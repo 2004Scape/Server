@@ -1,0 +1,16 @@
+[opnpc1,bolkoy]
+switch_int(%tree_progress) {
+    case default:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(neutral, "Hello stranger, new to these parts?");
+        ~chatnpc(happy, "I'm Bolkoy by the way.|I'm the village shopkeeper.|Would you like to buy something?");
+}
+switch_int(~p_choice2("What have you got?", 1, "No thank you.", 2)) {
+    case 1: 
+        ~chatplayer(quiz, "What have you got?");
+        ~chatnpc(neutral, "Take a look.");
+        ~openshop_activenpc;
+    case 2: 
+        ~chatplayer(neutral, "No thank you.");
+        ~chatnpc(neutral, "Ok, maybe later.");
+}

@@ -1,0 +1,17 @@
+[oploc1,loc_1293] // gnome stronghold tree
+//if(%tree_progress ! ^grandtree_complete) {
+//    mes("The tree doesn't feel like talking.");
+//    return;
+//}
+ 
+[oploc1,loc_1294] // gnome village tree
+if(%tree_progress ! ^tree_complete) {
+    mes("The tree doesn't feel like talking.");
+    return;
+}
+ 
+[oploc1,loc_1317] // young tree
+if(%tree_progress ! ^tree_complete) {
+    mes("The tree doesn't feel like talking.");
+    return;
+}

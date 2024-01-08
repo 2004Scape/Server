@@ -9571,7 +9571,7 @@ model3=model_2916_npc
 head1=model_20_npc_head
 wanderrange=2
 
-[npc_470]
+[commander_montai]
 vislevel=hide
 name=Commander Montai
 desc=It's a tree gnome.
@@ -9586,8 +9586,9 @@ model1=model_2909_npc
 model2=model_2903_npc
 model3=model_2919_npc
 head1=model_22_npc_head
+timer=10
 
-[npc_471]
+[bolkoy]
 vislevel=hide
 name=Bolkoy
 desc=It's a tree gnome.
@@ -9599,8 +9600,14 @@ model1=model_2909_npc
 model2=model_2901_npc
 model3=model_2917_npc
 head1=model_17_npc_head
+category=shop_keeper
+param=owned_shop,bolkoys_village_shop
+param=shop_sell_multiplier,1300
+param=shop_buy_multiplier,400
+param=shop_delta,30
+param=shop_title,Bolkoy's Village Shop
 
-[npc_472]
+[remsai]
 vislevel=hide
 name=Remsai
 desc=It's a tree gnome.
@@ -9616,7 +9623,7 @@ model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
 
-[npc_473]
+[elkoy_outmaze]
 vislevel=hide
 name=Elkoy
 desc=It's a tree gnome.
@@ -9633,7 +9640,7 @@ model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=3
 
-[npc_474]
+[elkoy_maze]
 vislevel=hide
 name=Elkoy
 desc=It's a tree gnome.
@@ -9840,7 +9847,7 @@ param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
-[npc_481]
+[tracker_gnome_1]
 vislevel=hide
 name=Gnome
 desc=Looks like a gnome to me.
@@ -9856,7 +9863,7 @@ model2=model_2890_npc
 model3=model_2915_npc
 head1=model_21_npc_head
 
-[npc_482]
+[tracker_gnome_2]
 vislevel=hide
 name=Gnome
 desc=Looks like a gnome to me.
@@ -9872,7 +9879,7 @@ model2=model_2890_npc
 model3=model_2915_npc
 head1=model_21_npc_head
 
-[npc_483]
+[tracker_gnome_3]
 vislevel=hide
 name=Gnome
 desc=Looks like a gnome to me.
@@ -9902,7 +9909,7 @@ head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
 
-[npc_485]
+[local_gnome]
 vislevel=hide
 name=Local Gnome
 desc=It's a young tree gnome.
@@ -9916,7 +9923,7 @@ head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
 
-[npc_486]
+[kalron]
 vislevel=hide
 name=Kalron
 desc=He looks lost.

@@ -1,0 +1,8 @@
+[opnpc1,local_gnome]
+switch_int(%tree_progress) {
+    case ^tree_not_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(happy, "Lardi dee, lardi da.");
+        ~chatplayer(confused, "Are you alright?");
+        ~chatnpc(happy, "Hee hee, lardi da, lardi dee.|@whi@(The gnome appears to be singing.)");
+}

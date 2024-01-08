@@ -1,0 +1,6 @@
+[opnpc1,kalron]
+switch_int(%tree_progress) {
+    case default:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(sad, "Gotta find a way out.|We built this maze for protection|but I can't get used to it.|I'm always getting lost.");
+}

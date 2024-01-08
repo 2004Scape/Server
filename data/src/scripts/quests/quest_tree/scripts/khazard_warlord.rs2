@@ -1,0 +1,7 @@
+[opnpc1,khazard_warlord]
+switch_int(%tree_progress) {
+    case ^tree_not_started:
+        ~chatplayer(happy, "Hello, how are you?");
+        ~chatnpc(angry, "Don't speak to me you insignificant wretch!|Die in the name of Khazard!");
+        ~npc_retaliate(0);
+}

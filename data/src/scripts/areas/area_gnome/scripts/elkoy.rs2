@@ -1,0 +1,19 @@
+[opnpc1,elkoy_outmaze]
+switch_int(%tree_progress) {
+    case ^tree_not_started: @elkoy_intro;
+}
+
+[opnpc1,elkoy_maze]
+switch_int(%tree_progress) {
+    case ^tree_not_started: @elkoy_intro;
+}
+
+[label,elkoy_intro]
+~chatplayer(neutral, "Hello there.");
+~chatnpc(happy, "Hello, welcome to our maze.|I'm Elkoy the tree gnome.");
+~chatplayer(quiz, "I haven't heard of your sort.");
+~chatnpc(sad, "There's not many of us left.|Once you could find tree gnomes|anywhere in the world, now we hide|in small groups to avoid capture.");
+~chatplayer(quiz, "Capture by whom?");
+~chatnpc(angry, "Tree gnomes have been hunted|for so called 'fun' since as|long as I can remember.");
+~chatnpc(sad, "Our main threat nowadays|are General Khazard's troops.|They know no mercy, but are also very dense.|They'll never find their way through our maze.");
+~chatnpc(neutral, "Have fun.");

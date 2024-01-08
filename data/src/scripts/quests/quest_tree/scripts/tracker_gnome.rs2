@@ -1,0 +1,24 @@
+[opnpc1,tracker_gnome_1]
+switch_int(%tree_progress) {
+    case ^tree_not_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(angry, "I can't talk now.|Can't you see we're trying to win a battle here?");
+}
+
+[apnpc1,tracker_gnome_2]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+switch_int(%tree_progress) {
+    case ^tree_not_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(shifty, "I can't talk now.|If the guards catch me I'll be dead gnome meat.");
+}
+
+[opnpc1,tracker_gnome_3]
+switch_int(%tree_progress) {
+    case ^tree_not_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(angry, "I can't talk now.|Can't you see we're trying to win a battle here?");
+}
