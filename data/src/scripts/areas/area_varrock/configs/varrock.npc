@@ -894,6 +894,6 @@ head2=model_79_idk_head
 wanderrange=2
 param=owned_shop,ye_old_tea_shoppe
 param=shop_sell_multiplier,1000
-param=shop_buy_multiplier,6000
+param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Ye Olde Tea Shoppe
