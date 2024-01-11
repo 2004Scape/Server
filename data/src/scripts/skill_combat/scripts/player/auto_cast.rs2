@@ -18,7 +18,7 @@
 
 [label,open_autocast_interface]
 if_close;
-if (busy = true) { // cant open autocast interface if delayed
+if (p_finduid(uid) = false) { // cant open autocast interface if delayed
     return;
 }
 %attackstyle_magic = 0;
