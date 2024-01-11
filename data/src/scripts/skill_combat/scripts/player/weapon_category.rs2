@@ -1,67 +1,169 @@
-[if_button,attack_2h_sword:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_2h_sword:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_2h_sword:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_2h_sword:com_6] %attackstyle = ^attackstyle_3;
+// in osrs attack styles are strongqueued
+[if_button,attack_2h_sword:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_2h_sword:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_2h_sword:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_2h_sword:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_axe:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_axe:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_axe:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_axe:com_6] %attackstyle = ^attackstyle_3;
+[if_button,attack_axe:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_axe:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_axe:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_axe:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_blunt:com_7] %attackstyle = ^attackstyle_0;
-[if_button,attack_blunt:com_6] %attackstyle = ^attackstyle_1;
-[if_button,attack_blunt:com_5] %attackstyle = ^attackstyle_2;
+[if_button,attack_blunt:com_7]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_blunt:com_6]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_blunt:com_5]
+if_close;
+%attackstyle = ^attackstyle_2;
 
-[if_button,attack_bow:com_7] %attackstyle = ^attackstyle_0;
-[if_button,attack_bow:com_6] %attackstyle = ^attackstyle_1;
-[if_button,attack_bow:com_5] %attackstyle = ^attackstyle_2;
+[if_button,attack_bow:com_7]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_bow:com_6]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_bow:com_5]
+if_close;
+%attackstyle = ^attackstyle_2;
 
-[if_button,attack_crossbow:com_7] %attackstyle = ^attackstyle_0;
-[if_button,attack_crossbow:com_6] %attackstyle = ^attackstyle_1;
-[if_button,attack_crossbow:com_5] %attackstyle = ^attackstyle_2;
+[if_button,attack_crossbow:com_7]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_crossbow:com_6]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_crossbow:com_5]
+if_close;
+%attackstyle = ^attackstyle_2;
 
-[if_button,attack_pickaxe:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_pickaxe:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_pickaxe:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_pickaxe:com_6] %attackstyle = ^attackstyle_3;
+[if_button,attack_pickaxe:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_pickaxe:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_pickaxe:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_pickaxe:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_scythe:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_scythe:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_scythe:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_scythe:com_6] %attackstyle = ^attackstyle_3;
+[if_button,attack_scythe:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_scythe:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_scythe:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_scythe:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_slashing:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_slashing:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_slashing:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_slashing:com_6] %attackstyle = ^attackstyle_3;
+[if_button,attack_slashing:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_slashing:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_slashing:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_slashing:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_spear:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_spear:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_spear:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_spear:com_6] %attackstyle = ^attackstyle_3;
+[if_button,attack_spear:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_spear:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_spear:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_spear:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_spiked:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_spiked:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_spiked:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_spiked:com_6] %attackstyle = ^attackstyle_3;
+[if_button,attack_spiked:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_spiked:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_spiked:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_spiked:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_stabbing:com_5] %attackstyle = ^attackstyle_0;
-[if_button,attack_stabbing:com_8] %attackstyle = ^attackstyle_1;
-[if_button,attack_stabbing:com_7] %attackstyle = ^attackstyle_2;
-[if_button,attack_stabbing:com_6] %attackstyle = ^attackstyle_3;
+[if_button,attack_stabbing:com_5]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_stabbing:com_8]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_stabbing:com_7]
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_stabbing:com_6]
+if_close;
+%attackstyle = ^attackstyle_3;
 
-[if_button,attack_thrown:com_7] %attackstyle = ^attackstyle_0;
-[if_button,attack_thrown:com_6] %attackstyle = ^attackstyle_1;
-[if_button,attack_thrown:com_5] %attackstyle = ^attackstyle_2;
+[if_button,attack_thrown:com_7]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_thrown:com_6]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_thrown:com_5]
+if_close;
+%attackstyle = ^attackstyle_2;
 
-[if_button,attack_unarmed:com_4] %attackstyle = ^attackstyle_0;
-[if_button,attack_unarmed:com_6] %attackstyle = ^attackstyle_1;
-[if_button,attack_unarmed:com_5] %attackstyle = ^attackstyle_2;
+[if_button,attack_unarmed:com_4]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_unarmed:com_6]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_unarmed:com_5]
+if_close;
+%attackstyle = ^attackstyle_2;
 
-[if_button,attack_magic_battlestaff:com_7] %attackstyle = ^attackstyle_0;
-[if_button,attack_magic_battlestaff:com_6] %attackstyle = ^attackstyle_1;
-[if_button,attack_magic_battlestaff:com_5] %attackstyle = ^attackstyle_2;
-[if_button,attack_magic_battlestaff:com_17] 
+[if_button,attack_magic_battlestaff:com_7]
+if_close;
+%attackstyle = ^attackstyle_0;
+[if_button,attack_magic_battlestaff:com_6]
+if_close;
+%attackstyle = ^attackstyle_1;
+[if_button,attack_magic_battlestaff:com_5] 
+if_close;
+%attackstyle = ^attackstyle_2;
+[if_button,attack_magic_battlestaff:com_17]
+if_close;
 %attackstyle_magic = togglebit(%attackstyle_magic, 0);
 %spell = %autocast_spell;
 
