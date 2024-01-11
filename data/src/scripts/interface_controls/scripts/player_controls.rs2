@@ -1,16 +1,22 @@
 [if_button,player_controls:com_2]
 p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
 if_close; // closes interfaces in osrs
-%auto_retaliate = ^player_auto_retaliate_on;
+queue(set_auto_retaliate, 0);
+
 [if_button,player_controls:com_3]
 p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
-%auto_retaliate = ^player_auto_retaliate_off;
+if_close; // might be strongqueued in osrs
+queue(set_auto_retaliate, 0);
+
+//todo: allow player to toggle run during delays.
 [if_button,player_controls:com_4] 
 if_close;
 %player_run = ^player_run_off;
+
 [if_button,player_controls:com_5]
 if_close;
 %player_run = ^player_run_on;
+
 [if_button,player_controls:com_13] @player_controls_emote(emote_cry);
 [if_button,player_controls:com_14] @player_controls_emote(emote_think);
 [if_button,player_controls:com_15] @player_controls_emote(emote_wave);
@@ -33,3 +39,10 @@ if (busy = true) {
 }
 anim($anim, 20);
 // p_delay(~seqlength20ms($anim));
+
+[queue,set_auto_retaliate]
+if (%auto_retaliate = ^player_auto_retaliate_on) {
+    %auto_retaliate = ^player_auto_retaliate_off;
+} else {
+    %auto_retaliate = ^player_auto_retaliate_on;
+}

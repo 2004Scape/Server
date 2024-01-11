@@ -18,6 +18,9 @@
 
 [label,open_autocast_interface]
 if_close;
+if (busy = true) { // cant open autocast interface if delayed
+    return;
+}
 %attackstyle_magic = 0;
 if_settab(attack_magic_spell, 0);
 
@@ -25,6 +28,7 @@ if_settab(attack_magic_spell, 0);
 if_close;
 ~initalltabs;
 
+// todo: allow setting autocast to go through delays.
 [label,set_autocast_spell](int $spell)
 if_close;
 //mes(tostring($spell));
