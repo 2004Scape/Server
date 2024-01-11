@@ -34,7 +34,7 @@ if ($option = 1) {
         ~mesbox("The Duke tries to hand you the talisman, but you don't have enough room to take it.");
     } else {
         // https://youtu.be/khWXGF8spNs?t=40
-        ~mesbox(air_talisman, "The Duke hands you an @blu@air talisman.");
+        ~mesbox("The Duke hands you an @blu@air talisman.");
         inv_add(inv, air_talisman, 1);
     }
 } else if($option = 2) {
