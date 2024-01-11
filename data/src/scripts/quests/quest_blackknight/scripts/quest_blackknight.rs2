@@ -18,6 +18,15 @@ if ($is_outside = true & ((inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (
     ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
 }
 
+[oploc1,blackknight_door_to_grill]
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_outside = false) {
+    def_boolean $has_spoken = false;
+    $has_spoken = ~set_black_knight_aggro(1_47_54_17_55, $has_spoken);
+    ~set_black_knight_aggro(1_47_54_15_55, $has_spoken);
+}
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+
 [label,blackknight_entrance_dialogue]
 npc_findallzone(0_47_54_8_59);
 while (npc_findnext = true) {
@@ -81,6 +90,10 @@ if ($option = 1) {
    ~chatplayer(neutral, "I don't care. I'm going in anyway.");
    ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
    // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
+   def_boolean $has_spoken = false;
+   $has_spoken =  ~set_black_knight_aggro(0_47_54_13_59, $has_spoken);
+   ~set_black_knight_aggro(0_47_54_21_59, $has_spoken);
+   ~set_black_knight_aggro(0_47_54_22_55, $has_spoken);
 }
 [oploc1,blackknight_potion_room_door]
 mes("It's locked.");
@@ -139,6 +152,19 @@ if (%blackknight_progress = 1) {
 } else {
     mes("I can't hear much right now.");
 }
+
+[proc,set_black_knight_aggro](coord $coord, boolean $has_spoken)(boolean)
+npc_findallzone($coord);
+while (npc_findnext = true) {
+    if (npc_type = npc_179) {
+        if ($has_spoken = false) {
+            npc_say("Die intruder!");
+            $has_spoken = true;
+        }
+        npc_setmode(opplayer2);
+    }
+}
+return($has_spoken);
 
 [proc,update_blackknight_progress]
 %blackknight_progress = calc(%blackknight_progress + 1);
