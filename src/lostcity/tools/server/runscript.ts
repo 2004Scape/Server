@@ -17,7 +17,7 @@ if (!script) {
     process.exit(1);
 }
 
-const self = Player.load('clirunner');
+const self = Player.loadFromFile('clirunner');
 World.addPlayer(self, null);
 await World.cycle(false);
 

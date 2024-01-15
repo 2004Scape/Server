@@ -12,6 +12,14 @@ export type account = {
     registration_ip: string | null;
     registration_date: Generated<Timestamp>;
 };
+export type friendlist = {
+    account_id: number;
+    friend_account_id: number;
+};
+export type ignorelist = {
+    account_id: number;
+    ignore_account_id: number;
+};
 export type newspost = {
     id: Generated<number>;
     category_id: number;
@@ -32,6 +40,8 @@ export type npc_hiscore = {
 };
 export type DB = {
     account: account;
+    friendlist: friendlist;
+    ignorelist: ignorelist;
     newspost: newspost;
     newspost_category: newspost_category;
     npc_hiscore: npc_hiscore;
