@@ -36,7 +36,7 @@ export default class TextEncoder {
                 savedChar = currentChar;
             }
         }
-        return this.toSentenceCase(stringBuilder.slice(0, offset).join(''));
+        return this.toSentenceCase(stringBuilder.slice(0, offset).join('')).trim();
     }
 
     static encode(packet: Packet, input: string): void {
