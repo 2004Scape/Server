@@ -20,13 +20,21 @@ const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pe
 parentPort.on('message', async msg => {
     try {
         if (!parentPort) throw new Error('This file must be run as a worker thread.');
-
+    
         switch (msg.type) {
             case 'reset': {
+                if (!Environment.LOGIN_KEY) {
+                    return;
+                }
+
                 const login = new LoginClient();
                 await login.reset();
             } break;
             case 'heartbeat': {
+                if (!Environment.LOGIN_KEY) {
+                    return;
+                }
+
                 const login = new LoginClient();
                 await login.heartbeat(msg.players);
             } break;
@@ -177,20 +185,21 @@ parentPort.on('message', async msg => {
                 }
             } break;
             case 'logout': {
-                if (!Environment.LOGIN_KEY) {
-                    return;
-                }
-
                 const { username, save } = msg;
 
-                // todo: keep retrying if login server is down
-                const login = new LoginClient();
-                const reply = await login.save(toBase37(username), save);
-
-                if (reply === 0) {
+                if (Environment.LOGIN_KEY) {
+                    const login = new LoginClient();
+                    const reply = await login.save(toBase37(username), save);
+    
+                    if (reply === 0) {
+                        parentPort.postMessage({
+                            type: 'logoutreply',
+                            username
+                        });
+                    }
+                } else {
                     parentPort.postMessage({
                         type: 'logoutreply',
-                        status: reply,
                         username
                     });
                 }

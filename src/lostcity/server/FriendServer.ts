@@ -12,11 +12,16 @@ import { fromBase37, toDisplayName } from '#jagex2/jstring/JString.js';
 export class FriendServer {
     private server: net.Server;
 
+    private players: bigint[][] = [];
     private messageId: number = 0;
-    private messages: Map<number, string> = new Map();
-
-    private worlds: Map<number, bigint> = new Map();
-    private players: Map<bigint, number> = new Map();
+    private messages: {
+        sender: bigint
+        messageId: number
+        staffModLevel: number
+        text: string
+    }[][] = [];
+    private loggedInEvents: bigint[][] = [];
+    private loggedOutEvents: bigint[][] = [];
 
     constructor() {
         this.server = net.createServer();
@@ -49,23 +54,75 @@ export class FriendServer {
                 await stream.readBytes(socket, data, 0, length);
 
                 if (opcode === 1) {
+                    // world reset
+                    const world = data.g2();
+
+                    this.players[world] = [];
+                    this.messages[world] = [];
+                    this.loggedInEvents[world] = [];
+                    this.loggedOutEvents[world] = [];
+                } else if (opcode === 2) {
+                    // heartbeat
+                    const world = data.g2();
+                    this.players[world] = [];
+
+                    const count = data.g2();
+                    for (let i = 0; i < count; i++) {
+                        const username37 = data.g8();
+                        this.players[world].push(username37);
+                    }
+                } else if (opcode === 3) {
                     // player logged in
                     const world = data.g2();
                     const username = data.g8();
-                } else if (opcode === 2) {
+
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                        this.messages[world] = [];
+                        this.loggedInEvents[world] = [];
+                        this.loggedOutEvents[world] = [];
+                    }
+
+                    this.players[world].push(username);
+                } else if (opcode === 4) {
                     // player logged out
                     const world = data.g2();
                     const username = data.g8();
-                } else if (opcode === 3) {
-                    // player sent message to another player
-                    const from = data.g8();
-                    const to = data.g8();
-                    const message = data.gjstr();
-                } else if (opcode === 4) {
-                    // world requested latest messages since last check
-                    const lastMessageId = data.g4();
+
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                        this.messages[world] = [];
+                        this.loggedInEvents[world] = [];
+                        this.loggedOutEvents[world] = [];
+                    }
+
+                    const index = this.players[world].indexOf(username);
+                    if (index > -1) {
+                        this.players[world].splice(index, 1);
+                    }
                 } else if (opcode === 5) {
-                    // player added friend
+                    // get latest state (messages, players)
+                    const world = data.g2();
+
+                    if (!this.players[world]) {
+                        this.players[world] = [];
+                        this.messages[world] = [];
+                        this.loggedInEvents[world] = [];
+                        this.loggedOutEvents[world] = [];
+                    }
+
+                    const reply = new Packet();
+                    reply.p2(this.messages[world].length);
+                    for (const message of this.messages[world]) {
+                        reply.p8(message.sender);
+                        reply.p2(message.messageId);
+                        reply.p1(message.staffModLevel);
+                        reply.pjstr(message.text);
+                    }
+                    // todo: send state of each world
+                    await this.write(socket, reply.data);
+                } else if (opcode === 6) {
+                    // add friend
                     const player = data.g8();
                     const other = data.g8();
 
@@ -86,8 +143,8 @@ export class FriendServer {
                             friend_account_id: otherAcc?.id
                         })
                         .ignore().execute();
-                } else if (opcode === 6) {
-                    // player removed friend
+                } else if (opcode === 7) {
+                    // del friend
                     const player = data.g8();
                     const other = data.g8();
 
@@ -106,8 +163,8 @@ export class FriendServer {
                         .where('account_id', '=', playerAcc.id)
                         .where('friend_account_id', '=', otherAcc.id)
                         .execute();
-                } else if (opcode === 7) {
-                    // player added ignore
+                } else if (opcode === 8) {
+                    // add ignore
                     const player = data.g8();
                     const other = data.g8();
 
@@ -128,8 +185,8 @@ export class FriendServer {
                             ignore_account_id: otherAcc?.id
                         })
                         .ignore().execute();
-                } else if (opcode === 8) {
-                    // player removed ignore
+                } else if (opcode === 9) {
+                    // del ignore
                     const player = data.g8();
                     const other = data.g8();
 
@@ -148,6 +205,72 @@ export class FriendServer {
                         .where('account_id', '=', playerAcc.id)
                         .where('ignore_account_id', '=', otherAcc.id)
                         .execute();
+                } else if (opcode === 10) {
+                    // log private message
+                    const world = data.g2();
+                    const from = data.g8();
+                    const to = data.g8();
+                    const message = data.gjstr();
+
+                    let toWorld = -1;
+                    for (let i = 0; i < this.players.length; i++) {
+                        if (this.players[i].includes(to)) {
+                            toWorld = i;
+                            break;
+                        }
+                    }
+
+                    const fromAcc = await db.selectFrom('account')
+                        .where('username', '=', fromBase37(from))
+                        .selectAll().executeTakeFirst();
+                    
+                    const toAcc = await db.selectFrom('account')
+                        .where('username', '=', fromBase37(to))
+                        .selectAll().executeTakeFirst();
+
+                    if (toWorld == -1 || !fromAcc || !toAcc) {
+                        return;
+                    }
+
+                    if (!this.messages[toWorld]) {
+                        this.players[toWorld] = [];
+                        this.messages[toWorld] = [];
+                        this.loggedInEvents[toWorld] = [];
+                        this.loggedOutEvents[toWorld] = [];
+                    }
+
+                    this.messages[toWorld].push({
+                        sender: from,
+                        messageId: this.messageId++,
+                        staffModLevel: 0,
+                        text: message
+                    });
+
+                    await db.insertInto('private_chat')
+                        .values({
+                            from_account_id: fromAcc.id,
+                            to_account_id: toAcc.id,
+                            message: message
+                        }).execute();
+                } else if (opcode === 11) {
+                    // log public message
+                    const world = data.g2();
+                    const from = data.g8();
+                    const message = data.gjstr();
+
+                    const fromAcc = await db.selectFrom('account')
+                        .where('username', '=', fromBase37(from))
+                        .selectAll().executeTakeFirst();
+
+                    if (!fromAcc) {
+                        return;
+                    }
+
+                    await db.insertInto('public_chat')
+                        .values({
+                            account_id: fromAcc.id,
+                            message: message
+                        }).execute();
                 }
             });
 
@@ -265,7 +388,41 @@ export class FriendClient {
         }
     }
 
-    async addFriend(player: bigint, other: bigint) {
+    // ----
+
+    async reset() {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet();
+        request.p2(Environment.WORLD_ID as number);
+        await this.write(this.socket, 1, request.data);
+
+        this.disconnect();
+    }
+
+    async heartbeat(players: bigint[]) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet();
+        request.p2(Environment.WORLD_ID as number);
+        request.p2(players.length);
+        for (const player of players) {
+            request.p8(player);
+        }
+        await this.write(this.socket, 2, request.data);
+
+        this.disconnect();
+    }
+
+    async login(player: bigint) {
         await this.connect();
 
         if (this.socket === null) {
@@ -273,12 +430,37 @@ export class FriendClient {
         }
 
         const data = new Packet();
+        data.p2(Environment.WORLD_ID as number);
         data.p8(player);
-        data.p8(other);
+        await this.write(this.socket, 3, data.data);
+    }
+
+    async logout(player: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return;
+        }
+
+        const data = new Packet();
+        data.p2(Environment.WORLD_ID as number);
+        data.p8(player);
+        await this.write(this.socket, 4, data.data);
+    }
+
+    async latest() {
+        await this.connect();
+
+        if (this.socket === null) {
+            return;
+        }
+
+        const data = new Packet();
+        data.p2(Environment.WORLD_ID as number);
         await this.write(this.socket, 5, data.data);
     }
 
-    async removeFriend(player: bigint, other: bigint) {
+    async addFriend(player: bigint, other: bigint) {
         await this.connect();
 
         if (this.socket === null) {
@@ -291,7 +473,7 @@ export class FriendClient {
         await this.write(this.socket, 6, data.data);
     }
 
-    async addIgnore(player: bigint, other: bigint) {
+    async delFriend(player: bigint, other: bigint) {
         await this.connect();
 
         if (this.socket === null) {
@@ -304,7 +486,7 @@ export class FriendClient {
         await this.write(this.socket, 7, data.data);
     }
 
-    async removeIgnore(player: bigint, other: bigint) {
+    async addIgnore(player: bigint, other: bigint) {
         await this.connect();
 
         if (this.socket === null) {
@@ -315,5 +497,47 @@ export class FriendClient {
         data.p8(player);
         data.p8(other);
         await this.write(this.socket, 8, data.data);
+    }
+
+    async delIgnore(player: bigint, other: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return;
+        }
+
+        const data = new Packet();
+        data.p8(player);
+        data.p8(other);
+        await this.write(this.socket, 9, data.data);
+    }
+
+    async privateMessage(from: bigint, to: bigint, message: string) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return;
+        }
+
+        const data = new Packet();
+        data.p2(Environment.WORLD_ID as number);
+        data.p8(from);
+        data.p8(to);
+        data.pjstr(message);
+        await this.write(this.socket, 10, data.data);
+    }
+
+    async publicMessage(from: bigint, message: string) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return;
+        }
+
+        const data = new Packet();
+        data.p2(Environment.WORLD_ID as number);
+        data.p8(from);
+        data.pjstr(message);
+        await this.write(this.socket, 11, data.data);
     }
 }

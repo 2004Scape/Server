@@ -58,6 +58,7 @@ import { ServerProt } from '#lostcity/server/ServerProt.js';
 import Environment from '#lostcity/util/Environment.js';
 
 class World {
+    id = Environment.WORLD_ID as number;
     members = Environment.MEMBERS_WORLD as boolean;
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
@@ -92,10 +93,7 @@ class World {
 
         this.friendThread.on('message', data => {
             try {
-                switch (data.type) {
-                    default:
-                        throw new Error('Unknown message type: ' + data.type);
-                }
+                this.onFriendMessage(data);
             } catch (err) {
                 console.error('Friend Thread:', err);
             }
@@ -103,6 +101,13 @@ class World {
     }
 
     // ----
+
+    onFriendMessage(msg: any) {
+        switch (msg.type) {
+            default:
+                throw new Error('Unknown message type: ' + msg.type);
+        }
+    }
 
     socialAddFriend(player: bigint, other: bigint) {
         this.friendThread.postMessage({
@@ -136,10 +141,37 @@ class World {
         });
     }
 
-    socialLogin(player: bigint) {
+    socialLogin(username: bigint) {
+        this.friendThread.postMessage({
+            type: 'login',
+            world: this.id,
+            username
+        });
     }
 
-    socialLogout(player: bigint) {
+    socialLogout(username: bigint) {
+        this.friendThread.postMessage({
+            type: 'logout',
+            world: this.id,
+            username
+        });
+    }
+
+    socialPrivateMessage(from: bigint, to: bigint, text: string) {
+        this.friendThread.postMessage({
+            type: 'private_message',
+            from,
+            to,
+            text
+        });
+    }
+
+    socialPublicMessage(from: bigint, text: string) {
+        this.friendThread.postMessage({
+            type: 'public_message',
+            from,
+            text
+        });
     }
 
     // ----
@@ -277,11 +309,13 @@ class World {
 
         this.vars = new Int32Array(VarSharedType.count);
 
-        if (Environment.LOGIN_KEY) {
-            Login.loginThread.postMessage({
-                type: 'reset'
-            });
-        }
+        Login.loginThread.postMessage({
+            type: 'reset'
+        });
+
+        this.friendThread.postMessage({
+            type: 'reset'
+        });
 
         console.log('World ready!');
 
@@ -591,6 +625,8 @@ class World {
                 player.client.state = 1;
                 player.client.send(Uint8Array.from([2]));
             }
+
+            this.socialLogin(player.username37);
         }
         playerLogin = Date.now() - playerLogin;
 
@@ -738,7 +774,7 @@ class World {
         }
         cleanup = Date.now() - cleanup;
 
-        if (Environment.LOGIN_KEY && this.currentTick % 100 === 0) {
+        if (this.currentTick % 100 === 0) {
             const players: bigint[] = [];
             for (let i = 0; i < this.players.length; i++) {
                 const player = this.players[i];
@@ -750,6 +786,11 @@ class World {
             }
 
             Login.loginThread.postMessage({
+                type: 'heartbeat',
+                players
+            });
+
+            this.friendThread.postMessage({
                 type: 'heartbeat',
                 players
             });
@@ -818,6 +859,10 @@ class World {
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
             setTimeout(this.cycle.bind(this), nextTick);
+
+            this.friendThread.postMessage({
+                type: 'latest'
+            });
         }
     }
 
@@ -1145,6 +1190,7 @@ class World {
         }
 
         Login.logout(player);
+        this.socialLogout(player.username37);
     }
 
     getPlayer(pid: number) {

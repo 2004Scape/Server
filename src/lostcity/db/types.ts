@@ -38,6 +38,19 @@ export type npc_hiscore = {
     account_id: number;
     kill_count: Generated<number>;
 };
+export type private_chat = {
+    id: Generated<number>;
+    from_account_id: number;
+    to_account_id: number;
+    message: string;
+    date: Generated<Timestamp>;
+};
+export type public_chat = {
+    id: Generated<number>;
+    account_id: number;
+    message: string;
+    date: Generated<Timestamp>;
+};
 export type DB = {
     account: account;
     friendlist: friendlist;
@@ -45,4 +58,6 @@ export type DB = {
     newspost: newspost;
     newspost_category: newspost_category;
     npc_hiscore: npc_hiscore;
+    private_chat: private_chat;
+    public_chat: public_chat;
 };

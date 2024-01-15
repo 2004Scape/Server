@@ -106,7 +106,7 @@ class Login {
                 World.addPlayer(player, client);
             } break;
             case 'logoutreply': {
-                const { status, username } = msg;
+                const { username } = msg;
 
                 const player = World.getPlayerByUsername(username);
                 if (player) {

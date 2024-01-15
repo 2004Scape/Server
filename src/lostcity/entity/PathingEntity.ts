@@ -187,9 +187,8 @@ export default abstract class PathingEntity extends Entity {
      */
     queueWaypoint(x: number, z: number, forceMove: boolean = false): void {
         this.waypoints = [];
-        this.waypoints.push({ x: x, z: z });
-        this.waypoints.reverse();
-        this.waypointIndex = this.waypoints.length - 1;
+        this.waypoints.push({ x, z });
+        this.waypointIndex = 0;
         this.forceMove = forceMove;
     }
 

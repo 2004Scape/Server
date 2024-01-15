@@ -679,11 +679,14 @@ export default class Player extends PathingEntity {
                 this.messageColor = colour;
                 this.messageEffect = effect;
                 this.messageType = 0;
+
                 const out = new Packet();
                 TextEncoder.encode(out, WordEnc.filter(message));
                 out.pos = 0;
                 this.message = out.gdata();
                 this.mask |= Player.CHAT;
+
+                World.socialPublicMessage(this.username37, message);
             } else if (opcode === ClientProt.IF_DESIGN) {
                 const female = data.g1();
 
@@ -1581,6 +1584,11 @@ export default class Player extends PathingEntity {
                     this.logout();
                     this.logoutRequested = true;
                 }
+            } else if (opcode === ClientProt.MESSAGE_PRIVATE) {
+                const other = data.g8();
+                const message = TextEncoder.decode(data, data.length - 8);
+
+                World.socialPrivateMessage(this.username37, other, message);
             }
         }
 
