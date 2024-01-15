@@ -1,6 +1,6 @@
 [opnpc1,local_gnome]
 switch_int(%tree_progress) {
-    case ^tree_not_started:
+    case default:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(happy, "Lardi dee, lardi da.");
         ~chatplayer(confused, "Are you alright?");

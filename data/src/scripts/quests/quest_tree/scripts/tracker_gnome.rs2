@@ -1,8 +1,12 @@
 [opnpc1,tracker_gnome_1]
 switch_int(%tree_progress) {
-    case ^tree_not_started:
+    case ^tree_not_started, ^tree_started, ^tree_given_logs_montai:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(angry, "I can't talk now.|Can't you see we're trying to win a battle here?");
+    case ^tree_spoken_montai:
+        ~chatplayer(neutral, "Hi there.");
+        ~chatnpc(bored, "We're trying to hold them back,|but without more wood we won't be able to last long.");
+        ~chatplayer(neutral, "Hang in there little man.");
 }
 
 [apnpc1,tracker_gnome_2]
@@ -11,14 +15,20 @@ if (npc_range(coord) > 2) {
     return;
 }
 switch_int(%tree_progress) {
-    case ^tree_not_started:
+    case ^tree_not_started, ^tree_started:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(shifty, "I can't talk now.|If the guards catch me I'll be dead gnome meat.");
+    case ^tree_spoken_montai, ^tree_given_logs_montai:
+        ~chatplayer(neutral, "Hi there.");
+        ~chatnpc(neutral, "The battle is far from over.|If you have a pure heart you will help us win.");
 }
 
 [opnpc1,tracker_gnome_3]
 switch_int(%tree_progress) {
-    case ^tree_not_started:
+    case ^tree_not_started, ^tree_started:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(angry, "I can't talk now.|Can't you see we're trying to win a battle here?");
+    case ^tree_spoken_montai, ^tree_given_logs_montai:
+        ~chatplayer(neutral, "Hi there.");
+        ~chatnpc(sad, "I can't stand this war.|The misery, the pain, it's driving me crazy!|When will it end?");
 }

@@ -1,5 +1,9 @@
 [opnpc1,remsai]
 switch_int(%tree_progress) {
+    case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai:
+        ~chatnpc(sad, "Oh my, oh my!");
+        ~chatplayer(quiz, "What's wrong?");
+        ~chatnpc(sad, "The orb, they have the orb.|It must be returned or we're doomed.");
     case default:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(happy, "Well done, well done.|Not many find their way in here.");

@@ -1,6 +1,6 @@
 [oploc1,loc_2186]
 p_delay(0);
-def_coord $start = movecoord(coord, 0, 0, calc(coordx(loc_coord) - coordx(coord))); 
+def_coord $start = movecoord(coord, calc(coordx(loc_coord) - coordx(coord)), 0, 0); 
 def_int $mod = -1;
 def_int $dir = ^exact_south;
 if(~check_axis(coord, loc_coord, loc_angle) = false) {
@@ -9,4 +9,4 @@ if(~check_axis(coord, loc_coord, loc_angle) = false) {
 }
 mes("You squeeze through the loose railing.");
 // OSRS uses an anim not in 225, just guessing here
-~agility_exactmove(human_ledge_on_right, 30, 2, $start, movecoord($start, 0, 0, $mod), 15, 90, $dir, false);
+~agility_exactmove(human_ledge_on_right, 30, 2, $start, movecoord($start, 0, 0, $mod), 15, 90, $dir, false);   

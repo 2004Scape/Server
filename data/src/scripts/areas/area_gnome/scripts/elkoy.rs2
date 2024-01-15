@@ -1,11 +1,13 @@
 [opnpc1,elkoy_outmaze]
 switch_int(%tree_progress) {
     case ^tree_not_started: @elkoy_intro;
+    case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai: @elkoy_looking_orbs(^elkoy_maze_coord);
 }
 
 [opnpc1,elkoy_maze]
 switch_int(%tree_progress) {
     case ^tree_not_started: @elkoy_intro;
+    case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai: @elkoy_looking_orbs(^elkoy_entrance_coord);
 }
 
 [label,elkoy_intro]
@@ -17,3 +19,31 @@ switch_int(%tree_progress) {
 ~chatnpc(angry, "Tree gnomes have been hunted|for so called 'fun' since as|long as I can remember.");
 ~chatnpc(sad, "Our main threat nowadays|are General Khazard's troops.|They know no mercy, but are also very dense.|They'll never find their way through our maze.");
 ~chatnpc(neutral, "Have fun.");
+
+[label,elkoy_looking_orbs](coord $dest_coord)
+if(%tree_progress = ^tree_started) {
+    ~chatplayer(happy, "Hello Elkoy.");
+    ~chatnpc(sad, "Oh my! Oh my!");
+    ~chatplayer(quiz, "What's wrong?");
+    ~chatnpc(sad, "The orb, they have the orb. We're doomed.|Do you need me to show you back to the village?");
+} else {
+    ~chatplayer(neutral, "Hello.");
+    ~chatnpc(sad, "You must retrieve the orb, or the gnome village is doomed. Do you need me to show you through the maze?");
+}
+switch_int(~p_choice2("Yes please.", 1, "Not now, thanks.", 2)) {
+    case 1:
+        ~chatplayer(happy, "Yes please.");
+        p_telejump($dest_coord);
+        if(npc_finduid(~npc_within_distance(coord, elkoy_outmaze, 4)) = true | npc_finduid(~npc_within_distance(coord, elkoy_maze, 4)) = true) {
+            ~chatnpc(sad, "Please help us get our orb back.");
+        }
+    case 2:
+        ~chatplayer(neutral, "Not now, thanks.");
+}
+
+
+[label,elkoy_leavemaze_initial]
+p_telejump(0_39_49_8_55);
+if(npc_finduid(~npc_within_distance(coord, elkoy_outmaze, 4)) = true) {
+    ~chatnpc(happy, "We're out of the maze now. Please hurry, we must have the orb if we are to survive.");
+}
