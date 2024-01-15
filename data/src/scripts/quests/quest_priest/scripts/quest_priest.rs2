@@ -312,9 +312,10 @@ if (%priest_progress = 5) {
     while (npc_findnext = true) {
         if (npc_type = restless_ghost) npc_del;
     }
+    queue(priest_quest_complete, 0);
     ~mesbox("The ghost vanishes.");
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
-    queue(priest_quest_complete, 0);
+    
 }
 
 [opobj3,ghost_skull]

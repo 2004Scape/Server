@@ -36,8 +36,22 @@ model newspost_category {
 }
 
 model npc_hiscore {
-  id        Int     @id @default(autoincrement())
+  id         Int @id @default(autoincrement())
   npc_id     Int
   account_id Int
-  kill_count Int     @default(0)
+  kill_count Int @default(0)
+}
+
+model friendlist {
+  account_id        Int
+  friend_account_id Int
+
+  @@id([account_id, friend_account_id])
+}
+
+model ignorelist {
+  account_id        Int
+  ignore_account_id Int
+
+  @@id([account_id, ignore_account_id])
 }

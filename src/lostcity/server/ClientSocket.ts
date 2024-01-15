@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { Socket } from 'net';
 import { WebSocket } from 'ws';
 
@@ -16,6 +17,7 @@ export default class ClientSocket {
     remoteAddress: string;
     totalBytesRead = 0;
     totalBytesWritten = 0;
+    uniqueId = randomUUID();
 
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;
@@ -67,14 +69,13 @@ export default class ClientSocket {
             return;
         }
 
-        // TODO: revisit this to make sure no overflow attacks can be done
         setTimeout(() => {
             if (this.isTCP()) {
                 (this.socket as Socket).end();
             } else if (this.isWebSocket()) {
                 (this.socket as WebSocket).close();
             }
-        }, 10);
+        }, 100);
     }
 
     // terminate the connection immediately
@@ -131,6 +132,10 @@ export default class ClientSocket {
 
         this.out.set(data, this.outOffset);
         this.outOffset += data.length;
+    }
+
+    writeImmediate(data: Uint8Array) {
+        this.send(data);
     }
 
     flush() {

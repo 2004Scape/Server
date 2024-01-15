@@ -1,20 +1,20 @@
 [opnpc1,sedridor]
 // we don't support teleporting until the quest is complete
 if(%runemysteries_progress = 0) {
-    ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+    ~chatnpc("default", "Welcome adventurer, to the world renowned Wizards' Tower. How may I help you?");
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "What are you doing down here?", 2);
     if ($option = 1) {
-        ~chatplayer("default", "Nothing thanks. Im just looking around.");
+        ~chatplayer("default", "Nothing thanks. I'm just looking around.");
     }
     if ($option = 2) {
         @sedridor_2;
     }
 } else if(%runemysteries_progress = 1) {
-    ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+    ~chatnpc("default", "Welcome adventurer, to the world renowned Wizards' Tower. How may I help you?");
     @rune_mysteries;
 } else if(%runemysteries_progress = 2) {
     if(~obj_gettotal(research_package) = 0) {
-        ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+        ~chatnpc("default", "Welcome adventurer, to the world renowned Wizards' Tower. How may I help you?");
         ~chatplayer("default", "...I lost the package you gave me.");
         ~chatnpc("default", "You WHAT?");
         ~chatnpc("default", "Tch, that was really very careless of you. Luckily as head wizard I have great powers, and will be able to teleport it back here without too much effort.");
@@ -31,7 +31,7 @@ if(%runemysteries_progress = 0) {
         ~chatnpc("default", "you get to the Barbarian village. The man you seek is named Aubury, and he owns the rune shop there. It is vital he receives this package.");
     }
 } else if (%runemysteries_progress = 4) {
-    ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+    ~chatnpc("default", "Welcome adventurer, to the world renowned Wizards' Tower. How may I help you?");
     ~chatnpc("default", "Ah, <displayname()>. How goes our quest? Have you delivered the research notes to my friend Aubury yet?");
     ~chatplayer("default", "Yes, I have. He gave me some research notes to pass on to you.");
     ~chatnpc("default", "May I have his notes then?");
@@ -51,16 +51,16 @@ if(%runemysteries_progress = 0) {
     ~chatnpc("default", "I came upon a scroll, almost destroyed that detailed a magical rock deep in the icefields of the North, closed off from access by anything other than magical means.");
     ~chatnpc("default", "This rock was called the 'Rune Essence' by the magicians who studied its powers. Apparently, by simply breaking a chunk from it, a Rune Stone could be fashioned very quickly and easily at certain");
     ~chatnpc("default", "elemental altars that were scattered across the land back then. Now, this is an intersting little piece of history, but not much use to us as modern wizards without access to the Rune Essence,");
-    ~chatnpc("default", "or these elemental altars. This is where you and Aubury come into this story. A few weeks back, Aubury discovered in a standard delivery of runes to his store, a patchment detailing a");
+    ~chatnpc("default", "or these elemental altars. This is where you and Aubury come into this story. A few weeks back, Aubury discovered in a standard delivery of runes to his store, a parchment detailing a");
     ~chatnpc("default", "teleportation spell that he had never come across before. To his shock, when cast it took him to a strange rock he had never encountered before... yet that felt strangely familiar...");
     ~chatnpc("default", "As I'm sure you have now guessed, he had discovered a portal leading to the mythical Rune Essence. As soon as he told me of this spell I saw the importance of his find,");
     ~chatnpc("default", "for if we could but find the elemental altars spoken of in the ancient texts, we would once more be able to create runes as our ancestors had done! It would be the saviour of the wizards' art!");
     ~chatplayer("default", "I'm still not sure how I fit into this little story of yours...");
     ~chatnpc("default", "You haven't guessed? This talisman you brought me... it is the key to the elemental altar of air! When you hold it next, it will direct you towards");
-    ~chatnpc("default", "the entrance to the long forgotten Air Altar! By brnging pieces of the Rune Essence to the Air Temple you will be able to fashion your own Air Runes!");
+    ~chatnpc("default", "the entrance to the long forgotten Air Altar! By bringing pieces of the Rune Essence to the Air Temple you will be able to fashion your own Air Runes!");
     ~chatnpc("default", "And this is not all! By finding other talismans similar to this one, you will eventually be able to craft every rune that is available on this world! Just");
     ~chatnpc("default", "as our ancestors did! I cannot stress enough what a find this is! Now, due to the risks involved of letting this mighty power fall into the wrong hands");
-    ~chatnpc("default", "I will keep the teleport skill to the Rune Essence a closely guarded secret, shared only by myself and those Magic users around the world wom I trust enough to keep it.");
+    ~chatnpc("default", "I will keep the teleport skill to the Rune Essence a closely guarded secret, shared only by myself and those Magic users around the world whom I trust enough to keep it.");
     ~chatnpc("default", "This means that if any evil power should discover the talismans required to enter the elemental temples, we will be able to prevent their access to the Rune Essence and prevent");
     ~chatnpc("default", "tragedy befalling this world. I know not where the templates are located, nor do I know where the talismans have been scattered to in this land, but I now");
     ~chatnpc("default", "return your Air Talisman to you. Find the Air Template and you wil be able to charge your Rune Essences to become Air Runes at will. Any time");
@@ -76,10 +76,10 @@ if(%runemysteries_progress = 0) {
     queue(rune_mysteries_complete, 0);
 
 } else if(%runemysteries_progress = ^runemysteries_complete) {
-    ~chatnpc("default", "Welcome adventurer, to the world reknowned Wizards' Tower. How may I help you?");
+    ~chatnpc("default", "Welcome adventurer, to the world renowned Wizards' Tower. How may I help you?");
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
     if ($option = 1) {
-        ~chatplayer("default", "Nothing thanks. Im just looking around.");
+        ~chatplayer("default", "Nothing thanks. I'm just looking around.");
     }
     if ($option = 2) {
         ~chatplayer("default", "Can you teleport me to the Rune Essence?");
@@ -92,9 +92,9 @@ if(%runemysteries_progress = 0) {
 ~send_quest_complete(quest_journal:runemysteries, air_talisman, 250, ^runemysteries_questpoints, "You have completed the\\nMysteries Of The Runes Quest!");
 
 [label,rune_mysteries]
-def_int $option = ~p_choice3("Nothing thanks. Im just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
+def_int $option = ~p_choice3("Nothing thanks. I'm just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
 if ($option = 1) {
-    ~chatplayer("default", "Nothing thanks. Im just looking around.");
+    ~chatplayer("default", "Nothing thanks. I'm just looking around.");
 } else if ($option = 2) {
     @sedridor_2;
 } else if ($option = 3) {
@@ -219,7 +219,7 @@ if (%runemysteries_progress = 2) {
     }
     inv_del(inv, research_package, 1);
     %runemysteries_progress = 3;
-    ~mesbox("You have Aubury the research package.");
+    ~mesbox("You give Aubury the research package.");
     ~chatnpc("default", "This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
     return;
 }
