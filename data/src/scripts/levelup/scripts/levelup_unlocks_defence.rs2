@@ -1,4 +1,5 @@
 [label,levelup_defence]
+//Defence level up unlock messgaes
 switch_int(stat_base(defence)) {
     case 5: objbox(steel_platebody,"You can now wear @dbl@Steel Armour@bla@!");
     case 10: objbox(black_platebody,"You can now wear @dbl@Black Armour@bla@!");

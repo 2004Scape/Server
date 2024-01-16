@@ -1,4 +1,5 @@
 [proc,levelup_unlocks](stat $stat)(label)
+//Level up skill
 switch_stat($stat) {
     case magic: return(levelup_magic);
     case herblore: return(levelup_herblore);

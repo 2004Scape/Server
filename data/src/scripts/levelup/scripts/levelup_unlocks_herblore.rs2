@@ -1,4 +1,5 @@
 [label,levelup_herblore]
+//Herblore level unlock messages
 switch_int(stat_base(herblore)) {
     case 3: ~objboxb(3dose1attack, "You can now make @dbl@attack potions@bla@. You can now clean @dbl@guam leaf, snake weed @bla@and @dbl@rogues purse@bla@.");
     case 5: ~objbox2(3doseantipoison,marentill,"You can now make @dbl@antipoison potions@bla@. You can now clean @dbl@marrentill@bla@.");
@@ -24,9 +25,5 @@ switch_int(stat_base(herblore)) {
     case 72: ~objboxb(3doserangerspotion,"You can now make @dbl@ranging potions@bla@.");
     case 75: ~objboxt(torstol,"You can now clean @dbl@torstol@bla@.");
     case 78: ~objboxb(3dosepotionofzamorak,"You can now make @dbl@Zamorak brews@bla@.");
-
-
-
-
 
 }
