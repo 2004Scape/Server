@@ -2,6 +2,12 @@
 inputtype=int
 outputtype=int
 default=null
+val=0,5
+val=1,10
+val=2,20
+val=3,30
+val=4,40
+val=5,60
 
 [levelup_unlocks_strength]
 inputtype=int
@@ -24,6 +30,12 @@ val=1,5
 inputtype=int
 outputtype=int
 default=null
+val=0,5
+val=1,10
+val=2,20
+val=3,30
+val=4,40
+val=5,60
 
 [levelup_unlocks_hitpoints]
 inputtype=int
