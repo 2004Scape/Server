@@ -1,6 +1,6 @@
 [opnpc1,kalron]
 switch_int(%tree_progress) {
-    case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai:
+    case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai, ^tree_finding_trackers, ^tree_ballista_fired, ^tree_retrieved_orb:
         ~chatplayer(neutral, "Hello, how are you?");
         ~chatnpc(sad, "Oh my. I'll never find my way back|before Khazard's men come and hunt me down.");
     case default:

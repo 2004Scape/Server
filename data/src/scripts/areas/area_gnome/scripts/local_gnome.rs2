@@ -1,5 +1,8 @@
 [opnpc1,local_gnome]
 switch_int(%tree_progress) {
+    case ^tree_retrieved_orb:
+        ~chatplayer(neutral, "Hello little man.");
+        ~chatnpc(happy, "Little man stronger than big man. Hee hee, lardi dee, lardi da.");
     case default:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(happy, "Lardi dee, lardi da.");

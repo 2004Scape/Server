@@ -1,5 +1,13 @@
 [opnpc1,bolkoy]
 switch_int(%tree_progress) {
+    case ^tree_retrieved_orb:
+        ~chatplayer(neutral, "Hello.");
+        if(inv_total(inv, first_orb_of_protection) > 0) {
+            ~chatnpc(shock, "Amazing, you recovered the orb.");
+            ~chatnpc(happy, "Well I am impressed.|Would you like to buy something?");
+        } else {
+            ~chatnpc(neutral, "I'm Bolkoy the village shopkeeper.|Would you like to buy something?");     
+        }   
     case default:
         ~chatplayer(neutral, "Hello there.");
         ~chatnpc(neutral, "Hello stranger, new to these parts?");

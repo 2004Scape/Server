@@ -36,7 +36,12 @@ switch_int(%tree_progress) {
         ~chatplayer(neutral, "Hello Bolren.");
         ~chatnpc(neutral, "Hello traveller, we must retrieve the orb.|It's being held by Khazard troops north of here.");
         ~chatplayer(neutral, "Ok, I'll try my best.");
-    case ^tree_spoken_montai, ^tree_given_logs_montai:
+    case ^tree_spoken_montai, ^tree_given_logs_montai, ^tree_finding_trackers, ^tree_ballista_fired:
         ~chatplayer(neutral, "Hello Bolren.");
         ~chatnpc(neutral, "The orb is being held at the battlefield north of the maze.");
+    case ^tree_retrieved_orb:
+        ~chatplayer(neutral, "Hello Bolren.");
+        ~chatnpc(quiz, "Do you have the orb?");   
+        ~chatplayer(sad, "No, I'm afraid not.");
+        ~chatnpc(sad, "Please, we must have the orb if we are to survive.");     
 }

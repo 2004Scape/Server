@@ -1,11 +1,24 @@
 [opnpc1,remsai]
 switch_int(%tree_progress) {
-    case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai:
-        ~chatnpc(sad, "Oh my, oh my!");
-        ~chatplayer(quiz, "What's wrong?");
-        ~chatnpc(sad, "The orb, they have the orb.|It must be returned or we're doomed.");
-    case default:
+    case ^tree_not_started:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(happy, "Well done, well done.|Not many find their way in here.");
         ~chatnpc(happy, "I'm Remsai, a tree gnome.|We live in this maze for our protection.|Have a look around and enjoy.");
+    case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai, ^tree_finding_trackers, ^tree_ballista_fired:
+        ~chatnpc(sad, "Oh my, oh my!");
+        ~chatplayer(quiz, "What's wrong?");
+        ~chatnpc(sad, "The orb, they have the orb.|It must be returned or we're doomed.");
+    case ^tree_retrieved_orb:
+        ~chatplayer(neutral, "Hello Remsai.");
+        ~chatnpc(quiz, "Hello, did you find the orb?"); 
+        if(inv_total(bank, first_orb_of_protection) > 0) {
+            ~chatplayer(happy, "I have it here.");
+            ~chatnpc(happy, "You're our saviour.");
+        } else if(inv_total(bank, first_orb_of_protection) > 0) { // only dialogue that does a bank check as well for some reason
+            ~chatplayer(sad, "Yes, although I've not got it with me right now.");
+            ~chatnpc(sad, "Please, we must have the orb if we are to survive."); 
+        } else {
+            ~chatplayer(sad, "No, I'm afraid not.");
+            ~chatnpc(sad, "Please, we must have the orb if we are to survive.");
+        }    
 }

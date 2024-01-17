@@ -56,6 +56,15 @@ switch_int(%tree_progress) {
     case ^tree_finding_trackers:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(bored, "Hello warrior. We need the coordinates|for a direct hit from the ballista.|Once you have a direct hit you will be able|to enter the stronghold and retrieve the orb.");
+    case ^tree_ballista_fired:
+        ~chatplayer(happy, "I've breached the stronghold.");
+        ~chatnpc(happy, "I saw, that was a beautiful sight. The Khazard troops didn't know what hit them.");
+        ~chatnpc(neutral, "Now is the time to retrieve the orb. It's all in your hands. I'll be praying for you.");
+    case ^tree_retrieved_orb:
+        ~chatplayer(happy, "I have the orb of protection.");
+        ~chatnpc(happy, "Incredible, for a human you really are something.");
+        ~chatplayer(confused, "Thanks... I think!");
+        ~chatnpc(neutral, "I'll stay here with my troops and try and hold Khazard's men back. You return the orb to the gnome village. Go as quick as you can, the village is still unprotected.");
 }
 
 [ai_timer,commander_montai]
