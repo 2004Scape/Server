@@ -56,7 +56,7 @@ export default function (f: any, opts: any, next: any) {
         const servers: string[][] = [];
         for (const world of WorldList) {
             // legacy PCs are more likely to have issues with HTTPS
-            let address = 'http:' + world.address.split(':')[1];
+            const address = 'http:' + world.address.split(':')[1];
 
             servers.push([
                 `[${world.id}.high]`,
