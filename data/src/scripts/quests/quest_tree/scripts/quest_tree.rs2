@@ -75,14 +75,14 @@ if(npc_finduid(~npc_within_distance(coord, khazard_commander, 5)) = true) {
 }
 
 [oploc1,loc_2182]
-if(%tree_progress > ^tree_retrieved_orb | inv_total(inv, first_orb_of_protection) > 0 | inv_total(bank, first_orb_of_protection) > 0) {
+if(%tree_progress > ^tree_retrieved_orb | inv_total(inv, orb_of_protection) > 0 | inv_total(bank, orb_of_protection) > 0) {
     mes("You search the chest, but find nothing.");
     return;
 }
 if(%tree_progress = ^tree_ballista_fired) {
     %tree_progress = ^tree_retrieved_orb;
 }
-inv_add(inv, first_orb_of_protection, 1);
+inv_add(inv, orb_of_protection, 1);
 ~mesbox("You search the chest.|Inside you find the gnomes' stolen orb of protection.");
 if(npc_finduid(~npc_within_distance(coord, khazard_commander, 5)) = true) {
     npc_say("Oi! You! Hands off the property of General Khazard.");
@@ -91,3 +91,9 @@ if(npc_finduid(~npc_within_distance(coord, khazard_commander, 5)) = true) {
 
 [oploc2,loc_2182]
 ~close_chest(loc_2183);
+
+[queue,tree_quest_complete]
+%tree_progress = ^tree_complete;
+inv_add(inv, gnome_amulet, 1);
+givexp(attack, 115000);
+~send_quest_complete(quest_journal:tree, gnome_amulet, 260, ^tree_questpoints, "You have completed the\\nTree Gnome Village Quest!");

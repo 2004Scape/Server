@@ -1,17 +1,54 @@
 [oploc1,loc_1293] // gnome stronghold tree
-//if(%tree_progress ! ^grandtree_complete) {
-//    mes("The tree doesn't feel like talking.");
-//    return;
-//}
+if(%tree_progress ! ^grandtree_complete) {
+    ~mesbox("The tree doesn't feel like talking.");
+    return;
+}
+// TODO: impl with grand tree quest
  
 [oploc1,loc_1294] // gnome village tree
 if(%tree_progress ! ^tree_complete) {
-    mes("The tree doesn't feel like talking.");
+    ~mesbox("The tree doesn't feel like talking.");
     return;
 }
+~mesbox("The tree talks in an old tired voice...");
+~mesbox("You friend of gnome people, you friend of mine.|Would you like me to take you somewhere?");
+switch_int(~p_choice2("No thanks, old tree.", 1, "Where can I go?", 2)) {
+    case 1:
+        ~chatplayer(neutral, "No thanks, old tree.");
+        return;
+    case 2:
+        ~chatplayer(quiz, "Where can I go?");
+        ~mesbox("The tree talks again...");
+        ~mesbox("You can travel to the trees|which are related to me.");
+}
+def_coord $end_pos = ^village_tree;
+switch_int(~p_choice3("Battlefield of Khazard.", 1, "Forest north of Varrock.", 2, "Gnome stronghold.", 3)) {
+    case 1: $end_pos = ^khazard_tree;
+    case 2: $end_pos = ^varrock_tree;
+    case 3: $end_pos = ^stronghold_tree;
+}
+@spirit_tree_tele($end_pos);
  
 [oploc1,loc_1317] // young tree
 if(%tree_progress ! ^tree_complete) {
-    mes("The tree doesn't feel like talking.");
+    ~mesbox("The tree doesn't feel like talking.");
     return;
 }
+~mesbox("The young spirit tree talks...");
+~mesbox("Hello gnome friend. Would you like to|travel to the home of the tree gnomes?");
+switch_int(~p_choice2("Yes please.", 1, "No thank you.", 2)) {
+    case 1: 
+        ~chatplayer(neutral, "Yes please.");
+        @spirit_tree_tele(^village_tree);
+    case 2: 
+        ~chatplayer(neutral, "No thank you.");
+}
+
+[label,spirit_tree_tele](coord $dest)
+if(map_members = false) {
+    if_close;
+    @you_need_to_be_on_a_members_server_to_use_this_feature;
+}
+~mesbox("You place your hands on the dry tough bark of the spirit tree,|and feel a surge of energy run through your veins.");
+if_close;
+@climb_ladder($dest, true);

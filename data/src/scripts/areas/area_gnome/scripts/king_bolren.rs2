@@ -40,8 +40,112 @@ switch_int(%tree_progress) {
         ~chatplayer(neutral, "Hello Bolren.");
         ~chatnpc(neutral, "The orb is being held at the battlefield north of the maze.");
     case ^tree_retrieved_orb:
+        if(inv_total(inv, orb_of_protection) = 0) {
+            ~chatplayer(neutral, "Hello Bolren.");
+            ~chatnpc(quiz, "Do you have the orb?");   
+            ~chatplayer(sad, "No, I'm afraid not.");
+            ~chatnpc(sad, "Please, we must have the orb if we are to survive.");   
+            return;
+        }
+        ~chatplayer(happy, "I have the orb.");
+        ~chatnpc(sad, "Oh my... The misery, the horror!");
+        ~chatplayer(quiz, "King Bolren, are you OK?");
+        ~chatnpc(sad, "Thank you traveller, but it's too late. We're all doomed.");
+        ~chatplayer(quiz, "What happened?");
+        ~chatnpc(sad, "They came in the night.|I don't know how many, but enough.");
+        ~chatplayer(quiz, "Who?");
+        ~chatnpc(sad, "Khazard troops.|They slaughtered anyone who got in their way.|Women, children, my wife.");
+        ~chatplayer(sad, "I'm sorry.");
+        ~chatnpc(sad, "They took the other orbs,|now we are defenceless.");
+        ~chatplayer(quiz, "Where did they take them?");
+        ~chatnpc(sad, "They headed north of the stronghold.|A warlord carries the orbs.");
+        switch_int(~p_choice2("I will find the warlord and bring back the orbs.", 1, "I'm sorry but I can't help.", 2)) {
+            case 1:
+                ~chatplayer(neutral, "I will find the warlord and bring back the orbs.");
+                ~chatnpc(neutral, "You are brave,|but this task will be tough even for you.|I wish you the best of luck.|Once again you are our only hope.");
+                %tree_progress = ^tree_returned_first_orb;
+                inv_del(inv, orb_of_protection, 1);
+                ~chatnpc(neutral, "I will safeguard this orb|and pray for your safe return.|My assistant will guide you out.");
+                @elkoy_leavemaze_second;
+            case 2:
+                ~chatplayer(neutral, "I'm sorry but I can't help.");
+                ~chatnpc(sad, "I understand, this isn't your battle.");
+        }
+    case ^tree_returned_first_orb:
         ~chatplayer(neutral, "Hello Bolren.");
-        ~chatnpc(quiz, "Do you have the orb?");   
-        ~chatplayer(sad, "No, I'm afraid not.");
-        ~chatnpc(sad, "Please, we must have the orb if we are to survive.");     
+        ~chatnpc(sad, "The orbs are gone,|taken north of the battlefield by a Khazard warlord.|We're all doomed.");  
+    case ^tree_defeated_warlord:
+        ~chatplayer(neutral, "Bolren, I have returned.");
+        ~chatnpc(shock, "You made it back! Do you have the orbs?");
+        if(inv_total(inv, orbs_of_protection)= 0) {
+            ~chatplayer(neutral, "No, I'm afraid not.");
+            ~chatnpc(sad, "Please, we must have the orbs if we are to survive.");
+            return;
+        }
+        ~chatplayer(happy, "I have them here.");
+        ~chatnpc(happy, "Hooray, you're amazing. I didn't think it was possible but you've saved us.");
+        ~chatnpc(happy, "Once the orbs are replaced we will be safe once more. We must begin the ceremony immediately.");
+        ~chatplayer(quiz, "What does the ceremony involve?");
+        ~chatnpc(neutral, "The spirit tree has looked over us for centuries. Now we must pay our respects.");
+        // no varbits yet (this is in the same range as the tracker stuff added in ~2005, so assuming this just works differently)
+        // going to queue the quest finish instead here
+        inv_del(inv, orbs_of_protection, 1);
+        p_stopaction;
+        queue(tree_quest_complete, 0);
+        ~mesbox("The gnomes begin to chant. Meanwhile, King Bolren holds the orbs of protection out in front of him.");
+        if_close;
+        p_walk(0_39_49_46_34);
+        npc_walk(0_39_49_46_33);
+        npc_setmode(none); // no mode because we don't want bolren to start moving
+        facesquare(movecoord(coord, 8, 0, 0));
+        npc_facesquare(movecoord(coord, 8, 0, 0));
+        ~gnome_chant("Su tana.");
+        ~gnome_chant("En tania.");
+        ~gnome_chant("Su tana.");
+        ~gnome_chant("En tania.");
+        if(npc_finduid(~npc_within_distance(coord, king_bolren, 4)) = false) { 
+            return; // should never happen, just switching active npc
+        }
+        npc_anim(midget_seq_199, 20);
+        spotanim_npc(spotanim_79, 20, 124);
+        p_delay(6); 
+        ~mesbox("The orbs of protection come to rest gently in the branches of the ancient spirit tree.");
+        ~chatnpc(happy, "Now at last my people are safe once more.|We can live in peace again.");
+        ~chatplayer(happy, "I'm pleased I could help.");
+        ~chatnpc(neutral, "You are modest brave traveller.");
+        ~chatnpc(happy, "Please, for your efforts take this amulet. It's made from the same sacred stone as the orbs of protection. It will help keep you safe on your journeys.");
+        ~chatplayer(happy, "Thank you King Bolren.");
+        ~chatnpc(happy, "The tree has many other powers, some of which I cannot reveal. As a friend of the gnome people, I can now allow you to use the tree's magic to teleport to other trees grown from related seeds.");
+    case ^tree_complete:
+        ~chatplayer(neutral, "Hello again, Bolren.");
+        ~chatnpc(happy, "Hello there. It's good to see you again.");
+        // dialogue was changed on OSRS recently, guessing mesanims here
+        if(inv_total(inv, gnome_amulet) = 0 & inv_total(bank, gnome_amulet) = 0) {
+            ~chatplayer(sad, "I've lost my amulet.");
+            ~chatnpc(neutral, "Oh dear. Here, take another. We truly are indebted to you.");
+            inv_add(inv, gnome_amulet, 1); // not sure if there was a space check originally, guessing no cause no proof otherwise
+        }
 }
+
+[proc,gnome_chant](string $message)
+npc_findallzone(coord);
+while(npc_findnext = true) {
+    if(npc_type = local_gnome) {
+        npc_facesquare(movecoord(coord, 2, 0, 0));
+        if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
+            npc_say($message);
+            npc_anim(midget_seq_197, 0);
+        }
+    }
+}
+npc_findallzone(movecoord(coord, 0, 0, -8));
+while(npc_findnext = true) {
+    if(npc_type = local_gnome) {
+        npc_facesquare(movecoord(coord, 2, 0, 0));
+        if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
+            npc_say($message);
+            npc_anim(midget_seq_197, 0);
+        }
+    }
+}
+p_delay(1);

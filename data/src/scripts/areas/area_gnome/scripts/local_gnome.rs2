@@ -3,6 +3,17 @@ switch_int(%tree_progress) {
     case ^tree_retrieved_orb:
         ~chatplayer(neutral, "Hello little man.");
         ~chatnpc(happy, "Little man stronger than big man. Hee hee, lardi dee, lardi da.");
+    case ^tree_returned_first_orb:
+        ~chatplayer(neutral, "Hi.");
+        ~chatnpc(happy, "Must save the orbs and kill the Khazard warlord.|That will be fun, hee hee.");
+    case ^tree_defeated_warlord:
+        ~chatplayer(neutral, "Hello gnome.");
+        ~chatnpc(happy, "Soon we're gonna have the sacred ceremony|and boy am I going to party.|Lock up your daughters.|Hee hee.");
+    case ^tree_complete:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(happy, "You're the best!");
+        ~chatplayer(happy, "Thanks.");
+        ~chatnpc(happy, "Well I'm better. Hee hee.");
     case default:
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(happy, "Lardi dee, lardi da.");
