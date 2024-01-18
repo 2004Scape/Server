@@ -29,7 +29,6 @@ module.exports = {
     'plugins': [
         '@typescript-eslint'
     ],
-    'ignorePatterns': ['**/*.test.ts', '**/*.js', 'src/lostcity/*'],
     'rules': {
         'indent': [
             'error',
@@ -75,8 +74,5 @@ module.exports = {
         '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/no-explicit-any': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',
-
-        '@typescript-eslint/explicit-function-return-type': ['error', { 'allowTypedFunctionExpressions': false }],
-        '@typescript-eslint/typedef': ['error', { 'variableDeclaration': true, 'variableDeclarationIgnoreFunction': true, 'propertyDeclaration': true }],
     }
 };
