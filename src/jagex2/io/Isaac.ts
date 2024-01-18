@@ -29,7 +29,7 @@ export default class Isaac {
             h ^= a >>> 9; c += h; a += b;
         }
 
-        for (let i = 0; i < 256; i += 8) {
+        for (let i: number = 0; i < 256; i += 8) {
             a += this.rsl[i];
             b += this.rsl[i + 1];
             c += this.rsl[i + 2];
@@ -115,7 +115,7 @@ export default class Isaac {
 
             this.a += this.mem[(i + 128) & 0xFF];
 
-            let y;
+            let y: number;
             this.mem[i] = y = this.mem[(x >>> 2) & 0xFF] + this.a + this.b;
             this.rsl[i] = this.b = this.mem[((y >>> 8) >>> 2) & 0xFF] + x;
         }
