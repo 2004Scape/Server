@@ -118,8 +118,8 @@ describe('StepValidator', () => {
     test.each(args)('test indoors flag strategy', (size, dirX, dirZ) => {
         const destX = srcX + dirX;
         const destZ = srcZ + dirZ;
-        const outdoorsX = destX + dirX
-        const outdoorsZ = destZ + dirZ
+        const outdoorsX = destX + dirX;
+        const outdoorsZ = destZ + dirZ;
 
         const map = new CollisionFlagMap();
         for (let level = 0; level < 4; level++) {
@@ -150,8 +150,8 @@ describe('StepValidator', () => {
     test.each(args)('test outdoors flag strategy', (size, dirX, dirZ) => {
         const destX = srcX + dirX;
         const destZ = srcZ + dirZ;
-        const indoorsX = destX + dirX
-        const indoorsZ = destZ + dirZ
+        const indoorsX = destX + dirX;
+        const indoorsZ = destZ + dirZ;
 
         const map = new CollisionFlagMap();
         for (let level = 0; level < 4; level++) {
@@ -182,8 +182,8 @@ describe('StepValidator', () => {
     test.each(args)('test line of sight flag strategy loc', (size, dirX, dirZ) => {
         const destX = srcX + dirX;
         const destZ = srcZ + dirZ;
-        const blockedX = destX + dirX
-        const blockedZ = destZ + dirZ
+        const blockedX = destX + dirX;
+        const blockedZ = destZ + dirZ;
 
         const map = new CollisionFlagMap();
         for (let level = 0; level < 4; level++) {
@@ -214,8 +214,8 @@ describe('StepValidator', () => {
     test.each(args)('test line of sight flag strategy player', (size, dirX, dirZ) => {
         const destX = srcX + dirX;
         const destZ = srcZ + dirZ;
-        const blockedX = destX + dirX
-        const blockedZ = destZ + dirZ
+        const blockedX = destX + dirX;
+        const blockedZ = destZ + dirZ;
 
         const map = new CollisionFlagMap();
         for (let level = 0; level < 4; level++) {

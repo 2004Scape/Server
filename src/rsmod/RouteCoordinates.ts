@@ -1,8 +1,8 @@
 export default class RouteCoordinates {
-    private static COORD_MASK: number = 0x3FFF;
-    private static LEVEL_MASK: number = 0x3;
-    private static X_BITS: number = 14;
-    private static LEVEL_BITS: number = 28;
+    private static readonly COORD_MASK: number = 0x3FFF;
+    private static readonly LEVEL_MASK: number = 0x3;
+    private static readonly X_BITS: number = 14;
+    private static readonly LEVEL_BITS: number = 28;
 
     private readonly packed: number;
 
@@ -13,7 +13,7 @@ export default class RouteCoordinates {
     ) {
         this.packed = (z & RouteCoordinates.COORD_MASK) |
             ((x & RouteCoordinates.COORD_MASK) << RouteCoordinates.X_BITS) |
-            ((level & RouteCoordinates.LEVEL_MASK) << RouteCoordinates.LEVEL_BITS)
+            ((level & RouteCoordinates.LEVEL_MASK) << RouteCoordinates.LEVEL_BITS);
     }
 
     get x(): number {

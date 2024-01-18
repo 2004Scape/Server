@@ -12,7 +12,7 @@ export default class JagStore {
         if (createNew && fs.existsSync(`${dir}/main_file_cache.dat`)) {
             fs.unlinkSync(`${dir}/main_file_cache.dat`);
 
-            for (let i = 0; i <= 4; i++) {
+            for (let i: number = 0; i <= 4; i++) {
                 if (fs.existsSync(`${dir}/main_file_cache.idx${i}`)) {
                     fs.unlinkSync(`${dir}/main_file_cache.idx${i}`);
                 }
@@ -21,12 +21,12 @@ export default class JagStore {
 
         this.dat = new RandomAccessFile(`${dir}/main_file_cache.dat`, readOnly);
 
-        for (let i = 0; i <= 4; i++) {
+        for (let i: number = 0; i <= 4; i++) {
             this.idx[i] = new RandomAccessFile(`${dir}/main_file_cache.idx${i}`, readOnly);
         }
     }
 
-    count(index: number) {
+    count(index: number): number {
         if (index < 0 || index > this.idx.length || !this.idx[index]) {
             return 0;
         }
@@ -47,12 +47,12 @@ export default class JagStore {
             return null;
         }
 
-        const idx = this.idx[index];
+        const idx: RandomAccessFile = this.idx[index];
         idx.pos = file * 6;
-        const idxHeader = idx.gPacket(6);
+        const idxHeader: Packet = idx.gPacket(6);
 
-        const size = idxHeader.g3();
-        let sector = idxHeader.g3();
+        const size: number = idxHeader.g3();
+        let sector: number = idxHeader.g3();
         // console.log(`read: index=${index} file=${file} size=${size} sector=${sector}`);
 
         if (size > 2000000) {
@@ -63,24 +63,24 @@ export default class JagStore {
             return null;
         }
 
-        const data = Packet.alloc(size);
-        for (let part = 0; data.pos < data.length; part++) {
+        const data: Packet = Packet.alloc(size);
+        for (let part: number = 0; data.pos < data.length; part++) {
             if (sector === 0) {
                 break;
             }
 
             this.dat.pos = sector * 520;
 
-            let available = size - data.pos;
+            let available: number = size - data.pos;
             if (available > 512) {
                 available = 512;
             }
 
-            const header = this.dat.gPacket(available + 8);
-            const sectorFile = header.g2();
-            const sectorPart = header.g2();
-            const nextSector = header.g3();
-            const sectorIndex = header.g1();
+            const header: Packet = this.dat.gPacket(available + 8);
+            const sectorFile: number = header.g2();
+            const sectorPart: number = header.g2();
+            const nextSector: number = header.g3();
+            const sectorIndex: number = header.g1();
 
             if (file !== sectorFile || part !== sectorPart || index !== sectorIndex - 1) {
                 return null;
@@ -110,12 +110,12 @@ export default class JagStore {
             return false;
         }
 
-        const idx = this.idx[index];
-        let sector = 0;
+        const idx: RandomAccessFile = this.idx[index];
+        let sector: number;
 
         if (overwrite) {
             idx.pos = file * 6;
-            const idxHeader = idx.gPacket(6);
+            const idxHeader: Packet = idx.gPacket(6);
             idxHeader.pos = 3;
             sector = idxHeader.g3();
 
@@ -131,23 +131,23 @@ export default class JagStore {
         }
 
         idx.pos = file * 6;
-        const idxHeader = Packet.alloc(6);
+        const idxHeader: Packet = Packet.alloc(6);
         idxHeader.p3(data.length);
         idxHeader.p3(sector);
         idx.pdata(idxHeader);
         // console.log(`write: index=${index} file=${file} size=${data.length} sector=${sector}`);
 
-        let written = 0;
-        for (let part = 0; written < data.length; part++) {
-            let nextSector = 0;
+        let written: number = 0;
+        for (let part: number = 0; written < data.length; part++) {
+            let nextSector: number = 0;
 
             if (overwrite) {
                 this.dat.pos = sector * 520;
-                const header = this.dat.gPacket(8);
-                const sectorFile = header.g2();
-                const sectorPart = header.g2();
+                const header: Packet = this.dat.gPacket(8);
+                const sectorFile: number = header.g2();
+                const sectorPart: number = header.g2();
                 nextSector = header.g3();
-                const sectorIndex = header.g1();
+                const sectorIndex: number = header.g1();
 
                 if (sectorFile !== file || sectorPart !== part || sectorIndex !== index - 1) {
                     return false;
@@ -176,14 +176,14 @@ export default class JagStore {
             }
 
             this.dat.pos = sector * 520;
-            const header = Packet.alloc(8);
+            const header: Packet = Packet.alloc(8);
             header.p2(file);
             header.p2(part);
             header.p3(nextSector);
             header.p1(index + 1);
             this.dat.pdata(header);
 
-            let available = data.length - written;
+            let available: number = data.length - written;
             if (available > 512) {
                 available = 512;
             }

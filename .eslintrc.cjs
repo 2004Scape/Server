@@ -29,6 +29,7 @@ module.exports = {
     'plugins': [
         '@typescript-eslint'
     ],
+    'ignorePatterns': ['**/*.test.ts', '**/*.js', 'src/lostcity/*'],
     'rules': {
         'indent': [
             'error',
@@ -46,7 +47,7 @@ module.exports = {
 
         /**
          * https://eslint.org/docs/latest/rules/no-constant-condition#checkloops
-         * 
+         *
          * Allows constant conditions in loops but not in if statements
          */
         'no-constant-condition': ['error', { 'checkLoops': false }],
@@ -74,5 +75,8 @@ module.exports = {
         '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/no-explicit-any': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',
+
+        '@typescript-eslint/explicit-function-return-type': ['error', { 'allowTypedFunctionExpressions': false }],
+        '@typescript-eslint/typedef': ['error', { 'variableDeclaration': true, 'variableDeclarationIgnoreFunction': true, 'propertyDeclaration': true }],
     }
 };

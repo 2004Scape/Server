@@ -6,11 +6,11 @@ import RectangleBoundaryUtils from '#rsmod/reach/RectangleBoundaryUtils.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 export default class ReachStrategy {
-    static WALL_STRATEGY: number = 0;
-    static WALL_DECOR_STRATEGY: number = 1;
-    static RECTANGLE_STRATEGY: number = 2;
-    static NO_STRATEGY: number = 3;
-    static RECTANGLE_EXCLUSIVE_STRATEGY: number = 4;
+    static readonly WALL_STRATEGY: number = 0;
+    static readonly WALL_DECOR_STRATEGY: number = 1;
+    static readonly RECTANGLE_STRATEGY: number = 2;
+    static readonly NO_STRATEGY: number = 3;
+    static readonly RECTANGLE_EXCLUSIVE_STRATEGY: number = 4;
 
     static exitStrategy(locShape: number): number {
         if (locShape == -2) {
@@ -45,7 +45,7 @@ export default class ReachStrategy {
         shape: number = -1,
         blockAccessFlags: number = 0
     ): boolean {
-        let exitStrategy = this.exitStrategy(shape);
+        const exitStrategy: number = this.exitStrategy(shape);
         if (exitStrategy != this.RECTANGLE_EXCLUSIVE_STRATEGY && srcX == destX && srcZ == destZ) {
             return true;
         }
@@ -119,10 +119,10 @@ export default class ReachStrategy {
         angle: number = 0,
         blockAccessFlags: number = 0
     ): boolean {
-        const rotatedWidth = RotationUtils.rotate(angle, destWidth, destHeight);
-        const rotatedHeight = RotationUtils.rotate(angle, destHeight, destWidth);
-        const rotatedBlockAccess = RotationUtils.rotateFlags(angle, blockAccessFlags);
-        const collides = RectangleBoundaryUtils.collides(
+        const rotatedWidth: number = RotationUtils.rotate(angle, destWidth, destHeight);
+        const rotatedHeight: number = RotationUtils.rotate(angle, destHeight, destWidth);
+        const rotatedBlockAccess: number = RotationUtils.rotateFlags(angle, blockAccessFlags);
+        const collides: boolean = RectangleBoundaryUtils.collides(
             srcX,
             srcZ,
             destX,
@@ -174,10 +174,10 @@ export default class ReachStrategy {
         angle: number = 0,
         blockAccessFlags: number = 0
     ): boolean {
-        const rotatedWidth = RotationUtils.rotate(angle, destWidth, destHeight);
-        const rotatedHeight = RotationUtils.rotate(angle, destHeight, destWidth);
-        const rotatedBlockAccess = RotationUtils.rotateFlags(angle, blockAccessFlags);
-        const collides = RectangleBoundaryUtils.collides(
+        const rotatedWidth: number = RotationUtils.rotate(angle, destWidth, destHeight);
+        const rotatedHeight: number = RotationUtils.rotate(angle, destHeight, destWidth);
+        const rotatedBlockAccess: number = RotationUtils.rotateFlags(angle, blockAccessFlags);
+        const collides: boolean = RectangleBoundaryUtils.collides(
             srcX,
             srcZ,
             destX,
@@ -306,112 +306,106 @@ export default class ReachStrategy {
         shape: number,
         angle: number
     ): boolean {
-        // Much faster check this way.
-        if (shape != 0 && shape != 2 && shape != 9) {
+        const collisionFlags: number = flags.get(srcX, srcZ, level);
+        if (shape === 0) {
+            if (angle === 0) {
+                if (srcX == destX - 1 && srcZ == destZ) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 1) {
+                if (srcX == destX && srcZ == destZ + 1) {
+                    return true;
+                } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 2) {
+                if (srcX == destX + 1 && srcZ == destZ) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 3) {
+                if (srcX == destX && srcZ == destZ - 1) {
+                    return true;
+                } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        } else if (shape === 2) {
+            if (angle === 0) {
+                if (srcX == destX - 1 && srcZ == destZ) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 1) {
+                if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ == destZ) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 2) {
+                if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ == destZ) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ - 1) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 3) {
+                if (srcX == destX - 1 && srcZ == destZ) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ - 1) {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        } else if (shape === 9) {
+            if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
+                return true;
+            }
             return false;
         }
-        const collisionFlags = flags.get(srcX, srcZ, level);
-        switch (shape) {
-            case 0:
-                switch (angle) {
-                    case 0:
-                        if (srcX == destX - 1 && srcZ == destZ) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 1:
-                        if (srcX == destX && srcZ == destZ + 1) {
-                            return true;
-                        } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 2:
-                        if (srcX == destX + 1 && srcZ == destZ) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 3:
-                        if (srcX == destX && srcZ == destZ - 1) {
-                            return true;
-                        } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                }
-                return false;
-            case 2:
-                switch (angle) {
-                    case 0:
-                        if (srcX == destX - 1 && srcZ == destZ) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 1:
-                        if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ == destZ) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 2:
-                        if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ == destZ) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1) {
-                            return true;
-                        }
-                        return false;
-                    case 3:
-                        if (srcX == destX - 1 && srcZ == destZ) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1) {
-                            return true;
-                        }
-                        return false;
-                }
-                return false;
-            case 9:
-                if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
-                    return true;
-                } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
-                    return true;
-                } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
-                    return true;
-                } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
-                    return true;
-                }
-                return false;
-        }
+        return false;
     }
 
     static reachWallN(
@@ -425,106 +419,21 @@ export default class ReachStrategy {
         shape: number,
         angle: number
     ): boolean {
-        // Much faster check this way.
-        if (shape != 0 && shape != 2 && shape != 9) {
-            return false;
-        }
-        const collisionFlags = flags.get(srcX, srcZ, level);
-        const east = srcX + srcSize - 1;
-        const north = srcZ + srcSize - 1;
-        switch (shape) {
-            case 0:
-                switch (angle) {
-                    case 0:
-                        if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 1:
-                        if ((destX >= srcX && destX <= east) && srcZ == destZ + 1) {
-                            return true;
-                        } else if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 2:
-                        if (srcX == destX + 1 && srcZ <= destZ && north >= destZ) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 3:
-                        if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize) {
-                            return true;
-                        } else if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                }
-                return false;
-            case 2:
-                switch (angle) {
-                    case 0:
-                        if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 1:
-                        if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 2:
-                        if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize) {
-                            return true;
-                        }
-                        return false;
-                    case 3:
-                        if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize) {
-                            return true;
-                        }
-                        return false;
-                }
-                return false;
-            case 9:
-                if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+        const collisionFlags: number = flags.get(srcX, srcZ, level);
+        const east: number = srcX + srcSize - 1;
+        const north: number = srcZ + srcSize - 1;
+        if (shape === 0) {
+            if (angle === 0) {
+                if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
                     return true;
                 } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 1) {
+                if ((destX >= srcX && destX <= east) && srcZ == destZ + 1) {
                     return true;
                 } else if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
                     return true;
@@ -532,7 +441,86 @@ export default class ReachStrategy {
                     return true;
                 }
                 return false;
+            } else if (angle === 2) {
+                if (srcX == destX + 1 && srcZ <= destZ && north >= destZ) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 3) {
+                if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize) {
+                    return true;
+                } else if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        } else if (shape === 2) {
+            if (angle === 0) {
+                if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 1) {
+                if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 2) {
+                if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize) {
+                    return true;
+                }
+                return false;
+            } else if (angle === 3) {
+                if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize) {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        } else if (shape === 9) {
+            if ((destX >= srcX && destX <= east) && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.BLOCK_NORTH) == CollisionFlag.OPEN) {
+                return true;
+            } else if ((destX >= srcX && destX <= east) && srcZ == destZ - srcSize && (collisionFlags & CollisionFlag.BLOCK_SOUTH) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_WEST) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.BLOCK_EAST) == CollisionFlag.OPEN) {
+                return true;
+            }
+            return false;
         }
+        return false;
     }
 
     static reachWallDecor1(
@@ -545,56 +533,51 @@ export default class ReachStrategy {
         shape: number,
         angle: number
     ): boolean {
-        // Faster check.
-        if (shape != 6 && shape != 7 && shape != 8) {
-            return false
-        }
-        const collisionFlags = flags.get(srcX, srcZ, level);
-        switch (shape) {
-            case 6:
-            case 7:
-                switch (this.alteredRotation(angle, shape)) {
-                    case 0:
-                        if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 1:
-                        if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 2:
-                        if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 3:
-                        if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                }
-                return false;
-            case 8:
-                if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
+        const collisionFlags: number = flags.get(srcX, srcZ, level);
+        if (shape === 6 || shape === 7) {
+            const number: number = this.alteredRotation(angle, shape);
+            if (number === 0) {
+                if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
                     return true;
                 } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
                     return true;
-                } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
+                }
+                return false;
+            } else if (number === 1) {
+                if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
                     return true;
-                } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
+                } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
                     return true;
                 }
                 return false;
+            } else if (number === 2) {
+                if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (number === 3) {
+                if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+            }
+            return false;
+        } else if (shape === 8) {
+            if (srcX == destX && srcZ == destZ + 1 && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX && srcZ == destZ - 1 && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX - 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX + 1 && srcZ == destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
+                return true;
+            }
+            return false;
         }
+        return false;
     }
 
     static reachWallDecorN(
@@ -608,58 +591,53 @@ export default class ReachStrategy {
         shape: number,
         angle: number
     ): boolean {
-        // Faster check.
-        if (shape != 6 && shape != 7 && shape != 8) {
-            return false
-        }
-        const collisionFlags = flags.get(srcX, srcZ, level);
-        const east = srcX + srcSize - 1;
-        const north = srcZ + srcSize - 1;
-        switch (shape) {
-            case 6:
-            case 7:
-                switch (this.alteredRotation(angle, shape)) {
-                    case 0:
-                        if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX <= destX && srcZ == destZ - srcSize && east >= destX && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 1:
-                        if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX <= destX && srcZ == destZ - srcSize && east >= destX && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 2:
-                        if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX <= destX && srcZ == destZ + 1 && east >= destX && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                    case 3:
-                        if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
-                            return true;
-                        } else if (srcX <= destX && srcZ == destZ + 1 && east >= destX && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
-                            return true;
-                        }
-                        return false;
-                }
-                return false;
-            case 8:
-                if (srcX <= destX && srcZ == destZ + 1 && east >= destX && (collisionFlags & CollisionFlag.WALL_SOUTH) == 0) {
+        const collisionFlags: number = flags.get(srcX, srcZ, level);
+        const east: number = srcX + srcSize - 1;
+        const north: number = srcZ + srcSize - 1;
+        if (shape === 6 || shape === 7) {
+            const number: number = this.alteredRotation(angle, shape);
+            if (number === 0) {
+                if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
                     return true;
                 } else if (srcX <= destX && srcZ == destZ - srcSize && east >= destX && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
                     return true;
-                } else if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
+                }
+                return false;
+            } else if (number === 1) {
+                if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
                     return true;
-                } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
+                } else if (srcX <= destX && srcZ == destZ - srcSize && east >= destX && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
                     return true;
                 }
                 return false;
+            } else if (number === 2) {
+                if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX <= destX && srcZ == destZ + 1 && east >= destX && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            } else if (number === 3) {
+                if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
+                    return true;
+                } else if (srcX <= destX && srcZ == destZ + 1 && east >= destX && (collisionFlags & CollisionFlag.WALL_SOUTH) == CollisionFlag.OPEN) {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        } else if (shape === 8) {
+            if (srcX <= destX && srcZ == destZ + 1 && east >= destX && (collisionFlags & CollisionFlag.WALL_SOUTH) == 0) {
+                return true;
+            } else if (srcX <= destX && srcZ == destZ - srcSize && east >= destX && (collisionFlags & CollisionFlag.WALL_NORTH) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX - srcSize && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_EAST) == CollisionFlag.OPEN) {
+                return true;
+            } else if (srcX == destX + 1 && srcZ <= destZ && north >= destZ && (collisionFlags & CollisionFlag.WALL_WEST) == CollisionFlag.OPEN) {
+                return true;
+            }
+            return false;
         }
+        return false;
     }
 }

@@ -3,7 +3,7 @@ import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
 
 export function buildCollisionMap(x1: number, z1: number, x2: number, z2: number) {
-    let map = new CollisionFlagMap();
+    const map = new CollisionFlagMap();
     for (let level = 0; level < 4; level++) {
         for (let z = Math.min(z1, z2); z <= Math.max(z1, z2); z++) {
             for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
@@ -15,7 +15,7 @@ export function buildCollisionMap(x1: number, z1: number, x2: number, z2: number
 }
 
 export function buildCollisionMapWithFlag(x1: number, z1: number, x2: number, z2: number, mask: number) {
-    let map = new CollisionFlagMap();
+    const map = new CollisionFlagMap();
     for (let level = 0; level < 4; level++) {
         for (let z = Math.min(z1, z2); z <= Math.max(z1, z2); z++) {
             for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
@@ -144,7 +144,7 @@ describe('PathFinder', () => {
             const objX = 3200, objZ = 3210 + size;
 
             const map = buildCollisionMap(srcX, srcZ, objX, objZ);
-            map.set(srcX, srcZ + 1, 0, CollisionFlag.LOC)
+            map.set(srcX, srcZ + 1, 0, CollisionFlag.LOC);
             const pathFinder = new PathFinder(map);
 
             const route = pathFinder.findPath(0, srcX, srcZ, objX, objZ, size);

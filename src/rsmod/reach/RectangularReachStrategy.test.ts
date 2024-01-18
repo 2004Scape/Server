@@ -54,7 +54,7 @@ describe('RectangularReachStrategy', () => {
         [ 2, 0, 1, CollisionFlag.WALL_SOUTH ],
         [ 3, 1, 0, CollisionFlag.WALL_WEST ],
         [ 3, 0, 1, CollisionFlag.WALL_SOUTH ]
-    ]
+    ];
 
     describe('test wall decor strategy', () => {
         const srcX = 3200;

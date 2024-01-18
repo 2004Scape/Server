@@ -9,7 +9,7 @@ class Normal implements CollisionStrategy {
 
 class Blocked implements CollisionStrategy {
     canMove(tileFlag: number, blockFlag: number): boolean {
-        const flag = blockFlag & ~CollisionFlag.FLOOR;
+        const flag: number = blockFlag & ~CollisionFlag.FLOOR;
         return (tileFlag & flag) == 0 && (tileFlag & CollisionFlag.FLOOR) != CollisionFlag.OPEN;
     }
 }
@@ -40,10 +40,10 @@ class LineOfSight implements CollisionStrategy {
     static BLOCK_ROUTE: number = CollisionFlag.PLAYER;
 
     canMove(tileFlag: number, blockFlag: number): boolean {
-        const movementFlags = (blockFlag & LineOfSight.BLOCK_MOVEMENT) << 9
-        const routeFlags = LineOfSight.BLOCK_ROUTE;
-        const finalBlockFlag = movementFlags | routeFlags;
-        return (tileFlag & finalBlockFlag) == CollisionFlag.OPEN
+        const movementFlags: number = (blockFlag & LineOfSight.BLOCK_MOVEMENT) << 9;
+        const routeFlags: number = LineOfSight.BLOCK_ROUTE;
+        const finalBlockFlag: number = movementFlags | routeFlags;
+        return (tileFlag & finalBlockFlag) == CollisionFlag.OPEN;
     }
 }
 

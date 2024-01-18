@@ -62,7 +62,7 @@ describe('ReachStrategyTest', () => {
                 rot,
                 -2, // Use rectangular excludive strategy
                 blockAccessFlags
-            )
+            );
         };
         
         for (let x = 0; x < width; x++) {
@@ -142,7 +142,7 @@ describe('ReachStrategyTest', () => {
                 rot,
                 -2, // Use rectangular exclusive strategy
                 blockAccessFlags
-            )
+            );
         };
             
         for (let x = 0; x < height; x++) {  // width and height are swapped

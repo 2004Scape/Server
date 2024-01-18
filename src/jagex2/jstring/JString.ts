@@ -1,9 +1,9 @@
-export function toBase37(string) {
+export function toBase37(string: string): bigint {
     string = string.trim();
-    let l = 0n;
+    let l: bigint = 0n;
 
-    for (let i = 0; i < string.length && i < 12; i++) {
-        let c = string.charCodeAt(i);
+    for (let i: number = 0; i < string.length && i < 12; i++) {
+        const c: number = string.charCodeAt(i);
         l *= 37n;
 
         if (c >= 0x41 && c <= 0x5A) { // A-Z
@@ -18,27 +18,23 @@ export function toBase37(string) {
     return l;
 }
 
-const BASE37_LOOKUP = [
+const BASE37_LOOKUP: string[] = [
     '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
     't', 'u', 'v', 'w', 'x', 'y', 'z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 ];
 
-export function fromBase37(value) {
-    if (typeof value !== 'bigint') {
-        value = BigInt(value);
-    }
-
+export function fromBase37(value: bigint): string {
     // >= 37 to the 12th power
     if (value < 0n || value >= 6582952005840035281n) {
         return 'invalid_name';
     }
 
-    let len = 0;
-    let chars = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
-    while (value != 0n) {
-        let l1 = value;
+    let len: number = 0;
+    const chars: string[] = Array(12);
+    while (value !== 0n) {
+        const l1: bigint = value;
         value /= 37n;
         chars[11 - len++] = BASE37_LOOKUP[Number(l1 - value * 37n)];
     }
@@ -46,14 +42,14 @@ export function fromBase37(value) {
     return chars.slice(12 - len).join('');
 }
 
-export function toTitleCase(str) {
-    return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+export function toTitleCase(str: string): string {
+    return str.replace(/\w\S*/g, (txt: string): string => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
-export function toSafeName(name) {
+export function toSafeName(name: string): string {
     return fromBase37(toBase37(name));
 }
 
-export function toDisplayName(name) {
+export function toDisplayName(name: string): string {
     return toTitleCase(toSafeName(name).replaceAll('_', ' '));
 }

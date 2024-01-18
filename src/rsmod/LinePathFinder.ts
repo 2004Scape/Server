@@ -37,7 +37,7 @@ export default class LinePathFinder {
             Line.SIGHT_BLOCKED_NORTH | extraFlag,
             CollisionFlag.LOC | extraFlag,
             true
-        )
+        );
     }
 
     lineOfWalk(
@@ -66,7 +66,7 @@ export default class LinePathFinder {
             Line.WALK_BLOCKED_NORTH | extraFlag,
             CollisionFlag.LOC | extraFlag,
             false
-        )
+        );
     }
 
     rayCast(
@@ -85,43 +85,43 @@ export default class LinePathFinder {
         flagObject: number,
         los: boolean
     ): RayCast {
-        const startX = Line.coordinate(srcX, destX, srcSize);
-        const startZ = Line.coordinate(srcZ, destZ, srcSize);
+        const startX: number = Line.coordinate(srcX, destX, srcSize);
+        const startZ: number = Line.coordinate(srcZ, destZ, srcSize);
 
         if (los && this.flags.isFlagged(startX, startZ, level, flagObject)) {
             return RayCast.FAILED;
         }
 
-        const endX = Line.coordinate(destX, srcX, destWidth);
-        const endZ = Line.coordinate(destZ, srcZ, destHeight);
+        const endX: number = Line.coordinate(destX, srcX, destWidth);
+        const endZ: number = Line.coordinate(destZ, srcZ, destHeight);
 
         if (startX == endX && startZ == endZ) {
             return RayCast.EMPTY_SUCCESS;
         }
 
-        const deltaX = endX - startX;
-        const deltaZ = endZ - startZ;
-        const absoluteDeltaX = Math.abs(deltaX);
-        const absoluteDeltaZ = Math.abs(deltaZ);
+        const deltaX: number = endX - startX;
+        const deltaZ: number = endZ - startZ;
+        const absoluteDeltaX: number = Math.abs(deltaX);
+        const absoluteDeltaZ: number = Math.abs(deltaZ);
 
-        const travelEast = deltaX >= 0;
-        const travelNorth = deltaZ >= 0;
+        const travelEast: boolean = deltaX >= 0;
+        const travelNorth: boolean = deltaZ >= 0;
 
-        let xFlags = travelEast ? flagWest : flagEast;
-        let zFlags = travelNorth ? flagSouth : flagNorth;
+        let xFlags: number = travelEast ? flagWest : flagEast;
+        let zFlags: number = travelNorth ? flagSouth : flagNorth;
 
-        const coordinates = Array<RouteCoordinates>()
+        const coordinates: RouteCoordinates[] = [];
         if (absoluteDeltaX > absoluteDeltaZ) {
-            const offsetX = travelEast ? 1 : -1;
-            const offsetZ = travelNorth ? 0 : -1;
+            const offsetX: number = travelEast ? 1 : -1;
+            const offsetZ: number = travelNorth ? 0 : -1;
 
-            let scaledZ = Line.scaleUp(startZ) + Line.HALF_TILE + offsetZ;
-            const tangent = Line.scaleUp(deltaZ) / absoluteDeltaX;
+            let scaledZ: number = Line.scaleUp(startZ) + Line.HALF_TILE + offsetZ;
+            const tangent: number = Line.scaleUp(deltaZ) / absoluteDeltaX;
 
-            let currX = startX;
+            let currX: number = startX;
             while (currX != endX) {
                 currX += offsetX;
-                const currZ = Line.scaleDown(scaledZ);
+                const currZ: number = Line.scaleDown(scaledZ);
                 if (los && currX == endX && currZ == endZ) {
                     xFlags = (xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (xFlags & ~CollisionFlag.PLAYER);
                 }
@@ -132,7 +132,7 @@ export default class LinePathFinder {
 
                 scaledZ += tangent;
 
-                const nextZ = Line.scaleDown(scaledZ);
+                const nextZ: number = Line.scaleDown(scaledZ);
                 if (nextZ != currZ) {
                     if (los && currX == endX && nextZ == endZ) {
                         zFlags = (zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (zFlags & ~CollisionFlag.PLAYER);
@@ -144,16 +144,16 @@ export default class LinePathFinder {
                 }
             }
         } else {
-            const offsetX = travelEast ? 0 : -1;
-            const offsetZ = travelNorth ? 1 : -1;
+            const offsetX: number = travelEast ? 0 : -1;
+            const offsetZ: number = travelNorth ? 1 : -1;
 
-            let scaledX = Line.scaleUp(startX) + Line.HALF_TILE + offsetX;
-            const tangent = Line.scaleUp(deltaX) / absoluteDeltaZ;
+            let scaledX: number = Line.scaleUp(startX) + Line.HALF_TILE + offsetX;
+            const tangent: number = Line.scaleUp(deltaX) / absoluteDeltaZ;
 
-            let currZ = startZ;
+            let currZ: number = startZ;
             while (currZ != endZ) {
                 currZ += offsetZ;
-                const currX = Line.scaleDown(scaledX);
+                const currX: number = Line.scaleDown(scaledX);
                 if (los && currX == endX && currZ == endZ) {
                     zFlags = (zFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (zFlags & ~CollisionFlag.PLAYER);
                 }
@@ -164,7 +164,7 @@ export default class LinePathFinder {
 
                 scaledX += tangent;
 
-                const nextX = Line.scaleDown(scaledX);
+                const nextX: number = Line.scaleDown(scaledX);
                 if (nextX != currX) {
                     if (los && nextX == endX && currZ == endZ) {
                         xFlags = (xFlags & ~CollisionFlag.LOC_PROJ_BLOCKER) | (xFlags & ~CollisionFlag.PLAYER);
