@@ -66,10 +66,10 @@ param=slashdefence,34
 param=crushdefence,29
 param=magicdefence,-7
 param=rangedefence,33
-param=attack_anim,human_baxe_crush
-param=defend_anim,seq_404
-param=attack_sound,baxe_crush
-param=damagetype,^crush_style
+param=attack_anim,human_spear_crush
+param=defend_anim,human_spear_defend
+param=attack_sound,staff_hit
+param=damagetype,^stab_style
 
 [khazard_warlord]
 name=Khazard warlord

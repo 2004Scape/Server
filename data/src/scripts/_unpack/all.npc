@@ -5805,6 +5805,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_254]
 name=Khazard Guard
@@ -5841,6 +5844,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_255]
 name=Khazard Guard
@@ -5876,6 +5882,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_256]
 name=Khazard Guard
@@ -5912,6 +5921,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_257]
 name=Khazard Guard
