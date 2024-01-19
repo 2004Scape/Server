@@ -2,7 +2,7 @@
 mes("You've already caught this scorpion");
 
 [label,scorpion_sting]
-mes("The scorpion strings you!");
+mes("The scorpion stings you!");
 ~damage_self(3);
 
 [label,catch_scorp](namedobj $next_cage)
@@ -57,7 +57,7 @@ def_coord $loc_coord = loc_coord;
 $x, $z = ~door_open($angle, loc_shape);
 def_coord $dest = $loc_coord;
 sound_synth(door_open, 0, 0); 
-mes("You've found a secret door!");
+mes("You've found a secret door");
 if ($entering = true) {
     if (coord ! $loc_coord) {
         p_teleport($loc_coord);

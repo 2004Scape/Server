@@ -1,0 +1,12 @@
+^tree_not_started = 0
+^tree_started = 1
+^tree_spoken_montai = 2
+^tree_given_logs_montai = 3
+^tree_finding_trackers = 4
+^tree_ballista_fired = 5
+^tree_retrieved_orb = 6
+^tree_returned_first_orb = 7
+^tree_defeated_warlord = 8
+
+^elkoy_entrance_coord = 0_39_49_8_56
+^elkoy_maze_coord = 0_39_49_19_23
