@@ -606,7 +606,7 @@ model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
 
-[npc_479]
+[gnome_troop_white]
 name=Gnome troop
 desc=It's a tree gnome trooper.
 walkanim=midget_walk
@@ -632,8 +632,9 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+category=gnome_troop
 
-[npc_480]
+[gnome_troop_black]
 name=Gnome troop
 desc=It's a tree gnome trooper.
 walkanim=midget_walk
@@ -667,3 +668,4 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+category=gnome_troop

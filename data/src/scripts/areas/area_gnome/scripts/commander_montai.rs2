@@ -71,15 +71,15 @@ switch_int(%tree_progress) {
         ~chatplayer(happy, "Hang in there.");
 }
 
-[ai_timer,commander_montai]
-loc_findallzone(0_39_50_31_5);
-def_coord $projectile_start = 0_39_50_31_5;
-def_coord $dest_coord = movecoord($projectile_start, calc(-5 + random(10)), 0, calc(random (15) + 34));
-def_int $delay = calc(distance($projectile_start, $dest_coord) / 4);
-while (loc_findnext = true) {
-    if(loc_type = loc_2180) {
-        loc_anim(catapult_fire);
-        spotanim_map(spotanim_71, movecoord($projectile_start, calc(-10 + random(10)), 0, calc(random (15) + 34)), 0, calc(distance($projectile_start, $dest_coord) / 4));
-        ~coord_projectile($projectile_start, movecoord($projectile_start, 0, 0, 34), spotanim_70, 50, 2, 15, 25, 21, 64, 10);
-    }
-}
+//[ai_timer,commander_montai]  catapult code, disabled for now, odd bug
+//loc_findallzone(0_39_50_31_5);
+//def_coord $projectile_start = 0_39_50_31_5;
+//def_coord $dest_coord = movecoord($projectile_start, calc(-5 + random(10)), 0, calc(random (15) + 34));
+//def_int $delay = calc(distance($projectile_start, $dest_coord) / 4);
+//while (loc_findnext = true) {
+//    if(loc_type = loc_2180) {
+//        loc_anim(catapult_fire);
+//        spotanim_map(spotanim_71, movecoord($projectile_start, calc(-10 + random(10)), 0, calc(random (15) + 34)), 0, calc(distance($projectile_start, $dest_coord) / 4));
+//        ~coord_projectile($projectile_start, movecoord($projectile_start, 0, 0, 34), spotanim_70, 50, 2, 15, 25, 21, 64, 10);
+//    }
+//}

@@ -33,7 +33,7 @@ if(npc_findhero = true) {
 [queue,queue_defeat_warlord] @defeat_warlord;
 
 [label,defeat_warlord]
-if(%tree_progress ! ^tree_returned_first_orb | %tree_progress = ^tree_defeated_warlord) {
+if(%tree_progress = ^tree_returned_first_orb | %tree_progress = ^tree_defeated_warlord) {
     if(inv_total(inv, orbs_of_protection) > 0 | inv_total(bank, orbs_of_protection) > 0) {
         ~mesbox("As the warlord falls to the ground, a ghostly vapour|floats upwards from his battle-worn armour. Out of sight|you hear a shrill scream in the still air of the valley.");
     } else {

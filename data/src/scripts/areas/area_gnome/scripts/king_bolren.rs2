@@ -2,12 +2,15 @@
 switch_int(%tree_progress) {
     case ^tree_not_started:
         ~chatplayer(neutral, "Hello.");
-        ~chatnpc(happy, "Well hello stranger. My name's Bolren, I'm the king of the tree gnomes.");
-        ~chatnpc(shock, "I'm surprised you made it in, maybe I made the maze too easy.");
+        ~chatnpc(happy, "Well hello stranger.|My name's Bolren, I'm the king of the tree gnomes.");
+        ~chatnpc(shock, "I'm surprised you made it in,|maybe I made the maze too easy.");
         ~chatplayer(neutral, "Maybe.");
         ~chatnpc(sad, "I'm afraid I have more serious concerns at the moment. Very serious.");
-        switch_int(~p_choice2("Can I help at all?", 1, "I'll leave you to it then.", 2)) {
+        switch_int(~p_choice2("I'll leave you to it then.", 1, "Can I help at all?", 2)) {
             case 1:
+                ~chatplayer(bored, "I'll leave you to it then.");
+                ~chatnpc(neutral, "Ok, take care.");
+            case 2:
                 ~chatplayer(quiz, "Can I help at all?");
                 ~chatnpc(happy, "I'm glad you asked.");
                 ~chatnpc(sad, "The truth is my people are in grave danger. We have always been protected by the Spirit Tree. No creature of dark can harm us while its three orbs are in place.");
@@ -16,10 +19,11 @@ switch_int(%tree_progress) {
                 ~chatnpc(sad, "Khazard troops seized the orb.|Now we are completely defenceless.");
                 ~chatplayer(quiz, "How can I help?");
                 ~chatnpc(neutral, "You would be a huge benefit on the battlefield.|If you would go there and try to retrieve the|orb, my people and I will be forever grateful.");
-                switch_int(~p_choice2("Can I help at all?", 1, "I'm sorry but I won't be involved.", 2)) {
+                switch_int(~p_choice2("I would be glad to help.", 1, "I'm sorry but I won't be involved.", 2)) {
                     case 1:
                         ~chatplayer(neutral, "I would be glad to help.");
                         %tree_progress = ^tree_started;
+                        ~send_quest_progress(quest_journal:tree, %tree_progress, ^tree_complete);
                         ~chatnpc(neutral, "Thank you. The battlefield is to the north of the maze. Commander Montai will inform you of their current situation.");
                         ~chatnpc(sad, "That is if he's still alive.");
                         ~chatnpc(neutral, "My assistant shall guide you out. Good luck friend, try your best to return the orb.");
@@ -28,9 +32,6 @@ switch_int(%tree_progress) {
                         ~chatplayer(neutral, "I'm sorry but I won't be involved.");
                         ~chatnpc(neutral, "Ok then, travel safe.");
                 }
-            case 2:
-                ~chatplayer(bored, "I'll leave you to it then.");
-                ~chatnpc(neutral, "Ok, take care.");
         }
     case ^tree_started:
         ~chatplayer(neutral, "Hello Bolren.");
