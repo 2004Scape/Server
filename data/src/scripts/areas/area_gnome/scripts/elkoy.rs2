@@ -127,13 +127,13 @@ switch_int(~p_choice2("Yes please.", 1, "No thanks Elkoy.", 2)) {
 ~chatnpc(sad, "Khazard's men have pillaged the village! They slaughtered many, and took the other orbs in an attempt to lead us out of the maze. When will the misery end?");
 
 [label,elkoy_leavemaze_initial]
-p_telejump(0_39_49_8_55);
+p_telejump(movecoord(^elkoy_entrance_coord, 0, 0, -1));
 if(npc_finduid(~npc_within_distance(coord, elkoy_outmaze, 4)) = true) {
     ~chatnpc(happy, "We're out of the maze now. Please hurry, we must have the orb if we are to survive.");
 }
 
 [label,elkoy_leavemaze_second]
-p_telejump(0_39_49_8_55);
+p_telejump(movecoord(^elkoy_entrance_coord, 0, 0, -1));
 if(npc_finduid(~npc_within_distance(coord, elkoy_outmaze, 4)) = true) {
     ~chatnpc(happy, "Good luck friend.");
 }
