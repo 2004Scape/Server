@@ -23,6 +23,9 @@ loc_del(300);
 loc_add(loc_coord, loc_2145, loc_angle, loc_shape, 300);
 
 [proc,check_restlessghost_spawn]
+if(%priest_progress = ^priest_complete) { // Don't send ghost if the quest is complete
+    return;
+}
 if (npc_finduid(~npc_within_distance(loc_coord, restless_ghost, 4)) = false) {
     npc_add(0_50_49_49_58, restless_ghost, 100);
 }

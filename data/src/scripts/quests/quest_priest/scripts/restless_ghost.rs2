@@ -1,4 +1,8 @@
 [opnpc1,restless_ghost]
+if(%priest_progress = ^priest_complete) {
+    mes("The ghost doesn't appear interested in talking."); 
+    return;
+}
 ~chatplayer(neutral, "Hello ghost, how are you?");
 if (inv_total(worn, amulet_of_ghostspeak) = 0) @priest_ghost_no_amulet;
 switch_int (%priest_progress) {
@@ -42,7 +46,7 @@ switch_int (%priest_progress) {
         ~chatplayer(sad, "Sorry, I can't find it at the moment.");
         ~chatnpc(neutral, "Ah well. Keep on looking.");
         ~chatnpc(neutral, "I'm pretty sure it's somewhere in the tower south west from here. There's a lot of levels to the tower, though. I suppose it might take a little while to find.");
-    case 4:
+    case ^priest_obtained_skull:
         ~chatnpc(neutral, "How are you doing finding my skull?");
         ~chatplayer(happy, "I have found it!");
         ~chatnpc(neutral, "Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, and I will be free!");
