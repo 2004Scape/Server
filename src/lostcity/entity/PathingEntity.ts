@@ -1,6 +1,3 @@
-import ReachStrategy from '#rsmod/reach/ReachStrategy.js';
-import RouteCoordinates from '#rsmod/RouteCoordinates.js';
-
 import World from '#lostcity/engine/World.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
@@ -11,10 +8,10 @@ import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+
 import LocType from '#lostcity/cache/LocType.js';
-import CollisionStrategy from '#rsmod/collision/CollisionStrategy.js';
-import CollisionStrategies from '#rsmod/collision/CollisionStrategies.js';
+
+import { CollisionFlag, CollisionStrategies, CollisionStrategy, ReachStrategy, RouteCoordinates } from '@2004scape/rsmod-pathfinder';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties

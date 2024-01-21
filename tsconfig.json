@@ -15,9 +15,6 @@
       ],
       "#lostcity/*": [
         "src/lostcity/*"
-      ],
-      "#rsmod/*": [
-        "src/rsmod/*"
       ]
     },
     "types": [

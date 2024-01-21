@@ -1,5 +1,4 @@
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import { CollisionFlag, CollisionFlagMap } from '@2004scape/rsmod-pathfinder';
 
 export default class RoofCollider {
     private readonly flags: CollisionFlagMap;

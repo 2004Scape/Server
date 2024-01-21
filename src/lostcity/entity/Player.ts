@@ -4,7 +4,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37, toDisplayName } from '#jagex2/jstring/JString.js';
 
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';

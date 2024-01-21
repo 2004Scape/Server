@@ -2,10 +2,6 @@ import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import StepValidator from '#rsmod/StepValidator.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
@@ -18,11 +14,13 @@ import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 import RoofCollider from '#lostcity/engine/collision/RoofCollider.js';
 import PlayerCollider from '#lostcity/engine/collision/PlayerCollider.js';
 
+// all of this above needs to be refactored into an export ^ for one line imports.
+
 import LocType from '#lostcity/cache/LocType.js';
 
 import Loc from '#lostcity/entity/Loc.js';
-import LineValidator from '#rsmod/LineValidator.js';
-import NaivePathFinder from '#rsmod/NaivePathFinder.js';
+
+import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);

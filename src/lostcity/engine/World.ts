@@ -4,13 +4,6 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37 } from '#jagex2/jstring/JString.js';
 
-import LineValidator from '#rsmod/LineValidator.js';
-import NaivePathFinder from '#rsmod/NaivePathFinder.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import StepValidator from '#rsmod/StepValidator.js';
-
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
@@ -56,6 +49,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import {CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator} from '@2004scape/rsmod-pathfinder';
 
 class World {
     id = Environment.WORLD_ID as number;
