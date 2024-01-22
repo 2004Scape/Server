@@ -585,9 +585,9 @@
 584=cert_bailing_bucket_empty
 585=bailing_bucket_full
 586=cert_bailing_bucket_full
-587=obj_587
-588=obj_588
-589=obj_589
+587=orb_of_protection
+588=orbs_of_protection
+589=gnome_amulet
 590=tinderbox
 591=cert_tinderbox
 592=ashes

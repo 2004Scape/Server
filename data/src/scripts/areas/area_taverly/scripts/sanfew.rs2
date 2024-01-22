@@ -7,18 +7,23 @@ if(%druid_progress = 1) {
 } else if(%druid_progress > 2) {
     @multi2("Have you any more work for me, to help reclaim the circle?", sanfew_more_work, "Actually I don't need to speak to you.", sanfew_dont_need);
 } else if(%druid_progress = 0) {
-    @multi2("I've heard you druids might be albe to teach me herblore.", sanfew_teach_herblore, "Actually I don't need to speak to you.", sanfew_dont_need);
+    @multi2("I've heard you druids might be able to teach me herblore.", sanfew_teach_herblore, "Actually I don't need to speak to you.", sanfew_dont_need);
 }
 
 [label,sanfew_teach_herblore]
-~chatplayer("quiz", "So... I've heard you druids might be able to teach me|herblore...");
-~chatplayer("default", "Herblore eh? You're probably best off talking to|Kaqemeex about that; he's the best herblore teacher we|currently have. I believe at the moment he's at out|stone circle just North of here.");
-~chatplayer("happy", "Thanks.");
+~chatplayer(quiz, "So... I've heard you druids might be able to teach me herblore...");
+~chatnpc(neutral, "Herblore eh? You're probably best off talking to Kaqemeex about that; he's the best herblore teacher we currently have. I believe at the moment he's at out stone circle just North of here.");
+~chatplayer(happy, "Thanks.");
 
 [label,sanfew_dont_need]
-~chatplayer("confused", "Actually, I don't need to speak to you.");
-~chatnpc("neutral", "Well, we all make mistakes sometimes.");
+~chatplayer(confused, "Actually, I don't need to speak to you.");
+~chatnpc(neutral, "Well, we all make mistakes sometimes.");
+if(%druid_progress > 2) { // guess they made a label with the exact same dialogue?
+    mes("Sanfew grunts.");
+} else {
+    mes("Sanfew grunts");
+}
 
 [label,sanfew_more_work]
-~chatplayer("neutral", "Have you any more work for me, to help reclaim the|circle?");
-~chatnpc("neutral", "Well, not right now I don't think young'un. Inf fact, I need to make some preparations myself for the ritual. Rest assured, if I need any more help I will ask you again.");
+~chatplayer(quiz, "Have you any more work for me to help reclaim the stone circle?");
+~chatnpc(neutral, "Well, not right now I don't think young 'un. In fact, I need to make some more preparations myself for the ritual. Rest assured, if I need any more help I will ask you again.");

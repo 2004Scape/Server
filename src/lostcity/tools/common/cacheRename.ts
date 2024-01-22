@@ -10,5 +10,7 @@ if (args.length < 1) {
 }
 
 fs.readdirSync(args[0]).forEach(f => {
-    fs.renameSync(`${args[0]}/${f}`, `${args[0]}/${fromBase37(f)}`);
+    try {
+        fs.renameSync(`${args[0]}/${f}`, `${args[0]}/${fromBase37(f)}`);
+    } catch (err) {}
 });

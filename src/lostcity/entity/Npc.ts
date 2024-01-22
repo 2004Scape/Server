@@ -718,10 +718,10 @@ export default class Npc extends PathingEntity {
             const nearby: Player[] = [];
             for (let x = centerX - 2; x <= centerX + 2; x++) {
                 for (let z = centerZ - 2; z <= centerZ + 2; z++) {
-                    const {players} = World.getZone(x << 3, z << 3, this.level);
+                    const { players } = World.getZone(x << 3, z << 3, this.level);
 
-                    for (let i = 0; i < players.length; i++) {
-                        const player = World.getPlayerByUid(players[i]);
+                    for (const uid of players) {
+                        const player = World.getPlayerByUid(uid);
                         if (!player) {
                             continue;
                         }
