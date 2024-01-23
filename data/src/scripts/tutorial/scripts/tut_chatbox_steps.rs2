@@ -1,0 +1,61 @@
+[label,tutorial_step_1_getting_started]
+~tutorialstep("Getting Started", "To start the tutorial use your left mouse button to click on the RuneScape Guide in this room. He is indicated by a flashing yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
+
+[label,tutorial_step_2_player_controls_spanner]
+if_settabflash(11);
+~tutorialstep("", "Player controls|Please click on the flashing spanner icon found at the bottom right of your screen. This will display your player controls.");
+
+[label,tutorial_step_3_player_controls_left_click]
+~tutorialstep("Player controls", "To start the tutorial use your left-mouse button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
+
+[label,tutorial_step_4_interact_with_scenery]
+hint_coord(2, 0_48_48_25_35, 100);
+~tutorialstep("Interacting with scenery", "You can interact with many items of scenery by simply clicking|on them. Right clicking will also give more options. Feel free to|try it with the things in this room, then click on the door|indicated with the yellow arrow to go through to the next|");
+
+[label,tutorial_step_10_moving_around]
+~tutorialstep("Moving around", "Follow the path to find the next instructor. Clicking on the|ground will walk you to that point. Talk to the survival expert by|the pond to continue the tutorial. Remember you can rotate|the view by pressing the arrow keys.");
+@set_hint_icon_surivial_guide;
+
+[label,tutorial_step_11_view_inventory]
+hint_stop();
+~tutorialstep("Viewing the items that you were given.", "Click on the flashing backpack icon to the right side of the main window to view your inventory. Your inventory is a list of everything you have in your backpack.");
+inv_transmit(inv, inventory:inv);
+if_settab(inventory, ^tab_inventory);
+if_settabflash(^tab_inventory);
+
+[label,tutorial_step_12_cut_tree]
+hint_coord(1, 0_48_48_28_23, 175);
+~tutorialstep("Cut down a tree", "You can click on the backpack icon at any time to view|the items you currently have in your inventory. You will see that you now have an axe in your inventory. Use this to get some logs by clicking on the indicated tree.");
+
+[proc,tutorial_please_wait_woodcutting]
+~tutorialstep("Please wait...", "|Your character is now attempting to cut down the tree. Sit back|for a moment whilst he does all the hard work.");
+
+[label,tutorial_step_13_build_fire]
+~tutorialstep("Building a fire", "Well done - you managed to cut some logs from the tree! Next, use the tinderbox in your inventory to light the logs.|a) First click on the tinderbox to use it.|b) Then click on the logs in your inventory to light them.");
+
+[proc,tutorial_please_wait_firemaking]
+~tutorialstep("Please wait...", "|Your character is now attempting to light the fire.|This should only take a few seconds.");
+
+[proc,tutorial_step_14_you_gained_experience]
+if_settab(skills, ^tab_skills);
+if_settabflash(^tab_skills);
+~tutorialstep("", "You gained some experience.|Click on the flashing bar graph icon near the inventory button|to see your skill abilities.");
+
+[label,tutorial_step_15_view_stats]
+~tutorialstep("These are your stats.", "Here you will see how good your skills are. As you move your|mouse over any of the icons in this panel, you can see the exact amount of experience you have and how much is needed to get to the next level. Speak to Bryanna to continue.");
+@set_hint_icon_surivial_guide;
+
+[label,tutorial_step_16_catch_shrimp]
+~tutorialstep("Catch some Shrimp.", "Click on the fishing spot, indicated by the flashing arrow.|Remember you can check your inventory by clicking the|backpack icon.");
+
+[label,tutorial_please_wait_fishing]
+~tutorialstep("Please wait...", "This should only take a few seconds.|As you gain fishing experience you'll find that there are many|types of fish and many ways to catch them.");
+
+[label,tutorial_step_17_cook_shrimp]
+~tutorialstep("Cooking your shrimp.", "Now you have caught some shrep let's cook it. First light a|fire: Chop down a tree and then use the tinderbox on the logs.|If you've lost your axe or tinderbox Brynna will give you|another.");
+
+[label,tutorial_step_18_burn_shrimp]
+~tutorialstep("Burning your shrimp.", "You have just burnt your first shrimp. This is normal. As you|get more experience in cooking you will burn stuff less. Let's|try cooking, without burning it this time. First catch some|shrimp, then use them on a fire.");
+
+[label,tutorial_step_19_survival_recap]
+~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move on to the next instructor. Click on|the gate shown and follow the path. Remember you can move|the camera with the arrow keys.");

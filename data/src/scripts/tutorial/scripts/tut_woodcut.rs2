@@ -1,0 +1,48 @@
+// Tutorial Island Tree
+[oploc1,loc_3033]
+if (%tutorial_progress < 12) {
+    ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
+    return;
+}
+
+if (%tutorial_progress > 18) {
+    ~mesbox("Perhaps you've done enough woodcutting now.");
+    return;
+}
+
+// check if no space
+// check if no axe
+
+if (%tutorial_progress = 12) {
+    ~tutorial_please_wait_woodcutting;
+    anim(human_woodcutting_bronze_axe, 0);
+    // do sound effect
+    // wait 8 seconds, so my p_delay is wrong
+    p_delay(6);
+    givexp(woodcutting, 250);
+    @tut_advance_woodcutting;
+} else {
+    anim(human_woodcutting_bronze_axe, 0);
+    // do sound effect
+    // wait 8 seconds, so my p_delay is wrong
+    p_delay(6);
+    givexp(woodcutting, 250);
+    @give_logs;
+}
+
+[label,tut_advance_woodcutting]
+hint_stop();
+inv_add(inv, logs, 1);
+~objboxt(logs, "You get some logs.");
+%tutorial_progress = 13;
+@tutorial_step_13_build_fire;
+
+[label,give_logs]
+inv_add(inv, logs, 1);
+~objboxt(logs, "You get some logs.");
+
+[oploc1,loc_3037]
+if (%tutorial_progress < 12) {
+    ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
+    return;
+}

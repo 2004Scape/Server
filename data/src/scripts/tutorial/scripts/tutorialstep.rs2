@@ -32,6 +32,8 @@ if ($lines = 0) {
 }
 if_openchatsticky($interface);
 
+// Updated the split init to match what's shown in this 2006 vid
+// https://youtu.be/Quwc_TfPW8Q?t=33
 [proc,tutorialstep](string $title, string $string)
 if_settext(tutorialstep:title, $title);
 split_init($string, 450, 4, q8, null);

@@ -1,0 +1,49 @@
+[opnpc1,runescape_guide]
+
+switch_int(%tutorial_progress) {
+    case 1: @runescape_guide_1;
+    case 3: @runescape_guide_3;
+    case default: @runescape_guide_return;
+}
+if (%tutorial_progress = 1) {
+
+} else if (%tutorial_progress = 3) {
+
+}
+
+[label,runescape_guide_1]
+if (map_localdev = true) {
+    ~chatnpc("default", "Do you want to skip the tutorial?");
+    def_int $choice = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
+    if ($choice = 1) {
+        %tutorial_progress = ^tutorial_complete;
+        @tutorial_complete;
+    }
+}
+
+~chatnpc(neutral, "Greetings! I see you are a new arrival to this land. My job is to welcome all new visitors. So welcome!");
+~chatnpc(neutral, "You have already learned the first thing needed to succeed in this world: talking to other people!");
+~chatnpc(neutral, "You will find many inhabitants of this world have useful things to say to you. By clicking on them with your mouse you can talk to them.");
+~chatnpc(neutral, "I would also suggest reading through some of the supporting information on the website. There you can find the Knowledge Base, which contains all the additional information you're ever likely to need. It also contains maps and helpful tips to help you on your journey.");
+
+// Todo redo this part it's wrong.
+if_settab(game_options, 11);
+if_settabflash(11);
+~chatnpc(neutral, "You will notice a flashing icon of a spanner; please click on this to continue the tutorial.");
+if_close();
+
+%tutorial_progress = 2;
+@tutorial_step_2_player_controls_spanner;
+
+[label,runescape_guide_3]
+~chatnpc(neutral, "I'm glad you're making progress!");
+~chatnpc(neutral, "To continue the tutorial go through that door over there and speak to your first instructor!");
+if_close();
+
+%tutorial_progress = 4;
+@tutorial_step_4_interact_with_scenery;
+
+[label,runescape_guide_return]
+~chatnpc(neutral, "Welcome back. You have already learnt the first thing needed to succeed in this world: talking to other people!");
+~chatnpc(neutral, "You will find many inhabitants of this world have useful things to say to you. By clicking on them, you can talk to them.");
+~chatnpc(neutral, "To continue the tutorial go through that door over there and speak to your first instructor!");

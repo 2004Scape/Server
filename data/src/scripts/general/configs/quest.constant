@@ -15,7 +15,7 @@
 ^haunted_complete = 3
 ^hunt_complete = 4
 ^drunkmonk_complete = 8
-^tutorial_complete = 5
+^tutorial_complete = 100
 ^vampire_complete = 3
 ^totem_complete = 5
 ^fishingcompo_complete = 5

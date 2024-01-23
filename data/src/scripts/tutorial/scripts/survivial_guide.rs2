@@ -1,0 +1,66 @@
+[opnpc1,npc_943]
+switch_int(%tutorial_progress) {
+    case ^survival_guide_start: @survival_guide_start;
+    case 11: @survival_guide_look_at_menu;
+    case 12, 13: @survival_guide_fire;
+    case 14: @survival_guide_fishing;
+}
+
+[label,survival_guide_start]
+~chatnpc(neutral, "Hello there newcomer. My name is Brynna. My job is|to teach you a few survival tips and tricks. First off|we're going to start with the most basic survival skill of|all; making a fire.");
+~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a @blu@Tinderbox@bla@ and a|@blu@Bronze Axe@bla@!");
+%tutorial_progress = 11;
+@tutorial_step_11_view_inventory;
+
+[label,survival_guide_look_at_menu]
+~chatnpc(neutral, "Hello again. You should take a look at that menu before we continue.");
+
+[label,survival_guide_fire]
+~chatnpc(neutral, "Next up you need to make a fire. First, you'll need to cut down a tree to get some logs.");
+@survival_guide_replace_items;
+
+[label,survival_guide_replace_items]
+if (inv_total(inv, bronze_axe) < 1 & inv_total(inv, tinderbox) < 1) {
+    inv_add(inv, bronze_axe, 1);
+    inv_add(inv, tinderbox, 1);
+    ~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a @dbl@tinderbox@bla@ and a @dbl@bronze axe@bla@!");
+}
+
+if (inv_total(inv, bronze_axe) < 1) {
+    inv_add(inv, bronze_axe, 1);
+    ~objboxt(bronze_axe, "The Survival Guide gives you a @dbl@bronze axe@bla@!");
+}
+
+if (inv_total(inv, tinderbox) < 1) {
+    inv_add(inv, tinderbox, 1);
+    ~objboxt(tinderbox, "The Survival Guide gives you a @dbl@tinderbox@bla@!");
+}
+
+[label,survival_guide_fishing]
+
+
+[label,set_hint_icon_surivial_guide]
+npc_findallzone(0_48_48_30_23);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
+        return;
+    }
+}
+
+npc_findallzone(0_48_48_32_23);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
+        return;
+    }
+}
+
+npc_findallzone(0_48_48_30_25);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
+        return;
+    }
+}
+

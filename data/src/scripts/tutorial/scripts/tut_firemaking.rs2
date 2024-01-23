@@ -1,0 +1,147 @@
+[label,tut_light_logs_ground]
+def_obj $log = obj_type;
+// check level first
+def_int $level = oc_param($log, levelrequire);
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// check if the coord is already occupied by an interactable loc
+// unconfirmed
+if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+// check if they have tinderbox
+if(inv_total(inv, tinderbox) < 0) {
+    mes("You need a tinderbox to light a fire.");
+    return;
+}
+@tut_attempt_light_logs($log);
+
+[label,tut_light_logs_inv](int $slot)
+def_obj $log = inv_getobj(inv, $slot);
+def_int $level = oc_param($log, levelrequire);
+
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// check if the coord is already occupied by an interactable loc
+if (map_blocked(coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+if (~inzone_coord_pair_table(bank_zones, coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+// check if they have tinderbox
+if(inv_total(inv, tinderbox) < 0) {
+    mes("You need a tinderbox to light a fire.");
+    return;
+}
+
+// add obj to ground
+obj_add(coord, $log, 1, ^lootdrop_duration);
+// delete item slot from inv
+inv_delslot(inv, $slot);
+// there should be no p_stopaction here, p_opobj(4) needs to be fixed
+if (%action_delay = map_clock) {
+    // firemaking roll
+    p_delay(5);
+    %action_delay = calc(map_clock + 4);
+    def_coord $fire_coord = obj_coord;
+    // attempt to firemaking each direction
+    // west east south north
+    // if the delay is from opheld, the first p_delay used must be p_delay(1). The next ones must be p_delay(0)
+    ~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log,
+        ~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log,
+            ~tut_firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log,
+                ~tut_firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log, true
+                )
+            )
+        )
+    );
+    // if fully blocked then just light the log and dont move
+    @tut_firemaking_success($fire_coord, $log);
+} else {
+    // stop player movement
+    p_stopaction;
+    p_opobj(4);
+}
+
+[label,tut_attempt_light_logs](obj $log)
+// 4t cycle
+if (%action_delay < map_clock) {
+    // stop player movement
+    p_stopaction;
+    // play anim
+    anim(human_createfire, 0);
+    // play sound
+    sound_synth(tinderbox_strike, 0, 0);
+    // mes
+    if (%tutorial_progress = 13) {
+        ~tutorial_please_wait_firemaking;
+    } else {
+        mes("You attempt to light the logs.");
+    }
+    %action_delay = calc(map_clock + 3);
+    p_opobj(4);
+} else if (%action_delay = map_clock) {
+    // firemaking roll
+    p_delay(5);
+    %action_delay = calc(map_clock + 4);
+    def_coord $fire_coord = obj_coord;
+    // attempt to firemaking each direction
+    // west east south north
+    // if the delay is from opheld, the first p_delay used must be p_delay(1). The next ones must be p_delay(0)
+    ~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log,
+        ~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log,
+            ~tut_firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log,
+                ~tut_firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log, false)
+            )
+        )
+    );
+    // if fully blocked then just light the log and dont move
+    @tut_firemaking_success($fire_coord, $log);
+} else {
+    // stop player movement
+    p_stopaction;
+    p_opobj(4);
+}
+
+[proc,tut_firemaking_move](coord $fire_coord, coord $move_coord, obj $log, boolean $first_from_opheld)(boolean)
+// firemaking length: https://archive.is/zF5hb
+// if player isnt standing on the log anymore, the fire is lit
+def_int $delay = 0;
+if (lineofwalk(coord, $move_coord) = true) {
+    p_teleport($move_coord);
+    //mes("<tostring(map_clock)>: Delay");
+    if ($first_from_opheld = true) {
+        $delay = 1;
+        $first_from_opheld = false;
+    }
+    p_delay($delay);
+}
+if (coord ! $fire_coord) {
+    @tut_firemaking_success($fire_coord, $log);
+}
+return ($first_from_opheld);
+
+[label,tut_firemaking_success](coord $fire_coord, obj $log)
+// delete log
+obj_del();
+givexp(firemaking, oc_param($log, productexp));
+sound_synth(fire_lit, 0, 0);
+facesquare($fire_coord);
+if (%tutorial_progress = 13) {
+    %tutorial_progress = 14;
+    ~tutorial_step_14_you_gained_experience;
+} else {
+    mes("The fire catches and the logs begin to burn.");
+}
+def_int $delay = calc(100 + random(100));
+loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
+world_delay($delay);
+obj_add($fire_coord, ashes, 1, 100);
