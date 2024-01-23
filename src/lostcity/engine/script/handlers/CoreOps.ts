@@ -38,6 +38,11 @@ function jump(state: ScriptState, id: number) {
         throw new Error(`unable to find label ${id}`);
     }
 
+    state.debugFrames[state.debugFp++] = {
+        script: state.script,
+        pc: state.pc
+    };
+
     setupNewScript(state, label);
     state.fp = 0;
     state.frames = [];

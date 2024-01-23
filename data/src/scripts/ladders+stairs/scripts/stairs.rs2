@@ -31,6 +31,8 @@ switch_coord (loc_coord) {
     case 0_49_53_20_43: p_telejump(1_49_53_19_43); // Julia house
     case 0_49_53_41_9: p_telejump(1_49_53_40_9); // Varrock wall
     case 0_49_52_52_61: p_telejump(1_49_53_52_0); // Varrock thief house
+    case 0_49_52_52_27: p_telejump(1_49_52_52_26); // champs guild https://youtu.be/es_xD6jgCbM?t=236
+    case 0_46_50_21_15: p_telejump(1_46_50_24_15); // Rimmington House
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -68,6 +70,8 @@ switch_coord (loc_coord) {
     case 1_49_53_20_43: p_telejump(0_49_53_23_43); // Julia house
     case 1_49_53_41_9: p_telejump(0_49_53_44_9); // Varrock wall
     case 1_49_52_52_62: p_telejump(0_49_52_52_60); // Varrock thief house
+    case 1_49_52_52_27: p_telejump(0_49_52_52_30); // champs guild
+    case 1_46_50_22_15: p_telejump(0_46_50_20_15); // Rimmington House
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -171,8 +175,8 @@ switch_coord (loc_coord) {
     case 0_50_53_37_55: p_telejump(1_50_53_39_55); // Varrock House - level 0
     case 0_45_53_18_36: p_telejump(1_45_53_18_35); // Taverly Sanfew House - level 0
     case 0_47_54_2_59: p_telejump(1_47_54_4_59); // Black Knight's Fortress - level 0
-    case 2_47_54_21_50: p_telejump(3_47_54_21_52); // Black Knight's Fortress - level 2
-    case 2_47_54_2_60: p_telejump(3_47_54_1_60); // Black Knight's Fortress - level 2
+    case 2_47_54_21_50: p_telejump(3_47_54_20_51); // Black Knight's Fortress - level 2
+    case 2_47_54_2_60: p_telejump(3_47_54_2_59); // Black Knight's Fortress - level 2
     case 0_46_52_10_10: p_telejump(1_46_52_12_10); // White Knight's Castle - level 0
     case 1_46_52_16_10: p_telejump(2_46_52_15_11); // White Knight's Castle - level 1
     case 2_46_52_13_10: p_telejump(3_46_52_12_11); // White Knight's Castle - level 1
@@ -192,10 +196,14 @@ switch_coord (loc_coord) {
     case 0_51_61_16_32: p_telejump(1_51_61_18_32); // Rogues Castle - level 0
     case 0_46_52_29_56: p_telejump(1_46_52_28_57); // Falador Shield shop
     case 0_47_52_3_10: p_telejump(1_47_52_3_9); // Falador dwarf place
-    case 0_49_55_8_55: p_telejump(1_49_53_7_56); // Cooking Guild
+    case 0_49_53_8_55: p_telejump(1_49_53_7_56); // Cooking Guild
     case 0_50_54_58_31: p_telejump(1_50_54_58_30); // Varrock church
     case 0_47_50_15_61: p_telejump(1_47_50_17_61); // Port Sarim
     case 0_47_50_18_48: p_telejump(1_47_50_18_47); // Port Sarim
+    case 0_51_49_48_49: p_telejump(1_51_49_50_49); // Al Kharid General Store
+    case 0_45_52_27_6: p_telejump(1_45_52_28_8); // Dark Wizard's Tower - Ground Floor
+    case 1_45_52_27_6: p_telejump(2_45_52_28_8); // Dark Wizard's Tower - First Floor
+    case 0_45_51_51_18: p_telejump(1_45_51_52_17); // Crafting Guild
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -284,6 +292,10 @@ switch_coord (loc_coord) {
     case 3_50_54_58_31: p_telejump(2_50_54_58_30); // Varrock church
     case 1_47_50_16_61: p_telejump(0_47_50_17_61); // Port Sarim
     case 1_47_50_18_48: p_telejump(0_47_50_17_48); // Port Sarim
+    case 1_51_49_49_49: p_telejump(0_51_49_49_48); // Al Kharid General Store
+    case 1_45_52_28_7: p_telejump(0_45_52_28_8); // Dark Wizard's Tower - level 1
+    case 2_45_52_28_7: p_telejump(1_45_52_28_8); // Dark Wizard's Tower - level 2
+    case 1_45_51_52_18: p_telejump(0_45_51_52_17); // Crafting Guild - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -345,6 +357,7 @@ switch_coord (loc_coord) {
     case 0_50_52_30_55: p_telejump(1_50_52_30_54); // Varrock misc house
     case 0_43_49_44_59: p_telejump(1_43_49_44_62); // Brimhaven house
     case 0_43_49_7_60: p_telejump(1_43_49_7_59); // Brimhaven house
+    case 0_42_54_62_54: p_telejump(1_42_54_62_57); // Camelot castle
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -359,6 +372,7 @@ switch_coord (loc_coord) {
     case 1_50_52_30_55: p_telejump(0_50_52_30_58); // Varrock misc house
     case 1_43_49_44_60: p_telejump(0_43_49_44_58); // Brimhaven house
     case 1_43_49_7_60: p_telejump(0_43_49_7_63); // Brimhaven house
+    case 1_42_54_62_55: p_telejump(0_42_54_62_53); // Camelot castle
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -371,4 +385,5 @@ if ($option = 1) {
 }
 
 [label,unhandled_stairs](coord $coord)
-mes("Unhandled stairs: <lc_debugname(loc_type)> at <~coord_tostring($coord)>");
+mes("Unhandled stairs: <lc_debugname(loc_type)> at");
+mes(~coord_tostring($coord)); // split line because its so hard to see the coord

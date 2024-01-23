@@ -1,0 +1,12 @@
+[loc_2541]
+name=Sewer pipe
+desc=An outlet to the sewer.
+model=model_loc_2541
+width=2
+op1=Search
+
+[loc_2542]
+name=Sewer pipe
+desc=An outlet to the sewer.
+model=model_loc_2288
+width=2

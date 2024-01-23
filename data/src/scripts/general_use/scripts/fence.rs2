@@ -1,0 +1,28 @@
+[oploc1,loc_2068]
+def_coord $start = loc_coord;
+def_coord $end = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
+def_int $dir;
+switch_int(loc_angle) {
+    case ^loc_west: $dir = ^exact_west;
+    case ^loc_north: $dir = ^exact_north;
+    case ^loc_east: $dir = ^exact_east;
+    case ^loc_south: $dir = ^exact_south;
+}
+if(~check_axis(coord, loc_coord, loc_angle) = false) {
+    $start = ~movecoord_loc_return(~door_open(loc_angle, loc_shape));
+    $end = loc_coord;
+    switch_int(loc_angle) {
+        case ^loc_west: $dir = ^exact_east;
+        case ^loc_north: $dir = ^exact_south;
+        case ^loc_east: $dir = ^exact_west;
+        case ^loc_south: $dir = ^exact_north;
+    }
+}
+if (coord ! $start) {
+    p_teleport($start);
+    p_delay(1);
+}
+facesquare($end);
+p_delay(0);
+~agility_exactmove(human_walk_fence_north, 0, 2, $start, $end, 0, 76, $dir, true);
+p_teleport($end);

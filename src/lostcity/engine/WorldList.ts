@@ -21,11 +21,20 @@ if (fs.existsSync('data/config/worlds.json')) {
 }
 
 if (Environment.LOCAL_DEV) {
+    let address = (Environment.HTTPS_ENABLED ? 'https://' : 'http://') + Environment.PUBLIC_IP;
+    if (Environment.ADDRESS_SHOWPORT) {
+        if (Environment.HTTPS_ENABLED && (Environment.WEB_PORT != 443 && Environment.WEB_PORT != 80)) {
+            address += ':' + Environment.WEB_PORT;
+        } else if (!Environment.HTTPS_ENABLED && Environment.WEB_PORT != 80) {
+            address += ':' + Environment.WEB_PORT;
+        }
+    }
+
     WorldList.push({
         id: Environment.WORLD_ID,
         region: 'Local Development',
         members: Environment.MEMBERS_WORLD,
-        address: (Environment.HTTPS_CERT ? 'https://' : 'http://') + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT,
+        address,
         portOffset: 0,
         players: 0
     });
@@ -33,12 +42,8 @@ if (Environment.LOCAL_DEV) {
 
 async function refreshWorldList() {
     for (const world of WorldList) {
-        if (!(await LoginClient.count(world.id))) {
-            break;
-        }
-
-        // probably won't update until the next interval, but that's okay, we don't need sub-minute updates...
-        world.players = LoginClient.worldCount.get(world.id) || 0;
+        const login = new LoginClient();
+        world.players = await login.count(world.id);
     }
 }
 

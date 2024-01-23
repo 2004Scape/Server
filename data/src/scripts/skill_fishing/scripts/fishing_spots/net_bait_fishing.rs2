@@ -51,7 +51,7 @@ if (%action_delay = calc(map_clock + 3)) {
 }
 if (%action_delay = map_clock) { 
     if (stat(fishing) >= 15) {
-        ~fish_roll(raw_anchovies, raw_shrimps, null);
+        ~fish_roll(raw_shrimps, raw_anchovies, null);
     } else {
         ~fish_roll(raw_shrimps, null, null);
     }
@@ -72,7 +72,7 @@ if (%action_delay < map_clock) {
 } else
 if (%action_delay = map_clock) {
     if (stat(fishing) >= 15) {
-        ~fish_roll(raw_anchovies, raw_shrimps, null);
+        ~fish_roll(raw_shrimps, raw_anchovies, null);
     } else {
         ~fish_roll(raw_shrimps, null, null);
     }

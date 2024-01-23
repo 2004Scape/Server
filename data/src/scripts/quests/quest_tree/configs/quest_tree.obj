@@ -1,4 +1,4 @@
-[obj_587]
+[orb_of_protection]
 name=Orb of protection
 desc=A strange glowing green orb.
 members=yes
@@ -10,7 +10,7 @@ recol1d=19410
 weight=1kg
 code9=yes
 
-[obj_588]
+[orbs_of_protection]
 name=Orb of protection
 desc=Two strange glowing green orbs.
 members=yes
@@ -23,7 +23,7 @@ recol1d=19410
 weight=2kg
 code9=yes
 
-[obj_589]
+[gnome_amulet]
 name=Gnome amulet
 desc=It's an emerald protection amulet given to me by the gnomes.
 members=yes

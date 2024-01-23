@@ -9,13 +9,13 @@ if ($weapon = null) {
     bas_walk_r(human_walk_r);
     bas_running(human_running);
 } else {
-    bas_readyanim(oc_param($weapon, readyanim));
-    bas_turnonspot(oc_param($weapon, turnonspot));
-    bas_walk_f(oc_param($weapon, walk_f));
-    bas_walk_b(oc_param($weapon, walk_b));
-    bas_walk_l(oc_param($weapon, walk_l));
-    bas_walk_r(oc_param($weapon, walk_r));
-    bas_running(oc_param($weapon, running));
+    bas_readyanim(oc_param($weapon, ready_baseanim));
+    bas_turnonspot(oc_param($weapon, turnonspot_baseanim));
+    bas_walk_f(oc_param($weapon, walk_f_baseanim));
+    bas_walk_b(oc_param($weapon, walk_b_baseanim));
+    bas_walk_l(oc_param($weapon, walk_l_baseanim));
+    bas_walk_r(oc_param($weapon, walk_r_baseanim));
+    bas_running(oc_param($weapon, running_baseanim));
 }
 buildappearance(worn);
 

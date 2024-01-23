@@ -1,0 +1,152 @@
+[crandor_map_part1]
+name=Map part
+desc=An incomplete map piece.
+model=model_2686_obj
+2dxof=44
+2dyof=-21
+2dzoom=1110
+2dyan=80
+2dxan=368
+iop1=Study
+weight=5g
+
+[crandor_map_part2]
+name=Map part
+desc=An incomplete map piece.
+model=model_2689_obj
+2dxof=6
+2dyof=2
+2dzoom=1400
+2dyan=108
+2dxan=420
+iop1=Study
+weight=5g
+
+[crandor_map_part3]
+name=Map part
+desc=An incomplete map piece.
+model=model_2692_obj
+2dxof=-41
+2dyof=37
+2dzoom=1340
+2dyan=168
+2dxan=336
+iop1=Study
+weight=5g
+
+[crandor_map]
+name=Crandor map
+desc=A map to Crandor.
+model=model_2497_obj
+2dyof=-1
+2dzoom=2090
+2dyan=1688
+2dxan=312
+iop1=Study
+weight=15g
+
+[nails]
+name=Nails
+desc=Keeps things in place fairly permanently.
+cost=3
+model=model_2580_obj
+stackable=yes
+2dxof=3
+2dyof=4
+2dzoom=650
+2dyan=1984
+2dxan=308
+weight=5g
+category=category_74
+
+[maze_key]
+name=Maze key
+desc=A key to Melzars' Maze.
+cost=1
+model=model_2372_obj
+recol1s=8128
+recol1d=61
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+
+[maze_key_red]
+name=Key
+desc=A red key.
+model=model_2372_obj
+recol1s=8128
+recol1d=960
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+
+[maze_key_orange]
+name=Key
+desc=An orange key.
+model=model_2372_obj
+recol1s=8128
+recol1d=6080
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+
+[maze_key_yellow]
+name=Key
+desc=A yellow key.
+model=model_2372_obj
+recol1s=8128
+recol1d=11200
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+
+[maze_key_blue]
+name=Key
+desc=A blue key.
+model=model_2372_obj
+recol1s=8128
+recol1d=43968
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+
+[maze_key_magenta]
+name=Key
+desc=A magenta key.
+model=model_2372_obj
+recol1s=8128
+recol1d=55232
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g
+
+[maze_key_green]
+name=Key
+desc=A green key.
+model=model_2372_obj
+recol1s=8128
+recol1d=22313
+2dxof=-3
+2dyof=5
+2dzoom=700
+2dyan=20
+2dxan=328
+weight=10g

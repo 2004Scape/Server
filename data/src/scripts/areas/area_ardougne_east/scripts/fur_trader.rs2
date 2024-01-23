@@ -1,4 +1,7 @@
 [opnpc1,fur_trader]
+if (map_clock < %last_stolen_from_stall_fur) {
+    @stall_owner_alert_guards;
+}
 ~chatnpc("default", "Would you like to trade in fur?");
 
 def_int $option = ~p_choice2("Yes please.", 1, "No thanks.", 2);

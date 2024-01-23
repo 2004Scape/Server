@@ -40,4 +40,4 @@ param=attackrate,5
 param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_blunt_defend
 param=crush_sound,baxe_crush
-param=readyanim,human_staffready
+param=ready_baseanim,human_staffready

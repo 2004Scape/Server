@@ -1,7 +1,15 @@
-[opnpc1,king_roald] // copying rsc logic here, no dialogue without both shield pieces or the certificate
+[opnpc1,king_roald] @roald_dialogue;
+[opnpcu,king_roald]
+if(last_useitem = arravcert_scroll) {
+    @roald_dialogue;
+}
+@nothing_interesting_happens;
+
+// copying rsc logic here, no dialogue without both shield pieces or the certificate
+[label,roald_dialogue]
 ~chatplayer(happy, "Greetings, your majesty.");
 if(inv_total(inv, arravcert_scroll) > 0) {
-    ~chatplayer(happy, "Your majesty, I have come to claim the reward for the return of the Shield Of Arrav.");
+    ~chatplayer(happy, "Your majesty.|I have come to claim the reward|for the return of the Shield Of Arrav.");
     if(%phoenixgang_progress < ^phoenixgang_joined & %blackarmgang_progress < ^blackarmgang_joined) {
         ~chatnpc(confused, "The name on this certificate isn't yours!|I can't give you the reward|unless you do the quest yourself!");
         return;
@@ -26,7 +34,6 @@ if(inv_total(inv, arravshield1) > 0 & inv_total(inv, arravshield2) > 0) {
     ~chatnpc(neutral, "If you get the authenticity of the shield verified|by the curator at the museum|and then return here with authentication,|I will grant you your reward.");
     return;
 }
-
 ~chatnpc(neutral, "Do you have anything of importance to say?");
 ~chatplayer(neutral, "...Not really.");
 ~chatnpc(neutral, "You will have to excuse me, then.|I am very busy|as I have a kingdom to run!");

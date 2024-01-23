@@ -31,8 +31,16 @@
       }
  
       canvas {
+        touch-action: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
         outline: none;
-        -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        z-index: -1;
       }
 
       html:-webkit-full-screen {
@@ -132,7 +140,9 @@
   </head>
   <body bgcolor="black" text="white" link="#90c040" alink="#90c040" vlink="#90c040" style="margin: 0" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
     <center>
-      <canvas id="game" width="789" height="532"></canvas><br />
+      <canvas id="game" width="789" height="532">
+        This browser is not capable of running the Modern Web Client. Please use one of the other web options or download the <a href="/downloads" target="_blank" rel="noreferrer noopener">Desktop Client</a>.
+      </canvas><br />
       <a href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> | 
       <a href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a>
     </center>

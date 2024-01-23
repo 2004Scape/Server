@@ -1,0 +1,102 @@
+// death
+[ai_queue3,elvarg](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+// finish dragon slayer quest
+// this is currently 1t too slow for some reason:
+// https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=222
+if (%dragon_progress < ^dragon_complete) {
+    queue(dragon_complete, 0);
+}
+
+
+//data is only from about 50 hits
+[ai_queue1,elvarg](int $arg)
+if (finduid(%npc_attacking_uid) = false) {
+    return;
+}
+// flinch
+// set npc to ap if its out of combat
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    npc_setmode(applayer2);
+    return;
+}
+npc_setmode(opplayer2);
+
+[ai_applayer2,elvarg]
+//mes("<tostring(map_clock)>: Ap");
+if (%npc_action_delay > map_clock) {
+    return;
+}
+// seems like 2/3 chance to dragon fire if ap.
+if (random(3) = 0) {
+    npc_setmode(opplayer2);
+}
+~elvarg_dragon_fire;
+
+
+[ai_opplayer2,elvarg]
+//mes("<tostring(map_clock)>: Op");
+if (%npc_action_delay > map_clock) {
+    return;
+}
+// seems like 2/3 chance to melee if op.
+if (random(3) = 0) {
+    npc_setmode(applayer2);
+}
+~npc_default_attack;
+
+
+[proc,elvarg_dragon_fire]
+if_close;
+spotanim_npc(spotanim_1, 92, 0);
+npc_anim(dragon_firebreath_middle_attack, 0);
+sound_synth(sound_22, 0, 30);
+%npc_action_delay = add(map_clock, 5);
+
+def_int $attack_roll = ~npc_melee_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+
+// damage player
+def_int $maxhit = ~elvarg_max_hit;
+def_int $damage = 0;
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+}
+queue(damage_player, 0, $damage);
+queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+%npc_action_delay = add(map_clock, 4);
+%lastcombat = map_clock;
+
+
+// proc is used when the player has dragon fire shiled, prot magic, or antifire potion
+[proc,elvarg_max_hit]()(int)
+def_int $maxhit = 70;
+if (inv_total(worn, dragonfire_shield) > 0) {
+    // https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=169
+    mes("Your shield absorbs most of the dragon fire!");
+    $maxhit = sub($maxhit, 60);
+    if (%prayer_protectfrommagic = ^true) {
+        $maxhit = sub($maxhit, 3);
+        // https://youtu.be/lSV2whAirvY?t=41
+        mes("Your prayers resist some of the dragon fire!");
+    }
+    if (%antifire = ^true) {
+        $maxhit = sub($maxhit, 3);
+        // guess based off this https://youtu.be/UXNFe3FeDgg?t=15
+        mes("Your potion protects you from the heat of the dragon fire!");
+    }
+} else {
+    if (%prayer_protectfrommagic = ^true) {
+        $maxhit = sub($maxhit, 15);
+    }
+    if (%antifire = ^true) {
+        $maxhit = sub($maxhit, 15);
+    }
+}
+return($maxhit);

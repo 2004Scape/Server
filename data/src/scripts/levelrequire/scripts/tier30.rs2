@@ -1,0 +1,50 @@
+// Melee
+[opheld2,adamant_dagger] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_dagger_p] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_axe] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_pickaxe] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_mace] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_sword] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_scimitar] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_longsword] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_warhammer] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_battleaxe] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_spear] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_spear_p] @levelrequire_attack(30, last_slot);
+[opheld2,adamant_2h_sword] @levelrequire_attack(30, last_slot);
+
+[opheld2,adamant_dart] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_dart_p] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_knife] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_knife_p] @levelrequire_ranged(30, last_slot);
+[opheld2,adamant_thrownaxe] @levelrequire_ranged(30, last_slot);
+
+[opheld2,adamant_med_helm] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_full_helm] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_sq_shield] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_kiteshield] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platelegs] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_plateskirt] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_chainbody] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platebody] @levelrequire_defence(30, last_slot);
+
+[opheld2,adamant_platebody_t] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platelegs_t] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_full_helm_t] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_kiteshield_t] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platebody_g] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platelegs_g] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_full_helm_g] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_kiteshield_g] @levelrequire_defence(30, last_slot);
+
+// Ranged
+[opheld2,maple_longbow] @levelrequire_ranged(30, last_slot);
+[opheld2,maple_shortbow] @levelrequire_ranged(30, last_slot);
+[opheld2,ogre_bow] @levelrequire_ranged(30, last_slot);
+
+// Magic
+[opheld2,battlestaff] @levelrequire_magic_and_attack(30, 30, last_slot);
+[opheld2,air_battlestaff] @levelrequire_magic_and_attack(30, 30, last_slot);
+[opheld2,water_battlestaff] @levelrequire_magic_and_attack(30, 30, last_slot);
+[opheld2,earth_battlestaff] @levelrequire_magic_and_attack(30, 30, last_slot);
+[opheld2,fire_battlestaff] @levelrequire_magic_and_attack(30, 30, last_slot);

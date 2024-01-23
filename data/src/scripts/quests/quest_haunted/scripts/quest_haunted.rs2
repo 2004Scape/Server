@@ -70,7 +70,7 @@ p_teleport($start_coord);
 if($dist > 0) {
     p_delay(distance($player_coord, $start_coord));
 }
-~open_and_close_door(loc_1532, loc_coord, loc_angle, loc_shape, $locked, true);
+~open_and_close_door(loc_1532, $locked, true);
 
 [oploc1,loc_153]
 if(%manor_fountain_poisoned = 1) {
@@ -202,19 +202,16 @@ if((loc_type = loc_137 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_
     }
     p_teleport($start_coord);
     p_delay(distance($player_coord, $start_coord));
-    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, $entering, false);
+    ~open_and_close_door(loc_1535, $entering, false);
     return;
 }
 mes("This door is locked.");
 sound_synth(locked, 0, 0);
 
 [proc,change_ernest]
-npc_findallzone(coord);
-while (npc_findnext = true) {
-    if (npc_type = ernest_chicken) {
-        npc_changetype(ernest_human);
-        npc_settimer(100);
-    }
+if(npc_finduid(~npc_within_distance(coord, ernest_chicken, 8)) = true) {
+    npc_changetype(ernest_human);
+    npc_settimer(100);
 }
 
 [ai_timer,ernest_human]
@@ -222,5 +219,5 @@ npc_changetype(ernest_chicken);
 
 [queue,haunted_quest_complete]
 %haunted_progress = ^haunted_complete;
-~send_quest_complete(quest_journal:haunted, feather, 250, 4, "You have completed the\\nErnest The Chicken Quest!");
+~send_quest_complete(quest_journal:haunted, feather, 250, ^haunted_questpoints, "You have completed the\\nErnest The Chicken Quest!");
 inv_add(inv, coins, 300);

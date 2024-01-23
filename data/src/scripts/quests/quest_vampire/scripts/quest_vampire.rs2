@@ -29,4 +29,4 @@ npc_setmode(opplayer2);
 [queue,quest_vampire_complete]
 givexp(attack, 48250);
 ~quest_vampire_set_progress(^vampire_complete);
-~send_quest_complete(quest_journal:vampire, stake, 220, 3, "You have completed the\\nVampire Slayer Quest!");
+~send_quest_complete(quest_journal:vampire, stake, 250, ^vampire_questpoints, "You have completed the\\nVampire Slayer Quest!");

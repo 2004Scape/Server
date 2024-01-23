@@ -3,6 +3,7 @@
 if (distance(coord, 0_46_52_55_55) <= 1) {
     @hunt_dig;
 }
+// Everything else
 anim(human_dig, 0);
 // Treasure Trails
 if(~trail_hasclue_inv = true) {

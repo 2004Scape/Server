@@ -22,7 +22,10 @@ switch_obj (last_useitem)
 
 
 [label,make_softclay](obj $water_source)
+// https://youtu.be/48JsDRNXWAc?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=240
+/// clay works the same as rsc
 def_namedobj $empty_source = oc_param($water_source, changesto);
+mes("You mix the clay and water.");
 inv_del(inv, clay, 1);
 //delete water source
 inv_del(inv, oc_param($empty_source, changesto), 1);
@@ -30,6 +33,8 @@ inv_del(inv, oc_param($empty_source, changesto), 1);
 inv_add(inv, $empty_source, 1);
 //add soft clay
 inv_add(inv, soft_clay, 1);
+p_delay(2); // 2 ticks
+mes("You now have some soft workable clay.");
 
 [label,craft_pottery_interface] 
 def_namedobj $choice = ~obj_choice3(

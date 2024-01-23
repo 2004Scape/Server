@@ -1,0 +1,31 @@
+// Dragon slayer was reworked in 2007, but some of the dialogue between rsc and 
+// osrs are similar. A good chunk of dialogue choices are speculation based off
+// of micro-sized pieces of evidence. The dialogue is essentially rsc dialogue with
+// some slight adjustments that align with old guides/videos.
+// some sources i used:
+// https://web.archive.org/web/20060910111257/http://www.runeweb.net/index.php?page=rs2-quest-dragonslay
+// https://web.archive.org/web/20060110090813/http://runescape.salmoneus.net/quests/DragonSlayer.html
+// https://web.archive.org/web/20050301055103/http://runevillage.com/quest2DragonSlayer.php
+// https://web.archive.org/web/20051104084237/http://www.nomadgaming.com/index.php?page=rs2_dragonslayer (has some partially transcribed dialogue)
+// https://web.archive.org/web/20050208000721/http://rscb.sitesled.com/
+// https://web.archive.org/web/20060828222012/http://www.trillionareguild.com/runescape/dragon.php
+// https://web.archive.org/web/20051202151118/http://runehq.com/RHQQuestsView.php?id=00146
+// https://web.archive.org/web/20051104235547/http://www.tip.it/runescape/index.php?rs2quest_id=21
+
+// rsc sources:
+// https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/npcs/varrock/Guildmaster.java
+// https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/quests/free/DragonSlayer.java
+// https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/npcs/barbarian/Oracle.java
+
+// osrs dialogue:
+// https://oldschool.runescape.wiki/w/Transcript:Dragon_Slayer_I
+
+// youtube videos:
+// https://youtube.com/playlist?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&si=OBw8ZF5_Oz5oKwKK
+
+[queue,dragon_complete]
+p_teleport(0_44_150_30_36);
+%dragon_progress = ^dragon_complete;
+givexp(strength, 186500);
+givexp(defence, 186500);
+~send_quest_complete(quest_journal:dragon, rune_platebody, 250, ^dragon_complete, "You have completed the\\nDragon Slayer Quest!");

@@ -1,0 +1,6 @@
+[wilderness_zones]
+table=coord_pair_table
+// main wilderness
+data=coord_pair,0_46_55_0_0,0_52_99_63_63
+// edgeville dungeon wildy
+data=coord_pair,0_46_155_0_0,0_52_199_63_63

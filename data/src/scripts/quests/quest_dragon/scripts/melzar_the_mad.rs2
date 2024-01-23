@@ -1,0 +1,107 @@
+// auto retaliate
+[ai_queue1,melzar](int $arg)
+if (finduid(%npc_attacking_uid) = false) {
+    return;
+}
+// flinch
+// set npc to ap if its out of combat
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    npc_setmode(applayer2);
+    return;
+}
+npc_setmode(opplayer2);
+
+
+// his ap attacks dont have the curse spell. It is replaced with the zap spell
+[ai_applayer2,melzar]
+~melzar_say_random_message;
+if (%npc_action_delay > map_clock) {
+    return;
+}
+// data based off of 200 or so attacks
+def_int $random_attack = random(128);
+// mes("Ap");
+
+// chances seem different for ap attacks.
+// need to further analyze his attack chances
+if ($random_attack < 8 & stat(strength) >= stat_base(strength)) { // dont cast if player's stats are reduced already
+    ~npc_cast_spell(^weaken, 4);
+} else if ($random_attack < 16) {
+    ~npc_cast_spell(^fire_strike, 4);
+} else if ($random_attack < 24) {
+    ~npc_cabbage_attack;
+} else if ($random_attack < 32) { // this seems to be ap only, so pretty much only happens when melzar gets auto retal'd
+    ~npc_zap_attack;
+} else {
+    npc_setmode(opplayer2);
+}
+
+
+[ai_opplayer2,melzar]
+~melzar_say_random_message;
+if (%npc_action_delay > map_clock) {
+    return;
+}
+// mes("Op");
+// data based off of 200 or so attacks
+// need to further analyze his attack chances
+def_int $random_attack = random(128);
+if ($random_attack < 20 & stat(strength) >= stat_base(strength)) { // dont cast if player's stats are reduced already
+    ~npc_cast_spell(^weaken, 4);
+} else if ($random_attack < 40 & stat(defence) >= stat_base(defence)) { // dont cast if player's stats are reduced already
+    ~npc_cast_spell(^curse, 4);
+} else if ($random_attack < 60) {
+    ~npc_cast_spell(^fire_strike, 4);
+} else if ($random_attack < 80) {
+    ~npc_cabbage_attack;
+} else {
+    ~npc_default_attack;
+}
+
+
+[proc,npc_cabbage_attack]
+if_close;
+// not sure if its line of sight or line of walk
+def_coord $cabbage_coord = ~coord_lineofwalk_radius(npc_coord, 7);
+if ($cabbage_coord = npc_coord) { // cant spawn cabbage on top of melzar. Unsure if they do it this way or ~coord_lineofwalk_radius should skip npc_coord's
+    ~npc_cabbage_attack;
+    return;
+}
+npc_anim(seq_710, 0);
+spotanim_npc(spotanim_177, 92, 0);
+%npc_action_delay = calc(map_clock + 5);
+world_delay(2); // delay cabbage spawn by 2 ticks
+~combat_clearqueue; // todo figure out if this is actually what happens. Could be npc delay? could be p_stopaction?
+obj_add($cabbage_coord, cabbage, 1, 100);
+spotanim_map(spotanim_86, $cabbage_coord, 124, 0);
+
+[proc,npc_zap_attack]
+if_close;
+
+npc_anim(seq_707, 0);
+spotanim_npc(spotanim_82, 92, 0);
+sound_synth(zap, 0, 0);
+
+def_int $damage = 0;
+if (~npc_player_hit_roll(^magic_style) = true) {
+    // i havent really see any low numbers for this attack in osrs. can only get the attack by flinching melzar
+    // max ive seen is a 6
+    $damage = randominc(6);
+}
+if ($damage > 0) {
+    queue(damage_player, 0, $damage);
+    queue(playerhit_n_retaliate, 0, npc_uid);
+}
+
+[proc,melzar_say_random_message]
+def_int $random_say = random(20);
+// seems like 1/5 chance?
+switch_int ($random_say) {
+    // this puncuation is correct. old vids show it like this
+    // https://youtu.be/tmPf68hogzw?t=258
+    case 0 : npc_say("Feel the wrath of my feet!");
+    case 1 : npc_say("Let me drink my tea in peace!");
+    case 2 : npc_say("By the power of custard!");
+    case 3 : npc_say("Leave me alone, I need to feed my pet rock!");
+}

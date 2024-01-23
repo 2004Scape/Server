@@ -13,9 +13,7 @@ if(loc_coord = $end_pipe_coord) {
     $end_pipe_coord = 0_40_148_16_34;
     $start = 0_40_148_12_34;
 }
-def_int $delay_time = distance(coord, $start);
-p_walk($start);
-p_delay($delay_time);
+~forcewalk($start);
 if(%yanille_obstacle_pipe_used >= map_clock) {
     mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
     return;
@@ -58,7 +56,7 @@ if(%yanille_ledge_used >= map_clock) {
     return;
 }
 %yanille_ledge_used = calc(map_clock + 5);
-mes("<tostring(%yanille_ledge_used)>, <tostring(map_clock)>");
+// mes("<tostring(%yanille_ledge_used)>, <tostring(map_clock)>");
 anim($start_seq, 0);
 p_delay(0);
 mes("You put your foot on the ledge and try to edge across...");

@@ -48,4 +48,45 @@ model5=model_170_idk
 model6=model_176_idk
 model7=model_265_obj_wear
 model8=model_202_obj_wear
-// TODO
+param=damagetype,2
+respawnrate=60
+// hitpoints from: https://web.archive.org/web/20050306000545/http://www.tip.it/runescape/index.php?rs2monster_id=379
+hitpoints=34
+// stats are from melzar, they line up perfectly with vislevel
+attack=37
+strength=37
+defence=34
+magic=40
+
+[imp_grayzag]
+name=Imp
+desc=A vicious little imp.
+walkanim=imp_walk
+readyanim=imp_ready
+op2=Attack
+vislevel=3
+recol1s=926
+recol1d=906
+recol2s=937
+recol2d=906
+recol3s=4550
+recol3d=555
+recol4s=18316
+recol4d=555
+model1=model_2887_npc
+hitpoints=9
+param=attackbonus,-42
+param=strengthbonus,-37
+param=stabdefence,-42
+param=slashdefence,-42
+param=crushdefence,-42
+param=magicdefence,-42
+param=rangedefence,-42
+param=damagetype,^stab_style
+param=attack_anim,imp_attack
+param=defend_anim,imp_block
+param=death_anim,imp_death
+param=attack_sound,imp_attack
+param=defend_sound,imp_hit
+param=death_sound,imp_death
+param=death_drop,ashes

@@ -1,66 +1,82 @@
 [stabattack]
 type=int
 default=0
+autodisable=yes
 
 [slashattack]
 type=int
 default=0
+autodisable=yes
 
 [crushattack]
 type=int
 default=0
+autodisable=yes
 
 [magicattack]
 type=int
 default=0
+autodisable=yes
 
 [rangeattack]
 type=int
 default=0
+autodisable=yes
 
 [stabdefence]
 type=int
 default=0
+autodisable=yes
 
 [slashdefence]
 type=int
 default=0
+autodisable=yes
 
 [crushdefence]
 type=int
 default=0
+autodisable=yes
 
 [magicdefence]
 type=int
 default=0
+autodisable=yes
 
 [rangedefence]
 type=int
 default=0
+autodisable=yes
 
 [strengthbonus]
 type=int
 default=0
+autodisable=yes
 
 [attackbonus]
 type=int
 default=0
+autodisable=yes
 
 [prayerbonus]
 type=int
 default=0
+autodisable=yes
 
 [rangebonus]
 type=int
 default=0
+autodisable=yes
 
 [attackrange]
 type=int
 default=0
+autodisable=yes
 
 [attackrate]
 type=int
 default=4
+autodisable=yes
 
 [levelrequire]
 type=int
@@ -69,6 +85,7 @@ default=0
 [stabattack_anim]
 type=seq
 default=human_unarmedpunch
+autodisable=yes
 
 [stab_sound]
 type=synth
@@ -77,6 +94,7 @@ default=null
 [slashattack_anim]
 type=seq
 default=human_unarmedpunch
+autodisable=yes
 
 [slash_sound]
 type=synth
@@ -85,6 +103,7 @@ default=null
 [crushattack_anim]
 type=seq
 default=human_unarmedkick
+autodisable=yes
 
 [crush_sound]
 type=synth
@@ -93,10 +112,12 @@ default=null
 [defend_anim]
 type=seq
 default=human_unarmedblock
+autodisable=yes
 
 [rangeattack_anim]
 type=seq
 default=human_unarmedpunch
+autodisable=yes
 
 [rangeattack_sound]
 type=synth
@@ -111,5 +132,9 @@ type=spotanim
 default=null
 
 [undead]
+type=int
+default=0
+
+[zamorakitem]
 type=int
 default=0

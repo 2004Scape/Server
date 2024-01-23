@@ -4,7 +4,7 @@ data=loc,chest_10_coins
 data=level,13
 data=experience,78
 data=respawn_ticks,5
-data=loot,coins,10,10,128,128
+data=loot,coins,10,10,128
 
 [trapped_chest_chest_nature_rune]
 table=trapped_chest
@@ -12,8 +12,8 @@ data=loc,chest_nature_rune
 data=level,28
 data=experience,250
 data=respawn_ticks,13
-data=loot,naturerune,1,1,128,128
-data=loot,coins,3,3,128,128
+data=loot,naturerune,1,1,128
+data=loot,coins,3,3,128
 
 [trapped_chest_chest_50_coins]
 table=trapped_chest
@@ -21,7 +21,7 @@ data=loc,chest_50_coins
 data=level,43
 data=experience,1250
 data=respawn_ticks,75
-data=loot,coins,50,50,128,128
+data=loot,coins,50,50,128
 
 [trapped_chest_chest_steel_arrowtips]
 table=trapped_chest
@@ -29,8 +29,8 @@ data=loc,chest_steel_arrowtips
 data=level,47
 data=experience,1500
 data=respawn_ticks,125
-data=loot,steel_arrowheads,5,5,128,128
-data=loot,coins,20,20,128,128
+data=loot,steel_arrowheads,5,5,128
+data=loot,coins,20,20,128
 
 [trapped_chest_chest_blood_runes]
 table=trapped_chest
@@ -38,8 +38,8 @@ data=loc,chest_blood_runes
 data=level,59
 data=experience,2500
 data=respawn_ticks,200
-data=loot,bloodrune,2,2,128,128
-data=loot,coins,500,500,128,128
+data=loot,bloodrune,2,2,128
+data=loot,coins,500,500,128
 
 [trapped_chest_chest_ardougne_castle]
 table=trapped_chest
@@ -47,7 +47,7 @@ data=loc,chest_ardougne_castle
 data=level,72
 data=experience,5000
 data=respawn_ticks,666
-data=loot,coins,1000,1000,128,128
-data=loot,raw_shark,1,1,128,128
-data=loot,adamantite_ore,1,1,128,128
-data=loot,uncut_sapphire,1,1,128,128
+data=loot,coins,1000,1000,128
+data=loot,raw_shark,1,1,128
+data=loot,adamantite_ore,1,1,128
+data=loot,uncut_sapphire,1,1,128

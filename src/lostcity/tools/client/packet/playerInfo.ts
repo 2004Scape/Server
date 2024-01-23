@@ -31,16 +31,16 @@ for (let i = 0; i < files.length; i++) {
 }
 
 for (const [username, ticks] of players) {
-    if (username === 'pazaz') {
-        continue;
-    }
+    // if (username !== 'pazaz') {
+    //     continue;
+    // }
 
     ticks.sort((a, b) => a - b);
 
     for (let i = 0; i < ticks.length; i++) {
         console.log('----');
         console.log(username, 'tick', ticks[i]);
-        const buf = Packet.load(`dump/${ticks[i]}.${username}.bin`);
+        const buf = Packet.load(`dump/${ticks[i]}.${username}.player.bin`);
 
         entityRemovalCount = 0;
         entityUpdateCount = 0;

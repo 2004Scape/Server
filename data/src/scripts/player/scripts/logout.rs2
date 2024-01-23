@@ -5,7 +5,7 @@ if (busy = true) {
     return(false);
 }
 
-if (add(%lastcombat, 17) > map_clock) {
+if (map_clock > 17 & add(%lastcombat, 17) > map_clock) {
     mes("You can't logout until 10 seconds after the end of combat."); // TODO: confirm this message for 2004
     return(false);
 }
@@ -18,5 +18,6 @@ if (%tradepartner ! null) {
     }
     %tradepartner = null;
 }
+~reset_stall_trade_timers;
 
 return(true);

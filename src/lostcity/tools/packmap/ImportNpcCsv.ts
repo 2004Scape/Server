@@ -3,7 +3,7 @@ import { basename } from 'path';
 
 import { loadDir } from '#lostcity/util/Parse.js';
 
-let allNpcs: { id: number, level: number, mapsquareX: number, mapsquareZ: number, localX: number, localZ: number }[] = [];
+let allNpcs: { id: number, level: number, mapsquareX: number, mapsquareZ: number, localX: number, localZ: number, source: string }[] = [];
 
 const args = process.argv.slice(2);
 if (args.length !== 1) {
@@ -12,7 +12,7 @@ if (args.length !== 1) {
 }
 
 const npcList = fs.readFileSync(args[0], 'ascii').replace(/\r/g, '').split('\n').slice(1).filter(line => line.length > 0);
-npcList.forEach((line) => {
+npcList.forEach((line, index) => {
     const csv = line.split(',');
     if (csv.length < 4) {
         return;
@@ -31,7 +31,7 @@ npcList.forEach((line) => {
         console.log(`Invalid id: ${id}`, csv);
     }
 
-    allNpcs.push({ id: parseInt(id), level: parseInt(level), mapsquareX, mapsquareZ, localX, localZ });
+    allNpcs.push({ id: parseInt(id), level: parseInt(level), mapsquareX, mapsquareZ, localX, localZ, source: line + '|' + index });
 });
 
 loadDir('data/src/maps', (lines: string[], file: string) => {

@@ -1,0 +1,24 @@
+^quest_elena_not_started = 0
+^quest_elena_started = 1
+^quest_elena_gasmask = 2
+^quest_elena_mud_patch1 = 3
+^quest_elena_mud_patch2 = 4
+^quest_elena_mud_patch3 = 5
+^quest_elena_mud_patch4 = 6
+^quest_elena_opened_tunnel = 7
+^quest_elena_tied_rope = 8
+^quest_elena_opened_pipe = 9
+^quest_elena_returned_book = 10
+^quest_elena_spoke_to_milli = 11
+^quest_elena_spoke_to_plague_house = 12
+^quest_elena_spoke_to_clerk = 13
+^quest_elena_spoke_to_bravek = 14
+^quest_elena_spoke_cured_bravek = 15
+^quest_elena_freed_elena = 16
+
+^quest_elena_garden_coord = 0_40_52_6_3
+^quest_elena_sewer_mud_pile_coord = 0_40_152_2_9
+^quest_elena_west_ardy_manhole_coord = 0_39_51_33_39
+^quest_elena_west_ardy_manhole_tele_coord = 0_39_51_33_40
+^quest_elena_sewer_sewerpipe_coord = 0_39_151_34_39
+^quest_elena_black_cross_door_coord = 0_39_51_44_9

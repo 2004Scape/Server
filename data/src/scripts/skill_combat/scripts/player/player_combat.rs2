@@ -1,8 +1,8 @@
 [opnpc2,_]
-if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-    mes("Someone else is fighting that.");
-    return;
-}
+// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
+//     mes("Someone else is fighting that.");
+//     return;
+// }
 @player_combat_start;
 
 [apnpc2,_]
@@ -20,10 +20,10 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
 //     mes("TRUE");
 // }
 // mes("<tostring(%spell)>");
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3){
-    if (%spell <= 0) {
-        %spell = %autocast_spell;
-    }
+if (%spell <= 0 & (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3)) {
+    %spell = %autocast_spell;
+}
+if (%spell > 0){
     // look for spell in db
     def_dbrow $spell_data = ~get_spell_data(%spell);
     // define spell runes
@@ -38,9 +38,9 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3){
     $attackrange = 10;
 }
 if ($attackrange <= 1) {
-    if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-        mes("Someone else is fighting that.");
-    }
+    // if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
+    //     mes("Someone else is fighting that.");
+    // }
     p_aprange($attackrange); // walk then op again
     return;
 }
@@ -48,10 +48,10 @@ if ($distance > $attackrange) {
     p_aprange($attackrange);
     return;
 }
-if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-    mes("Someone else is fighting that.");
-    return;
-}
+// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
+//     mes("Someone else is fighting that.");
+//     return;
+// }
 p_aprange($attackrange);
 @player_combat_start;
 
@@ -65,10 +65,11 @@ if (%damagetype = ^ranged_style) {
 // if (testbit(%attackstyle_magic, 0) = true){
 //     mes("TRUE");
 // }
-if (%spell > 0 & testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
+if (%spell > 0) {
     // in osrs you cant tick manip with autocast delay, so its prob its on varp?
     if (%autocast_delay = map_clock | %action_delay > map_clock) {
-        @magic_spell_combat(%spell);
+        @player_magic_spell_attack(%spell);
+        return;
     }
     if (%autocast_delay < map_clock) {
         // add auto cast delay

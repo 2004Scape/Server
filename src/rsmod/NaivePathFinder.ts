@@ -1,4 +1,5 @@
 // https://gist.github.com/Z-Kris/2eb1c2fbc22aa7486a57089c82f293f8
+// https://gist.github.com/Z-Kris/fe476d75a51374f12dca999700f009f7
 
 import RouteCoordinates from '#rsmod/RouteCoordinates.js';
 import CollisionStrategy from '#rsmod/collision/CollisionStrategy.js';

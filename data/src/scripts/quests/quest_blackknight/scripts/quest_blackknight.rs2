@@ -15,8 +15,17 @@ def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 if ($is_outside = true & ((inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (inv_getobj(worn, ^wearpos_torso) ! iron_chainbody))) {
     @blackknight_entrance_dialogue;
 } else {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_outside, false);
+    ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
 }
+
+[oploc1,blackknight_door_to_grill]
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_outside = false) {
+    def_boolean $has_spoken = false;
+    $has_spoken = ~set_black_knight_aggro(1_47_54_17_55, $has_spoken);
+    ~set_black_knight_aggro(1_47_54_15_55, $has_spoken);
+}
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
 
 [label,blackknight_entrance_dialogue]
 npc_findallzone(0_47_54_8_59);
@@ -69,7 +78,7 @@ if ($is_inside = false) {
         }
     }
 } else {
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
+    ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
 }
 
 [label,blackknight_banquet_hall_fortress_guard](boolean $is_inside)
@@ -79,8 +88,12 @@ if ($option = 1) {
     ~chatplayer(neutral, "Ok I won't.");
 } else {
    ~chatplayer(neutral, "I don't care. I'm going in anyway.");
-   ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
+   ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
    // TODO: Set all black knights in the banquet hall to attack player and yell "Die intruder!"
+   def_boolean $has_spoken = false;
+   $has_spoken =  ~set_black_knight_aggro(0_47_54_13_59, $has_spoken);
+   ~set_black_knight_aggro(0_47_54_21_59, $has_spoken);
+   ~set_black_knight_aggro(0_47_54_22_55, $has_spoken);
 }
 [oploc1,blackknight_potion_room_door]
 mes("It's locked.");
@@ -140,6 +153,19 @@ if (%blackknight_progress = 1) {
     mes("I can't hear much right now.");
 }
 
+[proc,set_black_knight_aggro](coord $coord, boolean $has_spoken)(boolean)
+npc_findallzone($coord);
+while (npc_findnext = true) {
+    if (npc_type = npc_179) {
+        if ($has_spoken = false) {
+            npc_say("Die intruder!");
+            $has_spoken = true;
+        }
+        npc_setmode(opplayer2);
+    }
+}
+return($has_spoken);
+
 [proc,update_blackknight_progress]
 %blackknight_progress = calc(%blackknight_progress + 1);
 ~send_quest_progress(quest_journal:fortress, %blackknight_progress, ^blackknight_complete);
@@ -148,4 +174,4 @@ if (%blackknight_progress = 1) {
 %blackknight_progress = ^blackknight_complete;
 inv_add(inv, coins, 2500);
 mes("Sir Amik hands you 2500 coins.");
-~send_quest_complete(quest_journal:fortress, coins, 250, 3, "You have completed the\\nBlack Knights' Fortress Quest!");
+~send_quest_complete(quest_journal:fortress, coins, 250, ^blackknight_questpoints, "You have completed the\\nBlack Knights' Fortress Quest!");

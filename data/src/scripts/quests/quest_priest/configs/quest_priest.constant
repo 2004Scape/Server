@@ -1,0 +1,5 @@
+^priest_not_started = 0
+^priest_started = 1
+^priest_spoken_urhney = 2
+^priest_spoken_ghost = 3
+^priest_obtained_skull = 4

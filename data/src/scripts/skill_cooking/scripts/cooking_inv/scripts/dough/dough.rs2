@@ -1,7 +1,9 @@
 [opheldu,pot_of_flour]
 switch_obj (last_useitem) {
     case cake_tin : @make_uncooked_cake;
+    case swamp_tar: @make_swamp_paste;
     case bowl_water, jug_of_water, bucket_water : @dough_interface(last_useslot);
+    case default : @nothing_interesting_happens;
 }
 
 [label,dough_interface](int $last_slot)
@@ -24,6 +26,8 @@ inv_del(inv, pot_of_flour, 1);
 inv_del(inv, $water_source, 1);
 
 inv_add(inv, pot_empty, 1);
-inv_add(inv, oc_param($water_source, changesto), 1);
+if (oc_param($water_source, changesto) ! null) {
+    inv_add(inv, oc_param($water_source, changesto), 1);
+}
 inv_add(inv, $choice, 1);
 mes("You mix the water and flour to make <$end_string> <lowercase(oc_name($choice))>.");

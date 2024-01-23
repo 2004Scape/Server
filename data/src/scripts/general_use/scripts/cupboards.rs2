@@ -16,15 +16,9 @@ switch_coord (loc_coord) {
                 }
             }
             ~mesbox("There is just a load of junk in here.");
-    case 1_48_51_24_4: // draynor morgans house level 1
-        if (inv_total(inv, garlic) = 0) {
-            mes("The cupboard contains garlic. You take a clove.");
-        } else {
-            mes("You take a clove of garlic.");
-        }
-        inv_add(inv, garlic, 1);
-    case default:
-        mes("The cupboard is empty.");
+    case 1_48_51_24_4: @cupboard_take_garlic; // draynor morgans house level 1
+    case 0_40_52_14_6: @elena_search_cupboard; // alrenas house for plague city
+    case default: mes("The cupboard is empty.");
 }
 
 [label,open_cupboard](boolean $message)
@@ -51,6 +45,18 @@ if ($message = true) {
 
 [proc,cupboards_use_message]()(boolean)
 switch_loc (loc_type) {
-    case loc_2612, loc_2613: return(true);
+    case loc_2612, loc_2613, loc_2524, loc_2525: return(true);
     case default: return(false);
+}
+
+[label,cupboard_take_garlic]
+if (inv_itemspace(inv, garlic, 1, inv_size(inv)) = true) {
+    if (inv_total(inv, garlic) = 0) {
+        mes("The cupboard contains garlic. You take a clove.");
+    } else {
+        mes("You take a clove of garlic.");
+    }
+    inv_add(inv, garlic, 1);
+} else {
+    ~mesbox("The cupboard contains garlic, but you don't|have room to hold it at the moment.");
 }

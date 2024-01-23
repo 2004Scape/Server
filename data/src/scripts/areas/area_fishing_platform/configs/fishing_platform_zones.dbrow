@@ -1,0 +1,5 @@
+[fishing_platform_zones]
+table=coord_pair_table
+// fishing platform
+data=coord_pair,0_43_51_8_7,0_43_51_52_63
+data=coord_pair,1_43_51_8_7,1_43_51_52_63

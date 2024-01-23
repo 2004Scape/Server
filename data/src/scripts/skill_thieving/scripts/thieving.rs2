@@ -46,12 +46,33 @@ mes("You've been stunned!");
 setmovecheck(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
+// if player is in combat, prevent stealing
+if (add(%lastcombat, 10) > map_clock) {
+    mes("You can't steal from the market stall during combat!");
+    return;
+}
+// if guard sees (for first time), stop player from stealing.
+// guards proioritize over sellers
+if (~stealing_check_for_guard($data) = true) {
+    return;
+} else if (~stealing_check_for_owner($data) = true) {
+   return;
+}
 def_int $experience = db_getfield($data, stealing:experience, 0);
-def_int $respawn_ticks = db_getfield($data, stealing:respawn_ticks, 0);
+// osrs is 2x respawn speed, since they removed the scale by playercount
+def_int $respawn_ticks = ~scale_by_playercount(db_getfield($data, stealing:respawn_ticks, 0));
 anim(human_pickuptable, 0);
 sound_synth(pick, 0, 0);
-gosub(stealing_check_for_guard);
 p_delay(0);
+switch_loc (loc_type) {
+    case bakers_stall_stealing : %last_stolen_from_stall_baker = calc(map_clock + ^bakery_stall_timer);
+    case tea_stall_stealing : %last_stolen_from_stall_tea = calc(map_clock + ^tea_stall_timer);
+    case silk_stall_stealing : %last_stolen_from_stall_silk = calc(map_clock + ^silk_stall_timer);
+    case fur_stall_stealing : %last_stolen_from_stall_fur = calc(map_clock + ^fur_stall_timer); 
+    case silver_stall_stealing : %last_stolen_from_stall_silver = calc(map_clock + ^silver_stall_timer);
+    case spice_stall_stealing : %last_stolen_from_stall_spice = calc(map_clock + ^spice_stall_timer);
+    case gem_stall_stealing : %last_stolen_from_stall_gem = calc(map_clock + ^gem_stall_timer);
+}
 ~stealing_check_for_reward($data);
 givexp(thieving, $experience);
 loc_del($respawn_ticks);
@@ -93,17 +114,17 @@ loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
 
 [proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);
-
+def_int $reward_rarity_denominator = 128;
 while ($count >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, pickpocket:loot, $count);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator = db_getfield($data, pickpocket:loot, $count);
 
     def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
+    $reward_rarity_denominator = sub($reward_rarity_denominator, $reward_rarity_numerator);
+    if ($roll >= $reward_rarity_denominator) {
         def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
         // Pickpocketing can reward more than 1.
         inv_add(inv, $reward, $quantity_roll);
@@ -115,45 +136,45 @@ while ($count >= 0) {
 [proc,stealing_check_for_reward](dbrow $data)
 def_int $length = db_getfieldcount($data, stealing:loot);
 def_int $count = calc($length - 1);
+def_int $reward_rarity_denominator = db_getfield($data, stealing:loot_total, 0);
 
 while ($count >= 0) {
     def_namedobj $reward;
-    def_int $reward_quantity_min;
-    def_int $reward_quantity_max;
+    def_int $min;
+    def_int $max;
     def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
     def_string $reward_message;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator, $reward_message = db_getfield($data, stealing:loot, $count);
 
-    def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
-        def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
-        // Stall stealing looks to only reward at most 1. Sometimes 0.
-        inv_add(inv, $reward, $quantity_roll);
+    $reward, $min, $max, $reward_rarity_numerator, $reward_message = db_getfield($data, stealing:loot, $count);
+    def_int $reward_count = ~random_range($min, $max);
+    def_int $rand = random($reward_rarity_denominator);
+    $reward_rarity_denominator = sub($reward_rarity_denominator, $reward_rarity_numerator);
+    if ($rand >= $reward_rarity_denominator) {
         // https://youtu.be/ZyiWFTAt_1o?t=2
-        mes("You steal <$reward_message>.");
-        if ($count ! 0) {
+        // extra sound is only from bread? (osrs)
+        if ($reward = bread) {
             sound_synth(pick, 0, 0);
         }
-        $count = -1; // Break the loop if we get an item.
+        inv_add(inv, $reward, $reward_count);
+        mes("You steal <$reward_message>.");
+        return;
     }
-
     $count = calc($count - 1);
 }
 
 [proc,trapped_chest_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, trapped_chest:loot) - 1);
-
+def_int $reward_rarity_denominator = 128;
 while ($count >= 0) {
     def_namedobj $reward;
     def_int $reward_quantity_min;
     def_int $reward_quantity_max;
     def_int $reward_rarity_numerator;
-    def_int $reward_rarity_denominator;
-    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator, $reward_rarity_denominator = db_getfield($data, trapped_chest:loot, $count);
+    $reward, $reward_quantity_min, $reward_quantity_max, $reward_rarity_numerator = db_getfield($data, trapped_chest:loot, $count);
 
     def_int $roll = random($reward_rarity_denominator);
-    if ($reward_rarity_numerator >= $roll) {
+    $reward_rarity_denominator = sub($reward_rarity_denominator, $reward_rarity_numerator);
+    if ($roll >= $reward_rarity_denominator) {
         def_int $quantity_roll = ~random_range($reward_quantity_min, $reward_quantity_max);
         // Trapped chests can reward more than 1.
         inv_add(inv, $reward, $quantity_roll);

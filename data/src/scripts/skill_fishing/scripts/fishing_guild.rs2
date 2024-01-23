@@ -6,7 +6,7 @@ if ($is_inside = false) {
         @fishing_guild_level_fail;
     }
 }
-    ~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, $is_inside, false);
+    ~open_and_close_door(loc_param(next_loc_stage), $is_inside, false);
 
 [label,fishing_guild_level_fail]
 // find master fisher

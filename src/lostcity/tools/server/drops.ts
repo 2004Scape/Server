@@ -26,7 +26,7 @@ const iterations = parseInt(args[1] ?? '1000');
 
 await World.start(true);
 
-const player = Player.load('clirunner');
+const player = Player.loadFromFile('clirunner');
 player.x = 3222;
 player.z = 3222;
 player.level = 0;

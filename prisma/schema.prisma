@@ -1,0 +1,78 @@
+generator kysely {
+    provider = "prisma-kysely"
+
+    output       = "../src/lostcity/db"
+    fileName     = "types.ts"
+    enumFileName = "enums.ts"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model account {
+    id Int @id @default(autoincrement())
+
+    username String @unique
+    password String
+
+    registration_ip   String?
+    registration_date DateTime @default(now())
+}
+
+model newspost {
+    id Int @id @default(autoincrement())
+
+    category_id Int
+    title       String   @db.TinyText
+    content     String   @db.Text
+    date        DateTime
+}
+
+model newspost_category {
+    id Int @id @default(autoincrement())
+
+    name  String
+    // css style class
+    style String
+}
+
+model npc_hiscore {
+    id Int @id @default(autoincrement())
+
+    npc_id     Int
+    account_id Int
+    kill_count Int @default(0)
+}
+
+model friendlist {
+    account_id        Int
+    friend_account_id Int
+
+    @@id([account_id, friend_account_id])
+}
+
+model ignorelist {
+    account_id        Int
+    ignore_account_id Int
+
+    @@id([account_id, ignore_account_id])
+}
+
+model public_chat {
+    id Int @id @default(autoincrement())
+
+    account_id Int
+    message    String
+    date       DateTime @default(now())
+}
+
+model private_chat {
+    id Int @id @default(autoincrement())
+
+    from_account_id Int
+    to_account_id   Int
+    message         String
+    date            DateTime @default(now())
+}

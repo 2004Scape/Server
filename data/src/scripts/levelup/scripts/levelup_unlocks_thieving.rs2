@@ -1,0 +1,30 @@
+[label,levelup_thieving]
+switch_int(stat_base(thieving)) {
+    case 5: ~mesbox("You can now steal from @dbl@Cake Stalls@bla@ and @dbl@Tea Stalls@bla@!");
+    case 10: ~mesbox("You can now pickpocket from @dbl@Farmers@bla@!");
+    case 13: ~mesbox("You can now steal from certain @dbl@chests@bla@ in Ardougne and the Wilderness!");
+    case 15: ~mesbox("You can now pickpocket from @dbl@HAM followers@bla@!");
+    case 20: ~mesbox("You can now steal from @dbl@Silk Stalls@bla@!");
+    case 22: ~mesbox("You can now steal from @dbl@Wine Stalls@bla@!");
+    case 25: ~mesbox("You can now pickpocket from @dbl@Warriors@bla@!");
+    case 32: ~mesbox("You can now pickpocket from @dbl@Rogues@bla@!");
+    case 35: ~mesbox("You can now steal from @dbl@Fur Stalls@bla@!");
+    case 38: ~mesbox("You can now pickpocket from @dbl@Master Farmers@bla@!");
+    case 40: ~mesbox("You can now pickpocket from @dbl@City Guards@bla@!");
+    case 42: ~mesbox("You can now steal from @dbl@Fish Stalls@bla@!");
+    case 43: ~mesbox("You can now steal from certain @dbl@chests@bla@ upstairs in Ardougne!");
+    case 47: ~mesbox("You can now steal from certain @dbl@chests@bla@ in Hemenster with the aid of a lockpick!");
+    case 50: ~mesbox("You can now steal from @dbl@Silver Stalls@bla@!");
+    case 55: ~mesbox("You can now pickpocket from @dbl@Knights of Ardougne@bla@!");
+    case 59: ~mesbox("You can now steal from certain @dbl@chests@bla@ under the Chaos Druid Tower near Ardougne!");
+    case 65: ~mesbox("You can now steal from @dbl@Spice Stalls@bla@ and pickpocket from @dbl@Watchmen@bla@!");
+    case 70: ~mesbox("You can now pickpocket from @dbl@Paladins@bla@!");
+    case 72: ~mesbox("You can now steal from certain @dbl@chests@bla@ in the castle in Ardougne!");
+    case 75: ~mesbox("You can now steal from @dbl@Gem Stalls@bla@ and pickpocket from @dbl@Gnomes@bla@!");
+    case 80: ~mesbox("You can now pickpocket from @dbl@Heros@bla@!");
+
+
+
+    
+
+}

@@ -6178,11 +6178,11 @@
 6177=line4_nocontinue:com_3
 6178=line4_nocontinue:com_4
 6179=tutorialstep
-6180=tutorialstep:com_0
-6181=tutorialstep:com_1
-6182=tutorialstep:com_2
-6183=tutorialstep:com_3
-6184=tutorialstep:com_4
+6180=tutorialstep:title
+6181=tutorialstep:line1
+6182=tutorialstep:line2
+6183=tutorialstep:line3
+6184=tutorialstep:line4
 6185=musicplayer:com_156
 6186=welcome_screen2:com_27
 6187=welcome_screen2:com_58

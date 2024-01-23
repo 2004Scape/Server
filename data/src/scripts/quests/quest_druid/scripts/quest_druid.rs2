@@ -81,23 +81,14 @@ if(inv_total(inv, druid_enchanted_beef) > 0 & inv_total(inv, druid_enchanted_rat
 }
 
 [label,druid_completion]
-~chatnpc("default", "I have word from Sanfew that you have been very|helpful in assisting him with his preparations for the|purification ritual. As promised I will now teach you the|ancient arts of Herblore.");
-~chatnpc(neutral, "Herblore is the skill of working with herbs and other|ingredients, to make useful potions and poison.");
-~chatnpc(neutral, "First you will need a vial, which can be found or made|with the crafting skill.");
-~chatnpc(neutral, "Then you must gather the herbs needed to make the|potion you want.");
-~chatnpc(neutral, "You must fill your vial with water and add the|ingredients you need. There are normally 2 ingredients|to each type of potion.");
-~chatnpc(neutral, "Bear in mind, you must first clean each herb before|you can use it.");
-~chatnpc(neutral, "You may also have to grind some ingredients before|you can use them. You will need a pestle and mortar|in order to do this.");
-~chatnpc(neutral, "Herbs can be found on the ground, and are also|dropped by some monsters when you kill them.");
-~chatnpc(neutral, "Let's try an example Attack potion: The first ingredient|is Guam leaf; the next is Eye of Newt.");
-~chatnpc(neutral, "Mix these in your water-filled vial, and you will produce|an Attack potion. Drink this potion to increase your|Attack level.");
-~chatnpc(neutral, "Different potions also require different Herblore levels|before you can make them.");
+~chatnpc(neutral, "I have word from Sanfew that you have been very helpful in assisting him with his preparations for the purification ritual. As promised I will now teach you the ancient arts of Herblore.");
+// additional dialogue here added after osrs: https://www.youtube.com/watch?v=n8RIbXtW5V4
 queue(druid_quest_complete, 0);
 
 [queue,druid_quest_complete]
 %druid_progress = ^druid_complete;
 givexp(herblore, 2500);
-~send_quest_complete(quest_journal:druid, marentill, 220, 4, "You have completed the\\nDruidic Ritual Quest!");
+~send_quest_complete(quest_journal:druid, marentill, 220, ^druid_questpoints, "You have completed the\\nDruidic Ritual Quest!");
 
 [oplocu,druid_cauldron]
 p_arrivedelay;

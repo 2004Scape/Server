@@ -1,0 +1,19 @@
+// takes a coord and returns the wilderness level
+// every 8 tiles is a new level.
+// starting level always starts at the very bottom coord of each coord pair
+[proc,wilderness_level](coord $coord)(int)
+def_coord $coord1;
+def_coord $coord2;
+def_int $i = 0;
+while($i < db_getfieldcount(wilderness_zones, coord_pair_table:coord_pair)) {
+    $coord1, $coord2 = db_getfield(wilderness_zones, coord_pair_table:coord_pair, $i);
+    if(inzone($coord1, $coord2, $coord) = true) {
+        return (calc((coordz($coord) - coordz($coord1))/8 + 1));
+    } else {
+        $i = add($i, 1);
+    }
+}
+return(0);
+
+// [debugproc,wildy]
+// mes("Wilderness level: <tostring(~wilderness_level(coord))>");

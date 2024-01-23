@@ -27,7 +27,7 @@ while ($maxX >= $minX) {
 
         def_int $dx = sub($zoneX, $x);
         def_int $dz = sub($zoneZ, $z);
-        def_coord $zoneCoord = movecoord(coord, $dx, 0, $dz);
+        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
 
         npc_findallzone($zoneCoord);
         while (npc_findnext = true) {
@@ -74,7 +74,7 @@ while ($maxX >= $minX) {
 
         def_int $dx = sub($zoneX, $x);
         def_int $dz = sub($zoneZ, $z);
-        def_coord $zoneCoord = movecoord(coord, $dx, 0, $dz);
+        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
 
         npc_findallzone($zoneCoord);
         while (.npc_findnext = true) {
@@ -91,3 +91,131 @@ if ($closet_distance < $distance | $closest_npc ! null) {
     return($closest_npc);
 }
 return(null);
+
+
+[proc,npc_category_within_distance](coord $coord, category $npc_category, int $distance)(npc_uid)
+// a radius of 1 will loop 9 zones
+// a radius of 2 will loop 25 zones
+// a radius of 3 will loop 49 zones
+def_int $radius = add(1, divide($distance, 8));
+
+def_int $x = coordx($coord);
+def_int $z = coordz($coord);
+
+def_int $centerX = divide($x, pow(2, 3));
+def_int $centerZ = divide($z, pow(2, 3));
+
+def_int $maxX = add($centerX, $radius);
+def_int $minX = sub($centerX, $radius);
+
+def_int $closet_distance = $distance;
+def_npc_uid $closest_npc = null;
+
+while ($maxX >= $minX) {
+    def_int $zoneX = multiply($maxX, pow(2, 3));
+    def_int $maxZ = add($centerZ, $radius);
+    def_int $minZ = sub($centerZ, $radius);
+    while ($maxZ >= $minZ) {
+        def_int $zoneZ = multiply($maxZ, pow(2, 3));
+
+        def_int $dx = sub($zoneX, $x);
+        def_int $dz = sub($zoneZ, $z);
+        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
+        // mes("Zone: <tostring(divide(coordx($zoneCoord), pow(2, 3)))>_<tostring(divide(coordz($zoneCoord), pow(2, 3)))>");
+        npc_findallzone($zoneCoord);
+        while (npc_findnext = true) {
+            if (npc_category = $npc_category & distance($coord, npc_coord) <= $closet_distance) {
+                $closet_distance = distance($coord, npc_coord);
+                $closest_npc = npc_uid;
+            }
+        }
+        $maxZ = sub($maxZ, 1);
+    }
+    $maxX = sub($maxX, 1);
+}
+if ($closet_distance < $distance | $closest_npc ! null) {
+    return($closest_npc);
+}
+return(null);
+
+[proc,npc_count_within_distance](coord $coord, npc $npc, int $distance)(int)
+// a radius of 1 will loop 9 zones
+// a radius of 2 will loop 25 zones
+// a radius of 3 will loop 49 zones
+def_int $radius = add(1, divide($distance, 8));
+
+def_int $x = coordx($coord);
+def_int $z = coordz($coord);
+
+def_int $centerX = divide($x, pow(2, 3));
+def_int $centerZ = divide($z, pow(2, 3));
+
+def_int $maxX = add($centerX, $radius);
+def_int $minX = sub($centerX, $radius);
+
+
+def_int $total = 0;
+
+while ($maxX >= $minX) {
+    def_int $zoneX = multiply($maxX, pow(2, 3));
+    def_int $maxZ = add($centerZ, $radius);
+    def_int $minZ = sub($centerZ, $radius);
+    while ($maxZ >= $minZ) {
+        def_int $zoneZ = multiply($maxZ, pow(2, 3));
+
+        def_int $dx = sub($zoneX, $x);
+        def_int $dz = sub($zoneZ, $z);
+        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
+        // mes("Zone: <tostring(divide(coordx($zoneCoord), pow(2, 3)))>_<tostring(divide(coordz($zoneCoord), pow(2, 3)))>");
+        npc_findallzone($zoneCoord);
+        while (npc_findnext = true) {
+            if (npc_type = $npc & distance($coord, npc_coord) <= $distance) {
+                $total = add($total, 1);
+            }
+        }
+        $maxZ = sub($maxZ, 1);
+    }
+    $maxX = sub($maxX, 1);
+}
+return($total);
+
+[proc,.npc_count_within_distance](coord $coord, npc $npc, int $distance)(int)
+// a radius of 1 will loop 9 zones
+// a radius of 2 will loop 25 zones
+// a radius of 3 will loop 49 zones
+def_int $radius = add(1, divide($distance, 8));
+
+def_int $x = coordx($coord);
+def_int $z = coordz($coord);
+
+def_int $centerX = divide($x, pow(2, 3));
+def_int $centerZ = divide($z, pow(2, 3));
+
+def_int $maxX = add($centerX, $radius);
+def_int $minX = sub($centerX, $radius);
+
+
+def_int $total = 0;
+
+while ($maxX >= $minX) {
+    def_int $zoneX = multiply($maxX, pow(2, 3));
+    def_int $maxZ = add($centerZ, $radius);
+    def_int $minZ = sub($centerZ, $radius);
+    while ($maxZ >= $minZ) {
+        def_int $zoneZ = multiply($maxZ, pow(2, 3));
+
+        def_int $dx = sub($zoneX, $x);
+        def_int $dz = sub($zoneZ, $z);
+        def_coord $zoneCoord = movecoord($coord, $dx, 0, $dz);
+        // mes("Zone: <tostring(divide(coordx($zoneCoord), pow(2, 3)))>_<tostring(divide(coordz($zoneCoord), pow(2, 3)))>");
+        npc_findallzone($zoneCoord);
+        while (.npc_findnext = true) {
+            if (.npc_type = $npc & distance($coord, .npc_coord) <= $distance) {
+                $total = add($total, 1);
+            }
+        }
+        $maxZ = sub($maxZ, 1);
+    }
+    $maxX = sub($maxX, 1);
+}
+return($total);

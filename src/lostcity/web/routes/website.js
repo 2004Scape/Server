@@ -1,4 +1,8 @@
+import { db } from '#lostcity/db/query.js';
+
 import WorldList from '#lostcity/engine/WorldList.js';
+
+import Environment from '#lostcity/util/Environment.js';
 
 export default function (f, opts, next) {
     f.get('/', async (req, res) => {
@@ -11,8 +15,10 @@ export default function (f, opts, next) {
             playerCount += world.players;
         }
 
+        const latestNews = Environment.DB_HOST ? await db.selectFrom('newspost').orderBy('id', 'desc').limit(5).selectAll().execute() : [];
         return res.view('title', {
-            playerCount
+            playerCount,
+            newsposts: latestNews
         });
     });
 
@@ -32,10 +38,15 @@ export default function (f, opts, next) {
         let members = WorldList.filter(x => x.members).length;
         let regions = {
             'Central USA': 'us',
+            'Germany': 'ger',
             'Local Development': 'uk'
         };
         let freeRegions = WorldList.filter(x => x.region && !x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
         let membersRegions = WorldList.filter(x => x.region && x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
+
+        if (req.query.method == 3) {
+            return res.redirect('/downloads');
+        }
 
         return res.view('serverlist', {
             detail: typeof req.query['hires.x'] !== 'undefined' ? 'high' : 'low',
@@ -46,74 +57,6 @@ export default function (f, opts, next) {
             freeRegions,
             membersRegions
         });
-    });
-
-    f.get('/client', async (req, res) => {
-        if (typeof req.query.detail == 'undefined' || !req.query.detail) {
-            return res.redirect(302, '/detail');
-        }
-
-        if (typeof req.query.world == 'undefined' || !req.query.world) {
-            return res.redirect(302, '/detail');
-        }
-
-        if (typeof req.query.method == 'undefined' || !req.query.method) {
-            return res.redirect(302, '/detail');
-        }
-
-        let world = WorldList.find(x => x.id == req.query.world);
-        if (!world) {
-            return res.redirect(302, '/detail');
-        }
-
-        if (req.query.method == 0) {
-            return res.view('webclient', {
-                world,
-                detail: req.query.detail,
-                method: req.query.method,
-            });
-        } else if (req.query.method == 1) {
-            return res.redirect('/client/rs2-client.jar');
-        } else if (req.query.method == 2) {
-            return res.view('javaclient', {
-                world,
-                detail: req.query.detail,
-                method: req.query.method,
-            });
-        }
-    });
-
-    f.get('/client-inner', async (req, res) => {
-        if (typeof req.query.detail == 'undefined' || !req.query.detail) {
-            return;
-        }
-
-        if (typeof req.query.world == 'undefined' || !req.query.world) {
-            return;
-        }
-
-        if (typeof req.query.method == 'undefined' || !req.query.method) {
-            return;
-        }
-
-        let world = WorldList.find(x => x.id == req.query.world);
-        if (!world) {
-            return;
-        }
-
-        if (req.query.method == 0) {
-            return res.view('webclient-inner', {
-                world,
-                detail: req.query.detail,
-                method: req.query.method,
-            });
-        } else if (req.query.method == 2) {
-            return res.view('javaclient-inner', {
-                world,
-                detail: req.query.detail,
-                method: req.query.method,
-            });
-        }
     });
 
     f.get('/play', async (req, res) => {
@@ -130,10 +73,6 @@ export default function (f, opts, next) {
 
     f.get('/detail', async (req, res) => {
         return res.view('detail');
-    });
-
-    f.get('/banner', async (req, res) => {
-        return res.view('banner');
     });
 
     f.get('/manual', async (req, res) => {
@@ -160,63 +99,8 @@ export default function (f, opts, next) {
         return res.view('worldmap');
     });
 
-    f.get('/register', async (req, res) => {
-        let { step, username, error } = req.query;
-
-        if (typeof step === 'undefined') {
-            step = 0;
-        }
-        step = parseInt(step);
-
-        if (typeof error === 'undefined') {
-            error = 0;
-        }
-        error = parseInt(error);
-
-        if (username) {
-            username = username.toLowerCase();
-        }
-
-        if (step > 3 || (step > 0 && !username)) {
-            return res.redirect(301, '/register');
-        }
-
-        if (error == 1) {
-            let suggestions = [];
-            for (let i = 0; i < 5; ++i) {
-                suggestions[i] = username + Math.ceil(Math.random() * 100);
-            }
-
-            return res.view('register', {
-                step,
-                username,
-                error,
-                suggestions
-            });
-        }
-
-        if (username) {
-            let exists = false;
-            if (step > 0 && step < 3 && exists) {
-                return res.redirect(301, '/register?username=' + encodeURIComponent(username) + '&error=1');
-            }
-        }
-
-        return res.view('register', {
-            step,
-            username
-        });
-    });
-
-    f.post('/register', async (req, res) => {
-        let { username, password } = req.body;
-
-        if (!username || !password) {
-            return res.redirect(301, '/register?username=' + encodeURIComponent(username) + '&step=2');
-        }
-
-        username = username.toLowerCase();
-        return res.redirect(301, '/register?username=' + encodeURIComponent(username) + '&step=3');
+    f.get('/downloads', async (req, res) => {
+        return res.view('downloads');
     });
 
     next();

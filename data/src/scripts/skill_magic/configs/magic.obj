@@ -1,4 +1,4 @@
-[obj_577]
+[wizards_robe]
 cost=15
 name=Wizards robe
 desc=I can do magic better in this.
@@ -62,3 +62,26 @@ weight=2lb
 tradeable=yes
 param=magicattack,3
 param=magicdefence,3
+
+[wizard_hat]
+cost=2
+name=Wizards hat
+desc=A silly pointed hat.
+model=model_2483_obj
+recol1s=38814
+recol1d=0
+2dxof=5
+2dyof=-10
+2dzoom=800
+2dyan=156
+2dxan=152
+iop2=Wear
+wearpos=hat
+manwear=model_202_obj_wear,0
+womanwear=model_377_obj_wear,0
+manhead=model_44_obj_wear
+womanhead=model_102_obj_wear
+weight=1lb
+tradeable=yes
+param=magicattack,2
+param=magicdefence,2

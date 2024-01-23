@@ -1,19 +1,77 @@
-[proc,door_open](int $angle)(int, int)
-switch_int($angle) {
-    case ^loc_west: return(-1, 0);
-    case ^loc_north: return(0, 1);
-    case ^loc_east: return(1, 0);
-    case ^loc_south: return(0, -1);
-    case default: error("angle not found for door_open: <tostring($angle)>");
+[proc,door_open](int $angle, locshape $shape)(int, int)
+if ($shape = wall_straight) {
+    switch_int($angle) {
+        case ^loc_west: return(-1, 0);
+        case ^loc_north: return(0, 1);
+        case ^loc_east: return(1, 0);
+        case ^loc_south: return(0, -1);
+        case default: error("angle not found for door_open: <tostring($angle)>");
+    }
+}
+if ($shape = wall_diagonal) {
+    switch_int ($angle) {
+        case ^loc_west: return(0, 1);
+        case ^loc_north: return(1, 0);
+        case ^loc_east: return(0, -1);
+        case ^loc_south: return(-1, 0);
+        case default: error("angle not found for door_close_diagonal: <tostring($angle)>");
+    }
 }
 
-[proc,door_close](int $angle)(int, int)
+[proc,door_close](int $angle, locshape $shape)(int, int)
+if ($shape = wall_straight) {
+    switch_int($angle) {
+        case ^loc_west: return(0, 1);
+        case ^loc_north: return(1, 0);
+        case ^loc_east: return(0, -1);
+        case ^loc_south: return(-1, 0);
+        case default: error("angle not found for door_close: <tostring($angle)>");
+    }
+}
+if ($shape = wall_diagonal) {
+    switch_int ($angle) {
+        case ^loc_west: return(1, 0);
+        case ^loc_north: return(0, -1);
+        case ^loc_east: return(-1, 0);
+        case ^loc_south: return(0, 1);
+        case default: error("angle not found for door_close_diagonal: <tostring($angle)>");
+    }
+}
+
+[proc,door_open_mirrored](int $angle)(int, int)
+switch_int($angle) {
+    case ^loc_west: return(-1, -1);
+    case ^loc_north: return(-1, 1);
+    case ^loc_east: return(1, 1);
+    case ^loc_south: return(1, -1);
+    case default: error("angle not found for door_open_mirrored: <tostring($angle)>");
+}
+
+[proc,door_close_mirrored](int $angle)(int, int)
 switch_int($angle) {
     case ^loc_west: return(0, 1);
     case ^loc_north: return(1, 0);
     case ^loc_east: return(0, -1);
     case ^loc_south: return(-1, 0);
-    case default: error("angle not found for door_close: <tostring($angle)>");
+    case default: error("angle not found for door_close_mirrored: <tostring($angle)>");
+}
+
+[proc,door_close_move_player_out_of_way](int $angle)(int, int, int)
+switch_int ($angle) {
+    case ^loc_west: return(1, 0, 1);
+    case ^loc_north: return (1, 0, -1);
+    case ^loc_east: return(-1, 0, -1);
+    case ^loc_south: return(-1, 0, 1);
+    case default: error("angle not found for door_move_player_out_of_way: <tostring($angle)>");
+}
+
+[proc,door_open_move_player_out_of_way](int $angle)(int, int, int)
+switch_int ($angle) {
+    case ^loc_west: return(-1, 0, 0);
+    case ^loc_north: return (0, 0, 1);
+    case ^loc_east: return(1, 0, 0);
+    case ^loc_south: return(0, 0, -1);
+    case default: error("angle not found for door_move_player_out_of_way: <tostring($angle)>");
 }
 
 [proc,check_axis](coord $coord, coord $loc_coord, int $angle)(boolean)
@@ -31,5 +89,33 @@ switch_int($angle) {
 }
 return(false);
 
+[proc,check_axis_locactive](coord $coord)(boolean)
+switch_int(loc_angle) {
+    case ^loc_north, ^loc_south: {
+        if (coordz($coord) = coordz(loc_coord)) {
+            return(true);
+        }
+    }
+    case ^loc_west, ^loc_east: {
+        if (coordx($coord) = coordx(loc_coord)) {
+            return(true);
+        }
+    }
+}
+return(false);
+
 [proc,movecoord_loc_return](int $x, int $z)(coord)
 return(movecoord(loc_coord, $x, 0, $z));
+
+[proc,loc_shape_debug](locshape $shape)
+if ($shape = wall_straight) {
+    mes("wall_straight");
+} else if ($shape = wall_diagonalcorner) {
+    mes("wall_diagonalcorner");
+} else if ($shape = wall_l) {
+    mes("wall_l");
+} else if ($shape = wall_squarecorner) {
+    mes("wall_squarecorner");
+} else if ($shape = wall_diagonal) {
+    mes("wall_diagonal");
+}

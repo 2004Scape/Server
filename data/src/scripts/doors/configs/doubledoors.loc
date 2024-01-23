@@ -36,20 +36,6 @@ op1=Close
 category=door_left_opened
 param=next_loc_stage,loc_1508
 
-[loc_1513]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1513
-op1=Open
-category=door_closed
-param=next_loc_stage,loc_1515
-
-[loc_1514]
-name=Large door
-desc=A sturdy wooden door.
-model=model_loc_1513
-op1=Close
-
 [loc_1516]
 name=Large door
 desc=A large double door.
@@ -133,6 +119,8 @@ active=yes
 blockrange=no
 category=door_left_closed
 param=next_loc_stage,loc_1560
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [loc_1597]
 name=Gate
@@ -144,6 +132,8 @@ active=yes
 blockrange=no
 category=door_right_closed
 param=next_loc_stage,loc_1561
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [loc_1560]
 name=Gate
@@ -152,7 +142,7 @@ model=model_loc_52
 op1=Close
 active=yes
 category=door_left_opened
-param=next_loc_stage,loc_1596
+param=next_loc_stage,loc_1557
 
 [loc_1561]
 name=Gate
@@ -162,7 +152,7 @@ op1=Close
 mirror=yes
 active=yes
 category=door_right_opened
-param=next_loc_stage,loc_1597
+param=next_loc_stage,loc_1558
 
 [loc_1557]
 name=Gate
@@ -173,6 +163,8 @@ active=yes
 blockrange=no
 category=door_left_closed
 param=next_loc_stage,loc_1560
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [loc_1558]
 name=Gate
@@ -184,60 +176,8 @@ active=yes
 blockrange=no
 category=door_right_closed
 param=next_loc_stage,loc_1561
-
-[loc_2546]
-name=Door
-model=model_loc_71
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-category=door_left_closed
-param=next_loc_stage,loc_2547
-
-[loc_2547]
-name=Door
-model=model_loc_71
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-category=door_left_opened
-param=next_loc_stage,loc_2546
-
-[loc_2548]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Open
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-category=door_right_closed
-param=next_loc_stage,loc_2549
-
-[loc_2549]
-name=Door
-model=model_loc_71
-mirror=yes
-op1=Close
-recol1s=2
-recol1d=23
-recol2s=3
-recol2d=16
-recol3s=7089
-recol3d=61
-category=door_right_opened
-param=next_loc_stage,loc_2548
+param=open_sound,grate_open
+param=close_sound,grate_close
 
 [blackknight_double_door_left]
 name=Large door

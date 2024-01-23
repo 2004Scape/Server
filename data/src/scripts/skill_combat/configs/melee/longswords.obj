@@ -256,4 +256,4 @@ param=stabattack_anim,human_sword_stab
 param=defend_anim,human_sword_defend
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
-param=readyanim,human_ready_sword_up
+param=ready_baseanim,human_ready_sword_up

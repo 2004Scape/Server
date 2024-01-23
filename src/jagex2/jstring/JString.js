@@ -45,3 +45,15 @@ export function fromBase37(value) {
 
     return chars.slice(12 - len).join('');
 }
+
+export function toTitleCase(str) {
+    return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}
+
+export function toSafeName(name) {
+    return fromBase37(toBase37(name));
+}
+
+export function toDisplayName(name) {
+    return toTitleCase(toSafeName(name).replaceAll('_', ' '));
+}

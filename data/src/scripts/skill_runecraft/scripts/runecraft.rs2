@@ -83,7 +83,7 @@ p_delay(3);
 
 
 [opheld4,_talismans]
-def_obj $last_item = last_useitem;
+def_obj $last_item = last_item;
 def_dbrow $data = ~get_runecraft_data(oc_param($last_item, rune_type));
 // if they're already in the temple
 if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
@@ -127,7 +127,6 @@ if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
 [proc,talisman_locate_coord](coord $altar_coord, coord $player_coord)
 def_int $delta_x = calc(coordx($altar_coord) - coordx($player_coord));
 def_int $delta_z = calc(coordz($altar_coord) - coordz($player_coord));
-mes("<tostring($delta_x)>, <tostring($delta_z)>");
 if ($delta_x < 0 & $delta_z > 0) {
     mes("The talisman pulls towards the north-west.");
 } else if ($delta_x < 0 & $delta_z < 0) {

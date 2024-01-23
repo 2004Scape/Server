@@ -1,0 +1,102 @@
+[label,scroll_pirate_message]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, ^string_empty);
+if_settext(scroll:com_5, "Visit the city of the White Knights, in the park");
+if_settext(scroll:com_6, "Saradomin points to the X which marks the spot.");
+if_settext(scroll:com_7, ^string_empty);
+if_settext(scroll:com_8, ^string_empty);
+if_settext(scroll:com_9, ^string_empty);
+if_settext(scroll:com_10, ^string_empty);
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_openmainmodal(scroll);
+
+[label,scroll_elena_hangover_cure_recipe]
+// Get a bucket of milk.
+// Then grind some chocolate with a pestle and mortar.
+// Add the ground chocolate to the milk.
+// Finally add some snape grass.
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, ^string_empty);
+if_settext(scroll:com_5, ^string_empty);
+if_settext(scroll:com_6, "Got a bncket of nnilk");
+if_settext(scroll:com_7, "Tlen qrind sorne lcoculate");
+if_settext(scroll:com_8, "vnith a pestal and rnortar");
+if_settext(scroll:com_9, "ald the grourd dlocolate to tho milt");
+if_settext(scroll:com_10, "fnales add 5cme snape gras5");
+if_setcolour(scroll:com_6, ^black_rgb);
+if_setcolour(scroll:com_7, ^black_rgb);
+if_setcolour(scroll:com_8, ^black_rgb);
+if_setcolour(scroll:com_9, ^black_rgb);
+if_setcolour(scroll:com_10, ^black_rgb);
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_openmainmodal(scroll);
+
+[label,scroll_barcrawl_card]
+if_settext(scroll:com_2, "@blu@The Official Alfred Grimhand Barcrawl!");
+if_settext(scroll:com_3, ^string_empty);
+if(testbit(%barcrawl_progress, ^bluemoon_index) = true) {
+    if_settext(scroll:com_4, "@gre@BlueMoon Inn - Completed!");
+} else {
+    if_settext(scroll:com_4, "@red@BlueMoon Inn - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^blurberry_index) = true) {
+    if_settext(scroll:com_5, "@gre@Blurberry's Bar - Completed!");
+} else {
+    if_settext(scroll:com_5, "@red@Blurberry's Bar - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^deadman_index) = true) {
+    if_settext(scroll:com_6, "@gre@Dead Man's Chest - Completed!");
+} else {
+    if_settext(scroll:com_6, "@red@Dead Man's Chest - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^dragoninn_index) = true) {
+    if_settext(scroll:com_7, "@gre@Dragon Inn - Completed!");
+} else {
+    if_settext(scroll:com_7, "@red@Dragon Inn - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^flyinghorse_index) = true) {
+    if_settext(scroll:com_8, "@gre@Flying Horse Inn - Completed!");
+} else {
+    if_settext(scroll:com_8, "@red@Flying Horse Inn - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^forestersarms_index) = true) {
+    if_settext(scroll:com_9, "@gre@Foresters Arms - Completed!");
+} else {
+    if_settext(scroll:com_9, "@red@Foresters Arms - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^jollyboar_index) = true) {
+    if_settext(scroll:com_10, "@gre@Jolly Boar Inn - Completed!");
+} else {
+    if_settext(scroll:com_10, "@red@Jolly Boar Inn - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^karamjaspirits_index) = true) {
+    if_settext(scroll:com_11, "@gre@Karamja Spirits Bar - Completed!");
+} else {
+    if_settext(scroll:com_11, "@red@Karamja Spirits Bar - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^risingsun_index) = true) {
+    if_settext(scroll:com_12, "@gre@Rising Sun Inn - Completed!");
+} else {
+    if_settext(scroll:com_12, "@red@Rising Sun Inn - Not Completed...");
+}
+
+if(testbit(%barcrawl_progress, ^rustyanchor_index) = true) {
+    if_settext(scroll:com_13, "@gre@Rusty Anchor Inn - Completed!");
+} else {
+    if_settext(scroll:com_13, "@red@Rusty Anchor Inn - Not Completed...");
+}
+if_openmainmodal(scroll);

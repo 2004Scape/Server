@@ -136,16 +136,13 @@ export default abstract class PathingEntity extends Entity {
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
-            // update zone entities
+            World.getZone(previousX, previousZ, previousLevel).leave(this);
+            World.getZone(this.x, this.z, this.level).enter(this);
+
             if (this instanceof Player) {
-                World.getZone(previousX, previousZ, previousLevel).removePlayer(this);
-                World.getZone(this.x, this.z, this.level).addPlayer(this);
                 if (previousLevel != this.level) {
                     this.loadedZones = {};
                 }
-            } else if (this instanceof Npc) {
-                World.getZone(previousX, previousZ, previousLevel).removeNpc(this);
-                World.getZone(this.x, this.z, this.level).addNpc(this);
             }
         }
     }
@@ -190,9 +187,8 @@ export default abstract class PathingEntity extends Entity {
      */
     queueWaypoint(x: number, z: number, forceMove: boolean = false): void {
         this.waypoints = [];
-        this.waypoints.push({ x: x, z: z });
-        this.waypoints.reverse();
-        this.waypointIndex = this.waypoints.length - 1;
+        this.waypoints.push({ x, z });
+        this.waypointIndex = 0;
         this.forceMove = forceMove;
     }
 
@@ -244,7 +240,7 @@ export default abstract class PathingEntity extends Entity {
      * Check if the number of tiles moved is > 2, we use Teleport for this PathingEntity.
      */
     validateDistanceWalked() {
-        const distanceCheck = Position.distanceTo({ x: this.x, z: this.z }, { x: this.lastX, z: this.lastZ }) > 2;
+        const distanceCheck = Position.distanceTo(this, { x: this.lastX, z: this.lastZ, width: this.width, length: this.length }) > 2;
         if (distanceCheck) {
             this.tele = true;
             this.jump = true;
@@ -258,7 +254,7 @@ export default abstract class PathingEntity extends Entity {
         let tele = this.tele;
 
         // convert p_teleport() into walk or run
-        const distanceMoved = Position.distanceTo(this, { x: this.lastX, z: this.lastZ });
+        const distanceMoved = Position.distanceTo(this, { x: this.lastX, z: this.lastZ, width: this.width, length: this.length });
         if (tele && !this.jump && distanceMoved <= 2) {
             if (distanceMoved === 2) {
                 // run
@@ -290,6 +286,9 @@ export default abstract class PathingEntity extends Entity {
     }
 
     inOperableDistance(target: Player | Npc | Loc | Obj | { x: number, z: number, level: number, width: number, length: number }): boolean {
+        if (!target || target.level !== this.level) {
+            return false;
+        }
         if (target instanceof PathingEntity) {
             return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         } else if (target instanceof Loc) {
@@ -300,8 +299,16 @@ export default abstract class PathingEntity extends Entity {
         return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
     }
 
-    inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, width: number, length: number }): boolean {
-        return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length) && Position.distanceTo(this, target) <= range;
+    inApproachDistance(range: number, target: Player | Npc | Loc | Obj | { x: number, z: number, level: number, width: number, length: number }): boolean {
+        if (!target || target.level !== this.level) {
+            return false;
+        }
+        if (target instanceof PathingEntity && World.naivePathFinder.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
+            // pathing entity has a -2 shape basically (not allow on same tile) for ap.
+            // you are not within ap distance of pathing entity if you are underneath it.
+            return false;
+        }
+        return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER) && Position.distanceTo(this, target) <= range;
     }
 
     getCollisionStrategy(): CollisionStrategy | null {

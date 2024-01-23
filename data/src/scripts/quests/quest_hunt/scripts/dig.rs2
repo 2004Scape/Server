@@ -34,7 +34,7 @@ inv_add(inv, emerald, 1);
 %hunt_progress = 4;
 
 // https://web.archive.org/web/20080325101204/http://www.global-rs.com/quests/piratestreasure/
-~send_quest_complete(quest_journal:hunt, emerald, 250, 2, "You have completed the Pirate's Treasure Quest!");
+~send_quest_complete(quest_journal:hunt, emerald, 250, ^hunt_questpoints, "You have completed the Pirate's Treasure Quest!");
 
 [label,wyson_attack]
 npc_say("Hey, leave off my flowers!");

@@ -1,0 +1,155 @@
+// i used some transcribed dialogue from this. https://web.archive.org/web/20051104084237/http://www.nomadgaming.com/index.php?page=rs2_dragonslayer
+
+[opnpc1,npc_747]
+if (%dragon_progress = ^quest_dragon_spoken_to_guildmaster) {
+    // rsc
+    ~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
+    @multi3("Can you sell me some Rune plate mail?", oziach_can_sell_rune_plate, "I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
+}
+// osrs, very similar to rsc
+if (%dragon_progress < ^dragon_complete) {
+    ~chatnpc(quiz, "So how is thy quest going?");
+    @multi2("So where can I find this dragon?", oziach_find_dragon, "Where can I get an antidragon shield?", oziach_dragon_shield);
+}
+if (%dragon_progress = ^dragon_complete) {
+    @oziach_dragon_complete;
+}
+//default
+~chatnpc(shifty, "Aye, 'tis a fair day my friend.");
+@multi2("I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
+
+[opnpc3,npc_747]
+if (%dragon_progress < ^quest_dragon_spoken_to_oziach) {
+    //osrs
+    ~chatnpc(angry, "I ain't got nothing to sell ye, adventurer.");
+    return;
+}
+if (%dragon_progress < ^dragon_complete) {
+    // osrs
+    ~chatnpc(angry, "I'm not sellin' ye anything till you've slayed that dragon!");
+    return;
+}
+if (%dragon_progress = ^dragon_complete) {
+    @oziach_dragon_complete;
+}
+~openshop_activenpc;
+
+// rsc and osrs
+[label,oziach_not_friend]
+~chatplayer(angry, "I'm not your friend.");
+~chatnpc(angry, "I'm surprised if you're anyone's friend with those kind of manners.");
+
+[label,oziach_can_sell_rune_plate]
+// rsc
+~chatplayer(quiz, "Can you sell me some Rune plate mail?");
+// rsc & osrs
+~chatnpc(shock, "So, how does thee know I 'ave some?");
+@multi2("The guildmaster of the Champions' Guild told me.", oziach_guildmaster, "I am a master detective.", oziach_detective);
+
+[label,oziach_nice_day]
+~chatplayer(neutral, "Yes, it's a very nice day.");
+// rsc. osrs oziach is really mean here for no reason :(
+~chatnpc(neutral, "Aye, may the gods walk by yer side.");
+
+// i think part of some of the later dragon slayer reworks made oziach meaner
+// so i took the mean part out of the osrs dialogue
+[label,oziach_detective]
+~chatplayer(neutral, "I am a master detective.");
+//Line breaks are guessed, based off other dialogues of the time. dialogue also says rune platemail, so its probably old.
+~chatnpc(neutral, "Well, however you found out about it,|I'm not going to let just anyone wear my rune platemail.|It's only for heroes.");
+
+// before the rework, oziach would give instructions on map pieces and what not.
+// the reworked dialogue shows oziach saying guild master tells the player oziach has a quest to give.
+// Seems like that part didnt exist before the rework. So im using the rsc dialogue here
+[label,oziach_guildmaster]
+~chatplayer(neutral, "The guildmaster of the Champions' Guild told me.");
+// i do line breaks here to match rsc's
+~chatnpc(neutral, "Well if you're worthy of his advise, you must have something going for you.");
+~chatnpc(neutral, "He has been known to let some weaklin's into his guild though.");
+~chatnpc(neutral, "I don't want just any old pumpkinmush to have this armour jus cos they have a large amount of cash.");
+~chatnpc(neutral, "This is armour fit for a hero to be sure.|So you'll need to prove to me that you're a hero before you can buy some.");
+def_int $choice = ~p_choice2("So how am I meant to prove that?", 0, "That's a pity, I'm not a hero.", 1);
+if ($choice = 1) {
+    ~chatplayer(sad, "That's a pity, I'm not a hero.");
+    return;
+}
+
+~chatplayer(quiz, "So how am I meant to prove that?");
+// extra line break after "Evlarg,"
+~chatnpc(neutral, "Well if you want to prove yourself, you could try and defeat Elvarg, the dragon of the Isle of Crandor.");
+$choice = ~p_choice3("A dragon, that sounds like fun!", 0, "And will I need anything to defeat this dragon?", 1, "I may be a champion, but I don't think I'm up to dragon killing yet", 2);
+if ($choice = 2) {
+    ~chatplayer(sad, "I may be a champion, but I don't think I'm up to dragon killing yet");
+    ~chatnpc(neutral, "Yes, I can understand that.");
+    return;
+}
+if ($choice = 0) {
+    ~chatplayer(neutral, "A dragon, that sounds like fun!");
+} else if ($choice = 1) {
+    ~chatplayer(neutral, "And will I need anything to defeat this dragon?");
+    ~chatnpc(neutral, "It's funny you should say that.");
+}
+
+~chatnpc(neutral, "Elvarg really is one of the most powerful dragons|I really wouldn't recommend charging in without special equipment.");
+~chatnpc(neutral, "Her breath is the main thing to watch out for.|You can get fried very fast, unless you have a special flameproof antidragon shield.");
+~chatnpc(neutral, "It won't totally protect you|but it should prevent some of the damage to you.");
+%dragon_progress = ^quest_dragon_spoken_to_oziach; //rsc does it here
+@multi2("So where can I find this dragon?", oziach_find_dragon, "Where can I get an antidragon shield?", oziach_dragon_shield);
+
+
+[label,oziach_dragon_shield]
+~chatplayer(quiz, "Where can I get an antidragon shield?");
+~chatnpc(neutral, "I believe the Duke of Lumbridge Castle may have one in his armoury.");
+%dragon_shield = ^quest_dragon_knows_about_shield;
+@multi2("So where can I find this dragon?", oziach_find_dragon, "Ok I'll try and get everything together.", oziach_farewell);
+
+[label,oziach_find_dragon]
+~chatplayer(quiz, "So where can I find this dragon?");
+~chatnpc(neutral, "That is a problem too yes.|No one knows where the Isle of Crandor is located.");
+~chatnpc(neutral, "There was a map, but it has torn up into three pieces which are now scattered across Asgarnia.");
+~chatnpc(neutral, "You'll also struggle to find someone bold enough to take a ship to Crandor Island");
+
+@multi4("Where is the first piece of the map?", oziach_first_piece, "Where is the second piece of the map?", oziach_second_piece, "Where is the third piece of the map?", oziach_third_piece, "Where can I get an antidragon shield?", oziach_dragon_shield);
+
+[label,oziach_first_piece]
+~chatplayer(quiz, "Where is the first piece of the map?");
+~chatnpc(neutral, "Deep in a strange building known as Melzar's maze|located north west of Rimmington.");
+if (%dragon_progress < ^quest_dragon_maze_key) {
+    ~chatnpc(neutral, "You will need this to get in|this is the key to the front entrance to the maze.");
+    inv_add(inv, maze_key, 1);
+    ~objbox(maze_key, "Oziach hands you a key.");
+    %dragon_progress = ^quest_dragon_maze_key;
+}
+@multi4("Where can I get an antidragon shield?", oziach_dragon_shield, "Where is the second piece of the map?", oziach_second_piece, "Where is the third piece of the map?", oziach_third_piece, "Ok I'll try and get everything together.", oziach_farewell);
+
+[label,oziach_second_piece]
+~chatplayer(quiz, "Where is the second piece of the map?");
+%dragon_oracle = ^quest_dragon_knows_about_oracle;
+~chatnpc(neutral, "You will need to talk to the oracle on the ice mountain.");
+@multi4("Where can I get an antidragon shield?", oziach_dragon_shield, "Where is the first piece of the map?", oziach_first_piece, "Where is the third piece of the map?", oziach_third_piece, "Ok I'll try and get everything together.", oziach_farewell);
+
+[label,oziach_third_piece]
+~chatplayer(quiz, "Where is the third piece of the map?");
+~chatnpc(neutral, "That was stolen by one of the goblins from the goblin village.");
+%dragon_goblin = ^quest_dragon_knows_about_goblin;
+@multi4("Where can I get an antidragon shield?", oziach_dragon_shield, "Where is the first piece of the map?", oziach_first_piece, "Where is the second piece of the map?", oziach_second_piece, "Ok I'll try and get everything together.", oziach_farewell);
+
+[label,oziach_farewell]
+~chatplayer(neutral, "Ok I'll try and get everything together.");
+~chatnpc(neutral, "Fare ye well.");
+
+[label,oziach_dragon_complete]
+// rsc
+~chatplayer(happy, "I have slain the dragon!");
+~chatnpc(happy, "Well done!");
+%dragon_progress = calc(^dragon_complete + 1);
+def_int $choice = ~p_choice2("Can I buy a rune plate mail body now please?", 0, "Thank you.", 1);
+if ($choice = 1) {
+    ~chatplayer(happy, "Thank you.");
+    return;
+}
+if ($choice = 0) {
+    ~chatplayer(happy, "Can I buy a rune plate mail body now please?");
+    ~openshop_activenpc;
+    return;
+}

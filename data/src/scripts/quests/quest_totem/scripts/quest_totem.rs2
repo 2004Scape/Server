@@ -1,6 +1,6 @@
 [oploc1,loc_2706]
 if(coordz(coord) > coordz(loc_coord)) {
-    ~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
     return;
 }
 mes("This door is securely locked.");
@@ -100,12 +100,13 @@ if(%handelmort_traps_disabled = 0) {
     if_openmainmodal(tribal_door2);
     return;
 }
-~open_and_close_door(loc_1535, loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
 
 [oploc1,loc_2711]
 // OSRS seems to only allow interaction from the top side of the ladder, so just going to assume
 // this is probably how it worked in 2004
 def_coord $start = movecoord(loc_coord, 0, 0, 3);
+p_delay(0);
 p_walk($start);
 p_delay(calc(distance(coord, $start) + 1));
 if(%handelmort_traps_disabled >= 2) {
@@ -125,6 +126,7 @@ p_delay(2);
 
 [oploc2,loc_2711]
 def_coord $start = movecoord(loc_coord, 0, 0, 3);
+p_delay(0);
 p_walk($start);
 p_delay(calc(distance(coord, $start) + 1));
 if(stat(thieving) < 21) {
@@ -162,6 +164,6 @@ if(%totem_progress = ^totem_crate_marked) {
 
 [queue,totem_quest_complete]
 %totem_progress = ^totem_complete;
-~send_quest_complete(quest_journal:totem, totem, 250, 1, "You have completed the\\nTribal Totem Quest!");
+~send_quest_complete(quest_journal:totem, totem, 250, ^totem_questpoints, "You have completed the\\nTribal Totem Quest!");
 givexp(thieving, 17750);
 inv_add(inv, swordfish, 5);

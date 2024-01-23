@@ -1,0 +1,31 @@
+[oploc1,loc_2543] @elena_open_manhole;
+[oploc1,loc_2544] @elena_enter_manhole;
+[oploc1,loc_2545] @elena_close_manhole;
+
+[label,elena_open_manhole]
+loc_findallzone(^quest_elena_west_ardy_manhole_coord); // the manhole is not in the same zone as the player tele.
+while (loc_findnext = true) {
+    // if the manhole is closed we open it when getting out basically.
+    if (loc_type = loc_2543) {
+        loc_change(loc_param(next_loc_stage), 500);
+        loc_add(movecoord(loc_coord, 0, 0, -1), loc_2545, loc_angle, centrepiece_straight, 500);
+    }
+}
+
+[label,elena_enter_manhole]
+mes("You climb down through the manhole.");
+anim(human_pickupfloor, 0);
+p_delay(0);
+p_telejump(^quest_elena_sewer_sewerpipe_coord);
+facesquare(movecoord(coord, 0, 0, 1)); // north
+
+[label,elena_close_manhole]
+loc_findallzone(^quest_elena_west_ardy_manhole_coord); // the manhole is not in the same zone as the player tele.
+while (loc_findnext = true) {
+    // if the manhole is closed we open it when getting out basically.
+    if (loc_type = loc_2544) {
+        loc_change(loc_param(next_loc_stage), 500);
+    } else if (loc_type = loc_2545) {
+        loc_del(500);
+    }
+}

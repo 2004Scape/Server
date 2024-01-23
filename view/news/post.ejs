@@ -1,0 +1,75 @@
+<%- include('../_partial/header.ejs'); %>
+
+<%- include('../_components/frame-top.ejs'); %>
+<%- include('../_components/content-start.ejs'); %>
+
+<table>
+  <tr>
+    <td>
+      <table bgcolor=black cellpadding=1>
+        <tr>
+          <% if (typeof prev !== 'undefined') { %>
+          <td class=b bgcolor=#474747 background=/img/stoneback.gif>
+            <center><a href='/news/<%= prev.id %>'><img src=/img/prevpage.gif border=0 width=74 height=35></a></center>
+          </td>
+          <% } else { %>
+          <td width="88px">
+            &nbsp
+          </td>
+          <% } %>
+        </tr>
+      </table>
+    </td>
+
+    <td width=40>&nbsp</td>
+
+    <td valign=bottom>
+      <table width=250 bgcolor=black cellpadding=4>
+        <tr>
+          <td class=e>
+            <center><b>Latest <%= category.name %> News</b><br><a href="/title" class=c>Main Menu</a></center>
+          </td>
+        </tr>
+      </table>
+    </td>
+
+    <td width=40></td>
+
+    <td>
+      <table bgcolor=black cellpadding=1>
+        <tr>
+          <% if (typeof next !== 'undefined') { %>
+          <td class=b bgcolor=#474747 background=/img/stoneback.gif>
+            <center><a href='/news/<%= next.id%>'><img src=/img/nextpage.gif border=0 width=74 height=35></a></center>
+          </td>
+          <% } else { %>
+          <td width="88px">
+            &nbsp
+          </td>
+          <% } %>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<img src='/img/title/blank.gif' width=1 height=3><br>
+
+<a href='/news?cat=0' class=white>All Categories</a> -
+<% let counter = 1; for (let i = 0; i < categories.length; i++) { const cat = categories[i]; %>
+<a href='/news?cat=<%= cat.id %>' class="<%= cat.style %>"><%= cat.name %></a><% if (counter >= 3) { %><br><% counter = 0; } else if (i < categories.length - 1) { counter++; %> -<% } %>
+<% } %>
+
+<img src='/img/title/blank.gif' width=1 height=3><br>
+
+<table width=500 bgcolor=black cellpadding=4>
+  <tr>
+    <td class=e>
+      <center><b><%= date %> - <%= newspost.title %></b></center><br>
+      <%- newspost.content %>
+    </td>
+  </tr>
+</table>
+
+<%- include('../_components/content-end.ejs'); %>
+<%- include('../_partial/footer.ejs'); %>

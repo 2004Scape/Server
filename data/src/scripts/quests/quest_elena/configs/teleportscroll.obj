@@ -1,0 +1,13 @@
+[elena_teleport_scroll]
+members=yes
+cost=1
+model=model_2600_obj
+2dxof=1
+2dyof=7
+2dzoom=1040
+2dyan=120
+2dxan=380
+name=A magic scroll
+desc=Maybe I should read it...
+iop1=Read
+weight=20g

@@ -1,0 +1,228 @@
+[dragon_slayer_magic_chest_closed]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+op1=Open
+forceapproach=top
+
+[dragon_slayer_magic_chest_opened]
+name=Chest
+desc=It's closed.
+model=model_loc_76
+op1=Search
+op2=Close
+forceapproach=top
+
+[lady_lumbridge_hole]
+name=Hole
+desc=This ship's not getting far with that.
+model=model_loc_281
+active=yes
+op1=Repair
+sharelight=yes
+
+[lady_lumbridge_ladder]
+name=Ladder
+desc=Takes me into the ship.
+model=model_loc_10
+active=yes
+op1=Climb-down
+mapscene=7
+
+[lady_lumbridge_ladder_shipwreck]
+name=Ladder
+desc=Takes me into the ship.
+model=model_loc_10
+active=yes
+op1=Climb-down
+mapscene=7
+
+[lady_lumbridge_ladder2]
+name=Ladder
+model=model_loc_11
+active=yes
+op1=Climb-up
+mapscene=7
+
+[dragonslayer_gangplank_board]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+
+[dragonslayer_gangplank_disembark]
+name=Gangplank
+desc=Handy for boarding the ship.
+model=model_loc_69
+active=yes
+op1=Cross
+
+[melzar_maze_entrance]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+
+[melzar_maze_red_door]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=960
+
+[melzar_maze_orange_door]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=6080
+
+[melzar_maze_yellow_door]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=11200
+
+[melzar_maze_blue_door]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=43968
+
+[melzar_maze_magenta_door]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=55232
+
+[melzar_maze_green_door]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=22313
+
+[melzar_maze_exit_door]
+name=Door
+desc=It's closed.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+
+[melzar_maze_chest_closed]
+name=Chest
+desc=It's closed.
+model=wooden_chest
+op1=Open
+forceapproach=top
+
+[melzar_maze_chest_opened]
+name=Chest
+desc=It's open.
+model=model_loc_76
+op1=Search
+op2=Close
+forceapproach=top
+
+[melzar_maze_ladder]
+name=Ladder
+model=model_loc_133
+active=yes
+op1=Climb-down
+mapscene=7
+
+[broken_ladder]
+name=Ladder
+desc=I can't climb this.
+model=model_loc_1752
+active=yes
+op1=Climb-up
+mapscene=7
+
+[elvarg_gate_right]
+name=Gate
+desc=It's closed.
+model=model_loc_52
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+param=next_loc_stage,loc_1563
+
+[elvarg_gate_left]
+name=Gate
+desc=It's closed.
+model=model_loc_52
+active=yes
+op1=Open
+mirror=yes
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+param=next_loc_stage,loc_1562
+
+[crandor_rock_opening]
+name=Rock opening
+desc=A collection of rocks over what looks like a depression.
+model=model_loc_748
+hillskew=yes
+width=2
+length=2
+occlude=yes
+op1=Climb-down
+
+[crandor_climbing_rope]
+name=Climbing rope
+desc=A rope hangs here that I can climb.
+model=model_loc_1762
+op1=Climb
+
+[crandor_secret_door]
+name=Wall
+desc=There is something strange about this wall...
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=23
+param=next_loc_stage,loc_1588

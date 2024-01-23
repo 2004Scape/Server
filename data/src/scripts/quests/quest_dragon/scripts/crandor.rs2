@@ -1,0 +1,44 @@
+
+// sand dune thing
+[oploc1,crandor_rock_opening]
+// no arrive delay, no anim lol https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=85
+p_teleport(0_44_150_17_58); //osrs
+
+// rope
+[oploc1,crandor_climbing_rope]
+p_teleport(0_44_50_17_57); // osrs
+
+[oploc1,crandor_secret_door]
+def_boolean $entering = ~check_axis_locactive(coord);
+if (%dragon_wall = ^false) {
+    // unlocked automatically when quest is completed?
+    // people here seem to think you cant sail back to crandor after the quest is completed
+    // so it'd prob have to be unlocked automatically
+    // https://www.neoseeker.com/forums/2410/t419625-neds-ship-on-crandor/
+    if ($entering = true | %dragon_progress >= ^dragon_complete) {
+        mes("You found a secret door!");
+        mes("You remember where the secret door is for future reference.");
+        %dragon_wall = ^true;
+    } else {
+        @nothing_interesting_happens;
+    }
+}
+~open_and_close_door(loc_param(next_loc_stage), $entering, false);
+
+
+// only one gate opened at a time. https://youtu.be/T0k1xEGK73A?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0
+[oploc1,elvarg_gate_right]
+def_boolean $entering = ~check_axis_locactive(coord);
+if (%dragon_progress ! ^quest_dragon_sailed_to_crandor & $entering = false) {
+    mes("This gate is locked."); // https://youtu.be/T0k1xEGK73A?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=159
+    return;
+}
+~open_and_close_metal_gate(loc_param(next_loc_stage), $entering, true);
+
+[oploc1,elvarg_gate_left]
+def_boolean $entering = ~check_axis_locactive(coord);
+if (%dragon_progress ! ^quest_dragon_sailed_to_crandor & $entering = false) {
+    mes("This gate is locked.");
+    return;
+}
+~open_and_close_metal_gate(loc_param(next_loc_stage), $entering, false);

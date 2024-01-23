@@ -94,6 +94,9 @@ const ObjOps: CommandHandlers = {
         const inv = state.popInt();
         const obj = state.activeObj;
 
+        const objType = ObjType.get(obj.type);
+        state.activePlayer.playerLog('Picked up item', objType.debugname as string);
+
         state.activePlayer.invAdd(inv, obj.id, obj.count);
         World.removeObj(obj, state.activePlayer);
     },

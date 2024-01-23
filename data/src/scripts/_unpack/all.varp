@@ -4,12 +4,6 @@
 
 [varp_8]
 
-[varp_9]
-
-[varp_15]
-
-[varp_16]
-
 [gnome_course_progress]
 scope=perm
 
@@ -30,9 +24,9 @@ protect=no
 
 [eat_delay]
 
-[eat_delay2]
+[varp_41]
 
-[drink_delay]
+[varp_42]
 
 [attackstyle]
 transmit=yes
@@ -144,19 +138,26 @@ scope=perm
 
 [skill_sound]
 
-[varp_132]
+[last_stolen_from_stall_baker]
+scope=perm
 
-[varp_133]
+[last_stolen_from_stall_tea]
+scope=perm
 
-[varp_134]
+[last_stolen_from_stall_silk]
+scope=perm
 
-[varp_135]
+[last_stolen_from_stall_fur]
+scope=perm
 
-[varp_136]
+[last_stolen_from_stall_silver]
+scope=perm
 
-[varp_137]
+[last_stolen_from_stall_spice]
+scope=perm
 
-[varp_138]
+[last_stolen_from_stall_gem]
+scope=perm
 
 [legends_progress]
 scope=perm
@@ -182,7 +183,8 @@ type=obj
 [glider_takeoff]
 transmit=yes
 
-[varp_154]
+[shantay_jail_progress]
+scope=perm
 
 [varp_155]
 
@@ -204,26 +206,12 @@ scope=perm
 
 [varp_164]
 
-[varp_165]
-
-[dragon_progress]
+[elena_progress]
 scope=perm
-
-[varp_177]
 
 [varp_181]
 
 [varp_182]
-
-[varp_183]
-
-[varp_184]
-
-[varp_185]
-
-[varp_186]
-
-[varp_187]
 
 [varp_189]
 
@@ -405,7 +393,8 @@ scope=perm
 
 [varp_276]
 
-[varp_277]
+[antifire]
+protect=no
 
 [varp_278]
 

@@ -1,0 +1,106 @@
+[opnpc1,holgart_ardougne]
+switch_int (%seaslug_progress) {
+    case ^seaslug_not_started: @holgart_prequest;
+    case ^seaslug_started: @holgart_wantboat;
+    case ^seaslug_spoken_holgart: @holgart_paste;
+    case ^seaslug_sailed_kent: @holgart_back_kent;
+    case ^seaslug_complete: @holgart_fancy;
+    case default: @holgart_strangethings;
+}
+
+[label,holgart_prequest]
+~chatplayer(happy, "Hello there.");
+~chatnpc(happy, "Well hello m'laddy, beautiful day isn't it.");
+~chatplayer(neutral, "Not bad I suppose.");
+~chatnpc(happy, "Just smell that sea air... beautiful.");
+~chatplayer(confused, "Hmm... lovely...");
+
+[label,holgart_wantboat]
+~chatplayer(happy, "Hello.");
+~chatnpc(happy, "Hello m'hearty.");
+~chatplayer(neutral, "I would like a ride on your boat to the fishing platform.");
+~chatnpc(sad, "I'm afraid it isn't sea worthy, it's full of holes.|To fill the holes I'll need some swamp paste.");
+~chatplayer(quiz, "Swamp paste?");
+~chatnpc(neutral, "Yes, swamp tar mixed with flour and heated over a fire.");
+~chatplayer(quiz, "Where can I find swamp tar?");
+// OSRS checks if you have in your inv here, and skips from stage 1 -> 3 if you do, since RSC doesn't have this check we'll copy that
+~chatnpc(sad, "Unfortunately the only supply of swamp tar is in the swamps below Lumbridge. It's too far for an old man like me to travel.");
+~chatnpc(neutral, "If you make me some swamp paste I'll give you a ride in my boat.");
+~chatplayer(neutral, "I'll see what I can do.");
+%seaslug_progress = ^seaslug_spoken_holgart;
+
+[label,holgart_paste]
+~chatplayer(happy, "Hello Holgart.");
+~chatnpc(quiz, "Hello m'hearty. Did you manage to make some swamp paste?");
+if(inv_total(inv, swamp_paste) < 1) {
+    ~chatplayer(sad, "I'm afraid not.");
+    ~chatnpc(neutral, "It's simply swamp tar mixed with flour heated over a fire. Unfortunately the only supply of swamp tar is in the swamps below Lumbridge.");
+    ~chatnpc(neutral, "I can't fix my row boat without it.");
+    ~chatplayer(neutral, "Ok, I'll try to find some.");
+    return;
+}
+~chatplayer(happy, "Yes, I have some here.");
+mes("You give Holgart the swamp paste.");
+inv_del(inv, swamp_paste, 1);
+%seaslug_progress = ^seaslug_boat_repaired;
+~chatnpc(neutral, "Superb, this looks great.");
+~mesbox("Holgart smears the paste over the under side of his boat.");
+~chatnpc(happy, "That's the job done, now we can go.|Jump aboard!");
+switch_int(~p_choice2("I'll come back later.", 1, "Okay, lets do it.", 2)) {
+    case 1:
+        ~chatplayer(neutral, "I'll come back later.");
+        ~chatnpc(neutral, "Okay then.|I'll wait here for you.");
+    case 2:
+        ~chatplayer(happy, "Okay, lets do it.");
+        ~board_ardougne_to_fishing_platform;
+}
+
+[label,holgart_strangethings]
+~chatplayer(happy, "Hello Holgart.");
+~chatnpc(neutral, "Hello again land lover.|There's some strange goings on,|on that platform, I tell you.");
+switch_int(~p_choice2("Will you take me there?", 1, "I'm keeping away from there.", 2)) {
+    case 1:
+        ~chatplayer(quiz, "Will you take me there?");
+        ~chatnpc(neutral, "Of course m'hearty. If that's what you want.");
+        ~board_ardougne_to_fishing_platform;
+    case 2:
+        ~chatplayer(neutral, "I'm keeping away from there.");
+        ~chatnpc(neutral, "Fair enough m'hearty.");
+}
+
+[label,holgart_back_kent]
+~chatplayer(confused, "Holgart, can you take me back out to Kent?");
+~chatnpc(neutral, "Righty ho traveller. Let's go.");
+~board_fishing_platform_to_island;
+
+[label,holgart_fancy]
+~chatplayer(happy, "Hello again Holgart.");
+~chatnpc(quiz, "Well hello again m'hearty.|Your land loving legs getting bored?|Fancy some cold wet underfoot?");
+~chatplayer(confused, "Pardon?");
+~chatnpc(neutral, "Fancy going out to sea?");
+switch_int(~p_choice2("I'll come back later.", 1, "Okay, let's do it.", 2)) {
+    case 1:
+        ~chatplayer(quiz, "I'll come back later.");
+        ~chatnpc(neutral, "Okay then. I'll wait here for you.");
+    case 2:
+        ~chatplayer(happy, "Okay, let's do it.");
+        ~chatnpc(neutral, "Hold on tight!");
+        ~board_ardougne_to_fishing_platform;
+}
+
+[proc,board_ardougne_to_fishing_platform]
+if_close;
+mes("You board the small row boat.");
+if(inv_total(inv, lit_torch) > 0) {
+    def_int $count = inv_total(inv, lit_torch);
+    inv_del(inv, lit_torch, $count);
+    inv_add(inv, unlit_torch, $count);
+    if($count > 1) {
+        mes("Your torches go out on the crossing.");
+    } else {
+        mes("Your torch goes out on the crossing.");
+    }
+}
+p_delay(2);
+p_telejump(^seaslug_platform_coord);
+~mesbox("You arrive at the fishing platform.");

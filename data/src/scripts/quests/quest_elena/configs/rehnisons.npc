@@ -1,0 +1,81 @@
+[ted_rehnison]
+vislevel=hide
+name=Ted Rehnison
+desc=The head of the Rehnison family.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=43072
+recol1d=4550
+recol2s=25238
+recol2d=3980
+model1=model_230_idk
+model2=model_185_obj_wear
+model3=model_250_idk
+model4=model_310_idk
+model5=model_151_idk
+model6=model_176_idk
+model7=model_275_idk
+head1=model_63_idk_head
+head2=model_82_idk_head
+moverestrict=indoors
+
+[martha_rehnison]
+vislevel=hide
+name=Martha Rehnison
+desc=A fairly poor looking woman.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+recol1s=43072
+recol1d=4550
+recol2s=25238
+recol2d=3980
+recol3s=8741
+recol3d=6449
+model1=model_378_idk
+model2=model_361_obj_wear
+model3=model_474_idk
+model4=model_351_idk
+model5=model_353_idk
+model6=model_438_idk
+head1=model_103_idk_head
+moverestrict=indoors
+
+[billy_rehnison]
+vislevel=hide
+name=Billy Rehnison
+desc=The Rehnisons' eldest son.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22426
+recol1d=8741
+recol2s=22418
+recol2d=908
+recol3s=11162
+recol3d=3980
+model1=model_2897_npc
+model2=model_2909_npc
+model3=model_2918_npc
+head1=model_53_idk_head
+moverestrict=indoors
+
+[milli_rehnison]
+vislevel=hide
+name=Milli Rehnison
+desc=She doesn't seem very happy.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22426
+recol1d=6449
+recol2s=22418
+recol2d=908
+recol3s=11162
+recol3d=3980
+model1=model_2902_npc
+model2=model_2911_npc
+model3=model_2918_npc
+head1=model_118_idk_head
+moverestrict=indoors

@@ -174,10 +174,20 @@ export default class ScriptRunner {
 
                 state.self.wrappedMessageGame('stack backtrace:');
                 state.self.wrappedMessageGame(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
+
+                let trace = 1;
                 for (let i = state.fp; i > 0; i--) {
                     const frame = state.frames[i];
                     if (frame) {
-                        state.self.wrappedMessageGame(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                        trace++;
+                        state.self.wrappedMessageGame(`    ${trace}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                    }
+                }
+                for (let i = state.debugFp; i >= 0; i--) {
+                    const frame = state.debugFrames[i];
+                    if (frame) {
+                        trace++;
+                        state.self.wrappedMessageGame(`    ${trace}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
                     }
                 }
             }
@@ -188,10 +198,20 @@ export default class ScriptRunner {
 
             console.error('stack backtrace:');
             console.error(`    1: ${state.script.name} - ${state.script.fileName}:${state.script.lineNumber(state.pc)}`);
+
+            let trace = 1;
             for (let i = state.fp; i > 0; i--) {
                 const frame = state.frames[i];
                 if (frame) {
-                    console.error(`    ${state.fp - i + 2}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                    trace++;
+                    console.error(`    ${trace}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
+                }
+            }
+            for (let i = state.debugFp; i >= 0; i--) {
+                const frame = state.debugFrames[i];
+                if (frame) {
+                    trace++;
+                    console.error(`    ${trace}: ${frame.script.name} - ${frame.script.fileName}:${frame.script.lineNumber(frame.pc)}`);
                 }
             }
 

@@ -68,10 +68,10 @@
 67=demon_death
 68=demon_death_greater
 69=demon_seq_69
-70=seq_70
-71=seq_71
+70=delrith_ready
+71=delrith_banish
 72=demon_seq_72
-73=seq_73
+73=nasty_tree_attack
 74=dog_walk
 75=dog_attack
 76=dog_block
@@ -191,7 +191,7 @@
 190=midget_seq_190
 191=midget_seq_191
 192=midget_seq_192
-193=midget_seq_193
+193=midget_block
 194=midget_seq_194
 195=midget_ready
 196=midget_death
@@ -429,7 +429,7 @@
 428=human_spear_stab
 429=human_spear_crush
 430=human_spear_defend
-431=seq_431
+431=human_khazardspear_defend
 432=seq_432
 433=seq_433
 434=seq_434
@@ -441,7 +441,7 @@
 440=human_spear_slash
 441=seq_441
 442=seq_442
-443=seq_443
+443=catapult_fire
 444=seq_444
 445=seq_445
 446=seq_446
@@ -488,7 +488,7 @@
 487=seq_487
 488=seq_488
 489=seq_489
-490=seq_490
+490=seaslug_crane_left
 491=seq_491
 492=seq_492
 493=seq_493
@@ -767,7 +767,7 @@
 766=seq_766
 767=seq_767
 768=seq_768
-769=seq_769
+769=human_steppingstonejump
 770=seq_770
 771=seq_771
 772=human_swim

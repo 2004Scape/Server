@@ -7,38 +7,37 @@ if ($lines = 0) {
     return;
 } else if ($lines = 1) {
     $interface = tutorialstep;
-    if_settext(tutorialstep:com_1, split_get($page, 0));
-    if_settext(tutorialstep:com_2, "");
-    if_settext(tutorialstep:com_3, "");
-    if_settext(tutorialstep:com_4, "");
+    if_settext(tutorialstep:line1, split_get($page, 0));
+    if_settext(tutorialstep:line2, "");
+    if_settext(tutorialstep:line3, "");
+    if_settext(tutorialstep:line4, "");
 } else if ($lines = 2) {
     $interface = tutorialstep;
-    if_settext(tutorialstep:com_1, split_get($page, 0));
-    if_settext(tutorialstep:com_2, split_get($page, 1));
-    if_settext(tutorialstep:com_3, "");
-    if_settext(tutorialstep:com_4, "");
+    if_settext(tutorialstep:line1, split_get($page, 0));
+    if_settext(tutorialstep:line2, split_get($page, 1));
+    if_settext(tutorialstep:line3, "");
+    if_settext(tutorialstep:line4, "");
 } else if ($lines = 3) {
     $interface = tutorialstep;
-    if_settext(tutorialstep:com_1, split_get($page, 0));
-    if_settext(tutorialstep:com_2, split_get($page, 1));
-    if_settext(tutorialstep:com_3, split_get($page, 2));
-    if_settext(tutorialstep:com_4, "");
+    if_settext(tutorialstep:line1, split_get($page, 0));
+    if_settext(tutorialstep:line2, split_get($page, 1));
+    if_settext(tutorialstep:line3, split_get($page, 2));
+    if_settext(tutorialstep:line4, "");
 } else if ($lines = 4) {
     $interface = tutorialstep;
-    if_settext(tutorialstep:com_1, split_get($page, 0));
-    if_settext(tutorialstep:com_2, split_get($page, 1));
-    if_settext(tutorialstep:com_3, split_get($page, 2));
-    if_settext(tutorialstep:com_4, split_get($page, 3));
+    if_settext(tutorialstep:line1, split_get($page, 0));
+    if_settext(tutorialstep:line2, split_get($page, 1));
+    if_settext(tutorialstep:line3, split_get($page, 2));
+    if_settext(tutorialstep:line4, split_get($page, 3));
 }
 if_openchatsticky($interface);
 
 [proc,tutorialstep](string $title, string $string)
-if_settext(tutorialstep:com_0, $title);
+if_settext(tutorialstep:title, $title);
 split_init($string, 450, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~tutorialstep_page($page);
-    p_pausebutton;
     $page = calc($page + 1);
 }

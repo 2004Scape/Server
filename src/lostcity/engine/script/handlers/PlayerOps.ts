@@ -16,38 +16,34 @@ import Environment from '#lostcity/util/Environment.js';
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
 
-let playerFindAllZone: Player[] = [];
-let playerFindAllZoneIndex = 0;
-
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: (state) => {
         const uid = state.popInt();
         const player = World.getPlayerByUid(uid);
 
-        if (player !== null) {
-            state.activePlayer = player;
-            state.pointerAdd(ActivePlayer[state.intOperand]);
-            state.pushInt(1);
-        } else {
-            state.pointerRemove(ActivePlayer[state.intOperand]);
+        if (!player) {
             state.pushInt(0);
+            return;
         }
+
+        state.activePlayer = player;
+        state.pointerAdd(ActivePlayer[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.P_FINDUID]: (state) => {
         const uid = state.popInt();
         const player = World.getPlayerByUid(uid);
 
-        if (player !== null && player.canAccess()) {
-            state.activePlayer = player;
-            state.pointerAdd(ActivePlayer[state.intOperand]);
-            state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
-            state.pushInt(1);
-        } else {
-            state.pointerRemove(ActivePlayer[state.intOperand]);
-            state.pointerRemove(ProtectedActivePlayer[state.intOperand]);
+        if (!player || !player.canAccess()) {
             state.pushInt(0);
+            return;
         }
+
+        state.activePlayer = player;
+        state.pointerAdd(ActivePlayer[state.intOperand]);
+        state.pointerAdd(ProtectedActivePlayer[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, (state) => {
@@ -253,10 +249,6 @@ const PlayerOps: CommandHandlers = {
             throw new Error('attempted to use a range that was null.');
         }
 
-        if (!state.activePlayer.target) {
-            return;
-        }
-
         state.activePlayer.apRange = apRange;
         state.activePlayer.apRangeCalled = true;
     }),
@@ -290,6 +282,9 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid oploc: ${type + 1}`);
         }
+        if (state.activePlayer.target !== null) {
+            return;
+        }
         state.activePlayer.setInteraction(state.activeLoc, ServerTriggerType.APLOC1 + type);
     }),
 
@@ -299,6 +294,9 @@ const PlayerOps: CommandHandlers = {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
         if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        if (state.activePlayer.target !== null) {
             return;
         }
         state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
@@ -351,8 +349,8 @@ const PlayerOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
-
         player.queueWaypoints(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
+        player.updateMovement(); // try to walk immediately
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, (state) => {
@@ -643,6 +641,7 @@ const PlayerOps: CommandHandlers = {
         const startPos = Position.unpackCoord(start);
         const endPos = Position.unpackCoord(end);
 
+        state.activePlayer.clearWalkingQueue();
         state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
     }),
 
@@ -751,6 +750,9 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opobj: ${type + 1}`);
         }
+        if (state.activePlayer.target !== null) {
+            return;
+        }
         state.activePlayer.setInteraction(state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
 
@@ -762,42 +764,15 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.hasWaypoints()) {
             return;
         }
+        if (state.activePlayer.target !== null) {
+            return;
+        }
         const target = state._activePlayer2;
         if (!target) {
             return;
         }
         state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYER1 + type);
     }),
-
-    // TODO: change to huntall
-    [ScriptOpcode.PLAYER_FINDALLZONE]: (state) => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const pos = Position.unpackCoord(coord);
-
-        playerFindAllZone = World.getZonePlayers(pos.x, pos.z, pos.level);
-        playerFindAllZoneIndex = 0;
-
-        if (state._activePlayer) {
-            state._activePlayer2 = state._activePlayer;
-            state.pointerAdd(ScriptPointer.ActivePlayer2);
-        }
-    },
-
-    [ScriptOpcode.PLAYER_FINDNEXT]: (state) => {
-        const player = playerFindAllZone[playerFindAllZoneIndex++];
-
-        if (player) {
-            state.activePlayer = player;
-            state.pointerAdd(ActivePlayer[state.intOperand]);
-        }
-
-        state.pushInt(player ? 1 : 0);
-    },
 
     [ScriptOpcode.ALLOWDESIGN]: (state) => {
         const allow = state.popInt();
@@ -826,6 +801,15 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.queue = state.activePlayer.queue.filter(req => req.script.id !== scriptId);
         state.activePlayer.weakQueue = state.activePlayer.weakQueue.filter(req => req.script.id !== scriptId);
     },
+
+    [ScriptOpcode.HEALENERGY]: (state) => {
+        const amount = state.popInt(); // 100=1%, 1000=10%, 10000=100%
+
+        const player = state.activePlayer;
+        const energyClamp = Math.min(Math.max(player.runenergy + amount, 0), 10000);
+        player.runenergy = energyClamp;
+        player.updateRunEnergy(energyClamp);
+    }
 };
 
 /**

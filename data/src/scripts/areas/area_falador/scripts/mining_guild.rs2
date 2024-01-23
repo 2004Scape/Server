@@ -13,4 +13,4 @@ if (stat(mining) < 60) {
     ~mesbox("You need a Mining level of 60 to access the Mining Guild.");
     return;
 }
-~open_and_close_door(loc_param(next_loc_stage), loc_coord, loc_angle, loc_shape, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);

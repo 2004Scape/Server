@@ -200,6 +200,9 @@ const InvOps: CommandHandlers = {
             return;
         }
 
+        const objType = ObjType.get(obj);
+        player.playerLog('Dropped item from', type.debugname as string, objType.debugname as string);
+
         const floorObj = new Obj(pos.level, pos.x, pos.z, obj, completed);
         World.addObj(floorObj, player, duration);
     }),
@@ -241,6 +244,9 @@ const InvOps: CommandHandlers = {
         if (completed == 0) {
             return;
         }
+
+        const objType = ObjType.get(obj.id);
+        player.playerLog('Dropped item from', type.debugname as string, objType.debugname as string);
 
         const floorObj = new Obj(pos.level, pos.x, pos.z, obj.id, completed);
         World.addObj(floorObj, player, duration);
@@ -452,6 +458,8 @@ const InvOps: CommandHandlers = {
             fromInv.delete(slot);
             toInv.add(obj.id, obj.count);
         }
+
+        // todo: update run weights
     }),
 
     // inv write

@@ -13,6 +13,13 @@ switch_obj (last_useitem) {
 switch_obj (last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case cake_tin : @make_uncooked_cake;
+    case chocolate_dust : @make_chocolate_milk(last_useslot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,chocolaty_milk]
+switch_obj (last_useitem) {
+    case snape_grass : @make_hangover_cure(last_useslot);
     case default : @nothing_interesting_happens;
 }
 
@@ -36,6 +43,13 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
 }
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
+    case bucket_milk : @make_chocolate_milk(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,snape_grass]
+switch_obj (last_useitem) {
+    case chocolaty_milk : @make_hangover_cure(last_slot);
     case default : @nothing_interesting_happens;
 }
 
@@ -101,3 +115,23 @@ inv_add(inv, chocolate_cake, 1);
 //givexp(cooking, 300);
 // display message
 mes("You make a chocolate cake.");
+
+[label,make_chocolate_milk](int $last)
+def_obj $chocolate = inv_getobj(inv, $last);
+if (oc_members($chocolate) = true) {
+    ~require_members_use_item;
+}
+inv_del(inv, $chocolate, 1);
+inv_del(inv, bucket_milk, 1);
+inv_add(inv, chocolaty_milk, 1);
+~objbox(chocolaty_milk, "You mix the chocolate into the bucket.");
+
+[label,make_hangover_cure](int $last)
+def_obj $snape_grass = inv_getobj(inv, $last);
+if (oc_members($snape_grass) = true) {
+    ~require_members_use_item;
+}
+inv_del(inv, $snape_grass, 1);
+inv_del(inv, chocolaty_milk, 1);
+inv_add(inv, hangover_cure, 1);
+~objbox(hangover_cure, "You mix the snape grass into the bucket.");
