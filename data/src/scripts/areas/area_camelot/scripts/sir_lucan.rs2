@@ -1,5 +1,14 @@
 [opnpc1,sir_lucan]
 ~chatnpc(happy, "Hello there adventurer.");
+if(%grail_progress > ^grail_not_started) {
+    switch_int (%grail_progress) {
+        case ^grail_started:
+            ~chatplayer(neutral, "I seek the Grail of legend!");
+            ~chatnpc(happy, "I'm afraid I don't have any suggestions...");
+            ~chatplayer(happy, "Thanks. I'll try and find someone who does.");
+    }
+    return;
+}
 switch_int (%arthur_progress) {
     case ^arthur_not_started:
         ~chatplayer(neutral, "I'm looking for a quest...");

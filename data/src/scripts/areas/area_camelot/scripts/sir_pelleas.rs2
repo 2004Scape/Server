@@ -1,5 +1,16 @@
 [opnpc1,sir_pelleas]
 ~chatnpc(happy, "Greetings to the court of King Arthur!");
+if(%grail_progress > ^grail_not_started) {
+    switch_int (%grail_progress) {
+        case ^grail_started:
+            ~chatplayer(neutral, "Any suggestions on finding the Grail?");
+            ~chatnpc(neutral, "My best guess would be some sort of spell. Merlin is our magic expert. Ask him?");
+            ~chatnpc(neutral, "Although having said that, I believe Galahad found its location once...");
+            ~chatplayer(quiz, "Really? Know where I can find him?");
+            ~chatnpc(neutral, "I'm afraid not. He left here many moons ago and I know not where he went.");
+    }
+    return;
+} 
 switch_int (%arthur_progress) {
     case ^arthur_not_started:
         ~chatplayer(neutral, "Hello. I'm looking for a quest. Who should I talk to?");

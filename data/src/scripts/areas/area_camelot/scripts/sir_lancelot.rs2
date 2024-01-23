@@ -1,5 +1,16 @@
 [opnpc1,sir_lancelot]
 ~chatnpc(happy, "Greetings! I am Sir Lancelot, the greatest Knight in the land! What do you want?");
+if(%grail_progress > ^grail_not_started) {
+    switch_int (%grail_progress) {
+        case ^grail_started:
+            ~chatplayer(neutral, "I am questing for the Holy Grail.");
+            ~chatnpc(neutral, "The Grail? Ha! Frankly, little <text_gender("man", "lady")>, you're not in that league.");
+            ~chatplayer(quiz, "Why do you say that?");
+            ~chatnpc(neutral, "You got lucky with freeing Merlin but there's no way a puny wannabe like you is going to find the Holy Grail where so many others have failed.");
+            ~chatplayer(sad, "We'll see about that.");
+    }
+    return;
+} 
 def_int $option;
 switch_int (%arthur_progress) {
     case ^arthur_not_started: $option = ~p_choice2("You're a little full of yourself aren't you?", 1, "I seek a quest!", 2);

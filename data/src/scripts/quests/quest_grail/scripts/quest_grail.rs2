@@ -1,0 +1,7 @@
+[oploc1,loc_24] 
+// merlin door
+if(%grail_progress > ^grail_not_started) {
+    ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+}
+mes("The door won't open.");

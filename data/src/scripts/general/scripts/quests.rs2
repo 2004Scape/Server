@@ -176,7 +176,7 @@ if (%tree_progress = ^tree_complete) {
 ~send_quest_progress_colour(quest_journal:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
 ~send_quest_progress_colour(quest_journal:zanaris, %zanaris_progress, ^zanaris_complete);
 ~send_quest_progress_colour(quest_journal:dragon, %dragon_progress, ^dragon_complete);
-if(%phoenixgang_progress > 0) { // shield of arrav
+if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) { // shield of arrav
     ~send_quest_progress_colour(quest_journal:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
 } else {
     ~send_quest_progress_colour(quest_journal:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);

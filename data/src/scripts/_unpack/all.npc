@@ -5389,7 +5389,7 @@ model10=model_323_obj_wear
 head1=model_65_npc_head
 head2=model_35_npc_head
 
-[npc_213]
+[merlin_workshop]
 vislevel=hide
 name=Merlin
 desc=A powerful Wizard of the Knights of the Round Table.
@@ -5505,7 +5505,7 @@ model5=model_426_npc
 model6=model_361_obj_wear
 head1=model_103_idk_head
 
-[npc_218]
+[galahad]
 vislevel=hide
 name=Galahad
 desc=A former Knight of the Round Table.

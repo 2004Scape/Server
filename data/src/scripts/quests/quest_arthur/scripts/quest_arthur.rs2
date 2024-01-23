@@ -1,7 +1,3 @@
-[oploc1,loc_24] 
-// merlin door
-mes("The door won't open.");
-
 [oploc1,loc_65] @leave_arhein_crate;
 [oploc2,loc_63]
 if(%arthur_progress >= ^arthur_spoken_lancelot) {

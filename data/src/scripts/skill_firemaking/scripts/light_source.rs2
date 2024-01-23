@@ -1,9 +1,3 @@
-[opobju,_light_source_unlit]
-if (last_useitem = tinderbox) {
-    @ignite_light_source(obj_type);
-}
-@nothing_interesting_happens;
-
 [label,ignite_light_source](obj $unlit_source)
 ~require_members_use_item;
 def_namedobj $product = oc_param($unlit_source, product);

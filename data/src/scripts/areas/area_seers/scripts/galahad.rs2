@@ -1,0 +1,14 @@
+[opnpc1,galahad]
+~chatnpc(neutral, "Welcome to my home.|It's rare for me to have guests!|Would you like a cup of tea?|I'll just put the kettle on.");
+~mesbox("Brother Galahad hangs a kettle over the fire.");
+switch_int(~p_choice2("Are you any relation to Sir Galahad?", 1, "Do you get lonely out here on your own?", 2)) {
+    case 1:
+        ~chatplayer(quiz, "Are you any relation to Sir Galahad?");
+        ~chatnpc(neutral, "I AM Sir Galahad.");
+        ~chatnpc(neutral, "Although I've retired as a Knight, and now live as a solitary monk. Also, I prefer to be known as brother rather than sir now. Half a moment, your cup of tea is ready.");
+    case 2:
+        ~chatplayer(neutral, "Do you get lonely out here on your own?");
+        ~chatnpc(neutral, "Sometimes I do, yes. Still not many people to share my solidarity with, as most of the religious men around here are worshippers of Saradomin. Half a moment, your cup of tea is ready.");
+}
+~mesbox("Sir Galahad gives you a cup of tea.");
+inv_add(inv, cup_of_tea, 1);

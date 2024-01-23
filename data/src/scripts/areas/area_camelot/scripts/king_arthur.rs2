@@ -1,8 +1,18 @@
 [opnpc1,king_arthur]
-switch_int(%arthur_progress) {
-    case ^arthur_freed_merlin: @arthur_merlin_free;
-    case ^arthur_complete: @arthur_grailstart;
-    case default: @arthur_firstmeet;
+if(%grail_progress > ^grail_not_started) {
+    switch_int(%grail_progress) {
+        case ^grail_started: 
+            ~chatnpc(quiz, "How goes thy quest?");
+            ~chatplayer(neutral, "I am making progress, but I have not recovered the Grail yet.");
+            ~chatnpc(neutral, "Well, the Grail IS very elusive, it may take some perseverance.");
+            ~chatnpc(neutral, "As I said before, speak to Merlin in the workshop by the library.");
+    }
+} else {
+    switch_int(%arthur_progress) {
+        case ^arthur_freed_merlin: @arthur_merlin_free;
+        case ^arthur_complete: @arthur_grailstart;
+        case default: @arthur_firstmeet;
+    }
 }
 
 [label,arthur_merlin_free]
@@ -11,12 +21,29 @@ switch_int(%arthur_progress) {
 queue(arthur_quest_complete, 0);
 
 [label,arthur_grailstart]
-// holy grail quest (not implemented yet)
 ~chatplayer(neutral, "Now I am a knight of the round table, do you have any more quests for me?");
 ~chatnpc(neutral, "Aha! I'm glad you are here! I am sending out various knights on an important quest. I was wondering if you too would like to take up this quest?");
-~chatplayer(sad, "I am weary of questing for the time being...");
-~chatnpc(neutral, "Maybe later then?");
-~chatplayer(neutral, "Maybe so.");
+switch_int(~p_choice2("Tell me of this quest.", 1, "I am weary of questing for the time being...", 2)) {
+    case 1:
+        ~chatplayer(quiz, "Tell me of this quest.");
+        ~chatnpc(neutral, "Well, we recently found out that the Holy Grail has passed into RuneScape world.");
+        ~chatnpc(neutral, "This is most fortuitous!");
+        ~chatnpc(neutral, "None of my knights ever did return with it last time. Now we have the opportunity to give it another go, maybe this time we will have more luck!");
+        switch_int(~p_choice2("I'd enjoy trying that.", 1, "I may come back and try that later.", 2)) {
+            case 1:
+                ~chatplayer(neutral, "I'd enjoy trying that.");
+                %grail_progress = ^grail_started;
+                ~chatnpc(neutral, "Go speak to Merlin. He may be able to give a better clue as to where it is now you have freed him from that crystal.");
+                ~chatnpc(neutral, "He has set up his workshop in the room next to the library.");
+            case 2:
+                ~chatplayer(neutral, "I may come back and try that later.");
+                ~chatnpc(neutral, "Be sure that you come speak to me soon then.");
+        }
+    case 2:
+        ~chatplayer(sad, "I am weary of questing for the time being...");
+        ~chatnpc(neutral, "Maybe later then?");
+        ~chatplayer(neutral, "Maybe so.");
+}
 
 [label,arthur_firstmeet]
 ~chatnpc(neutral, "Welcome to my court. I am King Arthur of the Knights of the Round Table.");

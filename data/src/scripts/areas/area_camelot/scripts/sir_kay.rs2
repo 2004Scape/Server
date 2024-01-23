@@ -2,7 +2,16 @@
 if(inv_total(inv, trail_clue_easy_simple_exp026) = 1) {
     @trail_sir_kay;
 }
-~chatnpc(happy, "Good morrow <text_gender("sirrah!", "madam")>!");
+~chatnpc(happy, "Good morrow <text_gender("sirrah", "madam")>!");
+if(%grail_progress > ^grail_not_started) {
+    switch_int (%grail_progress) {
+        case ^grail_started:
+            ~chatnpc(happy, "I hear you are questing for the Holy Grail?!");
+            ~chatplayer(neutral, "That's right. Any hints?");
+            ~chatnpc(happy, "Unfortunately not, Sirrah.");
+    }
+    return;
+}
 switch_int(%arthur_progress) {
     case ^arthur_not_started:
         ~chatplayer(neutral, "Morning. Know where an adventurer has to go to find a quest around here?");
