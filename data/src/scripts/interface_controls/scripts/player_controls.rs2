@@ -28,25 +28,20 @@ queue(set_auto_retaliate, 0, 0);
 [if_button,player_controls:com_4] 
 if_close;
 if (p_finduid(uid) = true) {
-    mes("p_finduid(uid) = true");
     %player_run = ^player_run_off;
     return;
 }
-mes("p_finduid(uid) = false");
 queue(set_run, 0, 0);
 
 [if_button,player_controls:com_5]
 if_close;
 if (p_finduid(uid) = true) {
-    mes("p_finduid(uid) = true");
     %player_run = ^player_run_on;
     return;
 }
-mes("p_finduid(uid) = false");
 queue(set_run, 0, 1);
 
 [queue,set_run](int $value)
-mes("Queue ran");
 %player_run = $value;
 
 // emotes
