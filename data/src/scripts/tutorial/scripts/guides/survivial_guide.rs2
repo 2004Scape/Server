@@ -3,7 +3,8 @@ switch_int(%tutorial_progress) {
     case ^survival_guide_start: @survival_guide_start;
     case 11: @survival_guide_look_at_menu;
     case 12, 13: @survival_guide_fire;
-    case 14: @survival_guide_fishing;
+    case 14: @survival_guide_look_at_menu;
+    case 15: @survival_guide_fishing;
 }
 
 [label,survival_guide_start]
@@ -37,30 +38,44 @@ if (inv_total(inv, tinderbox) < 1) {
 }
 
 [label,survival_guide_fishing]
-
+~chatnpc(neutral, "There's nothing like a good fire to warm the bones.|Next thing is getting food in our bellies. We'll need|something to cook. There are shrimp in the pond there.|So let's catch and cook some.");
+npc_findallzone(0_48_48_29_20);
+while (npc_findnext = true) {
+    if (npc_coord = 0_48_48_29_20 & npc_type = npc_952) {
+        hint_npc(npc_uid);
+    }
+}
+~objbox(net, "The Survival Guide gives you a @blu@Net@bla@!");
+inv_add(inv, net, 1);
+%tutorial_progress = 16;
+@tutorial_step_16_catch_shrimp;
 
 [label,set_hint_icon_surivial_guide]
-npc_findallzone(0_48_48_30_23);
+npc_findallzone(0_48_48_29_24);
 while (npc_findnext = true) {
     if (npc_type = npc_943) {
         hint_npc(npc_uid);
-        return;
     }
 }
 
-npc_findallzone(0_48_48_32_23);
+npc_findallzone(0_48_48_33_25);
 while (npc_findnext = true) {
     if (npc_type = npc_943) {
         hint_npc(npc_uid);
-        return;
     }
 }
 
-npc_findallzone(0_48_48_30_25);
+npc_findallzone(0_48_48_32_21);
 while (npc_findnext = true) {
     if (npc_type = npc_943) {
         hint_npc(npc_uid);
-        return;
+    }
+}
+
+npc_findallzone(0_48_48_29_21);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
     }
 }
 

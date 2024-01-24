@@ -1,10 +1,12 @@
 [label,tutorial_step_1_getting_started]
-~tutorialstep("Getting Started", "To start the tutorial use your left mouse button to click on the RuneScape Guide in this room. He is indicated by a flashing yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
+~tutorialstep("Getting started", "To start the tutorial use your left mouse-button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your|keyboard's arrow keys to rotate the view.");
 
+// Relevant in October 2006
 [label,tutorial_step_2_player_controls_spanner]
 if_settabflash(11);
 ~tutorialstep("", "Player controls|Please click on the flashing spanner icon found at the bottom right of your screen. This will display your player controls.");
 
+// Relevant in October 2006
 [label,tutorial_step_3_player_controls_left_click]
 ~tutorialstep("Player controls", "To start the tutorial use your left-mouse button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
 
@@ -48,14 +50,15 @@ if_settabflash(^tab_skills);
 [label,tutorial_step_16_catch_shrimp]
 ~tutorialstep("Catch some Shrimp.", "Click on the fishing spot, indicated by the flashing arrow.|Remember you can check your inventory by clicking the|backpack icon.");
 
-[label,tutorial_please_wait_fishing]
+[proc,tutorial_please_wait_fishing]
 ~tutorialstep("Please wait...", "This should only take a few seconds.|As you gain fishing experience you'll find that there are many|types of fish and many ways to catch them.");
 
 [label,tutorial_step_17_cook_shrimp]
-~tutorialstep("Cooking your shrimp.", "Now you have caught some shrep let's cook it. First light a|fire: Chop down a tree and then use the tinderbox on the logs.|If you've lost your axe or tinderbox Brynna will give you|another.");
+~tutorialstep("Cooking your shrimp.", "Now you have caught some shrimp let's cook it. First light a|fire: Chop down a tree and then use the tinderbox on the logs.|If you've lost your axe or tinderbox Brynna will give you|another.");
 
 [label,tutorial_step_18_burn_shrimp]
 ~tutorialstep("Burning your shrimp.", "You have just burnt your first shrimp. This is normal. As you|get more experience in cooking you will burn stuff less. Let's|try cooking, without burning it this time. First catch some|shrimp, then use them on a fire.");
 
 [label,tutorial_step_19_survival_recap]
-~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move on to the next instructor. Click on|the gate shown and follow the path. Remember you can move|the camera with the arrow keys.");
+hint_coord(2, 0_48_48_17_20, 100);
+~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move into the next instructor. Click on|the gate shown and follow the path. Remember you can move|the camera with the arrow keys.");

@@ -18,6 +18,7 @@ mes("God help us with the gate");
 // Runescape guide door
 [oploc1,loc_3014]
 if (%tutorial_progress < 4) {
+    ~mesbox("You need to talk to the 'Runescape Guide' before you are allowed to proceed through this door.");
     return;
 }
 

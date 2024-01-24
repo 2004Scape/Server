@@ -8,4 +8,16 @@
 ^prayer_guide_start = 70
 ^magic_guide_start = 80
 
+^tutorial_start = 0;
+^tutorial_player_customization = 1;
+^tutorial_runescape_guide_start = 2;
+^tutorial_open_settings_menu = 3;
+^tutorial_runescape_guide_more = 7;
+^tutorial_runescape_guide_exit = 10;
+
+^tutorial_survival_guide_start = 20;
+
+^tutorial_survival_guide_exit = 120;
+
+^tutorial_master_chef_start = 130;
 

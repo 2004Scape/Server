@@ -3,6 +3,8 @@
 // https://www.youtube.com/watch?v=yjxsitgrHpE&list=PL9FE4AE865F753045&index=61&t=72s
 // https://www.youtube.com/watch?v=xZ0pz8ZUit4&list=PL9FE4AE865F753045&index=28
 
+// Varp info: https://oldschool.runescape.wiki/w/RuneScape:Varplayer/281
+
 [label,start_tutorial]
 // logging into a new character might show old tabs so we're going to clear them
 if_settab(null, 0);
@@ -15,7 +17,7 @@ if_settab(null, 6);
 if_settab(null, 8);
 if_settab(null, 9);
 if_settab(logout, 10);
-if_settab(null, 11);
+if_settab(game_options, ^tab_game_options);
 if_settab(null, 12);
 if_settab(null, 13);
 
@@ -71,7 +73,15 @@ if (%tutorial_progress < 4) {
     while (npc_findnext = true) {
         if (npc_type = runescape_guide) {
             hint_npc(npc_uid);
-            return;
+        }
+    }
+}
+
+if (%tutorial_progress = 16) {
+    npc_findallzone(0_48_48_29_20);
+    while (npc_findnext = true) {
+        if (npc_coord = 0_48_48_29_20 & npc_type = npc_952) {
+            hint_npc(npc_uid);
         }
     }
 }
