@@ -33,7 +33,7 @@ spotanim_pl(spotanim_113, 92, 0);
 ~give_spell_xp($spell_data);
 // give 0.6x of item's value and delete item
 inv_del(inv, $item, 1);
-inv_add(inv, coins, scale(6, 10, oc_cost($item)));
+inv_add(inv, coins, max(scale(6, 10, oc_cost($item)), 1));
 // delay by 5 ticks
 %magic_utility_delay = calc(map_clock + 5);
 
@@ -70,7 +70,7 @@ spotanim_pl(spotanim_112, 92, 0);
 ~give_spell_xp($spell_data);
 // give 0.4x of item's value and delete item
 inv_del(inv, $item, 1);
-inv_add(inv, coins, scale(4, 10, oc_cost($item)));
+inv_add(inv, coins, max(scale(4, 10, oc_cost($item)), 1));
 // delay by 3 ticks
 %magic_utility_delay = calc(map_clock + 3);
 
