@@ -20,7 +20,7 @@ if(%cook_progress = 0) {
         ~chatnpc("sad", "Err thank you. It's a pretty ordinary cooks hat really.");
     } else if($option = 4) {
         ~chatplayer("neutral", "Can I use your range?");
-        ~chatnpc("happy", "Go ahead - it's a very good range. It's easier to use than most other ranges.");
+        ~chatnpc("happy", "Go ahead - it's a very good range.|It's easier to use than most other ranges.");
     }
 
 }

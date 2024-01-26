@@ -11,9 +11,9 @@ switch_int(%tree_progress) {
         ~chatplayer(quiz, "Do you know the coordinates of the Khazard stronghold?");
         ~chatnpc(happy, "I managed to get one, although it wasn't easy.");
         // (2006?) -> varbit 599, ~mesbox("The gnome tells you the @dbl@height coordinate.");
-        ~chatnpc(happy, "I managed to get one, although it wasn't easy.");
+        ~chatnpc(happy, "The height coordinate is 4.");
         ~chatplayer(happy, "Well done.");
-        ~chatnpc(neutral, "The other two tracker gnomes should have the other coordinates if they're still alive.");
+        ~chatnpc(neutral, "The other two tracker gnomes|should have the other coordinates|if they're still alive.");
         ~chatplayer(neutral, "OK, take care.");
     case ^tree_ballista_fired:
         ~chatplayer(neutral, "Hello again.");
@@ -40,19 +40,19 @@ switch_int(%tree_progress) {
         ~chatnpc(neutral, "The battle is far from over.|If you have a pure heart you will help us win.");
     case ^tree_finding_trackers:
         ~chatplayer(quiz, "Are you OK?");
-        ~chatnpc(bored, "They caught me spying on the stronghold. They beat and tortured me.");
+        ~chatnpc(bored, "They caught me spying on the stronghold.|They beat and tortured me.");
         ~chatnpc(angry, "But I didn't crack. I told them nothing. They can't break me!");
         ~chatplayer(sad, "I'm sorry little man.");
         ~chatnpc(shifty, "Don't be. I have the position of the stronghold!");
         // (2006?) -> varbit 600, ~mesbox("The gnome tells you the @dbl@y coordinate.");
-        ~chatnpc(shifty, "The y coordinate is 5");
+        ~chatnpc(shifty, "The y coordinate is 5.");
         ~chatplayer(happy, "Well done.");
         ~chatnpc(shifty, "Now leave before they find you and all is lost.");
         ~chatplayer(neutral, "Hang in there.");
         ~chatnpc(angry, "Go!");
     case ^tree_ballista_fired:
         ~chatplayer(neutral, "Hello again.");
-        ~chatnpc(neutral, "Well done, you've broken down their defences. This battle must be ours.");
+        ~chatnpc(neutral, "Well done, you've broken down their defences.|This battle must be ours.");
     case ^tree_retrieved_orb:
         ~chatplayer(neutral, "How are you tracker?");
         ~chatnpc(happy, "Now we have the orb I'm much better. Soon my comrades will come and free me.");

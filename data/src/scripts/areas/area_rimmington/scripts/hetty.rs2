@@ -1,19 +1,83 @@
 [opnpc1,hetty]
-if(%hetty_progress = 0) {
-    ~chatnpc("neutral", "What could you want with an old woman like me?");
-    def_int $option = ~p_choice2("I'm in search of a quest.", 1, "I've heard that you are a witch.", 2);
+switch_int(%hetty_progress) {
+    case ^hetty_not_started:
+        ~chatnpc("neutral", "What could you want with an old woman like me?");
+        def_int $option = ~p_choice2("I am in search of a quest.", 1, "I've heard that you are a witch.", 2);
+        if($option = 1) {
+            @hetty_search_quest;
+        } else if($option = 2) {
+            ~chatplayer("happy", "I've heard that you are a witch.");
+            ~chatnpc("sad", "Yes it does seem to be getting fairly common knowledge.");
+            ~chatnpc("sad", "I fear I may get a visit from the witch hunters of Falador before long.");
+        }
+    case ^hetty_started:
+        ~chatnpc(happy, "So have you found the things for the potion?");
+        if(inv_total(inv, burnt_meat) > 0 & inv_total(inv, rats_tail) > 0 & inv_total(inv, eye_of_newt) > 0 & inv_total(inv, onion) > 0) {
+            ~chatplayer("happy", "Yes I have everything!");
+            ~chatnpc("happy", "Excellent, can I have them then?");
+            ~mesbox("You pass the ingredients to Hetty and she puts them all into her cauldron. Hetty closes her eyes and begins to chant. The cauldron bubbles mysteriously.");
+            ~chatplayer("neutral", "Well, is it ready?");
+            inv_del(inv, burnt_meat, 1);
+            inv_del(inv, rats_tail, 1);
+            inv_del(inv, eye_of_newt, 1);
+            inv_del(inv, onion, 1);
+            %hetty_progress = ^hetty_objects_given;
+            ~chatnpc("happy", "Ok, now drink from the cauldron.");
+            return;
+        } else {
+            ~chatplayer("sad", "No, not yet."); // rsc
+            ~chatnpc("sad", "Well I can't make the potion without them! Remember... You need an eye of newt, a rat's tail, an onion, and a piece of burnt meat. Off you go dear!");
+        }
+    case ^hetty_objects_given: 
+        ~chatnpc(angry, "Well are you going to drink the potion or not?");
+    case ^hetty_complete:
+        ~chatnpc("happy", "How's your magic coming along?");
+        ~chatplayer("happy", "I'm practicing and slowly getting better.");
+        ~chatnpc("happy", "Good, good.");   
 
-    if($option = 1) {
-        @hetty_start;
-    } else if($option = 2) {
-        ~chatplayer("happy", "I've heard that you are a witch.");
-        ~chatnpc("sad", "Yes it does seem to be getting fairly common|knowledge.");
-        ~chatnpc("sad", "I fear I may get a visit from the witch hunters of|Falador before long.");
-    }
-} else if(%hetty_progress = 1) {
-    @hetty_step_2;
-} else if(%hetty_progress = ^hetty_complete) {
-    ~chatnpc("happy", "How's your magic coming along?");
-    ~chatplayer("happy", "I'm practicing and slowly getting better.");
-    ~chatnpc("happy", "Good, good.");
 }
+
+[label,hetty_search_quest]
+~chatplayer("neutral", "I am in search of a quest.");
+~chatnpc("neutral", "Hmmmm... Maybe I can think of something for you.");
+~chatnpc("happy", "Would you like to become more proficient in the dark arts?");
+
+def_int $option = ~p_choice3("Yes help me become one with my darker side.", 1, "No I have my principles and honour.", 2, "What, you mean improve my magic?", 3);
+if($option = 1) {
+    ~chatplayer("happy", "Yes help me become one with my darker side.");
+    @hetty_darker_self;
+} else if($option = 2) {
+    ~chatplayer("neutral", "No I have my principles and honour.");
+    ~chatnpc("sad", "Suit yourself, but you're missing out.");
+} else if($option = 3) {
+    // https://www.youtube.com/watch?v=Bp27LZSB_60
+    ~chatplayer("sad", "What, you mean improve my magic?");
+    ~mesbox("The witch sighs.");
+    ~chatnpc("neutral", "Yes, improve your magic...");
+    ~chatnpc("sad", "Do you have no sense of drama?");
+    $option = ~p_choice3("Yes I'd like to improve my magic.", 1, "No, I'm not interested.", 2, "Show me the mysteries of the dark arts....", 3);
+    if($option = 1) {
+        ~chatplayer("happy", "Yes I'd like to improve my magic.");
+        ~mesbox("The witch sighs.");
+        @hetty_darker_self;
+    } else if($option = 2) {
+        // not sure about the mesanims here
+        ~chatplayer("neutral", "No, I'm not interested.");
+        ~chatnpc("neutral", "Many aren't to start off with.");
+        ~mesbox("The witch smiles mysteriously.");
+        ~chatnpc("happy", "But I think you'll be drawn back to this place.");
+    } else if($option = 3) {
+        ~chatplayer("happy", "Show me the mysteries of the dark arts...");
+        ~mesbox("The witch smiles mysteriously.");
+        @hetty_darker_self;
+    }
+}
+
+[label,hetty_darker_self]
+~chatnpc("happy", "Ok I'm going to make a potion to help bring out your darker self.");
+~chatnpc("neutral", "You will need certain ingredients.");
+~chatplayer("neutral", "What do I need?");
+%hetty_progress = ^hetty_started;
+~send_quest_progress(quest_journal:hetty, %hetty_progress, ^hetty_complete);
+~chatnpc("neutral", "You need an eye of newt, a rat's tail, an onion... Oh and a piece of burnt meat.");
+~chatplayer("happy", "Great, I'll go and get them.");
