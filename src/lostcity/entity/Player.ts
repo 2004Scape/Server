@@ -2169,7 +2169,7 @@ export default class Player extends PathingEntity {
      * @param args
      */
     enqueueScript(script: Script, type: QueueType = 'normal', delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest(type, script, args, delay + 1);
+        const request = new EntityQueueRequest(type, script, args, delay);
         if (type === 'engine') {
             request.delay = 0;
             this.engineQueue.push(request);
@@ -2360,14 +2360,23 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        // todo: clear interaction if target no longer exists (including npc_changetype)
+        if (this.target.level !== this.level) {
+            this.clearInteraction();
+            return;
+        }
 
+        // todo: clear interaction on npc_changetype
         if (this.target instanceof Npc && this.target.delayed()) {
             this.clearInteraction();
             return;
         }
 
-        if (this.target.level !== this.level) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+            this.clearInteraction();
+            return;
+        }
+
+        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
             this.clearInteraction();
             return;
         }
