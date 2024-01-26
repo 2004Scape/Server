@@ -1,6 +1,6 @@
 // trigger for logs on ground
 [opobj4,_category_22]
-if (%tutorial_progress < 100) {
+if (%tutorial_progress < ^tutorial_complete) {
     @tut_light_logs_ground;
 } else {
     @light_logs_ground;
@@ -8,7 +8,7 @@ if (%tutorial_progress < 100) {
 
 [opobju,_category_22]
 if (last_useitem = tinderbox) {
-    if (%tutorial_progress < 100) {
+    if (%tutorial_progress < ^tutorial_complete) {
         @tut_light_logs_ground;
     } else {
         @light_logs_ground;
@@ -21,7 +21,7 @@ if (last_useitem = tinderbox) {
 [opheldu,tinderbox]
 switch_category(oc_category(last_useitem)) {
     case category_22 :
-        if (%tutorial_progress < 100) {
+        if (%tutorial_progress < ^tutorial_complete) {
             @tut_light_logs_inv(last_useslot);
         } else {
             @light_logs_inv(last_useslot);

@@ -1,12 +1,12 @@
 [label,tutorial_step_1_getting_started]
 ~tutorialstep("Getting started", "To start the tutorial use your left mouse-button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your|keyboard's arrow keys to rotate the view.");
 
-// Relevant in October 2006
+// Relevant in October 2006, Get Ready 435
 [label,tutorial_step_2_player_controls_spanner]
 if_settabflash(11);
 ~tutorialstep("", "Player controls|Please click on the flashing spanner icon found at the bottom right of your screen. This will display your player controls.");
 
-// Relevant in October 2006
+// Relevant in October 2006, Get Ready 435
 [label,tutorial_step_3_player_controls_left_click]
 ~tutorialstep("Player controls", "To start the tutorial use your left-mouse button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
 

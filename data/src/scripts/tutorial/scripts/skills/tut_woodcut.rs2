@@ -1,40 +1,55 @@
 // Tutorial Island Tree
 [oploc1,loc_3033]
-if (%tutorial_progress < 12) {
+if (%tutorial_progress < 30) {
     ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
     return;
 }
 
-if (%tutorial_progress > 18) {
-    ~mesbox("Perhaps you've done enough woodcutting now.");
+if (inv_freespace(inv) = 0) {
+    anim(null, 0);
+    ~mesbox("Your inventory is too full to hold any more logs.|To drop an item right-click on it and select drop.");
     return;
 }
 
-// check if no space
+if (%tutorial_progress > 90) {
+    ~mesbox("Perhaps you've done enough woodcutting now.");
+    return;
+}
 // check if no axe
 
-if (%tutorial_progress = 12) {
+if (%tutorial_progress = 30) {
     ~tutorial_please_wait_woodcutting;
     anim(human_woodcutting_bronze_axe, 0);
-    // do sound effect
+    sound_synth(woodchop_4,0,0);
     // wait 8 seconds, so my p_delay is wrong
     p_delay(6);
     givexp(woodcutting, 250);
+    def_int $respawnrate = ~scale_by_playercount(60);
+    loc_del($respawnrate);
+    loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
+    // set skill anim so it doesnt continue after depletion
+    anim(null, $respawnrate);
     @tut_advance_woodcutting;
 } else {
     anim(human_woodcutting_bronze_axe, 0);
-    // do sound effect
+    sound_synth(woodchop_4,0,0);
     // wait 8 seconds, so my p_delay is wrong
     p_delay(6);
     givexp(woodcutting, 250);
+    def_int $respawnrate = ~scale_by_playercount(60);
+    loc_del($respawnrate);
+    loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
+    // set skill anim so it doesnt continue after depletion
+    anim(null, $respawnrate);
     @give_logs;
 }
 
+
 [label,tut_advance_woodcutting]
+%tutorial_progress = 40;
 hint_stop();
 inv_add(inv, logs, 1);
 ~objboxt(logs, "You get some logs.");
-%tutorial_progress = 13;
 @tutorial_step_13_build_fire;
 
 [label,give_logs]
@@ -42,7 +57,10 @@ inv_add(inv, logs, 1);
 ~objboxt(logs, "You get some logs.");
 
 [oploc1,loc_3037]
-if (%tutorial_progress < 12) {
+if (%tutorial_progress < 30) {
     ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
+    return;
+} else {
+    ~mesbox("You won't be able to chop oak trees until you have a Woodcutting level of 15. You'll advance to higher Woodcutting levels by chopping down normal trees. At higher Woodcutting levels you will find even more trees you can cut.");
     return;
 }

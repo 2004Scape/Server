@@ -1,18 +1,18 @@
 // Survival Tutor Gate
 [oploc1,loc_3015]
-if (%tutorial_progress < 18) {
+if (%tutorial_progress < 120) {
     ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
     return;
 }
 
 // Survival Tutor Gate
 [oploc1,loc_3016]
-if (%tutorial_progress < 18) {
+if (%tutorial_progress < 120) {
     ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
     return;
 }
 
-%tutorial_progress = ^chef_start;
+//%tutorial_progress = ^chef_start;
 mes("God help us with the gate");
 
 // Runescape guide door
@@ -26,7 +26,7 @@ hint_stop();
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
 if (%tutorial_progress = 4) {
-    %tutorial_progress = ^survival_guide_start;
+    %tutorial_progress = 10;
     @tutorial_step_10_moving_around;
 }
 //@tutorial_complete;

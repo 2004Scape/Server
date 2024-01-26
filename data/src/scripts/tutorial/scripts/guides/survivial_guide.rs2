@@ -1,16 +1,16 @@
 [opnpc1,npc_943]
 switch_int(%tutorial_progress) {
-    case ^survival_guide_start: @survival_guide_start;
-    case 11: @survival_guide_look_at_menu;
-    case 12, 13: @survival_guide_fire;
-    case 14: @survival_guide_look_at_menu;
-    case 15: @survival_guide_fishing;
+    case 10: @survival_guide_start;
+    case 20: @survival_guide_look_at_menu;
+    case 30, 40: @survival_guide_fire;
+    case 50: @survival_guide_look_at_menu;
+    case 60: @survival_guide_fishing;
 }
 
 [label,survival_guide_start]
 ~chatnpc(neutral, "Hello there newcomer. My name is Brynna. My job is|to teach you a few survival tips and tricks. First off|we're going to start with the most basic survival skill of|all; making a fire.");
 ~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a @blu@Tinderbox@bla@ and a|@blu@Bronze Axe@bla@!");
-%tutorial_progress = 11;
+%tutorial_progress = 20;
 @tutorial_step_11_view_inventory;
 
 [label,survival_guide_look_at_menu]
@@ -47,7 +47,7 @@ while (npc_findnext = true) {
 }
 ~objbox(net, "The Survival Guide gives you a @blu@Net@bla@!");
 inv_add(inv, net, 1);
-%tutorial_progress = 16;
+%tutorial_progress = 70;
 @tutorial_step_16_catch_shrimp;
 
 [label,set_hint_icon_surivial_guide]

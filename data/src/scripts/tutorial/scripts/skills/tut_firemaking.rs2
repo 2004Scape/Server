@@ -81,7 +81,7 @@ if (%action_delay < map_clock) {
     // play sound
     sound_synth(tinderbox_strike, 0, 0);
     // mes
-    if (%tutorial_progress = 13) {
+    if (%tutorial_progress = 40) {
         ~tutorial_please_wait_firemaking;
     } else {
         mes("You attempt to light the logs.");
@@ -135,8 +135,8 @@ obj_del();
 givexp(firemaking, oc_param($log, productexp));
 sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
-if (%tutorial_progress = 13) {
-    %tutorial_progress = 14;
+if (%tutorial_progress = 40) {
+    %tutorial_progress = 50;
     ~tutorial_step_14_you_gained_experience;
 } else {
     mes("The fire catches and the logs begin to burn.");
