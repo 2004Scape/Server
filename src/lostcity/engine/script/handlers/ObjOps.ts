@@ -94,11 +94,13 @@ const ObjOps: CommandHandlers = {
         const inv = state.popInt();
         const obj = state.activeObj;
 
-        const objType = ObjType.get(obj.type);
-        state.activePlayer.playerLog('Picked up item', objType.debugname as string);
+        if (World.getObj(obj.x, obj.z, obj.level, obj.id)){
+            const objType = ObjType.get(obj.type);
+            state.activePlayer.playerLog('Picked up item', objType.debugname as string);
 
-        state.activePlayer.invAdd(inv, obj.id, obj.count);
-        World.removeObj(obj, state.activePlayer);
+            state.activePlayer.invAdd(inv, obj.id, obj.count);
+            World.removeObj(obj, state.activePlayer);
+        }
     },
 
     [ScriptOpcode.OBJ_COORD]: (state) => {
