@@ -3,331 +3,88 @@
 // Sources:
 // (2005) https://www.youtube.com/watch?v=QX-ieoyDXh4
 // https://runescapeclassic.fandom.com/wiki/The_Restless_Ghost
-
-[opnpc1,restless_ghost]
-~chatplayer(default, "Hello ghost, how are you?");
-if (inv_total(worn, amulet_of_ghostspeak) = 0) @priest_ghost_no_amulet;
-switch_int (%priest_progress) {
-    case 2: {
-        ~chatnpc(default, "Not very good actually.");
-        ~chatplayer(default, "What's the problem then?");
-        ~chatnpc(default, "Did you just understand what I said???");
-        def_int $option = ~p_choice3("Yep, now tell me what the problem is.", 1, "No, you sound like you're speaking nonsense to me.", 2, "Wow, this amulet works.", 3);
-        switch_int ($option) {
-
-            case 1: {
-                ~chatplayer(default, "Yep, now tell me what the problem is.");
-                ~chatnpc(default, "WOW! This is INCREDIBLE! I didn't expect anyone to ever understand me again!");
-                ~chatplayer(default, "Ok, Ok, I can understand you!");
-                ~chatplayer(default, "But have you any idea WHY you're doomed to be a ghost?");
-                ~chatnpc(default, "Well, to be honest... I'm not sure.");
-                @priest_ghost_why_ghost;
-            }
-
-            case 2: {
-
-                ~chatplayer(default, "No, you sound like you're speaking nonsense to me.");
-                ~chatnpc(default, "Oh that's a pity, You got my hopes up there.");
-                ~chatplayer(default, "Yeah, it is pity. Sorry.");
-                ~chatnpc(default, "Hang on a second. You can understand me.");
-                $option = ~p_choice2("No I Can't.", 1, "Yep clever aren't I.", 2);
-                switch_int ($option) {
-
-                    case 1: {
-                        ~chatplayer(default, "No I Can't.");
-                        ~chatnpc(default, "I don't know, the first person I can speak to in ages is a moron.");
-                    }
-
-                    case 2: {
-                        ~chatplayer(default, "Yep clever aren't I.");
-                        ~chatnpc(default, "I'm impressed. You must be very powerful. I don't suppose you can stop me being a ghost?");
-                        @priest_ghost_why_ghost_option;
-                    }
-
-                }
-            }
-
-            case 3: {
-                ~chatplayer(default, "Wow, this amulet works.");
-                ~chatnpc(default, "Oh its your amulet that's doing it. I did wonder. I don't suppose you can help me? I don't like being a ghost.");
-                @priest_ghost_why_ghost_option;
-            }
-        }
-    }
-
-    case 3: {
-        ~chatnpc(default, "How are you doing finding my skull?");
-        ~chatplayer(default, "Sorry, I can't find it at the moment.");
-        ~chatnpc(default, "Ah well keep on looking. I'm pretty sure it's somewhere in the tower south west from here. There's a lot of levels to the tower, though. I suppose it might take a little while to find.");
-    }
-
-    case 4: {
-        ~chatnpc(default, "How are you doing finding my skull?");
-        ~chatplayer(default, "I have found it!");
-        ~chatnpc(default, "Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, And I will be free!");
-        %priest_progress = 5;
-    }
-
-}
-
-[label,priest_ghost_no_amulet]
-~chatnpc(default, "Wooo wooo wooooo.");
-def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S interesting.", 2, "Any hints where I can find some treasure?", 3);
-switch_int ($option) {
-
-    case 1: {
-        @priest_ghost_dontunderstand;
-    }
-
-    case 2: {
-        ~chatplayer(default, "Ooh that's interesting.");
-        ~chatnpc(default, "Woo wooo Woooooooooooooooooo.");
-        $option = ~p_choice2("Did he really?", 1, "Yeah that's what I thought.", 2);
-        switch_int ($option) {
-
-            case 1: {
-                ~chatplayer(default, "Did he really?");
-                ~chatnpc(default, "Woo.");
-                $option = ~p_choice2("My brother had exactly the same problem.", 1, "Goodbye. Thanks for the chat.", 2);
-                switch_int ($option) {
-
-                    case 1: {
-                        ~chatplayer(default, "My brother had exactly the same problem.");
-                        ~chatnpc(default, "Woo wooooo. Wooooo Woo woo woo");
-                        $option = ~p_choice2("Goodbye. Thanks for the chat.", 1, "You'll have to give me the recipe some time.", 2);
-                        switch_int ($option) {
-
-                            case 1: {
-                                ~chatplayer(default, "Goodbye. Thanks for the chat.");
-                                ~chatnpc(default, "Woo wooo.");
-                            }
-
-                            case 2: {
-                                ~chatplayer(default, "You'll have to give me the recipe some time.");
-                                ~chatnpc(default, "Wooooooo woo woooooooo.");
-                                $option = ~p_choice2("Goodbye. Thanks for the chat.", 1, "Hmm I'm not sure about that.", 2);
-                                switch_int ($option) {
-
-                                    case 1: {
-                                        ~chatplayer(default, "Goodbye. Thanks for the chat.");
-                                        ~chatnpc(default, "Woo wooo.");
-                                    }
-
-                                    case 2: @priest_ghost_notsure;
-
-                                }
-                            }
-
-                        }
-                    }
-
-                    case 2: {
-                        ~chatplayer(default, "Goodbye. Thanks for the chat.");
-                        ~chatnpc(default, "Wooo woooooooooooooo.");
-                        $option = ~p_choice2("Goodbye. Thanks for the chat.", 1, "Hmm I'm not sure about that.", 2);
-                        switch_int ($option) {
-
-                            case 1: {
-                                ~chatplayer(default, "Goodbye. Thanks for the chat.");
-                                ~chatnpc(default, "Woo wooo.");
-                            }
-                            
-                            case 2: @priest_ghost_notsure;
-
-                        }
-                    }
-
-                }
-            }
-
-            case 2: {
-                ~chatplayer(default, "Yeah that's what I thought.");
-                ~chatnpc(default, "Woo wooo.");
-            }
-
-        }
-    }
-
-    case 3: {
-        ~chatplayer(default, "Any hints where I can find some treasure?");
-        ~chatnpc(default, "Wooooooo woo!");
-        $option = ~p_choice2("Sorry I don't speak ghost.", 1, "Thank you. You've been very helpful.", 2);
-        switch_int ($option) {
-
-            case 1:  @priest_ghost_dontunderstand;
-
-            case 2: {
-                ~chatplayer(default, "Thank you. You've been very helpful.");
-                ~chatnpc(default, "Wooooooo.");
-            }
-
-        }
-    }
-
-}
-
-[label,priest_ghost_why_ghost_option]
-def_int $option = ~p_choice2("Yes, Ok. Do you know why you're a ghost?", 1, "No, you're scary.", 2);
-switch_int ($option) {
-
-    case 1: {
-        ~chatplayer(default, "Yes, Ok. Do you know why you're a ghost?");
-        @priest_ghost_why_ghost;
-    }
-
-    case 2: {
-        ~chatplayer(default, "No, you're scary.");
-    }
-
-}
-
-[label,priest_ghost_why_ghost]
-~chatplayer(default, "I've been told a certain task may need to be completed so you can rest in peace.");
-~chatnpc(default, "I should think it is probably because a warlock has come along and stolen my skull. If you look inside my coffin there, you'll find my corpse without a head on it.");
-~chatplayer(default, "Do you know where this warlock might be now?");
-~chatnpc(default, "I think it was one of the warlocks who lives in the big tower by the sea southwest from here");
-~chatplayer(default, "Ok. I will try and get the skull back for you, so you can rest in peace.");
-~chatnpc(default, "Ooh, thank you. That would be such a great relief!");
-~chatnpc(default, "It is so dull being a ghost...");
-%priest_progress = 3;
-
-[label,priest_ghost_dontunderstand]
-~chatplayer(default, "Sorry I don't speak ghost.");
-~chatnpc(default, "Woo woo?");
-~chatplayer(default, "Nope still don't understand you.");
-~chatnpc(default, "Woooooooo");
-~chatplayer(default, "Never mind.");
-
-[label,priest_ghost_notsure]
-~chatplayer(default, "Hmm I'm not sure about that.");
-~chatnpc(default, "Wooo woo.");
-~chatplayer(default, "Well if you insist.");
-~chatnpc(default, "Wooooooooo.");
-~chatplayer(default, "Ah well, better be off now.");
-~chatnpc(default, "Woo.");
-~chatplayer(default, "Bye.");
-
-[label,father_aereck_priest_start]
-~chatnpc(default, "That's lucky, I need someone to do a quest for me.");
-~chatplayer(default, "Ok, let me help then.");
-~chatnpc(default, "Thank you. The problem is, there is a ghost in the church graveyard: I would like you to get rid of it.");
-~chatnpc(default, "If you need any help, my friend Father Urhney is an expert on ghosts.");
-~chatnpc(default, "I believe he is currently living as a hermit. He has a little shack somewhere in the swamps south of here. I'm sure if you told him that I sent you he'd be willing to help.");
-~chatnpc(default, "My name is father Aereck by the way. Pleased to meet you.");
-~chatplayer(default, "Likewise.");
-~chatnpc(default, "Take care travelling through the swamps. I have heard they can be quite dangerous.");
-~chatplayer(default, "I will, thanks.");
-%priest_progress = 1;
-~send_quest_progress(quest_journal:priest, %priest_progress, ^priest_complete);
-
-[label,father_aereck_priest_inprogress]
-~chatnpc(default, "Have you got rid of the ghost yet?");
-switch_int (%priest_progress) {
-
-    case 1: {
-        ~chatplayer(default, "I can't find father Urhnet at the moment.");
-        ~chatnpc(default, "Well to get to the swamp he is in you need to go round the back of the castle. The swamp is on the otherside of the fence to the south. You'll have to go through the wood to the west to get round the fence. Then you'll have to go right into the eastern depths of the swamp.");
-    }
-
-    case 2: {
-        ~chatplayer(default, "I had a talk with father Urhney. He has given me this funny amulet to talk to the ghost with.");
-        ~chatnpc(default, "I always wondered what that amulet was. Well I hope it's useful. Tell me if you get rid of the ghost.");
-    }
-
-    case 3: {
-        ~chatplayer(default, "I've found out that the ghost's corpse has lost its skull. If I can find the skull the ghost will go.");
-        ~chatnpc(default, "That would explain it. Well I haven't seen any skulls.");
-        ~chatplayer(default, "Yes I think a warlock has stolen it.");
-        ~chatnpc(default, "I hate warlocks. Ah well good luck.");
-    }
-
-    case 4: {
-        ~chatplayer(default, "I've finally found the ghost's skull.");
-        ~chatnpc(default, "Great. Put it in the ghost's coffin and see what happens!");
-    }
-
-}
-
 [oploc1,loc_2145]
-def_boolean $ghost_present = false;
-def_coord $ghost_spawnpoint = 0_50_49_50_59;
-mes("You open the coffin");
+p_arrivedelay;
+mes("You open the coffin.");
+anim(human_openchest, 0);
 sound_synth(coffin_open, 0, 0);
-loc_del(485);
-loc_add(loc_coord, loc_2146, loc_angle, loc_shape, 485);
-// Spawn the ghost if it's not already there
-// This should work when npc_add has been implemented
-npc_findallzone(loc_coord);
-while (npc_findnext = true) {
-    if (npc_type = restless_ghost) $ghost_present = true;
-}
-if ($ghost_present = false) {
-    npc_add($ghost_spawnpoint, restless_ghost, 500);
-}
+~check_restlessghost_spawn; // probably before delay like closing
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2146, loc_angle, loc_shape, 300);
 
 [oploc1,loc_2146]
 mes("You close the coffin.");
+anim(human_closechest, 0);
 sound_synth(coffin_close, 0, 0);
-loc_del(100);
-loc_add(loc_coord, loc_2145, loc_angle, loc_shape, 485);
+~check_restlessghost_spawn; // https://youtu.be/QX-ieoyDXh4?si=mJjuZG052xLGiVWq&t=950
+p_delay(0);
+loc_del(300);
+loc_add(loc_coord, loc_2145, loc_angle, loc_shape, 300);
+
+[proc,check_restlessghost_spawn]
+if(%priest_progress = ^priest_complete) { // Don't send ghost if the quest is complete
+    return;
+}
+if (npc_finduid(~npc_within_distance(loc_coord, restless_ghost, 4)) = false) {
+    npc_add(0_50_49_49_58, restless_ghost, 100);
+}
 
 [oploc2,loc_2146]
-if (%priest_progress >= 1) {
-    mes("There's a skeleton without a skull in here.");
-} else if (%priest_progress = ^priest_complete) {
-    mes("Theres a nice and complete skeleton in here!");
+if (%priest_progress = ^priest_complete) {
+    ~mesbox("Theres a nice and complete skeleton in here!");
+} else if (%priest_progress >= ^priest_started) {
+    ~mesbox("There's a skeleton without a skull in here.");
 } else {
     mes("You search the coffin and find some human remains.");
 }
+~check_restlessghost_spawn;
 
 [oplocu,loc_2145]
-if (%priest_progress = 5) {
+if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {
     ~mesbox("Maybe I should open it first.");
-}
-
-[oplocu,loc_2146]
-if (%priest_progress = 5) {
-    def_coord $crypt_north_west = 0_50_49_47_59;
-    def_coord $crypt_north_east = 0_50_49_52_59;
-    def_coord $crypt_south_west = 0_50_49_47_54;
-    def_coord $crypt_south_east = 0_50_49_52_54;
-    ~mesbox("You put the skull in the coffin.");
-    inv_del(inv, ghost_skull, 1);
-    %priest_progress = 6;
-    // Remove the ghost
-    // TODO improve this
-    npc_findallzone($crypt_north_west);
-    while (npc_findnext = true) {
-        if (npc_type = restless_ghost) npc_del;
-    }
-    npc_findallzone($crypt_north_east);
-    while (npc_findnext = true) {
-        if (npc_type = restless_ghost) npc_del;
-    }
-    npc_findallzone($crypt_south_west);
-    while (npc_findnext = true) {
-        if (npc_type = restless_ghost) npc_del;
-    }
-    npc_findallzone($crypt_south_east);
-    while (npc_findnext = true) {
-        if (npc_type = restless_ghost) npc_del;
-    }
-    ~mesbox("The ghost vanishes.");
-    ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
-    queue(priest_quest_complete, 0);
-}
-
-[opobj3,ghost_skull]
-if (%priest_progress = 3) {
-    def_coord $skeleton_spawnpoint = 0_48_149_48_29;
-    obj_takeitem(inv);
-    %priest_progress = 4;
-    npc_add($skeleton_spawnpoint, npc_459, 500);
-    npc_setmode(opplayer2);
-} else {
-    ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave it alone.");
     return;
 }
+@nothing_interesting_happens;
+
+[oplocu,loc_2146]
+if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {
+    ~mesbox("You put the skull in the coffin.");
+    inv_del(inv, ghost_skull, 1);
+    if(npc_finduid(~npc_within_distance(coord, restless_ghost, 4)) = true) {
+        npc_del;
+    }
+    queue(priest_quest_complete, 0);
+    ~mesbox("The ghost vanishes.");
+    ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
+    return;
+}
+@nothing_interesting_happens;
+
+[opobj3,ghost_skull]
+if(inv_total(inv, ghost_skull) > 0 | inv_total(bank, ghost_skull) > 0) {
+    ~mesbox("You already have the Ghost's skull.");
+    return;
+}
+if (%priest_progress = ^priest_spoken_ghost | %priest_progress = ^priest_obtained_skull) {
+    def_coord $skeleton_spawnpoint = 0_48_149_48_29;
+    %priest_progress = ^priest_obtained_skull;
+    npc_add($skeleton_spawnpoint, priest_skeleton, 500);
+    ~npc_retaliate(0);
+    mes("Out of nowhere a skeleton appears!");
+    @pickup_obj(obj_coord, obj_type, obj_count);
+} else {
+    ~mesbox("That skull looks scary.|I've got no reason to take it,|I think I'll leave it alone.");
+}
+
+[opheld5,ghost_skull]
+// objbox in osrs, dont think so here considering the objbox's in this quest are mesbox pre-rework 
+~mesbox("Dropping this skull here will destroy it!");
+def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Are you sure you want to drop the skull?");
+if ($choice = 1) {
+    inv_del(inv, ghost_skull, 1);
+}
+if_close;
 
 [queue,priest_quest_complete]
 %priest_progress = ^priest_complete;

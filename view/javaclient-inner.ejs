@@ -2,7 +2,7 @@
 <STYLE>
 BODY {margin:0px; overflow: auto;}
 </STYLE><BODY topmargin=0 leftmargin=0 bgcolor=black onload=startloop();><center>
-<applet code="loader.class" archive="loader.jar" name="app" width="789" height="532" scriptable="true">
+<applet code="<%= method == 1 ? "loader.class" : "client.class" %>" archive="<%= method == 1 ? "loader.jar" : "runescape.jar" %>" name="app" width="789" height="532" scriptable="true">
     <param name="nodeid" value="<%= 10 + world.id - 1 %>">
     <param name="portoff" value="<%= world.portOffset %>">
     <% if (detail == 'low') { %><param name="lowmem" value="1"><% } %>

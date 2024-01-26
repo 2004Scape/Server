@@ -1,0 +1,47 @@
+[tracker_gnome_1]
+vislevel=hide
+name=Gnome
+desc=Looks like a gnome to me.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22422
+recol1d=6942
+recol2s=22426
+recol2d=6945
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2915_npc
+head1=model_21_npc_head
+
+[tracker_gnome_2]
+vislevel=hide
+name=Gnome
+desc=Looks like a gnome to me.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22422
+recol1d=6942
+recol2s=22426
+recol2d=6945
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2915_npc
+head1=model_21_npc_head
+
+[tracker_gnome_3]
+vislevel=hide
+name=Gnome
+desc=Looks like a gnome to me.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22422
+recol1d=6942
+recol2s=22426
+recol2d=6945
+model1=model_2909_npc
+model2=model_2890_npc
+model3=model_2915_npc
+head1=model_21_npc_head

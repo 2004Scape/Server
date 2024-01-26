@@ -9,7 +9,7 @@ if($option = 1) {
 } else if($option = 3) {
     ~chatplayer("neutral", "You don't look very happy.");
     ~chatnpc("sad", "No, I'm not.");
-    $option = ~p_choice2("What's wrong?", 1, "I'd take the rest of the day off if I were you.?", 2);
+    $option = ~p_choice2("What's wrong?", 1, "I'd take the rest of the day off if I were you.", 2);
     if($option = 1) {
         @cooks_assistant_whats_wrong;
     } else if($option = 2) {
@@ -24,22 +24,22 @@ if($option = 1) {
 
 [label,cooks_assistant_whats_wrong]
 ~chatplayer("neutral", "What's wrong?");
-~chatnpc("worried", "Ooh dear, I'm in a terrible mess! It's the Duke's birthday today, I'm meant to be making him a big cake for this evening.");
-~chatnpc("sad", "Unfortunately, I've forgotten to buy some of the ingredients. I'll never get them in time now. I don't supposed you could help me?");
-def_int $option = ~p_choice2("Yes, I'll help you.", 1,"No I don't feel like it. Maybe later.", 2);
+~chatnpc("worried", "Ooh dear, I'm in a terrible mess!|It's the Duke's birthday today,|I'm meant to be making him a big cake for this evening.");
+~chatnpc("sad", "Unfortunately, I've forgotten to buy some of the ingredients. I'll never get them in time now. I don't suppose you could help me?");
+def_int $option = ~p_choice2("Yes, I'll help you.", 1, "No, I don't feel like it. Maybe later.", 2);
 
 if($option = 1) {
     %cook_progress = 1;
     ~send_quest_progress(quest_journal:cook, %cook_progress, ^cook_complete);
     ~chatplayer("happy","Yes, I'll help you.");
-    ~chatnpc("happy","Oh thank you, thank you. I need milk, eggs and flour. I'd be very grateful if you can get them to me.");
+    ~chatnpc("happy","Oh thank you, thank you.|I need milk, eggs and flour.|I'd be very grateful if you can get them to me.");
 } else if($option = 2) {
     ~chatplayer("neutral", "No, I don't feel like it. Maybe later.");
     ~chatnpc("sad", "OK, suit yourself!");
 }
 
 [label,cooks_assistant_inprogress]
-~chatnpc("neutral", "How are you getting on with finding the ingredients?");
+~chatnpc("sad", "How are you getting on with finding the ingredients?");
 
 if(inv_total(inv, pot_of_flour) > 0 & inv_total(inv, egg) > 0 & inv_total(inv, bucket_milk) > 0) {
     @cooks_assistant_completion;
@@ -47,7 +47,7 @@ if(inv_total(inv, pot_of_flour) > 0 & inv_total(inv, egg) > 0 & inv_total(inv, b
 
 if(inv_total(inv, pot_of_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, bucket_milk) = 0) {
     ~chatplayer("neutral", "I'm afraid I don't have any yet!");
-    ~chatnpc("sad", "Oh dear, oh dear! I need flour, eggs and milk. Without them I am doomed!");
+    ~chatnpc("sad", "Oh dear, oh dear!|I need flour, eggs and milk.|Without them I am doomed!");
     return;
 } else {
     ~chatplayer("happy", "I have found some of the things you asked for.");
@@ -55,14 +55,13 @@ if(inv_total(inv, pot_of_flour) = 0 & inv_total(inv, egg) = 0 & inv_total(inv, b
         ~chatplayer("happy", "I have some milk.");
     }
     if(inv_total(inv, pot_of_flour) > 0) {
-        ~chatplayer("happy", "I have some flour flour.");
+        ~chatplayer("happy", "I have some flour.");
     }
     if(inv_total(inv, egg) > 0) {
         ~chatplayer("happy", "I have an egg.");
     }
 }
-
-~chatnpc("sad", "Great, but can you get the other ingredients as well? You still need to find...");
+~chatnpc("sad", "Great, but can you get the other ingredients as well?|You still need to find...");
 if(inv_total(inv, bucket_milk) = 0) {
     ~chatnpc("happy", "Some milk.");
 }
@@ -72,21 +71,22 @@ if(inv_total(inv, pot_of_flour) = 0) {
 if(inv_total(inv, egg) = 0) {
     ~chatnpc("happy", "An egg.");
 }
+~chatplayer(happy, "OK, I'll try and find that for you.");
 
 [label,cooks_assistant_completion]
 ~chatplayer("happy", "I now have everything you need for your cake!");
 ~chatplayer("happy", "Milk, flour, and an egg!");
 ~chatnpc("happy", "I am saved, thank you!");
+~mesbox("You give some milk, an egg and some flour to the cook.");
 inv_del(inv, egg, 1);
 inv_del(inv, bucket_milk, 1);
 inv_del(inv, pot_of_flour, 1);
-~mesbox("You give some milk, an egg and some flour to the cook.");
 queue(cooks_quest_complete, 0);
 
 [queue,cooks_quest_complete]
 %cook_progress = ^cook_complete;
 givexp(cooking, 3000);
-~send_quest_complete(quest_journal:cook, cake, 250, ^cook_questpoints, "You have completed the\\nCooks' Quest!");
+~send_quest_complete(quest_journal:cook, cake, 250, ^cook_questpoints, "You have completed the Cooks' Quest!");
 
 [oplocu,cook_range]
 def_coord $cook_kitchen_centre = 0_50_50_9_15;

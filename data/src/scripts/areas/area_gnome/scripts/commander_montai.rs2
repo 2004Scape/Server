@@ -1,0 +1,85 @@
+[opnpc1,commander_montai]
+switch_int(%tree_progress) {
+    case ^tree_not_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(angry, "I can't talk now.|Can't you see we're trying to win a battle here?|If we can't hold back Khazard's men|we're all doomed.");
+    case ^tree_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(neutral, "Hello traveller, are you here to help or just to watch?");
+        ~chatplayer(neutral, "I've been sent by King Bolren to retrieve the orb of protection.");
+        ~chatnpc(happy, "Excellent we need all the help we can get.");
+        ~chatnpc(neutral, "I'm commander Montai.|The orb is in the Khazard stronghold to the north,|but until we weaken their defences|we can't get close.");
+        ~chatplayer(quiz, "What can I do?");
+        ~chatnpc(neutral, "Firstly we need to strengthen our own defences. We desperately need wood to make more battlements, once the battlements are gone it's all over. Six loads of normal logs should do it.");
+        switch_int(~p_choice2("Ok, I'll gather some wood.", 1, "Sorry, I no longer want to be involved.", 2)) {
+            case 1:
+                ~chatplayer(neutral, "Ok, I'll gather some wood.");
+                %tree_progress = ^tree_spoken_montai;
+                ~chatnpc(neutral, "Please be as quick as you can, I don't know how much longer we can hold out.");
+            case 2:
+                ~chatplayer(sad, "Sorry I no longer want to be involved.");
+                ~chatnpc(sad, "That's a shame, we could have done with your help.");
+        }
+    case ^tree_spoken_montai:
+        ~chatplayer(neutral, "Hello.");
+        if(inv_total(inv, logs) < 6) {
+            ~chatnpc(neutral, "Hello again, we're still desperate for wood soldier. We need six loads of normal logs.");
+            ~chatplayer(neutral, "I'll see what I can do.");
+            ~chatnpc(neutral, "Thank you.");
+            return;
+        }
+        ~chatnpc(neutral, "Hello again, we're still desperate for wood soldier.");
+        inv_del(inv, logs, 6);
+        %tree_progress = ^tree_given_logs_montai;
+        ~chatplayer(happy, "I have some here.|@whi@(You give six loads of logs to the commander.)");
+        ~chatnpc(happy, "That's excellent, now we can make more defensive battlements.  Give me a moment to organise the troops and then come speak to me. I'll inform you of our next phase of attack.");
+    case ^tree_given_logs_montai:
+        ~chatplayer(neutral, "How are you doing Montai?");
+        ~chatnpc(bored, "We're hanging in there soldier.|For the next phase of our attack|we need to breach their stronghold.");
+        ~chatnpc(bored, "The ballista can break through the stronghold wall,|and then we can advance and seize back the orb.");
+        ~chatplayer(quiz, "So what's the problem?");
+        ~chatnpc(bored, "From this distance we can't get an accurate enough shot. We need the correct coordinates of the stronghold for a direct hit. I've sent out three tracker gnomes to gather them.");
+        ~chatplayer(quiz, "Have they returned?");
+        ~chatnpc(sad, "I'm afraid not, and we're running out of time.|I need you to go into the heart of the battlefield,|find the trackers, and bring back the coordinates.");
+        ~chatnpc(quiz, "Do you think you can do it?");
+        switch_int(~p_choice2("No, I've had enough of your battle.", 1, "I'll try my best.", 2)) {
+            case 1:
+                ~chatplayer(sad, "No, I've had enough of your battle.");
+                ~chatnpc(sad, "I understand, this isn't your fight.");
+            case 2:
+                ~chatplayer(neutral, "I'll try my best.");
+                ~chatnpc(happy, "Thank you, you're braver than most.");
+                %tree_progress = ^tree_finding_trackers;
+                ~chatnpc(bored, "I don't know how long I will be able to hold out.|Once you have the coordinates|come back and fire the ballista|right into those monsters.");
+                ~chatnpc(bored, "If you can retrieve the orb and bring safety back to my people, none of the blood spilled on this field will be in vain.");
+        }
+    case ^tree_finding_trackers:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(bored, "Hello warrior. We need the coordinates|for a direct hit from the ballista.|Once you have a direct hit you will be able|to enter the stronghold and retrieve the orb.");
+    case ^tree_ballista_fired:
+        ~chatplayer(happy, "I've breached the stronghold.");
+        ~chatnpc(happy, "I saw, that was a beautiful sight. The Khazard troops didn't know what hit them.");
+        ~chatnpc(neutral, "Now is the time to retrieve the orb. It's all in your hands. I'll be praying for you.");
+    case ^tree_retrieved_orb:
+        ~chatplayer(happy, "I have the orb of protection.");
+        ~chatnpc(happy, "Incredible, for a human you really are something.");
+        ~chatplayer(confused, "Thanks... I think!");
+        ~chatnpc(neutral, "I'll stay here with my troops and try and hold Khazard's men back. You return the orb to the gnome village. Go as quick as you can, the village is still unprotected.");
+    case ^tree_returned_first_orb, ^tree_defeated_warlord, ^tree_complete:
+        ~chatplayer(quiz, "Hello Montai, how are you?");
+        ~chatnpc(bored, "I'm ok, this battle is going|to take longer to win than I expected.|The Khazard troops won't give up even without the orb.");
+        ~chatplayer(happy, "Hang in there.");
+}
+
+//[ai_timer,commander_montai]  catapult code, disabled for now, odd bug
+//loc_findallzone(0_39_50_31_5);
+//def_coord $projectile_start = 0_39_50_31_5;
+//def_coord $dest_coord = movecoord($projectile_start, calc(-5 + random(10)), 0, calc(random (15) + 34));
+//def_int $delay = calc(distance($projectile_start, $dest_coord) / 4);
+//while (loc_findnext = true) {
+//    if(loc_type = loc_2180) {
+//        loc_anim(catapult_fire);
+//        spotanim_map(spotanim_71, movecoord($projectile_start, calc(-10 + random(10)), 0, calc(random (15) + 34)), 0, calc(distance($projectile_start, $dest_coord) / 4));
+//        ~coord_projectile($projectile_start, movecoord($projectile_start, 0, 0, 34), spotanim_70, 50, 2, 15, 25, 21, 64, 10);
+//    }
+//}

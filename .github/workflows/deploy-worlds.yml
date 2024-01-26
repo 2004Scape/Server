@@ -60,6 +60,7 @@ jobs:
           wget https://github.com/2004scape/Client/releases/latest/download/loader-client.zip
           unzip loader-client.zip -d public
           rm loader-client.zip
+          cp public/runescape*.jar public/runescape.jar
           pm2 start w${{ matrix.world.number }}-maintenance
           npm run client:clean
           npm run client:pack

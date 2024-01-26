@@ -1,0 +1,32 @@
+[label,levelup_herblore]
+switch_int(stat_base(herblore)) {
+    case 3: ~objboxb(3dose1attack, "You can now make @dbl@attack potions@bla@. You can now clean @dbl@guam leaf, snake weed @bla@and @dbl@rogues purse@bla@.");
+    case 5: ~objbox2(3doseantipoison,marentill,"You can now make @dbl@antipoison potions@bla@. You can now clean @dbl@marrentill@bla@.");
+    case 11: ~objboxt(tarromin,"You can now clean @dbl@tarromin@bla@.");
+    case 12: ~objboxb(3dose1strength,"You can now make @dbl@strength potions@bla@.");
+    case 20: ~objboxt(harralander,"You can now clean @dbl@harralander@bla@.");
+    case 22: ~objboxb(3dose1restore,"You can now make @dbl@stat restore potions@bla@.");
+    case 25: ~objboxt(ranarr_weed,"You can now clean @dbl@rannar weed@bla@.");
+    case 30: ~objboxb(3dose1defense,"You can now make @dbl@defence potions@bla@.");
+    case 38: ~objboxb(3doseprayerrestore,"You can now make @dbl@prayer restore potions@bla@.");
+    case 40: ~objboxt(irit_leaf,"You can now clean @dbl@irit leaf@bla@.");
+    case 45: ~objboxb(3dose2attack,"You can now make @dbl@super attack potions@bla@.");
+    case 48: ~objbox2(3dose2antipoison,avantoe,"You can now make @dbl@super antipoison potions@bla@. You can now clean @dbl@avantoe@bla@.");
+    case 50: ~objboxb(3dosefisherspotion,"You can now make @dbl@fishing potions@bla@.");
+    case 54: ~objboxt(kwuarm,"You can now clean @dbl@kwuarm@bla@.");
+    case 56: ~objboxb(3dose2strength,"You can now make @dbl@super strength potions@bla@.");
+    case 60: ~objboxb(weapon_poison,"You can now make @dbl@weapon poisons@bla@.");
+    case 65: ~objboxt(cadantine,"You can now clean @dbl@cadantine@bla@.");
+    case 66: ~objboxb(4dose2defense,"You can now make @dbl@super defence potions@bla@.");
+    case 67: ~objboxt(lantadyme,"You can now clean @dbl@lantadyme@bla@.");
+    case 69: ~objboxb(3dose1antidragon,"You can now make @dbl@antifire potions@bla@.");
+    case 70: ~objboxt(dwarf_weed,"You can now clean @dbl@dwarf weed@bla@.");
+    case 72: ~objboxb(3doserangerspotion,"You can now make @dbl@ranging potions@bla@.");
+    case 75: ~objboxt(torstol,"You can now clean @dbl@torstol@bla@.");
+    case 78: ~objboxb(3dosepotionofzamorak,"You can now make @dbl@Zamorak brews@bla@.");
+
+
+
+
+
+}

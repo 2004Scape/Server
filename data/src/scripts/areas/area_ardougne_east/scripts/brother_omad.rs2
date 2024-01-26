@@ -46,6 +46,7 @@ if(inv_total(inv, childs_blanket) >= 1) {
     ~objbox(childs_blanket, "You hand the monk the childs blanket.");
     ~chatnpc(happy, "Really, that's excellent, well done! Maybe now I will be able to get some rest.");
     ~chatnpc(neutral, "*yawn*..I'm off to bed! Farewell brave traveller!");
+    inv_del(inv, childs_blanket, 1);
     %drunkmonk_progress = ^drunkmonk_retrieved_blanket;
     return;
 }

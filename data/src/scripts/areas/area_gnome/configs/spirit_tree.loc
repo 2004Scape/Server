@@ -1,0 +1,41 @@
+[loc_1293]
+name=Spirit tree
+desc=An ancient sentient tree.
+model=model_loc_1293
+width=4
+length=4
+anim=seq_332
+hasalpha=yes
+op1=Talk-to
+mapscene=0
+
+[loc_1294]
+name=Spirit tree
+desc=An ancient sentient tree.
+model=model_loc_1293
+width=4
+length=4
+anim=seq_332
+hasalpha=yes
+op1=Talk-to
+mapscene=0
+
+[loc_1295]
+name=Spirit tree
+desc=An ancient sentient tree.
+model=model_loc_1293
+width=4
+length=4
+anim=seq_333
+op1=Talk-to
+hasalpha=yes
+mapscene=0
+
+[loc_1317]
+name=Spirit tree
+desc=A young sentient tree.
+model=model_loc_1317
+width=2
+length=2
+op1=Talk-to
+mapscene=0
