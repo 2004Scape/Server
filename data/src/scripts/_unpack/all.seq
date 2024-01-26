@@ -4530,7 +4530,7 @@ frame8=anim_1918
 frame9=anim_1627
 frame10=anim_1340
 
-[seq_431]
+[human_khazardspear_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1426
 frame2=anim_1719

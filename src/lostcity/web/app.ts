@@ -74,6 +74,7 @@ if (Environment.GAME_PORT === 0) {
     // master server
     ignored.add('#lostcity/web/routes/cache.js');
     ignored.add('#lostcity/web/routes/api/v1/world.js');
+    ignored.add('#lostcity/web/routes/server/cache.js');
 
     await registerAll('src/lostcity/web/routes', '#lostcity/web/routes');    
 } else {
@@ -81,6 +82,7 @@ if (Environment.GAME_PORT === 0) {
     fastify.register(import('#lostcity/web/routes/cache.js'));
     fastify.register(import('#lostcity/web/routes/client.js'));
     fastify.register(import('#lostcity/web/routes/api/v1/world.js'), { prefix: '/api/v1' });
+    fastify.register(import('#lostcity/web/routes/server/cache.js'), { prefix: '/server'});
 
     fastify.get('/', (req: any, res: any) => {
         return res.redirect(302, `/client?world=${Environment.WORLD_ID}&detail=high&method=0`);
