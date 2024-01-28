@@ -146,10 +146,7 @@ while (loc_findnext = true) {
         loc_add(movecoord(loc_coord, 0, 0, 1), loc_157, loc_angle, loc_shape, 2);
     }
 }
-// todo: fix p_walk
-// p_walk($dest); 
-p_teleport($dest);
-p_delay(0);
+~agility_force_move(0, human_walk_f, $dest);
 
 [oploc1,loc_133]
 ~reset_haunted_levers;
