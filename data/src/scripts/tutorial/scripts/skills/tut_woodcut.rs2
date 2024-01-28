@@ -15,7 +15,16 @@ if (%tutorial_progress > 90) {
     ~mesbox("Perhaps you've done enough woodcutting now.");
     return;
 }
-// check if no axe
+
+if (inv_total(inv, logs) > 2) {
+    ~mesbox("Perhaps you've got enough logs for now.");
+    return;
+}
+
+if (inv_total(inv, bronze_axe) = 0) {
+    ~mesbox("You need an axe to chop this tree.|Talk to the survival expert to get one.");
+    return;
+}
 
 if (%tutorial_progress = 30) {
     ~tutorial_please_wait_woodcutting;
@@ -24,11 +33,7 @@ if (%tutorial_progress = 30) {
     // wait 8 seconds, so my p_delay is wrong
     p_delay(6);
     givexp(woodcutting, 250);
-    def_int $respawnrate = ~scale_by_playercount(60);
-    loc_del($respawnrate);
-    loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
-    // set skill anim so it doesnt continue after depletion
-    anim(null, $respawnrate);
+    ~tut_woodcutting_swap_loc;
     @tut_advance_woodcutting;
 } else {
     anim(human_woodcutting_bronze_axe, 0);
@@ -36,14 +41,16 @@ if (%tutorial_progress = 30) {
     // wait 8 seconds, so my p_delay is wrong
     p_delay(6);
     givexp(woodcutting, 250);
-    def_int $respawnrate = ~scale_by_playercount(60);
-    loc_del($respawnrate);
-    loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
-    // set skill anim so it doesnt continue after depletion
-    anim(null, $respawnrate);
+    ~tut_woodcutting_swap_loc;
     @give_logs;
 }
 
+[proc,tut_woodcutting_swap_loc]
+def_int $respawnrate = ~scale_by_playercount(60);
+loc_del($respawnrate);
+loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
+// set skill anim so it doesnt continue after depletion
+anim(null, $respawnrate);
 
 [label,tut_advance_woodcutting]
 %tutorial_progress = 40;
