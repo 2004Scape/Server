@@ -780,12 +780,14 @@ class World {
                     if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
                         inv.add(item?.id, 1, index, true, false, false);
                         inv.update = true;
+                        return;
                     }
 
                     // Item stock is over min
                     if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
                         inv.remove(item?.id, 1, index, true);
                         inv.update = true;
+                        return;
                     }
 
                     // Item stock is not listed, such as general stores
@@ -793,6 +795,7 @@ class World {
                     if (!invType.stockcount[index] && this.currentTick % 100 === 0) {
                         inv.remove(item?.id, 1, index, true);
                         inv.update = true;
+                        return;
                     }
                 }
             });
