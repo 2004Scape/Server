@@ -234,6 +234,9 @@ defence=8
 param=attackrate,6
 param=attackbonus,5
 param=strengthbonus,6
+param=attack_anim,human_spear_stab
+param=attack_sound,staff_stab
+param=defend_anim,human_spear_defend
 param=damagetype,^stab_style
 
 [npc_8]
@@ -1172,6 +1175,9 @@ attack=2
 strength=3
 defence=2
 param=damagetype,^stab_style
+param=attack_anim,human_spear_stab
+param=attack_sound,staff_stab
+param=defend_anim,human_spear_defend
 
 [npc_38]
 name=Shipyard worker

@@ -25,20 +25,17 @@ anim(human_dig, 0);
 mes("You dig a hole in the ground...");
 
 p_delay(4);
+queue(hunt_quest_complete, 0);
 
+[queue,hunt_quest_complete]
 mes("and find a little bag of treasure.");
 inv_add(inv, coins, 450);
 inv_add(inv, gold_ring, 1);
 inv_add(inv, emerald, 1);
-
 %hunt_progress = 4;
-
 // https://web.archive.org/web/20080325101204/http://www.global-rs.com/quests/piratestreasure/
 ~send_quest_complete(quest_journal:hunt, emerald, 250, ^hunt_questpoints, "You have completed the Pirate's Treasure Quest!");
 
 [label,wyson_attack]
 npc_say("Hey, leave off my flowers!");
-npc_delay(2);
-
-// TODO: chase player + combat instead of del
-npc_del;
+npc_setmode(opplayer2);
