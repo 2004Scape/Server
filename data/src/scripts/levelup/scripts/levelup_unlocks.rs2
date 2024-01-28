@@ -6,4 +6,16 @@ switch_stat($stat) {
     case thieving: return(levelup_thieving);
     case attack: return(levelup_attack);
     case defence: return(levelup_defence);
+    case crafting: return(levelup_crafting);
+    case fishing: return(levelup_fishing);
+    case mining: return(levelup_mining);
+    case fletching: return(levelup_fletching);
+    case runecraft: return(levelup_runecraft);
+    case prayer: return(levelup_prayer);
+    case woodcutting: return(levelup_woodcutting);
+    case smithing: return(levelup_smithing);
+    case cooking: return(levelup_cooking);
+    case ranged: return(levelup_ranged);
+    case firemaking: return(levelup_firemaking);
+    case smithing: return(levelup_smithing);
 }

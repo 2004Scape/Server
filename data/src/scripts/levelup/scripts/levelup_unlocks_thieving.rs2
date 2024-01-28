@@ -1,5 +1,5 @@
 [label,levelup_thieving]
-//Thieving level unlock messages
+//Thieving level up unlock messages
 switch_int(stat_base(thieving)) {
     case 5: ~mesbox("You can now steal from @dbl@Cake Stalls@bla@ and @dbl@Tea Stalls@bla@!");
     case 10: ~mesbox("You can now pickpocket from @dbl@Farmers@bla@!");
@@ -23,9 +23,5 @@ switch_int(stat_base(thieving)) {
     case 72: ~mesbox("You can now steal from certain @dbl@chests@bla@ in the castle in Ardougne!");
     case 75: ~mesbox("You can now steal from @dbl@Gem Stalls@bla@ and pickpocket from @dbl@Gnomes@bla@!");
     case 80: ~mesbox("You can now pickpocket from @dbl@Heros@bla@!");
-
-
-
-    
 
 }

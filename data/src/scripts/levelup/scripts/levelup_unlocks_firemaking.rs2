@@ -1,0 +1,9 @@
+[label,levelup_firemaking]
+//firemaking level up unlock messages
+switch_int(stat_base(firemaking)) {
+    case 15: ~objboxt(oak_logs,"You can now burn @dbl@Oak Logs@bla@.");
+    case 30: ~objboxt(willow_logs,"You can now burn @dbl@Willow Logs@bla@.");    
+    case 45: ~objboxt(maple_logs,"You can now burn @dbl@Maple Logs@bla@.");
+    case 60: ~objboxt(yew_logs,"You can now burn @dbl@Yew Logs@bla@.");
+    case 75: ~objboxt(magic_logs,"You can now burn @dbl@Magic Logs@bla@.");
+}

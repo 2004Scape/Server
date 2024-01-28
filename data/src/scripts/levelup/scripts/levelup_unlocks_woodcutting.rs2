@@ -1,0 +1,16 @@
+[label,levelup_woodcutting]
+//Woodcutting level up unlock messages
+switch_int(stat_base(woodcutting)) {
+    case 6: ~objboxt(steel_axe,"You can now chop with an @dbl@Steel Axe@bla@.");
+    case 11: ~objboxt(black_axe,"You can now chop with an @dbl@Black Axe@bla@.");
+    case 15: ~objbox(oak_logs,"You can cut down @dbl@Oak Trees@bla@.");
+    case 21: ~objboxt(mithril_axe,"You can now chop with an @dbl@Mithril Axe@bla@.");
+    case 30: ~objbox(willow_logs,"You can cut down @dbl@Willow Trees@bla@.");
+    case 31: ~objboxt(adamant_axe,"You can now chop with an @dbl@Adamant Axe@bla@.");
+    case 41: ~objboxt(rune_axe,"You can now chop with an @dbl@Rune Axe@bla@.");
+    case 45: ~objbox(maple_logs,"You can cut down @dbl@Maple Trees@bla@.");
+    case 60: ~objbox(yew_logs,"You can cut down @dbl@Yew Trees@bla@.");
+    case 75: ~objbox(magic_logs,"You can cut down @dbl@Magic Trees@bla@.");
+ 
+
+}
