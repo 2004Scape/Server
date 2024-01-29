@@ -18,9 +18,14 @@
 
 [label,open_autocast_interface]
 if_close;
-if (p_finduid(uid) = false) { // cant open autocast interface if delayed
+if (p_finduid(uid) = true) { // cant open autocast interface if delayed
+    %attackstyle_magic = 0;
+    if_settab(attack_magic_spell, 0);
     return;
 }
+queue(set_magic_attack_style, 0);
+
+[queue,set_magic_attack_style]
 %attackstyle_magic = 0;
 if_settab(attack_magic_spell, 0);
 

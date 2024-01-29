@@ -9,7 +9,7 @@ if (p_finduid(uid) = true) {
     %auto_retaliate = ^player_auto_retaliate_on;
     return;
 }
-queue(set_auto_retaliate, 0, 1);
+queue(set_auto_retaliate, 0, 0);
 
 [if_button,player_controls:com_3]
 p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
@@ -18,9 +18,10 @@ if (p_finduid(uid) = true) {
     %auto_retaliate = ^player_auto_retaliate_off;
     return;
 }
-queue(set_auto_retaliate, 0, 0);
+queue(set_auto_retaliate, 0, 1);
 
 [queue,set_auto_retaliate](int $value)
+//mes("Auto retal value <tostring($value)>");
 %auto_retaliate = $value;
 
 
@@ -29,7 +30,6 @@ queue(set_auto_retaliate, 0, 0);
 if_close;
 if (p_finduid(uid) = true) {
     %player_run = ^player_run_off;
-    return;
 }
 queue(set_run, 0, 0);
 
@@ -61,12 +61,16 @@ queue(set_run, 0, 1);
 [label,player_controls_emote](seq $anim)
 p_stopaction;
 if_close;
-if (p_finduid(uid) = false) {
+if (p_finduid(uid) = true) {
+    anim($anim, 20);
     // mes("You're already doing an emote!");
     return;
 }
-anim($anim, 20);
+queue(perform_emote, 0, $anim);
 // p_delay(~seqlength20ms($anim));
+
+[queue,perform_emote](seq $anim)
+anim($anim, 20);
 
 [debugproc,delay](int $delay)
 p_delay($delay);
