@@ -54,25 +54,54 @@ inv_add(inv, net, 1);
 
 // https://youtu.be/TSx2-jjPeIs?t=31
 [label,survival_guide_fishing_after_burning]
-~chatnpc(neutral, "Hello again. Next thing is getting food in our bellies. We'll need something to cook. There are shrimp in the pond there. So let's catch and cook some.");
+~chatnpc(happy, "Hello again. Next thing is getting food in our bellies. We'll need something to cook. There are shrimp in the pond there. So let's catch and cook some.");
 
 [label,surivial_guide_recap]
 ~chatnpc(neutral, "Hello again. Is there something you'd like to hear more about?");
-def_int $choice = ~p_choice4("Tell me about my skills again.", 1, "Tell me about Woodcutting again.", 2, "Tell me about Firemaking again.", 3, "More options...", 4);
+def_int $choice = ~survival_recap_previous_options;
 
 switch_int ($choice) {
     case 1:
-        ~chatplayer("default", "Tell me about my skills again.");
-        ~chatnpc(neutral, "Every skill is listed in the skills menu. Here you can see what your current levels are and how much experience you have.");
-        ~chatnpc(neutral, "As you move your mouse over the various skills will show you the exact amount of epxerience you have and how much is needed to get to the next level.");
-        // Re-enable this line when we get skill menus.
-        //~chatnpc("default", "You can also click on a skill to open the relevant skillguide. In the skillguide, you can see all of the unlocks available in that skill. ");
-        ~chatnpc(quiz, "Is there anything else you'd like to hear more about?");
-        ~p_choice5("Tell me about Woodcutting again.", 1, "Tell me about firemaking again.", 2, "Tell me about Fishing again", 3, "Tell me about cooking again", 4, "Nothing thanks.", 5);
-//    case 2:
+        ~survival_recap_skills;
+        ~survival_recap_questions($choice);
+    case 2:
+        ~survival_recap_woodcutting;
+        ~survival_recap_questions($choice);
 //    case 3:
 //    case 4:
 }
+
+[proc,survival_recap_questions](int $choice)
+if ($choice = 1) {
+    ~p_choice5("Tell me about Woodcutting again.", 1, "Tell me about firemaking again.", 2, "Tell me about Fishing again", 3, "Tell me about cooking again", 4, "Nothing thanks.", 5);
+}
+
+[proc,survival_recap_skills]
+~chatplayer("default", "Tell me about my skills again.");
+~chatnpc(neutral, "Every skill is listed in the skills menu. Here you can see what your current levels are and how much experience you have.");
+~chatnpc(neutral, "As you move your mouse over the various skills it will show you the exact amount of experience you have and how much is needed to get to the next level.");
+// Re-enable this line when we get skill menus.
+//~chatnpc("default", "You can also click on a skill to open the relevant skillguide. In the skillguide, you can see all of the unlocks available in that skill. ");
+~chatnpc(quiz, "Is there anything else you'd like to hear more about?");
+
+[proc,survival_recap_woodcutting]
+~chatplayer(quiz, "Tell me about Woodcutting again.");
+~chatnpc(neutral, "Woodcutting, eh? Don't worry, newcomer, it's really very easy. Simply equip your axe and click on a nearby tree to chop away.");
+
+[proc,survival_recap_firemaking]
+
+[proc,survival_recap_fishing]
+
+[proc,survival_recap_cooking]
+
+[proc,survival_recap_nothing_thanks]
+~chatplayer(quiz, "Nothing thanks.");
+
+[proc,survival_recap_more_options]()(int)
+~p_choice4("Tell me about Fishing again.", 1, "Tell me about Cooking again.", 2, "Nothing thanks.", 3, "Previous options...", 4);
+
+[proc,survival_recap_previous_options]()(int)
+~p_choice4("Tell me about my skills again.", 1, "Tell me about Woodcutting again.", 2, "Tell me about Firemaking again.", 3, "More options...", 4);
 
 [label,set_hint_icon_surivial_guide]
 npc_findallzone(0_48_48_29_24);
