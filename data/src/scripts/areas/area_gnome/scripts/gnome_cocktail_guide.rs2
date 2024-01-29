@@ -1,7 +1,7 @@
 [opheld1,cocktail_guide] @open_cocktail_guide_index;
 [if_button,blurberry_cocktail_guide:index] @open_cocktail_guide_index;
 [if_button,blurberry_cocktail_guide2:rightarrow] 
-if (last_item = gianne_cook_book) {
+if (%open_book = gianne_cook_book) {
     @flip_page_cook_book(1);
 } else {
     @flip_page_cocktail_guide(1);
@@ -19,6 +19,7 @@ if (last_item = gianne_cook_book) {
 
 [label,open_cocktail_guide_index]
 %book_page = 0;
+%open_book = cocktail_guide;
 if_sethide(blurberry_cocktail_guide2:gnome_food_index_layer, true);
 if_sethide(blurberry_cocktail_guide2:cocktail_index_layer, false);
 if_settext(blurberry_cocktail_guide2:book_title, "The Blurberry Cocktail Guide");
