@@ -11,7 +11,6 @@ import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import World from '#lostcity/engine/World.js';
-import world from '#lostcity/web/routes/api/v1/world.js';
 
 export default class GameMap {
     readonly collisionManager = new CollisionManager();

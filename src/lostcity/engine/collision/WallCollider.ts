@@ -1,4 +1,4 @@
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import { CollisionFlagMap } from '@2004scape/rsmod-pathfinder';
 
 import LocShape from '#lostcity/engine/collision/LocShape.js';
 import WallStraightCollider from '#lostcity/engine/collision/wall/WallStraightCollider.js';

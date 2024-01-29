@@ -1,8 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-
-import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 
@@ -28,6 +25,8 @@ import HuntType from '#lostcity/cache/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
+
+import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
