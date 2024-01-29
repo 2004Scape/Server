@@ -87,7 +87,7 @@ export default class InvType extends ConfigType {
             for (let j = 0; j < count; j++) {
                 this.stockobj[j] = packet.g2();
                 this.stockcount[j] = packet.g2();
-                this.stockrate[j] = packet.g1();
+                this.stockrate[j] = packet.g4();
             }
         } else if (opcode === 5) {
             this.restock = true;
