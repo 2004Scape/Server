@@ -22,6 +22,7 @@ switch_int (~p_choice3_header("Bread dough.", 1, "Pastry dough.", 2, "Pizza doug
     case default : @nothing_interesting_happens;
 }
 def_obj $water_source = inv_getobj(inv, $last_slot);
+
 inv_del(inv, pot_of_flour, 1);
 inv_del(inv, $water_source, 1);
 

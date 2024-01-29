@@ -45,7 +45,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     def_int $damage = randominc($maxhit);
     // if maxhit is defined then damage npc
     if ($maxhit ! null) {
-        // damage player
+        // damage player, isnt delayed an extra tick like using spells on npc (osrs)
         queue(damage_player, calc($duration / 30), $damage);
         // player anim for flinching doesnt exist, even in osrs
         // anim(~combat_defend_anim(inv_getobj(worn, ^wearpos_rhand)), $duration);

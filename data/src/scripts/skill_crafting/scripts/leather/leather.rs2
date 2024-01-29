@@ -19,9 +19,7 @@ switch_obj (last_useitem)
 
 [opheldu,leather]
 if (last_useitem = needle) {
-    if_setobject(crafting_leather:com_100, leather_cowl, 180);
-    if_openmainmodal(crafting_leather);
-    return;
+    @craft_leather_interface;
 }
 @nothing_interesting_happens;
 
@@ -75,6 +73,18 @@ if ($product_data = null) {
     @nothing_interesting_happens;
 }
 ~check_craft_leather_reqs($product_data);
+
+def_namedobj $leather;
+def_int $leather_count;
+$leather, $leather_count = db_getfield($product_data, craft_leather_table:leather, 0);
+if (inv_total(inv, $leather) < $leather_count) {
+    mes("You don't have enough leather to make <db_getfield($product_data, craft_leather_table:name, 0)>.");
+    return;
+}
+if (inv_total(inv, thread) < 1) {
+    ~objbox(thread, "You need some thread to make anything out of leather.");
+    return;
+}
 // delete thread after 5 uses are met
 %thread_used = calc(%thread_used + 1);
 if (%thread_used > 4) {
@@ -82,9 +92,6 @@ if (%thread_used > 4) {
     mes("You use up one of your reels of Thread.");
     %thread_used = 0;
 }
-def_namedobj $leather;
-def_int $leather_count;
-$leather, $leather_count = db_getfield($product_data, craft_leather_table:leather, 0);
 inv_del(inv, $leather, $leather_count);
 
 inv_add(inv, $product, 1);

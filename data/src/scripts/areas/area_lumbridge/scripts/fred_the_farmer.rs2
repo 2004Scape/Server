@@ -52,6 +52,7 @@ if($option = 1) {
 ~chatplayer(happy, "Yes okay. I can do that.");
 ~chatnpc(neutral, "Ok I'll see you when you have some wool.");
 %sheep_progress = ^sheep_started;
+~send_quest_progress_colour(quest_journal:sheep, %sheep_progress, ^sheep_started);
 
 [label,fred_progressed]
 ~chatnpc(neutral, "How are you doing getting those balls of wool?");

@@ -1,11 +1,50 @@
+// side interfaces are treated as modals for now. They will eventually be treated as overlays.
+// since they're modals right now, they're protected by default.
+
+// auto retaliate
 [if_button,player_controls:com_2]
 p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
-%auto_retaliate = ^player_auto_retaliate_on;
+if_close; // closes interfaces in osrs
+if (p_finduid(uid) = true) {
+    %auto_retaliate = ^player_auto_retaliate_on;
+    return;
+}
+queue(set_auto_retaliate, 0, 1);
+
 [if_button,player_controls:com_3]
 p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
-%auto_retaliate = ^player_auto_retaliate_off;
-[if_button,player_controls:com_4] %player_run = ^player_run_off;
-[if_button,player_controls:com_5] %player_run = ^player_run_on;
+if_close; // might be strongqueued in osrs
+if (p_finduid(uid) = true) {
+    %auto_retaliate = ^player_auto_retaliate_off;
+    return;
+}
+queue(set_auto_retaliate, 0, 0);
+
+[queue,set_auto_retaliate](int $value)
+%auto_retaliate = $value;
+
+
+// Player run
+[if_button,player_controls:com_4] 
+if_close;
+if (p_finduid(uid) = true) {
+    %player_run = ^player_run_off;
+    return;
+}
+queue(set_run, 0, 0);
+
+[if_button,player_controls:com_5]
+if_close;
+if (p_finduid(uid) = true) {
+    %player_run = ^player_run_on;
+    return;
+}
+queue(set_run, 0, 1);
+
+[queue,set_run](int $value)
+%player_run = $value;
+
+// emotes
 [if_button,player_controls:com_13] @player_controls_emote(emote_cry);
 [if_button,player_controls:com_14] @player_controls_emote(emote_think);
 [if_button,player_controls:com_15] @player_controls_emote(emote_wave);
@@ -21,9 +60,13 @@ p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_
 
 [label,player_controls_emote](seq $anim)
 p_stopaction;
-if (busy = true) {
+if_close;
+if (p_finduid(uid) = false) {
     // mes("You're already doing an emote!");
     return;
 }
 anim($anim, 20);
 // p_delay(~seqlength20ms($anim));
+
+[debugproc,delay](int $delay)
+p_delay($delay);

@@ -186,7 +186,6 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
 
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 def_int $damage = 0;
-def_int $queue_delay = 0;
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
     // play spell success sound
@@ -197,7 +196,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     if ($maxhit ! null) {
         // damage npc
         // mes("Duration: <tostring($duration)>, Duration (ticks): <tostring(calc($duration / 30))>");
-        npc_queue(2, $damage, calc($duration / 30));
+        npc_queue(2, $damage, calc($duration / 30 + 1)); // delayed an extra tick in osrs
         // npcs didnt have a flinch anim until sept 20 2006. https://youtu.be/UFgMqvI4to8
         // https://oldschool.runescape.wiki/w/Update:Slug_Menace
         // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
@@ -208,7 +207,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
     // npc auto retal
-    $queue_delay = calc($duration / 30 - 1); // minus one to allow flinching with manual casting (matching osrs)
+    ~npc_retaliate(calc($duration / 30 + 1)); // delayed an extra tick in osrs
 
     // other effects:
     // reduce stat
@@ -245,9 +244,8 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // sound_synth(, 0, $duration);
     spotanim_npc(spotanim_85, 92, $duration);
     // splashing in osrs causes insta auto retal
-    $queue_delay = 0;
+    ~npc_retaliate(0);
 }
-~npc_retaliate($queue_delay);
 npc_heropoints($damage);
 
 // debug code
