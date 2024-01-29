@@ -13,7 +13,7 @@ switch_int(%tutorial_progress) {
 ~chatnpc(neutral, "Hello there newcomer. My name is Brynna. My job is|to teach you a few survival tips and tricks. First off|we're going to start with the most basic survival skill of|all; making a fire.");
 ~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a @blu@Tinderbox@bla@ and a|@blu@Bronze Axe@bla@!");
 %tutorial_progress = 20;
-@tutorial_step_11_view_inventory;
+~tutorial_step_11_view_inventory;
 
 [label,survival_guide_look_at_menu]
 ~chatnpc(neutral, "Hello again. You should take a look at that menu before we continue.");
@@ -50,7 +50,7 @@ while (npc_findnext = true) {
 ~objbox(net, "The Survival Guide gives you a @blu@Net@bla@!");
 inv_add(inv, net, 1);
 %tutorial_progress = 70;
-@tutorial_step_16_catch_shrimp;
+~tutorial_step_16_catch_shrimp;
 
 // https://youtu.be/TSx2-jjPeIs?t=31
 [label,survival_guide_fishing_after_burning]

@@ -7,7 +7,7 @@ if ($uncooked_item = raw_shrimps) {
         inv_del(inv, raw_shrimps, 1);
         inv_add(inv, burnt_shrimp_anchovies, 1);
         %tutorial_progress = 90;
-        @tutorial_step_18_burn_shrimp;
+        ~tutorial_step_18_burn_shrimp;
     } else if (%tutorial_progress = 90) {
         anim(human_firecooking, 0);
         sound_synth(fry, 0, 0);
@@ -16,7 +16,7 @@ if ($uncooked_item = raw_shrimps) {
         inv_add(inv, shrimps, 1);
         givexp(cooking, 300);
         %tutorial_progress = 120;
-        @tutorial_step_19_survival_recap;
+        ~tutorial_step_19_survival_recap;
     } else {
 
     }

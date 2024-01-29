@@ -39,23 +39,23 @@ if (%tutorial_progress = 0) {
 
 switch_int(%tutorial_progress) {
     // Runescape Guide's House
-    case 0, 1: @tutorial_step_1_getting_started;
+    case 0, 1: ~tutorial_step_1_getting_started;
     // Not Relelvant until October 2006
-    case 2: @tutorial_step_2_player_controls_spanner;
-    case 3: @tutorial_step_3_player_controls_left_click;
-    case 4: @tutorial_step_4_interact_with_scenery;
-    case 10: @tutorial_step_10_moving_around;
+    case 2: ~tutorial_step_2_player_controls_spanner;
+    case 3: ~tutorial_step_3_player_controls_left_click;
+    case 4: ~tutorial_step_4_interact_with_scenery;
+    case 10: ~tutorial_step_10_moving_around;
 
     // Survival Tutor
-    case 20: @tutorial_step_11_view_inventory;
-    case 30: @tutorial_step_12_cut_tree;
-    case 40: @tutorial_step_13_build_fire;
+    case 20: ~tutorial_step_11_view_inventory;
+    case 30: ~tutorial_step_12_cut_tree;
+    case 40: ~tutorial_step_13_build_fire;
     case 50: ~tutorial_step_14_you_gained_experience;
-    case 60: @tutorial_step_15_view_stats;
-    case 70: @tutorial_step_16_catch_shrimp;
-    case 80: @tutorial_step_17_cook_shrimp;
-    case 90: @tutorial_step_18_burn_shrimp;
-    case 120: @tutorial_step_19_survival_recap;
+    case 60: ~tutorial_step_15_view_stats;
+    case 70: ~tutorial_step_16_catch_shrimp;
+    case 80: ~tutorial_step_17_cook_shrimp;
+    case 90: ~tutorial_step_18_burn_shrimp;
+    case 120: ~tutorial_step_19_survival_recap;
 
     // Master Chef
 }
@@ -94,7 +94,7 @@ if (%tutorial_progress = 70) {
 }
 
 if (%tutorial_progress = 10) {
-   @tutorial_step_10_moving_around;
+   ~tutorial_step_10_moving_around;
 }
 
 [if_button,player_design:accept]
@@ -108,15 +108,15 @@ allowdesign(false);
 [if_flashing_tab,_]
 if (%tutorial_progress = 2) {
     %tutorial_progress = 3;
-    @tutorial_step_3_player_controls_left_click;
+    ~tutorial_step_3_player_controls_left_click;
 } else if (%tutorial_progress = 20) {
     inv_add(inv, bronze_axe, 1);
     inv_add(inv, tinderbox, 1);
     %tutorial_progress = 30;
-    @tutorial_step_12_cut_tree;
+    ~tutorial_step_12_cut_tree;
 } else if (%tutorial_progress = 50) {
     %tutorial_progress = 60;
-    @tutorial_step_15_view_stats;
+    ~tutorial_step_15_view_stats;
 }
 
 [label,tutorial_step20]
@@ -126,23 +126,23 @@ if (%tutorial_progress = 2) {
 [proc,set_tutorial_progress]
 switch_int(%tutorial_progress) {
     // Runescape Guide's House
-    case 0, 1: @tutorial_step_1_getting_started;
+    case 0, 1: ~tutorial_step_1_getting_started;
     // Not Relelvant until October 2006
-    case 2: @tutorial_step_2_player_controls_spanner;
-    case 3: @tutorial_step_3_player_controls_left_click;
-    case 4: @tutorial_step_4_interact_with_scenery;
-    case 10: @tutorial_step_10_moving_around;
+    case 2: ~tutorial_step_2_player_controls_spanner;
+    case 3: ~tutorial_step_3_player_controls_left_click;
+    case 4: ~tutorial_step_4_interact_with_scenery;
+    case 10: ~tutorial_step_10_moving_around;
 
     // Survival Tutor
-    case 20: @tutorial_step_11_view_inventory;
-    case 30: @tutorial_step_12_cut_tree;
-    case 40: @tutorial_step_13_build_fire;
+    case 20: ~tutorial_step_11_view_inventory;
+    case 30: ~tutorial_step_12_cut_tree;
+    case 40: ~tutorial_step_13_build_fire;
     case 50: ~tutorial_step_14_you_gained_experience;
-    case 60: @tutorial_step_15_view_stats;
-    case 70: @tutorial_step_16_catch_shrimp;
-    case 80: @tutorial_step_17_cook_shrimp;
-    case 90: @tutorial_step_18_burn_shrimp;
-    case 120: @tutorial_step_19_survival_recap;
+    case 60: ~tutorial_step_15_view_stats;
+    case 70: ~tutorial_step_16_catch_shrimp;
+    case 80: ~tutorial_step_17_cook_shrimp;
+    case 90: ~tutorial_step_18_burn_shrimp;
+    case 120: ~tutorial_step_19_survival_recap;
 
     // Master Chef
 }

@@ -57,7 +57,7 @@ anim(null, $respawnrate);
 hint_stop();
 inv_add(inv, logs, 1);
 ~objboxt(logs, "You get some logs.");
-@tutorial_step_13_build_fire;
+~tutorial_step_13_build_fire;
 
 [label,give_logs]
 inv_add(inv, logs, 1);

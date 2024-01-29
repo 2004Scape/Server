@@ -23,11 +23,11 @@ if (map_localdev = true) {
 ~chatnpc(neutral, "I would also suggest reading through some of the|supporting information on the website. There you can|find maps, a bestiary, and much more.");
 ~chatnpc(neutral, "To continue the tutorial go through that door over there, and speak to your first instructor!");
 %tutorial_progress = 4;
-@tutorial_step_4_interact_with_scenery;
+~tutorial_step_4_interact_with_scenery;
 // The below commented out code will be relevant in October 2006, but was absent in September 2006.
 //~chatnpc(neutral, "You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");
 //%tutorial_progress = 2;
-//@tutorial_step_2_player_controls_spanner;
+//~tutorial_step_2_player_controls_spanner;
 //if_settab(game_options, ^tab_game_options);
 //if_settabflash(^tab_game_options);
 

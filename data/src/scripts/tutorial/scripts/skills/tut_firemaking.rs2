@@ -48,8 +48,9 @@ obj_add(coord, $log, 1, ^lootdrop_duration);
 inv_delslot(inv, $slot);
 // there should be no p_stopaction here, p_opobj(4) needs to be fixed
 if (%action_delay = map_clock) {
-    // firemaking roll
-    p_delay(5);
+    p_delay(0);
+    sound_synth(tinderbox_strike, 0, 0);
+    p_delay(2);
     %action_delay = calc(map_clock + 4);
     def_coord $fire_coord = obj_coord;
     // attempt to firemaking each direction
@@ -85,8 +86,10 @@ if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 3);
     p_opobj(4);
 } else if (%action_delay = map_clock) {
-    // firemaking roll
-    p_delay(5);
+    p_delay(0);
+    sound_synth(tinderbox_strike, 0, 0);
+    p_delay(2);
+
     %action_delay = calc(map_clock + 4);
     def_coord $fire_coord = obj_coord;
     // attempt to firemaking each direction
@@ -126,17 +129,18 @@ if (coord ! $fire_coord) {
 return ($first_from_opheld);
 
 [label,tut_firemaking_success](coord $fire_coord, obj $log)
-// delete log
 obj_del();
 givexp(firemaking, oc_param($log, productexp));
 sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
+
 if (%tutorial_progress = 40) {
     %tutorial_progress = 50;
     ~tutorial_step_14_you_gained_experience;
 } else {
-    @set_tutorial_progress;
+    ~set_tutorial_progress;
 }
+
 def_int $delay = calc(100 + random(100));
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 world_delay($delay);
