@@ -30,6 +30,7 @@ queue(set_auto_retaliate, 0, 1);
 if_close;
 if (p_finduid(uid) = true) {
     %player_run = ^player_run_off;
+    return;
 }
 queue(set_run, 0, 0);
 
