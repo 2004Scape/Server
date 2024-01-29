@@ -24,7 +24,6 @@ queue(set_auto_retaliate, 0, 1);
 //mes("Auto retal value <tostring($value)>");
 %auto_retaliate = $value;
 
-
 // Player run
 [if_button,player_controls:com_4] 
 if_close;
