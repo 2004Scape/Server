@@ -123,7 +123,7 @@ if (%tutorial_progress = 2) {
 ~tutorialstep("Find your next instructor.", "Follow the path until you get to the door with the yellow arrow|above it. Click on the door to open it. Notice the mini-map in|the top right, this shows a top down view of the area around|you. This can also be used for navigation.");
 
 
-[label,set_tutorial_progress]
+[proc,set_tutorial_progress]
 switch_int(%tutorial_progress) {
     // Runescape Guide's House
     case 0, 1: @tutorial_step_1_getting_started;
