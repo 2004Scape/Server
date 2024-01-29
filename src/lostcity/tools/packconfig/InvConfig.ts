@@ -151,9 +151,9 @@ export function packInvConfigs(configs: Map<string, ConfigLine[]>) {
                 dat.p2(count);
 
                 if (typeof rate !== 'undefined') {
-                    dat.p1(rate);
+                    dat.p4(rate);
                 } else {
-                    dat.p1(0);
+                    dat.p4(0);
                 }
             }
         }
