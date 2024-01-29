@@ -1,3 +1,5 @@
+type=overlay
+
 [inv]
 type=inv
 x=16

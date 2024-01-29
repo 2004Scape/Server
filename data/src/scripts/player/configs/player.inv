@@ -7,7 +7,6 @@ runweight=yes
 [worn]
 scope=perm
 size=14
-protect=no
 runweight=yes
 
 [reward]

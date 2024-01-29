@@ -9,6 +9,7 @@ import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
 import ScriptOpcodePointers from '#lostcity/engine/script/ScriptOpcodePointers.js';
+import IfType from '#lostcity/cache/IfType.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -98,22 +99,33 @@ for (let i = 0; i < locs.length; i++) {
 }
 fs.writeFileSync('data/symbols/loc.tsv', locSymbols);
 
+IfType.load('data/pack/server');
 let comSymbols = '';
 let interfaceSymbols = '';
+let overlaySymbols = '';
 const coms = loadPack('data/pack/interface.pack');
 for (let i = 0; i < coms.length; i++) {
     if (!coms[i] || coms[i] === 'null:null') {
         continue;
     }
 
+    const com = IfType.get(i);
     if (coms[i].indexOf(':') !== -1) {
         comSymbols += `${i}\t${coms[i]}\n`;
+    } else if (com.overlay) {
+        overlaySymbols += `${i}\t${coms[i]}\n`;
     } else {
+        interfaceSymbols += `${i}\t${coms[i]}\n`;
+    }
+
+    // temporary: until compiler updates
+    if (com.overlay) {
         interfaceSymbols += `${i}\t${coms[i]}\n`;
     }
 }
 fs.writeFileSync('data/symbols/component.tsv', comSymbols);
 fs.writeFileSync('data/symbols/interface.tsv', interfaceSymbols);
+fs.writeFileSync('data/symbols/overlayinterface.tsv', overlaySymbols);
 
 VarPlayerType.load('data/pack/server');
 let varpSymbols = '';

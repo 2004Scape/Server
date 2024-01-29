@@ -35,6 +35,12 @@ const PlayerOps: CommandHandlers = {
         const uid = state.popInt();
         const player = World.getPlayerByUid(uid);
 
+        if (state.pointerGet(ProtectedActivePlayer[state.intOperand]) && state.activePlayer.uid === uid) {
+            // script is already running on this player with protected access, no-op
+            state.pushInt(1);
+            return;
+        }
+
         if (!player || !player.canAccess()) {
             state.pushInt(0);
             return;
@@ -486,7 +492,7 @@ const PlayerOps: CommandHandlers = {
         const tab = state.popInt();
         const com = state.popInt();
 
-        state.activePlayer.ifSetTab(com, tab);
+        state.activePlayer.setTab(com, tab);
     }),
 
     [ScriptOpcode.IF_OPENMAINMODAL]: checkedHandler(ActivePlayer, (state) => {

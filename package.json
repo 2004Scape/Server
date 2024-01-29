@@ -22,7 +22,7 @@
     "server:pack": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/all/pack.ts",
     "server:clean": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/clean.ts",
     "server:build": "npm run server:pack && npm run script:symbols && npm run script:compile",
-    "server:watch": "watch \"npm run server:build\" ./data/src/scripts",
+    "server:watch": "watch \"npm run server:build\" ./data/src/scripts ./src/lostcity/tools",
     "test": "jest",
     "lint": "eslint . --ext .ts --ext .js",
     "drops": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/drops.ts",
