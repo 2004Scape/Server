@@ -3,18 +3,18 @@
 
 // auto retaliate
 [if_button,player_controls:com_2]
-p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
 if_close; // closes interfaces in osrs
 if (p_finduid(uid) = true) {
+    p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
     %auto_retaliate = ^player_auto_retaliate_on;
     return;
 }
 queue(set_auto_retaliate, 0, 1);
 
 [if_button,player_controls:com_3]
-p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
 if_close; // might be strongqueued in osrs
 if (p_finduid(uid) = true) {
+    p_stopaction; // https://oldschool.runescape.wiki/w/Update:Slayer_Cave_%26_High_Risk_Worlds
     %auto_retaliate = ^player_auto_retaliate_off;
     return;
 }
@@ -59,12 +59,12 @@ queue(set_run, 0, 1);
 [if_button,player_controls:com_24] @player_controls_emote(emote_clap);
 
 [label,player_controls_emote](seq $anim)
-p_stopaction;
 if_close;
 if (p_finduid(uid) = false) {
     // mes("You're already doing an emote!");
     return;
 }
+p_stopaction;
 anim($anim, 20);
 // p_delay(~seqlength20ms($anim));
 

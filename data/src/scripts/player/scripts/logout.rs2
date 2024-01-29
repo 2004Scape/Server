@@ -1,4 +1,7 @@
-[if_button,logout:try_logout] p_logout;
+[if_button,logout:try_logout]
+if (p_finduid(uid) = true) {
+    p_logout;
+}
 
 [logout,_]()(boolean)
 if (busy = true) {
