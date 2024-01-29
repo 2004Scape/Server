@@ -102,8 +102,12 @@ return (false);
 
 // returns the defence roll for an attacking style.
 [proc,npc_defence_roll_specific](int $damagetype)(int)
+def_npc_stat $stat = defence;
+if ($damagetype = ^magic_style) {
+    $stat = magic;
+}
 def_int $defencebonus = ~npc_combat_defencebonus($damagetype);
-def_int $effective_defence = ~combat_effective_stat(1, npc_stat(defence), 100); // no prayerbonus
+def_int $effective_defence = ~combat_effective_stat(1, npc_stat($stat), 100); // no prayerbonus
 def_int $defence_roll = ~combat_stat($effective_defence, $defencebonus);
 return($defence_roll);
 

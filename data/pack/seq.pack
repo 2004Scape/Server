@@ -191,7 +191,7 @@
 190=midget_seq_190
 191=midget_seq_191
 192=midget_seq_192
-193=midget_seq_193
+193=midget_block
 194=midget_seq_194
 195=midget_ready
 196=midget_death
@@ -429,7 +429,7 @@
 428=human_spear_stab
 429=human_spear_crush
 430=human_spear_defend
-431=seq_431
+431=human_khazardspear_defend
 432=seq_432
 433=seq_433
 434=seq_434
@@ -441,7 +441,7 @@
 440=human_spear_slash
 441=seq_441
 442=seq_442
-443=seq_443
+443=catapult_fire
 444=seq_444
 445=seq_445
 446=seq_446

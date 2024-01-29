@@ -44,7 +44,7 @@ export default function (f, opts, next) {
         let freeRegions = WorldList.filter(x => x.region && !x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
         let membersRegions = WorldList.filter(x => x.region && x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
 
-        if (req.query.method == 2) {
+        if (req.query.method == 3) {
             return res.redirect('/downloads');
         }
 

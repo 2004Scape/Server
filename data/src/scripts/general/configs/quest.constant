@@ -3,7 +3,7 @@
 ^cook_complete = 2
 ^romeojuliet_complete = 100
 ^hetty_complete = 3
-^priest_complete = 7
+^priest_complete = 5
 ^squire_complete = 7
 ^imp_complete = 2
 ^druid_complete = 4
@@ -29,6 +29,8 @@
 ^elena_complete = 17
 ^seaslug_complete = 12
 ^arthur_complete = 7
+^tree_complete = 9
+^grandtree_complete = 160
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -57,3 +59,4 @@
 ^vampire_questpoints = 3
 ^zanaris_questpoints = 3
 ^arthur_questpoints = 6
+^tree_questpoints = 2

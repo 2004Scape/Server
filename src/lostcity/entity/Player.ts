@@ -171,13 +171,25 @@ export default class Player extends PathingEntity {
         [ 4550, 4537, 5681, 5673, 5790, 6806, 8076, 4574 ]
     ];
 
-    static load(name: string) {
+    static loadFromFile(name: string) {
+        const name37 = toBase37(name);
+        const safeName = fromBase37(name37);
+
+        let save = new Packet();
+        if (fs.existsSync(`data/players/${safeName}.sav`)) {
+            save = Packet.load(`data/players/${safeName}.sav`);
+        }
+
+        return Player.load(name, save);
+    }
+
+    static load(name: string, sav: Packet) {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
 
         const player = new Player(safeName, name37);
 
-        if (!fs.existsSync(`data/players/${safeName}.sav`)) {
+        if (sav.length < 2) {
             for (let i = 0; i < 21; i++) {
                 player.stats[i] = 0;
                 player.baseLevels[i] = 1;
@@ -191,7 +203,6 @@ export default class Player extends PathingEntity {
             return player;
         }
 
-        const sav = Packet.load(`data/players/${safeName}.sav`);
         if (sav.g2() !== 0x2004) {
             throw new Error('Invalid player save');
         }
@@ -668,11 +679,14 @@ export default class Player extends PathingEntity {
                 this.messageColor = colour;
                 this.messageEffect = effect;
                 this.messageType = 0;
+
                 const out = new Packet();
                 TextEncoder.encode(out, WordEnc.filter(message));
                 out.pos = 0;
                 this.message = out.gdata();
                 this.mask |= Player.CHAT;
+
+                World.socialPublicMessage(this.username37, message);
             } else if (opcode === ClientProt.IF_DESIGN) {
                 const female = data.g1();
 
@@ -1549,6 +1563,32 @@ export default class Player extends PathingEntity {
                 pathfindX = player.x;
                 pathfindZ = player.z;
                 pathfindRequest = true;
+            } else if (opcode === ClientProt.FRIENDLIST_ADD) {
+                const other = data.g8();
+
+                World.socialAddFriend(this.username37, other);
+            } else if (opcode === ClientProt.FRIENDLIST_DEL) {
+                const other = data.g8();
+
+                World.socialRemoveFriend(this.username37, other);
+            } else if (opcode === ClientProt.IGNORELIST_ADD) {
+                const other = data.g8();
+
+                World.socialAddIgnore(this.username37, other);
+            } else if (opcode === ClientProt.IGNORELIST_DEL) {
+                const other = data.g8();
+
+                World.socialRemoveIgnore(this.username37, other);
+            } else if (opcode === ClientProt.IDLE_TIMER) {
+                if (!Environment.LOCAL_DEV) {
+                    this.logout();
+                    this.logoutRequested = true;
+                }
+            } else if (opcode === ClientProt.MESSAGE_PRIVATE) {
+                const other = data.g8();
+                const message = TextEncoder.decode(data, data.length - 8);
+
+                World.socialPrivateMessage(this.username37, other, message);
             }
         }
 
@@ -1842,18 +1882,6 @@ export default class Player extends PathingEntity {
                 this.client?.terminate();
                 this.client = null;
             } break;
-            case 'playerfill': {
-                if (!Environment.LOCAL_DEV) {
-                    break;
-                }
-
-                for (let i = 0; i < 1999; i++) {
-                    const player = Player.load('test' + i);
-                    player.x = Math.floor(this.x + (Math.random() * 32) - 16);
-                    player.z = Math.floor(this.x + (Math.random() * 32) - 16);
-                    World.addPlayer(player, new ClientSocket(null, '127.0.0.1', ClientSocket.TCP, 1));
-                }
-            } break;
             default: {
                 if (cmd.length <= 0) {
                     return;
@@ -2141,8 +2169,9 @@ export default class Player extends PathingEntity {
      * @param args
      */
     enqueueScript(script: Script, type: QueueType = 'normal', delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest(type, script, args, delay + 1);
+        const request = new EntityQueueRequest(type, script, args, delay);
         if (type === 'engine') {
+            request.delay = 0;
             this.engineQueue.push(request);
         } else if (type === 'weak') {
             this.weakQueue.push(request);
@@ -2331,14 +2360,23 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        // todo: clear interaction if target no longer exists (including npc_changetype)
+        if (this.target.level !== this.level) {
+            this.clearInteraction();
+            return;
+        }
 
+        // todo: clear interaction on npc_changetype
         if (this.target instanceof Npc && this.target.delayed()) {
             this.clearInteraction();
             return;
         }
 
-        if (this.target.level !== this.level) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+            this.clearInteraction();
+            return;
+        }
+
+        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
             this.clearInteraction();
             return;
         }
@@ -4306,16 +4344,16 @@ export default class Player extends PathingEntity {
         this.netOut.push(out);
     }
 
-    messagePrivate(from37: bigint, messageId: number, fromRights: number, message: Packet) {
+    messagePrivate(from: bigint, messageId: number, staffModLevel: number, message: string) {
         const out = new Packet();
         out.p1(ServerProt.MESSAGE_PRIVATE);
         out.p1(0);
         const start = out.pos;
 
-        out.p8(from37);
+        out.p8(from);
         out.p4(messageId);
-        out.p1(fromRights);
-        out.pdata(message);
+        out.p1(staffModLevel);
+        TextEncoder.encode(out, WordEnc.filter(message));
 
         out.psize1(out.pos - start);
         this.netOut.push(out);

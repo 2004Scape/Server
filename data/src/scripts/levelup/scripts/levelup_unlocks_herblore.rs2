@@ -25,5 +25,4 @@ switch_int(stat_base(herblore)) {
     case 72: ~objboxb(3doserangerspotion,"You can now make @dbl@ranging potions@bla@.");
     case 75: ~objboxt(torstol,"You can now identify @dbl@torstol@bla@.");
     case 78: ~objboxb(3dosepotionofzamorak,"You can now make @dbl@Zamorak brews@bla@.");
-
 }

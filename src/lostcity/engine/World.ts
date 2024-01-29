@@ -1,9 +1,14 @@
+import { Worker } from 'worker_threads';
+
 import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37 } from '#jagex2/jstring/JString.js';
 
-import PathFinder from '#rsmod/PathFinder.js';
 import LineValidator from '#rsmod/LineValidator.js';
+import NaivePathFinder from '#rsmod/NaivePathFinder.js';
+import PathFinder from '#rsmod/PathFinder.js';
+import StepValidator from '#rsmod/StepValidator.js';
+
 import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
@@ -26,9 +31,11 @@ import StructType from '#lostcity/cache/StructType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
+import WordEnc from '#lostcity/cache/WordEnc.js';
 
-import { Inventory } from '#lostcity/engine/Inventory.js';
 import GameMap from '#lostcity/engine/GameMap.js';
+import { Inventory } from '#lostcity/engine/Inventory.js';
+import Login from '#lostcity/engine/Login.js';
 
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 
@@ -49,12 +56,9 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { LoginClient } from '#lostcity/server/LoginServer.js';
-import NaivePathFinder from '#rsmod/NaivePathFinder.js';
-import StepValidator from '#rsmod/StepValidator.js';
-import WordEnc from '#lostcity/cache/WordEnc.js';
 
 class World {
+    id = Environment.WORLD_ID as number;
     members = Environment.MEMBERS_WORLD as boolean;
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
@@ -81,10 +85,96 @@ class World {
         delay: number;
     }[] = [];
 
+    friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
+
     constructor() {
         this.players.fill(null);
         this.playerIds.fill(-1);
+
+        this.friendThread.on('message', data => {
+            try {
+                this.onFriendMessage(data);
+            } catch (err) {
+                console.error('Friend Thread:', err);
+            }
+        });
     }
+
+    // ----
+
+    onFriendMessage(msg: any) {
+        switch (msg.type) {
+            default:
+                throw new Error('Unknown message type: ' + msg.type);
+        }
+    }
+
+    socialAddFriend(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'addfriend',
+            player: player,
+            other: other
+        });
+    }
+
+    socialRemoveFriend(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'delfriend',
+            player: player,
+            other: other
+        });
+    }
+
+    socialAddIgnore(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'addignore',
+            player: player,
+            other: other
+        });
+    }
+
+    socialRemoveIgnore(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'delignore',
+            player: player,
+            other: other
+        });
+    }
+
+    socialLogin(username: bigint) {
+        this.friendThread.postMessage({
+            type: 'login',
+            world: this.id,
+            username
+        });
+    }
+
+    socialLogout(username: bigint) {
+        this.friendThread.postMessage({
+            type: 'logout',
+            world: this.id,
+            username
+        });
+    }
+
+    socialPrivateMessage(from: bigint, to: bigint, text: string) {
+        this.friendThread.postMessage({
+            type: 'private_message',
+            from,
+            to,
+            text
+        });
+    }
+
+    socialPublicMessage(from: bigint, text: string) {
+        this.friendThread.postMessage({
+            type: 'public_message',
+            from,
+            text
+        });
+    }
+
+    // ----
 
     get collisionManager(): CollisionManager {
         return this.gameMap.collisionManager;
@@ -219,10 +309,13 @@ class World {
 
         this.vars = new Int32Array(VarSharedType.count);
 
-        if (Environment.LOGIN_KEY) {
-            const login = new LoginClient();
-            await login.reset();
-        }
+        Login.loginThread.postMessage({
+            type: 'reset'
+        });
+
+        this.friendThread.postMessage({
+            type: 'reset'
+        });
 
         console.log('World ready!');
 
@@ -444,17 +537,16 @@ class World {
                 continue;
             }
 
-            if (this.shutdownTick < this.currentTick) {
-                if (this.currentTick - player.lastResponse >= 100) {
-                    // remove after 60 seconds
-                    player.queue = [];
-                    player.weakQueue = [];
-                    player.engineQueue = [];
-                    player.clearInteraction();
-                    player.closeModal();
-                    player.clearWalkingQueue();
-                    player.logoutRequested = true;
-                }
+            if (this.currentTick - player.lastResponse >= 100) {
+                // remove after 60 seconds
+                player.queue = [];
+                player.weakQueue = [];
+                player.engineQueue = [];
+                player.clearInteraction();
+                player.closeModal();
+                player.clearWalkingQueue();
+                player.logoutRequested = true;
+                player.setVar('lastcombat', 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
 
             if (!player.logoutRequested) {
@@ -465,7 +557,6 @@ class World {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     console.error('LOGOUT TRIGGER IS BROKEN!');
-                    // todo: remove player safely still?
                     continue;
                 }
 
@@ -534,6 +625,8 @@ class World {
                 player.client.state = 1;
                 player.client.send(Uint8Array.from([2]));
             }
+
+            this.socialLogin(player.username37);
         }
         playerLogin = Date.now() - playerLogin;
 
@@ -681,9 +774,7 @@ class World {
         }
         cleanup = Date.now() - cleanup;
 
-        if (Environment.LOGIN_KEY && this.currentTick % 100 === 0) {
-            // send heartbeat to login server
-            const login = new LoginClient();
+        if (this.currentTick % 100 === 0) {
             const players: bigint[] = [];
             for (let i = 0; i < this.players.length; i++) {
                 const player = this.players[i];
@@ -693,7 +784,16 @@ class World {
 
                 players.push(player.username37);
             }
-            await login.heartbeat(players);
+
+            Login.loginThread.postMessage({
+                type: 'heartbeat',
+                players
+            });
+
+            this.friendThread.postMessage({
+                type: 'heartbeat',
+                players
+            });
         }
 
         // server shutdown
@@ -759,6 +859,10 @@ class World {
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
             setTimeout(this.cycle.bind(this), nextTick);
+
+            this.friendThread.postMessage({
+                type: 'latest'
+            });
         }
     }
 
@@ -1077,8 +1181,6 @@ class World {
             return;
         }
 
-        const sav = player.save();
-
         player.playerLog('Logging out');
         if (player.client) {
             // visually disconnect the client
@@ -1087,21 +1189,8 @@ class World {
             player.client = null;
         }
 
-        if (Environment.LOGIN_KEY) {
-            const login = new LoginClient();
-            const reply = await login.save(player.username37, sav);
-
-            if (reply !== 0) {
-                // login server error, try again next tick
-                return;
-            }
-        }
-
-        this.getZone(player.x, player.z, player.level).leave(player);
-
-        const index = this.playerIds[player.pid];
-        this.players[index] = null;
-        this.playerIds[player.pid] = -1;
+        Login.logout(player);
+        this.socialLogout(player.username37);
     }
 
     getPlayer(pid: number) {

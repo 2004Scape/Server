@@ -234,6 +234,9 @@ defence=8
 param=attackrate,6
 param=attackbonus,5
 param=strengthbonus,6
+param=attack_anim,human_spear_stab
+param=attack_sound,staff_stab
+param=defend_anim,human_spear_defend
 param=damagetype,^stab_style
 
 [npc_8]
@@ -1172,6 +1175,9 @@ attack=2
 strength=3
 defence=2
 param=damagetype,^stab_style
+param=attack_anim,human_spear_stab
+param=attack_sound,staff_stab
+param=defend_anim,human_spear_defend
 
 [npc_38]
 name=Shipyard worker
@@ -1951,6 +1957,7 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
@@ -1982,6 +1989,7 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
@@ -2017,6 +2025,7 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=defend_anim,midget_block
 param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
@@ -2679,6 +2688,8 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+huntmode=aggressive_melee
+param=death_drop,wolf_bones
 
 [npc_96]
 size=2
@@ -3932,6 +3943,7 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+param=death_drop,wolf_bones
 
 [npc_143]
 name=Jungle Wolf
@@ -5799,6 +5811,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_254]
 name=Khazard Guard
@@ -5835,6 +5850,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_255]
 name=Khazard Guard
@@ -5870,6 +5888,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_256]
 name=Khazard Guard
@@ -5906,6 +5927,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,seq_398
+param=attack_sound,baxe_slash
 
 [npc_257]
 name=Khazard Guard
@@ -9106,378 +9130,6 @@ param=damagetype,^slash_style
 param=defend_sound,animated_hit
 param=death_sound,animated_death
 param=death_drop,null
-
-[npc_469]
-vislevel=hide
-name=King Bolren
-desc=It's a gnome.  He looks important.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=22426
-recol1d=6845
-model1=model_2909_npc
-model2=model_2891_npc
-model3=model_2916_npc
-head1=model_20_npc_head
-wanderrange=2
-
-[npc_470]
-vislevel=hide
-name=Commander Montai
-desc=It's a tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-resizeh=150
-resizev=150
-recol1s=41
-recol1d=933
-model1=model_2909_npc
-model2=model_2903_npc
-model3=model_2919_npc
-head1=model_22_npc_head
-
-[npc_471]
-vislevel=hide
-name=Bolkoy
-desc=It's a tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op3=Trade
-model1=model_2909_npc
-model2=model_2901_npc
-model3=model_2917_npc
-head1=model_17_npc_head
-
-[npc_472]
-vislevel=hide
-name=Remsai
-desc=It's a tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=11162
-recol1d=38715
-recol2s=22422
-recol2d=38715
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-
-[npc_473]
-vislevel=hide
-name=Elkoy
-desc=It's a tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=11162
-recol1d=39477
-recol2s=22422
-recol2d=39477
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-wanderrange=3
-
-[npc_474]
-vislevel=hide
-name=Elkoy
-desc=It's a tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=11162
-recol1d=39477
-recol2s=22422
-recol2d=39477
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-wanderrange=3
-
-[npc_475]
-name=Khazard trooper
-desc=It's one of General Khazard's warriors.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=19
-recol1s=61
-recol1d=20
-model1=model_219_obj_wear
-model2=model_252_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_269_npc
-model7=model_185_obj_wear
-model8=model_502_obj_wear
-model9=model_523_npc
-wanderrange=8
-attackrange=10
-hitpoints=22
-attack=17
-strength=18
-defence=12
-param=attackrate,6
-param=attackbonus,8
-param=strengthbonus,10
-param=stabdefence,33
-param=slashdefence,34
-param=crushdefence,29
-param=magicdefence,-7
-param=rangedefence,33
-param=damagetype,^crush_style
-
-[npc_476]
-name=Khazard trooper
-desc=It's one of General Khazard's warriors.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op2=Attack
-vislevel=19
-recol1s=61
-recol1d=20
-model1=model_219_obj_wear
-model2=model_252_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_269_npc
-model7=model_185_obj_wear
-model8=model_540_obj_wear
-wanderrange=8
-attackrange=10
-hitpoints=22
-attack=17
-strength=18
-defence=12
-param=attackrate,6
-param=attackbonus,8
-param=strengthbonus,10
-param=stabdefence,33
-param=slashdefence,34
-param=crushdefence,29
-param=magicdefence,-7
-param=rangedefence,33
-param=damagetype,^crush_style
-
-[khazard_warlord]
-name=Khazard warlord
-desc=He looks real nasty, smells bad too.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=112
-recol1s=61
-recol1d=20
-recol2s=7700
-recol2d=11138
-recol3s=57
-recol3d=20
-model1=model_225_npc
-model2=model_246_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_268_obj_wear
-model7=model_185_obj_wear
-model8=model_542_obj_wear
-model9=model_523_npc
-model10=model_323_obj_wear
-head1=model_60_npc_head
-wanderrange=8
-attackrange=10
-// TODO respawnrate
-hitpoints=170
-attack=75
-strength=78
-defence=80
-param=damagetype,^crush_style
-
-[khazard_commander]
-name=Khazard commander
-desc=It's one of General Khazard's commanders.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=48
-recol1s=61
-recol1d=20
-recol2s=57
-recol2d=20
-model1=model_206_idk
-model2=model_252_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_268_obj_wear
-model7=model_185_obj_wear
-model8=model_540_obj_wear
-model9=model_323_obj_wear
-wanderrange=2
-attackrange=4
-respawnrate=150
-hitpoints=22
-attack=50
-strength=45
-defence=50
-param=damagetype,^stab_style
-
-[npc_479]
-name=Gnome troop
-desc=It's a tree gnome trooper.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-vislevel=1
-model1=model_2914_npc
-model2=model_2903_npc
-model3=model_2919_npc
-head1=model_22_npc_head
-respawnrate=30
-hitpoints=3
-param=attackbonus,2
-param=strengthbonus,3
-param=stabdefence,3
-param=slashdefence,4
-param=crushdefence,5
-param=magicdefence,2
-param=rangedefence,4
-param=death_anim,midget_death
-param=attack_sound,gnome_attack
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-
-[npc_480]
-name=Gnome troop
-desc=It's a tree gnome trooper.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-op2=Attack
-vislevel=1
-recol1s=4550
-recol1d=5916
-recol2s=4541
-recol2d=5916
-recol3s=4541
-recol3d=5916
-recol4s=4537
-recol4d=5916
-model1=model_2914_npc
-model2=model_2903_npc
-model3=model_2919_npc
-head1=model_22_npc_head
-respawnrate=30
-hitpoints=3
-param=attackbonus,2
-param=strengthbonus,3
-param=stabdefence,3
-param=slashdefence,4
-param=crushdefence,5
-param=magicdefence,2
-param=rangedefence,4
-param=death_anim,midget_death
-param=attack_sound,gnome_attack
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-
-[npc_481]
-vislevel=hide
-name=Gnome
-desc=Looks like a gnome to me.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=22422
-recol1d=6942
-recol2s=22426
-recol2d=6945
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-
-[npc_482]
-vislevel=hide
-name=Gnome
-desc=Looks like a gnome to me.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=22422
-recol1d=6942
-recol2s=22426
-recol2d=6945
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-
-[npc_483]
-vislevel=hide
-name=Gnome
-desc=Looks like a gnome to me.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=22422
-recol1d=6942
-recol2s=22426
-recol2d=6945
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2915_npc
-head1=model_21_npc_head
-
-[npc_484]
-vislevel=hide
-name=Local Gnome
-desc=It's a young tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-wanderrange=0
-moverestrict=nomove
-
-[npc_485]
-vislevel=hide
-name=Local Gnome
-desc=It's a young tree gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-wanderrange=0
-moverestrict=nomove
-
-[npc_486]
-vislevel=hide
-name=Kalron
-desc=He looks lost.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2890_npc
-model3=model_2917_npc
-head1=model_21_npc_head
 
 [npc_487]
 vislevel=hide

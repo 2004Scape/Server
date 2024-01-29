@@ -109,7 +109,7 @@ export default function (f: any, opts: any, next: any) {
             return res.redirect(302, '/detail');
         }
 
-        if (typeof req.query.method == 'undefined' || !req.query.method) {
+        if (typeof req.query.method == 'undefined') {
             return res.redirect(302, '/detail');
         }
 
@@ -124,7 +124,7 @@ export default function (f: any, opts: any, next: any) {
                 detail: req.query.detail,
                 method: req.query.method,
             });
-        } else if (req.query.method == 1) {
+        } else if (req.query.method == 1 || req.query.method == 2) {
             return res.view('javaclient', {
                 world,
                 detail: req.query.detail,
@@ -159,7 +159,7 @@ export default function (f: any, opts: any, next: any) {
                 detail: req.query.detail,
                 method: req.query.method,
             });
-        } else if (req.query.method == 1) {
+        } else if (req.query.method == 1 || req.query.method == 2) {
             return res.view('javaclient-inner', {
                 world,
                 detail: req.query.detail,
