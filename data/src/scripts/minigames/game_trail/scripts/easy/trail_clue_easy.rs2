@@ -16,7 +16,8 @@ if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;
 } else {
     inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "You've found another clue!");
+    // https://i.imgur.com/cohYEuj.jpeg
+    ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
 }
 
 [proc,trail_clue_easy_complete](boolean)
@@ -33,5 +34,5 @@ if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;
 } else {
     inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "You've found another clue!");
+    ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
 }

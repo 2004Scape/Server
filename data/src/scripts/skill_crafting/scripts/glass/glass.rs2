@@ -43,7 +43,7 @@ sound_synth(furnace,0,0);
 // success message
 mes("You heat the sand and soda ash in the furnace to make glass.");
 // give xp
-givexp(crafting, 20);
+givexp(crafting, 200);
 
 
 [label,craft_glass_interface]

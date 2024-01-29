@@ -146,8 +146,7 @@ while (loc_findnext = true) {
         loc_add(movecoord(loc_coord, 0, 0, 1), loc_157, loc_angle, loc_shape, 2);
     }
 }
-p_teleport($dest);
-p_delay(0);
+~forcemove($dest);
 
 [oploc1,loc_133]
 ~reset_haunted_levers;

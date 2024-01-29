@@ -314,7 +314,7 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest('npc', script, args, delay + 1);
+        const request = new EntityQueueRequest('npc', script, args, delay);
         this.queue.push(request);
     }
 

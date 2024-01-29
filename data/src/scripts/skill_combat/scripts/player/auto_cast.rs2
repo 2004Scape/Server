@@ -17,13 +17,20 @@
 [if_button,attack_magic_spell:com_15] @set_autocast_spell(^fire_wave);
 
 [label,open_autocast_interface]
+if_close;
+if (p_finduid(uid) = false) { // cant open autocast interface if delayed
+    return;
+}
 %attackstyle_magic = 0;
 if_settab(attack_magic_spell, 0);
 
 [if_button,attack_magic_spell:com_174]
+if_close;
 ~initalltabs;
 
+// todo: allow setting autocast to go through delays.
 [label,set_autocast_spell](int $spell)
+if_close;
 //mes(tostring($spell));
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
