@@ -1,0 +1,16 @@
+[general_macro_events]
+inputtype=int
+outputtype=npc
+val=0,npc_411
+val=1,npc_407
+val=2,npc_409
+val=3,npc_956
+val=4,npc_410
+
+
+// swarm of bees
+// tangle vine (discontinued)
+// strange plant
+// drunken dwarf
+// genie
+// mysterious old man

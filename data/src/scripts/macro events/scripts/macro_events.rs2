@@ -1,0 +1,15 @@
+// timer is initiated on login, in scripts\player\scripts\global.rs2
+[timer,general_macro_events]
+def_npc $event;
+if (afk_event = ^true) {
+    $event = ~roll_general_macro_event;
+}
+
+// swarm of bees
+// tangle vine (discontinued)
+// strange plant
+// drunken dwarf
+// genie
+// mysterious old man
+[proc,roll_general_macro_event]()(npc)
+return(enum(int, npc, general_macro_events, random(enum_getoutputcount(general_macro_events))));
