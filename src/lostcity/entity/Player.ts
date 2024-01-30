@@ -4456,28 +4456,24 @@ export default class Player extends PathingEntity {
         out.p2(zoneZ);
 
         // build area is 13x13 zones (8*13 = 104 tiles), so we need to load 6 zones in each direction
-        const areas = [];
+        const areas: { mapsquareX: number, mapsquareZ: number }[] = [];
         for (let x = zoneX - 6; x <= zoneX + 6; x++) {
             for (let z = zoneZ - 6; z <= zoneZ + 6; z++) {
                 const mapsquareX = Position.mapsquare(x << 3);
                 const mapsquareZ = Position.mapsquare(z << 3);
 
-                const landExists = PRELOADED.has(`m${mapsquareX}_${mapsquareZ}`);
-                const locExists = PRELOADED.has(`l${mapsquareX}_${mapsquareZ}`);
-
-                if ((landExists || locExists) && areas.findIndex(a => a.mapsquareX === mapsquareX && a.mapsquareZ === mapsquareZ) === -1) {
-                    areas.push({ mapsquareX, mapsquareZ, landExists, locExists });
+                if (areas.findIndex(a => a.mapsquareX === mapsquareX && a.mapsquareZ === mapsquareZ) === -1) {
+                    areas.push({mapsquareX, mapsquareZ});
                 }
             }
         }
 
         for (let i = 0; i < areas.length; i++) {
-            const { mapsquareX, mapsquareZ, landExists, locExists } = areas[i];
-
+            const { mapsquareX, mapsquareZ } = areas[i];
             out.p1(mapsquareX);
             out.p1(mapsquareZ);
-            out.p4(landExists ? PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) ?? 0 : 0);
-            out.p4(locExists ? PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) ?? 0 : 0);
+            out.p4(PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) ?? 0);
+            out.p4(PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) ?? 0);
         }
 
         out.psize2(out.pos - start);

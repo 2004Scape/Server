@@ -89,6 +89,10 @@ export default class Packet {
     }
 
     static load(path: string): Packet {
+        if (!fs.existsSync(path)) {
+            return new Packet();
+        }
+
         return new Packet(fs.readFileSync(path));
     }
 
