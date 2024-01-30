@@ -336,6 +336,7 @@ class World {
 
         // world processing
         // - world queue
+        // - calculate afk event readiness
         // - npc spawn scripts
         // - npc hunt
         let worldProcessing = Date.now();
@@ -367,6 +368,18 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
+            }
+        }
+
+        if (this.currentTick % 500 === 0) {
+            for (let i = 0; i < this.players.length; i++) {
+                const player = this.players[i];
+                if (!player) {
+                    continue;
+                }
+
+                // 1/12 chance every 5 minutes of setting an afk event state
+                player.afkEventReady = Math.random() < 0.12;
             }
         }
 

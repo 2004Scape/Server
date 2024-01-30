@@ -815,7 +815,12 @@ const PlayerOps: CommandHandlers = {
         const energyClamp = Math.min(Math.max(player.runenergy + amount, 0), 10000);
         player.runenergy = energyClamp;
         player.updateRunEnergy(energyClamp);
-    }
+    },
+
+    [ScriptOpcode.AFK_EVENT]: (state) => {
+        state.pushInt(state.activePlayer.afkEventReady ? 1 : 0);
+        state.activePlayer.afkEventReady = false;
+    },
 };
 
 /**

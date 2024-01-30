@@ -400,6 +400,7 @@ export default class Player extends PathingEntity {
         firstSeen: boolean
     }[] = [];
     allowDesign: boolean = false;
+    afkEventReady: boolean = false;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
