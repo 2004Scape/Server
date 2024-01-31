@@ -1,2 +1,6 @@
 [debugproc,delay](int $delay)
+if (map_localdev = false) {
+    return;
+}
+
 p_delay($delay);

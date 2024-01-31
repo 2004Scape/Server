@@ -1,4 +1,8 @@
 [debugproc,loc](loc $loc)
+if (map_localdev = false) {
+    return;
+}
+
 if ($loc = null) {
     mes("Usage --> ::loc (name) --> ::loc magic_tree --> ::loc castlewall");
     return;
