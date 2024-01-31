@@ -1,0 +1,7 @@
+^swarm_macro_event = 1
+^strange_plant_friendly_macro_event = 2
+^genie_macro_event = 3
+^drunken_dwarf_macro_event = 4
+^mysterious_old_man_general_macro_event = 5
+
+^no_macro_event = 0

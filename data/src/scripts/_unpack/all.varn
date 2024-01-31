@@ -6,3 +6,5 @@ type=player_uid
 [npc_lastcombat]
 
 [npc_stunned]
+
+[npc_macro_event_patience]

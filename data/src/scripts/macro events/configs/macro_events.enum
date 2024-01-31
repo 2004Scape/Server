@@ -1,11 +1,11 @@
 [general_macro_events]
 inputtype=int
 outputtype=npc
-val=0,swarm_macro_event
-val=1,strange_plant_friendly_macro_event
-val=2,genie_macro_event
-val=3,drunken_dwarf_macro_event
-val=4,mysterious_old_man_general_macro_event
+val=1,swarm_macro_event
+val=2,strange_plant_friendly_macro_event
+val=3,genie_macro_event
+val=4,drunken_dwarf_macro_event
+val=5,mysterious_old_man_general_macro_event
 
 // swarm of bees
 // tangle vine (discontinued)

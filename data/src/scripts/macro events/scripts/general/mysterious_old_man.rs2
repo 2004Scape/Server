@@ -3,5 +3,34 @@ npc_anim(emote_bow, 20);
 npc_say("Greetings <displayname>!");
 // npc_delay(1);
 npc_setmode(playerfollow);
+%npc_attacking_uid = uid;
 
 [opnpc1,mysterious_old_man_general_macro_event]
+
+
+[ai_timer,mysterious_old_man_general_macro_event]
+if (finduid(%npc_attacking_uid) = false) { // https://youtu.be/T0ulsgorBkY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT
+    npc_anim(emote_cry, 20);
+    npc_say("I lose more friends that way.");
+    %npc_macro_event_patience = 0;
+    ~macro_event_disappear;
+    return;
+}
+
+// https://youtu.be/_PPxvNjIgq4?t=63
+// https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=374
+%npc_macro_event_patience = calc(%npc_macro_event_patience + 1);
+
+if (%npc_macro_event_patience = 4) {
+    npc_anim(emote_angry, 20);
+    npc_say("It's really rude to ignore someone, <displayname>!");
+    return;
+}
+if (%npc_macro_event_patience = 5) {
+    ~macro_event_fail_teleport;
+    %npc_macro_event_patience = 0;
+    %macro_event = 0;
+    ~macro_event_disappear;
+    clearsofttimer(general_macro_events);
+    return;
+}

@@ -1,3 +1,8 @@
+// pirate lasts for 70 ticks until he starts to attack
+//https://youtu.be/4iiufZ31c_g?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=103
+// for sandwich lady, seems like a little over 50 seconds: https://youtu.be/KkyVz0tSOQA?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+// mysterious old man only teleports out 20 ticks after he gets mad. https://youtu.be/_PPxvNjIgq4?t=49
+
 [strange_plant_friendly_macro_event]
 vislevel=hide
 name=Strange plant
@@ -7,6 +12,7 @@ op1=Pick
 model1=model_3371_npc
 wanderrange=0
 moverestrict=nomove
+timer=70
 
 [strange_plant_hostile_macro_event]
 vislevel=hide
@@ -51,6 +57,7 @@ model8=model_270_npc
 head1=model_64_npc_head
 head2=model_73_npc_head
 head3=model_84_idk_head
+timer=70
 
 [mysterious_old_man_general_macro_event]
 vislevel=hide
@@ -82,6 +89,7 @@ model8=model_267_idk
 model9=model_185_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
+timer=20
 
 [swarm_macro_event]
 vislevel=hide
@@ -94,6 +102,7 @@ visonmap=no
 recol1s=12
 recol1d=3988
 model1=model_2950_npc
+timer=70
 // TODO
 
 [savage_bird]
@@ -1133,3 +1142,4 @@ model7=model_2992_npc
 head1=model_4_npc_head
 head2=model_6_npc_head
 wanderrange=10
+timer=70

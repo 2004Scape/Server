@@ -1,0 +1,8 @@
+// based off the evil twin from osrs https://oldschool.runescape.wiki/w/Evil_twin (still teleports)
+[macro_event_fail_teleports_free]
+inputtype=int
+outputtype=coord
+
+[macro_event_fail_teleports_members]
+inputtype=int
+outputtype=coord
