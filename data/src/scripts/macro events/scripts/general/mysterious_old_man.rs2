@@ -27,9 +27,9 @@ if (%npc_macro_event_patience = 4) {
     return;
 }
 if (%npc_macro_event_patience = 5) {
-    ~macro_event_fail_teleport;
     %npc_macro_event_patience = 0;
     %macro_event = 0;
+    ~macro_event_fail_teleport;
     ~macro_event_disappear;
     clearsofttimer(general_macro_events);
     return;

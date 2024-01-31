@@ -7,7 +7,7 @@ mes(tostring(afk_event));
 if (~macro_event_active = true) {
     return;
 }
-%macro_event = random(enum_getoutputcount(general_macro_events));
+%macro_event = randominc(enum_getoutputcount(general_macro_events));
 def_npc $event = enum(int, npc, general_macro_events, %macro_event);
 def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
 
@@ -46,6 +46,7 @@ switch_int (%macro_event) {
     case ^mysterious_old_man_general_macro_event : @mysterious_old_man_general_macro_event_spawn;
 }
 
+
 // teleports the player to a random location, using the coords in configs/macro_events_teleports.enum
 [proc,macro_event_fail_teleport]
 def_coord $teleport_coord;
@@ -54,6 +55,14 @@ if (map_members = true) {
 } else {
     $teleport_coord = enum(int, coord, macro_event_fail_teleports_free, random(enum_getoutputcount(macro_event_fail_teleports_free)));
 }
+// https://youtu.be/MS7ADB-hh18
+// doesnt if_close
+queue(macro_event_fail_teleport, 0, $teleport_coord);
+
+[queue,macro_event_fail_teleport](coord $teleport_coord)
+p_telejump($teleport_coord);
+// TODO: Confirm this
+~teleport_anti_smuggle_checks;
 
 // called when the npc needs to be poofed away
 [proc,macro_event_disappear]

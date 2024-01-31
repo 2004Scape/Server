@@ -43,7 +43,9 @@ spotanim_pl(spotanim_111, 92, 0);
 p_delay(3);
 p_telejump($coord);
 anim(null, 0);
+~teleport_anti_smuggle_checks;
 
+[proc,teleport_anti_smuggle_checks]
 // TODO: ensure this proc is used for other teleports too
 def_int $rum = inv_total(inv, karamja_rum);
 if ($rum > 0) {

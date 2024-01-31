@@ -2,7 +2,92 @@
 [macro_event_fail_teleports_free]
 inputtype=int
 outputtype=coord
+// Jolly boar inn
+val=0,1_51_54_14_44
+// upstairs in morgans house (draynor). Coord seems to be slightly off
+val=1,1_48_51_25_4
+// falador general store tower
+val=2,2_46_52_10_60
+// varrock palace, south east tower
+val=3,3_50_54_21_18
+// Lumbridge Castle northern gate tower
+val=4,1_50_50_29_23
+// Wizards' Tower basement
+val=5,0_48_149_25_31
+// Zeke's Scimitar shop, top floor
+val=6,2_51_49_23_54
+// Rimmington, north-eastern house
+val=7,1_46_50_20_13
+// Falador Castle
+val=8,0_46_52_24_7
+// Asgarnian Chaos Temple
+val=9,0_45_54_55_59
+// Varrock Fountain
+val=10,0_50_53_12_31
+// Barbarian Village
+val=11,0_48_53_4_20
+// Thurgo
+val=12,0_46_49_52_9
+// Port Sarim, above Brian's Battleaxe Bazaar
+val=13,1_47_50_17_51
+// Falador Shield Shop
+val=14,1_46_52_31_54
+// Lumbridge Castle spinning wheel room
+val=15,1_50_50_14_15
+// Wizards' Tower
+val=16,1_48_49_40_21
+// Varrock Museum
+val=17,0_50_53_46_59
+// North Al-Kharid, Gem stall
+val=18,0_51_50_19_18
+// Monastery
+val=19,0_47_54_37_35
+// Edgeville
+val=20,0_48_54_11_13
 
 [macro_event_fail_teleports_members]
 inputtype=int
 outputtype=coord
+// Jolly boar inn
+val=0,1_51_54_14_44
+// upstairs in morgans house (draynor). Coord seems to be slightly off
+val=1,1_48_51_25_4
+// falador general store tower
+val=2,2_46_52_10_60
+// varrock palace, south east tower
+val=3,3_50_54_21_18
+// Lumbridge Castle northern gate tower
+val=4,1_50_50_29_23
+// Wizards' Tower basement
+val=5,0_48_149_25_31
+// Zeke's Scimitar shop, top floor
+val=6,2_51_49_23_54
+// Rimmington, north-eastern house
+val=7,1_46_50_20_13
+// Tourist Information Centre
+val=8,1_39_53_23_34
+// Thormac
+val=9,2_42_53_12_11
+// South-west Yanille walls
+val=10,1_39_48_40_4
+// The Outpost, Ardougne. Outpost doesnt exist for us, but the tele here seems to make sense
+// its in the middle of nowhere
+val=11,0_38_52_2_18
+// Camelot, north-east outside the topiary
+val=12,0_43_54_35_59
+// East Ardougne, above the general store
+val=13,1_40_51_56_28
+// Taverley, next to Sanfew
+val=14,1_45_53_18_31
+// Seers' Village near Spinning wheel
+val=15,1_42_54_20_16
+// 2nd bridge to Hazelmere
+val=16,0_41_48_39_39
+// Port Khazard, above anvil
+val=17,1_41_49_27_27
+// Brimhaven, northern dock
+val=18,0_43_50_20_35
+// Ardougne Monastary, eastern tower
+val=19,1_40_50_53_8
+// Burthorpe Games Room stairwell
+// val=20,1_34_77_31_6
