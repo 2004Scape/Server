@@ -1,4 +1,4 @@
-[npc_407]
+[strange_plant_friendly_macro_event]
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
@@ -8,7 +8,7 @@ model1=model_3371_npc
 wanderrange=0
 moverestrict=nomove
 
-[npc_408]
+[strange_plant_hostile_macro_event]
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
@@ -20,7 +20,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[npc_409]
+[genie_macro_event]
 vislevel=hide
 name=Genie
 desc=Maybe he'll grant me a wish...
@@ -52,7 +52,7 @@ head1=model_64_npc_head
 head2=model_73_npc_head
 head3=model_84_idk_head
 
-[npc_410]
+[mysterious_old_man_general_macro_event]
 vislevel=hide
 name=Mysterious Old Man
 desc=A very strange old man...
@@ -83,7 +83,7 @@ model9=model_185_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
 
-[npc_411]
+[swarm_macro_event]
 vislevel=hide
 name=Swarm
 desc=A swarm of vicious insects!
@@ -126,7 +126,7 @@ param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
 
-[npc_413]
+[rock_golem_macro_event1]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -158,7 +158,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[npc_414]
+[rock_golem_macro_event2]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -190,7 +190,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[npc_415]
+[rock_golem_macro_event3]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -222,7 +222,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[npc_416]
+[rock_golem_macro_event4]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -254,7 +254,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[npc_417]
+[rock_golem_macro_event5]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -286,7 +286,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[npc_418]
+[rock_golem_macro_event6]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -318,7 +318,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[npc_419]
+[zombie_macro_event1]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -339,7 +339,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[npc_420]
+[zombie_macro_event2]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -360,7 +360,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[npc_421]
+[zombie_macro_event3]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -381,7 +381,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[npc_422]
+[zombie_macro_event4]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -402,7 +402,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[npc_423]
+[zombie_macro_event5]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -423,7 +423,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[npc_424]
+[zombie_macro_event6]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -449,7 +449,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[npc_425]
+[shade_macro_event1]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -478,7 +478,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[npc_426]
+[shade_macro_event2]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -507,7 +507,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[npc_427]
+[shade_macro_event3]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -536,7 +536,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[npc_428]
+[shade_macro_event4]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -565,7 +565,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[npc_429]
+[shade_macro_event5]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -594,7 +594,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[npc_430]
+[shade_macro_event6]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -628,7 +628,7 @@ defence=130
 param=damagetype,^crush_style
 param=undead,^true
 
-[npc_431]
+[watchman_macro_event1]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -651,7 +651,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[npc_432]
+[watchman_macro_event2]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -674,7 +674,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[npc_433]
+[watchman_macro_event3]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -697,7 +697,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[npc_434]
+[watchman_macro_event4]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -720,7 +720,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[npc_435]
+[watchman_macro_event5]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -743,7 +743,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[npc_436]
+[watchman_macro_event6]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -784,7 +784,7 @@ recol4d=7056
 model1=model_2887_npc
 // TODO
 
-[npc_438]
+[tree_spirit_macro_event1]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -814,7 +814,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[npc_439]
+[tree_spirit_macro_event2]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -844,7 +844,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[npc_440]
+[tree_spirit_macro_event3]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -874,7 +874,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[npc_441]
+[tree_spirit_macro_event4]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -904,7 +904,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[npc_442]
+[tree_spirit_macro_event5]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -934,7 +934,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[npc_443]
+[tree_spirit_macro_event6]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -964,7 +964,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[npc_444]
+[ent_tree_macro_event1]
 vislevel=hide
 name=Tree
 desc=One of the most common trees in RuneScape.
@@ -981,7 +981,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_445]
+[ent_tree_macro_event2]
 vislevel=hide
 name=Tree
 desc=This would make good firewood.
@@ -998,7 +998,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_446]
+[ent_dead_tree_macro_event1]
 vislevel=hide
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -1015,7 +1015,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_447]
+[ent_dead_tree_macro_event2]
 vislevel=hide
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -1031,7 +1031,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_448]
+[ent_oak_macro_event]
 vislevel=hide
 name=Oak
 desc=A beautiful old oak.
@@ -1048,7 +1048,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_449]
+[ent_willow_macro_event]
 vislevel=hide
 name=Willow
 desc=These trees are found near water.
@@ -1065,7 +1065,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_450]
+[ent_yew_macro_event]
 vislevel=hide
 name=Yew
 desc=A splendid tree.
@@ -1082,7 +1082,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_451]
+[ent_maple_macro_event]
 vislevel=hide
 name=Maple tree
 desc=I bet this makes good syrup!
@@ -1099,7 +1099,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_452]
+[ent_magic_macro_event]
 vislevel=hide
 name=Magic tree
 desc=The tree shimmers with a magical force.
@@ -1116,7 +1116,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_956]
+[drunken_dwarf_macro_event]
 vislevel=hide
 name=Drunken Dwarf
 desc=He's had a fair bit to drink...
