@@ -1,12 +1,13 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [softtimer,general_macro_events]
-mes(tostring(afk_event));
 // if (afk_event = ^false) {
 //     return;
 // }
 if (~macro_event_active = true) {
     return;
 }
+// random events arent restricted in wildy?
+// https://youtu.be/uPKaH7yg4To?t=421
 %macro_event = randominc(enum_getoutputcount(general_macro_events));
 def_npc $event = enum(int, npc, general_macro_events, %macro_event);
 def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
@@ -20,8 +21,7 @@ while ($event_coord = coord) {
         return;
     }
 }
-%macro_event = 5;
-@macro_event_spawn(mysterious_old_man_general_macro_event, $event_coord);
+@macro_event_spawn($event, $event_coord);
 
 
 // swarm of bees
@@ -36,8 +36,6 @@ npc_add($event_coord, $event, 100);
 spotanim_map(spotanim_86, $event_coord, 124, 0);
 sound_synth(smokepuff, 0, 0);
 
-// jump(enum(npc, label, macro_event_spawns, $event));
-mes(tostring(%macro_event));
 switch_int (%macro_event) {
     case ^swarm_macro_event : @swarm_macro_event_spawn;
     case ^strange_plant_friendly_macro_event : @strange_plant_macro_event_spawn;
@@ -63,6 +61,9 @@ queue(macro_event_fail_teleport, 0, $teleport_coord);
 p_telejump($teleport_coord);
 // TODO: Confirm this
 ~teleport_anti_smuggle_checks;
+
+[proc,macro_event_fail_scatter_inv]
+
 
 // called when the npc needs to be poofed away
 [proc,macro_event_disappear]
