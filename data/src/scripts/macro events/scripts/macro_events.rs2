@@ -1,9 +1,23 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
-[timer,general_macro_events]
-def_npc $event;
-if (afk_event = ^true) {
-    $event = ~roll_general_macro_event;
+[softtimer,general_macro_events]
+mes(tostring(afk_event));
+// if (afk_event = ^false) {
+//     return;
+// }
+def_npc $event = ~roll_general_macro_event;
+def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
+
+def_int $i = 0;
+while ($event_coord = coord) {
+    $event_coord = ~coord_lineofwalk_radius(coord, 1);
+    $i = calc($i + 1);
+    if ($i = 25) {
+        // after 25 tries, dont spawn anything
+        return;
+    }
 }
+@spawn_macro_event(mysterious_old_man_general_macro_event, $event_coord);
+
 
 // swarm of bees
 // tangle vine (discontinued)
@@ -13,3 +27,47 @@ if (afk_event = ^true) {
 // mysterious old man
 [proc,roll_general_macro_event]()(npc)
 return(enum(int, npc, general_macro_events, random(enum_getoutputcount(general_macro_events))));
+
+[label,spawn_macro_event](npc $event, coord $event_coord)
+npc_add($event_coord, $event, 100);
+spotanim_map(spotanim_86, $event_coord, 124, 0);
+sound_synth(smokepuff, 0, 0);
+
+// jump(enum(npc, label, macro_event_spawns, $event));
+switch_npc ($event) {
+    case swarm_macro_event : @swarm_macro_event_spawn;
+    case strange_plant_friendly_macro_event : @strange_plant_macro_event_spawn;
+    case drunken_dwarf_macro_event : @drunken_dwarf_macro_event_spawn;
+    case genie_macro_event : @genie_macro_event_spawn;
+    case mysterious_old_man_general_macro_event : @mysterious_old_man_general_macro_event_spawn;
+}
+
+[label,mysterious_old_man_general_macro_event_spawn]
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+// npc_delay(1);
+npc_setmode(playerfollow);
+
+[label,genie_macro_event_spawn]
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+npc_delay(1);
+npc_setmode(playerfollow);
+
+[label,drunken_dwarf_macro_event_spawn]
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+npc_delay(1);
+npc_setmode(playerfollow);
+
+[label,strange_plant_macro_event_spawn]
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+npc_delay(1);
+npc_setmode(playerfollow);
+
+[label,swarm_macro_event_spawn]
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+npc_delay(1);
+npc_setmode(playerfollow);
