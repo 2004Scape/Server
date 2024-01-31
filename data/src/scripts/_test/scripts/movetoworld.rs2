@@ -1,4 +1,0 @@
-[debugproc,world]
-mes("hello");
-world_delay(1);
-mes("hello from world");
