@@ -41,33 +41,3 @@ switch_npc ($event) {
     case genie_macro_event : @genie_macro_event_spawn;
     case mysterious_old_man_general_macro_event : @mysterious_old_man_general_macro_event_spawn;
 }
-
-[label,mysterious_old_man_general_macro_event_spawn]
-npc_anim(emote_bow, 20);
-npc_say("Greetings <displayname>!");
-// npc_delay(1);
-npc_setmode(playerfollow);
-
-[label,genie_macro_event_spawn]
-npc_anim(emote_bow, 20);
-npc_say("Greetings <displayname>!");
-npc_delay(1);
-npc_setmode(playerfollow);
-
-[label,drunken_dwarf_macro_event_spawn]
-npc_anim(emote_bow, 20);
-npc_say("Greetings <displayname>!");
-npc_delay(1);
-npc_setmode(playerfollow);
-
-[label,strange_plant_macro_event_spawn]
-npc_anim(emote_bow, 20);
-npc_say("Greetings <displayname>!");
-npc_delay(1);
-npc_setmode(playerfollow);
-
-[label,swarm_macro_event_spawn]
-npc_anim(emote_bow, 20);
-npc_say("Greetings <displayname>!");
-npc_delay(1);
-npc_setmode(playerfollow);

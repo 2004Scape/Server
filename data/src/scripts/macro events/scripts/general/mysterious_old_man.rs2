@@ -1,0 +1,7 @@
+[label,mysterious_old_man_general_macro_event_spawn]
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+// npc_delay(1);
+npc_setmode(playerfollow);
+
+[opnpc1,mysterious_old_man_general_macro_event]

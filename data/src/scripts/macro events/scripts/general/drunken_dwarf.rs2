@@ -1,0 +1,5 @@
+[label,drunken_dwarf_macro_event_spawn]
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+npc_delay(1);
+npc_setmode(playerfollow);
