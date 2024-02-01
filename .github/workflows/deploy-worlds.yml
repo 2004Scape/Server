@@ -54,6 +54,8 @@ jobs:
           [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh" && nvm use
           cd ${{ matrix.world.directory }}
           pm2 stop w${{ matrix.world.number }}-server
+          git fetch origin
+          git checkout live
           git pull
           npm ci
           rm -f public/loader.jar public/runescape*.jar
