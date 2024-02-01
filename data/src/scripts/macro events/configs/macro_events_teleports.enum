@@ -1,4 +1,7 @@
 // based off the evil twin from osrs https://oldschool.runescape.wiki/w/Evil_twin (still teleports)
+// looks like each random might have their own telecoords:
+// this says "Like the top of white wolf mountain" https://web.archive.org/web/20040805031902/http://runevillage.com/rs2specialEvent.php
+// and this video teleports to a coord that isnt used by molly: https://youtu.be/MS7ADB-hh18?t=9
 [macro_event_fail_teleports_free]
 inputtype=int
 outputtype=coord

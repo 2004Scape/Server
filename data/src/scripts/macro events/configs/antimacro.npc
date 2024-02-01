@@ -12,7 +12,7 @@ op1=Pick
 model1=model_3371_npc
 wanderrange=0
 moverestrict=nomove
-timer=70
+timer=1
 
 [strange_plant_hostile_macro_event]
 vislevel=hide
@@ -57,7 +57,7 @@ model8=model_270_npc
 head1=model_64_npc_head
 head2=model_73_npc_head
 head3=model_84_idk_head
-timer=70
+timer=1
 
 [mysterious_old_man_general_macro_event]
 vislevel=hide
@@ -89,7 +89,7 @@ model8=model_267_idk
 model9=model_185_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
-timer=20
+timer=1
 
 [swarm_macro_event]
 vislevel=hide
@@ -102,7 +102,7 @@ visonmap=no
 recol1s=12
 recol1d=3988
 model1=model_2950_npc
-timer=70
+timer=1
 // TODO
 
 [savage_bird]
@@ -1142,4 +1142,4 @@ model7=model_2992_npc
 head1=model_4_npc_head
 head2=model_6_npc_head
 wanderrange=10
-timer=70
+timer=1

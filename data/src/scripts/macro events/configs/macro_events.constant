@@ -5,3 +5,10 @@
 ^mysterious_old_man_general_macro_event = 5
 
 ^no_macro_event = 0
+
+^patience_1 = 20
+^patience_2 = 40
+^patience_3 = 60
+^patience_4 = 80
+^patience_5 = 100
+^patience_6 = 120

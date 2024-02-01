@@ -5,18 +5,19 @@ npc_setmode(playerfollow);
 %npc_attacking_uid = uid;
 
 [opnpc1,mysterious_old_man_general_macro_event]
-if (%macro_event = 0) {
+if (uid ! %npc_attacking_uid) {
+    ~chatnpc(neutral, "I'm looking for <displayname>.");
+    return;
+}
+if (%macro_event = ^no_macro_event) {
     ~chatnpc(neutral, "Goodbye.");
     return;
 }
-%npc_macro_event_patience = 0;
-%macro_event = 0;
+%macro_event = ^no_macro_event;
 ~macro_event_give_reward(~mysterious_old_man_general_macro_event_reward);
 // dialogue taken from osrs. Neutral is a guess.
-npc_delay(3);
-npc_anim(emote_wave, 20);
-npc_delay(2);
-~macro_event_disappear;
+%npc_macro_event_patience = ^patience_5;
+npc_settimer(3);
 ~chatnpc(neutral, "Ah, so you are there. I hoped you would talk to me, I get so lonely. Here, have a present! I must be going now though.");
 // delays are taken from this video: https://youtu.be/JeQUY1m1wRo?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=137
 
@@ -38,30 +39,44 @@ if ($random < 150) return(half_key2, 1); // 1/150 half key
 
 
 [ai_timer,mysterious_old_man_general_macro_event]
-if (finduid(%npc_attacking_uid) = false) { // https://youtu.be/T0ulsgorBkY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT
-    npc_anim(emote_cry, 20);
-    npc_say("I lose more friends that way.");
-    %npc_macro_event_patience = 0;
-    ~macro_event_disappear;
+if (~macro_event_lost = true) {
     return;
 }
-
+// other videos:
 // https://youtu.be/_PPxvNjIgq4?t=63
 // https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=374
-%npc_macro_event_patience = calc(%npc_macro_event_patience + 1);
 
-// warning
-if (%npc_macro_event_patience = 4) {
+// warnings https://youtu.be/Ai89wqupYqA
+// https://youtu.be/HpmsgVshwxg?t=267
+if (%npc_macro_event_patience = ^patience_1) {
+    npc_anim(emote_wave, 20);
+    npc_say("ehem... Hello <displayname>!");
+    return;
+} else if (%npc_macro_event_patience = ^patience_2) {
+    npc_anim(emote_think, 20);
+    npc_say("Hello, are you there <displayname>!");
+    return;
+} else if (%npc_macro_event_patience = ^patience_3) {
     npc_anim(emote_angry, 20);
     npc_say("It's really rude to ignore someone, <displayname>!");
     return;
-}
-// fail
-if (%npc_macro_event_patience = 5) {
-    %npc_macro_event_patience = 0;
-    %macro_event = 0;
+} else if (%npc_macro_event_patience = ^patience_4) { // fail
+    %macro_event = ^no_macro_event;
+    // https://youtu.be/Ai89wqupYqA?t=45
+    npc_say("No-one ignores me!");
+    npc_anim(human_castteleport, 0);
+    npc_delay(1);
+    npc_del;
     ~macro_event_fail_teleport;
+    return;
+} else if (%npc_macro_event_patience = ^patience_5) { // wave
+    %npc_macro_event_patience = ^patience_6;
+    npc_anim(emote_wave, 20);
+    npc_settimer(3);
+    return;
+} else if (%npc_macro_event_patience = ^patience_6) { // leave
     ~macro_event_disappear;
-    clearsofttimer(general_macro_events);
     return;
 }
+
+%npc_macro_event_patience = calc(%npc_macro_event_patience + 1);
