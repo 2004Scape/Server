@@ -2283,7 +2283,7 @@ export default class Player extends PathingEntity {
 
             // only execute if it's time and able
             // soft timers can execute while busy, normal cannot
-            if (--timer.clock <= 0 && (timer.type === 'soft' || !this.canAccess())) {
+            if (--timer.clock <= 0 && (timer.type === 'soft' || this.canAccess())) {
                 // set clock back to interval
                 timer.clock = timer.interval;
 
