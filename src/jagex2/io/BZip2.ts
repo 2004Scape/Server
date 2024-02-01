@@ -5,6 +5,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 fs.mkdirSync('dump', { recursive: true });
 
+/*! bz2 (C) 2019-present SheetJS LLC */
+
 // https://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/src/util/compress/bzip2/crctable.c
 const crc32Table = [
     0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b, 0x1a864db2, 0x1e475005, 0x2608edb8, 0x22c9f00f, 0x2f8ad6d6, 0x2b4bcb61, 0x350c9b64, 0x31cd86d3, 0x3c8ea00a, 0x384fbdbd, 0x4c11db70, 0x48d0c6c7, 0x4593e01e, 0x4152fda9,
@@ -28,21 +30,32 @@ const masks = [
     0x000fffff, 0x001fffff, 0x003fffff, 0x007fffff, 0x00ffffff, 0x01ffffff, 0x03ffffff, 0x07ffffff, 0x0fffffff, 0x1fffffff, 0x3fffffff, -0x80000000
 ];
 
-function createOrderedHuffmanTable(lengths) {
-    const z = [];
+type HuffmanTableEntry = {
+    code: number;
+    bits: number;
+    symbol: number;
+};
+
+type HuffmanTable = {
+    table: HuffmanTableEntry[];
+    fastAccess: { [key: number]: { [key: number]: HuffmanTableEntry } };
+};
+
+function createOrderedHuffmanTable(lengths: number[]): HuffmanTable {
+    const z: number[][] = [];
     for (let i = 0; i < lengths.length; i += 1) {
         z.push([i, lengths[i]]);
     }
     z.push([lengths.length, -1]);
-    const table = [];
-    let start = z[0][0];
-    let bits = z[0][1];
+    const table: HuffmanTableEntry[] = [];
+    let start: number = z[0][0];
+    let bits: number = z[0][1];
     for (let i = 0; i < z.length; i += 1) {
-        const finish = z[i][0];
-        const endbits = z[i][1];
+        const finish: number = z[i][0];
+        const endbits: number = z[i][1];
         if (bits) {
-            for (let code = start; code < finish; code += 1) {
-                table.push({ code, bits, symbol: undefined });
+            for (let code: number = start; code < finish; code += 1) {
+                table.push({ code, bits, symbol: -1 });
             }
         }
         start = finish;
@@ -52,12 +65,12 @@ function createOrderedHuffmanTable(lengths) {
         }
     }
     table.sort((a, b) => a.bits - b.bits || a.code - b.code);
-    let tempBits = 0;
-    let symbol = -1;
-    const fastAccess = [];
-    let current;
+    let tempBits: number = 0;
+    let symbol: number = -1;
+    const fastAccess: { [key: number]: { [key: number]: HuffmanTableEntry } } = [];
+    let current: { [key: number]: HuffmanTableEntry } | undefined;
     for (let i = 0; i < table.length; i += 1) {
-        const t = table[i];
+        const t: HuffmanTableEntry = table[i];
         symbol += 1;
         if (t.bits !== tempBits) {
             symbol <<= t.bits - tempBits;
@@ -65,7 +78,9 @@ function createOrderedHuffmanTable(lengths) {
             current = fastAccess[tempBits] = {};
         }
         t.symbol = symbol;
-        current[symbol] = t;
+        if (current) {
+            current[symbol] = t;
+        }
     }
     return {
         table,
@@ -73,44 +88,47 @@ function createOrderedHuffmanTable(lengths) {
     };
 }
 
-function bwtReverse(src, primary) {
+function bwtReverse(src: number[], primary: number): Uint8Array {
     if (primary < 0 || primary >= src.length) {
         throw RangeError('Out of bound');
     }
-    const unsorted = src.slice();
-    src.sort((a, b) => a - b);
-    const start = {};
+    const unsorted: number[] = src.slice();
+    // src.sort((a, b) => a - b);
+    src.sort((a, b) => (a === -1 ? 1 : 0) - (b === -1 ? 1 : 0) || a - b);
+
+    const start: number[] = [];
     for (let i = src.length - 1; i >= 0; i -= 1) {
         start[src[i]] = i;
     }
-    const links = [];
-    for (let i = 0; i < src.length; i += 1) {
+    const links: number[] = [];
+    for (let i: number = 0; i < src.length; i += 1) {
         links.push(start[unsorted[i]]++); // eslint-disable-line no-plusplus
     }
     let i;
-    const first = src[(i = primary)];
-    const ret = [];
-    for (let j = 1; j < src.length; j += 1) {
-        const x = src[(i = links[i])];
+    const first: number = src[(i = primary)];
+    const ret: Uint8Array = new Uint8Array(src.length);
+    for (let j: number = 1; j < src.length; j += 1) {
+        i = links[i];
+        const x: number = src[i];
         if (x === undefined) {
-            ret.push(255);
+            ret[j - 1] = 255;
         } else {
-            ret.push(x);
+            ret[j - 1] = x;
         }
     }
-    ret.push(first);
+    ret[src.length - 1] = first;
     ret.reverse();
     return ret;
 }
 
 export default class BZip2 {
-    static decompress(bytes, checkCRC = false) {
-        let index = 0;
-        let bitfield = 0;
-        let bits = 0;
-        const read = n => {
+    static decompress(bytes: Uint8Array, checkCRC: boolean = false): Uint8Array {
+        let index: number = 0;
+        let bitfield: number = 0;
+        let bits: number = 0;
+        const read = (n: number): number => {
             if (n >= 32) {
-                const nd = n >> 1;
+                const nd: number = n >> 1;
                 return read(nd) * (1 << nd) + read(n - nd);
             }
             while (bits < n) {
@@ -118,106 +136,122 @@ export default class BZip2 {
                 index += 1;
                 bits += 8;
             }
-            const m = masks[n];
-            const r = (bitfield >> (bits - n)) & m;
+            const m: number = masks[n];
+            const r: number = (bitfield >> (bits - n)) & m;
             bits -= n;
             bitfield &= ~(m << bits);
             return r;
         };
 
-        // const magic = read(16);
-        // if (magic !== 0x425A) { // 'BZ'
-        //     throw new Error('Invalid magic');
-        // }
-        // const method = read(8);
-        // if (method !== 0x68) { // h for huffman
-        //     throw new Error('Invalid method');
-        // }
-
-        // let blocksize = read(8);
-        // if (blocksize >= 49 && blocksize <= 57) { // 1..9
-        //     blocksize -= 48;
-        // } else {
-        //     throw new Error('Invalid blocksize');
-        // }
+        /*const magic: number = read(16);
+        if (magic !== 0x425a) {
+            // 'BZ'
+            throw new Error('Invalid magic');
+        }
+        const method: number = read(8);
+        if (method !== 0x68) {
+            // h for huffman
+            throw new Error('Invalid method');
+        }
+    
+        let blocksize: number = read(8);
+        if (blocksize >= 49 && blocksize <= 57) {
+            // 1..9
+            blocksize -= 48;
+        } else {
+            throw new Error('Invalid blocksize');
+        }*/
 
         let out = new Uint8Array(bytes.length * 1.5);
-        let outIndex = 0;
-        let newCRC = -1;
+        let outIndex: number = 0;
+        let newCRC: number = -1;
         while (true) {
-            const blocktype = read(48);
-            const crc = read(32) | 0;
+            const blocktype: number = read(48);
+            const crc: number = read(32) | 0;
             if (blocktype === 0x314159265359) {
                 if (read(1)) {
                     throw new Error('do not support randomised');
                 }
-                const pointer = read(24);
-                const used = [];
-                const usedGroups = read(16);
-                for (let i = 1 << 15; i > 0; i >>= 1) {
+                const pointer: number = read(24);
+                const used: boolean[] = [];
+                const usedGroups: number = read(16);
+                for (let i: number = 1 << 15; i > 0; i >>= 1) {
                     if (!(usedGroups & i)) {
                         for (let j = 0; j < 16; j += 1) {
                             used.push(false);
                         }
                         continue; // eslint-disable-line no-continue
                     }
-                    const usedChars = read(16);
-                    for (let j = 1 << 15; j > 0; j >>= 1) {
+                    const usedChars: number = read(16);
+                    for (let j: number = 1 << 15; j > 0; j >>= 1) {
                         used.push(!!(usedChars & j));
                     }
                 }
-                const groups = read(3);
+                const groups: number = read(3);
                 if (groups < 2 || groups > 6) {
                     throw new Error('Invalid number of huffman groups');
                 }
-                const selectorsUsed = read(15);
-                const selectors = [];
-                const mtf = Array.from({ length: groups }, (_, i) => i);
-                for (let i = 0; i < selectorsUsed; i += 1) {
-                    let c = 0;
-                    while (read(1)) {
+                const selectorsUsed: number = read(15);
+                const selectors: number[] = [];
+
+                // const mtf: number[] = Array.from({length: groups}, (_, i) => i);
+                const mtf: number[] = new Array(groups);
+                for (let i = 0; i < groups; i++) {
+                    mtf[i] = i;
+                }
+
+                for (let i: number = 0; i < selectorsUsed; i += 1) {
+                    let c: number = 0;
+                    while (read(1) !== 0) {
                         c += 1;
                         if (c >= groups) {
                             throw new Error('MTF table out of range');
                         }
                     }
-                    const v = mtf[c];
-                    for (let j = c; j > 0; mtf[j] = mtf[--j]) {
+                    const v: number = mtf[c];
+                    for (let j: number = c; j > 0; mtf[j] = mtf[--j]) {
                         // eslint-disable-line no-plusplus
                         // nothing
                     }
                     selectors.push(v);
                     mtf[0] = v;
                 }
-                const symbolsInUse = used.reduce((a, b) => a + b, 0) + 2;
-                const tables = [];
-                for (let i = 0; i < groups; i += 1) {
-                    let length = read(5);
-                    const lengths = [];
-                    for (let j = 0; j < symbolsInUse; j += 1) {
+
+                // const symbolsInUse: number = used.reduce((a, b) => a + (b ? 1 : 0), 0) + 2;
+                // reduce
+                let symbolsInUse: number = 2;
+                for (let i: number = 0; i < used.length; i++) {
+                    symbolsInUse += used[i] ? 1 : 0;
+                }
+
+                const tables: HuffmanTable[] = [];
+                for (let i: number = 0; i < groups; i += 1) {
+                    let length: number = read(5);
+                    const lengths: number[] = [];
+                    for (let j: number = 0; j < symbolsInUse; j += 1) {
                         if (length < 0 || length > 20) {
                             throw new Error('Huffman group length outside range');
                         }
-                        while (read(1)) {
+                        while (read(1) !== 0) {
                             length -= read(1) * 2 - 1;
                         }
                         lengths.push(length);
                     }
                     tables.push(createOrderedHuffmanTable(lengths));
                 }
-                const favourites = [];
+                const favourites: number[] = [];
                 for (let i = 0; i < used.length - 1; i += 1) {
                     if (used[i]) {
                         favourites.push(i);
                     }
                 }
-                let decoded = 0;
-                let selectorPointer = 0;
-                let t;
-                let r;
-                let repeat = 0;
-                let repeatPower = 0;
-                const buffer = [];
+                let decoded: number = 0;
+                let selectorPointer: number = 0;
+                let t: HuffmanTable;
+                let r: number = 0;
+                let repeat: number = 0;
+                let repeatPower: number = 0;
+                const buffer: number[] = [];
                 while (true) {
                     decoded -= 1;
                     if (decoded <= 0) {
@@ -227,19 +261,17 @@ export default class BZip2 {
                             selectorPointer += 1;
                         }
                     }
-                    for (const b in t.fastAccess) {
-                        if (!Object.prototype.hasOwnProperty.call(t.fastAccess, b)) {
-                            continue; // eslint-disable-line no-continue
-                        }
+                    for (const bstr in t!.fastAccess) {
+                        const b: number = parseInt(bstr, 10);
                         if (bits < b) {
                             bitfield = (bitfield << 8) + bytes[index];
                             index += 1;
                             bits += 8;
                         }
-                        r = t.fastAccess[b][bitfield >> (bits - b)];
-                        if (r) {
+                        const r2 = t!.fastAccess[b][bitfield >> (bits - b)];
+                        if (r2) {
                             bitfield &= masks[(bits -= b)];
-                            r = r.code;
+                            r = r2.code;
                             break;
                         }
                     }
@@ -251,7 +283,7 @@ export default class BZip2 {
                         repeatPower <<= 1;
                         continue; // eslint-disable-line no-continue
                     } else {
-                        const v = favourites[0];
+                        const v: number = favourites[0];
                         for (; repeat > 0; repeat -= 1) {
                             buffer.push(v);
                         }
@@ -259,7 +291,7 @@ export default class BZip2 {
                     if (r === symbolsInUse - 1) {
                         break;
                     } else {
-                        const v = favourites[r - 1];
+                        const v: number = favourites[r - 1];
                         // eslint-disable-next-line no-plusplus
                         for (let j = r - 1; j > 0; favourites[j] = favourites[--j]) {
                             // nothing
@@ -268,11 +300,11 @@ export default class BZip2 {
                         buffer.push(v);
                     }
                 }
-                const nt = bwtReverse(buffer, pointer);
-                let i = 0;
+                const nt: Uint8Array = bwtReverse(buffer, pointer);
+                let i: number = 0;
                 while (i < nt.length) {
-                    const c = nt[i];
-                    let count = 1;
+                    const c: number = nt[i];
+                    let count: number = 1;
                     if (i < nt.length - 4 && nt[i + 1] === c && nt[i + 2] === c && nt[i + 3] === c) {
                         count = nt[i + 4] + 4;
                         i += 5;
@@ -309,19 +341,19 @@ export default class BZip2 {
         return out.subarray(0, outIndex);
     }
 
-    static compress(src, prependLength = false) {
+    static compress(src: Packet | Uint8Array, prependLength: boolean = false) {
         if (src instanceof Packet) {
             src = src.data;
         }
 
-        let time = Date.now();
-        let path = `dump/${time}.tmp`;
+        const time = Date.now();
+        const path = `dump/${time}.tmp`;
 
         fs.writeFileSync(path, src);
         child_process.execSync(`java -jar JagCompress.jar bz2 "${path}"`);
         fs.unlinkSync(path);
 
-        let compressed = fs.readFileSync(path + '.bz2');
+        const compressed = fs.readFileSync(path + '.bz2');
         fs.unlinkSync(path + '.bz2');
         if (prependLength) {
             compressed[0] = src.length >> 24;
@@ -332,7 +364,7 @@ export default class BZip2 {
         return compressed;
     }
 
-    static compressMany(files, prependLength = false) {
+    static compressMany(files: string[], prependLength: boolean = false) {
         if (!files.length) {
             return;
         }
@@ -354,8 +386,8 @@ export default class BZip2 {
 
         if (prependLength) {
             for (let i = 0; i < files.length; i++) {
-                let length = fs.statSync(files[i]).size;
-                let compressed = fs.readFileSync(files[i] + '.bz2');
+                const length = fs.statSync(files[i]).size;
+                const compressed = fs.readFileSync(files[i] + '.bz2');
 
                 compressed[0] = length >> 24;
                 compressed[1] = length >> 16;
