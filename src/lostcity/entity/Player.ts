@@ -3828,7 +3828,7 @@ export default class Player extends PathingEntity {
 
     ifOpenChat(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENCHAT);
+        out.p1(ServerProt.IF_OPENCHATMODAL);
 
         out.p2(com);
 
@@ -3837,7 +3837,7 @@ export default class Player extends PathingEntity {
 
     ifOpenMainModalSideOverlay(top: number, side: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENMAINMODALSIDEOVERLAY);
+        out.p1(ServerProt.IF_OPENMAINSIDEMODAL);
 
         out.p2(top);
         out.p2(side);
@@ -3868,7 +3868,7 @@ export default class Player extends PathingEntity {
 
     ifSetTabActive(tab: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_SETTAB_ACTIVE);
+        out.p1(ServerProt.IF_SHOWSIDE);
 
         out.p1(tab);
 
@@ -3887,7 +3887,7 @@ export default class Player extends PathingEntity {
 
     ifSetModelColour(com: number, int2: number, int3: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_SETMODEL_COLOUR);
+        out.p1(ServerProt.IF_SETRECOL);
 
         out.p2(com);
         out.p2(int2);
@@ -3898,7 +3898,7 @@ export default class Player extends PathingEntity {
 
     ifSetTabFlash(tab: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_SETTAB_FLASH);
+        out.p1(ServerProt.TUTORIAL_FLASHSIDE);
 
         out.p1(tab);
 
@@ -3924,7 +3924,7 @@ export default class Player extends PathingEntity {
 
     ifSetTab(com: number, tab: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_SETTAB);
+        out.p1(ServerProt.IF_OPENSIDEOVERLAY);
 
         out.p2(com);
         out.p1(tab);
@@ -3934,7 +3934,7 @@ export default class Player extends PathingEntity {
 
     ifOpenMain(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENMAIN);
+        out.p1(ServerProt.IF_OPENMAINMODAL);
 
         out.p2(com);
 
@@ -3943,7 +3943,7 @@ export default class Player extends PathingEntity {
 
     ifOpenChatSticky(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENCHATSTICKY);
+        out.p1(ServerProt.TUTORIAL_OPENCHAT);
 
         out.p2(com);
 
@@ -3952,7 +3952,7 @@ export default class Player extends PathingEntity {
 
     ifOpenSideOverlay(com: number) {
         const out = new Packet();
-        out.p1(ServerProt.IF_OPENSIDEOVERLAY);
+        out.p1(ServerProt.IF_OPENSIDEMODAL);
 
         out.p2(com);
 
@@ -4004,14 +4004,14 @@ export default class Player extends PathingEntity {
 
     ifIAmount() {
         const out = new Packet();
-        out.p1(ServerProt.IF_IAMOUNT);
+        out.p1(ServerProt.P_COUNTDIALOG);
 
         this.netOut.push(out);
     }
 
     ifMultiZone(state: boolean) {
         const out = new Packet();
-        out.p1(ServerProt.IF_MULTIZONE);
+        out.p1(ServerProt.SET_MULTIWAY);
 
         out.pbool(state);
 
@@ -4178,7 +4178,7 @@ export default class Player extends PathingEntity {
         this.clearWalkSteps();
 
         const out = new Packet();
-        out.p1(ServerProt.CLEAR_WALKING_QUEUE);
+        out.p1(ServerProt.UNSET_MAP_FLAG);
 
         this.netOut.push(out);
     }
@@ -4449,7 +4449,7 @@ export default class Player extends PathingEntity {
 
     loadArea(zoneX: number, zoneZ: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOAD_AREA);
+        out.p1(ServerProt.REBUILD_NORMAL);
         out.p2(0);
         const start = out.pos;
 
