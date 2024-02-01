@@ -30,6 +30,7 @@ param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
 param=death_drop,wolf_bones
+huntmode=cowardly
 
 [npc_840]
 name=Ugthanki
@@ -53,3 +54,4 @@ param=damagetype,^stab_style
 param=attack_anim,camel_attack
 param=defend_anim,camel_block
 param=death_anim,camel_death
+huntmode=cowardly
