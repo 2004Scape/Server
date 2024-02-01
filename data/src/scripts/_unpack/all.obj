@@ -377,6 +377,7 @@ stackable=yes
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_3]
 name=Coins 3
@@ -386,6 +387,7 @@ stackable=yes
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_4]
 name=Coins 4
@@ -395,6 +397,7 @@ stackable=yes
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_5]
 name=Coins 5
@@ -404,6 +407,7 @@ stackable=yes
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_25]
 name=Coins 25
@@ -413,6 +417,7 @@ model=model_2667_obj
 2dyan=2012
 2dxan=184
 stackable=yes
+dummyitem=inv_only
 
 [coins_100]
 name=Coins 100
@@ -422,6 +427,7 @@ model=model_2825_obj
 2dyan=2012
 2dxan=184
 stackable=yes
+dummyitem=inv_only
 
 [coins_250]
 name=Coins 250
@@ -432,6 +438,7 @@ model=model_2423_obj
 2dyan=2044
 2dxan=160
 stackable=yes
+dummyitem=inv_only
 
 [coins_1000]
 name=Coins 1000
@@ -442,6 +449,7 @@ model=model_2710_obj
 2dyan=64
 2dxan=172
 stackable=yes
+dummyitem=inv_only
 
 [coins_10000]
 name=Coins 10000
@@ -451,6 +459,7 @@ model=model_2775_obj
 2dyan=80
 2dxan=168
 stackable=yes
+dummyitem=inv_only
 
 [white_apron]
 name=White apron
@@ -3521,3 +3530,4 @@ weight=10kg
 name=Chompy bird obj
 model=model_3445_obj
 tradeable=yes
+dummyitem=graphic_only

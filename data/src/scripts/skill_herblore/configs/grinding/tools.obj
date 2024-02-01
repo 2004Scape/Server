@@ -21,6 +21,7 @@ model=model_506_obj
 manwear=model_506_obj,0
 womanwear=model_506_obj,6
 weight=1lb
+dummyitem=graphic_only
 
 [grinder]
 name=Grinder
@@ -35,3 +36,4 @@ model=model_529_obj
 manwear=model_529_obj,0
 womanwear=model_529_obj,6
 weight=1lb
+dummyitem=graphic_only
