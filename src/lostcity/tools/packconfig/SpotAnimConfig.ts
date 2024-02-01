@@ -95,10 +95,6 @@ function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>, transmitAll: bo
     dat.p2(pack.length);
     idx.p2(pack.length);
 
-    // collect these to write at the end
-    const recol_s = [];
-    const recol_d = [];
-
     for (let i = 0; i < pack.length; i++) {
         const debugname = pack[i];
         const config = configs.get(debugname)!;

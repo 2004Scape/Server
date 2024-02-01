@@ -25,6 +25,7 @@ import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
+import SpotanimType from '#lostcity/cache/SpotanimType.js';
 
 import GameMap from '#lostcity/engine/GameMap.js';
 import { Inventory } from '#lostcity/engine/Inventory.js';
@@ -203,25 +204,32 @@ class World {
             this.npcs[i] = null;
         }
 
-        // console.time('Loading category.dat');
+        VarPlayerType.load('data/pack/server');
+        ObjType.load('data/pack/server', this.members);
+        LocType.load('data/pack/server');
+        NpcType.load('data/pack/server');
+        IdkType.load('data/pack/server');
+        SeqFrame.load('data/pack/server');
+        SeqType.load('data/pack/server');
+        SpotanimType.load('data/pack/server');
+
         CategoryType.load('data/pack/server');
-        // console.timeEnd('Loading category.dat');
-
-        // console.time('Loading param.dat');
         ParamType.load('data/pack/server');
-        // console.timeEnd('Loading param.dat');
-
-        // console.time('Loading enum.dat');
         EnumType.load('data/pack/server');
-        // console.timeEnd('Loading enum.dat');
-
-        // console.time('Loading struct.dat');
         StructType.load('data/pack/server');
-        // console.timeEnd('Loading struct.dat');
-
-        // console.time('Loading inv.dat');
         InvType.load('data/pack/server');
-        // console.timeEnd('Loading inv.dat');
+
+        MesanimType.load('data/pack/server');
+        DbTableType.load('data/pack/server');
+        DbRowType.load('data/pack/server');
+        HuntType.load('data/pack/server');
+        VarNpcType.load('data/pack/server');
+        VarSharedType.load('data/pack/server');
+
+        FontType.load('data/pack/client');
+        IfType.load('data/pack/server');
+
+        WordEnc.load('data/pack/client');
 
         for (let i = 0; i < InvType.count; i++) {
             const inv = InvType.get(i);
@@ -230,70 +238,6 @@ class World {
                 this.invs.push(Inventory.fromType(i));
             }
         }
-
-        // console.time('Loading varp.dat');
-        VarPlayerType.load('data/pack/server');
-        // console.timeEnd('Loading varp.dat');
-
-        // console.time('Loading obj.dat');
-        ObjType.load('data/pack/server', this.members);
-        // console.timeEnd('Loading obj.dat');
-
-        // console.time('Loading loc.dat');
-        LocType.load('data/pack/server');
-        // console.timeEnd('Loading loc.dat');
-
-        // console.time('Loading npc.dat');
-        NpcType.load('data/pack/server');
-        // console.timeEnd('Loading npc.dat');
-
-        // console.time('Loading idk.dat');
-        IdkType.load('data/pack/server');
-        // console.timeEnd('Loading idk.dat');
-
-        // console.time('Loading interface.dat');
-        IfType.load('data/pack/server');
-        // console.timeEnd('Loading interface.dat');
-
-        // console.time('Loading frame_del.dat');
-        SeqFrame.load('data/pack/server');
-        // console.timeEnd('Loading frame_del.dat');
-
-        // console.time('Loading seq.dat');
-        SeqType.load('data/pack/server');
-        // console.timeEnd('Loading seq.dat');
-
-        // console.time('Loading fonts');
-        FontType.load('data/pack/client');
-        // console.timeEnd('Loading fonts');
-
-        // console.time('Loading mesanim.dat');
-        MesanimType.load('data/pack/server');
-        // console.timeEnd('Loading mesanim.dat');
-
-        // console.time('Loading dbtable.dat');
-        DbTableType.load('data/pack/server');
-        // console.timeEnd('Loading dbtable.dat');
-
-        // console.time('Loading dbrow.dat');
-        DbRowType.load('data/pack/server');
-        // console.timeEnd('Loading dbrow.dat');
-
-        // console.time('Loading hunt.dat');
-        HuntType.load('data/pack/server');
-        // console.timeEnd('Loading hunt.dat');
-
-        // console.time('Loading varn.dat');
-        VarNpcType.load('data/pack/server');
-        // console.timeEnd('Loading varn.dat');
-
-        // console.time('Loading vars.dat');
-        VarSharedType.load('data/pack/server');
-        // console.timeEnd('Loading vars.dat');
-
-        // console.time('Loading wordenc');
-        WordEnc.load('data/pack/client');
-        // console.timeEnd('Loading wordenc');
 
         if (!skipMaps) {
             this.gameMap.init();
