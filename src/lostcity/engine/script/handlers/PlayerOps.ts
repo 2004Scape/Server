@@ -7,7 +7,8 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
-import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
 
 import { ServerProt } from '#lostcity/server/ServerProt.js';
@@ -62,7 +63,7 @@ const PlayerOps: CommandHandlers = {
         if (!script) {
             throw new Error(`Unable to find queue script: ${scriptId}`);
         }
-        state.activePlayer.enqueueScript(script, 'strong', delay, args);
+        state.activePlayer.enqueueScript(script, PlayerQueueType.STRONG, delay, args);
     }),
 
     [ScriptOpcode.WEAKQUEUE]: checkedHandler(ActivePlayer, (state) => {
@@ -74,7 +75,7 @@ const PlayerOps: CommandHandlers = {
         if (!script) {
             throw new Error(`Unable to find queue script: ${scriptId}`);
         }
-        state.activePlayer.enqueueScript(script, 'weak', delay, args);
+        state.activePlayer.enqueueScript(script, PlayerQueueType.WEAK, delay, args);
     }),
 
     [ScriptOpcode.QUEUE]: checkedHandler(ActivePlayer, (state) => {
@@ -86,7 +87,7 @@ const PlayerOps: CommandHandlers = {
         if (!script) {
             throw new Error(`Unable to find queue script: ${scriptId}`);
         }
-        state.activePlayer.enqueueScript(script, 'normal', delay, args);
+        state.activePlayer.enqueueScript(script, PlayerQueueType.NORMAL, delay, args);
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, (state) => {
@@ -600,7 +601,7 @@ const PlayerOps: CommandHandlers = {
         if (!script) {
             throw new Error(`Unable to find timer script: ${timerId}`);
         }
-        state.activePlayer.setTimer('soft', script, args, interval);
+        state.activePlayer.setTimer(PlayerTimerType.SOFT, script, args, interval);
     }),
 
     [ScriptOpcode.CLEARSOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
@@ -618,7 +619,7 @@ const PlayerOps: CommandHandlers = {
         if (!script) {
             throw new Error(`Unable to find timer script: ${timerId}`);
         }
-        state.activePlayer.setTimer('normal', script, args, interval);
+        state.activePlayer.setTimer(PlayerTimerType.NORMAL, script, args, interval);
     }),
 
     [ScriptOpcode.CLEARTIMER]: checkedHandler(ActivePlayer, (state) => {

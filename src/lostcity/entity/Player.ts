@@ -27,7 +27,7 @@ import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
 import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { EntityQueueRequest, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
@@ -2111,7 +2111,7 @@ export default class Player extends PathingEntity {
         if (this.modalSticky !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSticky);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, 'engine');
+                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
             this.modalSticky = -1;
@@ -2135,7 +2135,7 @@ export default class Player extends PathingEntity {
         if (this.modalTop !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTop);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, 'engine');
+                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
             this.modalTop = -1;
@@ -2144,7 +2144,7 @@ export default class Player extends PathingEntity {
         if (this.modalBottom !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalBottom);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, 'engine');
+                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
             this.modalBottom = -1;
@@ -2153,7 +2153,7 @@ export default class Player extends PathingEntity {
         if (this.modalSidebar !== -1) {
             const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSidebar);
             if (closeTrigger) {
-                this.enqueueScript(closeTrigger, 'engine');
+                this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
             this.modalSidebar = -1;
@@ -2186,12 +2186,12 @@ export default class Player extends PathingEntity {
      * @param delay
      * @param args
      */
-    enqueueScript(script: Script, type: QueueType = 'normal', delay = 0, args: ScriptArgument[] = []) {
+    enqueueScript(script: Script, type: QueueType = PlayerQueueType.NORMAL, delay = 0, args: ScriptArgument[] = []) {
         const request = new EntityQueueRequest(type, script, args, delay);
-        if (type === 'engine') {
+        if (type === PlayerQueueType.ENGINE) {
             request.delay = 0;
             this.engineQueue.push(request);
-        } else if (type === 'weak') {
+        } else if (type === PlayerQueueType.WEAK) {
             this.weakQueue.push(request);
         } else {
             this.queue.push(request);
@@ -2199,7 +2199,7 @@ export default class Player extends PathingEntity {
     }
 
     processQueues() {
-        if (this.queue.some(queue => queue.type === 'strong')) {
+        if (this.queue.some(queue => queue.type === PlayerQueueType.STRONG)) {
             this.closeModal();
         }
 
@@ -2223,7 +2223,7 @@ export default class Player extends PathingEntity {
 
         for (let i = 0; i < this.queue.length; i++) {
             const queue = this.queue[i];
-            if (queue.type === 'strong') {
+            if (queue.type === PlayerQueueType.STRONG) {
                 this.closeModal();
             }
 
@@ -2284,12 +2284,12 @@ export default class Player extends PathingEntity {
 
             // only execute if it's time and able
             // soft timers can execute while busy, normal cannot
-            if (--timer.clock <= 0 && (timer.type === 'soft' || this.canAccess())) {
+            if (--timer.clock <= 0 && (timer.type === PlayerTimerType.SOFT || this.canAccess())) {
                 // set clock back to interval
                 timer.clock = timer.interval;
 
                 const script = ScriptRunner.init(timer.script, this, null, null, timer.args);
-                this.runScript(script, timer.type !== 'soft');
+                this.runScript(script, timer.type === PlayerTimerType.NORMAL);
             }
         }
     }
@@ -3600,7 +3600,7 @@ export default class Player extends PathingEntity {
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
 
             if (script) {
-                this.enqueueScript(script, 'engine');
+                this.enqueueScript(script, PlayerQueueType.ENGINE);
             }
         }
 

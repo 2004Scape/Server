@@ -57,7 +57,7 @@ const ObjOps: CommandHandlers = {
         state.pointerAdd(ActiveObj[state.intOperand]);
 
         if (Environment.CLIRUNNER) {
-            state.activePlayer.invAdd(InvType.getByName('bank')!.id, type, count);
+            state.activePlayer.invAdd(InvType.getByName('bank')!.id, objId, count);
         }
     },
 

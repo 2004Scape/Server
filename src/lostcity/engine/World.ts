@@ -1,8 +1,8 @@
-import { Worker } from 'worker_threads';
+import {Worker} from 'worker_threads';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import { toBase37 } from '#jagex2/jstring/JString.js';
+import {toBase37} from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
@@ -27,7 +27,7 @@ import VarSharedType from '#lostcity/cache/VarSharedType.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
 
 import GameMap from '#lostcity/engine/GameMap.js';
-import { Inventory } from '#lostcity/engine/Inventory.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
 
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
@@ -44,12 +44,14 @@ import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 
-import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import {ClientProtLengths} from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import {ServerProt} from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import {CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator} from '@2004scape/rsmod-pathfinder';
+import {PlayerQueueType} from '#lostcity/entity/EntityQueueRequest.js';
+import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -504,14 +506,14 @@ class World {
                 }
 
                 player.queue = player.queue.filter(s => s);
-                if (player.queue.find(s => s.type === 'strong')) {
+                if (player.queue.find(s => s.type === PlayerQueueType.STRONG)) {
                     // the presence of a strong script closes modals before anything runs regardless of the order
                     player.closeModal();
                 }
 
                 player.processQueues();
-                player.processTimers('normal');
-                player.processTimers('soft');
+                player.processTimers(PlayerTimerType.NORMAL);
+                player.processTimers(PlayerTimerType.SOFT);
                 player.processEngineQueue();
                 player.processInteraction();
 

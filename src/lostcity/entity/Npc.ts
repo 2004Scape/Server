@@ -13,20 +13,20 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueRequest, NpcQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
-import { Direction, Position } from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -313,7 +313,7 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest('npc', script, args, delay);
+        const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, args, delay);
         this.queue.push(request);
     }
 
