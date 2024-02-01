@@ -578,7 +578,7 @@ export default class Player extends PathingEntity {
         for (let it = 0; it < decoded.length; it++) {
             const { opcode, data } = decoded[it];
 
-            if (opcode === ClientProt.MAP_REQUEST_AREAS) {
+            if (opcode === ClientProt.REBUILD_GETMAPS) {
                 const requested = [];
 
                 for (let i = 0; i < data.length / 3; i++) {
@@ -689,7 +689,7 @@ export default class Player extends PathingEntity {
                 this.mask |= Player.CHAT;
 
                 World.socialPublicMessage(this.username37, message);
-            } else if (opcode === ClientProt.IF_DESIGN) {
+            } else if (opcode === ClientProt.IF_PLAYERDESIGN) {
                 const female = data.g1();
 
                 const body = [];
@@ -752,7 +752,7 @@ export default class Player extends PathingEntity {
                 this.body = body;
                 this.colors = colors;
                 this.generateAppearance(InvType.getId('worn'));
-            } else if (opcode === ClientProt.IF_FLASHING_TAB) {
+            } else if (opcode === ClientProt.TUTORIAL_CLICKSIDE) {
                 const tab = data.g1();
 
                 if (tab < 0 || tab > 13) {
