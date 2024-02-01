@@ -1,5 +1,5 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
-[softtimer,general_macro_events]
+[timer,general_macro_events]
 // if (afk_event = ^false) {
 //     return;
 // }

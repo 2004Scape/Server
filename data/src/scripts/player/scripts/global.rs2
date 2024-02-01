@@ -20,7 +20,7 @@ softtimer(stat_replenish, 100);
 // same for health
 softtimer(health_replenish, 100);
 // random event timer
-softtimer(general_macro_events, 50);
+settimer(general_macro_events, 50);
 
 if (%tutorial_progress < ^tutorial_complete) {
     ~update_bas;
