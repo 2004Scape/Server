@@ -47,6 +47,9 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     if ($maxhit ! null) {
         // damage player, isnt delayed an extra tick like using spells on npc (osrs)
         queue(damage_player, calc($duration / 30), $damage);
+        if (npc_param(poison_severity) > 0) {
+            queue(poison_player, 0, npc_param(poison_severity));
+        }
         // player anim for flinching doesnt exist, even in osrs
         // anim(~combat_defend_anim(inv_getobj(worn, ^wearpos_rhand)), $duration);
     }

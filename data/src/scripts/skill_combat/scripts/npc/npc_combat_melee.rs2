@@ -35,6 +35,9 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
 //~damage_self($damage);
 if_close; // close the player interface when taking a hit.
 queue(damage_player, 0, $damage);
+if (npc_param(poison_severity) > 0) {
+    queue(poison_player, 0, npc_param(poison_severity));
+}
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, $delay);
 %lastcombat = map_clock;
