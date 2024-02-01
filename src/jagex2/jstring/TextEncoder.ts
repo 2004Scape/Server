@@ -3,13 +3,13 @@ import Packet from '#jagex2/io/Packet.js';
 export default class TextEncoder {
     // prettier-ignore
     private static CHAR_LOOKUP: string[] = [
-    ' ',
-    'e', 't', 'a', 'o', 'i', 'h', 'n', 's', 'r', 'd', 'l', 'u', 'm',
-    'w', 'c', 'y', 'f', 'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    ' ', '!', '?', '.', ',', ':', ';', '(', ')', '-',
-    '&', '*', '\\', '\'', '@', '#', '+', '=', '£', '$', '%', '"', '[', ']'
-  ];
+        ' ',
+        'e', 't', 'a', 'o', 'i', 'h', 'n', 's', 'r', 'd', 'l', 'u', 'm',
+        'w', 'c', 'y', 'f', 'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        ' ', '!', '?', '.', ',', ':', ';', '(', ')', '-',
+        '&', '*', '\\', '\'', '@', '#', '+', '=', '£', '$', '%', '"', '[', ']'
+    ];
 
     static decode(packet: Packet, length: number): string {
         const charBuffer: string[] = [];
