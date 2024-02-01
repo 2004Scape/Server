@@ -3,25 +3,25 @@
 // some sound synth?
 npc_anim(seq_348, 0);
 %npc_attacking_uid = uid;
+// isnt delayed on respawn in osrs
 %npc_macro_event_patience = ^macro_event_appear;
 npc_settimer(45);
 
 [opnpc1,strange_plant_friendly_macro_event]
+if (%npc_attacking_uid ! uid) {
+    mes("It's not here for you."); // osrs
+    return;
+}
 if (%npc_macro_event_patience = ^macro_event_appear) {
     return;
 }
-if (%npc_attacking_uid ! uid) {
-    ~mesbox("The plant doesn't seem interested in you."); // based off evil bob
-    // need to check this in osrs
-    return;
-}
-~macro_event_give_reward(obj_464, 1);
+~macro_event_give_reward(strange_fruit, 1);
 sound_synth(pick, 0, 0);
 mes("You pick the fruit from the plant."); // osrs
 %macro_event = ^no_macro_event;
 %npc_macro_event_patience  = ^macro_event_disappear;
 npc_anim(seq_350, 0); // take thing away
-npc_delay(24);
+npc_delay(24); // delayed when despawning in osrs
 npc_del;
 
 [ai_timer,strange_plant_friendly_macro_event]
