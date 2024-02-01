@@ -191,7 +191,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // play spell success sound
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
     // roll 0-maxhit
-    $damage = randominc($maxhit);
+    $damage = randominc(min($maxhit, npc_param(max_dealt)));
     // if maxhit is defined then damage npc
     if ($maxhit ! null) {
         // damage npc
@@ -202,7 +202,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
         // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
         // npc sound
         sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
-        ~give_combat_experience($damagestyle, min($damage, npc_stat(hitpoints)));
+        ~give_combat_experience($damagestyle, min($damage, npc_stat(hitpoints)), npc_param(combat_xp_multiplier));
     }
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);

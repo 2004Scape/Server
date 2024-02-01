@@ -82,32 +82,33 @@ switch_int ($damagetype) {
     case ^ranged_style : return(oc_param($weapon, rangeattack_anim), oc_param($weapon, rangeattack_sound));
 }
 
-[proc,give_combat_experience](int $damagestyle, int $damage)
+// default multiplier is 1000
+[proc,give_combat_experience](int $damagestyle, int $damage, int $multiplier)
 def_int $base = multiply($damage, 10);
 switch_int($damagestyle) {
     case ^style_melee_accurate : 
-        givexp(attack, scale(400, 100, $base));
+        givexp(attack, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_melee_aggressive : 
-        givexp(strength, scale(400, 100, $base));
+        givexp(strength, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_melee_defensive : 
-        givexp(defence, scale(400, 100, $base));
+        givexp(defence, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_melee_controlled : 
-        givexp(attack, scale(133, 100, $base));
-        givexp(strength, scale(133, 100, $base));
-        givexp(defence, scale(133, 100, $base));
+        givexp(attack, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(strength, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(133, 100, $base)));
     case ^style_ranged_accurate, ^style_ranged_rapid : 
-        givexp(ranged, scale(400, 100, $base));
+        givexp(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_ranged_longrange : 
-        givexp(ranged, scale(200, 100, $base));
-        givexp(defence, scale(200, 100, $base));
+        givexp(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(200, 100, $base)));
     case ^style_magic_normal :
-        givexp(magic, scale(200, 100, $base));
+        givexp(magic, scale($multiplier, 1000, scale(200, 100, $base)));
     case ^style_magic_defensive : 
-        givexp(magic, scale(133, 100, $base));
-        givexp(defence, scale(100, 100, $base));
+        givexp(magic, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(100, 100, $base)));
     case default : return;
 }
-givexp(hitpoints, scale(133, 100, $base));
+givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 
 // returns the defend anim to use for this combat
 [proc,combat_defend_anim](obj $weapon)(seq)

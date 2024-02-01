@@ -21,8 +21,8 @@ if (%action_delay > map_clock) {
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
-    $damage = randominc(%com_maxhit);
-    ~give_combat_experience(%damagestyle, min($damage, npc_stat(hitpoints)));
+    $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
+    ~give_combat_experience(%damagestyle, min($damage, npc_stat(hitpoints)), npc_param(combat_xp_multiplier));
 }
 
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
