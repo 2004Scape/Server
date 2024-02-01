@@ -1,4 +1,7 @@
 [label,mysterious_old_man_general_macro_event_spawn]
+spotanim_map(spotanim_86, npc_coord, 124, 0);
+sound_synth(smokepuff, 0, 0);
+
 npc_anim(emote_bow, 20);
 npc_say("Greetings <displayname>!");
 npc_setmode(playerfollow);

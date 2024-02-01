@@ -1,4 +1,7 @@
 [label,drunken_dwarf_macro_event_spawn]
+spotanim_map(spotanim_86, npc_coord, 124, 0);
+sound_synth(smokepuff, 0, 0);
+
 sound_synth(dwarf_whistle, 0, 0);
 npc_anim(dwarf_seq_105, 20);
 npc_say("'Ello der <displayname>! *hic*");
