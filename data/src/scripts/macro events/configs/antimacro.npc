@@ -1143,3 +1143,11 @@ head1=model_4_npc_head
 head2=model_6_npc_head
 wanderrange=10
 timer=1
+param=attack_anim,dwarf_seq_928
+param=defend_anim,dwarf_block
+param=death_anim,dwarf_death
+param=attackrate,4
+param=attack_sound,thrown
+// stats are completely guessed
+attack=50
+strength=1

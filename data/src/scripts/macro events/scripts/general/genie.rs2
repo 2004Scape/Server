@@ -16,29 +16,33 @@ if (%macro_event = ^no_macro_event) {
 %macro_event = ^no_macro_event;
 ~macro_event_give_reward(lamp, 1);
 // delays are taken from this video: https://youtu.be/EN4c2hV65Qk?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
-%npc_macro_event_patience = ^patience_5;
+%npc_macro_event_patience = ^macro_event_wave;
 npc_settimer(3);
 // dialogue taken from osrs. Neutral is a guess.
 ~chatnpc(neutral, "Ah, so you are there, <text_gender("master", "mistress")> <displayname>. I'm so glad you summoned me. Please take this lamp and make your wish.");
 
 [ai_timer,genie_macro_event]
 if (~macro_event_lost = true) {
+    // only confirmed for mysterious old man
+    npc_anim(emote_cry, 20);
+    npc_say("I lose more friends that way.");
+    ~macro_event_disappear;
     return;
 }
 
 // warning message https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=395
 // this video goes 50t after respawn without warning message https://youtu.be/KkyVz0tSOQA?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=176
 // 3 warning messages: https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
-if (%npc_macro_event_patience = ^patience_1) {
+if (%npc_macro_event_patience = 20) {
     npc_anim(emote_wave, 20);
     npc_say("Ehem... master <displayname>?");
-} else if (%npc_macro_event_patience = ^patience_2) {
+} else if (%npc_macro_event_patience = 40) {
     npc_anim(emote_think, 20);
     npc_say("Are you there, master <displayname>?");
-} else if (%npc_macro_event_patience = ^patience_3) {
+} else if (%npc_macro_event_patience = 60) {
     npc_anim(emote_angry, 20);
     npc_say("You shouldn't ignore a Genie master <displayname>?");
-} else if (%npc_macro_event_patience = ^patience_4) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
+} else if (%npc_macro_event_patience = 80) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
     %macro_event = ^no_macro_event;
     npc_say("No one ignores me!");
     npc_anim(human_castteleport, 0);
@@ -50,12 +54,12 @@ if (%npc_macro_event_patience = ^patience_1) {
         ~macro_event_fail_teleport;
     }
     return;
-} else if (%npc_macro_event_patience = ^patience_5) { // wave
-    %npc_macro_event_patience = ^patience_6;
+} else if (%npc_macro_event_patience = ^macro_event_wave) { // wave
+    %npc_macro_event_patience = ^macro_event_disappear;
     npc_anim(emote_wave, 20);
     npc_settimer(3);
     return;
-} else if (%npc_macro_event_patience >= ^patience_6) { // leave
+} else if (%npc_macro_event_patience = ^macro_event_disappear) { // leave
     ~macro_event_disappear;
     return;
 }

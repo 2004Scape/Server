@@ -6,9 +6,8 @@
 
 ^no_macro_event = 0
 
-^patience_1 = 20
-^patience_2 = 40
-^patience_3 = 60
-^patience_4 = 80
-^patience_5 = 100
-^patience_6 = 120
+^macro_event_wave = -1
+^macro_event_disappear = -2
+^macro_event_alone = -3
+^macro_event_del = -4
+^macro_event_attack = -5

@@ -16,7 +16,7 @@ if (%macro_event = ^no_macro_event) {
 %macro_event = ^no_macro_event;
 ~macro_event_give_reward(~mysterious_old_man_general_macro_event_reward);
 // dialogue taken from osrs. Neutral is a guess.
-%npc_macro_event_patience = ^patience_5;
+%npc_macro_event_patience = ^macro_event_wave;
 npc_settimer(3);
 ~chatnpc(neutral, "Ah, so you are there. I hoped you would talk to me, I get so lonely. Here, have a present! I must be going now though.");
 // delays are taken from this video: https://youtu.be/JeQUY1m1wRo?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=137
@@ -40,6 +40,10 @@ if ($random < 150) return(half_key2, 1); // 1/150 half key
 
 [ai_timer,mysterious_old_man_general_macro_event]
 if (~macro_event_lost = true) {
+    // only confirmed for mysterious old man
+    npc_anim(emote_cry, 20);
+    npc_say("I lose more friends that way.");
+    ~macro_event_disappear;
     return;
 }
 // other videos:
@@ -48,19 +52,19 @@ if (~macro_event_lost = true) {
 
 // warnings https://youtu.be/Ai89wqupYqA
 // https://youtu.be/HpmsgVshwxg?t=267
-if (%npc_macro_event_patience = ^patience_1) {
+if (%npc_macro_event_patience = 20) {
     npc_anim(emote_wave, 20);
     npc_say("ehem... Hello <displayname>!");
     return;
-} else if (%npc_macro_event_patience = ^patience_2) {
+} else if (%npc_macro_event_patience = 40) {
     npc_anim(emote_think, 20);
     npc_say("Hello, are you there <displayname>!");
     return;
-} else if (%npc_macro_event_patience = ^patience_3) {
+} else if (%npc_macro_event_patience = 60) {
     npc_anim(emote_angry, 20);
     npc_say("It's really rude to ignore someone, <displayname>!");
     return;
-} else if (%npc_macro_event_patience = ^patience_4) { // fail
+} else if (%npc_macro_event_patience = 80) { // fail
     %macro_event = ^no_macro_event;
     // https://youtu.be/Ai89wqupYqA?t=45
     npc_say("No-one ignores me!");
@@ -69,12 +73,12 @@ if (%npc_macro_event_patience = ^patience_1) {
     npc_del;
     ~macro_event_fail_teleport;
     return;
-} else if (%npc_macro_event_patience = ^patience_5) { // wave
-    %npc_macro_event_patience = ^patience_6;
+} else if (%npc_macro_event_patience = ^macro_event_wave) { // wave
+    %npc_macro_event_patience = ^macro_event_disappear;
     npc_anim(emote_wave, 20);
     npc_settimer(3);
     return;
-} else if (%npc_macro_event_patience = ^patience_6) { // leave
+} else if (%npc_macro_event_patience = ^macro_event_disappear) { // leave
     ~macro_event_disappear;
     return;
 }

@@ -1,5 +1,107 @@
 [label,drunken_dwarf_macro_event_spawn]
-npc_anim(emote_bow, 20);
-npc_say("Greetings <displayname>!");
-npc_delay(1);
+sound_synth(dwarf_whistle, 0, 0);
+npc_anim(dwarf_seq_105, 20);
+npc_say("'Ello der <displayname>! *hic*");
 npc_setmode(playerfollow);
+%npc_attacking_uid = uid;
+
+[opnpc1,drunken_dwarf_macro_event]
+if (uid ! %npc_attacking_uid) {
+    ~chatnpc(drunk, "You're not my matey!"); // osrs
+    return;
+}
+if (%macro_event = ^no_macro_event) {
+    ~chatnpc(drunk, "'Ave a good 'un buddy!"); // osrs
+    return;
+}
+%macro_event = ^no_macro_event;
+~macro_event_give_reward(kebab, 1);
+~macro_event_give_reward(beer, 1);
+%npc_macro_event_patience = ^macro_event_wave;
+npc_settimer(3);
+~chatnpc(drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
+
+[ai_timer,drunken_dwarf_macro_event]
+if (npc_getmode = opplayer2) {
+    return;
+}
+if (%npc_macro_event_patience = ^macro_event_attack | ~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+    %npc_macro_event_patience = ^macro_event_alone; // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
+    npc_settimer(20);
+    return;
+}
+
+// warnings: https://youtu.be/Ww-PkAr4vt4?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=96
+// todo: confirm these anims
+if (%npc_macro_event_patience = 10) {
+    npc_anim(dwarf_seq_103, 20);
+    sound_synth(dwarf_whistle, 0, 0);
+    npc_say("Aww comeon, talk to ikle me <displayname>!");
+} else if (%npc_macro_event_patience = 20) {
+    npc_anim(dwarf_seq_105, 20);
+    sound_synth(dwarf_whistle, 0, 0);
+    npc_say("Oi, are you der <displayname>!");
+} else if (%npc_macro_event_patience = 30) {
+    sound_synth(dwarf_whistle, 0, 0);
+    npc_say("Dunt ignore your mate, <displayname>!");
+} else if (%npc_macro_event_patience = 40) {
+    npc_anim(dwarf_seq_103, 20);
+    sound_synth(dwarf_whistle, 0, 0);
+    npc_say("I hates yoo <displayname>!");
+} else if (%npc_macro_event_patience = 50) { // fail
+    // todo: figure out the message that goes here
+    %npc_macro_event_patience = ^macro_event_attack;
+    npc_setmode(opplayer2);
+    return;
+} else if (%npc_macro_event_patience = ^macro_event_wave) { // wave
+    %npc_macro_event_patience = ^macro_event_disappear;
+    npc_anim(dwarf_seq_105, 20);
+    npc_settimer(3);
+    return;
+} else if (%npc_macro_event_patience = ^macro_event_disappear) { // leave
+    ~macro_event_disappear;
+    return;
+} else if (%npc_macro_event_patience = ^macro_event_alone) { // all alone and leave
+    %npc_macro_event_patience = ^macro_event_del;
+    npc_say("Aww, me is all alone.");
+    npc_settimer(3);
+    return;
+} else if (%npc_macro_event_patience = ^macro_event_del) { // delete
+    %macro_event = ^no_macro_event; // this is needed for dwarf, he doesnt 
+    npc_del;
+    return;
+}
+
+%npc_macro_event_patience = calc(%npc_macro_event_patience + 1);
+
+// https://youtu.be/8wJZmDwcBKs?t=108
+[ai_opplayer2,drunken_dwarf_macro_event]
+if (%npc_action_delay > map_clock) return;
+
+npc_anim(npc_param(attack_anim), 20);
+%npc_action_delay = add(map_clock, npc_param(attackrate));
+~player_projectile(npc_coord, coord, uid, spotanim_32, 45, 40, 51, 25, 5, 11, 5);
+sound_synth(npc_param(attack_sound), 0, 0);
+
+if (stat(hitpoints) = 0) {
+    return;
+}
+
+def_int $attack_roll = ~npc_melee_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+def_int $maxhit = ~npc_melee_maxhit;
+
+// npc_say("Clock: <tostring(map_clock)>, NPC A: <tostring($attack_roll)>, Player D: <tostring($defence_roll)>, NPC Max: <tostring($maxhit)>");
+
+def_int $damage = 0;
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+}
+if_close; // close the player interface when taking a hit.
+queue(drunken_dwarf_player_defend_anim, 1);
+queue(damage_player, 1, $damage);
+queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
+%lastcombat = map_clock;
+
+[queue,drunken_dwarf_player_defend_anim]
+anim(%com_defendanim, 0);
