@@ -46,7 +46,7 @@ module.exports = {
 
         /**
          * https://eslint.org/docs/latest/rules/no-constant-condition#checkloops
-         * 
+         *
          * Allows constant conditions in loops but not in if statements
          */
         'no-constant-condition': ['error', { 'checkLoops': false }],

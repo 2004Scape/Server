@@ -11,32 +11,32 @@ export default class TextEncoder {
     ];
 
     static decode(packet: Packet, length: number): string {
-        const stringBuilder: string[] = [];
-        let offset = 0;
-        let savedChar = -1;
-        let currentChar;
-        for (let index = 0; index < length && offset < 100; index++) {
-            const data = packet.g1();
-            currentChar = data >> 4 & 0xF;
-            if (savedChar !== -1) {
-                stringBuilder[offset++] = this.CHAR_LOOKUP[(savedChar << 4) + currentChar - 195];
-                savedChar = -1;
-            } else if (currentChar < 13) {
-                stringBuilder[offset++] = this.CHAR_LOOKUP[currentChar];
+        const charBuffer: string[] = [];
+        let pos: number = 0;
+        let carry: number = -1;
+        let nibble: number;
+        for (let i: number = 0; i < length && pos < 100; i++) {
+            const data: number = packet.g1();
+            nibble = data >> 4 & 0xF;
+            if (carry !== -1) {
+                charBuffer[pos++] = this.CHAR_LOOKUP[(carry << 4) + nibble - 195];
+                carry = -1;
+            } else if (nibble < 13) {
+                charBuffer[pos++] = this.CHAR_LOOKUP[nibble];
             } else {
-                savedChar = currentChar;
+                carry = nibble;
             }
-            currentChar = data & 0xF;
-            if (savedChar != -1) {
-                stringBuilder[offset++] = this.CHAR_LOOKUP[(savedChar << 4) + currentChar - 195];
-                savedChar = -1;
-            } else if (currentChar < 13) {
-                stringBuilder[offset++] = this.CHAR_LOOKUP[currentChar];
+            nibble = data & 0xF;
+            if (carry != -1) {
+                charBuffer[pos++] = this.CHAR_LOOKUP[(carry << 4) + nibble - 195];
+                carry = -1;
+            } else if (nibble < 13) {
+                charBuffer[pos++] = this.CHAR_LOOKUP[nibble];
             } else {
-                savedChar = currentChar;
+                carry = nibble;
             }
         }
-        return this.toSentenceCase(stringBuilder.slice(0, offset).join('')).trim();
+        return this.toSentenceCase(charBuffer.slice(0, pos).join('')).trim();
     }
 
     static encode(packet: Packet, input: string): void {
@@ -44,43 +44,43 @@ export default class TextEncoder {
             input = input.substring(0, 80);
         }
         input = input.toLowerCase();
-        let savedChar = -1;
-        for (let index = 0; index < input.length; index++) {
-            const char = input.charAt(index);
-            let currentChar = 0;
-            for (let lookupIndex = 0; lookupIndex < this.CHAR_LOOKUP.length; lookupIndex++) {
-                if (char === this.CHAR_LOOKUP[lookupIndex]) {
-                    currentChar = lookupIndex;
+        let carry: number = -1;
+        for (let i: number = 0; i < input.length; i++) {
+            const char: string = input.charAt(i);
+            let index: number = 0;
+            for (let j: number = 0; j < this.CHAR_LOOKUP.length; j++) {
+                if (char === this.CHAR_LOOKUP[j]) {
+                    index = j;
                     break;
                 }
             }
-            if (currentChar > 12) {
-                currentChar += 195;
+            if (index > 12) {
+                index += 195;
             }
-            if (savedChar == -1) {
-                if (currentChar < 13) {
-                    savedChar = currentChar;
+            if (carry == -1) {
+                if (index < 13) {
+                    carry = index;
                 } else {
-                    packet.p1(currentChar);
+                    packet.p1(index);
                 }
-            } else if (currentChar < 13) {
-                packet.p1((savedChar << 4) + currentChar);
-                savedChar = -1;
+            } else if (index < 13) {
+                packet.p1((carry << 4) + index);
+                carry = -1;
             } else {
-                packet.p1((savedChar << 4) + (currentChar >> 4));
-                savedChar = currentChar & 0xF;
+                packet.p1((carry << 4) + (index >> 4));
+                carry = index & 0xF;
             }
         }
-        if (savedChar != -1) {
-            packet.p1(savedChar << 4);
+        if (carry != -1) {
+            packet.p1(carry << 4);
         }
     }
 
     static toSentenceCase(input: string): string {
         const chars: string[] = [...input.toLowerCase()];
-        let punctuation = true;
-        for (let index = 0; index < chars.length; index++) {
-            const char = chars[index];
+        let punctuation: boolean = true;
+        for (let index: number = 0; index < chars.length; index++) {
+            const char: string = chars[index];
             if (punctuation && char >= 'a' && char <= 'z') {
                 chars[index] = char.toUpperCase();
                 punctuation = false;

@@ -1,2 +1,6 @@
 [debugproc,interface](interface $interface)
+if (map_localdev = false) {
+    return;
+}
+
 if_openmainmodal($interface);

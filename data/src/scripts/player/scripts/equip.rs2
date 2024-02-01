@@ -5,32 +5,36 @@ if_close;
 @unequip(last_slot);
 
 [label,equip](int $slot)
-//// first: we remove the inventory item, so the slot can be filled with inv_add
-def_obj $obj = inv_getobj(inv, $slot);
-def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
+if (p_finduid(uid) = true) {
+    //// first: we remove the inventory item, so the slot can be filled with inv_add
+    def_obj $obj = inv_getobj(inv, $slot);
+    def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
 
-def_int $count = inv_getnum(inv, $slot);
-def_int $slot1 = oc_wearpos($obj); // primary slot
-def_int $slot2 = oc_wearpos2($obj); // override slot 1
-def_int $slot3 = oc_wearpos3($obj); // override slot 2
+    def_int $count = inv_getnum(inv, $slot);
+    def_int $slot1 = oc_wearpos($obj); // primary slot
+    def_int $slot2 = oc_wearpos2($obj); // override slot 1
+    def_int $slot3 = oc_wearpos3($obj); // override slot 2
 
-// second: we need to check any wearpos overrides that this item describes
-if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false, true, false) = false) {
-    mes("You don't have enough free space to do that.");
-    return;
+    // second: we need to check any wearpos overrides that this item describes
+    if (~equip_validate_and_move($obj, $count, $slot, $slot1, $slot2, $slot3, false, true, false) = false) {
+        mes("You don't have enough free space to do that.");
+        return;
+    }
+    ~update_all($previous);
 }
-~update_all($previous);
 
 [label,unequip](int $slot)
-def_obj $obj = inv_getobj(worn, $slot);
-def_int $count = inv_getnum(worn, $slot);
-def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));
-if ($overflow >= $count) {
-    mes("You don't have enough free space to do that.");
-    return;
+if (p_finduid(uid) = true) {
+    def_obj $obj = inv_getobj(worn, $slot);
+    def_int $count = inv_getnum(worn, $slot);
+    def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));
+    if ($overflow >= $count) {
+        mes("You don't have enough free space to do that.");
+        return;
+    }
+    inv_moveitem(worn, inv, $obj, sub($count, $overflow));
+    ~update_all($obj);
 }
-inv_moveitem(worn, inv, $obj, sub($count, $overflow));
-~update_all($obj);
 
 [proc,update_bonuses]
 def_int $stabattack;

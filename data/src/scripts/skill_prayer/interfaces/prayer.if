@@ -1,3 +1,5 @@
+type=overlay
+
 [prayer_thickskin]
 type=graphic
 x=19

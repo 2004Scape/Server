@@ -46,7 +46,9 @@ export default class IfType {
             const com = new IfType();
             com.id = id;
             com.rootLayer = rootLayer;
+
             com.comName = dat.gjstr();
+            com.overlay = dat.gbool();
 
             com.type = dat.g1();
             com.buttonType = dat.g1();
@@ -248,6 +250,7 @@ export default class IfType {
     id: number = -1;
     rootLayer: number = -1;
     comName: string | null = null;
+    overlay: boolean = false;
     type: number = -1;
     buttonType: number = -1;
     clientCode: number = 0;

@@ -4,7 +4,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37, toDisplayName } from '#jagex2/jstring/JString.js';
 
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
@@ -400,6 +400,7 @@ export default class Player extends PathingEntity {
         firstSeen: boolean
     }[] = [];
     allowDesign: boolean = false;
+    afkEventReady: boolean = false;
 
     client: ClientSocket | null = null;
     netOut: Packet[] = [];
@@ -448,6 +449,7 @@ export default class Player extends PathingEntity {
     refreshModalClose = false;
     refreshModal = false;
     modalSticky = -1;
+    overlaySide: number[] = new Array(14).fill(-1);
     receivedFirstClose = false; // workaround to not close welcome screen on login
 
     interacted: boolean = false;
@@ -778,52 +780,52 @@ export default class Player extends PathingEntity {
                 this.lastInt = input;
                 this.executeScript(this.activeScript, true);
             } else if (opcode === ClientProt.IF_BUTTON) {
-                const com = data.g2();
+                const comId = data.g2();
 
-                // TODO: verify component is opened
-                const ifType = IfType.get(com);
-                if (!ifType) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                this.lastCom = com;
+                this.lastCom = comId;
 
-                // todo: conditionally give protected access
                 if (this.resumeButtons.indexOf(this.lastCom) !== -1) {
                     if (this.activeScript) {
                         this.executeScript(this.activeScript, true);
                     }
                 } else {
-                    const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, ifType.id, -1);
+                    const root = IfType.get(com.rootLayer);
+
+                    const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, comId, -1);
                     if (script) {
-                        this.executeScript(ScriptRunner.init(script, this), true);
+                        this.executeScript(ScriptRunner.init(script, this), root.overlay == false);
                     } else {
                         if (Environment.LOCAL_DEV) {
-                            this.messageGame(`No trigger for [if_button,${ifType.comName}]`);
+                            this.messageGame(`No trigger for [if_button,${com.comName}]`);
                         }
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
+                // jagex has if_button1-5
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
+                const comId = data.g2();
 
-                const ifType = IfType.get(com);
-                if (!ifType || !ifType.inventoryOptions || !ifType.inventoryOptions.length) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !com.inventoryOptions || !com.inventoryOptions.length || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                // todo: validate against inv component properties
-                if (opcode === ClientProt.INV_BUTTON1 && !ifType.inventoryOptions[0] ||
-                    opcode === ClientProt.INV_BUTTON2 && !ifType.inventoryOptions[1] ||
-                    opcode === ClientProt.INV_BUTTON3 && !ifType.inventoryOptions[2] ||
-                    opcode === ClientProt.INV_BUTTON4 && !ifType.inventoryOptions[3] ||
-                    opcode === ClientProt.INV_BUTTON5 && !ifType.inventoryOptions[4]
+                if (opcode === ClientProt.INV_BUTTON1 && !com.inventoryOptions[0] ||
+                    opcode === ClientProt.INV_BUTTON2 && !com.inventoryOptions[1] ||
+                    opcode === ClientProt.INV_BUTTON3 && !com.inventoryOptions[2] ||
+                    opcode === ClientProt.INV_BUTTON4 && !com.inventoryOptions[3] ||
+                    opcode === ClientProt.INV_BUTTON5 && !com.inventoryOptions[4]
                 ) {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -853,26 +855,28 @@ export default class Player extends PathingEntity {
                     trigger = ServerTriggerType.INV_BUTTON5;
                 }
 
-                // todo: give protected access as needed
-                const script = ScriptProvider.getByTrigger(trigger, ifType.id, -1);
+                const script = ScriptProvider.getByTrigger(trigger, comId, -1);
                 if (script) {
-                    this.executeScript(ScriptRunner.init(script, this), true);
+                    const root = IfType.get(com.rootLayer);
+
+                    this.executeScript(ScriptRunner.init(script, this), root.overlay == false);
                 } else {
                     if (Environment.LOCAL_DEV) {
-                        this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${ifType.comName}]`);
+                        this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${com.comName}]`);
                     }
                 }
             } else if (opcode === ClientProt.INV_BUTTOND) {
-                const com = data.g2();
+                // jagex has if_buttond
+                const comId = data.g2();
                 const slot = data.g2();
                 const targetSlot = data.g2();
 
-                const ifType = IfType.get(com);
-                if (!ifType) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -884,28 +888,30 @@ export default class Player extends PathingEntity {
 
                 if (this.delayed()) {
                     // do nothing; revert the client visual
-                    this.updateInvPartial(com, inv, [slot, targetSlot]);
+                    this.updateInvPartial(comId, inv, [slot, targetSlot]);
                     continue;
                 }
 
                 this.lastSlot = slot;
                 this.lastTargetSlot = targetSlot;
 
-                // todo: give protected access as needed
-                const dragTrigger = ScriptProvider.getByTrigger(ServerTriggerType.INV_BUTTOND, ifType.id);
+                const dragTrigger = ScriptProvider.getByTrigger(ServerTriggerType.INV_BUTTOND, comId);
                 if (dragTrigger) {
-                    this.executeScript(ScriptRunner.init(dragTrigger, this), true);
+                    const root = IfType.get(com.rootLayer);
+
+                    this.executeScript(ScriptRunner.init(dragTrigger, this), root.overlay == false);
                 } else {
                     if (Environment.LOCAL_DEV) {
-                        this.messageGame(`No trigger for [inv_buttond,${ifType.comName}]`);
+                        this.messageGame(`No trigger for [inv_buttond,${com.comName}]`);
                     }
                 }
             } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
+                const comId = data.g2();
 
-                if (!IfType.get(com)) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
@@ -918,7 +924,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -962,21 +968,23 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.OPHELDU) {
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
+                const comId = data.g2();
                 const useItem = data.g2();
                 const useSlot = data.g2();
-                const useCom = data.g2();
+                const useComId = data.g2();
 
-                if (!IfType.get(com)) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                if (!IfType.get(useCom)) {
+                const useCom = IfType.get(comId);
+                if (typeof useCom === 'undefined' || !this.isComponentVisible(useCom)) {
                     continue;
                 }
 
                 {
-                    const listener = this.invListeners.find(l => l.com === com);
+                    const listener = this.invListeners.find(l => l.com === comId);
                     if (!listener) {
                         continue;
                     }
@@ -988,7 +996,7 @@ export default class Player extends PathingEntity {
                 }
 
                 {
-                    const listener = this.invListeners.find(l => l.com === useCom);
+                    const listener = this.invListeners.find(l => l.com === useComId);
                     if (!listener) {
                         continue;
                     }
@@ -1051,18 +1059,20 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.OPHELDT) {
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
-                const spellCom = data.g2();
+                const comId = data.g2();
+                const spellComId = data.g2();
 
-                if (!IfType.get(com)) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                if (!IfType.get(spellCom)) {
+                const spellCom = IfType.get(comId);
+                if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -1082,13 +1092,12 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                const type = IfType.get(spellCom);
-                const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, type.id, -1);
+                const script = ScriptProvider.getByTrigger(ServerTriggerType.OPHELDT, spellComId, -1);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 } else {
                     if (Environment.LOCAL_DEV) {
-                        this.messageGame(`No trigger for [opheldt,${type.comName}]`);
+                        this.messageGame(`No trigger for [opheldt,${spellCom.comName}]`);
                     }
 
                     // todo: is this appropriate?
@@ -1146,9 +1155,10 @@ export default class Player extends PathingEntity {
 
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
+                const comId = data.g2();
 
-                if (!IfType.get(com)) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
@@ -1160,7 +1170,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -1193,9 +1203,10 @@ export default class Player extends PathingEntity {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
-                const spellCom = data.g2();
+                const spellComId = data.g2();
 
-                if (!IfType.get(spellCom)) {
+                const spellCom = IfType.get(spellComId);
+                if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
 
@@ -1219,7 +1230,7 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                this.setInteraction(loc, ServerTriggerType.APLOCT, spellCom);
+                this.setInteraction(loc, ServerTriggerType.APLOCT, spellComId);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
                 pathfindRequest = true;
@@ -1266,13 +1277,14 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
+                const comId = data.g2();
 
-                if (!IfType.get(com)) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -1307,9 +1319,10 @@ export default class Player extends PathingEntity {
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPNPCT) {
                 const nid = data.g2();
-                const spellCom = data.g2();
+                const spellComId = data.g2();
 
-                if (!IfType.get(spellCom)) {
+                const spellCom = IfType.get(spellComId);
+                if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
 
@@ -1329,7 +1342,7 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                this.setInteraction(npc, ServerTriggerType.APNPCT, spellCom);
+                this.setInteraction(npc, ServerTriggerType.APNPCT, spellComId);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
@@ -1383,9 +1396,10 @@ export default class Player extends PathingEntity {
 
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
+                const comId = data.g2();
 
-                if (!IfType.get(com)) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
@@ -1397,7 +1411,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -1430,9 +1444,10 @@ export default class Player extends PathingEntity {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
-                const spellCom = data.g2();
+                const spellComId = data.g2();
 
-                if (!IfType.get(spellCom)) {
+                const spellCom = IfType.get(spellComId);
+                if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
 
@@ -1456,7 +1471,7 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                this.setInteraction(obj, ServerTriggerType.APOBJT, spellCom);
+                this.setInteraction(obj, ServerTriggerType.APOBJT, spellComId);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
                 pathfindRequest = true;
@@ -1493,13 +1508,14 @@ export default class Player extends PathingEntity {
                 const pid = data.g2();
                 const item = data.g2();
                 const slot = data.g2();
-                const com = data.g2();
+                const comId = data.g2();
 
-                if (!IfType.get(com)) {
+                const com = IfType.get(comId);
+                if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                const listener = this.invListeners.find(l => l.com === com);
+                const listener = this.invListeners.find(l => l.com === comId);
                 if (!listener) {
                     continue;
                 }
@@ -1535,9 +1551,10 @@ export default class Player extends PathingEntity {
                 pathfindRequest = true;
             } else if (opcode === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
-                const spellCom = data.g2();
+                const spellComId = data.g2();
 
-                if (!IfType.get(spellCom)) {
+                const spellCom = IfType.get(spellComId);
+                if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
 
@@ -1559,7 +1576,7 @@ export default class Player extends PathingEntity {
                 this.clearInteraction();
                 this.closeModal();
 
-                this.setInteraction(player, ServerTriggerType.APPLAYERT, spellCom);
+                this.setInteraction(player, ServerTriggerType.APPLAYERT, spellComId);
                 pathfindX = player.x;
                 pathfindZ = player.z;
                 pathfindRequest = true;
@@ -2266,7 +2283,7 @@ export default class Player extends PathingEntity {
 
             // only execute if it's time and able
             // soft timers can execute while busy, normal cannot
-            if (--timer.clock <= 0 && (timer.type === 'soft' || !this.canAccess())) {
+            if (--timer.clock <= 0 && (timer.type === 'soft' || this.canAccess())) {
                 // set clock back to interval
                 timer.clock = timer.interval;
 
@@ -3732,6 +3749,15 @@ export default class Player extends PathingEntity {
         this.z = endZ;
     }
 
+    setTab(com: number, tab: number) {
+        this.overlaySide[tab] = com;
+        this.ifSetTab(com, tab);
+    }
+
+    isComponentVisible(com: IfType) {
+        return this.modalTop === com.rootLayer || this.modalBottom === com.rootLayer || this.modalSidebar === com.rootLayer || this.overlaySide.findIndex(l => l === com.rootLayer) !== -1 || this.modalSticky === com.rootLayer;
+    }
+
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
@@ -4431,28 +4457,24 @@ export default class Player extends PathingEntity {
         out.p2(zoneZ);
 
         // build area is 13x13 zones (8*13 = 104 tiles), so we need to load 6 zones in each direction
-        const areas = [];
+        const areas: { mapsquareX: number, mapsquareZ: number }[] = [];
         for (let x = zoneX - 6; x <= zoneX + 6; x++) {
             for (let z = zoneZ - 6; z <= zoneZ + 6; z++) {
                 const mapsquareX = Position.mapsquare(x << 3);
                 const mapsquareZ = Position.mapsquare(z << 3);
 
-                const landExists = PRELOADED.has(`m${mapsquareX}_${mapsquareZ}`);
-                const locExists = PRELOADED.has(`l${mapsquareX}_${mapsquareZ}`);
-
-                if ((landExists || locExists) && areas.findIndex(a => a.mapsquareX === mapsquareX && a.mapsquareZ === mapsquareZ) === -1) {
-                    areas.push({ mapsquareX, mapsquareZ, landExists, locExists });
+                if (areas.findIndex(a => a.mapsquareX === mapsquareX && a.mapsquareZ === mapsquareZ) === -1) {
+                    areas.push({mapsquareX, mapsquareZ});
                 }
             }
         }
 
         for (let i = 0; i < areas.length; i++) {
-            const { mapsquareX, mapsquareZ, landExists, locExists } = areas[i];
-
+            const { mapsquareX, mapsquareZ } = areas[i];
             out.p1(mapsquareX);
             out.p1(mapsquareZ);
-            out.p4(landExists ? PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) ?? 0 : 0);
-            out.p4(locExists ? PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) ?? 0 : 0);
+            out.p4(PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) ?? 0);
+            out.p4(PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) ?? 0);
         }
 
         out.psize2(out.pos - start);

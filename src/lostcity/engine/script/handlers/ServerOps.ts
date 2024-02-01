@@ -18,7 +18,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 import { Position } from '#lostcity/entity/Position.js';
 
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: (state) => {

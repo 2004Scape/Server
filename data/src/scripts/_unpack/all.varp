@@ -412,11 +412,6 @@ protect=no
 [duel_settings]
 transmit=yes
 
-[split_privatechat]
-clientcode=8
-transmit=yes
-scope=perm
-
 [varp_288]
 
 [varp_289]

@@ -4,13 +4,6 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37 } from '#jagex2/jstring/JString.js';
 
-import LineValidator from '#rsmod/LineValidator.js';
-import NaivePathFinder from '#rsmod/NaivePathFinder.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import StepValidator from '#rsmod/StepValidator.js';
-
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
@@ -56,6 +49,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import {CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator} from '@2004scape/rsmod-pathfinder';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -342,6 +336,7 @@ class World {
 
         // world processing
         // - world queue
+        // - calculate afk event readiness
         // - npc spawn scripts
         // - npc hunt
         let worldProcessing = Date.now();
@@ -373,6 +368,18 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
+            }
+        }
+
+        if (this.currentTick % 500 === 0) {
+            for (let i = 0; i < this.players.length; i++) {
+                const player = this.players[i];
+                if (!player) {
+                    continue;
+                }
+
+                // 1/12 chance every 5 minutes of setting an afk event state
+                player.afkEventReady = Math.random() < 0.12;
             }
         }
 
@@ -771,6 +778,40 @@ class World {
             }
 
             inv.update = false;
+
+
+            // Increase or Decrease shop stock
+            const invType = InvType.get(inv.type);
+
+            if (invType.restock) {
+                inv.items.forEach((item, index) => {
+                    if (item) {
+                        // Item stock is under min
+                        if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                            inv.add(item?.id, 1, index, true, false, false);
+                            inv.update = true;
+                            return;
+                        }
+
+                        // Item stock is over min
+                        if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                            inv.remove(item?.id, 1, index, true);
+                            inv.update = true;
+                            return;
+                        }
+
+                        // Item stock is not listed, such as general stores
+                        // Tested on low and high player count worlds, ever 1 minute stock decreases.
+                        if (invType.allstock) {
+                            if (!invType.stockcount[index] && this.currentTick % 100 === 0) {
+                                inv.remove(item?.id, 1, index, true);
+                                inv.update = true;
+                                return;
+                            }
+                        }
+                    }
+                });
+            }
         }
         cleanup = Date.now() - cleanup;
 

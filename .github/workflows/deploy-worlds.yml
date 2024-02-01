@@ -2,7 +2,7 @@ name: Deploy to 2004scape.org world servers
 
 on:
   push:
-    branches: [ main ]
+    branches: [ live ]
     paths:
       - '.github/workflows/deploy-worlds.yml'
       - 'data/**'

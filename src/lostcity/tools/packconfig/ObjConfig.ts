@@ -144,6 +144,16 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
         }
 
         return grams;
+    } else if (key === 'dummyitem') {
+        if (value === 'graphic_only') {
+            // only used during animations
+            return 1;
+        } else if (value === 'inv_only') {
+            // only used in dummy inventories (interfaces)
+            return 2;
+        } else {
+            return null;
+        }
     } else if (key.startsWith('count')) {
         const parts = value.split(',');
         if (parts.length < 2) {
@@ -439,6 +449,5 @@ export function packObjClient(configs: Map<string, ConfigLine[]>) {
 }
 
 export function packObjServer(configs: Map<string, ConfigLine[]>) {
-    // TODO: add certlink to server objs
     return packObjConfig(configs, true);
 }

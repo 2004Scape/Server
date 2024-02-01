@@ -3,7 +3,7 @@ def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Reset account?");
 if ($choice = 2) {
     return;
 }
-mes("Use '::minlevel' to reset stats.");
+~mesbox("Use '::minlevel' to reset your stats after you log back in.");
 
 inv_clear(bank);
 inv_clear(inv);
