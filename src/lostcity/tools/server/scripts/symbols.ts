@@ -1,6 +1,6 @@
 import fs from 'fs';
-import {loadDir, loadPack} from '#lostcity/util/NameMap.js';
-import {crawlConfigNames, regenPack} from '#lostcity/util/PackIds.js';
+import { loadDir, loadPack } from '#lostcity/util/NameMap.js';
+import { crawlConfigNames, regenPack } from '#lostcity/util/PackIds.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
@@ -10,6 +10,7 @@ import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
 import ScriptOpcodePointers from '#lostcity/engine/script/ScriptOpcodePointers.js';
 import IfType from '#lostcity/cache/IfType.js';
+import InvType from '#lostcity/cache/InvType.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -39,32 +40,37 @@ let constantSymbols = '';
 for (const name in constants) {
     constantSymbols += `${name}\t${constants[name]}\n`;
 }
-fs.writeFileSync('data/symbols/constant.tsv', constantSymbols);
+fs.writeFileSync('data/symbols/constant.sym', constantSymbols);
 
 let npcSymbols = '';
 const npcs = loadPack('data/pack/npc.pack');
 for (let i = 0; i < npcs.length; i++) {
     npcSymbols += `${i}\t${npcs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/npc.tsv', npcSymbols);
+fs.writeFileSync('data/symbols/npc.sym', npcSymbols);
 
 let objSymbols = '';
 const objs = loadPack('data/pack/obj.pack');
 for (let i = 0; i < objs.length; i++) {
     objSymbols += `${i}\t${objs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/obj.tsv', objSymbols);
+fs.writeFileSync('data/symbols/obj.sym', objSymbols);
 
+InvType.load('data/pack/server');
 let invSymbols = '';
+let writeInvSymbols = '';
 const invs = loadPack('data/pack/inv.pack');
 for (let i = 0; i < invs.length; i++) {
     if (!invs[i]) {
         continue;
     }
 
+    const type = InvType.get(i);
     invSymbols += `${i}\t${invs[i]}\n`;
+    writeInvSymbols += `${i}\t${invs[i]}\tnone\t${type.protect}\n`;
 }
-fs.writeFileSync('data/symbols/inv.tsv', invSymbols);
+fs.writeFileSync('data/symbols/inv.sym', invSymbols);
+fs.writeFileSync('data/symbols/writeinv.sym', writeInvSymbols);
 
 let seqSymbols = '';
 const seqs = loadPack('data/pack/seq.pack');
@@ -75,7 +81,7 @@ for (let i = 0; i < seqs.length; i++) {
 
     seqSymbols += `${i}\t${seqs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/seq.tsv', seqSymbols);
+fs.writeFileSync('data/symbols/seq.sym', seqSymbols);
 
 let spotanimSymbols = '';
 const spotanims = loadPack('data/pack/spotanim.pack');
@@ -86,7 +92,7 @@ for (let i = 0; i < spotanims.length; i++) {
 
     spotanimSymbols += `${i}\t${spotanims[i]}\n`;
 }
-fs.writeFileSync('data/symbols/spotanim.tsv', spotanimSymbols);
+fs.writeFileSync('data/symbols/spotanim.sym', spotanimSymbols);
 
 let locSymbols = '';
 const locs = loadPack('data/pack/loc.pack');
@@ -97,7 +103,7 @@ for (let i = 0; i < locs.length; i++) {
 
     locSymbols += `${i}\t${locs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/loc.tsv', locSymbols);
+fs.writeFileSync('data/symbols/loc.sym', locSymbols);
 
 IfType.load('data/pack/server');
 let comSymbols = '';
@@ -123,9 +129,9 @@ for (let i = 0; i < coms.length; i++) {
         interfaceSymbols += `${i}\t${coms[i]}\n`;
     }
 }
-fs.writeFileSync('data/symbols/component.tsv', comSymbols);
-fs.writeFileSync('data/symbols/interface.tsv', interfaceSymbols);
-fs.writeFileSync('data/symbols/overlayinterface.tsv', overlaySymbols);
+fs.writeFileSync('data/symbols/component.sym', comSymbols);
+fs.writeFileSync('data/symbols/interface.sym', interfaceSymbols);
+fs.writeFileSync('data/symbols/overlayinterface.sym', overlaySymbols);
 
 VarPlayerType.load('data/pack/server');
 let varpSymbols = '';
@@ -136,9 +142,9 @@ for (let i = 0; i < varps.length; i++) {
     }
 
     const varp = VarPlayerType.get(i);
-    varpSymbols += `${i}\t${varps[i]}\t${ScriptVarType.getType(varp.type)}\n`;
+    varpSymbols += `${i}\t${varps[i]}\t${ScriptVarType.getType(varp.type)}\t${varp.protect}\n`;
 }
-fs.writeFileSync('data/symbols/varp.tsv', varpSymbols);
+fs.writeFileSync('data/symbols/varp.sym', varpSymbols);
 
 VarNpcType.load('data/pack/server');
 let varnSymbols = '';
@@ -151,7 +157,7 @@ for (let i = 0; i < varns.length; i++) {
     const varn = VarNpcType.get(i);
     varnSymbols += `${i}\t${varns[i]}\t${ScriptVarType.getType(varn.type)}\n`;
 }
-fs.writeFileSync('data/symbols/varn.tsv', varnSymbols);
+fs.writeFileSync('data/symbols/varn.sym', varnSymbols);
 
 VarSharedType.load('data/pack/server');
 let varsSymbols = '';
@@ -164,7 +170,7 @@ for (let i = 0; i < varss.length; i++) {
     const vars = VarSharedType.get(i);
     varsSymbols += `${i}\t${varss[i]}\t${ScriptVarType.getType(vars.type)}\n`;
 }
-fs.writeFileSync('data/symbols/vars.tsv', varsSymbols);
+fs.writeFileSync('data/symbols/vars.sym', varsSymbols);
 
 console.time('Loading param.dat');
 ParamType.load('data/pack/server');
@@ -180,42 +186,42 @@ for (let i = 0; i < params.length; i++) {
     const config = ParamType.get(i);
     paramSymbols += `${i}\t${params[i]}\t${config.getType()}\n`;
 }
-fs.writeFileSync('data/symbols/param.tsv', paramSymbols);
+fs.writeFileSync('data/symbols/param.sym', paramSymbols);
 
 let structSymbols = '';
 const structs = loadPack('data/pack/struct.pack');
 for (let i = 0; i < structs.length; i++) {
     structSymbols += `${i}\t${structs[i]}\n`;
 }
-fs.writeFileSync('data/symbols/struct.tsv', structSymbols);
+fs.writeFileSync('data/symbols/struct.sym', structSymbols);
 
 let enumSymbols = '';
 const enums = loadPack('data/pack/enum.pack');
 for (let i = 0; i < enums.length; i++) {
     enumSymbols += `${i}\t${enums[i]}\n`;
 }
-fs.writeFileSync('data/symbols/enum.tsv', enumSymbols);
+fs.writeFileSync('data/symbols/enum.sym', enumSymbols);
 
 let huntSymbols = '';
 const hunts = loadPack('data/pack/hunt.pack');
 for (let i = 0; i < hunts.length; i++) {
     huntSymbols += `${i}\t${hunts[i]}\n`;
 }
-fs.writeFileSync('data/symbols/hunt.tsv', huntSymbols);
+fs.writeFileSync('data/symbols/hunt.sym', huntSymbols);
 
 let mesanimSymbols = '';
 const mesanims = loadPack('data/pack/mesanim.pack');
 for (let i = 0; i < mesanims.length; i++) {
     mesanimSymbols += `${i}\t${mesanims[i]}\n`;
 }
-fs.writeFileSync('data/symbols/mesanim.tsv', mesanimSymbols);
+fs.writeFileSync('data/symbols/mesanim.sym', mesanimSymbols);
 
 let synthSymbols = '';
 const synths = loadPack('data/pack/sound.pack');
 for (let i = 0; i < synths.length; i++) {
     synthSymbols += `${i}\t${synths[i]}\n`;
 }
-fs.writeFileSync('data/symbols/synth.tsv', synthSymbols);
+fs.writeFileSync('data/symbols/synth.sym', synthSymbols);
 
 let categorySymbols = '';
 const categories = loadPack('data/pack/category.pack');
@@ -226,7 +232,7 @@ for (let i = 0; i < categories.length; i++) {
 
     categorySymbols += `${i}\t${categories[i]}\n`;
 }
-fs.writeFileSync('data/symbols/category.tsv', categorySymbols);
+fs.writeFileSync('data/symbols/category.sym', categorySymbols);
 
 let scriptSymbols = '';
 const scripts = loadPack('data/pack/script.pack');
@@ -237,7 +243,7 @@ for (let i = 0; i < scripts.length; i++) {
 
     scriptSymbols += `${i}\t${scripts[i]}\n`;
 }
-fs.writeFileSync('data/symbols/runescript.tsv', scriptSymbols);
+fs.writeFileSync('data/symbols/runescript.sym', scriptSymbols);
 
 let commandSymbols = '';
 const commands = Object.keys(ScriptOpcode);
@@ -261,78 +267,46 @@ for (let i = 0; i < commands.length / 2; i++) {
 
     commandSymbols += '\t';
 
-    if (pointers && pointers.require) {
+    if (pointers.require) {
         commandSymbols += pointers.require.join(',');
+        if (pointers.require2) {
+            commandSymbols += ':';
+            commandSymbols += pointers.require2.join(',');
+        }
     } else {
         commandSymbols += 'none';
     }
 
-    if (!pointers.corrupt && !pointers.set && !pointers.conditional && !pointers.secondary) {
-        commandSymbols += '\n';
-        continue;
-    }
-
     commandSymbols += '\t';
 
-    if (pointers && pointers.corrupt) {
-        commandSymbols += pointers.corrupt.join(',');
-    } else {
-        commandSymbols += 'none';
-    }
-
-    if (!pointers.set && !pointers.conditional && !pointers.secondary) {
-        commandSymbols += '\n';
-        continue;
-    }
-
-    commandSymbols += '\t';
-
-    if (pointers && pointers.set) {
+    if (pointers.set) {
+        if (pointers.conditional) {
+            commandSymbols += 'CONDITIONAL:';
+        }
         commandSymbols += pointers.set.join(',');
+        if (pointers.set2) {
+            commandSymbols += ':';
+            commandSymbols += pointers.set2.join(',');
+        }
     } else {
         commandSymbols += 'none';
     }
 
-    if (!pointers.conditional && !pointers.secondary) {
-        commandSymbols += '\n';
-        continue;
-    }
-
     commandSymbols += '\t';
 
-    if (pointers && pointers.conditional) {
-        commandSymbols += pointers.conditional;
+    if (pointers.corrupt) {
+        commandSymbols += pointers.corrupt.join(',');
+        if (pointers.corrupt2) {
+            commandSymbols += ':';
+            commandSymbols += pointers.corrupt2.join(',');
+        }
     } else {
-        commandSymbols += 'false';
+        commandSymbols += 'none';
     }
 
-    if (!pointers.secondary) {
-        commandSymbols += '\n';
-        continue;
-    }
-
-    commandSymbols += '\t';
-
-    if (pointers && pointers.secondary) {
-        commandSymbols += pointers.secondary + '';
-    } else {
-        commandSymbols += 'false';
-    }
-
-    if (!pointers.secondaryRequire) {
-        commandSymbols += '\n';
-        continue;
-    }
-
-    commandSymbols += '\t';
-
-    if (pointers && pointers.secondaryRequire) {
-        commandSymbols += pointers.secondaryRequire.join(',') + '\n';
-    } else {
-        commandSymbols += 'none\n';
-    }
+    commandSymbols += '\n';
 }
-fs.writeFileSync('data/symbols/commands.tsv', commandSymbols);
+fs.writeFileSync('data/symbols/commands.sym', commandSymbols);
 
 DbTableType.load('data/pack/server');
 
@@ -354,8 +328,8 @@ for (let i = 0; i < dbtables.length; i++) {
         dbColumnSymbols += `${columnIndex}\t${table.debugname}:${table.columnNames[j]}\t${types}\n`;
     }
 }
-fs.writeFileSync('data/symbols/dbtable.tsv', dbTableSymbols);
-fs.writeFileSync('data/symbols/dbcolumn.tsv', dbColumnSymbols);
+fs.writeFileSync('data/symbols/dbtable.sym', dbTableSymbols);
+fs.writeFileSync('data/symbols/dbcolumn.sym', dbColumnSymbols);
 
 let dbRowSymbols = '';
 const dbrows = loadPack('data/pack/dbrow.pack');
@@ -366,7 +340,7 @@ for (let i = 0; i < dbrows.length; i++) {
 
     dbRowSymbols += `${i}\t${dbrows[i]}\n`;
 }
-fs.writeFileSync('data/symbols/dbrow.tsv', dbRowSymbols);
+fs.writeFileSync('data/symbols/dbrow.sym', dbRowSymbols);
 
 const stats = [
     'attack', 'defence', 'strength', 'hitpoints', 'ranged', 'prayer',
@@ -375,11 +349,11 @@ const stats = [
     'stat18', 'stat19', 'runecraft'
 ];
 
-fs.writeFileSync('data/symbols/stat.tsv', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+fs.writeFileSync('data/symbols/stat.sym', stats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
 const npcStats = ['hitpoints', 'attack', 'strength', 'defence', 'magic', 'ranged'];
 
-fs.writeFileSync('data/symbols/npc_stat.tsv', npcStats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+fs.writeFileSync('data/symbols/npc_stat.sym', npcStats.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
 const locshapes = [
     'wall_straight',
@@ -407,10 +381,10 @@ const locshapes = [
     'grounddecor',
 ];
 
-fs.writeFileSync('data/symbols/locshape.tsv', locshapes.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+fs.writeFileSync('data/symbols/locshape.sym', locshapes.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
 const fonts = ['p11', 'p12', 'b12', 'q8'];
-fs.writeFileSync('data/symbols/fontmetrics.tsv', fonts.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
+fs.writeFileSync('data/symbols/fontmetrics.sym', fonts.map((name, index) => `${index}\t${name}`).join('\n') + '\n');
 
 const npcmodes = [
     '-1\tnull',
@@ -462,7 +436,7 @@ const npcmodes = [
     '45\tapnpc4',
     '46\tapnpc5',
 ];
-fs.writeFileSync('data/symbols/npc_mode.tsv', npcmodes.join('\n') + '\n');
+fs.writeFileSync('data/symbols/npc_mode.sym', npcmodes.join('\n') + '\n');
 
 // ----
 

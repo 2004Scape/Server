@@ -16,7 +16,7 @@
     "client:pack": "node --no-warnings --loader ts-node/esm src/lostcity/tools/client/all/pack.ts",
     "client:clean": "node --no-warnings --loader ts-node/esm src/lostcity/tools/client/clean.ts",
     "script:symbols": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/scripts/symbols.ts",
-    "script:compile": "cd data && java -jar ../RuneScriptCompiler.jar src/scripts pack/server",
+    "script:compile": "java -jar RuneScriptCompiler.jar",
     "script:run": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/runscript.ts",
     "server:pack": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/all/pack.ts",
     "server:clean": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/clean.ts",
