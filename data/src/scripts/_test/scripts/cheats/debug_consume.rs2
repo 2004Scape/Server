@@ -13,7 +13,7 @@ inv_add(bank, obj_2878, 100);
 inv_add(bank, ugthanki_meat, 100);
 inv_add(bank, cooked_chicken, 100);
 inv_add(bank, cooked_meat, 100);
-inv_add(bank, obj_464, 100);
+inv_add(bank, strange_fruit, 100);
 inv_add(bank, pumpkin, 100);
 inv_add(bank, obj_1961, 100);
 inv_add(bank, banana, 100);

@@ -1,0 +1,11 @@
+[label,consume_effect_strange_fruit]
+sound_synth(eat, 0, 0);
+anim(human_eat, 0);
+def_obj $consumable = last_item;
+// change item to its next stage. default is null
+inv_delslot(inv, last_slot);
+// https://oldschool.runescape.wiki/w/Update:Special_Attacks was changed from 10 to 30 in this update
+// https://web.archive.org/web/20040713074721/http://runehq.com/viewguidedb.php?id=00206 guide says 10%
+healenergy(1000);
+cleartimer(poison);
+~consume_effect_messages($consumable, stat(hitpoints), false);
