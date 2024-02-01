@@ -74,7 +74,7 @@ const InvOps: CommandHandlers = {
 
         const obj = ObjType.get(objId);
         if (obj.dummyitem === 1) {
-            throw new Error(`attempted to add graphic_only dummy item: ${obj.debugname}`);
+            throw new Error(`attempted to add graphic_only dummyitem: ${obj.debugname}`);
         }
 
         const type = InvType.get(inv);
@@ -597,7 +597,7 @@ const InvOps: CommandHandlers = {
 
     // inv write
     [ScriptOpcode.INV_SETSLOT]: checkedHandler(ActivePlayer, (state) => {
-        const [inv, slot, obj, count] = state.popInts(4);
+        const [inv, slot, objId, count] = state.popInts(4);
 
         if (inv === -1) {
             throw new Error('$inv is null');
@@ -608,7 +608,7 @@ const InvOps: CommandHandlers = {
             throw new Error(`$slot is out of range: ${slot}`);
         }
 
-        if (obj === -1) {
+        if (objId === -1) {
             throw new Error('$obj is null');
         }
 
@@ -616,11 +616,20 @@ const InvOps: CommandHandlers = {
             throw new Error(`$count is out of range: ${count}`);
         }
 
+        const obj = ObjType.get(objId);
+        if (obj.dummyitem === 1) {
+            throw new Error(`attempted to set graphic_only dummyitem: ${obj.debugname}`);
+        }
+
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
-        state.activePlayer.invSet(inv, obj, count, slot);
+        if (!type.dummyinv && obj.dummyitem !== 0) {
+            throw new Error(`dummyitem in non-dummyinv: ${obj.debugname} -> ${type.debugname}`);
+        }
+
+        state.activePlayer.invSet(inv, objId, count, slot);
     }),
 
     // inv read

@@ -139,7 +139,7 @@ export function packInvConfigs(configs: Map<string, ConfigLine[]>) {
                 if (value === true) {
                     dat.p1(8);
                 }
-            } else if (key === 'dummyitem') {
+            } else if (key === 'dummyinv') {
                 if (value === true) {
                     dat.p1(9);
                 }
