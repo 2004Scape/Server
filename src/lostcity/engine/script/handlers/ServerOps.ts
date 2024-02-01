@@ -264,6 +264,10 @@ const ServerOps: CommandHandlers = {
             throw new Error(`attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
         }
 
+        if (spotanim === -1) {
+            throw new Error('attempted to use invalid spotanim: -1');
+        }
+
         const player = World.getPlayerByUid(uid);
         if (!player) {
             throw new Error(`attempted to use invalid player uid: ${uid}`);
@@ -279,6 +283,10 @@ const ServerOps: CommandHandlers = {
 
         if (srcCoord < 0 || srcCoord > Position.max) {
             throw new Error(`attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        if (spotanim === -1) {
+            throw new Error('attempted to use invalid spotanim: -1');
         }
 
         const slot = npcUid & 0xffff;
@@ -301,6 +309,10 @@ const ServerOps: CommandHandlers = {
             throw new Error(`attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
         } else if (dstCoord < 0 || dstCoord > Position.max) {
             throw new Error(`attempted to use coord that was out of range: ${dstCoord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        if (spotanim === -1) {
+            throw new Error('attempted to use invalid spotanim: -1');
         }
 
         const srcPos = Position.unpackCoord(srcCoord);
