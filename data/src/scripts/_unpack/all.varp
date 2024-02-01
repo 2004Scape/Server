@@ -4,12 +4,6 @@
 
 [varp_8]
 
-[varp_9]
-
-[varp_15]
-
-[varp_16]
-
 [gnome_course_progress]
 scope=perm
 
@@ -417,11 +411,6 @@ protect=no
 
 [duel_settings]
 transmit=yes
-
-[split_privatechat]
-clientcode=8
-transmit=yes
-scope=perm
 
 [varp_288]
 

@@ -112,6 +112,7 @@ recol5d=9329
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [ogre_arrow_4]
 name=Ogre arrow 4
@@ -132,6 +133,7 @@ recol5d=9329
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [ogre_arrow_3]
 name=Ogre arrow 3
@@ -152,6 +154,7 @@ recol5d=9329
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [ogre_arrow_2]
 name=Ogre arrow 2
@@ -172,3 +175,4 @@ recol5d=9329
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only

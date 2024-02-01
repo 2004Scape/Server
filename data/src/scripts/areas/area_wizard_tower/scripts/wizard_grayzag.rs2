@@ -1,0 +1,63 @@
+//todo: find some sources on wizard grayzag
+// this can be pics, videos, forum posts, recounts, anything.
+
+// auto retaliate
+[ai_queue1,wizard_grayzag](int $arg)
+if (finduid(%npc_attacking_uid) = false) {
+    return;
+}
+// flinch
+// set npc to ap if its out of combat
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    npc_setmode(applayer2);
+    return;
+}
+npc_setmode(opplayer2);
+
+
+[ai_applayer2,wizard_grayzag]
+if (map_clock < %npc_action_delay) {
+    return;
+}
+npc_setmode(opplayer2);
+// 1/10 chance and a 5 imp cap (completely guessed)
+// .npc_count_within_distance so it doesnt mess up activenpc pointer.
+if (random(10) = 0 & ~.npc_count_within_distance(npc_coord, imp_grayzag, 10) < 5) { // completely guessed
+    ~npc_spawn_imp_attack;
+    return;
+}
+
+
+
+[ai_opplayer2,wizard_grayzag]
+if (map_clock < %npc_action_delay) {
+    return;
+}
+// 1/10 chance and a 5 imp cap (completely guessed)
+// .npc_count_within_distance so it doesnt mess up activenpc pointer.
+if (random(10) = 0 & ~.npc_count_within_distance(npc_coord, imp_grayzag, 10) < 5) {
+    ~npc_spawn_imp_attack;
+    return;
+}
+~npc_default_attack;
+
+
+// inspired by melzar the mad's cabbage spawn
+[proc,npc_spawn_imp_attack]
+if_close;
+def_coord $imp_coord = ~coord_lineofwalk_radius(npc_coord, 7);
+if ($imp_coord = npc_coord) {
+    ~npc_spawn_imp_attack;
+    return;
+}
+npc_anim(seq_710, 0);
+spotanim_npc(spotanim_177, 92, 0);
+%npc_action_delay = calc(map_clock + 5);
+world_delay(2); // delay spawn by 2 ticks
+~combat_clearqueue; // todo figure out if this is actually what happens. Could be npc delay? could be p_stopaction?
+npc_add($imp_coord, imp_grayzag, 200); // complete guess!
+// new active npc
+npc_delay(1);
+npc_setmode(opplayer2);
+spotanim_map(spotanim_86, $imp_coord, 124, 0);

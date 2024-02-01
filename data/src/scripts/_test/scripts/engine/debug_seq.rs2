@@ -1,4 +1,8 @@
 [debugproc,seq](seq $seq)
+if (map_localdev = false) {
+    return;
+}
+
 if ($seq = null) {
     mes("Usage --> ::seq (name) --> ::seq human_castteleport");
     return;
@@ -6,6 +10,10 @@ if ($seq = null) {
 anim($seq, 0);
 
 [debugproc,anim](seq $seq)
+if (map_localdev = false) {
+    return;
+}
+
 if ($seq = null) {
     mes("Usage --> ::anim (name) --> ::anim human_castteleport");
     return;

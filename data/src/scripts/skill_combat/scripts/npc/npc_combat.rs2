@@ -1,11 +1,4 @@
-[ai_queue1,_](int $arg) 
-// for flinching
-// npc needs to be 8 ticks out of combat(since it was last able to atk) before it can be flinched
-if (add(%npc_action_delay, 8) < map_clock) {
-    %npc_action_delay = calc(map_clock + (npc_param(attackrate) / 2));
-}
-gosub(npc_default_retaliate);
-
+[ai_queue1,_](int $arg) gosub(npc_default_retaliate);
 [ai_queue2,_](int $damage) ~npc_default_damage($damage);
 [ai_queue3,_](int $arg) gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
@@ -109,8 +102,12 @@ return (false);
 
 // returns the defence roll for an attacking style.
 [proc,npc_defence_roll_specific](int $damagetype)(int)
+def_npc_stat $stat = defence;
+if ($damagetype = ^magic_style) {
+    $stat = magic;
+}
 def_int $defencebonus = ~npc_combat_defencebonus($damagetype);
-def_int $effective_defence = ~combat_effective_stat(1, npc_stat(defence), 100); // no prayerbonus
+def_int $effective_defence = ~combat_effective_stat(1, npc_stat($stat), 100); // no prayerbonus
 def_int $defence_roll = ~combat_stat($effective_defence, $defencebonus);
 return($defence_roll);
 

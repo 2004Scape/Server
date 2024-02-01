@@ -132,23 +132,28 @@ tradeable=yes
 name=Sapphire necklace
 model=model_loc_2733_0
 param=crafting_jewelry_struct,sapphire_necklace
+dummyitem=inv_only
 
 [obj_1669]
 name=Emerald necklace
 model=model_loc_2733_0
 param=crafting_jewelry_struct,emerald_necklace
+dummyitem=inv_only
 
 [obj_1670]
 name=Ruby necklace
 model=model_loc_2733_0
 param=crafting_jewelry_struct,ruby_necklace
+dummyitem=inv_only
 
 [obj_1671]
 name=Diamond necklace
 model=model_loc_2733_0
 param=crafting_jewelry_struct,diamond_necklace
+dummyitem=inv_only
 
 [obj_1672]
 name=Dragon necklace
 model=model_loc_2733_0
 param=crafting_jewelry_struct,dragonstone_necklace
+dummyitem=inv_only

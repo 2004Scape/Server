@@ -97,7 +97,7 @@
 [command,if_setobject](component $component, obj $obj, int $scale)
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
-[command,if_setmodelcolour]
+[command,if_setrecol](component $component, int $src, int $dest)
 [command,if_settabflash](int $tab)
 [command,if_setanim](component $component,seq $anim)
 [command,if_settab](interface $interface, int $tab)
@@ -155,6 +155,7 @@
 [command,last_targetslot]()(int)
 [command,setmovecheck]
 [command,clearqueue](queue $queue)
+[command,afk_event]()(int)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -354,6 +355,7 @@
 [command,scale](int $int0, int $int1, int $int2)(int)
 [command,bitcount](int $num)(int)
 [command,togglebit](int $num, int $bit)(int)
+[command,clearbit](int $num, int $bit)(int)
 [command,setbit_range](int $num, int $start_bit, int $end_bit)(int)
 [command,clearbit_range](int $num, int $start_bit, int $end_bit)(int)
 [command,getbit_range](int $num, int $start_bit, int $end_bit)(int)

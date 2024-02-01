@@ -1,2 +1,0 @@
-[debugproc,inv_totalcat]
-mes(tostring(inv_totalcat(inv, weapon_slash)));

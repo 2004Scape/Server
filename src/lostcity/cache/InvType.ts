@@ -69,6 +69,7 @@ export default class InvType extends ConfigType {
     stockrate: number[] = [];
     protect = true;
     runweight = false; // inv contributes to weight
+    dummyinv = false; // inv only accepts objs with dummyitem=inv_only
 
     decode(opcode: number, packet: Packet) {
         if (opcode === 1) {
@@ -87,7 +88,7 @@ export default class InvType extends ConfigType {
             for (let j = 0; j < count; j++) {
                 this.stockobj[j] = packet.g2();
                 this.stockcount[j] = packet.g2();
-                this.stockrate[j] = packet.g1();
+                this.stockrate[j] = packet.g4();
             }
         } else if (opcode === 5) {
             this.restock = true;
@@ -97,6 +98,8 @@ export default class InvType extends ConfigType {
             this.protect = false;
         } else if (opcode === 8) {
             this.runweight = true;
+        } else if (opcode === 9) {
+            this.dummyinv = true;
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {

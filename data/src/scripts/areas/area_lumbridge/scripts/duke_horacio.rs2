@@ -16,50 +16,51 @@ else if (%runemysteries_progress = ^runemysteries_complete) return(duke_rune_mys
 else return (duke_rune_mysteries_in_progress);
 
 [label,duke_horacio_money]
-~chatplayer("default", "Where can I find money?");
-~chatnpc("default", "I've heard that the blacksmiths are prosperous amongst the peasantry. Maybe you could try your hand at that?");
+~chatplayer(neutral, "Where can I find money?");
+~chatnpc(neutral, "I've heard that the blacksmiths are prosperous amongst the peasantry. Maybe you could try your hand at that?");
 
 [label,duke_rune_mysteries_start]
-~chatplayer("default", "Have you any quests for me?");
-~chatnpc("default", "Well it's not really a quest but I recently discovered this strange talisman.");
-~chatnpc("default", "It seems to be a mystical and I have never seen anything like it before. Would you take it to the head wizard at");
-~chatnpc("default", "the Wizards' Tower for me? It's just south-west of here and should not take you very long at all. I would be awfully grateful.");
+~chatplayer(quiz, "Have you any quests for me?");
+~chatnpc(neutral, "Well, it's not really a quest but I recently discovered this strange talisman.");
+~chatnpc(neutral, "It seems to be a mystical and I have never seen anything like it before. Would you take it to the head wizard at");
+~chatnpc(neutral, "the Wizards' Tower for me? It's just south-west of here and should not take you very long at all. I would be awfully grateful.");
 def_int $option = ~p_choice2("Sure, no problem.", 1, "Not right now.", 2);
 if ($option = 1) {
-    ~chatplayer("default", "Sure, no problem.");
+    ~chatplayer(neutral, "Sure, no problem.");
     %runemysteries_progress = 1;
     ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
-    ~chatnpc("default", "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
+    ~chatnpc(neutral, "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
     if(inv_freespace(inv) = 0) {
-        ~objbox(air_talisman, "The Duke tries to hand you the talisman, but you don't have enough room to take it.");
+        ~mesbox("The Duke tries to hand you the talisman, but you don't have enough room to take it.");
     } else {
-        ~objbox(air_talisman, "The Duke hands you an @blu@air talisman.");
+        // https://youtu.be/khWXGF8spNs?t=40
+        ~mesbox("The Duke hands you an @blu@air talisman.");
         inv_add(inv, air_talisman, 1);
     }
 } else if($option = 2) {
-    ~chatplayer("default", "Not right now.");
-    ~chatnpc("default", "As you wish. Hopefully I can find someone else to help.");
+    ~chatplayer(neutral, "Not right now.");
+    ~chatnpc(neutral, "As you wish. Hopefully I can find someone else to help.");
 }
 
 [label,duke_rune_mysteries_in_progress]
 if(~obj_gettotal(air_talisman) = 0) {
-    ~chatnpc("default", "Did you speak to the head wizard for me yet, adventurer?");
-    ~chatplayer("default", "No, I lost that talisman that you gave me.");
+    ~chatnpc(neutral, "Did you speak to the head wizard for me yet, adventurer?");
+    ~chatplayer(neutral, "No, I lost that talisman that you gave me.");
     if(inv_freespace(inv) = 0) {
         ~objbox(air_talisman, "The Duke tries to hand you a talisman, but you don't have enough room to take it.");
     } else {
-        ~chatnpc("default", "Ah, that would explain it. One of my servants found this outside, and it seemed too much of a coincidence that more than one strange.");
+        ~chatnpc(neutral, "Ah, that would explain it. One of my servants found this outside, and it seemed too much of a coincidence that more than one strange.");
         inv_add(inv, air_talisman, 1);
-        ~chatnpc("default", "object would appear on my land in such a short period of time. Please take this to the head wizard at the Wizards' Tower, south-west of here, and don't lose it this time.");
+        ~chatnpc(neutral, "object would appear on my land in such a short period of time. Please take this to the head wizard at the Wizards' Tower, south-west of here, and don't lose it this time.");
     }
 } else {
-    ~chatnpc("default", "The only task remotely approaching a quest is the delivery of that talisman I gave you to the head wizard of the Wizards' Tower,");
-    ~chatnpc("default", "south-west of here. I suggest you deliver it to him as soon as possible. I have the oddest feeling that it is important...");
+    ~chatnpc(neutral, "The only task remotely approaching a quest is the delivery of that talisman I gave you to the head wizard of the Wizards' Tower,");
+    ~chatnpc(neutral, "south-west of here. I suggest you deliver it to him as soon as possible. I have the oddest feeling that it is important...");
 }
 
 [label,duke_rune_mysteries_complete]
-~chatplayer("default", "Have you any quests for me?");
-//~chatnpc("default", "The only job I had was the delivery of that talisman, so I'm afraid not.");
+~chatplayer(neutral, "Have you any quests for me?");
+//~chatnpc(neutral, "The only job I had was the delivery of that talisman, so I'm afraid not.");
 ~chatnpc(neutral, "All is well for me."); // rsc
 
 // dragon slayer

@@ -114,7 +114,7 @@ enum ScriptOpcode {
     IF_SETCOLOUR, // official
     IF_SETHIDE, // official
     IF_SETMODEL, // official
-    IF_SETMODELCOLOUR,
+    IF_SETRECOL,
     IF_SETNPCHEAD, // official
     IF_SETOBJECT, // official
     IF_SETPLAYERHEAD, // official
@@ -174,6 +174,7 @@ enum ScriptOpcode {
     UID, // official
     WEAKQUEUE, // official
     IF_OPENMAINOVERLAY,
+    AFK_EVENT,
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official
@@ -382,7 +383,7 @@ enum ScriptOpcode {
 
     // Debug ops (10000-11000)
     ERROR = 10000,
-    MAP_LOCALDEV,
+    MAP_LOCALDEV
 }
 
 export default ScriptOpcode;

@@ -1,5 +1,4 @@
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import { CollisionFlag, CollisionFlagMap } from '@2004scape/rsmod-pathfinder';
 
 import LocAngle from '#lostcity/engine/collision/LocAngle.js';
 
@@ -10,14 +9,7 @@ export default class WallCornerCollider {
         this.flags = flags;
     }
 
-    change(
-        x: number,
-        z: number,
-        level: number,
-        angle: number,
-        blockrange: boolean,
-        add: boolean
-    ): void {
+    change(x: number, z: number, level: number, angle: number, blockrange: boolean, add: boolean): void {
         const northWest = blockrange ? CollisionFlag.WALL_NORTH_WEST_PROJ_BLOCKER : CollisionFlag.WALL_NORTH_WEST;
         const southEast = blockrange ? CollisionFlag.WALL_SOUTH_EAST_PROJ_BLOCKER : CollisionFlag.WALL_SOUTH_EAST;
         const northEast = blockrange ? CollisionFlag.WALL_NORTH_EAST_PROJ_BLOCKER : CollisionFlag.WALL_NORTH_EAST;

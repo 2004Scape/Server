@@ -1,0 +1,36 @@
+[opnpc1,bolkoy]
+switch_int(%tree_progress) {
+    case ^tree_retrieved_orb:
+        ~chatplayer(neutral, "Hello.");
+        if(inv_total(inv, orb_of_protection) > 0) {
+            ~chatnpc(shock, "Amazing, you recovered the orb.");
+            ~chatnpc(happy, "Well I am impressed.|Would you like to buy something?");
+        } else {
+            ~chatnpc(neutral, "I'm Bolkoy the village shopkeeper.|Would you like to buy something?");     
+        }   
+    case ^tree_returned_first_orb:
+        ~chatplayer(neutral, "Hi.");
+        ~chatnpc(sad, "Oh, hello there.|Have you heard? They took|the other orbs, it's terrible.|I suppose the show must go on.");
+        ~chatnpc(sad, "Would you like to buy something?");
+    case ^tree_defeated_warlord:
+        ~chatplayer(happy, "Hello.");
+        ~chatnpc(happy, "Hello there.|You're that hero who saved the orbs.|Soon we will perform the ritual|and the village will be safe again.");
+        ~chatnpc(happy, "Anyway, would you like anything from my shop?");
+    case ^tree_complete:
+        ~chatplayer(happy, "Hello.");
+        ~chatnpc(happy, "Welcome, welcome. It's good to see you again. The village is much safer now you have returned the orbs.");
+        ~chatnpc(happy, "By the way, I'm the village shop keeper.|Would you like to buy something?");
+    case default:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(neutral, "Hello stranger, new to these parts?");
+        ~chatnpc(happy, "I'm Bolkoy by the way.|I'm the village shopkeeper.|Would you like to buy something?");
+}
+switch_int(~p_choice2("What have you got?", 1, "No thank you.", 2)) {
+    case 1: 
+        ~chatplayer(quiz, "What have you got?");
+        ~chatnpc(neutral, "Take a look.");
+        ~openshop_activenpc;
+    case 2: 
+        ~chatplayer(neutral, "No thank you.");
+        ~chatnpc(neutral, "Ok, maybe later.");
+}

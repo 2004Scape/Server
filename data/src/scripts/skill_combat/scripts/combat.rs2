@@ -63,9 +63,9 @@ switch_int($damagestyle) {
 // unarmed
 if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
     switch_int (%attackstyle) {
-        case ^attackstyle_0: return(human_unarmedpunch, unarmed_punch);
-        case ^attackstyle_1: return(human_unarmedkick, unarmed_kick);
-        case ^attackstyle_2: return(human_unarmedpunch, unarmed_punch);
+        case 0: return(human_unarmedpunch, unarmed_punch);
+        case 1: return(human_unarmedkick, unarmed_kick);
+        case 2: return(human_unarmedpunch, unarmed_punch);
     }
 }
 // manually handle scythe defensive

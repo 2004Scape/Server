@@ -1,0 +1,43 @@
+[oploc1,_double_door_open_and_close_left]
+~open_and_close_double_door(~check_axis_locactive(coord), ^left);
+
+[oploc1,_double_door_open_and_close_right]
+~open_and_close_double_door(~check_axis_locactive(coord), ^right);
+
+
+[proc,open_and_close_double_door](boolean $entering, int $side)
+def_int $x;
+def_int $z;
+
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+
+$x, $z = ~door_open($angle, loc_shape);
+
+// walk through door, but if entering, walk next to door and then through
+def_coord $dest = $loc_coord;
+if ($entering = true) {
+    // mes(~coord_tostring($loc_coord));
+    // mes(~coord_tostring(coord));
+    if (coord ! $loc_coord) {
+        p_teleport($loc_coord);
+        // initially thought p_delay(0); was the right speed.
+        // but it seems to have buggy clipping; you move through too early
+        p_delay(1);
+    }
+    $dest = movecoord($loc_coord, $x, 0, $z);
+}
+p_teleport($dest);
+
+def_coord $opposite_coord = loc_coord;
+if ($side = ^left) {
+    ~open_double_doors_left(2, double_door_open_and_close_right);
+    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+} else if ($side = ^right) {
+    ~open_double_doors_right(2, double_door_open_and_close_left);
+    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+}
+loc_add($opposite_coord, loc_83, $angle, $shape, 2);
+loc_add($loc_coord, loc_83, $angle, $shape, 2);
+// mes(~coord_tostring($opposite_coord));

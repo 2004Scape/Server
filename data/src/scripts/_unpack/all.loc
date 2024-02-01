@@ -162,16 +162,6 @@ model=model_loc_23
 op1=Prod
 op2=Open
 
-[loc_24]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
 [loc_33]
 name=Lever
 desc=Yup, definitely a lever.
@@ -325,57 +315,6 @@ width=2
 length=2
 op1=Climb-down
 
-[loc_59]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_60]
-name=Ladder
-model=model_loc_11
-active=yes
-op1=Climb-up
-mapscene=7
-
-[loc_62]
-name=Giant crystal
-desc=Can I see something inside...?
-model=model_loc_62
-active=yes
-width=2
-length=2
-
-[loc_63]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-active=yes
-op2=Hide-in
-
-[loc_64]
-name=Crate
-desc=Used for storage.
-model=model_loc_63
-active=yes
-op2=Hide-in
-
-[loc_65]
-name=Crate wall
-desc=Surprisingly sturdy looking.
-model=model_loc_3
-sharelight=yes
-occlude=yes
-op1=Climb-out
-recol1s=2
-recol1d=22
-recol2s=24
-recol2d=3398
-
 [loc_66]
 name=Crate wall
 desc=Surprisingly sturdy looking.
@@ -395,21 +334,6 @@ model=model_loc_63
 active=yes
 op2=Check
 
-[loc_68]
-name=Beehive
-desc=Where bees live.
-model=model_loc_68
-active=yes
-op1=Take-from
-
-[loc_69]
-name=Gangplank
-desc=Handy for boarding boats.
-model=model_loc_69
-op1=Cross
-active=yes
-sharelight=yes
-
 [loc_70]
 name=Gangplank
 desc=Handy for boarding boats.
@@ -424,6 +348,7 @@ desc=Sturdy looking door.
 model=model_loc_71
 op1=Open
 op2=Knock-at
+category=keep_lefaye_door
 
 [loc_72]
 name=Large door
@@ -432,6 +357,7 @@ model=model_loc_71
 op1=Open
 op2=Knock-at
 mirror=yes
+category=keep_lefaye_door
 
 [loc_75]
 name=Chest
@@ -1044,7 +970,7 @@ hillskew=yes
 model=model_loc_169
 hillskew=yes
 
-[loc_170]
+[muddy_chest_closed]
 name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
@@ -1053,7 +979,7 @@ forceapproach=top
 recol1s=41
 recol1d=3625
 
-[loc_171]
+[muddy_chest_opened]
 name=Open chest
 desc=Perhaps I should search it.
 model=model_loc_76
@@ -2309,11 +2235,6 @@ name=Dresser
 desc=The perfect accompaniment to a bedroom.
 model=model_loc_373
 width=2
-
-[loc_374]
-name=Hat stand
-desc=A stand for hats!
-model=model_loc_374
 
 [loc_376]
 name=Closed chest
@@ -3903,269 +3824,6 @@ width=2
 length=2
 blockrange=no
 
-[loc_590]
-name=Bank table
-desc=Banking transactions are processed here.
-model=model_loc_590
-width=2
-blockrange=no
-
-[loc_591]
-name=Bank table
-desc=Banking transactions are recorded here.
-model=model_loc_591
-width=2
-blockrange=no
-
-[loc_592]
-name=Bathroom table
-desc=Contains washing items.
-model=model_loc_592
-blockrange=no
-
-[loc_593]
-name=Table
-desc=A nice sturdy looking table.
-model=model_loc_593
-width=2
-length=2
-blockrange=no
-
-[loc_594]
-name=Table
-desc=A nice sturdy looking table.
-model=model_loc_594
-width=2
-blockrange=no
-
-[loc_595]
-name=Table
-desc=A nice sturdy looking table.
-model=model_loc_594
-width=2
-blockrange=no
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
-
-[loc_596]
-name=Table
-desc=A banquet could be eaten from this.
-model=model_loc_596
-width=4
-blockrange=no
-
-[loc_597]
-name=Table
-desc=A banquet could be eaten from this.
-model=model_loc_597
-width=4
-length=2
-blockrange=no
-
-[loc_598]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_598
-blockrange=no
-
-[loc_599]
-name=Table
-desc=At one time it was for putting things on.
-model=model_loc_599
-blockrange=no
-
-[loc_600]
-name=Table
-desc=The napkins are made from real silk.
-model=model_loc_600
-blockrange=no
-
-[loc_601]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_601
-length=2
-width=2
-blockrange=no
-
-[loc_602]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_602
-blockrange=no
-
-[loc_603]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_603
-width=3
-blockrange=no
-
-[loc_604]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_604
-blockrange=no
-
-[loc_605]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_605
-blockrange=no
-
-[loc_606]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_606
-blockrange=no
-
-[loc_607]
-name=Table
-desc=Items for making clothes are kept on here.
-model=model_loc_607
-length=2
-blockrange=no
-
-[loc_608]
-name=Study desk
-desc=The ideal place to study.
-model=model_loc_608
-width=2
-blockrange=no
-
-[loc_609]
-name=Workbench
-desc=A handy workbench for a handy person.
-model=model_loc_609
-width=2
-blockrange=no
-
-[loc_610]
-name=Workbench
-desc=A handy workbench for a handy person.
-model=model_loc_609
-width=2
-blockrange=no
-recol1s=22
-recol1d=16
-recol2s=29
-recol2d=16
-
-[loc_611]
-name=Picnic bench
-desc=Sit back and enjoy the view.
-model=model_loc_611
-width=2
-length=2
-blockrange=no
-
-[loc_612]
-name=Counter
-desc=Items are for sale here.
-model=model_loc_612
-width=2
-blockrange=no
-
-[loc_613]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_613
-width=2
-length=2
-blockrange=no
-
-[loc_614]
-name=Table
-desc=Useful for putting things on.
-model=model_loc_614
-length=2
-blockrange=no
-
-[loc_615]
-name=Small table
-desc=Useful for putting things on.
-model=model_loc_615
-blockrange=no
-
-[loc_616]
-name=Table
-desc=A creepy looking table.
-model=model_loc_616
-blockrange=no
-
-[loc_617]
-name=Counter
-desc=Items are for sale here.
-model=model_loc_617
-width=2
-hasalpha=yes
-blockrange=no
-
-[loc_618]
-name=Chemistry Table
-desc=There are some strange chemicals here.
-model=model_loc_618
-width=2
-blockrange=no
-
-[loc_619]
-name=Chemistry Table
-desc=There are some strange chemicals here.
-model=model_loc_619
-width=2
-blockrange=no
-
-[loc_620]
-name=Table
-desc=Bamboo's a versatile material.
-model=model_loc_620
-blockrange=no
-
-[loc_621]
-name=Table
-desc=It's a banquet table.
-model=model_loc_621
-width=5
-length=5
-blockrange=no
-
-[loc_622]
-name=Table
-desc=It's a banquet table.
-model=model_loc_621
-width=5
-length=5
-blockrange=no
-recol1s=12
-recol1d=5543
-recol2s=796
-recol2d=38073
-
-[loc_623]
-name=Table
-desc=A nice sturdy looking table.
-model=model_loc_593
-width=2
-length=2
-blockrange=no
-recol1s=4886
-recol1d=43270
-
-[loc_624]
-name=Table
-desc=A nice sturdy looking table.
-model=model_loc_594
-blockrange=no
-resizex=40
-resizey=100
-resizez=100
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
-
 [loc_625]
 model=model_loc_625
 width=2
@@ -5421,7 +5079,7 @@ name=Cannonballs
 desc=Big heavy metal balls.
 model=model_loc_822
 
-[loc_823]
+[attack_dummy]
 name=Dummy
 desc=The easiest opponent I'll ever fight.
 model=model_loc_823
@@ -6279,7 +5937,7 @@ desc=Complete with authentic seaweed!
 model=model_loc_969
 active=yes
 
-[loc_970]
+[varrock_palace_plaque]
 name=Plaque
 desc=This mentions the monk trapped here...
 model=model_loc_909
@@ -8187,39 +7845,6 @@ op1=Chop down
 op3=hidden
 mapscene=0
 
-[loc_1293]
-name=Spirit tree
-desc=An ancient sentient tree.
-model=model_loc_1293
-width=4
-length=4
-anim=seq_332
-hasalpha=yes
-op1=Talk-to
-mapscene=0
-
-[loc_1294]
-name=Spirit tree
-desc=An ancient sentient tree.
-model=model_loc_1293
-width=4
-length=4
-anim=seq_332
-hasalpha=yes
-op1=Talk-to
-mapscene=0
-
-[loc_1295]
-name=Spirit tree
-desc=An ancient sentient tree.
-model=model_loc_1293
-width=4
-length=4
-anim=seq_333
-op1=Talk-to
-hasalpha=yes
-mapscene=0
-
 [loc_1296]
 name=Fallen tree
 desc=This tree has fallen to the ground.
@@ -8351,15 +7976,6 @@ recol1s=6028
 recol1d=6579
 recol2s=22455
 recol2d=15919
-
-[loc_1317]
-name=Spirit tree
-desc=A young sentient tree.
-model=model_loc_1317
-width=2
-length=2
-op1=Talk-to
-mapscene=0
 
 [loc_1320]
 name=Mossy branch
@@ -13344,51 +12960,6 @@ length=3
 hasalpha=yes
 active=yes
 
-[loc_2181]
-name=Ballista
-desc=It's a war machine.
-model=model_loc_2181
-width=3
-length=3
-op2=Fire
-
-[loc_2182]
-name=Open chest
-desc=It can't hurt to just have a look, can it?.
-model=model_loc_76
-op1=Search
-op2=Close
-forceapproach=top
-
-[loc_2183]
-name=Closed chest
-desc=I wonder what is inside...
-model=wooden_chest
-op1=Open
-forceapproach=top
-
-[loc_2184]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
-
-[loc_2185]
-name=Crumbled wall
-desc=This wall has seen better days.
-model=model_loc_2185
-op1=Climb-over
-active=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-
 [loc_2186]
 name=Loose Railing
 desc=Hmmm... I wonder if it's loose enough to get through.
@@ -14188,13 +13759,6 @@ desc=I can climb out of here using these rocks.
 model=model_loc_448
 op1=Climb-up
 
-[loc_2315]
-name=Tree branch
-desc=I can climb down here.
-model=model_loc_1143
-active=yes
-op1=Climb-down
-
 [loc_2319]
 name=Monkeybars
 desc=I can traverse these.
@@ -14251,27 +13815,6 @@ contrast=25
 forcedecor=yes
 recol1s=6689
 recol1d=20
-
-[loc_2333]
-name=Stepping stones
-desc=A rocky outcrop from the running water.
-model=model_loc_2311
-op1=Balance
-active=yes
-
-[loc_2334]
-name=Stepping stones
-desc=A rocky outcrop from the running water.
-model=model_loc_2311
-op1=Balance
-active=yes
-
-[loc_2335]
-name=Stepping stones
-desc=A rocky outcrop from the running water.
-model=model_loc_2311
-op1=Balance
-active=yes
 
 [blackknight_hole]
 name=Hole
@@ -19899,6 +19442,9 @@ recol2s=24
 recol2d=9098
 recol3s=20
 recol3d=7050
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_3210
+param=open_sound,coffin_open
 
 [loc_3210]
 name=Odd looking wall
@@ -19924,6 +19470,9 @@ recol2s=24
 recol2d=9098
 recol3s=20
 recol3d=7050
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_3212
+param=open_sound,coffin_open
 
 [loc_3212]
 name=Odd looking wall

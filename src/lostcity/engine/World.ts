@@ -1,10 +1,8 @@
+import { Worker } from 'worker_threads';
+
 import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37 } from '#jagex2/jstring/JString.js';
-
-import PathFinder from '#rsmod/PathFinder.js';
-import LineValidator from '#rsmod/LineValidator.js';
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
@@ -26,9 +24,11 @@ import StructType from '#lostcity/cache/StructType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
+import WordEnc from '#lostcity/cache/WordEnc.js';
 
-import { Inventory } from '#lostcity/engine/Inventory.js';
 import GameMap from '#lostcity/engine/GameMap.js';
+import { Inventory } from '#lostcity/engine/Inventory.js';
+import Login from '#lostcity/engine/Login.js';
 
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 
@@ -49,12 +49,12 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { LoginClient } from '#lostcity/server/LoginServer.js';
-import NaivePathFinder from '#rsmod/NaivePathFinder.js';
-import StepValidator from '#rsmod/StepValidator.js';
-import WordEnc from '#lostcity/cache/WordEnc.js';
+import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
+import { PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
 class World {
+    id = Environment.WORLD_ID as number;
     members = Environment.MEMBERS_WORLD as boolean;
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
@@ -81,10 +81,96 @@ class World {
         delay: number;
     }[] = [];
 
+    friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
+
     constructor() {
         this.players.fill(null);
         this.playerIds.fill(-1);
+
+        this.friendThread.on('message', data => {
+            try {
+                this.onFriendMessage(data);
+            } catch (err) {
+                console.error('Friend Thread:', err);
+            }
+        });
     }
+
+    // ----
+
+    onFriendMessage(msg: any) {
+        switch (msg.type) {
+            default:
+                throw new Error('Unknown message type: ' + msg.type);
+        }
+    }
+
+    socialAddFriend(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'addfriend',
+            player: player,
+            other: other
+        });
+    }
+
+    socialRemoveFriend(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'delfriend',
+            player: player,
+            other: other
+        });
+    }
+
+    socialAddIgnore(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'addignore',
+            player: player,
+            other: other
+        });
+    }
+
+    socialRemoveIgnore(player: bigint, other: bigint) {
+        this.friendThread.postMessage({
+            type: 'delignore',
+            player: player,
+            other: other
+        });
+    }
+
+    socialLogin(username: bigint) {
+        this.friendThread.postMessage({
+            type: 'login',
+            world: this.id,
+            username
+        });
+    }
+
+    socialLogout(username: bigint) {
+        this.friendThread.postMessage({
+            type: 'logout',
+            world: this.id,
+            username
+        });
+    }
+
+    socialPrivateMessage(from: bigint, to: bigint, text: string) {
+        this.friendThread.postMessage({
+            type: 'private_message',
+            from,
+            to,
+            text
+        });
+    }
+
+    socialPublicMessage(from: bigint, text: string) {
+        this.friendThread.postMessage({
+            type: 'public_message',
+            from,
+            text
+        });
+    }
+
+    // ----
 
     get collisionManager(): CollisionManager {
         return this.gameMap.collisionManager;
@@ -219,10 +305,13 @@ class World {
 
         this.vars = new Int32Array(VarSharedType.count);
 
-        if (Environment.LOGIN_KEY) {
-            const login = new LoginClient();
-            await login.reset();
-        }
+        Login.loginThread.postMessage({
+            type: 'reset'
+        });
+
+        this.friendThread.postMessage({
+            type: 'reset'
+        });
 
         console.log('World ready!');
 
@@ -240,7 +329,7 @@ class World {
                 continue;
             }
 
-            player.updateRebootTimer(this.shutdownTick - this.currentTick);
+            player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
         }
     }
 
@@ -249,6 +338,7 @@ class World {
 
         // world processing
         // - world queue
+        // - calculate afk event readiness
         // - npc spawn scripts
         // - npc hunt
         let worldProcessing = Date.now();
@@ -280,6 +370,18 @@ class World {
                 }
             } catch (err) {
                 console.error(err);
+            }
+        }
+
+        if (this.currentTick % 500 === 0) {
+            for (let i = 0; i < this.players.length; i++) {
+                const player = this.players[i];
+                if (!player) {
+                    continue;
+                }
+
+                // 1/12 chance every 5 minutes of setting an afk event state
+                player.afkEventReady = Math.random() < 0.12;
             }
         }
 
@@ -404,14 +506,14 @@ class World {
                 }
 
                 player.queue = player.queue.filter(s => s);
-                if (player.queue.find(s => s.type === 'strong')) {
+                if (player.queue.find(s => s.type === PlayerQueueType.STRONG)) {
                     // the presence of a strong script closes modals before anything runs regardless of the order
                     player.closeModal();
                 }
 
                 player.processQueues();
-                player.processTimers('normal');
-                player.processTimers('soft');
+                player.processTimers(PlayerTimerType.NORMAL);
+                player.processTimers(PlayerTimerType.SOFT);
                 player.processEngineQueue();
                 player.processInteraction();
 
@@ -444,17 +546,16 @@ class World {
                 continue;
             }
 
-            if (this.shutdownTick < this.currentTick) {
-                if (this.currentTick - player.lastResponse >= 100) {
-                    // remove after 60 seconds
-                    player.queue = [];
-                    player.weakQueue = [];
-                    player.engineQueue = [];
-                    player.clearInteraction();
-                    player.closeModal();
-                    player.clearWalkingQueue();
-                    player.logoutRequested = true;
-                }
+            if (this.currentTick - player.lastResponse >= 100) {
+                // remove after 60 seconds
+                player.queue = [];
+                player.weakQueue = [];
+                player.engineQueue = [];
+                player.clearInteraction();
+                player.closeModal();
+                player.unsetMapFlag();
+                player.logoutRequested = true;
+                player.setVar('lastcombat', 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
 
             if (!player.logoutRequested) {
@@ -465,7 +566,6 @@ class World {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     console.error('LOGOUT TRIGGER IS BROKEN!');
-                    // todo: remove player safely still?
                     continue;
                 }
 
@@ -515,7 +615,7 @@ class World {
             this.players[index] = player;
             this.playerIds[pid] = index;
             player.pid = pid;
-            player.uid = ((Number(player.username37 & 0x1FFFFFn) << 11) | player.pid) >>> 0;
+            player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
 
             this.getZone(player.x, player.z, player.level).enter(player);
 
@@ -527,13 +627,15 @@ class World {
             this.newPlayers.splice(i--, 1);
 
             if (this.shutdownTick > -1) {
-                player.updateRebootTimer(this.shutdownTick - this.currentTick);
+                player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
             }
 
             if (player.client) {
                 player.client.state = 1;
                 player.client.send(Uint8Array.from([2]));
             }
+
+            this.socialLogin(player.username37);
         }
         playerLogin = Date.now() - playerLogin;
 
@@ -678,12 +780,43 @@ class World {
             }
 
             inv.update = false;
+
+            // Increase or Decrease shop stock
+            const invType = InvType.get(inv.type);
+
+            if (invType.restock) {
+                inv.items.forEach((item, index) => {
+                    if (item) {
+                        // Item stock is under min
+                        if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                            inv.add(item?.id, 1, index, true, false, false);
+                            inv.update = true;
+                            return;
+                        }
+
+                        // Item stock is over min
+                        if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                            inv.remove(item?.id, 1, index, true);
+                            inv.update = true;
+                            return;
+                        }
+
+                        // Item stock is not listed, such as general stores
+                        // Tested on low and high player count worlds, ever 1 minute stock decreases.
+                        if (invType.allstock) {
+                            if (!invType.stockcount[index] && this.currentTick % 100 === 0) {
+                                inv.remove(item?.id, 1, index, true);
+                                inv.update = true;
+                                return;
+                            }
+                        }
+                    }
+                });
+            }
         }
         cleanup = Date.now() - cleanup;
 
-        if (Environment.LOGIN_KEY && this.currentTick % 100 === 0) {
-            // send heartbeat to login server
-            const login = new LoginClient();
+        if (this.currentTick % 100 === 0) {
             const players: bigint[] = [];
             for (let i = 0; i < this.players.length; i++) {
                 const player = this.players[i];
@@ -693,7 +826,16 @@ class World {
 
                 players.push(player.username37);
             }
-            await login.heartbeat(players);
+
+            Login.loginThread.postMessage({
+                type: 'heartbeat',
+                players
+            });
+
+            this.friendThread.postMessage({
+                type: 'heartbeat',
+                players
+            });
         }
 
         // server shutdown
@@ -759,6 +901,10 @@ class World {
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
             setTimeout(this.cycle.bind(this), nextTick);
+
+            this.friendThread.postMessage({
+                type: 'latest'
+            });
         }
     }
 
@@ -1030,7 +1176,7 @@ class World {
             let opcode = stream.g1();
 
             if (socket.decryptor) {
-                opcode = (opcode - socket.decryptor.nextInt()) & 0xFF;
+                opcode = (opcode - socket.decryptor.nextInt()) & 0xff;
                 stream.data[start] = opcode;
             }
 
@@ -1077,8 +1223,6 @@ class World {
             return;
         }
 
-        const sav = player.save();
-
         player.playerLog('Logging out');
         if (player.client) {
             // visually disconnect the client
@@ -1087,21 +1231,8 @@ class World {
             player.client = null;
         }
 
-        if (Environment.LOGIN_KEY) {
-            const login = new LoginClient();
-            const reply = await login.save(player.username37, sav);
-
-            if (reply !== 0) {
-                // login server error, try again next tick
-                return;
-            }
-        }
-
-        this.getZone(player.x, player.z, player.level).leave(player);
-
-        const index = this.playerIds[player.pid];
-        this.players[index] = null;
-        this.playerIds[player.pid] = -1;
+        Login.logout(player);
+        this.socialLogout(player.username37);
     }
 
     getPlayer(pid: number) {
@@ -1119,20 +1250,20 @@ class World {
     }
 
     getPlayerByUid(uid: number) {
-        const pid = uid & 0x7FF;
-        const name37 = (uid >> 11) & 0x1FFFFF;
+        const pid = uid & 0x7ff;
+        const name37 = (uid >> 11) & 0x1fffff;
 
         const slot = this.playerIds[pid];
         if (slot === -1) {
             return null;
         }
-        
+
         const player = this.players[slot];
         if (!player) {
             return null;
         }
 
-        if (Number(player.username37 & 0x1FFFFFn) !== name37) {
+        if (Number(player.username37 & 0x1fffffn) !== name37) {
             return null;
         }
 
@@ -1157,8 +1288,8 @@ class World {
     }
 
     getNpcByUid(uid: number) {
-        const slot = uid & 0xFFFF;
-        const type = (uid >> 16) & 0xFFFF;
+        const slot = uid & 0xffff;
+        const type = (uid >> 16) & 0xffff;
 
         const npc = this.npcs[slot];
         if (!npc || npc.type !== type) {

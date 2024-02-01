@@ -1,3 +1,5 @@
+type=overlay
+
 [com_0]
 type=text
 x=7
