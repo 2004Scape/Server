@@ -211,7 +211,7 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.IF_SETMODEL]: {
         require: ['active_player']
     },
-    [ScriptOpcode.IF_SETMODELCOLOUR]: {
+    [ScriptOpcode.IF_SETRECOL]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_SETNPCHEAD]: {

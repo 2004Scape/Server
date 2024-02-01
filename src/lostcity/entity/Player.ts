@@ -37,7 +37,7 @@ import { Position } from '#lostcity/entity/Position.js';
 
 import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import { ServerProt, ServerProtEncoders, ServerProtLengths } from '#lostcity/server/ServerProt.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
@@ -600,10 +600,10 @@ export default class Player extends PathingEntity {
                         }
 
                         for (let off = 0; off < land.length; off += CHUNK_SIZE) {
-                            this.dataLand(x, z, land.subarray(off, off + CHUNK_SIZE), off, land.length);
+                            this.write(ServerProt.DATA_LAND, x, z, off, land.length, land.subarray(off, off + CHUNK_SIZE));
                         }
 
-                        this.dataLandDone(x, z);
+                        this.write(ServerProt.DATA_LAND_DONE, x, z);
                     } else if (type == 1) {
                         const loc = PRELOADED.get(`l${x}_${z}`);
                         if (!loc) {
@@ -611,10 +611,10 @@ export default class Player extends PathingEntity {
                         }
 
                         for (let off = 0; off < loc.length; off += CHUNK_SIZE) {
-                            this.dataLoc(x, z, loc.subarray(off, off + CHUNK_SIZE), off, loc.length);
+                            this.write(ServerProt.DATA_LOC, x, z, off, loc.length, loc.subarray(off, off + CHUNK_SIZE));
                         }
 
-                        this.dataLocDone(x, z);
+                        this.write(ServerProt.DATA_LOC_DONE, x, z);
                     }
                 }
             } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK) {
@@ -636,7 +636,7 @@ export default class Player extends PathingEntity {
                 if (this.delayed() || running < 0 || running > 1 || Position.distanceTo(this, { x: pathfindX, z: pathfindZ, width: this.width, length: this.length }) > 104) {
                     pathfindX = -1;
                     pathfindZ = -1;
-                    this.clearWalkingQueue();
+                    this.unsetMapFlag();
                     continue;
                 }
 
@@ -888,7 +888,7 @@ export default class Player extends PathingEntity {
 
                 if (this.delayed()) {
                     // do nothing; revert the client visual
-                    this.updateInvPartial(comId, inv, [slot, targetSlot]);
+                    this.write(ServerProt.UPDATE_INV_PARTIAL, comId, inv, [slot, targetSlot]);
                     continue;
                 }
 
@@ -1610,7 +1610,7 @@ export default class Player extends PathingEntity {
         }
 
         if (this.forceMove && pathfindX !== -1 && pathfindZ !== -1) {
-            this.clearWalkingQueue();
+            this.unsetMapFlag();
             pathfindRequest = false;
             pathfindX = -1;
             pathfindZ = -1;
@@ -1621,7 +1621,7 @@ export default class Player extends PathingEntity {
         // process any pathfinder requests now
         if (pathfindRequest && pathfindX !== -1 && pathfindZ !== -1) {
             if (this.delayed()) {
-                this.clearWalkingQueue();
+                this.unsetMapFlag();
                 return;
             }
 
@@ -1663,7 +1663,7 @@ export default class Player extends PathingEntity {
 
         if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
             if (this.refreshModalClose) {
-                this.ifClose();
+                this.write(ServerProt.IF_CLOSE);
             }
             this.refreshModalClose = false;
 
@@ -1674,13 +1674,13 @@ export default class Player extends PathingEntity {
 
         if (this.refreshModal) {
             if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
-                this.ifOpenMainModalSideOverlay(this.modalTop, this.modalSidebar);
-            } else if ((this.modalState & 1) === 1 || (this.modalState & 32) === 32) {
-                this.ifOpenMain(this.modalTop);
+                this.write(ServerProt.IF_OPENMAINSIDEMODAL, this.modalTop, this.modalSidebar);
+            } else if ((this.modalState & 1) === 1) {
+                this.write(ServerProt.IF_OPENMAINMODAL, this.modalTop);
             } else if ((this.modalState & 2) === 2) {
-                this.ifOpenChat(this.modalBottom);
+                this.write(ServerProt.IF_OPENCHATMODAL, this.modalBottom);
             } else if ((this.modalState & 4) === 4) {
-                this.ifOpenSideOverlay(this.modalSidebar);
+                this.write(ServerProt.IF_OPENSIDEMODAL, this.modalSidebar);
             }
 
             this.refreshModal = false;
@@ -1720,20 +1720,21 @@ export default class Player extends PathingEntity {
         this.playerLog('Logging in');
 
         // normalize client between logins
-        this.ifClose();
-        this.updateUid192(this.pid);
-        this.clearWalkingQueue();
+        this.write(ServerProt.IF_CLOSE);
+        this.write(ServerProt.UPDATE_UID192, this.pid);
+        this.unsetMapFlag();
+        this.write(ServerProt.RESET_ANIMS);
 
-        this.resetClientVarCache();
-        for (let i = 0; i < this.varps.length; i++) {
-            const type = VarPlayerType.get(i);
-            const varp = this.varps[i];
+        this.write(ServerProt.RESET_CLIENT_VARCACHE);
+        for (let varp = 0; varp < this.varps.length; varp++) {
+            const type = VarPlayerType.get(varp);
+            const value = this.varps[varp];
 
-            if (type.transmit && type.scope === VarPlayerType.SCOPE_PERM) {
-                if (varp < 256) {
-                    this.varpSmall(i, varp);
+            if (type.transmit) {
+                if (value < 256) {
+                    this.write(ServerProt.VARP_SMALL, varp, value);
                 } else {
-                    this.varpLarge(i, varp);
+                    this.write(ServerProt.VARP_LARGE, varp, value);
                 }
             }
         }
@@ -2114,7 +2115,7 @@ export default class Player extends PathingEntity {
             }
 
             this.modalSticky = -1;
-            this.ifOpenChatSticky(-1);
+            this.write(ServerProt.TUTORIAL_OPENCHAT, -1);
         }
     }
 
@@ -2296,7 +2297,7 @@ export default class Player extends PathingEntity {
     setInteraction(target: (Player | Npc | Loc | Obj), op: ServerTriggerType, subject?: number) {
         if (this.forceMove || this.delayed()) {
             // console.log('not setting interaction');
-            this.clearWalkingQueue();
+            this.unsetMapFlag();
             return;
         }
 
@@ -2415,7 +2416,7 @@ export default class Player extends PathingEntity {
             this.executeScript(state, true);
 
             if (this.target === null) {
-                this.clearWalkingQueue();
+                this.unsetMapFlag();
             }
 
             this.interacted = true;
@@ -2431,7 +2432,7 @@ export default class Player extends PathingEntity {
             }
 
             if (this.target === null) {
-                this.clearWalkingQueue();
+                this.unsetMapFlag();
             }
 
             this.interacted = true;
@@ -2479,7 +2480,7 @@ export default class Player extends PathingEntity {
                 this.executeScript(state, true);
 
                 if (this.target === null) {
-                    this.clearWalkingQueue();
+                    this.unsetMapFlag();
                 }
 
                 this.interacted = true;
@@ -2497,7 +2498,7 @@ export default class Player extends PathingEntity {
                 }
 
                 if (this.target === null) {
-                    this.clearWalkingQueue();
+                    this.unsetMapFlag();
                 }
 
                 this.interacted = true;
@@ -2577,7 +2578,7 @@ export default class Player extends PathingEntity {
                 // todo: receiver/shared buffer logic
                 if (typeof this.loadedZones[zone.index] === 'undefined') {
                     // full update necessary to clear client zone memory
-                    this.updateZoneFullFollows(x << 3, z << 3);
+                    this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
                     this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
                 }
 
@@ -2586,7 +2587,7 @@ export default class Player extends PathingEntity {
                 });
 
                 if (updates.length) {
-                    this.updateZonePartialFollows(x << 3, z << 3);
+                    this.write(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
 
                     for (let i = 0; i < updates.length; i++) {
                         // have to copy because encryption will be applied to buffer
@@ -2781,7 +2782,7 @@ export default class Player extends PathingEntity {
         // debug.pdata(bitBlock);
         // debug.pdata(byteBlock);
         // debug.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
-        this.playerInfo(bitBlock, byteBlock);
+        this.write(ServerProt.PLAYER_INFO, bitBlock, byteBlock);
     }
 
     getAppearanceInSlot(slot: number) {
@@ -3201,20 +3202,20 @@ export default class Player extends PathingEntity {
         // debug.pdata(bitBlock);
         // debug.pdata(byteBlock);
         // debug.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
-        this.npcInfo(bitBlock, byteBlock);
+        this.write(ServerProt.NPC_INFO, bitBlock, byteBlock);
     }
 
     updateStats() {
         for (let i = 0; i < this.stats.length; i++) {
             if (this.stats[i] !== this.lastStats[i] || this.levels[i] !== this.lastLevels[i]) {
-                this.updateStat(i, this.stats[i], this.levels[i]);
+                this.write(ServerProt.UPDATE_STAT, i, this.stats[i], this.levels[i]);
                 this.lastStats[i] = this.stats[i];
                 this.lastLevels[i] = this.levels[i];
             }
         }
 
         if (Math.floor(this.runenergy) / 100 !== Math.floor(this.lastRunEnergy) / 100) {
-            this.updateRunEnergy(this.runenergy);
+            this.write(ServerProt.UPDATE_RUNENERGY, this.runenergy);
             this.lastRunEnergy = this.runenergy;
         }
     }
@@ -3251,7 +3252,7 @@ export default class Player extends PathingEntity {
                 }
 
                 if (inv.update || listener.firstSeen) {
-                    this.updateInvFull(listener.com, inv);
+                    this.write(ServerProt.UPDATE_INV_FULL, listener.com, inv);
                     listener.firstSeen = false;
                 }
             } else {
@@ -3267,20 +3268,25 @@ export default class Player extends PathingEntity {
                 }
 
                 if (inv.update || listener.firstSeen) {
-                    this.updateInvFull(listener.com, inv);
+                    this.write(ServerProt.UPDATE_INV_FULL, listener.com, inv);
                     listener.firstSeen = false;
-                }
 
-                const invType = InvType.get(listener.type);
-                if (invType.runweight) {
-                    runWeightChanged = true;
+                    const invType = InvType.get(listener.type);
+                    if (invType.runweight) {
+                        runWeightChanged = true;
+                    }
                 }
             }
         }
 
         if (runWeightChanged) {
+            const current = this.runweight;
             this.calculateRunWeight();
-            this.updateRunWeight(Math.ceil(this.runweight / 1000));
+            runWeightChanged = current !== this.runweight;
+        }
+
+        if (runWeightChanged) {
+            this.write(ServerProt.UPDATE_RUNWEIGHT, Math.ceil(this.runweight / 1000));
         }
     }
 
@@ -3336,7 +3342,7 @@ export default class Player extends PathingEntity {
         }
 
         this.invListeners.splice(index, 1);
-        this.updateInvStopTransmit(com);
+        this.write(ServerProt.UPDATE_INV_STOP_TRANSMIT, com);
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -3557,9 +3563,9 @@ export default class Player extends PathingEntity {
 
         if (varpType.transmit) {
             if (value < 256) {
-                this.varpSmall(varp, value);
+                this.write(ServerProt.VARP_SMALL, varp, value);
             } else {
-                this.varpLarge(varp, value);
+                this.write(ServerProt.VARP_LARGE, varp, value);
             }
         }
     }
@@ -3670,63 +3676,52 @@ export default class Player extends PathingEntity {
         if (song && crc) {
             const length = song.length;
 
-            this.midiSong(name, crc, length);
+            this.write(ServerProt.MIDI_SONG, name, crc, length);
         }
     }
 
-    playJingle(name: string, length: number): void {
+    playJingle(delay: number, name: string): void {
         name = name.toLowerCase().replaceAll('_', ' ');
         if (!name) {
             return;
         }
         const jingle = PRELOADED.get(name + '.mid');
         if (jingle) {
-            this.midiJingle(length, jingle);
+            this.write(ServerProt.MIDI_JINGLE, delay, jingle);
         }
     }
 
     openMainModal(com: number) {
         if (this.modalState & 4) {
-            this.ifClose(); // need to close sideoverlay
+            this.write(ServerProt.IF_CLOSE); // need to close sidemodal
             this.modalState &= ~4;
             this.modalSidebar = -1;
         }
 
-        // this.ifOpenMainModal(com);
         this.modalState |= 1;
         this.modalTop = com;
         this.refreshModal = true;
     }
 
-    openMainOverlay(com: number) {
-        // this.ifOpenMainModal(com);
-        this.modalState |= 32;
-        this.modalTop = com;
-        this.refreshModal = true;
-    }
-
     openChat(com: number) {
-        // this.ifOpenChat(com);
         this.modalState |= 2;
         this.modalBottom = com;
         this.refreshModal = true;
     }
 
     openSideOverlay(com: number) {
-        // this.ifOpenSideOverlay(com);
         this.modalState |= 4;
         this.modalSidebar = com;
         this.refreshModal = true;
     }
 
     openChatSticky(com: number) {
-        this.ifOpenChatSticky(com);
+        this.write(ServerProt.TUTORIAL_OPENCHAT, com);
         this.modalState |= 8;
         this.modalSticky = com;
     }
 
     openMainModalSideOverlay(top: number, side: number) {
-        // this.ifOpenMainModalSideOverlay(top, side);
         this.modalState |= 1;
         this.modalTop = top;
         this.modalState |= 4;
@@ -3751,7 +3746,7 @@ export default class Player extends PathingEntity {
 
     setTab(com: number, tab: number) {
         this.overlaySide[tab] = com;
-        this.ifSetTab(com, tab);
+        this.write(ServerProt.IF_OPENSIDEOVERLAY, com, tab);
     }
 
     isComponentVisible(com: IfType) {
@@ -3814,503 +3809,65 @@ export default class Player extends PathingEntity {
         }
     }
 
-    // ---- raw server protocol ----
-
-    ifSetColour(com: number, colour: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETCOLOUR);
-
-        out.p2(com);
-        out.p2(colour);
-
-        this.netOut.push(out);
+    wrappedMessageGame(mes: string) {
+        const font = FontType.get(1);
+        const lines = font.split(mes, 456);
+        for (const line of lines) {
+            this.messageGame(line);
+        }
     }
 
-    ifOpenChat(com: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_OPENCHATMODAL);
-
-        out.p2(com);
-
-        this.netOut.push(out);
-    }
-
-    ifOpenMainModalSideOverlay(top: number, side: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_OPENMAINSIDEMODAL);
-
-        out.p2(top);
-        out.p2(side);
-
-        this.netOut.push(out);
-    }
-
-    ifSetHide(com: number, state: boolean) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETHIDE);
-
-        out.p2(com);
-        out.pbool(state);
-
-        this.netOut.push(out);
-    }
-
-    ifSetObject(com: number, objId: number, scale: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETOBJECT);
-
-        out.p2(com);
-        out.p2(objId);
-        out.p2(scale);
-
-        this.netOut.push(out);
-    }
-
-    ifSetTabActive(tab: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SHOWSIDE);
-
-        out.p1(tab);
-
-        this.netOut.push(out);
-    }
-
-    ifSetModel(com: number, modelId: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETMODEL);
-
-        out.p2(com);
-        out.p2(modelId);
-
-        this.netOut.push(out);
-    }
-
-    ifSetModelColour(com: number, int2: number, int3: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETRECOL);
-
-        out.p2(com);
-        out.p2(int2);
-        out.p2(int3);
-
-        this.netOut.push(out);
-    }
-
-    ifSetTabFlash(tab: number) {
-        const out = new Packet();
-        out.p1(ServerProt.TUTORIAL_FLASHSIDE);
-
-        out.p1(tab);
-
-        this.netOut.push(out);
-    }
-
-    ifClose() {
-        const out = new Packet();
-        out.p1(ServerProt.IF_CLOSE);
-
-        this.netOut.push(out);
-    }
-
-    ifSetAnim(com: number, seqId: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETANIM);
-
-        out.p2(com);
-        out.p2(seqId);
-
-        this.netOut.push(out);
-    }
-
-    ifSetTab(com: number, tab: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_OPENSIDEOVERLAY);
-
-        out.p2(com);
-        out.p1(tab);
-
-        this.netOut.push(out);
-    }
-
-    ifOpenMain(com: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_OPENMAINMODAL);
-
-        out.p2(com);
-
-        this.netOut.push(out);
-    }
-
-    ifOpenChatSticky(com: number) {
-        const out = new Packet();
-        out.p1(ServerProt.TUTORIAL_OPENCHAT);
-
-        out.p2(com);
-
-        this.netOut.push(out);
-    }
-
-    ifOpenSideOverlay(com: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_OPENSIDEMODAL);
-
-        out.p2(com);
-
-        this.netOut.push(out);
-    }
-
-    ifSetPlayerHead(com: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETPLAYERHEAD);
-
-        out.p2(com);
-
-        this.netOut.push(out);
-    }
-
-    ifSetText(com: number, text: string) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETTEXT);
-        out.p2(0);
-        const start = out.pos;
-
-        out.p2(com);
-        out.pjstr(text);
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    ifSetNpcHead(com: number, npcId: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETNPCHEAD);
-
-        out.p2(com);
-        out.p2(npcId);
-
-        this.netOut.push(out);
-    }
-
-    ifSetPosition(com: number, int2: number, int3: number) {
-        const out = new Packet();
-        out.p1(ServerProt.IF_SETPOSITION);
-
-        out.p2(com);
-        out.p2(int2);
-        out.p2(int3);
-
-        this.netOut.push(out);
-    }
-
-    ifIAmount() {
-        const out = new Packet();
-        out.p1(ServerProt.P_COUNTDIALOG);
-
-        this.netOut.push(out);
-    }
-
-    ifMultiZone(state: boolean) {
-        const out = new Packet();
-        out.p1(ServerProt.SET_MULTIWAY);
-
-        out.pbool(state);
-
-        this.netOut.push(out);
-    }
-
-    updateInvStopTransmit(com: number) {
-        if (typeof com === 'string') {
-            com = IfType.getId(com);
+    write(opcode: ServerProt, ...args: any[]) {
+        if (opcode < 0 || opcode > 255 || !ServerProtEncoders[opcode]) {
+            return;
         }
 
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_INV_STOP_TRANSMIT);
+        // console.log('write', ServerProt[opcode], ServerProtLengths[opcode], args);
 
-        out.p2(com);
+        const buf = new Packet();
+        buf.p1(opcode);
 
-        this.netOut.push(out);
-    }
+        if (ServerProtLengths[opcode] === -1) {
+            buf.p1(0);
+        } else if (ServerProtLengths[opcode] === -2) {
+            buf.p2(0);
+        }
+        const start = buf.pos;
 
-    updateInvFull(com: number, inv: Inventory) {
-        if (typeof com === 'string') {
-            com = IfType.getId(com);
+        ServerProtEncoders[opcode](buf, ...args);
+
+        if (ServerProtLengths[opcode] === -1) {
+            buf.psize1(buf.pos - start);
+        } else if (ServerProtLengths[opcode] === -2) {
+            buf.psize2(buf.pos - start);
         }
 
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_INV_FULL);
-        out.p2(0);
-        const start = out.pos;
-
-        const comType = IfType.get(com);
-        const limit = Math.min(inv.capacity, comType.width * comType.height);
-
-        out.p2(com);
-        out.p1(limit);
-        for (let slot = 0; slot < limit; slot++) {
-            const obj = inv.get(slot);
-
-            if (obj) {
-                out.p2(obj.id + 1);
-
-                if (obj.count >= 255) {
-                    out.p1(255);
-                    out.p4(obj.count);
-                } else {
-                    out.p1(obj.count);
-                }
-            } else {
-                out.p2(0);
-                out.p1(0);
-            }
-        }
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
+        this.netOut.push(buf);
     }
 
-    updateInvPartial(com: number, inv: Inventory, slots: number[] = []) {
-        if (typeof com === 'string') {
-            com = IfType.getId(com);
-        }
-
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_INV_PARTIAL);
-        out.p2(0);
-        const start = out.pos;
-
-        out.p2(com);
-        for (let i = 0; i < slots.length; i++) {
-            const slot = slots[i];
-            const obj = inv.get(slot);
-
-            out.p1(slot);
-            if (obj) {
-                out.p2(obj.id + 1);
-
-                if (obj.count >= 255) {
-                    out.p1(255);
-                    out.p4(obj.count);
-                } else {
-                    out.p1(obj.count);
-                }
-            } else {
-                out.p2(0);
-                out.p1(0);
-            }
-        }
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    camLookAt(targetX: number, targetZ: number, cameraHeight: number, transitionStepBase: number, transitionStepScale: number) {
-        const out = new Packet();
-        out.p1(ServerProt.CAM_LOOKAT);
-
-        out.p1(targetX);
-        out.p1(targetZ);
-        out.p2(cameraHeight);
-        out.p1(transitionStepBase);
-        out.p1(transitionStepScale);
-
-        this.netOut.push(out);
-    }
-
-    camShake(type: number, jitter: number, amplitude: number, frequency: number) {
-        const out = new Packet();
-        out.p1(ServerProt.CAM_SHAKE);
-
-        out.p1(type); // direction?
-        out.p1(jitter);
-        out.p1(amplitude);
-        out.p1(frequency);
-
-        this.netOut.push(out);
-    }
-
-    camMoveTo(targetX: number, targetZ: number, cameraHeight: number, transitionStepBase: number, transitionStepScale: number) {
-        const out = new Packet();
-        out.p1(ServerProt.CAM_MOVETO);
-
-        out.p1(targetX);
-        out.p1(targetZ);
-        out.p2(cameraHeight);
-        out.p1(transitionStepBase);
-        out.p1(transitionStepScale);
-
-        this.netOut.push(out);
-    }
-
-    camReset() {
-        const out = new Packet();
-        out.p1(ServerProt.CAM_RESET);
-
-        this.netOut.push(out);
-    }
-
-    npcInfo(bitBlock: Packet, byteBlock: Packet) {
-        const out = new Packet();
-        out.p1(ServerProt.NPC_INFO);
-        out.p2(0);
-        const start = out.pos;
-
-        out.pdata(bitBlock);
-        out.pdata(byteBlock);
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    playerInfo(bitBlock: Packet, byteBlock: Packet) {
-        const out = new Packet();
-        out.p1(ServerProt.PLAYER_INFO);
-        out.p2(0);
-        const start = out.pos;
-
-        out.pdata(bitBlock);
-        out.pdata(byteBlock);
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    clearWalkingQueue() {
+    unsetMapFlag() {
         this.clearWalkSteps();
-
-        const out = new Packet();
-        out.p1(ServerProt.UNSET_MAP_FLAG);
-
-        this.netOut.push(out);
+        this.write(ServerProt.UNSET_MAP_FLAG);
     }
 
-    updateRunWeight(kg: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_RUNWEIGHT);
-
-        out.p2(kg);
-
-        this.netOut.push(out);
-    }
-
-    // pseudo-packet
     hintNpc(nid: number) {
-        const out = new Packet();
-        out.p1(ServerProt.HINT_ARROW);
-
-        out.p1(1);
-        out.p2(nid);
-        out.p2(0);
-        out.p1(0);
-
-        this.netOut.push(out);
+        this.write(ServerProt.HINT_ARROW, 1, nid, 0, 0);
     }
 
-    // pseudo-packet
     hintTile(offset: number, x: number, z: number, height: number) {
-        const out = new Packet();
-        out.p1(ServerProt.HINT_ARROW);
-
-        // 2 - 64, 64 offset - centered
-        // 3 - 0, 64 offset - far left
-        // 4 - 128, 64 offset - far right
-        // 5 - 64, 0 offset - bottom left
-        // 6 - 64, 128 offset - top left
-
-        out.p1(2 + offset);
-        out.p2(x);
-        out.p2(z);
-        out.p1(height);
-
-        this.netOut.push(out);
+        this.write(ServerProt.HINT_ARROW, offset, x, z, height);
     }
 
-    // pseudo-packet
     hintPlayer(pid: number) {
-        const out = new Packet();
-        out.p1(ServerProt.HINT_ARROW);
-
-        out.p1(10);
-        out.p2(pid);
-        out.p2(0);
-        out.p1(0);
-
-        this.netOut.push(out);
+        this.write(ServerProt.HINT_ARROW, 10, pid, 0, 0);
     }
 
     stopHint() {
-        const out = new Packet();
-        out.p1(ServerProt.HINT_ARROW);
-
-        out.p1(-1);
-        out.p2(0);
-        out.p2(0);
-        out.p1(0);
-
-        this.netOut.push(out);
-    }
-
-    updateRebootTimer(ticks: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_REBOOT_TIMER);
-
-        out.p2(ticks);
-
-        this.netOut.push(out);
-    }
-
-    updateStat(stat: number, xp: number, tempLevel: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_STAT);
-
-        out.p1(stat);
-        out.p4(xp / 10);
-        out.p1(tempLevel);
-
-        this.netOut.push(out);
-    }
-
-    updateRunEnergy(energy: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_RUNENERGY);
-
-        out.p1(Math.trunc(energy / 100));
-
-        this.netOut.push(out);
-    }
-
-    finishTracking() {
-        const out = new Packet();
-        out.p1(ServerProt.FINISH_TRACKING);
-
-        this.netOut.push(out);
-    }
-
-    resetAnims() {
-        const out = new Packet();
-        out.p1(ServerProt.RESET_ANIMS);
-
-        this.netOut.push(out);
-    }
-
-    updateUid192(pid: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_UID192);
-
-        out.p2(pid);
-
-        this.netOut.push(out);
+        this.write(ServerProt.HINT_ARROW, -1, 0, 0, 0);
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
-        const out = new Packet();
-        out.p1(ServerProt.LAST_LOGIN_INFO);
-
-        out.p4(lastLoginIp);
-        out.p2(daysSinceLogin);
-        out.p1(daysSinceRecoveryChange);
-        out.p2(unreadMessageCount);
-
-        this.netOut.push(out);
+        this.write(ServerProt.LAST_LOGIN_INFO, lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount);
         this.modalState |= 16;
     }
 
@@ -4321,132 +3878,11 @@ export default class Player extends PathingEntity {
         this.writeImmediately(out);
     }
 
-    enableTracking() {
-        const out = new Packet();
-        out.p1(ServerProt.ENABLE_TRACKING);
-
-        this.netOut.push(out);
+    messageGame(msg: string) {
+        this.write(ServerProt.MESSAGE_GAME, msg);
     }
 
-    messageGame(str1: string) {
-        const out = new Packet();
-        out.p1(ServerProt.MESSAGE_GAME);
-        out.p1(0);
-        const start = out.pos;
-
-        out.pjstr(str1);
-
-        out.psize1(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    wrappedMessageGame(mes: string) {
-        const font = FontType.get(1);
-        const lines = font.split(mes, 456);
-        for (const line of lines) {
-            this.messageGame(line);
-        }
-    }
-
-    updateIgnoreList(name37s: bigint[]) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_IGNORELIST);
-
-        for (let i = 0; i < name37s.length; i++) {
-            out.p8(name37s[i]);
-        }
-
-        this.netOut.push(out);
-    }
-
-    chatFilterSettings(int1: number, int2: number, int3: number) {
-        const out = new Packet();
-        out.p1(ServerProt.CHAT_FILTER_SETTINGS);
-
-        out.p1(int1);
-        out.p1(int2);
-        out.p1(int3);
-
-        this.netOut.push(out);
-    }
-
-    messagePrivate(from: bigint, messageId: number, staffModLevel: number, message: string) {
-        const out = new Packet();
-        out.p1(ServerProt.MESSAGE_PRIVATE);
-        out.p1(0);
-        const start = out.pos;
-
-        out.p8(from);
-        out.p4(messageId);
-        out.p1(staffModLevel);
-        TextEncoder.encode(out, WordEnc.filter(message));
-
-        out.psize1(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    updateFriendList(username37: bigint, worldNode: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_FRIENDLIST);
-
-        out.p8(username37);
-        out.p1(worldNode);
-
-        this.netOut.push(out);
-    }
-
-    dataLocDone(x: number, z: number) {
-        const out = new Packet();
-        out.p1(ServerProt.DATA_LOC_DONE);
-
-        out.p1(x);
-        out.p1(z);
-
-        this.netOut.push(out);
-    }
-
-    dataLandDone(x: number, z: number) {
-        const out = new Packet();
-        out.p1(ServerProt.DATA_LAND_DONE);
-
-        out.p1(x);
-        out.p1(z);
-
-        this.netOut.push(out);
-    }
-
-    dataLand(x: number, z: number, data: Uint8Array, off: number, length: number) {
-        const out = new Packet();
-        out.p1(ServerProt.DATA_LAND);
-        out.p2(0);
-        const start = out.pos;
-
-        out.p1(x);
-        out.p1(z);
-        out.p2(off);
-        out.p2(length);
-        out.pdata(data);
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    dataLoc(x: number, z: number, data: Uint8Array, off: number, length: number) {
-        const out = new Packet();
-        out.p1(ServerProt.DATA_LOC);
-        out.p2(0);
-        const start = out.pos;
-
-        out.p1(x);
-        out.p1(z);
-        out.p2(off);
-        out.p2(length);
-        out.pdata(data);
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
+    // todo
     loadArea(zoneX: number, zoneZ: number) {
         const out = new Packet();
         out.p1(ServerProt.REBUILD_NORMAL);
@@ -4476,109 +3912,6 @@ export default class Player extends PathingEntity {
             out.p4(PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) ?? 0);
             out.p4(PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) ?? 0);
         }
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    varpSmall(varp: number, value: number) {
-        const out = new Packet();
-        out.p1(ServerProt.VARP_SMALL);
-
-        out.p2(varp);
-        out.p1(value);
-
-        this.netOut.push(out);
-    }
-
-    varpLarge(varp: number, value: number) {
-        const out = new Packet();
-        out.p1(ServerProt.VARP_LARGE);
-
-        out.p2(varp);
-        out.p4(value);
-
-        this.netOut.push(out);
-    }
-
-    resetClientVarCache() {
-        const out = new Packet();
-        out.p1(ServerProt.RESET_CLIENT_VARCACHE);
-
-        this.netOut.push(out);
-    }
-
-    synthSound(id: number, loops: number, delay: number) {
-        const out = new Packet();
-        out.p1(ServerProt.SYNTH_SOUND);
-
-        out.p2(id);
-        out.p1(loops);
-        out.p2(delay);
-
-        this.netOut.push(out);
-    }
-
-    midiSong(name: string, crc: number, length: number) {
-        const out = new Packet();
-        out.p1(ServerProt.MIDI_SONG);
-        out.p1(0);
-        const start = out.pos;
-
-        out.pjstr(name);
-        out.p4(crc);
-        out.p4(length);
-
-        out.psize1(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    midiJingle(length: number, bytes: Uint8Array) {
-        const out = new Packet();
-        out.p1(ServerProt.MIDI_JINGLE);
-        out.p2(0);
-        const start = out.pos;
-
-        out.p2(length);
-        out.p4(bytes.length);
-        out.pdata(bytes, true);
-
-        out.psize2(out.pos - start);
-        this.netOut.push(out);
-    }
-
-    updateZonePartialFollows(baseX: number, baseZ: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS);
-
-        // delta to loaded zone
-        out.p1(baseX - Position.zoneOrigin(this.loadedX));
-        out.p1(baseZ - Position.zoneOrigin(this.loadedZ));
-
-        this.netOut.push(out);
-    }
-
-    updateZoneFullFollows(baseX: number, baseZ: number) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_ZONE_FULL_FOLLOWS);
-
-        // delta to loaded zone
-        out.p1(baseX - Position.zoneOrigin(this.loadedX));
-        out.p1(baseZ - Position.zoneOrigin(this.loadedZ));
-
-        this.netOut.push(out);
-    }
-
-    updateZonePartialEnclosed(baseX: number, baseZ: number, data: Packet) {
-        const out = new Packet();
-        out.p1(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED);
-        out.p2(0);
-        const start = out.pos;
-
-        // delta to loaded zone
-        out.p1(baseX - Position.zoneOrigin(this.loadedX));
-        out.p1(baseZ - Position.zoneOrigin(this.loadedZ));
-        out.pdata(data);
 
         out.psize2(out.pos - start);
         this.netOut.push(out);

@@ -327,7 +327,7 @@ class World {
                 continue;
             }
 
-            player.updateRebootTimer(this.shutdownTick - this.currentTick);
+            player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
         }
     }
 
@@ -551,7 +551,7 @@ class World {
                 player.engineQueue = [];
                 player.clearInteraction();
                 player.closeModal();
-                player.clearWalkingQueue();
+                player.unsetMapFlag();
                 player.logoutRequested = true;
                 player.setVar('lastcombat', 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
@@ -625,7 +625,7 @@ class World {
             this.newPlayers.splice(i--, 1);
 
             if (this.shutdownTick > -1) {
-                player.updateRebootTimer(this.shutdownTick - this.currentTick);
+                player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
             }
 
             if (player.client) {

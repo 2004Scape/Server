@@ -114,7 +114,7 @@ enum ScriptOpcode {
     IF_SETCOLOUR, // official
     IF_SETHIDE, // official
     IF_SETMODEL, // official
-    IF_SETMODELCOLOUR,
+    IF_SETRECOL,
     IF_SETNPCHEAD, // official
     IF_SETOBJECT, // official
     IF_SETPLAYERHEAD, // official

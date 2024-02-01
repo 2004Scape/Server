@@ -9,7 +9,8 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { Position } from '#lostcity/entity/Position.js';
-import Player from '#lostcity/entity/Player.js';
+
+import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -118,7 +119,7 @@ const PlayerOps: CommandHandlers = {
         const localX = pos.x - (state.activePlayer.x - 52);
         const localZ = pos.z - (state.activePlayer.z - 52);
 
-        state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
+        state.activePlayer.write(ServerProt.CAM_LOOKAT, localX, localZ, speed, height, accel);
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, (state) => {
@@ -135,16 +136,17 @@ const PlayerOps: CommandHandlers = {
         const localX = pos.x - (state.activePlayer.x - 52);
         const localZ = pos.z - (state.activePlayer.z - 52);
 
-        state.activePlayer.camMoveTo(localX, localZ, speed, height, accel);
+        state.activePlayer.write(ServerProt.CAM_MOVETO, localX, localZ, speed, height, accel);
     }),
 
     [ScriptOpcode.CAM_SHAKE]: checkedHandler(ActivePlayer, (state) => {
         const [type, jitter, amplitude, frequency] = state.popInts(4);
-        state.activePlayer.camShake(type, jitter, amplitude, frequency);
+
+        state.activePlayer.write(ServerProt.CAM_SHAKE, type, jitter, amplitude, frequency);
     }),
 
     [ScriptOpcode.CAM_RESET]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.camReset();
+        state.activePlayer.write(ServerProt.CAM_RESET);
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, (state) => {
@@ -269,7 +271,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_COUNTDIALOG]: checkedHandler(ProtectedActivePlayer, (state) => {
-        state.activePlayer.ifIAmount();
+        state.activePlayer.write(ServerProt.P_COUNTDIALOG);
         state.execution = ScriptState.COUNTDIALOG;
     }),
 
@@ -317,7 +319,7 @@ const PlayerOps: CommandHandlers = {
         // clear current walk queue, clear current interaction, close interface, clear suspended script? > not the script, cant emote while going thru toll
         state.activePlayer.clearInteraction();
         state.activePlayer.closeModal();
-        state.activePlayer.clearWalkingQueue();
+        state.activePlayer.unsetMapFlag();
         // state.activePlayer.activeScript = null;
     }),
 
@@ -366,7 +368,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SOUND_SYNTH]: checkedHandler(ActivePlayer, (state) => {
         const [synth, loops, delay] = state.popInts(3);
 
-        state.activePlayer.synthSound(synth, loops, delay);
+        state.activePlayer.write(ServerProt.SYNTH_SOUND, synth, loops, delay);
     }),
 
     [ScriptOpcode.STAFFMODLEVEL]: checkedHandler(ActivePlayer, (state) => {
@@ -433,7 +435,7 @@ const PlayerOps: CommandHandlers = {
         const colour = state.popInt();
         const com = state.popInt();
 
-        state.activePlayer.ifSetColour(com, colour);
+        state.activePlayer.write(ServerProt.IF_SETCOLOUR, com, colour);
     }),
 
     [ScriptOpcode.IF_OPENCHAT]: checkedHandler(ActivePlayer, (state) => {
@@ -443,107 +445,112 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
-        const com2 = state.popInt();
-        const com1 = state.popInt();
+        const [main, side] = state.popInts(2);
 
-        state.activePlayer.openMainModalSideOverlay(com1, com2);
+        state.activePlayer.openMainModalSideOverlay(main, side);
     }),
 
     [ScriptOpcode.IF_SETHIDE]: checkedHandler(ActivePlayer, (state) => {
-        const hidden = state.popInt();
-        const com = state.popInt();
+        const [com, hide] = state.popInts(2);
 
-        state.activePlayer.ifSetHide(com, hidden === 1);
+        state.activePlayer.write(ServerProt.IF_SETHIDE, com, hide === 1);
     }),
 
     [ScriptOpcode.IF_SETOBJECT]: checkedHandler(ActivePlayer, (state) => {
-        const [com, objId, scale] = state.popInts(3);
+        const [com, obj, scale] = state.popInts(3);
 
-        state.activePlayer.ifSetObject(com, objId, scale);
+        state.activePlayer.write(ServerProt.IF_SETOBJECT, com, obj, scale);
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifSetTabFlash(state.popInt());
+        const tab = state.popInt();
+
+        state.activePlayer.write(ServerProt.IF_SHOWSIDE, tab);
     }),
 
     [ScriptOpcode.IF_SETMODEL]: checkedHandler(ActivePlayer, (state) => {
-        const modelId = state.popInt();
-        const com = state.popInt();
+        const [com, model] = state.popInts(2);
 
-        state.activePlayer.ifSetModel(com, modelId);
+        state.activePlayer.write(ServerProt.IF_SETMODEL, com, model);
     }),
 
-    [ScriptOpcode.IF_SETMODELCOLOUR]: checkedHandler(ActivePlayer, (state) => {
-        throw new Error('unimplemented');
+    [ScriptOpcode.IF_SETRECOL]: checkedHandler(ActivePlayer, (state) => {
+        const [com, src, dest] = state.popInts(3);
+
+        state.activePlayer.write(ServerProt.IF_SETRECOL, com, src, dest);
     }),
 
     [ScriptOpcode.IF_SETTABFLASH]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifSetTabFlash(state.popInt());
+        const tab = state.popInt();
+
+        state.activePlayer.write(ServerProt.TUTORIAL_FLASHSIDE, tab);
     }),
 
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, (state) => {
-        const seqId = state.popInt();
-        const com = state.popInt();
+        const [com, seq] = state.popInts(2);
 
-        state.activePlayer.ifSetAnim(com, seqId);
+        state.activePlayer.write(ServerProt.IF_SETANIM, com, seq);
     }),
 
     [ScriptOpcode.IF_SETTAB]: checkedHandler(ActivePlayer, (state) => {
-        const tab = state.popInt();
-        const com = state.popInt();
+        const [com, tab] = state.popInts(2);
 
         state.activePlayer.setTab(com, tab);
     }),
 
     [ScriptOpcode.IF_OPENMAINMODAL]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.openMainModal(state.popInt());
+        const com = state.popInt();
+
+        state.activePlayer.openMainModal(com);
     }),
 
     [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.openChatSticky(state.popInt());
+        const com = state.popInt();
+
+        state.activePlayer.openChatSticky(com);
     }),
 
     [ScriptOpcode.IF_OPENSIDEOVERLAY]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.openSideOverlay(state.popInt());
+        const com = state.popInt();
+
+        state.activePlayer.openSideOverlay(com);
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifSetPlayerHead(state.popInt());
+        const com = state.popInt();
+
+        state.activePlayer.write(ServerProt.IF_SETPLAYERHEAD, com);
     }),
 
     [ScriptOpcode.IF_SETTEXT]: checkedHandler(ActivePlayer, (state) => {
         const text = state.popString();
         const com = state.popInt();
 
-        state.activePlayer.ifSetText(com, text);
+        state.activePlayer.write(ServerProt.IF_SETTEXT, com, text);
     }),
 
     [ScriptOpcode.IF_SETNPCHEAD]: checkedHandler(ActivePlayer, (state) => {
-        const npcId = state.popInt();
-        const com = state.popInt();
+        const [com, npc] = state.popInts(2);
 
-        state.activePlayer.ifSetNpcHead(com, npcId);
+        state.activePlayer.write(ServerProt.IF_SETNPCHEAD, com, npc);
     }),
 
     [ScriptOpcode.IF_SETPOSITION]: checkedHandler(ActivePlayer, (state) => {
-        const y = state.popInt();
-        const x = state.popInt();
-        const com = state.popInt();
+        const [com, x, y] = state.popInts(3);
 
-        state.activePlayer.ifSetPosition(com, x, y);
+        state.activePlayer.write(ServerProt.IF_SETPOSITION, com, x, y);
     }),
 
     [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, (state) => {
-        state.activePlayer.ifMultiZone(state.popInt() === 1);
+        const multi = state.popInt();
+
+        state.activePlayer.write(ServerProt.SET_MULTIWAY, multi === 1);
     }),
 
     [ScriptOpcode.GIVEXP]: checkedHandler(ProtectedActivePlayer, (state) => {
-        const self = state.activePlayer;
+        const [stat, xp] = state.popInts(2);
 
-        const xp = state.popInt();
-        const stat = state.popInt();
-
-        self.addXp(stat, xp);
+        state.activePlayer.addXp(stat, xp);
     }),
 
     [ScriptOpcode.DAMAGE]: (state) => {
@@ -579,10 +586,9 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MIDI_JINGLE]: (state) => {
-        // length of time of the midi in millis.
-        const length = state.popInt();
+        const delay = state.popInt();
         const name = state.popString();
-        state.activePlayer.playJingle(name, length);
+        state.activePlayer.playJingle(delay, name);
     },
 
     [ScriptOpcode.SOFTTIMER]: checkedHandler(ActivePlayer, (state) => {
@@ -647,7 +653,7 @@ const PlayerOps: CommandHandlers = {
         const startPos = Position.unpackCoord(start);
         const endPos = Position.unpackCoord(end);
 
-        state.activePlayer.clearWalkingQueue();
+        state.activePlayer.unsetMapFlag();
         state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
     }),
 
@@ -812,9 +818,8 @@ const PlayerOps: CommandHandlers = {
         const amount = state.popInt(); // 100=1%, 1000=10%, 10000=100%
 
         const player = state.activePlayer;
-        const energyClamp = Math.min(Math.max(player.runenergy + amount, 0), 10000);
-        player.runenergy = energyClamp;
-        player.updateRunEnergy(energyClamp);
+        const energy = Math.min(Math.max(player.runenergy + amount, 0), 10000);
+        player.runenergy = energy;
     },
 
     [ScriptOpcode.AFK_EVENT]: (state) => {
