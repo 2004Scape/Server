@@ -1,5 +1,6 @@
 [label,tut_attempt_cook_item](obj $uncooked_item)
 if ($uncooked_item = raw_shrimps) {
+    p_arrivedelay;
     if (%tutorial_progress = 80) {
         anim(human_firecooking, 0);
         sound_synth(fry, 0, 0);
@@ -14,11 +15,22 @@ if ($uncooked_item = raw_shrimps) {
         p_delay(2);
         inv_del(inv, raw_shrimps, 1);
         inv_add(inv, shrimps, 1);
-        givexp(cooking, 300);
+        ~tutorial_give_xp(cooking, 300);
         %tutorial_progress = 120;
         ~tutorial_step_19_survival_recap;
     } else {
+        anim(human_firecooking, 0);
+        sound_synth(fry, 0, 0);
+        p_delay(2);
+        inv_del(inv, raw_shrimps, 1);
 
+        def_int $rand = random(10);
+        if ($rand < calc(3 + stat_base(cooking))) {
+            inv_add(inv, shrimps, 1);
+            ~tutorial_give_xp(cooking, 300);
+        } else {
+            inv_add(inv, burnt_shrimp_anchovies, 1);
+        }
     }
 } else {
     @nothing_interesting_happens;

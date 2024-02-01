@@ -11,7 +11,7 @@ if (inv_freespace(inv) = 0) {
     return;
 }
 
-if (%tutorial_progress > 90) {
+if (%tutorial_progress > 120) {
     ~mesbox("Perhaps you've done enough woodcutting now.");
     return;
 }
@@ -26,24 +26,37 @@ if (inv_total(inv, bronze_axe) = 0) {
     return;
 }
 
+p_arrivedelay;
+~tutorial_please_wait_woodcutting;
+~tut_woodcutting_animation_and_sound;
+~tut_woodcutting_swap_loc;
+~tutorial_give_xp(woodcutting, 250);
 if (%tutorial_progress = 30) {
-    ~tutorial_please_wait_woodcutting;
-    anim(human_woodcutting_bronze_axe, 0);
-    sound_synth(woodchop_4,0,0);
-    // wait 8 seconds, so my p_delay is wrong
-    p_delay(6);
-    givexp(woodcutting, 250);
-    ~tut_woodcutting_swap_loc;
     @tut_advance_woodcutting;
 } else {
-    anim(human_woodcutting_bronze_axe, 0);
-    sound_synth(woodchop_4,0,0);
-    // wait 8 seconds, so my p_delay is wrong
-    p_delay(6);
-    givexp(woodcutting, 250);
-    ~tut_woodcutting_swap_loc;
     @give_logs;
 }
+
+[proc,tut_woodcutting_animation_and_sound]
+anim(human_woodcutting_bronze_axe, 0);
+sound_synth(woodchop_4, 0, 18);
+p_delay(1);
+sound_synth(woodchop_4, 0, 0);
+p_delay(0);
+sound_synth(woodchop_4, 0, 8);
+p_delay(0);
+anim(human_woodcutting_bronze_axe, 0);
+sound_synth(woodchop_4, 0, 25);
+p_delay(0);
+sound_synth(woodchop_4, 0, 18);
+p_delay(1);
+sound_synth(woodchop_4, 0, 8);
+p_delay(0);
+sound_synth(woodchop_4, 0, 25);
+p_delay(1);
+anim(human_woodcutting_bronze_axe, 0);
+sound_synth(woodchop_4, 0, 25);
+p_delay(0);
 
 [proc,tut_woodcutting_swap_loc]
 def_int $respawnrate = ~scale_by_playercount(60);
@@ -56,11 +69,12 @@ anim(null, $respawnrate);
 %tutorial_progress = 40;
 hint_stop();
 inv_add(inv, logs, 1);
-~objboxt(logs, "You get some logs.");
 ~tutorial_step_13_build_fire;
+~objboxt(logs, "You get some logs.");
 
 [label,give_logs]
 inv_add(inv, logs, 1);
+~set_tutorial_progress;
 ~objboxt(logs, "You get some logs.");
 
 [oploc1,loc_3037]

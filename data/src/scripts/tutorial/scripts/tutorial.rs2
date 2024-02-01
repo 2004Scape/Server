@@ -146,6 +146,13 @@ switch_int(%tutorial_progress) {
 
     // Master Chef
 }
+
+[proc,tutorial_give_xp](stat $skill, int $xp)
+if (stat_base($skill) >= 3) {
+    return;
+}
+givexp($skill, $xp);
+
 [label,tutorial_complete]
 if_closesticky();
 

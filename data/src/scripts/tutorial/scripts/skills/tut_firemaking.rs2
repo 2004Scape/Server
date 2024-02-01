@@ -130,7 +130,7 @@ return ($first_from_opheld);
 
 [label,tut_firemaking_success](coord $fire_coord, obj $log)
 obj_del();
-givexp(firemaking, oc_param($log, productexp));
+~tutorial_give_xp(firemaking, oc_param($log, productexp));
 sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
 
