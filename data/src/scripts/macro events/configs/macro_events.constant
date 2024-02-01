@@ -6,8 +6,10 @@
 
 ^no_macro_event = 0
 
+^macro_event_none = 0
 ^macro_event_wave = -1
 ^macro_event_disappear = -2
 ^macro_event_alone = -3
 ^macro_event_del = -4
 ^macro_event_attack = -5
+^macro_event_appear = -6
