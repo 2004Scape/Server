@@ -7,32 +7,34 @@
 
 [label,magic_teleport](int $spell)
 if_close;
-// look for spell in db
-def_dbrow $spell_data = ~get_spell_data($spell);
-// define spell runes
-def_namedobj $rune1;
-def_int $rune_count1;
-def_namedobj $rune2;
-def_int $rune_count2;
-def_namedobj $rune3;
-def_int $rune_count3;
-// check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-// TODO: 
-// - check if player has plague city completed for ardy teleport
-// - check if player has watchtower quest completed for watchtower teleport
-// - check for additional reqs, BEFORE deleting runes
-if (~wilderness_level(coord) > 20) {
-    mes("A mysterious force blocks your teleport spell!");
-    mes("You can't use this teleport after level 20 wilderness.");
-    return;
+if (p_finduid(uid) = true) {
+    // look for spell in db
+    def_dbrow $spell_data = ~get_spell_data($spell);
+    // define spell runes
+    def_namedobj $rune1;
+    def_int $rune_count1;
+    def_namedobj $rune2;
+    def_int $rune_count2;
+    def_namedobj $rune3;
+    def_int $rune_count3;
+    // check runes
+    $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    // TODO: 
+    // - check if player has plague city completed for ardy teleport
+    // - check if player has watchtower quest completed for watchtower teleport
+    // - check for additional reqs, BEFORE deleting runes
+    if (~wilderness_level(coord) > 20) {
+        mes("A mysterious force blocks your teleport spell!");
+        mes("You can't use this teleport after level 20 wilderness.");
+        return;
+    }
+    // delete runes and give xp
+    ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+    ~give_spell_xp($spell_data);
+    // give additional affects
+    // teleport player. Always a radius of 2
+    ~player_teleport_normal(~coord_lineofwalk_radius(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2));
 }
-// delete runes and give xp
-~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
-~give_spell_xp($spell_data);
-// give additional affects
-// teleport player. Always a radius of 2
-~player_teleport_normal(~coord_lineofwalk_radius(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2));
 
 [proc,player_teleport_normal](coord $coord)
 if_close;
