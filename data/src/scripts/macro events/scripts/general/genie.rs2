@@ -6,9 +6,8 @@ npc_setmode(playerfollow);
 %npc_attacking_uid = uid;
 
 [opnpc1,genie_macro_event]
-// confirm
 if (uid ! %npc_attacking_uid) {
-    ~chatnpc(neutral, "Sorry, I'm trying to speak to <displayname>, but <text_gender("he", "she")> seems to be ignoring me.");
+    ~chatnpc(sad, "Sorry, I'm trying to talk to <text_gender("Master", "Mistress")> <displayname>, but <text_gender("he", "she")> seems to be ignoring me."); // osrs
     return;
 }
 if (%macro_event = ^no_macro_event) {
