@@ -37,6 +37,7 @@ if (%tutorial_progress = 30) {
     @give_logs;
 }
 
+// I'm so sorry.
 [proc,tut_woodcutting_animation_and_sound]
 anim(human_woodcutting_bronze_axe, 0);
 sound_synth(woodchop_4, 0, 18);
