@@ -371,7 +371,12 @@ class World {
                 continue;
             }
 
-            player.decodeIn();
+            try {
+                player.decodeIn();
+            } catch (err) {
+                console.error(err);
+                await this.removePlayer(player);
+            }
         }
         clientInput = Date.now() - clientInput;
 
@@ -476,8 +481,8 @@ class World {
                     player.closeModal();
                 }
             } catch (err) {
-                // todo: remove player safely
                 console.error(err);
+                await this.removePlayer(player);
             }
         }
         playerProcessing = Date.now() - playerProcessing;
@@ -677,14 +682,19 @@ class World {
                 continue;
             }
 
-            player.updateMap();
-            player.updatePlayers();
-            player.updateNpcs();
-            player.updateZones();
-            player.updateInvs();
-            player.updateStats();
+            try {
+                player.updateMap();
+                player.updatePlayers();
+                player.updateNpcs();
+                player.updateZones();
+                player.updateInvs();
+                player.updateStats();
 
-            player.encodeOut();
+                player.encodeOut();
+            } catch (err) {
+                console.error(err);
+                await this.removePlayer(player);
+            }
         }
         clientOutput = Date.now() - clientOutput;
 
