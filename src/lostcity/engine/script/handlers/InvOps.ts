@@ -16,7 +16,7 @@ const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointe
 
 const InvOps: CommandHandlers = {
     // inv config
-    [ScriptOpcode.INV_ALLSTOCK]: (state) => {
+    [ScriptOpcode.INV_ALLSTOCK]: state => {
         const inv = state.popInt();
 
         if (inv === -1) {
@@ -28,7 +28,7 @@ const InvOps: CommandHandlers = {
     },
 
     // inv config
-    [ScriptOpcode.INV_SIZE]: (state) => {
+    [ScriptOpcode.INV_SIZE]: state => {
         const inv = state.popInt();
 
         if (inv === -1) {
@@ -40,7 +40,7 @@ const InvOps: CommandHandlers = {
     },
 
     // inv config
-    [ScriptOpcode.INV_STOCKBASE]: (state) => {
+    [ScriptOpcode.INV_STOCKBASE]: state => {
         const [inv, obj] = state.popInts(2);
 
         if (inv === -1) {
@@ -57,14 +57,14 @@ const InvOps: CommandHandlers = {
     },
 
     // inv write
-    [ScriptOpcode.INV_ADD]: checkedHandler(ActivePlayer, (state) => {
-        const [inv, obj, count] = state.popInts(3);
+    [ScriptOpcode.INV_ADD]: checkedHandler(ActivePlayer, state => {
+        const [inv, objId, count] = state.popInts(3);
 
         if (inv === -1) {
             throw new Error('$inv is null');
         }
 
-        if (obj === -1) {
+        if (objId === -1) {
             throw new Error('$obj is null');
         }
 
@@ -72,34 +72,37 @@ const InvOps: CommandHandlers = {
             throw new Error(`$count is out of range: ${count}`);
         }
 
+        const obj = ObjType.get(objId);
+        if (obj.dummyitem === 1) {
+            throw new Error(`attempted to add graphic_only dummyitem: ${obj.debugname}`);
+        }
+
         const type = InvType.get(inv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
+        if (!type.dummyinv && obj.dummyitem !== 0) {
+            throw new Error(`dummyitem in non-dummyinv: ${obj.debugname} -> ${type.debugname}`);
+        }
+
         const player = state.activePlayer;
-        const overflow = count - player.invAdd(inv, obj, count);
+        const overflow = count - player.invAdd(inv, objId, count);
         if (overflow > 0) {
-            const floorObj = new Obj(
-                player.level,
-                player.x,
-                player.z,
-                obj,
-                overflow
-            );
+            const floorObj = new Obj(player.level, player.x, player.z, objId, overflow);
 
             World.addObj(floorObj, player, 200);
         }
     }),
 
     // inv write
-    [ScriptOpcode.INV_CHANGESLOT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_CHANGESLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, find, replace, replaceCount] = state.popInts(4);
         throw new Error('unimplemented');
     }),
 
     // inv write
-    [ScriptOpcode.INV_CLEAR]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_CLEAR]: checkedHandler(ActivePlayer, state => {
         const inv = state.popInt();
 
         if (inv === -1) {
@@ -115,7 +118,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_DEL]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_DEL]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count] = state.popInts(3);
 
         if (inv === -1) {
@@ -139,7 +142,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_DELSLOT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_DELSLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, slot] = state.popInts(2);
 
         if (inv === -1) {
@@ -164,7 +167,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_DROPITEM]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_DROPITEM]: checkedHandler(ActivePlayer, state => {
         const [inv, coord, obj, count, duration] = state.popInts(5);
 
         if (inv === -1) {
@@ -208,7 +211,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_DROPSLOT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_DROPSLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, coord, slot, duration] = state.popInts(4);
 
         if (inv === -1) {
@@ -253,7 +256,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv read
-    [ScriptOpcode.INV_FREESPACE]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_FREESPACE]: checkedHandler(ActivePlayer, state => {
         const inv = state.popInt();
 
         if (inv === -1) {
@@ -264,7 +267,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv read
-    [ScriptOpcode.INV_GETNUM]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_GETNUM]: checkedHandler(ActivePlayer, state => {
         const [inv, slot] = state.popInts(2);
 
         if (inv === -1) {
@@ -281,7 +284,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv read
-    [ScriptOpcode.INV_GETOBJ]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_GETOBJ]: checkedHandler(ActivePlayer, state => {
         const [inv, slot] = state.popInts(2);
 
         const obj = state.activePlayer.invGetSlot(inv, slot);
@@ -289,7 +292,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv read
-    [ScriptOpcode.INV_ITEMSPACE]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_ITEMSPACE]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
 
         if (inv === -1) {
@@ -313,7 +316,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv read
-    [ScriptOpcode.INV_ITEMSPACE2]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_ITEMSPACE2]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
 
         if (inv === -1) {
@@ -332,7 +335,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_MOVEFROMSLOT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_MOVEFROMSLOT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, fromSlot] = state.popInts(3);
 
         if (fromInv === -1) {
@@ -358,22 +361,16 @@ const InvOps: CommandHandlers = {
         }
 
         const player = state.activePlayer;
-        const {overflow, fromObj} = player.invMoveFromSlot(fromInv, toInv, fromSlot);
+        const { overflow, fromObj } = player.invMoveFromSlot(fromInv, toInv, fromSlot);
         if (overflow > 0) {
-            const floorObj = new Obj(
-                player.level,
-                player.x,
-                player.z,
-                fromObj,
-                overflow
-            );
+            const floorObj = new Obj(player.level, player.x, player.z, fromObj, overflow);
 
             World.addObj(floorObj, player, 200);
         }
     }),
 
     // inv write
-    [ScriptOpcode.INV_MOVETOSLOT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_MOVETOSLOT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, fromSlot, toSlot] = state.popInts(4);
 
         if (fromInv === -1) {
@@ -406,7 +403,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.BOTH_MOVEINV]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.BOTH_MOVEINV]: checkedHandler(ActivePlayer, state => {
         const [from, to] = state.popInts(2);
 
         if (from === -1) {
@@ -463,7 +460,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_MOVEITEM]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_MOVEITEM]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
         if (fromInv === -1) {
@@ -501,7 +498,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_MOVEITEM_CERT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_MOVEITEM_CERT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
         if (fromInv === -1) {
@@ -544,7 +541,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_MOVEITEM_UNCERT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_MOVEITEM_UNCERT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
         if (fromInv === -1) {
@@ -587,8 +584,8 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv write
-    [ScriptOpcode.INV_SETSLOT]: checkedHandler(ActivePlayer, (state) => {
-        const [inv, slot, obj, count] = state.popInts(4);
+    [ScriptOpcode.INV_SETSLOT]: checkedHandler(ActivePlayer, state => {
+        const [inv, slot, objId, count] = state.popInts(4);
 
         if (inv === -1) {
             throw new Error('$inv is null');
@@ -599,7 +596,7 @@ const InvOps: CommandHandlers = {
             throw new Error(`$slot is out of range: ${slot}`);
         }
 
-        if (obj === -1) {
+        if (objId === -1) {
             throw new Error('$obj is null');
         }
 
@@ -607,15 +604,24 @@ const InvOps: CommandHandlers = {
             throw new Error(`$count is out of range: ${count}`);
         }
 
+        const obj = ObjType.get(objId);
+        if (obj.dummyitem === 1) {
+            throw new Error(`attempted to set graphic_only dummyitem: ${obj.debugname}`);
+        }
+
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
         }
 
-        state.activePlayer.invSet(inv, obj, count, slot);
+        if (!type.dummyinv && obj.dummyitem !== 0) {
+            throw new Error(`dummyitem in non-dummyinv: ${obj.debugname} -> ${type.debugname}`);
+        }
+
+        state.activePlayer.invSet(inv, objId, count, slot);
     }),
 
     // inv read
-    [ScriptOpcode.INV_TOTAL]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_TOTAL]: checkedHandler(ActivePlayer, state => {
         const [inv, obj] = state.popInts(2);
 
         if (inv === -1) {
@@ -632,7 +638,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv read
-    [ScriptOpcode.INV_TOTALCAT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_TOTALCAT]: checkedHandler(ActivePlayer, state => {
         const [inv, category] = state.popInts(2);
 
         if (inv === -1) {
@@ -647,7 +653,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv protocol
-    [ScriptOpcode.INV_TRANSMIT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_TRANSMIT]: checkedHandler(ActivePlayer, state => {
         const [inv, com] = state.popInts(2);
 
         if (inv === -1) {
@@ -662,7 +668,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv protocol
-    [ScriptOpcode.INVOTHER_TRANSMIT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INVOTHER_TRANSMIT]: checkedHandler(ActivePlayer, state => {
         const [uid, inv, com] = state.popInts(3);
 
         if (uid === -1) {
@@ -681,7 +687,7 @@ const InvOps: CommandHandlers = {
     }),
 
     // inv protocol
-    [ScriptOpcode.INV_STOPTRANSMIT]: checkedHandler(ActivePlayer, (state) => {
+    [ScriptOpcode.INV_STOPTRANSMIT]: checkedHandler(ActivePlayer, state => {
         const com = state.popInt();
 
         if (com === -1) {
@@ -689,7 +695,7 @@ const InvOps: CommandHandlers = {
         }
 
         state.activePlayer.invStopListenOnCom(com);
-    }),
+    })
 };
 
 export default InvOps;

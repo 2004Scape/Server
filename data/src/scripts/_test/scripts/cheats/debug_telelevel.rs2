@@ -1,6 +1,6 @@
 [debugproc,telelevel](int $y)
 if ($y <= 0) {
-    mes("Usage --> ::telelevel (y) --> ::telelevel 1");
+    @debugusage("::telelevel (level)", "::telelevel 1", "");
     return;
 }
 

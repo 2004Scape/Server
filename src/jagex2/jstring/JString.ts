@@ -6,18 +6,22 @@ export function toBase37(string: string): bigint {
         const c: number = string.charCodeAt(i);
         l *= 37n;
 
-        if (c >= 0x41 && c <= 0x5A) { // A-Z
-            l += BigInt((c + 1) - 0x41);
-        } else if (c >= 0x61 && c <= 0x7A) { // a-z
-            l += BigInt((c + 1) - 0x61);
-        } else if (c >= 0x30 && c <= 0x39) { // 0-9
-            l += BigInt((c + 27) - 0x30);
+        if (c >= 0x41 && c <= 0x5a) {
+            // A-Z
+            l += BigInt(c + 1 - 0x41);
+        } else if (c >= 0x61 && c <= 0x7a) {
+            // a-z
+            l += BigInt(c + 1 - 0x61);
+        } else if (c >= 0x30 && c <= 0x39) {
+            // 0-9
+            l += BigInt(c + 27 - 0x30);
         }
     }
 
     return l;
 }
 
+// prettier-ignore
 const BASE37_LOOKUP: string[] = [
     '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',

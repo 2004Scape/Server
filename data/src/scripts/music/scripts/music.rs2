@@ -82,7 +82,7 @@ if ($region = null) {
 // now that we have the region, we can grab info on the song
 db_find(music:name, db_getfield($region, musicregion:name, 0));
 def_dbrow $song = db_findnext;
-if ($region = null) {
+if ($song = null) {
     return;
 }
 

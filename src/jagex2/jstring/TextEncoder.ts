@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
 export default class TextEncoder {
+    // prettier-ignore
     private static CHAR_LOOKUP: string[] = [
         ' ',
         'e', 't', 'a', 'o', 'i', 'h', 'n', 's', 'r', 'd', 'l', 'u', 'm',
@@ -17,7 +18,7 @@ export default class TextEncoder {
         let nibble: number;
         for (let i: number = 0; i < length && pos < 100; i++) {
             const data: number = packet.g1();
-            nibble = data >> 4 & 0xF;
+            nibble = (data >> 4) & 0xf;
             if (carry !== -1) {
                 charBuffer[pos++] = this.CHAR_LOOKUP[(carry << 4) + nibble - 195];
                 carry = -1;
@@ -26,7 +27,7 @@ export default class TextEncoder {
             } else {
                 carry = nibble;
             }
-            nibble = data & 0xF;
+            nibble = data & 0xf;
             if (carry != -1) {
                 charBuffer[pos++] = this.CHAR_LOOKUP[(carry << 4) + nibble - 195];
                 carry = -1;
@@ -68,7 +69,7 @@ export default class TextEncoder {
                 carry = -1;
             } else {
                 packet.p1((carry << 4) + (index >> 4));
-                carry = index & 0xF;
+                carry = index & 0xf;
             }
         }
         if (carry != -1) {

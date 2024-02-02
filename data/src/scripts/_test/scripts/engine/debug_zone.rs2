@@ -1,4 +1,8 @@
 [debugproc,zone]
+if (map_localdev = false) {
+    return;
+}
+
 def_int $x = coordx(coord);
 def_int $z = coordz(coord);
 

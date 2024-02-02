@@ -1,7 +1,0 @@
-[debugproc,inzone]
-def_boolean $inzone = inzone(0_49_149_19_38, 0_49_149_12_46, coord);
-if ($inzone = true) {
-    mes("I am inzone.");
-} else {
-    mes("I am not inzone.");
-}

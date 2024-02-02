@@ -3,39 +3,41 @@
 
 // handles converting bones to bananas. will handle bones to peaches later on too.
 [label,magic_spell_convert_bones](int $spell)
-// look for spell in db
-def_dbrow $spell_data = ~get_spell_data($spell);
-// define spell runes
-def_namedobj $rune1;
-def_int $rune_count1;
-def_namedobj $rune2;
-def_int $rune_count2;
-def_namedobj $rune3;
-def_int $rune_count3;
-// check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-def_namedobj $product;
-def_seq $anim;
-def_spotanim $spotanim;
-def_synth $sound;
-$product, $anim, $spotanim, $sound = ~magic_spell_search_convertobj($spell_data, null);
-// check bones
-def_int $total_bones = inv_totalcat(inv, bones);
-if ($total_bones < 1) {
-    mes("You aren't holding any bones!");
-    return;
+if (p_finduid(uid) = true) {
+    // look for spell in db
+    def_dbrow $spell_data = ~get_spell_data($spell);
+    // define spell runes
+    def_namedobj $rune1;
+    def_int $rune_count1;
+    def_namedobj $rune2;
+    def_int $rune_count2;
+    def_namedobj $rune3;
+    def_int $rune_count3;
+    // check runes
+    $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    def_namedobj $product;
+    def_seq $anim;
+    def_spotanim $spotanim;
+    def_synth $sound;
+    $product, $anim, $spotanim, $sound = ~magic_spell_search_convertobj($spell_data, null);
+    // check bones
+    def_int $total_bones = inv_totalcat(inv, bones);
+    if ($total_bones < 1) {
+        mes("You aren't holding any bones!");
+        return;
+    }
+    // delete all bones by category
+    ~inv_delcat(inv, bones);
+    inv_add(inv, $product, $total_bones);
+    // play sound and anim
+    sound_synth($sound, 0, 0);
+    anim($anim, 0);
+    spotanim_pl($spotanim, 92, 0);
+    // delete runes and give xp
+    ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+    ~give_spell_xp($spell_data);
+    // doesnt delay in current osrs, but it did in early osrs:
+    // https://youtu.be/OQWflbHRYLo?t=859
+    // https://oldschool.runescape.wiki/w/Update:Bugfixes_%26_Combining_Tentacles
+    p_delay(3);
 }
-// delete all bones by category
-~inv_delcat(inv, bones);
-inv_add(inv, $product, $total_bones);
-// play sound and anim
-sound_synth($sound, 0, 0);
-anim($anim, 0);
-spotanim_pl($spotanim, 92, 0);
-// delete runes and give xp
-~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
-~give_spell_xp($spell_data);
-// doesnt delay in current osrs, but it did in early osrs:
-// https://youtu.be/OQWflbHRYLo?t=859
-// https://oldschool.runescape.wiki/w/Update:Bugfixes_%26_Combining_Tentacles
-p_delay(3);

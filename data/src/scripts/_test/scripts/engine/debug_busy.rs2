@@ -1,4 +1,8 @@
 [debugproc,busy]
+if (map_localdev = false) {
+    return;
+}
+
 if (busy = true) {
     mes("I am busy.");
 } else {

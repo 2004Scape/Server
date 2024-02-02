@@ -50,6 +50,7 @@ recol5d=37340
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [obj_80]
 name=Ice arrow 3
@@ -70,6 +71,7 @@ recol5d=37340
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [obj_81]
 name=Ice arrow 2
@@ -90,6 +92,7 @@ recol5d=37340
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [obj_82]
 name=Ice arrow 5
@@ -110,6 +113,7 @@ recol5d=37340
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [obj_83]
 name=Lever

@@ -6,11 +6,14 @@ import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/Pa
 
 export function parseInvConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
+    // prettier-ignore
     const numberKeys = [
         'size'
     ];
+    // prettier-ignore
     const booleanKeys = [
-        'stackall', 'restock', 'allstock', 'protect', 'runweight'
+        'stackall', 'restock', 'allstock', 'protect', 'runweight',
+        'dummyinv' // guessing that ObjType.dummyitem can only add to these invs
     ];
 
     if (stringKeys.includes(key)) {
@@ -137,6 +140,10 @@ export function packInvConfigs(configs: Map<string, ConfigLine[]>) {
             } else if (key === 'runweight') {
                 if (value === true) {
                     dat.p1(8);
+                }
+            } else if (key === 'dummyinv') {
+                if (value === true) {
+                    dat.p1(9);
                 }
             }
         }
