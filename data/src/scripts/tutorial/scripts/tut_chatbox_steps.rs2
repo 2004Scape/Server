@@ -10,9 +10,10 @@ if_settabflash(11);
 [proc,tutorial_step_3_player_controls_left_click]
 ~tutorialstep("Player controls", "To start the tutorial use your left-mouse button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your keyboard's arrow keys to rotate the view.");
 
+// Removing "Feel free to" before try it in this room
 [proc,tutorial_step_4_interact_with_scenery]
 hint_coord(2, 0_48_48_25_35, 100);
-~tutorialstep("Interacting with scenery", "You can interact with many items of scenery by simply clicking|on them. Right clicking will also give more options. Feel free to|try it with the things in this room, then click on the door|indicated with the yellow arrow to go through to the next|");
+~tutorialstep("Interacting with scenery", "You can interact with many items of scenery by simply clicking|on them. Right clicking will also give more options. Try it with the things in this room, then click on the door indicated with the yellow arrow to go through to the next instructor.");
 
 [proc,tutorial_step_10_moving_around]
 ~tutorialstep("Moving around", "Follow the path to find the next instructor. Clicking on the|ground will walk you to that point. Talk to the survival expert by|the pond to continue the tutorial. Remember you can rotate|the view by pressing the arrow keys.");
