@@ -1,3 +1,5 @@
+type=overlay
+
 [com_0]
 type=graphic
 x=24

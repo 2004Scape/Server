@@ -2,10 +2,6 @@ import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import StepValidator from '#rsmod/StepValidator.js';
-import PathFinder from '#rsmod/PathFinder.js';
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 import FloorCollider from '#lostcity/engine/collision/FloorCollider.js';
@@ -18,11 +14,13 @@ import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 import RoofCollider from '#lostcity/engine/collision/RoofCollider.js';
 import PlayerCollider from '#lostcity/engine/collision/PlayerCollider.js';
 
+// all of this above needs to be refactored into an export ^ for one line imports.
+
 import LocType from '#lostcity/cache/LocType.js';
 
 import Loc from '#lostcity/entity/Loc.js';
-import LineValidator from '#rsmod/LineValidator.js';
-import NaivePathFinder from '#rsmod/NaivePathFinder.js';
+
+import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
@@ -63,10 +61,13 @@ export default class CollisionManager {
 
         const maps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
         for (let index = 0; index < maps.length; index++) {
-            const [fileX, fileZ] = maps[index].substring(1).split('_').map(x => parseInt(x));
+            const [fileX, fileZ] = maps[index]
+                .substring(1)
+                .split('_')
+                .map(x => parseInt(x));
             const mapsquareX = fileX << 6;
             const mapsquareZ = fileZ << 6;
-            const mapsquareId = fileX << 8 | fileZ;
+            const mapsquareId = (fileX << 8) | fileZ;
 
             const landData = Packet.load(`data/pack/server/maps/m${fileX}_${fileZ}`);
             lands.set(mapsquareId, new Array<number>(4 * 64 * 64)); // 4 * 64 * 64 size is guaranteed for lands
@@ -136,16 +137,7 @@ export default class CollisionManager {
                 const width = type.width;
                 const length = type.length;
 
-                const loc = new Loc(
-                    adjustedLevel,
-                    absoluteX,
-                    absoluteZ,
-                    width,
-                    length,
-                    locId,
-                    shape,
-                    angle
-                );
+                const loc = new Loc(adjustedLevel, absoluteX, absoluteZ, width, length, locId, shape, angle);
 
                 zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(loc);
 
@@ -164,12 +156,7 @@ export default class CollisionManager {
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
-    changeLandCollision(
-        x: number,
-        z: number,
-        level: number,
-        add: boolean
-    ): void {
+    changeLandCollision(x: number, z: number, level: number, add: boolean): void {
         this.floorCollider.change(x, z, level, add);
     }
 
@@ -186,18 +173,7 @@ export default class CollisionManager {
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
-    changeLocCollision(
-        shape: number,
-        angle: number,
-        blockrange: boolean,
-        length: number,
-        width: number,
-        active: number,
-        x: number,
-        z: number,
-        level: number,
-        add: boolean,
-    ): void {
+    changeLocCollision(shape: number, angle: number, blockrange: boolean, length: number, width: number, active: number, x: number, z: number, level: number, add: boolean): void {
         switch (LocShapes.layer(shape)) {
             case LocLayer.WALL:
                 this.wallCollider.change(x, z, level, angle, shape, blockrange, add);
@@ -229,13 +205,7 @@ export default class CollisionManager {
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
-    changeNpcCollision(
-        size: number,
-        x: number,
-        z: number,
-        level: number,
-        add: boolean
-    ): void {
+    changeNpcCollision(size: number, x: number, z: number, level: number, add: boolean): void {
         this.npcCollider.change(x, z, level, size, add);
     }
 
@@ -247,13 +217,7 @@ export default class CollisionManager {
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
-    changePlayerCollision(
-        size: number,
-        x: number,
-        z: number,
-        level: number,
-        add: boolean
-    ): void {
+    changePlayerCollision(size: number, x: number, z: number, level: number, add: boolean): void {
         this.playerCollider.change(x, z, level, size, add);
     }
 
@@ -264,12 +228,7 @@ export default class CollisionManager {
      * @param level The level pos.
      * @param add True if adding this collision. False if removing.
      */
-    changeRoofCollision(
-        x: number,
-        z: number,
-        level: number,
-        add: boolean
-    ): void {
+    changeRoofCollision(x: number, z: number, level: number, add: boolean): void {
         this.roofCollider.change(x, z, level, add);
     }
 
@@ -323,37 +282,28 @@ export default class CollisionManager {
         }
     }
 
-    private packCoord(
-        x: number,
-        z: number,
-        level: number
-    ): number {
-        return ((z & 0x3F) | ((x & 0x3F) << 6) | ((level & 0x3) << 12));
+    private packCoord(x: number, z: number, level: number): number {
+        return (z & 0x3f) | ((x & 0x3f) << 6) | ((level & 0x3) << 12);
     }
 
     private unpackCoord(packed: number) {
-        const z = packed & 0x3F;
-        const x = (packed >> 6) & 0x3F;
+        const z = packed & 0x3f;
+        const x = (packed >> 6) & 0x3f;
         const level = (packed >> 12) & 0x3;
         return { x, z, level };
     }
 
-    private packLoc(
-        id: number,
-        shape: number,
-        angle: number,
-        coord: number
-    ): number {
-        const lowBits = (id & 0xFFFF) | ((shape & 0x1F) << 16) | ((angle & 0x3) << 21);
-        const highBits = (coord & 0x3FFF);
-        return lowBits + (highBits * CollisionManager.SHIFT_23);
+    private packLoc(id: number, shape: number, angle: number, coord: number): number {
+        const lowBits = (id & 0xffff) | ((shape & 0x1f) << 16) | ((angle & 0x3) << 21);
+        const highBits = coord & 0x3fff;
+        return lowBits + highBits * CollisionManager.SHIFT_23;
     }
 
     private unpackLoc(packed: number) {
-        const id = packed & 0xFFFF;
-        const shape = (packed >> 16) & 0x1F;
+        const id = packed & 0xffff;
+        const shape = (packed >> 16) & 0x1f;
         const angle = (packed >> 21) & 0x3;
-        const coord = (packed / CollisionManager.SHIFT_23) & 0x3FFF;
+        const coord = (packed / CollisionManager.SHIFT_23) & 0x3fff;
         return { id, shape, angle, coord };
     }
 }

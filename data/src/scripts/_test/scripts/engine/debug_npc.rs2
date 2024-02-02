@@ -1,6 +1,11 @@
 [debugproc,npc](npc $npc)
-if ($npc = null) {
-    mes("Usage --> ::npc (name) --> ::npc man_blue --> ::npc king_black_dragon");
+if (map_localdev = false) {
     return;
 }
+
+if ($npc = null) {
+    @debugusage("::npc (name)", "::npc man_blue", "::npc king_black_dragon");
+    return;
+}
+
 npc_add(coord, $npc, 500);

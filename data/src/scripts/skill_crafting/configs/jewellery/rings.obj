@@ -131,24 +131,28 @@ tradeable=yes
 name=Sapphire ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,sapphire_ring
+dummyitem=inv_only
 
 [obj_1650]
 name=Emerald ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,emerald_ring
+dummyitem=inv_only
 
 [obj_1651]
 name=Ruby ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,ruby_ring
-
+dummyitem=inv_only
 
 [obj_1652]
 name=Diamond ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,diamond_ring
+dummyitem=inv_only
 
 [obj_1653]
 name=Dragonstone ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,dragonstone_ring
+dummyitem=inv_only

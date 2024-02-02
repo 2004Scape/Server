@@ -1,3 +1,5 @@
+type=overlay
+
 [com_0]
 type=model
 x=136

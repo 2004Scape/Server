@@ -31,6 +31,7 @@ def_struct $struct = oc_param($studded_obj, crafting_studded_struct);
 // check if player has level req
 if (stat(crafting) < struct_param($struct, levelrequired)) {
     mes(struct_param($struct, levelfailure));
+    return;
 }
 
 // delete items

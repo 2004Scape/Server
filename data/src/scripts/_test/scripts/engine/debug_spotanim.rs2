@@ -1,6 +1,11 @@
 [debugproc,spotanim](spotanim $spotanim)
-if ($spotanim = null) {
-    mes("Usage --> ::spotanim (name) --> ::spotanim adamant_taxe_launch");
+if (map_localdev = false) {
     return;
 }
+
+if ($spotanim = null) {
+    @debugusage("::spotanim (name)", "::spotanim adamant_taxe_launch", "");
+    return;
+}
+
 spotanim_pl($spotanim, 100, 0);

@@ -1,6 +1,7 @@
 [music_mode]
 transmit=yes
 scope=temp
+protect=no
 
 [music_mapsquare]
 type=coord

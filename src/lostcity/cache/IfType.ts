@@ -46,7 +46,9 @@ export default class IfType {
             const com = new IfType();
             com.id = id;
             com.rootLayer = rootLayer;
+
             com.comName = dat.gjstr();
+            com.overlay = dat.gbool();
 
             com.type = dat.g1();
             com.buttonType = dat.g1();
@@ -58,7 +60,7 @@ export default class IfType {
             if (com.overLayer == 0) {
                 com.overLayer = -1;
             } else {
-                com.overLayer = (com.overLayer - 1 << 8) + dat.g1();
+                com.overLayer = ((com.overLayer - 1) << 8) + dat.g1();
             }
 
             const comparatorCount = dat.g1();
@@ -172,14 +174,14 @@ export default class IfType {
                     if (com.anim == 0) {
                         com.anim = -1;
                     } else {
-                        com.anim = (com.anim - 1 << 8) + dat.g1();
+                        com.anim = ((com.anim - 1) << 8) + dat.g1();
                     }
 
                     com.activeAnim = dat.g1();
                     if (com.activeAnim == 0) {
                         com.activeAnim = -1;
                     } else {
-                        com.activeAnim = (com.activeAnim - 1 << 8) + dat.g1();
+                        com.activeAnim = ((com.activeAnim - 1) << 8) + dat.g1();
                     }
 
                     com.zoom = dat.g2();
@@ -248,6 +250,7 @@ export default class IfType {
     id: number = -1;
     rootLayer: number = -1;
     comName: string | null = null;
+    overlay: boolean = false;
     type: number = -1;
     buttonType: number = -1;
     clientCode: number = 0;

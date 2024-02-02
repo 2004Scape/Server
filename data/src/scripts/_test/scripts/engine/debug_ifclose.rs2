@@ -1,5 +1,13 @@
 [debugproc,close]
+if (map_localdev = false) {
+    return;
+}
+
 if_close;
 
 [debugproc,if_close]
+if (map_localdev = false) {
+    return;
+}
+
 if_close;

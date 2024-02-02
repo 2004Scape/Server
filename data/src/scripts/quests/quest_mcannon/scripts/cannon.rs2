@@ -1,15 +1,8 @@
-[debugproc,cannon]
-inv_add(inv, cannon_base, 1);
-inv_add(inv, cannon_stand, 1);
-inv_add(inv, cannon_barrels, 1);
-inv_add(inv, cannon_furnace, 1);
-%mcannon_coord = null;
-%mcannon_world = 0;
-%mcannon_clock = 0;
-%mcannon_ammo = 0;
-
 [opheld1,cannon_base]
-// todo: prevent duplicates
+if (%mcannon_coord ! null) {
+    // todo: message for already having a cannon placed
+    return;
+}
 
 // todo: check locs that might be overridden as well
 def_coord $center = coord;

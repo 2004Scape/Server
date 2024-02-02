@@ -5,18 +5,17 @@ const config: Config = {
     moduleNameMapper: {
         '^#lostcity/(.*).js$': '<rootDir>/src/lostcity/$1',
         '^#jagex2/(.*).js$': '<rootDir>/src/jagex2/$1',
-        '^#rsmod/(.*).js$': '<rootDir>/src/rsmod/$1',
-        '^(\\.{1,2}/.*)\\.js$': '$1',
+        '^(\\.{1,2}/.*)\\.js$': '$1'
     },
 
     transform: {
         '^.+\\.[tj]sx?$': [
             'ts-jest',
             {
-                useESM: true,
-            },
-        ],
-    },
+                useESM: true
+            }
+        ]
+    }
 };
 
 export default config;

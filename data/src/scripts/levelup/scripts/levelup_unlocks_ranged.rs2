@@ -1,0 +1,16 @@
+[label,levelup_ranged]
+//Ranged level up unlock messages
+switch_int(stat_base(ranged)) {
+    case 5: ~objbox2(oak_shortbow,steel_knife,"You can now wield @dbl@oak bows@bla@ and members can wield|@dbl@steel throwing weapons@bla@.");
+    case 10: ~objboxt(black_knife,"Members can now wield @dbl@black throwing weapons@bla@.");
+    case 20: ~objbox2(willow_shortbow,mithril_knife,"You can now wield @dbl@willow bows@bla@ and wear @dbl@studded|@dbl@armour@bla@ and @dbl@coifs@bla@, and members can now wield @dbl@mithril|@dbl@throwing weapons@bla@.");
+    case 30: ~objbox2(maple_shortbow,adamant_knife,"You can now wield @dbl@maple bows@bla@ and members can wield|@dbl@adamant throwing weapons@bla@.");
+    case 40: ~objbox2(yew_shortbow,dragonhide_body,"You can now wear @dbl@Green Dragonhide armour@bla@.|Members can wield @dbl@Yew Bows@bla@ & @dbl@Rune Throwing|@dbl@Weapons @bla@and can wear @dbl@ranger boots@bla@ and the @dbl@Robin Hood hat@bla@.");
+    case 50: ~objbox2(magic_shortbow,blue_dragonhide_body,"Members can now wield @dbl@magic bows@bla@ and can wear|@dbl@blue dragonhide armour@bla@.");
+    case 60: ~objbox(red_dragonhide_body,"Members can now wear @dbl@Red Dragonhide armour@bla@.");
+    case 70: ~objboxt(black_dragonhide_body,"Members can now wear @dbl@Black Dragonhide armour@bla@.");
+
+
+
+
+}

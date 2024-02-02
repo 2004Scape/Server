@@ -23,7 +23,9 @@ if ($random < 5) {
 } else if ($random < 20) {
     obj_add(npc_coord, mithril_sq_shield, 1, ^lootdrop_duration);
 } else if ($random < 26) {
-    obj_add(npc_coord, adamant_arrow, 5, ^lootdrop_duration);
+    if (map_members = true) {
+        obj_add(npc_coord, adamant_arrow, 5, ^lootdrop_duration);
+    }
 } else if ($random < 30) {
     obj_add(npc_coord, naturerune, 6, ^lootdrop_duration);
 } else if ($random < 33) {

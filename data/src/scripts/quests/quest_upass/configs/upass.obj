@@ -5,3 +5,4 @@ wearpos=righthand
 manwear=model_549_obj_wear,0
 womanwear=model_549_obj_wear,6
 weight=2lb
+dummyitem=graphic_only
