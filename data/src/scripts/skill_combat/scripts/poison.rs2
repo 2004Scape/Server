@@ -33,7 +33,7 @@ if (gender() = 0) {
 }
 sound_synth($sound, 0, 20);
 
-if (stat(hitpoints) = 0) {
+if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {
     queue(player_death, 0);
 }
 

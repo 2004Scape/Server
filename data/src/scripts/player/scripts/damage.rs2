@@ -71,6 +71,6 @@ if ($amount > 0) {
     damage(uid, 0, 0);
 }
 
-if (stat(hitpoints) = 0) {
+if (stat(hitpoints) = 0 & getqueue(player_death) < 1){
     queue(player_death, 0);
 }
