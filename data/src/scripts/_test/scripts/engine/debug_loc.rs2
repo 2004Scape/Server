@@ -4,7 +4,8 @@ if (map_localdev = false) {
 }
 
 if ($loc = null) {
-    mes("Usage --> ::loc (name) --> ::loc magic_tree --> ::loc castlewall");
+    @debugusage("::loc (name)", "::loc magic_tree", "::loc castlewall");
     return;
 }
+
 loc_add(coord, $loc, 0, centrepiece_straight, 500);

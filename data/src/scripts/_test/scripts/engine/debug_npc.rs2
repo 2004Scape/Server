@@ -2,8 +2,10 @@
 if (map_localdev = false) {
     return;
 }
+
 if ($npc = null) {
-    mes("Usage --> ::npc (name) --> ::npc man_blue --> ::npc king_black_dragon");
+    @debugusage("::npc (name)", "::npc man_blue", "::npc king_black_dragon");
     return;
 }
+
 npc_add(coord, $npc, 500);

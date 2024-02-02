@@ -4,7 +4,8 @@ if (map_localdev = false) {
 }
 
 if ($spotanim = null) {
-    mes("Usage --> ::spotanim (name) --> ::spotanim adamant_taxe_launch");
+    @debugusage("::spotanim (name)", "::spotanim adamant_taxe_launch", "");
     return;
 }
+
 spotanim_pl($spotanim, 100, 0);
