@@ -34,7 +34,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.P_FINDUID]: state => {
-        const uid = state.popInt();
+        const uid = state.popInt() >>> 0;
         const player = World.getPlayerByUid(uid);
 
         if (state.pointerGet(ProtectedActivePlayer[state.intOperand]) && state.activePlayer.uid === uid) {
