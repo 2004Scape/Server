@@ -8,11 +8,11 @@ switch_obj(last_useitem) {
 // arrows
 [opheldu,_category_968]
 switch_obj(last_useitem) {
-    case obj_53 : @make_arrows(last_item);
+    case headless_arrow : @make_arrows(last_item);
     case default : @nothing_interesting_happens;
 }
 
-[opheldu,obj_53]
+[opheldu,headless_arrow]
 switch_obj(last_useitem) {
     case default : 
         if (oc_category(last_useitem) = category_968) {
@@ -37,7 +37,7 @@ if ($arrow_count > 1) {
     mes("You attach a feather to an arrow shaft.");
 }
 givexp(fletching, multiply($arrow_count, 10));
-inv_add(inv, obj_53, $arrow_count);
+inv_add(inv, headless_arrow, $arrow_count);
 
 
 [label,make_arrows](obj $arrow_tips)
@@ -54,12 +54,12 @@ if (stat(fletching) < $level) {
     return;
 }
 def_int $tip_count = min(inv_total(inv, $arrow_tips), $max_count);
-def_int $headless_count = min(inv_total(inv, obj_53), $max_count);
+def_int $headless_count = min(inv_total(inv, headless_arrow), $max_count);
 def_int $arrows_count = min($tip_count, $headless_count);
 
 // delete supplies
 inv_del(inv, $arrow_tips, $arrows_count);
-inv_del(inv, obj_53, $arrows_count);
+inv_del(inv, headless_arrow, $arrows_count);
 if ($arrows_count > 1) {
     mes("You attach <lowercase(oc_name($arrow_tips))> to <tostring($arrows_count)> headless arrows.");
 } else {

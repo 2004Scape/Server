@@ -1,0 +1,77 @@
+[opnpc1,hadley]
+~chatplayer(neutral, "Hello there.");
+// https://youtu.be/5YeeYCNzDH8?si=hloyr9VphBCV4WTe&t=153, https://youtu.be/VxPuLLiUHNk?si=nfmb-EdajnHIlGp9&t=217
+if(inv_total(inv, book_on_baxtorian) > 0) {
+    ~chatnpc(neutral, "I hope you're enjoying your stay,|there should be lots of useful infomation in that book you've got.|Places to go, people to see.");
+    @multi4("Can you tell me what happened to the elf king?", waterfall_hadley_elf_king, "Where else is worth visiting around here?", waterfall_hadley_worth_visiting, "Is there treasure under the waterfall?", waterfall_hadley_treasure, "Thanks then, goodbye.", waterfall_hadley_bye);
+}
+switch_int (%waterfall_progress) {
+    case ^waterfall_not_started, ^waterfall_started:
+        ~chatnpc(neutral, "Well hello, come in, come in, my name's Hadley, I'm head of tourism here in Hemenster. There's some of the most unspoilt wildlife and scenery in RuneScape here.");
+        ~chatnpc(neutral, "People come from miles around to fish in the clear lakes or to wander the beautiful hill sides");
+        ~chatplayer(neutral, "It is quite pretty.");
+        ~chatnpc(neutral, "Surely pretty is an understatement kind <text_gender("Sir", "Lady")>. Beautiful, amazing or possibly life-changing would be more suitable wording. Have you seen the Baxtorian Waterfall? Named after the elf king who was buried beneath.");
+        @multi4("What happened to the elf king?", waterfall_hadley_elf_king, "Where else is worth visiting around here?", waterfall_hadley_worth_visiting,  "I don't like nature, it gives me a rash!", @waterfall_hadley_nature, "Thanks then, goodbye.", waterfall_hadley_bye);
+    case default:
+        ~chatnpc(neutral, "Are you on holiday? If so you've come to the right place. I'm Hadley the tourist guide, anything you need to know just ask me. We have some of the most unspoilt wildlife and scenery in RuneScape.");
+        ~chatnpc(neutral, "People come from miles around to fish in the clear lakes or to wander the beautiful hill sides");
+        ~chatplayer(neutral, "It is quite pretty.");
+        ~chatnpc(neutral, "Surely pretty is an understatement kind <text_gender("Sir", "Lady")>. Beautiful, amazing or possibly life-changing would be more suitable wording. Have you seen the Baxtorian Waterfall? Named after the elf king who was buried beneath.");
+        @multi4("Can you tell me what happened to the elf king?", waterfall_hadley_elf_king, "Where else is worth visiting around here?", waterfall_hadley_worth_visiting, "Is there treasure under the waterfall?", waterfall_hadley_treasure, "Thanks then, goodbye.", waterfall_hadley_bye);
+}
+
+[label,waterfall_hadley_elf_king]
+switch_int (%waterfall_progress) {
+    case ^waterfall_not_started, ^waterfall_started:
+        ~chatplayer(neutral, "What happened to the elf king?");
+        ~chatnpc(sad, "Baxtorian, I guess he died a long long time ago, it's quite sad really. After defending his kingdom against the invading dark forces from the west, Baxtorian returned to find his beautiful wife, Glarial, had been captured by the enemy.");
+        ~chatnpc(sad, "This destroyed Baxtorian, after years of searching he became a recluse. In the secret home he had made for Glarial under the waterfall, he never came out and to this day no one has managed to get in.");
+        ~chatplayer(neutral, "What happened to him?");
+        ~chatnpc(neutral, "No one knows.");
+        @multi3("Where else is worth visiting around here?", waterfall_hadley_worth_visiting, "I don't like nature, it gives me a rash!", waterfall_hadley_nature, "Thanks then, goodbye.", waterfall_hadley_bye);
+    case default:
+        ~chatplayer(neutral, "Can you tell me what happened to the elf king?");
+        ~chatnpc(neutral, "There are many myths about Baxtorian. One popular story is that after defending his kingdom against the invading dark forces from the west, Baxtorian returned to find his wife Glarial had been captured by the enemy!");
+        ~chatnpc(neutral, "This destroyed Baxtorian, after years of searching he became a recluse. In the secret home he had made for Glarial under the waterfall, he never came out and it is told that only Glarial could enter.");
+        ~chatplayer(neutral, "What happened to him?");
+        ~chatnpc(neutral, "Oh, I don't know. I believe we have some pages on him upstairs in our archives. If you wish to look at them please be careful, they're all pretty delicate.");
+        @multi3("Where else is worth visiting around here?", waterfall_hadley_worth_visiting, "Is there treasure under the waterfall?", waterfall_hadley_treasure, "Thanks then, goodbye.", waterfall_hadley_bye);
+}
+
+[label,waterfall_hadley_treasure]
+~chatplayer(neutral, "Is there treasure under the waterfall?");
+~chatnpc(neutral, "Ha ha... Another treasure hunter. Well if there is no one's been able to get to it. They've been searching that river for decades, all to no avail.");
+@multi3("Can you tell me what happened to the elf king?", waterfall_hadley_elf_king, "What else is worth visiting around here?", waterfall_hadley_worth_visiting, "Thanks then, goodbye.", waterfall_hadley_bye);  
+
+[label,waterfall_hadley_worth_visiting]
+switch_int (%waterfall_progress) {
+    case ^waterfall_not_started, ^waterfall_started:
+        ~chatplayer(neutral, "What else is worth visiting around here?");
+        ~chatnpc(neutral, "Well, there's a wide variety of wildlife, although unfortunately most of it's quite dangerous.|Please don't feed the goblins.");
+        ~chatplayer(neutral, "OK.");
+        ~chatnpc(neutral, "There is a lovely spot for a picnic on the hill to the north east, there's a monument to the deceased elven queen Glarial. It really is quite pretty.");
+        @multi3("What happened to the elf king?", waterfall_hadley_elf_king, "I don't like nature, it gives me a rash!", waterfall_hadley_nature, "Thanks then, goodbye.", waterfall_hadley_bye);
+    case default:
+        ~chatplayer(neutral, "What else is worth visiting around here?");
+        ~chatnpc(neutral, "There is a lovely spot for a picnic on the hill to the north east, there's a monument to the deceased elven queen Glarial. It really is quite pretty.");
+        ~chatplayer(neutral, "Who was queen Glarial?");
+        ~chatnpc(neutral, "Baxtorian's wife, the only other person who could also enter the waterfall. She was queen when this land was inhabited by elven kind. Glarial was kidnapped while");
+        ~chatnpc(neutral, "Baxtorian was away, but they eventually recovered her body and brought her home to rest.");
+        ~chatplayer(sad, "That's sad.");
+        ~chatnpc(neutral, "True, I believe there's some information about her upstairs, if you look at them please be careful.");
+        @multi3("Can you tell me what happened to the elf king?", waterfall_hadley_elf_king, "Is there treasure under the waterfall?", waterfall_hadley_treasure, "Thanks then, goodbye.", waterfall_hadley_bye);
+}
+
+~chatplayer(neutral, "What else is worth visiting around here?");
+~chatnpc(neutral, "Well, there's a wide variety of wildlife, although unfortunately most of it's quite dangerous.|Please don't feed the goblins.");
+~chatplayer(neutral, "OK.");
+~chatnpc(neutral, "There is a lovely spot for a picnic on the hill to the north east, there's a monument to the deceased elven queen Glarial. It really is quite pretty.");
+@multi3("What happened to the elf king?", waterfall_hadley_elf_king, "I don't like nature, it gives me a rash!", waterfall_hadley_nature, "Thanks then, goodbye.", waterfall_hadley_bye);
+
+[label,waterfall_hadley_nature]
+~chatplayer(neutral, "I don't like nature, it gives me a rash!");
+~chatnpc(neutral, "That's just silly talk.");
+
+[label,waterfall_hadley_bye]
+~chatplayer(neutral, "Thanks then, goodbye.");
+~chatnpc(neutral, "Enjoy your visit.");
