@@ -8,8 +8,15 @@ if (~macro_event_active = true) {
 }
 // random events arent restricted in wildy?
 // https://youtu.be/uPKaH7yg4To?t=421
-%macro_event = ~random_range(1, enum_getoutputcount(general_macro_events));
-def_npc $event = enum(int, npc, general_macro_events, %macro_event);
+
+def_npc $event;
+if (map_members = true) {
+    %macro_event = ~random_range(1, enum_getoutputcount(general_macro_events_members));
+    $event = enum(int, npc, general_macro_events_members, %macro_event);
+} else {
+    %macro_event = ~random_range(1, enum_getoutputcount(general_macro_events_free));
+    $event = enum(int, npc, general_macro_events_free, %macro_event);
+}
 def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
 
 def_int $i = 0;
