@@ -26,19 +26,35 @@ npc_settimer(3);
 
 [proc,mysterious_old_man_general_macro_event_reward]()(namedobj, int)
 // drops taken from osrs, confirmed through https://web.archive.org/web/20040817204238/http://www.runescapecommunity.com:80/index.php?showtopic=104849
+
+// gives casket instead of main rewards - sudden
+// https://web.archive.org/web/20040606142810/http://www.tip.it/runescape/index.php?page=rs2randon.htm
+// if ($random < 50) return(coins, multiply(pow(2, ~random_range(3, 6)), 10));
+// if ($random < 82) return(uncut_sapphire, 1); // 32/150 uncut sapphire 
+// if ($random < 98) return(kebab, 1); // 16/150 kebab
+// if ($random < 114) return(uncut_emerald, 1); // 16/150 uncut emerald
+// if ($random < 128) return(spinach_roll, 1); // 14/150 spinach roll
+// if ($random < 136) return(uncut_ruby, 1); // 8/150 uncut ruby
+// if ($random < 142) return(coins, 240); // 6/150 240 coins
+// if ($random < 146) return(cosmic_talisman, 1); // 4/150 cosmic talisma
+// if ($random < 148) return(uncut_diamond, 1); // 2/150 uncut diamond
+// if ($random < 149) return(half_key1, 1); // 1/150 half key
+// if ($random < 150) return(half_key2, 1); // 1/150 half key
+
 def_int $random = random(150);
-// 10/150 chance for 80, 160, 320, 480, 640
-if ($random < 50) return(coins, multiply(pow(2, ~random_range(3, 6)), 10));
-if ($random < 82) return(uncut_sapphire, 1); // 32/150 uncut sapphire 
-if ($random < 98) return(kebab, 1); // 16/150 kebab
-if ($random < 114) return(uncut_emerald, 1); // 16/150 uncut emerald
-if ($random < 128) return(spinach_roll, 1); // 14/150 spinach roll
-if ($random < 136) return(uncut_ruby, 1); // 8/150 uncut ruby
-if ($random < 142) return(coins, 240); // 6/150 240 coins
-if ($random < 146) return(cosmic_talisman, 1); // 4/150 cosmic talisma
-if ($random < 148) return(uncut_diamond, 1); // 2/150 uncut diamond
-if ($random < 149) return(half_key1, 1); // 1/150 half key
-if ($random < 150) return(half_key2, 1); // 1/150 half key
+if (map_members = false) {
+    $random = random(36);
+}
+if ($random < 16) { // 16/150 kebab?
+    return(kebab, 1);
+} else if ($random < 30) {// 14/150 spinach roll
+    return(spinach_roll, 1);
+} else if ($random < 36) { // 6/150 240 coins
+    return(coins, 240);
+} else {
+    return(casket, 1);
+}
+
 
 
 [ai_timer,mysterious_old_man_general_macro_event]
@@ -58,15 +74,12 @@ if (~macro_event_lost = true) {
 if (%npc_macro_event_patience = 20) {
     npc_anim(emote_wave, 20);
     npc_say("ehem... Hello <displayname>!");
-    return;
 } else if (%npc_macro_event_patience = 40) {
     npc_anim(emote_think, 20);
     npc_say("Hello, are you there <displayname>!");
-    return;
 } else if (%npc_macro_event_patience = 60) {
     npc_anim(emote_angry, 20);
     npc_say("It's really rude to ignore someone, <displayname>!");
-    return;
 } else if (%npc_macro_event_patience = 80) { // fail
     %macro_event = ^no_macro_event;
     // https://youtu.be/Ai89wqupYqA?t=45
