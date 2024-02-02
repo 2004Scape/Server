@@ -380,6 +380,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_zombie2]
 visonmap=no
@@ -401,6 +402,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_zombie3]
 visonmap=no
@@ -422,6 +424,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_zombie4]
 visonmap=no
@@ -443,6 +446,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_zombie5]
 visonmap=no
@@ -464,6 +468,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_zombie6]
 visonmap=no
@@ -490,6 +495,7 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_159
 
 [macro_event_shade1]
 visonmap=no
@@ -519,6 +525,7 @@ wanderrange=10
 attackrange=10
 // TODO
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_shade2]
 visonmap=no
@@ -548,6 +555,7 @@ wanderrange=10
 attackrange=10
 // TODO
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_shade3]
 visonmap=no
@@ -577,6 +585,7 @@ wanderrange=10
 attackrange=10
 // TODO
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_shade4]
 visonmap=no
@@ -606,6 +615,7 @@ wanderrange=10
 attackrange=10
 // TODO
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_shade5]
 visonmap=no
@@ -635,6 +645,7 @@ wanderrange=10
 attackrange=10
 // TODO
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_shade6]
 visonmap=no
@@ -669,6 +680,7 @@ strength=130
 defence=130
 param=damagetype,^crush_style
 param=undead,^true
+param=macro_event_level,^macro_event_cmb_159
 
 [macro_event_watchman1]
 name=Watchman
@@ -692,6 +704,7 @@ model9=model_523_npc
 wanderrange=10
 attackrange=10
 // TODO
+param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_watchman2]
 name=Watchman
@@ -715,6 +728,7 @@ model9=model_523_npc
 wanderrange=10
 attackrange=10
 // TODO
+param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_watchman3]
 name=Watchman
@@ -738,6 +752,7 @@ model9=model_523_npc
 wanderrange=10
 attackrange=10
 // TODO
+param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_watchman4]
 name=Watchman
@@ -761,6 +776,7 @@ model9=model_523_npc
 wanderrange=10
 attackrange=10
 // TODO
+param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_watchman5]
 name=Watchman
@@ -784,6 +800,7 @@ model9=model_523_npc
 wanderrange=10
 attackrange=10
 // TODO
+param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_watchman6]
 name=Watchman
@@ -807,6 +824,7 @@ model9=model_523_npc
 wanderrange=10
 attackrange=10
 // TODO
+param=macro_event_level,^macro_event_cmb_159
 
 [npc_437]
 name=Brownie
@@ -855,6 +873,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_tree_spirit2]
 name=Tree spirit
@@ -885,6 +904,8 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=macro_event_level,^macro_event_cmb_29
+
 
 [macro_event_tree_spirit3]
 name=Tree spirit
@@ -915,6 +936,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_tree_spirit4]
 name=Tree spirit
@@ -945,6 +967,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_tree_spirit5]
 name=Tree spirit
@@ -975,6 +998,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_tree_spirit6]
 name=Tree spirit
@@ -1005,6 +1029,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=macro_event_level,^macro_event_cmb_159
 
 [macro_event_ent_tree1]
 vislevel=hide
@@ -1184,3 +1209,177 @@ param=attack_sound,thrown
 // stats are completely guessed
 attack=50
 strength=1
+
+[macro_event_big_fish]
+name=Big fish
+desc=A big fish with a bigger mouth.
+vislevel=hide
+readyanim=fish_ready
+resizeh=64
+resizev=64
+hasalpha=yes
+model1=model_2845_npc
+wanderrange=0
+moverestrict=nomove
+
+[macro_event_river_troll1]
+name=River troll
+desc=
+desc=Likes fish... hates people.
+resizev=96
+resizeh=160
+walkanim=troll_walk
+readyanim=troll_ready
+op2=Attack
+hasalpha=yes
+vislevel=14
+recol1s=61
+recol1d=26925
+model1=model_2930_npc
+wanderrange=10
+attackrange=10
+// TODO respawnrate
+hitpoints=25
+attack=9
+strength=9
+defence=9
+param=damagetype,^crush_style
+param=attack_anim,troll_attack
+param=defend_anim,troll_block
+param=death_anim,troll_death
+param=macro_event_level,^macro_event_cmb_14
+
+[macro_event_river_troll2]
+name=River troll
+desc=
+desc=Likes fish... hates people.
+resizev=96
+resizeh=160
+walkanim=troll_walk
+readyanim=troll_ready
+op2=Attack
+hasalpha=yes
+vislevel=29
+recol1s=61
+recol1d=26925
+model1=model_2930_npc
+wanderrange=10
+attackrange=10
+// TODO respawnrate
+hitpoints=40
+attack=22
+strength=22
+defence=22
+param=damagetype,^crush_style
+param=attack_anim,troll_attack
+param=defend_anim,troll_block
+param=death_anim,troll_death
+param=macro_event_level,^macro_event_cmb_29
+
+[macro_event_river_troll3]
+name=River troll
+desc=
+desc=Likes fish... hates people.
+resizev=96
+resizeh=160
+walkanim=troll_walk
+readyanim=troll_ready
+op2=Attack
+hasalpha=yes
+vislevel=49
+recol1s=61
+recol1d=26925
+model1=model_2930_npc
+wanderrange=10
+attackrange=10
+// TODO respawnrate
+hitpoints=60
+attack=38
+strength=38
+defence=38
+param=damagetype,^crush_style
+param=attack_anim,troll_attack
+param=defend_anim,troll_block
+param=death_anim,troll_death
+param=macro_event_level,^macro_event_cmb_49
+
+[macro_event_river_troll4]
+name=River troll
+desc=
+desc=Likes fish... hates people.
+resizev=96
+resizeh=160
+walkanim=troll_walk
+readyanim=troll_ready
+op2=Attack
+hasalpha=yes
+vislevel=79
+recol1s=61
+recol1d=26925
+model1=model_2930_npc
+wanderrange=10
+attackrange=10
+// TODO respawnrate
+hitpoints=85
+attack=65
+strength=65
+defence=65
+param=damagetype,^crush_style
+param=attack_anim,troll_attack
+param=defend_anim,troll_block
+param=death_anim,troll_death
+param=macro_event_level,^macro_event_cmb_79
+
+[macro_event_river_troll5]
+name=River troll
+desc=
+desc=Likes fish... hates people.
+resizev=96
+resizeh=160
+walkanim=troll_walk
+readyanim=troll_ready
+op2=Attack
+hasalpha=yes
+vislevel=120
+recol1s=61
+recol1d=26925
+model1=model_2930_npc
+wanderrange=10
+attackrange=10
+// TODO respawnrate
+hitpoints=120
+attack=100
+strength=100
+defence=100
+param=damagetype,^crush_style
+param=attack_anim,troll_attack
+param=defend_anim,troll_block
+param=death_anim,troll_death
+param=macro_event_level,^macro_event_cmb_120
+
+[macro_event_river_troll6]
+name=River troll
+desc=
+desc=Likes fish... hates people.
+resizev=96
+resizeh=160
+walkanim=troll_walk
+readyanim=troll_ready
+op2=Attack
+hasalpha=yes
+vislevel=159
+recol1s=61
+recol1d=26925
+model1=model_2930_npc
+wanderrange=10
+attackrange=10
+// TODO respawnrate
+hitpoints=170
+attack=130
+strength=130
+defence=130
+param=damagetype,^crush_style
+param=attack_anim,troll_attack
+param=defend_anim,troll_block
+param=death_anim,troll_death
+param=macro_event_level,^macro_event_cmb_159

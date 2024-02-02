@@ -13,3 +13,11 @@
 ^macro_event_del = -4
 ^macro_event_attack = -5
 ^macro_event_appear = -6
+
+
+^macro_event_cmb_14 = 1
+^macro_event_cmb_29 = 2
+^macro_event_cmb_49 = 3
+^macro_event_cmb_79 = 4
+^macro_event_cmb_120 = 5
+^macro_event_cmb_159 = 6
