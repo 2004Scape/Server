@@ -1,8 +1,8 @@
-[opheld1,obj_292]
+[opheld1,book_on_baxtorian]
 mes("The book is old with many pages missing,");
 mes("a few are translated from elven into common tongue.");
 %book_page = 0;
-%open_book = obj_292;
+%open_book = book_on_baxtorian;
 if (%waterfall_progress < ^waterfall_opened_book_on_baxtorian) {
     %waterfall_progress = ^waterfall_opened_book_on_baxtorian;
 }

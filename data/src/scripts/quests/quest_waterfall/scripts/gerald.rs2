@@ -1,13 +1,19 @@
-[opnpc1,npc_303]
-if (%waterfall_progress = ^waterfall_not_started) {
-    ~chatplayer(neutral, "Hello there.");
-    ~chatnpc(happy, "Good day to your traveller, are you here to fish or just looking around? I've caught some beauties down here.");
-    ~chatplayer(neutral, "Really?");
-    npc_anim(seq_802, 0);
-    ~chatnpc(neutral, "The last one was this big!");
-} else {
-    ~chatplayer(happy, "Hello");
-    ~chatnpc(neutral, "Hello traveller. Are you here to fish or to hunt for treasure?");
-    ~chatplayer(neutral, "Why do you say that?");
-    ~chatnpc(happy, "Adventurers pass through here every week, they never find anything though");
+[opnpc1,gerald]
+switch_int(%waterfall_progress) {
+    case ^waterfall_not_started:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(happy, "Good day to your traveller,|are you here to fish or just looking around?|I've caught some beauties down here.");
+        ~chatplayer(neutral, "Really?");
+        npc_anim(seq_802, 3);
+        ~chatnpc(neutral, "The last one was this big!");
+    case ^waterfall_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(neutral, "Hello there.");
+        ~chatplayer(quiz, "Have you seen a small boy?");
+        ~chatnpc(neutral, "Nope, plenty of small fish though.");
+    case default:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(neutral, "Hello traveller.|Are you here to fish or to hunt for treasure?");
+        ~chatplayer(quiz, "Why do you say that?");
+        ~chatnpc(neutral, "Adventurers pass through here every week,|they never find anything though.");
 }

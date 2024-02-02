@@ -1,4 +1,4 @@
-[npc_805]
+[master_crafter]
 name= Master crafter
 desc=The man in charge of the crafter's guild.
 vislevel=hide

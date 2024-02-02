@@ -1,4 +1,4 @@
-[obj_292]
+[book_on_baxtorian]
 cost=2
 name=Book on baxtorian
 desc=A book on elven history in north runescape.
@@ -12,7 +12,7 @@ members=yes
 iop1=Read
 weight=18oz
 
-[obj_293]
+[golrie_key]
 name=A key
 desc=This will unlock something
 model=model_2372_obj
@@ -24,7 +24,7 @@ model=model_2372_obj
 weight=10g
 members=yes
 
-[obj_294]
+[glarials_pebble]
 name=Glarials pebble
 desc=A small pebble with elven inscription.
 model=model_2701_obj
@@ -34,7 +34,7 @@ model=model_2701_obj
 weight=10g
 members=yes
 
-[obj_295]
+[glarials_amulet]
 name=Glarials amulet
 desc=A bright green gem set in a necklace.
 model=model_2515_obj
@@ -52,7 +52,7 @@ womanwear=model_447_obj_wear,0
 weight=10g
 members=yes
 
-[obj_296]
+[glarials_urn_full]
 name=Glarials urn
 desc=An urn containing glarials ashes
 model=model_2704_obj
@@ -63,7 +63,7 @@ model=model_2704_obj
 weight=5oz
 members=yes
 
-[obj_297]
+[glarials_urn_empty]
 name=Glarials urn
 desc=An empty urn made for glarials ashes
 model=model_2704_obj
@@ -74,7 +74,7 @@ model=model_2704_obj
 weight=3oz
 members=yes
 
-[obj_298]
+[waterfall_key]
 name=A key
 desc=This will unlock something
 model=model_2372_obj
