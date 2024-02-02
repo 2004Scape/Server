@@ -116,3 +116,25 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
     npc_tele(coord); // osrs
     npc_setmode(playerfollow); // only starts following after teleport? https://youtu.be/HpmsgVshwxg?t=303
 }
+
+// based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
+[proc,macro_event_combat_level]()(int)
+def_int $combat_level = ~player_combat_level;
+if ($combat_level < 11) {
+    return(^macro_event_cmb_14);
+}
+if ($combat_level < 21) {
+    return(^macro_event_cmb_29);
+}
+if ($combat_level < 41) {
+    return(^macro_event_cmb_49);
+}
+if ($combat_level < 61) {
+    return(^macro_event_cmb_79);
+}
+if ($combat_level < 91) {
+    return(^macro_event_cmb_120);
+}
+
+return(^macro_event_cmb_159);
+

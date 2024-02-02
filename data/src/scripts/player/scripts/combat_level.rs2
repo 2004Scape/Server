@@ -1,0 +1,7 @@
+[proc,player_combat_level]()(int)
+def_int $base = scale(1, 4, calc(stat_base(defence) + stat_base(hitpoints) + scale(1, 2, stat_base(prayer))));
+def_int $melee = scale(13, 40, calc(stat_base(attack) + stat_base(strength)));
+def_int $ranged = scale(13, 40, scale(3, 2, stat_base(ranged)));
+def_int $magic = scale(13, 40, scale(3, 2, stat_base(magic)));
+
+return(calc($base + max(max($melee, $ranged), $magic)));
