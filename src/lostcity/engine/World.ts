@@ -11,7 +11,7 @@ import EnumType from '#lostcity/cache/EnumType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import IdkType from '#lostcity/cache/IdkType.js';
-import IfType from '#lostcity/cache/IfType.js';
+import Component from '#lostcity/cache/Component.js';
 import InvType from '#lostcity/cache/InvType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
@@ -227,7 +227,7 @@ class World {
         VarSharedType.load('data/pack/server');
 
         FontType.load('data/pack/client');
-        IfType.load('data/pack/server');
+        Component.load('data/pack/server');
 
         WordEnc.load('data/pack/client');
 

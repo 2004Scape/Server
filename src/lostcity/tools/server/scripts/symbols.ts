@@ -9,7 +9,7 @@ import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
 import ScriptOpcodePointers from '#lostcity/engine/script/ScriptOpcodePointers.js';
-import IfType from '#lostcity/cache/IfType.js';
+import Component from '#lostcity/cache/Component.js';
 
 fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
 
@@ -99,7 +99,7 @@ for (let i = 0; i < locs.length; i++) {
 }
 fs.writeFileSync('data/symbols/loc.tsv', locSymbols);
 
-IfType.load('data/pack/server');
+Component.load('data/pack/server');
 let comSymbols = '';
 let interfaceSymbols = '';
 let overlaySymbols = '';
@@ -109,7 +109,7 @@ for (let i = 0; i < coms.length; i++) {
         continue;
     }
 
-    const com = IfType.get(i);
+    const com = Component.get(i);
     if (coms[i].indexOf(':') !== -1) {
         comSymbols += `${i}\t${coms[i]}\n`;
     } else if (com.overlay) {
