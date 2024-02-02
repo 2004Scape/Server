@@ -981,8 +981,8 @@
 980=cert_obj_979
 981=obj_981
 982=cert_obj_981
-983=obj_983
-984=cert_obj_983
+983=brass_key
+984=cert_brass_key
 985=half_key1
 986=cert_half_key1
 987=half_key2
@@ -991,8 +991,8 @@
 990=cert_crystal_key
 991=muddy_key
 992=cert_muddy_key
-993=obj_993
-994=cert_obj_993
+993=sinister_key
+994=cert_sinister_key
 995=coins
 996=coins_2
 997=coins_3

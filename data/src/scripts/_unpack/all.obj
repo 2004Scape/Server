@@ -264,7 +264,7 @@ model=model_2724_obj
 weight=1lb
 tradeable=yes
 
-[obj_983]
+[brass_key]
 name=Brass key
 desc=A mysterious key made of brass.
 model=model_2372_obj
@@ -333,7 +333,7 @@ recol1d=3625
 weight=10g
 tradeable=yes
 
-[obj_993]
+[sinister_key]
 name=Sinister key
 desc=You get a sense of dread from this key.
 members=yes
