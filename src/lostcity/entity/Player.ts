@@ -3891,6 +3891,7 @@ export default class Player extends PathingEntity {
             buf.psize2(buf.pos - start);
         }
 
+        // console.log(buf.data);
         this.netOut.push(buf);
     }
 
@@ -3900,19 +3901,19 @@ export default class Player extends PathingEntity {
     }
 
     hintNpc(nid: number) {
-        this.write(ServerProt.HINT_ARROW, 1, nid, 0, 0);
+        this.write(ServerProt.HINT_ARROW, 1, nid, 0, 0, 0, 0);
     }
 
     hintTile(offset: number, x: number, z: number, height: number) {
-        this.write(ServerProt.HINT_ARROW, offset, x, z, height);
+        this.write(ServerProt.HINT_ARROW, offset, 0, 0, x, z, height);
     }
 
     hintPlayer(pid: number) {
-        this.write(ServerProt.HINT_ARROW, 10, pid, 0, 0);
+        this.write(ServerProt.HINT_ARROW, 10, 0, pid, 0, 0, 0);
     }
 
     stopHint() {
-        this.write(ServerProt.HINT_ARROW, -1, 0, 0, 0);
+        this.write(ServerProt.HINT_ARROW, -1, 0, 0, 0, 0, 0);
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {

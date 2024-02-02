@@ -318,7 +318,7 @@ export const ServerProtEncoders: {
             buf.p2(nid);
             buf.p2(0);
             buf.p1(0);
-        } else if (type > 2 && type < 10) {
+        } else if (type >= 2 && type <= 10) {
             // 2 - 64, 64 offset - centered
             // 3 - 0, 64 offset - far left
             // 4 - 128, 64 offset - far right
