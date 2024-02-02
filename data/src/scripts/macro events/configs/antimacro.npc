@@ -168,7 +168,7 @@ param=attack_sound,terrorbird_attack
 param=defend_sound,terrorbird_hit
 param=death_sound,terrorbird_death
 
-[rock_golem_macro_event1]
+[macro_event_rock_golem1]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -200,7 +200,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[rock_golem_macro_event2]
+[macro_event_rock_golem2]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -232,7 +232,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[rock_golem_macro_event3]
+[macro_event_rock_golem3]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -264,7 +264,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[rock_golem_macro_event4]
+[macro_event_rock_golem4]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -296,7 +296,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[rock_golem_macro_event5]
+[macro_event_rock_golem5]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -328,7 +328,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[rock_golem_macro_event6]
+[macro_event_rock_golem6]
 name=Rock Golem
 desc=Rock with attitude.
 size=2
@@ -360,7 +360,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[zombie_macro_event1]
+[macro_event_zombie1]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -381,7 +381,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[zombie_macro_event2]
+[macro_event_zombie2]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -402,7 +402,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[zombie_macro_event3]
+[macro_event_zombie3]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -423,7 +423,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[zombie_macro_event4]
+[macro_event_zombie4]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -444,7 +444,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[zombie_macro_event5]
+[macro_event_zombie5]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -465,7 +465,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[zombie_macro_event6]
+[macro_event_zombie6]
 visonmap=no
 name=Zombie
 desc=The walking dead!
@@ -491,7 +491,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[shade_macro_event1]
+[macro_event_shade1]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -520,7 +520,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[shade_macro_event2]
+[macro_event_shade2]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -549,7 +549,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[shade_macro_event3]
+[macro_event_shade3]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -578,7 +578,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[shade_macro_event4]
+[macro_event_shade4]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -607,7 +607,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[shade_macro_event5]
+[macro_event_shade5]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -636,7 +636,7 @@ attackrange=10
 // TODO
 param=undead,^true
 
-[shade_macro_event6]
+[macro_event_shade6]
 visonmap=no
 name=Shade
 desc=The angry dead!
@@ -670,7 +670,7 @@ defence=130
 param=damagetype,^crush_style
 param=undead,^true
 
-[watchman_macro_event1]
+[macro_event_watchman1]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -693,7 +693,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[watchman_macro_event2]
+[macro_event_watchman2]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -716,7 +716,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[watchman_macro_event3]
+[macro_event_watchman3]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -739,7 +739,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[watchman_macro_event4]
+[macro_event_watchman4]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -762,7 +762,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[watchman_macro_event5]
+[macro_event_watchman5]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -785,7 +785,7 @@ wanderrange=10
 attackrange=10
 // TODO
 
-[watchman_macro_event6]
+[macro_event_watchman6]
 name=Watchman
 desc=The strong arm of the law.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -826,7 +826,7 @@ recol4d=7056
 model1=model_2887_npc
 // TODO
 
-[tree_spirit_macro_event1]
+[macro_event_tree_spirit1]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -856,7 +856,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[tree_spirit_macro_event2]
+[macro_event_tree_spirit2]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -886,7 +886,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[tree_spirit_macro_event3]
+[macro_event_tree_spirit3]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -916,7 +916,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[tree_spirit_macro_event4]
+[macro_event_tree_spirit4]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -946,7 +946,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[tree_spirit_macro_event5]
+[macro_event_tree_spirit5]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -976,7 +976,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[tree_spirit_macro_event6]
+[macro_event_tree_spirit6]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -1006,7 +1006,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[ent_tree_macro_event1]
+[macro_event_ent_tree1]
 vislevel=hide
 name=Tree
 desc=One of the most common trees in RuneScape.
@@ -1023,7 +1023,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_tree_macro_event2]
+[macro_event_ent_tree2]
 vislevel=hide
 name=Tree
 desc=This would make good firewood.
@@ -1040,7 +1040,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_dead_tree_macro_event1]
+[macro_event_ent_dead_tree1]
 vislevel=hide
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -1057,7 +1057,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_dead_tree_macro_event2]
+[macro_event_ent_dead_tree2]
 vislevel=hide
 name=Dead tree
 desc=It's only useful for firewood now.
@@ -1073,7 +1073,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_oak_macro_event]
+[macro_event_ent_oak]
 vislevel=hide
 name=Oak
 desc=A beautiful old oak.
@@ -1090,7 +1090,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_willow_macro_event]
+[macro_event_ent_willow]
 vislevel=hide
 name=Willow
 desc=These trees are found near water.
@@ -1107,7 +1107,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_yew_macro_event]
+[macro_event_ent_yew]
 vislevel=hide
 name=Yew
 desc=A splendid tree.
@@ -1124,7 +1124,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_maple_macro_event]
+[macro_event_ent_maple]
 vislevel=hide
 name=Maple tree
 desc=I bet this makes good syrup!
@@ -1141,7 +1141,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[ent_magic_macro_event]
+[macro_event_ent_magic]
 vislevel=hide
 name=Magic tree
 desc=The tree shimmers with a magical force.
