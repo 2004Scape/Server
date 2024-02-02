@@ -2,6 +2,11 @@
 // looks like each random might have their own telecoords:
 // this says "Like the top of white wolf mountain" https://web.archive.org/web/20040805031902/http://runevillage.com/rs2specialEvent.php
 // and this video teleports to a coord that isnt used by molly: https://youtu.be/MS7ADB-hh18?t=9
+
+// https://web.archive.org/web/20040809210043/http://www.runescapehelp.net/modules.php?name=content&id=64
+// "Calls out your name and gives you a present if you answer.
+// If ignored it will teleport you to a distant place. Some
+// places include low-level wilderness, White Wolf mountain, and Lumbridge."
 [macro_event_fail_teleports_free]
 inputtype=int
 outputtype=coord

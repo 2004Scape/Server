@@ -405,11 +405,11 @@
 404=npc_404
 405=npc_405
 406=npc_406
-407=strange_plant_friendly_macro_event
-408=strange_plant_hostile_macro_event
-409=genie_macro_event
-410=mysterious_old_man_general_macro_event
-411=swarm_macro_event
+407=macro_event_strange_plant_friendly
+408=macro_event_strange_plant_hostile
+409=macro_event_genie
+410=macro_event_mysterious_old_man_general
+411=macro_event_swarm
 412=savage_bird
 413=rock_golem_macro_event1
 414=rock_golem_macro_event2
@@ -954,7 +954,7 @@
 953=npc_953
 954=npc_954
 955=npc_955
-956=drunken_dwarf_macro_event
+956=macro_event_drunken_dwarf
 957=mubariz
 958=fadli
 959=aabla

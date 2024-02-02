@@ -31,11 +31,11 @@ while ($event_coord = coord) {
 }
 npc_add($event_coord, $event, 100);
 switch_int (%macro_event) {
-    case ^swarm_macro_event : @swarm_macro_event_spawn;
-    case ^strange_plant_friendly_macro_event : @strange_plant_macro_event_spawn;
-    case ^drunken_dwarf_macro_event : @drunken_dwarf_macro_event_spawn;
-    case ^genie_macro_event : @genie_macro_event_spawn;
-    case ^mysterious_old_man_general_macro_event : @mysterious_old_man_general_macro_event_spawn;
+    case ^macro_event_swarm : @macro_event_swarm_spawn;
+    case ^macro_event_strange_plant_friendly : @macro_event_strange_plant_spawn;
+    case ^macro_event_drunken_dwarf : @macro_event_drunken_dwarf_spawn;
+    case ^macro_event_genie : @macro_event_genie_spawn;
+    case ^macro_event_mysterious_old_man_general : @macro_event_mysterious_old_man_general_spawn;
 }
 
 

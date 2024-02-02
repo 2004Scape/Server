@@ -1,40 +1,40 @@
 // todo: get an osrs video of this
-[label,strange_plant_macro_event_spawn]
+[label,macro_event_strange_plant_spawn]
 // some sound synth?
 npc_anim(seq_348, 0);
 %npc_attacking_uid = uid;
 // isnt delayed on respawn in osrs
-%npc_macro_event_patience = ^macro_event_appear;
+%npc_macro_event_status = ^macro_event_appear;
 npc_settimer(45);
 
-[opnpc1,strange_plant_friendly_macro_event]
+[opnpc1,macro_event_strange_plant_friendly]
 if (%npc_attacking_uid ! uid) {
     mes("It's not here for you."); // osrs
     return;
 }
-if (%npc_macro_event_patience = ^macro_event_appear) {
+if (%npc_macro_event_status = ^macro_event_appear) {
     return;
 }
 ~macro_event_give_reward(strange_fruit, 1);
 sound_synth(pick, 0, 0);
 mes("You pick the fruit from the plant."); // osrs
 %macro_event = ^no_macro_event;
-%npc_macro_event_patience  = ^macro_event_disappear;
+%npc_macro_event_status  = ^macro_event_disappear;
 npc_anim(seq_350, 0); // take thing away
 npc_delay(24); // delayed when despawning in osrs
 npc_del;
 
-[ai_timer,strange_plant_friendly_macro_event]
-if (%npc_macro_event_patience = ^macro_event_appear) {
-    %npc_macro_event_patience = ^macro_event_none;
+[ai_timer,macro_event_strange_plant_friendly]
+if (%npc_macro_event_status = ^macro_event_appear) {
+    %npc_macro_event_status = ^macro_event_none;
     return;
-} else if (%npc_macro_event_patience = ^macro_event_disappear) {
+} else if (%npc_macro_event_status = ^macro_event_disappear) {
     // return since its already disappearing in opnpc1
     return;
 }
 npc_anim(seq_351, 60);
 npc_delay(4);
-.npc_add(npc_coord, strange_plant_hostile_macro_event, 1000); // guess based off https://youtu.be/LPXvj3Q3QJo?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+.npc_add(npc_coord, macro_event_strange_plant_hostile, 1000); // guess based off https://youtu.be/LPXvj3Q3QJo?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 .%npc_attacking_uid = %npc_attacking_uid;
 npc_del;
 
@@ -44,7 +44,7 @@ if (finduid(.%npc_attacking_uid) = true) {
     %macro_event = ^no_macro_event;
 }
 
-[ai_timer,strange_plant_hostile_macro_event]
+[ai_timer,macro_event_strange_plant_hostile]
 if (npc_getmode = opplayer2) {
     return;
 }

@@ -3,7 +3,7 @@
 // for sandwich lady, seems like a little over 50 seconds: https://youtu.be/KkyVz0tSOQA?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 // mysterious old man only teleports out 20 ticks after he gets mad. https://youtu.be/_PPxvNjIgq4?t=49
 
-[strange_plant_friendly_macro_event]
+[macro_event_strange_plant_friendly]
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
@@ -15,7 +15,7 @@ moverestrict=nomove
 // guess
 timer=80
 
-[strange_plant_hostile_macro_event]
+[macro_event_strange_plant_hostile]
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
@@ -41,7 +41,7 @@ defence=99
 // this video he does 209 damage, so 9 min of regen from the monster https://youtu.be/8GERe1S_4lM
 hitpoints=200
 
-[genie_macro_event]
+[macro_event_genie]
 vislevel=hide
 name=Genie
 desc=Maybe he'll grant me a wish...
@@ -74,7 +74,7 @@ head2=model_73_npc_head
 head3=model_84_idk_head
 timer=1
 
-[mysterious_old_man_general_macro_event]
+[macro_event_mysterious_old_man_general]
 vislevel=hide
 name=Mysterious Old Man
 desc=A very strange old man...
@@ -106,7 +106,7 @@ head1=model_48_npc_head
 head2=model_82_idk_head
 timer=1
 
-[swarm_macro_event]
+[macro_event_swarm]
 vislevel=hide
 name=Swarm
 desc=A swarm of vicious insects!
@@ -1158,7 +1158,7 @@ model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
 
-[drunken_dwarf_macro_event]
+[macro_event_drunken_dwarf]
 vislevel=hide
 name=Drunken Dwarf
 desc=He's had a fair bit to drink...

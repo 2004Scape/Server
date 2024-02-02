@@ -7,4 +7,4 @@ type=player_uid
 
 [npc_stunned]
 
-[npc_macro_event_patience]
+[npc_macro_event_status]
