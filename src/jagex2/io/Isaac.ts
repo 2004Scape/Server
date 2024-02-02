@@ -14,10 +14,11 @@ export default class Isaac {
         this.init();
     }
 
+    // prettier-ignore
     init(): void {
         let a: number = 0x9e3779b9, b: number = 0x9e3779b9, c: number = 0x9e3779b9, d: number = 0x9e3779b9,
             e: number = 0x9e3779b9, f: number = 0x9e3779b9, g: number = 0x9e3779b9, h: number = 0x9e3779b9;
-        
+    
         for (let i: number = 0; i < 4; i++) {
             a ^= b << 11; d += a; b += c;
             b ^= c >>> 2; e += b; c += d;
@@ -88,7 +89,7 @@ export default class Isaac {
         }
 
         this.isaac();
-        this.count = 256;   
+        this.count = 256;
     }
 
     isaac(): void {
@@ -113,11 +114,11 @@ export default class Isaac {
                     break;
             }
 
-            this.a += this.mem[(i + 128) & 0xFF];
+            this.a += this.mem[(i + 128) & 0xff];
 
             let y: number;
-            this.mem[i] = y = this.mem[(x >>> 2) & 0xFF] + this.a + this.b;
-            this.rsl[i] = this.b = this.mem[((y >>> 8) >>> 2) & 0xFF] + x;
+            this.mem[i] = y = this.mem[(x >>> 2) & 0xff] + this.a + this.b;
+            this.rsl[i] = this.b = this.mem[((y >>> 8) >>> 2) & 0xff] + x;
         }
     }
 

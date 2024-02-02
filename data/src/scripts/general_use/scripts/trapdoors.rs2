@@ -1,5 +1,5 @@
 [oploc1,loc_1568]
-mes("The trapdoors opens...");
+mes("The trapdoor opens...");
 sound_synth(door_open, 0, 0);
 loc_del(485);
 loc_add(loc_coord, loc_1570, loc_angle, loc_shape, 485);

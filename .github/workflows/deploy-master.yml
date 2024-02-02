@@ -31,6 +31,8 @@ jobs:
         script: |
           cd master
           pm2 stop master
+          git fetch origin
+          git checkout live
           git pull
           npm ci
           pm2 start master

@@ -38,7 +38,7 @@ param=stabdefence,99
 param=slashdefence,82
 param=crushdefence,62
 param=damagetype,^slash_style
-huntmode=aggressive_melee
+huntmode=cowardly
 
 [sir_mordred]
 name=Sir Mordred

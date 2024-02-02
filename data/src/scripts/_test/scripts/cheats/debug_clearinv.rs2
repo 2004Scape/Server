@@ -1,7 +1,6 @@
 [debugproc,clearinv](inv $inv)
 if ($inv = null) {
-    mes("Usage --> ::clearinv (inv) --> ::clearinv inv --> ::clearinv worn");
-    return;
+    $inv = inv;
 }
 
 inv_clear($inv);
