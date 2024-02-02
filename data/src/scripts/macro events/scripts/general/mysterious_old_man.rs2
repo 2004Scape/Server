@@ -77,13 +77,10 @@ if (%npc_macro_event_patience = 20) {
     ~macro_event_fail_teleport;
     return;
 } else if (%npc_macro_event_patience = ^macro_event_wave) { // wave
-    %npc_macro_event_patience = ^macro_event_disappear;
     npc_anim(emote_wave, 20);
     npc_settimer(3);
-    return;
-} else if (%npc_macro_event_patience = ^macro_event_disappear) { // leave
+    npc_delay(2);
     ~macro_event_disappear;
     return;
 }
-
 %npc_macro_event_patience = calc(%npc_macro_event_patience + 1);

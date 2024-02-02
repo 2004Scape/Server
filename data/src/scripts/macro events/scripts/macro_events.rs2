@@ -22,18 +22,14 @@ while ($event_coord = coord) {
         return;
     }
 }
-// only spawn genie for now
-// change
-$event = strange_plant_friendly_macro_event;
 npc_add($event_coord, $event, 100);
-@strange_plant_macro_event_spawn;
-// switch_int (%macro_event) {
-//     case ^swarm_macro_event : @swarm_macro_event_spawn;
-//     case ^strange_plant_friendly_macro_event : @strange_plant_macro_event_spawn;
-//     case ^drunken_dwarf_macro_event : @drunken_dwarf_macro_event_spawn;
-//     case ^genie_macro_event : @genie_macro_event_spawn;
-//     case ^mysterious_old_man_general_macro_event : @mysterious_old_man_general_macro_event_spawn;
-// }
+switch_int (%macro_event) {
+    case ^swarm_macro_event : @swarm_macro_event_spawn;
+    case ^strange_plant_friendly_macro_event : @strange_plant_macro_event_spawn;
+    case ^drunken_dwarf_macro_event : @drunken_dwarf_macro_event_spawn;
+    case ^genie_macro_event : @genie_macro_event_spawn;
+    case ^mysterious_old_man_general_macro_event : @mysterious_old_man_general_macro_event_spawn;
+}
 
 
 // teleports the player to a random location, using the coords in configs/macro_events_teleports.enum

@@ -117,7 +117,25 @@ visonmap=no
 recol1s=12
 recol1d=3988
 model1=model_2950_npc
-timer=1
+timer=20
+// hits up to 2's https://youtu.be/5NgTccJZh1o
+// https://web.archive.org/web/20051125144605/http://www.tip.it/runescape/index.php?rs2monster_id=167
+strength=10
+// attack and hp is completely guessed
+attack=50
+hitpoints=25
+// complete guesses
+wanderrange=3
+maxrange=3
+attackrange=3
+// attack rate is 7 ticks https://youtu.be/5NgTccJZh1o
+param=attackrate,7
+param=attack_sound,swarm_attack
+param=attack_anim,swarm_seq_2
+param=defend_anim,swarm_seq_1
+param=death_drop,null
+param=combat_xp_multiplier,25
+param=max_dealt,0
 // TODO
 
 [savage_bird]

@@ -60,17 +60,13 @@ if (%npc_macro_event_patience = 10) {
     %npc_macro_event_patience = ^macro_event_disappear;
     npc_anim(dwarf_seq_105, 20);
     npc_settimer(3);
-    return;
-} else if (%npc_macro_event_patience = ^macro_event_disappear) { // leave
+    npc_delay(2);
     ~macro_event_disappear;
     return;
 } else if (%npc_macro_event_patience = ^macro_event_alone) { // all alone and leave
-    %npc_macro_event_patience = ^macro_event_del;
     npc_say("Aww, me is all alone.");
-    npc_settimer(3);
-    return;
-} else if (%npc_macro_event_patience = ^macro_event_del) { // delete
-    %macro_event = ^no_macro_event; // this is needed for dwarf, he doesnt 
+    npc_settimer(4);
+    npc_delay(2); // osrs
     npc_del;
     return;
 }
@@ -101,9 +97,12 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
     $damage = randominc($maxhit);
 }
 if_close; // close the player interface when taking a hit.
-queue(drunken_dwarf_player_defend_anim, 1);
-queue(damage_player, 1, $damage);
-queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
+// not sure if this is correct
+if (getqueue(player_death) < 1) {
+    queue(drunken_dwarf_player_defend_anim, 1);
+    queue(damage_player, 1, $damage);
+    queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
+}
 %lastcombat = map_clock;
 
 [queue,drunken_dwarf_player_defend_anim]
