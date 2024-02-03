@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 
-export default class IfType {
+export default class Component {
     static TYPE_LAYER: number = 0;
     static TYPE_UNUSED: number = 1;
     static TYPE_INVENTORY: number = 2;
@@ -21,7 +21,7 @@ export default class IfType {
     static PAUSE_BUTTON: number = 6;
 
     private static componentNames: Map<string, number> = new Map();
-    private static components: IfType[] = [];
+    private static components: Component[] = [];
 
     static load(dir: string): void {
         this.componentNames = new Map();
@@ -43,7 +43,7 @@ export default class IfType {
                 id = dat.g2();
             }
 
-            const com = new IfType();
+            const com = new Component();
             com.id = id;
             com.rootLayer = rootLayer;
 
@@ -60,7 +60,7 @@ export default class IfType {
             if (com.overLayer == 0) {
                 com.overLayer = -1;
             } else {
-                com.overLayer = (com.overLayer - 1 << 8) + dat.g1();
+                com.overLayer = ((com.overLayer - 1) << 8) + dat.g1();
             }
 
             const comparatorCount = dat.g1();
@@ -89,7 +89,7 @@ export default class IfType {
             }
 
             switch (com.type) {
-                case IfType.TYPE_LAYER: {
+                case Component.TYPE_LAYER: {
                     com.scroll = dat.g2();
                     com.hide = dat.gbool();
 
@@ -105,12 +105,12 @@ export default class IfType {
                     }
                     break;
                 }
-                case IfType.TYPE_UNUSED:
+                case Component.TYPE_UNUSED:
                     // The client has this impl for 10 bytes.
                     // Seems unused though.
                     dat.pos += 10;
                     break;
-                case IfType.TYPE_INVENTORY: {
+                case Component.TYPE_INVENTORY: {
                     com.draggable = dat.gbool();
                     com.interactable = dat.gbool();
                     com.usable = dat.gbool();
@@ -139,13 +139,13 @@ export default class IfType {
                     com.actionTarget = dat.g2();
                     break;
                 }
-                case IfType.TYPE_RECT:
+                case Component.TYPE_RECT:
                     com.fill = dat.gbool();
                     com.colour = dat.g4();
                     com.activeColour = dat.g4();
                     com.overColour = dat.g4();
                     break;
-                case IfType.TYPE_TEXT:
+                case Component.TYPE_TEXT:
                     com.center = dat.gbool();
                     com.font = dat.g1();
                     com.shadowed = dat.gbool();
@@ -155,11 +155,11 @@ export default class IfType {
                     com.activeColour = dat.g4();
                     com.overColour = dat.g4();
                     break;
-                case IfType.TYPE_SPRITE:
+                case Component.TYPE_SPRITE:
                     com.graphic = dat.gjstr();
                     com.activeGraphic = dat.gjstr();
                     break;
-                case IfType.TYPE_MODEL: {
+                case Component.TYPE_MODEL: {
                     com.model = dat.g1();
                     if (com.model != 0) {
                         com.model = ((com.model - 1) << 8) + dat.g1();
@@ -174,14 +174,14 @@ export default class IfType {
                     if (com.anim == 0) {
                         com.anim = -1;
                     } else {
-                        com.anim = (com.anim - 1 << 8) + dat.g1();
+                        com.anim = ((com.anim - 1) << 8) + dat.g1();
                     }
 
                     com.activeAnim = dat.g1();
                     if (com.activeAnim == 0) {
                         com.activeAnim = -1;
                     } else {
-                        com.activeAnim = (com.activeAnim - 1 << 8) + dat.g1();
+                        com.activeAnim = ((com.activeAnim - 1) << 8) + dat.g1();
                     }
 
                     com.zoom = dat.g2();
@@ -189,7 +189,7 @@ export default class IfType {
                     com.yan = dat.g2();
                     break;
                 }
-                case IfType.TYPE_INVENTORY_TEXT: {
+                case Component.TYPE_INVENTORY_TEXT: {
                     com.center = dat.gbool();
                     com.font = dat.g1();
                     com.shadowed = dat.gbool();
@@ -206,38 +206,38 @@ export default class IfType {
             }
 
             switch (com.buttonType) {
-                case IfType.NO_BUTTON:
+                case Component.NO_BUTTON:
                     break;
-                case IfType.TARGET_BUTTON:
+                case Component.TARGET_BUTTON:
                     com.actionVerb = dat.gjstr();
                     com.action = dat.gjstr();
                     com.actionTarget = dat.g2();
                     break;
-                case IfType.BUTTON:
-                case IfType.TOGGLE_BUTTON:
-                case IfType.SELECT_BUTTON:
-                case IfType.PAUSE_BUTTON:
+                case Component.BUTTON:
+                case Component.TOGGLE_BUTTON:
+                case Component.SELECT_BUTTON:
+                case Component.PAUSE_BUTTON:
                     com.option = dat.gjstr();
                     break;
             }
 
-            IfType.components[id] = com;
+            Component.components[id] = com;
 
             if (com.comName) {
-                IfType.componentNames.set(com.comName, id);
+                Component.componentNames.set(com.comName, id);
             }
         }
     }
 
-    static get(id: number): IfType {
-        return IfType.components[id];
+    static get(id: number): Component {
+        return Component.components[id];
     }
 
     static getId(name: string): number {
-        return IfType.componentNames.get(name) ?? -1;
+        return Component.componentNames.get(name) ?? -1;
     }
 
-    static getByName(name: string): IfType | null {
+    static getByName(name: string): Component | null {
         const id = this.getId(name);
         if (id === -1) {
             return null;

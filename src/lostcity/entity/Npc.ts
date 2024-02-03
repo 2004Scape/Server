@@ -13,7 +13,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueRequest, NpcQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
@@ -82,12 +82,12 @@ export default class Npc extends PathingEntity {
     nextHuntTick: number = -1;
 
     interacted: boolean = false;
-    target: (Player | Npc | Loc | Obj | null) = null;
+    target: Player | Npc | Loc | Obj | null = null;
     targetOp: number = -1;
 
     heroPoints: {
-        uid: number,
-        points: number
+        uid: number;
+        points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     found: (Player | Npc | Loc | Obj)[] = [];
@@ -313,13 +313,13 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest('npc', script, args, delay);
+        const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, args, delay);
         this.queue.push(request);
     }
 
     randomWalk(range: number) {
-        const dx = Math.round((Math.random() * (range * 2)) - range);
-        const dz = Math.round((Math.random() * (range * 2)) - range);
+        const dx = Math.round(Math.random() * (range * 2) - range);
+        const dz = Math.round(Math.random() * (range * 2) - range);
         const destX = this.startX + dx;
         const destZ = this.startZ + dz;
 
@@ -496,8 +496,18 @@ export default class Npc extends PathingEntity {
         }
 
         const distanceToTarget = Position.distanceTo(this, target);
-        const distanceToEscape = Position.distanceTo(this, { x: this.startX, z: this.startZ, width: this.width, length: this.length });
-        const targetDistanceFromStart = Position.distanceTo(target, { x: this.startX, z: this.startZ, width: target.width, length: target.length });
+        const distanceToEscape = Position.distanceTo(this, {
+            x: this.startX,
+            z: this.startZ,
+            width: this.width,
+            length: this.length
+        });
+        const targetDistanceFromStart = Position.distanceTo(target, {
+            x: this.startX,
+            z: this.startZ,
+            width: target.width,
+            length: target.length
+        });
         const type = NpcType.get(this.type);
 
         if (distanceToTarget > type.maxrange) {
@@ -508,7 +518,8 @@ export default class Npc extends PathingEntity {
         this.facePlayer(target.pid);
 
         // todo: rework this logic
-        const op = (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
+        const op =
+            (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
             (this.mode >= NpcMode.OPPLAYER1 && this.mode <= NpcMode.OPPLAYER5) ||
             (this.mode >= NpcMode.OPLOC1 && this.mode <= NpcMode.OPLOC5) ||
             (this.mode >= NpcMode.OPOBJ1 && this.mode <= NpcMode.OPOBJ5);
@@ -521,7 +532,8 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const ap = (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
+        const ap =
+            (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
             (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
             (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
             (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
@@ -682,7 +694,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    setInteraction(target: (Player | Npc | Loc | Obj), op: NpcMode) {
+    setInteraction(target: Player | Npc | Loc | Obj, op: NpcMode) {
         this.target = target;
         this.targetOp = op;
         this.mode = op;
@@ -735,20 +747,14 @@ export default class Npc extends PathingEntity {
             for (let i = 0; i < nearby.length; i++) {
                 const player = nearby[i];
 
-                if (hunt.checkVis === HuntVis.LINEOFSIGHT &&
-                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length))
-                {
+                if (hunt.checkVis === HuntVis.LINEOFSIGHT && !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length)) {
                     continue;
-                } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
-                    !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
-                {
+                } else if (hunt.checkVis === HuntVis.LINEOFWALK && !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
                     continue;
                 }
 
                 // TODO: probably zone check to see if they're in the wilderness as well?
-                if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS &&
-                    player.combatLevel > type.vislevel * 2)
-                {
+                if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
                     continue;
                 }
 

@@ -11,7 +11,7 @@ import EnumType from '#lostcity/cache/EnumType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import IdkType from '#lostcity/cache/IdkType.js';
-import IfType from '#lostcity/cache/IfType.js';
+import Component from '#lostcity/cache/Component.js';
 import InvType from '#lostcity/cache/InvType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
@@ -25,6 +25,7 @@ import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 import VarSharedType from '#lostcity/cache/VarSharedType.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
+import SpotanimType from '#lostcity/cache/SpotanimType.js';
 
 import GameMap from '#lostcity/engine/GameMap.js';
 import { Inventory } from '#lostcity/engine/Inventory.js';
@@ -49,7 +50,9 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import {CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator} from '@2004scape/rsmod-pathfinder';
+import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
+import { PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -201,25 +204,32 @@ class World {
             this.npcs[i] = null;
         }
 
-        // console.time('Loading category.dat');
+        VarPlayerType.load('data/pack/server');
+        ObjType.load('data/pack/server', this.members);
+        LocType.load('data/pack/server');
+        NpcType.load('data/pack/server');
+        IdkType.load('data/pack/server');
+        SeqFrame.load('data/pack/server');
+        SeqType.load('data/pack/server');
+        SpotanimType.load('data/pack/server');
+
         CategoryType.load('data/pack/server');
-        // console.timeEnd('Loading category.dat');
-
-        // console.time('Loading param.dat');
         ParamType.load('data/pack/server');
-        // console.timeEnd('Loading param.dat');
-
-        // console.time('Loading enum.dat');
         EnumType.load('data/pack/server');
-        // console.timeEnd('Loading enum.dat');
-
-        // console.time('Loading struct.dat');
         StructType.load('data/pack/server');
-        // console.timeEnd('Loading struct.dat');
-
-        // console.time('Loading inv.dat');
         InvType.load('data/pack/server');
-        // console.timeEnd('Loading inv.dat');
+
+        MesanimType.load('data/pack/server');
+        DbTableType.load('data/pack/server');
+        DbRowType.load('data/pack/server');
+        HuntType.load('data/pack/server');
+        VarNpcType.load('data/pack/server');
+        VarSharedType.load('data/pack/server');
+
+        FontType.load('data/pack/client');
+        Component.load('data/pack/server');
+
+        WordEnc.load('data/pack/client');
 
         for (let i = 0; i < InvType.count; i++) {
             const inv = InvType.get(i);
@@ -228,70 +238,6 @@ class World {
                 this.invs.push(Inventory.fromType(i));
             }
         }
-
-        // console.time('Loading varp.dat');
-        VarPlayerType.load('data/pack/server');
-        // console.timeEnd('Loading varp.dat');
-
-        // console.time('Loading obj.dat');
-        ObjType.load('data/pack/server', this.members);
-        // console.timeEnd('Loading obj.dat');
-
-        // console.time('Loading loc.dat');
-        LocType.load('data/pack/server');
-        // console.timeEnd('Loading loc.dat');
-
-        // console.time('Loading npc.dat');
-        NpcType.load('data/pack/server');
-        // console.timeEnd('Loading npc.dat');
-
-        // console.time('Loading idk.dat');
-        IdkType.load('data/pack/server');
-        // console.timeEnd('Loading idk.dat');
-
-        // console.time('Loading interface.dat');
-        IfType.load('data/pack/server');
-        // console.timeEnd('Loading interface.dat');
-
-        // console.time('Loading frame_del.dat');
-        SeqFrame.load('data/pack/server');
-        // console.timeEnd('Loading frame_del.dat');
-
-        // console.time('Loading seq.dat');
-        SeqType.load('data/pack/server');
-        // console.timeEnd('Loading seq.dat');
-
-        // console.time('Loading fonts');
-        FontType.load('data/pack/client');
-        // console.timeEnd('Loading fonts');
-
-        // console.time('Loading mesanim.dat');
-        MesanimType.load('data/pack/server');
-        // console.timeEnd('Loading mesanim.dat');
-
-        // console.time('Loading dbtable.dat');
-        DbTableType.load('data/pack/server');
-        // console.timeEnd('Loading dbtable.dat');
-
-        // console.time('Loading dbrow.dat');
-        DbRowType.load('data/pack/server');
-        // console.timeEnd('Loading dbrow.dat');
-
-        // console.time('Loading hunt.dat');
-        HuntType.load('data/pack/server');
-        // console.timeEnd('Loading hunt.dat');
-
-        // console.time('Loading varn.dat');
-        VarNpcType.load('data/pack/server');
-        // console.timeEnd('Loading varn.dat');
-
-        // console.time('Loading vars.dat');
-        VarSharedType.load('data/pack/server');
-        // console.timeEnd('Loading vars.dat');
-
-        // console.time('Loading wordenc');
-        WordEnc.load('data/pack/client');
-        // console.timeEnd('Loading wordenc');
 
         if (!skipMaps) {
             this.gameMap.init();
@@ -327,7 +273,7 @@ class World {
                 continue;
             }
 
-            player.updateRebootTimer(this.shutdownTick - this.currentTick);
+            player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
         }
     }
 
@@ -425,7 +371,12 @@ class World {
                 continue;
             }
 
-            player.decodeIn();
+            try {
+                player.decodeIn();
+            } catch (err) {
+                console.error(err);
+                await this.removePlayer(player);
+            }
         }
         clientInput = Date.now() - clientInput;
 
@@ -504,14 +455,14 @@ class World {
                 }
 
                 player.queue = player.queue.filter(s => s);
-                if (player.queue.find(s => s.type === 'strong')) {
+                if (player.queue.find(s => s.type === PlayerQueueType.STRONG)) {
                     // the presence of a strong script closes modals before anything runs regardless of the order
                     player.closeModal();
                 }
 
                 player.processQueues();
-                player.processTimers('normal');
-                player.processTimers('soft');
+                player.processTimers(PlayerTimerType.NORMAL);
+                player.processTimers(PlayerTimerType.SOFT);
                 player.processEngineQueue();
                 player.processInteraction();
 
@@ -530,8 +481,8 @@ class World {
                     player.closeModal();
                 }
             } catch (err) {
-                // todo: remove player safely
                 console.error(err);
+                await this.removePlayer(player);
             }
         }
         playerProcessing = Date.now() - playerProcessing;
@@ -551,7 +502,7 @@ class World {
                 player.engineQueue = [];
                 player.clearInteraction();
                 player.closeModal();
-                player.clearWalkingQueue();
+                player.unsetMapFlag();
                 player.logoutRequested = true;
                 player.setVar('lastcombat', 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
@@ -613,7 +564,7 @@ class World {
             this.players[index] = player;
             this.playerIds[pid] = index;
             player.pid = pid;
-            player.uid = ((Number(player.username37 & 0x1FFFFFn) << 11) | player.pid) >>> 0;
+            player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
 
             this.getZone(player.x, player.z, player.level).enter(player);
 
@@ -625,7 +576,7 @@ class World {
             this.newPlayers.splice(i--, 1);
 
             if (this.shutdownTick > -1) {
-                player.updateRebootTimer(this.shutdownTick - this.currentTick);
+                player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
             }
 
             if (player.client) {
@@ -731,14 +682,19 @@ class World {
                 continue;
             }
 
-            player.updateMap();
-            player.updatePlayers();
-            player.updateNpcs();
-            player.updateZones();
-            player.updateInvs();
-            player.updateStats();
+            try {
+                player.updateMap();
+                player.updatePlayers();
+                player.updateNpcs();
+                player.updateZones();
+                player.updateInvs();
+                player.updateStats();
 
-            player.encodeOut();
+                player.encodeOut();
+            } catch (err) {
+                console.error(err);
+                await this.removePlayer(player);
+            }
         }
         clientOutput = Date.now() - clientOutput;
 
@@ -778,7 +734,6 @@ class World {
             }
 
             inv.update = false;
-
 
             // Increase or Decrease shop stock
             const invType = InvType.get(inv.type);
@@ -1150,19 +1105,18 @@ class World {
         // you will pickup one of them and the other one disappears
         const zone = this.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj, receiver, -1);
-
         obj.despawn = this.currentTick;
-        const endTick = this.currentTick;
-        let future = this.futureUpdates.get(endTick);
-        if (!future) {
-            future = [];
+        obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
+        if(zone.staticObjs.includes(obj)) {
+            let future = this.futureUpdates.get(obj.respawn);
+            if (!future) {
+                future = [];
+            }
+            if (!future.includes(zone.index)) {
+                future.push(zone.index);
+            }
+            this.futureUpdates.set(obj.respawn, future);
         }
-
-        if (!future.includes(zone.index)) {
-            future.push(zone.index);
-        }
-
-        this.futureUpdates.set(endTick, future);
     }
 
     // ----
@@ -1175,7 +1129,7 @@ class World {
             let opcode = stream.g1();
 
             if (socket.decryptor) {
-                opcode = (opcode - socket.decryptor.nextInt()) & 0xFF;
+                opcode = (opcode - socket.decryptor.nextInt()) & 0xff;
                 stream.data[start] = opcode;
             }
 
@@ -1249,20 +1203,20 @@ class World {
     }
 
     getPlayerByUid(uid: number) {
-        const pid = uid & 0x7FF;
-        const name37 = (uid >> 11) & 0x1FFFFF;
+        const pid = uid & 0x7ff;
+        const name37 = (uid >> 11) & 0x1fffff;
 
         const slot = this.playerIds[pid];
         if (slot === -1) {
             return null;
         }
-        
+
         const player = this.players[slot];
         if (!player) {
             return null;
         }
 
-        if (Number(player.username37 & 0x1FFFFFn) !== name37) {
+        if (Number(player.username37 & 0x1fffffn) !== name37) {
             return null;
         }
 
@@ -1287,8 +1241,8 @@ class World {
     }
 
     getNpcByUid(uid: number) {
-        const slot = uid & 0xFFFF;
-        const type = (uid >> 16) & 0xFFFF;
+        const slot = uid & 0xffff;
+        const type = (uid >> 16) & 0xffff;
 
         const npc = this.npcs[slot];
         if (!npc || npc.type !== type) {

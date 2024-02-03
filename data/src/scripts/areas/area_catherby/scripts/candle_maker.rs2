@@ -12,7 +12,7 @@ if(testbit(%excalibur_components_progress, ^blackcandle_index) = true) {
     %excalibur_components_progress = togglebit(%excalibur_components_progress, ^blackcandle_index);
     return;
 }
-~chatnpc(happy, "Hi! Would you be interested in some of my fine candles?");
+~chatnpc(happy, "Hi! Would you be interested|in some of my fine candles?");
 def_int $option;
 if(%arthur_progress = ^arthur_spoken_morgan_lefaye) {
     $option = ~p_choice3("Have you got any black candles?", 3, "Yes please.", 1, "No thank you.", 2);

@@ -97,7 +97,7 @@
 [command,if_setobject](component $component, obj $obj, int $scale)
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
-[command,if_setmodelcolour]
+[command,if_setrecol](component $component, int $src, int $dest)
 [command,if_settabflash](int $tab)
 [command,if_setanim](component $component,seq $anim)
 [command,if_settab](interface $interface, int $tab)

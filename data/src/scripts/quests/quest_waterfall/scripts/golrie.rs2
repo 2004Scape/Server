@@ -1,0 +1,43 @@
+[opnpc1,golrie]
+// diff dialogue, comparing with video to get mesanims (seems like the whole dialogue is neutral, almost matches with OSRS: https://www.youtube.com/watch?v=D80JSlBEC6I&t=282s)
+~chatplayer(neutral, "Hello, is your name Golrie?");
+~chatnpc(neutral, "That's me. I've been stuck in here for weeks, those goblins are trying to steal my family's heirlooms. My Grandad gave me all sorts of old junk.");
+~chatplayer(neutral, "Do you mind if I have a look?");
+~chatnpc(neutral, "No, of course not.");
+if_close;
+mes("You look amongst the junk on the floor.");
+p_delay(2);
+if (inv_total(inv, glarials_pebble) < 1) { // no bank check again
+    mes("mixed with the junk on the floor you find Glarial's pebble.");
+    p_delay(2);
+    ~chatplayer(neutral, "Could I take this old pebble?");
+    ~chatnpc(neutral, "Oh that, yes have it, it's just some old elven junk I believe.");
+    if_close;
+    inv_add(inv, glarials_pebble, 1);
+    %waterfall_golrie_and_puzzle = setbit(%waterfall_golrie_and_puzzle, 0); // gonna have waterfall_addl_values, bit 0 can be golrie's key, bits 1-18 will be pillars and runes
+    if(inv_total(inv, golrie_key) > 0) {
+        mes("You give Golrie the key.");
+        inv_del(inv, golrie_key, 1);
+        p_delay(2);
+    }
+} else {
+    mes("You find nothing of interest.");
+    p_delay(2);
+    if(inv_total(inv, golrie_key) > 0) {
+        mes("You give Golrie the key.");
+        inv_del(inv, golrie_key, 1);
+        p_delay(2);
+    }
+}
+~chatnpc(neutral, "Thanks a lot for the key traveller. I think I'll wait in here until those goblins get bored and leave.");
+~chatplayer(neutral, "OK... Take care Golrie.");
+
+[label,waterfall_golrie_door_dialogue]
+switch_int(%waterfall_progress) {
+    case ^waterfall_not_started, ^waterfall_started, ^waterfall_spoken_to_hudon: 
+        ~chatnpc(neutral, "What are you doing down here?|Leave before you get yourself into trouble.");
+    case ^waterfall_opened_book_on_baxtorian:
+        ~chatplayer(neutral, "Hello, are you okay?");
+        ~chatnpc(neutral, "Oh, don't worry, I'm totally fine. I locked myself in here for protection, but I've left the key somewhere.");
+        ~chatplayer(confused, "Okay... I'll have a look for a key.");
+}

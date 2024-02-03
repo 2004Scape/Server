@@ -9,7 +9,7 @@ if (p_finduid(uid) = true) {
     %auto_retaliate = ^player_auto_retaliate_on;
     return;
 }
-queue(set_auto_retaliate, 0, 1);
+queue(set_auto_retaliate, 0, 0);
 
 [if_button,player_controls:com_3]
 if_close; // might be strongqueued in osrs
@@ -18,7 +18,7 @@ if (p_finduid(uid) = true) {
     %auto_retaliate = ^player_auto_retaliate_off;
     return;
 }
-queue(set_auto_retaliate, 0, 0);
+queue(set_auto_retaliate, 0, 1);
 
 [queue,set_auto_retaliate](int $value)
 %auto_retaliate = $value;

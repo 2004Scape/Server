@@ -300,11 +300,11 @@
 299=npc_299
 300=sedridor
 301=npc_301
-302=npc_302
-303=npc_303
-304=npc_304
-305=npc_305
-306=npc_306
+302=hadley
+303=gerald
+304=almera
+305=hudon
+306=golrie
 307=hetty
 308=npc_308
 309=0_37_53_freshfish
@@ -803,7 +803,7 @@
 802=brother_jered
 803=monk
 804=tanner
-805=npc_805
+805=master_crafter
 806=npc_806
 807=npc_807
 808=npc_808

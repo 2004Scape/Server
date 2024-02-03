@@ -1,0 +1,467 @@
+// Varp 65 Values
+// 1 After the player says "I could go and take a look for you if you like" and before Almera responds "Would you?..."
+// 2 After the player says "Maybe I could help" and before Hudon says "I'm fine alone."
+// 3 Upon opening and reading the Book on baxtorian.
+// 4 Immediately after entering Glarial's tomb at the bottom of the ladder.
+// 5 Upon first entering the waterfall dungeon which requires Glarial's amulet equipped.
+// 6 Upon first entering the puzzle room.
+// 8 Upon placing the amulet on the statue.
+// 10 After pouring the ashes into the chalice and remove the treasure. Quest complete.
+
+// Coords
+// Unwrecked raft - 2510 3494
+// Wrecked Raft - 2512 3481
+// Golrie - 2515 9575
+
+// Animations
+// 765 swimming arms up
+// 774 - rope throw, possibly called: human_throwrope
+// 776 - in water pulling rope
+// 777 - holding rope in water stationary
+
+// Spotanim, possible one of th enames: rope_piece
+// 67 rope moving through air
+
+// Locs
+// 1996 - rock no rope
+// 1997 - rock with rope
+// 1998 - rope that appears as you're swimming
+
+// Glarial's Memorial
+[oploc1,loc_1992]
+mes("The grave is covered in elven script.");
+p_delay(2);
+mes("Some of the writing is in common tongue, it reads:");
+p_delay(2);
+mes("Here lies Glarial, wife of Baxtorian,");
+p_delay(2);
+mes("true friend of nature in life and death.");
+p_delay(2);
+mes("May she now rest knowing");
+p_delay(2);
+mes("only visitors with peaceful intent can enter.");
+
+[proc,waterfall_can_enter_glarials_tomb]()(boolean)
+if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
+    | (inv_totalcat(inv, weapon_staff) > 0 | inv_totalcat(worn, weapon_staff) > 0) 
+    | (inv_totalcat(inv, armour_helmet) > 0 | inv_totalcat(worn, armour_helmet) > 0) 
+    | (inv_totalcat(inv, armour_body) > 0 | inv_totalcat(worn, armour_body) > 0) 
+    | (inv_totalcat(inv, armour_legs) > 0 | inv_totalcat(worn, armour_legs) > 0) 
+    | (inv_totalcat(inv, armour_shield) > 0 | inv_totalcat(worn, armour_shield) > 0) 
+    | (inv_totalcat(inv, armour_cape) > 0 | inv_totalcat(worn, armour_cape) > 0) 
+    | (inv_totalcat(inv, armour_godcape) > 0 | inv_totalcat(worn, armour_godcape) > 0) 
+    | (inv_totalcat(inv, weapon_slash) > 0 | inv_totalcat(worn, weapon_slash) > 0) 
+    | (inv_totalcat(inv, weapon_blunt) > 0 | inv_totalcat(worn, weapon_blunt) > 0) 
+    | (inv_totalcat(inv, weapon_stab) > 0 | inv_totalcat(worn, weapon_stab) > 0) 
+    | (inv_totalcat(inv, weapon_crossbow) > 0 | inv_totalcat(worn, weapon_crossbow) > 0) 
+    | (inv_totalcat(inv, weapon_axe) > 0 | inv_totalcat(worn, weapon_axe) > 0) 
+    | (inv_totalcat(inv, weapon_pickaxe) > 0 | inv_totalcat(worn, weapon_pickaxe) > 0) 
+    | (inv_totalcat(inv, weapon_javelin) > 0 | inv_totalcat(worn, weapon_javelin) > 0) 
+    | (inv_totalcat(inv, weapon_2h_sword) > 0 | inv_totalcat(worn, weapon_2h_sword) > 0) 
+    | (inv_totalcat(inv, weapon_spear) > 0 | inv_totalcat(worn, weapon_spear) > 0) 
+    | (inv_totalcat(inv, weapon_spiked) > 0 | inv_totalcat(worn, weapon_spiked) > 0) 
+    | (inv_totalcat(inv, weapon_thrown) > 0 | inv_totalcat(worn, weapon_thrown) > 0) 
+    | (inv_totalcat(inv, weapon_scythe) > 0 | inv_totalcat(worn, weapon_scythe) > 0) 
+    | (inv_totalcat(inv, weapon_bow) > 0 | inv_totalcat(worn, weapon_bow) > 0) 
+    | (inv_totalcat(inv, arrows) > 0 | inv_totalcat(worn, arrows) > 0)
+    | (inv_totalcat(worn, flowers) > 0) // doesn't check worn
+    | (inv_totalcat(inv, category_149) > 0) // runes
+    | (inv_total(inv, headless_arrow) > 0) // headless arrows
+    | (inv_total(inv, arrow_shaft) > 0) 
+    | (inv_total(inv, bow_string) > 0)
+    | (inv_total(inv, knife) > 0) 
+    | (inv_totalcat(inv, category_22) > 0) // logs
+    | (inv_totalcat(inv, unstrung_bow) > 0)
+    | (inv_totalcat(inv, trail_clue_easy) > 0)
+    | (inv_totalcat(inv, trail_clue_medium) > 0)
+    | (inv_totalcat(inv, trail_clue_hard) > 0)
+    | (inv_totalcat(inv, cannon_parts) > 0)) {
+    return(false);
+}
+return(true);
+
+[oplocu,loc_1992]
+if (last_useitem ! glarials_pebble) {
+    @nothing_interesting_happens;
+}
+// TODO: Check inv_totalcat for each category we need
+// Can't bring in jewelry, armour, runes, arrows, bows, or any type of logs?
+mes("You place the pebble in the gravestone's small indent.");
+mes("It fits perfectly.");
+p_delay(2);
+if (~waterfall_can_enter_glarials_tomb() = false) {
+    mes("But nothing happens.");
+} else {
+    mes("You hear a loud creak.");
+    p_delay(2);
+    mes("The stone slab slides back revealing a ladder down.");
+    p_delay(2);
+    p_teleport(0_39_153_58_52);
+    %waterfall_progress = ^waterfall_entered_glarial_tomb;
+    mes("You climb down to an undergound passage.");
+}
+
+// Glarial's grave
+[oploc1,loc_1993]
+mes("You search the coffin");
+p_delay(1); // 2t delay based off old videos
+if(inv_total(inv, glarials_urn_full) > 0) {
+    mes("You find nothing of interest.");
+    p_delay(1);
+    mes("You close the coffin.");
+    return;
+}
+mes("Inside you find an urn full of ashes.");
+p_delay(1);
+mes("You take the urn and close the coffin.");
+inv_add(inv, glarials_urn_full, 1);
+
+// Chest with amulet closed
+[oploc1,loc_1994] ~open_chest(loc_1995);
+// close chest with amulet opened
+[oploc2,loc_1995] ~close_chest(loc_1994);
+
+// search chest with amulet opened
+[oploc1,loc_1995]
+if (inv_total(inv, glarials_amulet) > 0) { // no bank or worn check
+    mes("You search the chest but find nothing.");
+} else {
+    mes("You search the chest and find a small amulet.");
+    inv_add(inv, glarials_amulet, 1);
+}
+
+// waterfall_raft
+[oploc1,loc_1987]
+switch_int (%waterfall_progress) {
+    case ^waterfall_not_started: ~mesbox("You're not sure if the raft is safe to use.|Best to leave it alone.");
+    case default: 
+        mes("You board the small raft");
+        p_delay(2);
+        mes("and you push off down stream");
+        p_delay(2);
+        p_teleport(0_39_54_16_25);
+        mes("The raft is pulled down stream by strong currents.");
+        p_delay(2);
+        mes("You crash into a small land mound");
+        p_delay(2);
+        if (%waterfall_progress = ^waterfall_started) {
+            // Forced Hudon Dialogue
+            npc_findallzone(movecoord(coord, -1, 0, 0));
+            while (npc_findnext = true) {
+                if (npc_type = hudon) {
+                    ~chatplayer(neutral, "Hello son, are you okay? You need help?");
+                    ~chatnpc(neutral, "It looks like you need the help.");
+                    ~chatplayer(neutral, "Your mum sent me to find you.");
+                    ~chatnpc(neutral, "Don't play nice with me,|I know you're looking for the treasure.");
+                    ~chatplayer(neutral, "Where is this treasure you talk of?");
+                    ~chatnpc(neutral, "Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
+                    ~chatplayer(neutral, "Maybe I could help.");
+                    %waterfall_progress = ^waterfall_spoken_to_hudon;
+                    ~chatnpc(neutral, "I'm fine alone.");
+                    mes("Hudon is refusing to leave the waterfall");
+                }
+        }
+    }
+}
+
+// Swim to rock
+[aploc1,loc_1996]
+// https://youtu.be/fMODzckAC48?si=m-XuRGIoJ8fJfeMX&t=147, no distance check, set walk anim to swim and teleport after 1 tick
+if(coordz(coord) <= coordz(loc_coord)) {
+    mes("You don't see that being any help.");
+    return;
+}
+mes("It looks like a long distance, but you swim out into the water.");
+bas_walk_f(human_swim);
+bas_readyanim(human_swim);
+buildappearance(worn);
+p_walk(movecoord(loc_coord, 0, 0, 8));
+p_delay(0);
+p_teleport(movecoord(loc_coord, 0, 0, 7));
+spotanim_map(watersplash, coord, 0, 0);
+p_delay(0);
+~agility_force_move(0, human_swim, movecoord(loc_coord, 0, 0, 4));
+bas_readyanim(human_drowning);
+buildappearance(worn);
+mes("The current is too strong, you feel yourself being pulled under");
+p_delay(3);
+~update_bas;
+mes("You are washed downstream but feel lucky to be alive.");
+p_teleport(^waterfall_fail_coord);
+
+// Rope on Rock
+[aplocu,loc_1996]
+if(last_useitem ! rope) {
+    @nothing_interesting_happens;
+}
+if(coordz(coord) <= coordz(loc_coord)) {
+    mes("You don't see that being any help.");
+    return;
+}
+def_coord $rock_coord = loc_coord;
+~forcewalk(movecoord($rock_coord, 0, 0, 8)); // respects movespeed setting (will delay player)
+p_delay(0);
+anim(seq_774, 0);
+spotanim_map(spotanim_67, movecoord($rock_coord, 0, 0, 6), 0, 20);
+p_delay(1);
+loc_del(7);
+loc_add($rock_coord, loc_1997, loc_angle, loc_shape, 7);
+def_int $i = 1;
+while($i < 8) {
+    loc_add(movecoord($rock_coord, 0, 0, $i), loc_1998, loc_angle, loc_shape, calc(8 - $i));
+    $i = calc($i + 1);
+}
+~agility_force_move(0, seq_776, movecoord(coord, 0, 0, -7));
+~agility_force_move(0, seq_776, movecoord(coord, 1, 0, -1));
+p_delay(1);
+
+// tree
+[oploc1,loc_2020] // https://www.youtube.com/watch?v=uwoCjPXgzYY
+p_arrivedelay; // arrive delay on osrs
+mes("You slip and tumble over the water fall.");
+say("Ouch!");
+sound_synth(watersplash, 0, 0); // not sure if this sound plays here originally but it does in osrs
+p_teleport(^waterfall_fail_coord);
+p_delay(2);
+mes("You are washed up by the river side.");
+~damage_self(8); // fixed (on OSRS anyways)
+
+[oplocu,loc_2020]
+if(last_useitem ! rope) {
+    @nothing_interesting_happens;
+}
+mes("You tie the rope to the tree");
+p_delay(1);
+mes("and let your self down on to the ledge.");
+p_teleport(0_39_54_15_7);
+
+[oploc1,loc_2010] // basing this off RS3, seems like RS3 mechanics for this havn't changed
+mes("The door begins to open.");
+p_delay(2);
+if(inv_total(worn, glarials_amulet) > 0) {
+    mes("You walk through the door.");
+    if(%waterfall_progress = ^waterfall_entered_glarial_tomb) {
+        %waterfall_progress = ^waterfall_entered_waterfall;
+    }
+    p_teleport(0_40_154_15_5);
+    return;
+}
+mes("Suddenly the corridor floods...");
+p_delay(2);
+mes("flushing you back into the river.");
+mes("You tumble over the waterfall...");
+sound_synth(watersplash, 0, 0); // not sure if this sound plays here originally but it does in osrs
+p_teleport(^waterfall_fail_coord);
+p_delay(0);
+say("Ouch!");
+p_delay(1);
+mes("and are washed up by the riverside.");
+~damage_self(8); // fixed (on OSRS anyways)
+
+[oploc1,loc_2000]
+mes("You open the door and walk through."); // RS3
+p_teleport(0_39_54_15_7);
+
+[oploc1,loc_2022]
+mes("You climb in the barrel and start rocking.");
+p_delay(1);
+mes("The barrel falls off the ledge.");
+p_delay(1);
+p_teleport(^waterfall_fail_coord);
+
+// waterfall_bookcase
+[oploc1,loc_1989]
+mes("You search the books...");
+p_delay(2);
+switch_int (%waterfall_progress) {
+    case ^waterfall_not_started, ^waterfall_started: mes("You find nothing of interest.");
+    case default:
+        if (inv_total(inv, book_on_baxtorian) > 0) { // no bank check
+            mes("but find nothing of interest.");
+        } else {
+            mes("You find a book named 'Book on Baxtorian'");
+            inv_add(inv, book_on_baxtorian, 1);
+        }
+}
+
+// waterfall_golrie_key_crate
+[oploc1,loc_1990]
+//https://youtu.be/D80JSlBEC6I?si=llkZ6l1gSEvJWmRV&t=247
+mes("You search the crate");
+p_delay(2);
+switch_int (%waterfall_progress) {
+    case ^waterfall_not_started, ^waterfall_started, ^waterfall_spoken_to_hudon: mes("You find nothing of interest.");
+    case default:
+        if (inv_total(inv, golrie_key) > 0) { // no bank check
+            mes("but find nothing");
+        } else {
+            mes("and find a large key");
+            inv_add(inv, golrie_key, 1);
+        }
+}
+
+// Waterfall Golrie Door
+[oploc1,loc_1991]
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+if($is_outside = false) {
+    @waterfall_golrie_door;
+} else {
+    // https://youtu.be/Xxm1QD4t_zI?si=OFqGPRjXIkbKsA7N&t=373, release OSRS, gate is locked when op1 w/key
+    // https://web.archive.org/web/20050421234850/http://www.trillionareguild.com/runescape/waterfall.php mentions golrie gives you a hint for the key (same as OSRS)
+    // OSRS auto uses the key w/op1, on RSC theres a seperate dialogue for the key but not sure if it exists/existed in RS2
+    // could be possible that the dialogue used a distance check and only sends when closer than in the video but no proof 
+    if(testbit(%waterfall_golrie_and_puzzle, 0) = true) {
+        mes("Golrie has locked himself in.");
+        return;
+    }
+    if(%waterfall_progress <= ^waterfall_opened_book_on_baxtorian & inv_total(inv, golrie_key) = 0) {
+        npc_findallzone(movecoord(coord, 0, 0, 2));
+        while (npc_findnext = true) {
+            if(npc_type = golrie) @waterfall_golrie_door_dialogue;
+        }
+    }
+    mes("The gate is locked.");
+}
+
+[oplocu,loc_1991]
+if (last_useitem = golrie_key) {
+    @waterfall_golrie_door;
+}
+@nothing_interesting_happens;
+
+[label,waterfall_golrie_door]
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_outside = true) {
+    // https://youtu.be/D80JSlBEC6I?si=Q0kEbZAo-jI7mieo&t=271, both door and the key crate has punc fixed by release OSRS (aug 2007)
+    mes("The key fits the gate");
+    p_delay(2);
+    ~open_and_close_door(loc_1541, $is_outside, false);
+    mes("You open the gate and walk through");
+} else {
+    ~open_and_close_door(loc_1541, $is_outside, false);
+}
+
+[oploc1,loc_1999]
+//https://youtu.be/D80JSlBEC6I?si=llkZ6l1gSEvJWmRV&t=247
+mes("You search the crate");
+p_delay(2);
+if (inv_total(inv, waterfall_key) > 0) { // no bank check
+    mes("but find nothing");
+} else {
+    mes("and find a large key");
+    inv_add(inv, waterfall_key, 1);
+}
+
+[oploc1,loc_2002]
+// https://youtu.be/onKjBy9Y4DY?si=oNONByPMNyXhfa5P&t=514, south door is locked on both sides for some reason
+if(~check_axis(coord, loc_coord, loc_angle) = true | coordz(coord) < 9895) {
+    mes("The door is locked.");
+    return;
+}
+~open_and_close_door(loc_2003, ~check_axis(coord, loc_coord, loc_angle), false);
+if(coordx(loc_coord) > 2600) {
+    p_delay(2);
+    p_teleport(^waterfall_original_room_door_coord);
+}
+
+[oplocu,loc_2002]
+if(last_useitem = waterfall_key) {
+    mes("You open the door and walk through.");
+    ~open_and_close_door(loc_2003, ~check_axis(coord, loc_coord, loc_angle), false);
+    if(loc_coord = 0_40_154_6_46) {
+        if(%waterfall_progress = ^waterfall_entered_waterfall) {
+            %waterfall_progress = ^waterfall_entered_puzzle_room;
+        } else if(%waterfall_progress >= ^waterfall_placed_amulet) {
+            p_delay(1);
+            p_teleport(^waterfall_raised_room_door_coord);
+        }
+    } else if(coordx(loc_coord) > 2600) {
+        p_delay(2);
+        p_teleport(^waterfall_original_room_door_coord);
+    }
+    return;
+}
+@nothing_interesting_happens;
+
+[oplocu,loc_2006]
+p_delay(0); // always 1t delay before this interaction (NOT ARRIVEDELAY)
+if(last_useitem = glarials_amulet & %waterfall_progress = ^waterfall_entered_puzzle_room) { 
+    //https://www.youtube.com/watch?v=uFkwFEKgNRc
+    mes("You place the amulet around the neck of the statue.");
+    if(getbit_range(%waterfall_golrie_and_puzzle, 1, 18) = calc(pow(2, 18) - 1)) {
+        p_delay(2);
+        mes("You hear a loud rumble from beneath...");
+        p_delay(2);
+        mes("The ground raises up before you!");
+        p_teleport(0_40_154_43_58);
+        // sound_synth -> rumbling
+        %waterfall_progress = ^waterfall_placed_amulet;
+        return;
+    }
+    mes("You hear a loud rumble...");
+    mes("A large boulder hits you on the head!");
+    cam_shake(0, 0, 5, 100);  // guessing inputs here, this has been changed on both OSRS and RS3
+    anim(seq_529, 20);
+    spotanim_pl(spotanim_74, 0, 20);
+    p_delay(2);
+    cam_reset;
+    ~damage_self(20); // OSRS wiki
+    return;
+}
+@nothing_interesting_happens;
+
+//https://www.youtube.com/watch?v=b8aojMS0VDI&t=480s, https://www.youtube.com/watch?v=qfmXXQ68pis&t=344s
+[oploc1,loc_2014]
+if(%waterfall_progress = ^waterfall_complete) {
+    mes("The chalice only contains some old ashes."); // mesbox in osrs
+    return;
+}
+mes("You hear the gushing of water.");
+p_delay(2);
+mes("Water floods into the cavern.");
+bas_readyanim(human_drowning);
+buildappearance(worn);
+p_teleport(0_39_154_43_58);
+p_delay(0);
+~agility_force_move(0, human_drowning, movecoord(coord, 0, 0, -2));
+~agility_force_move(0, human_drowning, movecoord(coord, 1, 0, -1));
+bas_readyanim(seq_528);
+buildappearance(worn);
+p_delay(9);
+~update_bas;
+mes("You are washed downstream but feel lucky to be alive.");
+p_teleport(^waterfall_fail_coord);
+
+[oplocu,loc_2014]
+if(last_useitem = glarials_urn_full) {
+    if(%waterfall_progress = ^waterfall_complete) {
+        mes("The chalice only contains some old ashes."); // mesbox in osrs
+        return;
+    }
+    if(inv_freespace(inv) < 5) {
+        mes("You do not have enough free space for the reward, you will need 5 free slots to");
+        mes("accept it.");
+        return;
+    }
+    mes("You carefully pour the ashes into the chalice");
+    p_delay(0);
+    mes("as you remove the Treasure of Baxtorian.");
+    p_delay(2);
+    inv_del(inv, glarials_urn_full, 1);
+    inv_add(inv, glarials_urn_empty, 1);
+    queue(waterfall_quest_complete, 0);
+    mes("The chalice remains standing.");
+    mes("Inside you find a mithril case");
+    mes("containing 40 seeds,");
+    mes("two diamonds and two gold bars.");
+    return;
+}
+@nothing_interesting_happens;
+
+[queue,waterfall_quest_complete]
+%waterfall_progress = ^waterfall_complete;
+inv_add(inv, diamond, 2);
+inv_add(inv, mithril_seeds, 40);
+givexp(attack, 137500);
+givexp(strength, 137500);
+~send_quest_complete(quest_journal:waterfall, diamond, 250, 1, "You have completed the Waterfall Quest!");

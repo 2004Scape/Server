@@ -1,14 +1,17 @@
 [crafting_rings]
 scope=temp
 size=6
+dummyinv=yes
 stock1=gold_ring,1,0
 
 [crafting_necklaces]
 scope=temp
 size=6
+dummyinv=yes
 stock1=gold_necklace,1,0
 
 [crafting_amulets]
 scope=temp
 size=6
+dummyinv=yes
 stock1=unstrung_gold_amulet,1,0
