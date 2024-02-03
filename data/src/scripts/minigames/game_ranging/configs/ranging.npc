@@ -284,6 +284,7 @@ param=rangebonus,49
 param=magicdefence,34
 param=rangedefence,66
 param=damagetype,^ranged_style
+huntmode=aggressive_ranged
 
 [npc_689]
 name=Tower Archer
@@ -316,6 +317,7 @@ param=rangebonus,22
 param=magicdefence,24
 param=rangedefence,40
 param=damagetype,^ranged_style
+huntmode=aggressive_ranged
 
 [npc_690]
 name=Tower Archer
@@ -348,6 +350,7 @@ param=rangebonus,31
 param=magicdefence,20
 param=rangedefence,45
 param=damagetype,^ranged_style
+huntmode=aggressive_ranged
 
 [npc_691]
 name=Tower Archer
@@ -380,6 +383,7 @@ param=rangebonus,49
 param=magicdefence,34
 param=rangedefence,66
 param=damagetype,^ranged_style
+huntmode=aggressive_ranged
 
 [npc_692]
 vislevel=hide

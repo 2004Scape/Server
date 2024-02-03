@@ -1,3 +1,5 @@
+type=overlay
+
 [wind_strike]
 type=graphic
 x=1

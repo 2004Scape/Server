@@ -1,0 +1,38 @@
+[oplocu,loc_2004] @waterfall_placerune_pillar(loc_coord, last_useitem);
+
+[label,waterfall_placerune_pillar](coord $pillar_coord, obj $rune)
+def_int $pillar_index = ~get_pillar_index($pillar_coord);
+def_int $rune_index = ~get_rune_index($rune);
+def_int $bit = calc((($pillar_index - 1) * 3) + $rune_index); // bits 1-18 to store these rune flags, 0 is for golries key
+if($pillar_index = 0 | $rune_index = 0) {
+    @nothing_interesting_happens;
+}
+if(testbit(%waterfall_golrie_and_puzzle, $bit) = true) {
+    mes("You remember putting that type of rune there."); // osrs: You've already put that type of rune on this pillar.
+    return;
+}
+inv_del(inv, $rune, 1);
+mes("You place the rune on the stand.");
+p_delay(0);
+mes("The rune stone disappears in a puff of smoke.");
+spotanim_map(spotanim_86, $pillar_coord, 160, 0); // no sound: https://youtu.be/uwoCjPXgzYY?si=WN0PVUJ6NRXnfYPl&t=1672
+%waterfall_golrie_and_puzzle = setbit(%waterfall_golrie_and_puzzle, $bit);
+
+[proc,get_pillar_index](coord $pillar_coord)(int)
+switch_coord($pillar_coord) {
+    case 0_40_154_2_54: return (1); // sw
+    case 0_40_154_2_56: return (2); // w
+    case 0_40_154_2_58: return (3); // nw
+    case 0_40_154_9_54: return (4); // se
+    case 0_40_154_9_56: return (5); // e
+    case 0_40_154_9_58: return (6); // ne
+    case default: return (0); // should be impossible generally
+}
+
+[proc,get_rune_index](obj $rune)(int)
+switch_obj($rune) {
+    case airrune: return (1);
+    case earthrune: return (2);
+    case waterrune: return (3);
+    case default: return (0);
+}

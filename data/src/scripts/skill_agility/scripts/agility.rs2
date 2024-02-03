@@ -82,6 +82,11 @@ p_delay(0);
 p_walk($dest_coord);
 p_delay($delay);
 
+// Forces the player to walk to a certain coord. Basically p_teleport but doesnt telejump from a distance.
+// doesnt respect clipping
+[proc,forcemove](coord $dest_coord)
+~agility_force_move(0, human_walk_f, $dest_coord);
+
 // Instant fail, not used as often
 [proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)
 p_telejump($fail_coord);

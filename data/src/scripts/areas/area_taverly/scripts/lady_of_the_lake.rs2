@@ -1,7 +1,7 @@
 [opnpc1,lady_of_the_lake]
 ~chatnpc(neutral, "Good day to you <text_gender("sir", "madam")>.");
 def_int $option;
-if(%arthur_progress >= ^arthur_spoken_morgan_lefaye & inv_total(inv, excalibur) = 0 & inv_total(bank, excalibur) = 0 ) {
+if(%arthur_progress >= ^arthur_spoken_morgan_lefaye & ~obj_gettotal(excalibur) = 0) {
     $option = ~p_choice3("Who are you?", 1, "Good day.", 2, "I seek the sword Excalibur.", 3);
 } else {
     $option = ~p_choice2("Who are you?", 1, "Good day.", 2);

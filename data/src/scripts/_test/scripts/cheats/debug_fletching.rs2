@@ -8,7 +8,7 @@ inv_clear(bank);
 // add a bunch of fletch items to bank
 inv_add(bank, knife, 1000);
 inv_add(bank, arrow_shaft, 1000);
-inv_add(bank, obj_53, 1000);
+inv_add(bank, headless_arrow, 1000);
 inv_add(bank, feather, 1000);
 inv_add(bank, bronze_arrowheads, 1000);
 inv_add(bank, iron_arrowheads, 1000);

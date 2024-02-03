@@ -1,0 +1,9 @@
+[label,levelup_strength]
+//Strength level up unlock messages
+switch_int(stat_base(strength)) {
+    case 5: ~objboxt(steel_warhammer,"You can now wield @dbl@Steel Warhammers@bla@!");
+    case 10: ~objboxt(black_warhammer,"You can now wield @dbl@Black Warhammers@bla@!");
+    case 20: ~objboxt(mithril_warhammer,"You can now wield @dbl@Mithril Warhammers@bla@!");
+    case 30: ~objboxt(adamant_warhammer,"You can now wield @dbl@Adamant Warhammers@bla@!");
+    case 40: ~objboxt(rune_warhammer,"You can now wield @dbl@Rune Warhammers@bla@!");
+}

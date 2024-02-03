@@ -2,7 +2,7 @@ name: Deploy to 2004scape.org website
 
 on:
   push:
-    branches: [ main ]
+    branches: [ live ]
     paths:
       - '.github/workflows/deploy-master.yml'
       - 'public/**'
@@ -31,6 +31,8 @@ jobs:
         script: |
           cd master
           pm2 stop master
+          git fetch origin
+          git checkout live
           git pull
           npm ci
           pm2 start master

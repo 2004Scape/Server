@@ -271,7 +271,8 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,You identify the herb. It is Snake Weed. // https://youtu.be/maeY2TnTNVY?t=530
+param=identified_herb_message,You identify the herb. It is Snake Weed.
+// https://youtu.be/maeY2TnTNVY?t=530
 // guessed name
 
 [ardrigal]
@@ -292,7 +293,8 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,You identify the herb. It is Ardrigal. // https://youtu.be/maeY2TnTNVY?t=898
+param=identified_herb_message,You identify the herb. It is Ardrigal.
+// https://youtu.be/maeY2TnTNVY?t=898
 // guessed name
 
 [sito_foil]
@@ -309,7 +311,8 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,You identify the herb. It is Sito Foil. // https://youtu.be/maeY2TnTNVY?t=1126
+param=identified_herb_message,You identify the herb. It is Sito Foil.
+// https://youtu.be/maeY2TnTNVY?t=1126
 // guessed name
 
 [volencia_moss]
@@ -326,7 +329,8 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,You identify the herb. It is Volencia Moss. // https://youtu.be/maeY2TnTNVY?t=1205
+param=identified_herb_message,You identify the herb. It is Volencia Moss.
+// https://youtu.be/maeY2TnTNVY?t=1205
 // guessed name
 
 [rogues_purse]
@@ -343,7 +347,8 @@ members=yes
 weight=7g
 param=identified_herb_level,3
 param=identified_herb_exp,25
-param=identified_herb_message,You identify the herb. It is Rogue's Purse. // https://youtu.be/maeY2TnTNVY?t=1493
+param=identified_herb_message,You identify the herb. It is Rogue's Purse.
+// https://youtu.be/maeY2TnTNVY?t=1493
 // jagex name
 
 [lantadyme]

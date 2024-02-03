@@ -17,6 +17,7 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 def_int $dropint = random(128);
 
+// todo: may need to redo this table, and/or add bronze_javelin (check old fan sites)
 if ($dropint < 1) {
     obj_add(npc_coord, coins, 1, ^lootdrop_duration);
 } else if ($dropint < 2) {
@@ -40,7 +41,9 @@ if ($dropint < 1) {
 } else if ($dropint < 25) {
     obj_add(npc_coord, chefshat, 1, ^lootdrop_duration);
 } else if ($dropint < 29) {
-    obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+    if (map_members = true) {
+        obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+    }
 } else if ($dropint < 34) {
     obj_add(npc_coord, bodyrune, 7, ^lootdrop_duration);
 } else if ($dropint < 39) {
@@ -51,8 +54,6 @@ if ($dropint < 1) {
     obj_add(npc_coord, hammer, 1, ^lootdrop_duration);
 } else if ($dropint < 88) {
     obj_add(npc_coord, coins, 5, ^lootdrop_duration);
-} else if ($dropint < 126) {
-    return;
 }
 
 
@@ -76,8 +77,13 @@ if ($dropint < 3) {
     obj_add(npc_coord, bronze_axe, 1, ^lootdrop_duration);
 } else if ($dropint < 4) {
     obj_add(npc_coord, bronze_scimitar, 1, ^lootdrop_duration);
-} else if ($dropint < 13 & map_members = true) {
-    obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+} else if ($dropint < 13) {
+    if (map_members = true) {
+        obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
+    } else {
+        // guessing it gets replaced
+        obj_add(npc_coord, hammer, 1, ^lootdrop_duration);
+    }
 } else if ($dropint < 16) {
     obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
 } else if ($dropint < 19) {
@@ -86,8 +92,12 @@ if ($dropint < 3) {
     obj_add(npc_coord, earthrune, 4, ^lootdrop_duration);
 } else if ($dropint < 25) {
     obj_add(npc_coord, bodyrune, 2, ^lootdrop_duration);
-} else if ($dropint < 27 & map_members = true) {
-    obj_add(npc_coord, bronze_javelin, 5, ^lootdrop_duration);
+} else if ($dropint < 27) {
+    if (map_members = true) {
+        obj_add(npc_coord, bronze_javelin, 5, ^lootdrop_duration);
+    } else {
+        obj_add(npc_coord, coins, 10, ^lootdrop_duration);
+    }
 } else if ($dropint < 28) {
     obj_add(npc_coord, chaosrune, 1, ^lootdrop_duration);
 } else if ($dropint < 29) {

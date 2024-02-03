@@ -1,5 +1,4 @@
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import { CollisionFlag, CollisionFlagMap } from '@2004scape/rsmod-pathfinder';
 
 export default class NpcCollider {
     private readonly flags: CollisionFlagMap;
@@ -8,17 +7,11 @@ export default class NpcCollider {
         this.flags = flags;
     }
 
-    change(
-        x: number,
-        z: number,
-        level: number,
-        size: number,
-        add: boolean
-    ): void {
+    change(x: number, z: number, level: number, size: number, add: boolean): void {
         const mask = CollisionFlag.NPC;
         for (let index = 0; index < size * size; index++) {
             const deltaX = x + (index % size);
-            const deltaZ = z + (index / size);
+            const deltaZ = z + index / size;
             if (add) {
                 this.flags.add(deltaX, deltaZ, level, mask);
             } else {

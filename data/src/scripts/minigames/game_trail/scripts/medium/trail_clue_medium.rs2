@@ -15,7 +15,7 @@
 [opheld1,trail_casket_medium]
 inv_del(inv, trail_casket_medium, 1);
 inv_add(inv, ~trail_clue_medium_getrandom, 1);
-~objbox(trail_clue_hard_map001, "You've found another clue!");
+~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
 
 
 [proc,trail_clue_medium_getrandom](namedobj)
@@ -25,4 +25,4 @@ return(enum(int, namedobj, trail_medium_enum, random(enum_getoutputcount(trail_m
 [proc,trail_clue_medium_loc_interact](namedobj $clue)
 inv_del(inv, $clue, 1);
 inv_add(inv, ~trail_clue_medium_getrandom, 1);
-~objbox(trail_clue_hard_map001, "You've found another clue!");
+~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");

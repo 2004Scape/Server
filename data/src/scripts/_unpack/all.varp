@@ -76,14 +76,15 @@ scope=perm
 [waterfall_progress]
 scope=perm
 
-[spell]
+[waterfall_golrie_and_puzzle]
+scope=perm
 
 [varp_69]
 
 [boat_takeoff]
 transmit=yes
 
-[varp_78]
+[spell]
 
 [xplamp]
 transmit=yes
@@ -411,11 +412,6 @@ protect=no
 
 [duel_settings]
 transmit=yes
-
-[split_privatechat]
-clientcode=8
-transmit=yes
-scope=perm
 
 [varp_288]
 

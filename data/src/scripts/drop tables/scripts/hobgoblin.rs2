@@ -98,8 +98,10 @@ if ($random < 3) {
     obj_add(npc_coord, naturerune, 4, ^lootdrop_duration);
 } else if ($random < 21) {
     obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
-} else if ($random < 22 & map_members = true) {
-    obj_add(npc_coord, iron_javelin, 5, ^lootdrop_duration);
+} else if ($random < 22) {
+    if (map_members = true) {
+        obj_add(npc_coord, iron_javelin, 5, ^lootdrop_duration);
+    }
 } else if ($random < 29) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($random < 63) {

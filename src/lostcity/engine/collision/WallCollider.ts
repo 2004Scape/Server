@@ -1,4 +1,4 @@
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
+import { CollisionFlagMap } from '@2004scape/rsmod-pathfinder';
 
 import LocShape from '#lostcity/engine/collision/LocShape.js';
 import WallStraightCollider from '#lostcity/engine/collision/wall/WallStraightCollider.js';
@@ -16,15 +16,7 @@ export default class WallCollider {
         this.wallCornerLCollider = new WallCornerLCollider(flags);
     }
 
-    change(
-        x: number,
-        z: number,
-        level: number,
-        angle: number,
-        shape: number,
-        blockrange: boolean,
-        add: boolean
-    ): void {
+    change(x: number, z: number, level: number, angle: number, shape: number, blockrange: boolean, add: boolean): void {
         switch (shape) {
             case LocShape.WALL_STRAIGHT:
                 this.wallStraightCollider.change(x, z, level, angle, blockrange, add);

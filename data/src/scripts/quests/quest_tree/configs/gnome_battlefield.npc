@@ -139,3 +139,4 @@ param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_defend
 param=attack_sound,staff_stab
 param=damagetype,^stab_style
+huntmode=cowardly

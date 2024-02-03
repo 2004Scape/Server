@@ -151,6 +151,10 @@ if (%tree_progress = ^tree_complete) {
     $questpoints = add($questpoints, ^tree_questpoints);
 }
 
+if (%waterfall_progress = ^waterfall_complete) {
+    $questpoints = add($questpoints, ^waterfall_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(quest_journal:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -185,6 +189,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(quest_journal:seaslug, %seaslug_progress, ^seaslug_complete);
 ~send_quest_progress_colour(quest_journal:arthur, %arthur_progress, ^arthur_complete);
 ~send_quest_progress_colour(quest_journal:tree, %tree_progress, ^tree_complete);
+~send_quest_progress_colour(quest_journal:waterfall, %waterfall_progress, ^waterfall_complete);
 if_settab(quest_journal, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

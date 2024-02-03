@@ -1,6 +1,11 @@
 [debugproc,loc](loc $loc)
-if ($loc = null) {
-    mes("Usage --> ::loc (name) --> ::loc magic_tree --> ::loc castlewall");
+if (map_localdev = false) {
     return;
 }
+
+if ($loc = null) {
+    @debugusage("::loc (name)", "::loc magic_tree", "::loc castlewall");
+    return;
+}
+
 loc_add(coord, $loc, 0, centrepiece_straight, 500);
