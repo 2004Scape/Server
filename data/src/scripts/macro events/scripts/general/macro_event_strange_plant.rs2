@@ -5,7 +5,7 @@ npc_anim(seq_348, 0);
 %npc_attacking_uid = uid;
 // isnt delayed on respawn in osrs
 %npc_macro_event_status = ^macro_event_appear;
-npc_settimer(45);
+npc_settimer(44);
 
 [opnpc1,macro_event_strange_plant_friendly]
 if (%npc_attacking_uid ! uid) {

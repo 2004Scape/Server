@@ -1,14 +1,33 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
-// if (afk_event = ^false) {
-//     return;
-// }
-if (~macro_event_active = true) {
+if (afk_event = ^false | ~macro_event_active = true) {
     return;
 }
 // random events arent restricted in wildy?
 // https://youtu.be/uPKaH7yg4To?t=421
 
+@macro_event_general_spawn;
+
+
+[label,macro_event_general_spawn]
+def_npc $event = ~macro_event_general;
+def_coord $event_coord = ~macro_event_coord;
+if ($event_coord = null) {
+    return;
+}
+npc_add($event_coord, $event, 100);
+@macro_event_spawn;
+
+[label,macro_event_spawn]
+switch_int (%macro_event) {
+    case ^macro_event_swarm : @macro_event_swarm_spawn;
+    case ^macro_event_strange_plant_friendly : @macro_event_strange_plant_spawn;
+    case ^macro_event_drunken_dwarf : @macro_event_drunken_dwarf_spawn;
+    case ^macro_event_genie : @macro_event_genie_spawn;
+    case ^macro_event_mysterious_old_man_general : @macro_event_mysterious_old_man_general_spawn;
+}
+
+[proc,macro_event_general]()(npc)
 def_npc $event;
 if (map_members = true) {
     %macro_event = ~random_range(1, enum_getoutputcount(general_macro_events_members));
@@ -17,26 +36,14 @@ if (map_members = true) {
     %macro_event = ~random_range(1, enum_getoutputcount(general_macro_events_free));
     $event = enum(int, npc, general_macro_events_free, %macro_event);
 }
-def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
+return($event);
 
-def_int $i = 0;
-while ($event_coord = coord) {
-    $event_coord = ~coord_lineofwalk_radius(coord, 1);
-    $i = calc($i + 1);
-    if ($i = 25) {
-
-        // after 25 tries, dont spawn anything
-        return;
-    }
+// used for skilling random events
+[proc,macro_event_general_count]()(int)
+if (map_members = true) {
+    return(enum_getoutputcount(general_macro_events_members));
 }
-npc_add($event_coord, $event, 100);
-switch_int (%macro_event) {
-    case ^macro_event_swarm : @macro_event_swarm_spawn;
-    case ^macro_event_strange_plant_friendly : @macro_event_strange_plant_spawn;
-    case ^macro_event_drunken_dwarf : @macro_event_drunken_dwarf_spawn;
-    case ^macro_event_genie : @macro_event_genie_spawn;
-    case ^macro_event_mysterious_old_man_general : @macro_event_mysterious_old_man_general_spawn;
-}
+return(enum_getoutputcount(general_macro_events_free));
 
 
 // teleports the player to a random location, using the coords in configs/macro_events_teleports.enum
@@ -138,3 +145,17 @@ if ($combat_level < 91) {
 
 return(^macro_event_cmb_159);
 
+[proc,macro_event_coord]()(coord)
+def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
+
+def_int $i = 0;
+while ($event_coord = coord) {
+    $event_coord = ~coord_lineofwalk_radius(coord, 1);
+    $i = calc($i + 1);
+    if ($i = 25) {
+
+        // after 25 tries, dont spawn anything
+        return(null);
+    }
+}
+return($event_coord);

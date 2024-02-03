@@ -1,0 +1,56 @@
+
+// based off https://youtu.be/BvZCJ7ydw1o?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=144
+[label,macro_event_zombie_spawn]
+def_npc $zombie = enum(int, npc, macro_event_zombie_levels, ~macro_event_combat_level);
+
+def_coord $zombie_coord = ~macro_event_coord;
+if ($zombie_coord = null) {
+    return;
+}
+
+npc_add($zombie_coord, $zombie, 1000); // guess
+npc_say("Brainsssss...");
+%npc_attacking_uid = uid;
+spotanim_map(spotanim_78, $zombie_coord, 0, 0);
+if (finduid(uid) = false) {
+    return;
+}
+sound_synth(zombie_moan, 0, 0);
+npc_delay(3);
+npc_setmode(opplayer2);
+
+[ai_timer,macro_event_zombie1]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_timer,macro_event_zombie2]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_timer,macro_event_zombie3]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_timer,macro_event_zombie4]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_timer,macro_event_zombie5]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_timer,macro_event_zombie6]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}

@@ -15,7 +15,6 @@ val=2,macro_event_genie
 val=3,macro_event_drunken_dwarf
 val=4,macro_event_mysterious_old_man_general
 
-
 [macro_event_zombie_levels]
 inputtype=int
 outputtype=npc

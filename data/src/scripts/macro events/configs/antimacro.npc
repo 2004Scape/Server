@@ -370,9 +370,15 @@ op2=Attack
 hasalpha=yes
 vislevel=14
 model1=model_2931_npc
-wanderrange=10
-attackrange=10
-// TODO
+wanderrange=7
+maxrange=7
+attackrange=7
+// im guessing since theres 6 types, the first starts at 10's, and hp starts at 20
+// these stats are exactly 14 combat
+hitpoints=20
+attack=10
+strength=10
+defence=10
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -381,6 +387,8 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_14
+param=combat_xp_multiplier,25
+timer=20
 
 [macro_event_zombie2]
 visonmap=no
@@ -392,9 +400,14 @@ op2=Attack
 hasalpha=yes
 vislevel=29
 model1=model_2931_npc
-wanderrange=10
-attackrange=10
-// TODO
+wanderrange=7
+maxrange=7
+attackrange=7
+// unsure about this, it lines up with 29 combat though
+hitpoints=35
+attack=23
+strength=23
+defence=23
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -403,6 +416,8 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_29
+param=combat_xp_multiplier,25
+timer=20
 
 [macro_event_zombie3]
 visonmap=no
@@ -414,9 +429,14 @@ op2=Attack
 hasalpha=yes
 vislevel=49
 model1=model_2931_npc
-wanderrange=10
-attackrange=10
-// TODO
+wanderrange=7
+maxrange=7
+attackrange=7
+// guesses
+hitpoints=55
+attack=40
+strength=40
+defence=40
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -425,6 +445,8 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_49
+param=combat_xp_multiplier,25
+timer=20
 
 [macro_event_zombie4]
 visonmap=no
@@ -436,9 +458,14 @@ op2=Attack
 hasalpha=yes
 vislevel=79
 model1=model_2931_npc
-wanderrange=10
-attackrange=10
-// TODO
+wanderrange=7
+maxrange=7
+attackrange=7
+// guesses
+hitpoints=85
+attack=65
+strength=65
+defence=65
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -447,6 +474,8 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_79
+param=combat_xp_multiplier,25
+timer=20
 
 [macro_event_zombie5]
 visonmap=no
@@ -458,9 +487,14 @@ op2=Attack
 hasalpha=yes
 vislevel=120
 model1=model_2931_npc
-wanderrange=10
-attackrange=10
-// TODO
+wanderrange=7
+maxrange=7
+attackrange=7
+// guesses
+hitpoints=120
+attack=100
+strength=100
+defence=100
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -469,6 +503,8 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_120
+param=combat_xp_multiplier,25
+timer=20
 
 [macro_event_zombie6]
 visonmap=no
@@ -480,9 +516,9 @@ op2=Attack
 hasalpha=yes
 vislevel=159
 model1=model_2931_npc
-wanderrange=10
-attackrange=10
-respawnrate=75
+wanderrange=7
+maxrange=7
+attackrange=7
 hitpoints=170
 attack=130
 strength=130
@@ -496,6 +532,8 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_159
+param=combat_xp_multiplier,25
+timer=20
 
 [macro_event_shade1]
 visonmap=no

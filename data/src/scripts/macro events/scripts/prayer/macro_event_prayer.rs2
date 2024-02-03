@@ -1,0 +1,8 @@
+[label,macro_event_prayer]
+if (random(calc(~macro_event_general_count + 2)) < ~macro_event_general_count) {
+    @macro_event_general_spawn;
+}
+
+if (random(100) < 50) { // 50% chance
+    @macro_event_zombie_spawn;
+}
