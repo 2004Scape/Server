@@ -4,6 +4,9 @@ if (npc_findhero = false) {
     return;
 }
 
+// Tertiary
+~trail_hardcluedrop(128, npc_coord);
+
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
