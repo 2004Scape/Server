@@ -1105,19 +1105,18 @@ class World {
         // you will pickup one of them and the other one disappears
         const zone = this.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj, receiver, -1);
-
         obj.despawn = this.currentTick;
-        const endTick = this.currentTick;
-        let future = this.futureUpdates.get(endTick);
-        if (!future) {
-            future = [];
+        obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
+        if(zone.staticObjs.includes(obj)) {
+            let future = this.futureUpdates.get(obj.respawn);
+            if (!future) {
+                future = [];
+            }
+            if (!future.includes(zone.index)) {
+                future.push(zone.index);
+            }
+            this.futureUpdates.set(obj.respawn, future);
         }
-
-        if (!future.includes(zone.index)) {
-            future.push(zone.index);
-        }
-
-        this.futureUpdates.set(endTick, future);
     }
 
     // ----
