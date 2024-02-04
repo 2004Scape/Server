@@ -11,6 +11,6 @@ param=productmessage,a vial
 
 [stafforb]
 param=levelrequire,46
-param=productexp,5250
+param=productexp,525
 param=product,stafforb
 param=productmessage,an orb
