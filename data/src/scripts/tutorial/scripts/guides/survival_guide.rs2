@@ -5,7 +5,7 @@ switch_int(%tutorial_progress) {
     case 30, 40: @survival_guide_fire;
     case 50: @survival_guide_look_at_menu;
     case 60: @survival_guide_fishing;
-    case 70, 80: @survival_guide_fishing_after_burning;
+    case 70, 80, 90: @survival_guide_fishing_after_burning;
     case default: @surivial_guide_recap;
 }
 
@@ -39,6 +39,19 @@ if (inv_total(inv, tinderbox) < 1) {
     ~objboxt(tinderbox, "The Survival Guide gives you a @dbl@tinderbox@bla@!");
 }
 
+[proc,survival_guide_replace_items_no_objboxes]
+if (inv_total(inv, bronze_axe) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, bronze_axe, 1);
+}
+
+if (inv_total(inv, tinderbox) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, tinderbox, 1);
+}
+
+if (inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, net, 1);
+}
+
 [label,survival_guide_fishing]
 ~chatnpc(neutral, "There's nothing like a good fire to warm the bones.|Next thing is getting food in our bellies. We'll need|something to cook. There are shrimp in the pond there.|So let's catch and cook some.");
 npc_findallzone(0_48_48_29_20);
@@ -54,9 +67,11 @@ inv_add(inv, net, 1);
 
 // https://youtu.be/TSx2-jjPeIs?t=31
 [label,survival_guide_fishing_after_burning]
+~survival_guide_replace_items_no_objboxes;
 ~chatnpc(neutral, "Hello again. Next thing is getting food in our bellies. We'll need something to cook. There are shrimp in the pond there. So let's catch and cook some.");
 
 [label,surivial_guide_recap]
+~survival_guide_replace_items_no_objboxes;
 ~chatnpc(quiz, "Hello again. Is there something you'd like to hear more about?");
 ~survival_recap_previous_options;
 
