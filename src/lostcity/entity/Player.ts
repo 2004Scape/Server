@@ -2174,6 +2174,10 @@ export default class Player extends PathingEntity {
         this.weakQueue = [];
         // this.activeScript = null;
 
+        if (!this.delayed()) {
+            this.protect = false;
+        }
+
         if (this.modalState === 0) {
             return;
         }

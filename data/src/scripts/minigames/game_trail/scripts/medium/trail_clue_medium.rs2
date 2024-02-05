@@ -13,8 +13,8 @@
 // TODO
 
 [opheld1,trail_casket_medium]
-inv_del(inv, trail_casket_medium, 1);
-inv_add(inv, ~trail_clue_medium_getrandom, 1);
+inv_delslot(inv, last_slot);
+inv_setslot(inv, last_slot, ~trail_clue_medium_getrandom, 1);
 ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
 
 
