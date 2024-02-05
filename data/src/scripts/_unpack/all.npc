@@ -1831,6 +1831,7 @@ param=damagetype,^stab_style
 param=attack_anim,spider_attack
 param=defend_anim,spider_block
 param=death_anim,spider_death
+param=death_drop,null
 
 [npc_62]
 walkanim=giantspider_walk
@@ -2431,6 +2432,7 @@ param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,ashes
+category=black_demon
 huntmode=cowardly
 
 [golem]
@@ -3044,6 +3046,7 @@ param=damagetype,^slash_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=death_drop,null
 huntmode=cowardly
 
 [npc_108]
@@ -10296,6 +10299,7 @@ param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,ashes
+category=black_demon
 huntmode=cowardly
 
 [imp]
