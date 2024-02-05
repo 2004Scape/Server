@@ -22,21 +22,25 @@ switch_int(%tutorial_progress) {
 ~chatnpc(neutral, "Next up you need to make a fire. First, you'll need to cut down a tree to get some logs.");
 @survival_guide_replace_items;
 
+// basing these obj boxes off this from 2005
+// https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial8.gif
+// https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial10.gif
+// Looks like the exclamation points don't switch back to black.
 [label,survival_guide_replace_items]
 if (inv_total(inv, bronze_axe) < 1 & inv_total(inv, tinderbox) < 1) {
     inv_add(inv, bronze_axe, 1);
     inv_add(inv, tinderbox, 1);
-    ~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a @dbl@tinderbox@bla@ and a @dbl@bronze axe@bla@!");
+    ~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
 }
 
 if (inv_total(inv, bronze_axe) < 1) {
     inv_add(inv, bronze_axe, 1);
-    ~objboxt(bronze_axe, "The Survival Guide gives you a @dbl@bronze axe@bla@!");
+    ~objboxt(bronze_axe, "The Survival Guide gives you a |@blu@Bronze Hatchet!");
 }
 
 if (inv_total(inv, tinderbox) < 1) {
     inv_add(inv, tinderbox, 1);
-    ~objboxt(tinderbox, "The Survival Guide gives you a @dbl@tinderbox@bla@!");
+    ~objboxt(tinderbox, "The Survival Guide gives you a |@blu@Tinderbox!");
 }
 
 [proc,survival_guide_replace_items_no_objboxes]
@@ -60,8 +64,9 @@ while (npc_findnext = true) {
         hint_npc(npc_uid);
     }
 }
-~objbox(net, "The Survival Guide gives you a @blu@Net@bla@!");
+~survival_guide_replace_items_no_objboxes;
 inv_add(inv, net, 1);
+~objbox(net, "The Survival Guide gives you a |@blu@Net!");
 %tutorial_progress = 70;
 ~tutorial_step_16_catch_shrimp;
 
