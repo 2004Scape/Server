@@ -2022,7 +2022,7 @@ export default class Player extends PathingEntity {
                     }
                 }
 
-                this.executeScript(ScriptRunner.init(script, this, null, null, params), true);
+                this.executeScript(ScriptRunner.init(script, this, null, null, params), false);
                 break;
             }
         }
@@ -3839,8 +3839,11 @@ export default class Player extends PathingEntity {
     }
 
     executeScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
+        // console.log('Executing', script.script.info.scriptName);
+
         const state = this.runScript(script, protect, force);
         if (state === -1) {
+            // console.log('Script did not run', script.script.info.scriptName, protect, this.protect);
             return;
         }
 

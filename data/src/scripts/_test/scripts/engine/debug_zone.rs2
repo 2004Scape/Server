@@ -1,8 +1,4 @@
 [debugproc,zone]
-if (map_localdev = false) {
-    return;
-}
-
 def_int $x = coordx(coord);
 def_int $z = coordz(coord);
 
@@ -10,4 +6,3 @@ def_int $zoneX = divide($x, pow(2, 3));
 def_int $zoneZ = divide($z, pow(2, 3));
 
 mes("Zone: <tostring($zoneX)>_<tostring($zoneZ)>");
-

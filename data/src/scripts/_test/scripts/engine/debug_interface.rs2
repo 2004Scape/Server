@@ -4,3 +4,10 @@ if (map_localdev = false | $interface = null) {
 }
 
 if_openmainmodal($interface);
+
+[debugproc,close]
+if (map_localdev = false) {
+    return;
+}
+
+if_close;

@@ -1,0 +1,106 @@
+[label,tut_light_logs_ground]
+def_obj $log = obj_type;
+def_int $level = oc_param($log, levelrequire);
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// check if the coord is already occupied by an interactable loc
+// unconfirmed
+if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
+    // https://youtu.be/ui3I-OPLqzE?t=253 doesn't use the mesbox
+    mes("You can't light a fire here.");
+    return;
+}
+// check if they have tinderbox
+if(inv_total(inv, tinderbox) < 0) {
+    mes("You need a tinderbox to light a fire.");
+    return;
+}
+p_delay(0);
+anim(human_createfire, 0);
+sound_synth(tinderbox_strike, 0, 0);
+~tutorial_please_wait_firemaking;
+p_delay(3);
+sound_synth(tinderbox_strike, 0, 0);
+p_delay(2);
+anim(null, 0);
+@tut_firemaking_move_and_delay($log);
+
+[label,tut_light_logs_inv](int $slot)
+def_obj $log = inv_getobj(inv, $slot);
+def_int $level = oc_param($log, levelrequire);
+
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// check if the coord is already occupied by an interactable loc
+if (map_locaddunsafe(coord) = true | map_blocked(coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+if (~inzone_coord_pair_table(bank_zones, coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+// check if they have tinderbox
+if(inv_total(inv, tinderbox) < 0) {
+    mes("You need a tinderbox to light a fire.");
+    return;
+}
+
+p_delay(0);
+anim(human_createfire, 0);
+sound_synth(tinderbox_strike, 0, 0);
+obj_add(coord, $log, 1, ^lootdrop_duration);
+inv_delslot(inv, $slot);
+~tutorial_please_wait_firemaking;
+p_delay(3);
+sound_synth(tinderbox_strike, 0, 0);
+p_delay(2);
+anim(null, 0);
+@tut_firemaking_move_and_delay($log);
+
+[label,tut_firemaking_move_and_delay](obj $log)
+def_coord $fire_coord = obj_coord;
+~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, 1), $log,
+    ~tut_firemaking_move($fire_coord, movecoord(coord, 0, 0, -1), $log,
+        ~tut_firemaking_move($fire_coord, movecoord(coord, 1, 0, 0), $log,
+            ~tut_firemaking_move($fire_coord, movecoord(coord, -1, 0, 0), $log, true
+            )
+        )
+    )
+);
+p_delay(0);
+@tut_firemaking_success($fire_coord, $log);
+
+[proc,tut_firemaking_move](coord $fire_coord, coord $move_coord, obj $log, boolean $first_from_opheld)(boolean)
+// firemaking length: https://archive.is/zF5hb
+// if player isnt standing on the log anymore, the fire is lit
+if (lineofwalk(coord, $move_coord) = true) {
+    p_teleport($move_coord);
+    if ($first_from_opheld = true) {
+        $first_from_opheld = false;
+    }
+}
+if (coord ! $fire_coord) {
+    @tut_firemaking_success($fire_coord, $log);
+}
+return ($first_from_opheld);
+
+[label,tut_firemaking_success](coord $fire_coord, obj $log)
+obj_del();
+~tutorial_give_xp(firemaking, oc_param($log, productexp));
+sound_synth(fire_lit, 0, 0);
+facesquare($fire_coord);
+if (%tutorial_progress = 40) {
+    %tutorial_progress = 50;
+    ~tutorial_step_you_gained_experience;
+} else {
+    ~set_tutorial_progress;
+}
+def_int $delay = 150;
+loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
+world_delay($delay);
+obj_add($fire_coord, ashes, 1, 100);

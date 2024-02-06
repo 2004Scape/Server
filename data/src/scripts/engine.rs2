@@ -156,6 +156,7 @@
 [command,setmovecheck]
 [command,clearqueue](queue $queue)
 [command,afk_event]()(int)
+[command,lowmemory]()(boolean)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
