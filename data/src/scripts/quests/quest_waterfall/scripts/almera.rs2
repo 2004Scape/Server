@@ -12,7 +12,7 @@ switch_int(%waterfall_progress) {
                 ~chatnpc(confused, "It's my son Hudon, he's always getting into trouble.|The boy's convinced there's hidden treasure in the river|and I'm a bit worried about his safety,|the poor lad can't even swim.");
                 ~chatplayer(confused, "I could go and take a look for you if you like?");
                 %waterfall_progress = ^waterfall_started;
-                ~send_quest_progress(quest_journal:waterfall, %waterfall_progress, ^waterfall_complete);
+                ~send_quest_progress(questlist:waterfall, %waterfall_progress, ^waterfall_complete);
                 ~chatnpc(happy, "Would you? You are kind.|You can use the small raft out back if you wish,|do be careful, the current down stream is very strong.");
         }
     case ^waterfall_started:

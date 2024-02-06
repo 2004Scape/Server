@@ -2,7 +2,7 @@
 //Herblore level up unlock messages
 switch_int(stat_base(herblore)) {
     case 3: ~objboxb(3dose1attack, "You can now make @dbl@attack potions@bla@. You can now identify @dbl@guam leaf, snake weed @bla@and @dbl@rogues purse@bla@.");
-    case 5: ~objbox2(3doseantipoison,marentill,"You can now make @dbl@antipoison potions@bla@. You can now identify @dbl@marrentill@bla@.");
+    case 5: ~doubleobjbox(3doseantipoison,marentill,"You can now make @dbl@antipoison potions@bla@. You can now identify @dbl@marrentill@bla@.");
     case 11: ~objboxt(tarromin,"You can now identify @dbl@tarromin@bla@.");
     case 12: ~objboxb(3dose1strength,"You can now make @dbl@strength potions@bla@.");
     case 20: ~objboxt(harralander,"You can now identify @dbl@harralander@bla@.");
@@ -12,7 +12,7 @@ switch_int(stat_base(herblore)) {
     case 38: ~objboxb(3doseprayerrestore,"You can now make @dbl@prayer restore potions@bla@.");
     case 40: ~objboxt(irit_leaf,"You can now identify @dbl@irit leaf@bla@.");
     case 45: ~objboxb(3dose2attack,"You can now make @dbl@super attack potions@bla@.");
-    case 48: ~objbox2(3dose2antipoison,avantoe,"You can now make @dbl@super antipoison potions@bla@. You can now identify @dbl@avantoe@bla@.");
+    case 48: ~doubleobjbox(3dose2antipoison,avantoe,"You can now make @dbl@super antipoison potions@bla@. You can now identify @dbl@avantoe@bla@.");
     case 50: ~objboxb(3dosefisherspotion,"You can now make @dbl@fishing potions@bla@.");
     case 54: ~objboxt(kwuarm,"You can now identify @dbl@kwuarm@bla@.");
     case 56: ~objboxb(3dose2strength,"You can now make @dbl@super strength potions@bla@.");

@@ -41,7 +41,7 @@ switch_int(~p_choice4("Sorry, I haven't got any.", 1, "Go get a job!", 2, "Ok. H
             }
             if(%blackarmgang_progress = 0) {
                 %blackarmgang_progress = 1;
-                ~send_quest_progress(quest_journal:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);
+                ~send_quest_progress(questlist:blackarmgang, %blackarmgang_progress, ^blackarmgang_complete);
             }
             ~chatnpc(neutral, "You never know.|You'll find a lady down there called Katrine.|Speak to her.");
             ~chatnpc(neutral, "But don't upset her, she's pretty dangerous.");

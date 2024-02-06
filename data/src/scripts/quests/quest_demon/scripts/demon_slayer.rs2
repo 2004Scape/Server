@@ -10,15 +10,15 @@
 
 [proc,update_demon_progress]
 %demon_progress = calc(%demon_progress + 1);
-~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
+~send_quest_progress(questlist:demon, %demon_progress, ^demon_complete);
 
 [proc,set_demon_progress](int $stage)
 %demon_progress = $stage;
-~send_quest_progress(quest_journal:demon, %demon_progress, ^demon_complete);
+~send_quest_progress(questlist:demon, %demon_progress, ^demon_complete);
 
 [queue,demon_slayer_complete]
 ~update_demon_progress;
-~send_quest_complete(quest_journal:demon, silverlight, 250, ^demon_questpoints, "You have completed the\\nDemon Slayer Quest!");
+~send_quest_complete(questlist:demon, silverlight, 250, ^demon_questpoints, "You have completed the\\nDemon Slayer Quest!");
 
 // Search Drain
 [oploc1,varrock_palace_sewer_drain]

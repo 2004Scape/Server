@@ -65,7 +65,7 @@ if($option = 1) {
     ~chatnpc(angry, "GAH! I didn't mean to tell you that! Look, just forget I said anything okay?");
     ~chatplayer(quiz, "So a leprechaun knows where Zanaris is eh?");
     %zanaris_progress = ^zanaris_started;
-    ~send_quest_progress(quest_journal:zanaris, %zanaris_progress, ^zanaris_complete);
+    ~send_quest_progress(questlist:zanaris, %zanaris_progress, ^zanaris_complete);
     ~chatnpc(confused, "Ye.. uh, no. No, not at all. And even if he did - which he doesn't - he DEFINITELY ISN'T hiding in some tree around here. Nope, definitely not. Honestly.");
     ~chatplayer(happy, "Thanks for the help!");
     ~chatnpc(confused, "Help? What help? I didn't help! Please don't say I did, I'll get in trouble!");

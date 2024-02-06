@@ -1,9 +1,9 @@
 [opheld1,trail_clue_medium_map001]
-~full_trail_readclue_map(trail_medium_map001);
+~full_trail_readclue_map(trail_map03);
 
 // This clue is flagged as unobtainable in information frmo @Hlwys.
 [opheld1,trail_clue_medium_map002]
-~full_trail_readclue_map(trail_medium_map002);
+~full_trail_readclue_map(trail_map04);
 
 [opheld1,_trail_clue_medium]
 ~full_trail_readclue(oc_param(last_item, trail_desc));

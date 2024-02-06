@@ -6,34 +6,36 @@ if ($lines = 0) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = tutorialstep;
-    if_settext(tutorialstep:line1, split_get($page, 0));
-    if_settext(tutorialstep:line2, "");
-    if_settext(tutorialstep:line3, "");
-    if_settext(tutorialstep:line4, "");
+    $interface = tutorial_text;
+    if_settext(tutorial_text:line1, split_get($page, 0));
+    if_settext(tutorial_text:line2, "");
+    if_settext(tutorial_text:line3, "");
+    if_settext(tutorial_text:line4, "");
 } else if ($lines = 2) {
-    $interface = tutorialstep;
-    if_settext(tutorialstep:line1, split_get($page, 0));
-    if_settext(tutorialstep:line2, split_get($page, 1));
-    if_settext(tutorialstep:line3, "");
-    if_settext(tutorialstep:line4, "");
+    $interface = tutorial_text;
+    if_settext(tutorial_text:line1, split_get($page, 0));
+    if_settext(tutorial_text:line2, split_get($page, 1));
+    if_settext(tutorial_text:line3, "");
+    if_settext(tutorial_text:line4, "");
 } else if ($lines = 3) {
-    $interface = tutorialstep;
-    if_settext(tutorialstep:line1, split_get($page, 0));
-    if_settext(tutorialstep:line2, split_get($page, 1));
-    if_settext(tutorialstep:line3, split_get($page, 2));
-    if_settext(tutorialstep:line4, "");
+    $interface = tutorial_text;
+    if_settext(tutorial_text:line1, split_get($page, 0));
+    if_settext(tutorial_text:line2, split_get($page, 1));
+    if_settext(tutorial_text:line3, split_get($page, 2));
+    if_settext(tutorial_text:line4, "");
 } else if ($lines = 4) {
-    $interface = tutorialstep;
-    if_settext(tutorialstep:line1, split_get($page, 0));
-    if_settext(tutorialstep:line2, split_get($page, 1));
-    if_settext(tutorialstep:line3, split_get($page, 2));
-    if_settext(tutorialstep:line4, split_get($page, 3));
+    $interface = tutorial_text;
+    if_settext(tutorial_text:line1, split_get($page, 0));
+    if_settext(tutorial_text:line2, split_get($page, 1));
+    if_settext(tutorial_text:line3, split_get($page, 2));
+    if_settext(tutorial_text:line4, split_get($page, 3));
 }
 if_openchatsticky($interface);
 
+// Updated the split init to match what's shown in this 2006 vid
+// https://youtu.be/Quwc_TfPW8Q?t=33
 [proc,tutorialstep](string $title, string $string)
-if_settext(tutorialstep:title, $title);
+if_settext(tutorial_text:title, $title);
 split_init($string, 450, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;

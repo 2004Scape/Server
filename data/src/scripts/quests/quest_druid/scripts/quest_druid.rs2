@@ -26,7 +26,7 @@ if($option = 1) {
 %druid_progress = 1;
 ~chatnpc("default", "Excellent. Go to the village south of this place and speak|to my fellow druid, Sanfew, who is working on the|purification ritual. He knows what is required to|complete it.");
 ~chatplayer(neutral, "Will do.");
-~send_quest_progress(quest_journal:druid, %druid_progress, ^druid_complete);
+~send_quest_progress(questlist:druid, %druid_progress, ^druid_complete);
 
 [label,druid_not_interested]
 ~chatplayer(confused, "No, that doesn't sound very interesting.");
@@ -88,7 +88,7 @@ queue(druid_quest_complete, 0);
 [queue,druid_quest_complete]
 %druid_progress = ^druid_complete;
 givexp(herblore, 2500);
-~send_quest_complete(quest_journal:druid, marentill, 220, ^druid_questpoints, "You have completed the\\nDruidic Ritual Quest!");
+~send_quest_complete(questlist:druid, marentill, 220, ^druid_questpoints, "You have completed the\\nDruidic Ritual Quest!");
 
 [oplocu,druid_cauldron]
 p_arrivedelay;

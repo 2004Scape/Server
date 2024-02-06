@@ -1,3 +1,0 @@
-[debugproc,energy]
-healenergy(10000); // 100=1%, 1000=10%, 10000=100%
-%player_run = ^player_run_on;

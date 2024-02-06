@@ -43,7 +43,7 @@ switch_int (~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, 
             case 0:
                 ~chatnpc(happy, "That's lucky, I need someone to do a quest for me.");
                 %priest_progress = ^priest_started;
-                ~send_quest_progress(quest_journal:priest, %priest_progress, ^priest_complete);
+                ~send_quest_progress(questlist:priest, %priest_progress, ^priest_complete);
                 ~chatplayer(happy, "Ok, let me help then.");
                 ~chatnpc(happy, "Thank you. The problem is, there is a ghost in the church graveyard: I would like you to get rid of it.");
                 ~chatnpc(happy, "If you need any help, my friend Father Urhney is an expert on ghosts.");
