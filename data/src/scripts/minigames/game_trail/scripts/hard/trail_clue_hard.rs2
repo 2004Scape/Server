@@ -1,5 +1,5 @@
 [opheld1,trail_clue_hard_map001]
-~full_trail_readclue_map(trail_hard_map001);
+~full_trail_readclue_map(trail_map05);
 
 [opheld1,trail_clue_hard_riddle_exp011]
 ~full_trail_readclue(oc_param(last_item,trail_desc));

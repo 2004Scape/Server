@@ -127,13 +127,13 @@ $interface_item1, $interface_item2, $interface_item3 = db_getfield($leather_data
 // open interface
 def_string $color = db_getfield($leather_data, dhide_interface_table:color, 0);
 // :) https://i.imgur.com/pYZyKE8.png
-// def_namedobj $choice = ~objdialog3(
+// def_namedobj $choice = ~multiobj3(
 //     "What would you like to make?", 
 //     $interface_item1, 1, -19, 155, "<$color> body", -7, 0, 
 //     $interface_item2, 1, -23, 180, "<$color> vambraces", 1, -6, 
 //     $interface_item3, 2, -22, 180, "<$color> chaps", 3, -3
 // );
-def_namedobj $choice = ~objdialog3_close(
+def_namedobj $choice = ~multiobj3_close(
     "What would you like to make?", 
     $interface_item1, 175, "Dragonhide Body.",
     $interface_item2, 175, "Dragonhide Vambraces.",

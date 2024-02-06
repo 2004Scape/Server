@@ -48,7 +48,7 @@ givexp(crafting, 200);
 
 [label,craft_glass_interface]
 ~require_members_feature;
-def_namedobj $item = ~objdialog3 ("What would you like to make?", 
+def_namedobj $item = ~multiobj3 ("What would you like to make?", 
     beer_glass, 0, 5, 200, "Beer Glass", 0, 0,
     vial_empty, 2, 10, 180, "Vial", 0, 0,
     stafforb, 2, -10, 200, "Orb", 0, 0
