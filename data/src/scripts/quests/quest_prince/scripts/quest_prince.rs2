@@ -11,7 +11,7 @@ if($option = 1) {
     ~chatplayer(happy, "Can I help you? You must need some help here in the desert.");
     ~chatnpc(happy, "I need the services of someone, yes. If you are interested, see the spymaster, Osman. I manage the finances here. Come to me when you need payment.");
     %prince_progress = 1;
-    ~send_quest_progress(quest_journal:prince, %prince_progress, 8);
+    ~send_quest_progress(questlist:prince, %prince_progress, 8);
 } else if($option = 2) {
     ~chatplayer(sad, "It's just too hot here. How can you stand it?");
     ~chatnpc(default, "We manage, in our humble way. We are a wealthy town and we have water. It cures many thirsts.");
@@ -405,7 +405,7 @@ queue(prince_complete, 0);
 
 [queue,prince_complete]
 %prince_progress = ^prince_complete;
-~send_quest_complete(quest_journal:prince, coins, 250, ^prince_questpoints, "You have completed the\\nPrince Ali Rescue Quest!");
+~send_quest_complete(questlist:prince, coins, 250, ^prince_questpoints, "You have completed the\\nPrince Ali Rescue Quest!");
 inv_add(inv, coins, 700);
 
 [ai_timer,npc_921]

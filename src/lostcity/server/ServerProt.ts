@@ -2,7 +2,7 @@ import Packet from '#jagex2/io/Packet.js';
 
 import TextEncoder from '#jagex2/jstring/TextEncoder.js';
 
-import IfType from '#lostcity/cache/IfType.js';
+import Component from '#lostcity/cache/Component.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
@@ -199,7 +199,7 @@ export const ServerProtEncoders: {
         buf.p2(com);
     },
     [ServerProt.UPDATE_INV_FULL]: (buf: Packet, com: number, inv: Inventory) => {
-        const comType = IfType.get(com);
+        const comType = Component.get(com);
         const size = Math.min(inv.capacity, comType.width * comType.height);
 
         // todo: size should be the index of the last non-empty slot

@@ -129,6 +129,11 @@
         element.textContent = filtering ? "Auto scaling" : "Pixel scaling";
       }
 
+      function saveScreenshot() {
+        document.getElementById('screenshot').download = 'screenshot-' + Math.floor(Date.now() / 1000) + '.png';
+        document.getElementById('screenshot').href = document.getElementById('game').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+      }
+
       window.onload = () => {
         let canvas = document.getElementById('game');
         canvas.style.imageRendering = 'auto';
@@ -144,7 +149,8 @@
         This browser is not capable of running the Modern Web Client. Please use one of the other web options or download the <a href="/downloads" target="_blank" rel="noreferrer noopener">Desktop Client</a>.
       </canvas><br />
       <a href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> | 
-      <a href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a>
+      <a href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
+      <a href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a>
     </center>
   </body>
 </html>

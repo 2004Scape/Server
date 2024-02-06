@@ -22,22 +22,22 @@ mes("Sending trade offer...");
 %tradepartner = .uid;
 
 if (.%tradepartner = uid) {
-    if_settext(trade:status, "");
-    if_settext(trade:otherplayer, "Trading With: <.displayname>");
+    if_settext(trademain:status, "");
+    if_settext(trademain:otherplayer, "Trading With: <.displayname>");
     inv_clear(tempinv);
-    inv_transmit(tempinv, trade:inv);
-    invother_transmit(.uid, tempinv, trade:otherinv);
-    inv_transmit(inv, trade_offer:inv);
+    inv_transmit(tempinv, trademain:inv);
+    invother_transmit(.uid, tempinv, trademain:otherinv);
+    inv_transmit(inv, tradeside:inv);
 
-    .if_settext(trade:status, "");
-    .if_settext(trade:otherplayer, "Trading With: <displayname>");
+    .if_settext(trademain:status, "");
+    .if_settext(trademain:otherplayer, "Trading With: <displayname>");
     .inv_clear(tempinv);
-    .inv_transmit(tempinv, trade:inv);
-    .invother_transmit(uid, tempinv, trade:otherinv);
-    .inv_transmit(inv, trade_offer:inv);
+    .inv_transmit(tempinv, trademain:inv);
+    .invother_transmit(uid, tempinv, trademain:otherinv);
+    .inv_transmit(inv, tradeside:inv);
 
-    if_openmainmodalsideoverlay(trade, trade_offer);
-    .if_openmainmodalsideoverlay(trade, trade_offer);
+    if_openmainmodalsideoverlay(trademain, tradeside);
+    .if_openmainmodalsideoverlay(trademain, tradeside);
 
     %tradestatus = 0;
     .%tradestatus = 0;
@@ -45,18 +45,18 @@ if (.%tradepartner = uid) {
     .mes("<displayname>:tradereq:");
 }
 
-[if_button,trade:accept]
+[if_button,trademain:accept]
 %tradestatus = 1;
 
 if (.finduid(%tradepartner) = true) {
     if (.%tradestatus = 1) {
-        inv_stoptransmit(trade:inv);
-        inv_stoptransmit(trade:otherinv);
-        inv_stoptransmit(trade_offer:inv);
+        inv_stoptransmit(trademain:inv);
+        inv_stoptransmit(trademain:otherinv);
+        inv_stoptransmit(tradeside:inv);
 
-        .inv_stoptransmit(trade:inv);
-        .inv_stoptransmit(trade:otherinv);
-        .inv_stoptransmit(trade_offer:inv);
+        .inv_stoptransmit(trademain:inv);
+        .inv_stoptransmit(trademain:otherinv);
+        .inv_stoptransmit(tradeside:inv);
 
         // check if contents of tempinv fits in other player's inv
         def_int $size = inv_size(tempinv);
@@ -101,54 +101,54 @@ if (.finduid(%tradepartner) = true) {
 
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
         if ($tempinvused < 1) {
-            if_settext(trade_confirm:inv_nothing, "Absolutely nothing!");
-            .if_settext(trade_confirm:otherinv_nothing, "Absolutely nothing!");
+            if_settext(tradeconfirm:inv_nothing, "Absolutely nothing!");
+            .if_settext(tradeconfirm:otherinv_nothing, "Absolutely nothing!");
         } else if ($tempinvused < 14) {
-            if_settext(trade_confirm:inv_nothing, "");
-            .if_settext(trade_confirm:otherinv_nothing, "");
+            if_settext(tradeconfirm:inv_nothing, "");
+            .if_settext(tradeconfirm:otherinv_nothing, "");
 
-            inv_transmit(tempinv, trade_confirm:inv1);
-            .invother_transmit(uid, tempinv, trade_confirm:otherinv1);
+            inv_transmit(tempinv, tradeconfirm:inv1);
+            .invother_transmit(uid, tempinv, tradeconfirm:otherinv1);
         } else {
-            if_settext(trade_confirm:inv_nothing, "");
-            .if_settext(trade_confirm:otherinv_nothing, "");
+            if_settext(tradeconfirm:inv_nothing, "");
+            .if_settext(tradeconfirm:otherinv_nothing, "");
 
-            inv_transmit(tempinv, trade_confirm:inv2);
-            .invother_transmit(uid, tempinv, trade_confirm:otherinv2);
+            inv_transmit(tempinv, tradeconfirm:inv2);
+            .invother_transmit(uid, tempinv, tradeconfirm:otherinv2);
         }
 
         def_int $other_tempinvused = sub(inv_size(tempinv), .inv_freespace(tempinv));
         if ($other_tempinvused < 1) {
-            if_settext(trade_confirm:otherinv_nothing, "Absolutely nothing!");
-            .if_settext(trade_confirm:inv_nothing, "Absolutely nothing!");
+            if_settext(tradeconfirm:otherinv_nothing, "Absolutely nothing!");
+            .if_settext(tradeconfirm:inv_nothing, "Absolutely nothing!");
         } else if ($other_tempinvused < 14) {
-            if_settext(trade_confirm:otherinv_nothing, "");
-            .if_settext(trade_confirm:inv_nothing, "");
+            if_settext(tradeconfirm:otherinv_nothing, "");
+            .if_settext(tradeconfirm:inv_nothing, "");
 
-            invother_transmit(.uid, tempinv, trade_confirm:otherinv1);
-            .inv_transmit(tempinv, trade_confirm:inv1);
+            invother_transmit(.uid, tempinv, tradeconfirm:otherinv1);
+            .inv_transmit(tempinv, tradeconfirm:inv1);
         } else {
-            if_settext(trade_confirm:otherinv_nothing, "");
-            .if_settext(trade_confirm:inv_nothing, "");
+            if_settext(tradeconfirm:otherinv_nothing, "");
+            .if_settext(tradeconfirm:inv_nothing, "");
 
-            invother_transmit(.uid, tempinv, trade_confirm:otherinv2);
-            .inv_transmit(tempinv, trade_confirm:inv2);
+            invother_transmit(.uid, tempinv, tradeconfirm:otherinv2);
+            .inv_transmit(tempinv, tradeconfirm:inv2);
         }
 
-        if_openmainmodal(trade_confirm);
-        .if_openmainmodal(trade_confirm);
+        if_openmainmodal(tradeconfirm);
+        .if_openmainmodal(tradeconfirm);
 
         %tradestatus = 2;
         .%tradestatus = 2;
     } else {
-        if_settext(trade:status, "Waiting for other player");
+        if_settext(trademain:status, "Waiting for other player");
     }
 }
 
-[if_close,trade]
-inv_stoptransmit(trade:inv);
-inv_stoptransmit(trade:otherinv);
-inv_stoptransmit(trade_offer:inv);
+[if_close,trademain]
+inv_stoptransmit(trademain:inv);
+inv_stoptransmit(trademain:otherinv);
+inv_stoptransmit(tradeside:inv);
 
 ~moveallinv(tempinv, inv);
 
@@ -159,7 +159,7 @@ if (.finduid(%tradepartner) = true) {
 
 %tradepartner = null;
 
-[if_button,trade_confirm:accept]
+[if_button,tradeconfirm:accept]
 %tradestatus = 3;
 
 if (.finduid(%tradepartner) = true) {
@@ -178,11 +178,11 @@ if (.finduid(%tradepartner) = true) {
     }
 }
 
-[if_close,trade_confirm]
-inv_stoptransmit(trade_confirm:inv1);
-inv_stoptransmit(trade_confirm:inv2);
-inv_stoptransmit(trade_confirm:otherinv1);
-inv_stoptransmit(trade_confirm:otherinv2);
+[if_close,tradeconfirm]
+inv_stoptransmit(tradeconfirm:inv1);
+inv_stoptransmit(tradeconfirm:inv2);
+inv_stoptransmit(tradeconfirm:otherinv1);
+inv_stoptransmit(tradeconfirm:otherinv2);
 
 if (%tradestatus ! 3) {
     ~moveallinv(tempinv, inv);
@@ -197,11 +197,11 @@ if (%tradestatus ! 3) {
 
 // ----
 
-[inv_button1,trade:inv] @removefromtrade(last_slot, 1);
-[inv_button2,trade:inv] @removefromtrade(last_slot, 5);
-[inv_button3,trade:inv] @removefromtrade(last_slot, 10);
-[inv_button4,trade:inv] @removefromtrade(last_slot, ^max_32bit_int);
-[inv_button5,trade:inv] @removefromtrade(last_slot, null);
+[inv_button1,trademain:inv] @removefromtrade(last_slot, 1);
+[inv_button2,trademain:inv] @removefromtrade(last_slot, 5);
+[inv_button3,trademain:inv] @removefromtrade(last_slot, 10);
+[inv_button4,trademain:inv] @removefromtrade(last_slot, ^max_32bit_int);
+[inv_button5,trademain:inv] @removefromtrade(last_slot, null);
 
 [label,removefromtrade](int $slot, int $amount)
 if ($amount <= 0) {
@@ -216,19 +216,19 @@ if ($amount < $total) $total = $amount;
 inv_moveitem(tempinv, inv, $obj, $total);
 
 %tradestatus = 0;
-if_settext(trade:status, "");
+if_settext(trademain:status, "");
 if (.finduid(%tradepartner) = true) {
     .%tradestatus = 0;
-    .if_settext(trade:status, "");
+    .if_settext(trademain:status, "");
 }
 
 // ----
 
-[inv_button1,trade_offer:inv] @movetotrade(last_slot, 1);
-[inv_button2,trade_offer:inv] @movetotrade(last_slot, 5);
-[inv_button3,trade_offer:inv] @movetotrade(last_slot, 10);
-[inv_button4,trade_offer:inv] @movetotrade(last_slot, ^max_32bit_int);
-[inv_button5,trade_offer:inv] @movetotrade(last_slot, null);
+[inv_button1,tradeside:inv] @movetotrade(last_slot, 1);
+[inv_button2,tradeside:inv] @movetotrade(last_slot, 5);
+[inv_button3,tradeside:inv] @movetotrade(last_slot, 10);
+[inv_button4,tradeside:inv] @movetotrade(last_slot, ^max_32bit_int);
+[inv_button5,tradeside:inv] @movetotrade(last_slot, null);
 
 [label,movetotrade](int $slot, int $amount)
 if ($amount <= 0) {
@@ -254,8 +254,8 @@ if ($amount < $total) $total = $amount;
 inv_moveitem(inv, tempinv, $obj, $total);
 
 %tradestatus = 0;
-if_settext(trade:status, "");
+if_settext(trademain:status, "");
 if (.finduid(%tradepartner) = true) {
     .%tradestatus = 0;
-    .if_settext(trade:status, "");
+    .if_settext(trademain:status, "");
 }

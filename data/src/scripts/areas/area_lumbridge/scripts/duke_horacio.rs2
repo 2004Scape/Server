@@ -28,7 +28,7 @@ def_int $option = ~p_choice2("Sure, no problem.", 1, "Not right now.", 2);
 if ($option = 1) {
     ~chatplayer(neutral, "Sure, no problem.");
     %runemysteries_progress = 1;
-    ~send_quest_progress(quest_journal:runemysteries, %runemysteries_progress, 5);
+    ~send_quest_progress(questlist:runemysteries, %runemysteries_progress, 5);
     ~chatnpc(neutral, "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
     if(inv_freespace(inv) = 0) {
         ~mesbox("The Duke tries to hand you the talisman, but you don't have enough room to take it.");

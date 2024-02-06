@@ -2,4 +2,4 @@
 %imp_progress = ^imp_complete;
 inv_add(inv, amulet_accuracy, 1);
 givexp(magic, 8750);
-~send_quest_complete(quest_journal:imp, amulet_accuracy, 200, ^imp_questpoints, "You have completed the\\nImp Catcher Quest!");
+~send_quest_complete(questlist:imp, amulet_accuracy, 200, ^imp_questpoints, "You have completed the\\nImp Catcher Quest!");

@@ -1,23 +1,23 @@
-[inv_button1,bank:inv] @bank_withdraw(last_slot, 1);
-[inv_button2,bank:inv] @bank_withdraw(last_slot, 5);
-[inv_button3,bank:inv] @bank_withdraw(last_slot, 10);
-[inv_button4,bank:inv] @bank_withdraw(last_slot, ^max_32bit_int);
-[inv_button5,bank:inv] @bank_withdraw(last_slot, null);
-[inv_buttond,bank:inv] inv_movetoslot(bank, bank, last_slot, last_targetslot);
-[if_button,bank:com_94] %bank_noted = 0;
-[if_button,bank:com_93] %bank_noted = 1;
-[if_close,bank] @closebank;
+[inv_button1,bank_main:inv] @bank_withdraw(last_slot, 1);
+[inv_button2,bank_main:inv] @bank_withdraw(last_slot, 5);
+[inv_button3,bank_main:inv] @bank_withdraw(last_slot, 10);
+[inv_button4,bank_main:inv] @bank_withdraw(last_slot, ^max_32bit_int);
+[inv_button5,bank_main:inv] @bank_withdraw(last_slot, null);
+[inv_buttond,bank_main:inv] inv_movetoslot(bank, bank, last_slot, last_targetslot);
+[if_button,bank_main:com_94] %bank_noted = 0;
+[if_button,bank_main:com_93] %bank_noted = 1;
+[if_close,bank_main] @closebank;
 
 [label,openbank]
 ~reorganize_bank;
-inv_transmit(inv, bank_deposit:inv);
-inv_transmit(bank, bank:inv);
-if_openmainmodalsideoverlay(bank, bank_deposit);
+inv_transmit(inv, bank_side:inv);
+inv_transmit(bank, bank_main:inv);
+if_openmainmodalsideoverlay(bank_main, bank_side);
 
 [label,closebank]
 ~reorganize_bank;
-inv_stoptransmit(bank_deposit:inv);
-inv_stoptransmit(bank:inv);
+inv_stoptransmit(bank_side:inv);
+inv_stoptransmit(bank_main:inv);
 
 [label,bank_withdraw](int $slot, int $requested_number)
 // Check if the slot was empty.
@@ -80,7 +80,6 @@ if (~bank_find_obj_unbankable($obj) = true) {
 if (map_members = false) {
     // check for f2p bank limits.
     if ((inv_total(bank, oc_uncert($obj)) = 0) & (sub(inv_size(bank), inv_freespace(bank)) > ^bank_free_slots)) {
-        // https://youtu.be/yv-H5-IoRLs?t=9
         @you_need_to_subscribe_for_a_members_account_if_you_want_to_store_any_more_items_in_the_bank;
     }
 }

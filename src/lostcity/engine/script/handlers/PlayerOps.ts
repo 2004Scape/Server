@@ -730,7 +730,7 @@ const PlayerOps: CommandHandlers = {
         const lastLoginIp = new Uint32Array(new Uint8Array(remoteAddress.split('.').map(x => parseInt(x))).reverse().buffer)[0];
 
         // 201 sends welcome_screen if.
-        // not 201 sends welcome_screen2 if.
+        // not 201 sends welcome_screen_warning if.
         player.lastLoginInfo(lastLoginIp, 0, 201, 0);
     },
 

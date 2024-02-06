@@ -1,0 +1,53 @@
+[ai_queue3,fire_giant](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 3) {
+    obj_add(npc_coord, steel_axe, 1, ^lootdrop_duration);
+} else if ($random < 5) {
+    obj_add(npc_coord, mithril_sq_shield, 1, ^lootdrop_duration);
+} else if ($random < 6) {
+    obj_add(npc_coord, fire_battlestaff, 1, ^lootdrop_duration);
+} else if ($random < 7) {
+    obj_add(npc_coord, rune_scimitar, 1, ^lootdrop_duration);
+} else if ($random < 17) {
+    obj_add(npc_coord, firerune, 150, ^lootdrop_duration);
+} else if ($random < 24) {
+    obj_add(npc_coord, chaosrune, 5, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, rune_arrow, 12, ^lootdrop_duration);
+} else if ($random < 33) {
+    obj_add(npc_coord, bloodrune, 5, ^lootdrop_duration);
+} else if ($random < 34) {
+    obj_add(npc_coord, firerune, 37, ^lootdrop_duration);
+} else if ($random < 35) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 54) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 94) {
+    obj_add(npc_coord, coins, 60, ^lootdrop_duration);
+} else if ($random < 101) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 107) {
+    obj_add(npc_coord, coins, 25, ^lootdrop_duration);
+} else if ($random < 109) {
+    obj_add(npc_coord, coins, 300, ^lootdrop_duration);
+} else if ($random < 110) {
+    obj_add(npc_coord, coins, 50, ^lootdrop_duration);
+} else if ($random < 113) {
+    obj_add(npc_coord, lobster, 1, ^lootdrop_duration);
+} else if ($random < 115) {
+    obj_add(npc_coord, steel_bar, 1, ^lootdrop_duration);
+} else if ($random < 116) {
+    obj_add(npc_coord, 2dose1strength, 1, ^lootdrop_duration);
+} else if ($random < 127) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+} else if ($random <  128) {
+    ~lootdrop(npc_coord, ~ultrarare_getitem, ^lootdrop_duration);
+}

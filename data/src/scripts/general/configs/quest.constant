@@ -31,6 +31,7 @@
 ^arthur_complete = 7
 ^tree_complete = 9
 ^grandtree_complete = 160
+^waterfall_complete = 10
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -60,3 +61,4 @@
 ^zanaris_questpoints = 3
 ^arthur_questpoints = 6
 ^tree_questpoints = 2
+^waterfall_questpoints = 1

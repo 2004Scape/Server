@@ -9,4 +9,4 @@ def_int $mapsquare_y;
 $mapsquare_x, $mapsquare_y = ~mapsquare(coord);
 
 %newcomers_pos = calc($mapsquare_x - 46 + ($mapsquare_y - 49) * 6);
-if_openmainmodal(newcomers_map);
+if_openmainmodal(playermap_east);

@@ -78,6 +78,6 @@ if($option = 1) {
 ~chatnpc("neutral", "You will need certain ingredients.");
 ~chatplayer("neutral", "What do I need?");
 %hetty_progress = ^hetty_started;
-~send_quest_progress(quest_journal:hetty, %hetty_progress, ^hetty_complete);
+~send_quest_progress(questlist:hetty, %hetty_progress, ^hetty_complete);
 ~chatnpc("neutral", "You need an eye of newt, a rat's tail, an onion... Oh and a piece of burnt meat.");
 ~chatplayer("happy", "Great, I'll go and get them.");

@@ -1,23 +1,23 @@
 [oploc1,crafting_guild_door]
 if (~check_axis(coord, loc_coord, loc_angle) = true) {
     if (stat(crafting) < 40) {
-        ~chatnpc_specific("Master Crafter", npc_805, neutral, "Sorry only experienced craftsmen are allowed in here.|You must be level 40 or above to enter.");
+        ~chatnpc_specific(nc_name(master_crafter), master_crafter, neutral, "Sorry only experienced craftsmen are allowed in here.|You must be level 40 or above to enter.");
         return;
     }
     if (inv_total(worn, brown_apron) < 1) {
-        ~chatnpc_specific("Master Crafter", npc_805, neutral, "Where's your brown apron? You can't come in here unless you're wearing one.");
+        ~chatnpc_specific(nc_name(master_crafter), master_crafter, neutral, "Where's your brown apron? You can't come in here unless you're wearing one.");
         if (inv_total(inv, brown_apron) < 1) {
             ~chatplayer(default, "Err... I haven't got one.");
         }
         return;
     }
     ~open_and_close_door(loc_param(next_loc_stage), true, false);
-    ~chatnpc_specific("Master Crafter", npc_805, neutral, "Welcome to the Guild of Master Craftsmen.");
+    ~chatnpc_specific(nc_name(master_crafter), master_crafter, neutral, "Welcome to the Guild of Master Craftsmen.");
 } else {
     ~open_and_close_door(loc_param(next_loc_stage), false, false);
 }
 
-[opnpc1,npc_805]
+[opnpc1,master_crafter]
 ~chatnpc(confused, "Yeah?"); // animationId = 575
 ~chatplayer(happy, "Hello."); // animationId = 567
 ~chatnpc(confused, "Whassup?"); // animationId = 575
