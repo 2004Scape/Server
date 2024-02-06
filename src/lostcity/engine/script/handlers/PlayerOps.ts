@@ -852,6 +852,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.AFK_EVENT]: state => {
         state.pushInt(state.activePlayer.afkEventReady ? 1 : 0);
         state.activePlayer.afkEventReady = false;
+    },
+
+    [ScriptOpcode.LOWMEMORY]: state => {
+        state.pushInt(state.activePlayer.lowMemory ? 1 : 0);
     }
 };
 
