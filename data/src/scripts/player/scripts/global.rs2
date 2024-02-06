@@ -50,9 +50,10 @@ if_settab(friends, ^tab_friends);
 if_settab(ignore, ^tab_ignore);
 if_settab(logout, ^tab_logout);
 if_settab(controls, ^tab_player_controls);
-// todo: support low detail modes
 if_settab(options, ^tab_game_options);
-if_settab(music, ^tab_musicplayer);
+if (lowmemory = false) {
+    if_settab(music, ^tab_musicplayer);
+}
 
 [proc,update_all](obj $previous_weapon)
 // secret sauce

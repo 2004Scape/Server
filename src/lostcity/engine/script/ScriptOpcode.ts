@@ -175,6 +175,7 @@ enum ScriptOpcode {
     WEAKQUEUE, // official
     IF_OPENMAINOVERLAY,
     AFK_EVENT,
+    LOWMEMORY,
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official
