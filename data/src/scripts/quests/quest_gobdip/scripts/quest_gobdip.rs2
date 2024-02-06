@@ -16,7 +16,7 @@
 ~chatnpc(angry, "Knowing the goblins, it could easily turn into a full blown war. Which wouldn't be good. Goblin wars make such a mess of the countryside.");
 ~chatplayer(neutral, "Well, if I have time, I'll see if I can go and knock some sense into them.");
 %gobdip_progress = 1;
-~send_quest_progress(quest_journal:gobdip, %gobdip_progress, ^gobdip_complete);
+~send_quest_progress(questlist:gobdip, %gobdip_progress, ^gobdip_complete);
 
 [label,goblin_diplomacy_orange_armour]
 ~chatplayer("confused", "Do you want me to pick an armour colour for you?");
@@ -60,7 +60,7 @@ queue(goblin_diplomacy_complete_quest, 0);
 %gobdip_progress = ^gobdip_complete;
 givexp(crafting, 2000);
 inv_add(inv, gold_bar, 1);
-~send_quest_complete(quest_journal:gobdip, gold_bar, 250, ^gobdip_questpoints, "You have completed the\\nGoblin Diplomacy Quest!");
+~send_quest_complete(questlist:gobdip, gold_bar, 250, ^gobdip_questpoints, "You have completed the\\nGoblin Diplomacy Quest!");
 
 [label,goblin_diplomacy_completed]
 ~chatnpc_specific("General Wartface", general_wartface, "default", "Now you've solved our argument we gotta think of something else to do.");

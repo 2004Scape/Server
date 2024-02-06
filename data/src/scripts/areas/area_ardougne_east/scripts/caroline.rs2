@@ -21,7 +21,7 @@ switch_int(~p_choice2("I suppose so, how do I get there?", 1, "I'm sorry, I'm to
         ~chatnpc(neutral, "That's very good of you traveller.|My friend Holgart will take you there.");
         ~chatplayer(neutral, "Ok, I'll go and see if they're ok.");
         %seaslug_progress = ^seaslug_started;
-        ~send_quest_progress(quest_journal:seaslug, %seaslug_progress, ^seaslug_complete);
+        ~send_quest_progress(questlist:seaslug, %seaslug_progress, ^seaslug_complete);
         ~chatnpc(neutral, "I'll reward you for your time.|It'll give me peace of mind|to know Kennith and my husband, Kent, are safe.");
     case 2:
         ~chatplayer(neutral, "I'm sorry, I'm too busy.");

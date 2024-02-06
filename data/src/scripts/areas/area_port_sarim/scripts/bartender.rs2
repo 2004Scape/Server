@@ -9,14 +9,17 @@ if(%gobdip_progress = 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = fal
 } else if(%gobdip_progress = 0) { // gobdip not started, not doing barcrawl
     $option = ~p_choice2("Could I buy a beer please?", 1, "Not very busy in here today, is it?", 2);
 } else if(%gobdip_progress > 0 & (testbit(%barcrawl_progress, ^rustyanchor_index) = false & inv_total(inv, barcrawl_card) > 0)) { // gobdip started, doing barcrawl
-    $option = ~p_choice2("Could I buy a beer please?", 1, "I'm doing Alfred Grimhand's barcrawl.", 3);
+    $option = ~p_choice3("Could I buy a beer please?", 1, "Have you heard any more rumours in here?", 4, "I'm doing Alfred Grimhand's barcrawl.", 3);
 } else {
-    @bartender_port_sarim_beer;
+    $option = ~p_choice2("Could I buy a beer please?", 1, "Have you heard any more rumours in here?", 4);
 }
 switch_int ($option) {
     case 1: @bartender_port_sarim_beer;
     case 2: @goblin_diplomacy_start;
     case 3: @rustyanchor_barcrawl;
+    case 4: 
+        ~chatplayer(neutral, "Have you heard any more rumours in here?");
+        ~chatnpc(neutral, "No, it hasn't been very busy lately.");
 }
 
 [opnpcu,bartender_port_sarim]

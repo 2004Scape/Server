@@ -88,6 +88,6 @@ if_close;
 
 [queue,priest_quest_complete]
 %priest_progress = ^priest_complete;
-~send_quest_complete(quest_journal:priest, ghost_skull, 220, ^priest_questpoints, "You have completed the\\nRestless Ghost Quest!");
+~send_quest_complete(questlist:priest, ghost_skull, 220, ^priest_questpoints, "You have completed the\\nRestless Ghost Quest!");
 givexp(prayer, 11250);
 

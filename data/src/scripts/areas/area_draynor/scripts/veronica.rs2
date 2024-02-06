@@ -14,7 +14,7 @@ if($option = 1) {
     ~chatnpc(neutral, "Seeing as we were a little lost|Ernest decided to go in and ask for directions.");
     ~chatnpc(neutral, "That was an hour ago.|That house looks very spooky,|can you go and see if you can find him for me?");
     %haunted_progress = ^haunted_started;
-    ~send_quest_progress(quest_journal:haunted, %haunted_progress, 3);
+    ~send_quest_progress(questlist:haunted, %haunted_progress, 3);
     ~chatplayer(neutral, "Ok, I'll see what I can do.");
     ~chatnpc(happy, "Thank you, thank you.|I'm very grateful.");
 } else if($option = 2) {

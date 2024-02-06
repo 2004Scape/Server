@@ -63,7 +63,7 @@ if ($option = 1) {
 ~chatnpc(happy, "I'd like some rum made on Karamja Island. There's no rum like Karamja Rum!");
 
 %hunt_progress = 1;
-~send_quest_progress(quest_journal:hunt, %hunt_progress, ^hunt_complete);
+~send_quest_progress(questlist:hunt, %hunt_progress, ^hunt_complete);
 
 [label,redbeard_arr]
 ~chatplayer(laugh, "Arr!");

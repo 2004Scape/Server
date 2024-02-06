@@ -35,7 +35,7 @@ if (Environment.LOCAL_DEV) {
         region: 'Local Development',
         members: Environment.MEMBERS_WORLD,
         address,
-        portOffset: 0,
+        portOffset: (Environment.GAME_PORT as number - 43594),
         players: 0
     });
 }

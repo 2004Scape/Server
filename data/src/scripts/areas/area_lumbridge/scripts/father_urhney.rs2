@@ -2,7 +2,7 @@
 ~chatnpc(angry, "Go away! I'm meditating!");
 if (%priest_progress = ^priest_started) {
     @multi3("Well, that's friendly.", father_urhney_well_thats_friendly, "Father Aereck sent me to talk to you.", father_urhney_priest_father_aereck_sent_me, "I've come to repossess your house.", father_urhney_repossess_house);
-} else if (%priest_progress >= ^priest_spoken_urhney & inv_total(inv, amulet_of_ghostspeak) = 0 & inv_total(bank, amulet_of_ghostspeak) = 0) {
+} else if (%priest_progress >= ^priest_spoken_urhney & ~obj_gettotal(amulet_of_ghostspeak) = 0) {
     @multi3("Well, that's friendly.", father_urhney_well_thats_friendly, "I've lost the amulet.", father_urhney_priest_lost_amulet, "I've come to repossess your house.", father_urhney_repossess_house);
 } else {
     @multi2("Well, that's friendly.", father_urhney_well_thats_friendly, "I've come to repossess your house.", father_urhney_repossess_house);

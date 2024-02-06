@@ -124,4 +124,4 @@ if($entering = false) {
 
 [queue,zanaris_quest_complete]
 %zanaris_progress = ^zanaris_complete;
-~send_quest_complete(quest_journal:zanaris, coins, 250, ^zanaris_questpoints, "You have completed the\\nLost City of Zanaris Quest!");
+~send_quest_complete(questlist:zanaris, coins, 250, ^zanaris_questpoints, "You have completed the\\nLost City of Zanaris Quest!");

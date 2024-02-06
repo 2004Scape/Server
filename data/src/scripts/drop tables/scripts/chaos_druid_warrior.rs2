@@ -1,0 +1,51 @@
+[ai_queue3,chaos_druid_warrior](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 1) {
+    obj_add(npc_coord, black_dagger, 1, ^lootdrop_duration);
+} else if ($random < 6) {
+    obj_add(npc_coord, firerune, 12, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, lawrune, 22, ^lootdrop_duration);
+} else if ($random < 12) {
+    obj_add(npc_coord, earthrune, 9, ^lootdrop_duration);
+} else if ($random < 13) {
+    obj_add(npc_coord, airrune, 36, ^lootdrop_duration);
+} else if ($random < 14) {
+    obj_add(npc_coord, naturerune, 3, ^lootdrop_duration);
+} else if ($random < 48) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 58) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 63) {
+    obj_add(npc_coord, white_berries, 1, ^lootdrop_duration);
+} else if ($random < 65) {
+    obj_add(npc_coord, unicorn_horn_dust, 1, ^lootdrop_duration);
+} else if ($random < 66) {
+    obj_add(npc_coord, limpwurt_root, 1, ^lootdrop_duration);
+} else if ($random < 67) {
+    obj_add(npc_coord, limpwurt_root, 2, ^lootdrop_duration);
+} else if ($random < 68) {
+    obj_add(npc_coord, snape_grass, 1, ^lootdrop_duration);
+} else if ($random < 69) {
+    obj_add(npc_coord, vial_water, 2, ^lootdrop_duration);
+} else if ($random < 84) {
+    obj_add(npc_coord, coins, 13, ^lootdrop_duration);
+} else if ($random < 87) {
+    obj_add(npc_coord, coins, 29, ^lootdrop_duration);
+} else if ($random < 88) {
+    obj_add(npc_coord, coins, 10, ^lootdrop_duration);
+} else if ($random < 89) {
+    obj_add(npc_coord, 1dose2defense, 1, ^lootdrop_duration);
+} else if ($random < 90) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

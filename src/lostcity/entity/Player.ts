@@ -12,7 +12,7 @@ import DbRowType from '#lostcity/cache/DbRowType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import EnumType from '#lostcity/cache/EnumType.js';
 import HuntType from '#lostcity/cache/HuntType.js';
-import IfType from '#lostcity/cache/IfType.js';
+import Component from '#lostcity/cache/Component.js';
 import InvType from '#lostcity/cache/InvType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import MesanimType from '#lostcity/cache/MesanimType.js';
@@ -413,7 +413,7 @@ export default class Player extends PathingEntity {
     logoutRequested: boolean = false;
     invListeners: {
         type: number; // InvType
-        com: number; // IfType
+        com: number; // Component
         source: number; // uid or -1 for world
         firstSeen: boolean;
     }[] = [];
@@ -804,7 +804,7 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.IF_BUTTON) {
                 const comId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -816,7 +816,7 @@ export default class Player extends PathingEntity {
                         this.executeScript(this.activeScript, true);
                     }
                 } else {
-                    const root = IfType.get(com.rootLayer);
+                    const root = Component.get(com.rootLayer);
 
                     const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, comId, -1);
                     if (script) {
@@ -833,7 +833,7 @@ export default class Player extends PathingEntity {
                 const slot = data.g2();
                 const comId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !com.inventoryOptions || !com.inventoryOptions.length || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -880,7 +880,7 @@ export default class Player extends PathingEntity {
 
                 const script = ScriptProvider.getByTrigger(trigger, comId, -1);
                 if (script) {
-                    const root = IfType.get(com.rootLayer);
+                    const root = Component.get(com.rootLayer);
 
                     this.executeScript(ScriptRunner.init(script, this), root.overlay == false);
                 } else {
@@ -894,7 +894,7 @@ export default class Player extends PathingEntity {
                 const slot = data.g2();
                 const targetSlot = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -920,7 +920,7 @@ export default class Player extends PathingEntity {
 
                 const dragTrigger = ScriptProvider.getByTrigger(ServerTriggerType.INV_BUTTOND, comId);
                 if (dragTrigger) {
-                    const root = IfType.get(com.rootLayer);
+                    const root = Component.get(com.rootLayer);
 
                     this.executeScript(ScriptRunner.init(dragTrigger, this), root.overlay == false);
                 } else {
@@ -933,7 +933,7 @@ export default class Player extends PathingEntity {
                 const slot = data.g2();
                 const comId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -992,12 +992,12 @@ export default class Player extends PathingEntity {
                 const useSlot = data.g2();
                 const useComId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                const useCom = IfType.get(comId);
+                const useCom = Component.get(comId);
                 if (typeof useCom === 'undefined' || !this.isComponentVisible(useCom)) {
                     continue;
                 }
@@ -1081,12 +1081,12 @@ export default class Player extends PathingEntity {
                 const comId = data.g2();
                 const spellComId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
 
-                const spellCom = IfType.get(comId);
+                const spellCom = Component.get(comId);
                 if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
@@ -1177,7 +1177,7 @@ export default class Player extends PathingEntity {
                 const slot = data.g2();
                 const comId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -1225,7 +1225,7 @@ export default class Player extends PathingEntity {
                 const locId = data.g2();
                 const spellComId = data.g2();
 
-                const spellCom = IfType.get(spellComId);
+                const spellCom = Component.get(spellComId);
                 if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
@@ -1300,7 +1300,7 @@ export default class Player extends PathingEntity {
                 const slot = data.g2();
                 const comId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -1342,7 +1342,7 @@ export default class Player extends PathingEntity {
                 const nid = data.g2();
                 const spellComId = data.g2();
 
-                const spellCom = IfType.get(spellComId);
+                const spellCom = Component.get(spellComId);
                 if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
@@ -1417,7 +1417,7 @@ export default class Player extends PathingEntity {
                 const slot = data.g2();
                 const comId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -1465,7 +1465,7 @@ export default class Player extends PathingEntity {
                 const objId = data.g2();
                 const spellComId = data.g2();
 
-                const spellCom = IfType.get(spellComId);
+                const spellCom = Component.get(spellComId);
                 if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
@@ -1529,7 +1529,7 @@ export default class Player extends PathingEntity {
                 const slot = data.g2();
                 const comId = data.g2();
 
-                const com = IfType.get(comId);
+                const com = Component.get(comId);
                 if (typeof com === 'undefined' || !this.isComponentVisible(com)) {
                     continue;
                 }
@@ -1572,7 +1572,7 @@ export default class Player extends PathingEntity {
                 const pid = data.g2();
                 const spellComId = data.g2();
 
-                const spellCom = IfType.get(spellComId);
+                const spellCom = Component.get(spellComId);
                 if (typeof spellCom === 'undefined' || !this.isComponentVisible(spellCom)) {
                     continue;
                 }
@@ -1832,7 +1832,7 @@ export default class Player extends PathingEntity {
                     ObjType.load('data/pack/server', World.members);
                     LocType.load('data/pack/server');
                     NpcType.load('data/pack/server');
-                    IfType.load('data/pack/server');
+                    Component.load('data/pack/server');
                     SeqType.load('data/pack/server');
                     SpotanimType.load('data/pack/server');
                     MesanimType.load('data/pack/server');
@@ -2010,7 +2010,7 @@ export default class Player extends PathingEntity {
                         case ScriptVarType.INTERFACE: {
                             const name = args.shift();
 
-                            params.push(IfType.getId(name ?? ''));
+                            params.push(Component.getId(name ?? ''));
                             break;
                         }
                         case ScriptVarType.SPOTANIM: {
@@ -2173,6 +2173,10 @@ export default class Player extends PathingEntity {
 
         this.weakQueue = [];
         // this.activeScript = null;
+
+        if (!this.delayed()) {
+            this.protect = false;
+        }
 
         if (this.modalState === 0) {
             return;
@@ -2493,7 +2497,7 @@ export default class Player extends PathingEntity {
                     debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
                 } else if (this.targetSubject !== -1) {
                     if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
-                        debugname = IfType.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
+                        debugname = Component.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
                     } else {
                         debugname = ObjType.get(this.targetSubject)?.debugname ?? this.targetSubject.toString();
                     }
@@ -2559,7 +2563,7 @@ export default class Player extends PathingEntity {
                         debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
                     } else if (this.targetSubject !== -1) {
                         if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
-                            debugname = IfType.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
+                            debugname = Component.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
                         } else {
                             debugname = ObjType.get(this.targetSubject)?.debugname ?? this.targetSubject.toString();
                         }
@@ -3798,7 +3802,7 @@ export default class Player extends PathingEntity {
         this.write(ServerProt.IF_OPENSIDEOVERLAY, com, tab);
     }
 
-    isComponentVisible(com: IfType) {
+    isComponentVisible(com: Component) {
         return this.modalTop === com.rootLayer || this.modalBottom === com.rootLayer || this.modalSidebar === com.rootLayer || this.overlaySide.findIndex(l => l === com.rootLayer) !== -1 || this.modalSticky === com.rootLayer;
     }
 

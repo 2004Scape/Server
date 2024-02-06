@@ -23,7 +23,7 @@ switch_int(%tree_progress) {
                     case 1:
                         ~chatplayer(neutral, "I would be glad to help.");
                         %tree_progress = ^tree_started;
-                        ~send_quest_progress(quest_journal:tree, %tree_progress, ^tree_complete);
+                        ~send_quest_progress(questlist:tree, %tree_progress, ^tree_complete);
                         ~chatnpc(neutral, "Thank you. The battlefield is to the north of the maze. Commander Montai will inform you of their current situation.");
                         ~chatnpc(sad, "That is if he's still alive.");
                         ~chatnpc(neutral, "My assistant shall guide you out. Good luck friend, try your best to return the orb.");
@@ -121,7 +121,7 @@ switch_int(%tree_progress) {
         ~chatplayer(neutral, "Hello again, Bolren.");
         ~chatnpc(happy, "Hello there. It's good to see you again.");
         // dialogue was changed on OSRS recently, guessing mesanims here
-        if(inv_total(inv, gnome_amulet) = 0 & inv_total(bank, gnome_amulet) = 0) {
+        if(~obj_gettotal(gnome_amulet) = 0) {
             ~chatplayer(sad, "I've lost my amulet.");
             ~chatnpc(neutral, "Oh dear. Here, take another. We truly are indebted to you.");
             inv_add(inv, gnome_amulet, 1); // not sure if there was a space check originally, guessing no cause no proof otherwise

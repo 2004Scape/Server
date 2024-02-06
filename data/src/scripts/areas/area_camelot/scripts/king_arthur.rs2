@@ -32,7 +32,7 @@ switch_int(~p_choice3("I want to become a Knight of the Round Table!", 1, "So wh
         ~chatnpc(sad, "Unfortunately, our current quest is to rescue Merlin.");
         ~chatnpc(confused, "Back in England, he got himself trapped in some|sort of magical crystal. We've moved|him from the cave we found him in and now|he's upstairs in his tower.");
         %arthur_progress = ^arthur_started;
-        ~send_quest_progress(quest_journal:arthur, %arthur_progress, ^arthur_complete);
+        ~send_quest_progress(questlist:arthur, %arthur_progress, ^arthur_complete);
         ~chatplayer(neutral, "I will see what I can do then.");
         ~chatnpc(neutral, "Talk to my knights if you need any help.");
     case 2:

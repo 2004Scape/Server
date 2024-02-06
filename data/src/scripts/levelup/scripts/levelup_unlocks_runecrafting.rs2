@@ -16,7 +16,7 @@ switch_int(stat_base(runecraft)) {
     case 35: ~objboxt(chaosrune,"Members can now craft @dbl@Chaos Runes@bla@ from Rune Essence|and you will now receive 2 @dbl@Fire Runes@bla@ from each Essence.");
     case 38: ~objboxt(waterrune,"You can now receive 3 @dbl@Water Runes@bla@ from each Essence.");
     case 42: ~objboxt(mindrune,"You can now receive 4 @dbl@Mind Runes@bla@ from each Essence.");
-    case 44: ~objbox2(naturerune,airrune,"Members can now craft @dbl@Nature Runes@bla@ from Rune Essence|and you will now recieve 4 @dbl@Air Runes@bla@ from each Essence.");
+    case 44: ~doubleobjbox(naturerune,airrune,"Members can now craft @dbl@Nature Runes@bla@ from Rune Essence|and you will now recieve 4 @dbl@Air Runes@bla@ from each Essence.");
     case 46: ~objboxt(bodyrune,"You can now receive 2 @dbl@Body Runes@bla@ from each Essence.");
     case 52: ~objboxt(earthrune,"You can now receive 3 @dbl@Earth Runes@bla@ from each Essence.");
     case 54: ~objboxt(lawrune,"Members can now craft @dbl@Law Runes@bla@ from Rune Essence.");
@@ -25,7 +25,7 @@ switch_int(stat_base(runecraft)) {
     case 57: ~objboxt(waterrune,"You can now receive 4 @dbl@Water Runes@bla@ from each Essence.");
     case 59: ~objboxt(cosmicrune,"You can now receive 2 @dbl@Cosmic Runes@bla@ from each Essence."); 
     case 66: ~objboxt(airrune,"You can now receive 7 @dbl@Air Runes@bla@ from each Essence.");
-    case 70: ~objbox2(mindrune,firerune,"You can now receive 6 @dbl@Mind Runes@bla@ from each Essence|and you can now receive 3 @dbl@Fire Runes@bla@ from each Essence.");
+    case 70: ~doubleobjbox(mindrune,firerune,"You can now receive 6 @dbl@Mind Runes@bla@ from each Essence|and you can now receive 3 @dbl@Fire Runes@bla@ from each Essence.");
     case 74: ~objboxt(chaosrune,"You can now receive 2 @dbl@Chaos Runes@bla@ from each Essence."); 
     case 76: ~objboxt(waterrune,"You can now receive 5 @dbl@Water Runes@bla@ from each Essence.");
     case 77: ~objboxt(airrune,"You can now receive 8 @dbl@Air Runes@bla@ from each Essence.");
@@ -34,7 +34,7 @@ switch_int(stat_base(runecraft)) {
     case 88: ~objboxt(airrune,"You can now receive 9 @dbl@Air Runes@bla@ from each Essence.");
     case 91: ~objboxt(naturerune,"You can now receive 2 @dbl@Nature Runes@bla@ from each Essence.");
     case 92: ~objboxt(bodyrune,"You can now receive 3 @dbl@Body Runes@bla@ from each Essence."); 
-    case 95: ~objbox2(waterrune,lawrune,"ou can now receive 6 @dbl@Water Runes@bla@ from each Essence|and you can now receive 2 @dbl@Law Runes@bla@ from each Essence.");
+    case 95: ~doubleobjbox(waterrune,lawrune,"ou can now receive 6 @dbl@Water Runes@bla@ from each Essence|and you can now receive 2 @dbl@Law Runes@bla@ from each Essence.");
     case 98: ~objboxt(mindrune,"You can now receive 8 @dbl@Mind Runes@bla@ from each Essence.");
     case 99: ~objboxt(airrune,"You can now receive 10 @dbl@Air Runes@bla@ from each Essence.");
 
