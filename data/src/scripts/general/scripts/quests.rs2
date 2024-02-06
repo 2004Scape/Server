@@ -29,10 +29,10 @@ if ($random < 32) {
     // The most common music that plays when completing a quest.
     midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
-if_settext(quest_complete:com_3, $questmessage);
-if_settext(quest_complete:com_9, tostring($questpoints));
-if_setobject(quest_complete:com_4, $obj, $objscale);
-if_openmainmodal(quest_complete);
+if_settext(questscroll:com_3, $questmessage);
+if_settext(questscroll:com_9, tostring($questpoints));
+if_setobject(questscroll:com_4, $obj, $objscale);
+if_openmainmodal(questscroll);
 if_setcolour($component, ~rgb15bits(^green_rgb));
 if_settab(quest_journal, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");

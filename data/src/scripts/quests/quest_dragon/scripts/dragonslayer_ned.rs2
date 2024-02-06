@@ -24,8 +24,8 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     mes("The ship is sailing across the ocean...");
     %boat_takeoff = ^sail_port_sarim_to_crandor;
 
-    if_settext(boat_travel:com_0, "You sail to Crandor Isle.");
-    if_openmainmodal(boat_travel);
+    if_settext(ship_journey:com_0, "You sail to Crandor Isle.");
+    if_openmainmodal(ship_journey);
     midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 
     p_telejump(^crandor_tele_coord);
@@ -34,7 +34,7 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     %dragon_planks = 0;
     p_delay(11);
     if_close;
-    if_settext(boat_travel:com_0, "You Journey on the ship...."); // reset text
+    if_settext(ship_journey:com_0, "You Journey on the ship...."); // reset text
     // https://youtu.be/ucaYfz3ihWs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=28
     ~mesbox("You hear a loud crack as the ship comes to a juddering halt.");
     ~chatnpc(neutral,"Um... I think we're there. I probably should have paid closer attention.");

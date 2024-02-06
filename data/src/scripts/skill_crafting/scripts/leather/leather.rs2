@@ -1,11 +1,11 @@
-[if_button,crafting_leather:com_88] @craft_leather(leather_body);
-[if_button,crafting_leather:com_89] @craft_leather(leather_gloves);
-[if_button,crafting_leather:com_90] @craft_leather(leather_boots);
-[if_button,crafting_leather:com_91] @craft_leather(leather_vambraces);
-[if_button,crafting_leather:com_97] @craft_leather(leather_chaps);
-[if_button,crafting_leather:com_99] @craft_leather(coif);
-[if_button,crafting_leather:com_100] @craft_leather(leather_cowl);
-[if_button,crafting_leather:com_110] if_close;
+[if_button,leather_crafting:com_88] @craft_leather(leather_body);
+[if_button,leather_crafting:com_89] @craft_leather(leather_gloves);
+[if_button,leather_crafting:com_90] @craft_leather(leather_boots);
+[if_button,leather_crafting:com_91] @craft_leather(leather_vambraces);
+[if_button,leather_crafting:com_97] @craft_leather(leather_chaps);
+[if_button,leather_crafting:com_99] @craft_leather(coif);
+[if_button,leather_crafting:com_100] @craft_leather(leather_cowl);
+[if_button,leather_crafting:com_110] if_close;
 
 [opheldu,needle]
 switch_obj (last_useitem)
@@ -104,8 +104,8 @@ if (inv_total(inv, thread) < 1) {
     ~objbox(thread, "You need some thread to make anything out of leather.");
     return;
 }
-if_setobject(crafting_leather:com_100, leather_cowl, 180);
-if_openmainmodal(crafting_leather);
+if_setobject(leather_crafting:com_100, leather_cowl, 180);
+if_openmainmodal(leather_crafting);
 
 //--- dragonhide interface
 [label,craft_dhide_interface](int $last)
@@ -161,7 +161,7 @@ if (inv_total(inv, $leather) < $leather_count) {
 /** UNUSED
 // crafting leather used no weakqueue before 27 September 2004.
 // https://oldschool.runescape.wiki/w/Update:Skills,_Duels_and_the_Kalphite
-[weakqueue,crafting_leather](int $crafting_exp, namedobj $crafting_product, string $crafting_message, seq $crafting_anim, int $count, int $crafting_bar_count, namedobj $crafting_ingredient, string $crafting_productfailure)
+[weakqueue,leather_crafting](int $crafting_exp, namedobj $crafting_product, string $crafting_message, seq $crafting_anim, int $count, int $crafting_bar_count, namedobj $crafting_ingredient, string $crafting_productfailure)
 
 //items with a ingredient count of more than 1 have a product fail message
 if ($count < 1) {
@@ -186,6 +186,6 @@ if (%action_delay < calc(map_clock + 1)) {
     }
     $count = sub($count, $crafting_bar_count);
     %action_delay = calc(map_clock + 1);
-    weakqueue(crafting_leather, 3, $crafting_exp, $crafting_product, $crafting_message, $crafting_anim, $count, $crafting_bar_count, $crafting_ingredient, $crafting_productfailure);
+    weakqueue(leather_crafting, 3, $crafting_exp, $crafting_product, $crafting_message, $crafting_anim, $count, $crafting_bar_count, $crafting_ingredient, $crafting_productfailure);
 }
 */

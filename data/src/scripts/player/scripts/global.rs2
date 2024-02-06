@@ -48,10 +48,10 @@ if_settab(magic, ^tab_magic);
 if_settab(friends, ^tab_friends);
 if_settab(ignore, ^tab_ignore);
 if_settab(logout, ^tab_logout);
-if_settab(player_controls, ^tab_player_controls);
+if_settab(controls, ^tab_player_controls);
 // todo: support low detail modes
-if_settab(game_options, ^tab_game_options);
-if_settab(musicplayer, ^tab_musicplayer);
+if_settab(options, ^tab_game_options);
+if_settab(music, ^tab_musicplayer);
 
 [proc,update_all](obj $previous_weapon)
 // secret sauce

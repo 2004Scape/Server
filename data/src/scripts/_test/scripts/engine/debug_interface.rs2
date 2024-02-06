@@ -1,5 +1,5 @@
-[debugproc,interface](interface $interface)
-if (map_localdev = false) {
+[debugproc,open](interface $interface)
+if (map_localdev = false | $interface = null) {
     return;
 }
 

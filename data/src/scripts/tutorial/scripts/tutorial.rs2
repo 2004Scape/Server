@@ -15,7 +15,7 @@ if_settab(null, 12);
 if_settab(null, 13);
 
 if (%tutorial_progress > 0) {
-    if_settab(game_options, 11);
+    if_settab(options, 11);
 }
 
 if (%tutorial_progress < 4) {
@@ -67,7 +67,7 @@ if (%tutorial_progress = 1) {
     ~chatnpc(quiz, "You will find many inhabitants of this world have useful things to say to you. By clicking on them with your mouse you can talk to them.");
     ~chatnpc(quiz, "I would also suggest reading through some of the supporting information on the website. There you can find the Knowledge Base, which contains all the additional information you're ever likely to need. It also contains maps and helpful tips to help you on your journey.");
 
-    if_settab(game_options, 11);
+    if_settab(options, 11);
     if_settabflash(11);
     ~chatnpc(quiz, "You will notice a flashing icon of a spanner; please click on this to continue the tutorial.");
     if_close();

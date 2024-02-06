@@ -187,6 +187,11 @@ export function packInterface(server: boolean) {
         const ifName = file.replace('.if', '');
         const ifId = interfacePack.indexOf(ifName);
 
+        if (!component[ifId]) {
+            console.error('Something went horribly wrong', ifName, ifId);
+            process.exit(1);
+        }
+
         component[ifId].src['type'] = 'layer';
         component[ifId].src['width'] = 512;
         component[ifId].src['height'] = 334;

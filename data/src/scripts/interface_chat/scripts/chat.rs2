@@ -189,35 +189,35 @@ if ($lines = 0) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = player_line1;
-    if_setplayerhead(player_line1:com_0);
-    if_setanim(player_line1:com_0, split_getanim($page));
-    if_settext(player_line1:com_1, displayname);
-    if_settext(player_line1:com_2, split_get($page, 0));
+    $interface = chat1;
+    if_setplayerhead(chat1:com_0);
+    if_setanim(chat1:com_0, split_getanim($page));
+    if_settext(chat1:com_1, displayname);
+    if_settext(chat1:com_2, split_get($page, 0));
 } else if ($lines = 2) {
-    $interface = player_line2;
-    if_setplayerhead(player_line2:com_0);
-    if_setanim(player_line2:com_0, split_getanim($page));
-    if_settext(player_line2:com_1, displayname);
-    if_settext(player_line2:com_2, split_get($page, 0));
-    if_settext(player_line2:com_3, split_get($page, 1));
+    $interface = chat2;
+    if_setplayerhead(chat2:com_0);
+    if_setanim(chat2:com_0, split_getanim($page));
+    if_settext(chat2:com_1, displayname);
+    if_settext(chat2:com_2, split_get($page, 0));
+    if_settext(chat2:com_3, split_get($page, 1));
 } else if ($lines = 3) {
-    $interface = player_line3;
-    if_setplayerhead(player_line3:com_0);
-    if_setanim(player_line3:com_0, split_getanim($page));
-    if_settext(player_line3:com_1, displayname);
-    if_settext(player_line3:com_2, split_get($page, 0));
-    if_settext(player_line3:com_3, split_get($page, 1));
-    if_settext(player_line3:com_4, split_get($page, 2));
+    $interface = chat3;
+    if_setplayerhead(chat3:com_0);
+    if_setanim(chat3:com_0, split_getanim($page));
+    if_settext(chat3:com_1, displayname);
+    if_settext(chat3:com_2, split_get($page, 0));
+    if_settext(chat3:com_3, split_get($page, 1));
+    if_settext(chat3:com_4, split_get($page, 2));
 } else if ($lines = 4) {
-    $interface = player_line4;
-    if_setplayerhead(player_line4:com_0);
-    if_setanim(player_line4:com_0, split_getanim($page));
-    if_settext(player_line4:com_1, displayname);
-    if_settext(player_line4:com_2, split_get($page, 0));
-    if_settext(player_line4:com_3, split_get($page, 1));
-    if_settext(player_line4:com_4, split_get($page, 2));
-    if_settext(player_line4:com_5, split_get($page, 3));
+    $interface = chat4;
+    if_setplayerhead(chat4:com_0);
+    if_setanim(chat4:com_0, split_getanim($page));
+    if_settext(chat4:com_1, displayname);
+    if_settext(chat4:com_2, split_get($page, 0));
+    if_settext(chat4:com_3, split_get($page, 1));
+    if_settext(chat4:com_4, split_get($page, 2));
+    if_settext(chat4:com_5, split_get($page, 3));
 }
 
 if_openchat($interface);
@@ -242,35 +242,35 @@ if ($lines = 0) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = npc_line1;
-    if_setnpchead(npc_line1:com_0, $npc);
-    if_setanim(npc_line1:com_0, split_getanim($page));
-    if_settext(npc_line1:com_1, $npc_name);
-    if_settext(npc_line1:com_2, split_get($page, 0));
+    $interface = npcchat1;
+    if_setnpchead(npcchat1:com_0, $npc);
+    if_setanim(npcchat1:com_0, split_getanim($page));
+    if_settext(npcchat1:com_1, $npc_name);
+    if_settext(npcchat1:com_2, split_get($page, 0));
 } else if ($lines = 2) {
-    $interface = npc_line2;
-    if_setnpchead(npc_line2:com_0, $npc);
-    if_setanim(npc_line2:com_0, split_getanim($page));
-    if_settext(npc_line2:com_1, $npc_name);
-    if_settext(npc_line2:com_2, split_get($page, 0));
-    if_settext(npc_line2:com_3, split_get($page, 1));
+    $interface = npcchat2;
+    if_setnpchead(npcchat2:com_0, $npc);
+    if_setanim(npcchat2:com_0, split_getanim($page));
+    if_settext(npcchat2:com_1, $npc_name);
+    if_settext(npcchat2:com_2, split_get($page, 0));
+    if_settext(npcchat2:com_3, split_get($page, 1));
 } else if ($lines = 3) {
-    $interface = npc_line3;
-    if_setnpchead(npc_line3:com_0, $npc);
-    if_setanim(npc_line3:com_0, split_getanim($page));
-    if_settext(npc_line3:com_1, $npc_name);
-    if_settext(npc_line3:com_2, split_get($page, 0));
-    if_settext(npc_line3:com_3, split_get($page, 1));
-    if_settext(npc_line3:com_4, split_get($page, 2));
+    $interface = npcchat3;
+    if_setnpchead(npcchat3:com_0, $npc);
+    if_setanim(npcchat3:com_0, split_getanim($page));
+    if_settext(npcchat3:com_1, $npc_name);
+    if_settext(npcchat3:com_2, split_get($page, 0));
+    if_settext(npcchat3:com_3, split_get($page, 1));
+    if_settext(npcchat3:com_4, split_get($page, 2));
 } else if ($lines = 4) {
-    $interface = npc_line4;
-    if_setnpchead(npc_line4:com_0, $npc);
-    if_setanim(npc_line4:com_0, split_getanim($page));
-    if_settext(npc_line4:com_1, $npc_name);
-    if_settext(npc_line4:com_2, split_get($page, 0));
-    if_settext(npc_line4:com_3, split_get($page, 1));
-    if_settext(npc_line4:com_4, split_get($page, 2));
-    if_settext(npc_line4:com_5, split_get($page, 3));
+    $interface = npcchat4;
+    if_setnpchead(npcchat4:com_0, $npc);
+    if_setanim(npcchat4:com_0, split_getanim($page));
+    if_settext(npcchat4:com_1, $npc_name);
+    if_settext(npcchat4:com_2, split_get($page, 0));
+    if_settext(npcchat4:com_3, split_get($page, 1));
+    if_settext(npcchat4:com_4, split_get($page, 2));
+    if_settext(npcchat4:com_5, split_get($page, 3));
 }
 if_openchat($interface);
 
@@ -363,30 +363,30 @@ if ($lines = 0) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = message_line1;
-    if_settext(message_line1:com_0, split_get($page, 0));
+    $interface = message1;
+    if_settext(message1:com_0, split_get($page, 0));
 } else if ($lines = 2) {
-    $interface = message_line2;
-    if_settext(message_line2:com_0, split_get($page, 0));
-    if_settext(message_line2:com_1, split_get($page, 1));
+    $interface = message2;
+    if_settext(message2:com_0, split_get($page, 0));
+    if_settext(message2:com_1, split_get($page, 1));
 } else if ($lines = 3) {
-    $interface = message_line3;
-    if_settext(message_line3:com_0, split_get($page, 0));
-    if_settext(message_line3:com_1, split_get($page, 1));
-    if_settext(message_line3:com_2, split_get($page, 2));
+    $interface = message3;
+    if_settext(message3:com_0, split_get($page, 0));
+    if_settext(message3:com_1, split_get($page, 1));
+    if_settext(message3:com_2, split_get($page, 2));
 } else if ($lines = 4) {
-    $interface = message_line4;
-    if_settext(message_line4:com_0, split_get($page, 0));
-    if_settext(message_line4:com_1, split_get($page, 1));
-    if_settext(message_line4:com_2, split_get($page, 2));
-    if_settext(message_line4:com_3, split_get($page, 3));
+    $interface = message4;
+    if_settext(message4:com_0, split_get($page, 0));
+    if_settext(message4:com_1, split_get($page, 1));
+    if_settext(message4:com_2, split_get($page, 2));
+    if_settext(message4:com_3, split_get($page, 3));
 } else if ($lines = 5) {
-    $interface = message_line5;
-    if_settext(message_line5:com_0, split_get($page, 0));
-    if_settext(message_line5:com_1, split_get($page, 1));
-    if_settext(message_line5:com_2, split_get($page, 2));
-    if_settext(message_line5:com_3, split_get($page, 3));
-    if_settext(message_line5:com_4, split_get($page, 4));
+    $interface = message5;
+    if_settext(message5:com_0, split_get($page, 0));
+    if_settext(message5:com_1, split_get($page, 1));
+    if_settext(message5:com_2, split_get($page, 2));
+    if_settext(message5:com_3, split_get($page, 3));
+    if_settext(message5:com_4, split_get($page, 4));
 }
 if_openchat($interface);
 
@@ -410,31 +410,31 @@ if ($lines = 0) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = objbox_line1;
-    if_setobject(objbox_line1:com_0, $obj, $scale);
-    if_setposition(objbox_line1:com_0, $x, $y);
-    if_settext(objbox_line1:com_1, split_get($page, 0));
+    $interface = objbox1;
+    if_setobject(objbox1:com_0, $obj, $scale);
+    if_setposition(objbox1:com_0, $x, $y);
+    if_settext(objbox1:com_1, split_get($page, 0));
 } else if ($lines = 2) {
-    $interface = objbox_line2;
-    if_setobject(objbox_line2:com_0, $obj, $scale);
-    if_setposition(objbox_line2:com_0, $x, $y);
-    if_settext(objbox_line2:com_2, split_get($page, 0));
-    if_settext(objbox_line2:com_1, split_get($page, 1));
+    $interface = doubleobjbox;
+    if_setobject(doubleobjbox:com_0, $obj, $scale);
+    if_setposition(doubleobjbox:com_0, $x, $y);
+    if_settext(doubleobjbox:com_2, split_get($page, 0));
+    if_settext(doubleobjbox:com_1, split_get($page, 1));
 } else if ($lines = 3) {
-    $interface = objbox_line3;
-    if_setobject(objbox_line3:com_0, $obj, $scale);
-    if_setposition(objbox_line3:com_0, $x, $y);
-    if_settext(objbox_line3:com_2, split_get($page, 0));
-    if_settext(objbox_line3:com_1, split_get($page, 1));
-    if_settext(objbox_line3:com_4, split_get($page, 2));
+    $interface = objbox3;
+    if_setobject(objbox3:com_0, $obj, $scale);
+    if_setposition(objbox3:com_0, $x, $y);
+    if_settext(objbox3:com_2, split_get($page, 0));
+    if_settext(objbox3:com_1, split_get($page, 1));
+    if_settext(objbox3:com_4, split_get($page, 2));
 } else if ($lines = 4) {
-    $interface = objbox_line4;
-    if_setobject(objbox_line4:com_0, $obj, $scale);
-    if_setposition(objbox_line4:com_0, $x, $y);
-    if_settext(objbox_line4:com_2, split_get($page, 0));
-    if_settext(objbox_line4:com_1, split_get($page, 1));
-    if_settext(objbox_line4:com_4, split_get($page, 2));
-    if_settext(objbox_line4:com_5, split_get($page, 3));
+    $interface = objbox4;
+    if_setobject(objbox4:com_0, $obj, $scale);
+    if_setposition(objbox4:com_0, $x, $y);
+    if_settext(objbox4:com_2, split_get($page, 0));
+    if_settext(objbox4:com_1, split_get($page, 1));
+    if_settext(objbox4:com_4, split_get($page, 2));
+    if_settext(objbox4:com_5, split_get($page, 3));
 }
 if_openchat($interface);
 
@@ -470,7 +470,7 @@ while ($page < $pagetotal) {
 
 // ----
 
-[proc,objbox2_page](obj $obj_1, obj $obj_2, int $scale, int $page)
+[proc,doubleobjbox_page](obj $obj_1, obj $obj_2, int $scale, int $page)
 def_int $lines = split_linecount($page);
 
 def_interface $interface = null;
@@ -478,46 +478,46 @@ if ($lines = 0) {
     // sanity check
     return;
 } else if ($lines = 1) {
-    $interface = objbox2;
-    if_setobject(objbox2:com_0, $obj_1, $scale);
-    if_settext(objbox2:com_1, split_get($page, 0));
-    if_settext(objbox2:com_2, "");
-    if_settext(objbox2:com_4, "");
-    if_settext(objbox2:com_5, "");
-    if_setobject(objbox2:com_6, $obj_2, $scale);
+    $interface = doubleobjbox;
+    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
+    if_settext(doubleobjbox:com_1, split_get($page, 0));
+    if_settext(doubleobjbox:com_2, "");
+    if_settext(doubleobjbox:com_4, "");
+    if_settext(doubleobjbox:com_5, "");
+    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 } else if ($lines = 2) {
-    $interface = objbox2;
-    if_setobject(objbox2:com_0, $obj_1, $scale);
-    if_settext(objbox2:com_1, split_get($page, 0));
-    if_settext(objbox2:com_2, "");
-    if_settext(objbox2:com_4, split_get($page, 1));
-    if_settext(objbox2:com_5, "");
-    if_setobject(objbox2:com_6, $obj_2, $scale);
+    $interface = doubleobjbox;
+    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
+    if_settext(doubleobjbox:com_1, split_get($page, 0));
+    if_settext(doubleobjbox:com_2, "");
+    if_settext(doubleobjbox:com_4, split_get($page, 1));
+    if_settext(doubleobjbox:com_5, "");
+    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 } else if ($lines = 3) {
-    $interface = objbox2;
-    if_setobject(objbox2:com_0, $obj_1, $scale);
-    if_settext(objbox2:com_1, split_get($page, 0));
-    if_settext(objbox2:com_2, "");
-    if_settext(objbox2:com_4, split_get($page, 1));
-    if_settext(objbox2:com_5, split_get($page, 2));
-    if_setobject(objbox2:com_6, $obj_2, $scale);
+    $interface = doubleobjbox;
+    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
+    if_settext(doubleobjbox:com_1, split_get($page, 0));
+    if_settext(doubleobjbox:com_2, "");
+    if_settext(doubleobjbox:com_4, split_get($page, 1));
+    if_settext(doubleobjbox:com_5, split_get($page, 2));
+    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 } else if ($lines = 4) {
-    $interface = objbox2;
-    if_setobject(objbox2:com_0, $obj_1, $scale);
-    if_settext(objbox2:com_1, split_get($page, 1));
-    if_settext(objbox2:com_2, split_get($page, 0));
-    if_settext(objbox2:com_4, split_get($page, 2));
-    if_settext(objbox2:com_5, split_get($page, 3));
-    if_setobject(objbox2:com_6, $obj_2, $scale);
+    $interface = doubleobjbox;
+    if_setobject(doubleobjbox:com_0, $obj_1, $scale);
+    if_settext(doubleobjbox:com_1, split_get($page, 1));
+    if_settext(doubleobjbox:com_2, split_get($page, 0));
+    if_settext(doubleobjbox:com_4, split_get($page, 2));
+    if_settext(doubleobjbox:com_5, split_get($page, 3));
+    if_setobject(doubleobjbox:com_6, $obj_2, $scale);
 }
 if_openchat($interface);
 
-[proc,objbox2](obj $obj_1, obj $obj_2, string $string)
+[proc,doubleobjbox](obj $obj_1, obj $obj_2, string $string)
 split_init($string, 350, 4, q8, null);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
-    ~objbox2_page($obj_1, $obj_2, 150, $page);
+    ~doubleobjbox_page($obj_1, $obj_2, 150, $page);
     p_pausebutton;
     $page = calc($page + 1);
 }
