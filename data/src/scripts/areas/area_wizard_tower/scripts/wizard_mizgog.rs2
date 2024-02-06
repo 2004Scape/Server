@@ -48,7 +48,7 @@ if($option = 1) {
     ~chatnpc(sad, "But they stole my four magical beads.|There was a red one, a yellow one,|a black one, and a white one.");
     ~chatnpc(sad, "These imps have now spread out all over the kingdom.|Could you get my beads back for me?");
     %imp_progress = ^imp_started;
-    ~send_quest_progress(quest_journal:imp, %imp_progress, ^imp_complete);
+    ~send_quest_progress(questlist:imp, %imp_progress, ^imp_complete);
     ~chatplayer(happy, "I'll try.");
 } else if($option = 2) {
     ~chatplayer(sad, "Give me a quest or else!");

@@ -23,7 +23,7 @@ switch_int(%tree_progress) {
                     case 1:
                         ~chatplayer(neutral, "I would be glad to help.");
                         %tree_progress = ^tree_started;
-                        ~send_quest_progress(quest_journal:tree, %tree_progress, ^tree_complete);
+                        ~send_quest_progress(questlist:tree, %tree_progress, ^tree_complete);
                         ~chatnpc(neutral, "Thank you. The battlefield is to the north of the maze. Commander Montai will inform you of their current situation.");
                         ~chatnpc(sad, "That is if he's still alive.");
                         ~chatnpc(neutral, "My assistant shall guide you out. Good luck friend, try your best to return the orb.");

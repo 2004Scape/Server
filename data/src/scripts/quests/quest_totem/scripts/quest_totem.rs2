@@ -164,6 +164,6 @@ if(%totem_progress = ^totem_crate_marked) {
 
 [queue,totem_quest_complete]
 %totem_progress = ^totem_complete;
-~send_quest_complete(quest_journal:totem, totem, 250, ^totem_questpoints, "You have completed the\\nTribal Totem Quest!");
+~send_quest_complete(questlist:totem, totem, 250, ^totem_questpoints, "You have completed the\\nTribal Totem Quest!");
 givexp(thieving, 17750);
 inv_add(inv, swordfish, 5);

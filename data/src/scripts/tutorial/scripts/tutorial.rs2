@@ -30,7 +30,7 @@ if (%tutorial_progress < 4) {
 if (%tutorial_progress = 0) {
     p_telejump(0_48_48_22_34);
     if_close; // workaround w/ receivedFirstClose
-    if_openmainmodal(player_design);
+    if_openmainmodal(player_kit);
     allowdesign(true);
 }
 
@@ -44,10 +44,10 @@ if (%tutorial_progress < 2) {
     @tutorial_step4;
 }
 
-[if_button,player_design:accept]
+[if_button,player_kit:accept]
 if_close;
 
-[if_close,player_design]
+[if_close,player_kit]
 %tutorial_progress = 1;
 allowdesign(false);
 

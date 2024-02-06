@@ -337,7 +337,7 @@ export function packInterface(server: boolean) {
             }
 
             if (src[`script${j}op1`] === '') {
-                // TODO: clean this up, skills:com_0 and 2 others in the same file use this code path
+                // TODO: clean this up, stats:com_0 and 2 others in the same file use this code path
                 data.p2(opCount);
             } else {
                 data.p2(opCount + 1);

@@ -33,8 +33,8 @@ if (%tutorial_progress < ^tutorial_complete) {
 
 [proc,initalltabs]
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
-if_settab(skills, ^tab_skills);
-if_settab(quest_journal, ^tab_quest_journal);
+if_settab(stats, ^tab_skills);
+if_settab(questlist, ^tab_quest_journal);
 ~update_quests;
 
 inv_transmit(inv, inventory:inv);
