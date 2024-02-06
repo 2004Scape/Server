@@ -57,8 +57,11 @@ if_settab(friends, ^tab_friends);
 if_settab(ignore, ^tab_ignore);
 if_settab(logout, ^tab_logout);
 if_settab(controls, ^tab_player_controls);
-if_settab(options, ^tab_game_options);
-if (lowmemory = false) {
+if (lowmemory = true) {
+    if_settab(options_ld, ^tab_game_options);
+    if_settab(music_ld, ^tab_musicplayer);
+} else {
+    if_settab(options, ^tab_game_options);
     if_settab(music, ^tab_musicplayer);
 }
 
