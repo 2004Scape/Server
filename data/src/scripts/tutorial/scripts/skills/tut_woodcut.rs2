@@ -64,7 +64,8 @@ if (%tutorial_progress = 30) {
 }
 
 [proc,tut_woodcutting_swap_loc]
-def_int $respawnrate = ~scale_by_playercount(60);
+// Seem to be a fixed 9.6 seconds https://www.youtube.com/watch?v=Ln_NMq4eQss
+def_int $respawnrate = 16;
 loc_del($respawnrate);
 loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
 // set skill anim so it doesnt continue after depletion

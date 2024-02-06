@@ -17,7 +17,7 @@ hint_coord(2, 0_48_48_25_35, 100);
 
 [proc,tutorial_step_moving_around]
 ~tutorialstep("Moving around", "Follow the path to find the next instructor. Clicking on the|ground will walk you to that point. Talk to the survival expert by|the pond to continue the tutorial. Remember you can rotate|the view by pressing the arrow keys.");
-@set_hint_icon_surivial_guide;
+~set_hint_icon_surivial_guide;
 
 [proc,tutorial_step_view_inventory]
 hint_stop();
@@ -46,7 +46,7 @@ if_settabflash(^tab_skills);
 
 [proc,tutorial_step_view_stats]
 ~tutorialstep("These are your stats.", "Here you will see how good your skills are. As you move your|mouse over any of the icons in this panel, you can see the exact amount of experience you have and how much is needed to get to the next level. Speak to Bryanna to continue.");
-@set_hint_icon_surivial_guide;
+~set_hint_icon_surivial_guide;
 
 [proc,tutorial_step_catch_shrimp]
 ~tutorialstep("Catch some Shrimp.", "Click on the fishing spot, indicated by the flashing arrow.|Remember you can check your inventory by clicking the|backpack icon.");

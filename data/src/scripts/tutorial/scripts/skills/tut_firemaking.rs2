@@ -8,12 +8,13 @@ if (stat(firemaking) < $level) {
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
 if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true) {
-    ~mesbox("You can't light a fire here.");
+    // https://youtu.be/ui3I-OPLqzE?t=253 doesn't use the mesbox
+    mes("You can't light a fire here.");
     return;
 }
 // check if they have tinderbox
 if(inv_total(inv, tinderbox) < 0) {
-    ~mesbox("You need a tinderbox to light a fire.");
+    mes("You need a tinderbox to light a fire.");
     return;
 }
 p_delay(0);
@@ -31,21 +32,21 @@ def_obj $log = inv_getobj(inv, $slot);
 def_int $level = oc_param($log, levelrequire);
 
 if (stat(firemaking) < $level) {
-    ~mesbox("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
     return;
 }
 // check if the coord is already occupied by an interactable loc
-if (map_blocked(coord) = true) {
-    ~mesbox("You can't light a fire here.");
+if (map_locaddunsafe(coord) = true | map_blocked(coord) = true) {
+    mes("You can't light a fire here.");
     return;
 }
 if (~inzone_coord_pair_table(bank_zones, coord) = true) {
-    ~mesbox("You can't light a fire here.");
+    mes("You can't light a fire here.");
     return;
 }
 // check if they have tinderbox
 if(inv_total(inv, tinderbox) < 0) {
-    ~mesbox("You need a tinderbox to light a fire.");
+    mes("You need a tinderbox to light a fire.");
     return;
 }
 
@@ -93,15 +94,13 @@ obj_del();
 ~tutorial_give_xp(firemaking, oc_param($log, productexp));
 sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
-
 if (%tutorial_progress = 40) {
     %tutorial_progress = 50;
     ~tutorial_step_you_gained_experience;
 } else {
     ~set_tutorial_progress;
 }
-
-def_int $delay = calc(100 + random(100));
+def_int $delay = 150;
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 world_delay($delay);
 obj_add($fire_coord, ashes, 1, 100);
