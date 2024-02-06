@@ -27,8 +27,34 @@ if (inv_total(inv, bronze_axe) = 0) {
 }
 
 p_arrivedelay;
+%action_delay = calc(map_clock + 10);
+def_int $counter = 0;
+
 ~tutorial_please_wait_woodcutting;
-~tut_woodcutting_animation_and_sound;
+anim(human_woodcutting_bronze_axe, 0);
+sound_synth(woodchop_4, 0, 18);
+while (map_clock < %action_delay) {
+    if ($counter = 2) {
+        sound_synth(woodchop_4, 0, 0);
+    }
+
+    if ($counter > 0 & calc($counter % 3) = 0 & $counter ! 9) {
+        sound_synth(woodchop_4, 0, 8);
+    }
+
+    if ($counter = 7) {
+        sound_synth(woodchop_4, 0, 18);
+    }
+
+    if ($counter > 0 & calc($counter % 4) = 0) {
+        anim(human_woodcutting_bronze_axe, 0);
+        sound_synth(woodchop_4, 0, 18);
+    }
+
+    p_delay(0);
+    $counter = calc($counter + 1);
+}
+anim(null, 0);
 ~tut_woodcutting_swap_loc;
 ~tutorial_give_xp(woodcutting, 250);
 if (%tutorial_progress = 30) {
@@ -36,28 +62,6 @@ if (%tutorial_progress = 30) {
 } else {
     @give_logs;
 }
-
-// I'm so sorry.
-[proc,tut_woodcutting_animation_and_sound]
-anim(human_woodcutting_bronze_axe, 0);
-sound_synth(woodchop_4, 0, 18);
-p_delay(1);
-sound_synth(woodchop_4, 0, 0);
-p_delay(0);
-sound_synth(woodchop_4, 0, 8);
-p_delay(0);
-anim(human_woodcutting_bronze_axe, 0);
-sound_synth(woodchop_4, 0, 25);
-p_delay(0);
-sound_synth(woodchop_4, 0, 18);
-p_delay(1);
-sound_synth(woodchop_4, 0, 8);
-p_delay(0);
-sound_synth(woodchop_4, 0, 25);
-p_delay(1);
-anim(human_woodcutting_bronze_axe, 0);
-sound_synth(woodchop_4, 0, 25);
-p_delay(0);
 
 [proc,tut_woodcutting_swap_loc]
 def_int $respawnrate = ~scale_by_playercount(60);
