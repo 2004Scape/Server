@@ -11,7 +11,7 @@ switch_int(%tutorial_progress) {
 
 [label,survival_guide_start]
 ~chatnpc(neutral, "Hello there newcomer. My name is Brynna. My job is|to teach you a few survival tips and tricks. First off|we're going to start with the most basic survival skill of|all; making a fire.");
-~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
+~doubleobjbox(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
 %tutorial_progress = 20;
 ~tutorial_step_view_inventory;
 
@@ -30,7 +30,7 @@ switch_int(%tutorial_progress) {
 if (inv_total(inv, bronze_axe) < 1 & inv_total(inv, tinderbox) < 1) {
     inv_add(inv, bronze_axe, 1);
     inv_add(inv, tinderbox, 1);
-    ~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
+    ~doubleobjbox(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
 }
 
 if (inv_total(inv, bronze_axe) < 1) {

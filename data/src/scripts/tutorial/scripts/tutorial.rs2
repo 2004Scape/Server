@@ -25,7 +25,7 @@ if_settab(null, ^tab_magic);
 if_settab(null, ^tab_friends);
 if_settab(null, ^tab_ignore);
 if_settab(logout, ^tab_logout);
-if_settab(game_options, ^tab_game_options);
+if_settab(options, ^tab_game_options);
 if_settab(null, ^tab_player_controls);
 if_settab(null, ^tab_musicplayer);
 
@@ -35,14 +35,14 @@ if_settab(null, ^tab_musicplayer);
 if (%tutorial_progress = 0) {
     p_telejump(0_48_48_22_34);
     if_close; // workaround w/ receivedFirstClose
-    if_openmainmodal(player_design);
+    if_openmainmodal(player_kit);
     allowdesign(true);
 }
 ~set_tutorial_progress;
 
 [proc,tutorial_set_active_tabs]
 if (%tutorial_progress > 0) {
-    if_settab(game_options, ^tab_game_options);
+    if_settab(options, ^tab_game_options);
 }
 
 if (%tutorial_progress > 20) {
@@ -51,7 +51,7 @@ if (%tutorial_progress > 20) {
 }
 
 if (%tutorial_progress > 50) {
-    if_settab(skills, ^tab_skills);
+    if_settab(stats, ^tab_skills);
 }
 
 [proc,tutorial_set_npc_hints]
@@ -74,10 +74,10 @@ if (%tutorial_progress = 70) {
 }
 
 
-[if_button,player_design:accept]
+[if_button,player_kit:accept]
 if_close;
 
-[if_close,player_design]
+[if_close,player_kit]
 %tutorial_progress = 1;
 allowdesign(false);
 

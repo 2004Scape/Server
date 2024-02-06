@@ -40,7 +40,7 @@ hint_coord(2, 0_48_48_27_23, 175);
 ~tutorialstep("Please wait...", "|Your character is now attempting to light the fire.|This should only take a few seconds.");
 
 [proc,tutorial_step_you_gained_experience]
-if_settab(skills, ^tab_skills);
+if_settab(stats, ^tab_skills);
 if_settabflash(^tab_skills);
 ~tutorialstep("", "You gained some experience.|Click on the flashing bar graph icon near the inventory button|to see your skill abilities.");
 
