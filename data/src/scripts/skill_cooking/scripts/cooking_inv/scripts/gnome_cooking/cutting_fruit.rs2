@@ -69,7 +69,7 @@ switch_obj($fruit) {
 }
 // https://youtu.be/cC26OwAULXM?t=257
 // lime is lower for some reason, need to look into this
-def_namedobj $product = ~obj_choice2("Would you like to...", 
+def_namedobj $product = ~objdialog2("Would you like to...", 
     $sliced, 0, -26, 175, "Slice the <lowercase(oc_name($fruit))>.", 5, -1,
     $diced, 0, -24, 175, "Dice the <lowercase(oc_name($fruit))>.", 4, -1
 );

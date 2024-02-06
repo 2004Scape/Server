@@ -37,7 +37,7 @@ p_delay(2); // 2 ticks
 mes("You now have some soft workable clay.");
 
 [label,craft_pottery_interface] 
-def_namedobj $choice = ~obj_choice3(
+def_namedobj $choice = ~objdialog3(
     "What would you like to make?", 
     unfired_pot, 0, 2, 185, "Pot", 0, 0, 
     unfired_piedish, 0, -4, 190, "Pie Dish", 0, 0, 
