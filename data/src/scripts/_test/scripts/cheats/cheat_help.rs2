@@ -1,9 +1,19 @@
 [debugproc,help]
+// after alpha
+// if (staffmodlevel < 2) {
+//     return;
+// }
+
 if_close;
 if (p_finduid(uid) = true) {
-    ~mesbox("These cheats are only available during the Alpha phase.|If a command has options, run it by itself to get a list.");
+    if (map_localdev = false) {
+        ~mesbox("These cheats are only available during the Alpha phase.|If a command has options, run it by itself to get specific instructions.");
+    }
+
+    // Client
     ~mesbox("@blu@Client commands|@whi@::debug@bla@ - Toggles the debug overlay|@whi@::chat@bla@ - Switches the chat font-era|@whi@::perf@bla@ - Show FPS");
 
+    // Content
     ~mesbox("@blu@Content testing|@whi@::reset@bla@ - Reset your progress|@whi@::minlevel@bla@ - Set all your stats to level 1|@whi@::maxlevel@bla@ - Set all your stats to level 99|@whi@::setlevel@bla@ - Set a skill to a specific level");
     ~mesbox("@blu@Content testing|@whi@::addxp@bla@ - Add XP to a skill|@whi@::setxp@bla@ - Set your XP in a skill");
     ~mesbox("@blu@Content testing|@whi@::bank@bla@ - Open your bank anywhere|@whi@::bank_preset@bla@ - Fill your bank with common items|@whi@::clearinv@bla@ - Clear a named inventory|@whi@::give@bla@ - Give yourself any item");
@@ -18,8 +28,8 @@ if (p_finduid(uid) = true) {
     ~mesbox("@blu@Content testing|@whi@::portsarim@bla@ - Teleport to Port Sarim|@whi@::rimmington@bla@ - Teleport to Rimmington|@whi@::alkharid@bla@ - Teleport to Al Kharid|@whi@::seers@bla@ - Teleport to Seers Village");
     ~mesbox("@blu@Content testing|@whi@::giants@bla@ - Teleport to Giants in Edgeville Dungeon");
 
+    // Engine
     ~mesbox("@blu@Engine commands|@whi@::coord@bla@ - Get your position in Jagex's format|@whi@::pos@bla@ - Get your position|@whi@::zone@bla@ - Get your zone|@whi@::players@bla@ - Get the number of players online");
-
     if (map_localdev = true) {
         ~mesbox("@blu@Engine commands|@whi@::busy@bla@ - Check if your player is busy|@whi@::lineofwalk@bla@ - Check where your player has line-of-walk|@whi@::map_blocked@bla@ - Check where your player is touching blocked tiles");
         ~mesbox("@blu@Engine commands|@whi@::delay@bla@ - Delay yourself for n ticks|@whi@::open@bla@ - Open an interface to check how it looks|@whi@::close@bla@ - Close open interfaces");
