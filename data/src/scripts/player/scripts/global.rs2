@@ -22,8 +22,15 @@ softtimer(stat_replenish, 100);
 softtimer(health_replenish, 100);
 
 if (%tutorial_progress < ^tutorial_complete) {
-    ~update_bas;
-    @start_tutorial;
+    // This is a check to not bork every account that currently has a tutorial complete progress of 5.
+    if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
+        %tutorial_progress = ^tutorial_complete;
+        last_login_info;
+        ~initalltabs;
+    } else {
+        ~update_bas;
+        @start_tutorial;
+    }
 } else {
     last_login_info;
     ~initalltabs;
