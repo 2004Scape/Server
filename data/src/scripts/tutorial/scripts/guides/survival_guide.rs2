@@ -156,7 +156,7 @@ switch_int($choice) {
 [proc,survival_recap_more_options]
 ~survival_guide_recap_response(~p_choice4("Tell me about Fishing again.", 5, "Tell me about Cooking again.", 6, "Nothing thanks.", 7, "Previous options...", 8));
 
-[label,set_hint_icon_surivial_guide]
+[proc,set_hint_icon_surivial_guide]
 npc_findallzone(0_48_48_29_24);
 while (npc_findnext = true) {
     if (npc_type = npc_943) {
