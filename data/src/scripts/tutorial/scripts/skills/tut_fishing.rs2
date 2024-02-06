@@ -16,14 +16,19 @@ if (inv_freespace(inv) < 1) {
 }
 
 p_arrivedelay;
+%action_delay = calc(map_clock + 7);
+def_int $counter = 0;
+
+~tutorial_please_wait_fishing;
 anim(human_smallnet, 0);
 sound_synth(fishing_cast, 0, 15);
-~tutorial_please_wait_fishing;
-p_delay(2);
-sound_synth(fishing_cast, 0, 15);
-p_delay(2);
-sound_synth(fishing_cast, 0, 15);
-p_delay(1);
+while (map_clock < %action_delay) {
+    if ($counter > 0 & calc($counter % 3) = 0) {
+        sound_synth(fishing_cast, 0, 15);
+    }
+    p_delay(0);
+    $counter = calc($counter + 1);
+}
 anim(null, 0);
 inv_add(inv, raw_shrimps, 1);
 ~tutorial_give_xp(fishing, 100);
