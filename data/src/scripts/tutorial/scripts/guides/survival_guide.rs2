@@ -11,9 +11,9 @@ switch_int(%tutorial_progress) {
 
 [label,survival_guide_start]
 ~chatnpc(neutral, "Hello there newcomer. My name is Brynna. My job is|to teach you a few survival tips and tricks. First off|we're going to start with the most basic survival skill of|all; making a fire.");
-~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a @blu@Tinderbox@bla@ and a|@blu@Bronze Axe@bla@!");
+~objbox2(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
 %tutorial_progress = 20;
-~tutorial_step_11_view_inventory;
+~tutorial_step_view_inventory;
 
 [label,survival_guide_look_at_menu]
 ~chatnpc(neutral, "Hello again. You should take a look at that menu before we continue.");
@@ -64,11 +64,11 @@ while (npc_findnext = true) {
         hint_npc(npc_uid);
     }
 }
-~survival_guide_replace_items_no_objboxes;
 inv_add(inv, net, 1);
-~objbox(net, "The Survival Guide gives you a |@blu@Net!");
 %tutorial_progress = 70;
-~tutorial_step_16_catch_shrimp;
+~tutorial_step_catch_shrimp;
+~objbox(net, "The Survival Guide gives you a |@blu@Net!");
+~survival_guide_replace_items_no_objboxes;
 
 // https://youtu.be/TSx2-jjPeIs?t=31
 [label,survival_guide_fishing_after_burning]

@@ -74,7 +74,7 @@ anim(null, $respawnrate);
 %tutorial_progress = 40;
 hint_stop();
 inv_add(inv, logs, 1);
-~tutorial_step_13_build_fire;
+~tutorial_step_build_fire;
 ~objboxt(logs, "You get some logs.");
 
 [label,give_logs]

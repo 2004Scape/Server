@@ -29,7 +29,9 @@ if ($unlock_row = null) {
 }
 def_int $level = stat_base($stat);
 def_string $message = db_getfield($unlock_row, levelup:message, 0);
-mes($message);
+if (%tutorial_progress >= ^tutorial_complete) {
+    mes($message);
+}
 // play the fireworks
 spotanim_pl(levelup_anim, 124, 0);
 // sound_synth(firework, 0, 0); Was an osrs addition apparently

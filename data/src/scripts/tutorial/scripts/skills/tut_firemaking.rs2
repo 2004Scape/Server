@@ -96,7 +96,7 @@ facesquare($fire_coord);
 
 if (%tutorial_progress = 40) {
     %tutorial_progress = 50;
-    ~tutorial_step_14_you_gained_experience;
+    ~tutorial_step_you_gained_experience;
 } else {
     ~set_tutorial_progress;
 }

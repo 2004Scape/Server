@@ -15,19 +15,19 @@
 
 [label,start_tutorial]
 // logging into a new character might show old tabs so we're going to clear them
-if_settab(null, 0);
-if_settab(null, 1);
-if_settab(null, 2);
-if_settab(null, 3);
-if_settab(null, 4);
-if_settab(null, 5);
-if_settab(null, 6);
-if_settab(null, 8);
-if_settab(null, 9);
-if_settab(logout, 10);
+if_settab(null, ^tab_combat_options);
+if_settab(null, ^tab_skills);
+if_settab(null, ^tab_quest_journal);
+if_settab(null, ^tab_inventory);
+if_settab(null, ^tab_wornitems);
+if_settab(null, ^tab_prayer);
+if_settab(null, ^tab_magic);
+if_settab(null, ^tab_friends);
+if_settab(null, ^tab_ignore);
+if_settab(logout, ^tab_logout);
 if_settab(game_options, ^tab_game_options);
-if_settab(null, 12);
-if_settab(null, 13);
+if_settab(null, ^tab_player_controls);
+if_settab(null, ^tab_musicplayer);
 
 ~tutorial_set_active_tabs;
 ~tutorial_set_npc_hints;
@@ -38,33 +38,11 @@ if (%tutorial_progress = 0) {
     if_openmainmodal(player_design);
     allowdesign(true);
 }
-
-switch_int(%tutorial_progress) {
-    // Runescape Guide's House
-    case 0, 1: ~tutorial_step_1_getting_started;
-    // Not Relelvant until October 2006
-    case 2: ~tutorial_step_2_player_controls_spanner;
-    case 3: ~tutorial_step_3_player_controls_left_click;
-    case 4: ~tutorial_step_4_interact_with_scenery;
-    case 10: ~tutorial_step_10_moving_around;
-
-    // Survival Tutor
-    case 20: ~tutorial_step_11_view_inventory;
-    case 30: ~tutorial_step_12_cut_tree;
-    case 40: ~tutorial_step_13_build_fire;
-    case 50: ~tutorial_step_14_you_gained_experience;
-    case 60: ~tutorial_step_15_view_stats;
-    case 70: ~tutorial_step_16_catch_shrimp;
-    case 80: ~tutorial_step_17_cook_shrimp;
-    case 90: ~tutorial_step_18_burn_shrimp;
-    case 120: ~tutorial_step_19_survival_recap;
-
-    // Master Chef
-}
+~set_tutorial_progress;
 
 [proc,tutorial_set_active_tabs]
 if (%tutorial_progress > 0) {
-    if_settab(game_options, 11);
+    if_settab(game_options, ^tab_game_options);
 }
 
 if (%tutorial_progress > 20) {
@@ -72,7 +50,7 @@ if (%tutorial_progress > 20) {
     if_settab(inventory, ^tab_inventory);
 }
 
-if (%tutorial_progress > 60) {
+if (%tutorial_progress > 50) {
     if_settab(skills, ^tab_skills);
 }
 
@@ -95,9 +73,6 @@ if (%tutorial_progress = 70) {
     }
 }
 
-if (%tutorial_progress = 10) {
-   ~tutorial_step_10_moving_around;
-}
 
 [if_button,player_design:accept]
 if_close;
@@ -106,44 +81,40 @@ if_close;
 %tutorial_progress = 1;
 allowdesign(false);
 
-
 [if_flashing_tab,_]
 if (%tutorial_progress = 2) {
     %tutorial_progress = 3;
-    ~tutorial_step_3_player_controls_left_click;
+    ~tutorial_step_player_controls_left_click;
 } else if (%tutorial_progress = 20) {
     inv_add(inv, bronze_axe, 1);
     inv_add(inv, tinderbox, 1);
     %tutorial_progress = 30;
-    ~tutorial_step_12_cut_tree;
+    ~tutorial_step_cut_tree;
 } else if (%tutorial_progress = 50) {
     %tutorial_progress = 60;
-    ~tutorial_step_15_view_stats;
+    ~tutorial_step_view_stats;
 }
-
-[label,tutorial_step20]
-~tutorialstep("Find your next instructor.", "Follow the path until you get to the door with the yellow arrow|above it. Click on the door to open it. Notice the mini-map in|the top right, this shows a top down view of the area around|you. This can also be used for navigation.");
 
 [proc,set_tutorial_progress]
 switch_int(%tutorial_progress) {
     // Runescape Guide's House
-    case 0, 1: ~tutorial_step_1_getting_started;
+    case 0, 1: ~tutorial_step_getting_started;
     // Not Relelvant until October 2006
-    case 2: ~tutorial_step_2_player_controls_spanner;
-    case 3: ~tutorial_step_3_player_controls_left_click;
-    case 4: ~tutorial_step_4_interact_with_scenery;
-    case 10: ~tutorial_step_10_moving_around;
+    case 2: ~tutorial_step_player_controls_spanner;
+    case 3: ~tutorial_step_player_controls_left_click;
+    case 4: ~tutorial_step_interact_with_scenery;
+    case 10: ~tutorial_step_moving_around;
 
     // Survival Tutor
-    case 20: ~tutorial_step_11_view_inventory;
-    case 30: ~tutorial_step_12_cut_tree;
-    case 40: ~tutorial_step_13_build_fire;
-    case 50: ~tutorial_step_14_you_gained_experience;
-    case 60: ~tutorial_step_15_view_stats;
-    case 70: ~tutorial_step_16_catch_shrimp;
-    case 80: ~tutorial_step_17_cook_shrimp;
-    case 90: ~tutorial_step_18_burn_shrimp;
-    case 120: ~tutorial_step_19_survival_recap;
+    case 20: ~tutorial_step_view_inventory;
+    case 30: ~tutorial_step_cut_tree;
+    case 40: ~tutorial_step_build_fire;
+    case 50: ~tutorial_step_you_gained_experience;
+    case 60: ~tutorial_step_view_stats;
+    case 70: ~tutorial_step_catch_shrimp;
+    case 80: ~tutorial_step_cook_shrimp;
+    case 90: ~tutorial_step_burn_shrimp;
+    case 120: ~tutorial_step_survival_recap;
 
     // Master Chef
 }
