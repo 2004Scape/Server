@@ -3,6 +3,7 @@ mes("Welcome to RuneScape.");
 if (map_localdev = false) {
     mes("The server is currently in the Alpha testing phase.");
     mes("Character progression will reset when Beta testing begins.");
+    mes("Available commands during this phase can be found by running ::help.");
 }
 cam_reset;
 //if_close; // come back to this if this proves to be problematic, commented so welcome screen is visible
