@@ -1107,7 +1107,7 @@ class World {
         zone.removeObj(obj, receiver, -1);
         obj.despawn = this.currentTick;
         obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
-        if(zone.staticObjs.includes(obj)) {
+        if (zone.staticObjs.includes(obj)) {
             let future = this.futureUpdates.get(obj.respawn);
             if (!future) {
                 future = [];

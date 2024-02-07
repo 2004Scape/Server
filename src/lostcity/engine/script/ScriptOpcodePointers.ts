@@ -4,13 +4,13 @@ const POINTER_GROUP_FIND = ['find_player', 'find_npc', 'find_loc', 'find_obj', '
 
 const ScriptOpcodePointers: {
     [key: string]: {
-        require?: string[],
-        set?: string[],
-        corrupt?: string[],
-        require2?: string[],
-        set2?: string[],
-        corrupt2?: string[],
-        conditional?: boolean,
+        require?: string[];
+        set?: string[];
+        corrupt?: string[];
+        require2?: string[];
+        set2?: string[];
+        corrupt2?: string[];
+        conditional?: boolean;
     };
 } = {
     // Player ops
@@ -46,7 +46,7 @@ const ScriptOpcodePointers: {
         require: ['active_player']
     },
     [ScriptOpcode.BUILDAPPEARANCE]: {
-        require: ['active_player'],
+        require: ['active_player']
     },
     [ScriptOpcode.BUSY]: {
         require: ['active_player'],
@@ -96,7 +96,7 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.FINDUID]: {
         set: ['active_player'],
         set2: ['active_player2'],
-        conditional: true,
+        conditional: true
     },
     [ScriptOpcode.GENDER]: {
         require: ['active_player'],
@@ -138,7 +138,7 @@ const ScriptOpcodePointers: {
         require2: ['find_player'],
         set: ['active_player'],
         set2: ['active_player2'],
-        conditional: true,
+        conditional: true
     },
     [ScriptOpcode.IF_CLOSE]: {
         require: ['active_player'],
@@ -261,8 +261,14 @@ const ScriptOpcodePointers: {
         corrupt: [
             // everything except active is assumed corrupted
             ...POINTER_GROUP_FIND,
-            'last_com', 'last_int', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'
-        ],
+            'last_com',
+            'last_int',
+            'last_item',
+            'last_slot',
+            'last_targetslot',
+            'last_useitem',
+            'last_useslot'
+        ]
     },
     [ScriptOpcode.P_COUNTDIALOG]: {
         require: ['p_active_player'],
@@ -270,7 +276,12 @@ const ScriptOpcodePointers: {
         corrupt: [
             // everything except active is assumed corrupted
             ...POINTER_GROUP_FIND,
-            'last_com', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'
+            'last_com',
+            'last_item',
+            'last_slot',
+            'last_targetslot',
+            'last_useitem',
+            'last_useslot'
         ]
     },
     [ScriptOpcode.P_DELAY]: {
@@ -278,7 +289,13 @@ const ScriptOpcodePointers: {
         corrupt: [
             // everything except active is assumed corrupted
             ...POINTER_GROUP_FIND,
-            'last_com', 'last_int', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'
+            'last_com',
+            'last_int',
+            'last_item',
+            'last_slot',
+            'last_targetslot',
+            'last_useitem',
+            'last_useslot'
         ]
     },
     [ScriptOpcode.P_EXACTMOVE]: {
@@ -287,7 +304,7 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.P_FINDUID]: {
         set: ['p_active_player'],
         set2: ['p_active_player2'],
-        conditional: true,
+        conditional: true
     },
     [ScriptOpcode.P_LOCMERGE]: {
         require: ['p_active_player']
@@ -317,7 +334,12 @@ const ScriptOpcodePointers: {
         corrupt: [
             // everything except active is assumed corrupted
             ...POINTER_GROUP_FIND,
-            'last_int', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'
+            'last_int',
+            'last_item',
+            'last_slot',
+            'last_targetslot',
+            'last_useitem',
+            'last_useslot'
         ]
     },
     [ScriptOpcode.P_STOPACTION]: {
@@ -435,7 +457,13 @@ const ScriptOpcodePointers: {
         corrupt: [
             // everything except active is assumed corrupted
             ...POINTER_GROUP_FIND,
-            'last_com', 'last_int', 'last_item', 'last_slot', 'last_targetslot', 'last_useitem', 'last_useslot'
+            'last_com',
+            'last_int',
+            'last_item',
+            'last_slot',
+            'last_targetslot',
+            'last_useitem',
+            'last_useslot'
         ],
         require2: ['active_npc2']
     },
@@ -450,18 +478,18 @@ const ScriptOpcodePointers: {
         require: ['find_npc'],
         set: ['active_npc'],
         set2: ['active_npc2'],
-        conditional: true,
+        conditional: true
     },
     [ScriptOpcode.NPC_FINDHERO]: {
         require: ['active_npc'],
         set: ['active_player'],
         set2: ['active_player'],
-        conditional: true,
+        conditional: true
     },
     [ScriptOpcode.NPC_FINDUID]: {
         set: ['active_npc'],
         set2: ['active_npc2'],
-        conditional: true,
+        conditional: true
     },
     [ScriptOpcode.NPC_GETMODE]: {
         require: ['active_npc'],
@@ -594,7 +622,7 @@ const ScriptOpcodePointers: {
         set: ['active_loc'],
         require2: ['find_loc'],
         set2: ['active_loc2'],
-        conditional: true,
+        conditional: true
     },
     [ScriptOpcode.LOC_NAME]: {
         require: ['active_loc'],
@@ -618,11 +646,11 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         set: ['active_obj'],
         require2: ['active_player'],
-        set2: ['active_obj2'],
+        set2: ['active_obj2']
     },
     [ScriptOpcode.OBJ_ADDALL]: {
         set: ['active_obj'],
-        set2: ['active_obj2'],
+        set2: ['active_obj2']
     },
     [ScriptOpcode.OBJ_COORD]: {
         require: ['active_obj'],
