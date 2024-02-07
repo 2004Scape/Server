@@ -325,7 +325,7 @@ export const ServerProtEncoders: {
             // 5 - 64, 0 offset - bottom left
             // 6 - 64, 128 offset - top left
 
-            buf.p1(type + 2);
+            buf.p1(type);
             buf.p2(x);
             buf.p2(z);
             buf.p1(y);
