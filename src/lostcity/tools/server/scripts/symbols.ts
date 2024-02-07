@@ -83,6 +83,17 @@ for (let i = 0; i < seqs.length; i++) {
 }
 fs.writeFileSync('data/symbols/seq.sym', seqSymbols);
 
+let idkSymbols = '';
+const idks = loadPack('data/pack/idk.pack');
+for (let i = 0; i < idks.length; i++) {
+    if (!idks[i]) {
+        continue;
+    }
+
+    idkSymbols += `${i}\t${idks[i]}\n`;
+}
+fs.writeFileSync('data/symbols/idk.sym', idkSymbols);
+
 let spotanimSymbols = '';
 const spotanims = loadPack('data/pack/spotanim.pack');
 for (let i = 0; i < spotanims.length; i++) {
