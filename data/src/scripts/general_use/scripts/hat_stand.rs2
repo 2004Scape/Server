@@ -5,8 +5,9 @@ if (oc_wearpos(inv_getobj(inv, last_useslot)) ! ^wearpos_hat) {
     return;
 }
 // anim in osrs is 2140
+def_int $slot = last_useslot;
 p_delay(1);
-inv_dropslot(inv, coord, last_useslot, 300);
+inv_dropslot(inv, coord, $slot, 300);
 sound_synth(put_down, 0, 0);
 p_delay(0);
 ~mesbox("Oops - it fell off the hatstand!");
