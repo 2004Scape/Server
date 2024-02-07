@@ -357,13 +357,13 @@ scope=perm
 
 [varp_260]
 
-[temp_if1]
+[option1]
 transmit=yes
 
-[temp_if2]
+[option2]
 transmit=yes
 
-[temp_if3]
+[option3]
 transmit=yes
 
 [varp_264]

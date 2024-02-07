@@ -85,24 +85,28 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     }
     // freeze player if spell has freeze effect
     if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-        %stunned = calc(map_clock + db_getfield($spell_data, magic_spell_table:freeze_time, 0) + 1);
-        setmovecheck(frozen);
-        }
+        queue(freeze_player, 0, db_getfield($spell_data, magic_spell_table:freeze_time, 0));
+    }
+} else {
+    if_close; // close the player interface when taking a hit.
+    // splash
+    if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
+        sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
     } else {
-        if_close; // close the player interface when taking a hit.
-        // splash
-        if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
-            sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
-        } else {
-            // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
-            // every time?
-            sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-        }
-        // splash sound would play here, doesnt exist in this rev?
-        // sound_synth(, 0, $duration);
-        spotanim_pl(spotanim_85, 92, $duration);
-        // splashing in osrs causes insta auto retal
-        queue(playerhit_n_retaliate, 0, npc_uid);
+        // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
+        // every time?
+        sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+    }
+    // splash sound would play here, doesnt exist in this rev?
+    // sound_synth(, 0, $duration);
+    spotanim_pl(spotanim_85, 92, $duration);
+    // splashing in osrs causes insta auto retal
+    queue(playerhit_n_retaliate, 0, npc_uid);
 }
 
 %npc_lastcombat = map_clock;
+
+// todo: dunno if this should be queued but protected access lol
+[queue,freeze_player](int $duration)
+%stunned = calc(map_clock + $duration + 1);
+setmovecheck(frozen);

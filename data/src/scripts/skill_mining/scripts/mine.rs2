@@ -122,7 +122,7 @@ if (random($chance) = ^true) {
     if ($gem ! null) {
         inv_add(inv, $gem, 1);
         db_find(gem_cutting_table:uncut_gem, $gem);
-        def_dbrow $data = db_findnext;
+        $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
@@ -162,7 +162,7 @@ if (random($chance) = ^true) {
     if ($gem ! null) {
         inv_add(inv, $gem, 1);
         db_find(gem_cutting_table:uncut_gem, $gem);
-        def_dbrow $data = db_findnext;
+        $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
@@ -226,7 +226,7 @@ if (stat_random(stat(mining), $low, $high) = true) {
     givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
 
     db_find(gem_cutting_table:uncut_gem, $gem);
-    def_dbrow $data = db_findnext;
+    $data = db_findnext;
     mes("You just mined <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     return;
 }
