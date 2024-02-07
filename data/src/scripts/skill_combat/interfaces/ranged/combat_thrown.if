@@ -1,6 +1,6 @@
 type=overlay
 
-[com_0]
+[preview]
 type=model
 x=135
 y=16
@@ -14,7 +14,7 @@ yan=1288
 [com_1]
 type=text
 x=4
-y=10
+y=2
 width=47
 height=14
 font=p12
@@ -22,10 +22,10 @@ shadowed=yes
 text=Weapon:
 colour=0xFFFF00
 
-[com_2]
+[name]
 type=text
 x=52
-y=10
+y=2
 width=17
 height=14
 font=p12
@@ -36,7 +36,7 @@ colour=0xFFFF00
 [com_3]
 type=text
 x=4
-y=40
+y=18
 width=114
 height=14
 font=p12
@@ -44,15 +44,15 @@ shadowed=yes
 text=Choose Attack Style
 colour=0x00C000
 
-[com_4]
+[thrown101]
 type=layer
 x=4
 y=60
 width=145
 height=190
 
-[com_5]
-layer=com_4
+[thrown2]
+layer=thrown101
 type=graphic
 x=5
 y=97
@@ -64,8 +64,8 @@ script1=eq,2
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_6]
-layer=com_4
+[thrown1]
+layer=thrown101
 type=graphic
 x=5
 y=51
@@ -77,8 +77,8 @@ script1=eq,1
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_7]
-layer=com_4
+[thrown0]
+layer=thrown101
 type=graphic
 x=5
 y=5
@@ -91,34 +91,34 @@ graphic=combatboxes,0
 activegraphic=combatboxes,1
 
 [com_8]
-layer=com_4
+layer=thrown101
 type=graphic
 x=22
 y=103
 width=34
 height=24
-graphic=combaticons2,7
+graphic=combaticons2,12
 
 [com_9]
-layer=com_4
+layer=thrown101
 type=graphic
 x=21
 y=11
 width=34
 height=24
-graphic=combaticons2,5
+graphic=combaticons2,10
 
 [com_10]
-layer=com_4
+layer=thrown101
 type=graphic
 x=22
 y=57
 width=34
 height=24
-graphic=combaticons2,6
+graphic=combaticons2,11
 
 [com_11]
-layer=com_4
+layer=thrown101
 type=text
 x=78
 y=15
@@ -130,7 +130,7 @@ text=Accurate
 colour=0xFFFF00
 
 [com_12]
-layer=com_4
+layer=thrown101
 type=text
 x=78
 y=60
@@ -142,7 +142,7 @@ text=Rapid
 colour=0xFFFF00
 
 [com_13]
-layer=com_4
+layer=thrown101
 type=text
 x=78
 y=107
