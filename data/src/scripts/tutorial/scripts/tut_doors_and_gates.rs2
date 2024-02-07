@@ -7,6 +7,7 @@ if (%tutorial_progress < 120) {
 p_teleport(movecoord(coord, -1, 0, 0));
 //@tutorial_complete;
 %tutorial_progress = 130;
+~set_tutorial_progress;
 
 
 // Survival Tutor Gate
@@ -17,6 +18,7 @@ if (%tutorial_progress < 120) {
 }
 p_teleport(movecoord(coord, -1, 0, 0));
 %tutorial_progress = 130;
+~set_tutorial_progress;
 //%tutorial_progress = ^chef_start;
 //@tutorial_complete;
 
@@ -47,10 +49,25 @@ if (%tutorial_progress = 130) {
 
 // Door exiting Master Chef's house
 [oploc1,loc_3018]
+if (%tutorial_progress < 180) {
+    ~mesbox("Can't leave yet.");
+    return;
+}
+
 hint_stop();
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 170) {
-    %tutorial_progress = 180;
+if (%tutorial_progress = 180) {
+    %tutorial_progress = 190;
+    ~set_tutorial_progress;
+}
+
+// Door to Quest Guide's house
+[oploc1,loc_3019]
+hint_stop();
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = 200) {
+    %tutorial_progress = ^quest_guide_start;
     ~set_tutorial_progress;
 }

@@ -1,2 +1,55 @@
+[opnpc1,npc_949]
+switch_int(%tutorial_progress) {
+    case ^quest_guide_start: @quest_guide_start;
+    case 230: @quest_guide_menu_not_opened;
+    case 240: @quest_guide_journal_info;
+    case default: @quest_guide_recap;
+}
+
+[label,quest_guide_start]
+~chatnpc(neutral, "Ah... welcome adventurer. I'm here to tell you all about|quests. Let's start by opening the quest side panel.");
+%tutorial_progress = 230;
+~set_tutorial_progress;
+
+[label,quest_guide_journal_info]
+~chatnpc(neutral, "Now you have the journal open I'll tell you a bit about|it. As you see at the moment all the quests are shown|in red, a quest shown in red is unstarted.");
+~quest_guide_journal_info_no_intro;
+%tutorial_progress = 250;
+~set_tutorial_progress;
+
+[proc,quest_guide_journal_info_no_intro]
+~chatnpc(neutral, "When you start a quest it will change colour to yellow,|and green when you've finished. This is so you can|easily see what's complete, what's started, and what's left|to begin.");
+~chatnpc(neutral, "The start of quests are easy to find. Look out for the|star icons on the minimap, like the one you should see|marking my house.");
+~chatnpc(neutral, "The quests themselves can vary greatly from collecting|beads to hunting down dragons. Generally quests are|started by talking to a non player character and will|involve a series of tasks.");
+~chatnpc(neutral, "There's not a lot more I can tell you about questing.|You have to experience the thrill of it yourself to fully|understand; You may find some adventure in the caves|under my house.");
+
 [label,quest_guide_menu_not_opened]
 ~chatnpc(quiz, "Have you not opened that menu yet?");
+
+[label,quest_guide_recap]
+~chatnpc(quiz, "Would you like to hear more about quests again?");
+def_int $choice = ~p_choice2("Yes!", 1, "Nope, I'm ready to move on!", 2);
+
+if ($choice = 1) {
+    ~chatplayer("default", "Yes!");
+    ~quest_guide_journal_info_no_intro;
+} else {
+    ~chatplayer("default", "Nope, I'm ready to move on!");
+    ~chatnpc("default", "Okay then.");
+}
+
+
+[proc,set_hint_icon_quest_guide]
+npc_findallzone(0_48_48_12_52);
+while (npc_findnext = true) {
+    if (npc_type = npc_949) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_48_16_48);
+while (npc_findnext = true) {
+    if (npc_type = npc_949) {
+        hint_npc(npc_uid);
+    }
+}
