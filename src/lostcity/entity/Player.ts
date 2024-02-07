@@ -781,7 +781,7 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_FLASHING_TAB, -1, -1);
+                const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.TUTORIAL_CLICKSIDE, -1, -1);
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 }
