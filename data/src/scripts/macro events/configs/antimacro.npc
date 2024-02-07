@@ -186,12 +186,12 @@ recol3d=920
 model1=model_2969_npc
 wanderrange=10
 attackrange=10
-// TODO respawnrate
 hitpoints=25
 attack=9
 strength=9
 defence=9
 ranged=8
+category=macro_event_rock_golem
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -218,12 +218,12 @@ recol3d=920
 model1=model_2969_npc
 wanderrange=10
 attackrange=10
-// TODO respawnrate
 hitpoints=40
 attack=22
 strength=22
 defence=22
 ranged=20
+category=macro_event_rock_golem
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -250,12 +250,12 @@ recol3d=920
 model1=model_2969_npc
 wanderrange=10
 attackrange=10
-// TODO respawnrate
 hitpoints=60
 attack=38
 strength=38
 defence=38
 ranged=35
+category=macro_event_rock_golem
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -282,12 +282,12 @@ recol3d=920
 model1=model_2969_npc
 wanderrange=10
 attackrange=10
-// TODO respawnrate
 hitpoints=85
 attack=65
 strength=65
 defence=65
 ranged=70
+category=macro_event_rock_golem
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -314,12 +314,12 @@ recol3d=920
 model1=model_2969_npc
 wanderrange=10
 attackrange=10
-// TODO respawnrate
 hitpoints=120
 attack=100
 strength=100
 defence=100
 ranged=75
+category=macro_event_rock_golem
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -346,12 +346,12 @@ recol3d=920
 model1=model_2969_npc
 wanderrange=10
 attackrange=10
-// TODO respawnrate
 hitpoints=170
 attack=130
 strength=130
 defence=130
 ranged=80
+category=macro_event_rock_golem
 param=attack_anim,golem_attack
 param=defend_anim,golem_block
 param=death_anim,golem_death
@@ -373,12 +373,13 @@ model1=model_2931_npc
 wanderrange=7
 maxrange=7
 attackrange=7
-// im guessing since theres 6 types, the first starts at 10's, and hp starts at 20
-// these stats are exactly 14 combat
+// same as rock golem?
 hitpoints=20
-attack=10
-strength=10
-defence=10
+attack=9
+strength=9
+defence=9
+category=macro_event_zombie
+param=damagetype,^crush_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -403,11 +404,12 @@ model1=model_2931_npc
 wanderrange=7
 maxrange=7
 attackrange=7
-// unsure about this, it lines up with 29 combat though
-hitpoints=35
-attack=23
-strength=23
-defence=23
+hitpoints=40
+attack=22
+strength=22
+defence=22
+category=macro_event_zombie
+param=damagetype,^crush_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -432,11 +434,12 @@ model1=model_2931_npc
 wanderrange=7
 maxrange=7
 attackrange=7
-// guesses
-hitpoints=55
-attack=40
-strength=40
-defence=40
+hitpoints=60
+attack=38
+strength=38
+defence=38
+category=macro_event_zombie
+param=damagetype,^crush_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -461,11 +464,12 @@ model1=model_2931_npc
 wanderrange=7
 maxrange=7
 attackrange=7
-// guesses
 hitpoints=85
 attack=65
 strength=65
 defence=65
+category=macro_event_zombie
+param=damagetype,^crush_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -490,11 +494,12 @@ model1=model_2931_npc
 wanderrange=7
 maxrange=7
 attackrange=7
-// guesses
 hitpoints=120
 attack=100
 strength=100
 defence=100
+category=macro_event_zombie
+param=damagetype,^crush_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
 param=death_anim,zombie_death
@@ -523,6 +528,7 @@ hitpoints=170
 attack=130
 strength=130
 defence=130
+category=macro_event_zombie
 param=damagetype,^crush_style
 param=attack_anim,zombie_attack
 param=defend_anim,zombie_block
@@ -561,7 +567,12 @@ model3=model_174_npc
 model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=25
+attack=9
+strength=9
+defence=9
+category=macro_event_shade
+param=damagetype,^crush_style
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_14
 
@@ -591,7 +602,12 @@ model3=model_174_npc
 model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=40
+attack=22
+strength=22
+defence=22
+category=macro_event_shade
+param=damagetype,^crush_style
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_29
 
@@ -621,7 +637,12 @@ model3=model_174_npc
 model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=60
+attack=38
+strength=38
+defence=38
+category=macro_event_shade
+param=damagetype,^crush_style
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_49
 
@@ -651,7 +672,12 @@ model3=model_174_npc
 model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=85
+attack=65
+strength=65
+defence=65
+category=macro_event_shade
+param=damagetype,^crush_style
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_79
 
@@ -681,7 +707,12 @@ model3=model_174_npc
 model4=model_265_obj_wear
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=120
+attack=100
+strength=100
+defence=100
+category=macro_event_shade
+param=damagetype,^crush_style
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_120
 
@@ -741,7 +772,12 @@ model8=model_502_obj_wear
 model9=model_523_npc
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=20
+attack=9
+strength=9
+defence=9
+category=macro_event_watchman
+param=damage_type,^crush_style
 param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_watchman2]
@@ -765,7 +801,12 @@ model8=model_502_obj_wear
 model9=model_523_npc
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=40
+attack=22
+strength=22
+defence=22
+category=macro_event_watchman
+param=damage_type,^crush_style
 param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_watchman3]
@@ -789,7 +830,12 @@ model8=model_502_obj_wear
 model9=model_523_npc
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=60
+attack=38
+strength=38
+defence=38
+category=macro_event_watchman
+param=damage_type,^crush_style
 param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_watchman4]
@@ -813,7 +859,12 @@ model8=model_502_obj_wear
 model9=model_523_npc
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=85
+attack=65
+strength=65
+defence=65
+category=macro_event_watchman
+param=damage_type,^crush_style
 param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_watchman5]
@@ -837,7 +888,12 @@ model8=model_502_obj_wear
 model9=model_523_npc
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=120
+attack=100
+strength=100
+defence=100
+category=macro_event_watchman
+param=damage_type,^crush_style
 param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_watchman6]
@@ -861,7 +917,12 @@ model8=model_502_obj_wear
 model9=model_523_npc
 wanderrange=10
 attackrange=10
-// TODO
+hitpoints=170
+attack=130
+strength=130
+defence=130
+category=macro_event_watchman
+param=damage_type,^crush_style
 param=macro_event_level,^macro_event_cmb_159
 
 [npc_437]
@@ -907,6 +968,7 @@ hitpoints=25
 attack=9
 strength=9
 defence=9
+param=category,macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -938,6 +1000,7 @@ hitpoints=40
 attack=22
 strength=22
 defence=22
+param=category,macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -970,6 +1033,7 @@ hitpoints=60
 attack=38
 strength=38
 defence=38
+param=category,macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1001,6 +1065,7 @@ hitpoints=85
 attack=65
 strength=65
 defence=65
+param=category,macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1032,6 +1097,7 @@ hitpoints=120
 attack=100
 strength=100
 defence=100
+param=category,macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1063,6 +1129,7 @@ hitpoints=170
 attack=130
 strength=130
 defence=130
+param=category,macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
