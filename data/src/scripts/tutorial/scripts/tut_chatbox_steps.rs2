@@ -62,7 +62,34 @@ if_settabflash(^tab_skills);
 
 [proc,tutorial_step_survival_recap]
 hint_coord(2, 0_48_48_17_20, 100);
-~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move into the next instructor. Click on|the gate shown and follow the path. Remember you can move|the camera with the arrow keys.");
+~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move onto the next instructor. Follow the path and click on the gate shown. Remember you can move|the camera with the arrow keys.");
 
-[label,tutorial_step20]
+[proc,tutorial_step_go_to_chef]
+hint_coord(2, 0_48_48_6_12, 100);
 ~tutorialstep("Find your next instructor.", "Follow the path until you get to the door with the yellow arrow|above it. Click on the door to open it. Notice the mini-map in|the top right, this shows a top down view of the area around|you. This can also be used for navigation.");
+
+[proc,tutorial_step_talk_to_chef]
+~set_hint_icon_master_chef;
+~tutorialstep("Find your next instructor.", "Talk to the chef indicated. He will teach you the more advanced|aspects of cooking such as combining ingredients. He will also|teach you about your music player menu as well.");
+
+[proc,tutorial_step_make_dough]
+hint_stop();
+~tutorialstep("Making dough.", "This is the base for many of the meals. To make dough we must|mix flour and water. So first right click the bucket of water and|select use  then left click on the pot of flour.");
+
+[proc,tutorial_step_cooking_dough]
+hint_coord(2, 0_48_48_3_9, 100);
+~tutorialstep("", "Cooking dough. Now you have dough made you can cook it. To|cook the dough use it with the range shown by the arrow. If you|lose your dough talk to Lev, he will give you more ingredients.");
+
+[proc,tutorial_step_click_music_player]
+if (lowmemory = true) {
+    if_settabflash(^tab_musicplayer);
+    if_settab(music_ld, ^tab_musicplayer);
+} else {
+    if_settabflash(^tab_musicplayer);
+    if_settab(music, ^tab_musicplayer);
+}
+~tutorialstep("Well done, your first loaf of bread. As you gain experience in", "cooking you will be able to make other things like pies, cakes|and even kebabs. Now you've got the hang of cooking let's|move on. Click on the flashing icon in the bottom right to see|the jukebox.");
+
+[proc,tutorial_step_music_player]
+hint_coord(2, 0_48_48_0_18, 100);
+~tutorialstep("The Music Player.", "From this interface you can control the music that is played.|As you explore the world more of the tunes will become unlocked.|Once you've examined this menu use the next door|to continue.");

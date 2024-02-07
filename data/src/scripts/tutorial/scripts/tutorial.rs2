@@ -42,7 +42,11 @@ if (%tutorial_progress = 0) {
 
 [proc,tutorial_set_active_tabs]
 if (%tutorial_progress > 0) {
-    if_settab(options, ^tab_game_options);
+    if (lowmemory = true) {
+        if_settab(options_ld, ^tab_game_options);
+    } else {
+        if_settab(options, ^tab_game_options);
+    }
 }
 
 if (%tutorial_progress > 20) {
@@ -52,6 +56,14 @@ if (%tutorial_progress > 20) {
 
 if (%tutorial_progress > 50) {
     if_settab(stats, ^tab_skills);
+}
+
+if (%tutorial_progress > 170) {
+    if (lowmemory = true) {
+        if_settab(music_ld, ^tab_musicplayer);
+    } else {
+        if_settab(music, ^tab_musicplayer);
+    }
 }
 
 [proc,tutorial_set_npc_hints]
@@ -93,6 +105,9 @@ if (%tutorial_progress = 2) {
 } else if (%tutorial_progress = 50) {
     %tutorial_progress = 60;
     ~tutorial_step_view_stats;
+} else if (%tutorial_progress = 170) {
+    %tutorial_progress = 180;
+    ~set_tutorial_progress;
 }
 
 [proc,set_tutorial_progress]
@@ -117,7 +132,24 @@ switch_int(%tutorial_progress) {
     case 120: ~tutorial_step_survival_recap;
 
     // Master Chef
+    case 130: ~tutorial_step_go_to_chef;
+    case 140: ~tutorial_step_talk_to_chef;
+    case 150: ~tutorial_step_make_dough;
+    case 160: ~tutorial_step_cooking_dough;
+    case 170: ~tutorial_step_click_music_player;
+    case 180: ~tutorial_step_music_player;
+//    case 180: ;
+    // ehhh on these
+//    case 200: ~tutorial_step_running;
+//    case 210: ~tutorial_enter_quest_guide;
 }
+
+[label,tutorial_island_equip](int $slot)
+if (%tutorial_progress < ^combat_guide_start) {
+    ~mesbox("You'll be told how to equip items later.");
+    return;
+}
+@levelrequire_attack(1, $slot);
 
 [proc,tutorial_give_xp](stat $skill, int $xp)
 if (stat_base($skill) >= 3) {
