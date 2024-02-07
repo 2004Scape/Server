@@ -3816,11 +3816,11 @@ export default class Player extends PathingEntity {
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
-        console.log('Executing', script.script.info.scriptName);
+        // console.log('Executing', script.script.info.scriptName);
 
         if (!force && protect && (this.protect || this.delayed())) {
             // can't get protected access, bye-bye
-            console.log('No protected access:', script.script.info.scriptName, protect, this.protect);
+            // console.log('No protected access:', script.script.info.scriptName, protect, this.protect);
             return -1;
         }
 
