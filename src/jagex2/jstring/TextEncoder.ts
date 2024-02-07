@@ -16,7 +16,7 @@ export default class TextEncoder {
         let pos: number = 0;
         let carry: number = -1;
         let nibble: number;
-        for (let i: number = 0; i < length && pos < 100; i++) {
+        for (let i: number = 0; i < length && pos < 80; i++) {
             const data: number = packet.g1();
             nibble = (data >> 4) & 0xf;
             if (carry !== -1) {
@@ -37,7 +37,7 @@ export default class TextEncoder {
                 carry = nibble;
             }
         }
-        return this.toSentenceCase(charBuffer.slice(0, pos).join('')).trim();
+        return this.toSentenceCase(charBuffer.slice(0, pos).join(''));
     }
 
     static encode(packet: Packet, input: string): void {
