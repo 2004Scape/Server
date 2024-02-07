@@ -3,8 +3,8 @@ def_string $gender = text_gender("man", "lady");
 ~chatnpc(happy, "Hello young <$gender>!|Come to visit old Grandpa Jack?|I can tell ye stories for sure.|I used to be the best fisherman these parts have seen!");
 def_int $option;
 switch_int (%fishingcompo_progress) {
-    case ^fishingcompo_started,^fishingcompo_in_comp,^fishingcompo_garlic_comp: def_int $option = ~p_choice3("Tell me a story then.", 1, "Are you entering the fishing competition?", 3, "Sorry, I don't have time now.", 2);
-    case default: def_int $option = ~p_choice2("Tell me a story then.", 1, "Sorry, I don't have time now.", 2);
+    case ^fishingcompo_started,^fishingcompo_in_comp,^fishingcompo_garlic_comp: $option = ~p_choice3("Tell me a story then.", 1, "Are you entering the fishing competition?", 3, "Sorry, I don't have time now.", 2);
+    case default: $option = ~p_choice2("Tell me a story then.", 1, "Sorry, I don't have time now.", 2);
 }
 if($option = 1) {
     ~chatplayer(neutral, "Tell me a story then.");

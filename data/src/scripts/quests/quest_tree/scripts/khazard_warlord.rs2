@@ -26,11 +26,15 @@ gosub(npc_death);
 if(npc_findhero = true) {
     if(p_finduid(uid) = true) { // get protected access, if not then queue
         @defeat_warlord;
-    } 
-    queue(queue_defeat_warlord, 0); //strongqueue probably
+        return;
+    }
+    queue(queue_defeat_warlord, 0, npc_uid); //strongqueue probably
 }
 
-[queue,queue_defeat_warlord] @defeat_warlord;
+[queue,queue_defeat_warlord](npc_uid $npc)
+if (npc_finduid($npc) = true) {
+    @defeat_warlord;
+}
 
 [label,defeat_warlord]
 if(%tree_progress = ^tree_returned_first_orb | %tree_progress = ^tree_defeated_warlord) {

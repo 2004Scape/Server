@@ -159,6 +159,7 @@ switch_int (%waterfall_progress) {
                     %waterfall_progress = ^waterfall_spoken_to_hudon;
                     ~chatnpc(neutral, "I'm fine alone.");
                     mes("Hudon is refusing to leave the waterfall");
+                    return;
                 }
         }
     }
@@ -384,8 +385,9 @@ if(last_useitem = waterfall_key) {
 @nothing_interesting_happens;
 
 [oplocu,loc_2006]
+def_obj $useitem = last_useitem;
 p_delay(0); // always 1t delay before this interaction (NOT ARRIVEDELAY)
-if(last_useitem = glarials_amulet & %waterfall_progress = ^waterfall_entered_puzzle_room) { 
+if($useitem = glarials_amulet & %waterfall_progress = ^waterfall_entered_puzzle_room) { 
     //https://www.youtube.com/watch?v=uFkwFEKgNRc
     mes("You place the amulet around the neck of the statue.");
     if(getbit_range(%waterfall_golrie_and_puzzle, 1, 18) = calc(pow(2, 18) - 1)) {
