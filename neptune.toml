@@ -1,0 +1,14 @@
+# Array of source paths
+sources = ["data/src/scripts/"]
+
+# Array of symbol paths
+symbols = ["data/symbols/"]
+
+# Whether to enable pointer checking. This adds additional safety but with a
+# compile time cost.
+check_pointers = true
+
+# Bianry file writer configuration
+[writer.binary]
+# The output path
+output = "data/pack/server"
