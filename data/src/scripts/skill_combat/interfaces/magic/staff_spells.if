@@ -1,6 +1,6 @@
 type=overlay
 
-[com_0]
+[ssb0]
 type=graphic
 x=24
 y=12
@@ -20,7 +20,7 @@ script3=gt,0
 graphic=magicoff,0
 activegraphic=magicon,0
 
-[com_1]
+[ssb1]
 type=graphic
 x=64
 y=12
@@ -45,7 +45,7 @@ script4=gt,4
 graphic=magicoff,2
 activegraphic=magicon,2
 
-[com_2]
+[ssb2]
 type=graphic
 x=104
 y=12
@@ -70,7 +70,7 @@ script4=gt,8
 graphic=magicoff,4
 activegraphic=magicon,4
 
-[com_3]
+[ssb3]
 type=graphic
 x=144
 y=12
@@ -95,7 +95,7 @@ script4=gt,12
 graphic=magicoff,6
 activegraphic=magicon,6
 
-[com_4]
+[ssb4]
 type=graphic
 x=24
 y=54
@@ -115,7 +115,7 @@ script3=gt,16
 graphic=magicoff,8
 activegraphic=magicon,8
 
-[com_5]
+[ssb5]
 type=graphic
 x=64
 y=54
@@ -140,7 +140,7 @@ script4=gt,22
 graphic=magicoff,11
 activegraphic=magicon,11
 
-[com_6]
+[ssb6]
 type=graphic
 x=104
 y=54
@@ -165,7 +165,7 @@ script4=gt,28
 graphic=magicoff,14
 activegraphic=magicon,14
 
-[com_7]
+[ssb7]
 type=graphic
 x=144
 y=54
@@ -190,7 +190,7 @@ script4=gt,34
 graphic=magicoff,17
 activegraphic=magicon,17
 
-[com_8]
+[ssb8]
 type=graphic
 x=24
 y=96
@@ -210,7 +210,7 @@ script3=gt,40
 graphic=magicoff,20
 activegraphic=magicon,20
 
-[com_9]
+[ssb9]
 type=graphic
 x=64
 y=96
@@ -235,7 +235,7 @@ script4=gt,46
 graphic=magicoff,23
 activegraphic=magicon,23
 
-[com_10]
+[ssb10]
 type=graphic
 x=104
 y=96
@@ -260,7 +260,7 @@ script4=gt,52
 graphic=magicoff,25
 activegraphic=magicon,25
 
-[com_11]
+[ssb11]
 type=graphic
 x=144
 y=96
@@ -285,7 +285,7 @@ script4=gt,58
 graphic=magicoff,29
 activegraphic=magicon,29
 
-[com_12]
+[ssb12]
 type=graphic
 x=24
 y=138
@@ -305,7 +305,7 @@ script3=gt,61
 graphic=magicoff,31
 activegraphic=magicon,31
 
-[com_13]
+[ssb13]
 type=graphic
 x=64
 y=138
@@ -330,7 +330,7 @@ script4=gt,64
 graphic=magicoff,33
 activegraphic=magicon,33
 
-[com_14]
+[ssb14]
 type=graphic
 x=104
 y=138
@@ -355,7 +355,7 @@ script4=gt,69
 graphic=magicoff,36
 activegraphic=magicon,36
 
-[com_15]
+[ssb15]
 type=graphic
 x=144
 y=138
@@ -2395,7 +2395,7 @@ text=%1/1
 colour=0xC00000
 activecolour=0x00C000
 
-[com_174]
+[cancelspell]
 type=text
 x=143
 y=169
