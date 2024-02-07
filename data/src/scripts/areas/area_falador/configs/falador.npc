@@ -64,7 +64,7 @@ param=shop_delta,10
 param=shop_title,Flynn's Mace Market.
 moverestrict=indoors
 
-[falador_hairdresser]
+[hairdresser]
 vislevel=hide
 name=Hairdresser
 desc=Anyone fancy a trim?

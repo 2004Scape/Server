@@ -1828,6 +1828,7 @@ export default class Player extends PathingEntity {
                     EnumType.load('data/pack/server');
                     StructType.load('data/pack/server');
                     InvType.load('data/pack/server');
+                    IdkType.load('data/pack/server');
                     VarPlayerType.load('data/pack/server');
                     ObjType.load('data/pack/server', World.members);
                     LocType.load('data/pack/server');
@@ -2017,6 +2018,12 @@ export default class Player extends PathingEntity {
                             const name = args.shift();
 
                             params.push(SpotanimType.getId(name ?? ''));
+                            break;
+                        }
+                        case ScriptVarType.IDKIT: {
+                            const name = args.shift();
+
+                            params.push(IdkType.getId(name ?? ''));
                             break;
                         }
                     }
@@ -3809,8 +3816,11 @@ export default class Player extends PathingEntity {
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {
+        console.log('Executing', script.script.info.scriptName);
+
         if (!force && protect && (this.protect || this.delayed())) {
             // can't get protected access, bye-bye
+            console.log('No protected access:', script.script.info.scriptName, protect, this.protect);
             return -1;
         }
 

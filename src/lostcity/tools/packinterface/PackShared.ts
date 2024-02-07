@@ -188,7 +188,7 @@ export function packInterface(server: boolean) {
         const ifId = interfacePack.indexOf(ifName);
 
         if (!component[ifId]) {
-            console.error('Something went horribly wrong', ifName, ifId);
+            console.error('Could not find name <-> ID for interface file, perhaps misnamed?', ifName, ifId);
             process.exit(1);
         }
 

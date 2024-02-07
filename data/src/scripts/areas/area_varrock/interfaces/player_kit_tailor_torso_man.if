@@ -735,215 +735,215 @@ width=403
 height=28
 fill=yes
 
-[com_91]
+[khaki]
 type=rect
 x=60
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,1
 fill=yes
 colour=0x7B6E32
 option=Khaki
 
-[com_92]
+[black]
 type=rect
 x=85
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,2
 fill=yes
 colour=0x262323
 option=Black
 
-[com_93]
+[crimson]
 type=rect
 x=110
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,3
 fill=yes
 colour=0x752F3B
 option=Crimson
 
-[com_94]
+[navy]
 type=rect
 x=135
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,4
 fill=yes
 colour=0x3B3B4E
 option=Navy
 
-[com_95]
+[straw]
 type=rect
 x=160
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,5
 fill=yes
 colour=0xAA9045
 option=Straw
 
-[com_96]
+[white]
 type=rect
 x=185
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,6
 fill=yes
 colour=0xBEB89C
 option=White
 
-[com_97]
+[red]
 type=rect
 x=210
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,7
 fill=yes
 colour=0x8B3B2A
 option=Red
 
-[com_98]
+[blue]
 type=rect
 x=235
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,8
 fill=yes
 colour=0x2D5272
 option=Blue
 
-[com_99]
+[green]
 type=rect
 x=260
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,9
 fill=yes
 colour=0x2D723E
 option=Green
 
-[com_100]
+[yellow]
 type=rect
 x=285
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,10
 fill=yes
 colour=0xA3970D
 option=Yellow
 
-[com_101]
+[purple]
 type=rect
 x=310
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,11
 fill=yes
 colour=0x83537B
 option=Purple
 
-[com_102]
+[orange]
 type=rect
 x=335
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,12
 fill=yes
 colour=0x9D642F
 option=Orange
 
-[com_103]
+[rose]
 type=rect
 x=360
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,13
 fill=yes
 colour=0xA17067
 option=Rose
 
-[com_104]
+[lime]
 type=rect
 x=385
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,14
 fill=yes
 colour=0x829472
 option=Lime
 
-[com_105]
+[cyan]
 type=rect
 x=410
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,15
 fill=yes
 colour=0x728C94
 option=Cyan
 
-[com_106]
+[emerald]
 type=rect
 x=435
 y=250
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,16
 fill=yes
 colour=0x1C6135
 option=Emerald
 
-[com_107]
+[confirm]
 type=text
 x=197
 y=289
@@ -962,7 +962,7 @@ x=59
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,1
 activegraphic=headicons,1
 
@@ -972,7 +972,7 @@ x=84
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,2
 activegraphic=headicons,1
 
@@ -982,7 +982,7 @@ x=109
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,3
 activegraphic=headicons,1
 
@@ -992,7 +992,7 @@ x=134
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,4
 activegraphic=headicons,1
 
@@ -1002,7 +1002,7 @@ x=160
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,5
 activegraphic=headicons,1
 
@@ -1012,7 +1012,7 @@ x=185
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,6
 activegraphic=headicons,1
 
@@ -1022,7 +1022,7 @@ x=210
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,7
 activegraphic=headicons,1
 
@@ -1032,7 +1032,7 @@ x=235
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,8
 activegraphic=headicons,1
 
@@ -1042,7 +1042,7 @@ x=260
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,9
 activegraphic=headicons,1
 
@@ -1052,7 +1052,7 @@ x=285
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,10
 activegraphic=headicons,1
 
@@ -1062,7 +1062,7 @@ x=310
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,11
 activegraphic=headicons,1
 
@@ -1072,7 +1072,7 @@ x=335
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,12
 activegraphic=headicons,1
 
@@ -1082,7 +1082,7 @@ x=360
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,13
 activegraphic=headicons,1
 
@@ -1092,7 +1092,7 @@ x=385
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,14
 activegraphic=headicons,1
 
@@ -1102,7 +1102,7 @@ x=410
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,15
 activegraphic=headicons,1
 
@@ -1112,7 +1112,7 @@ x=435
 y=250
 width=25
 height=25
-script1op1=testvar,temp_if3
+script1op1=testvar,option3
 script1=eq,16
 activegraphic=headicons,1
 
@@ -1428,158 +1428,158 @@ height=32
 model=model_327_idk
 zoom=800
 
-[com_158]
+[plain]
 type=graphic
 x=53
 y=100
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if1
+script1op1=testvar,option1
 script1=eq,1
 activegraphic=headicons,1
 option=Plain
 
-[com_159]
+[light_buttons]
 type=graphic
 x=117
 y=100
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if1
+script1op1=testvar,option1
 script1=eq,2
 activegraphic=headicons,1
 option=Light buttons
 
-[com_160]
+[jacket]
 type=graphic
 x=179
 y=100
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if1
+script1op1=testvar,option1
 script1=eq,3
 activegraphic=headicons,1
 option=Jacket
 
-[com_161]
+[dark_buttons]
 type=graphic
 x=243
 y=100
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if1
+script1op1=testvar,option1
 script1=eq,4
 activegraphic=headicons,1
 option=Dark buttons
 
-[com_162]
+[stitching]
 type=graphic
 x=305
 y=100
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if1
+script1op1=testvar,option1
 script1=eq,5
 activegraphic=headicons,1
 option=Stitching
 
-[com_163]
+[shirt]
 type=graphic
 x=361
 y=100
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if1
+script1op1=testvar,option1
 script1=eq,6
 activegraphic=headicons,1
 option=Shirt
 
-[com_164]
+[two_toned]
 type=graphic
 x=422
 y=100
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if1
+script1op1=testvar,option1
 script1=eq,7
 activegraphic=headicons,1
 option=Two-toned
 
-[com_165]
+[regular]
 type=graphic
 x=52
 y=180
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if2
+script1op1=testvar,option2
 script1=eq,1
 activegraphic=headicons,1
 option=Regular
 
-[com_166]
+[musclebound]
 type=graphic
 x=116
 y=180
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if2
+script1op1=testvar,option2
 script1=eq,2
 activegraphic=headicons,1
 option=Musclebound
 
-[com_167]
+[loose_sleeved]
 type=graphic
 x=178
 y=180
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if2
+script1op1=testvar,option2
 script1=eq,3
 activegraphic=headicons,1
 option=Loose sleeved
 
-[com_168]
+[large_cuffed]
 type=graphic
 x=242
 y=180
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if2
+script1op1=testvar,option2
 script1=eq,4
 activegraphic=headicons,1
 option=Large cuffed
 
-[com_169]
+[thin_sleeved]
 type=graphic
 x=304
 y=180
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if2
+script1op1=testvar,option2
 script1=eq,5
 activegraphic=headicons,1
 option=Thin sleeved
 
-[com_170]
+[shoulder_pads]
 type=graphic
 x=360
 y=180
 buttontype=select
 width=25
 height=25
-script1op1=testvar,temp_if2
+script1op1=testvar,option2
 script1=eq,6
 activegraphic=headicons,1
 option=Shoulder pads
