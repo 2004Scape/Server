@@ -75,12 +75,20 @@ if ($rand > $chance) {
     mes("That tasted a bit dodgy. You feel a bit ill.");
     // reduces random stat by 3
     def_stat $random_stat = enum(int, stat, stats, random(enum_getoutputcount(stats)));
+    def_int $debuff;
     if (stat($random_stat) > 4) {
-        stat_sub($random_stat, 3, 0);
+        $debuff = 3;
         mes("Eating the kebab has damaged your <enum(stat, string, stat_names, $random_stat)> stat.");
     } else if (stat($random_stat) > 2){
-        stat_sub($random_stat, calc(stat($random_stat) - 2), 0);
+        $debuff = calc(stat($random_stat) - 2);
         mes("Eating the kebab has damaged your <enum(stat, string, stat_names, $random_stat)> stat.");
+    }
+    // not sure if this can damage the player.
+    // they removed the damage feature in like 2006/2007
+    if ($random_stat = hitpoints) {
+        ~damage_self($debuff);
+    } else {
+        stat_sub($random_stat, $debuff, 0);
     }
     return;
 }
