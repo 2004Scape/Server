@@ -1,0 +1,41 @@
+// https://youtu.be/GwSL0nKsiqk?t=111
+// https://youtu.be/dQ0CKFrXGJY?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=201
+[label,macro_event_shade_spawn]
+def_npc $shade = enum(int, npc, macro_event_shade_levels, ~macro_event_combat_level);
+
+def_coord $shade_coord = ~macro_event_coord;
+if ($shade_coord = null) {
+    return;
+}
+
+npc_add($shade_coord, $shade, 1000); // guess
+npc_say("Leave this place mortal!");
+%npc_attacking_uid = uid;
+spotanim_map(spotanim_78, $shade_coord, 0, 0);
+if (finduid(uid) = false) {
+    return;
+}
+npc_delay(3);
+npc_setmode(opplayer2);
+
+
+[ai_timer,_macro_event_shade]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_queue3,_macro_event_shade](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+def_int $random = random(128);
+if ($random < 64) {
+    return;
+} if ($random < 96) {
+    obj_add(npc_coord, obj_546, 1, ^lootdrop_duration);
+} else {
+    obj_add(npc_coord, obj_548, 1, ^lootdrop_duration);
+}

@@ -395,7 +395,6 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_14
 param=combat_xp_multiplier,25
 param=death_drop,big_bones
 timer=20
@@ -426,7 +425,6 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_29
 param=combat_xp_multiplier,25
 param=death_drop,big_bones
 timer=20
@@ -457,7 +455,6 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_49
 param=combat_xp_multiplier,25
 param=death_drop,big_bones
 timer=20
@@ -488,7 +485,6 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_79
 param=combat_xp_multiplier,25
 param=death_drop,big_bones
 timer=20
@@ -519,7 +515,6 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_120
 param=combat_xp_multiplier,25
 param=death_drop,big_bones
 timer=20
@@ -550,7 +545,6 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_159
 param=combat_xp_multiplier,25
 param=death_drop,big_bones
 timer=20
@@ -587,8 +581,15 @@ strength=9
 defence=9
 category=macro_event_shade
 param=damagetype,^crush_style
+param=attack_anim,seq_391
+param=defend_anim,seq_389
+param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_anim,seq_843
+param=death_sound,ghost_death
+param=death_drop,null
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_shade2]
 visonmap=no
@@ -622,8 +623,15 @@ strength=22
 defence=22
 category=macro_event_shade
 param=damagetype,^crush_style
+param=attack_anim,seq_391
+param=defend_anim,seq_389
+param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_anim,seq_843
+param=death_sound,ghost_death
+param=death_drop,null
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_shade3]
 visonmap=no
@@ -657,8 +665,15 @@ strength=38
 defence=38
 category=macro_event_shade
 param=damagetype,^crush_style
+param=attack_anim,seq_391
+param=defend_anim,seq_389
+param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_anim,seq_843
+param=death_sound,ghost_death
+param=death_drop,null
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_shade4]
 visonmap=no
@@ -692,8 +707,15 @@ strength=65
 defence=65
 category=macro_event_shade
 param=damagetype,^crush_style
+param=attack_anim,seq_391
+param=defend_anim,seq_389
+param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_anim,seq_843
+param=death_sound,ghost_death
+param=death_drop,null
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_shade5]
 visonmap=no
@@ -727,8 +749,15 @@ strength=100
 defence=100
 category=macro_event_shade
 param=damagetype,^crush_style
+param=attack_anim,seq_391
+param=defend_anim,seq_389
+param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_anim,seq_843
+param=death_sound,ghost_death
+param=death_drop,null
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_shade6]
 visonmap=no
@@ -762,8 +791,15 @@ attack=130
 strength=130
 defence=130
 param=damagetype,^crush_style
+param=attack_anim,seq_391
+param=defend_anim,seq_389
+param=death_anim,ghost_death
+param=attack_sound,ghost_attack
+param=defend_sound,ghost_hit
+param=death_anim,seq_843
+param=death_sound,ghost_death
+param=death_drop,null
 param=undead,^true
-param=macro_event_level,^macro_event_cmb_159
 
 [macro_event_watchman1]
 name=Watchman
@@ -792,7 +828,6 @@ strength=9
 defence=9
 category=macro_event_watchman
 param=damagetype,^crush_style
-param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_watchman2]
 name=Watchman
@@ -821,7 +856,6 @@ strength=22
 defence=22
 category=macro_event_watchman
 param=damagetype,^crush_style
-param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_watchman3]
 name=Watchman
@@ -850,7 +884,6 @@ strength=38
 defence=38
 category=macro_event_watchman
 param=damagetype,^crush_style
-param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_watchman4]
 name=Watchman
@@ -879,7 +912,6 @@ strength=65
 defence=65
 category=macro_event_watchman
 param=damagetype,^crush_style
-param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_watchman5]
 name=Watchman
@@ -908,7 +940,6 @@ strength=100
 defence=100
 category=macro_event_watchman
 param=damagetype,^crush_style
-param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_watchman6]
 name=Watchman
@@ -937,7 +968,6 @@ strength=130
 defence=130
 category=macro_event_watchman
 param=damagetype,^crush_style
-param=macro_event_level,^macro_event_cmb_159
 
 [npc_437]
 name=Brownie
@@ -987,7 +1017,6 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_tree_spirit2]
 name=Tree spirit
@@ -1019,7 +1048,6 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-param=macro_event_level,^macro_event_cmb_29
 
 
 [macro_event_tree_spirit3]
@@ -1052,7 +1080,6 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_tree_spirit4]
 name=Tree spirit
@@ -1084,7 +1111,6 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_tree_spirit5]
 name=Tree spirit
@@ -1116,7 +1142,6 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_tree_spirit6]
 name=Tree spirit
@@ -1148,7 +1173,6 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-param=macro_event_level,^macro_event_cmb_159
 
 [macro_event_ent_tree1]
 vislevel=hide
@@ -1366,7 +1390,6 @@ param=damagetype,^crush_style
 param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
-param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_river_troll2]
 name=River troll
@@ -1393,7 +1416,6 @@ param=damagetype,^crush_style
 param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
-param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_river_troll3]
 name=River troll
@@ -1420,7 +1442,6 @@ param=damagetype,^crush_style
 param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
-param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_river_troll4]
 name=River troll
@@ -1447,7 +1468,6 @@ param=damagetype,^crush_style
 param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
-param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_river_troll5]
 name=River troll
@@ -1474,7 +1494,6 @@ param=damagetype,^crush_style
 param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
-param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_river_troll6]
 name=River troll
@@ -1501,4 +1520,3 @@ param=damagetype,^crush_style
 param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
-param=macro_event_level,^macro_event_cmb_159
