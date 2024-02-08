@@ -1,11 +1,15 @@
 [queue,poison_player](int $severity)
-if (%poison < 1) {
+if (map_members = false) {
+    // nothing poisons in f2p
+    return;
+}
+if (%poison = 0 | %antipoison < map_clock) {
     settimer(poison, 30);
 }
 %poison = $severity;
 
 [timer,poison]
-if (%poison < 1) {
+if (%poison = 0 | %antipoison > map_clock) {
     cleartimer(poison);
     return;
 }

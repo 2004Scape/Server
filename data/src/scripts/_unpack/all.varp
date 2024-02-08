@@ -93,6 +93,7 @@ transmit=yes
 transmit=yes
 
 [poison]
+scope=perm
 
 [stunned]
 
@@ -392,9 +393,10 @@ scope=perm
 [varp_276]
 
 [antifire]
-protect=no
+scope=perm
 
-[varp_278]
+[antipoison]
+scope=perm
 
 [varp_279]
 
