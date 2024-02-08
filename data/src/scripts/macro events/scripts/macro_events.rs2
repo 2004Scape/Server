@@ -15,7 +15,7 @@ def_coord $event_coord = ~macro_event_coord;
 if ($event_coord = null) {
     return;
 }
-npc_add($event_coord, $event, 100);
+npc_add($event_coord, $event, 1000);
 @macro_event_spawn;
 
 [label,macro_event_spawn]

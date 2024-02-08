@@ -10,10 +10,17 @@ desc=A very strange plant.
 readyanim=seq_349
 op1=Pick
 model1=model_3371_npc
-wanderrange=0
+wanderrange=10
+attackrange=10
 moverestrict=nomove
 // guess
 timer=80
+// stats are completely guessed
+attack=50
+strength=10
+defence=99
+// this video he does 209 damage, so 9 min of regen from the monster https://youtu.be/8GERe1S_4lM
+hitpoints=200
 
 [macro_event_strange_plant_hostile]
 vislevel=hide
@@ -132,6 +139,7 @@ attackrange=3
 param=attackrate,7
 param=attack_sound,swarm_attack
 param=attack_anim,swarm_seq_2
+param=defend_sound,null
 param=defend_anim,swarm_seq_1
 param=death_drop,null
 param=combat_xp_multiplier,25
@@ -389,6 +397,7 @@ param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_14
 param=combat_xp_multiplier,25
+param=death_drop,big_bones
 timer=20
 
 [macro_event_zombie2]
@@ -419,6 +428,7 @@ param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_29
 param=combat_xp_multiplier,25
+param=death_drop,big_bones
 timer=20
 
 [macro_event_zombie3]
@@ -449,6 +459,7 @@ param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_49
 param=combat_xp_multiplier,25
+param=death_drop,big_bones
 timer=20
 
 [macro_event_zombie4]
@@ -479,6 +490,7 @@ param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_79
 param=combat_xp_multiplier,25
+param=death_drop,big_bones
 timer=20
 
 [macro_event_zombie5]
@@ -509,6 +521,7 @@ param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_120
 param=combat_xp_multiplier,25
+param=death_drop,big_bones
 timer=20
 
 [macro_event_zombie6]
@@ -539,6 +552,7 @@ param=death_sound,zombie_death
 param=undead,^true
 param=macro_event_level,^macro_event_cmb_159
 param=combat_xp_multiplier,25
+param=death_drop,big_bones
 timer=20
 
 [macro_event_shade1]
@@ -777,7 +791,7 @@ attack=9
 strength=9
 defence=9
 category=macro_event_watchman
-param=damage_type,^crush_style
+param=damagetype,^crush_style
 param=macro_event_level,^macro_event_cmb_14
 
 [macro_event_watchman2]
@@ -806,7 +820,7 @@ attack=22
 strength=22
 defence=22
 category=macro_event_watchman
-param=damage_type,^crush_style
+param=damagetype,^crush_style
 param=macro_event_level,^macro_event_cmb_29
 
 [macro_event_watchman3]
@@ -835,7 +849,7 @@ attack=38
 strength=38
 defence=38
 category=macro_event_watchman
-param=damage_type,^crush_style
+param=damagetype,^crush_style
 param=macro_event_level,^macro_event_cmb_49
 
 [macro_event_watchman4]
@@ -864,7 +878,7 @@ attack=65
 strength=65
 defence=65
 category=macro_event_watchman
-param=damage_type,^crush_style
+param=damagetype,^crush_style
 param=macro_event_level,^macro_event_cmb_79
 
 [macro_event_watchman5]
@@ -893,7 +907,7 @@ attack=100
 strength=100
 defence=100
 category=macro_event_watchman
-param=damage_type,^crush_style
+param=damagetype,^crush_style
 param=macro_event_level,^macro_event_cmb_120
 
 [macro_event_watchman6]
@@ -922,7 +936,7 @@ attack=130
 strength=130
 defence=130
 category=macro_event_watchman
-param=damage_type,^crush_style
+param=damagetype,^crush_style
 param=macro_event_level,^macro_event_cmb_159
 
 [npc_437]
@@ -968,7 +982,7 @@ hitpoints=25
 attack=9
 strength=9
 defence=9
-param=category,macro_event_tree_spirit
+category=macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1000,7 +1014,7 @@ hitpoints=40
 attack=22
 strength=22
 defence=22
-param=category,macro_event_tree_spirit
+category=macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1033,7 +1047,7 @@ hitpoints=60
 attack=38
 strength=38
 defence=38
-param=category,macro_event_tree_spirit
+category=macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1065,7 +1079,7 @@ hitpoints=85
 attack=65
 strength=65
 defence=65
-param=category,macro_event_tree_spirit
+category=macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1097,7 +1111,7 @@ hitpoints=120
 attack=100
 strength=100
 defence=100
-param=category,macro_event_tree_spirit
+category=macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
@@ -1129,7 +1143,7 @@ hitpoints=170
 attack=130
 strength=130
 defence=130
-param=category,macro_event_tree_spirit
+category=macro_event_tree_spirit
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block

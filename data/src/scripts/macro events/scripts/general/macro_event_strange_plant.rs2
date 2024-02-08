@@ -34,13 +34,11 @@ if (%npc_macro_event_status = ^macro_event_appear) {
 }
 npc_anim(seq_351, 60);
 npc_delay(4);
-.npc_add(npc_coord, macro_event_strange_plant_hostile, 1000); // guess based off https://youtu.be/LPXvj3Q3QJo?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
-.%npc_attacking_uid = %npc_attacking_uid;
-npc_del;
 
-.npc_delay(1);
-if (finduid(.%npc_attacking_uid) = true) {
-    .npc_setmode(opplayer2);
+npc_changetype(macro_event_strange_plant_hostile);
+npc_delay(1);
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(opplayer2);
     %macro_event = ^no_macro_event;
 }
 

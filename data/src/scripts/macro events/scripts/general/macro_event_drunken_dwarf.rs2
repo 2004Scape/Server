@@ -34,6 +34,10 @@ if (%npc_macro_event_status = ^macro_event_attack | ~macro_event_lost = true) { 
     return;
 }
 
+if (finduid(%npc_attacking_uid) = false) {
+    return;
+}
+
 // warnings: https://youtu.be/Ww-PkAr4vt4?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=96
 // todo: confirm these anims
 if (%npc_macro_event_status = 10) {

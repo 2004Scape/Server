@@ -19,38 +19,68 @@ sound_synth(zombie_moan, 0, 0);
 npc_delay(3);
 npc_setmode(opplayer2);
 
-[ai_timer,macro_event_zombie1]
+
+[ai_timer,_macro_event_zombie]
 if (finduid(%npc_attacking_uid) = false) {
     npc_del;
     return;
 }
 
-[ai_timer,macro_event_zombie2]
-if (finduid(%npc_attacking_uid) = false) {
-    npc_del;
+[ai_queue3,_macro_event_zombie](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
     return;
 }
+// Default drop
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
-[ai_timer,macro_event_zombie3]
-if (finduid(%npc_attacking_uid) = false) {
-    npc_del;
-    return;
-}
+// guess based off https://i.imgur.com/lHra6Pp.png
+// and https://twitter.com/JagexAsh/status/1346426487268900864
+// todo: get some more data
+def_int $random = random(256);
 
-[ai_timer,macro_event_zombie4]
-if (finduid(%npc_attacking_uid) = false) {
-    npc_del;
-    return;
-}
-
-[ai_timer,macro_event_zombie5]
-if (finduid(%npc_attacking_uid) = false) {
-    npc_del;
-    return;
-}
-
-[ai_timer,macro_event_zombie6]
-if (finduid(%npc_attacking_uid) = false) {
-    npc_del;
-    return;
+if ($random < 36) { // 36/256
+    obj_add(npc_coord, fishing_bait, 50, ^lootdrop_duration);
+} else if ($random < 60) { // 24/256
+    obj_add(npc_coord, fishing_bait, 27, ^lootdrop_duration);
+} else if ($random < 92) { // 32/256
+    obj_add(npc_coord, chaosrune, 35, ^lootdrop_duration);
+} else if ($random < 100) { // 8/256
+    obj_add(npc_coord, chaosrune, 50, ^lootdrop_duration);
+} else if ($random < 128) { // 28/256
+    obj_add(npc_coord, airrune, 40, ^lootdrop_duration);
+} else if ($random < 144) { // 16/256
+    obj_add(npc_coord, cosmicrune, 5, ^lootdrop_duration);
+} else if ($random < 160) { // 16/256
+    obj_add(npc_coord, coins, 26, ^lootdrop_duration);
+} else if ($random < 200) { // 40/256
+    obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
+} else if ($random < 232) { // 32/256
+    obj_add(npc_coord, big_bones, 2, ^lootdrop_duration);
+} else if ($random < 240) { // 8/256
+    obj_add(npc_coord, big_bones, 6, ^lootdrop_duration);
+    obj_add(npc_coord, bones, 3, ^lootdrop_duration);
+} else if (map_members = true) {
+    if ($random < 245) { // 5/256
+        obj_add(npc_coord, dragon_bones, 1, ^lootdrop_duration);
+        obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
+    } else if ($random < 246) { // 1/256
+        obj_add(npc_coord, dragon_bones, 2, ^lootdrop_duration);
+        obj_add(npc_coord, big_bones, 10, ^lootdrop_duration);
+        obj_add(npc_coord, bones, 10, ^lootdrop_duration);
+    } else if ($random < 247) { // 1/256
+        obj_add(npc_coord, dragon_bones, 3, ^lootdrop_duration);
+    } else if ($random < 255) { // 8/256
+        // idk why they do it like this, you can see its done this way with drop notifications
+        obj_add(npc_coord, big_bones, 4, ^lootdrop_duration);
+        obj_add(npc_coord, big_bones, 2, ^lootdrop_duration);
+    } else {
+        ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    }
+} else if ($random < 255) {
+    // idk why they do it like this, you can see its done this way with drop notifications
+    obj_add(npc_coord, big_bones, 4, ^lootdrop_duration);
+    obj_add(npc_coord, big_bones, 2, ^lootdrop_duration);
+} else {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

@@ -65,6 +65,9 @@ if (~macro_event_lost = true) {
     ~macro_event_disappear;
     return;
 }
+if (finduid(%npc_attacking_uid) = false) {
+    return;
+}
 // other videos:
 // https://youtu.be/_PPxvNjIgq4?t=63
 // https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=374
