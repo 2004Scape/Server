@@ -2,71 +2,71 @@
 // for us its normal queued. Its likely queued because if you're delayed 
 // and setting attack style, it wont go through at all. Queueing allows
 // for it to go through after delay is over
-[if_button,attack_2h_sword:com_5] ~set_attackstyle(0);
-[if_button,attack_2h_sword:com_8] ~set_attackstyle(1);
-[if_button,attack_2h_sword:com_7] ~set_attackstyle(2);
-[if_button,attack_2h_sword:com_6] ~set_attackstyle(3);
+[if_button,combat_heavysword:heavy0] ~set_attackstyle(0);
+[if_button,combat_heavysword:heavy1] ~set_attackstyle(1);
+[if_button,combat_heavysword:heavy2] ~set_attackstyle(2);
+[if_button,combat_heavysword:heavy3] ~set_attackstyle(3);
 
-[if_button,attack_axe:com_5] ~set_attackstyle(0);
-[if_button,attack_axe:com_8] ~set_attackstyle(1);
-[if_button,attack_axe:com_7] ~set_attackstyle(2);
-[if_button,attack_axe:com_6] ~set_attackstyle(3);
+[if_button,combat_axe:axe0] ~set_attackstyle(0);
+[if_button,combat_axe:axe1] ~set_attackstyle(1);
+[if_button,combat_axe:axe2] ~set_attackstyle(2);
+[if_button,combat_axe:axe3] ~set_attackstyle(3);
 
-[if_button,attack_blunt:com_7] ~set_attackstyle(0);
-[if_button,attack_blunt:com_6] ~set_attackstyle(1);
-[if_button,attack_blunt:com_5] ~set_attackstyle(2);
+[if_button,combat_blunt:blunt0] ~set_attackstyle(0);
+[if_button,combat_blunt:blunt1] ~set_attackstyle(1);
+[if_button,combat_blunt:blunt2] ~set_attackstyle(2);
 
-[if_button,attack_bow:com_7] ~set_attackstyle(0);
-[if_button,attack_bow:com_6] ~set_attackstyle(1);
-[if_button,attack_bow:com_5] ~set_attackstyle(2);
+[if_button,combat_bow:bow0] ~set_attackstyle(0);
+[if_button,combat_bow:bow1] ~set_attackstyle(1);
+[if_button,combat_bow:bow2] ~set_attackstyle(2);
 
-[if_button,attack_crossbow:com_7] ~set_attackstyle(0);
-[if_button,attack_crossbow:com_6] ~set_attackstyle(1);
-[if_button,attack_crossbow:com_5] ~set_attackstyle(2);
+[if_button,combat_crossbow:crossbow0] ~set_attackstyle(0);
+[if_button,combat_crossbow:crossbow1] ~set_attackstyle(1);
+[if_button,combat_crossbow:crossbow2] ~set_attackstyle(2);
 
-[if_button,attack_pickaxe:com_5] ~set_attackstyle(0);
-[if_button,attack_pickaxe:com_8] ~set_attackstyle(1);
-[if_button,attack_pickaxe:com_7] ~set_attackstyle(2);
-[if_button,attack_pickaxe:com_6] ~set_attackstyle(3);
+[if_button,combat_pickaxe:pickaxe0] ~set_attackstyle(0);
+[if_button,combat_pickaxe:pickaxe1] ~set_attackstyle(1);
+[if_button,combat_pickaxe:pickaxe2] ~set_attackstyle(2);
+[if_button,combat_pickaxe:pickaxe3] ~set_attackstyle(3);
 
-[if_button,attack_scythe:com_5] ~set_attackstyle(0);
-[if_button,attack_scythe:com_8] ~set_attackstyle(1);
-[if_button,attack_scythe:com_7] ~set_attackstyle(2);
-[if_button,attack_scythe:com_6] ~set_attackstyle(3);
+[if_button,combat_scythe:scythe0] ~set_attackstyle(0);
+[if_button,combat_scythe:scythe1] ~set_attackstyle(1);
+[if_button,combat_scythe:scythe2] ~set_attackstyle(2);
+[if_button,combat_scythe:scythe3] ~set_attackstyle(3);
 
-[if_button,attack_slashing:com_5] ~set_attackstyle(0);
-[if_button,attack_slashing:com_8] ~set_attackstyle(1);
-[if_button,attack_slashing:com_7] ~set_attackstyle(2);
-[if_button,attack_slashing:com_6] ~set_attackstyle(3);
+[if_button,combat_hacksword:hack0] ~set_attackstyle(0);
+[if_button,combat_hacksword:hack1] ~set_attackstyle(1);
+[if_button,combat_hacksword:hack2] ~set_attackstyle(2);
+[if_button,combat_hacksword:hack3] ~set_attackstyle(3);
 
-[if_button,attack_spear:com_5] ~set_attackstyle(0);
-[if_button,attack_spear:com_8] ~set_attackstyle(1);
-[if_button,attack_spear:com_7] ~set_attackstyle(2);
-[if_button,attack_spear:com_6] ~set_attackstyle(3);
+[if_button,combat_spear:spear0] ~set_attackstyle(0);
+[if_button,combat_spear:spear1] ~set_attackstyle(1);
+[if_button,combat_spear:spear2] ~set_attackstyle(2);
+[if_button,combat_spear:spear3] ~set_attackstyle(3);
 
-[if_button,attack_spiked:com_5] ~set_attackstyle(0);
-[if_button,attack_spiked:com_8] ~set_attackstyle(1);
-[if_button,attack_spiked:com_7] ~set_attackstyle(2);
-[if_button,attack_spiked:com_6] ~set_attackstyle(3);
+[if_button,combat_spiked:spiked0] ~set_attackstyle(0);
+[if_button,combat_spiked:spiked1] ~set_attackstyle(1);
+[if_button,combat_spiked:spiked2] ~set_attackstyle(2);
+[if_button,combat_spiked:spiked3] ~set_attackstyle(3);
 
-[if_button,attack_stabbing:com_5] ~set_attackstyle(0);
-[if_button,attack_stabbing:com_8] ~set_attackstyle(1);
-[if_button,attack_stabbing:com_7] ~set_attackstyle(2);
-[if_button,attack_stabbing:com_6] ~set_attackstyle(3);
+[if_button,combat_stabsword:stab0] ~set_attackstyle(0);
+[if_button,combat_stabsword:stab1] ~set_attackstyle(1);
+[if_button,combat_stabsword:stab2] ~set_attackstyle(2);
+[if_button,combat_stabsword:stab3] ~set_attackstyle(3);
 
-[if_button,attack_thrown:com_7] ~set_attackstyle(0);
-[if_button,attack_thrown:com_6] ~set_attackstyle(1);
-[if_button,attack_thrown:com_5] ~set_attackstyle(2);
+[if_button,combat_thrown:thrown0] ~set_attackstyle(0);
+[if_button,combat_thrown:thrown1] ~set_attackstyle(1);
+[if_button,combat_thrown:thrown2] ~set_attackstyle(2);
 
-[if_button,attack_unarmed:com_4] ~set_attackstyle(0);
-[if_button,attack_unarmed:com_6] ~set_attackstyle(1);
-[if_button,attack_unarmed:com_5] ~set_attackstyle(2);
+[if_button,combat_unarmed:unarmed0] ~set_attackstyle(0);
+[if_button,combat_unarmed:unarmed1] ~set_attackstyle(1);
+[if_button,combat_unarmed:unarmed2] ~set_attackstyle(2);
 
-[if_button,attack_magic_battlestaff:com_7] ~set_attackstyle(0);
-[if_button,attack_magic_battlestaff:com_6] ~set_attackstyle(1);
-[if_button,attack_magic_battlestaff:com_5] ~set_attackstyle(2);
+[if_button,combat_staff_2:staff2a] ~set_attackstyle(0);
+[if_button,combat_staff_2:staff2b] ~set_attackstyle(1);
+[if_button,combat_staff_2:staff2c] ~set_attackstyle(2);
 
-[if_button,attack_magic_battlestaff:com_17]
+[if_button,combat_staff_2:auto_toggle]
 if_close;
 if (p_finduid(uid) = true) {
     %attackstyle_magic = togglebit(%attackstyle_magic, 0);
@@ -113,21 +113,21 @@ if ($obj = null | (map_members = false & oc_members($obj) = true)) {
 }
 switch_category (oc_category($obj)) {
     // melee
-    case weapon_2h_sword: ~weapon_category_tab_attack(attack_2h_sword:com_0, attack_2h_sword:com_2, attack_2h_sword, $obj);
-    case weapon_axe: ~weapon_category_tab_attack(attack_axe:com_0, attack_axe:com_2, attack_axe, $obj);
-    case weapon_blunt: ~weapon_category_tab_attack(attack_blunt:com_0, attack_blunt:com_2, attack_blunt, $obj);
-    case weapon_pickaxe: ~weapon_category_tab_attack(attack_pickaxe:com_0, attack_pickaxe:com_2, attack_pickaxe, $obj);
-    case weapon_scythe: ~weapon_category_tab_attack(attack_scythe:com_0, attack_scythe:com_2, attack_scythe, $obj);
-    case weapon_slash: ~weapon_category_tab_attack(attack_slashing:com_0, attack_slashing:com_2, attack_slashing, $obj);
-    case weapon_spear: ~weapon_category_tab_attack(attack_spear:com_0, attack_spear:com_2, attack_spear, $obj);
-    case weapon_spiked: ~weapon_category_tab_attack(attack_spiked:com_0, attack_spiked:com_2, attack_spiked, $obj);
-    case weapon_stab: ~weapon_category_tab_attack(attack_stabbing:com_0, attack_stabbing:com_2, attack_stabbing, $obj);
+    case weapon_2h_sword: ~weapon_category_tab_attack(combat_heavysword:preview, combat_heavysword:name, combat_heavysword, $obj);
+    case weapon_axe: ~weapon_category_tab_attack(combat_axe:preview, combat_axe:name, combat_axe, $obj);
+    case weapon_blunt: ~weapon_category_tab_attack(combat_blunt:preview, combat_blunt:name, combat_blunt, $obj);
+    case weapon_pickaxe: ~weapon_category_tab_attack(combat_pickaxe:preview, combat_pickaxe:name, combat_pickaxe, $obj);
+    case weapon_scythe: ~weapon_category_tab_attack(combat_scythe:preview, combat_scythe:name, combat_scythe, $obj);
+    case weapon_slash: ~weapon_category_tab_attack(combat_hacksword:preview, combat_hacksword:name, combat_hacksword, $obj);
+    case weapon_spear: ~weapon_category_tab_attack(combat_spear:preview, combat_spear:name, combat_spear, $obj);
+    case weapon_spiked: ~weapon_category_tab_attack(combat_spiked:preview, combat_spiked:name, combat_spiked, $obj);
+    case weapon_stab: ~weapon_category_tab_attack(combat_stabsword:preview, combat_stabsword:name, combat_stabsword, $obj);
     // ranged
-    case weapon_bow: ~weapon_category_tab_attack(attack_bow:com_0, attack_bow:com_2, attack_bow, $obj);
-    case weapon_crossbow: ~weapon_category_tab_attack(attack_crossbow:com_0, attack_crossbow:com_2, attack_crossbow, $obj);
-    case weapon_thrown, weapon_javelin: ~weapon_category_tab_attack(attack_thrown:com_0, attack_thrown:com_2, attack_thrown, $obj);
+    case weapon_bow: ~weapon_category_tab_attack(combat_bow:preview, combat_bow:name, combat_bow, $obj);
+    case weapon_crossbow: ~weapon_category_tab_attack(combat_crossbow:preview, combat_crossbow:name, combat_crossbow, $obj);
+    case weapon_thrown, weapon_javelin: ~weapon_category_tab_attack(combat_thrown:preview, combat_thrown:name, combat_thrown, $obj);
     // magic
-    case weapon_staff: ~weapon_category_tab_attack(attack_magic_battlestaff:com_0, attack_magic_battlestaff:com_2, attack_magic_battlestaff, $obj);
+    case weapon_staff: ~weapon_category_tab_attack(combat_staff_2:preview, combat_staff_2:name, combat_staff_2, $obj);
     // unarmed everything else
     case default: ~weapon_category_tab_attack_unarmed;
 }
@@ -140,5 +140,5 @@ if_settab($interface, 0);
 // sends the unarmed interface tab
 [proc,weapon_category_tab_attack_unarmed]
 // yes this is actually "unarmed" between beta and 2005-ish.
-if_settext(attack_unarmed:com_1, "unarmed");
-if_settab(attack_unarmed, 0);
+if_settext(combat_unarmed:name, "unarmed");
+if_settab(combat_unarmed, 0);

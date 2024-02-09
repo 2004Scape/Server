@@ -43,7 +43,7 @@ type=man_hair
 head1=model_45_idk_head
 model1=model_203_idk
 
-[idk_9]
+[man_hair_demon]
 disable=yes
 type=man_hair
 head1=model_45_idk_head
@@ -88,68 +88,68 @@ type=man_jaw
 head1=model_84_idk_head
 model1=model_252_idk
 
-[idk_18]
+[man_torso_plain]
 type=man_torso
 model1=model_292_idk
 
-[idk_19]
+[man_torso_light_buttons]
 type=man_torso
 model1=model_292_idk
 model2=model_322_idk
 
-[idk_20]
+[man_torso_dark_buttons]
 type=man_torso
 model1=model_292_idk
 model2=model_326_idk
 
-[idk_21]
+[man_torso_jacket]
 type=man_torso
 model1=model_292_idk
 model2=model_320_idk
 
-[idk_22]
+[man_torso_shirt]
 type=man_torso
 model1=model_292_idk
 model2=model_327_idk
 
-[idk_23]
+[man_torso_stitching]
 type=man_torso
 model1=model_292_idk
 model2=model_324_idk
 
-[idk_24]
+[man_torso_torn]
 type=man_torso
 model1=model_310_idk
 
-[idk_25]
+[man_torso_two_toned]
 type=man_torso
 model1=model_297_idk
 
-[idk_26]
+[man_arms_regular]
 type=man_arms
 model1=model_151_idk
 
-[idk_27]
+[man_arms_musclebound]
 type=man_arms
 model1=model_167_idk
 
-[idk_28]
+[man_arms_loose_sleeved]
 type=man_arms
 model1=model_170_idk
 
-[idk_29]
+[man_arms_large_cuffed]
 type=man_arms
 model1=model_162_idk
 
-[idk_30]
+[man_arms_thin_sleeved]
 type=man_arms
 model1=model_163_idk
 
-[idk_31]
+[man_arms_shoulder_pads]
 type=man_arms
 model1=model_158_idk
 
-[idk_32]
+[man_arms_demon]
 disable=yes
 type=man_arms
 model1=model_158_idk
@@ -164,32 +164,32 @@ recol1s=43072
 recol1d=4550
 model1=model_176_idk
 
-[idk_35]
+[man_hands_demon]
 disable=yes
 type=man_hands
 model1=model_176_idk
 
-[idk_36]
+[man_legs_plain]
 type=man_legs
 model1=model_254_idk
 
-[idk_37]
+[man_legs_shorts]
 type=man_legs
 model1=model_271_idk
 
-[idk_38]
+[man_legs_flares]
 type=man_legs
 model1=model_267_idk
 
-[idk_39]
+[man_legs_turn_ups]
 type=man_legs
 model1=model_274_idk
 
-[idk_40]
+[man_legs_tatty]
 type=man_legs
 model1=model_275_idk
 
-[idk_41]
+[man_legs_demon]
 disable=yes
 type=man_legs
 model1=model_275_idk
@@ -202,7 +202,7 @@ model1=model_181_idk
 type=man_feet
 model1=model_183_idk
 
-[idk_44]
+[man_feet_demon]
 disable=yes
 type=man_feet
 model1=model_183_idk

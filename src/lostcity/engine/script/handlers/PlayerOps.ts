@@ -1,3 +1,4 @@
+import IdkType from '#lostcity/cache/IdkType.js';
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
@@ -856,7 +857,43 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.LOWMEMORY]: state => {
         state.pushInt(state.activePlayer.lowMemory ? 1 : 0);
-    }
+    },
+
+    [ScriptOpcode.SETIDKIT]: (state) => {
+        const [idkit, color] = state.popInts(2);
+
+        const idk = IdkType.get(idkit);
+
+        let slot = idk.type;
+        if (state.activePlayer.gender === 1) {
+            slot -= 7;
+        }
+        state.activePlayer.body[slot] = idkit;
+
+        // 0 - hair
+        // 1 - torso
+        // 2 - legs
+        // 3 - boots
+        // 4 - jaw
+        let colorSlot = -1;
+        if (idk.type === 0) {
+            colorSlot = 0;
+        } else if (idk.type === 1) {
+            colorSlot = 4;
+        } else if (idk.type === 2 || idk.type === 3) {
+            colorSlot = 1;
+        } else if (idk.type === 4) {
+            /* no-op (no hand recoloring) */
+        } else if (idk.type === 5) {
+            colorSlot = 2;
+        } else if (idk.type === 6) {
+            colorSlot = 3;
+        }
+
+        if (colorSlot !== -1) {
+            state.activePlayer.colors[colorSlot] = color;
+        }
+    },
 };
 
 /**

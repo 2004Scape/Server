@@ -1,0 +1,6 @@
+[label,nothing_interesting_happens]
+mes("Nothing interesting happens.");
+
+// users get confused when things don't work
+[label,not_written_yet]
+mes("This feature has not been written yet. Try again later!");

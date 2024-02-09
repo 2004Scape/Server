@@ -1,6 +1,6 @@
 type=overlay
 
-[com_0]
+[preview]
 type=model
 x=135
 y=16
@@ -22,7 +22,7 @@ shadowed=yes
 text=Weapon:
 colour=0xFFFF00
 
-[com_2]
+[name]
 type=text
 x=52
 y=10
@@ -44,15 +44,15 @@ shadowed=yes
 text=Choose Attack Style
 colour=0x00C000
 
-[com_4]
+[scythe101]
 type=layer
 x=4
 y=60
 width=145
 height=190
 
-[com_5]
-layer=com_4
+[scythe0]
+layer=scythe101
 type=graphic
 x=5
 y=5
@@ -64,8 +64,8 @@ script1=eq,0
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_6]
-layer=com_4
+[scythe3]
+layer=scythe101
 type=graphic
 x=5
 y=143
@@ -77,8 +77,8 @@ script1=eq,3
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_7]
-layer=com_4
+[scythe2]
+layer=scythe101
 type=graphic
 x=5
 y=97
@@ -90,8 +90,8 @@ script1=eq,2
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_8]
-layer=com_4
+[scythe1]
+layer=scythe101
 type=graphic
 x=5
 y=51
@@ -104,43 +104,43 @@ graphic=combatboxes,0
 activegraphic=combatboxes,1
 
 [com_9]
-layer=com_4
+layer=scythe101
 type=graphic
 x=22
 y=149
 width=34
 height=24
-graphic=combaticons,4
+graphic=combaticons2,8
 
 [com_10]
-layer=com_4
+layer=scythe101
 type=graphic
 x=22
-y=11
-width=34
-height=24
-graphic=combaticons,6
-
-[com_11]
-layer=com_4
-type=graphic
-x=21
 y=57
 width=34
 height=24
-graphic=combaticons,5
+graphic=combaticons2,9
 
-[com_12]
-layer=com_4
+[com_11]
+layer=scythe101
 type=graphic
 x=22
 y=103
 width=34
 height=24
-graphic=combaticons,7
+graphic=combaticons2,18
+
+[com_12]
+layer=scythe101
+type=graphic
+x=24
+y=11
+width=34
+height=24
+graphic=combaticons2,19
 
 [com_13]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=5
@@ -148,35 +148,35 @@ width=25
 height=11
 font=p11
 shadowed=yes
-text=Chop
+text=Reap
 colour=0xFFFF00
 
 [com_14]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=51
-width=28
+width=25
 height=11
 font=p11
 shadowed=yes
-text=Slash
+text=Chop
 colour=0xFFFF00
 
 [com_15]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=97
-width=29
+width=18
 height=11
 font=p11
 shadowed=yes
-text=Lunge
+text=Jab
 colour=0xFFFF00
 
 [com_16]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=143
@@ -188,7 +188,7 @@ text=Block
 colour=0xFFFF00
 
 [com_17]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=18
@@ -199,18 +199,18 @@ text=(Accurate)
 colour=0xFFFF00
 
 [com_18]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=110
-width=58
+width=64
 height=11
 font=p11
-text=(Controlled)
+text=(Aggressive)
 colour=0xFFFF00
 
 [com_19]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=64
@@ -221,7 +221,7 @@ text=(Aggressive)
 colour=0xFFFF00
 
 [com_20]
-layer=com_4
+layer=scythe101
 type=text
 x=78
 y=156
@@ -245,20 +245,20 @@ colour=0xFFFF00
 type=text
 x=82
 y=136
-width=34
+width=29
 height=11
 font=p11
-text=(Slash)
+text=(Stab)
 colour=0xFFFF00
 
 [com_23]
 type=text
 x=82
 y=182
-width=29
+width=36
 height=11
 font=p11
-text=(Stab)
+text=(Crush)
 colour=0xFFFF00
 
 [com_24]
