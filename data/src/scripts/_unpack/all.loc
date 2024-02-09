@@ -275,7 +275,6 @@ name=Gate
 desc=A wooden gate.
 model=model_loc_47
 active=yes
-category=gate_main_open
 
 [loc_50]
 name=Gate
@@ -283,7 +282,6 @@ desc=A wooden gate.
 model=model_loc_47
 active=yes
 mirror=yes
-category=gate_outer_open
 
 [loc_54]
 name=Stairs
@@ -17749,8 +17747,7 @@ desc=A wooden gate.
 model=model_loc_47
 active=yes
 op1=Open
-category=gate_main_closed
-param=next_loc_stage,loc_49
+category=tutorial_gate
 
 [loc_3016]
 name=Gate
@@ -17759,8 +17756,7 @@ model=model_loc_47
 active=yes
 mirror=yes
 op1=Open
-category=gate_outer_closed
-param=next_loc_stage,loc_50
+category=tutorial_gate
 
 [loc_3017]
 name=Door

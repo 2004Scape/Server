@@ -1,4 +1,4 @@
-[proc,tut_island_survial_gate](loc $loc, coord $loc_coord, int $angle)
+[proc,tut_island_survial_gate]
 if (%tutorial_progress < 120) {
     ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
     return;
@@ -7,53 +7,31 @@ if (%tutorial_progress = 120) {
     %tutorial_progress = 130;
     ~set_tutorial_progress;
 }
-if ($loc = loc_3015) {
-    ~tut_open_gate;
-} else {
-    def_coord $orig_coord = $loc_coord;
-    loc_findallzone(~get_pair_coord($orig_coord, $angle, true));
-    while (loc_findnext = true) {
-        if (distance($orig_coord, $loc_coord) <= 1 & loc_category = gate_main_closed) {
-            ~tut_open_gate;
-        }
-    }
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = tutorial_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_3015) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
 }
-
-def_boolean $is_outside = ~check_axis(coord, $loc_coord, $angle);
-if ($is_outside = true) {
-    if (coord ! $loc_coord) {
-        p_teleport($loc_coord);
-        p_delay(1);
-    }
-    p_teleport(movecoord($loc_coord, 1, 0, 0));
-} else {
-    if (coord ! $loc_coord) {
-        p_teleport($loc_coord);
-        p_delay(1);
-    }
-}
-
-[proc,tut_open_gate]
-def_int $orig_angle = loc_angle;
-def_coord $orig_coord = loc_coord;
-def_coord $main_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 1));
-def_coord $outer_open = ~movecoord_loc_return(~gate_set_close($orig_angle, 2));
-//TODO: Figure out if these use door_open/close, the gate sounds werent added until ~2005?
 sound_synth(door_open, 0, 0);
-loc_del(2);
-loc_add($main_open, loc_param(next_loc_stage), modulo(add(loc_angle, 3), 4), wall_straight, 2);
-loc_findallzone(~get_pair_coord($orig_coord, $orig_angle, false));
-while (loc_findnext = true) {
-    if (distance($orig_coord, loc_coord) <= 1 & loc_category = gate_outer_closed) {
-        loc_del(2);
-        loc_add($outer_open, loc_param(next_loc_stage), modulo(add($orig_angle, 3), 4), wall_straight, 2);
-        return;
-    }
-}
+p_delay(0);
 
 // Survival Tutor Gate
-[oploc1,loc_3015] ~tut_island_survial_gate(loc_type, loc_coord, loc_angle);
-[oploc1,loc_3016] ~tut_island_survial_gate(loc_type, loc_coord, loc_angle);
+[oploc1,_tutorial_gate]
+if(coordx(coord) <= coordx(loc_coord)) {
+    p_teleport(movecoord(loc_coord, 1, 0, 0));
+    ~tut_island_survial_gate;
+    return;
+}
+p_teleport(loc_coord);
+~tut_island_survial_gate;
 
 // Runescape guide door
 [oploc1,loc_3014]
