@@ -1,8 +1,8 @@
 import Packet from '#jagex2/io/Packet.js';
 
-export default class TextEncoder {
+export default class WordPack {
     // prettier-ignore
-    private static CHAR_LOOKUP: string[] = [
+    private static readonly CHAR_LOOKUP: string[] = [
         ' ',
         'e', 't', 'a', 'o', 'i', 'h', 'n', 's', 'r', 'd', 'l', 'u', 'm',
         'w', 'c', 'y', 'f', 'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z',
@@ -11,7 +11,7 @@ export default class TextEncoder {
         '&', '*', '\\', '\'', '@', '#', '+', '=', '£', '$', '%', '"', '[', ']'
     ];
 
-    static decode(packet: Packet, length: number): string {
+    static unpack(packet: Packet, length: number): string {
         const charBuffer: string[] = [];
         let pos: number = 0;
         let carry: number = -1;
@@ -40,7 +40,7 @@ export default class TextEncoder {
         return this.toSentenceCase(charBuffer.slice(0, pos).join(''));
     }
 
-    static encode(packet: Packet, input: string): void {
+    static pack(packet: Packet, input: string): void {
         if (input.length > 80) {
             input = input.substring(0, 80);
         }

@@ -3,7 +3,7 @@ import fs from 'fs';
 import BZip2 from '#jagex2/io/BZip2.js';
 import Packet from '#jagex2/io/Packet.js';
 
-function genHash(name: string): number {
+export function genHash(name: string): number {
     let hash: number = 0;
     name = name.toUpperCase();
     for (let i: number = 0; i < name.length; i++) {
@@ -480,13 +480,5 @@ export const KNOWN_NAMES: string[] = [
 export const KNOWN_HASHES: number[] = [];
 
 for (let i: number = 0; i < KNOWN_NAMES.length; i++) {
-    let hash: number = 0;
-    let str: string = KNOWN_NAMES[i];
-
-    str = str.toUpperCase();
-    for (let i: number = 0; i < str.length; i++) {
-        hash = (hash * 61 + str.charCodeAt(i) - 32) | 0;
-    }
-
-    KNOWN_HASHES[i] = hash;
+    KNOWN_HASHES[i] = genHash(KNOWN_NAMES[i]);
 }

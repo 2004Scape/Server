@@ -17,19 +17,14 @@ export default class WallCollider {
     }
 
     change(x: number, z: number, level: number, angle: number, shape: number, blockrange: boolean, add: boolean): void {
-        switch (shape) {
-            case LocShape.WALL_STRAIGHT:
-                this.wallStraightCollider.change(x, z, level, angle, blockrange, add);
-                break;
-            case LocShape.WALL_DIAGONAL_CORNER:
-            case LocShape.WALL_SQUARE_CORNER:
-                this.wallCornerCollider.change(x, z, level, angle, blockrange, add);
-                break;
-            case LocShape.WALL_L:
-                this.wallCornerLCollider.change(x, z, level, angle, blockrange, add);
-                break;
-            default:
-                throw new Error(`Invalid loc shape for wall collider. Shape was: ${shape}.`);
+        if (shape === LocShape.WALL_STRAIGHT) {
+            this.wallStraightCollider.change(x, z, level, angle, blockrange, add);
+        } else if (shape === LocShape.WALL_DIAGONAL_CORNER || shape === LocShape.WALL_SQUARE_CORNER) {
+            this.wallCornerCollider.change(x, z, level, angle, blockrange, add);
+        } else if (shape === LocShape.WALL_L) {
+            this.wallCornerLCollider.change(x, z, level, angle, blockrange, add);
+        } else {
+            throw new Error(`Invalid loc shape for wall collider. Shape was: ${shape}.`);
         }
     }
 }

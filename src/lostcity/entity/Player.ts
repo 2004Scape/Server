@@ -52,7 +52,7 @@ import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
-import TextEncoder from '#jagex2/jstring/TextEncoder.js';
+import WordPack from '#jagex2/wordenc/WordPack.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 
 const levelExperience = new Int32Array(99);
@@ -694,7 +694,7 @@ export default class Player extends PathingEntity {
             } else if (opcode === ClientProt.MESSAGE_PUBLIC) {
                 const colour = data.g1();
                 const effect = data.g1();
-                const message = TextEncoder.decode(data, data.length - 2);
+                const message = WordPack.unpack(data, data.length - 2);
 
                 if (colour < 0 || colour > 11 || effect < 0 || effect > 2 || message.length > 100) {
                     continue;
@@ -705,7 +705,7 @@ export default class Player extends PathingEntity {
                 this.messageType = 0;
 
                 const out = new Packet();
-                TextEncoder.encode(out, WordEnc.filter(message));
+                WordPack.pack(out, WordEnc.filter(message));
                 out.pos = 0;
                 this.message = out.gdata();
                 this.mask |= Player.CHAT;
@@ -1622,7 +1622,7 @@ export default class Player extends PathingEntity {
                 }
             } else if (opcode === ClientProt.MESSAGE_PRIVATE) {
                 const other = data.g8();
-                const message = TextEncoder.decode(data, data.length - 8);
+                const message = WordPack.unpack(data, data.length - 8);
 
                 World.socialPrivateMessage(this.username37, other, message);
             }
