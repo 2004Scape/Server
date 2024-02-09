@@ -38,6 +38,8 @@ if ($choice = 1) {
     ~chatnpc("default", "Okay then.");
 }
 
+[label,quest_guide_not_ready_to_leave_yet]
+~chatnpc(quiz, "I don't think you're ready to go down there yet.");
 
 [proc,set_hint_icon_quest_guide]
 npc_findallzone(0_48_48_12_52);
