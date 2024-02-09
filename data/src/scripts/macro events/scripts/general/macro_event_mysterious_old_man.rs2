@@ -9,7 +9,8 @@ npc_setmode(playerfollow);
 
 [opnpc1,macro_event_mysterious_old_man_general]
 if (uid ! %npc_attacking_uid) {
-    ~chatnpc(neutral, "I'm looking for <displayname>.");
+    // https://youtu.be/U_TRFGTfIY0?t=276
+    ~chatnpc(neutral, "Sorry, but I'm trying to talk to <displayname>. However he appears to be ignoring me...");
     return;
 }
 if (%macro_event = ^no_macro_event) {

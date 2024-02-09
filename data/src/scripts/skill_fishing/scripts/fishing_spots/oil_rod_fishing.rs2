@@ -1,3 +1,4 @@
+// i assume no fishing random events for these guys
 [opnpc1,npc_800] @attempt_fish_lava_eel;
 [opnpc2,npc_800] @fish_lava_eel;
 [opnpcu,npc_800] @oil_rod_fishing_use_item;
@@ -49,11 +50,13 @@ if (~oil_rod_fishing_check_requirements = false) {
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
     p_opnpc(1);
+    return;
 } else if (%action_delay = calc(map_clock + 4)) {
     anim(human_fishing_casting, 0);
     sound_synth(fishing_cast, 0, 39);
     mes("You cast out your line...");
     p_opnpc(1);
+    return;
 } else if (%action_delay = calc(map_clock + 3)) {
     mes("You attempt to catch an eel.");
     p_opnpc(2);
@@ -63,6 +66,7 @@ if (%action_delay < map_clock) {
 if (%action_delay = map_clock) {
     ~fish_roll(raw_lava_eel, null, fishing_bait);
 }
+
 
 [label,fish_lava_eel]
 if (~oil_rod_fishing_check_requirements = false) {

@@ -41,6 +41,7 @@ if (inv_freespace(inv) < 1) {
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 4);
     p_opnpc(1);
+    return;
 } 
 if (%action_delay = calc(map_clock + 3)) {
     mes("You cast out your net...");
@@ -48,8 +49,7 @@ if (%action_delay = calc(map_clock + 3)) {
     sound_synth(fishing_cast, 0, 15);
     %skill_anim = calc(map_clock + 5);
     p_opnpc(2);
-}
-if (%action_delay = map_clock) { 
+} else if (%action_delay = map_clock) { 
     if (stat(fishing) >= 15) {
         ~fish_roll(raw_shrimps, raw_anchovies, null);
     } else {
@@ -59,6 +59,9 @@ if (%action_delay = map_clock) {
     sound_synth(fishing_cast, 0, 15);
 }
 
+if (1 = ^true & %macro_event = ^no_macro_event) {
+    @macro_event_fishing(net);
+}
 
 [label,fish_shrimp]
 // check if inv is full again
@@ -107,23 +110,27 @@ if (inv_freespace(inv) < 1) {
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
     p_opnpc(3);
+    return;
 } 
 if (%action_delay = calc(map_clock + 4)) {
     mes("You cast out your line...");
     anim(human_fishing_casting, 0);
     p_opnpc(3);
-}
-if (%action_delay = calc(map_clock + 3)) {
+    return;
+} else if (%action_delay = calc(map_clock + 3)) {
     mes("You attempt to catch a fish.");
     p_opnpc(4);
-}
-if (%action_delay = map_clock) {
+} else if (%action_delay = map_clock) {
     if (stat(fishing) >= 10) {
         ~fish_roll(raw_sardine, raw_herring, fishing_bait);
     } else {
         ~fish_roll(raw_sardine, null, fishing_bait);
     }
 }
+if (1 = ^true & %macro_event = ^no_macro_event) {
+    @macro_event_fishing(fishing_rod);
+}
+
 
 [label,fish_sardine]
 // check level

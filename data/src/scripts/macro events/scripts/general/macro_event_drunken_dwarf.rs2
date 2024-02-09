@@ -1,6 +1,6 @@
 [label,macro_event_drunken_dwarf_spawn]
-spotanim_map(spotanim_86, npc_coord, 124, 0);
-sound_synth(smokepuff, 0, 0);
+// https://youtu.be/R9eKmC7oLy0?t=122
+// no smoke puff
 
 sound_synth(dwarf_whistle, 0, 0);
 npc_anim(dwarf_seq_105, 20);

@@ -1,0 +1,30 @@
+// requires active npc
+[label,macro_event_big_fish_spawn](namedobj $fishing_equipment)
+%macro_event = ^no_macro_event;
+if (p_finduid(uid) = false) {
+    return;
+}
+def_npc $old = npc_type;
+npc_changetype(macro_event_big_fish);
+npc_anim(fish_seq_3, 20);
+
+p_delay(0);
+anim(human_unarmedblock, 0);
+
+// todo: big fish is supposed to disappear after this anim. I cant seem to replicate it
+// perhaps the anim was different? or they spawn some secondary npc or something.
+// video: https://youtu.be/9z5XLWq4lZU?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=129
+npc_anim(fish_seq_5, 0);
+
+p_delay(3);
+npc_changetype($old);
+npc_tele(~fishing_spot_random_coord($old)); // move fishing spot
+
+def_coord $random_coord = ~coord_lineofwalk_radius2(coord, 7);
+// todo: confirm the delay on this
+def_int $duration = ~coord_projectile(coord, $random_coord, spotanim_94, 0, 0, 20, 16, -5, 64, 10);
+if (p_finduid(uid) = true) {
+    p_delay(calc($duration/30));
+    obj_add($random_coord, $fishing_equipment, 1, 100);
+    inv_del(inv, $fishing_equipment, 1);
+}

@@ -4,6 +4,8 @@
 ^macro_event_drunken_dwarf = 4
 ^macro_event_mysterious_old_man_general = 5
 
+^macro_event_big_fish = 6
+
 ^no_macro_event = 0
 
 ^macro_event_none = 0
@@ -13,6 +15,7 @@
 ^macro_event_del = -4
 ^macro_event_attack = -5
 ^macro_event_appear = -6
+^macro_event_big_fish_move = -7
 
 
 ^macro_event_cmb_14 = 1

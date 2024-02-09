@@ -17,6 +17,7 @@ if (%npc_macro_event_status = ^macro_event_appear) {
 }
 ~macro_event_give_reward(strange_fruit, 1);
 sound_synth(pick, 0, 0);
+// https://youtu.be/ghfKpXe7N5s?t=24
 mes("You pick the fruit from the plant."); // osrs
 %macro_event = ^no_macro_event;
 %npc_macro_event_status  = ^macro_event_disappear;
