@@ -12,6 +12,7 @@ npc_anim(fish_seq_3, 20);
 
 p_delay(0);
 anim(human_unarmedblock, 0);
+~human_hit_sound;
 
 // todo: big fish is supposed to disappear after this anim. I cant seem to replicate it
 // perhaps the anim was different? or they spawn some secondary npc or something.

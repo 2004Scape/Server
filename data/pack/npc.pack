@@ -405,8 +405,8 @@
 404=npc_404
 405=npc_405
 406=npc_406
-407=macro_event_strange_plant_friendly
-408=macro_event_strange_plant_hostile
+407=macro_event_triffid_friendly
+408=macro_event_triffid_hostile
 409=macro_event_genie
 410=macro_event_mysterious_old_man_general
 411=macro_event_swarm

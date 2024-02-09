@@ -3,7 +3,7 @@
 // for sandwich lady, seems like a little over 50 seconds: https://youtu.be/KkyVz0tSOQA?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 // mysterious old man only teleports out 20 ticks after he gets mad. https://youtu.be/_PPxvNjIgq4?t=49
 
-[macro_event_strange_plant_friendly]
+[macro_event_triffid_friendly]
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
@@ -22,7 +22,7 @@ defence=99
 // this video he does 209 damage, so 9 min of regen from the monster https://youtu.be/8GERe1S_4lM
 hitpoints=200
 
-[macro_event_strange_plant_hostile]
+[macro_event_triffid_hostile]
 vislevel=hide
 name=Strange plant
 desc=A very strange plant.
@@ -37,6 +37,7 @@ param=attack_anim,seq_353
 param=defend_anim,seq_354
 param=death_anim,seq_355
 param=death_drop,null
+param=attack_sound,triffid_attack
 param=max_dealt,3
 param=combat_xp_multiplier,25
 // https://youtu.be/mah2N7nznSk?list=PLn23LiLYLb1aLE-R7X4IV6D0Jl-m2el9i for poison and hit points (estimated)

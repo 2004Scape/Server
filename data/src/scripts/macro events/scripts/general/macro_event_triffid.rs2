@@ -1,13 +1,15 @@
 // todo: get an osrs video of this
-[label,macro_event_strange_plant_spawn]
-// some sound synth?
+[label,macro_event_triffid_spawn]
+if (finduid(uid) = true) {
+    sound_synth(triffid_appear, 0, 0);
+}
 npc_anim(seq_348, 0);
 %npc_attacking_uid = uid;
 // isnt delayed on respawn in osrs
 %npc_macro_event_status = ^macro_event_appear;
 npc_settimer(44);
 
-[opnpc1,macro_event_strange_plant_friendly]
+[opnpc1,macro_event_triffid_friendly]
 if (%npc_attacking_uid ! uid) {
     mes("It's not here for you."); // osrs
     return;
@@ -25,7 +27,7 @@ npc_anim(seq_350, 0); // take thing away
 npc_delay(24); // delayed when despawning in osrs
 npc_del;
 
-[ai_timer,macro_event_strange_plant_friendly]
+[ai_timer,macro_event_triffid_friendly]
 if (%npc_macro_event_status = ^macro_event_appear) {
     %npc_macro_event_status = ^macro_event_none;
     return;
@@ -36,14 +38,14 @@ if (%npc_macro_event_status = ^macro_event_appear) {
 npc_anim(seq_351, 60);
 npc_delay(4);
 
-npc_changetype(macro_event_strange_plant_hostile);
+npc_changetype(macro_event_triffid_hostile);
 npc_delay(1);
 if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(opplayer2);
     %macro_event = ^no_macro_event;
 }
 
-[ai_timer,macro_event_strange_plant_hostile]
+[ai_timer,macro_event_triffid_hostile]
 if (npc_getmode = opplayer2) {
     return;
 }
