@@ -1,6 +1,17 @@
 type=overlay
 
-[com_0]
+[preview]
+type=model
+x=135
+y=16
+width=35
+height=32
+model=model_2778_obj
+zoom=624
+xan=521
+yan=1288
+
+[com_1]
 type=text
 x=4
 y=10
@@ -11,7 +22,7 @@ shadowed=yes
 text=Weapon:
 colour=0xFFFF00
 
-[com_1]
+[name]
 type=text
 x=52
 y=10
@@ -22,7 +33,7 @@ shadowed=yes
 text=%1
 colour=0xFFFF00
 
-[com_2]
+[com_3]
 type=text
 x=4
 y=40
@@ -33,15 +44,15 @@ shadowed=yes
 text=Choose Attack Style
 colour=0x00C000
 
-[com_3]
+[heavy101]
 type=layer
 x=4
 y=60
 width=145
 height=190
 
-[com_4]
-layer=com_3
+[heavy0]
+layer=heavy101
 type=graphic
 x=5
 y=5
@@ -53,8 +64,21 @@ script1=eq,0
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_5]
-layer=com_3
+[heavy3]
+layer=heavy101
+type=graphic
+x=5
+y=143
+buttontype=select
+width=72
+height=36
+script1op1=testvar,attackstyle
+script1=eq,3
+graphic=combatboxes,0
+activegraphic=combatboxes,1
+
+[heavy2]
+layer=heavy101
 type=graphic
 x=5
 y=97
@@ -66,8 +90,8 @@ script1=eq,2
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_6]
-layer=com_3
+[heavy1]
+layer=heavy101
 type=graphic
 x=5
 y=51
@@ -79,62 +103,83 @@ script1=eq,1
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_7]
-layer=com_3
+[com_9]
+layer=heavy101
+type=graphic
+x=22
+y=149
+width=34
+height=24
+graphic=combaticons,4
+
+[com_10]
+layer=heavy101
 type=graphic
 x=22
 y=11
 width=34
 height=24
-graphic=combaticons,14
+graphic=combaticons,6
 
-[com_8]
-layer=com_3
+[com_11]
+layer=heavy101
 type=graphic
 x=21
 y=57
 width=34
 height=24
-graphic=combaticons,15
+graphic=combaticons,5
 
-[com_9]
-layer=com_3
+[com_12]
+layer=heavy101
 type=graphic
 x=22
 y=103
 width=34
 height=24
-graphic=combaticons,16
+graphic=combaticons,5
 
-[com_10]
-layer=com_3
+[com_13]
+layer=heavy101
 type=text
 x=78
 y=5
-width=30
+width=25
 height=11
 font=p11
 shadowed=yes
-text=Punch
+text=Chop
 colour=0xFFFF00
 
-[com_11]
-layer=com_3
+[com_14]
+layer=heavy101
 type=text
 x=78
 y=51
-width=19
+width=28
 height=11
 font=p11
 shadowed=yes
-text=Kick
+text=Slash
 colour=0xFFFF00
 
-[com_12]
-layer=com_3
+[com_15]
+layer=heavy101
 type=text
 x=78
 y=97
+width=32
+height=11
+font=p11
+shadowed=yes
+text=Smash
+colour=0xFFFF00
+
+[com_16]
+layer=heavy101
+type=text
+x=78
+y=143
 width=26
 height=11
 font=p11
@@ -142,8 +187,8 @@ shadowed=yes
 text=Block
 colour=0xFFFF00
 
-[com_13]
-layer=com_3
+[com_17]
+layer=heavy101
 type=text
 x=78
 y=18
@@ -153,8 +198,19 @@ font=p11
 text=(Accurate)
 colour=0xFFFF00
 
-[com_14]
-layer=com_3
+[com_18]
+layer=heavy101
+type=text
+x=78
+y=110
+width=64
+height=11
+font=p11
+text=(Aggressive)
+colour=0xFFFF00
+
+[com_19]
+layer=heavy101
 type=text
 x=78
 y=64
@@ -164,38 +220,48 @@ font=p11
 text=(Aggressive)
 colour=0xFFFF00
 
-[com_15]
-layer=com_3
+[com_20]
+layer=heavy101
 type=text
 x=78
-y=110
+y=156
 width=58
 height=11
 font=p11
 text=(Defensive)
 colour=0xFFFF00
 
-[com_16]
+[com_21]
 type=text
 x=82
 y=90
-width=36
+width=34
 height=11
 font=p11
-text=(Crush)
+text=(Slash)
 colour=0xFFFF00
 
-[com_17]
+[com_22]
 type=text
 x=82
 y=136
-width=36
+width=34
 height=11
 font=p11
-text=(Crush)
+text=(Slash)
 colour=0xFFFF00
 
-[com_18]
+[com_23]
+type=text
+x=82
+y=228
+width=34
+height=11
+font=p11
+text=(Slash)
+colour=0xFFFF00
+
+[com_24]
 type=text
 x=82
 y=182

@@ -239,6 +239,9 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.LONGQUEUE]: {
         require: ['active_player']
     },
+    [ScriptOpcode.LOWMEMORY]: {
+        require: ['active_player']
+    },
     [ScriptOpcode.MES]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -369,6 +372,9 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.SAY]: {
         require: ['active_player'],
         require2: ['active_player2']
+    },
+    [ScriptOpcode.SETIDKIT]: {
+        require: ['p_active_player']
     },
     [ScriptOpcode.SETMOVECHECK]: {
         require: ['active_player'],

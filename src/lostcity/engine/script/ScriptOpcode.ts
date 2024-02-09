@@ -176,6 +176,7 @@ enum ScriptOpcode {
     IF_OPENMAINOVERLAY,
     AFK_EVENT,
     LOWMEMORY,
+    SETIDKIT,
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official

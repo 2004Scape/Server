@@ -1,6 +1,6 @@
 type=overlay
 
-[com_0]
+[preview]
 type=model
 x=135
 y=16
@@ -22,7 +22,7 @@ shadowed=yes
 text=Weapon:
 colour=0xFFFF00
 
-[com_2]
+[name]
 type=text
 x=52
 y=10
@@ -44,15 +44,15 @@ shadowed=yes
 text=Choose Attack Style
 colour=0x00C000
 
-[com_4]
+[pickaxe101]
 type=layer
 x=4
 y=60
 width=145
 height=190
 
-[com_5]
-layer=com_4
+[pickaxe0]
+layer=pickaxe101
 type=graphic
 x=5
 y=5
@@ -64,8 +64,8 @@ script1=eq,0
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_6]
-layer=com_4
+[pickaxe3]
+layer=pickaxe101
 type=graphic
 x=5
 y=143
@@ -77,8 +77,8 @@ script1=eq,3
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_7]
-layer=com_4
+[pickaxe2]
+layer=pickaxe101
 type=graphic
 x=5
 y=97
@@ -90,8 +90,8 @@ script1=eq,2
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[com_8]
-layer=com_4
+[pickaxe1]
+layer=pickaxe101
 type=graphic
 x=5
 y=51
@@ -104,7 +104,7 @@ graphic=combatboxes,0
 activegraphic=combatboxes,1
 
 [com_9]
-layer=com_4
+layer=pickaxe101
 type=graphic
 x=22
 y=149
@@ -113,7 +113,7 @@ height=24
 graphic=combaticons3,0
 
 [com_10]
-layer=com_4
+layer=pickaxe101
 type=graphic
 x=22
 y=11
@@ -122,7 +122,7 @@ height=24
 graphic=combaticons3,1
 
 [com_11]
-layer=com_4
+layer=pickaxe101
 type=graphic
 x=21
 y=57
@@ -131,7 +131,7 @@ height=24
 graphic=combaticons3,3
 
 [com_12]
-layer=com_4
+layer=pickaxe101
 type=graphic
 x=22
 y=103
@@ -140,7 +140,7 @@ height=24
 graphic=combaticons3,2
 
 [com_13]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=5
@@ -152,7 +152,7 @@ text=Spike
 colour=0xFFFF00
 
 [com_14]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=51
@@ -164,7 +164,7 @@ text=Impale
 colour=0xFFFF00
 
 [com_15]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=97
@@ -176,7 +176,7 @@ text=Smash
 colour=0xFFFF00
 
 [com_16]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=143
@@ -188,7 +188,7 @@ text=Block
 colour=0xFFFF00
 
 [com_17]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=18
@@ -199,7 +199,7 @@ text=(Accurate)
 colour=0xFFFF00
 
 [com_18]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=110
@@ -210,7 +210,7 @@ text=(Aggressive)
 colour=0xFFFF00
 
 [com_19]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=64
@@ -221,7 +221,7 @@ text=(Aggressive)
 colour=0xFFFF00
 
 [com_20]
-layer=com_4
+layer=pickaxe101
 type=text
 x=78
 y=156

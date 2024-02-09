@@ -1,22 +1,290 @@
+// source: https://www.youtube.com/watch?v=VK_A2Vf9VE8
+// todo: options to retrieve scythe/bunny ears
+
 [opnpc1,thessalia]
-// TODO: options to retrieve scythe/bunny ears
 ~chatnpc(happy, "Do you want to buy any fine clothes?");
-def_int $option = ~p_choice2("What have you got?", 1, "No, thank you.", 2);
-if($option = 1) {
-    ~chatplayer(quiz, "What have you got?"); 
-    ~chatnpc(happy, "Well, I have a number of fine pieces of clothing on sale or, if you prefer, I can offer you an exclusive, total- clothing makeover?");
-    @multi3("Tell me more about this makeover.", thessalia_makeover, "I'd just like to buy some clothes.", thessalia_buy, "No, thank you.", thessalia_no);
-} else if($option = 2) {
-    @thessalia_no;
-}
+@multi2("What have you got?", thessalia_b1_s1, "No, thank you.", thessalia_b1_s2);
 
-[label,thessalia_buy]
-~chatplayer(neutral, "I'd just like to buy some clothes.");
-~openshop_activenpc;
+[label,thessalia_b1_s1]
+~chatplayer(quiz, "What have you got?"); 
+~chatnpc(happy, "Well, I have a number of fine pieces of clothing on sale or, if you prefer I can offer you an exclusive, total clothing makeover?");
+@multi2("Tell me more about this makeover.", thessalia_b2_s1, "I'd just like to buy some clothes.", thessalia_b2_s2);
 
-[label,thessalia_no]
+[label,thessalia_b1_s2]
 ~chatplayer(neutral, "No, thank you.");
 ~chatnpc(happy, "Well, please return if you change your mind.");
 
-[label,thessalia_makeover]
-// TODO: implement
+[label,thessalia_b2_s1]
+~chatplayer(neutral, "Tell me more about this makeover.");
+~chatnpc(happy, "Certainly!");
+~chatnpc(happy, "Here at Thessalia's fine clothing boutique, we offer a unique service where we will totally revamp your outfit to your choosing, for... wait for it...");
+~chatnpc(happy, "A fee of only 500 gold coins! Tired of always wearing the same old outfit, day in, day out? This is the service for you!");
+~chatnpc(happy, "So what do you say? Interested? We can change either your top, or your legwear for only 500 gold an item!");
+@multi4("I'd like to change my top please.", thessalia_b3_s1, "I'd like to change my legwear please.", thessalia_b3_s2, "I'd just like to buy some clothes.", thessalia_b2_s2, "No, thank you.", thessalia_b1_s2);
+
+[label,thessalia_b3_s1]
+%option1 = 0;
+%option2 = 0;
+%option3 = 0;
+
+~chatnpc(happy, "Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
+
+if (gender = ^gender_male) {
+    if_openmainmodal(player_kit_tailor_torso_man);
+} else {
+    @not_written_yet;
+    // if_openmainmodal(player_kit_tailor_torso_woman);
+}
+
+[label,thessalia_b3_s2]
+%option1 = 0;
+%option2 = 0;
+%option3 = 0;
+
+~chatnpc(happy, "Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
+
+if (gender = ^gender_male) {
+    if_openmainmodal(player_kit_tailor_legs_man);
+} else {
+    @not_written_yet;
+    // if_openmainmodal(player_kit_tailor_legs_woman);
+}
+
+[label,thessalia_b2_s2]
+~chatplayer(neutral, "I'd just like to buy some clothes.");
+~openshop_activenpc;
+
+// ----
+
+[if_button,player_kit_tailor_torso_man:plain]
+%option1 = 1;
+
+[if_button,player_kit_tailor_torso_man:light_buttons]
+%option1 = 2;
+
+[if_button,player_kit_tailor_torso_man:jacket]
+%option1 = 3;
+
+[if_button,player_kit_tailor_torso_man:dark_buttons]
+%option1 = 4;
+
+[if_button,player_kit_tailor_torso_man:stitching]
+%option1 = 5;
+
+[if_button,player_kit_tailor_torso_man:shirt]
+%option1 = 6;
+
+[if_button,player_kit_tailor_torso_man:two_toned]
+%option1 = 7;
+
+[if_button,player_kit_tailor_torso_man:regular]
+%option2 = 1;
+
+[if_button,player_kit_tailor_torso_man:musclebound]
+%option2 = 2;
+
+[if_button,player_kit_tailor_torso_man:loose_sleeved]
+%option2 = 3;
+
+[if_button,player_kit_tailor_torso_man:large_cuffed]
+%option2 = 4;
+
+[if_button,player_kit_tailor_torso_man:thin_sleeved]
+%option2 = 5;
+
+[if_button,player_kit_tailor_torso_man:shoulder_pads]
+%option2 = 6;
+
+[if_button,player_kit_tailor_torso_man:khaki]
+%option3 = 1;
+
+[if_button,player_kit_tailor_torso_man:black]
+%option3 = 2;
+
+[if_button,player_kit_tailor_torso_man:crimson]
+%option3 = 3;
+
+[if_button,player_kit_tailor_torso_man:navy]
+%option3 = 4;
+
+[if_button,player_kit_tailor_torso_man:straw]
+%option3 = 5;
+
+[if_button,player_kit_tailor_torso_man:white]
+%option3 = 6;
+
+[if_button,player_kit_tailor_torso_man:red]
+%option3 = 7;
+
+[if_button,player_kit_tailor_torso_man:blue]
+%option3 = 8;
+
+[if_button,player_kit_tailor_torso_man:green]
+%option3 = 9;
+
+[if_button,player_kit_tailor_torso_man:yellow]
+%option3 = 10;
+
+[if_button,player_kit_tailor_torso_man:purple]
+%option3 = 11;
+
+[if_button,player_kit_tailor_torso_man:orange]
+%option3 = 12;
+
+[if_button,player_kit_tailor_torso_man:rose]
+%option3 = 13;
+
+[if_button,player_kit_tailor_torso_man:lime]
+%option3 = 14;
+
+[if_button,player_kit_tailor_torso_man:cyan]
+%option3 = 15;
+
+[if_button,player_kit_tailor_torso_man:emerald]
+%option3 = 16;
+
+[if_button,player_kit_tailor_torso_man:confirm]
+if (%option1 = 0 | %option2 = 0 | %option3 = 0) {
+    return;
+}
+
+if_close;
+
+if (inv_total(inv, coins) < 500) {
+    mes("You do not have enough money.");
+    return;
+}
+
+def_int $color = calc(%option3 - 1);
+
+if (%option1 = 1) {
+    setidkit(man_torso_plain, $color);
+} else if (%option1 = 2) {
+    setidkit(man_torso_light_buttons, $color);
+} else if (%option1 = 3) {
+    setidkit(man_torso_jacket, $color);
+} else if (%option1 = 4) {
+    setidkit(man_torso_dark_buttons, $color);
+} else if (%option1 = 5) {
+    setidkit(man_torso_stitching, $color);
+} else if (%option1 = 6) {
+    setidkit(man_torso_shirt, $color);
+} else if (%option1 = 7) {
+    setidkit(man_torso_two_toned, $color);
+}
+
+if (%option2 = 1) {
+    setidkit(man_arms_regular, $color);
+} else if (%option2 = 2) {
+    setidkit(man_arms_musclebound, $color);
+} else if (%option2 = 3) {
+    setidkit(man_arms_loose_sleeved, $color);
+} else if (%option2 = 4) {
+    setidkit(man_arms_large_cuffed, $color);
+} else if (%option2 = 5) {
+    setidkit(man_arms_thin_sleeved, $color);
+} else if (%option2 = 6) {
+    setidkit(man_arms_shoulder_pads, $color);
+}
+
+buildappearance(worn);
+inv_del(inv, coins, 500);
+
+if (npc_finduid(~npc_within_distance(coord, thessalia, 4)) = true) {
+    ~chatnpc(happy, "Very stylish! It really suits you!");
+    ~chatplayer(happy, "Thanks!");
+}
+
+// ----
+
+[if_button,player_kit_tailor_legs_man:plain]
+%option1 = 1;
+
+[if_button,player_kit_tailor_legs_man:shorts]
+%option1 = 2;
+
+[if_button,player_kit_tailor_legs_man:flares]
+%option1 = 3;
+
+[if_button,player_kit_tailor_legs_man:turn_ups]
+%option1 = 4;
+
+[if_button,player_kit_tailor_legs_man:khaki]
+%option3 = 2;
+
+[if_button,player_kit_tailor_legs_man:black]
+%option3 = 3;
+
+[if_button,player_kit_tailor_legs_man:crimson]
+%option3 = 4;
+
+[if_button,player_kit_tailor_legs_man:navy]
+%option3 = 5;
+
+[if_button,player_kit_tailor_legs_man:straw]
+%option3 = 6;
+
+[if_button,player_kit_tailor_legs_man:white]
+%option3 = 7;
+
+[if_button,player_kit_tailor_legs_man:red]
+%option3 = 8;
+
+[if_button,player_kit_tailor_legs_man:blue]
+%option3 = 9;
+
+[if_button,player_kit_tailor_legs_man:green]
+%option3 = 10;
+
+[if_button,player_kit_tailor_legs_man:yellow]
+%option3 = 11;
+
+[if_button,player_kit_tailor_legs_man:purple]
+%option3 = 12;
+
+[if_button,player_kit_tailor_legs_man:orange]
+%option3 = 13;
+
+[if_button,player_kit_tailor_legs_man:rose]
+%option3 = 14;
+
+[if_button,player_kit_tailor_legs_man:lime]
+%option3 = 15;
+
+[if_button,player_kit_tailor_legs_man:cyan]
+%option3 = 16;
+
+[if_button,player_kit_tailor_legs_man:emerald]
+%option3 = 1;
+
+[if_button,player_kit_tailor_legs_man:confirm]
+if (%option1 = 0 | %option3 = 0) {
+    return;
+}
+
+if_close;
+
+if (inv_total(inv, coins) < 500) {
+    mes("You do not have enough money.");
+    return;
+}
+
+def_int $color = calc(%option3 - 1);
+
+if (%option1 = 1) {
+    setidkit(man_legs_plain, $color);
+} else if (%option1 = 2) {
+    setidkit(man_legs_shorts, $color);
+} else if (%option1 = 3) {
+    setidkit(man_legs_flares, $color);
+} else if (%option1 = 4) {
+    setidkit(man_legs_turn_ups, $color);
+}
+
+buildappearance(worn);
+inv_del(inv, coins, 500);
+
+if (npc_finduid(~npc_within_distance(coord, thessalia, 4)) = true) {
+    ~chatnpc(happy, "Totally cool! That outfit looks great!");
+    ~chatplayer(happy, "Thanks!");
+}

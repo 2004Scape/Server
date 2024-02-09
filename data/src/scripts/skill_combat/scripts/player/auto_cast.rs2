@@ -1,20 +1,20 @@
-[if_button,attack_magic_battlestaff:com_24] @open_autocast_interface;
-[if_button,staff_spells:com_0] @set_autocast_spell(^wind_strike);
-[if_button,staff_spells:com_1] @set_autocast_spell(^water_strike);
-[if_button,staff_spells:com_2] @set_autocast_spell(^earth_strike);
-[if_button,staff_spells:com_3] @set_autocast_spell(^fire_strike);
-[if_button,staff_spells:com_4] @set_autocast_spell(^wind_bolt);
-[if_button,staff_spells:com_5] @set_autocast_spell(^water_bolt);
-[if_button,staff_spells:com_6] @set_autocast_spell(^earth_bolt);
-[if_button,staff_spells:com_7] @set_autocast_spell(^fire_bolt);
-[if_button,staff_spells:com_8] @set_autocast_spell(^wind_blast);
-[if_button,staff_spells:com_9] @set_autocast_spell(^water_blast);
-[if_button,staff_spells:com_10] @set_autocast_spell(^earth_blast);
-[if_button,staff_spells:com_11] @set_autocast_spell(^fire_blast);
-[if_button,staff_spells:com_12] @set_autocast_spell(^wind_wave);
-[if_button,staff_spells:com_13] @set_autocast_spell(^water_wave);
-[if_button,staff_spells:com_14] @set_autocast_spell(^earth_wave);
-[if_button,staff_spells:com_15] @set_autocast_spell(^fire_wave);
+[if_button,combat_staff_2:auto_choose] @open_autocast_interface;
+[if_button,staff_spells:ssb0] @set_autocast_spell(^wind_strike);
+[if_button,staff_spells:ssb1] @set_autocast_spell(^water_strike);
+[if_button,staff_spells:ssb2] @set_autocast_spell(^earth_strike);
+[if_button,staff_spells:ssb3] @set_autocast_spell(^fire_strike);
+[if_button,staff_spells:ssb4] @set_autocast_spell(^wind_bolt);
+[if_button,staff_spells:ssb5] @set_autocast_spell(^water_bolt);
+[if_button,staff_spells:ssb6] @set_autocast_spell(^earth_bolt);
+[if_button,staff_spells:ssb7] @set_autocast_spell(^fire_bolt);
+[if_button,staff_spells:ssb8] @set_autocast_spell(^wind_blast);
+[if_button,staff_spells:ssb9] @set_autocast_spell(^water_blast);
+[if_button,staff_spells:ssb10] @set_autocast_spell(^earth_blast);
+[if_button,staff_spells:ssb11] @set_autocast_spell(^fire_blast);
+[if_button,staff_spells:ssb12] @set_autocast_spell(^wind_wave);
+[if_button,staff_spells:ssb13] @set_autocast_spell(^water_wave);
+[if_button,staff_spells:ssb14] @set_autocast_spell(^earth_wave);
+[if_button,staff_spells:ssb15] @set_autocast_spell(^fire_wave);
 
 [label,open_autocast_interface]
 if_close;
@@ -24,7 +24,7 @@ if (p_finduid(uid) = false) { // cant open autocast interface if delayed
 %attackstyle_magic = 0;
 if_settab(staff_spells, 0);
 
-[if_button,staff_spells:com_174]
+[if_button,staff_spells:cancelspell]
 if_close;
 ~initalltabs;
 
@@ -49,7 +49,7 @@ if (p_finduid(uid) = true) {
     %spell = $spell;
 
     %attackstyle_magic = 2;
-    if_settext(attack_magic_battlestaff:com_23, db_getfield($spell_data, magic_spell_table:name, 0));
+    if_settext(combat_staff_2:auto_spell, db_getfield($spell_data, magic_spell_table:name, 0));
 
     ~initalltabs;
 }
