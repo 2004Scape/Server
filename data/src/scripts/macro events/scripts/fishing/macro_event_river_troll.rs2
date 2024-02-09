@@ -1,1 +1,19 @@
-[label,macro_event_fishing_troll_spawn]
+[label,macro_event_river_troll_spawn]
+// no smoke puff https://youtu.be/X1KjOMAmJ_g?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=122
+def_npc $event = enum(int, npc, macro_event_river_troll_levels, ~macro_event_combat_level);
+
+def_coord $event_coord = ~macro_event_coord;
+if ($event_coord = null) {
+    return;
+}
+
+npc_add($event_coord, $event, 1000); // guess
+npc_say("Fishies be mine, leave dem fishies!"); // https://youtu.be/X1KjOMAmJ_g?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=122
+%npc_attacking_uid = uid;
+spotanim_map(spotanim_78, $event_coord, 0, 0);
+if (finduid(uid) = false) {
+    return;
+}
+npc_delay(3);
+npc_setmode(opplayer2);
+
