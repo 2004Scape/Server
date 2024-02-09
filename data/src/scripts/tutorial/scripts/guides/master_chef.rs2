@@ -26,21 +26,21 @@ if (inv_freespace(inv) = 0 & %tutorial_progress < 170) {
     return;
 }
 
-if (inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) > 0) {
+if (inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) > 0 & inv_freespace(inv) > 0) {
     inv_add(inv, pot_of_flour, 1);
-    ~objbox(pot_of_flour, "The Cooking Guide gives you some|@blu@flour.");
+    ~objbox(pot_of_flour, "The Cooking Guide gives you a |@blu@Pot of Flour.");
     return;
 }
 
 if (inv_freespace(inv) = 1 & inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) < 1) {
     inv_add(inv, pot_of_flour, 1);
-    ~objbox(pot_of_flour, "The Cooking Guide gives you some flour. He would ahve given you some water as well but you didn't have room for it. To get some drop something and talk to the master chef again.");
+    ~objbox(pot_of_flour, "The Cooking Guide gives you some flour. He would have given you some water as well but you didn't have room for it. To get some drop something and talk to the |Cooking Guide again.");
     return;
 }
 
-if (inv_total(inv, bucket_water) < 1 & inv_total(inv, pot_of_flour) > 0 ) {
+if (inv_total(inv, bucket_water) < 1 & inv_total(inv, pot_of_flour) > 0 & inv_freespace(inv) > 0) {
     inv_add(inv, bucket_water, 1);
-    ~objbox(pot_of_flour, "The Cooking Guide gives you some|@blu@water.");
+    ~objbox(bucket_water, "The Cooking Guide gives you a|@blu@Bucket of Water.");
     return;
 }
 
@@ -70,7 +70,7 @@ switch_int($option) {
         ~master_chef_recap_options;
     case 2:
         ~chatplayer(neutral, "Tell me about range cooking again.");
-        ~chatnpc(neutral, "The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a rage, right click the item you would like to cook, select 'use' then left click the range.");
+        ~chatnpc(neutral, "The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a range, right click the item you would like to cook, select 'use' then left click the range.");
         ~master_chef_recap_options;
     case 3:
         ~chatplayer("default", "Tell me about music again.");
@@ -79,6 +79,13 @@ switch_int($option) {
 }
 
 [proc,set_hint_icon_master_chef]
+npc_findallzone(0_48_48_4_11);
+while (npc_findnext = true) {
+    if (npc_type = npc_942) {
+        hint_npc(npc_uid);
+    }
+}
+
 npc_findallzone(0_48_48_6_12);
 while (npc_findnext = true) {
     if (npc_type = npc_942) {

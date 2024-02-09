@@ -13,9 +13,11 @@ if (last_useitem = bread_dough) {
         inv_del(inv, bread_dough, 1);
         def_int $rand = random(10);
         if ($rand < calc(3 + stat_base(cooking))) {
+            mes("You remove the bread from the oven.");
             inv_add(inv, bread, 1);
             ~tutorial_give_xp(cooking, 400);
         } else {
+            mes("You accidentally burn the bread.");
             inv_add(inv, burnt_bread, 1);
         }
     }
@@ -63,9 +65,11 @@ if ($uncooked_item = raw_shrimps) {
 [label,tut_random_shrimp_chance]
 def_int $rand = random(10);
 if ($rand < calc(3 + stat_base(cooking))) {
+    mes("The shrimps are now nicely cooked.");
     inv_add(inv, shrimps, 1);
     ~tutorial_give_xp(cooking, 300);
 } else {
+    mes("You accidentally burn the shrimps.");
     inv_add(inv, burnt_shrimp_anchovies, 1);
 }
 
