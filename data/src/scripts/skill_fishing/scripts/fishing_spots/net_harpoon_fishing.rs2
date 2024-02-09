@@ -13,7 +13,9 @@ if (stat(fishing) < 76) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(harpoon);
+if (~check_fish_equipment(harpoon) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -50,7 +52,9 @@ if (stat(fishing) < 76) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(harpoon);
+if (~check_fish_equipment(harpoon) = false) {
+    return;
+}
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -87,7 +91,9 @@ if (stat(fishing) < 16) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(net_big);
+if (~check_fish_equipment(net_big) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -123,7 +129,9 @@ if (stat(fishing) < 16) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(net_big);
+if (~check_fish_equipment(net_big) = false) {
+    return;
+}
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);

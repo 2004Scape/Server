@@ -8,7 +8,9 @@ if (stat(fishing) < 20) {
     return;
 }
 // check if they have fishing equipment & bait
-~check_fish_equipment(fly_fishing_rod);
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
 %skill_anim = calc(%skill_anim + 1);
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 4);
@@ -28,7 +30,9 @@ if (stat(fishing) < 20) {
     return;
 }
 // check if they still have fishing equipment & bait
-~check_fish_equipment(fly_fishing_rod);
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) = 0) {
     anim(null, 0);
@@ -64,7 +68,9 @@ if (stat(fishing) < 25) {
     return;
 }
 // check if they have fishing equipment & bait
-~check_fish_equipment(fishing_rod);
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
 %skill_anim = calc(%skill_anim + 1);
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
@@ -83,7 +89,9 @@ if (stat(fishing) < 25) {
     return;
 }
 // check if they still have fishing equipment & bait
-~check_fish_equipment(fishing_rod);
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) = 0) {
     anim(null, 0);
@@ -115,11 +123,10 @@ if (%action_delay = map_clock) {
 }
 
 [oplocu,loc_2027]
-~check_correct_fish_equipment(fishing_rod, fly_fishing_rod);
 switch_obj(last_useitem) {
     case fishing_rod : p_oploc(2);
     case fly_fishing_rod : p_oploc(1);
-    case default : @nothing_interesting_happens;
+    case default : @fishing_wrong_spot_message(last_useitem);
 }
 
 [proc,fish_roll_waterfall](namedobj $fish1, namedobj $fish2, namedobj $bait)

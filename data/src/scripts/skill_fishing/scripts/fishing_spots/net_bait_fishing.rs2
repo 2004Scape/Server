@@ -14,24 +14,20 @@
 @fish_sardine;
 
 [opnpcu,_saltfish]
-if (last_useitem = fly_fishing_rod) {
-    @nothing_interesting_happens;
-}
-if (last_useitem = net_big) {
-    ~mesbox("The fish here aren't suitable for catching with a Big Net.");
-    return;
-}
-~check_correct_fish_equipment(net, fishing_rod);
 switch_obj(last_useitem) {
+    case fly_fishing_rod : @nothing_interesting_happens;
     case fishing_rod : @attempt_fish_sardine;
     case net : @attempt_fish_shrimp;
-    case default : @nothing_interesting_happens;
+    case net_big : ~mesbox("The fish here aren't suitable for catching with a Big Net.");
+    case default : @fishing_wrong_spot_message(last_useitem);
 }
 
 
 [label,attempt_fish_shrimp]
 // check if they have fishing equipment
-~check_fish_equipment(net);
+if (~check_fish_equipment(net) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -65,7 +61,9 @@ if (1 = ^true & %macro_event = ^no_macro_event & npc_param(is_whirlpool) = ^fals
 
 [label,fish_shrimp]
 // check if they have fishing equipment
-~check_fish_equipment(net);
+if (~check_fish_equipment(net) = false) {
+    return;
+}
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -102,7 +100,9 @@ if (stat(fishing) < 5) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(fishing_rod);
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -142,7 +142,9 @@ if (stat(fishing) < 5) {
     return;
 }
 // check if they still have fishing equipment & bait
-~check_fish_equipment(fishing_rod);
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);

@@ -10,16 +10,11 @@
 @fish_swordfish;
 
 [opnpcu,_rarefish]
-if (last_useitem = net_big) {
-    anim(null, 0);
-    ~mesbox("The fish here aren't suitable for catching with a big net.");
-    return;
-}
-~check_correct_fish_equipment(lobster_pot, harpoon);
 switch_obj(last_useitem) {
     case harpoon : @attempt_fish_swordfish;
     case lobster_pot : @attempt_fish_lobster;
-    case default : @nothing_interesting_happens;
+    case net_big : ~mesbox("The fish here aren't suitable for catching with a big net.");
+    case default : @fishing_wrong_spot_message(last_useitem);
 }
 
 
@@ -31,7 +26,10 @@ if (stat(fishing) < 40) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(lobster_pot);
+if (~check_fish_equipment(lobster_pot) = false) {
+    return;
+}
+
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -70,7 +68,9 @@ if (stat(fishing) < 40) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(lobster_pot);
+if (~check_fish_equipment(lobster_pot) = false) {
+    return;
+}
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -103,7 +103,9 @@ if (stat(fishing) < 35) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(harpoon);
+if (~check_fish_equipment(harpoon) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -143,7 +145,9 @@ if (stat(fishing) < 35) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(harpoon);
+if (~check_fish_equipment(harpoon) = false) {
+    return;
+}
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);

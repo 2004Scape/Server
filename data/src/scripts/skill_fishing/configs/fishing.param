@@ -2,6 +2,10 @@
 type=string
 default=null
 
+[fish_wrong_spot_message]
+type=string
+default=null
+
 [fish_equipment_struct]
 type=struct
 default=null
