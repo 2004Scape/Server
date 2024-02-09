@@ -50,7 +50,7 @@ if (%tutorial_progress = 130) {
 // Door exiting Master Chef's house
 [oploc1,loc_3018]
 if (%tutorial_progress < 180) {
-    ~mesbox("Can't leave yet.");
+    ~mesbox("You need to finish the Cooking Guide's tasks first.");
     return;
 }
 

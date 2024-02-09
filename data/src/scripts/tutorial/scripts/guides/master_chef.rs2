@@ -1,18 +1,83 @@
 [opnpc1,npc_942]
 switch_int(%tutorial_progress) {
     case ^chef_start: @master_chef_start;
+    case 150: @master_chef_after_start;
+    case 160: @master_chef_after_start;
+    case 170: @master_chef_menu_not_opened;
+    case default: @master_chef_recap;
 }
 
 [label,master_chef_start]
-~chatnpc(neutral, "Ah... welcome newcomer. I am Lev, the chef. It is here|I will teach you how to cook food truly fit for a king.");
+// https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial13.gif older line breaks
+~chatnpc(neutral, "Ah... welcome newcomer. I am Lev, the chef.| It is here I will teach you how to |cook food truly fit for a king.");
 ~chatplayer(neutral, "I already know how to cook.|Brynna taught me just now.");
 ~chatnpc(neutral, "HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
 ~chatnpc(neutral, "And no fine meal is complete without good music so|we'll cover that while you're here too.");
 %tutorial_progress = 150;
-inv_add(inv, bucket_water, 1);
-inv_add(inv, pot_of_flour, 1);
 ~set_tutorial_progress;
-~doubleobjbox(bucket_water, pot_of_flour, "The Cooking Guide gives you a |@blu@Bucket of Water@bla@ |and a|@blu@Pot of Flour!");
+~master_chef_give_ingredients;
+
+[label,master_chef_after_start]
+~chatnpc(neutral, "Time for you to learn the fine art of cooking bread.");
+~master_chef_give_ingredients;
+
+[proc,master_chef_give_ingredients]
+if (inv_freespace(inv) = 0) {
+    ~mesbox("You need some ingredients for this section of the tutorial but you don't have enough inventory room. You'll need to drop something. To do so, right-click on an item you don't want and select drop. Once you've done that speak to the Cooking Guide again.");
+    return;
+}
+
+if (inv_freespace(inv) = 1 & inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) > 0) {
+    inv_add(inv, pot_of_flour, 1);
+    ~objbox(pot_of_flour, "The Cooking Guide gives you some|@blu@flour.");
+    return;
+}
+
+if (inv_freespace(inv) = 1 & inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) < 1) {
+    inv_add(inv, pot_of_flour, 1);
+    ~objbox(pot_of_flour, "The Cooking Guide gives you some flour. He would ahve given you some water as well but you didn't have room for it. To get some drop something and talk to the master chef again.");
+    return;
+}
+
+if (inv_freespace(inv) = 1 & inv_total(inv, bucket_water) < 1) {
+    inv_add(inv, bucket_water, 1);
+    ~objbox(pot_of_flour, "The Cooking Guide gives you some|@blu@water.");
+    return;
+}
+
+if (inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) < 1) {
+    inv_add(inv, pot_of_flour, 1);
+    inv_add(inv, bucket_water, 1);
+    ~doubleobjbox(bucket_water, pot_of_flour, "The Cooking Guide gives you a |@blu@Bucket of Water@bla@ |and a|@blu@Pot of Flour!");
+}
+
+// This is a guess, the Survival Expert and Quest guide have this dialogue figure we do as well for the music tab
+[label,master_chef_menu_not_opened]
+~chatnpc(quiz, "Have you not opened that menu yet?");
+
+[label,master_chef_recap]
+~chatnpc(quiz, "hello again.");
+~master_chef_give_ingredients;
+~master_chef_recap_options;
+
+[proc,master_chef_recap_options]
+~master_chef_recap_response(~p_choice3("Tell me about making dough again.", 1, "Tell me about range cooking again.", 2, "Nothing thanks.", 3));
+
+[proc,master_chef_recap_response](int $option)
+switch_int($option) {
+    case 1:
+        ~chatplayer(neutral, "Tell me about making dough again.");
+        ~chatnpc(neutral, "It's quite simple. Just use a pot of flour on a bucket of water, or vice versa, and you'll make dough. You can fill a bucket with water at any sink.");
+        ~chatnpc(quiz, "Do you need anything else?");
+        ~master_chef_recap_response(~p_choice2("Tell me about range cooking again.", 2, "Nothing thanks.", 3));
+    case 2:
+        ~chatplayer(neutral, "Tell me about range cooking again.");
+        ~chatnpc(neutral, "The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a range use the food on it. You'll need to make sure you have all the required items in your inventory, though.");
+       ~chatnpc(quiz, "Do you need anything else?");
+        ~master_chef_recap_response(~p_choice2("Tell me about making dough again.", 1, "Nothing thanks.", 3));
+    case 3:
+        ~chatplayer("default", "Nothing thanks.");
+}
 
 [proc,set_hint_icon_master_chef]
 npc_findallzone(0_48_48_6_12);

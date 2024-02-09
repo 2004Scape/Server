@@ -10,8 +10,18 @@
 // https://www.youtube.com/watch?v=wrA5lcCcBts - October 29, 2007 - Dies on Tutorial Island
 // https://www.youtube.com/watch?v=WI-4Gi0WU3E - Dec 28, 2006 - actual audio for some of it
 // https://web.archive.org/web/20051215201825/http://runevillage.com:80/rs2specialTutorial.php - has pictures, yahoo!
+// https://youtu.be/NtZXrGgC8iY?t=311 - Mar 4, 2013 - talks to chef again after opening music tab
+// https://youtu.be/KxWGUTUSQAQ?t=304 - Feb 23, 2013 - talks to chef again before opening music tab
+// https://youtu.be/GNRPeRShDzQ?t=270 -  Feb 24, 2013 - Different messages around cooking and burning shrimps
+// https://www.youtube.com/watch?v=cup6iXhjJLs - much later vid - Can still woodcut when on the last step of tut island
+// https://www.youtube.com/watch?v=c3EYlEqyIu0 - Jul 2, 2009 - different vid from above
+// https://youtu.be/wFo6zU5VNjI?t=246 - Dec 31, 2008 - Different options when talking to survival guide
+// https://youtu.be/7zsi7hiF4SQ?t=219 - Dec 3, 2012 - Combat Beta Bug
 
 // Varp info: https://oldschool.runescape.wiki/w/RuneScape:Varplayer/281
+
+// https://web.archive.org/web/20051210062857/http://runehq.com/RHQSpecialReportsView.php?id=00461
+// https://web.archive.org/web/20051215201825/http://runevillage.com:80/rs2specialTutorial.php
 
 [label,start_tutorial]
 // logging into a new character might show old tabs so we're going to clear them

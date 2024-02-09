@@ -10,7 +10,14 @@ if (last_useitem = bread_dough) {
         %tutorial_progress = 170;
         ~set_tutorial_progress;
     } else {
-
+        inv_del(inv, bread_dough, 1);
+        def_int $rand = random(10);
+        if ($rand < calc(3 + stat_base(cooking))) {
+            inv_add(inv, bread, 1);
+            ~tutorial_give_xp(cooking, 400);
+        } else {
+            inv_add(inv, burnt_bread, 1);
+        }
     }
 } else if (last_useitem = raw_shrimps) {
     anim(human_cooking, 0);
@@ -54,7 +61,7 @@ if ($uncooked_item = raw_shrimps) {
 }
 
 [label,tut_random_shrimp_chance]
- def_int $rand = random(10);
+def_int $rand = random(10);
 if ($rand < calc(3 + stat_base(cooking))) {
     inv_add(inv, shrimps, 1);
     ~tutorial_give_xp(cooking, 300);
