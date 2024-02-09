@@ -98,9 +98,15 @@ hint_coord(^hint_east, 0_48_48_0_18, 150);
 [proc,tutorial_step_click_run_icon]
 if_settabflash(^tab_player_controls);
 if_settab(controls, ^tab_player_controls);
+
 ~tutorialstep("It's only a short distance to the next guide.", "|Why not try running there. Start by opening the player|controls, that's the flashing icon of a running man.");
 
 [proc,tutorial_step_enable_run]
+if (p_finduid(uid) = true) {
+    %player_run = ^player_run_off;
+    return;
+}
+queue(set_run, 0, 0);
 ~tutorialstep("Running.", "In this menu you will see many options from waving to walking.|At the top of the panel there are two buttons. One is walk the|other one is run. Click on the run button.");
 
 [proc,tutorial_step_enter_quest_guide_house]
