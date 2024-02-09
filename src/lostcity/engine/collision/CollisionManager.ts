@@ -60,14 +60,19 @@ export default class CollisionManager {
             const [mx, mz] = maps[index].substring(1).split('_').map((x: string) => parseInt(x));
 
             const lands: Int8Array = new Int8Array(4 * 64 * 64); // 4 * 64 * 64 size is guaranteed for lands
-            this.decodeLands(lands, Packet.load(`data/pack/server/maps/m${mx}_${mz}`));
+            const locs: number[] = []; // dynamically grow locs
+
+            Promise.all([
+                this.decodeLands(lands, Packet.load(`data/pack/server/maps/m${mx}_${mz}`)),
+                this.decodeLocs(locs, Packet.load(`data/pack/server/maps/l${mx}_${mz}`))
+            ]).then((): void => {});
 
             const mapsquareX: number = mx << 6;
             const mapsquareZ: number = mz << 6;
 
             Promise.all([
                 this.applyLandCollision(mapsquareX, mapsquareZ, lands),
-                this.applyLocCollision(zoneManager, mx, mz, mapsquareX, mapsquareZ, lands)
+                this.applyLocCollision(zoneManager, locs, mapsquareX, mapsquareZ, lands)
             ]).then((): void => {});
         }
         console.timeEnd('Loading collision');
@@ -149,14 +154,16 @@ export default class CollisionManager {
         this.roofCollider.change(x, z, level, add);
     }
 
-    private decodeLands(lands: Int8Array, packet: Packet): void {
-        for (let level: number = 0; level < 4; level++) {
-            for (let x: number = 0; x < 64; x++) {
-                for (let z: number = 0; z < 64; z++) {
-                    lands[this.packCoord(x, z, level)] = this.decodeLand(packet);
+    private decodeLands(lands: Int8Array, packet: Packet): Promise<void> {
+        return new Promise<void>((): void => {
+            for (let level: number = 0; level < 4; level++) {
+                for (let x: number = 0; x < 64; x++) {
+                    for (let z: number = 0; z < 64; z++) {
+                        lands[this.packCoord(x, z, level)] = this.decodeLand(packet);
+                    }
                 }
             }
-        }
+        });
     }
 
     private applyLandCollision(mapsquareX: number, mapsquareZ: number, lands: Int8Array): Promise<void> {
@@ -192,11 +199,8 @@ export default class CollisionManager {
         });
     }
 
-    private applyLocCollision(zoneManager: ZoneManager, mx: number, mz: number, mapsquareX: number, mapsquareZ: number, lands: Int8Array): Promise<void> {
+    private applyLocCollision(zoneManager: ZoneManager, locs: number[], mapsquareX: number, mapsquareZ: number, lands: Int8Array): Promise<void> {
         return new Promise<void>((): void => {
-            const locs: number[] = []; // dynamically grow locs
-            this.decodeLocs(locs, Packet.load(`data/pack/server/maps/l${mx}_${mz}`));
-
             for (let index: number = 0; index < locs.length; index++) {
                 const packed: number = locs[index];
                 const {id, shape, coord, angle} = this.unpackLoc(packed);
@@ -237,26 +241,28 @@ export default class CollisionManager {
         return this.decodeLand(packet, opcode >= 50 && opcode <= 81 ? opcode - 49 : collision);
     }
 
-    private decodeLocs(locs: number[], packet: Packet): void {
-        let locId: number = -1;
-        let locIdOffset: number = packet.gsmart();
+    private decodeLocs(locs: number[], packet: Packet): Promise<void> {
+        return new Promise<void>((): void => {
+            let locId: number = -1;
+            let locIdOffset: number = packet.gsmart();
 
-        while (locIdOffset !== 0) {
-            locId += locIdOffset;
+            while (locIdOffset !== 0) {
+                locId += locIdOffset;
 
-            let coord: number = 0;
-            let coordOffset: number = packet.gsmart();
+                let coord: number = 0;
+                let coordOffset: number = packet.gsmart();
 
-            while (coordOffset !== 0) {
-                coord += coordOffset - 1;
+                while (coordOffset !== 0) {
+                    coord += coordOffset - 1;
 
-                const attributes: number = packet.g1();
-                locs.push(this.packLoc(locId, attributes >> 2, attributes & 0x3, coord));
+                    const attributes: number = packet.g1();
+                    locs.push(this.packLoc(locId, attributes >> 2, attributes & 0x3, coord));
 
-                coordOffset = packet.gsmart();
+                    coordOffset = packet.gsmart();
+                }
+                locIdOffset = packet.gsmart();
             }
-            locIdOffset = packet.gsmart();
-        }
+        });
     }
 
     private packCoord(x: number, z: number, level: number): number {
