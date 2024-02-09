@@ -53,7 +53,9 @@ sound_synth(%com_attacksound, 0, 0);
 ~npc_retaliate(calc($delay / 30));
 npc_queue(2, $damage, calc($delay / 30));
 npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
-sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
+if (npc_param(defend_sound) ! null) {
+    sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
+}
 npc_heropoints($damage);
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);

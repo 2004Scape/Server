@@ -5,7 +5,7 @@ if (p_finduid(uid) = false) {
     return;
 }
 // todo: figure out sounds
-sound_synth(pool_plop, 0, 0); // complete guess
+sound_synth(watersplash, 0, 0); // complete guess
 def_npc $old = npc_type;
 npc_changetype(macro_event_big_fish);
 npc_anim(fish_seq_3, 20);

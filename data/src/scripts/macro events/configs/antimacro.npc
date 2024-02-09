@@ -1381,6 +1381,7 @@ recol1s=61
 recol1d=26925
 model1=model_2930_npc
 wanderrange=10
+maxrange=10
 attackrange=10
 // TODO respawnrate
 hitpoints=25
@@ -1389,8 +1390,13 @@ strength=9
 defence=9
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
+param=attack_sound,null
 param=defend_anim,troll_block
+param=defend_sound,null
 param=death_anim,troll_death
+param=death_sound,null
+param=combat_xp_multiplier,25
+category=macro_event_river_troll
 
 [macro_event_river_troll2]
 name=River troll
@@ -1407,6 +1413,7 @@ recol1s=61
 recol1d=26925
 model1=model_2930_npc
 wanderrange=10
+maxrange=10
 attackrange=10
 // TODO respawnrate
 hitpoints=40
@@ -1415,8 +1422,13 @@ strength=22
 defence=22
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
+param=attack_sound,null
 param=defend_anim,troll_block
+param=defend_sound,null
 param=death_anim,troll_death
+param=death_sound,null
+param=combat_xp_multiplier,25
+category=macro_event_river_troll
 
 [macro_event_river_troll3]
 name=River troll
@@ -1433,6 +1445,7 @@ recol1s=61
 recol1d=26925
 model1=model_2930_npc
 wanderrange=10
+maxrange=10
 attackrange=10
 // TODO respawnrate
 hitpoints=60
@@ -1441,8 +1454,13 @@ strength=38
 defence=38
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
+param=attack_sound,null
 param=defend_anim,troll_block
+param=defend_sound,null
 param=death_anim,troll_death
+param=death_sound,null
+param=combat_xp_multiplier,25
+category=macro_event_river_troll
 
 [macro_event_river_troll4]
 name=River troll
@@ -1459,6 +1477,7 @@ recol1s=61
 recol1d=26925
 model1=model_2930_npc
 wanderrange=10
+maxrange=10
 attackrange=10
 // TODO respawnrate
 hitpoints=85
@@ -1467,8 +1486,13 @@ strength=65
 defence=65
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
+param=attack_sound,null
 param=defend_anim,troll_block
+param=defend_sound,null
 param=death_anim,troll_death
+param=death_sound,null
+param=combat_xp_multiplier,25
+category=macro_event_river_troll
 
 [macro_event_river_troll5]
 name=River troll
@@ -1485,6 +1509,7 @@ recol1s=61
 recol1d=26925
 model1=model_2930_npc
 wanderrange=10
+maxrange=10
 attackrange=10
 // TODO respawnrate
 hitpoints=120
@@ -1493,8 +1518,13 @@ strength=100
 defence=100
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
+param=attack_sound,null
 param=defend_anim,troll_block
+param=defend_sound,null
 param=death_anim,troll_death
+param=death_sound,null
+param=combat_xp_multiplier,25
+category=macro_event_river_troll
 
 [macro_event_river_troll6]
 name=River troll
@@ -1511,6 +1541,7 @@ recol1s=61
 recol1d=26925
 model1=model_2930_npc
 wanderrange=10
+maxrange=10
 attackrange=10
 // TODO respawnrate
 hitpoints=170
@@ -1519,5 +1550,10 @@ strength=130
 defence=130
 param=damagetype,^crush_style
 param=attack_anim,troll_attack
+param=attack_sound,null
 param=defend_anim,troll_block
+param=defend_sound,null
 param=death_anim,troll_death
+param=death_sound,null
+param=combat_xp_multiplier,25
+category=macro_event_river_troll

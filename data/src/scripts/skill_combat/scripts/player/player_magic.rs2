@@ -201,7 +201,9 @@ if (~player_npc_hit_roll(^magic_style) = true) {
         // https://oldschool.runescape.wiki/w/Update:Slug_Menace
         // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
         // npc sound
-        sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
+        if (npc_param(defend_sound) ! null) {
+            sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
+        }
         ~give_combat_experience($damagestyle, min($damage, npc_stat(hitpoints)), npc_param(combat_xp_multiplier));
     }
     // spell visual

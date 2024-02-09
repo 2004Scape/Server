@@ -10,10 +10,93 @@ if ($event_coord = null) {
 npc_add($event_coord, $event, 1000); // guess
 npc_say("Fishies be mine, leave dem fishies!"); // https://youtu.be/X1KjOMAmJ_g?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=122
 %npc_attacking_uid = uid;
-spotanim_map(spotanim_78, $event_coord, 0, 0);
 if (finduid(uid) = false) {
     return;
 }
+sound_synth(watersplash, 0, 0); // osrs
 npc_delay(3);
 npc_setmode(opplayer2);
 
+[ai_timer,_macro_event_river_troll]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_queue3,_macro_event_river_troll](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// no default drop: https://youtu.be/bCBkaO6Es1M?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=165
+// https://oldschool.runescape.wiki/w/River_troll
+def_int $random = random(128);
+
+// p2p drop table
+if (map_members = true) {
+    if ($random < 27) { // 27/128
+        obj_add(npc_coord, fishing_bait, 5, ^lootdrop_duration);
+    } else if ($random < 40) { // 13/128
+        obj_add(npc_coord, fishing_bait, 30, ^lootdrop_duration);
+    } else if ($random < 49) { // 9/128
+        obj_add(npc_coord, fishing_bait, 15, ^lootdrop_duration);
+    } else if ($random < 51) { // 2/128
+        obj_add(npc_coord, fishing_bait, 50, ^lootdrop_duration);
+    } else if ($random < 55) { // 4/128
+        obj_add(npc_coord, feather, 20, ^lootdrop_duration);
+    } else if ($random < 59) { // 4/128
+        obj_add(npc_coord, feather, 40, ^lootdrop_duration);
+    } else if ($random < 60) { // 1/128
+        obj_add(npc_coord, raw_tuna, 1, ^lootdrop_duration);
+    } else if ($random < 79) { // 19/128
+        obj_add(npc_coord, raw_swordfish, 1, ^lootdrop_duration);
+    } else if ($random < 91) { // 12/128
+        obj_add(npc_coord, raw_shark, 1, ^lootdrop_duration);
+    } else if ($random < 97) { // 6/128
+        obj_add(npc_coord, raw_pike, 1, ^lootdrop_duration);
+    } else if ($random < 101) { // 4/128
+        obj_add(npc_coord, raw_salmon, 1, ^lootdrop_duration);
+    } else if ($random < 105) { // 4/128
+        obj_add(npc_coord, raw_sardine, 1, ^lootdrop_duration);
+    } else if ($random < 108) { // 3/128
+        obj_add(npc_coord, raw_herring, 1, ^lootdrop_duration);
+    } else if ($random < 120) { // 12/128
+        // https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
+        // https://web.archive.org/web/20040817204238/http://www.runescapecommunity.com:80/index.php?showtopic=104849
+        // says 5 instead of 1
+        obj_add(npc_coord, oyster, 5, ^lootdrop_duration);
+    } else if ($random < 125) { // 5/128
+        obj_add(npc_coord, casket, 1, ^lootdrop_duration);
+    } else { // 3/128
+        obj_add(npc_coord, 3dosefisherspotion, 1, ^lootdrop_duration);
+    } 
+} else {
+    // f2p drop table
+    if ($random < 27) { // 27/128
+        obj_add(npc_coord, fishing_bait, 5, ^lootdrop_duration);
+    } else if ($random < 40) { // 13/128
+        obj_add(npc_coord, fishing_bait, 30, ^lootdrop_duration);
+    } else if ($random < 49) { // 9/128
+        obj_add(npc_coord, fishing_bait, 15, ^lootdrop_duration);
+    } else if ($random < 51) { // 2/128
+        obj_add(npc_coord, fishing_bait, 50, ^lootdrop_duration);
+    } else if ($random < 55) { // 4/128
+        obj_add(npc_coord, feather, 20, ^lootdrop_duration);
+    } else if ($random < 59) { // 4/128
+        obj_add(npc_coord, feather, 40, ^lootdrop_duration);
+    } else if ($random < 80) { // 21/128. Complete guess, todo: confirm with ash or something
+        obj_add(npc_coord, raw_tuna, 1, ^lootdrop_duration);
+    } else if ($random < 99) { // 19/128
+        obj_add(npc_coord, raw_swordfish, 1, ^lootdrop_duration);
+    } else if ($random < 111) { // 12/128
+        obj_add(npc_coord, raw_shark, 1, ^lootdrop_duration);
+    } else if ($random < 117) { // 6/128
+        obj_add(npc_coord, raw_pike, 1, ^lootdrop_duration);
+    } else if ($random < 121) { // 4/128
+        obj_add(npc_coord, raw_salmon, 1, ^lootdrop_duration);
+    } else if ($random < 125) { // 4/128
+        obj_add(npc_coord, raw_sardine, 1, ^lootdrop_duration);
+    } else if ($random < 128) { // 3/128
+        obj_add(npc_coord, raw_herring, 1, ^lootdrop_duration);
+    }
+}
