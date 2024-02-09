@@ -1,0 +1,7 @@
+[whirlpool]
+type=npc
+default=null
+
+[is_whirlpool]
+type=int
+default=0

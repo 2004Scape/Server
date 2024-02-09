@@ -45,9 +45,9 @@ if (%action_delay < map_clock) {
 }
 if (%action_delay = map_clock) {
     if (stat(fishing) >= 30) {
-        ~fish_roll(raw_trout, raw_salmon, feather);
+        ~fish_roll_waterfall(raw_trout, raw_salmon, feather);
     } else {
-        ~fish_roll(raw_trout, null, feather);
+        ~fish_roll_waterfall(raw_trout, null, feather);
     }
     %skill_anim = calc(map_clock - 1);
     anim(human_fish_onspot, 0);
@@ -100,7 +100,7 @@ if (%action_delay < map_clock) {
 }
 if (%action_delay = map_clock) {
     %skill_anim = calc(map_clock - 1);
-    ~fish_roll(raw_pike, null, fishing_bait);
+    ~fish_roll_waterfall(raw_pike, null, fishing_bait);
     if (randominc(5) = 5) { // 1/5 chance to recast
         //mes("<tostring(map_clock)>: Recast.");
         p_oploc(2);
@@ -120,4 +120,33 @@ switch_obj(last_useitem) {
     case fishing_rod : p_oploc(2);
     case fly_fishing_rod : p_oploc(1);
     case default : @nothing_interesting_happens;
+}
+
+[proc,fish_roll_waterfall](namedobj $fish1, namedobj $fish2, namedobj $bait)
+if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
+    def_struct $struct2 = oc_param($fish2, fishing_struct);
+    if (stat_random(stat(fishing), struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
+        if ($bait ! null) {
+            // delete bait
+            inv_del(inv, $bait, 1);
+        }
+        // give fish and display message
+        inv_add(inv, $fish2, 1);
+        givexp(fishing, struct_param($struct2, productexp));
+        mes(struct_param($struct2, productmessage));
+        return;
+    }
+}
+if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
+    def_struct $struct1 = oc_param($fish1, fishing_struct);
+    if (stat_random(stat(fishing), struct_param($struct1, success_low), struct_param($struct1, success_high)) = true) {
+        if ($bait ! null) {
+            // delete bait
+            inv_del(inv, $bait, 1);
+        }
+        // give fish and display message
+        inv_add(inv, $fish1, 1);
+        givexp(fishing, struct_param($struct1, productexp));
+        mes(struct_param($struct1, productmessage));
+    }
 }

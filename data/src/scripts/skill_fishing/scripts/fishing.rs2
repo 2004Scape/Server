@@ -23,17 +23,20 @@ if (inv_total(inv, $fish_equipment) < 1) {
     @fishing_fail_message(struct_param($struct, fish_equipment_failmessage));
 }
 // check if player has enough bait
-def_namedobj $bait = struct_param($struct, baitrequired);
-if ($bait ! null & inv_total(inv, $bait) < 1) {
-    anim(null, 0);
-    @fishing_fail_message("You don't have any <struct_param($struct, baitmessage)> left.");
+if ($struct ! null) {
+    def_namedobj $bait = struct_param($struct, baitrequired);
+    if ($bait ! null & inv_total(inv, $bait) < 1) {
+        anim(null, 0);
+        @fishing_fail_message("You don't have any <struct_param($struct, baitmessage)> left.");
+    }
 }
+
 
 [label,fishing_fail_message](string $string)
 ~mesbox($string);
 
 // proc for fish rolls
-[proc,fish_roll](namedobj $fish1, namedobj $fish2, namedobj $bait)
+[proc,fish_roll](namedobj $fish1, namedobj $fish2, namedobj $equipment, namedobj $bait)
 if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
     def_struct $struct2 = oc_param($fish2, fishing_struct);
     if (stat_random(stat(fishing), struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
@@ -60,4 +63,8 @@ if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
         givexp(fishing, struct_param($struct1, productexp));
         mes(struct_param($struct1, productmessage));
     }
+}
+
+if (npc_param(is_whirlpool) = ^true) {
+    ~macro_event_whirlpool_take_equipment($equipment);
 }

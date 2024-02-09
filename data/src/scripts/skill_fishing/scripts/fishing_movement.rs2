@@ -1,10 +1,15 @@
-[ai_timer,_lure_bait_fishing] @move_fishing_spot;
-[ai_timer,_cage_harpoon_fishing] @move_fishing_spot;
-[ai_timer,_net_harpoon_fishing] @move_fishing_spot;
-[ai_timer,_net_bait_fishing] @move_fishing_spot;
+[ai_timer,_freshfish] @move_fishing_spot;
+[ai_timer,_rarefish] @move_fishing_spot;
+[ai_timer,_memberfish] @move_fishing_spot;
+[ai_timer,_saltfish] @move_fishing_spot;
 [ai_timer,npc_800] @move_fishing_spot; // lava eel
 
 [label,move_fishing_spot]
+if (npc_param(is_whirlpool) = ^true) {
+    npc_delay(2);
+    npc_del;
+    return;
+}
 def_coord $rand_coord = ~fishing_spot_random_coord(npc_type);
 npc_delay(2);
 npc_tele($rand_coord);
@@ -31,7 +36,7 @@ return (npc_coord);
 [proc,check_fishing_spot_empty](coord $rand_coord)(boolean)
 npc_findallzone($rand_coord);
 while (npc_findnext = true) {
-    if (npc_coord = $rand_coord & (nc_category(npc_type) = cage_harpoon_fishing | nc_category(npc_type) = net_harpoon_fishing | nc_category(npc_type) = net_bait_fishing | nc_category(npc_type) = lure_bait_fishing | nc_category(npc_type) = net_bait_fishing | npc_type = npc_800)) {
+    if (npc_coord = $rand_coord & (nc_category(npc_type) = saltfish | nc_category(npc_type) = freshfish | nc_category(npc_type) = saltfish | nc_category(npc_type) = rarefish | nc_category(npc_type) = memberfish | npc_type = npc_800)) {
         return (false);
     }
 }

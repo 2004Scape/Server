@@ -21,7 +21,10 @@ npc_anim(fish_seq_5, 0);
 
 p_delay(3);
 npc_changetype($old);
-npc_tele(~fishing_spot_random_coord($old)); // move fishing spot
+npc_tele(~fishing_spot_random_coord($old)); // move fishing spot. 
+// Might have a chance to move to the same spot: 
+// https://youtu.be/9z5XLWq4lZU?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=88
+// https://www.youtube.com/watch?v=c_LXJDSTKPA
 
 def_coord $random_coord = ~coord_lineofwalk_radius2(coord, 7);
 // todo: confirm the delay on this

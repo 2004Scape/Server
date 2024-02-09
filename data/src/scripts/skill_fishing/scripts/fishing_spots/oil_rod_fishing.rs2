@@ -64,7 +64,7 @@ if (%action_delay < map_clock) {
     p_opnpc(1);
 }
 if (%action_delay = map_clock) {
-    ~fish_roll(raw_lava_eel, null, fishing_bait);
+    ~fish_roll(raw_lava_eel, null, fishing_rod, fishing_bait);
 }
 
 
@@ -77,7 +77,7 @@ if (%action_delay < map_clock) {
     anim(human_fish_onspot, 0);
 }
 if (%action_delay = map_clock) {
-    ~fish_roll(raw_lava_eel, null, fishing_bait);
+    ~fish_roll(raw_lava_eel, null, fishing_rod, fishing_bait);
 }
 p_opnpc(2);
 

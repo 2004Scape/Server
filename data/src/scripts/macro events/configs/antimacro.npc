@@ -1557,3 +1557,75 @@ param=death_anim,troll_death
 param=death_sound,null
 param=combat_xp_multiplier,25
 category=macro_event_river_troll
+
+[freshfish_whirlpool]
+vislevel=hide
+name=Fishing spot
+desc=I can see fish swimming in the water.
+readyanim=seq_456
+hasalpha=yes
+resizeh=32
+resizev=32
+op1=Lure
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
+category=freshfish
+param=is_whirlpool,^true
+
+[saltfish_whirlpool]
+vislevel=hide
+name=Fishing spot
+desc=I can see fish swimming in the water.
+readyanim=seq_456
+hasalpha=yes
+resizeh=32
+resizev=32
+op1=Net
+op3=Bait
+op4=hidden
+op5=hidden
+model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
+category=saltfish
+param=is_whirlpool,^true
+
+[rarefish_whirlpool]
+vislevel=hide
+name=Fishing spot
+desc=I can see fish swimming in the water.
+readyanim=seq_456
+hasalpha=yes
+resizeh=32
+resizev=32
+op1=Cage
+op3=Harpoon
+op4=hidden
+op5=hidden
+model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
+category=rarefish
+param=is_whirlpool,^true
+
+[memberfish_whirlpool]
+vislevel=hide
+name=Fishing spot
+desc=I can see fish swimming in the water.
+readyanim=seq_456
+hasalpha=yes
+resizeh=32
+resizev=32
+op1=Net
+op3=Harpoon
+op4=hidden
+op5=hidden
+model1=model_loc_2019_8
+wanderrange=0
+moverestrict=nomove
+category=memberfish
+param=is_whirlpool,^true

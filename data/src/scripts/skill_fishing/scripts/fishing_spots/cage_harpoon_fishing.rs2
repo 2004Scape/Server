@@ -1,15 +1,15 @@
-[opnpc1,_cage_harpoon_fishing]
+[opnpc1,_rarefish]
 @attempt_fish_lobster;
-[opnpc3,_cage_harpoon_fishing]
+[opnpc3,_rarefish]
 @attempt_fish_swordfish;
 
 // hidden ops
-[opnpc2,_cage_harpoon_fishing]
+[opnpc2,_rarefish]
 @fish_lobster;
-[opnpc4,_cage_harpoon_fishing]
+[opnpc4,_rarefish]
 @fish_swordfish;
 
-[opnpcu,_cage_harpoon_fishing]
+[opnpcu,_rarefish]
 if (last_useitem = net_big) {
     anim(null, 0);
     ~mesbox("The fish here aren't suitable for catching with a big net.");
@@ -53,11 +53,11 @@ if (%action_delay = calc(map_clock + 3)) {
     p_opnpc(2);
 }
 if (%action_delay = map_clock) { 
-    ~fish_roll(raw_lobster, null, null);
+    ~fish_roll(raw_lobster, null, lobster_pot, null);
     anim(human_lobster, 0);
     sound_synth(fishing_cast, 0, 20);
 }
-if (1 = ^true & %macro_event = ^no_macro_event) {
+if (1 = ^true & %macro_event = ^no_macro_event & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(lobster_pot);
 }
 
@@ -81,7 +81,7 @@ if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
 } else
 if (%action_delay = map_clock) {
-    ~fish_roll(raw_lobster, null, null);
+    ~fish_roll(raw_lobster, null, lobster_pot, null);
 }
 if (%skill_anim < map_clock) {
     %skill_anim = calc(map_clock + 8);
@@ -124,14 +124,14 @@ if (%action_delay = calc(map_clock + 4)) {
 } else
 if (%action_delay = map_clock) { 
     if (stat(fishing) >= 50) {
-        ~fish_roll(raw_swordfish, raw_tuna, null);
+        ~fish_roll(raw_swordfish, raw_tuna, harpoon, null);
     } else {
-        ~fish_roll(raw_tuna, null, null);
+        ~fish_roll(raw_tuna, null, harpoon, null);
     }
     anim(human_harpoon, 0);
     sound_synth(fishing_cast, 0, 10);
 }
-if (1 = ^true & %macro_event = ^no_macro_event) {
+if (1 = ^true & %macro_event = ^no_macro_event & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(harpoon);
 }
 
@@ -155,9 +155,9 @@ if (%action_delay < map_clock) {
 } else
 if (%action_delay = map_clock) {
     if (stat(fishing) >= 50) {
-        ~fish_roll(raw_swordfish, raw_tuna, null);
+        ~fish_roll(raw_swordfish, raw_tuna, harpoon, null);
     } else {
-        ~fish_roll(raw_tuna, null, null);
+        ~fish_roll(raw_tuna, null, harpoon, null);
     }
 }
 // play animation every 8 ticks

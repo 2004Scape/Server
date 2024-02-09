@@ -1,8 +1,8 @@
 [label,macro_event_fishing](namedobj $fishing_equipment)
-@macro_event_river_troll_spawn;
+@macro_event_whirlpool_spawn($fishing_equipment);
 switch_int (random(calc(~macro_event_general_count + 3))) {
     case 0: @macro_event_big_fish_spawn($fishing_equipment);
     case 1: @macro_event_river_troll_spawn;
-    case 2: @macro_event_whirl_pool_spawn($fishing_equipment);
+    case 2: @macro_event_whirlpool_spawn($fishing_equipment);
     case default : @macro_event_general_spawn;
 }

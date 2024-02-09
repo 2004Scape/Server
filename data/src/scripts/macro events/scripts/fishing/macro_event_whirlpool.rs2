@@ -1,0 +1,16 @@
+[label,macro_event_whirlpool_spawn](namedobj $fishing_equipment)
+%macro_event = ^no_macro_event;
+
+npc_changetype(npc_param(whirlpool));
+sound_synth(whirlpool, 0, 0);
+
+[proc,macro_event_whirlpool_take_equipment](namedobj $fishing_equipment)
+if (npc_param(is_whirlpool) = ^false) {
+    return;
+}
+if_close;
+if (p_finduid(uid) = true) {
+    p_stopaction;
+    sound_synth(watersplash, 0, 0);
+    inv_del(inv, $fishing_equipment, 1);
+}

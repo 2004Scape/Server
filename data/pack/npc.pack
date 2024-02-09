@@ -401,10 +401,10 @@
 400=npc_400
 401=npc_401
 402=npc_402
-403=npc_403
-404=npc_404
-405=npc_405
-406=npc_406
+403=freshfish_whirlpool
+404=saltfish_whirlpool
+405=rarefish_whirlpool
+406=memberfish_whirlpool
 407=macro_event_triffid_friendly
 408=macro_event_triffid_hostile
 409=macro_event_genie
