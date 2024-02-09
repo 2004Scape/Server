@@ -164,8 +164,8 @@ describe('CollisionManager', (): void => {
         collision.flags.allocateIfAbsent(3222, 3222, 0);
         expect(collision.flags.isZoneAllocated(3222, 3222, 0)).toBeTruthy();
 
-        collision.changeLocCollision(LocShape.GROUND_DECOR, LocAngle.WEST, false, 1, 1, 0, 3224, 3224, 0, true);
-        expect(collision.flags.isFlagged(3224, 3224, 0, CollisionFlag.FLOOR)).toBeFalsy();
+        collision.changeLocCollision(LocShape.GROUND_DECOR, LocAngle.WEST, false, 1, 1, 0, 3222, 3222, 0, true);
+        expect(collision.flags.isFlagged(3222, 3222, 0, CollisionFlag.FLOOR)).toBeFalsy();
     });
 
     it('result after changeLocCollision WALL WALL_L, WEST, 1x1', (): void => {
