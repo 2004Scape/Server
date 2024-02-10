@@ -40,6 +40,12 @@ if (stat(mining) < $levelreq) {
     ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
     return;
 }
+// Macro events
+if (1 = ^true) {
+    if (loc_param(macro_gas) = null) jump(macro_randomminingrune);
+    jump(macro_randommining);
+}
+// macro events
 def_obj $pickaxe = ~pickaxe_checker;
 if ($pickaxe = null) {
     anim(null, 0);

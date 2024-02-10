@@ -1,0 +1,39 @@
+// https://i.imgur.com/BEfenlv.png
+[label,macro_randommining]
+switch_int (random(calc(~macro_event_general_count + 3))) {
+    case 0: @macro_event_lost_pickaxe_spawn;
+    case 1: @macro_event_gas_spawn;
+    case 2: @macro_event_rock_golem_spawn;
+    case default : @macro_event_general_spawn;
+}
+// rune essence
+[label,macro_randomminingrune]
+switch_int (random(calc(~macro_event_general_count + 2))) {
+    case 0: @macro_event_lost_pickaxe_spawn;
+    case 1: @macro_event_rock_golem_spawn;
+    case default : @macro_event_general_spawn;
+}
+
+[debugproc,mm](int $int)
+switch_int($int) {
+    case 1 : loc_add(coord, iron_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 2 : loc_add(coord, iron_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 3 : loc_add(coord, tin_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 4 : loc_add(coord, tin_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 5 : loc_add(coord, coal_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 6 : loc_add(coord, coal_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 7 : loc_add(coord, gold_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 8 : loc_add(coord, gold_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 9 : loc_add(coord, silver_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 10 : loc_add(coord, silver_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 11 : loc_add(coord, mithril_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 12 : loc_add(coord, mithril_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 13 : loc_add(coord, adamantite_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 14 : loc_add(coord, adamantite_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 15 : loc_add(coord, runite_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 16 : loc_add(coord, runite_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 17 : loc_add(coord, clay_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 18 : loc_add(coord, clay_rock_macro_gas_2, 0, centrepiece_straight, 500);
+    case 19 : loc_add(coord, blurite_rock_macro_gas_1, 0, centrepiece_straight, 500);
+    case 20 : loc_add(coord, gem_rock_macro_gas_1, 0, centrepiece_straight, 500);
+}
