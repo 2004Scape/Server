@@ -1,28 +1,28 @@
 [label,levelup_herblore]
 //Herblore level up unlock messages
 switch_int(stat_base(herblore)) {
-    case 3: ~objboxb(3dose1attack, "You can now make @dbl@attack potions@bla@. You can now identify @dbl@guam leaf, snake weed @bla@and @dbl@rogues purse@bla@.");
-    case 5: ~doubleobjbox(3doseantipoison,marentill,"You can now make @dbl@antipoison potions@bla@. You can now identify @dbl@marrentill@bla@.");
-    case 11: ~objboxt(tarromin,"You can now identify @dbl@tarromin@bla@.");
-    case 12: ~objboxb(3dose1strength,"You can now make @dbl@strength potions@bla@.");
-    case 20: ~objboxt(harralander,"You can now identify @dbl@harralander@bla@.");
-    case 22: ~objboxb(3dose1restore,"You can now make @dbl@stat restore potions@bla@.");
-    case 25: ~objboxt(ranarr_weed,"You can now identify @dbl@rannar weed@bla@.");
-    case 30: ~objboxb(3dose1defense,"You can now make @dbl@defence potions@bla@.");
-    case 38: ~objboxb(3doseprayerrestore,"You can now make @dbl@prayer restore potions@bla@.");
-    case 40: ~objboxt(irit_leaf,"You can now identify @dbl@irit leaf@bla@.");
-    case 45: ~objboxb(3dose2attack,"You can now make @dbl@super attack potions@bla@.");
-    case 48: ~doubleobjbox(3dose2antipoison,avantoe,"You can now make @dbl@super antipoison potions@bla@. You can now identify @dbl@avantoe@bla@.");
-    case 50: ~objboxb(3dosefisherspotion,"You can now make @dbl@fishing potions@bla@.");
-    case 54: ~objboxt(kwuarm,"You can now identify @dbl@kwuarm@bla@.");
-    case 56: ~objboxb(3dose2strength,"You can now make @dbl@super strength potions@bla@.");
-    case 60: ~objboxb(weapon_poison,"You can now make @dbl@weapon poisons@bla@.");
-    case 65: ~objboxt(cadantine,"You can now identify @dbl@cadantine@bla@.");
-    case 66: ~objboxb(4dose2defense,"You can now make @dbl@super defence potions@bla@.");
-    case 67: ~objboxt(lantadyme,"You can now identify @dbl@lantadyme@bla@.");
-    case 69: ~objboxb(3dose1antidragon,"You can now make @dbl@antifire potions@bla@.");
+    case 3: ~objboxb(3dose1attack, "You can now make @dbl@Attack Potions@bla@. You can now identify @dbl@Guam Leaf, Snake Weed @bla@and @dbl@Rogues Purse@bla@.");
+    case 5: ~objboxb(3doseantipoison,"You can now make @dbl@Antipoison Potions@bla@. You can now identify @dbl@Marrentill@bla@.");
+    case 11: ~objboxt(tarromin,"You can now identify @dbl@Tarromin@bla@.");
+    case 12: ~objboxb(3dose1strength,"You can now make @dbl@Strength Potions@bla@.");
+    case 20: ~objboxt(harralander,"You can now identify @dbl@Harralander@bla@.");
+    case 22: ~objboxb(3dose1restore,"You can now make @dbl@Stat Restore Potions@bla@.");
+    case 25: ~objboxt(ranarr_weed,"You can now identify @dbl@Rannar Weed@bla@.");
+    case 30: ~objboxb(3dose1defense,"You can now make @dbl@Defence Potions@bla@.");
+    case 38: ~objboxb(3doseprayerrestore,"You can now make @dbl@Prayer Restore Potions@bla@.");
+    case 40: ~objboxt(irit_leaf,"You can now identify @dbl@Irit Leaf@bla@.");
+    case 45: ~objboxb(3dose2attack,"You can now make @dbl@Super Attack Potions@bla@.");
+    case 48: ~objboxb(3dose2antipoison,"You can now make @dbl@Super Antipoison Potions@bla@. You can now identify @dbl@Avantoe@bla@.");
+    case 50: ~objboxb(3dosefisherspotion,"You can now make @dbl@Fishing Potions@bla@.");
+    case 54: ~objboxt(kwuarm,"You can now identify @dbl@Kwuarm@bla@.");
+    case 56: ~objboxb(3dose2strength,"You can now make @dbl@Super Strength Potions@bla@.");
+    case 60: ~objboxb(weapon_poison,"You can now make @dbl@Weapon Poisons@bla@.");
+    case 65: ~objboxt(cadantine,"You can now identify @dbl@Cadantine@bla@.");
+    case 66: ~objboxb(3dose2defense,"You can now make @dbl@Super Defence Potions@bla@.");
+    case 67: ~objboxt(lantadyme,"You can now identify @dbl@Lantadyme@bla@.");
+    case 69: ~objboxb(3dose1antidragon,"You can now make @dbl@Anti-FireBreath Potions@bla@.");
     case 70: ~objboxt(dwarf_weed,"You can now identify @dbl@dwarf weed@bla@.");
-    case 72: ~objboxb(3doserangerspotion,"You can now make @dbl@ranging potions@bla@.");
-    case 75: ~objboxt(torstol,"You can now identify @dbl@torstol@bla@.");
-    case 78: ~objboxb(3dosepotionofzamorak,"You can now make @dbl@Zamorak brews@bla@.");
+    case 72: ~objboxb(3doserangerspotion,"You can now make @dbl@Ranging Potions@bla@.");
+    case 75: ~objboxt(torstol,"You can now identify @dbl@Torstol@bla@.");
+    case 78: ~objboxb(3dosepotionofzamorak,"You can now make @dbl@Zamorak Brews@bla@.");
 }

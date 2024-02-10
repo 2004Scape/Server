@@ -52,5 +52,5 @@ if ($random < 4) {
 } else if ($random < 113) {
     obj_add(npc_coord, adamantite_bar, 1, ^lootdrop_duration);
 } else if ($random < 7) {
-    ~lootdrop(npc_coord, ~randomgem, ^lootdrop_duration);
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

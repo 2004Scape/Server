@@ -1,43 +1,41 @@
 [label,levelup_runecraft]
-//Fishing level up unlock messages
+//Runecraft level up unlock messages
 switch_int(stat_base(runecraft)) {
-    case 2: ~objboxt(mindrune,"You can now craft @dbl@Mind Runes@bla@ from Rune Essence.");
-    case 5: ~objboxt(waterrune,"You can now craft @dbl@Water Runes@bla@ from Rune Essence.");
-    case 9: ~objboxt(earthrune,"You can now craft @dbl@Earth Runes@bla@ from Rune Essence.");
-    case 11: ~objboxt(airrune,"You can now receive 2 @dbl@Air Runes@bla@ from each Essence.");
-    case 14: ~objboxt(firerune,"You can now craft @dbl@Fire Runes@bla@ from Rune Essence|and you will now receive 2 @dbl@Mind Runes@bla@ from each Essence.");
-    case 19: ~objboxt(waterrune,"You can now receive 2 @dbl@Water Runes@bla@ from each Essence.");
-    case 20: ~objboxt(bodyrune,"You can now craft @dbl@Body Runes@bla@ from Rune Essence.");
-    case 22: ~objboxt(airrune,"You can now receive 3 @dbl@Air Runes@bla@ from each Essence.");
-    case 26: ~objboxt(earthrune,"You can now receive 2 @dbl@Earth Runes@bla@ from each Essence.");
-    case 27: ~objboxt(cosmicrune,"Members can now craft @dbl@Cosumic Runes@bla@ from Rune Essence.");
-    case 28: ~objboxt(mindrune,"You can now receive 3 @dbl@Mind Runes@bla@ from each Essence.");
-    case 33: ~objboxt(airrune,"You can now receive 4 @dbl@Air Runes@bla@ from each Essence.");   
-    case 35: ~objboxt(chaosrune,"Members can now craft @dbl@Chaos Runes@bla@ from Rune Essence|and you will now receive 2 @dbl@Fire Runes@bla@ from each Essence.");
-    case 38: ~objboxt(waterrune,"You can now receive 3 @dbl@Water Runes@bla@ from each Essence.");
-    case 42: ~objboxt(mindrune,"You can now receive 4 @dbl@Mind Runes@bla@ from each Essence.");
-    case 44: ~doubleobjbox(naturerune,airrune,"Members can now craft @dbl@Nature Runes@bla@ from Rune Essence|and you will now recieve 4 @dbl@Air Runes@bla@ from each Essence.");
-    case 46: ~objboxt(bodyrune,"You can now receive 2 @dbl@Body Runes@bla@ from each Essence.");
-    case 52: ~objboxt(earthrune,"You can now receive 3 @dbl@Earth Runes@bla@ from each Essence.");
-    case 54: ~objboxt(lawrune,"Members can now craft @dbl@Law Runes@bla@ from Rune Essence.");
-    case 55: ~objboxt(airrune,"You can now receive 4 @dbl@Air Runes@bla@ from each Essence.");
-    case 56: ~objboxt(mindrune,"You can now receive 5 @dbl@Mind Runes@bla@ from each Essence.");
-    case 57: ~objboxt(waterrune,"You can now receive 4 @dbl@Water Runes@bla@ from each Essence.");
-    case 59: ~objboxt(cosmicrune,"You can now receive 2 @dbl@Cosmic Runes@bla@ from each Essence."); 
-    case 66: ~objboxt(airrune,"You can now receive 7 @dbl@Air Runes@bla@ from each Essence.");
-    case 70: ~doubleobjbox(mindrune,firerune,"You can now receive 6 @dbl@Mind Runes@bla@ from each Essence|and you can now receive 3 @dbl@Fire Runes@bla@ from each Essence.");
-    case 74: ~objboxt(chaosrune,"You can now receive 2 @dbl@Chaos Runes@bla@ from each Essence."); 
-    case 76: ~objboxt(waterrune,"You can now receive 5 @dbl@Water Runes@bla@ from each Essence.");
-    case 77: ~objboxt(airrune,"You can now receive 8 @dbl@Air Runes@bla@ from each Essence.");
-    case 78: ~objboxt(earthrune,"You can now receive 4 @dbl@Earth Runes@bla@ from each Essence.");
-    case 84: ~objboxt(mindrune,"You can now receive 7 @dbl@Mind Runes@bla@ from each Essence.");
-    case 88: ~objboxt(airrune,"You can now receive 9 @dbl@Air Runes@bla@ from each Essence.");
-    case 91: ~objboxt(naturerune,"You can now receive 2 @dbl@Nature Runes@bla@ from each Essence.");
-    case 92: ~objboxt(bodyrune,"You can now receive 3 @dbl@Body Runes@bla@ from each Essence."); 
-    case 95: ~doubleobjbox(waterrune,lawrune,"ou can now receive 6 @dbl@Water Runes@bla@ from each Essence|and you can now receive 2 @dbl@Law Runes@bla@ from each Essence.");
-    case 98: ~objboxt(mindrune,"You can now receive 8 @dbl@Mind Runes@bla@ from each Essence.");
-    case 99: ~objboxt(airrune,"You can now receive 10 @dbl@Air Runes@bla@ from each Essence.");
-
-
-
+    case 2: ~objboxt(mindrune,"You can now craft @dbl@Mind Runes@bla@.");
+    case 5: ~objboxt(waterrune,"You can now craft @dbl@Water Runes@bla@.");
+    case 9: ~objboxt(earthrune,"You can now craft @dbl@Earth Runes@bla@.");
+    // case 11: ~objboxt(airrune,"You can now receive 2 @dbl@Air Runes@bla@.");
+    case 14: ~objboxt(firerune,"You can now craft @dbl@Fire Runes@bla@.");
+    // case 19: ~objboxt(waterrune,"You can now receive 2 @dbl@Water Runes@bla@.");
+    case 20: ~objboxt(bodyrune,"You can now craft @dbl@Body Runes@bla@.");
+    // case 22: ~objboxt(airrune,"You can now receive 3 @dbl@Air Runes@bla@.");
+    // case 26: ~objboxt(earthrune,"You can now receive 2 @dbl@Earth Runes@bla@.");
+    case 27: ~objboxt(cosmicrune,"You can now craft @dbl@Cosmic Runes@bla@.");
+    // case 28: ~objboxt(mindrune,"You can now receive 3 @dbl@Mind Runes@bla@.");
+    // case 33: ~objboxt(airrune,"You can now receive 4 @dbl@Air Runes@bla@.");
+    case 35: ~objboxt(chaosrune,"You can now craft @dbl@Chaos Runes@bla@.");
+    // case 38: ~objboxt(waterrune,"You can now receive 3 @dbl@Water Runes@bla@.");
+    // case 42: ~objboxt(mindrune,"You can now receive 4 @dbl@Mind Runes@bla@.");
+    case 44: ~objboxt(naturerune,"You can now craft @dbl@Nature Runes@bla@."); // confirmed
+    // case 46: ~objboxt(bodyrune,"You can now receive 2 @dbl@Body Runes@bla@.");
+    // case 52: ~objboxt(earthrune,"You can now receive 3 @dbl@Earth Runes@bla@.");
+    case 54: ~objboxt(lawrune,"You can now craft @dbl@Law Runes@bla@.");
+    // case 55: ~objboxt(airrune,"You can now receive 4 @dbl@Air Runes@bla@.");
+    // case 56: ~objboxt(mindrune,"You can now receive 5 @dbl@Mind Runes@bla@.");
+    // case 57: ~objboxt(waterrune,"You can now receive 4 @dbl@Water Runes@bla@.");
+    // case 59: ~objboxt(cosmicrune,"You can now receive 2 @dbl@Cosmic Runes@bla@.");
+    case 65: ~objboxt(deathrune,"You can now craft @dbl@Death Runes@bla@.");
+    // case 66: ~objboxt(airrune,"You can now receive 7 @dbl@Air Runes@bla@.");
+    // case 70: ~doubleobjbox(mindrune,firerune,"You can now receive 6 @dbl@Mind Runes@bla@|and you can now receive 3 @dbl@Fire Runes@bla@.");
+    // case 74: ~objboxt(chaosrune,"You can now receive 2 @dbl@Chaos Runes@bla@.");
+    // case 76: ~objboxt(waterrune,"You can now receive 5 @dbl@Water Runes@bla@.");
+    // case 77: ~objboxt(airrune,"You can now receive 8 @dbl@Air Runes@bla@.");
+    // case 78: ~objboxt(earthrune,"You can now receive 4 @dbl@Earth Runes@bla@.");
+    // case 84: ~objboxt(mindrune,"You can now receive 7 @dbl@Mind Runes@bla@.");
+    // case 88: ~objboxt(airrune,"You can now receive 9 @dbl@Air Runes@bla@.");
+    // case 91: ~objboxt(naturerune,"You can now receive 2 @dbl@Nature Runes@bla@.");
+    // case 92: ~objboxt(bodyrune,"You can now receive 3 @dbl@Body Runes@bla@.");
+    // case 95: ~doubleobjbox(waterrune,lawrune,"You can now receive 6 @dbl@Water Runes@bla@|and you can now receive 2 @dbl@Law Runes@bla@.");
+    // case 98: ~objboxt(mindrune,"You can now receive 8 @dbl@Mind Runes@bla@.");
+    // case 99: ~objboxt(airrune,"You can now receive 10 @dbl@Air Runes@bla@.");
 }
