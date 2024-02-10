@@ -30,7 +30,7 @@ if ($random < 4) {
 } else if ($random < 36) {
     obj_add(npc_coord, adamant_javelin, 30, ^lootdrop_duration);
 } else if ($random < 44) {
-    obj_add(npc_coord, firerrune, 50, ^lootdrop_duration);
+    obj_add(npc_coord, firerune, 50, ^lootdrop_duration);
 } else if ($random < 51) {
     obj_add(npc_coord, adamant_dart_p, 16, ^lootdrop_duration);
 } else if ($random < 56) {
