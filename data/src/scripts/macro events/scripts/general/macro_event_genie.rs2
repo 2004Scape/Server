@@ -19,8 +19,8 @@ if (%macro_event = ^no_macro_event) {
 // delays are taken from this video: https://youtu.be/EN4c2hV65Qk?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 %npc_macro_event_status = ^macro_event_wave;
 npc_settimer(3);
-// dialogue taken from osrs. Neutral is a guess.
-~chatnpc(neutral, "Ah, so you are there, <text_gender("master", "mistress")> <displayname>. I'm so glad you summoned me. Please take this lamp and make your wish.");
+// sept 2006 https://imgur.com/undefined
+~chatnpc(neutral, "Ah, so you are there <text_gender("master", "mistress")>. I'm so glad you|summoned me. Please take this lamp, and make your|wish!");
 
 [ai_timer,macro_event_genie]
 if (~macro_event_lost = true) {
