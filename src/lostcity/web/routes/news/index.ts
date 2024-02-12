@@ -1,5 +1,28 @@
 import { db } from '#lostcity/db/query.js';
 
+function getOrdinalNum(value: number) {
+    let selector;
+
+    if (value <= 0) {
+        selector = 4;
+    } else if ((value > 3 && value < 21) || value % 10 > 3) {
+        selector = 0;
+    } else {
+        selector = value % 10;
+    }
+
+    return value + ['th', 'st', 'nd', 'rd', ''][selector];
+}
+
+function niceDate(date: Date) {
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+
+    const num = getOrdinalNum(day);
+    return `${num} ${month} ${year}`;
+}
+
 export default function (f: any, opts: any, next: any) {
     f.get('/', async (req: any, res: any) => {
         if (!req.query.page) {
@@ -52,15 +75,6 @@ export default function (f: any, opts: any, next: any) {
         const categories = await db.selectFrom('newspost_category').selectAll().execute();
         const prev = await db.selectFrom('newspost').where('id', '<', req.params.id).where('category_id', '=', newspost.category_id).orderBy('id', 'desc').select('id').executeTakeFirst();
         const next = await db.selectFrom('newspost').where('id', '>', req.params.id).where('category_id', '=', newspost.category_id).orderBy('id', 'asc').select('id').executeTakeFirst();
-
-        // convert date into "25th November 2002" "1st December 2002" etc
-        const niceDate = (date: Date) => {
-            const day = date.getDate();
-            const month = date.toLocaleString('default', { month: 'long' });
-            const year = date.getFullYear();
-            const suffix = ['th', 'st', 'nd', 'rd'][day % 10 > 3 ? 0 : day - (day % 10) !== 10 ? 1 : (0 * day) % 10];
-            return `${day}${suffix} ${month} ${year}`;
-        };
 
         return res.view('news/post', {
             newspost,
