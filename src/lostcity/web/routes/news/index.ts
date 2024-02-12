@@ -88,7 +88,7 @@ export default function (f: any, opts: any, next: any) {
     });
 
     f.get('/create', async (req: any, res: any) => {
-        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        const ip = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         if (Environment.ADMIN_IP != ip) {
             return res.redirect('/');
         }
@@ -115,7 +115,7 @@ export default function (f: any, opts: any, next: any) {
     });
 
     f.post('/create', async (req: any, res: any) => {
-        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        const ip = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         if (Environment.ADMIN_IP != ip) {
             return res.redirect('/');
         }
@@ -166,7 +166,7 @@ export default function (f: any, opts: any, next: any) {
     });
 
     f.post('/preview', async (req: any, res: any) => {
-        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        const ip = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         if (Environment.ADMIN_IP != ip) {
             return res.redirect('/');
         }
