@@ -5,7 +5,7 @@ export default class ZoneManager {
     // 60x160 mapsquares (we don't support instances): ((60 * 160) * 64) * 4
     private static TOTAL_ZONE_COUNT: number = 60 * 160 * 64 * 4;
 
-    private static zoneIndex(x: number, z: number, level: number): number {
+    static zoneIndex(x: number, z: number, level: number): number {
         return ((x >> 3) & 0x7ff) | (((z >> 3) & 0x7ff) << 11) | ((level & 0x3) << 22);
     }
 

@@ -177,12 +177,21 @@ export default class Zone {
 
     // zone events
     updates: ZoneEvent[] = [];
-    lastEvent = -1;
     buffer: Packet = new Packet();
+    lastEvent = -1;
 
     constructor(index: number) {
         this.index = index;
     }
+
+    cycle() {
+        this.computeSharedEvents();
+    }
+
+    computeSharedEvents() {
+    }
+
+    // ----
 
     enter(entity: PathingEntity) {
         if (entity instanceof Player && !this.players.has(entity.uid)) {
