@@ -72,6 +72,12 @@ export default class Packet {
         }
     }
 
+    copy() {
+        const temp = new Uint8Array(this.length);
+        temp.set(this.data);
+        return new Packet(temp);
+    }
+
     // ----
 
     static crc32(src: Packet | Uint8Array | Buffer, length: number = src.length, offset: number = 0): number {

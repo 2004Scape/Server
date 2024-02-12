@@ -1144,6 +1144,7 @@ export default class Player extends PathingEntity {
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
+                    this.unsetMapFlag();
                     continue;
                 }
 
@@ -1266,6 +1267,7 @@ export default class Player extends PathingEntity {
 
                 const npc = World.getNpc(nid);
                 if (!npc || npc.delayed()) {
+                    this.unsetMapFlag();
                     continue;
                 }
 
@@ -1389,6 +1391,7 @@ export default class Player extends PathingEntity {
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
+                    this.unsetMapFlag();
                     continue;
                 }
 
@@ -2621,6 +2624,7 @@ export default class Player extends PathingEntity {
         const topZ = Position.zone(this.loadedZ) + 6;
         const bottomZ = Position.zone(this.loadedZ) - 6;
 
+        // update newly tracked zones
         for (let x = centerX - 3; x <= centerX + 3; x++) {
             for (let z = centerZ - 3; z <= centerZ + 3; z++) {
                 if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
@@ -2633,24 +2637,53 @@ export default class Player extends PathingEntity {
                 }
             }
         }
+
+        // remove old zones from all tracked (outside of 3x3 area around player's current pos)
+        for (const zone of this.allTrackedZones) {
+            const x = zone & 2047;
+            const z = zone >> 11;
+
+            if (x < centerX - 3 || x > centerX + 3 || z > centerZ + 3 || z < centerZ - 3) {
+                this.allTrackedZones.delete(zone);
+            }
+        }
     }
 
     updateZones() {
+        console.log('tracked', this.newlyTrackedZones.size, this.allTrackedZones.size);
+
         for (const zone of this.newlyTrackedZones) {
             const x = zone & 2047;
             const z = zone >> 11;
 
             this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
-            // todo: write cached events (from previous ticks only)
+
+            const { locDelCached, locAddCached } = World.getZone(x << 3, z << 3, this.level);
+
+            for (const [packed, buf] of locDelCached) {
+                this.netOut.push(buf.copy());
+            }
+
+            for (const [packed, buf] of locAddCached) {
+                this.netOut.push(buf.copy());
+            }
+
+            if (locDelCached.size > 0 || locAddCached.size > 0) {
+                World.getZone(x << 3, z << 3, this.level).debug();
+            }
         }
 
         for (const zone of this.allTrackedZones) {
             const x = zone & 2047;
             const z = zone >> 11;
 
-            const { buffer } = World.getZone(x << 3, z << 3, this.level);
+            const { buffer, locAddTimer, locDelTimer, locChangeTimer } = World.getZone(x << 3, z << 3, this.level);
             if (buffer.length > 0) {
                 this.write(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, x, z, this.loadedX, this.loadedZ, buffer);
+
+                World.getZone(x << 3, z << 3, this.level).debug();
+            } else if (locAddTimer.size > 0 || locDelTimer.size > 0 || locChangeTimer.size > 0) {
+                World.getZone(x << 3, z << 3, this.level).debug();
             }
         }
 

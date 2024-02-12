@@ -888,6 +888,11 @@ class World {
         zone.addLoc(loc.x, loc.z, loc.type, loc.shape, loc.angle, duration);
     }
 
+    changeLoc(loc: Loc, duration: number) {
+        const zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.changeLoc(loc.x, loc.z, loc.type, loc.shape, loc.angle, duration);
+    }
+
     removeLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc.x, loc.z, loc.shape, duration);
