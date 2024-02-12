@@ -29,7 +29,7 @@ npc_tele(~fishing_spot_random_coord($old)); // move fishing spot.
 def_coord $random_coord = ~coord_lineofwalk_radius2(coord, 7);
 // todo: confirm the delay on this
 sound_synth(water_strike_all, 0, 0); // complete guess
-def_int $duration = ~coord_projectile(coord, $random_coord, spotanim_94, 0, 0, 20, 16, -5, 64, 10);
+def_int $duration = ~coord_projectile(coord, $random_coord, water_strike_travel, 0, 0, 20, 16, -5, 64, 10);
 if (p_finduid(uid) = true) {
     p_delay(calc($duration/30));
     obj_add($random_coord, $fishing_equipment, 1, 100);

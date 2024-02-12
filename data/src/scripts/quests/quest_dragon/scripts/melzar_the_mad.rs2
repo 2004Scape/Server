@@ -69,7 +69,7 @@ if ($cabbage_coord = npc_coord) { // cant spawn cabbage on top of melzar. Unsure
     return;
 }
 npc_anim(seq_710, 0);
-spotanim_npc(spotanim_177, 92, 0);
+spotanim_npc(bind_cast, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 world_delay(2); // delay cabbage spawn by 2 ticks
 ~combat_clearqueue; // todo figure out if this is actually what happens. Could be npc delay? could be p_stopaction?
