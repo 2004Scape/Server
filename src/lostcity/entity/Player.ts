@@ -399,7 +399,8 @@ export default class Player extends PathingEntity {
     // build area
     loadedX: number = -1;
     loadedZ: number = -1;
-    loadedZones: Record<number, number> = {};
+    newlyTrackedZones: Set<number> = new Set();
+    allTrackedZones: Set<number> = new Set();
     npcs: Set<number> = new Set(); // observed npcs
     players: Set<number> = new Set(); // observed players
     lastMovement: number = 0; // for p_arrivedelay
@@ -553,6 +554,12 @@ export default class Player extends PathingEntity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
+
+        for (const zone of this.newlyTrackedZones) {
+            this.allTrackedZones.add(zone);
+        }
+
+        this.newlyTrackedZones = new Set();
     }
 
     decodeIn() {
@@ -2597,16 +2604,15 @@ export default class Player extends PathingEntity {
         // if the build area should be regenerated, do so now
         const { tele } = this.getMovementDir(); // wasteful but saves time on loading lines
         if (dx >= 36 || dz >= 36 || (tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
-            this.loadArea(Position.zone(this.x), Position.zone(this.z));
+            this.rebuildNormal(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
             this.loadedZ = this.z;
-            this.loadedZones = {};
-        }
-    }
 
-    updateZones() {
-        // check nearby zones for updates
+            this.allTrackedZones = new Set();
+            this.newlyTrackedZones = new Set();
+        }
+
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -2615,28 +2621,40 @@ export default class Player extends PathingEntity {
         const topZ = Position.zone(this.loadedZ) + 6;
         const bottomZ = Position.zone(this.loadedZ) - 6;
 
-        // update 3 zones around the player
         for (let x = centerX - 3; x <= centerX + 3; x++) {
             for (let z = centerZ - 3; z <= centerZ + 3; z++) {
-                // check if the zone is within the build area
                 if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
                     continue;
                 }
 
-                const zone = World.getZone(x << 3, z << 3, this.level);
-
-                if (typeof this.loadedZones[zone.index] === 'undefined') {
-                    // full update necessary to clear client zone memory
-                    this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
+                const zone = x | (z << 11);
+                if (!this.allTrackedZones.has(zone)) {
+                    this.newlyTrackedZones.add(zone);
                 }
-
-                if (zone.buffer.length > 0) {
-                    this.write(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, x, z, this.loadedX, this.loadedZ, zone.buffer);
-                }
-
-                this.loadedZones[zone.index] = World.currentTick;
             }
         }
+    }
+
+    updateZones() {
+        for (const zone of this.newlyTrackedZones) {
+            const x = zone & 2047;
+            const z = zone >> 11;
+
+            this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
+            // todo: write cached events (from previous ticks only)
+        }
+
+        for (const zone of this.allTrackedZones) {
+            const x = zone & 2047;
+            const z = zone >> 11;
+
+            const { buffer } = World.getZone(x << 3, z << 3, this.level);
+            if (buffer.length > 0) {
+                this.write(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, x, z, this.loadedX, this.loadedZ, buffer);
+            }
+        }
+
+        // todo: obj events
     }
 
     // ----
@@ -3932,8 +3950,7 @@ export default class Player extends PathingEntity {
         this.write(ServerProt.MESSAGE_GAME, msg);
     }
 
-    // todo
-    loadArea(zoneX: number, zoneZ: number) {
+    rebuildNormal(zoneX: number, zoneZ: number) {
         const out = new Packet();
         out.p1(ServerProt.REBUILD_NORMAL);
         out.p2(0);
