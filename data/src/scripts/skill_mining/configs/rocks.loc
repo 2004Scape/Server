@@ -401,6 +401,7 @@ hasalpha=yes
 blockrange=no
 recol1s=24
 recol1d=4645
+category=mining_rock_macro_gas
 
 [copper_rock_macro_gas_2]
 name=Rocks
@@ -415,6 +416,7 @@ hasalpha=yes
 blockrange=no
 recol1s=24
 recol1d=4645
+category=mining_rock_macro_gas
 
 [iron_rock_macro_gas_1]
 name=Rocks
@@ -431,6 +433,7 @@ recol1s=24
 recol1d=2576
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [iron_rock_macro_gas_2]
 name=Rocks
@@ -447,6 +450,7 @@ recol1s=24
 recol1d=2576
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [tin_rock_macro_gas_1]
 name=Rocks
@@ -463,6 +467,7 @@ recol1s=24
 recol1d=53
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [tin_rock_macro_gas_2]
 name=Rocks
@@ -479,6 +484,7 @@ recol1s=24
 recol1d=53
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [coal_rock_macro_gas_1]
 name=Rocks
@@ -495,6 +501,7 @@ recol1s=24
 recol1d=10508
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [coal_rock_macro_gas_2]
 name=Rocks
@@ -511,6 +518,7 @@ recol1s=24
 recol1d=10508
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [gold_rock_macro_gas_1]
 name=Rocks
@@ -527,6 +535,7 @@ recol1s=24
 recol1d=8885
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [gold_rock_macro_gas_2]
 name=Rocks
@@ -543,6 +552,7 @@ recol1s=24
 recol1d=8885
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [silver_rock_macro_gas_1]
 name=Rocks
@@ -559,6 +569,7 @@ recol1s=24
 recol1d=74
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [silver_rock_macro_gas_2]
 name=Rocks
@@ -575,6 +586,7 @@ recol1s=24
 recol1d=74
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [mithril_rock_macro_gas_1]
 name=Rocks
@@ -591,6 +603,7 @@ recol1s=24
 recol1d=43297
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [mithril_rock_macro_gas_2]
 name=Rocks
@@ -607,6 +620,7 @@ recol1s=24
 recol1d=43297
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [adamantite_rock_macro_gas_1]
 name=Rocks
@@ -623,6 +637,7 @@ recol1s=24
 recol1d=21662
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [adamantite_rock_macro_gas_2]
 name=Rocks
@@ -639,6 +654,7 @@ recol1s=24
 recol1d=21662
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [runite_rock_macro_gas_1]
 name=Rocks
@@ -655,6 +671,7 @@ recol1s=24
 recol1d=34099
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [runite_rock_macro_gas_2]
 name=Rocks
@@ -671,6 +688,7 @@ recol1s=24
 recol1d=34099
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [clay_rock_macro_gas_1]
 name=Rocks
@@ -687,6 +705,7 @@ recol1s=24
 recol1d=6705
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [clay_rock_macro_gas_2]
 name=Rocks
@@ -703,6 +722,7 @@ recol1s=24
 recol1d=6705
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [blurite_rock_macro_gas_1]
 name=Rocks
@@ -719,6 +739,7 @@ recol1s=24
 recol1d=39869
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas
 
 [gem_rock_macro_gas_1]
 name=Rocks
@@ -735,3 +756,4 @@ recol1s=24
 recol1d=55201
 recol2s=10349
 recol2d=7366
+category=mining_rock_macro_gas

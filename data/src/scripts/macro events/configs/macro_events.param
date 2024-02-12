@@ -5,3 +5,15 @@ default=null
 [is_whirlpool]
 type=int
 default=0
+
+[broken]
+type=namedobj
+default=null
+
+[is_broken]
+type=int
+default=0
+
+[fixed]
+type=namedobj
+default=null

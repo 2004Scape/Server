@@ -1,1 +1,54 @@
+// When a macro gas spawns:
+// - it creates a new loc (probably)
+// - delayed 1t and the player re interacts with it (confirmed: https://youtu.be/hoIaiSdQZGk?t=25)
+// - the get ore label counts how many times the player has mined it (unsure)
+// - once the player has mined it 3 times, it explodes (unsure)
+
+
+// requires active loc
 [label,macro_event_gas_spawn]
+%macro_event = ^no_macro_event; // just incase
+// video looks like a bit over 50 ticks https://youtu.be/_tyuBlx5Fng?list=PLn23LiLYLb1bQvSMxsNH6T0eM0nRU-5w0&t=123
+// videos are exactly 60 ticks: 
+// - https://youtu.be/hoIaiSdQZGk?t=25
+// - https://youtu.be/Giyx_JsAWxg?t=114
+def_int $duration = 60;
+loc_del($duration);
+loc_add(loc_coord, loc_param(macro_gas), loc_angle, loc_shape, $duration);
+// todo: confirm if the player continued mining or stopped mining after gas spawned.
+loc_find(loc_coord, loc_param(macro_gas));
+sound_synth(gas_hiss, 0, 0);
+p_oploc(1);
+
+
+[oploc1,_mining_rock_macro_gas] @mining_firstswing(get_ore_macro_gas); 
+[oploc3,_mining_rock_macro_gas] @mining_continue(get_ore_macro_gas);
+
+[label,get_ore_macro_gas]
+// Getting mixed information on the damage:
+// - "up to 10 hits" https://web.archive.org/web/20041026163949/http://www.runescapecommunity.com:80/index.php?showtopic=104849
+// - "1 to 8 damage" https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
+// - video: https://oldschool.runescape.wiki/images/Exploding_rock.gif?fa0e9
+// - video2: https://runescape.fandom.com/wiki/Exploding_rock?file=Exploding_rock.gif
+// - Probably 10 hp: https://web.archive.org/web/20040606142810/http://www.tip.it/runescape/index.php?page=rs2randon.htm
+
+// Video2 shows that the rock explodes after mining for 1 roll!
+
+// Osrs wiki says: "Explosion of an exploding rock does not cease the smoke from puffing and therefore an exploding rock can explode again if it were mined again or mined by another player."
+anim(null, 0);
+sound_synth(gas_explosion, 0, 0);
+spotanim_map(fire_wave_hit, loc_coord, 92, 0);
+queue(damage_player, 0, 10);
+
+def_obj $pickaxe = ~pickaxe_checker;
+def_namedobj $pickaxe_broken = oc_param($pickaxe, broken);
+
+// todo: use inv_changeslot?
+if (inv_total(worn, $pickaxe) > 0) {
+    inv_del(worn, $pickaxe, 1);
+    inv_setslot(worn, ^wearpos_rhand, $pickaxe_broken, 1);
+    ~update_all($pickaxe);
+} if (inv_total(inv, $pickaxe) > 0) {
+    inv_del(inv, $pickaxe, 1);
+    inv_add(inv, $pickaxe_broken, 1);
+}
