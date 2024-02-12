@@ -852,6 +852,23 @@ class World {
         return this.getZone(x, z, level).npcs;
     }
 
+    // todo: rewrite, this is for legacy code compatibility
+    getZoneLocs(x: number, z: number, level: number): Loc[] {
+        const zone = this.getZone(x, z, level);
+        const locs = [];
+        for (let dx = 0; dx < 8; dx++) {
+            for (let dz = 0; dz < 8; dz++) {
+                for (let layer = 0; layer < 4; layer++) {
+                    const loc = zone.getLoc(x + dx, z + dz, layer);
+                    if (loc) {
+                        locs.push(loc);
+                    }
+                }
+            }
+        }
+        return locs;
+    }
+
     addNpc(npc: Npc) {
         this.npcs[npc.nid] = npc;
         npc.x = npc.startX;

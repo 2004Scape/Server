@@ -352,8 +352,8 @@ export default class Zone {
         const info = this.locInfo.get(packed);
         if (this.locs.has(packed) && typeof info !== 'undefined') {
             console.log('removeLoc(): deleting loc on tile');
-            this.locs.delete(packed);
-            this.locInfo.delete(packed);
+            // this.locs.delete(packed);
+            // this.locInfo.delete(packed);
 
             const type = LocType.get(info & 0xFFFF);
             const angle = (info >> 21) & 3;
@@ -368,7 +368,7 @@ export default class Zone {
         const staticInfo = this.locInfo.get(staticPacked);
         if (this.locs.has(staticPacked) && typeof staticInfo !== 'undefined') {
             console.log('removeLoc(): deleting static loc on tile');
-            this.locs.add(packed);
+            this.locs.add(packed); // temporarily add dynamic loc to prevent static loc from respawning
             this.locInfo.delete(packed);
 
             const type = LocType.get(staticInfo & 0xFFFF);

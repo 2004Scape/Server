@@ -124,7 +124,7 @@ const LocOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        locFindAllZone = []; // World.getZoneLocs(pos.x, pos.z, pos.level);
+        locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
         locFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original loc again, we can

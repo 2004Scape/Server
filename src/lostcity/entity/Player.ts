@@ -2616,6 +2616,11 @@ export default class Player extends PathingEntity {
             this.newlyTrackedZones = new Set();
         }
 
+        if (this.tele && this.jump) {
+            this.allTrackedZones = new Set();
+            this.newlyTrackedZones = new Set();
+        }
+
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
