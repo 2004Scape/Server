@@ -1,6 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import TextEncoder from '#jagex2/jstring/TextEncoder.js';
+import WordPack from '#jagex2/wordenc/WordPack.js';
 
 import Component from '#lostcity/cache/Component.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
@@ -300,7 +300,7 @@ export const ServerProtEncoders: {
         buf.p8(from);
         buf.p4(messageId);
         buf.p1(staffModLevel);
-        TextEncoder.encode(buf, WordEnc.filter(msg));
+        WordPack.pack(buf, WordEnc.filter(msg));
     },
     [ServerProt.UPDATE_FRIENDLIST]: (buf: Packet, name: bigint, nodeId: number) => {
         buf.p8(name);
