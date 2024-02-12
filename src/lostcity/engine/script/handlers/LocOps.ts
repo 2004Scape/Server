@@ -58,7 +58,7 @@ const LocOps: CommandHandlers = {
         const seq = state.popInt();
 
         const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).animLoc(loc, seq);
+        World.getZone(loc.x, loc.z, loc.level).locanim(loc, seq);
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, state => {
@@ -126,7 +126,7 @@ const LocOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
-        locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
+        locFindAllZone = []; // World.getZoneLocs(pos.x, pos.z, pos.level);
         locFindAllZoneIndex = 0;
 
         // not necessary but if we want to refer to the original loc again, we can

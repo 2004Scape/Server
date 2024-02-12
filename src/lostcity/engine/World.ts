@@ -841,30 +841,7 @@ class World {
     }
 
     getZoneIndex(zoneIndex: number) {
-        return this.gameMap.zoneManager.zones[zoneIndex];
-    }
-
-    getSharedEvents(zoneIndex: number): Packet | undefined {
-        return this.getZoneIndex(zoneIndex).buffer;
-    }
-
-    getUpdates(zoneIndex: number) {
-        return this.gameMap.zoneManager.zones[zoneIndex].updates;
-    }
-
-    getReceiverUpdates(zoneIndex: number, receiverId: number) {
-        const updates = this.getUpdates(zoneIndex);
-        return updates.filter(event => {
-            if (event.type !== ServerProt.OBJ_ADD && event.type !== ServerProt.OBJ_DEL && event.type !== ServerProt.OBJ_COUNT && event.type !== ServerProt.OBJ_REVEAL) {
-                return false;
-            }
-
-            // if (event.type === ServerProt.OBJ_DEL && receiverId !== -1 && event.receiverId !== receiverId) {
-            //     return false;
-            // }
-
-            return true;
-        });
+        return this.gameMap.zoneManager.zones.get(zoneIndex);
     }
 
     getZonePlayers(x: number, z: number, level: number) {
@@ -882,50 +859,24 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
-
-        switch (npc.blockWalk) {
-            case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
-                break;
-            case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
-                break;
-        }
-
-        npc.resetEntity(true);
-        npc.playAnimation(-1, 0);
     }
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.leave(npc);
-
-        switch (npc.blockWalk) {
-            case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
-                break;
-            case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
-                break;
-        }
-
-        if (!npc.static) {
-            this.npcs[npc.nid] = null;
-        } else {
-            const type = NpcType.get(npc.type);
-            npc.despawn = this.currentTick;
-            npc.respawn = this.currentTick + type.respawnrate;
-        }
     }
 
-    getLoc(x: number, z: number, level: number, locId: number) {
-        return this.getZone(x, z, level).getLoc(x, z, locId);
-    }
+    getLoc(x: number, z: number, level: number, locId: number): Loc | null {
+        const zone = this.getZone(x, z, level);
 
-    getZoneLocs(x: number, z: number, level: number) {
-        return [...this.getZone(x, z, level).staticLocs.filter(l => l.respawn < this.currentTick), ...this.getZone(x, z, level).locs];
+        for (let layer = 0; layer < 4; layer++) {
+            const loc = zone.getLoc(x, z, layer);
+            if (loc && loc.type === locId) {
+                return loc;
+            }
+        }
+
+        return null;
     }
 
     getObj(x: number, z: number, level: number, objId: number) {
@@ -934,28 +885,12 @@ class World {
 
     addLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-        zone.addLoc(loc, duration);
-
-        const type = LocType.get(loc.type);
-        if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
-        }
-
-        loc.despawn = this.currentTick + duration;
-        loc.respawn = -1;
+        zone.addLoc(loc.x, loc.z, loc.type, loc.shape, loc.angle, duration);
     }
 
     removeLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-        zone.removeLoc(loc, duration);
-
-        const type = LocType.get(loc.type);
-        if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
-        }
-
-        loc.despawn = -1;
-        loc.respawn = this.currentTick + duration;
+        zone.removeLoc(loc.x, loc.z, loc.shape, duration);
     }
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {

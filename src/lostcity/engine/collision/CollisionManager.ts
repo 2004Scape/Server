@@ -205,15 +205,7 @@ export default class CollisionManager {
                 continue;
             }
 
-            const type: LocType = LocType.get(id);
-            const width: number = type.width;
-            const length: number = type.length;
-
-            zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(new Loc(adjustedLevel, absoluteX, absoluteZ, width, length, id, shape, angle));
-
-            if (type.blockwalk) {
-                this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, adjustedLevel, true);
-            }
+            zoneManager.getZone(absoluteX, absoluteZ, adjustedLevel).addStaticLoc(absoluteX, absoluteZ, id, shape, angle);
         }
     }
 

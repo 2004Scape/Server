@@ -2632,19 +2632,6 @@ export default class Player extends PathingEntity {
                     this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
                 }
 
-                const updates = World.getUpdates(zone.index).filter(event => {
-                    return event.tick > this.loadedZones[zone.index];
-                });
-
-                if (updates.length) {
-                    this.write(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
-
-                    for (let i = 0; i < updates.length; i++) {
-                        // have to copy because encryption will be applied to buffer
-                        this.netOut.push(new Packet(updates[i].buffer));
-                    }
-                }
-
                 this.loadedZones[zone.index] = World.currentTick;
             }
         }
@@ -3876,6 +3863,7 @@ export default class Player extends PathingEntity {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     write(opcode: ServerProt, ...args: any[]) {
         if (opcode < 0 || opcode > 255 || !ServerProtEncoders[opcode]) {
             return;
