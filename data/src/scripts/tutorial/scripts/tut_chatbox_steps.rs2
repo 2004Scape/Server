@@ -12,12 +12,12 @@ if_settabflash(^tab_game_options);
 
 // Removing "Feel free to" before try it in this room
 [proc,tutorial_step_interact_with_scenery]
-hint_coord(2, 0_48_48_25_35, 100);
+hint_coord(^hint_west, 0_48_48_26_35, 128);
 ~tutorialstep("Interacting with scenery", "You can interact with many items of scenery by simply clicking|on them. Right clicking will also give more options. Try it with the things in this room, then click on the door indicated with the yellow arrow to go through to the next instructor.");
 
 [proc,tutorial_step_moving_around]
 ~tutorialstep("Moving around", "Follow the path to find the next instructor. Clicking on the|ground will walk you to that point. Talk to the survival expert by|the pond to continue the tutorial. Remember you can rotate|the view by pressing the arrow keys.");
-~set_hint_icon_surivial_guide;
+~set_hint_icon_survival_guide;
 
 [proc,tutorial_step_view_inventory]
 hint_stop();
@@ -27,7 +27,7 @@ if_settab(inventory, ^tab_inventory);
 if_settabflash(^tab_inventory);
 
 [proc,tutorial_step_cut_tree]
-hint_coord(2, 0_48_48_27_23, 175);
+hint_coord(^hint_west, 0_48_48_28_23, 175);
 ~tutorialstep("Cut down a tree", "You can click on the backpack icon at any time to view|the items you currently have in your inventory. You will see that you now have an axe in your inventory. Use this to get some logs by clicking on the indicated tree.");
 
 [proc,tutorial_please_wait_woodcutting]
@@ -46,7 +46,7 @@ if_settabflash(^tab_skills);
 
 [proc,tutorial_step_view_stats]
 ~tutorialstep("These are your stats.", "Here you will see how good your skills are. As you move your|mouse over any of the icons in this panel, you can see the exact amount of experience you have and how much is needed to get to the next level. Speak to Bryanna to continue.");
-~set_hint_icon_surivial_guide;
+~set_hint_icon_survival_guide;
 
 [proc,tutorial_step_catch_shrimp]
 ~tutorialstep("Catch some Shrimp.", "Click on the fishing spot, indicated by the flashing arrow.|Remember you can check your inventory by clicking the|backpack icon.");
@@ -61,8 +61,73 @@ if_settabflash(^tab_skills);
 ~tutorialstep("Burning your shrimp.", "You have just burnt your first shrimp. This is normal. As you|get more experience in cooking you will burn stuff less. Let's|try cooking, without burning it this time. First catch some|shrimp, then use them on a fire.");
 
 [proc,tutorial_step_survival_recap]
-hint_coord(2, 0_48_48_17_20, 100);
-~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move into the next instructor. Click on|the gate shown and follow the path. Remember you can move|the camera with the arrow keys.");
+hint_coord(^hint_east, 0_48_48_17_20, 100);
+~tutorialstep("Well done, you've just cooked your first RuneScape meal.", "If you'd like a recap on anything you've learned so far speak|to Brynna. You can now move onto the next instructor. Follow the path and click on the gate shown. Remember you can move|the camera with the arrow keys.");
 
-[label,tutorial_step20]
+[proc,tutorial_step_go_to_chef]
+hint_coord(^hint_east, 0_48_48_6_12, 150);
 ~tutorialstep("Find your next instructor.", "Follow the path until you get to the door with the yellow arrow|above it. Click on the door to open it. Notice the mini-map in|the top right, this shows a top down view of the area around|you. This can also be used for navigation.");
+
+[proc,tutorial_step_talk_to_chef]
+~set_hint_icon_master_chef;
+~tutorialstep("Find your next instructor.", "Talk to the chef indicated. He will teach you the more advanced|aspects of cooking such as combining ingredients. He will also|teach you about your music player menu as well.");
+
+[proc,tutorial_step_make_dough]
+hint_stop();
+~tutorialstep("Making dough.", "This is the base for many of the meals. To make dough we must|mix flour and water. So first right click the bucket of water and|select use  then left click on the pot of flour.");
+
+[proc,tutorial_step_cooking_dough]
+hint_coord(2, 0_48_48_3_9, 100);
+~tutorialstep("", "Cooking dough. Now you have dough made you can cook it. To|cook the dough use it with the range shown by the arrow. If you|lose your dough talk to Lev, he will give you more ingredients.");
+
+[proc,tutorial_step_click_music_player]
+hint_stop();
+if (lowmemory = true) {
+    if_settabflash(^tab_musicplayer);
+    if_settab(music_ld, ^tab_musicplayer);
+} else {
+    if_settabflash(^tab_musicplayer);
+    if_settab(music, ^tab_musicplayer);
+}
+~tutorialstep("Well done, your first loaf of bread. As you gain experience in", "cooking you will be able to make other things like pies, cakes|and even kebabs. Now you've got the hang of cooking let's|move on. Click on the flashing icon in the bottom right to see|the jukebox.");
+
+[proc,tutorial_step_music_player]
+hint_coord(^hint_east, 0_48_48_0_18, 150);
+~tutorialstep("The Music Player.", "From this interface you can control the music that is played.|As you explore the world more of the tunes will become unlocked.|Once you've examined this menu use the next door|to continue.");
+
+[proc,tutorial_step_click_run_icon]
+if_settabflash(^tab_player_controls);
+if_settab(controls, ^tab_player_controls);
+
+~tutorialstep("It's only a short distance to the next guide.", "|Why not try running there. Start by opening the player|controls, that's the flashing icon of a running man.");
+
+[proc,tutorial_step_enable_run]
+if (p_finduid(uid) = true) {
+    %player_run = ^player_run_off;
+    return;
+}
+queue(set_run, 0, 0);
+~tutorialstep("Running.", "In this menu you will see many options from waving to walking.|At the top of the panel there are two buttons. One is walk the|other one is run. Click on the run button.");
+
+[proc,tutorial_step_enter_quest_guide_house]
+hint_coord(^hint_north, 0_48_48_14_54, 150);
+~tutorialstep("Run to the next guide.", "Now that you have run turned on follow the path, until you|come to the end. You may notice that your energy left goes|down. If this reaches zero you'll stop running. Click on the door|to pass through it.");
+
+[proc,tutorial_step_talk_to_quest_guide]
+~set_hint_icon_quest_guide;
+~tutorialstep("", "Talk with the Quest Guide Instructor.||He'll tell you all about quests.");
+
+[proc,tutorial_step_open_quest_journal]
+hint_stop();
+if_settabflash(^tab_quest_journal);
+~update_quests;
+if_settab(questlist, ^tab_quest_journal);
+~tutorialstep("", "Open the Quest journal||Click on the flashing icon next to your inventory.");
+
+[proc,tutorial_step_quest_journal]
+~set_hint_icon_quest_guide;
+~tutorialstep("", "Your Quest journal.|This is your quest journal, a list of all the quests in the game.|Talk to the instructor again for an explanation.");
+
+[proc,tutorial_step_enter_mine]
+hint_coord(^hint_center, 0_48_48_16_47, 100);
+~tutorialstep("", "Moving on.|It's time to enter some caves. Click on the ladder to go down to|the next area.");

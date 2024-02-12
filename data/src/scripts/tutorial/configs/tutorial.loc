@@ -18,6 +18,7 @@ length=2
 mapscene=0
 op1=Chop down
 op3=hidden
+param=next_loc_stage,loc_1342
 
 [loc_3036]
 name=Tree
@@ -28,6 +29,7 @@ length=2
 mapscene=6
 op1=Chop down
 op3=hidden
+param=next_loc_stage,loc_1348
 
 [loc_3037]
 name=Oak

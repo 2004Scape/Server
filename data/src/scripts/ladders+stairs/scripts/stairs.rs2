@@ -205,6 +205,7 @@ switch_coord (loc_coord) {
     case 1_45_52_27_6: p_telejump(2_45_52_28_8); // Dark Wizard's Tower - First Floor
     case 0_45_51_51_18: p_telejump(1_45_51_52_17); // Crafting Guild
     case 0_39_53_21_37: p_telejump(1_39_53_22_39); // Hadley house - ground floor
+    case 0_48_48_10_52: p_telejump(1_48_48_12_52); // Tutorial island Quest Guide house - ground floor
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -298,6 +299,7 @@ switch_coord (loc_coord) {
     case 2_45_52_28_7: p_telejump(1_45_52_28_8); // Dark Wizard's Tower - level 2
     case 1_45_51_52_18: p_telejump(0_45_51_52_17); // Crafting Guild - level 1
     case 1_39_53_22_38: p_telejump(0_39_53_23_38); // Hadley house - level 1
+    case 1_48_48_11_52: p_telejump(0_48_48_12_52); // Tutorial island Quest Guide house - 1st floor
     case default: @unhandled_stairs(loc_coord);
 }
 

@@ -17747,6 +17747,7 @@ desc=A wooden gate.
 model=model_loc_47
 active=yes
 op1=Open
+category=tutorial_gate
 
 [loc_3016]
 name=Gate
@@ -17755,6 +17756,7 @@ model=model_loc_47
 active=yes
 mirror=yes
 op1=Open
+category=tutorial_gate
 
 [loc_3017]
 name=Door
@@ -17766,6 +17768,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3018]
 name=Door
@@ -17777,6 +17780,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3019]
 name=Door
@@ -17788,6 +17792,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3020]
 name=Gate

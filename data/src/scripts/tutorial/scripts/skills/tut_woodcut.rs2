@@ -1,5 +1,9 @@
 // Tutorial Island Tree
-[oploc1,loc_3033]
+[oploc1,loc_3033] @tut_woodcutting;
+[oploc1,loc_3034] @tut_woodcutting;
+[oploc1,loc_3036] @tut_woodcutting;
+
+[label,tut_woodcutting]
 if (%tutorial_progress < 30) {
     ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
     return;
