@@ -15,7 +15,7 @@ while ($i < 50) {
 // center coord
 return($coord);
 
-// doesnt allow the random coordinate the be the same as the arg coordinate
+// doesnt allow the random coordinate to be the same as the arg coordinate
 [proc,coord_lineofwalk_radius2](coord $coord, int $radius)(coord)
 def_int $x = $radius;
 def_int $z = $radius;

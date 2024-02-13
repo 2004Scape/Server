@@ -21,7 +21,7 @@ if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
 switch_category(oc_category($weapon)) {
     case weapon_2h_sword : return(weapon_2h_sword_table);
     case weapon_axe : return(weapon_axe_table);
-    case weapon_blunt : return(weapon_blunt_table);
+    case weapon_blunt, category_15 : return(weapon_blunt_table); // https://i.imgur.com/jFiwBP8.png
     case weapon_pickaxe : return(weapon_pickaxe_table);
     case weapon_scythe : return(weapon_scythe_table);
     case weapon_slash : return(weapon_slash_table);

@@ -83,7 +83,7 @@ if (%npc_action_delay > map_clock) return;
 
 npc_anim(npc_param(attack_anim), 20);
 %npc_action_delay = add(map_clock, npc_param(attackrate));
-~player_projectile(npc_coord, coord, uid, spotanim_32, 45, 40, 51, 25, 5, 11, 5);
+~player_projectile(npc_coord, coord, uid, dwarf_rock_launch, 45, 40, 51, 25, 5, 11, 5);
 sound_synth(npc_param(attack_sound), 0, 0);
 
 if (stat(hitpoints) = 0) {
