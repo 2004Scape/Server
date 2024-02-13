@@ -1,0 +1,10 @@
+[fisher_realm_zones]
+table=coord_pair_table
+// before percival returns
+data=coord_pair,0_43_73_0_0,0_43_73_63_63
+data=coord_pair,1_43_73_0_0,1_43_73_63_63
+data=coord_pair,2_43_73_0_0,2_43_73_63_63
+// after he returns
+data=coord_pair,0_43_73_0_0,0_43_73_63_63
+data=coord_pair,1_43_73_0_0,1_43_73_63_63
+data=coord_pair,2_43_73_0_0,2_43_73_63_63

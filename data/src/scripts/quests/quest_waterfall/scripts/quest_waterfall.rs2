@@ -172,17 +172,14 @@ if(coordz(coord) <= coordz(loc_coord)) {
     return;
 }
 mes("It looks like a long distance, but you swim out into the water.");
-bas_walk_f(human_swim);
-bas_readyanim(human_swim);
-buildappearance(worn);
+~set_bas(human_swim);
 p_walk(movecoord(loc_coord, 0, 0, 8));
 p_delay(0);
 p_teleport(movecoord(loc_coord, 0, 0, 7));
 spotanim_map(watersplash, coord, 0, 0);
 p_delay(0);
 ~agility_force_move(0, human_swim, movecoord(loc_coord, 0, 0, 4));
-bas_readyanim(human_drowning);
-buildappearance(worn);
+~set_bas(human_drowning);
 mes("The current is too strong, you feel yourself being pulled under");
 p_delay(3);
 ~update_bas;
@@ -393,6 +390,7 @@ if(last_useitem = glarials_amulet & %waterfall_progress = ^waterfall_entered_puz
         mes("You hear a loud rumble from beneath...");
         p_delay(2);
         mes("The ground raises up before you!");
+        inv_del(inv, glarials_amulet, 1);
         p_teleport(0_40_154_43_58);
         // sound_synth -> rumbling
         %waterfall_progress = ^waterfall_placed_amulet;
@@ -419,14 +417,12 @@ if(%waterfall_progress = ^waterfall_complete) {
 mes("You hear the gushing of water.");
 p_delay(2);
 mes("Water floods into the cavern.");
-bas_readyanim(human_drowning);
-buildappearance(worn);
+~set_bas(human_drowning);
 p_teleport(0_39_154_43_58);
 p_delay(0);
 ~agility_force_move(0, human_drowning, movecoord(coord, 0, 0, -2));
 ~agility_force_move(0, human_drowning, movecoord(coord, 1, 0, -1));
-bas_readyanim(seq_528);
-buildappearance(worn);
+~set_bas(seq_528);
 p_delay(9);
 ~update_bas;
 mes("You are washed downstream but feel lucky to be alive.");
@@ -461,6 +457,7 @@ if(last_useitem = glarials_urn_full) {
 [queue,waterfall_quest_complete]
 %waterfall_progress = ^waterfall_complete;
 inv_add(inv, diamond, 2);
+inv_add(inv, gold_bar, 2);
 inv_add(inv, mithril_seeds, 40);
 givexp(attack, 137500);
 givexp(strength, 137500);

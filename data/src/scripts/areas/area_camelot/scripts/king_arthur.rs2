@@ -1,11 +1,41 @@
 [opnpc1,king_arthur]
 if(%grail_progress > ^grail_not_started) {
     switch_int(%grail_progress) {
-        case ^grail_started: 
+        case ^grail_complete:  
+            ~chatnpc(happy, "Thank you for retrieving the Grail!|You shall be long remembered|as one of the greatest heroes|amongst the Knights of the Round Table!");
+        case ^grail_finding_percival:
+            ~chatplayer(neutral, "Hello, do you have a knight named Sir Percival?");
+            ~chatnpc(neutral, "Ah yes. I remember young Percival.|He rode off on a quest a couple of months ago.|We are getting a bit worried, he's not back yet...");
+            ~chatnpc(neutral, "He was going to try and recover the golden boots of Arkaneeses.");
+            ~chatplayer(quiz, "Any idea which way that would be?");
+            ~chatnpc(neutral, "Not exactly.|We discovered some magic golden feathers|that are said to point the way to the boots...");
+            ~chatnpc(neutral, "They certainly point somewhere.");
+            // https://web.archive.org/web/20041115150440im_/http://img31.imageshack.us/img31/5648/feather.jpg
+            ~chatnpc(neutral, "Just blowing gently on them|will supposedly show the way to go.");
+            // https://youtu.be/FPNmOhs8jdw?si=_OTwHKKLGifRzd5M&t=653
+            if(inv_freespace(inv) = 0) {
+                ~chatnpc(bored, "Free up some space and I'll give you a feather.");
+                return;
+            }
+            if(~obj_gettotal(magic_gold_feather) = 0) {
+                inv_add(inv, magic_gold_feather, 1);
+                ~mesbox("King Arthur gives you a feather.");
+            } else {
+                ~chatnpc(bored, "You've got one of the feathers somewhere - off you go."); // think these check dialogues may have been added to osrs but not sure
+            }
+        case default:
             ~chatnpc(quiz, "How goes thy quest?");
+            if(inv_total(inv, holy_grail) > 0) {
+                ~chatplayer(happy, "I have retrieved the Grail!");
+                ~chatnpc(happy, "Wow! Incredible! You truly are a splendid knight!");
+                queue(grail_quest_complete, 0);
+                return;
+            }
             ~chatplayer(neutral, "I am making progress, but I have not recovered the Grail yet.");
             ~chatnpc(neutral, "Well, the Grail IS very elusive, it may take some perseverance.");
-            ~chatnpc(neutral, "As I said before, speak to Merlin in the workshop by the library.");
+            if(%grail_progress = ^grail_started) {
+                ~chatnpc(neutral, "As I said before, speak to Merlin in the workshop by the library.");
+            }
     }
 } else {
     switch_int(%arthur_progress) {
@@ -33,6 +63,7 @@ switch_int(~p_choice2("Tell me of this quest.", 1, "I am weary of questing for t
             case 1:
                 ~chatplayer(neutral, "I'd enjoy trying that.");
                 %grail_progress = ^grail_started;
+                ~send_quest_progress(quest_journal:grail, %grail_progress, ^grail_complete);
                 ~chatnpc(neutral, "Go speak to Merlin. He may be able to give a better clue as to where it is now you have freed him from that crystal.");
                 ~chatnpc(neutral, "He has set up his workshop in the room next to the library.");
             case 2:

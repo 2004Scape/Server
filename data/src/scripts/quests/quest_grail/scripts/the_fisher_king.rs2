@@ -1,0 +1,33 @@
+[opnpc1,the_fisher_king]
+~chatnpc(happy, "Ah! You got inside at last!|You spent all that time fumbling around outside,|I thought you'd never make it here.");
+@multi3("How did you know what I have been doing?", fisher_king_how, "I seek the Holy Grail.", fisher_king_grail, "You don't look too well.", fisher_king_well);
+
+[label,fisher_king_how]
+~chatplayer(confused, "How did you know what I have been doing?");
+~chatnpc(neutral, "Oh, I can see what is happening in my realm.|I have sent clues to help you get here,|such as the fisherman, and the crone.");
+@multi3("I seek the Holy Grail.", fisher_king_grail, "You don't look too well.", fisher_king_well, "Do you mind if I have a look around?", fisher_king_look);
+
+[label,fisher_king_grail]
+~chatplayer(neutral, "I seek the Holy Grail.");
+~chatnpc(happy, "Ah excellent. A knight come to seek the Holy Grail.|Maybe our land can be restored to its former glory.");
+~chatnpc(happy, "At the moment the Grail cannot be removed from the castle.|Legend has it a questing knight will one day|work out how to restore our land;|then he will claim the Grail as his prize.");
+~chatplayer(neutral, "Any ideas how I can restore the land?");
+~chatnpc(sad, "None at all.");
+@multi2("You don't look too well.", fisher_king_well, "Do you mind if I have a look around?", fisher_king_look);
+
+[label,fisher_king_look]
+~chatplayer(quiz, "Do you mind if I have a look around?");
+~chatnpc(happy, "No, not at all. Please, be my guest.");
+
+[label,fisher_king_well]
+~chatplayer(neutral, "You don't look too well.");
+~chatnpc(sad, "Nope, I don't feel so good either.");
+~chatplayer(neutral, "I fear my life is running short...|Alas, my son and heir is not here.|I am waiting for my son to return to this castle.");
+~chatnpc(neutral, "If you could find my son, that would be a great weight off my shoulders.");
+~chatplayer(quiz, "Who is your son?");
+~chatnpc(neutral, "He is known as Percival.");
+~chatnpc(neutral, "I believe he is a knight of the round table.");
+~chatplayer(neutral, "I shall go and see if I can find him.");
+if(%grail_progress < ^grail_finding_percival) {
+    %grail_progress = ^grail_finding_percival;
+}

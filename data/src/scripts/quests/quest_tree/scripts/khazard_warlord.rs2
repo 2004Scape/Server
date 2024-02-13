@@ -24,27 +24,28 @@ switch_int(%tree_progress) {
 [ai_queue3,khazard_warlord](int $arg)
 gosub(npc_death);
 if(npc_findhero = true) {
-    if(p_finduid(uid) = true) { // get protected access, if not then queue
-        @defeat_warlord;
-    } 
-    queue(queue_defeat_warlord, 0); //strongqueue probably
+    if(%tree_progress = ^tree_returned_first_orb | %tree_progress = ^tree_defeated_warlord) {
+        if(p_finduid(uid) = true) { // get protected access, if not then queue
+            @defeat_warlord;
+        }
+        if_close;
+        queue(queue_defeat_warlord, 0); //strongqueue probably
+        return;
+    }
+    // Not sure if he actually drops bones here, he drops nothing during the quest in old videos, in OSRS he drops the bones + orbs during the quest and just bones after
+    obj_add(npc_coord, bones, 1, 200);
 }
 
 [queue,queue_defeat_warlord] @defeat_warlord;
 
 [label,defeat_warlord]
-if(%tree_progress = ^tree_returned_first_orb | %tree_progress = ^tree_defeated_warlord) {
-    if(inv_total(inv, orbs_of_protection) > 0 | inv_total(bank, orbs_of_protection) > 0) {
-        ~mesbox("As the warlord falls to the ground, a ghostly vapour|floats upwards from his battle-worn armour. Out of sight|you hear a shrill scream in the still air of the valley.");
-    } else {
-        %tree_progress = ^tree_defeated_warlord;
-        inv_add(inv, orbs_of_protection, 1);
-        ~mesbox("As the warlord falls to the ground, a ghostly vapour|floats upwards from his battle worn armour. Out of sight|you hear a shrill scream in the still air of the valley.|You search his satchel and find the orbs of protection.");
-    } 
-    return;
-}
-// Not sure if he actually drops bones here, he drops nothing during the quest in old videos, in OSRS he drops the bones + orbs during the quest and just bones after
-obj_add(npc_coord, bones, 1, 200);
+if(inv_total(inv, orbs_of_protection) > 0 | inv_total(bank, orbs_of_protection) > 0) {
+    ~mesbox("As the warlord falls to the ground, a ghostly vapour|floats upwards from his battle-worn armour. Out of sight|you hear a shrill scream in the still air of the valley.");
+} else {
+    %tree_progress = ^tree_defeated_warlord;
+    inv_add(inv, orbs_of_protection, 1);
+    ~mesbox("As the warlord falls to the ground, a ghostly vapour|floats upwards from his battle worn armour. Out of sight|you hear a shrill scream in the still air of the valley.|You search his satchel and find the orbs of protection.");
+} 
 
 [opobj3,orbs_of_protection]
 if(inv_total(inv, orbs_of_protection) > 0 | inv_total(bank, orbs_of_protection) > 0) {

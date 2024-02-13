@@ -1,12 +1,9 @@
 [opnpc1,sir_tristram]
 ~chatnpc(happy, "Hail Arthur, King of the Britons!");
 ~chatplayer(quiz, "Um... Hello.");
-if(%grail_progress > ^grail_not_started) {
-    switch_int (%grail_progress) {
-        case ^grail_started:
-            ~chatplayer(neutral, "I am seeking the Grail...");
-            ~chatnpc(neutral, "Good luck with that!");
-    }
+if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
+    ~chatplayer(neutral, "I am seeking the Grail...");
+    ~chatnpc(neutral, "Good luck with that!");
     return;
 } 
 switch_int (%arthur_progress) {

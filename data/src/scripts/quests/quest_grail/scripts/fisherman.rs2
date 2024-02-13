@@ -1,0 +1,17 @@
+[opnpc1,grail_fisherman]
+~chatnpc(happy, "Hi! I don't get many visitors here!");
+switch_int(~p_choice3("How's the fishing?", 1, "Any idea how to get into the castle?", 2, "Yes, well, this place is a dump.", 3)) {
+    case 1:
+        ~chatplayer(quiz, "How's the fishing?");
+        ~chatnpc(sad, "Not amazing.|Not many fish can live in this gungey stuff.|I remember when this was a pleasant river|teeming with every sort of fish...");
+    case 2:
+        ~chatplayer(quiz, "Any idea how to get into the castle?");
+        ~chatnpc(shock, "Why, that's easy!");
+        ~chatnpc(neutral, "Just ring one of the bells outside.");
+        ~chatplayer(quiz, "...I didn't see any bells.");
+        ~chatnpc(neutral, "You must be blind then. There's ALWAYS bells there when I go to the castle.");
+        obj_add(0_43_73_10_22, grail_bell, 1, 500);
+    case 3:
+        ~chatplayer(angry, "Yes, well, this place is a dump!");
+        ~chatnpc(neutral, "This place used to be very beautiful,|however, as our king grows old and weak,|the land seems to be dying too.");
+}

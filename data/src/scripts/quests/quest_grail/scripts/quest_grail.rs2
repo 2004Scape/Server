@@ -1,7 +1,118 @@
 [oploc1,loc_24] 
 // merlin door
 if(%grail_progress > ^grail_not_started) {
-    ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+    def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+    if($entering = true) {
+        if(npc_finduid(~npc_within_distance(coord, merlin_workshop, 6)) = true) {
+            npc_del;
+        }
+        npc_add(1_43_54_15_44, merlin_workshop, 500);
+    }
+    ~open_and_close_door(loc_1535, $entering, false);
     return;
 }
 mes("The door won't open.");
+
+[oploc1,loc_23]
+// no map_members check
+~mesbox("You hear a muffled groan. The sack wriggles slightly.");
+
+[oploc2,loc_23]
+if(%grail_progress = ^grail_finding_percival) {
+    ~mesbox("You hear muffled noises from the sack.|You open the sack.");
+    if(npc_finduid(~npc_within_distance(coord, sir_percival, 4)) = false) {
+        npc_add(movecoord(loc_coord, -1, -1, 0), sir_percival, 500);
+    }
+    @percival_found;
+}
+mes("I have no reason to do that.");
+
+[oploc1,loc_22]
+if(map_members = true & inv_total(inv, holy_table_napkin) > 0 & inv_total(inv, magic_whistle) < 2) { // doesn't check bank for either
+    obj_add(2_48_52_35_31, magic_whistle, 1, 100); // this is intended to keep spawning 2 more each time you enter/leave
+    obj_add(2_48_52_35_31, magic_whistle, 1, 100); 
+}
+~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+
+[opheld1,magic_whistle]
+if(inzone(0_42_50_52_34, 0_42_50_55_37, coord) = true) { // Karamja -> fisher's realm
+    if(%grail_progress >= ^grail_given_whistle) {
+        // this spawns you inside a tree, osrs has the tree moved 1 tile to the right (which was the case on release)
+        // the map looks to be identical otherwise so I think they just moved the tree instead of fixing the coord
+        p_teleport(0_41_73_54_43);
+    } else {
+        p_teleport(0_43_73_54_43);
+    }
+} else if(~inzone_coord_pair_table(fisher_realm_zones, coord) = true) { // fisher's realm -> karamja
+    p_teleport(0_42_50_53_35);
+} else {
+    ~mesbox("The whistle makes no noise.|It will not work in this location.");
+}
+
+[opheld1,grail_bell]
+~mesbox("Ting-a-ling-a-ling!");
+if(npc_finduid(~npc_within_distance(coord, grail_maiden, 4)) = true & inzone(0_43_73_0_0, 0_43_73_63_63, coord) = true) {
+    ~chatnpc(confused, "Welcome to the Grail castle.|You should come inside,|it's cold out here.");
+    def_coord $dest = 0_43_73_9_20; 
+    // osrs does p_teleport with controlling walkspeed, can't do 1 tile each here since the next mesbox would be stalled by p_delay
+    p_teleport($dest);
+    ~mesbox("Somehow you are now inside the castle.");
+    return;
+}
+mes("Nothing happens.");
+
+[opobj3,holy_grail]
+if(%grail_progress < ^grail_given_whistle) {
+    ~mesbox("You feel that the Grail shouldn't be moved.|You must complete some task here before you are worthy.");
+    return;
+}
+if(~obj_gettotal(holy_grail) > 0) {
+    ~mesbox("You feel that taking more than one Holy Grail might be greedy...");
+    return;
+}
+inv_add(inv, holy_grail, 1); // no space check
+
+[opheld1,magic_gold_feather]
+if(%grail_progress ! ^grail_finding_percival) {
+    @nothing_interesting_happens;
+}
+def_coord $sack_coord = 0_46_54_16_51; // it looks like OSRS still uses this original coord, only way the logic makes sense
+def_int $delta_x = calc(coordx($sack_coord) - coordx(coord));
+def_int $delta_z = calc(coordz($sack_coord) - coordz(coord));
+if(lineofsight(coord, $sack_coord) = true & distance(coord, $sack_coord) <= 1) {
+    mes("The feather points at the sacks.");
+    return;
+} else if(distance(coord, $sack_coord) <= 5) {
+    mes("The feather points to somewhere nearby.");
+    return;
+}
+// TODO: This probably needs to be re-looked at? (not 100% sure if this is correct)
+if(abs($delta_x) > 5 & abs($delta_z) > 5) {
+    if ($delta_x < 0 & $delta_z < 0) {
+        mes("The feather points to the southwest.");
+    } else if ($delta_x > 0 & $delta_z < 0) {
+        mes("The feather points to the southeast.");
+    } else if ($delta_x > 0 & $delta_z > 0) {
+        mes("The feather points to the northeast.");
+    } else if ($delta_x < 0 & $delta_z > 0) {
+        mes("The feather points to the northwest.");
+    }
+} else {
+    if (abs($delta_z) > abs($delta_x) & $delta_z < 0) {
+        mes("The feather points to the south.");
+    } else if (abs($delta_z) > abs($delta_x) & $delta_z > 0) {
+        mes("The feather points to the north.");
+    } else if (abs($delta_x) > abs($delta_z) & $delta_x > 0) {
+        mes("The feather points to the east.");
+    } else if (abs($delta_x) > abs($delta_z) & $delta_x < 0) {
+        mes("The feather points to the west.");
+    } 
+}
+
+[queue,grail_quest_complete]
+%grail_progress = ^grail_complete;
+inv_del(inv, holy_grail, 1);
+givexp(prayer, 110000);
+givexp(defence, 153000);
+~send_quest_complete(quest_journal:grail, holy_grail, 250, ^grail_questpoints, "You have completed the\\nHoly Grail Quest!");
+

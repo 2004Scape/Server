@@ -1,16 +1,13 @@
 [opnpc1,sir_gawain]
 ~chatnpc(happy, "Good day to you <text_gender("sir", "madam")>!");
-if(%grail_progress > ^grail_not_started) {
-    switch_int (%grail_progress) {
-        case ^grail_started:
-            ~chatplayer(neutral, "I seek the Grail in the name of Camelot!");
-            ~chatnpc(neutral, "The Grail? That is truly a noble quest indeed. None but Galahad have come close.");
-            ~chatplayer(quiz, "Galahad? Who is he?");
-            ~chatnpc(neutral, "He used to be one of the Knights of the Round Table, but he mysteriously disappeared many years ago.");
-            ~chatplayer(neutral, "Why would he quit being a Knight?");
-            ~chatnpc(sad, "|That is a good question.");
-            ~chatnpc(sad, "I'm afraid I don't have the answer.");
-    }
+if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
+    ~chatplayer(neutral, "I seek the Grail in the name of Camelot!");
+    ~chatnpc(neutral, "The Grail? That is truly a noble quest indeed. None but Galahad have come close.");
+    ~chatplayer(quiz, "Galahad? Who is he?");
+    ~chatnpc(neutral, "He used to be one of the Knights of the Round Table, but he mysteriously disappeared many years ago.");
+    ~chatplayer(neutral, "Why would he quit being a Knight?");
+    ~chatnpc(sad, "|That is a good question.");
+    ~chatnpc(sad, "I'm afraid I don't have the answer.");
     return;
 } 
 def_int $option;

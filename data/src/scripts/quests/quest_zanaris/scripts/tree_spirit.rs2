@@ -3,7 +3,8 @@ gosub(npc_death);
 if(npc_findhero = true) {
     if(p_finduid(uid) = true) { // get protected access, if not then queue
         @defeat_tree_spirit;
-    } 
+    }
+    if_close;
     queue(queue_defeat_tree_spirit, 0);
 }
 

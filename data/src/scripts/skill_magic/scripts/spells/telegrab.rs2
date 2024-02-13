@@ -20,6 +20,10 @@ if (obj_type = obj_712) {
     ~chatnpc_specific(nc_name(tea_seller), tea_seller, angry, "Hey! Put that back! Those are for display only!");
     return;
 }
+if(obj_type = holy_grail) { // prob some other objs that use this mes as well, maybe make a param if so
+    mes("I can't use Telekinetic Grab on this object.");
+    return;
+}
 // start anim, sound, and spotanim
 anim(human_casttelegrab, 0);
 sound_synth(telegrab_all, 0, 0);

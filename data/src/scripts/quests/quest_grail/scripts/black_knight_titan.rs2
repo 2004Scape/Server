@@ -1,0 +1,106 @@
+[opnpc1,black_knight_titan]
+~chatnpc(angry, "@red@I am the Black Knight Titan!|@red@You must pass through|@red@me before you can|@red@continue in this realm!");
+switch_int(~p_choice2("Ok, have at ye oh evil knight!", 1, "Actually I think I'll run away!", 2)) {
+    case 1:
+         ~chatplayer(angry, "Ok, have at ye oh evil knight!");
+         ~npc_retaliate(0);
+    case 2: ~chatplayer(shock, "Actually I think I'll run away!");
+}
+
+[opnpc2,black_knight_titan]
+if(npc_stat(hitpoints) = 0) {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+}
+@player_combat_start;
+
+[ai_queue3,black_knight_titan](int $arg)
+if(npc_findhero = true) {
+    if(p_finduid(uid) = true) { 
+        @defeat_titan;
+    }
+    if_close;
+    queue(queue_defeat_titan, 0); //strongqueue probably
+}
+
+[queue,queue_defeat_titan] @defeat_titan;
+
+[label,defeat_titan]
+p_stopaction;
+p_delay(0);
+if(npc_finduid(~npc_within_distance(coord, black_knight_titan, 10)) = false) {
+    return;
+}
+// https://www.youtube.com/watch?v=KCjnsoBT0vA&t=97s
+if(inv_total(worn, excalibur) = 0) { // if this was queued we'll need to regain prot access
+    if(%grail_progress = ^grail_spoken_crone) {
+        %grail_progress = ^grail_failed_defeat_titan;
+    }
+    mes("Maybe you need something more to beat the titan?");
+    ~chatnpc(angry, "@red@Puny mortal...|@red@You cannot defeat me...");
+    ~chatnpc(angry, "@red@I...|@red@Am...|@red@INVINCIBLE!!!");
+} else {
+    mes("Well done! You have defeated the Black Knight Titan!");
+    def_coord $dest = movecoord(npc_coord, 1, 0, 0);
+    if(coordx(coord) > coordx(npc_coord)) {
+        $dest = movecoord(npc_coord, -1, 0, 0);
+    }
+    if(distance($dest, coord) > 2) { // looks like osrs does p_teleport with controlling walkspeed but we can't do that so this is the workaround
+        p_telejump($dest);
+    } else {
+        ~forcemove($dest);
+    }
+    gosub(npc_death);
+    obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+    def_int $random = random(128);
+    if ($random < 5) {
+        obj_add(npc_coord, iron_full_helm, 1, ^lootdrop_duration);
+    } else if ($random < 9) {
+        obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
+    } else if ($random < 12) {
+        obj_add(npc_coord, iron_kiteshield, 1, ^lootdrop_duration);
+    } else if ($random < 14) {
+        obj_add(npc_coord, steel_longsword, 1, ^lootdrop_duration);
+    } else if ($random < 20) {
+        obj_add(npc_coord, iron_arrow, 3, ^lootdrop_duration);
+    } else if ($random < 23) {
+        obj_add(npc_coord, firerune, 15, ^lootdrop_duration);
+    } else if ($random < 26) {
+        obj_add(npc_coord, waterrune, 7, ^lootdrop_duration);
+    } else if ($random < 29) {
+        obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+    } else if ($random < 31) {
+        obj_add(npc_coord, steel_arrow, 10, ^lootdrop_duration);
+    } else if ($random < 33) {
+        obj_add(npc_coord, mindrune, 3, ^lootdrop_duration);
+    } else if ($random < 35) {
+        obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
+    } else if ($random < 37) {
+        obj_add(npc_coord, naturerune, 6, ^lootdrop_duration);
+    } else if ($random < 38) {
+        obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+    } else if ($random < 39) {
+        obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
+    } else if ($random < 46) {
+        obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+    } else if ($random < 64) {
+        obj_add(npc_coord, coins, 26, ^lootdrop_duration); // TODO: seed drop table, can't find any sources for how much gp it would of been
+    } else if ($random < 78) {
+        obj_add(npc_coord, coins, 38, ^lootdrop_duration);
+    } else if ($random < 88) {
+        obj_add(npc_coord, coins, 52, ^lootdrop_duration);
+    } else if ($random < 96) {
+        obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+    } else if ($random < 102) {
+        obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+    } else if ($random < 104) {
+        obj_add(npc_coord, coins, 88, ^lootdrop_duration);
+    } else if ($random < 115) {
+        obj_add(npc_coord, limpwurt_root, 1, ^lootdrop_duration);
+    } else if ($random < 121) {
+        obj_add(npc_coord, beer, 1, ^lootdrop_duration);
+    } else if ($random < 123) {
+        obj_add(npc_coord, body_talisman, 1, ^lootdrop_duration);
+    } else if ($random < 126) {
+        obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+    }
+}
