@@ -4,25 +4,29 @@
 
 <%- include('./_components/stones-border-top.ejs'); %>
 <%- include('./_components/stones-content-start.ejs'); %>
+
 <img src=/img/title/blank.gif height=7 width=1><br>
-<b>What is 2004Scape?</b><br>
 
-This is an emulation of RuneScape as it was in 2004.<br />
-It exists for the sake of nostalgia and preservation of the game's history.<br /><br />
+<b style="font-size: larger;">What is 2004Scape?</b><br>
 
-It is not representative of today's RuneScape and does not involve any of their live services.<br />
-<b>You <em>cannot</em> play Old School RuneScape here or buy RuneScape gold!</b><br /><br />
+<br>
 
-This is a fan-made project and is not affiliated with Jagex Ltd.<br />
-The assets within belong wholly to Jagex. The website content and assets were obtained via archive.org snapshots from May/June 2004. The client and its assets were obtained from old computer backups. The server uses no official code and was written in NodeJS/JavaScript, based on observations and historical archives.<br /><br />
+This is an emulation of RuneScape as it was in 2004.<br>
+It exists for the sake of nostalgia and preservation of the game's history.<br>
 
-We come in peace, this is a non-profit no-donation open-source hobby project.<br />
-<a href="/title">Please click here to continue, acknowledging you understand the above statements.</a>
+<br>
 
-<br />
+It is not representative of today's RuneScape and does not involve any of their live services.<br>
+<b>You <em>cannot</em> play Old School RuneScape here or buy RuneScape gold!</b><br>
+
+<hr>
+
+<%- include('./_partial/disclaimer.ejs'); %>
+
+<a href="/title">Please click here to continue, acknowledging you understand the above statements.</a><br>
 
 <%- include('./_components/stones-content-end.ejs'); %>
 <%- include('./_components/stones-border-bottom.ejs'); %>
 
 <%- include('./_components/content-end.ejs'); %>
-<%- include('./_partial/footer.ejs'); %>
+<%- include('./_partial/footer.ejs', { nodisclaimer: true }); %>
