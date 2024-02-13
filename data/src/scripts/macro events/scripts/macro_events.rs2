@@ -146,23 +146,10 @@ if ($combat_level < 91) {
 return(^macro_event_cmb_159);
 
 [proc,macro_event_coord]()(coord)
-def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
-
-def_int $i = 0;
-while ($event_coord = coord) {
-    $event_coord = ~coord_lineofwalk_radius(coord, 1);
-    $i = calc($i + 1);
-    if ($i = 25) {
-
-        // after 25 tries, dont spawn anything
-        return(null);
-    }
-}
-return($event_coord);
+return(~coord_lineofwalk_radius2(coord, 1));
 
 // for 2x2 npcs
 [proc,macro_event_coord_2x2]()(coord)
-
 def_int $i = 0;
 def_coord $sw;
 def_coord $nw;
@@ -170,13 +157,13 @@ def_coord $se;
 def_coord $ne;
 // basically prevent the npc from spawning into anything it shouldnt. and so it doesnt spawn ontop of player
 while ($i < 50) {
-    $sw = ~coord_lineofwalk_radius(coord, 2);
+    $sw = movecoord(coord, ~random_range(calc(0 - 2), 2), 0, ~random_range(calc(0 - 2), 2));
     $nw = movecoord($sw, 1, 0, 0);
     $se = movecoord($sw, 0, 0, 1);
     $ne = movecoord($sw, 1, 0, 1);
-    if (map_blocked($sw) = false & map_blocked($nw) = false & map_blocked($se) = false & map_blocked($ne) = false) {
+    if (map_blocked($sw) = false & map_blocked($nw) = false & map_blocked($se) = false & map_blocked($ne) = false & lineofwalk($sw, $ne) = true){
         return($sw);
     }
     $i = calc($i + 1);
 }
-return($sw);
+return(null);

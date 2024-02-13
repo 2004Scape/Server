@@ -8655,9 +8655,9 @@ frame87=anim_5916
 frame88=anim_5977
 delay88=20000
 
-[seq_642]
-lefthand=obj_466
-righthand=obj_466
+[human_mining_pickaxe_handle]
+lefthand=pickaxe_handle
+righthand=pickaxe_handle
 frame1=anim_2161
 frame2=anim_1866
 frame3=anim_1572

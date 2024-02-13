@@ -10,7 +10,7 @@ weight=3oz
 iop1=Eat
 tradeable=yes
 
-[obj_466]
+[pickaxe_handle]
 name=Pickaxe handle
 desc=Useless without the head.
 model=model_2597_obj
@@ -151,7 +151,7 @@ tradeable=yes
 param=is_broken,^true
 param=fixed,rune_pickaxe
 
-[obj_480]
+[bronze_pickaxe_head]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -166,8 +166,9 @@ weight=4lb
 category=category_15
 cost=1
 tradeable=yes
+param=fixed,bronze_pickaxe
 
-[obj_482]
+[iron_pickaxe_head]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -182,8 +183,9 @@ weight=4lb
 category=category_15
 cost=139
 tradeable=yes
+param=fixed,iron_pickaxe
 
-[obj_484]
+[steel_pickaxe_head]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -196,8 +198,9 @@ weight=4lb
 category=category_15
 cost=499
 tradeable=yes
+param=fixed,steel_pickaxe
 
-[obj_486]
+[mithril_pickaxe_head]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -212,8 +215,9 @@ weight=4lb
 category=category_15
 cost=1299
 tradeable=yes
+param=fixed,mithril_pickaxe
 
-[obj_488]
+[adamant_pickaxe_head]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -228,8 +232,9 @@ weight=4lb
 category=category_15
 cost=3199
 tradeable=yes
+param=fixed,adamant_pickaxe
 
-[obj_490]
+[rune_pickaxe_head]
 name=Pickaxe head
 desc=It's missing a handle.
 model=model_2732_obj
@@ -244,6 +249,7 @@ weight=4lb
 category=category_15
 cost=31999
 tradeable=yes
+param=fixed,rune_pickaxe
 
 [obj_492]
 name=Axe handle

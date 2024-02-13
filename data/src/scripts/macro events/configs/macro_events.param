@@ -17,3 +17,7 @@ default=0
 [fixed]
 type=namedobj
 default=null
+
+[pickaxe_head]
+type=namedobj
+default=null
