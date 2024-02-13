@@ -988,7 +988,7 @@ recol4d=7056
 model1=model_2887_npc
 // TODO
 
-[macro_event_tree_spirit1]
+[macro_event_dryad1]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -1013,13 +1013,13 @@ hitpoints=25
 attack=9
 strength=9
 defence=9
-category=macro_event_tree_spirit
+category=macro_event_dryad
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[macro_event_tree_spirit2]
+[macro_event_dryad2]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -1044,14 +1044,14 @@ hitpoints=40
 attack=22
 strength=22
 defence=22
-category=macro_event_tree_spirit
+category=macro_event_dryad
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
 
-[macro_event_tree_spirit3]
+[macro_event_dryad3]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -1076,13 +1076,13 @@ hitpoints=60
 attack=38
 strength=38
 defence=38
-category=macro_event_tree_spirit
+category=macro_event_dryad
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[macro_event_tree_spirit4]
+[macro_event_dryad4]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -1107,13 +1107,13 @@ hitpoints=85
 attack=65
 strength=65
 defence=65
-category=macro_event_tree_spirit
+category=macro_event_dryad
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[macro_event_tree_spirit5]
+[macro_event_dryad5]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -1138,13 +1138,13 @@ hitpoints=120
 attack=100
 strength=100
 defence=100
-category=macro_event_tree_spirit
+category=macro_event_dryad
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[macro_event_tree_spirit6]
+[macro_event_dryad6]
 name=Tree spirit
 desc=A very angry nymph.
 readyanim=dryhad_ready
@@ -1169,7 +1169,7 @@ hitpoints=170
 attack=130
 strength=130
 defence=130
-category=macro_event_tree_spirit
+category=macro_event_dryad
 param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block

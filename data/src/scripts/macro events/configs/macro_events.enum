@@ -55,15 +55,15 @@ val=4,macro_event_watchman4
 val=5,macro_event_watchman5
 val=6,macro_event_watchman6
 
-[macro_event_tree_spirit_levels]
+[macro_event_dryad_levels]
 inputtype=int
 outputtype=npc
-val=1,macro_event_tree_spirit1
-val=2,macro_event_tree_spirit2
-val=3,macro_event_tree_spirit3
-val=4,macro_event_tree_spirit4
-val=5,macro_event_tree_spirit5
-val=6,macro_event_tree_spirit6
+val=1,macro_event_dryad1
+val=2,macro_event_dryad2
+val=3,macro_event_dryad3
+val=4,macro_event_dryad4
+val=5,macro_event_dryad5
+val=6,macro_event_dryad6
 
 [macro_event_river_troll_levels]
 inputtype=int

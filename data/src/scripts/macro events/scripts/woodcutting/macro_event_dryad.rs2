@@ -1,0 +1,59 @@
+[label,macro_event_dryad_spawn]
+// https://youtu.be/QOl_8KE9jUU?list=PLn23LiLYLb1aYjPgadhUQGX61AeHWaT4y&t=15
+def_npc $event = enum(int, npc, macro_event_dryad_levels, ~macro_event_combat_level);
+
+def_coord $event_coord = ~macro_event_coord;
+if ($event_coord = null) {
+    return;
+}
+
+npc_add($event_coord, $event, 1000);
+npc_say("Leave these woods and never return!");
+%npc_attacking_uid = uid;
+if (finduid(uid) = false) {
+    return;
+}
+sound_synth(dryad_appear, 0, 0);
+spotanim_map(snare_hit, npc_coord, 100, 0); // osrs
+npc_delay(1);
+npc_setmode(opplayer2);
+
+[ai_timer,_macro_event_dryad]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_queue3,_macro_event_dryad](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+def_int $random = random(128);
+
+if ($random < 20) {
+    obj_add(npc_coord, mithril_axe, 1, ^lootdrop_duration);
+} else if ($random < 30) {
+    obj_add(npc_coord, steel_axe, 1, ^lootdrop_duration);
+} else if ($random < 38) {
+    obj_add(npc_coord, adamant_axe, 1, ^lootdrop_duration);
+} else if ($random < 42) {
+    obj_add(npc_coord, rune_axe, 1, ^lootdrop_duration);
+} else if ($random < 73) {
+    obj_add(npc_coord, naturerune, 22, ^lootdrop_duration);
+} else if ($random < 75) {
+    obj_add(npc_coord, naturerune, 10, ^lootdrop_duration);
+} else if ($random < 77) {
+    obj_add(npc_coord, naturerune, 5, ^lootdrop_duration);
+} else if ($random < 78) {
+    obj_add(npc_coord, naturerune, 2, ^lootdrop_duration);
+} else if ($random < 90) { // snap dragons and toadflaxes didnt exist in 2004, guides say bananas were dropped
+    obj_add(npc_coord, banana, 1, ^lootdrop_duration); 
+} else if ($random < 91) {
+    obj_add(npc_coord, knife, 1, ^lootdrop_duration);
+} else if ($random < 99) {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+} else {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+}
