@@ -4,6 +4,15 @@
 		"dockerfile": "Server.Dockerfile",
 		"context": ".."
 	},
+	"customizations": {
+		"vscode": {  
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"2004scape.runescriptlanguage"
+	  		]
+	  	}
+	},
 	"remoteUser": "vscode",
 	"postStartCommand": "bash -c 'chmod +x setup.sh && ./setup.sh'",
 	"mounts": [
