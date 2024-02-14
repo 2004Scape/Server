@@ -84,6 +84,35 @@ switch_int ($damagetype) {
 
 [proc,give_combat_experience](int $damagestyle, int $damage)
 def_int $base = multiply($damage, 10);
+// not a multiplier (some npcs have that), but exactly 1xp * hit for all cb styles (including controlled), prob a better way of doing this
+// not sure if this is the only npc that has this mechanic (not 100% sure if this existed in 2004 either)
+if(npc_type = black_knight_titan) { 
+    switch_int($damagestyle) {
+        case ^style_melee_accurate : 
+            givexp(attack, $base);
+        case ^style_melee_aggressive : 
+            givexp(strength, $base);
+        case ^style_melee_defensive : 
+            givexp(defence, $base);
+        case ^style_melee_controlled : 
+            givexp(attack, $base);
+            givexp(strength, $base);
+            givexp(defence, $base);
+        case ^style_ranged_accurate, ^style_ranged_rapid : 
+            givexp(ranged, $base);
+        case ^style_ranged_longrange : 
+            givexp(ranged, $base);
+            givexp(defence, $base);
+        case ^style_magic_normal :
+            givexp(magic, $base);
+        case ^style_magic_defensive : 
+            givexp(magic, $base);
+            givexp(defence, $base);
+        case default : return;
+    }
+    givexp(hitpoints, scale(133, 100, $base));
+    return;
+}
 switch_int($damagestyle) {
     case ^style_melee_accurate : 
         givexp(attack, scale(400, 100, $base));

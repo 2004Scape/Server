@@ -93,6 +93,6 @@ inv_add(inv, cup_of_tea, 1);
 inv_add(inv, cup_of_tea, 1);
 
 [label,galahad_borrow_cloth]
-~chatplayer(quiz, "I don't suppose I could borrow that? It could come in useful on my quest.");
+~chatplayer(quiz, "I don't suppose I could borrow that?|It could come in useful on my quest.");
 ~mesbox("Galahad reluctantly passes you a small cloth.");
 inv_add(inv, holy_table_napkin, 1);

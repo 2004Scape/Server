@@ -148,6 +148,7 @@ switch_coord (loc_coord) {
     case 1_39_51_34_53: p_telejump(0_39_51_34_56); // West Ardy House 01 - level 1
     case 1_39_51_30_28: p_telejump(0_39_51_30_26); // West Ardy Church - level 1
     case 1_46_52_24_19: p_telejump(0_46_52_27_19); // Falador castle courtyard
+    case 1_39_53_20_33: p_telejump(0_39_53_20_31); // Waterfall tourism building - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -161,6 +162,7 @@ switch_coord (loc_coord) {
     case 0_39_51_34_55: p_telejump(1_39_51_33_53); // West Ardy House 01 - level 0
     case 0_39_51_30_27: p_telejump(1_39_51_31_29); // West Ardy Church - level 0
     case 0_46_52_26_19: p_telejump(1_46_52_24_20); // Falador castle courtyard
+    case 0_39_53_20_32: p_telejump(1_39_53_21_34); // Waterfall tourism building - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 

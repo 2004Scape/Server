@@ -25,7 +25,7 @@ if(%grail_progress > ^grail_not_started) {
             }
         case default:
             ~chatnpc(quiz, "How goes thy quest?");
-            if(inv_total(inv, holy_grail) > 0) {
+            if(inv_total(inv, holy_grail) > 0 & %grail_progress = ^grail_given_whistle) {
                 ~chatplayer(happy, "I have retrieved the Grail!");
                 ~chatnpc(happy, "Wow! Incredible! You truly are a splendid knight!");
                 queue(grail_quest_complete, 0);

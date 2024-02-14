@@ -10,7 +10,7 @@
 [label,fisher_king_grail]
 ~chatplayer(neutral, "I seek the Holy Grail.");
 ~chatnpc(happy, "Ah excellent. A knight come to seek the Holy Grail.|Maybe our land can be restored to its former glory.");
-~chatnpc(happy, "At the moment the Grail cannot be removed from the castle.|Legend has it a questing knight will one day|work out how to restore our land;|then he will claim the Grail as his prize.");
+~chatnpc(happy, "At the moment the Grail cannot be removed from the castle. Legend has it a questing knight will one day work out how to restore our land; then he will claim the Grail as his prize.");
 ~chatplayer(neutral, "Any ideas how I can restore the land?");
 ~chatnpc(sad, "None at all.");
 @multi2("You don't look too well.", fisher_king_well, "Do you mind if I have a look around?", fisher_king_look);
@@ -22,7 +22,7 @@
 [label,fisher_king_well]
 ~chatplayer(neutral, "You don't look too well.");
 ~chatnpc(sad, "Nope, I don't feel so good either.");
-~chatplayer(neutral, "I fear my life is running short...|Alas, my son and heir is not here.|I am waiting for my son to return to this castle.");
+~chatnpc(neutral, "I fear my life is running short...|Alas, my son and heir is not here.|I am waiting for my son to return to this castle.");
 ~chatnpc(neutral, "If you could find my son, that would be a great weight off my shoulders.");
 ~chatplayer(quiz, "Who is your son?");
 ~chatnpc(neutral, "He is known as Percival.");

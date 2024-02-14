@@ -20,8 +20,13 @@ if (obj_type = obj_712) {
     ~chatnpc_specific(nc_name(tea_seller), tea_seller, angry, "Hey! Put that back! Those are for display only!");
     return;
 }
-if(obj_type = holy_grail) { // prob some other objs that use this mes as well, maybe make a param if so
+// These use a different mes compared to obj's with the telegrab_disabled param (maybe make a 2nd param)
+if(obj_type = holy_grail | obj_type = ghost_skull | obj_type = obj_78) {
     mes("I can't use Telekinetic Grab on this object.");
+    return;
+}
+if(oc_param(obj_type, telegrab_disabled) = true) {
+    mes("You can't cast this spell on that object.");
     return;
 }
 // start anim, sound, and spotanim

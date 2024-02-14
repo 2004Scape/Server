@@ -95,7 +95,7 @@ if (~npc_is_attackable($npc) = false) {
 return (true);
 
 [proc,npc_out_of_combat]()(boolean)
-if (add(%npc_action_delay, 8) < map_clock) {
+if (add(%npc_action_delay, 8) < map_clock | (npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
     return (true);
 }
 return (false);
