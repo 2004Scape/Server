@@ -4,5 +4,6 @@
 		"dockerfile": "Server.Dockerfile",
 		"context": ".."
 	},
-	"remoteUser": "vscode"
+	"remoteUser": "vscode",
+	"postStartCommand": "bash -c 'chmod +x setup.sh && ./setup.sh'"
 }
