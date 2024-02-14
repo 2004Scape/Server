@@ -591,6 +591,7 @@ param=death_anim,seq_843
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+param=combat_xp_multiplier,25
 
 [macro_event_shade2]
 visonmap=no
@@ -633,6 +634,7 @@ param=death_anim,seq_843
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+param=combat_xp_multiplier,25
 
 [macro_event_shade3]
 visonmap=no
@@ -675,6 +677,7 @@ param=death_anim,seq_843
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+param=combat_xp_multiplier,25
 
 [macro_event_shade4]
 visonmap=no
@@ -717,6 +720,7 @@ param=death_anim,seq_843
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+param=combat_xp_multiplier,25
 
 [macro_event_shade5]
 visonmap=no
@@ -759,6 +763,7 @@ param=death_anim,seq_843
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+param=combat_xp_multiplier,25
 
 [macro_event_shade6]
 visonmap=no
@@ -801,6 +806,7 @@ param=death_anim,seq_843
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
+param=combat_xp_multiplier,25
 
 [macro_event_watchman1]
 name=Watchman
@@ -827,8 +833,13 @@ hitpoints=20
 attack=9
 strength=9
 defence=9
+// i assume the stats are identical to other random events
 category=macro_event_watchman
+param=defend_anim,human_blunt_defend
+param=attack_anim,human_baxe_crush
+param=attack_sound,mace_crush
 param=damagetype,^crush_style
+param=combat_xp_multiplier,25
 
 [macro_event_watchman2]
 name=Watchman
@@ -856,7 +867,11 @@ attack=22
 strength=22
 defence=22
 category=macro_event_watchman
+param=defend_anim,human_blunt_defend
+param=attack_anim,human_baxe_crush
+param=attack_sound,mace_crush
 param=damagetype,^crush_style
+param=combat_xp_multiplier,25
 
 [macro_event_watchman3]
 name=Watchman
@@ -884,7 +899,11 @@ attack=38
 strength=38
 defence=38
 category=macro_event_watchman
+param=defend_anim,human_blunt_defend
+param=attack_anim,human_baxe_crush
+param=attack_sound,mace_crush
 param=damagetype,^crush_style
+param=combat_xp_multiplier,25
 
 [macro_event_watchman4]
 name=Watchman
@@ -912,7 +931,11 @@ attack=65
 strength=65
 defence=65
 category=macro_event_watchman
+param=defend_anim,human_blunt_defend
+param=attack_anim,human_baxe_crush
+param=attack_sound,mace_crush
 param=damagetype,^crush_style
+param=combat_xp_multiplier,25
 
 [macro_event_watchman5]
 name=Watchman
@@ -940,7 +963,11 @@ attack=100
 strength=100
 defence=100
 category=macro_event_watchman
+param=defend_anim,human_blunt_defend
+param=attack_anim,human_baxe_crush
+param=attack_sound,mace_crush
 param=damagetype,^crush_style
+param=combat_xp_multiplier,25
 
 [macro_event_watchman6]
 name=Watchman
@@ -968,7 +995,11 @@ attack=130
 strength=130
 defence=130
 category=macro_event_watchman
+param=defend_anim,human_blunt_defend
+param=attack_anim,human_baxe_crush
+param=attack_sound,mace_crush
 param=damagetype,^crush_style
+param=combat_xp_multiplier,25
 
 [npc_437]
 name=Brownie
@@ -1018,6 +1049,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=combat_xp_multiplier,25
 
 [macro_event_dryad2]
 name=Tree spirit
@@ -1049,7 +1081,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-
+param=combat_xp_multiplier,25
 
 [macro_event_dryad3]
 name=Tree spirit
@@ -1081,6 +1113,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=combat_xp_multiplier,25
 
 [macro_event_dryad4]
 name=Tree spirit
@@ -1112,6 +1145,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=combat_xp_multiplier,25
 
 [macro_event_dryad5]
 name=Tree spirit
@@ -1143,6 +1177,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=combat_xp_multiplier,25
 
 [macro_event_dryad6]
 name=Tree spirit
@@ -1174,6 +1209,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+param=combat_xp_multiplier,25
 
 [macro_event_ent_tree1]
 vislevel=hide

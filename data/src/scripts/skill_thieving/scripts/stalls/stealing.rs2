@@ -29,6 +29,10 @@ if ($data = null) {
     @nothing_interesting_happens;
 }
 
+if (1 = ^true) {
+    @macro_randomthieving;
+}
+
 def_string $stall = db_getfield($data, stealing:stall, 0);
 
 if (db_getfieldcount($data, stealing:stall) > 1) {

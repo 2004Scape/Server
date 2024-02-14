@@ -94,6 +94,10 @@ if ($data = null) {
     @nothing_interesting_happens;
 }
 
+if (1 = ^true) {
+    @macro_randomthieving;
+}
+
 def_string $pocket = db_getfield($data, pickpocket:pocket, 0);
 def_int $current_level = stat(thieving);
 def_int $thieving_level = db_getfield($data, pickpocket:level, 0);

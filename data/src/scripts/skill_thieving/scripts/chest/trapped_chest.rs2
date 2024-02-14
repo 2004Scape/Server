@@ -44,6 +44,10 @@ if ($data = null) {
     @nothing_interesting_happens;
 }
 
+if (1 = ^true) {
+    @macro_randomthievingchest;
+}
+
 mes("You search the chest for traps.");
 
 def_int $current_level = stat(thieving);

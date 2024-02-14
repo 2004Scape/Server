@@ -1,0 +1,109 @@
+[label,macro_event_watchman_spawn]
+// no video :(
+// https://web.archive.org/web/20050114214457/http://www.nomadgaming.com/index.php?page=rs2randomevent
+// drops:
+// - https://web.archive.org/web/20040713074721/http://runehq.com/viewguidedb.php?id=00206
+// - https://web.archive.org/web/20040606142810/http://www.tip.it/runescape/index.php?page=rs2randon.htm
+def_npc $event = enum(int, npc, macro_event_watchman_levels, ~macro_event_combat_level);
+
+def_coord $event_coord = ~macro_event_coord;
+if ($event_coord = null) {
+    return;
+}
+
+npc_add($event_coord, $event, 1000);
+npc_say("<displayname>, you are under arrest!");
+%npc_attacking_uid = uid;
+if (finduid(uid) = false) {
+    return;
+}
+// no idea what sound he makes
+sound_synth(smokepuff, 0, 0);
+spotanim_map(spotanim_86, npc_coord, 124, 0);
+npc_delay(2);
+npc_setmode(opplayer2);
+
+
+[ai_timer,_macro_event_watchman]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+
+// i have to guess these drop rates to the best of my ability. basically impossible to get these rates unless
+// jagex still has the code laying around somewhere, somehow
+// - todo: ask jagex if they have these drop rates
+
+// Sources:
+// - https://web.archive.org/web/20040713074721/http://runehq.com/viewguidedb.php?id=00206
+// - https://web.archive.org/web/20040606142810/http://www.tip.it/runescape/index.php?page=rs2randon.htm
+// - https://web.archive.org/web/20051105212509/http://www.tip.it/runescape/index.php?rs2monster_id=217
+// - https://web.archive.org/web/20050210102631/http://runehq.com/viewMonster.php?id=212
+[ai_queue3,_macro_event_watchman](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+// drops:
+// - 3 death runes
+// - 3 law runes
+// - 8 nature runes
+// - 50 water runes
+// - 22 body runes
+// - 2 coins
+// - 16 coins
+// - 20 coins
+// - 30 coins
+// - 50 coins
+// - 70 coins
+// - 105 coins
+// - "herbs"
+// - 1-3 steel bars
+// - randomjewel
+// - coal
+// - mithril med helm
+// - steel sword
+
+// rates are completely guessed
+if ($random < 8) { // 8/128
+    obj_add(npc_coord, steel_sword, 1, ^lootdrop_duration);
+} else if ($random < 14) { // 6/128
+    obj_add(npc_coord, mithril_med_helm, 1, ^lootdrop_duration);
+} else if ($random < 20) { // 6/128
+    obj_add(npc_coord, coal, 1, ^lootdrop_duration);
+} else if ($random < 28) { // 8/128
+    obj_add(npc_coord, steel_bar, add(random(3), 1), ^lootdrop_duration);
+} else if ($random < 44) { // 16/128
+    obj_add(npc_coord, coins, 2, ^lootdrop_duration);
+} else if ($random < 58) { // 14/128
+    obj_add(npc_coord, coins, 16, ^lootdrop_duration);
+} else if ($random < 70) { // 12/128
+    obj_add(npc_coord, coins, 20, ^lootdrop_duration);
+} else if ($random < 80) { // 10/128
+    obj_add(npc_coord, coins, 30, ^lootdrop_duration);
+} else if ($random < 88) { // 8/128
+    obj_add(npc_coord, coins, 50, ^lootdrop_duration);
+} else if ($random < 94) { // 6/128
+    obj_add(npc_coord, coins, 70, ^lootdrop_duration);
+} else if ($random < 98) { // 4/128
+    obj_add(npc_coord, coins, 105, ^lootdrop_duration);
+} else if ($random < 105) { // 7/128
+    obj_add(npc_coord, waterrune, 50, ^lootdrop_duration);
+} else if ($random < 110) { // 5/128
+    obj_add(npc_coord, bodyrune, 22, ^lootdrop_duration);
+} else if ($random < 114) { // 4/128
+    obj_add(npc_coord, lawrune, 3, ^lootdrop_duration);
+} else if ($random < 118) { // 4/128
+    obj_add(npc_coord, deathrune, 3, ^lootdrop_duration);
+} else if ($random < 120) { // 2/128
+    obj_add(npc_coord, naturerune, 8, ^lootdrop_duration);
+} else if ($random < 124 & map_members = true) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

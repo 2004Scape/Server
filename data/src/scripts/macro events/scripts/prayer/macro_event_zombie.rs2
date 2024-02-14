@@ -37,6 +37,11 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 // guess based off https://i.imgur.com/lHra6Pp.png
 // and https://twitter.com/JagexAsh/status/1346426487268900864
 // todo: get some more data
+
+// Fan sites fail to mention the air rune drops, but two of them mention a swordfish drop.
+// - https://web.archive.org/web/20061104102323/http://runehints.com/revents.php
+// - https://web.archive.org/web/20040713074721/http://runehq.com/viewguidedb.php?id=00206
+// - swordfish drop mightve been replaced with air runes at some point?
 def_int $random = random(256);
 
 if ($random < 36) { // 36/256
@@ -47,8 +52,8 @@ if ($random < 36) { // 36/256
     obj_add(npc_coord, chaosrune, 35, ^lootdrop_duration);
 } else if ($random < 100) { // 8/256
     obj_add(npc_coord, chaosrune, 50, ^lootdrop_duration);
-} else if ($random < 128) { // 28/256
-    obj_add(npc_coord, airrune, 40, ^lootdrop_duration);
+} else if ($random < 128) { // 28/256 (swordfish replaced with air runes?)
+    obj_add(npc_coord, swordfish, 1, ^lootdrop_duration);
 } else if ($random < 144) { // 16/256
     obj_add(npc_coord, cosmicrune, 5, ^lootdrop_duration);
 } else if ($random < 160) { // 16/256
