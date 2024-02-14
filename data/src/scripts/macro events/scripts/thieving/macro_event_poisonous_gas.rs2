@@ -1,1 +1,39 @@
 [label,macro_event_poisonous_gas_spawn]
+mes("You search the chest for traps.");
+
+mes("You find a trap on the chest,");
+p_delay(1);
+mes("You disable the trap.");
+sound_synth(locked, 0, 0);
+p_delay(1);
+mes("You open the chest.");
+sound_synth(chest_open, 0, 0);
+p_delay(1);
+anim(human_openchest, 0);
+loc_change(macro_poisonous_gas_chest, 100); // timing is guessed
+p_delay(0);
+settimer(poison_gas, 1); // start the timer
+
+say("I better run!"); // 2004 https://i.imgur.com/nwQIetY.png
+
+// timer is set when macro_poisonous_gas_chest is called.
+// timer is cleared when player is not within 10 tiles of macro_poisonous_gas_chest
+// - Not sure if this timer should be reset on login.
+// - Should this damage other players? If so, how is that possible without an npc?
+[timer,poison_gas]
+def_coord $check_coord = ~loc_within_distance(coord, macro_poisonous_gas_chest, 10);
+if ($check_coord = null) {
+    cleartimer(poison_gas); // stop the timer
+    return;
+}
+if (loc_find($check_coord, macro_poisonous_gas_chest) = true) { // set active loc
+    // if player is within 1 tile of gas, apply damage (2-3)
+    if (distance(loc_coord, coord) <= 1) {
+        // todo: figure out the mes for this thing
+        sound_synth(gas_hiss, 0, 0);
+        ~poison_damage(~random_range(2, 3)); // poison damage doesnt actually poison, its just a green hitsplat
+    }
+    settimer(poison_gas, 4);
+} else {
+    cleartimer(poison_gas); // stop the timer
+}

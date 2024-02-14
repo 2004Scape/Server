@@ -13,12 +13,17 @@ if (%poison = 0 | %antipoison > map_clock) {
     cleartimer(poison);
     return;
 }
+~poison_damage(calc((%poison + 4)/5));
 
+%poison = calc(%poison - 1);
+settimer(poison, 30);
+
+[proc,poison_damage](int $damage)
 if_close;
 def_synth $sound;
 def_int $rand;
 // not sure if this damage is supposed to be queued or not
-damage(uid, ^hitmark_poison, calc((%poison + 4)/5));
+damage(uid, ^hitmark_poison, $damage);
 if (gender() = 0) {
     $rand = random(2);
     switch_int($rand) {
@@ -40,6 +45,3 @@ sound_synth($sound, 0, 20);
 if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {
     queue(player_death, 0);
 }
-
-%poison = calc(%poison - 1);
-settimer(poison, 30);
