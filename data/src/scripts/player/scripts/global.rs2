@@ -22,6 +22,8 @@ softtimer(stat_replenish, 100);
 softtimer(health_replenish, 100);
 // random event timer
 settimer(general_macro_events, 500);
+// chest macro gas 
+~check_chest_macro_gas;
 
 if (%tutorial_progress < ^tutorial_complete) {
     // This is a check to not bork every account that currently has a tutorial complete progress of 5.

@@ -12325,7 +12325,7 @@ resizey=32
 resizez=32
 blockrange=no
 
-[macro_poisonous_gas_chest]
+[chest_macro_gas]
 name=Chest
 desc=An open chest.
 model=model_loc_674
