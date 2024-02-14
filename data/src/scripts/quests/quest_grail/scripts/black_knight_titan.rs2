@@ -19,17 +19,17 @@ if(npc_findhero = true) {
         @defeat_titan;
     }
     if_close;
-    queue(queue_defeat_titan, 0); //strongqueue probably
+    queue(queue_defeat_titan, 0, npc_uid); //strongqueue probably
 }
 
-[queue,queue_defeat_titan] @defeat_titan;
+[queue,queue_defeat_titan](npc_uid $npc)
+if (npc_finduid($npc) = true) {
+    @defeat_titan;
+}
 
 [label,defeat_titan]
 p_stopaction;
 p_delay(0);
-if(npc_finduid(~npc_within_distance(coord, black_knight_titan, 10)) = false) {
-    return;
-}
 // https://www.youtube.com/watch?v=KCjnsoBT0vA&t=97s
 if(inv_total(worn, excalibur) = 0) { // if this was queued we'll need to regain prot access
     if(%grail_progress = ^grail_spoken_crone) {

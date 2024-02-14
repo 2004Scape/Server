@@ -63,7 +63,7 @@ switch_int(~p_choice2("Tell me of this quest.", 1, "I am weary of questing for t
             case 1:
                 ~chatplayer(neutral, "I'd enjoy trying that.");
                 %grail_progress = ^grail_started;
-                ~send_quest_progress(quest_journal:grail, %grail_progress, ^grail_complete);
+                ~send_quest_progress(questlist:grail, %grail_progress, ^grail_complete);
                 ~chatnpc(neutral, "Go speak to Merlin. He may be able to give a better clue as to where it is now you have freed him from that crystal.");
                 ~chatnpc(neutral, "He has set up his workshop in the room next to the library.");
             case 2:
