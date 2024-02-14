@@ -408,7 +408,7 @@ tradeable=yes
 param=to_be_fixed_by_bob,^true
 param=fixed,rune_axe
 
-[obj_508]
+[bronze_axe_head]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -422,8 +422,9 @@ weight=2lb
 category=category_15
 cost=15
 tradeable=yes
+param=fixed,bronze_axe
 
-[obj_510]
+[iron_axe_head]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -437,8 +438,9 @@ weight=2lb
 category=category_15
 cost=55
 tradeable=yes
+param=fixed,iron_axe
 
-[obj_512]
+[steel_axe_head]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -450,8 +452,9 @@ weight=2lb
 category=category_15
 cost=199
 tradeable=yes
+param=fixed,steel_axe
 
-[obj_514]
+[black_axe_head]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -465,8 +468,9 @@ weight=2lb
 category=category_15
 cost=383
 tradeable=yes
+param=fixed,black_axe
 
-[obj_516]
+[mithril_axe_head]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -480,8 +484,9 @@ weight=24oz
 category=category_15
 cost=519
 tradeable=yes
+param=fixed,mithril_axe
 
-[obj_518]
+[adamant_axe_head]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -495,8 +500,9 @@ weight=40oz
 category=category_15
 cost=1279
 tradeable=yes
+param=fixed,adamant_axe
 
-[obj_520]
+[rune_axe_head]
 name=Axe head
 desc=It's missing a handle.
 model=model_2444_obj
@@ -510,3 +516,4 @@ weight=2lb
 category=category_15
 cost=12799
 tradeable=yes
+param=fixed,rune_axe

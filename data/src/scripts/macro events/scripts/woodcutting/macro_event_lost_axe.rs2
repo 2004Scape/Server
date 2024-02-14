@@ -1,1 +1,57 @@
 [label,macro_event_lost_axe_spawn]
+def_obj $axe = ~woodcutting_axe_checker;
+if ($axe = null) {
+    @woodcutting_axe_fail;
+}
+
+def_namedobj $axe_head = oc_param($axe, axe_head);
+
+// todo: use inv_changeslot?
+if (inv_total(worn, $axe) > 0) {
+    inv_del(worn, $axe, 1);
+    inv_setslot(worn, ^wearpos_rhand, axe_handle, 1);
+    ~update_all($axe);
+} if (inv_total(inv, $axe) > 0) {
+    inv_del(inv, $axe, 1);
+    inv_add(inv, axe_handle, 1);
+}
+def_coord $axe_coord = ~coord_lineofwalk_radius2(coord, 7);
+anim(human_woodcutting_axe_handle, 0);
+// not sure what sound to use
+sound_synth(lost_pickaxe, 0, 0);
+mes("You swing your axe at the tree.");
+
+def_int $delay = ~coord_projectile(coord, $axe_coord, axe_head_launch, 35, 0, 14, 16, -2, 64, 10);
+p_delay(calc($delay/60)); // https://youtu.be/tev6FR2iowQ?t=16
+obj_add($axe_coord, $axe_head, 1, ^lootdrop_duration);
+
+
+[label,reattach_axe](obj $axe_head)
+def_namedobj $axe = oc_param($axe_head, fixed);
+if (inv_total(inv, axe_handle) > 0 & inv_total(inv, $axe_head) > 0) {
+    inv_del(inv, axe_handle, 1);
+    inv_del(inv, $axe_head, 1);
+    inv_add(inv, $axe, 1);
+    sound_synth(attach_handle, 0, 0);
+    mes("You carefully attach the two pieces together."); // https://youtu.be/tev6FR2iowQ?t=34
+}
+
+[opheldu,axe_handle]
+switch_obj(last_useitem) {
+    case bronze_axe_head, iron_axe_head, steel_axe_head, mithril_axe_head, adamant_axe_head, rune_axe_head : @reattach_axe(last_useitem);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,bronze_axe_head] @check_axe_head;
+[opheldu,iron_axe_head] @check_axe_head;
+[opheldu,steel_axe_head] @check_axe_head;
+[opheldu,mithril_axe_head] @check_axe_head;
+[opheldu,adamant_axe_head] @check_axe_head;
+[opheldu,rune_axe_head] @check_axe_head;
+
+[label,check_axe_head]
+if (last_useitem = axe_handle) {
+    @reattach_axe(last_item);
+} else {
+    @nothing_interesting_happens;
+}

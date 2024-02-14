@@ -22,6 +22,10 @@ default=0
 type=namedobj
 default=null
 
+[axe_head]
+type=namedobj
+default=null
+
 [pickaxe_head]
 type=namedobj
 default=null
