@@ -10,7 +10,11 @@ default=0
 type=namedobj
 default=null
 
-[is_broken]
+[to_be_fixed_by_bob]
+type=int
+default=0
+
+[to_be_fixed_by_nurmof]
 type=int
 default=0
 
@@ -20,4 +24,12 @@ default=null
 
 [pickaxe_head]
 type=namedobj
+default=null
+
+[ent]
+type=npc
+default=null
+
+[ent_tree_loc]
+type=loc
 default=null

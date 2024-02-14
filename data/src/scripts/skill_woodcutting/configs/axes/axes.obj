@@ -29,6 +29,7 @@ param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_baxe_defend
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
+param=broken,iron_axe_broken
 
 [bronze_axe]
 name=Bronze axe
@@ -61,6 +62,7 @@ param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_baxe_defend
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
+param=broken,bronze_axe_broken
 
 [steel_axe]
 name=Steel axe
@@ -91,6 +93,7 @@ param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_baxe_defend
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
+param=broken,steel_axe_broken
 
 [mithril_axe]
 name=Mithril axe
@@ -123,6 +126,7 @@ param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_baxe_defend
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
+param=broken,mithril_axe_broken
 
 [adamant_axe]
 name=Adamant axe
@@ -155,6 +159,7 @@ param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_baxe_defend
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
+param=broken,adamant_axe_broken
 
 [rune_axe]
 name=Rune axe
@@ -187,6 +192,7 @@ param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_baxe_defend
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
+param=broken,rune_axe_broken
 
 [black_axe]
 name=Black axe
@@ -220,3 +226,4 @@ param=crushattack_anim,human_baxe_crush
 param=defend_anim,human_baxe_defend
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
+param=broken,black_axe_broken

@@ -45,7 +45,7 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=0
 tradeable=yes
-param=is_broken,^true
+param=to_be_fixed_by_nurmof,^true
 param=fixed,bronze_pickaxe
 
 [iron_pickaxe_broken]
@@ -66,7 +66,7 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=0
 tradeable=yes
-param=is_broken,^true
+param=to_be_fixed_by_nurmof,^true
 param=fixed,iron_pickaxe
 
 [steel_pickaxe_broken]
@@ -85,7 +85,7 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=17
 tradeable=yes
-param=is_broken,^true
+param=to_be_fixed_by_nurmof,^true
 param=fixed,steel_pickaxe
 
 [mithril_pickaxe_broken]
@@ -106,7 +106,7 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=43
 tradeable=yes
-param=is_broken,^true
+param=to_be_fixed_by_nurmof,^true
 param=fixed,mithril_pickaxe
 
 [adamant_pickaxe_broken]
@@ -127,7 +127,7 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=107
 tradeable=yes
-param=is_broken,^true
+param=to_be_fixed_by_nurmof,^true
 param=fixed,adamant_pickaxe
 
 [rune_pickaxe_broken]
@@ -148,7 +148,7 @@ manwear=model_530_obj_wear,0
 womanwear=model_530_obj_wear,6
 cost=1100
 tradeable=yes
-param=is_broken,^true
+param=to_be_fixed_by_nurmof,^true
 param=fixed,rune_pickaxe
 
 [bronze_pickaxe_head]
@@ -251,7 +251,7 @@ cost=31999
 tradeable=yes
 param=fixed,rune_pickaxe
 
-[obj_492]
+[axe_handle]
 name=Axe handle
 desc=Useless without the head.
 model=model_2597_obj
@@ -270,7 +270,7 @@ womanwear=model_557_obj_wear,6
 cost=1
 tradeable=yes
 
-[obj_494]
+[bronze_axe_broken]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -287,8 +287,10 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=0
 tradeable=yes
+param=to_be_fixed_by_bob,^true
+param=fixed,bronze_axe
 
-[obj_496]
+[iron_axe_broken]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -305,8 +307,10 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=0
 tradeable=yes
+param=to_be_fixed_by_bob,^true
+param=fixed,iron_axe
 
-[obj_498]
+[steel_axe_broken]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -321,8 +325,10 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=0
 tradeable=yes
+param=to_be_fixed_by_bob,^true
+param=fixed,steel_axe
 
-[obj_500]
+[black_axe_broken]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -339,8 +345,10 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=10
 tradeable=yes
+param=to_be_fixed_by_bob,^true
+param=fixed,black_axe
 
-[obj_502]
+[mithril_axe_broken]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -357,8 +365,10 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=18
 tradeable=yes
+param=to_be_fixed_by_bob,^true
+param=fixed,mithril_axe
 
-[obj_504]
+[adamant_axe_broken]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -375,8 +385,10 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=43
 tradeable=yes
+param=to_be_fixed_by_bob,^true
+param=fixed,adamant_axe
 
-[obj_506]
+[rune_axe_broken]
 name=Broken axe
 desc=Bob can fix this for me.
 model=model_2342_obj
@@ -393,6 +405,8 @@ manwear=model_487_obj_wear,0
 womanwear=model_487_obj_wear,6
 cost=427
 tradeable=yes
+param=to_be_fixed_by_bob,^true
+param=fixed,rune_axe
 
 [obj_508]
 name=Axe head

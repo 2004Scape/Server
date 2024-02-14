@@ -1191,6 +1191,9 @@ recol1d=3470
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,loc_1276
+param=next_loc_stage,loc_2639
 
 [macro_event_ent_tree2]
 vislevel=hide
@@ -1208,6 +1211,9 @@ recol1d=3470
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,loc_1276
+param=next_loc_stage,loc_2639
 
 [macro_event_ent_dead_tree1]
 vislevel=hide
@@ -1225,6 +1231,9 @@ recol1d=5388
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,loc_1276
+param=next_loc_stage,loc_2639
 
 [macro_event_ent_dead_tree2]
 vislevel=hide
@@ -1241,6 +1250,9 @@ recol1d=5388
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,loc_1276
+param=next_loc_stage,loc_83
 
 [macro_event_ent_oak]
 vislevel=hide
@@ -1258,6 +1270,8 @@ recol1d=3470
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,oak_tree
 
 [macro_event_ent_willow]
 vislevel=hide
@@ -1275,6 +1289,9 @@ recol1d=5786
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,willow_tree
+param=next_loc_stage,loc_2639
 
 [macro_event_ent_yew]
 vislevel=hide
@@ -1292,6 +1309,8 @@ recol1d=5388
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,yew_tree
 
 [macro_event_ent_maple]
 vislevel=hide
@@ -1309,6 +1328,9 @@ recol1d=6814
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,maple_tree
+param=next_loc_stage,loc_2639
 
 [macro_event_ent_magic]
 vislevel=hide
@@ -1326,6 +1348,9 @@ recol1d=3470
 model1=model_loc_1293_8
 wanderrange=0
 moverestrict=nomove
+category=macro_event_ent
+param=ent_tree_loc,magic_tree
+param=next_loc_stage,loc_2639
 
 [macro_event_drunken_dwarf]
 vislevel=hide

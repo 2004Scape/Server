@@ -8686,7 +8686,7 @@ frame16=anim_3011
 frame17=anim_3014
 
 [seq_644]
-righthand=obj_492
+righthand=axe_handle
 lefthand=hide
 frame1=anim_1752
 frame2=anim_2052
