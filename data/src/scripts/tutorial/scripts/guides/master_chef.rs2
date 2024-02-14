@@ -1,0 +1,101 @@
+[opnpc1,npc_942]
+switch_int(%tutorial_progress) {
+    case ^chef_start: @master_chef_start;
+    case 150: @master_chef_after_start;
+    case 160: @master_chef_after_start;
+    case default: @master_chef_recap;
+}
+
+[label,master_chef_start]
+// https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial13.gif older line breaks
+~chatnpc(neutral, "Ah... welcome newcomer. I am Lev, the chef.| It is here I will teach you how to |cook food truly fit for a king.");
+~chatplayer(neutral, "I already know how to cook.|Brynna taught me just now.");
+~chatnpc(neutral, "HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
+~chatnpc(neutral, "And no fine meal is complete without good music so|we'll cover that while you're here too.");
+%tutorial_progress = 150;
+~set_tutorial_progress;
+~master_chef_give_ingredients;
+
+[label,master_chef_after_start]
+~chatnpc(neutral, "Time for you to learn the fine art of cooking bread.");
+~master_chef_give_ingredients;
+
+[proc,master_chef_give_ingredients]
+if (inv_freespace(inv) = 0 & %tutorial_progress < 170) {
+    ~mesbox("You need some ingredients for this section of the tutorial but you don't have enough inventory room. You'll need to drop something. To do so, right-click on an item you don't want and select drop. Once you've done that speak to the Cooking Guide again.");
+    return;
+}
+
+if (inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) > 0 & inv_freespace(inv) > 0) {
+    inv_add(inv, pot_of_flour, 1);
+    ~objbox(pot_of_flour, "The Cooking Guide gives you a |@blu@Pot of Flour.");
+    return;
+}
+
+if (inv_freespace(inv) = 1 & inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) < 1) {
+    inv_add(inv, pot_of_flour, 1);
+    ~objbox(pot_of_flour, "The Cooking Guide gives you some flour. He would have given you some water as well but you didn't have room for it. To get some drop something and talk to the |Cooking Guide again.");
+    return;
+}
+
+if (inv_total(inv, bucket_water) < 1 & inv_total(inv, pot_of_flour) > 0 & inv_freespace(inv) > 0) {
+    inv_add(inv, bucket_water, 1);
+    ~objbox(bucket_water, "The Cooking Guide gives you a|@blu@Bucket of Water.");
+    return;
+}
+
+if (inv_freespace(inv) > 1 & inv_total(inv, pot_of_flour) < 1 & inv_total(inv, bucket_water) < 1) {
+    inv_add(inv, pot_of_flour, 1);
+    inv_add(inv, bucket_water, 1);
+    ~doubleobjbox(bucket_water, pot_of_flour, "The Cooking Guide gives you a |@blu@Bucket of Water@bla@ |and a|@blu@Pot of Flour!");
+}
+
+[label,master_chef_recap]
+~chatnpc(quiz, "Hello again.");
+~master_chef_give_ingredients;
+~master_chef_recap_options;
+
+[proc,master_chef_recap_options]
+if (%tutorial_progress < 180) {
+    ~master_chef_recap_response(~p_choice3_header("Making dough.", 1, "Range cooking.", 2, "Nothing, thanks.", 4, "What would you like to hear more about?"));
+} else {
+    ~master_chef_recap_response(~p_choice4_header("Making dough.", 1, "Range cooking.", 2, "Music.", 3, "Nothing, thanks.", 4, "What would you like to hear more about?"));
+}
+
+[proc,master_chef_recap_response](int $option)
+switch_int($option) {
+    case 1:
+        ~chatplayer(neutral, "Tell me about making dough again.");
+        ~chatnpc(neutral, "It's quite simple: just use a pot of flour on a bucket of water, or vice versa, and you'll make dough. You can also refill your bucket at the sink.");
+        ~master_chef_recap_options;
+    case 2:
+        ~chatplayer(neutral, "Tell me about range cooking again.");
+        ~chatnpc(neutral, "The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a range, right click the item you would like to cook, select 'use' then left click the range.");
+        ~master_chef_recap_options;
+    case 3:
+        ~chatplayer("default", "Tell me about music again.");
+        ~chatnpc(neutral, "Ah yes. The music was created by the great bard Ian. As you explore the world and complete quests you will unlock more of the tunes in your music player. Simply click on a tune in the music menu to listen to it.");
+        ~master_chef_recap_options;
+}
+
+[proc,set_hint_icon_master_chef]
+npc_findallzone(0_48_48_4_11);
+while (npc_findnext = true) {
+    if (npc_type = npc_942) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_48_6_12);
+while (npc_findnext = true) {
+    if (npc_type = npc_942) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_48_2_16);
+while (npc_findnext = true) {
+    if (npc_type = npc_942) {
+        hint_npc(npc_uid);
+    }
+}

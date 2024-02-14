@@ -1,7 +1,7 @@
-<%- include('./_partial/header.ejs'); %>
+<%- include('./_partial/header.ejs', { title: 'Select a World' }); %>
 <%- include('./_components/frame-top.ejs'); %>
 <%- include('./_components/content-start.ejs'); %>
-<%- include('./_components/title-box.ejs', { title: 'Play RuneScape', links: [ { text: 'Detail Select', href: '/detail' } ] }); %>
+<%- include('./_components/title-box.ejs', { title: 'Play 2004Scape', links: [ { text: 'Detail Select', href: '/detail' } ] }); %>
 
 <%- include('./_components/content-body-start.ejs'); %>
 <center><b>Anyone can play on the Free Worlds below</b><br><br>
@@ -60,8 +60,8 @@
           <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
             <center>
             <a href='/members' class=c>
-            <font color='#ffbb22'><b>Become a Member</b></font></a><br>
-              <s>Access exclusive benefits for only $5 a month!</s>
+            <font color='#ffbb22'><b>Play for Free</b></font></a><br>
+              You won't need to pay now-- or ever! Play any way you want
             </center>
           </td></tr>
         </table>
@@ -116,8 +116,8 @@
           <tr><td class=b bgcolor=#474747 background='/img/stoneback.gif'>
             <center>
             <a href='/members' class=c>
-            <font color='#ffbb22'><b>Become a Member</b></font></a><br>
-              <s>Access exclusive benefits for only $5 a month!</s>
+            <font color='#ffbb22'><b>Play for Free</b></font></a><br>
+              You won't need to pay now-- or ever! Play any way you want
             </center>
           </td></tr>
         </table>
@@ -141,7 +141,7 @@
 
 <center>
 <br><center><table width=500 bgcolor=black cellpadding=4 border=0><tr><td class=e>
-<br><center><b>Only <a href='/members' class=c target=_parent>members</a> can use the <%= members %> world<%= members != 1 ? 's' : '' %> below</b><br>Use these worlds to access members-only features<br><br>
+<br><center><b>Anyone can play on the Members Worlds below</b><br>Use these worlds to access members-only features<br><br>
 <table>
   <tr valign="top">
     <% for (let i = 0; i < membersRegions.length; i++) { let regionWorlds = worlds.filter(x => x.region == membersRegions[i] && x.members); %>

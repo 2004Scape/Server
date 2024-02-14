@@ -2,4 +2,4 @@
 
 [queue,rune_mysteries_complete]
 %runemysteries_progress = ^runemysteries_complete;
-~send_quest_complete(quest_journal:runemysteries, air_talisman, 250, ^runemysteries_questpoints, "You have completed the\\nMysteries Of The Runes Quest!");
+~send_quest_complete(questlist:runemysteries, air_talisman, 250, ^runemysteries_questpoints, "You have completed the\\nMysteries Of The Runes Quest!");

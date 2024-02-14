@@ -58,7 +58,7 @@ if(inv_total(inv, scorpion_cage_empty) = 0) {
     mes("Thormac gives you a cage.");
 }
 %scorpcatcher_progress = ^scorpcatcher_started;
-~send_quest_progress(quest_journal:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
+~send_quest_progress(questlist:scorpcatcher, %scorpcatcher_progress, ^scorpcatcher_complete);
 
 [label,thormac_how_goes]
 ~chatnpc(quiz, "How goes your quest?");

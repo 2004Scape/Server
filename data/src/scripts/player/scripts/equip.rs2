@@ -245,12 +245,18 @@ if ($primary_count > 0 & oc_stackable($primary_obj) = false) {
         // according to kris:
         // imagine u got 2b chins equipped and 1b in inventory
         // u cant now equip another weapon
-        if (inv_itemspace(inv, $primary_obj, $primary_count, inv_size(inv)) = false) {
+        // a free inv slot is guarantee as long as the player does not already have the obj.
+        if (inv_total(inv, $primary_obj) > 0 & inv_itemspace(inv, $primary_obj, $primary_count, inv_size(inv)) = false) {
             return(false, $swapped);
         }
         if ($move_item = true) {
-            // if we have any of the stackable obj
-            // then combine it
+            // if this executes we already assert we have space to do stuff.
+            // a free space is guarantee from doing the swap.
+            // if the player already has the item then we need to move the worn slot to inv slot first.
+            if (inv_total(inv, $primary_obj) > 0) {
+                inv_moveitem(worn, inv, $primary_obj, $primary_count);
+            }
+            // then move the clicked inv obj to the worn slot.
             inv_movetoslot(inv, worn, $slot, $primary_slot);
             $swapped = true;
         }

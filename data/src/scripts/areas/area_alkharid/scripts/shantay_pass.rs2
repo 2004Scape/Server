@@ -23,7 +23,7 @@ if (inv_total(inv, shantay_disclaimer) < 1) {
     ~mesbox("There is a large billboard poster near the gateway. It reads:");
     ~mesbox("The Desert is a VERY Dangerous place. Do not enter if|you are scared of dying. Beware of high temperatures,|sand storms, robbers, and slavers.");
     ~mesbox("That seems pretty scary! Are you sure you want to go through?");
-    def_int $choice = ~p_choice2_header("Yeah, that poster doesn't scare me!", 1, "No, I'm having serious second thoughts now.", 2, "Go into Desert?");
+    $choice = ~p_choice2_header("Yeah, that poster doesn't scare me!", 1, "No, I'm having serious second thoughts now.", 2, "Go into Desert?");
     if ($choice = 2) {
         return;
     }

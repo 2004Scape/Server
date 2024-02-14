@@ -52,8 +52,8 @@ def_coord $river_end_coord = 0_45_47_25_48;
 def_coord $fail_end_coord = 0_45_47_23_49;
 if(coordx(coord) < 2909) {
     $z_dist = 2;
-    def_coord $turn_coord = 0_45_47_29_48;
-    def_coord $river_end_coord = 0_45_47_29_50;
+    $turn_coord = 0_45_47_29_48;
+    $river_end_coord = 0_45_47_29_50;
     $fail_end_coord = 0_45_47_29_51;
 }
 mes("You attempt to walk across the slippery log.");

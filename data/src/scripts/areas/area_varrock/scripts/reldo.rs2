@@ -33,7 +33,7 @@ if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started 
 ~chatnpc(confused, "Let me think actually...");
 ~chatnpc(neutral, "If you look in a book called 'The Shield of Arrav',|you'll find a quest in there.");
 %phoenixgang_progress = ^phoenixgang_started; 
-~send_quest_progress(quest_journal:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
+~send_quest_progress(questlist:blackarmgang, %phoenixgang_progress, ^phoenixgang_complete);
 ~chatnpc(neutral, "I'm not sure where the book is mind you...|but I'm sure it's around here somewhere.");
 
 [label,reldo_read_book]

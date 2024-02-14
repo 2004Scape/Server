@@ -14,7 +14,7 @@ def_int $option = ~p_choice2("I want to come through this gate.", 1, "I want som
 if($option = 1) {
     ~chatplayer(neutral, "I want to come through this gate.");
     ~chatnpc(neutral, "Barbarians only.|Are you a barbarian?|You don't look like one.");
-    def_int $option = ~p_choice2("Hmm, yep you've got me there.", 1, "Looks can be deceiving, I am in fact a barbarian.", 2);
+    $option = ~p_choice2("Hmm, yep you've got me there.", 1, "Looks can be deceiving, I am in fact a barbarian.", 2);
     if($option = 1) {
         ~chatplayer(sad, "Hmm, yep you've got me there.");
     } else if($option = 2) {

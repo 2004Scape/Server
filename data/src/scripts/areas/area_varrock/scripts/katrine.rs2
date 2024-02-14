@@ -30,7 +30,7 @@ switch_int($option) {
     case 3:
         ~chatplayer(quiz, "I've heard you're the Black Arm Gang.");
         ~chatnpc(angry, "Who told you that?");
-        def_int $option = ~p_choice3("I'd rather not reveal my sources.", 1, "It was the tramp outside.", 2, "Everyone knows - it's no great secret.", 3);
+        $option = ~p_choice3("I'd rather not reveal my sources.", 1, "It was the tramp outside.", 2, "Everyone knows - it's no great secret.", 3);
         if($option = 1) {
             ~chatplayer(neutral, "I'd rather not reveal my sources.");
             ~chatnpc(neutral, "Yes, I can understand that.|So what do you want with us?");

@@ -24,13 +24,13 @@ $obj2, $obj3 = db_getfield($data, fletch_bow_table:objchoices, 0);
 def_namedobj $product;
 // guess based off 2004
 if ($shaft_count < 1) {
-    $product = ~obj_choice2("What would you like to make?", 
+    $product = ~multiobj2("What would you like to make?", 
         $obj2, 0, -15, 175, "<~string_removeright(oc_name($log), 5)> Short Bow.", 0, 0,
         $obj3, 0, -15, 175, "<~string_removeright(oc_name($log), 5)> Long Bow.", 0, 0
     );
 } else {
     // 2004
-    $product = ~obj_choice3_close("What would you like to make?", 
+    $product = ~multiobj3_close("What would you like to make?", 
         $obj1, 175, "Arrow Shafts.",
         $obj2, 175, "Short Bow.",
         $obj3, 175, "Long Bow."
@@ -55,7 +55,7 @@ if ($product = $obj2) {
 }
 if (stat(fletching) < $level) {
     // osrs has a level 1 fail message for arrow shafts but i doubt 2004 used it
-    ~objbox2($log, $product, "You need a Fletching level of at least <tostring($level)> to make <~add_article(lowercase(oc_name($product)))>.");
+    ~doubleobjbox($log, $product, "You need a Fletching level of at least <tostring($level)> to make <~add_article(lowercase(oc_name($product)))>.");
     return;
 }
 // make one bow at a time

@@ -35,6 +35,10 @@ export function fromBase37(value: bigint): string {
         return 'invalid_name';
     }
 
+    if (value % 37n === 0n) {
+        return 'invalid_name';
+    }
+
     let len: number = 0;
     const chars: string[] = Array(12);
     while (value !== 0n) {

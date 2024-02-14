@@ -30,7 +30,7 @@ def_int $option = ~p_choice2("Yes, I'll help you.", 1, "No, I don't feel like it
 
 if($option = 1) {
     %cook_progress = 1;
-    ~send_quest_progress(quest_journal:cook, %cook_progress, ^cook_complete);
+    ~send_quest_progress(questlist:cook, %cook_progress, ^cook_complete);
     ~chatplayer("happy","Yes, I'll help you.");
     ~chatnpc("happy","Oh thank you, thank you.|I need milk, eggs and flour.|I'd be very grateful if you can get them to me.");
 } else if($option = 2) {
@@ -86,14 +86,17 @@ queue(cooks_quest_complete, 0);
 [queue,cooks_quest_complete]
 %cook_progress = ^cook_complete;
 givexp(cooking, 3000);
-~send_quest_complete(quest_journal:cook, cake, 250, ^cook_questpoints, "You have completed the Cooks' Quest!");
+~send_quest_complete(questlist:cook, cake, 250, ^cook_questpoints, "You have completed the Cooks' Quest!");
 
 [oplocu,cook_range]
 def_coord $cook_kitchen_centre = 0_50_50_9_15;
 if (%cook_progress = 0) {
     npc_findallzone($cook_kitchen_centre);
     while(npc_findnext = true) {
-        if(npc_type = cook) ~chatnpc("angry", "Hey, who said you could use that?");
+        if(npc_type = cook) {
+            ~chatnpc("angry", "Hey, who said you could use that?");
+            return;
+        }
     }
 } else {
     @attempt_cook_item(last_useitem);

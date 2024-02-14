@@ -91,6 +91,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(0); // type
             packet.p1(0); // buttonType
             packet.p2(6969); // clientCode
@@ -124,6 +125,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(0);
             expect(com.buttonType).toBe(0);
             expect(com.clientCode).toBe(6969);
@@ -185,6 +187,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(2); // type
             packet.p1(0); // buttonType
             packet.p2(6969); // clientCode
@@ -234,6 +237,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(2);
             expect(com.buttonType).toBe(0);
             expect(com.clientCode).toBe(6969);
@@ -305,6 +309,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(3); // type
             packet.p1(0); // buttonType
             packet.p2(6969); // clientCode
@@ -335,6 +340,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(3);
             expect(com.buttonType).toBe(0);
             expect(com.clientCode).toBe(6969);
@@ -392,6 +398,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(4); // type
             packet.p1(0); // buttonType
             packet.p2(6969); // clientCode
@@ -426,6 +433,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(4);
             expect(com.buttonType).toBe(0);
             expect(com.clientCode).toBe(6969);
@@ -483,6 +491,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(5); // type
             packet.p1(0); // buttonType
             packet.p2(6969); // clientCode
@@ -511,6 +520,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(5);
             expect(com.buttonType).toBe(0);
             expect(com.clientCode).toBe(6969);
@@ -568,6 +578,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(6); // type
             packet.p1(0); // buttonType
             packet.p2(6969); // clientCode
@@ -601,6 +612,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(6);
             expect(com.buttonType).toBe(0);
             expect(com.clientCode).toBe(6969);
@@ -658,6 +670,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(7); // type
             packet.p1(0); // buttonType
             packet.p2(6969); // clientCode
@@ -694,6 +707,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(7);
             expect(com.buttonType).toBe(0);
             expect(com.clientCode).toBe(6969);
@@ -753,6 +767,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(5); // type
             packet.p1(1); // buttonType
             packet.p2(6969); // clientCode
@@ -782,6 +797,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(5);
             expect(com.buttonType).toBe(1);
             expect(com.clientCode).toBe(6969);
@@ -839,6 +855,7 @@ describe('Component', () => {
             packet.p2(1); // count
             packet.p2(0); // id
             packet.pjstr('jordan'); //comName
+            packet.pbool(false); // overlay
             packet.p1(5); // type
             packet.p1(2); // buttonType
             packet.p2(6969); // clientCode
@@ -870,6 +887,7 @@ describe('Component', () => {
             const com = Component.get(0);
 
             expect(com.comName).toBe('jordan');
+            expect(com.overlay).toBeFalsy();
             expect(com.type).toBe(5);
             expect(com.buttonType).toBe(2);
             expect(com.clientCode).toBe(6969);

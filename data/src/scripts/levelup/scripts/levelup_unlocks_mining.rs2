@@ -7,7 +7,7 @@ switch_int(stat_base(mining)) {
     case 21: ~objboxt(mithril_pickaxe,"You can now mine with @dbl@mithril pickaxes@bla@.");
     case 30: ~objboxt(coal,"You can now mine @dbl@Coal@bla@.");
     case 31: ~objboxt(adamant_pickaxe,"You can now mine with @dbl@adamant pickaxes@bla@.");
-    case 40: ~objbox2(gold_ore,red_topaz,"You can now mine @dbl@Gold@bla@. Members can mine @dbl@Gem|@dbl@rocks@bla@.");
+    case 40: ~doubleobjbox(gold_ore,red_topaz,"You can now mine @dbl@Gold@bla@. Members can mine @dbl@Gem|@dbl@rocks@bla@.");
     case 41: ~objboxt(rune_pickaxe,"You can now mine with @dbl@rune pickaxes@bla@.");
     case 55: ~objboxt(mithril_ore,"You can now mine @dbl@Mithril@bla@.");
     case 70: ~objboxt(adamantite_ore,"You can now mine @dbl@Adamantite@bla@.");

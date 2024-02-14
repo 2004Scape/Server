@@ -14,12 +14,14 @@ npc_findallzone(0_40_53_51_1);
 while (npc_findnext = true) {
     if (npc_type = npc_308) {
         ~chatnpc(happy, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+        return;
     }
 }
 npc_findallzone(0_40_52_51_63);
 while (npc_findnext = true) {
     if (npc_type = npc_308) {
         ~chatnpc(happy, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+        return;
     }
 }
 

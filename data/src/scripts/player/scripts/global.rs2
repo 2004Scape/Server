@@ -3,6 +3,7 @@ mes("Welcome to RuneScape.");
 if (map_localdev = false) {
     mes("The server is currently in the Alpha testing phase.");
     mes("Character progression will reset when Beta testing begins.");
+    mes("Available commands during this phase can be found by running ::help.");
 }
 cam_reset;
 //if_close; // come back to this if this proves to be problematic, commented so welcome screen is visible
@@ -21,8 +22,15 @@ softtimer(stat_replenish, 100);
 softtimer(health_replenish, 100);
 
 if (%tutorial_progress < ^tutorial_complete) {
-    ~update_bas;
-    @start_tutorial;
+    // This is a check to not bork every account that currently has a tutorial complete progress of 5.
+    if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
+        %tutorial_progress = ^tutorial_complete;
+        last_login_info;
+        ~initalltabs;
+    } else {
+        ~update_bas;
+        @start_tutorial;
+    }
 } else {
     last_login_info;
     ~initalltabs;
@@ -33,8 +41,8 @@ if (%tutorial_progress < ^tutorial_complete) {
 
 [proc,initalltabs]
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
-if_settab(skills, ^tab_skills);
-if_settab(quest_journal, ^tab_quest_journal);
+if_settab(stats, ^tab_skills);
+if_settab(questlist, ^tab_quest_journal);
 ~update_quests;
 
 inv_transmit(inv, inventory:inv);
@@ -48,10 +56,14 @@ if_settab(magic, ^tab_magic);
 if_settab(friends, ^tab_friends);
 if_settab(ignore, ^tab_ignore);
 if_settab(logout, ^tab_logout);
-if_settab(player_controls, ^tab_player_controls);
-// todo: support low detail modes
-if_settab(game_options, ^tab_game_options);
-if_settab(musicplayer, ^tab_musicplayer);
+if_settab(controls, ^tab_player_controls);
+if (lowmemory = true) {
+    if_settab(options_ld, ^tab_game_options);
+    if_settab(music_ld, ^tab_musicplayer);
+} else {
+    if_settab(options, ^tab_game_options);
+    if_settab(music, ^tab_musicplayer);
+}
 
 [proc,update_all](obj $previous_weapon)
 // secret sauce

@@ -41,7 +41,7 @@ if($option = 1) {
 
 [label,kangai_mau_start_totem]
 %totem_progress = ^totem_started;
-~send_quest_progress(quest_journal:totem, %totem_progress, ^totem_complete);
+~send_quest_progress(questlist:totem, %totem_progress, ^totem_complete);
 ~chatplayer(neutral, "Ok, I will get it back.");
 ~chatnpc(neutral, "Best of luck with that adventurer.");
 

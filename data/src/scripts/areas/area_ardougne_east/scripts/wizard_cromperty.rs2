@@ -22,7 +22,7 @@ if($option = 1) {
     ~chatplayer(quiz, "So where is the other block?");
     ~chatnpc(confused, "Well... Hmm. I would guess somewhere between here and the Wizards' Tower in Misthalin. All I know is that it hasn't got there yet as the wizards there would have contacted me.");
     ~chatnpc(sad, "I'm using the RPDT for delivery. They assured me it would be delivered promptly.");
-    def_int $option = ~p_choice2("Can I be teleported please?", 1, "Who are the RPDT?", 2);
+    $option = ~p_choice2("Can I be teleported please?", 1, "Who are the RPDT?", 2);
     if($option = 1) {
         @cromperty_teleport;
     } else if($option = 2) {

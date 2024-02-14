@@ -1,9 +1,9 @@
 [opheld1,trail_clue_medium_map001]
-~full_trail_readclue_map(trail_medium_map001);
+~full_trail_readclue_map(trail_map03);
 
 // This clue is flagged as unobtainable in information frmo @Hlwys.
 [opheld1,trail_clue_medium_map002]
-~full_trail_readclue_map(trail_medium_map002);
+~full_trail_readclue_map(trail_map04);
 
 [opheld1,_trail_clue_medium]
 ~full_trail_readclue(oc_param(last_item, trail_desc));
@@ -13,8 +13,8 @@
 // TODO
 
 [opheld1,trail_casket_medium]
-inv_del(inv, trail_casket_medium, 1);
-inv_add(inv, ~trail_clue_medium_getrandom, 1);
+inv_delslot(inv, last_slot);
+inv_setslot(inv, last_slot, ~trail_clue_medium_getrandom, 1);
 ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
 
 

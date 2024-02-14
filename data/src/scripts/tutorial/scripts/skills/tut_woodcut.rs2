@@ -1,0 +1,97 @@
+// Tutorial Island Tree
+[oploc1,loc_3033] @tut_woodcutting;
+[oploc1,loc_3034] @tut_woodcutting;
+[oploc1,loc_3036] @tut_woodcutting;
+
+[label,tut_woodcutting]
+if (%tutorial_progress < 30) {
+    ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
+    return;
+}
+
+if (inv_freespace(inv) = 0) {
+    anim(null, 0);
+    ~mesbox("Your inventory is too full to hold any more logs.|To drop an item right-click on it and select drop.");
+    return;
+}
+
+if (%tutorial_progress > 120) {
+    ~mesbox("Perhaps you've done enough woodcutting now.");
+    return;
+}
+
+if (inv_total(inv, logs) > 2) {
+    ~mesbox("Perhaps you've got enough logs for now.");
+    return;
+}
+
+if (inv_total(inv, bronze_axe) = 0) {
+    ~mesbox("You need an axe to chop this tree.|Talk to the survival expert to get one.");
+    return;
+}
+
+p_arrivedelay;
+%action_delay = calc(map_clock + 10);
+def_int $counter = 0;
+
+~tutorial_please_wait_woodcutting;
+anim(human_woodcutting_bronze_axe, 0);
+sound_synth(woodchop_4, 0, 18);
+while (map_clock < %action_delay) {
+    if ($counter = 2) {
+        sound_synth(woodchop_4, 0, 0);
+    }
+
+    if ($counter > 0 & calc($counter % 3) = 0 & $counter ! 9) {
+        sound_synth(woodchop_4, 0, 8);
+    }
+
+    if ($counter = 7) {
+        sound_synth(woodchop_4, 0, 18);
+    }
+
+    if ($counter > 0 & calc($counter % 4) = 0) {
+        anim(human_woodcutting_bronze_axe, 0);
+        sound_synth(woodchop_4, 0, 18);
+    }
+
+    p_delay(0);
+    $counter = calc($counter + 1);
+}
+anim(null, 0);
+~tut_woodcutting_swap_loc;
+~tutorial_give_xp(woodcutting, 250);
+if (%tutorial_progress = 30) {
+    @tut_advance_woodcutting;
+} else {
+    @give_logs;
+}
+
+[proc,tut_woodcutting_swap_loc]
+// Seem to be a fixed 9.6 seconds https://www.youtube.com/watch?v=Ln_NMq4eQss
+def_int $respawnrate = 16;
+loc_del($respawnrate);
+loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
+// set skill anim so it doesnt continue after depletion
+anim(null, $respawnrate);
+
+[label,tut_advance_woodcutting]
+%tutorial_progress = 40;
+hint_stop();
+inv_add(inv, logs, 1);
+~tutorial_step_build_fire;
+~objboxt(logs, "You get some logs.");
+
+[label,give_logs]
+inv_add(inv, logs, 1);
+~set_tutorial_progress;
+~objboxt(logs, "You get some logs.");
+
+[oploc1,loc_3037]
+if (%tutorial_progress < 30) {
+    ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
+    return;
+} else {
+    ~mesbox("You won't be able to chop oak trees until you have a Woodcutting level of 15. You'll advance to higher Woodcutting levels by chopping down normal trees. At higher Woodcutting levels you will find even more trees you can cut.");
+    return;
+}

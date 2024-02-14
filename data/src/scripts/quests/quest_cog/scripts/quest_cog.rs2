@@ -11,7 +11,7 @@ def_int $option = ~p_choice3("OK old monk, what can I do?", 1, "How much reward 
 if($option = 1) {
     ~chatplayer("default", "OK old monk, what can I do?");
     %cog_progress = 1;
-    ~send_quest_progress(quest_journal:cog, %cog_progress, 15);
+    ~send_quest_progress(questlist:cog, %cog_progress, 15);
     ~chatnpc("default", "Oh, thank you kind sir!|In the cellar below, you'll find four cogs.|They're too heavy for me, but you should be able to carry them one at a time.");
     ~chatnpc("default", "I know one goes on each floor... but I can't exactly remember which goes where specifically. Oh well, I'm sure you can figure it out fairly easily.");
     ~chatplayer("default", "Well, I'll do my best.");

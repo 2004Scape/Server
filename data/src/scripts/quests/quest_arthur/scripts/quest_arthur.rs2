@@ -270,4 +270,4 @@ switch_obj(last_useitem) {
 
 [queue,arthur_quest_complete]
 %arthur_progress = ^arthur_complete;
-~send_quest_complete(quest_journal:arthur, excalibur, 250, ^arthur_questpoints, "You have completed the\\nMerlins' Crystal Quest!");
+~send_quest_complete(questlist:arthur, excalibur, 250, ^arthur_questpoints, "You have completed the\\nMerlins' Crystal Quest!");

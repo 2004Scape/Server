@@ -1,3 +1,4 @@
+import IdkType from '#lostcity/cache/IdkType.js';
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
@@ -712,7 +713,7 @@ const PlayerOps: CommandHandlers = {
         const north = nw.z;
 
         const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
+        World.getZone(loc.x, loc.z, loc.level).locmerge(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
@@ -730,7 +731,7 @@ const PlayerOps: CommandHandlers = {
         const lastLoginIp = new Uint32Array(new Uint8Array(remoteAddress.split('.').map(x => parseInt(x))).reverse().buffer)[0];
 
         // 201 sends welcome_screen if.
-        // not 201 sends welcome_screen2 if.
+        // not 201 sends welcome_screen_warning if.
         player.lastLoginInfo(lastLoginIp, 0, 201, 0);
     },
 
@@ -852,7 +853,47 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.AFK_EVENT]: state => {
         state.pushInt(state.activePlayer.afkEventReady ? 1 : 0);
         state.activePlayer.afkEventReady = false;
-    }
+    },
+
+    [ScriptOpcode.LOWMEMORY]: state => {
+        state.pushInt(state.activePlayer.lowMemory ? 1 : 0);
+    },
+
+    [ScriptOpcode.SETIDKIT]: (state) => {
+        const [idkit, color] = state.popInts(2);
+
+        const idk = IdkType.get(idkit);
+
+        let slot = idk.type;
+        if (state.activePlayer.gender === 1) {
+            slot -= 7;
+        }
+        state.activePlayer.body[slot] = idkit;
+
+        // 0 - hair
+        // 1 - torso
+        // 2 - legs
+        // 3 - boots
+        // 4 - jaw
+        let colorSlot = -1;
+        if (idk.type === 0) {
+            colorSlot = 0;
+        } else if (idk.type === 1) {
+            colorSlot = 4;
+        } else if (idk.type === 2 || idk.type === 3) {
+            colorSlot = 1;
+        } else if (idk.type === 4) {
+            /* no-op (no hand recoloring) */
+        } else if (idk.type === 5) {
+            colorSlot = 2;
+        } else if (idk.type === 6) {
+            colorSlot = 3;
+        }
+
+        if (colorSlot !== -1) {
+            state.activePlayer.colors[colorSlot] = color;
+        }
+    },
 };
 
 /**

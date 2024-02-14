@@ -22,6 +22,7 @@ export default class ScriptVarType {
     static NPC_UID = 78; // N
     static INTERFACE = 97; // a
     static NPC_STAT = 254; // þ
+    static IDKIT = 75; // K
 
     static getType(type: number) {
         switch (type) {
@@ -71,6 +72,8 @@ export default class ScriptVarType {
                 return 'interface';
             case ScriptVarType.NPC_STAT:
                 return 'npc_stat';
+            case ScriptVarType.IDKIT:
+                return 'idkit';
             default:
                 return 'unknown';
         }
@@ -149,6 +152,9 @@ export default class ScriptVarType {
                 break;
             case 'npc_stat':
                 char = 'þ';
+                break;
+            case 'idkit':
+                char = 'K';
                 break;
             default:
                 return null;

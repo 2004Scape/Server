@@ -1,4 +1,4 @@
-<%- include('./_partial/header.ejs'); %>
+<%- include('./_partial/header.ejs', { title: 'Play Game' }); %>
 <%- include('./_components/frame-top.ejs'); %>
 <%- include('./_components/content-start.ejs'); %>
 
@@ -48,6 +48,7 @@
                     <span style="font-size:11px" color="white">Select a method to play</span><br>
                     <select name='method' id='method' style="background-color: #B1977E;">
                       <option value='0'> Modern Web Client (Recommended)</option>
+                      <option value='4'> Modern Web Client (Experimental)</option>
                       <option value='1'> Legacy Web Client</option>
                       <option value='2'> Legacy Web Client Unsigned</option>
                       <option value='3'> Desktop Client</option>

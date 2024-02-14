@@ -3,18 +3,17 @@
 switch_int(stat_base(fishing)) {
     case 5: ~objboxt(raw_sardine,"You can now try fishing for @dbl@sardines@bla@.");
     case 10: ~objboxt(raw_herring,"You can now try fishing for @dbl@herring@bla@.");
-    case 15: ~objbox2(raw_anchovies,net,"You can now try to net @dbl@anchovies@bla@.");
-    case 16: ~objbox2(raw_mackerel,casket,"You can now try fishing for @dbl@mackerel@bla@,|@dbl@oysters@bla@ and @bdl@caskets@bla@ with a large net.");
-    case 20: ~objbox2(raw_trout,fly_fishing_rod,"You can now try fishing for @dbl@trout@bla@.");
-    case 23: ~objbox2(raw_cod,net,"Members can now try fishing for @dbl@cod@bla@ with a large net.");
-    case 25: ~objbox2(raw_pike,fishing_rod,"You can now try fishing for @dbl@pike@bla@.");
-    case 30: ~objbox2(raw_salmon,fly_fishing_rod,"You can now try fishing for @dbl@salmon@bla@.");
-    case 35: ~objbox2(raw_tuna,harpoon,"You can now try harpooning @dbl@tuna@bla@.");
-    case 40: ~objbox2(raw_lobster,lobster_pot,"You can now try to catch @dbl@lobster@bla@.");
-    case 46: ~objbox2(raw_bass,net_big,"Members can now try fishing for @dbl@sea bass@bla@ with a large net.");
-    case 50: ~objbox2(raw_swordfish,harpoon,"You can now try harpooning @dbl@swordfish@bla@.");
-    case 53: ~objbox2(raw_lava_eel,fishing_rod,"Members can now try catching @dbl@lava eels@bla@.");
+    case 15: ~doubleobjbox(raw_anchovies,net,"You can now try to net @dbl@anchovies@bla@.");
+    case 16: ~doubleobjbox(raw_mackerel,casket,"You can now try fishing for @dbl@mackerel@bla@,|@dbl@oysters@bla@ and @bdl@caskets@bla@ with a large net.");
+    case 20: ~doubleobjbox(raw_trout,fly_fishing_rod,"You can now try fishing for @dbl@trout@bla@.");
+    case 23: ~doubleobjbox(raw_cod,net,"Members can now try fishing for @dbl@cod@bla@ with a large net.");
+    case 25: ~doubleobjbox(raw_pike,fishing_rod,"You can now try fishing for @dbl@pike@bla@.");
+    case 30: ~doubleobjbox(raw_salmon,fly_fishing_rod,"You can now try fishing for @dbl@salmon@bla@.");
+    case 35: ~doubleobjbox(raw_tuna,harpoon,"You can now try harpooning @dbl@tuna@bla@.");
+    case 40: ~doubleobjbox(raw_lobster,lobster_pot,"You can now try to catch @dbl@lobster@bla@.");
+    case 46: ~doubleobjbox(raw_bass,net_big,"Members can now try fishing for @dbl@sea bass@bla@ with a large net.");
+    case 50: ~doubleobjbox(raw_swordfish,harpoon,"You can now try harpooning @dbl@swordfish@bla@.");
+    case 53: ~doubleobjbox(raw_lava_eel,fishing_rod,"Members can now try catching @dbl@lava eels@bla@.");
     case 68: ~mesbox("Members are now qualified to enter the @dbl@Fishing Guild@bla@.");
-    case 76: ~objbox2(raw_shark,harpoon,"Mmbers can now try harpooning @dbl@sharks@bla@.");
-
+    case 76: ~doubleobjbox(raw_shark,harpoon,"Members can now try harpooning @dbl@sharks@bla@.");
 }

@@ -1,6 +1,10 @@
 [oplocu,_cooking_oven] @attempt_cook_item(last_useitem);
-[oplocu,_cooking_fire] @attempt_cook_item(last_useitem);
-
+[oplocu,_cooking_fire]
+if (%tutorial_progress < ^tutorial_complete) {
+    @tut_attempt_cook_item(last_useitem);
+} else {
+    @attempt_cook_item(last_useitem);
+}
 
 [label,attempt_cook_item](obj $uncooked_item)
 //not sure if this is used
