@@ -43,12 +43,12 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     const numberKeys = [
         'width', 'length',
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
-        'walloff',
+        'wallwidth',
         'ambient', 'contrast',
         'mapfunction',
         'resizex', 'resizey', 'resizez',
         'mapscene',
-        'xoff', 'yoff', 'zoff'
+        'offsetx', 'offsety', 'offsetz'
     ];
     // prettier-ignore
     const booleanKeys = [
@@ -96,7 +96,7 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        if (key === 'walloff' && (number < 0 || number > 32 || number % 8 !== 0)) {
+        if (key === 'wallwidth' && (number < 0 || number > 32 || number % 8 !== 0)) {
             return null;
         }
 
@@ -287,7 +287,7 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                 if (value === true) {
                     dat.p1(25);
                 }
-            } else if (key === 'walloff') {
+            } else if (key === 'wallwidth') {
                 dat.p1(28);
                 dat.p1(value as number);
             } else if (key === 'ambient') {
@@ -326,13 +326,13 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'forceapproach') {
                 dat.p1(69);
                 dat.p1(value as number);
-            } else if (key === 'xoff') {
+            } else if (key === 'offsetx') {
                 dat.p1(70);
                 dat.p2(value as number);
-            } else if (key === 'yoff') {
+            } else if (key === 'offsety') {
                 dat.p1(71);
                 dat.p2(value as number);
-            } else if (key === 'zoff') {
+            } else if (key === 'offsetz') {
                 dat.p1(72);
                 dat.p2(value as number);
             } else if (key === 'forcedecor') {

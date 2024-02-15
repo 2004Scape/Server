@@ -5055,21 +5055,21 @@ model=model_loc_829
 
 [loc_830]
 model=model_loc_830
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
 
 [loc_831]
 model=model_loc_831
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
 
 [loc_832]
 model=model_loc_832
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
@@ -5950,7 +5950,7 @@ recol2d=47382
 
 [loc_979]
 model=model_loc_979
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
@@ -9465,13 +9465,13 @@ blockrange=no
 
 [timberwall]
 model=model_loc_1602
-walloff=8
+wallwidth=8
 sharelight=yes
 occlude=yes
 
 [loc_1603]
 model=model_loc_1602
-walloff=8
+wallwidth=8
 sharelight=yes
 
 [loc_1604]
@@ -9544,7 +9544,7 @@ recol1d=16
 
 [loc_1615]
 model=model_loc_1615
-walloff=8
+wallwidth=8
 sharelight=yes
 occlude=yes
 
@@ -9575,7 +9575,7 @@ active=no
 
 [loc_1620]
 model=model_loc_1512
-walloff=32
+wallwidth=32
 sharelight=yes
 occlude=yes
 recol1s=2
@@ -9586,7 +9586,7 @@ recol2d=9098
 [loc_1621]
 model=model_loc_1621
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 recol1s=2
 recol1d=23
@@ -11316,13 +11316,13 @@ recol1d=10508
 [castlewall]
 model=model_loc_1512
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 
 [loc_1912]
 model=model_loc_1621
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 
 [loc_1913]
@@ -11366,14 +11366,14 @@ active=no
 [loc_1920]
 model=model_loc_1623
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 active=no
 
 [loc_1921]
 model=model_loc_1921
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 width=2
 active=no
@@ -16439,14 +16439,14 @@ op1=Climb-up
 name=Wall
 desc=Made of wood.
 model=model_loc_1602
-walloff=8
+wallwidth=8
 occlude=yes
 active=yes
 op1=Knock-at
 
 [loc_2855]
 model=model_loc_1602
-walloff=8
+wallwidth=8
 occlude=yes
 
 [loc_2856]
@@ -18704,7 +18704,7 @@ model=model_loc_3146
 ambient=15
 contrast=15
 active=no
-walloff=32
+wallwidth=32
 
 [loc_3147]
 model=model_loc_3147
@@ -18743,14 +18743,14 @@ model=model_loc_3152
 ambient=15
 contrast=15
 active=no
-walloff=32
+wallwidth=32
 
 [loc_3153]
 model=model_loc_3153
 ambient=15
 contrast=15
 active=no
-walloff=32
+wallwidth=32
 
 [loc_3154]
 model=model_loc_3154
