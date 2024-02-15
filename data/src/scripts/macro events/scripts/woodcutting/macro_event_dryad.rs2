@@ -52,8 +52,8 @@ if ($random < 20) {
     obj_add(npc_coord, banana, 1, ^lootdrop_duration); 
 } else if ($random < 91) {
     obj_add(npc_coord, knife, 1, ^lootdrop_duration);
-} else if ($random < 99) {
-    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
-} else {
+} else if ($random < 120 & map_members = true) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else {
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

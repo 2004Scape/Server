@@ -30,6 +30,10 @@ gosub(npc_death);
 if (npc_findhero = false) {
     return;
 }
+// if f2p, dont drop anything
+if (map_members = false) {
+    return;
+}
 
 def_int $random = random(128);
 if ($random < 64) {
