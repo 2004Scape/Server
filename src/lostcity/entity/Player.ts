@@ -2134,8 +2134,7 @@ export default class Player extends PathingEntity {
             this.refreshZonePresence(this.lastX, this.lastZ, this.level);
 
             // run energy drain
-            if (running) {
-                // TODO: "Moving to an adjacent tile through walking will not drain energy, even if Run is turned on."
+            if (running && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
                 const weightKg = Math.floor(this.runweight / 1000);
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + (67 * clampWeight) / 64;
