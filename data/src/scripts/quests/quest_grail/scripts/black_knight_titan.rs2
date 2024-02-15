@@ -15,10 +15,10 @@ if(npc_stat(hitpoints) = 0) {
 
 [ai_queue3,black_knight_titan](int $arg)
 if(npc_findhero = true) {
+    if_close;
     if(p_finduid(uid) = true) { 
         @defeat_titan;
     }
-    if_close;
     queue(queue_defeat_titan, 0, npc_uid); //strongqueue probably
 }
 

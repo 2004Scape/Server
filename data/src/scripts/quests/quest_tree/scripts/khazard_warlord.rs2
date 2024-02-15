@@ -24,11 +24,11 @@ switch_int(%tree_progress) {
 [ai_queue3,khazard_warlord](int $arg)
 gosub(npc_death);
 if(npc_findhero = true) {
+        if_close;
     if(p_finduid(uid) = true) { // get protected access, if not then queue
         @defeat_warlord;
         return;
     }
-    if_close;
     queue(queue_defeat_warlord, 0, npc_uid); //strongqueue probably
 }
 
