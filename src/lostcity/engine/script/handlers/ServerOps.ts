@@ -330,6 +330,7 @@ const ServerOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
 
+        // todo: rewrite map_locaddunsafe for the new loc collection
         const zone = World.getZone(pos.x, pos.z, pos.level);
         const locs = zone.staticLocs.concat(zone.locs);
 
