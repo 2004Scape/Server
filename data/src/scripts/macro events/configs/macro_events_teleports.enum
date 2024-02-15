@@ -52,6 +52,12 @@ val=18,0_51_50_19_18
 val=19,0_47_54_37_35
 // Edgeville
 val=20,0_48_54_11_13
+// wizards tower, near mizgog. Confirmed: https://www.youtube.com/watch?v=MS7ADB-hh18&list=PLn23LiLYLb1az7fRD5RlqWnV3dlLoj8Rt&index=2
+val=21,2_48_49_32_27
+// lubmy basement. Confirmed: https://youtu.be/gIyV77WVxhQ?list=PLn23LiLYLb1az7fRD5RlqWnV3dlLoj8Rt&t=27
+val=22,0_50_150_18_18
+// varrock east bank. Confirmed: https://youtu.be/6H6B7LMt418?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=91
+val=23,0_50_53_63_32
 
 [macro_event_fail_teleports_members]
 inputtype=int
@@ -99,3 +105,9 @@ val=18,0_43_50_20_35
 val=19,1_40_50_53_8
 // Burthorpe Games Room stairwell
 // val=20,1_34_77_31_6
+// wizards tower, near mizgog. Confirmed: https://www.youtube.com/watch?v=MS7ADB-hh18&list=PLn23LiLYLb1az7fRD5RlqWnV3dlLoj8Rt&index=2
+val=20,2_48_49_32_27
+// lubmy basement. Confirmed: https://youtu.be/gIyV77WVxhQ?list=PLn23LiLYLb1az7fRD5RlqWnV3dlLoj8Rt&t=27
+val=21,0_50_150_18_18
+// varrock east bank. Confirmed: https://youtu.be/6H6B7LMt418?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=91
+val=22,0_50_53_63_32
