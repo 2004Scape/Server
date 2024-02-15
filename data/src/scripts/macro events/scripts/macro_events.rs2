@@ -5,10 +5,10 @@ if (afk_event = ^false) {
 }
 // macro_event varp resets when a random event is due to spawn? To prevent more than one general event at a time
 if (%macro_event > 0) {
-    // delete npc if player already has a random event somehow. I think this only applies to general random events?
-    // This is just a fail safe, no idea if this existed back then
-    if (~macro_event_general_active = true & npc_finduid(%macro_event_uid) = true) {
-        npc_del;
+    // This is just a fail safe, no idea if this existed back then.
+    // some general macro events use the %macro_event varp, so if multiple exist, it could cause issues
+    if (~macro_event_general_active = true) {
+        return;
     }
     %macro_event = ^no_macro_event;
 }
@@ -26,7 +26,6 @@ if ($event_coord = null) {
 %macro_event = $event;
 def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
-%macro_event_uid = npc_uid;
 
 switch_int ($event) {
     case ^macro_event_swarm : ~macro_event_swarm_spawn;
@@ -79,12 +78,10 @@ if (map_members = true) {
 // https://youtu.be/MS7ADB-hh18
 // doesnt if_close
 %macro_event = ^no_macro_event;
-if (npc_finduid(%macro_event_uid) = true) {
-    npc_say("No one ignores me!");
-    npc_anim(human_castteleport, 0);
-    p_delay(1);
-    npc_del;
-}
+npc_say("No one ignores me!");
+npc_anim(human_castteleport, 0);
+p_delay(1);
+npc_del;
 p_delay(0);
 // https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=37
 spotanim_map(spotanim_86, coord, 124, 0);
@@ -99,12 +96,10 @@ if (p_finduid(uid) = false) {
     return;
 }
 %macro_event = ^no_macro_event;
-if (npc_finduid(%macro_event_uid) = true) {
-    npc_say("No one ignores me!");
-    npc_anim(human_castteleport, 0);
-    p_delay(1);
-    npc_del;
-}
+npc_say("No one ignores me!");
+npc_anim(human_castteleport, 0);
+p_delay(1);
+npc_del;
 p_delay(0);
 def_int $i = 0;
 while ($i < inv_size(inv)) {
@@ -203,7 +198,7 @@ while ($i < 50) {
     $nw = movecoord($sw, 1, 0, 0);
     $se = movecoord($sw, 0, 0, 1);
     $ne = movecoord($sw, 1, 0, 1);
-    if (map_blocked($sw) = false & map_blocked($nw) = false & map_blocked($se) = false & map_blocked($ne) = false & lineofwalk($sw, $ne) = true){
+    if (map_blocked($sw) = false & map_blocked($nw) = false & map_blocked($se) = false & map_blocked($ne) = false & lineofwalk($sw, $ne) = true & $sw ! coord & $se ! coord & $nw ! coord & $ne ! coord){
         return($sw);
     }
     $i = calc($i + 1);
