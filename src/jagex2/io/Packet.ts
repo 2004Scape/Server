@@ -94,6 +94,12 @@ export default class Packet {
         return ~crc;
     }
 
+    static checkcrc(src: Packet | Uint8Array | Buffer, expected: number = 0) {
+        const checksum: number = Packet.crc32(src);
+        // console.log(checksum, expected);
+        return checksum == expected;
+    }
+
     static load(path: string): Packet {
         if (!fs.existsSync(path)) {
             return new Packet();

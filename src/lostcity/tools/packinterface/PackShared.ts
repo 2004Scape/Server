@@ -196,11 +196,12 @@ export function packInterface(server: boolean) {
         component[ifId].src['width'] = 512;
         component[ifId].src['height'] = 334;
 
+        let comName = '';
         let comId = -1;
         for (let i = 0; i < src.length; i++) {
             const line = src[i];
             if (line.startsWith('[')) {
-                const comName = line.substring(1, line.length - 1);
+                comName = line.substring(1, line.length - 1);
                 comId = interfacePack.indexOf(`${ifName}:${comName}`);
                 if (comId === -1 || typeof component[comId] === 'undefined') {
                     console.error(`Missing component ID ${ifName}:${comName} in data/pack/interface.pack`);
@@ -217,6 +218,12 @@ export function packInterface(server: boolean) {
 
             if (key === 'layer') {
                 const layerId = interfacePack.indexOf(`${ifName}:${value}`);
+
+                if (component[layerId].children.indexOf(comId) !== -1) {
+                    console.error(`ERROR: Layer ${ifName}:${value} already has ${comName} as a child`);
+                    process.exit(1);
+                }
+
                 component[layerId].children.push(comId);
                 component[ifId].children.splice(component[ifId].children.indexOf(comId), 1);
             }

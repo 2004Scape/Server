@@ -175,7 +175,7 @@ export function readConfigs(extension: string, requiredProperties: string[], par
                     configs.set(debugname, config);
                 }
 
-                debugname = line.substring(1, line.length - 1);
+                debugname = line.substring(1, line.length - 1).toLowerCase();
                 if (!debugname.length) {
                     throw parseStepError(file, lineNumber, 'No config name');
                 }
