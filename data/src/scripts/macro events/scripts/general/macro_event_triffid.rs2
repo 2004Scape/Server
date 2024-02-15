@@ -3,6 +3,7 @@
 if (finduid(uid) = true) {
     sound_synth(triffid_appear, 0, 0);
 }
+npc_setmode(none);
 npc_anim(seq_348, 0);
 %npc_attacking_uid = uid;
 // isnt delayed on respawn in osrs
@@ -30,6 +31,7 @@ npc_del;
 [ai_timer,macro_event_triffid_friendly]
 if (%npc_macro_event_status = ^macro_event_appear) {
     %npc_macro_event_status = ^macro_event_none;
+    npc_settimer(50); // 30s https://youtu.be/94bDnUMTMXQ?t=394
     return;
 } else if (%npc_macro_event_status = ^macro_event_disappear) {
     // return since its already disappearing in opnpc1
