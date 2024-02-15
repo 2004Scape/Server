@@ -37,3 +37,7 @@ default=null
 [ent_tree_loc]
 type=loc
 default=null
+
+[follow_player_on_logout]
+type=int
+default=0

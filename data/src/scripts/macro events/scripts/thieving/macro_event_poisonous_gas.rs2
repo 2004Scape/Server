@@ -1,5 +1,5 @@
 // todo: find a video of this
-[label,macro_event_macro_gas_chest]
+[proc,macro_event_macro_gas_chest]
 mes("You search the chest for traps.");
 
 mes("You find a trap on the chest,");

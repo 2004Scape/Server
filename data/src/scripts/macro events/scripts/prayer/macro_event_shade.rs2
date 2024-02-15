@@ -1,6 +1,6 @@
 // https://youtu.be/GwSL0nKsiqk?t=111
 // https://youtu.be/dQ0CKFrXGJY?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=201
-[label,macro_event_shade_spawn]
+[proc,macro_event_shade_spawn]
 def_npc $shade = enum(int, npc, macro_event_shade_levels, ~macro_event_combat_level);
 
 def_coord $shade_coord = ~macro_event_coord;

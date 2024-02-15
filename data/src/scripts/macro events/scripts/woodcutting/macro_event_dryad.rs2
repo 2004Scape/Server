@@ -1,4 +1,4 @@
-[label,macro_event_dryad_spawn]
+[proc,macro_event_dryad_spawn]
 // https://youtu.be/QOl_8KE9jUU?list=PLn23LiLYLb1aYjPgadhUQGX61AeHWaT4y&t=15
 def_npc $event = enum(int, npc, macro_event_dryad_levels, ~macro_event_combat_level);
 

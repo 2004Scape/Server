@@ -1,42 +1,62 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
-if (afk_event = ^false | ~macro_event_active = true) {
+if (afk_event = ^false) {
     return;
+}
+// macro_event varp resets when a random event is due to spawn? To prevent more than one general event at a time
+if (%macro_event > 0) {
+    // delete npc if player already has a random event somehow. I think this only applies to general random events?
+    // This is just a fail safe, no idea if this existed back then
+    if (~macro_event_general_active = true & npc_finduid(%macro_event_uid) = true) {
+        npc_del;
+    }
+    %macro_event = ^no_macro_event;
 }
 // random events arent restricted in wildy?
 // https://youtu.be/uPKaH7yg4To?t=421
 
-@macro_event_general_spawn;
+~macro_event_general_spawn(~macro_event_set_random);
 
 
-[label,macro_event_general_spawn]
-def_npc $event = ~macro_event_general;
+[proc,macro_event_general_spawn](int $event)
 def_coord $event_coord = ~macro_event_coord;
 if ($event_coord = null) {
     return;
 }
-npc_add($event_coord, $event, 1000);
-@macro_event_spawn;
+%macro_event = $event;
+def_npc $event_npc = ~macro_event_npc($event);
+npc_add($event_coord, $event_npc, 1000);
+%macro_event_uid = npc_uid;
 
-[label,macro_event_spawn]
-switch_int (%macro_event) {
-    case ^macro_event_swarm : @macro_event_swarm_spawn;
-    case ^macro_event_triffid_friendly : @macro_event_triffid_spawn;
-    case ^macro_event_drunken_dwarf : @macro_event_drunken_dwarf_spawn;
-    case ^macro_event_genie : @macro_event_genie_spawn;
-    case ^macro_event_mysterious_old_man_general : @macro_event_mysterious_old_man_general_spawn;
+switch_int ($event) {
+    case ^macro_event_swarm : ~macro_event_swarm_spawn;
+    case ^macro_event_triffid_friendly : ~macro_event_triffid_spawn;
+    case ^macro_event_drunken_dwarf : ~macro_event_drunken_dwarf_spawn;
+    case ^macro_event_genie : ~macro_event_genie_spawn;
+    case ^macro_event_mysterious_old_man_general : ~macro_event_mysterious_old_man_general_spawn;
 }
 
-[proc,macro_event_general]()(npc)
-def_npc $event;
+// called when the player logs in
+[proc,macro_event_general_check]
+if (~macro_event_general_active = true & nc_param(~macro_event_npc(%macro_event), follow_player_on_logout) = ^true) {
+    ~macro_event_general_spawn(%macro_event);
+}
+
+[proc,macro_event_npc](int $event)(npc)
+def_npc $event_npc;
 if (map_members = true) {
-    %macro_event = ~random_range(1, enum_getoutputcount(general_macro_events_members));
-    $event = enum(int, npc, general_macro_events_members, %macro_event);
+    $event_npc = enum(int, npc, general_macro_events_members, $event);
 } else {
-    %macro_event = ~random_range(1, enum_getoutputcount(general_macro_events_free));
-    $event = enum(int, npc, general_macro_events_free, %macro_event);
+    $event_npc = enum(int, npc, general_macro_events_free, $event);
 }
-return($event);
+return($event_npc);
+
+[proc,macro_event_set_random]()(int)
+if (map_members = true) {
+    return(~random_range(1, enum_getoutputcount(general_macro_events_members)));
+} else {
+    return(~random_range(1, enum_getoutputcount(general_macro_events_free)));
+}
 
 // used for skilling random events
 [proc,macro_event_general_count]()(int)
@@ -45,9 +65,11 @@ if (map_members = true) {
 }
 return(enum_getoutputcount(general_macro_events_free));
 
-
 // teleports the player to a random location, using the coords in configs/macro_events_teleports.enum
 [proc,macro_event_fail_teleport]
+if (p_finduid(uid) = false) {
+    return;
+}
 def_coord $teleport_coord;
 if (map_members = true) {
     $teleport_coord = enum(int, coord, macro_event_fail_teleports_members, random(enum_getoutputcount(macro_event_fail_teleports_members)));
@@ -56,9 +78,14 @@ if (map_members = true) {
 }
 // https://youtu.be/MS7ADB-hh18
 // doesnt if_close
-queue(macro_event_fail_teleport, 0, $teleport_coord);
-
-[queue,macro_event_fail_teleport](coord $teleport_coord)
+%macro_event = ^no_macro_event;
+if (npc_finduid(%macro_event_uid) = true) {
+    npc_say("No one ignores me!");
+    npc_anim(human_castteleport, 0);
+    p_delay(1);
+    npc_del;
+}
+p_delay(0);
 // https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=37
 spotanim_map(spotanim_86, coord, 124, 0);
 sound_synth(smokepuff2, 0, 0);
@@ -68,6 +95,17 @@ p_telejump($teleport_coord);
 ~teleport_anti_smuggle_checks;
 
 [proc,macro_event_fail_scatter_inv]
+if (p_finduid(uid) = false) {
+    return;
+}
+%macro_event = ^no_macro_event;
+if (npc_finduid(%macro_event_uid) = true) {
+    npc_say("No one ignores me!");
+    npc_anim(human_castteleport, 0);
+    p_delay(1);
+    npc_del;
+}
+p_delay(0);
 def_int $i = 0;
 while ($i < inv_size(inv)) {
     def_coord $coord = ~coord_lineofwalk_radius(coord, 5); // 11x11 for now. todo: confirm how scattering works
@@ -78,6 +116,7 @@ while ($i < inv_size(inv)) {
     $i = calc($i + 1);
 }
 
+
 // called when the npc needs to be poofed away
 [proc,macro_event_disappear]
 if (npc_findhero = true) {
@@ -86,12 +125,14 @@ if (npc_findhero = true) {
 spotanim_map(spotanim_86, npc_coord, 124, 0);
 npc_del;
 
-// check if other macro events already exist
-[proc,macro_event_active]()(boolean)
-if (%macro_event > 0) { 
-    return (true);
+// check if other general macro events already exist
+[proc,macro_event_general_active]()(boolean)
+if (%macro_event < 1) {
+    return(false);
 }
-return (false);
+if (%macro_event < add(~macro_event_general_count, 1)){
+    return(true);
+}
 
 [proc,macro_event_give_reward](namedobj $reward, int $count)
 if (inv_freespace(inv) < 1) {
@@ -123,6 +164,7 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
     npc_tele(coord); // osrs
     npc_setmode(playerfollow); // only starts following after teleport? https://youtu.be/HpmsgVshwxg?t=303
 }
+return(false);
 
 // based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
 [proc,macro_event_combat_level]()(int)
@@ -157,7 +199,7 @@ def_coord $se;
 def_coord $ne;
 // basically prevent the npc from spawning into anything it shouldnt. and so it doesnt spawn ontop of player
 while ($i < 50) {
-    $sw = movecoord(coord, ~random_range(calc(0 - 2), 2), 0, ~random_range(calc(0 - 2), 2));
+    $sw = movecoord(coord, ~random_range(-2, 2), 0, ~random_range(-2, 2));
     $nw = movecoord($sw, 1, 0, 0);
     $se = movecoord($sw, 0, 0, 1);
     $ne = movecoord($sw, 1, 0, 1);

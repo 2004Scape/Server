@@ -1,4 +1,4 @@
-[label,macro_event_drunken_dwarf_spawn]
+[proc,macro_event_drunken_dwarf_spawn]
 // https://youtu.be/R9eKmC7oLy0?t=122
 // no smoke puff
 
@@ -62,10 +62,14 @@ if (%npc_macro_event_status = 10) {
     return;
 } else if (%npc_macro_event_status = ^macro_event_wave) { // wave
     %npc_macro_event_status = ^macro_event_disappear;
-    npc_anim(dwarf_seq_105, 20);
-    npc_settimer(3);
-    npc_delay(2);
-    ~macro_event_disappear;
+    // npc_anim(dwarf_seq_105, 20);
+    // npc_settimer(3);
+    // npc_delay(2);
+    // ~macro_event_disappear;
+
+    // Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
+    npc_delay(1);
+    npc_del;
     return;
 } else if (%npc_macro_event_status = ^macro_event_alone) { // all alone and leave
     npc_say("Aww, me is all alone.");

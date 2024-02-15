@@ -1,11 +1,11 @@
-// todo: get an osrs video of this
-[label,macro_event_triffid_spawn]
+[proc,macro_event_triffid_spawn]
 if (finduid(uid) = true) {
     sound_synth(triffid_appear, 0, 0);
 }
 npc_setmode(none);
 npc_anim(seq_348, 0);
 %npc_attacking_uid = uid;
+%macro_event = ^no_macro_event;
 // isnt delayed on respawn in osrs
 %npc_macro_event_status = ^macro_event_appear;
 npc_settimer(44);
@@ -22,7 +22,6 @@ if (%npc_macro_event_status = ^macro_event_appear) {
 sound_synth(pick, 0, 0);
 // https://youtu.be/ghfKpXe7N5s?t=24
 mes("You pick the fruit from the plant."); // osrs
-%macro_event = ^no_macro_event;
 %npc_macro_event_status  = ^macro_event_disappear;
 npc_anim(seq_350, 0); // take thing away
 npc_delay(24); // delayed when despawning in osrs
@@ -44,7 +43,6 @@ npc_changetype(macro_event_triffid_hostile);
 npc_delay(1);
 if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(opplayer2);
-    %macro_event = ^no_macro_event;
 }
 
 [ai_timer,macro_event_triffid_hostile]

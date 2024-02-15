@@ -1,4 +1,4 @@
-[label,macro_event_river_troll_spawn]
+[proc,macro_event_river_troll_spawn]
 // no smoke puff https://youtu.be/X1KjOMAmJ_g?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=122
 def_npc $event = enum(int, npc, macro_event_river_troll_levels, ~macro_event_combat_level);
 

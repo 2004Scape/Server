@@ -1,4 +1,4 @@
-[label,macro_event_genie_spawn]
+[proc,macro_event_genie_spawn]
 spotanim_map(spotanim_86, npc_coord, 124, 0);
 sound_synth(genie_appear, 0, 0);
 npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
@@ -48,11 +48,6 @@ if (%npc_macro_event_status = 20) {
     npc_anim(emote_angry, 20);
     npc_say("You shouldn't ignore a Genie master <displayname>?");
 } else if (%npc_macro_event_status = 80) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
-    %macro_event = ^no_macro_event;
-    npc_say("No one ignores me!");
-    npc_anim(human_castteleport, 0);
-    npc_delay(1);
-    npc_del;
     if (random(2) < 1 & inv_freespace(inv) < inv_size(inv)) { // 50% chance to teleport or scatter inv
         ~macro_event_fail_scatter_inv;
     } else {

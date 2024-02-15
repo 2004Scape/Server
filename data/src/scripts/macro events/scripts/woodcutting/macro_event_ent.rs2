@@ -1,4 +1,4 @@
-[label,macro_event_ent_spawn]
+[proc,macro_event_ent_spawn]
 def_npc $ent = loc_param(ent);
 def_loc $loc = nc_param($ent, (next_loc_stage));
 def_coord $coord = loc_coord;

@@ -6,7 +6,7 @@
 
 
 // requires active loc
-[label,macro_event_gas_spawn]
+[proc,macro_event_gas_spawn]
 %macro_event = ^no_macro_event; // just incase
 // video looks like a bit over 50 ticks https://youtu.be/_tyuBlx5Fng?list=PLn23LiLYLb1bQvSMxsNH6T0eM0nRU-5w0&t=123
 // videos are exactly 60 ticks: 

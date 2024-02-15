@@ -1,10 +1,10 @@
-[label,macro_event_rock_golem_spawn]
+[proc,macro_event_rock_golem_spawn]
 // no smoke puff https://youtu.be/3SqlpJe90jE?list=PLn23LiLYLb1bQvSMxsNH6T0eM0nRU-5w0&t=140
 def_npc $event = enum(int, npc, macro_event_rock_golem_levels, ~macro_event_combat_level);
 
 def_coord $event_coord = ~macro_event_coord_2x2;
 if ($event_coord = null) {
-    @macro_event_general_spawn;
+    ~macro_event_general_spawn(~macro_event_set_random);
     return;
 }
 

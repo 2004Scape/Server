@@ -113,7 +113,9 @@ scope=perm
 
 [varp_109]
 
-[varp_110]
+[macro_event_uid]
+type=npc_uid
+scope=perm
 
 [varp_113]
 

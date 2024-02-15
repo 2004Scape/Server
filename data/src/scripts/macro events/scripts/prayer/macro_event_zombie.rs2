@@ -1,6 +1,6 @@
 
 // based off https://youtu.be/BvZCJ7ydw1o?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=144
-[label,macro_event_zombie_spawn]
+[proc,macro_event_zombie_spawn]
 def_npc $zombie = enum(int, npc, macro_event_zombie_levels, ~macro_event_combat_level);
 
 def_coord $zombie_coord = ~macro_event_coord;

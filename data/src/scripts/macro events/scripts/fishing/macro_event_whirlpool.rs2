@@ -1,4 +1,4 @@
-[label,macro_event_whirlpool_spawn](namedobj $fishing_equipment)
+[proc,macro_event_whirlpool_spawn](namedobj $fishing_equipment)
 %macro_event = ^no_macro_event;
 
 npc_changetype(npc_param(whirlpool));

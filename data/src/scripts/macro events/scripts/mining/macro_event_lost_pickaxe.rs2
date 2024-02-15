@@ -1,4 +1,4 @@
-[label,macro_event_lost_pickaxe_spawn]
+[proc,macro_event_lost_pickaxe_spawn]
 def_obj $pickaxe = ~pickaxe_checker;
 if ($pickaxe = null) {
     anim(null, 0);

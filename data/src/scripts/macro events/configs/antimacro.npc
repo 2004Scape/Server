@@ -10,6 +10,7 @@ desc=A very strange plant.
 readyanim=seq_349
 op1=Pick
 model1=model_3371_npc
+moverestrict=nomove
 wanderrange=5
 maxrange=5
 timer=50
@@ -80,6 +81,7 @@ head1=model_64_npc_head
 head2=model_73_npc_head
 head3=model_84_idk_head
 timer=1
+param=follow_player_on_logout,^true
 
 [macro_event_mysterious_old_man_general]
 vislevel=hide
@@ -112,6 +114,7 @@ model9=model_185_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
 timer=1
+param=follow_player_on_logout,^true
 
 [macro_event_swarm]
 vislevel=hide

@@ -1,3 +1,2 @@
 [macro_event]
-// temporary
-protect=no
+scope=perm
