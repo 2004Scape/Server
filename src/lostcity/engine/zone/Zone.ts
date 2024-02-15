@@ -42,44 +42,44 @@ export default class Zone {
     }
 
     debug() {
-        console.log('zone', this.index);
+        // console.log('zone', this.index);
 
         if (this.buffer.length > 0) {
-            console.log('buffer', this.buffer);
+            // console.log('buffer', this.buffer);
         }
 
         if (this.locDelEvent.size > 0 || this.locAddEvent.size > 0) {
-            console.log('events', this.locDelEvent.size, this.locAddEvent.size);
+            // console.log('events', this.locDelEvent.size, this.locAddEvent.size);
         }
 
         if (this.locDelCached.size > 0 || this.locAddCached.size > 0) {
-            console.log('cached', this.locDelCached.size, this.locAddCached.size);
+            // console.log('cached', this.locDelCached.size, this.locAddCached.size);
         }
 
         if (this.locDelTimer.size > 0 || this.locAddTimer.size > 0 || this.locChangeTimer.size > 0) {
-            console.log('timer', this.locDelTimer.size, this.locAddTimer.size, this.locChangeTimer.size);
+            // console.log('timer', this.locDelTimer.size, this.locAddTimer.size, this.locChangeTimer.size);
         }
 
         for (const [packed, timer] of this.locDelTimer) {
-            console.log('del', packed, timer - World.currentTick);
+            // console.log('del', packed, timer - World.currentTick);
         }
 
         for (const [packed, timer] of this.locAddTimer) {
-            console.log('add', packed, timer - World.currentTick);
+            // console.log('add', packed, timer - World.currentTick);
         }
 
         for (const [packed, timer] of this.locChangeTimer) {
-            console.log('change', packed, timer - World.currentTick);
+            // console.log('change', packed, timer - World.currentTick);
         }
 
-        console.log('----');
+        // console.log('----');
     }
 
     cycle() {
         // despawn
         for (const [packed, timer] of this.locAddTimer) {
             if (timer - World.currentTick <= 0) {
-                console.log('locAddTimer: despawning loc on tile');
+                // console.log('locAddTimer: despawning loc on tile');
                 this.locAddTimer.delete(packed);
                 this.locAddCached.delete(packed);
 
@@ -93,13 +93,13 @@ export default class Zone {
         // respawn
         for (const [packed, timer] of this.locDelTimer) {
             if (timer - World.currentTick <= 0) {
-                console.log('locDelTimer: despawning loc on tile');
+                // console.log('locDelTimer: despawning loc on tile');
                 this.locDelTimer.delete(packed);
                 this.locDelCached.delete(packed);
 
                 const staticPacked = packed | (1 << 8);
                 if (this.locs.has(staticPacked)) {
-                    console.log('locDelTimer: respawning static loc on tile');
+                    // console.log('locDelTimer: respawning static loc on tile');
                     this.locs.delete(packed);
                     this.locInfo.delete(packed);
                     this.locAddEvent.add(staticPacked);
@@ -109,7 +109,7 @@ export default class Zone {
 
         for (const [packed, timer] of this.locChangeTimer) {
             if (timer - World.currentTick <= 0) {
-                console.log('locChangeTimer: changing loc on tile');
+                // console.log('locChangeTimer: changing loc on tile');
                 this.locs.delete(packed);
                 this.locInfo.delete(packed);
                 this.locChangeTimer.delete(packed);
@@ -163,13 +163,13 @@ export default class Zone {
                 World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, false);
             }
 
-            console.log('locDelEvent:', x, z, id, shape, angle, isStatic);
+            // console.log('locDelEvent:', x, z, id, shape, angle, isStatic);
         }
 
         for (const packed of this.locAddEvent) {
             const info = this.locInfo.get(packed);
             if (typeof info === 'undefined') {
-                console.log('locAddEvent: missing loc info');
+                // console.log('locAddEvent: missing loc info');
                 continue;
             }
 
@@ -195,7 +195,7 @@ export default class Zone {
                 World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, true);
             }
 
-            console.log('locAddEvent:', x, z, id, shape, angle, isStatic);
+            // console.log('locAddEvent:', x, z, id, shape, angle, isStatic);
         }
 
         for (const event of this.events) {
@@ -312,7 +312,7 @@ export default class Zone {
 
         this.locs.add(packed);
         this.locInfo.set(packed, packedInfo);
-        console.log('addLoc(): adding loc on tile');
+        // console.log('addLoc(): adding loc on tile');
 
         const type = LocType.get(id);
 
@@ -321,7 +321,7 @@ export default class Zone {
         }
 
         if (this.locDelEvent.has(packed)) {
-            console.log('addLoc(): clearing old delete event');
+            // console.log('addLoc(): clearing old delete event');
             this.locDelEvent.delete(packed);
             this.locDelCached.delete(packed);
             this.locDelTimer.delete(packed);
@@ -337,7 +337,7 @@ export default class Zone {
 
         const packed = x | (z << 3) | (LocShapes.layer(shape) << 6);
 
-        console.log('changeLoc(): changing loc on tile');
+        // console.log('changeLoc(): changing loc on tile');
         this.locInfo.set(packed, id | (shape << 16) | (angle << 21));
         this.locAddEvent.add(packed);
         this.locChangeTimer.set(packed, World.currentTick + duration);
@@ -351,7 +351,7 @@ export default class Zone {
         const packed = x | (z << 3) | (LocShapes.layer(shape) << 6);
         const info = this.locInfo.get(packed);
         if (this.locs.has(packed) && typeof info !== 'undefined') {
-            console.log('removeLoc(): deleting loc on tile');
+            // console.log('removeLoc(): deleting loc on tile');
             // this.locs.delete(packed);
             // this.locInfo.delete(packed);
 
@@ -367,7 +367,7 @@ export default class Zone {
         const staticPacked = packed | (1 << 8);
         const staticInfo = this.locInfo.get(staticPacked);
         if (this.locs.has(staticPacked) && typeof staticInfo !== 'undefined') {
-            console.log('removeLoc(): deleting static loc on tile');
+            // console.log('removeLoc(): deleting static loc on tile');
             this.locs.add(packed); // temporarily add dynamic loc to prevent static loc from respawning
             this.locInfo.delete(packed);
 
@@ -380,7 +380,7 @@ export default class Zone {
         }
 
         if (this.locAddEvent.has(packed)) {
-            console.log('removeLoc(): clearing old add event');
+            // console.log('removeLoc(): clearing old add event');
             this.locAddEvent.delete(packed);
             this.locAddCached.delete(packed);
             this.locAddTimer.delete(packed);

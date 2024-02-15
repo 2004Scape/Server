@@ -2654,7 +2654,7 @@ export default class Player extends PathingEntity {
     }
 
     updateZones() {
-        console.log('tracked', this.newlyTrackedZones.size, this.allTrackedZones.size);
+        // console.log('tracked', this.newlyTrackedZones.size, this.allTrackedZones.size);
 
         for (const zone of this.newlyTrackedZones) {
             const x = zone & 2047;

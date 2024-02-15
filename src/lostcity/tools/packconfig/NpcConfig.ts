@@ -414,6 +414,10 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             }
         }
 
+        if (name === null) {
+            name = debugname;
+        }
+
         if (name !== null) {
             dat.p1(2);
             dat.pjstr(name);
