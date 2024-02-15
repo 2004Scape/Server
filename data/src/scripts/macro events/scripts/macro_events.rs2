@@ -1,15 +1,12 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
-if (afk_event = ^false) {
+// some general macro events use the %macro_event varp, so if multiple exist, it could cause issues
+if (afk_event = ^false | ~macro_event_general_active = true) {
     return;
 }
-// macro_event varp resets when a random event is due to spawn? To prevent more than one general event at a time
+// macro_event varp resets when a random event is due to spawn?
+// Just so the player isnt permanantly stuck at a certain %macro_event value
 if (%macro_event > 0) {
-    // This is just a fail safe, no idea if this existed back then.
-    // some general macro events use the %macro_event varp, so if multiple exist, it could cause issues
-    if (~macro_event_general_active = true) {
-        return;
-    }
     %macro_event = ^no_macro_event;
 }
 // random events arent restricted in wildy?
