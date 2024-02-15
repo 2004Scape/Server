@@ -12,9 +12,16 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if ($passes = false) {
+    return;
+}
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 // display tea
 if (obj_type = obj_712) {
     ~chatnpc_specific(nc_name(tea_seller), tea_seller, angry, "Hey! Put that back! Those are for display only!");

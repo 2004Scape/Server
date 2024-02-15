@@ -17,8 +17,12 @@ if (p_finduid(uid) = true) {
     def_int $rune_count2;
     def_namedobj $rune3;
     def_int $rune_count3;
+    def_boolean $passes;
     // check runes
-    $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    if ($passes = false) {
+        return;
+    }
     // TODO: 
     // - check if player has plague city completed for ardy teleport
     // - check if player has watchtower quest completed for watchtower teleport
@@ -26,6 +30,10 @@ if (p_finduid(uid) = true) {
     if (~wilderness_level(coord) > 20) {
         mes("A mysterious force blocks your teleport spell!");
         mes("You can't use this teleport after level 20 wilderness.");
+        return;
+    }
+    if (afk_event = ^true) {
+        ~macro_event_general_spawn(~macro_event_set_random);
         return;
     }
     // delete runes and give xp

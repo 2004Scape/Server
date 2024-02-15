@@ -14,8 +14,12 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if ($passes = false) {
+    return;
+}
 def_namedobj $bar = oc_param($ore1, smeltsto);
 // if player doesnt even superheat an ore
 if ($bar = null) {
@@ -62,3 +66,8 @@ if ($ore2 ! null) {
 inv_add(inv, $bar, 1);
 // delay magic utility by 3 ticks
 %magic_utility_delay = calc(map_clock + 3);
+
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}

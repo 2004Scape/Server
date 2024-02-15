@@ -93,9 +93,13 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
 // mes("<tostring(map_clock)>: Cast");
+if ($passes = false) {
+    return;
+}
 // check if npc is attackable
 if (~npc_is_attackable_message(npc_type) = false) {
     p_stopaction;

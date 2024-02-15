@@ -18,8 +18,12 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if ($passes = false) {
+    return;
+}
 // prevent alchemy
 if (~is_alchable($item) = false) {
     return;
@@ -36,6 +40,10 @@ inv_del(inv, $item, 1);
 inv_add(inv, coins, max(scale(6, 10, oc_cost($item)), 1));
 // delay by 5 ticks
 %magic_utility_delay = calc(map_clock + 5);
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 
 
 [label,magic_spell_low_alch](int $spell, obj $item)
@@ -50,8 +58,12 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if ($passes = false) {
+    return;
+}
 // if player has casted a spell recently then return
 // https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell instead of returning
 if (map_clock < %magic_utility_delay) {
@@ -73,6 +85,10 @@ inv_del(inv, $item, 1);
 inv_add(inv, coins, max(scale(4, 10, oc_cost($item)), 1));
 // delay by 3 ticks
 %magic_utility_delay = calc(map_clock + 3);
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 
 
 [proc,is_alchable](obj $item)(boolean)

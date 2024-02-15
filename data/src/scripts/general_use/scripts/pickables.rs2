@@ -52,6 +52,11 @@ p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You can't carry any more flax.");
 } else {
+    // macro event
+    if (afk_event = ^true) {
+        ~macro_event_general_spawn(~macro_event_set_random);
+        return;
+    }
     mes("You pick some flax.");
     p_delay(0);
     anim(human_pickupfloor, 0);

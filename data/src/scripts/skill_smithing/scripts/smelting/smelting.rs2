@@ -41,6 +41,11 @@ if ($secondary_total < struct_param($struct, ingredient_secondary_count)) {
     ~mesbox(struct_param($struct, processfailure));
     return;
 }
+// macro event
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
 

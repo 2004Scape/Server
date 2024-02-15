@@ -1,7 +1,7 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
 // some general macro events use the %macro_event varp, so if multiple exist, it could cause issues
-if (afk_event = ^false | ~macro_event_general_active = true) {
+if (afk_event = ^false | ~macro_event_general_active = true | %tutorial_progress < ^tutorial_complete) {
     return;
 }
 // macro_event varp resets when a random event is due to spawn?
@@ -12,10 +12,25 @@ if (%macro_event > 0) {
 // random events arent restricted in wildy?
 // https://youtu.be/uPKaH7yg4To?t=421
 
+// Not restricted in banks: https://youtu.be/1Rz9Eg4ZHhA
+
 ~macro_event_general_spawn(~macro_event_set_random);
 
-
+// this is called during:
+// - alching. Confirmed: https://youtu.be/2nqpZoHUjSc?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+// - teleporting. Confirmed: https://youtu.be/ZtnrEwb0n48?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=51
+// (probably every spell)
+// - cooking. Confirmed: https://youtu.be/Brq99Bdl0aI?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=198
+// - using flax wheel. Confirmed: https://youtu.be/sW48OR1I86M (early osrs)
+// - using anvil? Cant find a video, not implimented.
+// - fletching? Cant find a video, not implimented.
+// - flax picking? Cant find a video, but it is implimented.
+// - smithing at furnace. Confirmed? https://youtu.be/a6NobmSGBYw
+// - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
+if (~macro_event_general_active = true) {
+    return;
+}
 def_coord $event_coord = ~macro_event_coord;
 if ($event_coord = null) {
     return;
