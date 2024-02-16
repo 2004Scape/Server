@@ -310,7 +310,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 25) {
             locConfig.push('hasalpha=yes'); // TODO: inherit from anim
         } else if (code === 28) {
-            locConfig.push(`walloff=${loc.g1()}`);
+            locConfig.push(`wallwidth=${loc.g1()}`);
         } else if (code === 29) {
             locConfig.push(`ambient=${loc.g1s()}`);
         } else if (code === 39) {

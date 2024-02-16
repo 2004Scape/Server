@@ -34,14 +34,23 @@ if (p_finduid(uid) = true) {
 queue(set_run, 0, 0);
 
 [if_button,controls:com_5]
+
 if_close;
 if (p_finduid(uid) = true) {
+    if (%tutorial_progress = 195) {
+        %tutorial_progress = 200;
+        ~set_tutorial_progress;
+    }
     %player_run = ^player_run_on;
     return;
 }
 queue(set_run, 0, 1);
 
 [queue,set_run](int $value)
+if (%tutorial_progress = 195) {
+    %tutorial_progress = 200;
+    ~set_tutorial_progress;
+}
 %player_run = $value;
 
 // emotes

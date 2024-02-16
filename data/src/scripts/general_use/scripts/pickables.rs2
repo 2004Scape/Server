@@ -23,7 +23,7 @@ if(inv_freespace(inv) = 0) {
 }
 
 // Pickable Onion
-[oploc2,loc_3366]
+[oploc2,onion]
 p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You don't have room for this onion.");
@@ -35,7 +35,7 @@ if(inv_freespace(inv) = 0) {
 }
 
 // Pickable Cabbage
-[oploc2,loc_1161]
+[oploc2,cabbage]
 p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You don't have room for this cabbage.");

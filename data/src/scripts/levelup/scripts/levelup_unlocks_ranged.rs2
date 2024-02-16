@@ -9,8 +9,4 @@ switch_int(stat_base(ranged)) {
     case 50: ~doubleobjbox(magic_shortbow,blue_dragonhide_body,"Members can now wield @dbl@magic bows@bla@ and can wear|@dbl@blue dragonhide armour@bla@.");
     case 60: ~objbox(red_dragonhide_body,"Members can now wear @dbl@Red Dragonhide armour@bla@.");
     case 70: ~objboxt(black_dragonhide_body,"Members can now wear @dbl@Black Dragonhide armour@bla@.");
-
-
-
-
 }

@@ -90,7 +90,7 @@ script1=eq,2
 graphic=combatboxes,0
 activegraphic=combatboxes,1
 
-[hack0]
+[hack1]
 layer=hack101
 type=graphic
 x=5

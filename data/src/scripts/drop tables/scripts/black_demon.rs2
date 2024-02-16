@@ -22,7 +22,7 @@ if ($random < 4) {
     obj_add(npc_coord, mithril_kiteshield, 1, ^lootdrop_duration);
 } else if ($random < 11) {
     obj_add(npc_coord, rune_med_helm, 1, ^lootdrop_duration);  
-} else if ($random < 11) {
+} else if ($random < 12) {
     obj_add(npc_coord, rune_chainbody, 1, ^lootdrop_duration);
 }else if ($random < 20) {
     obj_add(npc_coord, airrune, 50, ^lootdrop_duration);

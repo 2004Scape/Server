@@ -1,0 +1,27 @@
+[loc_22]
+name=Door
+desc=The door is shut.
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762
+
+[loc_23]
+name=Sacks
+desc=Unusually lumpy looking.
+model=model_loc_23
+op1=Prod
+op2=Open
+
+[loc_24]
+name=Door
+model=model_loc_3
+active=yes
+op1=Open
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762

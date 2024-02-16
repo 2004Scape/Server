@@ -10,8 +10,18 @@
 // https://www.youtube.com/watch?v=wrA5lcCcBts - October 29, 2007 - Dies on Tutorial Island
 // https://www.youtube.com/watch?v=WI-4Gi0WU3E - Dec 28, 2006 - actual audio for some of it
 // https://web.archive.org/web/20051215201825/http://runevillage.com:80/rs2specialTutorial.php - has pictures, yahoo!
+// https://youtu.be/NtZXrGgC8iY?t=311 - Mar 4, 2013 - talks to chef again after opening music tab
+// https://youtu.be/KxWGUTUSQAQ?t=304 - Feb 23, 2013 - talks to chef again before opening music tab
+// https://youtu.be/GNRPeRShDzQ?t=270 -  Feb 24, 2013 - Different messages around cooking and burning shrimps
+// https://www.youtube.com/watch?v=cup6iXhjJLs - much later vid - Can still woodcut when on the last step of tut island
+// https://www.youtube.com/watch?v=c3EYlEqyIu0 - Jul 2, 2009 - different vid from above
+// https://youtu.be/wFo6zU5VNjI?t=246 - Dec 31, 2008 - Different options when talking to survival guide
+// https://youtu.be/7zsi7hiF4SQ?t=219 - Dec 3, 2012 - Combat Beta Bug
 
 // Varp info: https://oldschool.runescape.wiki/w/RuneScape:Varplayer/281
+
+// https://web.archive.org/web/20051210062857/http://runehq.com/RHQSpecialReportsView.php?id=00461
+// https://web.archive.org/web/20051215201825/http://runevillage.com:80/rs2specialTutorial.php
 
 [label,start_tutorial]
 // logging into a new character might show old tabs so we're going to clear them
@@ -42,7 +52,11 @@ if (%tutorial_progress = 0) {
 
 [proc,tutorial_set_active_tabs]
 if (%tutorial_progress > 0) {
-    if_settab(options, ^tab_game_options);
+    if (lowmemory = true) {
+        if_settab(options_ld, ^tab_game_options);
+    } else {
+        if_settab(options, ^tab_game_options);
+    }
 }
 
 if (%tutorial_progress > 20) {
@@ -52,6 +66,23 @@ if (%tutorial_progress > 20) {
 
 if (%tutorial_progress > 50) {
     if_settab(stats, ^tab_skills);
+}
+
+if (%tutorial_progress > 170) {
+    if (lowmemory = true) {
+        if_settab(music_ld, ^tab_musicplayer);
+    } else {
+        if_settab(music, ^tab_musicplayer);
+    }
+}
+
+if (%tutorial_progress > 180) {
+    if_settab(controls, ^tab_player_controls);
+}
+
+if (%tutorial_progress > 230) {
+    ~update_quests;
+    if_settab(questlist, ^tab_quest_journal);
 }
 
 [proc,tutorial_set_npc_hints]
@@ -93,6 +124,15 @@ if (%tutorial_progress = 2) {
 } else if (%tutorial_progress = 50) {
     %tutorial_progress = 60;
     ~tutorial_step_view_stats;
+} else if (%tutorial_progress = 170) {
+    %tutorial_progress = 180;
+    ~set_tutorial_progress;
+} else if (%tutorial_progress = 190) {
+    %tutorial_progress = 195;
+    ~set_tutorial_progress;
+} else if(%tutorial_progress = 230) {
+    %tutorial_progress = 240;
+    ~set_tutorial_progress;
 }
 
 [proc,set_tutorial_progress]
@@ -117,7 +157,29 @@ switch_int(%tutorial_progress) {
     case 120: ~tutorial_step_survival_recap;
 
     // Master Chef
+    case 130: ~tutorial_step_go_to_chef;
+    case 140: ~tutorial_step_talk_to_chef;
+    case 150: ~tutorial_step_make_dough;
+    case 160: ~tutorial_step_cooking_dough;
+    case 170: ~tutorial_step_click_music_player;
+    case 180: ~tutorial_step_music_player;
+    case 190: ~tutorial_step_click_run_icon;
+    case 195: ~tutorial_step_enable_run;
+
+    // Quest Guide
+    case 200: ~tutorial_step_enter_quest_guide_house;
+    case 220: ~tutorial_step_talk_to_quest_guide;
+    case 230: ~tutorial_step_open_quest_journal;
+    case 240: ~tutorial_step_quest_journal;
+    case 250: ~tutorial_step_enter_mine;
 }
+
+[label,tutorial_island_equip](int $slot)
+if (%tutorial_progress < ^combat_guide_start) {
+    ~mesbox("You'll be told how to equip items later.");
+    return;
+}
+@levelrequire_attack(1, $slot);
 
 [proc,tutorial_give_xp](stat $skill, int $xp)
 if (stat_base($skill) >= 3) {
