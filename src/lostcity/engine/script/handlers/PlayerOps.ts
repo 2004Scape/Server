@@ -342,9 +342,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
         const spellId = state.popInt();
-        if (typeof spellId === 'undefined') {
-            return;
-        }
         if (state.activePlayer.hasWaypoints()) {
             return;
         }

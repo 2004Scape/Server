@@ -251,11 +251,9 @@ npc_heropoints($damage);
 // only continue fighting if auto cast is turned on
 // freezes, and stat reductions dont continue ever, even if you have autocast enabled.
 // crumble undead continues autocast for some reason
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
-    if (db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
-        p_opnpc(2);
-        return;
-    }
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+    p_opnpct(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
+    return;
 }
 
 [ai_movecheck,npc_stunned_magic]()(boolean)
