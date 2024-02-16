@@ -148,6 +148,7 @@ enum ScriptOpcode {
     P_OPHELD, // official
     P_OPLOC, // official
     P_OPNPC, // official
+    P_OPNPCT, // official
     P_OPOBJ,
     P_OPPLAYER,
     P_PAUSEBUTTON, // official

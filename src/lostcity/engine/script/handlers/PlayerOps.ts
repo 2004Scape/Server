@@ -340,6 +340,20 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
     }),
 
+    [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
+        const spellId = state.popInt();
+        if (typeof spellId === 'undefined') {
+            return;
+        }
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        if (state.activePlayer.target !== null) {
+            return;
+        }
+        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPCT, spellId);
+    }),
+
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, state => {
         state.execution = ScriptState.PAUSEBUTTON;
         // TODO last_com
