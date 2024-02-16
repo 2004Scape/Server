@@ -68,7 +68,7 @@ type=synth
 [autocast_spell]
 scope=perm
 
-[autocast_delay]
+[varp_61]
 
 [gobdip_progress]
 scope=perm
@@ -84,7 +84,7 @@ scope=perm
 [boat_takeoff]
 transmit=yes
 
-[spell]
+[varp_78]
 
 [xplamp]
 transmit=yes

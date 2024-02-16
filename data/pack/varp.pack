@@ -59,7 +59,7 @@
 58=action_delay
 59=autocast_spell
 60=sheepherder_progress
-61=autocast_delay
+61=varp_61
 62=gobdip_progress
 63=runemysteries_progress
 64=exit_essence_mine_coord
@@ -76,7 +76,7 @@
 75=boat_takeoff
 76=scorpcatcher_progress
 77=barcrawl_progress
-78=spell
+78=varp_78
 79=xplamp
 80=druid_progress
 81=varp_81

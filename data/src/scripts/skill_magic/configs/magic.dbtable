@@ -4,6 +4,7 @@ column=rune,namedobj
 
 [magic_spell_table]
 column=spell,int
+column=spellcom,component
 column=name,string
 column=members,boolean
 column=levelrequired,int

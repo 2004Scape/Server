@@ -1,6 +1,7 @@
 [magic_spell_wind_strike]
 table=magic_spell_table
 data=spell,^wind_strike
+data=spellcom,magic:wind_strike
 data=name,Wind Strike
 data=members,false
 data=levelrequired,1
@@ -18,6 +19,7 @@ data=continue_by_autocast,true
 [magic_spell_water_strike]
 table=magic_spell_table
 data=spell,^water_strike
+data=spellcom,magic:water_strike
 data=name,Water Strike
 data=members,false
 data=levelrequired,5
@@ -35,6 +37,7 @@ data=continue_by_autocast,true
 [magic_spell_earth_strike]
 table=magic_spell_table
 data=spell,^earth_strike
+data=spellcom,magic:earth_strike
 data=name,Earth Strike
 data=members,false
 data=levelrequired,9
@@ -52,6 +55,7 @@ data=continue_by_autocast,true
 [magic_spell_fire_strike]
 table=magic_spell_table
 data=spell,^fire_strike
+data=spellcom,magic:fire_strike
 data=name,Fire Strike
 data=members,false
 data=levelrequired,13
@@ -69,6 +73,7 @@ data=continue_by_autocast,true
 [magic_spell_wind_bolt]
 table=magic_spell_table
 data=spell,^wind_bolt
+data=spellcom,magic:wind_bolt
 data=name,Wind Bolt
 data=members,false
 data=levelrequired,17
@@ -86,6 +91,7 @@ data=continue_by_autocast,true
 [magic_spell_water_bolt]
 table=magic_spell_table
 data=spell,^water_bolt
+data=spellcom,magic:water_bolt
 data=name,Water Bolt
 data=members,false
 data=levelrequired,23
@@ -103,6 +109,7 @@ data=continue_by_autocast,true
 [magic_spell_earth_bolt]
 table=magic_spell_table
 data=spell,^earth_bolt
+data=spellcom,magic:earth_bolt
 data=name,Earth Bolt
 data=members,false
 data=levelrequired,29
@@ -120,6 +127,7 @@ data=continue_by_autocast,true
 [magic_spell_fire_bolt]
 table=magic_spell_table
 data=spell,^fire_bolt
+data=spellcom,magic:fire_bolt
 data=name,Fire Bolt
 data=members,false
 data=levelrequired,35
@@ -137,6 +145,7 @@ data=continue_by_autocast,true
 [magic_spell_wind_blast]
 table=magic_spell_table
 data=spell,^wind_blast
+data=spellcom,magic:wind_blast
 data=name,Wind Blast
 data=members,false
 data=levelrequired,41
@@ -154,6 +163,7 @@ data=continue_by_autocast,true
 [magic_spell_water_blast]
 table=magic_spell_table
 data=spell,^water_blast
+data=spellcom,magic:water_blast
 data=name,Water Blast
 data=members,false
 data=levelrequired,47
@@ -171,6 +181,7 @@ data=continue_by_autocast,true
 [magic_spell_earth_blast]
 table=magic_spell_table
 data=spell,^earth_blast
+data=spellcom,magic:earth_blast
 data=name,Earth Blast
 data=members,false
 data=levelrequired,53
@@ -188,6 +199,7 @@ data=continue_by_autocast,true
 [magic_spell_fire_blast]
 table=magic_spell_table
 data=spell,^fire_blast
+data=spellcom,magic:fire_blast
 data=name,Fire Blast
 data=members,false
 data=levelrequired,59
@@ -205,6 +217,7 @@ data=continue_by_autocast,true
 [magic_spell_wind_wave]
 table=magic_spell_table
 data=spell,^wind_wave
+data=spellcom,magic:wind_wave
 data=name,Wind Wave
 data=members,true
 data=levelrequired,62
@@ -222,6 +235,7 @@ data=continue_by_autocast,true
 [magic_spell_water_wave]
 table=magic_spell_table
 data=spell,^water_wave
+data=spellcom,magic:water_wave
 data=name,Water Wave
 data=members,true
 data=levelrequired,65
@@ -239,6 +253,7 @@ data=continue_by_autocast,true
 [magic_spell_earth_wave]
 table=magic_spell_table
 data=spell,^earth_wave
+data=spellcom,magic:earth_wave
 data=name,Earth Wave
 data=members,true
 data=levelrequired,70
@@ -256,6 +271,7 @@ data=continue_by_autocast,true
 [magic_spell_fire_wave]
 table=magic_spell_table
 data=spell,^fire_wave
+data=spellcom,magic:fire_wave
 data=name,Fire Wave
 data=members,true
 data=levelrequired,75
@@ -273,6 +289,7 @@ data=continue_by_autocast,true
 [magic_spell_bind]
 table=magic_spell_table
 data=spell,^bind
+data=spellcom,magic:bind
 data=members,false
 data=levelrequired,20
 data=runesrequired,naturerune,2,waterrune,3,earthrune,3
@@ -288,6 +305,7 @@ data=continue_by_autocast,false
 [magic_spell_snare]
 table=magic_spell_table
 data=spell,^snare
+data=spellcom,magic:snare
 data=members,true
 data=levelrequired,50
 data=runesrequired,naturerune,3,waterrune,4,earthrune,4
@@ -304,6 +322,7 @@ data=continue_by_autocast,false
 [magic_spell_entangle]
 table=magic_spell_table
 data=spell,^entangle
+data=spellcom,magic:entangle
 data=members,true
 data=levelrequired,79
 data=runesrequired,naturerune,4,waterrune,5,earthrune,5
@@ -320,6 +339,7 @@ data=continue_by_autocast,false
 [magic_spell_confuse]
 table=magic_spell_table
 data=spell,^confuse
+data=spellcom,magic:confuse
 data=members,false
 data=levelrequired,3
 data=runesrequired,bodyrune,1,waterrune,3,earthrune,2
@@ -335,6 +355,7 @@ data=continue_by_autocast,false
 [magic_spell_weaken]
 table=magic_spell_table
 data=spell,^weaken
+data=spellcom,magic:weaken
 data=members,false
 data=levelrequired,11
 data=runesrequired,bodyrune,1,waterrune,3,earthrune,2
@@ -350,6 +371,7 @@ data=continue_by_autocast,false
 [magic_spell_curse]
 table=magic_spell_table
 data=spell,^curse
+data=spellcom,magic:curse
 data=members,false
 data=levelrequired,19
 data=runesrequired,bodyrune,1,waterrune,2,earthrune,3
@@ -365,6 +387,7 @@ data=continue_by_autocast,false
 [magic_spell_vulnerability]
 table=magic_spell_table
 data=spell,^vulnerability
+data=spellcom,magic:vulnerability
 data=members,true
 data=levelrequired,66
 data=runesrequired,soulrune,1,waterrune,5,earthrune,5
@@ -380,6 +403,7 @@ data=continue_by_autocast,false
 [magic_spell_enfeeble]
 table=magic_spell_table
 data=spell,^enfeeble
+data=spellcom,magic:enfeeble
 data=members,true
 data=levelrequired,73
 data=runesrequired,soulrune,1,waterrune,8,earthrune,8
@@ -395,6 +419,7 @@ data=continue_by_autocast,false
 [magic_spell_stun]
 table=magic_spell_table
 data=spell,^stun
+data=spellcom,magic:stun
 data=members,true
 data=levelrequired,80
 data=runesrequired,soulrune,1,waterrune,12,earthrune,12
@@ -413,6 +438,7 @@ data=continue_by_autocast,false
 // only one fansite has the maxhit (8), it seems credible: https://web.archive.org/web/20050416144009/http://www.trillionareguild.com/runescape/magic.php
 table=magic_spell_table
 data=spell,^crumble_undead
+data=spellcom,magic:crumble_undead
 data=members,false
 data=levelrequired,39
 data=runesrequired,chaosrune,1,airrune,2,earthrune,2

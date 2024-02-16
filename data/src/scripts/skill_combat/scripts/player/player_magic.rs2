@@ -3,70 +3,59 @@
 // add it to the spell table in ../configs/magic/magic_combat_spells.dbrow
 // create an opnpct and apnpct trigger for it in this script
 
-[opnpct,magic:wind_strike] @player_manual_spell(^wind_strike);
-[opnpct,magic:water_strike] @player_manual_spell(^water_strike);
-[opnpct,magic:earth_strike] @player_manual_spell(^earth_strike);
-[opnpct,magic:fire_strike] @player_manual_spell(^fire_strike);
-[opnpct,magic:wind_bolt] @player_manual_spell(^wind_bolt);
-[opnpct,magic:water_bolt] @player_manual_spell(^water_bolt);
-[opnpct,magic:earth_bolt] @player_manual_spell(^earth_bolt);
-[opnpct,magic:fire_bolt] @player_manual_spell(^fire_bolt);
-[opnpct,magic:wind_blast] @player_manual_spell(^wind_blast);
-[opnpct,magic:water_blast] @player_manual_spell(^water_blast);
-[opnpct,magic:earth_blast] @player_manual_spell(^earth_blast);
-[opnpct,magic:fire_blast] @player_manual_spell(^fire_blast);
-[opnpct,magic:wind_wave] @player_manual_spell(^wind_wave);
-[opnpct,magic:water_wave] @player_manual_spell(^water_wave);
-[opnpct,magic:earth_wave] @player_manual_spell(^earth_wave);
-[opnpct,magic:fire_wave] @player_manual_spell(^fire_wave);
-[opnpct,magic:curse] @player_manual_spell(^curse);
-[opnpct,magic:weaken] @player_manual_spell(^weaken);
-[opnpct,magic:confuse] @player_manual_spell(^confuse);
-[opnpct,magic:bind] @player_manual_spell(^bind);
-[opnpct,magic:snare] @player_manual_spell(^snare);
-[opnpct,magic:entangle] @player_manual_spell(^entangle);
-[opnpct,magic:vulnerability] @player_manual_spell(^vulnerability);
-[opnpct,magic:enfeeble] @player_manual_spell(^enfeeble);
-[opnpct,magic:stun] @player_manual_spell(^stun);
-[opnpct,magic:crumble_undead] @player_manual_spell(^crumble_undead);
+[opnpct,magic:wind_strike] @player_magic_spell_attack(^wind_strike);
+[opnpct,magic:water_strike] @player_magic_spell_attack(^water_strike);
+[opnpct,magic:earth_strike] @player_magic_spell_attack(^earth_strike);
+[opnpct,magic:fire_strike] @player_magic_spell_attack(^fire_strike);
+[opnpct,magic:wind_bolt] @player_magic_spell_attack(^wind_bolt);
+[opnpct,magic:water_bolt] @player_magic_spell_attack(^water_bolt);
+[opnpct,magic:earth_bolt] @player_magic_spell_attack(^earth_bolt);
+[opnpct,magic:fire_bolt] @player_magic_spell_attack(^fire_bolt);
+[opnpct,magic:wind_blast] @player_magic_spell_attack(^wind_blast);
+[opnpct,magic:water_blast] @player_magic_spell_attack(^water_blast);
+[opnpct,magic:earth_blast] @player_magic_spell_attack(^earth_blast);
+[opnpct,magic:fire_blast] @player_magic_spell_attack(^fire_blast);
+[opnpct,magic:wind_wave] @player_magic_spell_attack(^wind_wave);
+[opnpct,magic:water_wave] @player_magic_spell_attack(^water_wave);
+[opnpct,magic:earth_wave] @player_magic_spell_attack(^earth_wave);
+[opnpct,magic:fire_wave] @player_magic_spell_attack(^fire_wave);
+[opnpct,magic:curse] @player_magic_spell_attack(^curse);
+[opnpct,magic:weaken] @player_magic_spell_attack(^weaken);
+[opnpct,magic:confuse] @player_magic_spell_attack(^confuse);
+[opnpct,magic:bind] @player_magic_spell_attack(^bind);
+[opnpct,magic:snare] @player_magic_spell_attack(^snare);
+[opnpct,magic:entangle] @player_magic_spell_attack(^entangle);
+[opnpct,magic:vulnerability] @player_magic_spell_attack(^vulnerability);
+[opnpct,magic:enfeeble] @player_magic_spell_attack(^enfeeble);
+[opnpct,magic:stun] @player_magic_spell_attack(^stun);
+[opnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
 
-[apnpct,magic:wind_strike] @player_manual_spell(^wind_strike);
-[apnpct,magic:water_strike] @player_manual_spell(^water_strike);
-[apnpct,magic:earth_strike] @player_manual_spell(^earth_strike);
-[apnpct,magic:fire_strike] @player_manual_spell(^fire_strike);
-[apnpct,magic:wind_bolt] @player_manual_spell(^wind_bolt);
-[apnpct,magic:water_bolt] @player_manual_spell(^water_bolt);
-[apnpct,magic:earth_bolt] @player_manual_spell(^earth_bolt);
-[apnpct,magic:fire_bolt] @player_manual_spell(^fire_bolt);
-[apnpct,magic:wind_blast] @player_manual_spell(^wind_blast);
-[apnpct,magic:water_blast] @player_manual_spell(^water_blast);
-[apnpct,magic:earth_blast] @player_manual_spell(^earth_blast);
-[apnpct,magic:fire_blast] @player_manual_spell(^fire_blast);
-[apnpct,magic:wind_wave] @player_manual_spell(^wind_wave);
-[apnpct,magic:water_wave] @player_manual_spell(^water_wave);
-[apnpct,magic:earth_wave] @player_manual_spell(^earth_wave);
-[apnpct,magic:fire_wave] @player_manual_spell(^fire_wave);
-[apnpct,magic:curse] @player_manual_spell(^curse);
-[apnpct,magic:weaken] @player_manual_spell(^weaken);
-[apnpct,magic:confuse] @player_manual_spell(^confuse);
-[apnpct,magic:bind] @player_manual_spell(^bind);
-[apnpct,magic:snare] @player_manual_spell(^snare);
-[apnpct,magic:entangle] @player_manual_spell(^entangle);
-[apnpct,magic:vulnerability] @player_manual_spell(^vulnerability);
-[apnpct,magic:enfeeble] @player_manual_spell(^enfeeble);
-[apnpct,magic:stun] @player_manual_spell(^stun);
-[apnpct,magic:crumble_undead] @player_manual_spell(^crumble_undead);
-
-[label,player_manual_spell](int $spell)
-if (%action_delay > map_clock) {
-    %spell = null;
-    return;
-}
-// later need to add weakqueue behavior when casting spells manually.
-// specifically when action_delay is higher than map_clock.
-// I believe this behavior didnt exist until weakqueues were added late 2004 
-@player_magic_spell_attack($spell);
-
+[apnpct,magic:wind_strike] @player_magic_spell_attack(^wind_strike);
+[apnpct,magic:water_strike] @player_magic_spell_attack(^water_strike);
+[apnpct,magic:earth_strike] @player_magic_spell_attack(^earth_strike);
+[apnpct,magic:fire_strike] @player_magic_spell_attack(^fire_strike);
+[apnpct,magic:wind_bolt] @player_magic_spell_attack(^wind_bolt);
+[apnpct,magic:water_bolt] @player_magic_spell_attack(^water_bolt);
+[apnpct,magic:earth_bolt] @player_magic_spell_attack(^earth_bolt);
+[apnpct,magic:fire_bolt] @player_magic_spell_attack(^fire_bolt);
+[apnpct,magic:wind_blast] @player_magic_spell_attack(^wind_blast);
+[apnpct,magic:water_blast] @player_magic_spell_attack(^water_blast);
+[apnpct,magic:earth_blast] @player_magic_spell_attack(^earth_blast);
+[apnpct,magic:fire_blast] @player_magic_spell_attack(^fire_blast);
+[apnpct,magic:wind_wave] @player_magic_spell_attack(^wind_wave);
+[apnpct,magic:water_wave] @player_magic_spell_attack(^water_wave);
+[apnpct,magic:earth_wave] @player_magic_spell_attack(^earth_wave);
+[apnpct,magic:fire_wave] @player_magic_spell_attack(^fire_wave);
+[apnpct,magic:curse] @player_magic_spell_attack(^curse);
+[apnpct,magic:weaken] @player_magic_spell_attack(^weaken);
+[apnpct,magic:confuse] @player_magic_spell_attack(^confuse);
+[apnpct,magic:bind] @player_magic_spell_attack(^bind);
+[apnpct,magic:snare] @player_magic_spell_attack(^snare);
+[apnpct,magic:entangle] @player_magic_spell_attack(^entangle);
+[apnpct,magic:vulnerability] @player_magic_spell_attack(^vulnerability);
+[apnpct,magic:enfeeble] @player_magic_spell_attack(^enfeeble);
+[apnpct,magic:stun] @player_magic_spell_attack(^stun);
+[apnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
 
 [label,player_magic_spell_attack](int $spell)
 p_stopaction;
@@ -75,17 +64,16 @@ if (npc_stat(hitpoints) = 0) {
     p_stopaction;
     return; // this means the npc is not avail to fight i.e dead
 }
-if (%action_delay > map_clock | %autocast_delay > map_clock) {
-    %autocast_delay = add(map_clock, 1);
-    %spell = $spell;
-    //mes("p_opnpc(2)");
-    p_opnpc(2);
-    return;
-}
-// reset spell VERY IMPORTANT!
-%spell = null;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
+
+// mes("<tostring(map_clock)>, <tostring(%action_delay)>");
+if (map_clock < %action_delay) {
+    mes("p_opnpct");
+    p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    return;
+}
+
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;
@@ -263,14 +251,9 @@ npc_heropoints($damage);
 // only continue fighting if auto cast is turned on
 // freezes, and stat reductions dont continue ever, even if you have autocast enabled.
 // crumble undead continues autocast for some reason
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3) {
-    // 
-    %spell = %autocast_spell;
-    if (db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
-        %autocast_delay = add(map_clock, 1);
-        p_opnpc(2);
-        return;
-    }
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+    p_opnpct(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
+    return;
 }
 
 [ai_movecheck,npc_stunned_magic]()(boolean)
