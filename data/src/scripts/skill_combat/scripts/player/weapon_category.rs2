@@ -70,7 +70,6 @@
 if_close;
 if (p_finduid(uid) = true) {
     %attackstyle_magic = togglebit(%attackstyle_magic, 0);
-    %spell = %autocast_spell;
     return;
 }
 queue(set_attack_style_magic, 0);
@@ -89,7 +88,6 @@ queue(set_attackstyle, 0, $style);
 
 [queue,set_attack_style_magic]
 %attackstyle_magic = togglebit(%attackstyle_magic, 0);
-%spell = %autocast_spell;
 
 // updates the attack style tab depending on the
 // weapon currently equipped or not by the player
@@ -103,7 +101,6 @@ if ($previous = null | $obj = null | oc_category($previous) ! oc_category($obj))
     // TODO somehow confirm this
     // osrs keeps track of selected per category
     %attackstyle_magic = 0;
-    %spell = null;
     %autocast_spell = null;
     %attackstyle = 0;
 }
