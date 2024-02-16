@@ -324,6 +324,9 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.P_OPNPC]: {
         require: ['p_active_player', 'active_npc']
     },
+    [ScriptOpcode.P_OPNPCT]: {
+        require: ['p_active_player', 'active_npc']
+    },
     [ScriptOpcode.P_OPOBJ]: {
         require: ['p_active_player', 'active_obj']
     },

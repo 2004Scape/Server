@@ -73,6 +73,7 @@
 [command,p_opheld](int $op, int $inv, int $slot)
 [command,p_oploc](int $op)
 [command,p_opnpc](int $op)
+[command,p_opnpct](component $spell)
 [command,p_pausebutton]
 [command,p_stopaction]
 [command,p_telejump](coord $coord)

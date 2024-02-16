@@ -70,7 +70,7 @@ type=synth
 [autocast_spell]
 scope=perm
 
-[autocast_delay]
+[varp_61]
 
 [gobdip_progress]
 scope=perm

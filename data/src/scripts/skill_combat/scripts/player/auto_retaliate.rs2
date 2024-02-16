@@ -12,8 +12,6 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~np
         }
 
         %action_delay = add(map_clock, $delay);
-        %autocast_delay = add(map_clock, 1);
-        %spell = %autocast_spell;
     }
     p_opnpc(2);
 }

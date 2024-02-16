@@ -2497,7 +2497,11 @@ export default class Player extends PathingEntity {
             if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
-                    debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                    if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.OPNPCT) {
+                        debugname = Component.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
+                    } else {
+                        debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
+                    }
                 } else if (this.target instanceof Loc) {
                     debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
                 } else if (this.target instanceof Obj) {
