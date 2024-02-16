@@ -3,69 +3,69 @@ scope=perm
 
 [prayer_thickskin]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_strengthburst]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_clarity]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_rockskin]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_superhumanstrength]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_improvedreflexes]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_rapidrestore]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_rapidheal]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_protectitems]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_steelskin]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_ultimatestrength]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_incrediblereflexes]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_protectfrommagic]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_protectfrommissiles]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_protectfrommelee]
 transmit=yes
-protect=no
+protect=yes
 
 [prayer_drain_counter]
-protect=no
+protect=yes
 
 [prayer_drain_effect]
-protect=no
+protect=yes
 
 [prayer_drain_resistance]
-protect=no
+protect=yes

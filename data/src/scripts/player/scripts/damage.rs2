@@ -10,6 +10,8 @@ midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
 p_delay(6);
 
+~deactivate_prayers;
+
 // todo: save 3 items + protect items prayer
 def_int $i = 0;
 def_int $size = inv_size(inv);

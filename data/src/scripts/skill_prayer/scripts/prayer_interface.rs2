@@ -510,6 +510,9 @@ if (getqueue(start_draining) < 1) { // it might be queue(start_draining, getqueu
 softtimer(drain_prayer, 5);
 
 [softtimer,drain_prayer]
+queue(drain_prayer, 0);
+
+[queue,drain_prayer]
 %prayer_drain_counter = calc(%prayer_drain_effect * 5 + max(%prayer_drain_counter, 0));
 // 60 + equipment bonus * 2
 if (~prayers_are_active = false) {
