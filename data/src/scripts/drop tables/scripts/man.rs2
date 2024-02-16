@@ -5,7 +5,6 @@
 [ai_queue3,npc_282](int $arg) @man_drop_table;
 
 [label,man_drop_table]
-
 gosub(npc_death);
 if (npc_findhero = false) {
     return;

@@ -1,4 +1,7 @@
-[ai_queue3,npc_118](int $arg)
+[ai_queue3,npc_118](int $arg) @dwarf_drop_table;
+[ai_queue3,npc_120](int $arg) @dwarf_drop_table;
+
+[label,dwarf_drop_table]
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
@@ -18,7 +21,7 @@ if ($random < 13) {
     obj_add(npc_coord, iron_battleaxe, 1, ^lootdrop_duration);
 } else if ($random < 27) {
     if (map_members = true) {
-        obj_add(npc_coord, bolt, 1, ^lootdrop_duration);
+        obj_add(npc_coord, bolt, ~random_range(2, 12), ^lootdrop_duration);
     }
 } else if ($random < 31) {
     obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
