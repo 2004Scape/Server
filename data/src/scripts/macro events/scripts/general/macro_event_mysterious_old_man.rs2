@@ -61,8 +61,10 @@ if ($random < 16) { // 16/150 kebab?
 [ai_timer,macro_event_mysterious_old_man_general]
 if (~macro_event_lost = true) {
     // only confirmed for mysterious old man
+    npc_delay(2);
     npc_anim(emote_cry, 20);
     npc_say("I lose more friends that way.");
+    npc_delay(2);
     ~macro_event_disappear;
     return;
 }
