@@ -150,20 +150,3 @@ else if (%skill_sound = calc(map_clock + 2)) {
 }
 
 p_opnpc(3);
-
-[debugproc,tt](int $int)
-switch_int($int) {
-    case 0 : loc_add(movecoord(coord, 0, 0, 1), loc_1276, 0, centrepiece_straight, 500);
-    case 1 : loc_add(movecoord(coord, 0, 0, 1), loc_1277, 0, centrepiece_straight, 500);
-    case 2 : loc_add(movecoord(coord, 0, 0, 1), loc_1278, 0, centrepiece_straight, 500);
-    case 3 : loc_add(movecoord(coord, 0, 0, 1), loc_1279, 0, centrepiece_straight, 500);
-    case 4 : loc_add(movecoord(coord, 0, 0, 1), loc_1280, 0, centrepiece_straight, 500);
-    case 5 : loc_add(movecoord(coord, 0, 0, 1), loc_1282, 0, centrepiece_straight, 500);
-    case 6 : loc_add(movecoord(coord, 0, 0, 1), loc_1283, 0, centrepiece_straight, 500);
-    case 7 : loc_add(movecoord(coord, 0, 0, 1), loc_1284, 0, centrepiece_straight, 500);
-    case 8 : loc_add(movecoord(coord, 0, 0, 1), loc_1285, 0, centrepiece_straight, 500);
-    case 9 : loc_add(movecoord(coord, 0, 0, 1), loc_1286, 0, centrepiece_straight, 500);
-    case 10 : loc_add(movecoord(coord, 0, 0, 1), loc_1289, 0, centrepiece_straight, 500);
-    case 11 : loc_add(movecoord(coord, 0, 0, 1), loc_1290, 0, centrepiece_straight, 500);
-    case 12 : loc_add(movecoord(coord, 0, 0, 1), loc_1291, 0, centrepiece_straight, 500);
-}
