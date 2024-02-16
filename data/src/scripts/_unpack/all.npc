@@ -3073,6 +3073,7 @@ param=damagetype,^stab_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=death_drop,null
 huntmode=cowardly
 
 [npc_109]
@@ -3096,6 +3097,7 @@ param=damagetype,^stab_style
 param=attack_anim,smallscorpion_attack
 param=defend_anim,smallscorpion_block
 param=death_anim,smallscorpion_death
+param=death_drop,null
 huntmode=cowardly
 
 [fire_giant]
@@ -4062,6 +4064,7 @@ param=damagetype,^stab_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=death_drop,null
 huntmode=cowardly
 
 [npc_145]
@@ -6017,6 +6020,7 @@ param=damagetype,^stab_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=death_drop,null
 
 [npc_272]
 name=Lucien
@@ -8945,6 +8949,7 @@ param=damagetype,^crush_style
 param=attack_anim,smallscorpion_attack
 param=defend_anim,smallscorpion_block
 param=death_anim,smallscorpion_death
+param=death_drop,null
 
 [npc_500]
 vislevel=hide
