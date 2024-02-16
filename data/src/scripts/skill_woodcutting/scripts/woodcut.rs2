@@ -37,7 +37,7 @@ if (inv_freespace(inv) < 1) {
     anim(null, 0);
     @your_inventory_is_full($product);
 }
-if (1 = ^true) {
+if (afk_event = ^true) {
     @macro_randomwoodcutting;
 }
 if (%action_delay < map_clock) {

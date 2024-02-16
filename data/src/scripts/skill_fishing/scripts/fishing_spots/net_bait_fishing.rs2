@@ -55,7 +55,7 @@ if (%action_delay = calc(map_clock + 3)) {
     sound_synth(fishing_cast, 0, 15);
 }
 
-if (1 = ^true & %macro_event = ^no_macro_event & npc_param(is_whirlpool) = ^false) {
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(net);
 }
 
@@ -129,7 +129,7 @@ if (%action_delay = calc(map_clock + 4)) {
         ~fish_roll(raw_sardine, null, fishing_rod, fishing_bait);
     }
 }
-if (1 = ^true & %macro_event = ^no_macro_event & npc_param(is_whirlpool) = ^false) {
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(fishing_rod);
 }
 

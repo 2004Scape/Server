@@ -55,7 +55,7 @@ if (%action_delay = map_clock) {
     anim(human_lobster, 0);
     sound_synth(fishing_cast, 0, 20);
 }
-if (1 = ^true & %macro_event = ^no_macro_event & npc_param(is_whirlpool) = ^false) {
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(lobster_pot);
 }
 
@@ -133,7 +133,7 @@ if (%action_delay = map_clock) {
     anim(human_harpoon, 0);
     sound_synth(fishing_cast, 0, 10);
 }
-if (1 = ^true & %macro_event = ^no_macro_event & npc_param(is_whirlpool) = ^false) {
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
     @macro_event_fishing(harpoon);
 }
 

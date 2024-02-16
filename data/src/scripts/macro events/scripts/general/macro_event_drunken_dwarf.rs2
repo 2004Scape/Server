@@ -20,8 +20,11 @@ if (%macro_event = ^no_macro_event) {
 %macro_event = ^no_macro_event;
 ~macro_event_give_reward(kebab, 1);
 ~macro_event_give_reward(beer, 1);
-%npc_macro_event_status = ^macro_event_wave;
-npc_settimer(3);
+// %npc_macro_event_status = ^macro_event_wave;
+// npc_settimer(3);
+
+// Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
+npc_del;
 ~chatnpc(drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
 
 [ai_timer,macro_event_drunken_dwarf]
@@ -60,16 +63,12 @@ if (%npc_macro_event_status = 10) {
     %npc_macro_event_status = ^macro_event_attack;
     npc_setmode(opplayer2);
     return;
-} else if (%npc_macro_event_status = ^macro_event_wave) { // wave
+} else if (%npc_macro_event_status = ^macro_event_wave) { // wave (unused)
     %npc_macro_event_status = ^macro_event_disappear;
-    // npc_anim(dwarf_seq_105, 20);
-    // npc_settimer(3);
-    // npc_delay(2);
-    // ~macro_event_disappear;
-
-    // Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
-    npc_delay(1);
-    npc_del;
+    npc_anim(dwarf_seq_105, 20);
+    npc_settimer(3);
+    npc_delay(2);
+    ~macro_event_disappear;
     return;
 } else if (%npc_macro_event_status = ^macro_event_alone) { // all alone and leave
     npc_say("Aww, me is all alone.");

@@ -39,7 +39,7 @@ if (stat(mining) < $levelreq) {
     return;
 }
 // Macro events
-if (1 = ^true & %macro_event = ^no_macro_event & loc_category ! mining_rock_macro_gas) {
+if (afk_event = ^true & loc_category ! mining_rock_macro_gas) {
     if (loc_param(macro_gas) = null) jump(macro_randomminingrune);
     jump(macro_randommining);
 }

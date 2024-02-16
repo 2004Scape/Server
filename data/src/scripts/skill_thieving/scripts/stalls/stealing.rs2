@@ -29,7 +29,7 @@ if ($data = null) {
     @nothing_interesting_happens;
 }
 
-if (1 = ^true) {
+if (afk_event = ^true) {
     @macro_randomthieving;
 }
 
