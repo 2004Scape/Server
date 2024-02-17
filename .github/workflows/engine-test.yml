@@ -1,8 +1,12 @@
-﻿name: Lint
+﻿name: Test Engine Code
 
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main, live ]
+    paths:
+      - 'src/**'
 
 jobs:
   build:
@@ -24,9 +28,8 @@ jobs:
         key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.OS }}-node-
-
     - name: Install Dependencies
       run: npm ci
 
-    - name: Run Linter
-      run: npm run lint
+    - name: Run tests
+      run: CI_MODE=true npm test

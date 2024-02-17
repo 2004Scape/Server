@@ -1,8 +1,12 @@
-﻿name: Validate Cache
+﻿name: Pack Server Cache
 
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main, live ]
+    paths:
+      - 'data/src/**'
 
 jobs:
   build:
