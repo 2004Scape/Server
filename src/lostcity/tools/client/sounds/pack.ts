@@ -3,26 +3,33 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 import { loadOrder, loadPack } from '#lostcity/util/NameMap.js';
+import { shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 
-console.log('Packing sounds.jag');
-//console.time('sounds.jag');
+export function packClientSound() {
+    if (!shouldBuildFileAny('data/src/sounds', 'data/pack/client/sounds')) {
+        return;
+    }
 
-const order = loadOrder('data/pack/sound.order');
-const pack = loadPack('data/pack/sound.pack');
+    console.log('Packing sounds.jag');
+    //console.time('sounds.jag');
 
-const jag = new Jagfile();
+    const order = loadOrder('data/pack/sound.order');
+    const pack = loadPack('data/pack/sound.pack');
 
-const out = new Packet();
-for (let i = 0; i < order.length; i++) {
-    const id = Number(order[i]);
-    const name = pack[id];
+    const jag = new Jagfile();
 
-    out.p2(id);
-    const data = fs.readFileSync(`data/src/sounds/${name}.synth`);
-    out.pdata(data);
+    const out = new Packet();
+    for (let i = 0; i < order.length; i++) {
+        const id = Number(order[i]);
+        const name = pack[id];
+
+        out.p2(id);
+        const data = fs.readFileSync(`data/src/sounds/${name}.synth`);
+        out.pdata(data);
+    }
+    out.p2(-1);
+
+    jag.write('sounds.dat', out);
+    jag.save('data/pack/client/sounds', true);
+    //console.timeEnd('sounds.jag');
 }
-out.p2(-1);
-
-jag.write('sounds.dat', out);
-jag.save('data/pack/client/sounds', true);
-//console.timeEnd('sounds.jag');

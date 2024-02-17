@@ -95,6 +95,30 @@ export function shouldBuildFile(src: string, dest: string) {
     return stats.mtimeMs < srcStats.mtimeMs;
 }
 
+export function shouldBuildFileAny(path: string, dest: string) {
+    if (!fs.existsSync(dest)) {
+        return true;
+    }
+
+    const names = fs.readdirSync(path);
+    for (let i = 0; i < names.length; i++) {
+        const stat = fs.statSync(`${path}/${names[i]}`);
+
+        if (stat.isDirectory()) {
+            const subdir = shouldBuildFileAny(`${path}/${names[i]}`, dest);
+            if (subdir) {
+                return true;
+            }
+        } else {
+            if (shouldBuildFile(`${path}/${names[i]}`, dest)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 export function crawlConfigNames(ext: string, includeBrackets = false) {
     const names: string[] = [];
 

@@ -139,19 +139,14 @@ maps.forEach(file => {
 
     const parts = file.split('_');
     const mapX = parts[0].slice(1);
-    let mapZ = parts[1];
-    if (mapZ.indexOf('.') !== -1) {
-        mapZ = mapZ.slice(0, mapZ.indexOf('.'));
-    }
+    const mapZ = parts[1];
     console.log(`Unpacking map for ${mapX}_${mapZ}`);
 
     // console.time('read');
     let data: Buffer | Uint8Array = fs.readFileSync(`data/pack/client/maps/${file}`);
     // console.timeEnd('read');
     // console.time('decompress');
-    if (file.indexOf('.') === -1) {
-        data = BZip2.decompress(data.subarray(4));
-    }
+    data = BZip2.decompress(data, 0, false, true);
     // console.timeEnd('decompress');
     const land = readLand(new Packet(data));
 
@@ -201,19 +196,14 @@ maps.forEach(file => {
 
     const parts = file.split('_');
     const mapX = parts[0].slice(1);
-    let mapZ = parts[1];
-    if (mapZ.indexOf('.') !== -1) {
-        mapZ = mapZ.slice(0, mapZ.indexOf('.'));
-    }
+    const mapZ = parts[1];
     console.log(`Unpacking loc map for ${mapX}_${mapZ}`);
 
     // console.time('read');
     let data: Buffer | Uint8Array = fs.readFileSync(`data/pack/client/maps/${file}`);
     // console.timeEnd('read');
     // console.time('decompress');
-    if (file.indexOf('.') === -1) {
-        data = BZip2.decompress(data.subarray(4));
-    }
+    data = BZip2.decompress(data, 0, false, true);
     // console.timeEnd('decompress');
     const locs = readLocs(new Packet(data));
 

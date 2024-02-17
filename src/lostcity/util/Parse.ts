@@ -156,7 +156,7 @@ export function listFilesExt(path: string, ext: string, out: string[] = []): str
         if (isDir) {
             listFilesExt(`${path}/${file}`, ext, out);
         } else {
-            if (file.endsWith(ext)) {
+            if (!ext.length || file.endsWith(ext)) {
                 out.push(`${path}/${file}`);
             }
         }

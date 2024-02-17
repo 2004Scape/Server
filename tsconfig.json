@@ -8,6 +8,7 @@
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "paths": {
+      "#3rdparty/*": ["src/3rdparty/*"],
       "#jagex2/*": ["src/jagex2/*"],
       "#lostcity/*": ["src/lostcity/*"]
     },

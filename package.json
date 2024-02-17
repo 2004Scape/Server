@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "imports": {
+    "#3rdparty/*": "./src/3rdparty/*",
     "#jagex2/*": "./src/jagex2/*",
     "#lostcity/*": "./src/lostcity/*"
   },
@@ -15,21 +16,22 @@
     "maintenance": "npm run ts-loader src/lostcity/maintenance.ts",
     "web": "npm run ts-loader src/lostcity/web.ts",
     "dev": "concurrently \"nodemon src/lostcity/app.ts\" \"npm run server:watch\"",
-    "client:pack": "npm run ts-loader src/lostcity/tools/client/all/pack.ts",
+    "client:pack": "npm run ts-loader src/lostcity/tools/pack/client.ts",
     "client:clean": "npm run ts-loader src/lostcity/tools/client/clean.ts",
-    "script:symbols": "npm run ts-loader src/lostcity/tools/server/scripts/symbols.ts",
     "script:compile": "java -jar RuneScriptCompiler.jar",
     "script:run": "npm run ts-loader src/lostcity/tools/server/runscript.ts",
-    "server:pack": "npm run ts-loader src/lostcity/tools/server/all/pack.ts",
+    "server:pack": "npm run ts-loader src/lostcity/tools/pack/server.ts",
     "server:clean": "npm run ts-loader src/lostcity/tools/server/clean.ts",
-    "server:build": "npm run server:pack && npm run script:symbols && npm run script:compile",
+    "server:build": "npm run server:pack && npm run script:compile",
     "server:watch": "watch \"npm run server:build\" ./data/src/scripts ./src/lostcity/tools",
     "test": "jest",
     "lint": "eslint . --ext .ts --ext .js",
     "drops": "npm run ts-loader src/lostcity/tools/server/drops.ts",
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
-    "db:schema": "prisma migrate dev"
+    "db:schema": "prisma migrate dev",
+    "clean": "npm run client:clean && npm run server:clean",
+    "build": "npm run client:pack && npm run server:build"
   },
   "prisma": {
     "seed": "npm run ts-loader src/lostcity/db/seed.ts"

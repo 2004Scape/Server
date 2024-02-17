@@ -168,7 +168,6 @@ type Component = {
 };
 
 export function packInterface(server: boolean) {
-    console.log('Packing interfaces');
     // console.time('Packing .if');
 
     const component: Record<number, Component> = {};
