@@ -1,12 +1,82 @@
 [opnpc1,nurmof]
 ~chatnpc(happy, "Greetings and welcome to my pickaxe shop. Do you want to buy my premium quality pickaxes?");
-def_int $option = ~p_choice3("Yes please.", 1, "No, thank you.", 2, "Are your pickaxes better than other pickaxes, then?", 3);
+def_int $option;
+
+if (~has_broken_pickaxe = true) {
+    $option = ~p_choice4("Yes please.", 1, "No, thank you.", 2, "Are your pickaxes better than other pickaxes, then?", 3, "Can you repair my pickaxe for me?", 4);
+} else {
+    $option = ~p_choice3("Yes please.", 1, "No, thank you.", 2, "Are your pickaxes better than other pickaxes, then?", 3);
+}
+
 if($option = 1) {
     ~chatplayer(neutral, "Yes please.");
     ~openshop_activenpc;
 } else if($option = 2) {
     ~chatplayer(neutral, "No, thank you.");
-}else if($option = 3) {
+} else if($option = 3) {
     ~chatplayer(neutral, "Are your pickaxes better than other pickaxes, then?");
     ~chatnpc(happy, "Of course they are! My pickaxes are made of higher grade metal than your ordinary bronze pickaxes, allowing you to mine that ore just a little bit faster than normal.");
+} else if ($option = 4) {
+    ~chatplayer(sad, "Can you repair my pickaxe for me?"); // guess
+    ~chatnpc(shock, "Of course I can, though the materials may cost you.|Just hand me the pickaxe and I'll have a look."); // taken from bob fixing axe
+    return;
 }
+
+[opnpcu,nurmof]
+def_obj $item = last_useitem;
+def_int $slot = last_useslot;
+def_int $cost = oc_cost($item);
+if (oc_param($item, to_be_fixed_by_nurmof) = ^true) { // dialogue is guessed and inspired by bob fixing axes
+// found a video https://youtu.be/43nVXcCOOCM
+// doesnt show all the dialogue but shows that its likely the same as bob fixing axes
+    if (inv_total(inv, coins) < $cost) {
+        ~chatnpc(sad, "I'll need <tostring($cost)>gp to repair that."); // bob osrs
+        return;
+    }
+    if ($cost > 0) {
+        ~chatnpc(neutral, "Quite badly damaged, but easy to repair. Would you like me to repair it for <tostring($cost)>gp?");
+    } else {
+        ~chatnpc(neutral, "Quite badly damaged, but easy to repair. Would you like me to repair it for free?");
+    }
+    
+    def_int $option = ~p_choice2("Yes, please.", 1, "No, thank you.", 2);
+    if ($option = 1) {
+        if ($cost = 0) {
+            inv_delslot(inv, $slot);
+            inv_add(inv, oc_param($item, fixed), 1);
+            mes("Nurmof fixes your pickaxe for free!"); // guess
+            return;
+        }
+        if (inv_total(inv, coins) < $cost) {
+            ~chatplayer(sad, "Sorry, I don't have enough money with me."); // complete guess
+            return;
+        }
+        // fix pickaxe
+        inv_delslot(inv, $slot);
+        inv_del(inv, coins, $cost);
+        inv_add(inv, oc_param($item, fixed), 1);
+        mes("Nurmof fixes your pickaxe for <tostring($cost)>gp"); // no period in the dialogue
+        return;
+    }
+} else {
+    ~chatnpc(neutral, "Sorry friend, but I can't do anything with that."); // bob osrs
+}
+
+[proc,has_broken_pickaxe]()(boolean)
+def_int $i = 0;
+while ($i < inv_size(inv)) {
+    if (inv_getobj(inv, $i) ! null & oc_param(inv_getobj(inv, $i), to_be_fixed_by_bob) = ^true) {
+        return (true);
+    }
+    $i = calc($i + 1);
+}
+
+$i = 0;
+while ($i < inv_size(worn)) {
+    if (inv_getobj(inv, $i) ! null & oc_param(inv_getobj(worn, $i), to_be_fixed_by_bob) = ^true) {
+        return (true);
+    }
+    $i = calc($i + 1);
+}
+
+return (false);

@@ -42,8 +42,12 @@ if (p_finduid(uid) = true) {
     def_int $rune_count2;
     def_namedobj $rune3;
     def_int $rune_count3;
-    // check if the player meets the requirements to cast the spell
-    $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    def_boolean $passes;
+    // check runes
+    $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    if ($passes = false) {
+        return;
+    }
     // set auto cast varp
     %autocast_spell = $spell;
 

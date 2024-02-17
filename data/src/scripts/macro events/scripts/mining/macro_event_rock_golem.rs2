@@ -1,0 +1,152 @@
+[proc,macro_event_rock_golem_spawn]
+// no smoke puff https://youtu.be/3SqlpJe90jE?list=PLn23LiLYLb1bQvSMxsNH6T0eM0nRU-5w0&t=140
+def_npc $event = enum(int, npc, macro_event_rock_golem_levels, ~macro_event_combat_level);
+
+def_coord $event_coord = ~macro_event_coord_2x2;
+if ($event_coord = null) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
+
+npc_add($event_coord, $event, 1000); // guess
+npc_say("Rrrraaarrrrggghhhh, flee human!"); // https://youtu.be/vL0-EwN076w?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=135
+%npc_attacking_uid = uid;
+if (finduid(uid) = false) {
+    return;
+}
+sound_synth(rock_spirit_appear, 0, 0);
+npc_delay(2);
+npc_setmode(opplayer2);
+
+[ai_queue1,_macro_event_rock_golem](int $arg)
+if (finduid(%npc_attacking_uid) = false) {
+    return;
+}
+// flinch
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    // set to ap, after we reach 2006 dec
+}
+npc_setmode(opplayer2);
+
+// pretty sure these guys dont have an op attack // https://youtu.be/3SqlpJe90jE?list=PLn23LiLYLb1bQvSMxsNH6T0eM0nRU-5w0&t=139
+// edit: Actually they probably removed the op attack in this update (dec 2006). https://oldschool.runescape.wiki/w/Update:Treasure_Trails,_spiders_and_sheep
+// before then they only melee'd. Ill keep this here for now
+[ai_applayer2,_macro_event_rock_golem]
+// mes("<tostring(map_clock)>: Ap");
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (npc_range(coord) < 2) {
+    ~npc_default_attack;
+    return;
+}
+~macro_event_rock_golem_ranged_attack;
+
+
+// this attack was added in dec 2006
+[proc,macro_event_rock_golem_ranged_attack]
+if_close;
+npc_anim(golem_attack, 0);
+// todo: find projectile id
+def_int $delay = ~player_projectile(npc_coord, coord, uid, dwarf_rock_launch, 30, 15, 120, 0, 5, 30, 0);
+sound_synth(golem_attack, 0, 120);
+
+def_int $attack_roll = ~npc_ranged_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(^ranged_style);
+
+def_int $maxhit = ~combat_maxhit(npc_stat(ranged));
+def_int $damage = 0;
+
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+}
+// https://oldschool.runescape.wiki/w/Update:POH_room_increase_and_more 
+// his ranged attack was negated by protect from melee
+if (~check_protect_prayer(^melee_style) = true) {
+    $damage = 0;
+}
+queue(damage_player, calc($delay/60), $damage);
+queue(playerhit_n_retaliate, calc($delay/60), npc_uid); // this should be a queue* command
+%npc_action_delay = add(map_clock, 4);
+%lastcombat = map_clock;
+
+[ai_timer,_macro_event_rock_golem]
+if (finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+
+[ai_queue3,_macro_event_rock_golem](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+if (npc_type = macro_event_rock_golem6 | npc_type = macro_event_rock_golem5) {
+    @macro_event_rock_golem_highlvl_drops;
+} else {
+    @macro_event_rock_golem_lowlvl_drops;
+}
+
+[label,macro_event_rock_golem_lowlvl_drops]
+def_int $random = random(78);
+if ($random < 30) { // 30/78
+    obj_add(npc_coord, earthrune, 5, ^lootdrop_duration);
+} else if ($random < 34) { // 4/78
+    obj_add(npc_coord, earthrune, 42, ^lootdrop_duration);
+} else if ($random < 38) { // 4/78
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($random < 45) { // 7/78
+    obj_add(npc_coord, bronze_bar, 1, ^lootdrop_duration);
+} else if ($random < 49) { // 4/78
+    obj_add(npc_coord, iron_ore, 1, ^lootdrop_duration);
+} else if ($random < 52) { // 3/78
+    obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
+} else if ($random < 55) { // 3/78
+    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+} else if ($random < 68) { // 13/78
+    obj_add(npc_coord, dwarven_stout, 1, ^lootdrop_duration);
+} else { // 10/78
+    obj_add(npc_coord, hammer, 1, ^lootdrop_duration);
+}
+
+
+[label,macro_event_rock_golem_highlvl_drops]
+def_int $random = random(128);
+if ($random < 4) { // 4/128
+    obj_add(npc_coord, bronze_pickaxe, 1, ^lootdrop_duration);
+} else if ($random < 5) { // 1/128
+    obj_add(npc_coord, adamant_pickaxe, 1, ^lootdrop_duration);
+} else if ($random < 6) { // 1/128
+    obj_add(npc_coord, rune_pickaxe, 1, ^lootdrop_duration);
+} else if ($random < 36) { // 30/128
+    obj_add(npc_coord, earthrune, 5, ^lootdrop_duration);
+} else if ($random < 40) { // 4/128
+    obj_add(npc_coord, earthrune, 42, ^lootdrop_duration);
+} else if ($random < 44) { // 4/128
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($random < 69) { // 25/128
+    obj_add(npc_coord, coal, 1, ^lootdrop_duration);
+} else if ($random < 79) { // 10/128
+    obj_add(npc_coord, mithril_ore, 1, ^lootdrop_duration);
+} else if ($random < 86) { // 7/128
+    obj_add(npc_coord, bronze_bar, 1, ^lootdrop_duration);
+} else if ($random < 90) { // 4/128
+    obj_add(npc_coord, iron_ore, 1, ^lootdrop_duration);
+} else if ($random < 93) { // 3/128
+    obj_add(npc_coord, iron_bar, 1, ^lootdrop_duration);
+} else if ($random < 96) { // 3/128
+    obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
+} else if ($random < 99) { // 3/128
+    obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+} else if ($random < 102) { // 3/128
+    obj_add(npc_coord, adamantite_ore, 1, ^lootdrop_duration);
+} else if ($random < 103) { // 1/128
+    obj_add(npc_coord, runite_ore, 1, ^lootdrop_duration);
+} else if ($random < 116) { // 13/128
+    obj_add(npc_coord, dwarven_stout, 1, ^lootdrop_duration);
+} else if ($random < 126) { // 10/128
+    obj_add(npc_coord, hammer, 1, ^lootdrop_duration);
+} else { // 2/128
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

@@ -79,6 +79,7 @@ switch_obj(last_item) {
         @player_consume_item(consume_effect_antipoison, null, null);
     case default : @player_consume_item(consume_effect_stat, null, null);
 }
+[opheld1,strange_fruit]@player_consume_item(consume_effect_strange_fruit, 2, 3);
 // ************************* TRIGGERS **************************
 
 // all normal foods use %eat_delay

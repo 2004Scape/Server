@@ -451,7 +451,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
+        this.facePlayer(target.pid); // face the player
         this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
     }
 

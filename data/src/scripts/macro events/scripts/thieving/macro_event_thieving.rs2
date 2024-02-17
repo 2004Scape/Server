@@ -1,0 +1,13 @@
+[label,macro_randomthieving]
+switch_int (random(calc(~macro_event_general_count + 1))) {
+    case 0: ~macro_event_watchman_spawn;
+    case default : ~macro_event_general_spawn(~macro_event_set_random);
+}
+
+
+[label,macro_randomthievingchest]
+switch_int (random(calc(~macro_event_general_count + 2))) {
+    case 0: ~macro_event_macro_gas_chest;
+    case 1: ~macro_event_watchman_spawn;
+    case default : ~macro_event_general_spawn(~macro_event_set_random);
+}

@@ -21,7 +21,7 @@ if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
 switch_category(oc_category($weapon)) {
     case weapon_2h_sword : return(weapon_2h_sword_table);
     case weapon_axe : return(weapon_axe_table);
-    case weapon_blunt : return(weapon_blunt_table);
+    case weapon_blunt, category_15 : return(weapon_blunt_table); // https://i.imgur.com/jFiwBP8.png
     case weapon_pickaxe : return(weapon_pickaxe_table);
     case weapon_scythe : return(weapon_scythe_table);
     case weapon_slash : return(weapon_slash_table);
@@ -82,7 +82,8 @@ switch_int ($damagetype) {
     case ^ranged_style : return(oc_param($weapon, rangeattack_anim), oc_param($weapon, rangeattack_sound));
 }
 
-[proc,give_combat_experience](int $damagestyle, int $damage)
+// default multiplier is 1000
+[proc,give_combat_experience](int $damagestyle, int $damage, int $multiplier)
 def_int $base = multiply($damage, 10);
 // not a multiplier (some npcs have that), but exactly 1xp * hit for all cb styles (including controlled), prob a better way of doing this
 // not sure if this is the only npc that has this mechanic (not 100% sure if this existed in 2004 either)
@@ -115,28 +116,28 @@ if(npc_type = black_knight_titan) {
 }
 switch_int($damagestyle) {
     case ^style_melee_accurate : 
-        givexp(attack, scale(400, 100, $base));
+        givexp(attack, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_melee_aggressive : 
-        givexp(strength, scale(400, 100, $base));
+        givexp(strength, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_melee_defensive : 
-        givexp(defence, scale(400, 100, $base));
+        givexp(defence, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_melee_controlled : 
-        givexp(attack, scale(133, 100, $base));
-        givexp(strength, scale(133, 100, $base));
-        givexp(defence, scale(133, 100, $base));
+        givexp(attack, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(strength, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(133, 100, $base)));
     case ^style_ranged_accurate, ^style_ranged_rapid : 
-        givexp(ranged, scale(400, 100, $base));
+        givexp(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
     case ^style_ranged_longrange : 
-        givexp(ranged, scale(200, 100, $base));
-        givexp(defence, scale(200, 100, $base));
+        givexp(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(200, 100, $base)));
     case ^style_magic_normal :
-        givexp(magic, scale(200, 100, $base));
+        givexp(magic, scale($multiplier, 1000, scale(200, 100, $base)));
     case ^style_magic_defensive : 
-        givexp(magic, scale(133, 100, $base));
-        givexp(defence, scale(100, 100, $base));
+        givexp(magic, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(100, 100, $base)));
     case default : return;
 }
-givexp(hitpoints, scale(133, 100, $base));
+givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 
 // returns the defend anim to use for this combat
 [proc,combat_defend_anim](obj $weapon)(seq)

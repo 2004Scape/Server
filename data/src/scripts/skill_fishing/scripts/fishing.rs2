@@ -1,39 +1,42 @@
-// only used for opnpcu triggers.
-// checks if the right fish equipment is used.
-[proc,check_correct_fish_equipment](namedobj $fish_equipment1, namedobj $fish_equipment2)
-if (last_useitem = $fish_equipment1 | last_useitem = $fish_equipment2) {
+// when you use your equipment on the wrong fishing spot
+// example: net -> harpoon spot
+[label,fishing_wrong_spot_message](obj $item)
+def_struct $struct = oc_param($item, fish_equipment_struct);
+if ($struct = null) {
+    @nothing_interesting_happens;
+}
+def_string $message = struct_param($struct, fish_wrong_spot_message);
+if (string_length($message) > 0) {
+    ~mesbox($message);
     return;
 }
-switch_obj(last_useitem) {
-    case net, net_big : @fishing_fail_message("There is nothing suitable for catching with a net here.");
-    case fishing_rod : @fishing_fail_message("There is nothing suitable for catching with a rod here.");
-    case fly_fishing_rod : @fishing_fail_message("You should use this rod to catch freshwater fish.");
-    case lobster_pot : @fishing_fail_message("There aren't any Lobsters to catch here.");
-    case harpoon : @fishing_fail_message("There aren't any fish suitable for Harpooning here.");
-};
+@nothing_interesting_happens;
+
 
 // checks if you actually have the fish equipment required.
 // usually called right after level check, and right before inv space check.
 // inv space check doesnt seem to have consistent behavior so its not included in this proc.
-[proc,check_fish_equipment](namedobj $fish_equipment)
+[proc,check_fish_equipment](namedobj $fish_equipment)(boolean)
 def_struct $struct = oc_param($fish_equipment, fish_equipment_struct);
 // check if they have fishing equipment
 if (inv_total(inv, $fish_equipment) < 1) {
     anim(null, 0);
-    @fishing_fail_message(struct_param($struct, fish_equipment_failmessage));
+    ~mesbox(struct_param($struct, fish_equipment_failmessage));
+    return(false);
 }
 // check if player has enough bait
-def_namedobj $bait = struct_param($struct, baitrequired);
-if ($bait ! null & inv_total(inv, $bait) < 1) {
-    anim(null, 0);
-    @fishing_fail_message("You don't have any <struct_param($struct, baitmessage)> left.");
+if ($struct ! null) {
+    def_namedobj $bait = struct_param($struct, baitrequired);
+    if ($bait ! null & inv_total(inv, $bait) < 1) {
+        anim(null, 0);
+        ~mesbox("You don't have any <struct_param($struct, baitmessage)> left.");
+        return(false);
+    }
 }
-
-[label,fishing_fail_message](string $string)
-~mesbox($string);
+return(true);
 
 // proc for fish rolls
-[proc,fish_roll](namedobj $fish1, namedobj $fish2, namedobj $bait)
+[proc,fish_roll](namedobj $fish1, namedobj $fish2, namedobj $equipment, namedobj $bait)
 if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
     def_struct $struct2 = oc_param($fish2, fishing_struct);
     if (stat_random(stat(fishing), struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
@@ -59,5 +62,10 @@ if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
         inv_add(inv, $fish1, 1);
         givexp(fishing, struct_param($struct1, productexp));
         mes(struct_param($struct1, productmessage));
+        return;
     }
+}
+
+if (npc_param(is_whirlpool) = ^true) {
+    ~macro_event_whirlpool_take_equipment($equipment);
 }

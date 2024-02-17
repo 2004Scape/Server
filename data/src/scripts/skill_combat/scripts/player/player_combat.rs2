@@ -19,6 +19,7 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
 // if (testbit(%attackstyle_magic, 0) = true){
 //     mes("TRUE");
 // }
+
 // mes("<tostring(%autocast_spell)>");
 // if auto cast is enabled, and autocast spell is set
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){

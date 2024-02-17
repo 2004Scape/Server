@@ -23,7 +23,9 @@ if (%npc_action_delay > map_clock) return;
 anim(%com_defendanim, 0);
 
 npc_anim(npc_param(attack_anim), 0);
-sound_synth(npc_param(attack_sound), 0, 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
 ~npc_meleeattack;
 
 // a default damage script.

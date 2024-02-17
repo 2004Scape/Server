@@ -431,7 +431,7 @@ const ScriptOpcodePointers: {
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {
         set: ['active_npc'],
-        require2: ['active_npc2']
+        set2: ['active_npc2']
     },
     [ScriptOpcode.NPC_ANIM]: {
         require: ['active_npc'],

@@ -166,12 +166,15 @@
 [command,npc_add](coord $coord, npc $npc, int $duration)
 [command,.npc_add](coord $coord, npc $npc, int $duration)
 [command,npc_anim](seq $seq, int $delay)
+[command,.npc_anim](seq $seq, int $delay)
 [command,npc_category]()(category)
 [command,.npc_category]()(category)
 [command,npc_coord]()(coord)
 [command,.npc_coord]()(coord)
 [command,npc_del]
+[command,.npc_del]
 [command,npc_delay](int $delay)
+[command,.npc_delay](int $delay)
 [command,npc_facesquare](coord $coord)
 [command,npc_findexact](coord $coord, npc $npc)(boolean)
 [command,npc_findhero]()(boolean)

@@ -112,7 +112,7 @@ switch_category (oc_category($obj)) {
     // melee
     case weapon_2h_sword: ~weapon_category_tab_attack(combat_heavysword:preview, combat_heavysword:name, combat_heavysword, $obj);
     case weapon_axe: ~weapon_category_tab_attack(combat_axe:preview, combat_axe:name, combat_axe, $obj);
-    case weapon_blunt: ~weapon_category_tab_attack(combat_blunt:preview, combat_blunt:name, combat_blunt, $obj);
+    case weapon_blunt, category_15: ~weapon_category_tab_attack(combat_blunt:preview, combat_blunt:name, combat_blunt, $obj);
     case weapon_pickaxe: ~weapon_category_tab_attack(combat_pickaxe:preview, combat_pickaxe:name, combat_pickaxe, $obj);
     case weapon_scythe: ~weapon_category_tab_attack(combat_scythe:preview, combat_scythe:name, combat_scythe, $obj);
     case weapon_slash: ~weapon_category_tab_attack(combat_hacksword:preview, combat_hacksword:name, combat_hacksword, $obj);

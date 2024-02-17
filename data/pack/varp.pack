@@ -79,7 +79,7 @@
 78=varp_78
 79=xplamp
 80=druid_progress
-81=varp_81
+81=macro_event
 82=prayer_guild
 83=prayer_thickskin
 84=prayer_strengthburst
@@ -100,10 +100,10 @@
 99=prayer_drain_effect
 100=prayer_drain_resistance
 101=questpoints
-102=varp_102
+102=poison
 103=stunned
 104=multiway
-105=varp_105
+105=chest_macro_gas_coord
 106=newcomers_pos
 107=priest_progress
 108=attackstyle_magic
@@ -276,7 +276,7 @@
 275=varp_275
 276=varp_276
 277=antifire
-278=varp_278
+278=antipoison
 279=varp_279
 280=varp_280
 281=tutorial_progress

@@ -46,11 +46,22 @@ healenergy(10000);
 
 [proc,damage_self](int $amount)
 if_close;
-def_synth $sound;
-def_int $rand;
 if ($amount > 0) {
     damage(uid, 1, $amount);
-    if (gender() = 0) {
+    ~human_hit_sound;
+} else {
+    damage(uid, 0, 0);
+}
+
+if (stat(hitpoints) = 0 & getqueue(player_death) < 1){
+    queue(player_death, 0);
+}
+
+
+[proc,human_hit_sound]
+def_int $rand;
+def_synth $sound;
+if (gender() = 0) {
         $rand = random(2);
         switch_int($rand) {
             case 0 : $sound = human_hit2;
@@ -66,11 +77,4 @@ if ($amount > 0) {
             case default : $sound = female_hit;
         }
     }
-    sound_synth($sound, 0, 20);
-} else {
-    damage(uid, 0, 0);
-}
-
-if (stat(hitpoints) = 0) {
-    queue(player_death, 0);
-}
+sound_synth($sound, 0, 20);

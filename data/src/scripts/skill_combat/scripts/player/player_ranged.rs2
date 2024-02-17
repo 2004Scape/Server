@@ -19,7 +19,7 @@ if ($rhand = null) {
 }
 
 // check if npc is attackable
-if (~npc_is_attackable_message(npc_type) = false) {
+if (~npc_is_attackable(npc_type) = false) {
     p_stopaction;
     return;
 }
@@ -42,8 +42,8 @@ if (%action_delay > map_clock) {
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
-    $damage = randominc(%com_maxhit);
-    ~give_combat_experience(%damagestyle, min($damage, npc_stat(hitpoints)));
+    $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
+    ~give_combat_experience(%damagestyle, min($damage, npc_stat(hitpoints)), npc_param(combat_xp_multiplier));
 }
 
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
@@ -53,7 +53,9 @@ sound_synth(%com_attacksound, 0, 0);
 ~npc_retaliate(calc($delay / 30));
 npc_queue(2, $damage, calc($delay / 30));
 npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
-sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
+if (npc_param(defend_sound) ! null) {
+    sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
+}
 npc_heropoints($damage);
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
