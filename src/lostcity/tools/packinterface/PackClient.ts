@@ -9,7 +9,7 @@ export function packClientInterface() {
         return;
     }
 
-    console.log('Packing interface.jag');
+    console.log('Packing interfaces');
 
     const jag = new Jagfile();
     const data = packInterface(false);

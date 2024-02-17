@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { basename, dirname } from 'path';
+import { dirname } from 'path';
 
 // cached directory listings
 export const dirCache: Map<string, string[]> = new Map();
@@ -87,8 +87,8 @@ export function loadDir(path: string, extension: string, callback: (src: string[
                     .replace(/\r/g, '')
                     .split('\n')
                     .filter(x => x),
-                basename(file),
-                dirname(path)
+                file.substring(file.lastIndexOf('/') + 1),
+                file.substring(0, file.lastIndexOf('/'))
             );
         }
     }

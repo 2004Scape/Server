@@ -1,11 +1,11 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import { shouldBuild, shouldBuildFile } from '#lostcity/util/PackFile.js';
+import { AnimPack, CategoryPack, shouldBuild, shouldBuildFile } from '#lostcity/util/PackFile.js';
 import { listFilesExt } from '#lostcity/util/Parse.js';
 
 import DbTableType from '#lostcity/cache/DbTableType.js';
 
-import { PACKFILE, readConfigs } from '#lostcity/tools/packconfig/PackShared.js';
+import { readConfigs } from '#lostcity/tools/packconfig/PackShared.js';
 import { packFloServer, parseFloConfig } from '#lostcity/tools/packconfig/FloConfig.js';
 import { packIdkServer, parseIdkConfig } from '#lostcity/tools/packconfig/IdkConfig.js';
 import { packLocServer, parseLocConfig } from '#lostcity/tools/packconfig/LocConfig.js';
@@ -29,26 +29,25 @@ export function packServerConfig() {
     if (shouldBuildFile('data/pack/category.pack', 'data/pack/server/category.dat') || shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/category.dat')) {
         console.log('Packing categories');
         //console.time('Packed categories');
-        const categories = PACKFILE.get('category')!;
         const dat = new Packet();
-        dat.p2(categories.length);
-        for (let i = 0; i < categories.length; i++) {
-            dat.pjstr(categories[i]);
+        dat.p2(CategoryPack.size);
+        for (let i = 0; i < CategoryPack.size; i++) {
+            dat.pjstr(CategoryPack.getById(i));
         }
         dat.save('data/pack/server/category.dat');
         //console.timeEnd('Packed categories');
     }
 
     // want the server to access frame lengths without loading data from models
-    if (shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat') || shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/frame_del.dat')) {
+    if (shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/frame_del.dat')) {
         console.log('Packing frame_del');
         //console.time('Packed frame_del');
-        const frames = PACKFILE.get('anim')!;
         const files = listFilesExt('data/src/models', '.frame');
         const frame_del = new Packet();
-        for (let i = 0; i < frames.length; i++) {
-            const name = frames[i];
-            if (!name) {
+        for (let i = 0; i <= AnimPack.max; i++) {
+            const name = AnimPack.getById(i);
+            if (!name.length) {
                 frame_del.p1(0);
                 continue;
             }

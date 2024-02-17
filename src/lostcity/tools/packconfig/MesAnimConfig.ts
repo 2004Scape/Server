@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { MesAnimPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseMesAnimConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -44,7 +45,7 @@ export function parseMesAnimConfig(key: string, value: string): ConfigValue | nu
 
         return value === 'yes';
     } else if (key.startsWith('len')) {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -56,15 +57,13 @@ export function parseMesAnimConfig(key: string, value: string): ConfigValue | nu
 }
 
 export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('mesanim')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(MesAnimPack.size);
+    idx.p2(MesAnimPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < MesAnimPack.size; i++) {
+        const debugname = MesAnimPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

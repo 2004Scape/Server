@@ -3,8 +3,9 @@ import Packet from '#jagex2/io/Packet.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, LocModelShape, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { LocModelShape, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { CategoryPack, LocPack, ModelPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 // these suffixes are simply the map editor keybinds
 enum LocShapeSuffix {
@@ -128,7 +129,7 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
         const models: LocModelShape[] = [];
 
         // if a model matches directly, we know that they want to make another suffix act like _8
-        let model = PACKFILE.get('model')!.indexOf(value);
+        let model = ModelPack.getByName(value);
         if (model !== -1) {
             models.push({ model, shape: LocShapeSuffix._8 });
             return models;
@@ -136,16 +137,16 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 
         // if it doesn't match, we'll have to lookup all model suffixes to see what's supported
         // this shape (centrepiece_default) comes first in their check, so we do it separately
-        model = PACKFILE.get('model')!.indexOf(value + '_8');
+        model = ModelPack.getByName(value + '_8');
         if (model !== -1) {
             models.push({ model, shape: LocShapeSuffix._8 });
         }
-        for (let i = 0; i < 23; i++) {
+        for (let i = 0; i <= 22; i++) {
             if (i === 10) {
                 continue;
             }
 
-            model = PACKFILE.get('model')!.indexOf(value + LocShapeSuffix[i]);
+            model = ModelPack.getByName(value + LocShapeSuffix[i]);
             if (model !== -1) {
                 models.push({ model, shape: i });
             }
@@ -157,14 +158,14 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 
         return null;
     } else if (key === 'category') {
-        const index = PACKFILE.get('category')!.indexOf(value);
+        const index = CategoryPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'anim') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -210,15 +211,13 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 }
 
 function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('loc')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(LocPack.size);
+    idx.p2(LocPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < LocPack.size; i++) {
+        const debugname = LocPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

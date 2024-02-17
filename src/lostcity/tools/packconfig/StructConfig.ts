@@ -3,8 +3,9 @@ import Packet from '#jagex2/io/Packet.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { StructPack } from '#lostcity/util/PackFile.js';
 
 export function parseStructConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -70,15 +71,13 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
 }
 
 export function packStructConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('struct')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(StructPack.size);
+    idx.p2(StructPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < StructPack.size; i++) {
+        const debugname = StructPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

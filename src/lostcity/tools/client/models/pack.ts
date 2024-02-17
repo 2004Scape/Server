@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import { loadOrder, loadPack, listFiles } from '#lostcity/util/NameMap.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
-import { shouldBuildFileAny } from '#lostcity/util/PackFile.js';
+import { AnimPack, BasePack, ModelPack, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 
 export function packClientModel() {
     if (!shouldBuildFileAny('data/src/models', 'data/pack/client/models')) {
@@ -29,10 +29,6 @@ export function packClientModel() {
     const animOrder = loadOrder('data/pack/anim.order');
     const baseOrder = loadOrder('data/pack/base.order');
 
-    const modelPack = loadPack('data/pack/model.pack');
-    const animPack = loadPack('data/pack/anim.pack');
-    const basePack = loadPack('data/pack/base.pack');
-
     const files = listFiles('data/src/models');
 
     // ----
@@ -54,7 +50,7 @@ export function packClientModel() {
 
         for (let i = 0; i < baseOrder.length; i++) {
             const id = baseOrder[i];
-            const name = basePack[id];
+            const name = BasePack.getById(id);
 
             const file = files.find(file => file.endsWith(`${name}.base`));
             if (!file) {
@@ -101,7 +97,7 @@ export function packClientModel() {
 
         for (let i = 0; i < animOrder.length; i++) {
             const id = animOrder[i];
-            const name = animPack[id];
+            const name = AnimPack.getById(id);
 
             const file = files.find(file => file.endsWith(`${name}.frame`));
             if (!file) {
@@ -152,7 +148,7 @@ export function packClientModel() {
 
         for (let i = 0; i < modelOrder.length; i++) {
             const id = modelOrder[i];
-            const name = modelPack[id];
+            const name = ModelPack.getById(id);
 
             const file = files.find(file => file.endsWith(`${name}.ob2`));
             if (!file) {

@@ -3,7 +3,8 @@ import Packet from '#jagex2/io/Packet.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { VarpPack } from '#lostcity/util/PackFile.js';
 
 export function parseVarpConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -72,15 +73,13 @@ export function parseVarpConfig(key: string, value: string): ConfigValue | null 
 }
 
 function packVarpConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('varp')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(VarpPack.size);
+    idx.p2(VarpPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < VarpPack.size; i++) {
+        const debugname = VarpPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

@@ -6,9 +6,10 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
-import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import { CategoryPack, HuntPack, ModelPack, NpcPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     // prettier-ignore
@@ -100,28 +101,28 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
 
         return value === 'yes';
     } else if (key.startsWith('model')) {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key.startsWith('head')) {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'readyanim') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'walkanim') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -132,7 +133,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         const indices: number[] = [];
 
         for (const anim of anims) {
-            const index = PACKFILE.get('seq')!.indexOf(anim);
+            const index = SeqPack.getByName(anim);
             if (index === -1) {
                 return null;
             }
@@ -157,7 +158,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             return number;
         }
     } else if (key === 'category') {
-        const index = PACKFILE.get('category')!.indexOf(value);
+        const index = CategoryPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -211,7 +212,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
                 return null;
         }
     } else if (key === 'huntmode') {
-        const index = PACKFILE.get('hunt')!.indexOf(value);
+        const index = HuntPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -262,15 +263,13 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
 }
 
 function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('npc')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(NpcPack.size);
+    idx.p2(NpcPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < NpcPack.size; i++) {
+        const debugname = NpcPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

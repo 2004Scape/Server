@@ -1,11 +1,10 @@
 import fs from 'fs';
-import { basename } from 'path';
 
 import { listDir, listFiles } from '#lostcity/util/NameMap.js';
 
-export function readTextNormalize(path: string) {
+export function readTextNormalize(path: string): string {
     if (!fs.existsSync(path)) {
-        return null;
+        return '';
     }
 
     return fs.readFileSync(path, 'utf8').replace(/\r/g, '');
@@ -14,8 +13,12 @@ export function readTextNormalize(path: string) {
 // -----
 
 // simple! just reads the file as-is
-export function loadFile(path: string) {
-    return readTextNormalize(path)!.split('\n');
+export function loadFile(path: string): string[] {
+    if (!fs.existsSync(path)) {
+        return [];
+    }
+
+    return readTextNormalize(path).split('\n');
 }
 
 // fully-featured! strips out comments
@@ -101,7 +104,7 @@ export function loadDir(path: string, callback: LoadDirCallback) {
     const files = listFiles(path);
 
     for (let i = 0; i < files.length; i++) {
-        callback(loadFile(files[i]), basename(files[i]));
+        callback(loadFile(files[i]), files[i].substring(files[i].lastIndexOf('/') + 1));
     }
 }
 
@@ -110,7 +113,7 @@ export function loadDirFull(path: string, callback: LoadDirCallback) {
     const files = listFiles(path);
 
     for (let i = 0; i < files.length; i++) {
-        callback(loadFileFull(files[i]), basename(files[i]));
+        callback(loadFileFull(files[i]), files[i].substring(files[i].lastIndexOf('/') + 1));
     }
 }
 

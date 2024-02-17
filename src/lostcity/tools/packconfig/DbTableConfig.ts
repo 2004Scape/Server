@@ -2,8 +2,9 @@ import Packet from '#jagex2/io/Packet.js';
 
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { DbTablePack } from '#lostcity/util/PackFile.js';
 
 function parseCsv(str: string): string[] {
     const result = [];
@@ -78,15 +79,13 @@ export function parseDbTableConfig(key: string, value: string): ConfigValue | nu
 }
 
 export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('dbtable')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(DbTablePack.size);
+    idx.p2(DbTablePack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < DbTablePack.size; i++) {
+        const debugname = DbTablePack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

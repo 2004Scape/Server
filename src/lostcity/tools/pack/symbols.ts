@@ -13,10 +13,6 @@ import Component from '#lostcity/cache/Component.js';
 import InvType from '#lostcity/cache/InvType.js';
 
 export function generateServerSymbols() {
-    fs.writeFileSync('data/pack/script.pack', regenPack(loadPack('data/pack/script.pack'), crawlConfigNames('.rs2', true)));
-
-    // ----
-
     fs.mkdirSync('data/symbols', { recursive: true });
 
     const constants: Record<string, string> = {};
