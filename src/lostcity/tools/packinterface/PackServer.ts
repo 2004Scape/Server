@@ -1,4 +1,4 @@
-import { shouldBuild } from '#lostcity/util/PackIds.js';
+import { shouldBuild } from '#lostcity/util/PackFile.js';
 import { packInterface } from './PackShared.js';
 
 export function packServerInterface() {
