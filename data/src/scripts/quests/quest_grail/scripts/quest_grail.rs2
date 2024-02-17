@@ -124,5 +124,5 @@ if(abs($delta_x) > 5 & abs($delta_z) > 5) {
 inv_del(inv, holy_grail, 1);
 givexp(prayer, 110000);
 givexp(defence, 153000);
-~send_quest_complete(questlist:grail, holy_grail, 250, ^grail_questpoints, "You have completed the\\nHoly Grail Quest!");
+~send_quest_complete(questlist:grail, holy_grail, 220, ^grail_questpoints, "You have completed the\\nHoly Grail Quest!");
 
