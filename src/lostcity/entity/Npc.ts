@@ -390,7 +390,7 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
         const patrolPoints = type.patrolCoord;
         const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
-        var dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]);
+        let dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]);
 
         if(!(this.x == dest.x && this.z == dest.z) && World.currentTick > this.nextPatrolTick) {
             this.teleJump(dest.x, dest.z, dest.level);
