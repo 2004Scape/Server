@@ -5,3 +5,7 @@ default=0
 [next_loc_stage_mining]
 type=loc
 default=empty_rock_1
+
+[macro_gas]
+type=loc
+default=null

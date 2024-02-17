@@ -1,5 +1,6 @@
 // this proc returns the first loc found, not the closest loc
-[proc,loc_within_distance](coord $coord, loc $loc, int $distance)(boolean)
+// returns coord, you will have to use loc_find to set active loc
+[proc,loc_within_distance](coord $coord, loc $loc, int $distance)(coord)
 // a radius of 1 will loop 9 zones
 // a radius of 2 will loop 25 zones
 // a radius of 3 will loop 49 zones
@@ -28,11 +29,11 @@ while ($maxX >= $minX) {
         loc_findallzone($zoneCoord);
         while (loc_findnext = true) {
             if (loc_type = $loc) {
-                return(true);
+                return(loc_coord);
             }
         }
         $maxZ = sub($maxZ, 1);
     }
     $maxX = sub($maxX, 1);
 }
-return(false);
+return(null);

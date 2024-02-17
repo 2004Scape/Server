@@ -36,6 +36,11 @@ if (stat(cooking) < $levelrequired) {
     ~mesbox("You need a Cooking level of <tostring($levelrequired)> to cook <lowercase(oc_name($cooked_item))>.");
     return;
 }
+// macro event
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 // def variables
 def_string $cookmessage;
 def_string $succesmessage = db_getfield($data,cooking_generic:successmessage,0);

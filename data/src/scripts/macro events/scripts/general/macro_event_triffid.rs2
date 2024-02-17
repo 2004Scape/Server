@@ -1,0 +1,57 @@
+[proc,macro_event_triffid_spawn]
+if (finduid(uid) = true) {
+    sound_synth(triffid_appear, 0, 0);
+}
+npc_setmode(none);
+npc_anim(seq_348, 0);
+%npc_attacking_uid = uid;
+%macro_event = ^no_macro_event;
+// isnt delayed on respawn in osrs
+%npc_macro_event_status = ^macro_event_appear;
+npc_settimer(44);
+
+[opnpc1,macro_event_triffid_friendly]
+if (%npc_attacking_uid ! uid) {
+    mes("It's not here for you."); // osrs
+    return;
+}
+if (%npc_macro_event_status = ^macro_event_appear) {
+    return;
+}
+~macro_event_give_reward(strange_fruit, 1);
+sound_synth(pick, 0, 0);
+// https://youtu.be/ghfKpXe7N5s?t=24
+mes("You pick the fruit from the plant."); // osrs
+%npc_macro_event_status  = ^macro_event_disappear;
+npc_anim(seq_350, 0); // take thing away
+npc_delay(24); // delayed when despawning in osrs
+npc_del;
+
+[ai_timer,macro_event_triffid_friendly]
+if (%npc_macro_event_status = ^macro_event_appear) {
+    %npc_macro_event_status = ^macro_event_none;
+    npc_settimer(50); // 30s https://youtu.be/94bDnUMTMXQ?t=394
+    return;
+} else if (%npc_macro_event_status = ^macro_event_disappear) {
+    // return since its already disappearing in opnpc1
+    return;
+}
+npc_anim(seq_351, 60);
+npc_delay(4);
+
+npc_changetype(macro_event_triffid_hostile);
+npc_delay(1);
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(opplayer2);
+}
+
+[ai_timer,macro_event_triffid_hostile]
+if (npc_getmode = opplayer2) {
+    return;
+}
+// https://youtu.be/t7iOUMQv6Ws?t=148
+if (finduid(%npc_attacking_uid) = false | (npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
+    npc_anim(seq_355, 0);
+    npc_delay(1);
+    npc_del;
+}

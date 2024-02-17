@@ -18,6 +18,11 @@ if (stat(crafting) < $level) {
     ~mesbox("You need level <tostring($level)> Crafting to make that.");
     return;
 }
+// macro event
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 // play human animation
 anim(human_spinningwheel, 0);
 loc_anim(spinningwheel);

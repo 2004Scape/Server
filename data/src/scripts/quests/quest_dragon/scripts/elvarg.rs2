@@ -86,7 +86,7 @@ if (inv_total(worn, dragonfire_shield) > 0) {
         // https://youtu.be/lSV2whAirvY?t=41
         mes("Your prayers resist some of the dragon fire!");
     }
-    if (%antifire = ^true) {
+    if (%antifire < map_clock) {
         $maxhit = sub($maxhit, 3);
         // guess based off this https://youtu.be/UXNFe3FeDgg?t=15
         mes("Your potion protects you from the heat of the dragon fire!");

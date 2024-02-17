@@ -93,9 +93,13 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
 // mes("<tostring(map_clock)>: Cast");
+if ($passes = false) {
+    return;
+}
 // check if npc is attackable
 if (~npc_is_attackable_message(npc_type) = false) {
     p_stopaction;
@@ -191,7 +195,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // play spell success sound
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
     // roll 0-maxhit
-    $damage = randominc($maxhit);
+    $damage = randominc(min($maxhit, npc_param(max_dealt)));
     // if maxhit is defined then damage npc
     if ($maxhit ! null) {
         // damage npc
@@ -201,8 +205,10 @@ if (~player_npc_hit_roll(^magic_style) = true) {
         // https://oldschool.runescape.wiki/w/Update:Slug_Menace
         // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
         // npc sound
-        sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
-        ~give_combat_experience($damagestyle, min($damage, npc_stat(hitpoints)));
+        if (npc_param(defend_sound) ! null) {
+            sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
+        }
+        ~give_combat_experience($damagestyle, min($damage, npc_stat(hitpoints)), npc_param(combat_xp_multiplier));
     }
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);

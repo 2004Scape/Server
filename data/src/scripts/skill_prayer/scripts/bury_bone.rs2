@@ -18,9 +18,14 @@ def_obj $last_item = inv_getobj(inv, $slot);
 inv_delslot(inv, $slot);
 // this is strong queue in later revs
 p_stopaction;
-queue(finish_bury, 0, $last_item);
+queue(finish_bury, 1, $last_item);
 
 [queue,finish_bury](obj $last_item)
 if_close;
 givexp(prayer, oc_param($last_item, bone_exp));
 mes("You bury the bones.");
+
+if (1 = ^false | ~macro_event_general_active = true) {
+    return;
+}
+@macro_event_prayer;
