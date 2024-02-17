@@ -1,3 +1,5 @@
+// disabled due to Jagfile's bzip-wasm dependency
+
 import Packet from '#jagex2/io/Packet.js';
 
 import fs from 'fs';
