@@ -10999,6 +10999,9 @@ model6=model_361_obj_wear
 model7=model_377_obj_wear
 head1=model_122_npc_head
 head2=model_102_obj_wear
+defaultmode=patrol
+patrol1=0_45_54_50_7,0
+patrol2=0_45_54_24_7,0
 
 [npc_897]
 name=Witches experiment

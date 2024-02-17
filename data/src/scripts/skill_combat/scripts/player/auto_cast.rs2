@@ -50,7 +50,6 @@ if (p_finduid(uid) = true) {
     }
     // set auto cast varp
     %autocast_spell = $spell;
-    %spell = $spell;
 
     %attackstyle_magic = 2;
     if_settext(combat_staff_2:auto_spell, db_getfield($spell_data, magic_spell_table:name, 0));
