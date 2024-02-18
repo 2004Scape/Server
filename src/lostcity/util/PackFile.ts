@@ -58,7 +58,7 @@ export class PackFile {
 
     refreshNames() {
         this.names = new Set(this.pack.values());
-        this.max = Math.max(...Array.from(this.pack.keys()));
+        this.max = Math.max(...Array.from(this.pack.keys())) + 1;
     }
 
     save() {
@@ -211,13 +211,15 @@ function validateInterfacePack(pack: PackFile) {
     });
 }
 
-// todo: eventually validate and/or reuse IDs?
+// todo: validate triggers, names, and/or reuse IDs?
 function regenScriptPack(pack: PackFile) {
     pack.load('data/pack/script.pack');
 
     const names = crawlConfigNames('.rs2', true);
     for (let i = 0; i < names.length; i++) {
-        pack.register(i, names[i]);
+        if (!pack.names.has(names[i])) {
+            pack.register(pack.max++, names[i]);
+        }
     }
     pack.refreshNames();
     pack.save();
@@ -334,6 +336,11 @@ function crawlConfigCategories() {
     });
 
     return names;
+}
+
+export function getModified(path: string) {
+    const stats = fs.statSync(path);
+    return stats.mtimeMs;
 }
 
 export function getLatestModified(path: string, ext: string) {

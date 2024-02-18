@@ -55,6 +55,7 @@ import { PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ZoneManager from './zone/ZoneManager.js';
+import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -62,6 +63,11 @@ class World {
     currentTick = 0;
     tickRate = 600; // speeds up when we're processing server shutdown
     shutdownTick = -1;
+
+    // packed data timestamps
+    allLastModified: number = 0;
+    datLastModified: Map<string, number> = new Map();
+
     // debug data
     lastCycleStats: number[] = [];
     lastCycleBandwidth: number[] = [0, 0];
@@ -196,6 +202,129 @@ class World {
         return this.collisionManager.stepValidator;
     }
 
+    shouldReload(type: string): boolean {
+        const current = getModified(`data/pack/server/${type}.dat`);
+
+        if (!this.datLastModified.has(type)) {
+            this.datLastModified.set(type, current);
+            return true;
+        }
+
+        const changed = this.datLastModified.get(type) !== current;
+        if (changed) {
+            this.datLastModified.set(type, current);
+        }
+        return changed;
+    }
+
+    reload() {
+        if (this.shouldReload('varp')) {
+            VarPlayerType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('obj')) {
+            ObjType.load('data/pack/server', this.members);
+        }
+
+        if (this.shouldReload('loc')) {
+            LocType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('npc')) {
+            NpcType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('idk')) {
+            IdkType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('frame_del')) {
+            SeqFrame.load('data/pack/server');
+        }
+
+        if (this.shouldReload('seq')) {
+            SeqType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('spotanim')) {
+            SpotanimType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('category')) {
+            CategoryType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('param')) {
+            ParamType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('enum')) {
+            EnumType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('struct')) {
+            StructType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('inv')) {
+            InvType.load('data/pack/server');
+
+            for (let i = 0; i < InvType.count; i++) {
+                const inv = InvType.get(i);
+    
+                if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                    this.invs[i] = Inventory.fromType(i);
+                }
+            }
+        }
+
+        if (this.shouldReload('mesanim')) {
+            MesanimType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('dbtable')) {
+            DbTableType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('dbrow')) {
+            DbRowType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('hunt')) {
+            HuntType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('varn')) {
+            VarNpcType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('vars')) {
+            VarSharedType.load('data/pack/server');
+        }
+
+        if (this.shouldReload('interface')) {
+            Component.load('data/pack/server');
+        }
+
+        if (this.shouldReload('script')) {
+            const count = ScriptProvider.load('data/pack/server');
+            this.broadcastMes(`Reloaded ${count} scripts.`);
+        }
+
+        this.allLastModified = getLatestModified('data/pack/server', '.dat');
+    }
+
+    broadcastMes(message: string) {
+        for (let i = 0; i < this.players.length; i++) {
+            const player = this.players[i];
+            if (!player) {
+                continue;
+            }
+
+            player.messageGame(message);
+        }
+    }
+
     async start(skipMaps = false, startCycle = true) {
         console.log('Starting world...');
 
@@ -203,48 +332,14 @@ class World {
             this.npcs[i] = null;
         }
 
-        VarPlayerType.load('data/pack/server');
-        ObjType.load('data/pack/server', this.members);
-        LocType.load('data/pack/server');
-        NpcType.load('data/pack/server');
-        IdkType.load('data/pack/server');
-        SeqFrame.load('data/pack/server');
-        SeqType.load('data/pack/server');
-        SpotanimType.load('data/pack/server');
-
-        CategoryType.load('data/pack/server');
-        ParamType.load('data/pack/server');
-        EnumType.load('data/pack/server');
-        StructType.load('data/pack/server');
-        InvType.load('data/pack/server');
-
-        MesanimType.load('data/pack/server');
-        DbTableType.load('data/pack/server');
-        DbRowType.load('data/pack/server');
-        HuntType.load('data/pack/server');
-        VarNpcType.load('data/pack/server');
-        VarSharedType.load('data/pack/server');
-
         FontType.load('data/pack/client');
-        Component.load('data/pack/server');
-
         WordEnc.load('data/pack/client');
 
-        for (let i = 0; i < InvType.count; i++) {
-            const inv = InvType.get(i);
-
-            if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                this.invs.push(Inventory.fromType(i));
-            }
-        }
+        this.reload();
 
         if (!skipMaps) {
             this.gameMap.init();
         }
-
-        // console.time('Loading script.dat');
-        ScriptProvider.load('data/pack/server');
-        // console.timeEnd('Loading script.dat');
 
         this.vars = new Int32Array(VarSharedType.count);
 
@@ -277,6 +372,14 @@ class World {
     }
 
     async cycle(continueCycle = true) {
+        if (Environment.LOCAL_DEV) {
+            const lastModified = getLatestModified('data/pack/server', '.dat');
+            if (this.allLastModified !== lastModified) {
+                console.log('Reloading data...');
+                this.reload();
+            }
+        }
+
         const start = Date.now();
 
         // world processing
