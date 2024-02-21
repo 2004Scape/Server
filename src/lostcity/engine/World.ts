@@ -426,8 +426,8 @@ class World {
                     continue;
                 }
 
-                // 1/12 chance every 5 minutes of setting an afk event state
-                player.afkEventReady = Math.random() < 0.12;
+                // 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
+                player.afkEventReady = Math.random() < 0.0833;
             }
         }
 
