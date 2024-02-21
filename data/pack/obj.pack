@@ -77,10 +77,10 @@
 76=obj_76
 77=obj_77
 78=obj_78
-79=obj_79
-80=obj_80
-81=obj_81
-82=obj_82
+79=ice_arrow_4
+80=ice_arrow_3
+81=ice_arrow_2
+82=ice_arrow_5
 83=obj_83
 84=obj_84
 85=obj_85
@@ -943,7 +943,7 @@
 942=lit_arrows
 943=obj_943
 944=cert_obj_943
-945=obj_945
+945=throwingrope
 946=knife
 947=cert_knife
 948=bear_fur
@@ -977,8 +977,8 @@
 976=cert_machete
 977=obj_977
 978=cert_obj_977
-979=obj_979
-980=cert_obj_979
+979=highwayman_mask
+980=cert_highwayman_mask
 981=obj_981
 982=cert_obj_981
 983=brass_key
@@ -2629,8 +2629,8 @@
 2628=cert_rune_full_helm_t
 2629=rune_kiteshield_t
 2630=cert_rune_kiteshield_t
-2631=highwayman_mask
-2632=cert_highwayman_mask
+2631=trail_highwayman_mask
+2632=cert_trail_highwayman_mask
 2633=blue_berret
 2634=cert_blue_berret
 2635=black_berret
@@ -2882,5 +2882,5 @@
 2881=cert_obj_2880
 2882=obj_2882
 2883=ogre_bow
-2884=obj_2884
-2885=cert_obj_2884
+2884=chompy_bird_obj
+2885=cert_chompy_bird_obj
