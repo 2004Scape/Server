@@ -111,6 +111,7 @@ if (getqueue(player_death) < 1) {
     queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
 }
 %lastcombat = map_clock;
+%npc_lastattack = map_clock;
 
 [queue,drunken_dwarf_player_defend_anim]
 anim(%com_defendanim, 0);

@@ -72,6 +72,7 @@ queue(damage_player, 0, $damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, 4);
 %lastcombat = map_clock;
+%npc_lastattack = map_clock;
 
 
 // proc is used when the player has dragon fire shiled, prot magic, or antifire potion
