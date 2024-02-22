@@ -1,9 +1,9 @@
-[opnpc1,_net_harpoon_fishing] @attempt_fish_mackerel;
-[opnpc3,_net_harpoon_fishing] @attempt_fish_shark;
+[opnpc1,_memberfish] @attempt_fish_mackerel;
+[opnpc3,_memberfish] @attempt_fish_shark;
 
 // hidden ops
-[opnpc2,_net_harpoon_fishing] @fish_mackerel;
-[opnpc4,_net_harpoon_fishing] @fish_shark;
+[opnpc2,_memberfish] @fish_mackerel;
+[opnpc4,_memberfish] @fish_shark;
 
 [label,attempt_fish_shark]
 // check level 
@@ -13,7 +13,9 @@ if (stat(fishing) < 76) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(harpoon);
+if (~check_fish_equipment(harpoon) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -23,6 +25,7 @@ if (inv_freespace(inv) < 1) {
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
     p_opnpc(3);
+    return;
 }
 if (%action_delay = calc(map_clock + 4)) {
     mes("You start Harpooning fish.");
@@ -30,18 +33,26 @@ if (%action_delay = calc(map_clock + 4)) {
     %skill_sound = calc(map_clock + 7);
     anim(human_harpoon, 0);
     p_opnpc(4);
-}
-if (%action_delay = map_clock) { 
-    ~fish_roll(raw_shark, null, null);
+} else if (%action_delay = map_clock) { 
+    ~fish_roll(raw_shark, null, harpoon, null);
     anim(human_harpoon, 0);
     sound_synth(fishing_cast, 0, 30);
 }
+
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
+    @macro_event_fishing(harpoon);
+}
+
 
 [label,fish_shark]
 // check level 
 if (stat(fishing) < 76) {
     anim(null, 0);
     ~mesbox("You need at least 76 Fishing to harpoon these fish.");
+    return;
+}
+// check if they have fishing equipment
+if (~check_fish_equipment(harpoon) = false) {
     return;
 }
 // check if inv is full again
@@ -54,7 +65,7 @@ if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
 } else
 if (%action_delay = map_clock) {
-    ~fish_roll(raw_shark, null, null);
+    ~fish_roll(raw_shark, null, harpoon, null);
 }
 // play animation every 8 ticks
 if (%skill_anim < map_clock) {
@@ -80,7 +91,9 @@ if (stat(fishing) < 16) {
     return;
 }
 // check if they have fishing equipment
-~check_fish_equipment(net_big);
+if (~check_fish_equipment(net_big) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -90,6 +103,7 @@ if (inv_freespace(inv) < 1) {
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 4);
     p_opnpc(1);
+    return;
 } 
 if (%action_delay = calc(map_clock + 3)) {
     mes("You cast out your net...");
@@ -98,10 +112,13 @@ if (%action_delay = calc(map_clock + 3)) {
     sound_synth(fishing_cast, 0, 15);
     %skill_anim = calc(map_clock + 5);
     p_opnpc(2);
-}
-if (%action_delay = map_clock) { 
+} else if (%action_delay = map_clock) { 
     ~fish_roll_big_net;
 }
+if (afk_event = ^true & npc_param(is_whirlpool) = ^false) {
+    @macro_event_fishing(net_big);
+}
+
 
 
 [label,fish_mackerel]
@@ -109,6 +126,10 @@ if (%action_delay = map_clock) {
 if (stat(fishing) < 16) {
     anim(null, 0);
     ~mesbox("You need at least 16 Fishing to catch these fish.");
+    return;
+}
+// check if they have fishing equipment
+if (~check_fish_equipment(net_big) = false) {
     return;
 }
 // check if inv is full again
@@ -136,63 +157,138 @@ p_opnpc(2);
 
 [proc,fish_roll_big_net]
 def_int $level = stat(fishing);
+def_boolean $caught = false;
 // leather boots
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, leather_boots, 1);
     mes("You catch some boots.");
     givexp(fishing, 10);
+    $caught = true;
 }
 // seaweed
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, seaweed, 1);
     mes("You catch some seaweed.");
     givexp(fishing, 1);
+    $caught = true;
 }
 // leather gloves
 if (stat_random($level, 5, 5) = true) {
     inv_add(inv, leather_gloves, 1);
     mes("You catch some gloves.");
     givexp(fishing, 10);
+    $caught = true;
 }
 // mackerel
 if (stat_random($level, 5, 65) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
     givexp(fishing, 200);
+    $caught = true;
 }
 // another mackerel
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
     givexp(fishing, 200);
+    $caught = true;
 }
 // oyster
 if (stat_random($level, 3, 7) = true) {
     inv_add(inv, oyster, 1);
     mes("You catch an oyster shell.");
     givexp(fishing, 100);
+    $caught = true;
 }
 // casket
 if (stat_random($level, 1, 2) = true) {
     inv_add(inv, casket, 1);
     mes("You catch a casket.");
     givexp(fishing, 100);
+    $caught = true;
 }
 // cod
 if ($level < 23) {
+    if ($caught = false) {
+        ~macro_event_whirlpool_take_equipment(net_big);
+    }
     return;
 }
 if (stat_random($level, 4, 55) = true) {
     inv_add(inv, raw_cod, 1);
     mes("You catch a cod.");
     givexp(fishing, 450);
+    $caught = true;
 }
 // bass
 if ($level < 46) {
+    if ($caught = false) {
+        ~macro_event_whirlpool_take_equipment(net_big);
+    }
     return;
 }
 if (stat_random($level, 3, 40) = true) {
     inv_add(inv, raw_bass, 1);
     mes("You catch a bass.");
     givexp(fishing, 1000);
+    $caught = true;
+}
+if ($caught = false) {
+        ~macro_event_whirlpool_take_equipment(net_big);
+    }
+
+// oysters and casket ops
+[opheld1,oyster]
+mes("You open the oyster shell."); // osrs
+inv_del(inv, oyster, 1);
+// rates taken from osrs wiki
+// https://oldschool.runescape.wiki/w/Oyster
+def_int $random = random(32);
+
+if ($random < 25) {
+    inv_add(inv, oyster_perl, 1);
+} else {
+    inv_add(inv, empty_oyster, 1);
+}
+
+// i used this video. Osrs video from july 29 2020
+// https://youtu.be/Tp2VxwIWMcQ
+[opheld1,casket]
+inv_delslot(inv, last_slot);
+def_int $random = random(128);
+// drop rates are from https://oldschool.runescape.wiki/w/Casket
+// todo: find screenshots for these objbox's
+if ($random < 60) { // 10/128 coins for each
+    // 20, 40, 80, 160, 320, 640
+    inv_add(inv, coins, multiply(pow(2, add(random(6), 1)), 10)); // 2 ^ (random(6) + 1) * 10
+    ~objbox(coins_250, "You open the casket. Inside you find some coins.");
+    return;
+} else if ($random < 92) { // 32/128 uncut sapphire
+    inv_add(inv, uncut_sapphire, 1);
+    ~objbox(uncut_sapphire, "You open the casket. Inside you find an uncut|sapphire.");
+    return;
+} else if ($random < 108) { // 16/128 uncut emerald
+    inv_add(inv, uncut_emerald, 1);
+    ~objbox(uncut_emerald, "You open the casket. Inside you find an uncut|emerald.");
+    return;
+} else if ($random < 116) { // 8/128 uncut ruby
+    inv_add(inv, uncut_ruby, 1);
+    ~objbox(uncut_ruby, "You open the casket. Inside you find an uncut ruby.");
+    return;
+} else if ($random < 124) { // 8/128 cosmic talisman
+    inv_add(inv, cosmic_talisman, 1);
+    ~objboxt(cosmic_talisman, "You open the casket. Inside you find a cosmic talisman.");
+    return;
+} else if ($random < 126) { // 2/128 uncut diamond
+    inv_add(inv, uncut_diamond, 1);
+    ~objbox(uncut_diamond, "You open the casket. Inside you find an uncut|diamond.");
+    return;
+} else if ($random < 127) { // 1/128 tooth half key
+    inv_add(inv, half_key1, 1);
+    ~objboxt(half_key1, "You open the casket. Inside you find half a key.");
+    return;
+} else if ($random < 128) { // 1/128 loop half of key
+    inv_add(inv, half_key2, 1);
+    ~objboxt(half_key2, "You open the casket. Inside you find half a key.");
+    return;
 }

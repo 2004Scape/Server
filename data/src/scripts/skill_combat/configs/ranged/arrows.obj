@@ -350,7 +350,6 @@ param=proj_launch,rune_arrow_launch
 param=proj_travel,rune_arrow_travel
 
 [bronze_arrow_4]
-name=Bronze arrow 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -362,9 +361,9 @@ recol2d=5652
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [bronze_arrow_3]
-name=Bronze arrow 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -376,9 +375,9 @@ recol2d=5652
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [bronze_arrow_2]
-name=Bronze arrow 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -390,9 +389,9 @@ recol2d=5652
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [bronze_arrow_5]
-name=Bronze arrow 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -404,9 +403,9 @@ recol2d=5652
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [bronze_arrow_p_4]
-name=Bronze arrow p 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -418,9 +417,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [bronze_arrow_p_3]
-name=Bronze arrow p 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -432,9 +431,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [bronze_arrow_p_2]
-name=Bronze arrow p 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -446,9 +445,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [bronze_arrow_p_5]
-name=Bronze arrow p 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -460,9 +459,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_4]
-name=Iron arrow 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -474,9 +473,9 @@ recol2d=33
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_3]
-name=Iron arrow 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -488,9 +487,9 @@ recol2d=33
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_2]
-name=Iron arrow 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -502,9 +501,9 @@ recol2d=33
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_5]
-name=Iron arrow 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -516,9 +515,9 @@ recol2d=33
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_p_4]
-name=Iron arrow p 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -530,9 +529,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_p_3]
-name=Iron arrow p 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -544,9 +543,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_p_2]
-name=Iron arrow p 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -558,9 +557,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [iron_arrow_p_5]
-name=Iron arrow p 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -572,9 +571,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_4]
-name=Steel arrow 4
 stackable=yes
 model=model_2421_obj
 2dxof=6
@@ -582,9 +581,9 @@ model=model_2421_obj
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_3]
-name=Steel arrow 3
 stackable=yes
 model=model_2420_obj
 2dxof=6
@@ -592,9 +591,9 @@ model=model_2420_obj
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_2]
-name=Steel arrow 2
 stackable=yes
 model=model_2419_obj
 2dxof=6
@@ -602,9 +601,9 @@ model=model_2419_obj
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_5]
-name=Steel arrow 5
 stackable=yes
 model=model_2422_obj
 2dxof=6
@@ -612,9 +611,9 @@ model=model_2422_obj
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_p_4]
-name=Steel arrow p 4
 stackable=yes
 model=model_2421_obj
 recol1s=57
@@ -624,9 +623,9 @@ recol1d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_p_3]
-name=Steel arrow p 3
 stackable=yes
 model=model_2420_obj
 recol1s=57
@@ -636,9 +635,9 @@ recol1d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_p_2]
-name=Steel arrow p 2
 stackable=yes
 model=model_2419_obj
 recol1s=57
@@ -648,9 +647,9 @@ recol1d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [steel_arrow_p_5]
-name=Steel arrow p 5
 stackable=yes
 model=model_2422_obj
 recol1s=57
@@ -660,9 +659,9 @@ recol1d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_4]
-name=Mithril arrow 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -674,9 +673,9 @@ recol2d=43297
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_3]
-name=Mithril arrow 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -688,9 +687,9 @@ recol2d=43297
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_2]
-name=Mithril arrow 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -702,9 +701,9 @@ recol2d=43297
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_5]
-name=Mithril arrow 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -716,9 +715,9 @@ recol2d=43297
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_p_4]
-name=Mithril arrow p 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -730,9 +729,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_p_3]
-name=Mithril arrow p 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -744,9 +743,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_p_2]
-name=Mithril arrow p 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -758,9 +757,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [mithril_arrow_p_5]
-name=Mithril arrow p 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -772,9 +771,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_4]
-name=Adamant arrow 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -786,9 +785,9 @@ recol2d=21662
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_3]
-name=Adamant arrow 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -800,9 +799,9 @@ recol2d=21662
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_2]
-name=Adamant arrow 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -814,9 +813,9 @@ recol2d=21662
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_5]
-name=Adamant arrow 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -828,9 +827,9 @@ recol2d=21662
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_p_4]
-name=Adamant arrow p 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -842,9 +841,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_p_3]
-name=Adamant arrow p 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -856,9 +855,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_p_2]
-name=Adamant arrow p 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -870,9 +869,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [adamant_arrow_p_5]
-name=Adamant arrow p 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -884,9 +883,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_4]
-name=Rune arrow 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -898,9 +897,9 @@ recol2d=36133
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_3]
-name=Rune arrow 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -912,9 +911,9 @@ recol2d=36133
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_2]
-name=Rune arrow 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -926,9 +925,9 @@ recol2d=36133
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_5]
-name=Rune arrow 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -940,9 +939,9 @@ recol2d=36133
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_p_4]
-name=Rune arrow p 4
 stackable=yes
 model=model_2421_obj
 recol1s=61
@@ -954,9 +953,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_p_3]
-name=Rune arrow p 3
 stackable=yes
 model=model_2420_obj
 recol1s=61
@@ -968,9 +967,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_p_2]
-name=Rune arrow p 2
 stackable=yes
 model=model_2419_obj
 recol1s=61
@@ -982,9 +981,9 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [rune_arrow_p_5]
-name=Rune arrow p 5
 stackable=yes
 model=model_2422_obj
 recol1s=61
@@ -996,6 +995,7 @@ recol2d=13221
 2dzoom=1220
 2dyan=100
 2dxan=216
+dummyitem=inv_only
 
 [lit_arrows]
 name=Lit arrows
@@ -1274,7 +1274,6 @@ param=proj_travel,fire_arrow_travel
 tradeable=yes
 
 [unlitarrow_2]
-name=Unlitarrow 2
 stackable=yes
 model=model_397_obj
 2dxof=3
@@ -1282,9 +1281,9 @@ model=model_397_obj
 2dzoom=1420
 2dyan=1772
 2dxan=272
+dummyitem=inv_only
 
 [unlitarrow_3]
-name=Unlitarrow 3
 stackable=yes
 model=model_568_obj
 2dxof=12
@@ -1292,9 +1291,9 @@ model=model_568_obj
 2dzoom=1360
 2dyan=1880
 2dxan=196
+dummyitem=inv_only
 
 [unlitarrow_4]
-name=Unlitarrow 4
 stackable=yes
 model=model_2882_obj
 2dxof=1
@@ -1302,46 +1301,47 @@ model=model_2882_obj
 2dzoom=1820
 2dyan=1896
 2dxan=340
+dummyitem=inv_only
 
 [unlitarrow_5]
-name=Unlitarrow 5
 stackable=yes
 model=model_3361_obj
 2dxof=4
 2dyan=1884
 2dxan=384
+dummyitem=inv_only
 
 [litarrow_2]
-name=Litarrow 2
 stackable=yes
 model=model_3362_obj
 2dzoom=1590
 2dyan=1812
 2dxan=324
+dummyitem=inv_only
 
 [litarrow_3]
-name=Litarrow 3
 stackable=yes
 model=model_3363_obj
 2dxof=11
 2dzoom=1950
 2dyan=1804
 2dxan=388
+dummyitem=inv_only
 
 [litarrow_4]
-name=Litarrow 4
 stackable=yes
 model=model_3364_obj
 2dyof=-6
 2dzoom=1980
 2dyan=1896
 2dxan=408
+dummyitem=inv_only
 
 [litarrow_5]
-name=Litarrow 5
 stackable=yes
 model=model_3365_obj
 2dxof=3
 2dyof=2
 2dyan=1860
 2dxan=440
+dummyitem=inv_only

@@ -1,5 +1,4 @@
 [template_for_cert]
-name=Template for cert
 model=model_2429_obj
 stackable=yes
 weight=0g
@@ -7,3 +6,4 @@ weight=0g
 2dzoom=760
 2dyan=28
 2dxan=552
+dummyitem=inv_only

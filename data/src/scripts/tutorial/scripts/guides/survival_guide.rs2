@@ -1,0 +1,178 @@
+[opnpc1,npc_943]
+switch_int(%tutorial_progress) {
+    case 10: @survival_guide_start;
+    case 20: @survival_guide_look_at_menu;
+    case 30, 40: @survival_guide_fire;
+    case 50: @survival_guide_look_at_menu;
+    case 60: @survival_guide_fishing;
+    case 70, 80, 90: @survival_guide_fishing_after_burning;
+    case default: @survival_guide_recap;
+}
+
+[label,survival_guide_start]
+~chatnpc(neutral, "Hello there newcomer. My name is Brynna. My job is|to teach you a few survival tips and tricks. First off|we're going to start with the most basic survival skill of|all; making a fire.");
+~doubleobjbox(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
+%tutorial_progress = 20;
+~tutorial_step_view_inventory;
+
+[label,survival_guide_look_at_menu]
+~chatnpc(neutral, "Hello again. You should take a look at that menu before we continue.");
+
+[label,survival_guide_fire]
+~chatnpc(neutral, "Next up you need to make a fire. First, you'll need to cut down a tree to get some logs.");
+~survival_guide_replace_items;
+
+// basing these obj boxes off this from 2005
+// https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial8.gif
+// https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial10.gif
+// Looks like the exclamation points don't switch back to black.
+[proc,survival_guide_replace_items]
+if (inv_total(inv, bronze_axe) < 1 & inv_total(inv, tinderbox) < 1 & inv_freespace(inv) > 1) {
+    inv_add(inv, bronze_axe, 1);
+    inv_add(inv, tinderbox, 1);
+    ~doubleobjbox(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
+}
+
+if (inv_total(inv, bronze_axe) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, bronze_axe, 1);
+    ~objboxt(bronze_axe, "The Survival Guide gives you a |@blu@Bronze Hatchet!");
+}
+
+if (inv_total(inv, tinderbox) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, tinderbox, 1);
+    ~objboxt(tinderbox, "The Survival Guide gives you a |@blu@Tinderbox!");
+}
+
+if (%tutorial_progress > 50 & inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, net, 1);
+    ~objbox(net, "The Survival Guide gives you a |@blu@Net!");
+}
+
+// Used later for OSRS so we'll leave it.
+[proc,survival_guide_replace_items_no_objboxes]
+if (inv_total(inv, bronze_axe) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, bronze_axe, 1);
+}
+
+if (inv_total(inv, tinderbox) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, tinderbox, 1);
+}
+
+if (inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, net, 1);
+}
+
+[label,survival_guide_fishing]
+~chatnpc(neutral, "There's nothing like a good fire to warm the bones.|Next thing is getting food in our bellies. We'll need|something to cook. There are shrimp in the pond there.|So let's catch and cook some.");
+npc_findallzone(0_48_48_29_20);
+while (npc_findnext = true) {
+    if (npc_coord = 0_48_48_29_20 & npc_type = npc_952) {
+        hint_npc(npc_uid);
+    }
+}
+inv_add(inv, net, 1);
+%tutorial_progress = 70;
+~tutorial_step_catch_shrimp;
+~objbox(net, "The Survival Guide gives you a |@blu@Net!");
+~survival_guide_replace_items;
+
+// https://youtu.be/TSx2-jjPeIs?t=31
+[label,survival_guide_fishing_after_burning]
+~survival_guide_replace_items;
+~chatnpc(neutral, "Hello again. Next thing is getting food in our bellies. We'll need something to cook. There are shrimp in the pond there. So let's catch and cook some.");
+
+[label,survival_guide_recap]
+~chatnpc(neutral, "Hello again.");
+~survival_guide_replace_items;
+~survival_guide_recap_response(~p_choice5_header("Woodcutting.", 1, "Firemaking.", 2, "Fishing.", 3, "Cooking.", 4, "My stats.", 5, "What would you like to hear more about?"));
+
+[proc,survival_guide_recap_response](int $choice)
+switch_int ($choice) {
+    case 1:
+        ~survival_recap_woodcutting;
+        ~survival_recap_questions($choice);
+    case 2:
+        ~survival_recap_firemaking;
+        ~survival_recap_questions($choice);
+    case 3:
+        ~survival_recap_fishing;
+        ~survival_recap_questions($choice);
+    case 4:
+        ~survival_recap_cooking;
+        ~survival_recap_questions($choice);
+    case 5:
+        ~survival_recap_skills;
+        ~survival_recap_questions($choice);
+}
+
+[proc,survival_recap_questions](int $choice)
+switch_int($choice) {
+    case 1: ~survival_guide_recap_response(~p_choice5_header("Firemaking.", 2, "Fishing.", 3, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 2: ~survival_guide_recap_response(~p_choice5_header("Woodcutting", 1, "Fishing.", 3, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 3: ~survival_guide_recap_response(~p_choice5_header("Woodcutting", 1, "Firemaking.", 2, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 4: ~survival_guide_recap_response(~p_choice5_header("Woodcutting.", 1, "Firemaking.", 2, "Cooking.", 4, "My stats.", 5, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+    case 5: ~survival_guide_recap_response(~p_choice5_header("Woodcutting.", 1, "Firemaking.", 2, "Fishing.", 3, "Cooking.", 4, "Nothing, thanks.", 6, "What would you like to hear more about?"));
+}
+
+[proc,survival_recap_skills]
+~chatplayer("default", "Tell me about my stats again.");
+~chatnpc(neutral, "To look at your stats, click on the bar graph icon found near your backpack icon. You can check your skill levels here.");
+// OSRS specific
+//~chatnpc(neutral, "Every skill is listed in the skills menu. Here you can see what your current levels are and how much experience you have.");
+~chatnpc(neutral, "As you move your mouse over any of the icons here, look at the bottom of the menu and you will see the exact amount of experience you have and how much is needed to get to the next level.");
+// Re-enable this line when we get skill menus.
+//~chatnpc("default", "You can also click on a skill to open the relevant skillguide. In the skillguide, you can see all of the unlocks available in that skill. ");
+
+[proc,survival_recap_woodcutting]
+~chatplayer("default", "Tell me about Woodcutting again.");
+~chatnpc(neutral, "Woodcutting, eh? Don't worry, newcomer, it's really very easy. Simply equip your axe and click on a nearby tree to chop away.");
+~chatnpc(neutral, "As you explore the mainland you will discover many different kinds of trees that will require different levels of Woodcutting to chop down.");
+~chatnpc(neutral, "Logs are not only useful for making fires. Many archers use the skill known as Fletching to craft their own bows and arrows from trees.");
+
+[proc,survival_recap_fishing]
+~chatplayer("default", "Tell me about Fishing again.");
+~chatnpc(neutral, "Ah, yes. Fishing! Fishing is undoubtedly one the more popular hobbies here in Runescape!");
+~chatnpc(neutral, "Whenever you see sparkling waters, you can be sure there's probably some good fishing to be had there!");
+~chatnpc(neutral, "Not only are fish absolutely delicious when cooked, there are always fighters willing to buy a well cooked fish when they're low on health.");
+~chatnpc(quiz, "I would recommend everybody has a go at Fishing at least once in their lives! Was there anything else you wished to hear again?");
+
+[proc,survival_recap_firemaking]
+~chatplayer("default", "Tell me about Firemaking again.");
+~chatnpc(neutral, "Certainly, newcomer. When you have logs simply use your tinderbox on then. If successful, you will start a fire.");
+~chatnpc(neutral, "You can also set fire to logs you find lying on the floor already, and some other things can also be set alight...");
+~chatnpc(neutral, "A tinderbox is always a useful item to keep around!");
+
+[proc,survival_recap_cooking]
+~chatplayer("default", "Tell me about Cooking again.");
+~chatnpc(neutral, "Yes, the most basic of survival techniques. Most simple meals can be cooked on a fire by right clicking on the food, selecting use, then left clicking on the fire.");
+~chatnpc(neutral, "Eating food will restore a little health. The harder something is to cook, the more it will heal you. Somewhere around here is a chef who will tell you more about food and cooking it.");
+
+[proc,set_hint_icon_survival_guide]
+npc_findallzone(0_48_48_29_24);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_48_33_25);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_48_32_21);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_48_29_21);
+while (npc_findnext = true) {
+    if (npc_type = npc_943) {
+        hint_npc(npc_uid);
+    }
+}
+

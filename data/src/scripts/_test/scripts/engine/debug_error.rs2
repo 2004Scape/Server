@@ -1,0 +1,2 @@
+[debugproc,error](string $str)
+error($str);

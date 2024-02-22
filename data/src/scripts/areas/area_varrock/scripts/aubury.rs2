@@ -22,3 +22,75 @@ if ($choice = 1) {
 [label,aubury_rune_shop]
 ~chatplayer(happy, "Oh, it's a rune shop. No thank you, then.");
 ~chatnpc(happy, "Well, if you find someone who does want runes, please send them my way.");
+
+
+[proc,rune_mysteries_handle_aubury](boolean)
+if(%runemysteries_progress < ^runemysteries_complete) {
+    return(true);
+}
+return(false);
+
+[label,rune_mysteries_aubury]
+// aubury cannot teleport until this quest is complete
+if (%runemysteries_progress = 0 | %runemysteries_progress = 1) {
+    ~chatnpc(quiz, "Do you want to buy some runes?");
+    def_int $choice = ~p_choice2("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2);
+    if ($choice = 1) {
+        ~openshop_activenpc;
+        return;
+    }
+    if ($choice = 2) {
+        @aubury_rune_shop;
+        return;
+    }
+}
+
+if (%runemysteries_progress = 2 & inv_total(inv, research_package) > 0) {
+    ~chatnpc(quiz, "Do you want to buy some runes?");
+    def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "I have been sent here with a package for you.", 3);
+
+    if ($choice = 1) {
+        ~openshop_activenpc;
+        return;
+    }
+    if ($choice = 2) {
+        @aubury_rune_shop;
+        return;
+    }
+
+    ~chatplayer(neutral, "I have been sent here with a package for you. It's from the head wizard at the Wizards' Tower.");
+    ~chatnpc(neutral, "Really? But... surely he can't have..? Please, let me have it, it must be extremely important for him to have sent a stranger.");
+    inv_del(inv, research_package, 1);
+    %runemysteries_progress = 3;
+    ~mesbox("You hand Aubury the research package.");
+    ~chatnpc(neutral, "This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
+    return;
+}
+if(%runemysteries_progress = 3) {
+    ~chatnpc(neutral, "My gratitude to you adventurer for bringing me these research notes. I notice that you brought the head wizard a special talisman that was the key to our finally unlocking the puzzle.");
+    ~chatnpc(neutral, "Combined with the information I had already already collated regarding the Rune Essence, I think we have finally unlocked the power to");
+    ~chatnpc(neutral, "...no. I am getting ahead of myself. Please take this summary of my research back to the head wizard at the Wizards' Tower. I trust his judgement on whether to let you in on our little secret or not.");
+    ~mesbox("Aubury gives you his research notes.");
+    if (inv_freespace(inv) = 0) {
+        ~objbox(notes, "Aubury tries to hand you the Research Notes, but you don't have enough room to take them.");
+        return;
+    }
+    %runemysteries_progress = 4;
+    inv_add(inv, notes, 1);
+    return;
+}
+if(%runemysteries_progress = 4) {
+    ~chatnpc(neutral, "I suggest you take those research notes of mine back to the head wizard at the Wizards' Tower.");
+    if(~obj_gettotal(notes) = 0) {
+        ~chatplayer(neutral, "I can't... I lost them...");
+        ~chatplayer(neutral, "Well, luckily I have duplicates. It's a good thing they are written in code, I would not want the wrong kind of person to get access to the information contained within.");
+        if (inv_freespace(inv) = 0) {
+            ~objbox(notes, "Aubury tries to hand you the Research Notes, but you don't have enough room to take them.");
+            return;
+        }
+        inv_add(inv, notes, 1);
+    } else {
+       ~chatplayer(neutral, "Ok then, I will do that.");
+    }
+    return;
+}

@@ -2,8 +2,9 @@ import Packet from '#jagex2/io/Packet.js';
 
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { DbTablePack } from '#lostcity/util/PackFile.js';
 
 function parseCsv(str: string): string[] {
     const result = [];
@@ -78,15 +79,13 @@ export function parseDbTableConfig(key: string, value: string): ConfigValue | nu
 }
 
 export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('dbtable')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(DbTablePack.size);
+    idx.p2(DbTablePack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < DbTablePack.size; i++) {
+        const debugname = DbTablePack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;
@@ -108,17 +107,17 @@ export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
                 const name = column.shift();
                 const types = [];
                 const properties = [];
-    
+
                 for (let j = 0; j < column.length; j++) {
                     const part = column[j];
-    
+
                     if (part.toUpperCase() === part) {
                         properties.push(part);
                     } else {
                         types.push(ScriptVarType.getTypeChar(part));
                     }
                 }
-    
+
                 columns.push({ name, types, properties });
             } else if (key === 'default') {
                 // default values have a few rules:
@@ -130,36 +129,36 @@ export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
                 const column = parts.shift();
                 const columnIndex = columns.findIndex(col => col.name === column);
                 const values = parts;
-    
+
                 defaults[columnIndex] = values;
             }
         }
 
         if (columns.length) {
             dat.p1(1);
-    
+
             dat.p1(columns.length); // total columns (not every one has to be encoded)
             for (let i = 0; i < columns.length; i++) {
                 const column = columns[i];
-    
+
                 let flags = i;
                 if (defaults[i]) {
                     flags |= 0x80;
                 }
                 dat.p1(flags);
-    
+
                 dat.p1(column.types.length);
                 for (let j = 0; j < column.types.length; j++) {
                     dat.p1(column.types[j] as number);
                 }
-    
+
                 if (flags & 0x80) {
                     dat.p1(1); // # of fields
-    
+
                     for (let j = 0; j < column.types.length; j++) {
                         const type = column.types[j];
                         const value = lookupParamValue(type as number, defaults[i][j]);
-    
+
                         if (type === ScriptVarType.STRING) {
                             dat.pjstr(value as string);
                         } else {
@@ -168,7 +167,7 @@ export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
                     }
                 }
             }
-    
+
             dat.p1(255); // end of column list
         }
 
@@ -177,7 +176,7 @@ export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
 
         if (columns.length) {
             dat.p1(251);
-    
+
             dat.p1(columns.length);
             for (let i = 0; i < columns.length; i++) {
                 dat.pjstr(columns[i].name as string);

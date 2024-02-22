@@ -242,8 +242,8 @@ recol3d=5016
 weight=1g
 tradeable=yes
 
-[obj_979]
-name=Highwayman mask
+// jagex name
+[highwayman_mask]
 model=model_2500_obj
 2dxof=3
 2dzoom=290
@@ -264,7 +264,7 @@ model=model_2724_obj
 weight=1lb
 tradeable=yes
 
-[obj_983]
+[brass_key]
 name=Brass key
 desc=A mysterious key made of brass.
 model=model_2372_obj
@@ -333,7 +333,7 @@ recol1d=3625
 weight=10g
 tradeable=yes
 
-[obj_993]
+[sinister_key]
 name=Sinister key
 desc=You get a sense of dread from this key.
 members=yes
@@ -370,61 +370,60 @@ count9=coins_10000,10000
 tradeable=yes
 
 [coins_2]
-name=Coins 2
 model=model_2485_obj
 stackable=yes
 2dxof=3
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_3]
-name=Coins 3
 model=model_2486_obj
 stackable=yes
 2dxof=3
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_4]
-name=Coins 4
 model=model_2487_obj
 stackable=yes
 2dxof=3
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_5]
-name=Coins 5
 model=model_2488_obj
 stackable=yes
 2dxof=3
 2dzoom=710
 2dyan=2012
 2dxan=184
+dummyitem=inv_only
 
 [coins_25]
-name=Coins 25
 model=model_2667_obj
 2dxof=3
 2dzoom=710
 2dyan=2012
 2dxan=184
 stackable=yes
+dummyitem=inv_only
 
 [coins_100]
-name=Coins 100
 model=model_2825_obj
 2dxof=3
 2dzoom=710
 2dyan=2012
 2dxan=184
 stackable=yes
+dummyitem=inv_only
 
 [coins_250]
-name=Coins 250
 model=model_2423_obj
 2dxof=2
 2dyof=-2
@@ -432,9 +431,9 @@ model=model_2423_obj
 2dyan=2044
 2dxan=160
 stackable=yes
+dummyitem=inv_only
 
 [coins_1000]
-name=Coins 1000
 model=model_2710_obj
 2dxof=11
 2dyof=13
@@ -442,15 +441,16 @@ model=model_2710_obj
 2dyan=64
 2dxan=172
 stackable=yes
+dummyitem=inv_only
 
 [coins_10000]
-name=Coins 10000
 model=model_2775_obj
 2dxof=11
 2dzoom=1000
 2dyan=80
 2dxan=168
 stackable=yes
+dummyitem=inv_only
 
 [white_apron]
 name=White apron
@@ -2986,252 +2986,6 @@ param=attackrate,5
 
 [obj_2425]
 
-[obj_2460]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2462]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=947
-recol2s=37196
-recol2d=947
-recol3s=53167
-recol3d=947
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2464]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=43955
-recol2s=37196
-recol2d=43955
-recol3s=53167
-recol3d=43955
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2466]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=11200
-recol2s=37196
-recol2d=11200
-recol3s=53167
-recol3d=11200
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2468]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=51136
-recol2s=37196
-recol2d=51136
-recol3s=53167
-recol3d=51136
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2470]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=7097
-recol2s=37196
-recol2d=7097
-recol3s=53167
-recol3d=7097
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2472]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=947
-recol2s=37196
-recol2d=43955
-recol3s=53167
-recol3d=11200
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2474]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=127
-recol2s=37196
-recol2d=127
-recol3s=53167
-recol3d=127
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
-[obj_2476]
-name=Flowers
-desc=A posy of flowers.
-cost=100
-model=model_1781_obj
-recol1s=48596
-recol1d=0
-recol2s=37196
-recol2d=0
-recol3s=53167
-recol3d=0
-members=yes
-iop2=Wield
-wearpos=righthand
-weight=1oz
-manwear=model_677_obj_wear,0
-womanwear=model_677_obj_wear,6
-category=category_55
-2dyof=-2
-2dzoom=840
-2dyan=816
-2dxan=612
-tradeable=yes
-param=stabattack,-100
-param=slashattack,-100
-param=crushattack,-50
-param=strengthbonus,-10
-
 [obj_2480]
 
 [obj_2511]
@@ -3517,7 +3271,7 @@ recol1d=6053
 2dxan=88
 weight=10kg
 
-[obj_2884]
-name=Chompy bird obj
+[chompy_bird_obj]
 model=model_3445_obj
 tradeable=yes
+dummyitem=graphic_only

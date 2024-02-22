@@ -43,12 +43,16 @@ if ($random < 6) {
     obj_add(npc_coord, coins, 35, ^lootdrop_duration);
 } else if ($random < 95) {
     obj_add(npc_coord, coins, 55, ^lootdrop_duration);
-} else if ($random < 107 & map_members = true) {
-    obj_add(npc_coord, eyepatch, 1, ^lootdrop_duration);
+} else if ($random < 107) {
+    if (map_members = true) {
+        obj_add(npc_coord, eyepatch, 1, ^lootdrop_duration);
+    }
 } else if ($random < 108) {
     obj_add(npc_coord, chefshat, 1, ^lootdrop_duration);
-} else if ($random < 109 & map_members = true) {
-    obj_add(npc_coord, iron_bar, 1, ^lootdrop_duration);
-} else if ($random < 110 & map_members = true) {
+} else if ($random < 109) {
+    if (map_members = true) {
+        obj_add(npc_coord, iron_bar, 1, ^lootdrop_duration);
+    }
+} else if ($random < 110) {
     ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

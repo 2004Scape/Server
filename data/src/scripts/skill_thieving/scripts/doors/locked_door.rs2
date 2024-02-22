@@ -20,7 +20,7 @@
 ~attempt_open_locked_door(loc_type, ~not_bool(~check_axis_locactive(coord)));
 
 [oploc1,loc_2559]
-~attempt_open_locked_door(loc_type, ~check_axis_locactive(coord));
+~attempt_open_locked_door(loc_type, ~not_bool(~check_axis_locactive(coord)));
 
 [oploc2,loc_2550]
 ~pick_locked_door(loc_type, loc_coord, ~check_axis_locactive(coord));

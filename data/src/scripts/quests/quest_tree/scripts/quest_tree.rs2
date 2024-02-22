@@ -1,0 +1,99 @@
+[oploc2,loc_2181]
+switch_int(%tree_progress) {
+    case ^tree_not_started, ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai:
+        ~mesbox("The ballista is damaged. It cannot be used until the gnomes have finished their repairs.");    
+    case ^tree_finding_trackers:
+        // Works different when compared to OSRS/2007, have to enter in coordinates given by the gnomes manually,
+        // also don't actually have to talk to the gnomes based of what RSC has (maybe this is why it was changed)
+        // My guess is that it was probably changed at the same time as the tracker gnome name changes (between July and Sept 2005)
+        ~mesbox("To fire the ballista you must first set the coordinates.");
+        def_int $height_coord = ~p_choice5_header("0001", 1, "0002", 2, "0003", 3, "0004", 4, "0005", 5, "Enter the height-coordinate of the stronghold");
+        def_int $x_coord = ~p_choice5_header("0001", 1, "0002", 2, "0003", 3, "0004", 4, "0005", 5, "Enter the x-coordinate of the stronghold");
+        def_int $y_coord = ~p_choice5_header("0001", 1, "0002", 2, "0003", 3, "0004", 4, "0005", 5, "Enter the y-coordinate of the stronghold");
+        ~mesbox("You fire the ballista.|The huge spear flies through the air...");
+        def_coord $projectile_start = 0_39_50_13_13;
+        if_close;
+        loc_anim(seq_730);
+        // play synth treevillage_catabow_launch, added in early 2007 I think?
+        ~coord_projectile($projectile_start, movecoord($projectile_start, 0, 0, 41), spotanim_182, 23, 0, 110, 7, 0, 0, 0);
+        p_delay(1);
+        // Fixed values, this is changed to use a random value for the height and unmentioned values for the x/y using varbits
+        if($height_coord = 4 & $x_coord = 3 & $y_coord = 5) {
+            // https://web.archive.org/web/20051025140108im_/http://www.runeweb.net/fireball/Tree%20Gnome%20Images/TreeGnome4.PNG
+            ~mesbox("...and screams down directly into the|Khazard stronghold. A deafening crash|echoes over the battlefield as the|front entrance is reduced to rubble.");
+            %tree_progress = ^tree_ballista_fired;
+            return;
+        }
+        ~mesbox("...straight over the Khazard stronghold, into the valleys beyond. You've missed the target.");
+    case default: 
+        ~mesbox("The Khazard stronghold has already been breached.");
+}
+
+[oploc1,loc_2184]
+if(coordz(coord) > coordz(loc_coord)) {
+    // bigdoor_open (sound)
+    ~open_and_close_door(loc_1532, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+}
+if(%tree_progress >= ^tree_finding_trackers) {
+    ~mesbox("The door seems to be locked from the inside.|I'll need to find another way to get in.");
+    return;
+}
+mes("The door is locked from the inside.");
+
+[oploc1,loc_2185]
+if(coordz(coord) > coordz(loc_coord)) {
+    mes("You can't get over the wall from this side.");
+    return;
+}
+if(%tree_progress >= ^tree_ballista_fired) {
+    ~mesbox("The wall has been reduced to rubble.|It should be possible to climb over the remains.");
+    if_close;
+    def_coord $start = movecoord(loc_coord, 0, 0, -1);
+    ~forcewalk($start);
+    ~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord($start, 0, 0, 2), 30, 100, ^exact_north, true);
+    p_teleport(movecoord(coord, 0, 0, 1));
+    if(%tree_progress = ^tree_ballista_fired & npc_finduid(~npc_within_distance(coord, khazard_commander, 4)) = true) {
+        // TODO: OSRS respawns the NPC if dead, but it also doesn't have this cutscene (prob cause of the delays + aggo npc)
+        p_delay(1);
+        npc_say("What? How did you manage to get in here.");
+        p_delay(2);
+        say("I've come for the orb.");
+        p_delay(2);
+        npc_say("I'll never let you take it.");
+        ~npc_retaliate(0);
+    }
+    return;
+}
+mes("The wall is damaged, but not enough to climb.");
+
+[oploc1,loc_2183]
+~open_chest(loc_2182);
+if(npc_finduid(~npc_within_distance(coord, khazard_commander, 5)) = true) {
+    npc_say("Oi! You! Get out of there.");
+    ~npc_retaliate(0);
+}
+
+[oploc1,loc_2182]
+if(%tree_progress > ^tree_retrieved_orb | inv_total(inv, orb_of_protection) > 0 | inv_total(bank, orb_of_protection) > 0) {
+    mes("You search the chest, but find nothing.");
+    return;
+}
+if(%tree_progress = ^tree_ballista_fired) {
+    %tree_progress = ^tree_retrieved_orb;
+}
+inv_add(inv, orb_of_protection, 1);
+~mesbox("You search the chest.|Inside you find the gnomes' stolen orb of protection.");
+if(npc_finduid(~npc_within_distance(coord, khazard_commander, 5)) = true) {
+    npc_say("Oi! You! Hands off the property of General Khazard.");
+    ~npc_retaliate(0);
+}
+
+[oploc2,loc_2182]
+~close_chest(loc_2183);
+
+[queue,tree_quest_complete]
+%tree_progress = ^tree_complete;
+inv_add(inv, gnome_amulet, 1);
+givexp(attack, 114500);
+~send_quest_complete(questlist:tree, gnome_amulet, 260, ^tree_questpoints, "You have completed the\\nTree Gnome Village Quest!");

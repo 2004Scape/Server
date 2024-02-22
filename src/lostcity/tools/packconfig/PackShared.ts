@@ -2,47 +2,16 @@ import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import { shouldBuild, validateCategoryPack, validateConfigPack, validateFilesPack, validateInterfacePack, validateScriptPack } from '#lostcity/util/PackFile.js';
+import { VarnPack, VarpPack, VarsPack, shouldBuild } from '#lostcity/util/PackFile.js';
 
 import ParamType from '#lostcity/cache/ParamType.js';
 
 import { packParamConfigs, parseParamConfig } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { loadDir } from '#lostcity/util/NameMap.js';
 
-console.log('Validating .pack files');
-// console.time('Validated .pack files');
-export const PACKFILE = new Map<string, string[]>();
-PACKFILE.set('anim', validateFilesPack('data/pack/anim.pack', 'data/src/models', '.frame'));
-PACKFILE.set('base', validateFilesPack('data/pack/base.pack', 'data/src/models', '.base'));
-PACKFILE.set('category', validateCategoryPack());
-PACKFILE.set('dbrow', validateConfigPack('data/pack/dbrow.pack', '.dbrow', true, false, false, true));
-PACKFILE.set('dbtable', validateConfigPack('data/pack/dbtable.pack', '.dbtable', true, false, false, true));
-PACKFILE.set('enum', validateConfigPack('data/pack/enum.pack', '.enum', true, false, false, true));
-PACKFILE.set('flo', validateConfigPack('data/pack/flo.pack', '.flo'));
-PACKFILE.set('idk', validateConfigPack('data/pack/idk.pack', '.idk'));
-PACKFILE.set('interface', validateInterfacePack());
-PACKFILE.set('inv', validateConfigPack('data/pack/inv.pack', '.inv', true));
-PACKFILE.set('loc', validateConfigPack('data/pack/loc.pack', '.loc'));
-PACKFILE.set('mesanim', validateConfigPack('data/pack/mesanim.pack', '.mesanim', true, false, false, true));
-PACKFILE.set('model', validateFilesPack('data/pack/model.pack', 'data/src/models', '.ob2'));
-PACKFILE.set('npc', validateConfigPack('data/pack/npc.pack', '.npc'));
-PACKFILE.set('obj', validateConfigPack('data/pack/obj.pack', '.obj'));
-PACKFILE.set('param', validateConfigPack('data/pack/param.pack', '.param', true, false, false, true));
-PACKFILE.set('script', validateScriptPack());
-PACKFILE.set('seq', validateConfigPack('data/pack/seq.pack', '.seq'));
-PACKFILE.set('sound', validateFilesPack('data/pack/sound.pack', 'data/src/sounds', '.synth'));
-PACKFILE.set('spotanim', validateConfigPack('data/pack/spotanim.pack', '.spotanim'));
-PACKFILE.set('struct', validateConfigPack('data/pack/struct.pack', '.struct', true, false, false, true));
-PACKFILE.set('texture', validateFilesPack('data/pack/texture.pack', 'data/src/textures', '.png'));
-PACKFILE.set('varp', validateConfigPack('data/pack/varp.pack', '.varp', true));
-PACKFILE.set('hunt', validateConfigPack('data/pack/hunt.pack', '.hunt', true, false, false, true));
-PACKFILE.set('varn', validateConfigPack('data/pack/varn.pack', '.varn', true, false, false, true));
-PACKFILE.set('vars', validateConfigPack('data/pack/vars.pack', '.vars', true, false, false, true));
-// console.timeEnd('Validated .pack files');
-
 export const CONSTANTS = new Map<string, string>();
 // console.time('Generating constants');
-loadDir('data/src/scripts', '.constant', (src) => {
+loadDir('data/src/scripts', '.constant', src => {
     for (let i = 0; i < src.length; i++) {
         if (!src[i] || src[i].startsWith('//')) {
             continue;
@@ -66,24 +35,27 @@ loadDir('data/src/scripts', '.constant', (src) => {
 });
 // console.timeEnd('Generating constants');
 
-// check if var domains have any conflicts - comparing varp and varn
-const varp = PACKFILE.get('varp')!;
-const varn = PACKFILE.get('varn')!;
-const vars = PACKFILE.get('vars')!;
-for (let i = 0; i < varp.length; i++) {
-    if (varn.includes(varp[i])) {
-        console.error(`Varp and varn name conflict: ${varp[i]}\nPick a different name for one of them!`);
+// var domains are global, so we need to check for conflicts
+
+for (let id = 0; id < VarpPack.size; id++) {
+    const name = VarpPack.getById(id);
+
+    if (VarnPack.getByName(name) !== -1) {
+        console.error(`Varp and varn name conflict: ${name}\nPick a different name for one of them!`);
         process.exit(1);
     }
 
-    if (vars.includes(varp[i])) {
-        console.error(`Varp and vars name conflict: ${varp[i]}\nPick a different name for one of them!`);
+    if (VarsPack.getByName(name) !== -1) {
+        console.error(`Varp and vars name conflict: ${name}\nPick a different name for one of them!`);
         process.exit(1);
     }
 }
-for (let i = 0; i < varn.length; i++) {
-    if (vars.includes(varn[i])) {
-        console.error(`Varn and vars name conflict: ${varp[i]}\nPick a different name for one of them!`);
+
+for (let id = 0; id < VarnPack.size; id++) {
+    const name = VarnPack.getById(id);
+
+    if (VarsPack.getByName(name) !== -1) {
+        console.error(`Varn and vars name conflict: ${name}\nPick a different name for one of them!`);
         process.exit(1);
     }
 }
@@ -126,14 +98,18 @@ export function packStepError(debugname: string, message: string) {
     process.exit(1);
 }
 
-export type ParamValue = { id: number, type: number, value: string | number | boolean };
-export type LocModelShape = { model: number, shape: number };
+export type ParamValue = {
+    id: number;
+    type: number;
+    value: string | number | boolean;
+};
+export type LocModelShape = { model: number; shape: number };
 export type ConfigValue = string | number | boolean | number[] | LocModelShape[] | ParamValue;
-export type ConfigLine = { key: string, value: ConfigValue };
+export type ConfigLine = { key: string; value: ConfigValue };
 
 // we're using null for invalid values, undefined for invalid keys
 export type ConfigParseCallback = (key: string, value: string) => ConfigValue | null | undefined;
-export type ConfigDatIdx = { dat: Packet, idx: Packet };
+export type ConfigDatIdx = { dat: Packet; idx: Packet };
 export type ConfigPackCallback = (configs: Map<string, ConfigLine[]>) => ConfigDatIdx;
 export type ConfigSaveCallback = (dat: Packet, idx: Packet) => void;
 
@@ -162,7 +138,7 @@ export function readConfigs(extension: string, requiredProperties: string[], par
                     if (requiredProperties.length > 0) {
                         // check config keys against requiredProperties
                         for (let i = 0; i < requiredProperties.length; i++) {
-                            if (!config.some((value) => value.key === requiredProperties[i])) {
+                            if (!config.some(value => value.key === requiredProperties[i])) {
                                 throw parseStepError(file, -1, `Missing required property: ${requiredProperties[i]}`);
                             }
                         }
@@ -171,7 +147,7 @@ export function readConfigs(extension: string, requiredProperties: string[], par
                     configs.set(debugname, config);
                 }
 
-                debugname = line.substring(1, line.length - 1);
+                debugname = line.substring(1, line.length - 1); // TODO: .toLowerCase();
                 if (!debugname.length) {
                     throw parseStepError(file, lineNumber, 'No config name');
                 }
@@ -231,7 +207,7 @@ export function readConfigs(extension: string, requiredProperties: string[], par
             if (requiredProperties.length > 0) {
                 // check config keys against requiredProperties
                 for (let i = 0; i < requiredProperties.length; i++) {
-                    if (!config.some((value) => value.key === requiredProperties[i])) {
+                    if (!config.some(value => value.key === requiredProperties[i])) {
                         throw parseStepError(file, -1, `Missing required property: ${requiredProperties[i]}`);
                     }
                 }

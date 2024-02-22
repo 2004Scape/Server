@@ -1,4 +1,5 @@
 import fs from 'fs';
+import zlib from 'zlib';
 
 import JagStore from '#jagex2/io/JagStore.js';
 
@@ -10,17 +11,28 @@ if (args.length < 2) {
 const inputDir = args[0];
 const outputDir = args[1];
 
-const store = new JagStore(outputDir);
-for (let index = 0; index <= 4; index++) {
-    const count = store.count(index);
+const names = [['', 'title', 'config', 'interface', 'media', 'versionlist', 'textures', 'wordenc', 'sounds'], [], [], [], []];
+const extensions = ['jag', 'dat', 'dat', 'mid', 'dat'];
 
-    fs.mkdirSync(`${inputDir}/${index}`, { recursive: true });
+const store = new JagStore(inputDir);
+for (let index = 0; index <= 4; index++) {
+    fs.mkdirSync(`${outputDir}/${index}`, { recursive: true });
+
+    const count = store.count(index);
     for (let file = 0; file < count; file++) {
-        const data = store.read(index, file);
+        let data = store.read(index, file);
         if (!data) {
             continue;
         }
 
-        fs.writeFileSync(`${inputDir}/${index}/${file}`, data);
+        const name = names[index][file];
+
+        if (index > 0) {
+            const version = (((data[data.length - 2] << 8) | data[data.length - 1]) >>> 0) - 1;
+            data = zlib.gunzipSync(data);
+            fs.writeFileSync(`${outputDir}/${index}/${name?.length > 0 ? name.replaceAll(' ', '_') : file}.${version}.${extensions[index]}`, data);
+        } else {
+            fs.writeFileSync(`${outputDir}/${index}/${name?.length > 0 ? name.replaceAll(' ', '_') : file}.${extensions[index]}`, data);
+        }
     }
 }

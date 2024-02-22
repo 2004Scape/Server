@@ -191,7 +191,7 @@
 190=midget_seq_190
 191=midget_seq_191
 192=midget_seq_192
-193=midget_seq_193
+193=midget_block
 194=midget_seq_194
 195=midget_ready
 196=midget_death
@@ -429,7 +429,7 @@
 428=human_spear_stab
 429=human_spear_crush
 430=human_spear_defend
-431=seq_431
+431=human_khazardspear_defend
 432=seq_432
 433=seq_433
 434=seq_434
@@ -441,7 +441,7 @@
 440=human_spear_slash
 441=seq_441
 442=seq_442
-443=seq_443
+443=catapult_fire
 444=seq_444
 445=seq_445
 446=seq_446
@@ -640,9 +640,9 @@
 639=seq_639
 640=seq_640
 641=seq_641
-642=seq_642
+642=human_mining_pickaxe_handle
 643=seq_643
-644=seq_644
+644=human_woodcutting_axe_handle
 645=human_pray
 646=seq_646
 647=seq_647
@@ -763,7 +763,7 @@
 762=human_walk_logbalance
 763=seq_763
 764=human_sidestep_fall
-765=seq_765
+765=human_drowning
 766=seq_766
 767=seq_767
 768=seq_768

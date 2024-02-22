@@ -1,6 +1,10 @@
 [oplocu,_cooking_oven] @attempt_cook_item(last_useitem);
-[oplocu,_cooking_fire] @attempt_cook_item(last_useitem);
-
+[oplocu,_cooking_fire]
+if (%tutorial_progress < ^tutorial_complete) {
+    @tut_attempt_cook_item(last_useitem);
+} else {
+    @attempt_cook_item(last_useitem);
+}
 
 [label,attempt_cook_item](obj $uncooked_item)
 //not sure if this is used
@@ -30,6 +34,11 @@ if (oc_members($cooked_item) = true | oc_members($uncooked_item) = true) {
 def_int $levelrequired = db_getfield($data,cooking_generic:levelrequired,0);
 if (stat(cooking) < $levelrequired) {
     ~mesbox("You need a Cooking level of <tostring($levelrequired)> to cook <lowercase(oc_name($cooked_item))>.");
+    return;
+}
+// macro event
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
     return;
 }
 // def variables

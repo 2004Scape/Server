@@ -93,6 +93,8 @@ export default class NpcType extends ConfigType {
     members = false;
     blockwalk = BlockWalk.NPC;
     params: ParamMap = new Map();
+    patrolCoord: number[] = [];
+    patrolDelay: number[] = [];
 
     decode(opcode: number, packet: Packet): void {
         if (opcode === 1) {
@@ -179,6 +181,16 @@ export default class NpcType extends ConfigType {
             this.defaultmode = packet.g1();
         } else if (opcode === 211) {
             this.members = true;
+        } else if (opcode === 212) {
+            const count = packet.g1();
+
+            this.patrolCoord = new Array(count);
+            this.patrolDelay = new Array(count);
+
+            for (let j = 0; j < count; j++) {
+                this.patrolCoord[j] = packet.g4();
+                this.patrolDelay[j] = packet.g1();
+            }
         } else if (opcode === 249) {
             this.params = ParamHelper.decodeParams(packet);
         } else if (opcode === 250) {

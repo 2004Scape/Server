@@ -3,8 +3,9 @@ import Packet from '#jagex2/io/Packet.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { DbRowPack, DbTablePack } from '#lostcity/util/PackFile.js';
 
 function parseCsv(str: string): string[] {
     const result = [];
@@ -70,7 +71,7 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
 
         return value === 'yes';
     } else if (key === 'table') {
-        const index = PACKFILE.get('dbtable')!.indexOf(value);
+        const index = DbTablePack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -84,15 +85,13 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
 }
 
 export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('dbrow')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(DbRowPack.size);
+    idx.p2(DbRowPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < DbRowPack.size; i++) {
+        const debugname = DbRowPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;
@@ -114,7 +113,7 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
                 const parts = parseCsv(value as string);
                 const column = parts.shift();
                 const values = parts;
-    
+
                 data.push({ column, values });
             }
         }
@@ -126,24 +125,24 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
 
         if (data.length) {
             dat.p1(3);
-    
+
             dat.p1(table!.types.length);
             for (let i = 0; i < table!.types.length; i++) {
                 dat.p1(i);
-    
+
                 const types = table!.types[i];
                 dat.p1(types.length);
                 for (let j = 0; j < types.length; j++) {
                     dat.p1(types[j]);
                 }
-    
+
                 const columnName = table!.columnNames[i];
                 const fields = data.filter(d => d.column === columnName);
 
                 dat.p1(fields.length);
                 for (let j = 0; j < fields.length; j++) {
                     const values = fields[j].values;
-    
+
                     for (let k = 0; k < values.length; k++) {
                         const type = types[k];
                         const value = lookupParamValue(type, values[k]);
@@ -151,7 +150,7 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
                             packStepError(debugname, `Data invalid in row, double-check the reference exists: data=${fields[j].column},${values.join(',')}`);
                             process.exit(1);
                         }
-    
+
                         if (type === ScriptVarType.STRING) {
                             dat.pjstr(value as string);
                         } else {
@@ -162,7 +161,7 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
             }
             dat.p1(255);
         }
-    
+
         if (table) {
             dat.p1(4);
             dat.p2(table.id);

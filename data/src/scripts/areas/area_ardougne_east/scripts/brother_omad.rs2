@@ -34,7 +34,7 @@ switch_int (~p_choice2("Can I help at all?", 1, "I'm sorry to hear that! I hope 
 ~chatplayer(neutral, "Where are they?");
 %drunkmonk_progress = ^drunkmonk_spoken_to_omad;
 softtimer(blanket_ladder, 1);
-~send_quest_progress(quest_journal:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
+~send_quest_progress(questlist:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
 ~chatnpc(default, "They hide in a secret cave in the forest. It's hidden under a ring of stones. Please, bring back the blanket!");
 
 [label,omad_have_blanket]
@@ -46,6 +46,7 @@ if(inv_total(inv, childs_blanket) >= 1) {
     ~objbox(childs_blanket, "You hand the monk the childs blanket.");
     ~chatnpc(happy, "Really, that's excellent, well done! Maybe now I will be able to get some rest.");
     ~chatnpc(neutral, "*yawn*..I'm off to bed! Farewell brave traveller!");
+    inv_del(inv, childs_blanket, 1);
     %drunkmonk_progress = ^drunkmonk_retrieved_blanket;
     return;
 }

@@ -1,4 +1,4 @@
-[rc_air_ruins]
+[airtemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -31,7 +31,7 @@ hasalpha=yes
 category=rc_exit_portal
 param=rune_type,1
 
-[rc_mind_ruins]
+[mindtemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -64,7 +64,7 @@ hasalpha=yes
 category=rc_exit_portal
 param=rune_type,2
 
-[rc_water_ruins]
+[watertemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -99,7 +99,7 @@ recol1d=43486
 category=rc_exit_portal
 param=rune_type,3
 
-[rc_earth_ruins]
+[earthtemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -132,7 +132,7 @@ hasalpha=yes
 category=rc_exit_portal
 param=rune_type,4
 
-[rc_fire_ruins]
+[firetemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_2456
@@ -167,7 +167,7 @@ recol1d=935
 category=rc_exit_portal
 param=rune_type,5
 
-[rc_body_ruins]
+[bodytemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -202,7 +202,7 @@ recol1d=61733
 category=rc_exit_portal
 param=rune_type,6
 
-[rc_cosmic_ruins]
+[cosmictemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -235,7 +235,7 @@ hasalpha=yes
 category=rc_exit_portal
 param=rune_type,7
 
-[rc_chaos_ruins]
+[chaostemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -256,7 +256,7 @@ hasalpha=yes
 category=rc_altar
 param=rune_type,11
 
-[rc_nature_ruins]
+[naturetemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
@@ -289,28 +289,28 @@ hasalpha=yes
 category=rc_exit_portal
 param=rune_type,9
 
-[loc_2459]
+[lawtemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
 
-[loc_2462]
+[deathtemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
 
-[loc_2463]
+[soultemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888
 width=3
 length=3
 
-[loc_2464]
+[bloodtemple_ruined]
 name=Mysterious ruins
 desc=There is a powerful presence about these ruins...
 model=model_loc_1888

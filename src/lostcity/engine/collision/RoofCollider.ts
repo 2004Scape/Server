@@ -1,5 +1,4 @@
-import CollisionFlagMap from '#rsmod/collision/CollisionFlagMap.js';
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
+import { CollisionFlag, CollisionFlagMap } from '@2004scape/rsmod-pathfinder';
 
 export default class RoofCollider {
     private readonly flags: CollisionFlagMap;
@@ -8,12 +7,7 @@ export default class RoofCollider {
         this.flags = flags;
     }
 
-    change(
-        x: number,
-        z: number,
-        level: number,
-        add: boolean
-    ): void {
+    change(x: number, z: number, level: number, add: boolean): void {
         if (add) {
             this.flags.add(x, z, level, CollisionFlag.ROOF);
         } else {

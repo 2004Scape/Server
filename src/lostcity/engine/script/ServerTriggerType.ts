@@ -148,13 +148,13 @@ enum ServerTriggerType {
 
     LOGIN = 155,
     LOGOUT = 156,
-    IF_FLASHING_TAB = 157,
+    TUTORIAL_CLICKSIDE = 157,
 
     MOVE = 158,
     MOVECHECK = 159,
     AI_MOVECHECK = 160,
 
-    LEVELUP = 161,
+    LEVELUP = 161
 }
 
 namespace ServerTriggerType {

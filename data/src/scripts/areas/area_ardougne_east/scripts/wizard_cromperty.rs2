@@ -22,7 +22,7 @@ if($option = 1) {
     ~chatplayer(quiz, "So where is the other block?");
     ~chatnpc(confused, "Well... Hmm. I would guess somewhere between here and the Wizards' Tower in Misthalin. All I know is that it hasn't got there yet as the wizards there would have contacted me.");
     ~chatnpc(sad, "I'm using the RPDT for delivery. They assured me it would be delivered promptly.");
-    def_int $option = ~p_choice2("Can I be teleported please?", 1, "Who are the RPDT?", 2);
+    $option = ~p_choice2("Can I be teleported please?", 1, "Who are the RPDT?", 2);
     if($option = 1) {
         @cromperty_teleport;
     } else if($option = 2) {
@@ -55,8 +55,8 @@ if($option = 1) {
 [label,rdpt_teleport]
 if_close;
 npc_say("Dipsolum sententa sententi!");
-spotanim_pl(spotanim_110, 124, 70);
-spotanim_npc(spotanim_108, 92, 0);
+spotanim_pl(curse_hit, 124, 70);
+spotanim_npc(curse_cast, 92, 0);
 // IncompleteProjectile(id = 109, startHeight = 31, endHeight = 31, delay = 61, angle = 16, distOffset = 128)	
 sound_synth(curse_all, 0, 0);
 p_delay(4);

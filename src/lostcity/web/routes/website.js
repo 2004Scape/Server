@@ -9,6 +9,10 @@ export default function (f, opts, next) {
         return res.view('index');
     });
 
+    f.get('/disclaimer', async (req, res) => {
+        return res.view('disclaimer');
+    });
+
     f.get('/title', async (req, res) => {
         let playerCount = 0;
         for (let world of WorldList) {
@@ -38,14 +42,20 @@ export default function (f, opts, next) {
         let members = WorldList.filter(x => x.members).length;
         let regions = {
             'Central USA': 'us',
-            'Germany': 'ger',
+            Germany: 'ger',
             'Local Development': 'uk'
         };
-        let freeRegions = WorldList.filter(x => x.region && !x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
-        let membersRegions = WorldList.filter(x => x.region && x.members).map(x => x.region).filter((x, i, self) => self.indexOf(x) == i);
+        let freeRegions = WorldList.filter(x => x.region && !x.members)
+            .map(x => x.region)
+            .filter((x, i, self) => self.indexOf(x) == i);
+        let membersRegions = WorldList.filter(x => x.region && x.members)
+            .map(x => x.region)
+            .filter((x, i, self) => self.indexOf(x) == i);
 
-        if (req.query.method == 2) {
+        if (req.query.method == 3) {
             return res.redirect('/downloads');
+        } else if (req.query.method == 4) {
+            return res.redirect('https://2004scape.github.io/Client2/');
         }
 
         return res.view('serverlist', {

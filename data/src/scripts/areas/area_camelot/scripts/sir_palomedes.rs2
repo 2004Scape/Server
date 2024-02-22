@@ -1,5 +1,10 @@
 [opnpc1,sir_palomedes]
 ~chatnpc(happy, "Hello there adventurer, what do you want of me?");
+if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
+    ~chatplayer(neutral, "I'd like some advice on finding the Grail.");
+    ~chatnpc(happy, "Sorry, I cannot help you with that.");
+    return;
+} 
 switch_int (%arthur_progress) {
     case ^arthur_not_started:
         ~chatplayer(neutral, "I'd like some advice on finding a quest.");

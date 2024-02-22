@@ -1,5 +1,3 @@
-// jagex name
-
 [pestle_and_mortar]
 cost=4
 members=yes
@@ -10,20 +8,18 @@ model=model_2682_obj
 2dyan=316
 2dxan=180
 weight=2oz
+tradeable=yes
 name=Pestle and mortar
 desc=I can grind things for potions in this.
-tradeable=yes
-// jagex name
 
 [herbbowl]
-name=Herbbowl
 model=model_506_obj
 manwear=model_506_obj,0
 womanwear=model_506_obj,6
 weight=1lb
+dummyitem=graphic_only
 
 [grinder]
-name=Grinder
 model=model_2657_obj
 2dxof=8
 2dyof=-5
@@ -35,3 +31,4 @@ model=model_529_obj
 manwear=model_529_obj,0
 womanwear=model_529_obj,6
 weight=1lb
+dummyitem=graphic_only

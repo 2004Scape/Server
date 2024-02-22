@@ -34,8 +34,7 @@ if(stat(agility) < 20) {
     return;
 }
 mes("You walk carefully across the slippery log...");
-bas_walk_f(human_walk_logbalance);
-buildappearance(worn);
+~set_bas(human_walk_logbalance);
 p_teleport(loc_coord);
 p_delay(0);
 def_int $z_dist = -4;
@@ -53,8 +52,8 @@ def_coord $river_end_coord = 0_45_47_25_48;
 def_coord $fail_end_coord = 0_45_47_23_49;
 if(coordx(coord) < 2909) {
     $z_dist = 2;
-    def_coord $turn_coord = 0_45_47_29_48;
-    def_coord $river_end_coord = 0_45_47_29_50;
+    $turn_coord = 0_45_47_29_48;
+    $river_end_coord = 0_45_47_29_50;
     $fail_end_coord = 0_45_47_29_51;
 }
 mes("You attempt to walk across the slippery log.");
@@ -216,7 +215,9 @@ if(stat_random(stat(agility), 140, 250) = false) {
     ~agility_force_move(0, human_swim, movecoord(coord, 1, 0, 0));
     ~agility_force_move(0, human_swim, movecoord(coord, 1, 0, calc(2 * $dz)));
     ~agility_force_move(0, human_swim, movecoord(coord, 0, 0, calc(2 * $dz)));
-    mes("You get washed up on the side of the river, after being nearly half drowned.");
+    // https://discord.com/channels/953326730632904844/1126857544523063367/1204001670489571328, can't see first part of the mes, image is from late 05
+    mes("You get washed up on the side of the river.");
+    mes("After being nearly half drowned.");
     ~damage_self(calc($damage_bound + random($damage_bound) + 1)); // 10 - 20%?
     givexp(agility, 10);
     return;

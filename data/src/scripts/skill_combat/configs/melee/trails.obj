@@ -75,7 +75,7 @@ param=crushdefence,8
 param=magicdefence,4
 param=rangedefence,4
 
-[highwayman_mask]
+[trail_highwayman_mask]
 name=Highwayman mask
 desc=Your money or your life!
 cost=40

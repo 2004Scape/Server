@@ -9,8 +9,7 @@ p_telejump($coord);
 // force walk to a specific location, this isn't the 
 // same as an exactmove 
 [proc,agility_force_move](int $xp, seq $walk_seq, coord $dest)
-bas_walk_f($walk_seq);
-buildappearance(worn);
+~set_bas($walk_seq);
 def_int $change_x = calc(coordx($dest) - coordx(coord));
 def_int $change_z = calc(coordz($dest) - coordz(coord));
 ~agility_walk($change_x, $change_z);
@@ -82,11 +81,26 @@ p_delay(0);
 p_walk($dest_coord);
 p_delay($delay);
 
+// Forces the player to walk to a certain coord. Basically p_teleport but doesnt telejump from a distance.
+// doesnt respect clipping
+[proc,forcemove](coord $dest_coord)
+~agility_force_move(0, human_walk_f, $dest_coord);
+
 // Instant fail, not used as often
 [proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)
 p_telejump($fail_coord);
 ~damage_self($damage);
 mes($message);
+
+[proc,set_bas](seq $walk_seq)
+bas_readyanim($walk_seq);
+bas_turnonspot($walk_seq);
+bas_walk_f($walk_seq);
+bas_walk_b($walk_seq);
+bas_walk_l($walk_seq);
+bas_walk_r($walk_seq);
+bas_running($walk_seq);
+buildappearance(worn);
 
 // Finds an identical loc on the $merge_pos coord to switch active_loc to
 [proc,change_merged_loc](coord $merge_pos)

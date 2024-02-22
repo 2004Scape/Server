@@ -1,8 +1,48 @@
 [opnpc1,king_arthur]
-switch_int(%arthur_progress) {
-    case ^arthur_freed_merlin: @arthur_merlin_free;
-    case ^arthur_complete: @arthur_grailstart;
-    case default: @arthur_firstmeet;
+if(%grail_progress > ^grail_not_started) {
+    switch_int(%grail_progress) {
+        case ^grail_complete:  
+            ~chatnpc(happy, "Thank you for retrieving the Grail!|You shall be long remembered|as one of the greatest heroes|amongst the Knights of the Round Table!");
+        case ^grail_finding_percival:
+            ~chatplayer(neutral, "Hello, do you have a knight named Sir Percival?");
+            ~chatnpc(neutral, "Ah yes. I remember young Percival.|He rode off on a quest a couple of months ago.|We are getting a bit worried, he's not back yet...");
+            ~chatnpc(neutral, "He was going to try and recover the golden boots of Arkaneeses.");
+            ~chatplayer(quiz, "Any idea which way that would be?");
+            ~chatnpc(neutral, "Not exactly.|We discovered some magic golden feathers|that are said to point the way to the boots...");
+            ~chatnpc(neutral, "They certainly point somewhere.");
+            // https://web.archive.org/web/20041115150440im_/http://img31.imageshack.us/img31/5648/feather.jpg
+            ~chatnpc(neutral, "Just blowing gently on them|will supposedly show the way to go.");
+            // https://youtu.be/FPNmOhs8jdw?si=_OTwHKKLGifRzd5M&t=653
+            if(inv_freespace(inv) = 0) {
+                ~chatnpc(bored, "Free up some space and I'll give you a feather.");
+                return;
+            }
+            if(~obj_gettotal(magic_gold_feather) = 0) {
+                inv_add(inv, magic_gold_feather, 1);
+                ~mesbox("King Arthur gives you a feather.");
+            } else {
+                ~chatnpc(bored, "You've got one of the feathers somewhere - off you go."); // think these check dialogues may have been added to osrs but not sure
+            }
+        case default:
+            ~chatnpc(quiz, "How goes thy quest?");
+            if(inv_total(inv, holy_grail) > 0 & %grail_progress = ^grail_given_whistle) {
+                ~chatplayer(happy, "I have retrieved the Grail!");
+                ~chatnpc(happy, "Wow! Incredible! You truly are a splendid knight!");
+                queue(grail_quest_complete, 0);
+                return;
+            }
+            ~chatplayer(neutral, "I am making progress, but I have not recovered the Grail yet.");
+            ~chatnpc(neutral, "Well, the Grail IS very elusive, it may take some perseverance.");
+            if(%grail_progress = ^grail_started) {
+                ~chatnpc(neutral, "As I said before, speak to Merlin in the workshop by the library.");
+            }
+    }
+} else {
+    switch_int(%arthur_progress) {
+        case ^arthur_freed_merlin: @arthur_merlin_free;
+        case ^arthur_complete: @arthur_grailstart;
+        case default: @arthur_firstmeet;
+    }
 }
 
 [label,arthur_merlin_free]
@@ -11,12 +51,30 @@ switch_int(%arthur_progress) {
 queue(arthur_quest_complete, 0);
 
 [label,arthur_grailstart]
-// holy grail quest (not implemented yet)
 ~chatplayer(neutral, "Now I am a knight of the round table, do you have any more quests for me?");
 ~chatnpc(neutral, "Aha! I'm glad you are here! I am sending out various knights on an important quest. I was wondering if you too would like to take up this quest?");
-~chatplayer(sad, "I am weary of questing for the time being...");
-~chatnpc(neutral, "Maybe later then?");
-~chatplayer(neutral, "Maybe so.");
+switch_int(~p_choice2("Tell me of this quest.", 1, "I am weary of questing for the time being...", 2)) {
+    case 1:
+        ~chatplayer(quiz, "Tell me of this quest.");
+        ~chatnpc(neutral, "Well, we recently found out that the Holy Grail has passed into RuneScape world.");
+        ~chatnpc(neutral, "This is most fortuitous!");
+        ~chatnpc(neutral, "None of my knights ever did return with it last time. Now we have the opportunity to give it another go, maybe this time we will have more luck!");
+        switch_int(~p_choice2("I'd enjoy trying that.", 1, "I may come back and try that later.", 2)) {
+            case 1:
+                ~chatplayer(neutral, "I'd enjoy trying that.");
+                %grail_progress = ^grail_started;
+                ~send_quest_progress(questlist:grail, %grail_progress, ^grail_complete);
+                ~chatnpc(neutral, "Go speak to Merlin. He may be able to give a better clue as to where it is now you have freed him from that crystal.");
+                ~chatnpc(neutral, "He has set up his workshop in the room next to the library.");
+            case 2:
+                ~chatplayer(neutral, "I may come back and try that later.");
+                ~chatnpc(neutral, "Be sure that you come speak to me soon then.");
+        }
+    case 2:
+        ~chatplayer(sad, "I am weary of questing for the time being...");
+        ~chatnpc(neutral, "Maybe later then?");
+        ~chatplayer(neutral, "Maybe so.");
+}
 
 [label,arthur_firstmeet]
 ~chatnpc(neutral, "Welcome to my court. I am King Arthur of the Knights of the Round Table.");
@@ -32,7 +90,7 @@ switch_int(~p_choice3("I want to become a Knight of the Round Table!", 1, "So wh
         ~chatnpc(sad, "Unfortunately, our current quest is to rescue Merlin.");
         ~chatnpc(confused, "Back in England, he got himself trapped in some|sort of magical crystal. We've moved|him from the cave we found him in and now|he's upstairs in his tower.");
         %arthur_progress = ^arthur_started;
-        ~send_quest_progress(quest_journal:arthur, %arthur_progress, ^arthur_complete);
+        ~send_quest_progress(questlist:arthur, %arthur_progress, ^arthur_complete);
         ~chatplayer(neutral, "I will see what I can do then.");
         ~chatnpc(neutral, "Talk to my knights if you need any help.");
     case 2:

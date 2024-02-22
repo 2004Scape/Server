@@ -1,12 +1,15 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { IdkPack, ModelPack } from '#lostcity/util/PackFile.js';
 
 export function parseIdkConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
+    // prettier-ignore
     const numberKeys = [
-        'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d',
+        'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d'
     ];
+    // prettier-ignore
     const booleanKeys = [
         'disable'
     ];
@@ -102,14 +105,14 @@ export function parseIdkConfig(key: string, value: string): ConfigValue | null |
 
         return bodypart;
     } else if (key.startsWith('model')) {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key.startsWith('head')) {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -121,15 +124,13 @@ export function parseIdkConfig(key: string, value: string): ConfigValue | null |
 }
 
 function packIdkConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('idk')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(IdkPack.size);
+    idx.p2(IdkPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < IdkPack.size; i++) {
+        const debugname = IdkPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;
@@ -170,25 +171,25 @@ function packIdkConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean
                 dat.p2(recol_s[i]);
             }
         }
-    
+
         if (recol_d.length) {
             for (let i = 0; i < recol_d.length; i++) {
                 dat.p1(50 + i);
                 dat.p2(recol_d[i]);
             }
         }
-    
+
         if (heads.length) {
             for (let i = 0; i < heads.length; i++) {
                 dat.p1(60 + i);
                 dat.p2(heads[i]);
             }
         }
-    
+
         if (models.length) {
             dat.p1(2);
             dat.p1(models.length);
-    
+
             for (let i = 0; i < models.length; i++) {
                 dat.p2(models[i]);
             }

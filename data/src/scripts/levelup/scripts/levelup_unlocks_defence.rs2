@@ -1,0 +1,10 @@
+[label,levelup_defence]
+//Defence level up unlock messgaes
+switch_int(stat_base(defence)) {
+    case 5: ~objboxt(steel_platebody,"You can now wear @dbl@Steel Armour@bla@!");
+    case 10: ~objboxt(black_platebody,"You can now wear @dbl@Black Armour@bla@!");
+    case 20: ~objboxt(mithril_platebody,"You can now wear @dbl@Mithril Armour@bla@!");
+    case 30: ~objboxt(adamant_platebody,"You can now wear @dbl@Adamant Armour@bla@!");
+    case 40: ~objboxt(rune_platebody,"You can now wear @dbl@Rune Armour@bla@!");
+    case 60: ~objboxb(dragon_med_helm,"Members can now wear @dbl@Dragon Armour@bla@!");
+}

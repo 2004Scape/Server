@@ -1,0 +1,36 @@
+[opnpcu,npc_952] @tutorial_fishing;
+[opnpc1,npc_952] @tutorial_fishing;
+
+[label,tutorial_fishing]
+if (inv_total(inv, net) < 1) {
+    // OSRS message
+    ~mesbox("You need to use a net to catch these fish.|Talk to the survival expert to get one.");
+    return;
+}
+
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    // OSRS message
+    ~mesbox("Your inventory is too full to hold any more shrimp.|To drop an item right-click on it and select drop.");
+    return;
+}
+
+p_arrivedelay;
+anim(human_smallnet, 0);
+sound_synth(fishing_cast, 0, 15);
+~tutorial_please_wait_fishing;
+p_delay(2);
+sound_synth(fishing_cast, 0, 15);
+p_delay(2);
+sound_synth(fishing_cast, 0, 15);
+p_delay(1);
+anim(null, 0);
+inv_add(inv, raw_shrimps, 1);
+~tutorial_give_xp(fishing, 100);
+if (%tutorial_progress = 70) {
+    hint_stop();
+    %tutorial_progress = 80;
+    ~tutorial_step_cook_shrimp;
+} else {
+    ~set_tutorial_progress;
+}

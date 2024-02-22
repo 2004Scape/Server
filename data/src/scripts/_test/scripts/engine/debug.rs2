@@ -1,0 +1,15 @@
+[label,debugusage](string $command, string $example, string $example2)
+if (string_length($example2) > 0) {
+    if (p_finduid(uid) = true) {
+        ~mesbox("@blu@Examples for <$command>|<$example>|<$example2>");
+    }
+    mes("Usage --> <$command> --> <$example> --> <$example2>");
+} else {
+    if (p_finduid(uid) = true) {
+        ~mesbox("@blu@Example for <$command>|<$example>");
+    }
+    mes("Usage --> <$command> --> <$example>");
+}
+
+[label,please_finish]
+mes("Please finish what you are doing first.");

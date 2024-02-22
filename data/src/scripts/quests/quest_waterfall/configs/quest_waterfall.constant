@@ -1,0 +1,14 @@
+^waterfall_not_started = 0
+^waterfall_started = 1
+^waterfall_spoken_to_hudon = 2
+^waterfall_opened_book_on_baxtorian = 3
+^waterfall_entered_glarial_tomb = 4
+^waterfall_entered_waterfall = 5
+^waterfall_entered_puzzle_room = 6
+^waterfall_placed_amulet = 8
+^waterfall_poured_ashes = 10
+
+^waterfall_fail_coord = 0_39_53_31_21
+^waterfall_raised_room_door_coord = 0_40_154_44_45
+^waterfall_original_room_door_coord = 0_40_154_6_45
+

@@ -94,7 +94,6 @@ tradeable=yes
 param=crafting_jewelry_struct,unstrung_dragonstone_amulet
 
 [black_amulet]
-name=Black amulet
 model=model_2550_obj
 recol1s=127
 recol1d=16
@@ -106,31 +105,37 @@ recol2d=16
 2dyan=100
 2dxan=304
 tradeable=yes
+dummyitem=inv_only
 
 [obj_1687]
 name=Sapphire amulet
 model=model_loc_2733_0
 param=crafting_jewelry_struct,unstrung_sapphire_amulet
+dummyitem=inv_only
 
 [obj_1688]
 name=Emerald amulet
 model=model_loc_2733_0
 param=crafting_jewelry_struct,unstrung_emerald_amulet
+dummyitem=inv_only
 
 [obj_1689]
 name=Ruby amulet
 model=model_loc_2733_0
 param=crafting_jewelry_struct,unstrung_ruby_amulet
+dummyitem=inv_only
 
 [obj_1690]
 name=Diamond amulet
 model=model_loc_2733_0
 param=crafting_jewelry_struct,unstrung_diamond_amulet
+dummyitem=inv_only
 
 [obj_1691]
 name=Dragonstoneamulet
 model=model_loc_2733_0
 param=crafting_jewelry_struct,unstrung_dragonstone_amulet
+dummyitem=inv_only
 
 [gold_amulet]
 cost=350

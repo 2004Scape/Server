@@ -68,7 +68,7 @@ type=synth
 [autocast_spell]
 scope=perm
 
-[autocast_delay]
+[varp_61]
 
 [gobdip_progress]
 scope=perm
@@ -76,7 +76,8 @@ scope=perm
 [waterfall_progress]
 scope=perm
 
-[spell]
+[waterfall_golrie_and_puzzle]
+scope=perm
 
 [varp_69]
 
@@ -88,19 +89,20 @@ transmit=yes
 [xplamp]
 transmit=yes
 
-[varp_81]
-
 [questpoints]
 transmit=yes
 
-[varp_102]
+[poison]
+scope=perm
 
 [stunned]
 
 [multiway]
 type=boolean
 
-[varp_105]
+[chest_macro_gas_coord]
+type=coord
+scope=perm
 
 [newcomers_pos]
 transmit=yes
@@ -112,6 +114,8 @@ scope=perm
 [varp_109]
 
 [varp_110]
+type=npc_uid
+scope=perm
 
 [varp_113]
 
@@ -358,13 +362,13 @@ scope=perm
 
 [varp_260]
 
-[temp_if1]
+[option1]
 transmit=yes
 
-[temp_if2]
+[option2]
 transmit=yes
 
-[temp_if3]
+[option3]
 transmit=yes
 
 [varp_264]
@@ -393,9 +397,10 @@ scope=perm
 [varp_276]
 
 [antifire]
-protect=no
+scope=perm
 
-[varp_278]
+[antipoison]
+scope=perm
 
 [varp_279]
 
@@ -411,11 +416,6 @@ protect=no
 
 [duel_settings]
 transmit=yes
-
-[split_privatechat]
-clientcode=8
-transmit=yes
-scope=perm
 
 [varp_288]
 

@@ -1,0 +1,10 @@
+data/*
+prisma/*
+public/*
+ref/*
+view/*
+src/3rdparty/*
+
+*.json
+*.yml
+*.md

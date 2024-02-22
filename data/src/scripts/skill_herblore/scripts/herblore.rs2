@@ -8,7 +8,7 @@ givexp(herblore, $experience);
 
 /** Fail identifying an herb. */
 [label,fail_identifying_herb]
-mes("You cannot clean this herb."); // https://youtu.be/_CEkzXSdnh4?t=86
+mes("You cannot identify this herb."); // https://youtu.be/_CEkzXSdnh4?t=86
 mes("You need a higher Herblore level.");
 
 /** Brew a potion. */

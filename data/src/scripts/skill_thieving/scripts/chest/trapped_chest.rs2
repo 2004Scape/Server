@@ -44,6 +44,10 @@ if ($data = null) {
     @nothing_interesting_happens;
 }
 
+if (afk_event = ^true) {
+    @macro_randomthievingchest;
+}
+
 mes("You search the chest for traps.");
 
 def_int $current_level = stat(thieving);

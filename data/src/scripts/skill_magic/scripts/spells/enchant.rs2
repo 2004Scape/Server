@@ -19,9 +19,12 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if ($passes = false) {
+    return;
+}
 def_namedobj $final_obj;
 def_seq $anim;
 def_spotanim $spotanim;
@@ -57,6 +60,10 @@ if ($initial_obj = dragonstone_amulet) {
 }
 // delay magic utility by 3 ticks
 %magic_utility_delay = calc(map_clock + 3);
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 
 [opheld4,amulet_of_glory_4] @amulet_of_glory_interface("Your amulet has three charges left.");
 [opheld4,amulet_of_glory_3] @amulet_of_glory_interface("Your amulet has two charges left.");
@@ -65,6 +72,8 @@ if ($initial_obj = dragonstone_amulet) {
 [opheld4,amulet_of_glory] mes("The amulet has lost its charge.");
 
 [label,amulet_of_glory_interface](string $message)
+def_obj $item = last_item;
+def_int $slot = last_slot;
 // https://youtu.be/Zv7Wh3TIDOc
 mes("You rub the amulet...");
 def_int $choice = ~p_choice5_header("Edgeville", 1, "Karamja", 2, "Draynor Village", 3, "Al Kharid", 4, "Nowhere", 5, "Where would you like to teleport to?");
@@ -86,7 +95,7 @@ switch_int($choice) {
     case 3: ~player_teleport_normal(0_48_50_33_51);
     case 4: ~player_teleport_normal(0_51_49_29_27);
 }
-inv_setslot(inv, last_slot, oc_param(last_item, next_obj_stage), 1);
+inv_setslot(inv, $slot, oc_param($item, next_obj_stage), 1);
 
 
 [opheld4,_category_136]
@@ -98,13 +107,15 @@ if (~wilderness_level(coord) > 20) {
     mes("You can't use this teleport after level 20 wilderness.");
     return;
 }
+def_obj $item = last_item;
+def_int $slot = last_slot;
 ~player_teleport_normal(~coord_lineofwalk_radius(0_51_50_51_35, 2));
-def_namedobj $new_ring = oc_param(last_item, next_obj_stage);
+def_namedobj $new_ring = oc_param($item, next_obj_stage);
 if ($new_ring = null) {
-    inv_delslot(inv, last_slot);
+    inv_delslot(inv, $slot);
     mes("Your ring of dueling crumbles to dust.");
 } else {
-    inv_setslot(inv, last_slot, $new_ring, 1);
+    inv_setslot(inv, $slot, $new_ring, 1);
     mes("Your ring of dueling has <~pluralise(oc_param($new_ring, charges), "use")> left.");
 }
 

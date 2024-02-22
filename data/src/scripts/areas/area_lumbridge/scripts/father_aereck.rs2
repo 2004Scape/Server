@@ -1,65 +1,84 @@
 [opnpc1,father_aereck]
 switch_int(%priest_progress) {
-
-    case 0: @father_aereck_default;
-
+    case ^priest_not_started: @father_aereck_default;
     case ^priest_complete: @father_aereck_default;
-
     case default: @father_aereck_priest_inprogress;
-
 }
 
 [label,father_aereck_default]
-~chatnpc("default", "Welcome to the church of holy Saradomin.");
-def_int $option = ~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, "I'm looking for a quest.", 3);
-switch_int ($option) {
-
-    case 1: {
-        ~chatplayer("default", "Who's Saradomin?");
-        ~chatnpc("default", "Surely you have heard of the God, Saradomin? He who creates the forces of goodness and purity in this world? I cannot believe your ignorance! This isthe God with more followers than any other! At least in these parts! He who along with his brothers Guthix and Zamorak created this world.");
-        $option = ~p_choice2("Oh that Saradomin.", 1, "Oh sorry I'm not from this world.", 2);
-        switch_int ($option) {
-
-            case 1: {
-                ~chatplayer("default", "Oh that Saradomin.");
-                ~chatnpc("default", "There is only one Saradomin.");
-            }
-
-            case 2: {
-                ~chatplayer("default", "Oh sorry I'm not from this world.");
-                ~chatnpc("default", "That's strange. I thought things nor from this world were all slime and tenticles.");
-                $option = ~p_choice2("You don't understand. This is a computer game.", 1, "I am - do you like my disguise?", 2);
-                switch_int ($option) {
-
-                    case 1: {
-                        ~chatplayer("default", "You don't understand. This is a computer game.");
-                        ~chatnpc("default", "I beg you pardon?");
-                        ~chatplayer("default", "Never mind.");
-                    }
-
-                    case 2: {
-                        ~chatplayer("default", "I am - do you like my disguise?");
-                        ~chatnpc("default", "Aargh begone foul creature from antoher dimension.");
-                        ~chatplayer("default", "Ok, Ok. It was a joke.");
-                    }
-
+~chatnpc(happy, "Welcome to the church of holy Saradomin.");
+switch_int (~p_choice3("Who's Saradomin?", 1, "Nice place you've got here.", 2, "I'm looking for a quest.", 3)) {
+    case 1: 
+        ~chatplayer(quiz, "Who's Saradomin?");
+        ~chatnpc(shock, "Surely you have heard of the god, Saradomin?");
+        ~chatnpc(neutral, "He who creates the forces of goodness and purity in this world? I cannot believe your ignorance!");
+        ~chatnpc(neutral, "This is the God with more followers than any other!.. At least in this part of the world.");
+        ~chatnpc(neutral, "He who created this world along with his brothers Guthix and Zamorak?");
+        switch_int (~p_choice2("Oh, THAT Saradomin...", 1, "Oh, sorry. I'm not from this world.", 2)) {
+            case 1:
+                ~chatplayer(neutral, "Oh, THAT Saradomin...");
+                ~chatnpc(confused, "There... is only one Saradomin...");
+            case 2: 
+                ~chatplayer(neutral, "Oh, sorry. I'm not from this world.");
+                ~chatnpc(shock, "...");
+                ~chatnpc(neutral, "That's... strange.");
+                ~chatnpc(neutral, "I thought things not from this world were all slime and tenticles.");
+                switch_int (~p_choice2("You don't understand. This is a computer game!", 1, "I am - do you like my disguise?", 2)) {
+                    case 1: 
+                        ~chatplayer(neutral, "You don't understand. This is a computer game!");
+                        ~chatnpc(confused, "I... beg your pardon?");
+                        ~chatplayer(neutral, "Never mind.");
+                    case 2:
+                        ~chatplayer(happy, "I am - do you like my disguise?");
+                        ~chatnpc(shock, "Aargh! Begone foul creature from another dimension!");
+                        ~chatplayer(happy, "Ok, ok, I was only joking...");
                 }
-            }
-
         }
-    }
-
-    case 2: {
-        ~chatplayer("default", "Nice place you've got here.");
-        ~chatnpc("default", "It is, isn't it? It was built 230 years ago.");
-    }
-
-    case 3: {
-        ~chatplayer("default", "I'm looking for a quest.");
+     case 2:
+        ~chatplayer(happy, "Nice place you've got here.");
+        ~chatnpc(happy, "It is, isn't it?|It was built over 230 years ago.");
+    case 3: 
+        ~chatplayer(happy, "I'm looking for a quest.");
         switch_int(%priest_progress) {
-            case 0: @father_aereck_priest_start;
-            case ^priest_complete: ~chatnpc("default", "Sorry I only had the one quest.");
+            case 0:
+                ~chatnpc(happy, "That's lucky, I need someone to do a quest for me.");
+                %priest_progress = ^priest_started;
+                ~send_quest_progress(questlist:priest, %priest_progress, ^priest_complete);
+                ~chatplayer(happy, "Ok, let me help then.");
+                ~chatnpc(happy, "Thank you. The problem is, there is a ghost in the church graveyard: I would like you to get rid of it.");
+                ~chatnpc(happy, "If you need any help, my friend Father Urhney is an expert on ghosts.");
+                ~chatnpc(happy, "I believe he is currently living as a hermit. He has a little shack somewhere in the swamps south of here. I'm sure if you told him that I sent you he'd be willing to help.");
+                ~chatnpc(happy, "My name is father Aereck by the way.|Pleased to meet you.");
+                ~chatplayer(happy, "Likewise.");
+                ~chatnpc(neutral, "Take care travelling through the swamps.|I have heard they can be quite dangerous.");
+                ~chatplayer(happy, "I will, thanks.");
+            case ^priest_complete: ~chatnpc(happy, "Sorry, I only had the one quest.");
         }
-    }
+}
 
+[label,father_aereck_priest_inprogress]
+~chatnpc(neutral, "Have you got rid of the ghost yet?");
+switch_int (%priest_progress) {
+    case ^priest_started:
+        ~chatplayer(sad, "I can't find father Urhney at the moment.");
+        ~chatnpc(happy, "Well, to get to the swamp he is in you need to go round the back of the castle. The swamp is on the otherside of the fence to the south.");
+        ~chatnpc(happy, "You'll have to go through the wood to the west to get round the fence. Then you'll have to go right into the eastern depths of the swamp.");
+    case ^priest_spoken_urhney:
+        ~chatplayer(neutral, "I had a talk with Father Urhney. He has given me this funny amulet to talk to the ghost with.");
+        ~chatnpc(confused, "I always wondered what that amulet was... Well, I hope it's useful. Tell me when you get rid of the ghost!");
+    case ^priest_spoken_ghost:
+        ~chatplayer(neutral, "I've found out that the ghost's corpse has lost its skull. If I can find the skull the ghost will go.");
+        ~chatnpc(neutral, "That WOULD explain it."); 
+        ~chatnpc(neutral, "Hmmmmm. Well, I haven't seen any skulls.");
+        ~chatplayer(confused, "Yes, I think a warlock has stolen it.");
+        ~chatnpc(angry, "I hate warlocks.");
+        ~chatnpc(happy, "Ah well, good luck!");
+    case ^priest_obtained_skull:
+        if(inv_total(inv, ghost_skull) = 0) { // this only checks the player inv
+            ~chatplayer(sad, "Well, I found the ghost's skull but then lost it.");
+            ~chatnpc(neutral, "Don't worry, I'm sure you'll find it again.");
+            return;
+        }
+        ~chatplayer(happy, "I've finally found the ghost's skull!");
+        ~chatnpc(happy, "Great! Put it in the ghost's coffin and see what happens!");
 }

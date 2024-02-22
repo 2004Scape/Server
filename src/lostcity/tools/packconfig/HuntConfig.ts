@@ -1,14 +1,16 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
+import { HuntPack, VarnPack, VarpPack } from '#lostcity/util/PackFile.js';
 
 export function parseHuntConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
+    // prettier-ignore
     const numberKeys: string[] = [
         'rate'
     ];
@@ -43,7 +45,8 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             return null;
         }
 
-        if (key === 'rate' && (number < 1 || number > 255)) { // min of 1 tick
+        if (key === 'rate' && (number < 1 || number > 255)) {
+            // min of 1 tick
             return null;
         }
 
@@ -97,10 +100,11 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
 
         value = value.slice(1);
 
-        const index = PACKFILE.get('varp')!.indexOf(value);
+        const index = VarpPack.getByName(value);
         if (index === -1) {
             return null;
         }
+
         return index;
     } else if (key === 'check_notcombat_self') {
         if (!value.startsWith('%')) {
@@ -109,10 +113,11 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
 
         value = value.slice(1);
 
-        const index = PACKFILE.get('varn')!.indexOf(value);
+        const index = VarnPack.getByName(value);
         if (index === -1) {
             return null;
         }
+
         return index;
     } else if (key === 'check_notbusy') {
         switch (value) {
@@ -221,15 +226,13 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
 }
 
 export function packHuntConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('hunt')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(HuntPack.size);
+    idx.p2(HuntPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < HuntPack.size; i++) {
+        const debugname = HuntPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

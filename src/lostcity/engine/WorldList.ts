@@ -23,7 +23,7 @@ if (fs.existsSync('data/config/worlds.json')) {
 if (Environment.LOCAL_DEV) {
     let address = (Environment.HTTPS_ENABLED ? 'https://' : 'http://') + Environment.PUBLIC_IP;
     if (Environment.ADDRESS_SHOWPORT) {
-        if (Environment.HTTPS_ENABLED && (Environment.WEB_PORT != 443 && Environment.WEB_PORT != 80)) {
+        if (Environment.HTTPS_ENABLED && Environment.WEB_PORT != 443 && Environment.WEB_PORT != 80) {
             address += ':' + Environment.WEB_PORT;
         } else if (!Environment.HTTPS_ENABLED && Environment.WEB_PORT != 80) {
             address += ':' + Environment.WEB_PORT;
@@ -35,7 +35,7 @@ if (Environment.LOCAL_DEV) {
         region: 'Local Development',
         members: Environment.MEMBERS_WORLD,
         address,
-        portOffset: 0,
+        portOffset: (Environment.GAME_PORT as number) - 43594,
         players: 0
     });
 }

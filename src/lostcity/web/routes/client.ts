@@ -6,7 +6,7 @@ export default function (f: any, opts: any, next: any) {
     f.get('/jav_config.ws', async (req: any, res: any) => {
         let address = (Environment.HTTPS_ENABLED ? 'https://' : 'http://') + Environment.PUBLIC_IP;
         if (Environment.ADDRESS_SHOWPORT) {
-            if (Environment.HTTPS_ENABLED && (Environment.WEB_PORT != 443 && Environment.WEB_PORT != 80)) {
+            if (Environment.HTTPS_ENABLED && Environment.WEB_PORT != 443 && Environment.WEB_PORT != 80) {
                 address += ':' + Environment.WEB_PORT;
             } else if (!Environment.HTTPS_ENABLED && Environment.WEB_PORT != 80) {
                 address += ':' + Environment.WEB_PORT;
@@ -22,7 +22,7 @@ export default function (f: any, opts: any, next: any) {
             'applet_minwidth=789',
             'applet_minheight=532',
             'applet_maxwidth=5670',
-            'applet_maxheight=2160',
+            'applet_maxheight=2160'
         ];
 
         const localization: string[] = [
@@ -49,14 +49,14 @@ export default function (f: any, opts: any, next: any) {
             'new_version=Launcher update available! Please visit the website to download the latest version.',
             'new_version_link=http://2004scape.org/downloads',
             'new_version_linktext=Open Homepage',
-            'tandc=This game is copyright (c) 1999 - 2004 Jagex Ltd.\\Recreated and preserved in 2023.'
+            'tandc=This game is copyright (c) 1999 - 2004 Jagex Ltd.\\Recreated and preserved in 2023 - 2024.'
         ];
         config.push(...localization.map(x => 'msg=' + x));
 
         const servers: string[][] = [];
         for (const world of WorldList) {
             // legacy PCs are more likely to have issues with HTTPS
-            let address = 'http:' + world.address.split(':')[1];
+            const address = 'http:' + world.address.split(':')[1];
 
             servers.push([
                 `[${world.id}.high]`,
@@ -109,7 +109,7 @@ export default function (f: any, opts: any, next: any) {
             return res.redirect(302, '/detail');
         }
 
-        if (typeof req.query.method == 'undefined' || !req.query.method) {
+        if (typeof req.query.method == 'undefined') {
             return res.redirect(302, '/detail');
         }
 
@@ -122,13 +122,13 @@ export default function (f: any, opts: any, next: any) {
             return res.view('webclient', {
                 world,
                 detail: req.query.detail,
-                method: req.query.method,
+                method: req.query.method
             });
-        } else if (req.query.method == 1) {
+        } else if (req.query.method == 1 || req.query.method == 2) {
             return res.view('javaclient', {
                 world,
                 detail: req.query.detail,
-                method: req.query.method,
+                method: req.query.method
             });
         } else {
             return res.redirect(302, '/');
@@ -157,13 +157,13 @@ export default function (f: any, opts: any, next: any) {
             return res.view('webclient-inner', {
                 world,
                 detail: req.query.detail,
-                method: req.query.method,
+                method: req.query.method
             });
-        } else if (req.query.method == 1) {
+        } else if (req.query.method == 1 || req.query.method == 2) {
             return res.view('javaclient-inner', {
                 world,
                 detail: req.query.detail,
-                method: req.query.method,
+                method: req.query.method
             });
         } else {
             return res.redirect(302, '/');

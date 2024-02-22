@@ -1,0 +1,26 @@
+^macro_event_swarm = 1
+^macro_event_triffid_friendly = 2
+^macro_event_genie = 3
+^macro_event_drunken_dwarf = 4
+^macro_event_mysterious_old_man_general = 5
+
+^macro_event_big_fish = 6
+
+^no_macro_event = 0
+
+^macro_event_none = 0
+^macro_event_wave = -1
+^macro_event_disappear = -2
+^macro_event_alone = -3
+^macro_event_del = -4
+^macro_event_attack = -5
+^macro_event_appear = -6
+^macro_event_big_fish_move = -7
+
+
+^macro_event_cmb_14 = 1
+^macro_event_cmb_29 = 2
+^macro_event_cmb_49 = 3
+^macro_event_cmb_79 = 4
+^macro_event_cmb_120 = 5
+^macro_event_cmb_159 = 6

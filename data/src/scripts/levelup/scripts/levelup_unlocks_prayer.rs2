@@ -1,0 +1,18 @@
+[label,levelup_prayer]
+//Prayer level up unlock messages
+switch_int(stat_base(prayer)) {
+    case 4: ~mesbox("You can now use the Prayer @dbl@Burst of Strength@bla@!");
+    case 7: ~mesbox("You can now use the Prayer @dbl@Clarity of Thought@bla@!");
+    case 10: ~mesbox("You can now use the Prayer @dbl@Rock Skin@bla@!");
+    case 13: ~mesbox("You can now use the Prayer @dbl@Superhuman Strength@bla@!");
+    case 16: ~mesbox("You can now use the Prayer @dbl@Improved Reflexes@bla@!");
+    case 19: ~mesbox("You can now use the Prayer @dbl@Rapid Restore@bla@!");
+    case 22: ~mesbox("You can now use the Prayer @dbl@Rapid Heal@bla@!");
+    case 25: ~mesbox("You can now use the Prayer @dbl@Protect Items@bla@!");
+    case 28: ~mesbox("You can now use the Prayer @dbl@Steel Skin@bla@!");
+    case 31: ~mesbox("You can now use the Prayer @dbl@Ultimate Strength@bla@|and you can enter the @dbl@Monastery");
+    case 34: ~mesbox("You can now use the Prayer @dbl@Incredible Reflexes@bla@!");
+    case 37: ~mesbox("You can now use the Prayer @dbl@Protect From Magic@bla@!");
+    case 40: ~mesbox("You can now use the Prayer @dbl@Protect From Missiles@bla@!");
+    case 43: ~mesbox("You can now use the Prayer @dbl@Protect From Melee@bla@!");
+}

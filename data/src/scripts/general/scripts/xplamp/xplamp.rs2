@@ -77,7 +77,7 @@ error("case not found for stat: <enum(stat, string, stat_names, $stat)>");
 switch_int ($selection) {
     case ^xplamp_agility:
         ~require_members_gain_experience_in_stat(agility);
-    case ^druid_complete:
+    case ^xplamp_herblore:
         ~require_members_gain_experience_in_stat(herblore);
         if (%druid_progress ! ^druid_complete) {
             %xplamp = ^xplamp_none;

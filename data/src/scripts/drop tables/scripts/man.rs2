@@ -1,9 +1,10 @@
 // https://oldschool.runescape.wiki/w/Man#Drops
 [ai_queue3,_citizen](int $arg) @man_drop_table;
 [ai_queue3,alkharid_warrior](int $arg) @man_drop_table;
+[ai_queue3,npc_8](int $arg) @man_drop_table;
+[ai_queue3,npc_282](int $arg) @man_drop_table;
 
 [label,man_drop_table]
-
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
@@ -21,8 +22,10 @@ if ($random < 1) {
     obj_add(npc_coord, iron_dagger, 1, ^lootdrop_duration);
 } else if ($random < 3) {
     obj_add(npc_coord, bronze_med_helm,1 , ^lootdrop_duration);
-} else if ($random < 25 & map_members = true) {
-    obj_add(npc_coord, bolt, ~random_range(2,12), ^lootdrop_duration);
+} else if ($random < 25) {
+    if (map_members = true) {
+        obj_add(npc_coord, bolt, ~random_range(2,12), ^lootdrop_duration);
+    }
 } else if ($random < 28) {
     obj_add(npc_coord, bronze_arrow, 7, ^lootdrop_duration);
 } else if ($random < 30) {

@@ -9,3 +9,4 @@ op1=Chop
 op3=hidden
 category=tree
 param=next_loc_stage,achey_tree_stump
+// todo: figure out if an ent exists for this?

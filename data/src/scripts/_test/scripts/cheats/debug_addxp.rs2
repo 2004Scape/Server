@@ -1,7 +1,0 @@
-[debugproc,addxp](stat $stat, int $amount)
-if ($stat = null | $amount < 1) {
-    mes("Usage --> ::addxp (stat) (amount) --> ::addxp attack 500");
-    return;
-}
-
-givexp($stat, calc($amount * 10));

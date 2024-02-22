@@ -53,4 +53,6 @@ export default {
     DB_USER: tryParse(process.env.DB_USER) ?? '',
     DB_PASS: tryParse(process.env.DB_PASS) ?? '',
     DB_NAME: tryParse(process.env.DB_NAME) ?? '',
+
+    ADMIN_IP: tryParse(process.env.ADMIN_IP) ?? ''
 };

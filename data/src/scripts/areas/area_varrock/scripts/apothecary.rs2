@@ -14,15 +14,17 @@ if(%romeojuliet_progress = ^romeojuliet_spoken_father) {
 switch_int(~p_choice3("Can you make a strength potion?", 1, "Do you know any potion to make hair fall out?", 2, "Have you got any good potions to give away?", 3)) {
     case 1:
         ~chatplayer(neutral, "Can you make a strength potion?");
-        if(inv_total(inv, limpwurt_root) > 0 & inv_total(inv, red_spiders_eggs) > 0) {
+        if(inv_total(inv, limpwurt_root) > 0 & inv_total(inv, red_spiders_eggs) > 0 & inv_total(inv, coins) > 4) {
             ~chatplayer(happy, "I have the root and spiders eggs needed to make it.");
             ~chatnpc(neutral, "Well give me them and 5 gold and I'll make you your potion.");
+
             def_int $option = ~p_choice2("Yes ok.", 1, "No thanks.", 2);
             if($option = 1) {
                 ~chatplayer(happy, "Yes ok.");
                 ~mesbox("You give a limpwurt root, some red spider|eggs and 5 coins to the Apothecary.|The Apothecary brews up a potion.");
                 inv_del(inv, red_spiders_eggs, 1);
                 inv_del(inv, limpwurt_root, 1);
+                inv_del(inv, coins, 5);
                 inv_add(inv, 4dose1strength, 1);
                 ~mesbox("The Apothecary gives you a strength potion.");
             } else if($option = 2) {

@@ -113,7 +113,6 @@ category=category_656
 tradeable=yes
 
 [black_ring]
-name=Black ring
 model=model_2677_obj
 recol1s=127
 recol1d=16
@@ -126,29 +125,34 @@ recol2d=16
 2dzan=2024
 2dxan=268
 tradeable=yes
+dummyitem=inv_only
 
 [obj_1649]
 name=Sapphire ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,sapphire_ring
+dummyitem=inv_only
 
 [obj_1650]
 name=Emerald ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,emerald_ring
+dummyitem=inv_only
 
 [obj_1651]
 name=Ruby ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,ruby_ring
-
+dummyitem=inv_only
 
 [obj_1652]
 name=Diamond ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,diamond_ring
+dummyitem=inv_only
 
 [obj_1653]
 name=Dragonstone ring
 model=model_loc_2733_0
 param=crafting_jewelry_struct,dragonstone_ring
+dummyitem=inv_only

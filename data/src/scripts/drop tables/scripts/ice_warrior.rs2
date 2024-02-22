@@ -26,14 +26,14 @@ if ($random < 3) {
 } else if ($random < 39) {
     obj_add(npc_coord, mithril_arrow, 3, ^lootdrop_duration);
 } else if ($random < 41) {
-    obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
+    if (map_members = true) {
+        obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
+    }
 } else if ($random < 44) {
     obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
 } else if ($random < 45) {
     if (map_members = true) {
         obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
-    } else {
-        obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
     }
 } else if ($random < 55) {
     obj_add(npc_coord, ~randomherb, ^lootdrop_duration);

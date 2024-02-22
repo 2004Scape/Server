@@ -129,7 +129,7 @@ model=model_2616_obj
 weight=10g
 tradeable=yes
 
-[obj_53]
+[headless_arrow]
 name=Headless arrow
 desc=A wooden arrow shaft with flights attached
 cost=1

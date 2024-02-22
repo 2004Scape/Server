@@ -1,0 +1,89 @@
+type=overlay
+
+[com_0]
+type=text
+x=8
+y=45
+width=180
+height=14
+font=p12
+shadowed=yes
+text=To reduce memory requirements
+colour=0xFFFF00
+
+[com_1]
+type=text
+x=24
+y=60
+width=136
+height=14
+font=p12
+shadowed=yes
+text=Music + sounds are only
+colour=0xFFFF00
+
+[com_2]
+type=text
+x=18
+y=75
+width=151
+height=14
+font=p12
+shadowed=yes
+text=available in the high-detail
+colour=0xFFFF00
+
+[com_3]
+type=text
+x=21
+y=145
+width=140
+height=14
+font=p12
+shadowed=yes
+text=If you wish to hear these
+colour=0xFFFF00
+
+[com_4]
+type=text
+x=7
+y=160
+width=170
+height=14
+font=p12
+shadowed=yes
+text=please switch version, but bear
+colour=0xFFFF00
+
+[com_5]
+type=text
+x=15
+y=175
+width=150
+height=14
+font=p12
+shadowed=yes
+text=in mind things will run more
+colour=0xFFFF00
+
+[com_6]
+type=text
+x=43
+y=190
+width=101
+height=14
+font=p12
+shadowed=yes
+text=slowly as a result.
+colour=0xFFFF00
+
+[com_7]
+type=text
+x=33
+y=90
+width=117
+height=14
+font=p12
+shadowed=yes
+text=version of the game.
+colour=0xFFFF00

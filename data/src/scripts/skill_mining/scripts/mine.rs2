@@ -1,5 +1,3 @@
-// TODO: Random Events handling
-
 // normal rocks
 [oploc1,_mining_rock_normal] @mining_firstswing(get_ore_normal);
 [oploc3,_mining_rock_normal] @mining_continue(get_ore_normal);
@@ -34,11 +32,16 @@ if (inv_freespace(inv) < 1) {
     ~mesbox("Your inventory is too full to hold anymore <db_getfield($data, mining_table:ore_name, 0)>.");
     return;
 }
-def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);;
+def_int $levelreq = db_getfield($data, mining_table:rock_level, 0);
 if (stat(mining) < $levelreq) {
     anim(null, 0);
     ~mesbox("You need a mining level of <tostring($levelreq)> to mine this rock.");
     return;
+}
+// Macro events
+if (afk_event = ^true & loc_category ! mining_rock_macro_gas) {
+    if (loc_param(macro_gas) = null) jump(macro_randomminingrune);
+    jump(macro_randommining);
 }
 def_obj $pickaxe = ~pickaxe_checker;
 if ($pickaxe = null) {
@@ -122,7 +125,7 @@ if (random($chance) = ^true) {
     if ($gem ! null) {
         inv_add(inv, $gem, 1);
         db_find(gem_cutting_table:uncut_gem, $gem);
-        def_dbrow $data = db_findnext;
+        $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
@@ -162,7 +165,7 @@ if (random($chance) = ^true) {
     if ($gem ! null) {
         inv_add(inv, $gem, 1);
         db_find(gem_cutting_table:uncut_gem, $gem);
-        def_dbrow $data = db_findnext;
+        $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
@@ -226,7 +229,7 @@ if (stat_random(stat(mining), $low, $high) = true) {
     givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
 
     db_find(gem_cutting_table:uncut_gem, $gem);
-    def_dbrow $data = db_findnext;
+    $data = db_findnext;
     mes("You just mined <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     return;
 }

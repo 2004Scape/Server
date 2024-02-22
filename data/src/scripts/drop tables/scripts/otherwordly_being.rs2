@@ -1,0 +1,35 @@
+[ai_queue3,otherworldly_being](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+def_int $random = random(128);
+
+if ($random < 9) {
+    obj_add(npc_coord, naturerune, 5, ^lootdrop_duration);
+} else if ($random < 17) {
+    obj_add(npc_coord, chaosrune, 4, ^lootdrop_duration);
+} else if ($random < 24) {
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, cosmicrune, 2, ^lootdrop_duration);
+} else if ($random < 33) {
+    obj_add(npc_coord, deathrune, 2, ^lootdrop_duration);
+} else if ($random < 34) {
+    obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
+} else if ($random < 44) {
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 103) {
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 105) {
+    obj_add(npc_coord, ruby_ring, 1, ^lootdrop_duration);
+} else if ($random < 106) {
+    obj_add(npc_coord, mithril_mace, 1, ^lootdrop_duration);
+} else if ($random < 107) {
+    obj_add(npc_coord, mackerel, 1, ^lootdrop_duration);
+} else if ($random < 110) {
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}

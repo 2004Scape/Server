@@ -68,7 +68,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_gnome_stronghold_enum
 //--- (Lure/Bait) Gnome Stronghold
 
@@ -88,7 +89,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_baxtorian_falls_enum
 //--- (Lure/Bait) Baxtorian Falls
 
@@ -108,7 +110,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_ardougne_river_enum
 //--- (Lure/Bait) Ardougne River
 
@@ -128,7 +131,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=cage_harpoon_fishing
+category=rarefish
+param=whirlpool,rarefish_whirlpool
 param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Cage/Harpoon) Fishing guild
 
@@ -148,7 +152,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_harpoon_fishing
+category=memberfish
+param=whirlpool,memberfish_whirlpool
 param=fishing_movement_enum,fishing_movement_fishing_guild_enum
 //--- (Net/Harpoon) Fishing guild
 
@@ -168,7 +173,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_harpoon_fishing
+category=memberfish
+param=whirlpool,memberfish_whirlpool
 param=fishing_movement_enum,fishing_movement_fisher_realm_enum
 //--- (Net/Harpoon) Fisher kingdom
 
@@ -188,7 +194,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_seers_village_enum
 //--- (Lure/Bait) Seer's village
 
@@ -208,7 +215,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_fishing_platform_enum
 //--- (Net/Bait) Fishing platform
 
@@ -228,7 +236,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_shilo_village_enum
 //--- (Lure/Bait) Shilo village
 
@@ -248,7 +257,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_entrana1_enum
 //--- (Lure/Bait) Entrana
 
@@ -268,7 +278,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_entrana2_enum
 //--- (Net/Bait) Entrana
 
@@ -288,7 +299,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Bait) Catherby
 
@@ -308,7 +320,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=cage_harpoon_fishing
+category=rarefish
+param=whirlpool,rarefish_whirlpool
 param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Cage/Harpoon) Catherby
 
@@ -328,7 +341,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_harpoon_fishing
+category=memberfish
+param=whirlpool,memberfish_whirlpool
 param=fishing_movement_enum,fishing_movement_catherby_enum
 //--- (Net/Harpoon) Catherby
 
@@ -348,7 +362,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Net/Bait) Musa point
 
@@ -368,7 +383,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=cage_harpoon_fishing
+category=rarefish
+param=whirlpool,rarefish_whirlpool
 param=fishing_movement_enum,fishing_movement_musa_point_enum
 //--- (Cage/Harpoon) Musa point
 
@@ -388,7 +404,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_rimmington_enum
 //--- (Net/Bait) Rimmington
 
@@ -408,7 +425,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_wilderness_camp_enum
 //--- (Net/Bait) Bandit Camp Wilderness
 
@@ -428,7 +446,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_draynor_village_enum
 //--- (Net/Bait) Draynor village
 
@@ -448,7 +467,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_barbarian_village_enum
 //--- (Lure/Bait) Barbarian village
 
@@ -468,7 +488,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_lumbridge_river_enum
 //--- (Lure/Bait) Lumbridge
 
@@ -488,7 +509,8 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=net_bait_fishing
+category=saltfish
+param=whirlpool,saltfish_whirlpool
 param=fishing_movement_enum,fishing_movement_al_kharid_enum
 //--- (Net/Bait) Al-Kharid
 
@@ -525,6 +547,7 @@ op5=hidden
 model1=model_loc_42_8
 moverestrict=nomove
 timer=250
-category=lure_bait_fishing
+category=freshfish
+param=whirlpool,freshfish_whirlpool
 param=fishing_movement_enum,fishing_movement_observatory_enum
 //--- (Lure/Bait) Observatory

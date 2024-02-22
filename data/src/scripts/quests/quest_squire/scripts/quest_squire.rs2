@@ -4,7 +4,7 @@ def_int $option = ~p_choice2("And how is life as a squire?", 1, "Wouldn't you pr
 if($option = 1) {
     ~chatplayer(neutral, "And how is life as a squire?");
     ~chatnpc(sad, "Well, Sir Vyvin is a good guy to work for, however, I'm in a spot of trouble today. I've gone and lost Sir Vyvin's sword!");
-    def_int $option = ~p_choice3("Do you know where you lost it?", 1, "I can make a new sword if you like...", 2, "Is he angry?", 3);
+    $option = ~p_choice3("Do you know where you lost it?", 1, "I can make a new sword if you like...", 2, "Is he angry?", 3);
     if($option = 1) {
         ~chatplayer(quiz, "Do you know where you lost it?");
         ~chatnpc(happy, "Well now, if I knew THAT it wouldn't be lost, now would it?");
@@ -61,10 +61,10 @@ if($option = 1) {
     ~chatplayer(quiz, "So would these dwarves make another one?");
     ~chatnpc(default, "I'm not a hundred percent sure the Imcando tribe exists anymore. I should think Reldo, the palace librarian in Varrock, will know; he has done a lot of research on the races of RuneScape.");
     ~chatnpc(happy, "I don't suppose you could try and track down the Imcando dwarves for me? I've got so much work to do...");
-    def_int $option = ~p_choice2("Ok, I'll give it a go.", 1, "No, I've got lots of mining work to do.", 2);
+    $option = ~p_choice2("Ok, I'll give it a go.", 1, "No, I've got lots of mining work to do.", 2);
     if($option = 1) {
         %squire_progress = 1;
-        ~send_quest_progress(quest_journal:squire, %squire_progress, ^squire_complete);
+        ~send_quest_progress(questlist:squire, %squire_progress, ^squire_complete);
         ~chatplayer(neutral, "Ok, I'll give it a go.");
         ~chatnpc(neutral, "Thank you very much! As I say, the best place to start should be with Reldo...");
     } else {
@@ -216,5 +216,5 @@ return(true);
 
 [queue,squire_complete]
 %squire_progress = ^squire_complete;
-~send_quest_complete(quest_journal:squire, blurite_sword, 250, ^squire_questpoints, "You have completed the Knight's Sword Quest!");
+~send_quest_complete(questlist:squire, blurite_sword, 250, ^squire_questpoints, "You have completed the Knight's Sword Quest!");
 givexp(smithing, 127250);

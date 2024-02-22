@@ -84,7 +84,7 @@ if ($option = 1) {
     ~chatplayer(angry, "Who are you calling young one?!");
     ~chatnpc(quiz, "You have been on this world a relatively short time, at least compared to me. So do you want your fortune told or not?");
 
-    def_int $option = ~p_choice3("Yes, please.", 1, "No, I don't believe in that stuff.", 2, "Ooh, how old are you then?", 3);
+    $option = ~p_choice3("Yes, please.", 1, "No, I don't believe in that stuff.", 2, "Ooh, how old are you then?", 3);
     if ($option = 1) {
         ~chatplayer(quiz, "Yes, please.");
         ~chatnpc(neutral, "Cross my palm with silver then.");
@@ -105,7 +105,7 @@ def_int $option = ~p_choice3("Believe me, I have a good imagination.", 1, "How d
 if ($option = 1) {
     ~chatplayer(quiz, "Believe me, I have a good imagination.");
     ~chatnpc(quiz, "You seem like just the sort of person who would want their fortune told then.");
-    def_int $option = ~p_choice2("No, I don't believe in that stuff.", 1, "Yes, please.", 2);
+    $option = ~p_choice2("No, I don't believe in that stuff.", 1, "Yes, please.", 2);
 
     if ($option = 1) {
         @demon_slayer_gypsy_dont_believe;
@@ -116,7 +116,7 @@ if ($option = 1) {
 } else if ($option = 2) {
     ~chatplayer(neutral, "How do you know how old I think you are?");
     ~chatnpc("default", "I have the power to know. Just as I have the power to foresee the future.");
-    def_int $option = ~p_choice3("Ok, what am I thinking now?", 1, "Ok, but how old are you?", 2, "Go on then, what's my future?", 3);
+    $option = ~p_choice3("Ok, what am I thinking now?", 1, "Ok, but how old are you?", 2, "Go on then, what's my future?", 3);
 
     if ($option = 1) {
         ~chatplayer(neutral, "Ok, what am I thinking now?");

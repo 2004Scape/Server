@@ -1,0 +1,11 @@
+[debugproc,delay](int $delay)
+if (map_localdev = false) {
+    return;
+}
+
+if_close;
+if (p_finduid(uid) = true) {
+    p_delay($delay);
+} else {
+    @please_finish;
+}

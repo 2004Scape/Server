@@ -1,8 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import CollisionFlag from '#rsmod/flag/CollisionFlag.js';
-
-import LocType from '#lostcity/cache/LocType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import VarNpcType from '#lostcity/cache/VarNpcType.js';
 
@@ -16,7 +13,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import { EntityQueueRequest, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueRequest, NpcQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
@@ -28,6 +25,8 @@ import HuntType from '#lostcity/cache/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
+
+import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -83,12 +82,16 @@ export default class Npc extends PathingEntity {
     nextHuntTick: number = -1;
 
     interacted: boolean = false;
-    target: (Player | Npc | Loc | Obj | null) = null;
+    target: Player | Npc | Loc | Obj | null = null;
     targetOp: number = -1;
 
+    nextPatrolTick: number = -1;
+    nextPatrolPoint : number = 0;
+    delayedPatrol : boolean = false;
+
     heroPoints: {
-        uid: number,
-        points: number
+        uid: number;
+        points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     found: (Player | Npc | Loc | Obj)[] = [];
@@ -130,14 +133,14 @@ export default class Npc extends PathingEntity {
 
     addHero(uid: number, points: number) {
         // check if hero already exists, then add points
-        const index = this.heroPoints.findIndex(hero => hero.uid === uid);
+        const index = this.heroPoints.findIndex(hero => hero && hero.uid === uid);
         if (index !== -1) {
             this.heroPoints[index].points += points;
             return;
         }
 
         // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
-        const emptyIndex = this.heroPoints.findIndex(hero => hero.uid === -1);
+        const emptyIndex = this.heroPoints.findIndex(hero => hero && hero.uid === -1);
         if (emptyIndex !== -1) {
             this.heroPoints[emptyIndex] = { uid, points };
             return;
@@ -314,13 +317,13 @@ export default class Npc extends PathingEntity {
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest('npc', script, args, delay + 1);
+        const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, args, delay);
         this.queue.push(request);
     }
 
     randomWalk(range: number) {
-        const dx = Math.round((Math.random() * (range * 2)) - range);
-        const dz = Math.round((Math.random() * (range * 2)) - range);
+        const dx = Math.round(Math.random() * (range * 2) - range);
+        const dz = Math.round(Math.random() * (range * 2) - range);
         const destX = this.startX + dx;
         const destZ = this.startZ + dz;
 
@@ -384,7 +387,27 @@ export default class Npc extends PathingEntity {
     }
 
     patrolMode(): void {
-        // TODO points
+        const type = NpcType.get(this.type);
+        const patrolPoints = type.patrolCoord;
+        const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
+        let dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]);
+
+        if(!(this.x == dest.x && this.z == dest.z) && World.currentTick > this.nextPatrolTick) {
+            this.teleJump(dest.x, dest.z, dest.level);
+        }
+        if ((this.x == dest.x && this.z == dest.z) && !this.delayedPatrol) {
+            this.nextPatrolTick = World.currentTick + patrolDelay;
+            this.delayedPatrol = true;
+        }
+        if(this.nextPatrolTick > World.currentTick) { 
+            return;
+        }
+
+        this.nextPatrolPoint = (this.nextPatrolPoint + 1) % patrolPoints.length;
+        this.nextPatrolTick = World.currentTick + 30; // 30 ticks until we force the npc to the next patrol coord
+        this.delayedPatrol = false;
+        dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]); // recalc dest
+        this.queueWaypoint(dest.x, dest.z);
     }
 
     playerEscapeMode(): void {
@@ -428,7 +451,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
+        this.facePlayer(target.pid); // face the player
         this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
     }
 
@@ -497,8 +520,18 @@ export default class Npc extends PathingEntity {
         }
 
         const distanceToTarget = Position.distanceTo(this, target);
-        const distanceToEscape = Position.distanceTo(this, { x: this.startX, z: this.startZ, width: this.width, length: this.length });
-        const targetDistanceFromStart = Position.distanceTo(target, { x: this.startX, z: this.startZ, width: target.width, length: target.length });
+        const distanceToEscape = Position.distanceTo(this, {
+            x: this.startX,
+            z: this.startZ,
+            width: this.width,
+            length: this.length
+        });
+        const targetDistanceFromStart = Position.distanceTo(target, {
+            x: this.startX,
+            z: this.startZ,
+            width: target.width,
+            length: target.length
+        });
         const type = NpcType.get(this.type);
 
         if (distanceToTarget > type.maxrange) {
@@ -509,7 +542,8 @@ export default class Npc extends PathingEntity {
         this.facePlayer(target.pid);
 
         // todo: rework this logic
-        const op = (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
+        const op =
+            (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
             (this.mode >= NpcMode.OPPLAYER1 && this.mode <= NpcMode.OPPLAYER5) ||
             (this.mode >= NpcMode.OPLOC1 && this.mode <= NpcMode.OPLOC5) ||
             (this.mode >= NpcMode.OPOBJ1 && this.mode <= NpcMode.OPOBJ5);
@@ -522,7 +556,8 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const ap = (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
+        const ap =
+            (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
             (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
             (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
             (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
@@ -683,7 +718,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    setInteraction(target: (Player | Npc | Loc | Obj), op: NpcMode) {
+    setInteraction(target: Player | Npc | Loc | Obj, op: NpcMode) {
         this.target = target;
         this.targetOp = op;
         this.mode = op;
@@ -718,10 +753,10 @@ export default class Npc extends PathingEntity {
             const nearby: Player[] = [];
             for (let x = centerX - 2; x <= centerX + 2; x++) {
                 for (let z = centerZ - 2; z <= centerZ + 2; z++) {
-                    const {players} = World.getZone(x << 3, z << 3, this.level);
+                    const { players } = World.getZone(x << 3, z << 3, this.level);
 
-                    for (let i = 0; i < players.length; i++) {
-                        const player = World.getPlayerByUid(players[i]);
+                    for (const uid of players) {
+                        const player = World.getPlayerByUid(uid);
                         if (!player) {
                             continue;
                         }
@@ -736,20 +771,14 @@ export default class Npc extends PathingEntity {
             for (let i = 0; i < nearby.length; i++) {
                 const player = nearby[i];
 
-                if (hunt.checkVis === HuntVis.LINEOFSIGHT &&
-                    !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length))
-                {
+                if (hunt.checkVis === HuntVis.LINEOFSIGHT && !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length)) {
                     continue;
-                } else if (hunt.checkVis === HuntVis.LINEOFWALK &&
-                    !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1))
-                {
+                } else if (hunt.checkVis === HuntVis.LINEOFWALK && !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
                     continue;
                 }
 
                 // TODO: probably zone check to see if they're in the wilderness as well?
-                if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS &&
-                    player.combatLevel > type.vislevel * 2)
-                {
+                if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
                     continue;
                 }
 

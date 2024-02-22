@@ -3,34 +3,38 @@
   "version": "1.0.0",
   "type": "module",
   "imports": {
+    "#3rdparty/*": "./src/3rdparty/*",
     "#jagex2/*": "./src/jagex2/*",
-    "#lostcity/*": "./src/lostcity/*",
-    "#rsmod/*": "./src/rsmod/*"
+    "#lostcity/*": "./src/lostcity/*"
   },
   "scripts": {
-    "start": "node --no-warnings --loader ts-node/esm src/lostcity/app.ts",
-    "login": "node --no-warnings --loader ts-node/esm src/lostcity/login.ts",
-    "maintenance": "node --no-warnings --loader ts-node/esm src/lostcity/maintenance.ts",
-    "web": "node --no-warnings --loader ts-node/esm src/lostcity/web.ts",
+    "precommit": "prettier . --write && eslint . --ext .ts --ext .js --fix",
+    "ts-loader": "node --no-warnings --loader ts-node/esm",
+    "start": "npm run ts-loader src/lostcity/app.ts",
+    "login": "npm run ts-loader src/lostcity/login.ts",
+    "friend": "npm run ts-loader src/lostcity/friend.ts",
+    "maintenance": "npm run ts-loader src/lostcity/maintenance.ts",
+    "web": "npm run ts-loader src/lostcity/web.ts",
     "dev": "concurrently \"nodemon src/lostcity/app.ts\" \"npm run server:watch\"",
-    "client:pack": "node --no-warnings --loader ts-node/esm src/lostcity/tools/client/all/pack.ts",
-    "client:clean": "node --no-warnings --loader ts-node/esm src/lostcity/tools/client/clean.ts",
-    "script:symbols": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/scripts/symbols.ts",
-    "script:compile": "cd data && java -jar ../RuneScriptCompiler.jar src/scripts pack/server",
-    "script:run": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/runscript.ts",
-    "server:pack": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/all/pack.ts",
-    "server:clean": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/clean.ts",
-    "server:build": "npm run server:pack && npm run script:symbols && npm run script:compile",
-    "server:watch": "watch \"npm run server:build\" ./data/src/scripts",
+    "client:pack": "npm run ts-loader src/lostcity/tools/pack/client.ts",
+    "client:clean": "npm run ts-loader src/lostcity/tools/client/clean.ts",
+    "script:compile": "java -jar RuneScriptCompiler.jar",
+    "script:run": "npm run ts-loader src/lostcity/tools/server/runscript.ts",
+    "server:pack": "npm run ts-loader src/lostcity/tools/pack/server.ts",
+    "server:clean": "npm run ts-loader src/lostcity/tools/server/clean.ts",
+    "server:build": "npm run server:pack && npm run script:compile",
+    "server:watch": "watch \"npm run server:build\" ./data/src/scripts ./src/lostcity/tools",
     "test": "jest",
     "lint": "eslint . --ext .ts --ext .js",
-    "drops": "node --no-warnings --loader ts-node/esm src/lostcity/tools/server/drops.ts",
+    "drops": "npm run ts-loader src/lostcity/tools/server/drops.ts",
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
-    "db:schema": "prisma migrate dev"
+    "db:schema": "prisma migrate dev",
+    "clean": "npm run client:clean && npm run server:clean",
+    "build": "npm run client:pack && npm run server:build"
   },
   "prisma": {
-    "seed": "node --no-warnings --loader ts-node/esm src/lostcity/db/seed.ts"
+    "seed": "npm run ts-loader src/lostcity/db/seed.ts"
   },
   "dependencies": {
     "@fastify/cookie": "^9.2.0",
@@ -53,6 +57,7 @@
     "ws": "^8.15.1"
   },
   "devDependencies": {
+    "@2004scape/rsmod-pathfinder": "^4.2.6",
     "@swc/core": "1.3.101",
     "@swc/helpers": "^0.5.3",
     "@types/bcrypt": "^5.0.2",
@@ -65,8 +70,10 @@
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
+    "eslint-plugin-jest": "^27.6.3",
     "jest": "^29.7.0",
     "nodemon": "^3.0.2",
+    "prettier": "3.2.4",
     "prisma": "^5.7.1",
     "prisma-kysely": "^1.7.1",
     "ts-jest": "^29.1.1",

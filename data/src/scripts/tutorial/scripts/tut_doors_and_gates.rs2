@@ -1,0 +1,100 @@
+[proc,tut_island_survial_gate]
+if (%tutorial_progress < 120) {
+    ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
+    return;
+}
+if (%tutorial_progress = 120) {
+    %tutorial_progress = 130;
+    ~set_tutorial_progress;
+}
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = tutorial_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_3015) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+sound_synth(door_open, 0, 0);
+p_delay(0);
+
+// Survival Tutor Gate
+[oploc1,_tutorial_gate]
+if(coordx(coord) <= coordx(loc_coord)) {
+    p_teleport(movecoord(loc_coord, 1, 0, 0));
+    ~tut_island_survial_gate;
+    return;
+}
+p_teleport(loc_coord);
+~tut_island_survial_gate;
+
+// Runescape guide door
+[oploc1,loc_3014]
+if (%tutorial_progress < 4) {
+    ~mesbox("You need to talk to the 'Runescape Guide' before you are allowed to proceed through this door.");
+    return;
+}
+
+hint_stop();
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = 4) {
+    %tutorial_progress = 10;
+    ~tutorial_step_moving_around;
+}
+
+// Door to Master Chef
+[oploc1,loc_3017]
+hint_stop();
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = 130) {
+    %tutorial_progress = ^chef_start;
+    ~set_tutorial_progress;
+}
+
+// Door exiting Master Chef's house
+[oploc1,loc_3018]
+if (%tutorial_progress < 180) {
+    ~mesbox("You need to finish the Cooking Guide's tasks first.");
+    return;
+}
+
+hint_stop();
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = 180) {
+    %tutorial_progress = 190;
+    ~set_tutorial_progress;
+}
+
+// Door to Quest Guide's house
+[oploc1,loc_3019]
+hint_stop();
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = 200) {
+    %tutorial_progress = ^quest_guide_start;
+    ~set_tutorial_progress;
+}
+
+// Ladder to Mine
+[oploc1,loc_3029]
+if (%tutorial_progress < 250) {
+    npc_findallzone(0_48_48_12_52);
+    while (npc_findnext = true) {
+        if (npc_type = npc_949) @quest_guide_not_ready_to_leave_yet;
+    }
+
+    npc_findallzone(0_48_48_16_48);
+    while (npc_findnext = true) {
+        if (npc_type = npc_949) @quest_guide_not_ready_to_leave_yet;
+    }
+    return;
+}
+@tutorial_complete;

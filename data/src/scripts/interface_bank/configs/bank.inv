@@ -2,4 +2,3 @@
 scope=perm
 size=^bank_total_slots
 stackall=yes
-protect=no
