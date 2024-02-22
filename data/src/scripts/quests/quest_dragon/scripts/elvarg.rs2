@@ -33,6 +33,10 @@ npc_setmode(opplayer2);
 if (%npc_action_delay > map_clock) {
     return;
 }
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 // seems like 2/3 chance to dragon fire if ap.
 if (random(3) = 0) {
     npc_setmode(opplayer2);
@@ -43,6 +47,10 @@ if (random(3) = 0) {
 [ai_opplayer2,elvarg]
 //mes("<tostring(map_clock)>: Op");
 if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
     return;
 }
 // seems like 2/3 chance to melee if op.
@@ -71,8 +79,7 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
 queue(damage_player, 0, $damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, 4);
-%lastcombat = map_clock;
-%npc_lastattack = map_clock;
+~npc_set_attack_vars;
 
 
 // proc is used when the player has dragon fire shiled, prot magic, or antifire potion

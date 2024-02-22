@@ -3,6 +3,10 @@ if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
     return;
 }
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 
 npc_setmode(applayer2);
 
@@ -16,6 +20,10 @@ if (random(8) = 0) {
 [ai_applayer2,dark_wizard_water]
 if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
     return;
 }
 

@@ -37,6 +37,10 @@ npc_setmode(opplayer2);
 if (%npc_action_delay > map_clock) {
     return;
 }
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 if (npc_range(coord) < 2) {
     ~npc_default_attack;
     return;
@@ -69,8 +73,7 @@ if (~check_protect_prayer(^melee_style) = true) {
 queue(damage_player, calc($delay/60), $damage);
 queue(playerhit_n_retaliate, calc($delay/60), npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, 4);
-%lastcombat = map_clock;
-%npc_lastattack = map_clock;
+~npc_set_attack_vars;
 
 [ai_timer,_macro_event_rock_golem]
 if (finduid(%npc_attacking_uid) = false) {

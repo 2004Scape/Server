@@ -16,11 +16,15 @@ return(true);
 
 
 [proc,npc_cast_spell](int $spell, int $attackspeed)
-if_close;
 if (%npc_action_delay > map_clock) {
     npc_setmode(applayer2);
     return;
 }
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+if_close;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 
@@ -103,9 +107,8 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     // splashing in osrs causes insta auto retal
     queue(playerhit_n_retaliate, 0, npc_uid);
 }
+~npc_set_attack_vars;
 
-%lastcombat = map_clock;
-%npc_lastattack = map_clock;
 
 // todo: dunno if this should be queued but protected access lol
 [queue,freeze_player](int $duration)
