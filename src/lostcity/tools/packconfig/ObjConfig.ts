@@ -231,7 +231,22 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         } else {
             config = configs.get(debugname)!;
 
+            // if no name we fill with the debug name
+            let hasName = false;
+            for (let j = 0; j < config.length; j++) {
+                if (config[j].key === 'name') {
+                    hasName = true;
+                    break;
+                }
+            }
+
+            if (!hasName && config.length > 0) {
+                const name = debugname.charAt(0).toUpperCase() + debugname.slice(1).replace(/_/g, ' ');
+                config.push({ key: 'name', value: name });
+            }
+
             if (transmitAll === true) {
+                // reverse-lookup the certificate
                 const cert = ObjPack.getByName('cert_' + debugname);
                 if (cert !== -1) {
                     config.push({ key: 'certlink', value: cert });

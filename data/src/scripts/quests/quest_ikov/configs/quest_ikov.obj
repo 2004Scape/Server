@@ -23,16 +23,15 @@ recol5d=37340
 iop2=Wield
 wearpos=quiver
 weight=16g
-count1=obj_81,2
-count2=obj_80,3
-count3=obj_79,4
-count4=obj_82,5
+count1=ice_arrow_2,2
+count2=ice_arrow_3,3
+count3=ice_arrow_4,4
+count4=ice_arrow_5,5
 category=arrows
 param=rangebonus,16
 param=levelrequire,40
 
-[obj_79]
-name=Ice arrow 4
+[ice_arrow_4]
 stackable=yes
 model=model_2421_obj
 recol1s=57
@@ -52,8 +51,7 @@ recol5d=37340
 2dxan=216
 dummyitem=inv_only
 
-[obj_80]
-name=Ice arrow 3
+[ice_arrow_3]
 stackable=yes
 model=model_2420_obj
 recol1s=57
@@ -73,8 +71,7 @@ recol5d=37340
 2dxan=216
 dummyitem=inv_only
 
-[obj_81]
-name=Ice arrow 2
+[ice_arrow_2]
 stackable=yes
 model=model_2419_obj
 recol1s=57
@@ -94,8 +91,7 @@ recol5d=37340
 2dxan=216
 dummyitem=inv_only
 
-[obj_82]
-name=Ice arrow 5
+[ice_arrow_5]
 stackable=yes
 model=model_2422_obj
 recol1s=57

@@ -105,7 +105,7 @@ const LocOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
         const loc = World.getLoc(pos.x, pos.z, pos.level, locId);
-        if (!loc || loc.respawn !== -1) {
+        if (!loc) {
             state.pushInt(0);
             return;
         }

@@ -3,8 +3,13 @@
 [npc_attacking_uid]
 type=player_uid
 
+[npc_defending_uid]
+type=player_uid
+
 [npc_lastcombat]
 
 [npc_stunned]
 
 [npc_macro_event_status]
+
+[npc_lastattack]

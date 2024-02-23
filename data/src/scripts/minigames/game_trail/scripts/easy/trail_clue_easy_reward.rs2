@@ -68,7 +68,7 @@ switch_int ($random) {
     case 5: inv_add(reward, black_platelegs_g, 1);
     case 6: inv_add(reward, black_full_helm_g, 1);
     case 7: inv_add(reward, black_kiteshield_g, 1);
-    case 8: inv_add(reward, highwayman_mask, 1);
+    case 8: inv_add(reward, trail_highwayman_mask, 1);
     case 9: inv_add(reward, blue_berret, 1);
     case 10: inv_add(reward, black_berret, 1);
     case 11: inv_add(reward, white_berret, 1);

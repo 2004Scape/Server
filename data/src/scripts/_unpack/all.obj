@@ -242,8 +242,8 @@ recol3d=5016
 weight=1g
 tradeable=yes
 
-[obj_979]
-name=Highwayman mask
+// jagex name
+[highwayman_mask]
 model=model_2500_obj
 2dxof=3
 2dzoom=290
@@ -370,7 +370,6 @@ count9=coins_10000,10000
 tradeable=yes
 
 [coins_2]
-name=Coins 2
 model=model_2485_obj
 stackable=yes
 2dxof=3
@@ -380,7 +379,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_3]
-name=Coins 3
 model=model_2486_obj
 stackable=yes
 2dxof=3
@@ -390,7 +388,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_4]
-name=Coins 4
 model=model_2487_obj
 stackable=yes
 2dxof=3
@@ -400,7 +397,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_5]
-name=Coins 5
 model=model_2488_obj
 stackable=yes
 2dxof=3
@@ -410,7 +406,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_25]
-name=Coins 25
 model=model_2667_obj
 2dxof=3
 2dzoom=710
@@ -420,7 +415,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_100]
-name=Coins 100
 model=model_2825_obj
 2dxof=3
 2dzoom=710
@@ -430,7 +424,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_250]
-name=Coins 250
 model=model_2423_obj
 2dxof=2
 2dyof=-2
@@ -441,7 +434,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_1000]
-name=Coins 1000
 model=model_2710_obj
 2dxof=11
 2dyof=13
@@ -452,7 +444,6 @@ stackable=yes
 dummyitem=inv_only
 
 [coins_10000]
-name=Coins 10000
 model=model_2775_obj
 2dxof=11
 2dzoom=1000
@@ -3280,8 +3271,7 @@ recol1d=6053
 2dxan=88
 weight=10kg
 
-[obj_2884]
-name=Chompy bird obj
+[chompy_bird_obj]
 model=model_3445_obj
 tradeable=yes
 dummyitem=graphic_only
