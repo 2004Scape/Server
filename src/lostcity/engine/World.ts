@@ -931,11 +931,12 @@ class World {
             return null;
         }
 
-        let container = this.invs.find(x => x.type == inv);
+        let container = this.invs.find(x => x && x.type == inv);
         if (!container) {
             container = Inventory.fromType(inv);
             this.invs.push(container);
         }
+
         return container;
     }
 
