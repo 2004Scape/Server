@@ -1,0 +1,4 @@
+^ball_not_started = 0
+^ball_started = 1
+
+^ball_mouse_coord = 0_45_54_23_10

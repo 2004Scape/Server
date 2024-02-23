@@ -1,0 +1,103 @@
+[oploc1,loc_2867]
+// https://youtu.be/stROSTIJ2q8?si=4wvlodUkO9x6pAV9&t=62
+if(inv_total(inv, obj_2409) > 0) { // no bank check (osrs)
+    mes("You don't find anything interesting.");
+    return;
+}
+~mesbox("You find a key hidden under the flower pot.");
+inv_add(inv, obj_2409, 1);
+
+[oploc1,loc_2861]
+if(inv_total(inv, obj_2409) > 0) {
+    @open_witch_house_door;
+}
+mes("The door is locked.");
+
+[oplocu,loc_2861]
+if(last_useitem = obj_2409) {
+    @open_witch_house_door;
+}
+@nothing_interesting_happens;
+
+[label,open_witch_house_door]
+if(%ball_progress < ^ball_started) {
+    ~chatplayer(neutral, "It would be rude to break into this house.");
+    return;
+}
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+def_int $x;
+def_int $z;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+def_coord $loc_coord = loc_coord;
+$x, $z = ~door_open($angle, loc_shape);
+def_coord $dest = $loc_coord;
+sound_synth(door_open, 0, 0);
+if ($entering = true) {
+    if (coord ! $loc_coord) {
+        p_teleport($loc_coord);
+        p_delay(1);
+    }
+    $dest = movecoord(loc_coord, $x, 0, $z);
+}
+p_teleport($dest);
+loc_change(loc_83, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_1535, modulo(add($angle, 1), 4), $shape, 2);
+
+[oploc1,_ball_irongate]
+if(inv_total(worn, leather_gloves) = 0) {
+    ~mesbox("As your bare hands touch the gate you feel a shock.");
+    p_delay(0);
+    ~damage_self(calc((stat(hitpoints) / 10) + 1));
+    return;
+}
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+def_int $x;
+def_int $z;
+def_locshape $shape = loc_shape;
+def_coord $loc_coord = loc_coord;
+def_int $next_angle = calc(loc_angle - 1);
+def_loc $next_loc = loc_param(next_loc_stage);
+$x, $z = ~door_open(loc_angle, loc_shape);
+sound_synth(grate_open, 0, 0); // iron_door_open
+def_coord $dest = $loc_coord;
+if ($entering = true) {
+    $dest = movecoord($loc_coord, $x, 0, $z);
+}
+if($next_loc = loc_1563) {
+    $next_angle = calc(loc_angle + 1);
+}
+p_teleport($dest);
+loc_change(loc_83, 2);
+loc_add(movecoord($loc_coord, 1, 0, 0), $next_loc, $next_angle, $shape, 2);
+
+// this cupboard just opens/closes with loc_add/del
+[oploc1,loc_2868]
+loc_change(loc_2869, 500);
+
+[oploc2,loc_2869]
+loc_change(loc_2868, 500);
+
+[label,ball_cheese](string $pref)
+inv_del(inv, cheese, 1);
+npc_findallzone(coord);
+while(npc_findnext = true) {
+    if(npc_type = npc_901) {
+        npc_del;
+    }
+}
+npc_add(^ball_mouse_coord, npc_901, 50);
+~mesbox("A mouse runs out of <$pref> hole.");
+
+[oplocu,loc_2870]
+if(last_useitem = cheese) {
+    @ball_cheese("a");
+}
+@nothing_interesting_happens;
+
+[opheld5,cheese]
+if(inzone(0_45_54_21_10, 0_45_54_23_11, coord) = true) {
+    @ball_cheese("the");
+}
+inv_dropslot(inv, coord, last_slot, 200);
+sound_synth(put_down, 0, 0);

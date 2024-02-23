@@ -979,6 +979,7 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
+        console.log("Test");
     }
 
     removeNpc(npc: Npc) {
