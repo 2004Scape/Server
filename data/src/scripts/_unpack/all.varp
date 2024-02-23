@@ -24,7 +24,9 @@ protect=no
 
 [eat_delay]
 
-[varp_41]
+[defending_npc_uid]
+type=npc_uid
+protect=no
 
 [varp_42]
 
@@ -114,8 +116,6 @@ scope=perm
 [varp_109]
 
 [varp_110]
-type=npc_uid
-scope=perm
 
 [varp_113]
 

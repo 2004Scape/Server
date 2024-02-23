@@ -6,6 +6,8 @@ data=coord_pair,0_46_61_40_8,0_46_61_63_23
 data=coord_pair,0_50_61_0_0,0_50_61_63_63
 // rogues' fort
 data=coord_pair,0_51_61_0_0,0_51_61_63_63
+data=coord_pair,1_51_61_0_0,1_51_61_63_63
+data=coord_pair,2_51_61_0_0,2_51_61_63_63
 // evil altar
 data=coord_pair,0_46_59_0_40,0_46_69_15_55
 // north of lava maze
@@ -16,6 +18,8 @@ data=coord_pair,0_48_60_0_40,0_48_60_37_63
 data=coord_pair,0_48_60_38_32,0_48_60_63_63
 // dark warrior castle
 data=coord_pair,0_47_56_0_16,0_47_56_63_63
+data=coord_pair,1_47_56_0_16,1_47_56_63_63
+data=coord_pair,2_47_56_0_16,2_47_56_63_63
 // bandit camp
 data=coord_pair,0_47_57_0_0,0_47_57_63_63
 // east wilderness
@@ -42,8 +46,11 @@ data=coord_pair,0_48_53_0_56,0_48_53_63_63
 data=coord_pair,0_48_50_32_32,0_48_50_63_63
 // wizards' tower
 data=coord_pair,0_48_49_16_8,0_48_49_55_39
+data=coord_pair,1_48_49_16_8,1_48_49_55_39
+data=coord_pair,2_48_49_16_8,2_48_49_55_39
 // al kharid
 data=coord_pair,0_51_49_0_0,0_51_49_63_63
+data=coord_pair,1_51_49_0_0,1_51_49_63_63
 // white wolf mountain
 data=coord_pair,0_44_54_0_0,0_44_54_63_63
 // ranging guild
@@ -52,6 +59,7 @@ data=coord_pair,0_41_53_32_16,0_41_53_55_23
 data=coord_pair,0_41_53_32_48,0_41_53_55_55
 // necromancer tower
 data=coord_pair,0_41_50_32_32,0_41_50_55_55
+data=coord_pair,1_41_50_32_32,1_41_50_55_55
 data=coord_pair,0_41_50_40_16,0_41_50_55_31
 // gnome battlefield
 data=coord_pair,0_39_50_8_8,0_39_50_47_47
