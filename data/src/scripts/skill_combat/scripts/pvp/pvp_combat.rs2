@@ -2,7 +2,7 @@
 if (~pvp_level_check = false) {
     return;
 }
-if (~pvp_singles_check = false) {
+if (~pvp_in_combat_check = false) {
     return;
 }
 @pvp_combat_start;
@@ -27,7 +27,7 @@ if ($attackrange <= 1) {
     p_aprange($attackrange); // walk then op again
     return;
 }
-if (~pvp_singles_check = false) {
+if (~pvp_in_combat_check = false) {
     return;
 }
 p_aprange($attackrange);
@@ -79,16 +79,18 @@ if ($wilderness_level < $combat_level_diff) {
 }
 return(true);
 
-[proc,pvp_singles_check]()(boolean)
+[proc,pvp_in_combat_check]()(boolean)
 // if multi, return true
 if (~inzone_coord_pair_table(multiway_zones, .coord) = true) {
     return(true);
 }
-if (add(%lastcombat, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null) {
+if ((add(%lastcombat_pvp, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null)
+    | add(%lastcombat, 8) > map_clock) {
     mes("I'm already under attack.");
     return(false);
 }
-if (add(.%lastcombat, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null) {
+if ((add(.%lastcombat_pvp, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null)
+    | add(.%lastcombat, 8) > map_clock) {
     mes("Someone else is already fighting your apponent.");
     return(false);
 }

@@ -72,7 +72,8 @@ type=synth
 [autocast_spell]
 scope=perm
 
-[varp_61]
+[lastcombat_pvp]
+protect=no
 
 [gobdip_progress]
 scope=perm

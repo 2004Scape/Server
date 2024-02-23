@@ -155,7 +155,13 @@ if (~inzone_coord_pair_table(multiway_zones, npc_coord) = false & %npc_attacking
 %defending_npc_uid = npc_uid;
 
 [proc,npc_can_attack_player]()(boolean)
-if (add(%lastcombat, 8) > map_clock & %defending_npc_uid ! npc_uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
+if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
+    return(true);
+}
+if (add(%lastcombat_pvp, 8) > map_clock) {
+    return(false);
+}
+if (add(%lastcombat, 8) > map_clock & %defending_npc_uid ! npc_uid) {
     return(false);
 }
 

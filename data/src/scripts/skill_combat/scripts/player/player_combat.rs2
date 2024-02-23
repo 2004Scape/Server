@@ -1,5 +1,5 @@
 [opnpc2,_]
-if (~player_can_attack_npc = false) {
+if (~player_in_combat_check = false) {
     return;
 }
 @player_combat_start;
@@ -32,7 +32,7 @@ if ($distance > $attackrange) {
     p_aprange($attackrange);
     return;
 }
-if (~player_can_attack_npc = false) {
+if (~player_in_combat_check = false) {
     return;
 }
 p_aprange($attackrange);
@@ -118,15 +118,16 @@ switch_int ($damagetype) {
     case ^magic_style: return(.%com_magicdef);
 }
 
-[proc,player_can_attack_npc]()(boolean)
+[proc,player_in_combat_check]()(boolean)
 if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
     return(true);
 }
-if (calc(%lastcombat + 8) > map_clock & %defending_npc_uid ! npc_uid & %defending_npc_uid ! null) {
+if ((add(%lastcombat, 8) > map_clock & %defending_npc_uid ! npc_uid & %defending_npc_uid ! null)
+    | add(%lastcombat_pvp, 8) > map_clock) {
     mes("I'm already under attack.");
     return(false);
 }
-if (calc(%npc_lastcombat + 8) > map_clock & %npc_defending_uid ! uid) {
+if ((add(%npc_lastcombat, 8) > map_clock & %npc_defending_uid ! uid)) {
     mes("Someone else is fighting that.");
     return(false);
 }

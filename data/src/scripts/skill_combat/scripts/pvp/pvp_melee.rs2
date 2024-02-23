@@ -10,6 +10,7 @@ if (.stat(hitpoints) = 0) {
 }
 
 ~player_combat_stat;
+// ~.player_combat_stat; needs .p_active_player pointer for some reason
 
 def_int $damage = 0;
 // not sure if xp multipler exists for us or not?!
@@ -42,4 +43,6 @@ if ($weapon = null) {
 } else {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
 }
+.%lastcombat_pvp = map_clock;
+.%defending_player_uid = uid;
 p_opplayer(2);
