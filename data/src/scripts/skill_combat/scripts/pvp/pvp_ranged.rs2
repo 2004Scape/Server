@@ -1,1 +1,84 @@
 [label,pvp_ranged_attack]
+if (.stat(hitpoints) = 0) {
+    p_stopaction;
+    return;
+}
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+if ($rhand = null) {
+    mes("That was your last one!");
+    p_stopaction;
+    ~update_all($rhand);
+    return;
+}
+// this can be either the quiver or rhand.
+def_obj $ammo = ~player_ranged_check_ammo($rhand);
+if ($ammo = null) {
+    p_stopaction;
+    ~update_all($rhand);
+    return;
+}
+if (%action_delay > map_clock) {
+    p_opplayer(2);
+    return;
+}
+
+
+~player_combat_stat;
+// ~.player_combat_stat; needs .p_active_player pointer for some reason
+
+def_int $damage = 0;
+// not sure if xp multipler exists for us or not?!
+// https://oldschool.runescape.wiki/w/Combat#PvP_bonus_experience
+if (~pvp_hit_roll(%damagetype) = true) {
+    $damage = randominc(%com_maxhit);
+    ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
+}
+.if_close;
+def_int $delay = ~pvp_ranged_use_weapon($rhand, $ammo);
+anim(%com_attackanim, 0);
+sound_synth(%com_attacksound, 0, 0);
+.sound_synth(.%com_attacksound, 0, 0);
+
+// todo: queue these
+if (.p_finduid(.uid) = true) {
+    ~.pvp_retaliate(uid);
+    ~.pvp_damage_player($damage);
+}
+// .queue(.pvp_retaliate, uid, calc($delay / 30));
+// .queue(.pvp_damage, uid, $damage, calc($delay / 30));
+
+.anim(.%com_defendanim, 20);
+// .sound_synth(.%com_defendsound, 0, 20);
+// sound_synth(.%com_defendsound, 0, 20);
+
+// todo: heropoints
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+if ($weapon = null) {
+    %action_delay = add(map_clock, 4);
+} else {
+    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+}
+.%lastcombat_pvp = map_clock;
+.%defending_player_uid = uid;
+p_opplayer(2);
+
+if (random(5) ! 0) {
+    world_delay(calc($delay / 30));
+    if (map_blocked(.coord) = true) {
+        return;
+    }
+    obj_add(.coord, $ammo, 1, 200);
+}
+
+
+[proc,pvp_ranged_use_weapon](obj $rhand, obj $ammo)(int)
+spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
+inv_del(worn, $ammo, 1);
+def_int $delay = 30;
+switch_category(oc_category($rhand)) {
+    case weapon_bow, weapon_crossbow: 
+        $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5);
+    case weapon_thrown, weapon_javelin: 
+        $delay = ~player_projectile(coord, .coord, .uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5);
+}
+return($delay);

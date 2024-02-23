@@ -71,10 +71,9 @@ p_opnpc(2);
 if (random(5) ! 0) {
     world_delay(calc($delay / 30));
     if (map_blocked(npc_coord) = true) {
-        obj_add(coord, $ammo, 1, 200);
-    } else {
-        obj_add(npc_coord, $ammo, 1, 200);
+        return;
     }
+    obj_add(npc_coord, $ammo, 1, 200);
 }
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)
@@ -104,19 +103,17 @@ return($ammo);
 
 [proc,player_ranged_use_weapon](obj $rhand, obj $ammo)(int)
 switch_category(oc_category($rhand)) {
-    case weapon_bow: return(~player_ranged_shoot($ammo));
-    case weapon_crossbow: return(~player_ranged_shoot($ammo));
-    case weapon_thrown: return(~player_ranged_throw($ammo));
-    case weapon_javelin: return(~player_ranged_throw($ammo));
+    case weapon_bow, weapon_crossbow: return(~ranged_shoot_npc($ammo));
+    case weapon_thrown, weapon_javelin: return(~ranged_throw_npc($ammo));
     case default: return(30); // idk some random default delay just in case shouldnt happen tho
 }
 
-[proc,player_ranged_shoot](obj $ammo)(int)
+[proc,ranged_shoot_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 inv_del(worn, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
-[proc,player_ranged_throw](obj $ammo)(int)
+[proc,ranged_throw_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 inv_del(worn, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));
