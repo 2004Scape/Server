@@ -15,6 +15,7 @@ export default class Zone {
     index = -1; // packed coord
     level = 0;
     buffer: Packet = new Packet();
+    events: Packet[] = [];
 
     // zone entities
     players: Set<number> = new Set(); // list of player uids
@@ -24,17 +25,18 @@ export default class Zone {
     // loc info - bits 0-15 = type, bits 16-20 = shape, bits 21-23 = angle
     locs: Set<number> = new Set();
     locInfo: Map<number, number> = new Map();
-
-    events: Packet[] = [];
     locDelEvent: Set<number> = new Set();
     locAddEvent: Set<number> = new Set();
-
     locDelCached: Map<number, Packet> = new Map();
     locAddCached: Map<number, Packet> = new Map();
-
     locDelTimer: Map<number, number> = new Map();
     locAddTimer: Map<number, number> = new Map();
     locChangeTimer: Map<number, number> = new Map();
+
+    staticObjs: Obj[] = []; // source of truth from map
+    staticObjAddCached: Packet[] = [];
+    staticObjDelCached: Packet[] = [];
+    objs: Obj[] = []; // objs actually in the zone
 
     constructor(index: number, level: number) {
         this.index = index;
@@ -90,6 +92,10 @@ export default class Zone {
             }
         }
 
+        for (const obj of this.objs) {
+            //
+        }
+
         // respawn
         for (const [packed, timer] of this.locDelTimer) {
             if (timer - World.currentTick <= 0) {
@@ -118,6 +124,10 @@ export default class Zone {
                 const staticPacked = packed | (1 << 8);
                 this.locAddEvent.add(staticPacked);
             }
+        }
+
+        for (const obj of this.staticObjs) {
+            //
         }
 
         // shared events (this tick)
@@ -338,6 +348,7 @@ export default class Zone {
         const packed = x | (z << 3) | (LocShapes.layer(shape) << 6);
 
         // console.log('changeLoc(): changing loc on tile');
+        this.locs.add(packed);
         this.locInfo.set(packed, id | (shape << 16) | (angle << 21));
         this.locAddEvent.add(packed);
         this.locChangeTimer.set(packed, World.currentTick + duration);
@@ -431,15 +442,27 @@ export default class Zone {
     // ----
 
     addStaticObj(obj: Obj) {
+        this.staticObjs.push(obj);
+        this.addObj(Obj.clone(obj), null, -1); // temp
+
+        const buf = Zone.write(ServerProt.OBJ_ADD, obj.x, obj.z, obj.type, obj.count);
+        this.staticObjAddCached.push(buf);
     }
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
+        this.objs.push(obj);
     }
 
-    removeObj(obj: Obj, receiver: Player | null, subtractTick: number = 0) {
+    removeObj(obj: Obj, receiver: Player | null) {
     }
 
     getObj(x: number, z: number, type: number): Obj | null {
+        for (const obj of this.objs) {
+            if (obj.x === x && obj.z === z && obj.type === type) {
+                return obj;
+            }
+        }
+
         return null;
     }
 }

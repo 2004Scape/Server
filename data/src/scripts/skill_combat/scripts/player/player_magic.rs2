@@ -58,6 +58,10 @@
 [apnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
 
 [label,player_magic_spell_attack](int $spell)
+if (calc(%npc_lastcombat + 8) > map_clock & %npc_defending_uid ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
+    mes("Someone else is fighting that.");
+    return;
+}
 p_stopaction;
 if_close;
 if (npc_stat(hitpoints) = 0) {
@@ -69,7 +73,6 @@ def_dbrow $spell_data = ~get_spell_data($spell);
 
 // mes("<tostring(map_clock)>, <tostring(%action_delay)>");
 if (map_clock < %action_delay) {
-    mes("p_opnpct");
     p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return;
 }

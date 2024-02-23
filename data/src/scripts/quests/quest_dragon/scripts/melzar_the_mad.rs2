@@ -19,6 +19,10 @@ npc_setmode(opplayer2);
 if (%npc_action_delay > map_clock) {
     return;
 }
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 // data based off of 200 or so attacks
 def_int $random_attack = random(128);
 // mes("Ap");
@@ -41,6 +45,10 @@ if ($random_attack < 8 & stat(strength) >= stat_base(strength)) { // dont cast i
 [ai_opplayer2,melzar]
 ~melzar_say_random_message;
 if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
     return;
 }
 // mes("Op");

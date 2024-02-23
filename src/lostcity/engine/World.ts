@@ -1020,31 +1020,12 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        const existing = this.getObj(obj.x, obj.z, obj.level, obj.id);
-        if (existing && existing.id == obj.id) {
-            const type = ObjType.get(obj.type);
-            const nextCount = obj.count + existing.count;
-            if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
-                // if an obj of the same type exists and is stackable, then we merge them.
-                obj.count = nextCount;
-                zone.removeObj(existing, receiver);
-            }
-        }
         zone.addObj(obj, receiver, duration);
-
-        obj.despawn = this.currentTick + duration;
-        obj.respawn = -1;
     }
 
     removeObj(obj: Obj, receiver: Player | null) {
-        // TODO
-        // stackable objs when they overflow are created into another slot on the floor
-        // currently when you pickup from a tile with multiple stackable objs
-        // you will pickup one of them and the other one disappears
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        zone.removeObj(obj, receiver, -1);
-        obj.despawn = this.currentTick;
-        obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
+        zone.removeObj(obj, receiver);
     }
 
     // ----
