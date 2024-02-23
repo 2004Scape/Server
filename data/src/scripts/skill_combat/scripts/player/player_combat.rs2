@@ -1,8 +1,7 @@
 [opnpc2,_]
-// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-//     mes("Someone else is fighting that.");
-//     return;
-// }
+if (~player_can_attack_npc = false) {
+    return;
+}
 @player_combat_start;
 
 [apnpc2,_]
@@ -26,9 +25,6 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_s
     $attackrange = 10;
 }
 if ($attackrange <= 1) {
-    // if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-    //     mes("Someone else is fighting that.");
-    // }
     p_aprange($attackrange); // walk then op again
     return;
 }
@@ -36,10 +32,9 @@ if ($distance > $attackrange) {
     p_aprange($attackrange);
     return;
 }
-// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-//     mes("Someone else is fighting that.");
-//     return;
-// }
+if (~player_can_attack_npc = false) {
+    return;
+}
 p_aprange($attackrange);
 @player_combat_start;
 
@@ -103,3 +98,17 @@ switch_int ($damagetype) {
     case ^magic_style: return(%com_magicdef);
 }
 error("style of <tostring($damagetype)> not defined in switch for player_defence_roll_specific");
+
+[proc,player_can_attack_npc]()(boolean)
+if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
+    return(true);
+}
+if (calc(%lastcombat + 8) > map_clock & %defending_npc_uid ! npc_uid & %defending_npc_uid ! null) {
+    mes("I'm already under attack.");
+    return(false);
+}
+if (calc(%npc_lastcombat + 8) > map_clock & %npc_defending_uid ! uid) {
+    mes("Someone else is fighting that.");
+    return(false);
+}
+return(true);

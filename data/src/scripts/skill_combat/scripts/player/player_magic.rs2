@@ -69,17 +69,22 @@ if (%action_delay > map_clock) {
 
 
 [label,player_magic_spell_attack](int $spell)
+if (calc(%npc_lastcombat + 8) > map_clock & %npc_defending_uid ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
+    mes("Someone else is fighting that.");
+    return;
+}
 p_stopaction;
 if_close;
 if (npc_stat(hitpoints) = 0) {
     p_stopaction;
     return; // this means the npc is not avail to fight i.e dead
 }
-if (%action_delay > map_clock | %autocast_delay > map_clock) {
-    %autocast_delay = add(map_clock, 1);
-    %spell = $spell;
-    //mes("p_opnpc(2)");
-    p_opnpc(2);
+// look for spell in db
+def_dbrow $spell_data = ~get_spell_data($spell);
+
+// mes("<tostring(map_clock)>, <tostring(%action_delay)>");
+if (map_clock < %action_delay) {
+    p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return;
 }
 // reset spell VERY IMPORTANT!
