@@ -16,7 +16,7 @@ while ($roll < $rolls) {
 ~trail_complete;
 
 [proc,trail_clue_medium_normal]
-def_int $random = random();
+def_int $random = random(1);
 
 switch_int ($random)
 {
@@ -24,7 +24,7 @@ switch_int ($random)
 }
 
 [proc,trail_clue_medium_rare]
-def_int $random = random();
+def_int $random = random(1);
 
 switch_int ($random)
 {

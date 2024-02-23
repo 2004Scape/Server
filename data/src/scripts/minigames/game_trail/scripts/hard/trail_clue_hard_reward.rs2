@@ -42,37 +42,35 @@ switch_int ($random) {
 }
 
 [proc,trail_clue_hard_rare]
-def_int $random = random(27);
+def_int $random = random(25);
 
 switch_int ($random) {
     case 0: inv_add(reward, robin_hood_hat, 1);
     case 1: inv_add(reward, rune_full_helm_t, 1);
     case 2: inv_add(reward, rune_platebody_t, 1);
     case 3: inv_add(reward, rune_platelegs_t, 1);
-    case 4: inv_add(reward, rune_plateskirt_t, 1);
-    case 5: inv_add(reward, rune_kiteshield_t, 1);
-    case 6: inv_add(reward, rune_full_helm_g, 1);
-    case 7: inv_add(reward, rune_platebody_g, 1);
-    case 8: inv_add(reward, rune_platelegs_g, 1);
-    case 9: inv_add(reward, rune_plateskirt_g, 1);
-    case 10: inv_add(reward, rune_kiteshield_g, 1);
-    case 11: inv_add(reward, pirates_hat, 1);
+    case 4: inv_add(reward, rune_kiteshield_t, 1);
+    case 5: inv_add(reward, rune_full_helm_g, 1);
+    case 6: inv_add(reward, rune_platebody_g, 1);
+    case 7: inv_add(reward, rune_platelegs_g, 1);
+    case 8: inv_add(reward, rune_kiteshield_g, 1);
+    case 9: inv_add(reward, pirates_hat, 1);
 
     // TODO - rename these OBJs.
-    case 12: inv_add(reward, obj_2639, 1);
-    case 13: inv_add(reward, obj_2641, 1);
-    case 14: inv_add(reward, obj_2643, 1);
+    case 10: inv_add(reward, obj_2639, 1);
+    case 11: inv_add(reward, obj_2641, 1);
+    case 12: inv_add(reward, obj_2643, 1);
 
-    case 15: inv_add(reward, zamorak_full_helm, 1);
-    case 16: inv_add(reward, zamorak_platebody, 1);
-    case 17: inv_add(reward, zamorak_platelegs, 1);
-    case 18: inv_add(reward, zamorak_kiteshield, 1);
-    case 19: inv_add(reward, guthix_full_helm, 1);
-    case 20: inv_add(reward, guthix_platebody, 1);
-    case 21: inv_add(reward, guthix_platelegs, 1);
-    case 22: inv_add(reward, guthix_kiteshield, 1);
-    case 23: inv_add(reward, saradomin_full_helm, 1);
-    case 24: inv_add(reward, saradomin_platebody, 1);
-    case 25: inv_add(reward, saradomin_platelegs, 1);
-    case 26: inv_add(reward, saradomin_kiteshield, 1);
+    case 13: inv_add(reward, zamorak_full_helm, 1);
+    case 14: inv_add(reward, zamorak_platebody, 1);
+    case 15: inv_add(reward, zamorak_platelegs, 1);
+    case 16: inv_add(reward, zamorak_kiteshield, 1);
+    case 17: inv_add(reward, guthix_full_helm, 1);
+    case 18: inv_add(reward, guthix_platebody, 1);
+    case 19: inv_add(reward, guthix_platelegs, 1);
+    case 20: inv_add(reward, guthix_kiteshield, 1);
+    case 21: inv_add(reward, saradomin_full_helm, 1);
+    case 22: inv_add(reward, saradomin_platebody, 1);
+    case 23: inv_add(reward, saradomin_platelegs, 1);
+    case 24: inv_add(reward, saradomin_kiteshield, 1);
 }
