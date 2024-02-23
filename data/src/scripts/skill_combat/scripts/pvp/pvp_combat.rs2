@@ -1,0 +1,144 @@
+[opplayer2,_]
+if (~pvp_level_check = false) {
+    return;
+}
+if (~pvp_singles_check = false) {
+    return;
+}
+@pvp_combat_start;
+
+[applayer2,_]
+if (~pvp_level_check = false) {
+    return;
+}
+def_int $distance = distance(coord, .coord);
+def_int $attackrange = 0;
+if (inv_getobj(worn, ^wearpos_rhand) ! null) {
+    $attackrange = min(oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange), 10);
+    if (%damagestyle = ^style_ranged_longrange) {
+        $attackrange = min(add($attackrange, 2), 10);
+    }
+}
+
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
+    $attackrange = 10;
+}
+if ($attackrange <= 1) {
+    p_aprange($attackrange); // walk then op again
+    return;
+}
+if (~pvp_singles_check = false) {
+    return;
+}
+p_aprange($attackrange);
+@pvp_combat_start;
+
+[label,pvp_combat_start]
+if (%damagetype = ^ranged_style) {
+    @pvp_ranged_attack;
+}
+
+// if autocast is enabled and spell is selected
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
+    // look for spell in db
+    def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
+    def_boolean $passes;
+
+    // define spell runes
+    def_namedobj $rune1;
+    def_int $rune_count1;
+    def_namedobj $rune2;
+    def_int $rune_count2;
+    def_namedobj $rune3;
+    def_int $rune_count3;
+
+    // check runes
+    $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    if ($passes = false) {
+        return;
+    }
+
+    // in osrs you cant tick manip with autocast delay, so its prob its on varp?
+    // p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    return;
+}
+@pvp_melee_attack;
+
+[proc,pvp_level_check]()(boolean)
+// not high enough level
+def_int $combat_level_diff = abs(sub(~player_combat_level, ~.player_combat_level));
+def_int $wilderness_level = min(~wilderness_level(coord), ~wilderness_level(.coord));
+if ($wilderness_level = 0) {
+    mes("You can't attack players who aren't in the Wilderness.");
+    return(false);
+}
+if ($wilderness_level < $combat_level_diff) {
+    mes("Your level difference is too great!");
+    mes("You need to move deeper into the Wilderness.");
+    return(false);
+}
+return(true);
+
+[proc,pvp_singles_check]()(boolean)
+// if multi, return true
+if (~inzone_coord_pair_table(multiway_zones, .coord) = true) {
+    return(true);
+}
+if (add(%lastcombat, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null) {
+    mes("I'm already under attack.");
+    return(false);
+}
+if (add(.%lastcombat, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null) {
+    mes("Someone else is already fighting your apponent.");
+    return(false);
+}
+return(true);
+
+[proc,pvp_hit_roll](int $damagetype)(boolean)
+def_int $attack_roll = ~player_attack_roll_specific($damagetype);
+def_int $defence_roll = ~.player_defence_roll_specific($damagetype);
+//mes("Clock: <tostring(map_clock)>, Player A: <tostring($attack_roll)>, NPC D: <tostring($defence_roll)>, Player Max: <tostring(%com_maxhit)>");
+//mes("Attack roll: <tostring($attack_roll)>, Defence roll: <tostring($defence_roll)>");
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    return(true);
+}
+return(false);
+
+
+//https://oldschool.runescape.wiki/w/Combat#PvP_bonus_experience
+[proc,pvp_xp_multiplier](int $combat_level)(int)
+return(min(1125, add(1000, divide(multiply(divide($combat_level, 20), 1000), 40))));
+
+[debugproc,c]
+mes(tostring(~pvp_xp_multiplier(~player_combat_level)));
+
+
+[proc,give_combat_experience_pvp](int $damagestyle, int $base, int $multiplier)
+switch_int($damagestyle) {
+    case ^style_melee_accurate : 
+        givexp(attack, scale($multiplier, 1000, scale(400, 100, $base)));
+    case ^style_melee_aggressive : 
+        givexp(strength, scale($multiplier, 1000, scale(400, 100, $base)));
+    case ^style_melee_defensive : 
+        givexp(defence, scale($multiplier, 1000, scale(400, 100, $base)));
+    case ^style_melee_controlled : 
+        givexp(attack, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(strength, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(133, 100, $base)));
+    case ^style_ranged_accurate, ^style_ranged_rapid : 
+        givexp(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
+    case ^style_ranged_longrange : 
+        givexp(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(200, 100, $base)));
+    case ^style_magic_normal :
+        givexp(magic, scale($multiplier, 1000, scale(200, 100, $base)));
+    case ^style_magic_defensive : 
+        givexp(magic, scale($multiplier, 1000, scale(133, 100, $base)));
+        givexp(defence, scale($multiplier, 1000, scale(100, 100, $base)));
+    case default : return;
+}
+givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
+
+// needs to be a queue
+[proc,.pvp_damage_player](int $damage)
+~.damage_self($damage);

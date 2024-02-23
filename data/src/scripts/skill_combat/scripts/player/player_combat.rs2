@@ -109,6 +109,15 @@ switch_int ($damagetype) {
 }
 error("style of <tostring($damagetype)> not defined in switch for player_defence_roll_specific");
 
+[proc,.player_defence_roll_specific](int $damagetype)(int)
+switch_int ($damagetype) {
+    case ^stab_style: return(.%com_stabdef);
+    case ^slash_style: return(.%com_slashdef);
+    case ^crush_style: return(.%com_crushdef);
+    case ^ranged_style: return(.%com_rangedef);
+    case ^magic_style: return(.%com_magicdef);
+}
+
 [proc,player_can_attack_npc]()(boolean)
 if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
     return(true);
