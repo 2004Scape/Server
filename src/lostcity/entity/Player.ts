@@ -2008,7 +2008,7 @@ export default class Player extends PathingEntity {
                                 const lx = parseInt(args2[3]);
                                 const lz = parseInt(args2[4]);
 
-                                params.push(Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz));
+                                params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
                                 break;
                             }
                             case ScriptVarType.INTERFACE: {

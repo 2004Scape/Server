@@ -338,6 +338,7 @@ export default class Zone {
         const packed = x | (z << 3) | (LocShapes.layer(shape) << 6);
 
         // console.log('changeLoc(): changing loc on tile');
+        this.locs.add(packed);
         this.locInfo.set(packed, id | (shape << 16) | (angle << 21));
         this.locAddEvent.add(packed);
         this.locChangeTimer.set(packed, World.currentTick + duration);
