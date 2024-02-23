@@ -141,7 +141,10 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
     def_npc_stat $npc_stat = ~convert_stat_to_npc_stat($stat);
     if (npc_stat($npc_stat) < npc_basestat($npc_stat)) {
         // in osrs, confuse and weaken spell have a different message
-        if (($npc_stat = attack & $spell = ^confuse) | ($npc_stat = strength & $spell = ^weaken)) {
+        if (($npc_stat = attack & $spell = ^confuse)) {
+            // yes theres an extra period. only for pvp
+            mes("Your foe's <lowercase(~stat_name($stat))> has already been lowered..");
+        } else if ($npc_stat = strength & $spell = ^weaken) {
             mes("Your foe's <lowercase(~stat_name($stat))> has already been lowered.");
         } else {
             mes("Your foe's <lowercase(~stat_name($stat))> has already been weakened.");

@@ -135,6 +135,7 @@
 [command,settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
+[command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
@@ -167,6 +168,7 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,setmovecheck]
+[command,.setmovecheck]
 [command,clearqueue](queue $queue)
 [command,afk_event]()(int)
 [command,lowmemory]()(boolean)
