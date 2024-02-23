@@ -1,0 +1,19 @@
+// Shop Keeper
+// TODO - facial animations need game verifying.
+[opnpc1,npc_561]
+~chatplayer(neutral, "Hello.");
+~chatnpc(neutral, "So, are you looking to buy weapons? King Lathas keeps us very well stocked.");
+
+def_int $option = ~p_choice2("What do you have?", 0, "No thanks.", 1);
+
+switch_int ($option) {
+    case 0: {
+        ~chatplayer(neutral, "What do you have?");
+        ~chatnpc(neutral, "Take a look.");
+        ~openshop_activenpc;
+    }
+
+    case 1: {
+        ~chatplayer(neutral, "No thanks.");
+    }
+}
