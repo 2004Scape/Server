@@ -4,12 +4,71 @@ def_int $rolls = calc(4 + random(3));
 def_int $roll = 0;
 
 while ($roll < $rolls) {
-    // Rare drop chance is 1/13. @https://twitter.com/JagexTide/status/1131933683714330624
+    // Rare drop chance was 1/13 in OSRS in 2019. @https://twitter.com/JagexTide/status/1131933683714330624
+
     if(random(13) = 0) {
-
+        gosub(trail_clue_hard_rare);
     } else {
-
+        gosub(trail_clue_hard_normal);
     }
 }
 
 ~trail_complete;
+
+[proc,trail_clue_hard_normal]
+def_int $random = random(20);
+
+switch_int ($random) {
+    case 0: inv_add(reward, coins, calc(1000 + random(4000)));
+    case 1: inv_add(reward, cert_lobster, calc(12 + random(3)));
+    case 2: inv_add(reward, cert_shark, calc(12 + random(3)));
+    case 3: inv_add(reward, naturerune, calc(30 + random(20)));
+    case 4: inv_add(reward, lawrune, calc(30 + random(20)));
+    case 5: inv_add(reward, bloodrune, calc(20 + random(10)));
+    case 6: inv_add(reward, rune_full_helm, 1);
+    case 7: inv_add(reward, rune_platebody, 1);
+    case 8: inv_add(reward, rune_platelegs, 1);
+    case 9: inv_add(reward, rune_plateskirt, 1);
+    case 10: inv_add(reward, rune_kiteshield, 1);
+    case 11: inv_add(reward, rune_longsword, 1);
+    case 12: inv_add(reward, rune_dagger, 1);
+    case 13: inv_add(reward, rune_battleaxe, 1);
+    case 14: inv_add(reward, rune_axe, 1);
+    case 15: inv_add(reward, rune_pickaxe, 1);
+    case 16: inv_add(reward, black_dragonhide_body, 1);
+    case 17: inv_add(reward, black_dragonhide_chaps, 1);
+    case 18: inv_add(reward, magic_shortbow, 1);
+    case 19: inv_add(reward, magic_longbow, 1);
+}
+
+[proc,trail_clue_hard_rare]
+def_int $random = random(25);
+
+switch_int ($random) {
+    case 0: inv_add(reward, trail_robin_hood_hat, 1);
+    case 1: inv_add(reward, rune_full_helm_trim, 1);
+    case 2: inv_add(reward, rune_platebody_trim, 1);
+    case 3: inv_add(reward, rune_platelegs_trim, 1);
+    case 4: inv_add(reward, rune_kiteshield_trim, 1);
+    case 5: inv_add(reward, rune_full_helm_gold, 1);
+    case 6: inv_add(reward, rune_platebody_gold, 1);
+    case 7: inv_add(reward, rune_platelegs_gold, 1);
+    case 8: inv_add(reward, rune_kiteshield_gold, 1);
+    case 9: inv_add(reward, trail_pirates_hat, 1);
+    case 10: inv_add(reward, trail_cavalier_tan, 1);
+    case 11: inv_add(reward, trail_cavalier_brown, 1);
+    case 12: inv_add(reward, trail_cavalier_black, 1);
+
+    case 13: inv_add(reward, rune_full_helm_zamorak, 1);
+    case 14: inv_add(reward, rune_platebody_zamorak, 1);
+    case 15: inv_add(reward, rune_platelegs_zamorak, 1);
+    case 16: inv_add(reward, rune_kiteshield_zamorak, 1);
+    case 17: inv_add(reward, rune_full_helm_guthix, 1);
+    case 18: inv_add(reward, rune_platebody_guthix, 1);
+    case 19: inv_add(reward, rune_platelegs_guthix, 1);
+    case 20: inv_add(reward, rune_kiteshield_guthix, 1);
+    case 21: inv_add(reward, rune_full_helm_saradomin, 1);
+    case 22: inv_add(reward, rune_platebody_saradomin, 1);
+    case 23: inv_add(reward, rune_platelegs_saradomin, 1);
+    case 24: inv_add(reward, rune_kiteshield_saradomin, 1);
+}
