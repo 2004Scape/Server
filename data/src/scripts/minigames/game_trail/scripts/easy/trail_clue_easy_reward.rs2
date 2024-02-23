@@ -4,12 +4,12 @@ def_int $rolls = calc(2 + random(3));
 def_int $roll = 0;
 
 while ($roll < $rolls) {
-    // Rare drop chance is 1/12 in OSRS. @https://twitter.com/JagexTide/status/1131933683714330624
+    // Rare drop chance was 1/12 in OSRS in 2019. @https://twitter.com/JagexTide/status/1131933683714330624
     // This was adjusted from 1/21 at clue expansion, according to Mod John C:
     //
-    // Previously it was 1/21 to jump to the rare item list then 1/67 at each of the rewards,
+    // "Previously it was 1/21 to jump to the rare item list then 1/67 at each of the rewards,
     // effectively 1/1407. To keep each reward the same rarity I made it 1/13 to jump to the rare table
-    // which now has 108 rewards, effectively 1404, which is as close as I could make it.
+    // which now has 108 rewards, effectively 1404, which is as close as I could make it."
     //
     // Assuming the rarity of any given object from the rare drop tables, have stayed consistent throughout
     // the years, this lands our chance to land on the rare drop table at 1/117.

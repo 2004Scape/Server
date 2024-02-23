@@ -3,11 +3,11 @@ def_int $rolls = calc(3 + random(3));
 def_int $roll = 0;
 
 while ($roll < $rolls) {
-    // Rare drop chance is 1/11. @https://twitter.com/JagexTide/status/1131933683714330624
+    // Rare drop chance was 1/11 in OSRS in 2019. @https://twitter.com/JagexTide/status/1131933683714330624
     if(random(11) = 0) {
-
+        gosub(trail_clue_hard_rare);
     } else {
-
+        gosub(trail_clue_hard_normal);
     }
 
     $roll = calc($roll + 1);
@@ -15,4 +15,18 @@ while ($roll < $rolls) {
 
 ~trail_complete;
 
+[proc,trail_clue_medium_normal]
+def_int $random = random();
+
+switch_int ($random)
+{
+    
+}
+
 [proc,trail_clue_medium_rare]
+def_int $random = random();
+
+switch_int ($random)
+{
+
+}
