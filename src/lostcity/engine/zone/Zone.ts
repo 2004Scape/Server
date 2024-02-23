@@ -167,11 +167,8 @@ export default class Zone {
             }
 
             const type = LocType.get(id);
-    
-            if (type.blockwalk) {
-                const { x: zoneX, z: zoneZ } = ZoneManager.unpackIndex(this.index);
-                World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, false);
-            }
+            const { x: zoneX, z: zoneZ } = ZoneManager.unpackIndex(this.index);
+            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, false);
 
             // console.log('locDelEvent:', x, z, id, shape, angle, isStatic);
         }
@@ -199,11 +196,8 @@ export default class Zone {
             }
 
             const type = LocType.get(id);
-    
-            if (type.blockwalk) {
-                const { x: zoneX, z: zoneZ } = ZoneManager.unpackIndex(this.index);
-                World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, true);
-            }
+            const { x: zoneX, z: zoneZ } = ZoneManager.unpackIndex(this.index);
+            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, type.blockwalk);
 
             // console.log('locAddEvent:', x, z, id, shape, angle, isStatic);
         }
@@ -292,10 +286,7 @@ export default class Zone {
         this.locInfo.set(packed, packedInfo);
 
         const type = LocType.get(id);
-
-        if (type.blockwalk) {
-            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, true);
-        }
+        World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, type.blockwalk);
     }
 
     addLoc(absX: number, absZ: number, id: number, shape: number, angle: number, duration: number) {
@@ -325,10 +316,7 @@ export default class Zone {
         // console.log('addLoc(): adding loc on tile');
 
         const type = LocType.get(id);
-
-        if (type.blockwalk) {
-            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, true);
-        }
+        World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, type.blockwalk);
 
         if (this.locDelEvent.has(packed)) {
             // console.log('addLoc(): clearing old delete event');
@@ -369,9 +357,7 @@ export default class Zone {
             const type = LocType.get(info & 0xFFFF);
             const angle = (info >> 21) & 3;
 
-            if (type.blockwalk) {
-                World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, false);
-            }
+            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, false);
         }
 
         // (temporarily) delete static loc if it exists
@@ -385,9 +371,7 @@ export default class Zone {
             const type = LocType.get(staticInfo & 0xFFFF);
             const angle = (staticInfo >> 21) & 3;
 
-            if (type.blockwalk) {
-                World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, false);
-            }
+            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, false);
         }
 
         if (this.locAddEvent.has(packed)) {
