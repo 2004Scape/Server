@@ -89,7 +89,8 @@ scope=perm
 [boat_takeoff]
 transmit=yes
 
-[varp_78]
+[pk_skull]
+scope=perm
 
 [xplamp]
 transmit=yes

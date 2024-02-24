@@ -26,6 +26,8 @@ settimer(general_macro_events, 500);
 ~check_chest_macro_gas;
 // for logout out during a general macro event, they respawn when you log back in
 ~macro_event_general_check;
+// so pk skulls persist after logging back in
+~set_pk_skull_login;
 
 
 if (%tutorial_progress < ^tutorial_complete) {

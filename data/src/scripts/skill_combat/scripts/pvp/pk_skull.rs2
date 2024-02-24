@@ -11,6 +11,7 @@ return(true);
 // requires active_player
 [proc,pk_skull](int $duration)
 ~headicon_add(^headicon_skull);
+%pk_skull = add(map_clock, $duration);
 softtimer(pk_skull_timer, $duration);
 
 [proc,clear_pk_skull]
@@ -19,3 +20,12 @@ clearsofttimer(pk_skull_timer);
 
 [softtimer,pk_skull_timer]
 ~clear_pk_skull;
+
+[proc,set_pk_skull_logout]
+%pk_skull = sub(%pk_skull, map_clock);
+
+[proc,set_pk_skull_login]
+if (%pk_skull < 1) {
+    return;
+}
+~pk_skull(%pk_skull);
