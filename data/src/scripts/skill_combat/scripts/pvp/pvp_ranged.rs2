@@ -58,6 +58,11 @@ if ($weapon = null) {
 } else {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
 }
+
+if (~deserves_pk_skull = true) {
+    ~pk_skull(3000); // 3000 ticks, or 30 minutes
+}
+
 .%lastcombat_pvp = map_clock;
 .%defending_player_uid = uid;
 p_opplayer(2);

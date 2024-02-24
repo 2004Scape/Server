@@ -1,0 +1,22 @@
+// requires .active_player and active_player
+[proc,deserves_pk_skull]()(boolean)
+// todo: pk skull logic? I think theres some weird engine command they use?
+if (~headicon_exists(^headicon_skull) = true) { 
+    // in osrs pk skull resets after each new player you attack.
+    // this was not the case before this update though: https://oldschool.runescape.wiki/w/Update:Grand_Exchange_Tax_%26_Item_Sink
+    return(false);
+}
+return(true);
+
+// requires active_player
+[proc,pk_skull](int $duration)
+~headicon_add(^headicon_skull);
+softtimer(pk_skull_timer, $duration);
+
+[proc,clear_pk_skull]
+~headicon_del(^headicon_skull);
+clearsofttimer(pk_skull_timer);
+
+[softtimer,pk_skull_timer]
+~headicon_del(^headicon_skull);
+clearsofttimer(pk_skull_timer);

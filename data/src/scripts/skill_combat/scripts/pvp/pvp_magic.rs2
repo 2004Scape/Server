@@ -227,6 +227,11 @@ if (~pvp_hit_roll(^magic_style) = true) {
 }
 
 // todo: heropoints
+
+if (~deserves_pk_skull = true) {
+    ~pk_skull(3000); // 3000 ticks, or 30 minutes
+}
+
 .%lastcombat_pvp = map_clock;
 .%defending_player_uid = uid;
 
