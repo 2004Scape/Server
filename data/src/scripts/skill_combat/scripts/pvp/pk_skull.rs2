@@ -18,5 +18,4 @@ softtimer(pk_skull_timer, $duration);
 clearsofttimer(pk_skull_timer);
 
 [softtimer,pk_skull_timer]
-~headicon_del(^headicon_skull);
-clearsofttimer(pk_skull_timer);
+~clear_pk_skull;
