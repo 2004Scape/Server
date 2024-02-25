@@ -162,7 +162,8 @@ if (~pvp_hit_roll(^magic_style) = true) {
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
     .sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
 
-    $damage = randominc($maxhit);
+    $damage = randominc($maxhit); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
+    $damage = min($damage, .stat(hitpoints));
     if ($maxhit ! null) {
         //.queue(pvp_damage_player, $damage, calc($duration / 30 + 1)); // delayed an extra tick in osrs
         if (.p_finduid(.uid) = true) { // todo: queue this

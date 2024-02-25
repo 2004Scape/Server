@@ -31,6 +31,7 @@ def_int $damage = 0;
 // https://oldschool.runescape.wiki/w/Combat#PvP_bonus_experience
 if (~pvp_hit_roll(%damagetype) = true) {
     $damage = randominc(%com_maxhit);
+    $damage = min($damage, .stat(hitpoints)); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
     ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
 }
 .if_close;
