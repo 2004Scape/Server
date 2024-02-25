@@ -145,19 +145,20 @@ givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 [proc,.pvp_damage_player](int $damage)
 ~.damage_self($damage);
 if (.stat(hitpoints) = 0) {
+    // these messages need to be in the death queue https://youtu.be/9Q8BbGi2VWg?t=136
     def_int $random = random(11);
     switch_int($random) {
-        case 0 : mes("You have defeated <displayname>.");
-        case 1 : mes("<displayname> was no match for you.");
-        case 2 : mes("With a crushing blow you finish <displayname>.");
-        case 3 : mes("Can anyone defeat you? Certainly not <displayname>.");
-        case 4 : mes("<displayname> regrets the day they met you in combat.");
-        case 5 : mes("It's all over for <displayname>.");
-        case 6 : mes ("<displayname> didn't stand a chance against you.");
-        case 7 : mes("A humiliating defeat for <displayname>.");
-        case 8 : mes("<displayname> falls before your might.");
-        case 9 : mes("<displayname> has won a free ticket to Lumbridge.");
-        case 10 : mes("You were clearly a better fighter than <displayname>.");
-        case default : mes("You have defeated <displayname>.");
+        case 0 : mes("You have defeated <.displayname>.");
+        case 1 : mes("<.displayname> was no match for you.");
+        case 2 : mes("With a crushing blow you finish <.displayname>.");
+        case 3 : mes("Can anyone defeat you? Certainly not <.displayname>.");
+        case 4 : mes("<.displayname> regrets the day they met you in combat.");
+        case 5 : mes("It's all over for <.displayname>.");
+        case 6 : mes ("<.displayname> didn't stand a chance against you.");
+        case 7 : mes("A humiliating defeat for <.displayname>.");
+        case 8 : mes("<.displayname> falls before your might.");
+        case 9 : mes("<.displayname> has won a free ticket to Lumbridge.");
+        case 10 : mes("You were clearly a better fighter than <.displayname>.");
+        case default : mes("You have defeated <.displayname>.");
     }
 }
