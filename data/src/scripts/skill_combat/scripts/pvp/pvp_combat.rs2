@@ -55,6 +55,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_s
     // check runes
     $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
     if ($passes = false) {
+        %attackstyle_magic = 0;
         return;
     }
 
