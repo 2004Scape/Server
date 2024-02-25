@@ -11,6 +11,7 @@ anim(human_death, 0);
 p_delay(6);
 
 // todo: save 3 items + protect items prayer
+// todo: pk skull lose all items
 def_int $i = 0;
 def_int $size = inv_size(inv);
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
