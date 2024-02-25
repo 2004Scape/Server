@@ -26,7 +26,8 @@ if (~npc_is_attackable(npc_type) = false) {
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
-    ~give_combat_experience(%damagestyle, min($damage, npc_stat(hitpoints)), npc_param(combat_xp_multiplier));
+    $damage = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
 }
 
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
