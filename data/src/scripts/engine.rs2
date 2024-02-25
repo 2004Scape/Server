@@ -163,6 +163,7 @@
 [command,p_opobj](int $op)
 [command,p_opplayer](int $op)
 [command,.p_opplayer](int $op)
+[command,p_opplayert](component $spell)
 [command,player_findallzone](coord $coord)
 [command,player_findnext]()(boolean)
 [command,allowdesign](boolean $allow)

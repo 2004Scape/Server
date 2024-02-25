@@ -59,7 +59,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_s
     }
 
     // in osrs you cant tick manip with autocast delay, so its prob its on varp?
-    // p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return;
 }
 @pvp_melee_attack;

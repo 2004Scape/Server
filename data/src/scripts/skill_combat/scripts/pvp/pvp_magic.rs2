@@ -65,7 +65,7 @@ def_dbrow $spell_data = ~get_spell_data($spell);
 
 // mes("<tostring(map_clock)>, <tostring(%action_delay)>");
 if (map_clock < %action_delay) {
-    //p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return;
 }
 
@@ -238,6 +238,6 @@ if (~deserves_pk_skull = true) {
 ~set_pk_vars;
 
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
-    //p_opplayert(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
+    p_opplayert(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
     return;
 }

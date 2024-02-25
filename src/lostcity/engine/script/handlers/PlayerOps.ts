@@ -905,6 +905,21 @@ const PlayerOps: CommandHandlers = {
             state.activePlayer.colors[colorSlot] = color;
         }
     },
+
+    [ScriptOpcode.P_OPPLAYERT]: checkedHandler(ProtectedActivePlayer, state => {
+        const spellId = state.popInt();
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        if (state.activePlayer.target !== null) {
+            return;
+        }
+        const target = state._activePlayer2;
+        if (!target) {
+            return;
+        }
+        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYERT, spellId);
+    }),
 };
 
 /**

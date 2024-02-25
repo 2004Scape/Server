@@ -151,6 +151,7 @@ enum ScriptOpcode {
     P_OPNPCT, // official
     P_OPOBJ,
     P_OPPLAYER,
+    P_OPPLAYERT, // official
     P_PAUSEBUTTON, // official
     P_STOPACTION, // official
     P_TELEJUMP, // official
