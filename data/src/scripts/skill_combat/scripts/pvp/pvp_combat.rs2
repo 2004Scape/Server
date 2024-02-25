@@ -91,7 +91,7 @@ if ((add(%lastcombat_pvp, 8) > map_clock & .%defending_player_uid ! uid & .%defe
 }
 if ((add(.%lastcombat_pvp, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null)
     | add(.%lastcombat, 8) > map_clock) {
-    mes("Someone else is already fighting your apponent.");
+    mes("Someone else is already fighting your opponent.");
     return(false);
 }
 return(true);
