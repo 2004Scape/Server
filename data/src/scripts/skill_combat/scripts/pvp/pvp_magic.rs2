@@ -156,6 +156,12 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
 }
 
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
+
+def_boolean $has_prot_prayer = ~.check_protect_prayer(^magic_style);
+if ($has_prot_prayer = true) {
+    $maxhit = scale(6, 10, $maxhit); // reduction of 40%
+}
+
 def_int $damage = 0;
 // if spell is successful
 if (~pvp_hit_roll(^magic_style) = true) {
@@ -201,10 +207,14 @@ if (~pvp_hit_roll(^magic_style) = true) {
         $i = add($i, 1);
     }
     // freeze player if spell has freeze effect
-    if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-        //.queue(.freeze_player, 0, db_getfield($spell_data, magic_spell_table:freeze_time, 0));
+    def_int $freeze_time = db_getfield($spell_data, magic_spell_table:freeze_time, 0);
+    if ($freeze_time > 0) {
+        if ($has_prot_prayer = true) {
+            $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
+        }
+        //.queue(.freeze_player, 0, $freeze_time);
         if (.p_finduid(.uid) = true) { // todo: queue this
-            .%stunned = calc(map_clock + $duration + 1);
+            .%stunned = calc(map_clock + $freeze_time + 1);
             //.setmovecheck(frozen);
         }
     }
