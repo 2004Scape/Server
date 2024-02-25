@@ -1,12 +1,24 @@
 // requires .active_player and active_player
 [proc,deserves_pk_skull]()(boolean)
-// todo: pk skull logic? I think theres some weird engine command they use?
 if (~headicon_exists(^headicon_skull) = true) { 
     // in osrs pk skull resets after each new player you attack.
     // this was not the case before this update though: https://oldschool.runescape.wiki/w/Update:Grand_Exchange_Tax_%26_Item_Sink
     return(false);
 }
+if (.%pk_prey1 = uid | .%pk_prey2 = uid | %pk_predator1 = .uid | %pk_predator2 = .uid | %pk_predator3 = .uid) {
+    return(false);
+}
 return(true);
+
+[proc,set_pk_vars]
+// for preys
+%pk_prey2 = %pk_prey1;
+%pk_prey1 = .uid; 
+
+// for predators
+.%pk_predator3 = .%pk_predator2;
+.%pk_predator2 = .%pk_predator1;
+.%pk_predator1 = uid;
 
 // requires active_player
 [proc,pk_skull](int $duration)
@@ -22,6 +34,10 @@ clearsofttimer(pk_skull_timer);
 ~clear_pk_skull;
 
 [proc,set_pk_skull_logout]
+if (~headicon_exists(^headicon_skull) = false) {
+    %pk_skull = null;
+    return;
+}
 %pk_skull = sub(%pk_skull, map_clock);
 
 [proc,set_pk_skull_login]

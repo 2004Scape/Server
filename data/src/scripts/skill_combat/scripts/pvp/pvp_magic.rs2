@@ -234,6 +234,7 @@ if (~deserves_pk_skull = true) {
 
 .%lastcombat_pvp = map_clock;
 .%defending_player_uid = uid;
+~set_pk_vars;
 
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
     //p_opplayert(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));

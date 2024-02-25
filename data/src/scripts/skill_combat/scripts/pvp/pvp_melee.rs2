@@ -50,4 +50,5 @@ if (~deserves_pk_skull = true) {
 
 .%lastcombat_pvp = map_clock;
 .%defending_player_uid = uid;
+~set_pk_vars;
 p_opplayer(2);
