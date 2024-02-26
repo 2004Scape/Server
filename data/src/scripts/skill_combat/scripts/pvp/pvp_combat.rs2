@@ -75,7 +75,7 @@ if ($wilderness_level = 0) {
 }
 if ($wilderness_level < $combat_level_diff) {
     mes("Your level difference is too great!");
-    mes("You need to move deeper into the Wilderness.");
+    mes("You need to move deeper into the wilderness."); // wilderness is title'd in late 2005/2006 ish
     return(false);
 }
 return(true);
