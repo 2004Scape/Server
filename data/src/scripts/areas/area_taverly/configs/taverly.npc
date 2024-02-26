@@ -159,7 +159,7 @@ model2=model_2909_npc
 model3=model_2917_npc
 head1=model_53_idk_head
 
-[npc_896]
+[nora_t_hagg]
 vislevel=hide
 name=Nora T. Hagg
 desc=Distinctly witchey.
@@ -187,3 +187,4 @@ head2=model_102_obj_wear
 defaultmode=patrol
 patrol1=0_45_54_50_7,0
 patrol2=0_45_54_24_7,0
+huntmode=ball_caught

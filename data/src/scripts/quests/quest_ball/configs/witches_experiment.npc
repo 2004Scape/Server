@@ -1,0 +1,106 @@
+[witches_experiment_p1]
+name=Witches experiment
+desc=Looks unnatural.
+walkanim=skavid_walk
+readyanim=skavid_ready
+op2=Attack
+vislevel=19
+recol1s=9647
+recol1d=52120
+recol2s=127
+recol2d=23506
+model1=model_2999_npc
+// TODO respawnrate?
+hitpoints=21
+attack=18
+strength=10
+defence=19
+param=damagetype,^crush_style
+param=attack_anim,skavid_attack
+param=defend_anim,skavid_block
+param=death_anim,skavid_death
+param=attack_sound,imp_attack
+param=defend_sound,imp_hit
+param=death_sound,imp_death
+category=witches_experiment
+
+[witches_experiment_p2]
+name=Witches experiment second form
+desc=Looks unnatural.
+walkanim=giantspider_walk
+readyanim=giantspider_ready
+op2=Attack
+vislevel=30
+recol1s=10258
+recol1d=52120
+recol2s=8128
+recol2d=23506
+model1=model_2884_npc
+hitpoints=31
+attack=28
+strength=20
+defence=29
+param=damagetype,^crush_style
+param=attack_anim,giantspider_attack
+param=defend_anim,giantspider_block
+param=death_anim,giantspider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
+param=death_drop,null
+category=witches_experiment
+
+[witches_experiment_p3]
+name=Witches experiment third form
+desc=Looks unnatural.
+size=2
+walkanim=bear_walk
+readyanim=bear_ready
+op2=Attack
+vislevel=42
+recol1s=3491
+recol1d=52120
+recol2s=3377
+recol2d=49457
+recol3s=3346
+recol3d=23506
+model1=model_2966_npc
+// TODO respawnrate?
+hitpoints=41
+attack=38
+strength=30
+defence=39
+param=damagetype,^slash_style
+param=attack_anim,bear_attack
+param=defend_anim,bear_block
+param=death_anim,bear_death
+param=attack_sound,bear_attack
+param=defend_sound,bear_hit
+param=death_sound,bear_death
+category=witches_experiment
+
+[witches_experiment_p4]
+name=Witches experiment fourth form
+desc=Looks unnatural.
+walkanim=dog_walk
+readyanim=dog_ready
+op2=Attack
+vislevel=53
+recol1s=61
+recol1d=52120
+recol2s=90
+recol2d=49457
+recol3s=929
+recol3d=23506
+model1=model_2937_npc
+// TODO respawnrate?
+hitpoints=51
+attack=48
+strength=40
+defence=49
+param=damagetype,^stab_style
+param=attack_anim,dog_attack
+param=defend_anim,dog_block
+param=death_anim,dog_death
+param=death_drop,null
+category=witches_experiment

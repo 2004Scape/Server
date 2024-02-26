@@ -12,7 +12,7 @@ switch_int(%ball_progress) {
                         %ball_progress = ^ball_started;
                         ~send_quest_progress(questlist:ball, %ball_progress, ^ball_complete);
                         ~chatplayer(neutral, "Ok, I'll see what I can do.");
-                        ~chatnpc(happy, "Thanks mister!");
+                        ~chatnpc(happy, "Thanks <text_gender("mister", "lady")>!");
                     case 2:
                         ~chatplayer(angry, "Get it back yourself.");
                         ~chatnpc(angry, "You're a meany!");
