@@ -39,7 +39,7 @@
 38=lastcombat
 39=magic_utility_delay
 40=eat_delay
-41=defending_npc_uid
+41=aggressive_npc
 42=varp_42
 43=attackstyle
 44=com_stabattack
@@ -59,7 +59,7 @@
 58=action_delay
 59=autocast_spell
 60=sheepherder_progress
-61=lastcombat_pvp
+61=varp_61
 62=gobdip_progress
 63=runemysteries_progress
 64=exit_essence_mine_coord

@@ -85,13 +85,15 @@ return(true);
 if (~inzone_coord_pair_table(multiway_zones, .coord) = true) {
     return(true);
 }
-if ((add(%lastcombat_pvp, 8) > map_clock & .%pk_predator1 ! uid & .%pk_predator1 ! null)
-    | add(%lastcombat, 8) > map_clock) {
+// if you have been attacked in the last 8 ticks, and the last person to attack you isnt your opponent
+// or an npc attacked you
+if (add(%lastcombat, 8) > map_clock & (%pk_predator1 ! .uid | %aggressive_npc ! null)) {
     mes("I'm already under attack.");
     return(false);
 }
-if ((add(.%lastcombat_pvp, 8) > map_clock & .%pk_predator1 ! uid & .%pk_predator1 ! null)
-    | add(.%lastcombat, 8) > map_clock) {
+// if your opponent has been attacked in the last 8 ticks, and the opponents last attacker is not you
+// or an npc attacked them 
+if (add(.%lastcombat, 8) > map_clock & (.%pk_predator1 ! uid | .%aggressive_npc ! null)) {
     mes("Someone else is already fighting your opponent.");
     return(false);
 }
@@ -161,5 +163,27 @@ if (.stat(hitpoints) = 0) {
         case 9 : mes("<.displayname> has won a free ticket to Lumbridge.");
         case 10 : mes("You were clearly a better fighter than <.displayname>.");
         case default : mes("You have defeated <.displayname>.");
+    }
+}
+
+[debugproc,singles]
+def_string $pk_preyname;
+def_string $pk_predatorname;
+if(.finduid(%pk_predator1) = true) {
+    $pk_predatorname = .displayname;
+}
+if(.finduid(%pk_prey1) = true) {
+    $pk_preyname = .displayname;
+}
+mes("Last person you attacked: <$pk_preyname>.");
+mes("Last person who attacked you: <$pk_predatorname>.");
+mes("Ticks ago you were in combat: <tostring(sub(map_clock, %lastcombat))>.");
+if(.finduid(%pk_prey1) = true) {
+    mes("Ticks ago your opponent was in combat: <tostring(sub(map_clock, .%lastcombat))>.");
+}
+if (npc_finduid(%aggressive_npc) = true) {
+    mes("Aggressive NPC: <npc_name>");
+    if (.finduid(%npc_aggressive_player) = true) {
+        mes("Aggressive NPC's target: <.displayname>");
     }
 }

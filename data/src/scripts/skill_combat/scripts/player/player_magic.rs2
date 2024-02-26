@@ -58,7 +58,7 @@
 [apnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
 
 [label,player_magic_spell_attack](int $spell)
-if (calc(%npc_lastcombat + 8) > map_clock & %npc_defending_uid ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
+if (calc(%npc_lastcombat + 8) > map_clock & %npc_aggressive_player ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
     mes("Someone else is fighting that.");
     return;
 }

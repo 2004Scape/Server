@@ -122,12 +122,14 @@ switch_int ($damagetype) {
 if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
     return(true);
 }
-if ((add(%lastcombat, 8) > map_clock & %defending_npc_uid ! npc_uid & %defending_npc_uid ! null)
-    | add(%lastcombat_pvp, 8) > map_clock) {
+// player has been attacked in the last 8 ticks, and not by the current npc
+// or player has been attacked in the last 8 ticks, and %aggressive_npc is null (for pvp)
+if (add(%lastcombat, 8) > map_clock & (%aggressive_npc ! npc_uid | %aggressive_npc = null)) {
     mes("I'm already under attack.");
     return(false);
 }
-if ((add(%npc_lastcombat, 8) > map_clock & %npc_defending_uid ! uid)) {
+// npc has been attacked in the last 8 ticks, and not by the current player
+if ((add(%npc_lastcombat, 8) > map_clock & %npc_aggressive_player ! uid)) {
     mes("Someone else is fighting that.");
     return(false);
 }

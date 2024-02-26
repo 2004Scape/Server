@@ -20,7 +20,8 @@ return(true);
 .%pk_predator2 = .%pk_predator1;
 .%pk_predator1 = uid;
 
-.%lastcombat_pvp = map_clock;
+.%lastcombat = map_clock;
+.%aggressive_npc = null; // prevents npc's from attacking your opponent after you attack them.
 
 // requires active_player
 [proc,pk_skull](int $duration)
