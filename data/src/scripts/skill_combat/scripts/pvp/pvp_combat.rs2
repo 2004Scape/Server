@@ -114,10 +114,6 @@ return(false);
 [proc,pvp_xp_multiplier](int $combat_level)(int)
 return(min(1125, add(1000, divide(multiply(divide($combat_level, 20), 1000), 40))));
 
-[debugproc,c]
-mes(tostring(~pvp_xp_multiplier(~player_combat_level)));
-
-
 [proc,give_combat_experience_pvp](int $damagestyle, int $base, int $multiplier)
 switch_int($damagestyle) {
     case ^style_melee_accurate : 
