@@ -1,5 +1,0 @@
-[debugproc,skull]
-~pk_skull(3000);
-
-[debugproc,clearskull]
-~clear_pk_skull;
