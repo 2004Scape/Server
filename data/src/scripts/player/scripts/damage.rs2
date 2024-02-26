@@ -11,6 +11,7 @@ anim(human_death, 0);
 p_delay(6);
 
 // todo: save 3 items + protect items prayer
+// todo: pk skull lose all items
 def_int $i = 0;
 def_int $size = inv_size(inv);
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
@@ -41,6 +42,7 @@ stat_heal(hitpoints, 99, 0);
 stat_heal(prayer, 99, 0);
 healenergy(10000);
 ~combat_clearqueue;
+~clear_pk_skull;
 // todo: end poison timer ~player_end_poison
 ~update_all($prev_wep);
 
@@ -78,3 +80,42 @@ if (gender() = 0) {
         }
     }
 sound_synth($sound, 0, 20);
+
+
+[proc,.damage_self](int $amount)
+.if_close;
+if ($amount > 0) {
+    .damage(.uid, 1, $amount);
+    ~.human_hit_sound;
+} else {
+    .damage(.uid, 0, 0);
+}
+
+// if (.stat(hitpoints) = 0 & .getqueue(player_death) < 1){
+//     .queue(player_death, 0);
+// }
+if (.stat(hitpoints) = 0){
+    .say("Pvp death is not implimented. Need support for .queue.");
+} 
+
+
+[proc,.human_hit_sound]
+def_int $rand;
+def_synth $sound;
+if (.gender() = 0) {
+        $rand = random(2);
+        switch_int($rand) {
+            case 0 : $sound = human_hit2;
+            case 1 : $sound = human_hit3;
+            case 2 : $sound = human_hit4;
+            case default : $sound = human_hit2;
+        }
+    } else {
+        $rand = random(1);
+        switch_int($rand) {
+            case 0 : $sound = female_hit;
+            case 1 : $sound = female_hit2;
+            case default : $sound = female_hit;
+        }
+    }
+.sound_synth($sound, 0, 20);

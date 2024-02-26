@@ -24,7 +24,7 @@ protect=no
 
 [eat_delay]
 
-[defending_npc_uid]
+[aggressive_npc]
 type=npc_uid
 protect=no
 
@@ -86,7 +86,9 @@ scope=perm
 [boat_takeoff]
 transmit=yes
 
-[varp_78]
+[pk_skull]
+protect=no
+scope=perm
 
 [xplamp]
 transmit=yes
@@ -125,15 +127,25 @@ scope=perm
 transmit=yes
 scope=perm
 
-[varp_117]
+[pk_prey1]
+protect=no
+type=player_uid
 
-[varp_118]
+[pk_prey2]
+protect=no
+type=player_uid
 
-[varp_119]
+[pk_predator1]
+protect=no
+type=player_uid
 
-[varp_120]
+[pk_predator2]
+protect=no
+type=player_uid
 
-[varp_121]
+[pk_predator3]
+protect=no
+type=player_uid
 
 [varp_123]
 

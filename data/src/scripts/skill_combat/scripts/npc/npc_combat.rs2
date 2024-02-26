@@ -8,7 +8,7 @@
 // npc flinch
 if (~npc_out_of_combat = true) {
     %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    %npc_attacking_uid = %npc_defending_uid;
+    %npc_attacking_uid = %npc_aggressive_player;
 }
 if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(opplayer2);
@@ -146,16 +146,19 @@ npc_queue(1, 0, $queue_delay);
 if (~inzone_coord_pair_table(multiway_zones, npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
     %npc_action_delay = add(map_clock, 8);
 }
-%npc_defending_uid = uid;
+%npc_aggressive_player = uid;
 %npc_lastcombat = map_clock;
 
 [proc,npc_set_attack_vars]
 %lastcombat = map_clock;
 %npc_lastattack = map_clock;
-%defending_npc_uid = npc_uid;
+%aggressive_npc = npc_uid;
 
 [proc,npc_can_attack_player]()(boolean)
-if (add(%lastcombat, 8) > map_clock & %defending_npc_uid ! npc_uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
+if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
+    return(true);
+}
+if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {
     return(false);
 }
 
