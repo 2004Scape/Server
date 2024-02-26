@@ -100,6 +100,108 @@ switch_int(%damagetype) {
 %com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
 %com_defendanim = ~combat_defend_anim($weapon);
 
+[proc,.player_combat_stat]
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $attack_prayer;
+def_int $defence_prayer;
+def_int $strength_prayer;
+def_int $rangebonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus,
+$rangebonus = ~.equip_get_bonuses;
+
+//adjust prayer drain
+.%prayer_drain_resistance = add(60, multiply($prayerbonus, 2));
+
+$attack_prayer = ~.check_attack_prayer;
+$defence_prayer = ~.check_defence_prayer;
+$strength_prayer = ~.check_strength_prayer;
+
+def_int $attack_level = .stat(attack);
+def_int $strength_level = .stat(strength);
+def_int $defence_level = .stat(defence);
+def_int $magic_level = .stat(magic);
+def_int $ranged_level = .stat(ranged);
+def_obj $weapon = .inv_getobj(worn, ^wearpos_rhand);
+
+// get style data
+def_dbrow $data = ~combat_get_weapon_style_data($weapon);
+
+// might be worth having a %damagetype, and %damagestyle varp
+def_int $damagetype = ~combat_get_damagetype($data, .%attackstyle);
+def_int $damagestyle = ~combat_get_damagestyle($data, .%attackstyle);
+
+// attack range
+
+
+// style bonuses
+def_int $attack_stylebonus;
+def_int $strength_stylebonus;
+def_int $defence_stylebonus;
+def_int $ranged_stylebonus;
+$attack_stylebonus,
+$strength_stylebonus,
+$defence_stylebonus,
+$ranged_stylebonus = ~combat_get_damagestyle_bonuses($damagestyle);
+
+// effective levels
+def_int $effective_attack = ~combat_effective_stat($attack_stylebonus, $attack_level, $attack_prayer);
+def_int $effective_strength = ~combat_effective_stat($strength_stylebonus, $strength_level, $strength_prayer);
+def_int $effective_defence = ~combat_effective_stat($defence_stylebonus, $defence_level, $defence_prayer);
+def_int $effective_magic = ~combat_effective_stat(1, $magic_level, 100); // no magic prayers
+def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_level, 100); // no ranged prayers
+
+// style related varps
+.%damagetype = $damagetype;
+.%damagestyle = $damagestyle;
+
+// defence rolls and attack rolls
+.%com_stabattack = ~combat_stat($effective_attack, $stabattack);
+.%com_stabdef = ~combat_stat($effective_defence, $stabdefence);
+.%com_slashattack = ~combat_stat($effective_attack, $stabattack);
+.%com_slashdef = ~combat_stat($effective_defence, $stabdefence);
+.%com_crushattack = ~combat_stat($effective_attack, $stabattack);
+.%com_crushdef = ~combat_stat($effective_defence, $stabdefence);
+.%com_magicattack = ~combat_stat($effective_magic, $magicattack);
+.%com_magicdef = ~combat_stat($effective_magic, $magicdefence);
+.%com_rangeattack = ~combat_stat($effective_ranged, $rangeattack);
+.%com_rangedef = ~combat_stat($effective_ranged, $rangedefence);
+
+def_int $melee_strength = ~combat_stat($effective_strength, $strengthbonus);
+def_int $ranged_strength = ~combat_stat($effective_ranged, $rangebonus);
+
+// maximum hit with all bonuses applied
+switch_int(.%damagetype) {
+    case ^stab_style, ^slash_style, ^crush_style: .%com_maxhit = ~combat_maxhit($melee_strength);
+    case ^ranged_style: .%com_maxhit = ~combat_maxhit($ranged_strength);
+}
+
+// weapon related varps
+.%com_attackanim, .%com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
+.%com_defendanim = ~combat_defend_anim($weapon);
+
 [proc,check_attack_prayer]()(int)
 if (%prayer_clarity = ^true) return (105);
 if (%prayer_improvedreflexes = ^true) return (110);
@@ -122,4 +224,28 @@ else return(100);
 if (($style = ^melee_style | $style = ^stab_style | $style = ^slash_style | $style = ^crush_style) & %prayer_protectfrommelee = ^true) return (true);
 if (($style = ^ranged_style) & %prayer_protectfrommissiles = ^true) return (true);
 if (($style = ^magic_style) & %prayer_protectfrommagic = ^true) return (true);
+else return (false);
+
+[proc,.check_attack_prayer]()(int)
+if (.%prayer_clarity = ^true) return (105);
+if (.%prayer_improvedreflexes = ^true) return (110);
+if (.%prayer_incrediblereflexes = ^true) return (115);
+else return(100);
+
+[proc,.check_defence_prayer]()(int)
+if (.%prayer_thickskin = ^true) return (105);
+if (.%prayer_rockskin = ^true) return (110);
+if (.%prayer_steelskin = ^true) return (115);
+else return(100);
+
+[proc,.check_strength_prayer]()(int)
+if (.%prayer_strengthburst = ^true) return (105);
+if (.%prayer_superhumanstrength = ^true) return (110);
+if (.%prayer_ultimatestrength = ^true) return (115);
+else return(100);
+
+[proc,.check_protect_prayer](int $style)(boolean)
+if (($style = ^melee_style | $style = ^stab_style | $style = ^slash_style | $style = ^crush_style) & .%prayer_protectfrommelee = ^true) return (true);
+if (($style = ^ranged_style) & .%prayer_protectfrommissiles = ^true) return (true);
+if (($style = ^magic_style) & .%prayer_protectfrommagic = ^true) return (true);
 else return (false);

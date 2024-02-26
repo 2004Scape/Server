@@ -8,7 +8,7 @@ return(~combat_stat($effective_magic, $magicattack));
 
 [movecheck,frozen]()(boolean)
 if (map_clock < %stunned) {
-    mes("You're frozen!"); // guess fornow
+    mes("A magical force stops you from moving.");
     return(false);
 }
 

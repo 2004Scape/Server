@@ -69,7 +69,7 @@ if (%action_delay > map_clock) {
 
 
 [label,player_magic_spell_attack](int $spell)
-if (calc(%npc_lastcombat + 8) > map_clock & %npc_defending_uid ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
+if (calc(%npc_lastcombat + 8) > map_clock & %npc_aggressive_player ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
     mes("Someone else is fighting that.");
     return;
 }
@@ -155,7 +155,7 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
     def_npc_stat $npc_stat = ~convert_stat_to_npc_stat($stat);
     if (npc_stat($npc_stat) < npc_basestat($npc_stat)) {
         // in osrs, confuse and weaken spell have a different message
-        if (($npc_stat = attack & $spell = ^confuse) | ($npc_stat = strength & $spell = ^weaken)) {
+        if (($npc_stat = strength & $spell = ^weaken) | ($npc_stat = attack & $spell = ^confuse)) {
             mes("Your foe's <lowercase(~stat_name($stat))> has already been lowered.");
         } else {
             mes("Your foe's <lowercase(~stat_name($stat))> has already been weakened.");
@@ -201,6 +201,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
     // roll 0-maxhit
     $damage = randominc(min($maxhit, npc_param(max_dealt)));
+    $damage = min($damage, npc_stat(hitpoints));
     // if maxhit is defined then damage npc
     if ($maxhit ! null) {
         // damage npc
@@ -213,7 +214,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
         if (npc_param(defend_sound) ! null) {
             sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
         }
-        ~give_combat_experience($damagestyle, min($damage, npc_stat(hitpoints)), npc_param(combat_xp_multiplier));
+        ~give_combat_experience($damagestyle, $damage, npc_param(combat_xp_multiplier));
     }
     // spell visual
     spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);

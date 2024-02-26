@@ -17,3 +17,41 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~np
     }
     p_opnpc(2);
 }
+
+// this needs fixing, and .queue support
+// [queue,.pvp_retaliate](player_uid $target_uid)
+// if (.finduid($target_uid) = true & .%auto_retaliate = ^player_auto_retaliate_on) {
+//     // player flinches player
+//     if (.%action_delay < map_clock) {
+//         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+//         def_int $delay = 4;
+//         if ($weapon ! null) {
+//             $delay = divide(oc_param($weapon, attackrate), 2);
+//         }
+//         if (.%damagestyle = ^style_ranged_rapid) {
+//             $delay = sub($delay, 1);
+//         }
+
+//         .%action_delay = add(map_clock, $delay);
+//     }
+//     .p_opplayer(2);
+// }
+
+// proc for now
+[proc,.pvp_retaliate](player_uid $target_uid)
+if (.%auto_retaliate = ^player_auto_retaliate_on) {
+    // player flinches player
+    if (.%action_delay < map_clock) {
+        def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+        def_int $delay = 4;
+        if ($weapon ! null) {
+            $delay = divide(oc_param($weapon, attackrate), 2);
+        }
+        if (.%damagestyle = ^style_ranged_rapid) {
+            $delay = sub($delay, 1);
+        }
+
+        .%action_delay = add(map_clock, $delay);
+    }
+    .p_opplayer(2);
+}
