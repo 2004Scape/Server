@@ -71,7 +71,6 @@ type=synth
 scope=perm
 
 [varp_61]
-protect=no
 
 [gobdip_progress]
 scope=perm
