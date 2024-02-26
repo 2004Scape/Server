@@ -28,9 +28,7 @@ protect=no
 type=npc_uid
 protect=no
 
-[defending_player_uid]
-type=player_uid
-protect=no
+[varp_42]
 
 [attackstyle]
 transmit=yes

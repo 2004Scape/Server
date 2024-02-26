@@ -20,6 +20,8 @@ return(true);
 .%pk_predator2 = .%pk_predator1;
 .%pk_predator1 = uid;
 
+.%lastcombat_pvp = map_clock;
+
 // requires active_player
 [proc,pk_skull](int $duration)
 ~headicon_add(^headicon_skull);

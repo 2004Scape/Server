@@ -215,7 +215,7 @@ if (~pvp_hit_roll(^magic_style) = true) {
         //.queue(.freeze_player, 0, $freeze_time);
         if (.p_finduid(.uid) = true) { // todo: queue this
             .%stunned = calc(map_clock + $freeze_time + 1);
-            //.setmovecheck(frozen);
+            //.setmovecheck(.frozen);
         }
     }
 } else {
@@ -242,12 +242,18 @@ if (~pvp_hit_roll(^magic_style) = true) {
 if (~deserves_pk_skull = true) {
     ~pk_skull(3000); // 3000 ticks, or 30 minutes
 }
-
-.%lastcombat_pvp = map_clock;
-.%defending_player_uid = uid;
 ~set_pk_vars;
 
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
     p_opplayert(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
     return;
 }
+
+// todo: .movecheck
+// [movecheck,.frozen]()(boolean)
+// if (map_clock < .%stunned) {
+//     .mes("A magical force stops you from moving.");
+//     return(false);
+// }
+
+// return(true);

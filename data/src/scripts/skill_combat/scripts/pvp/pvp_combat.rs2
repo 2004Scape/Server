@@ -85,12 +85,12 @@ return(true);
 if (~inzone_coord_pair_table(multiway_zones, .coord) = true) {
     return(true);
 }
-if ((add(%lastcombat_pvp, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null)
+if ((add(%lastcombat_pvp, 8) > map_clock & .%pk_predator1 ! uid & .%pk_predator1 ! null)
     | add(%lastcombat, 8) > map_clock) {
     mes("I'm already under attack.");
     return(false);
 }
-if ((add(.%lastcombat_pvp, 8) > map_clock & .%defending_player_uid ! uid & .%defending_player_uid ! null)
+if ((add(.%lastcombat_pvp, 8) > map_clock & .%pk_predator1 ! uid & .%pk_predator1 ! null)
     | add(.%lastcombat, 8) > map_clock) {
     mes("Someone else is already fighting your opponent.");
     return(false);

@@ -40,7 +40,7 @@
 39=magic_utility_delay
 40=eat_delay
 41=defending_npc_uid
-42=defending_player_uid
+42=varp_42
 43=attackstyle
 44=com_stabattack
 45=com_stabdef
