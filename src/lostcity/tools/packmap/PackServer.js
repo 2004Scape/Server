@@ -1,23 +1,7 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import { shouldBuildFile } from '#lostcity/util/PackIds.js';
-
-let queue = [];
-
-fs.readdirSync('data/src/maps').forEach(file => {
-    let [x, z] = file.slice(1).split('.').shift().split('_');
-    if (
-        !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/m${x}_${z}`) &&
-        !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/l${x}_${z}`) &&
-        !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/n${x}_${z}`) &&
-        !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`)
-    ) {
-        return;
-    }
-
-    queue.push({ file, x, z });
-});
+import { shouldBuildFile } from '#lostcity/util/PackFile.js';
 
 function readMap(map) {
     let land = [];
@@ -108,10 +92,32 @@ function readMap(map) {
     return { land, loc, npc, obj };
 }
 
-if (queue.length) {
+export function packServerMap() {
+    let queue = [];
+
+    fs.readdirSync('data/src/maps').forEach(file => {
+        let [x, z] = file.slice(1).split('.').shift().split('_');
+        if (
+            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/m${x}_${z}`) &&
+            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/l${x}_${z}`) &&
+            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/n${x}_${z}`) &&
+            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`)
+        ) {
+            return;
+        }
+
+        queue.push({ file, x, z });
+    });
+    
+    if (!queue.length) {
+        return;
+    }
+
+    console.log('Packing server maps');
+
     fs.mkdirSync('data/pack/server/maps', { recursive: true });
 
-    console.time('Packing maps');
+    // console.time('Packing maps');
     queue.forEach(({ file, x, z }) => {
         let data = fs
             .readFileSync(`data/src/maps/${file}`, 'ascii')
@@ -425,5 +431,5 @@ if (queue.length) {
             out.save(`data/pack/server/maps/o${x}_${z}`);
         }
     });
-    console.timeEnd('Packing maps');
+    // console.timeEnd('Packing maps');
 }

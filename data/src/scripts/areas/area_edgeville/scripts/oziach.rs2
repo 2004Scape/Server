@@ -7,7 +7,7 @@ if (%dragon_progress = ^quest_dragon_spoken_to_guildmaster) {
     @multi3("Can you sell me some Rune plate mail?", oziach_can_sell_rune_plate, "I'm not your friend.", oziach_not_friend, "Yes, it's a very nice day.", oziach_nice_day);
 }
 // osrs, very similar to rsc
-if (%dragon_progress < ^dragon_complete) {
+if (%dragon_progress < ^dragon_complete & %dragon_progress > 0) {
     ~chatnpc(quiz, "So how is thy quest going?");
     @multi2("So where can I find this dragon?", oziach_find_dragon, "Where can I get an antidragon shield?", oziach_dragon_shield);
 }

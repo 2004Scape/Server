@@ -31,3 +31,20 @@ if (stat(fishing) < 68) {
 } else {
     ~chatnpc(happy, "Hello, welcome to the fishing guild. Please feel free to make use of any of our facilities.");
 }
+
+
+// TODO - facial animations.
+// TODO - linebreaks.
+[opnpc1,npc_592]
+~chatnpc(neutral, "Would you like to buy some fishing equipment, or sell some fish?");
+
+def_int $option = ~p_choice2("Yes please.", 0, "No thank you.", 1);
+
+switch_int ($option) {
+    case 0: {
+        ~chatplayer(neutral, "Yes please.");
+        ~openshop_activenpc;
+    }
+
+    case 1: ~chatplayer(neutral, "No thank you.");
+}

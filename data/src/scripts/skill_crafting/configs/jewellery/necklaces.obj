@@ -115,7 +115,6 @@ weight=10g
 tradeable=yes
 
 [black_necklace]
-name=Black necklace
 model=model_2506_obj
 recol1s=41
 recol1d=16
@@ -127,6 +126,7 @@ recol2d=16
 2dyan=68
 2dxan=424
 tradeable=yes
+dummyitem=inv_only
 
 [obj_1668]
 name=Sapphire necklace

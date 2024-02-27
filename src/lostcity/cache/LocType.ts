@@ -76,7 +76,7 @@ export default class LocType extends ConfigType {
     occlude = false;
     anim = -1;
     hasalpha = false;
-    walloff = 16;
+    wallwidth = 16;
     ambient = 0;
     contrast = 0;
     ops: (string | null)[] = [];
@@ -134,7 +134,7 @@ export default class LocType extends ConfigType {
         } else if (opcode === 25) {
             this.hasalpha = true;
         } else if (opcode === 28) {
-            this.walloff = packet.g1();
+            this.wallwidth = packet.g1();
         } else if (opcode === 29) {
             this.ambient = packet.g1s();
         } else if (opcode === 39) {

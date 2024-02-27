@@ -71,6 +71,7 @@ recol1s=24
 recol1d=4645
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,copper_rock_macro_gas_1
 
 [copper_rock_2]
 name=Rocks
@@ -85,6 +86,7 @@ recol1s=24
 recol1d=4645
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,copper_rock_macro_gas_2
 
 [iron_rock_1]
 name=Rocks
@@ -99,6 +101,7 @@ recol1s=24
 recol1d=2576
 category=mining_rock_fast
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,iron_rock_macro_gas_1
 
 [iron_rock_2]
 name=Rocks
@@ -113,6 +116,7 @@ recol1s=24
 recol1d=2576
 category=mining_rock_fast
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,iron_rock_macro_gas_2
 
 [tin_rock_1]
 name=Rocks
@@ -127,6 +131,7 @@ recol1s=24
 recol1d=53
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,tin_rock_macro_gas_1
 
 [tin_rock_2]
 name=Rocks
@@ -141,6 +146,7 @@ recol1s=24
 recol1d=53
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,tin_rock_macro_gas_2
 
 [coal_rock_1]
 name=Rocks
@@ -155,6 +161,7 @@ recol1s=24
 recol1d=10508
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,coal_rock_macro_gas_1
 
 [coal_rock_2]
 name=Rocks
@@ -169,6 +176,7 @@ recol1s=24
 recol1d=10508
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,coal_rock_macro_gas_2
 
 [gold_rock_1]
 name=Rocks
@@ -183,6 +191,7 @@ recol1s=24
 recol1d=8885
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,gold_rock_macro_gas_1
 
 [gold_rock_2]
 name=Rocks
@@ -197,6 +206,7 @@ recol1s=24
 recol1d=8885
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,gold_rock_macro_gas_2
 
 [silver_rock_1]
 name=Rocks
@@ -211,6 +221,7 @@ recol1s=24
 recol1d=74
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,silver_rock_macro_gas_1
 
 [silver_rock_2]
 name=Rocks
@@ -225,6 +236,7 @@ recol1s=24
 recol1d=74
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,silver_rock_macro_gas_2
 
 [mithril_rock_1]
 name=Rocks
@@ -239,6 +251,7 @@ recol1s=24
 recol1d=43297
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,mithril_rock_macro_gas_1
 
 [mithril_rock_2]
 name=Rocks
@@ -253,6 +266,7 @@ recol1s=24
 recol1d=43297
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,mithril_rock_macro_gas_2
 
 [adamantite_rock_1]
 name=Rocks
@@ -267,6 +281,7 @@ recol1s=24
 recol1d=21662
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,adamantite_rock_macro_gas_1
 
 [adamantite_rock_2]
 name=Rocks
@@ -281,6 +296,7 @@ recol1s=24
 recol1d=21662
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,adamantite_rock_macro_gas_2
 
 [runite_rock_1]
 name=Rocks
@@ -295,6 +311,7 @@ recol1s=24
 recol1d=34099
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,runite_rock_macro_gas_1
 
 [runite_rock_2]
 name=Rocks
@@ -309,6 +326,7 @@ recol1s=24
 recol1d=34099
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,runite_rock_macro_gas_2
 
 [clay_rock_1]
 name=Rocks
@@ -323,6 +341,7 @@ recol1s=24
 recol1d=6705
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_1
+param=macro_gas,clay_rock_macro_gas_1
 
 [clay_rock_2]
 name=Rocks
@@ -337,6 +356,7 @@ recol1s=24
 recol1d=6705
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,clay_rock_macro_gas_2
 
 [blurite_rock_1]
 name=Rocks
@@ -351,6 +371,7 @@ recol1s=24
 recol1d=39869
 category=mining_rock_normal
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,blurite_rock_macro_gas_1
 
 [gem_rock_1]
 name=Rocks
@@ -364,3 +385,375 @@ blockrange=no
 recol1s=24
 recol1d=55201
 param=next_loc_stage_mining,empty_rock_3
+param=macro_gas,gem_rock_macro_gas_1
+
+
+[copper_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=4645
+category=mining_rock_macro_gas
+
+[copper_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=4645
+category=mining_rock_macro_gas
+
+[iron_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=2576
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[iron_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=2576
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[tin_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=53
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[tin_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=53
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[coal_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=10508
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[coal_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=10508
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[gold_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=8885
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[gold_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=8885
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[silver_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=74
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[silver_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=74
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[mithril_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=43297
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[mithril_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=43297
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[adamantite_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=21662
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[adamantite_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=21662
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[runite_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=34099
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[runite_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=34099
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[clay_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_675
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=6705
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[clay_rock_macro_gas_2]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=6705
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[blurite_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=39869
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas
+
+[gem_rock_macro_gas_1]
+name=Rocks
+desc=A rocky outcrop.
+model=model_loc_676
+op1=Mine
+op2=Prospect
+op3=hidden
+mapscene=12
+anim=seq_523
+hasalpha=yes
+blockrange=no
+recol1s=24
+recol1d=55201
+recol2s=10349
+recol2d=7366
+category=mining_rock_macro_gas

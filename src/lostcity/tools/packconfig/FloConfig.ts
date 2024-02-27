@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { FloPack, TexturePack } from '#lostcity/util/PackFile.js';
 
 export function parseFloConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -50,7 +51,7 @@ export function parseFloConfig(key: string, value: string): ConfigValue | null |
 
         return value === 'yes';
     } else if (key === 'texture') {
-        const index = PACKFILE.get('texture')!.indexOf(value);
+        const index = TexturePack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -62,15 +63,13 @@ export function parseFloConfig(key: string, value: string): ConfigValue | null |
 }
 
 function packFloConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('flo')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(FloPack.size);
+    idx.p2(FloPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < FloPack.size; i++) {
+        const debugname = FloPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

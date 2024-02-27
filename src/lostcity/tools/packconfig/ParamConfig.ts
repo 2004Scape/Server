@@ -2,7 +2,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { CategoryPack, EnumPack, InterfacePack, InvPack, LocPack, NpcPack, ObjPack, ParamPack, SeqPack, SoundPack, SpotAnimPack, StructPack, VarpPack } from '#lostcity/util/PackFile.js';
 
 const stats: (string | null)[] = [
     'attack',
@@ -105,38 +106,38 @@ export function lookupParamValue(type: number, value: string): string | number |
             return z | (x << 14) | (level << 28);
         }
         case ScriptVarType.ENUM:
-            index = PACKFILE.get('enum')!.indexOf(value);
+            index = EnumPack.getByName(value);
             break;
         case ScriptVarType.NAMEDOBJ:
         case ScriptVarType.OBJ:
-            index = PACKFILE.get('obj')!.indexOf(value);
+            index = ObjPack.getByName(value);
             break;
         case ScriptVarType.LOC:
-            index = PACKFILE.get('loc')!.indexOf(value);
+            index = LocPack.getByName(value);
             break;
         case ScriptVarType.COMPONENT:
-            index = PACKFILE.get('interface')!.indexOf(value);
+            index = InterfacePack.getByName(value);
             break;
         case ScriptVarType.STRUCT:
-            index = PACKFILE.get('struct')!.indexOf(value);
+            index = StructPack.getByName(value);
             break;
         case ScriptVarType.CATEGORY:
-            index = PACKFILE.get('category')!.indexOf(value);
+            index = CategoryPack.getByName(value);
             break;
         case ScriptVarType.SPOTANIM:
-            index = PACKFILE.get('spotanim')!.indexOf(value);
+            index = SpotAnimPack.getByName(value);
             break;
         case ScriptVarType.NPC:
-            index = PACKFILE.get('npc')!.indexOf(value);
+            index = NpcPack.getByName(value);
             break;
         case ScriptVarType.INV:
-            index = PACKFILE.get('inv')!.indexOf(value);
+            index = InvPack.getByName(value);
             break;
         case ScriptVarType.SYNTH:
-            index = PACKFILE.get('sound')!.indexOf(value);
+            index = SoundPack.getByName(value);
             break;
         case ScriptVarType.SEQ:
-            index = PACKFILE.get('seq')!.indexOf(value);
+            index = SeqPack.getByName(value);
             break;
         case ScriptVarType.STAT:
             index = stats.indexOf(value);
@@ -145,19 +146,18 @@ export function lookupParamValue(type: number, value: string): string | number |
             index = npcStats.indexOf(value);
             break;
         case ScriptVarType.VARP:
-            index = PACKFILE.get('varp')!.indexOf(value);
+            index = VarpPack.getByName(value);
             break;
         case ScriptVarType.INTERFACE:
-            // errr... might match components too
-            index = PACKFILE.get('interface')!.indexOf(value);
+            if (value.indexOf(':') !== -1) {
+                index = -1;
+            } else {
+                index = InterfacePack.getByName(value);
+            }
             break;
     }
 
-    if (index === -1) {
-        return null;
-    }
-
-    return index;
+    return index !== -1 ? index : null;
 }
 
 export function parseParamConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -214,15 +214,13 @@ export function parseParamConfig(key: string, value: string): ConfigValue | null
 }
 
 export function packParamConfigs(configs: Map<string, ConfigLine[]>) {
-    const paramPack = PACKFILE.get('param')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(paramPack.length);
-    idx.p2(paramPack.length);
+    dat.p2(ParamPack.size);
+    idx.p2(ParamPack.size);
 
-    for (let i = 0; i < paramPack.length; i++) {
-        const debugname = paramPack[i];
+    for (let i = 0; i < ParamPack.size; i++) {
+        const debugname = ParamPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

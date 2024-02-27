@@ -324,10 +324,17 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.P_OPNPC]: {
         require: ['p_active_player', 'active_npc']
     },
+    [ScriptOpcode.P_OPNPCT]: {
+        require: ['p_active_player', 'active_npc']
+    },
     [ScriptOpcode.P_OPOBJ]: {
         require: ['p_active_player', 'active_obj']
     },
     [ScriptOpcode.P_OPPLAYER]: {
+        require: ['p_active_player', 'active_player2'],
+        require2: ['p_active_player2', 'active_player']
+    },
+    [ScriptOpcode.P_OPPLAYERT]: {
         require: ['p_active_player', 'active_player2'],
         require2: ['p_active_player2', 'active_player']
     },
@@ -428,7 +435,7 @@ const ScriptOpcodePointers: {
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {
         set: ['active_npc'],
-        require2: ['active_npc2']
+        set2: ['active_npc2']
     },
     [ScriptOpcode.NPC_ANIM]: {
         require: ['active_npc'],

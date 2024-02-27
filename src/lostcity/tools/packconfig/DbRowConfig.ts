@@ -3,8 +3,9 @@ import Packet from '#jagex2/io/Packet.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { DbRowPack, DbTablePack } from '#lostcity/util/PackFile.js';
 
 function parseCsv(str: string): string[] {
     const result = [];
@@ -70,7 +71,7 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
 
         return value === 'yes';
     } else if (key === 'table') {
-        const index = PACKFILE.get('dbtable')!.indexOf(value);
+        const index = DbTablePack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -84,15 +85,13 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
 }
 
 export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('dbrow')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(DbRowPack.size);
+    idx.p2(DbRowPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < DbRowPack.size; i++) {
+        const debugname = DbRowPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

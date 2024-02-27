@@ -1,8 +1,7 @@
 [opnpc2,_]
-// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-//     mes("Someone else is fighting that.");
-//     return;
-// }
+if (~player_in_combat_check = false) {
+    return;
+}
 @player_combat_start;
 
 [apnpc2,_]
@@ -14,33 +13,18 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
         $attackrange = min(add($attackrange, 2), 10);
     }
 }
-// if auto cast is enabled
+
 // mes("<tostring(%attackstyle_magic)>");
 // if (testbit(%attackstyle_magic, 0) = true){
 //     mes("TRUE");
 // }
-// mes("<tostring(%spell)>");
-if (%spell <= 0 & (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3)) {
-    %spell = %autocast_spell;
-}
-if (%spell > 0){
-    // look for spell in db
-    def_dbrow $spell_data = ~get_spell_data(%spell);
-    // define spell runes
-    def_namedobj $rune1;
-    def_int $rune_count1;
-    def_namedobj $rune2;
-    def_int $rune_count2;
-    def_namedobj $rune3;
-    def_int $rune_count3;
-    // check runes
-    $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+
+// mes("<tostring(%autocast_spell)>");
+// if auto cast is enabled, and autocast spell is set
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
     $attackrange = 10;
 }
 if ($attackrange <= 1) {
-    // if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-    //     mes("Someone else is fighting that.");
-    // }
     p_aprange($attackrange); // walk then op again
     return;
 }
@@ -48,10 +32,9 @@ if ($distance > $attackrange) {
     p_aprange($attackrange);
     return;
 }
-// if (calc(%npc_lastcombat + 10) > map_clock & %npc_attacking_uid ! uid) {
-//     mes("Someone else is fighting that.");
-//     return;
-// }
+if (~player_in_combat_check = false) {
+    return;
+}
 p_aprange($attackrange);
 @player_combat_start;
 
@@ -65,22 +48,32 @@ if (%damagetype = ^ranged_style) {
 // if (testbit(%attackstyle_magic, 0) = true){
 //     mes("TRUE");
 // }
-if (%spell > 0) {
+// if autocast is enabled and spell is selected
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
+    // look for spell in db
+    def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
+    def_boolean $passes;
+
+    // define spell runes
+    def_namedobj $rune1;
+    def_int $rune_count1;
+    def_namedobj $rune2;
+    def_int $rune_count2;
+    def_namedobj $rune3;
+    def_int $rune_count3;
+
+    // check runes
+    $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    if ($passes = false) {
+        return;
+    }
+
     // in osrs you cant tick manip with autocast delay, so its prob its on varp?
-    if (%autocast_delay = map_clock | %action_delay > map_clock) {
-        @player_magic_spell_attack(%spell);
-        return;
-    }
-    if (%autocast_delay < map_clock) {
-        // add auto cast delay
-        %autocast_delay = add(map_clock, 1);
-        p_opnpc(2);
-        return;
-    }
-} else {
-    // i assume they just melee if autocast is turned on but no spell is selected. Complete guess, needs confirmation!!
-    @player_melee_attack;
+    p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    return;
 }
+
+@player_melee_attack;
 
 
 [proc,player_npc_hit_roll](int $damagetype)(boolean)
@@ -115,3 +108,29 @@ switch_int ($damagetype) {
     case ^magic_style: return(%com_magicdef);
 }
 error("style of <tostring($damagetype)> not defined in switch for player_defence_roll_specific");
+
+[proc,.player_defence_roll_specific](int $damagetype)(int)
+switch_int ($damagetype) {
+    case ^stab_style: return(.%com_stabdef);
+    case ^slash_style: return(.%com_slashdef);
+    case ^crush_style: return(.%com_crushdef);
+    case ^ranged_style: return(.%com_rangedef);
+    case ^magic_style: return(.%com_magicdef);
+}
+
+[proc,player_in_combat_check]()(boolean)
+if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
+    return(true);
+}
+// player has been attacked in the last 8 ticks, and not by the current npc
+// or player has been attacked in the last 8 ticks, and %aggressive_npc is null (for pvp)
+if (add(%lastcombat, 8) > map_clock & (%aggressive_npc ! npc_uid | %aggressive_npc = null)) {
+    mes("I'm already under attack.");
+    return(false);
+}
+// npc has been attacked in the last 8 ticks, and not by the current player
+if ((add(%npc_lastcombat, 8) > map_clock & %npc_aggressive_player ! uid)) {
+    mes("Someone else is fighting that.");
+    return(false);
+}
+return(true);

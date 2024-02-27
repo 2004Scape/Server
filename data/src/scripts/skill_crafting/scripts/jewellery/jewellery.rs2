@@ -193,6 +193,11 @@ if (stat(crafting) < $level) {
     ~mesbox("You need at least level <tostring($level)> Crafting to make that.");
     return;
 }
+// macro event
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 def_namedobj $gem = struct_param($struct, gem);
 // ****** FOR WEAKQUEUE *******
 // // make sure the player doesnt produce more than they can
@@ -260,6 +265,11 @@ if (inv_total(inv, unholy_mould) > 0) {
     $choice = 2;
 } else {
     ~mesbox("You require a mould to make that.");
+    return;
+}
+// macro event
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
     return;
 }
 switch_int ($choice) {

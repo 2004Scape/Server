@@ -4,6 +4,11 @@
 [oploct,magic:fire_orb]@magic_spell_charge_orb(^fire_orb, loc_type);
 
 [label,magic_spell_charge_orb](int $spell, loc $loc)
+// check if they have orb in inv
+if (inv_total(inv, stafforb) < 1) {
+    mes("You must be holding an orb to enchant it.");
+    return;
+}
 def_dbrow $spell_data = ~get_spell_data($spell);
 // define spell runes
 def_namedobj $rune1;
@@ -12,16 +17,19 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
-// check if they have orb in inv
-if (inv_total(inv, stafforb) < 1) {
-    mes("You must be holding an orb to enchant it.");
+def_boolean $passes;
+// check runes
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if ($passes = false) {
     return;
 }
-// check runes, and spell reqs
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
 // check if used on correct loc
 if (db_getfield($spell_data, magic_spell_table:loc_type, 0) ! $loc) {
     mes("This spell needs to be cast on <~add_article(lc_param(db_getfield($spell_data, magic_spell_table:loc_type, 0), charge_orb_name))>.");
+    return;
+}
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
     return;
 }
 def_namedobj $final_obj;

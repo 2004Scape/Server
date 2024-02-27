@@ -1,43 +1,4 @@
-import fs from 'fs';
-
 import { loadDir } from '#lostcity/util/NameMap.js';
-
-export function getLatestModified(path: string, extension: string) {
-    const files = fs.readdirSync(path);
-
-    let mTimeMs = 0;
-    for (const file of files) {
-        if (fs.statSync(`${path}/${file}`).isDirectory()) {
-            mTimeMs = Math.max(mTimeMs, getLatestModified(`${path}/${file}`, extension));
-        } else if (file.endsWith(extension)) {
-            mTimeMs = Math.max(mTimeMs, fs.statSync(`${path}/${file}`).mtimeMs);
-        }
-    }
-
-    return mTimeMs;
-}
-
-export function shouldBuild(dir: string, ext: string, output: string) {
-    if (!fs.existsSync(output)) {
-        return true;
-    }
-
-    const mTimeMsSource = getLatestModified(dir, ext);
-    const mTimeMsOutput = fs.statSync(output).mtimeMs;
-
-    return mTimeMsSource > mTimeMsOutput;
-}
-
-export function shouldBuildFile(input: string, output: string) {
-    if (!fs.existsSync(output)) {
-        return true;
-    }
-
-    const mTimeMs1 = fs.statSync(input).mtimeMs;
-    const mTimeMs2 = fs.statSync(output).mtimeMs;
-
-    return mTimeMs1 > mTimeMs2;
-}
 
 export function crawlConfigNames(ext: string, includeBrackets = false) {
     const names: string[] = [];

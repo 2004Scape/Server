@@ -9,6 +9,10 @@ export default function (f, opts, next) {
         return res.view('index');
     });
 
+    f.get('/disclaimer', async (req, res) => {
+        return res.view('disclaimer');
+    });
+
     f.get('/title', async (req, res) => {
         let playerCount = 0;
         for (let world of WorldList) {

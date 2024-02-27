@@ -1,0 +1,21 @@
+[proc,player_combat_level]()(int)
+def_int $base = calc(10 * (stat_base(defence) + stat_base(hitpoints) + stat_base(prayer) / 2));
+def_int $melee = calc(13 * (stat_base(attack) + stat_base(strength)));
+def_int $ranged = calc(13 * scale(3, 2, stat_base(ranged)));
+def_int $magic = calc(13 * scale(3, 2, stat_base(magic)));
+
+//mes("Base: <tostring($base)>, Melee: <tostring($melee)>, Ranged: <tostring($ranged)>, Magic: <tostring($magic)>");
+
+def_int $final = calc(($base + max(max($melee, $ranged), $magic))/40);
+return($final);
+
+[proc,.player_combat_level]()(int)
+def_int $base = calc(10 * (.stat_base(defence) + .stat_base(hitpoints) + .stat_base(prayer) / 2));
+def_int $melee = calc(13 * (.stat_base(attack) + .stat_base(strength)));
+def_int $ranged = calc(13 * scale(3, 2, .stat_base(ranged)));
+def_int $magic = calc(13 * scale(3, 2, .stat_base(magic)));
+
+//mes("Base: <tostring($base)>, Melee: <tostring($melee)>, Ranged: <tostring($ranged)>, Magic: <tostring($magic)>");
+
+def_int $final = calc(($base + max(max($melee, $ranged), $magic))/40);
+return($final);

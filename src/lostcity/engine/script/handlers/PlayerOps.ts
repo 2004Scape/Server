@@ -340,6 +340,17 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
     }),
 
+    [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
+        const spellId = state.popInt();
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        if (state.activePlayer.target !== null) {
+            return;
+        }
+        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPCT, spellId);
+    }),
+
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, state => {
         state.execution = ScriptState.PAUSEBUTTON;
         // TODO last_com
@@ -713,7 +724,7 @@ const PlayerOps: CommandHandlers = {
         const north = nw.z;
 
         const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
+        World.getZone(loc.x, loc.z, loc.level).locmerge(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
@@ -894,6 +905,21 @@ const PlayerOps: CommandHandlers = {
             state.activePlayer.colors[colorSlot] = color;
         }
     },
+
+    [ScriptOpcode.P_OPPLAYERT]: checkedHandler(ProtectedActivePlayer, state => {
+        const spellId = state.popInt();
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        if (state.activePlayer.target !== null) {
+            return;
+        }
+        const target = state._activePlayer2;
+        if (!target) {
+            return;
+        }
+        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYERT, spellId);
+    }),
 };
 
 /**

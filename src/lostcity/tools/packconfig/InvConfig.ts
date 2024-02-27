@@ -2,7 +2,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import InvType from '#lostcity/cache/InvType.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { InvPack, ObjPack } from '#lostcity/util/PackFile.js';
 
 export function parseInvConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -68,7 +69,7 @@ export function parseInvConfig(key: string, value: string): ConfigValue | null |
         }
     } else if (key.startsWith('stock')) {
         const parts = value.split(',');
-        const objIndex = PACKFILE.get('obj')!.indexOf(parts[0]);
+        const objIndex = ObjPack.getByName(parts[0]);
         if (objIndex === -1) {
             return null;
         }
@@ -94,15 +95,13 @@ export function parseInvConfig(key: string, value: string): ConfigValue | null |
 }
 
 export function packInvConfigs(configs: Map<string, ConfigLine[]>) {
-    const pack = PACKFILE.get('inv')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(InvPack.size);
+    idx.p2(InvPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < InvPack.size; i++) {
+        const debugname = InvPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

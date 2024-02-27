@@ -1,8 +1,8 @@
 // Melee
-[opheld2,bronze_dagger] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_dagger] @tutorial_island_equip(last_slot);
 [opheld2,bronze_dagger_p] @levelrequire_attack(1, last_slot);
-[opheld2,bronze_axe] @levelrequire_attack(1, last_slot);
-[opheld2,bronze_pickaxe] @levelrequire_attack(1, last_slot);
+[opheld2,bronze_axe] @tutorial_island_equip(last_slot);
+[opheld2,bronze_pickaxe] @tutorial_island_equip(last_slot);
 [opheld2,bronze_mace] @levelrequire_attack(1, last_slot);
 [opheld2,bronze_sword] @levelrequire_attack(1, last_slot);
 [opheld2,bronze_scimitar] @levelrequire_attack(1, last_slot);

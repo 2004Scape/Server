@@ -4,7 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 const args = process.argv.slice(2);
 
 if (args.length < 2) {
-    console.log('Usage: node jagList.js <path/to/file1.jag> <path/to/file2.jag>');
+    console.log('Usage: ts-loader jagCompare.ts <path/to/file1.jag> <path/to/file2.jag>');
     process.exit(1);
 }
 
@@ -22,8 +22,27 @@ for (let i = 0; i < jag1.fileCount; i++) {
         if (crc1 !== crc2) {
             console.log(`File ${jag1.fileName[i]} is different`);
 
-            console.log(Buffer.from(file1.data).subarray(0, 25), file1.length);
-            console.log(Buffer.from(file2.data).subarray(0, 25), file2.length);
+            if (jag1.fileName[i] === jag2.fileName[i] && jag1.fileName[i].endsWith('.dat')) {
+                const diff1 = jag1.deconstruct(jag1.fileName[i].replace('.dat', ''));
+                const diff2 = jag2.deconstruct(jag2.fileName[i].replace('.dat', ''));
+
+                if (diff1.count !== diff2.count) {
+                    console.log('Count is different', diff1.count, diff2.count);
+                } else {
+                    for (let j = 0; j < diff1.count; j++) {
+                        if (diff1.checksums[j] !== diff2.checksums[j]) {
+                            console.log(`Checksum for ${j} is different`, diff1.checksums[j], diff2.checksums[j]);
+                        } else if (diff1.sizes[j] !== diff2.sizes[j]) {
+                            console.log(`Size for ${j} is different`, diff1.sizes[j], diff2.sizes[j]);
+                        } else if (diff1.offsets[j] !== diff2.offsets[j]) {
+                            console.log(`Offset for ${j} is different`, diff1.offsets[j], diff2.offsets[j]);
+                        }
+                    }
+                }
+            }
+
+            console.log(Buffer.from(file1.data).subarray(0, 25), file1.length, Packet.crc32(file1));
+            console.log(Buffer.from(file2.data).subarray(0, 25), file2.length, Packet.crc32(file2));
 
             console.log();
 

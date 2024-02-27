@@ -19,6 +19,10 @@ npc_setmode(opplayer2);
 if (%npc_action_delay > map_clock) {
     return;
 }
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 // data based off of 200 or so attacks
 def_int $random_attack = random(128);
 // mes("Ap");
@@ -41,6 +45,10 @@ if ($random_attack < 8 & stat(strength) >= stat_base(strength)) { // dont cast i
 [ai_opplayer2,melzar]
 ~melzar_say_random_message;
 if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
     return;
 }
 // mes("Op");
@@ -69,7 +77,7 @@ if ($cabbage_coord = npc_coord) { // cant spawn cabbage on top of melzar. Unsure
     return;
 }
 npc_anim(seq_710, 0);
-spotanim_npc(spotanim_177, 92, 0);
+spotanim_npc(bind_cast, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 world_delay(2); // delay cabbage spawn by 2 ticks
 ~combat_clearqueue; // todo figure out if this is actually what happens. Could be npc delay? could be p_stopaction?
@@ -89,7 +97,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     // max ive seen is a 6
     $damage = randominc(6);
 }
-if ($damage > 0) {
+if ($damage > 0 & getqueue(player_death) < 1) {
     queue(damage_player, 0, $damage);
     queue(playerhit_n_retaliate, 0, npc_uid);
 }

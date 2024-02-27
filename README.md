@@ -22,11 +22,11 @@ It won't ever profit off your trademarks. Without this project, this version of 
 - [NodeJS 20+](https://nodejs.org/) (current LTS) or [18](https://nodejs.org/download/release/v18.18.2/) (last LTS)
 - [Java 17+](https://adoptium.net/)
 
-Java is required for JagCompress.jar (a small 1:1 compression utility) and RuneScriptCompiler.jar (the content language compiler).
+Java is required for RuneScriptCompiler.jar, our content language compiler.
 
-You can download JagCompress and RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel. Place the jar files in the root directory of the project.  
+You can download RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel. Place the jar file in the root directory of the project.  
 
-[JagCompress is also available on GitHub](https://github.com/2004scape/JagCompress/releases). RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
+RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
 
 ## Getting Started
 
@@ -37,6 +37,30 @@ You can download JagCompress and RuneScriptCompiler from the [#dev-resources](ht
 5. Run `npm run client:pack` to create the client cache. This may take a few minutes the first time
 6. Run `npm run server:build` to build all of the server files (packs cache, generates symbols, compiles scripts)
 7. Run `npm start` to start the server
+
+### Using the setup script
+
+You can instead run `setup.sh` to get your repository ready for running the server. Manually download RuneScriptCompiler.jar, from [environment dependencies](#environment-dependencies), and then run `setup.sh` to run the above commands.
+
+### Using the DevContainer
+
+An alternative way to set up your environment is to utilize a [Development Container](https://containers.dev/). In order to start the Dev Container, you'll need to install [Docker](https://www.docker.com/products/docker-desktop/). If you're running Windows, I suggest getting Docker Desktop. Linux users can use whatever means they prefer to install Docker. Once docker is installed, install the VSCode extension [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+
+Make sure to still grab the RuneScriptCompiler.jar from the [environment dependencies](#environment-dependencies) as that can't be automatically installed yet.
+
+Once that is done follow these steps:
+
+1. Make sure Docker is running
+2. Open VSCode and run `Dev Containers: Clone Repository in Container Volume`
+3. Select `GitHub` as the remote Source
+4. Find your fork of this repo
+5. Select the branch you want to work from
+6. At any point once the container has started and you can see the files in VSCode, drag the RuneScriptCompiler.jar into the root of your repo
+7. Once the startup script is finished, run `npm start`
+
+Once the container starts, it automatically starts running `setup.sh`. You can cancel this and do the [Getting Started](#getting-started) steps manually as well. If you let the startup script finish before moving RuneScriptCompiler.jar into the root of your repo and the script fails, you just need to run `npm run server:build` again before starting your server.
+
+Another option for building your Dev Container is to instead clone your repository onto your local machine first and then run `Dev Containers: Open Folder in Container` and work that way by mounting the local files into your container. This way, you can have RuneScriptCompiler.jar in your workspace from the get-go. **Note: The npm scripts are much slower when the container is running this way.**
 
 ## Development Workflow
 

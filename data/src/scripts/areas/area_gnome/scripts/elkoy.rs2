@@ -174,7 +174,7 @@ switch_int(~p_choice2("Yes please.", 1, "No thanks Elkoy.", 2)) {
     case 1:
         ~chatplayer(happy, "Yes please.");
         ~chatnpc(happy, "Ok then, follow me.");
-        p_telejump(^elkoy_maze_coord);
+        p_telejump($dest_coord);
         ~chatnpc_specific("Elkoy", elkoy_maze, happy, $message);
     case 2:
         ~chatplayer(neutral, "No thanks Elkoy.");

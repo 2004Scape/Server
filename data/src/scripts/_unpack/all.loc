@@ -144,24 +144,6 @@ model=model_loc_21
 width=4
 length=4
 
-[loc_22]
-name=Door
-desc=The door is shut.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_23]
-name=Sacks
-desc=Unusually lumpy looking.
-model=model_loc_23
-op1=Prod
-op2=Open
-
 [loc_33]
 name=Lever
 desc=Yup, definitely a lever.
@@ -430,13 +412,10 @@ model=model_loc_83
 model=model_loc_83
 
 [loc_85]
-// these properties are commented intentionally
-// because this lines the edges of rivers with
-// a sprite!
-//model=model_loc_83
+model=model_loc_83
 blockrange=no
 shadow=no
-//mapscene=22
+mapscene=22
 
 [loc_86]
 name=Lever bracket
@@ -619,7 +598,6 @@ blockwalk=no
 blockrange=no
 
 [hiddentrapdoor_open]
-name=hiddentrapdoor_open
 model=model_loc_106
 blockwalk=no
 blockrange=no
@@ -1053,7 +1031,6 @@ model=model_loc_178
 hillskew=yes
 
 [mudpiledown]
-name=mudpiledown
 model=model_loc_183
 length=2
 
@@ -1245,23 +1222,18 @@ width=5
 
 [bowcornerl]
 model=model_loc_213
-name=bowcornerl
 
 [bowcornerr]
-name=bowcornerr
 model=model_loc_213
 mirror=yes
 
 [bowmiddle]
 model=model_loc_215
-name=bowmiddle
 
 [bowshortl]
 model=model_loc_216
-name=bowshortl
 
 [bowshortr]
-name=bowshortr
 model=model_loc_216
 mirror=yes
 
@@ -1517,7 +1489,6 @@ name=Mast
 
 [mast4]
 model=model_loc_264
-name=mast4
 
 [loc_265]
 name=Sail
@@ -2674,7 +2645,6 @@ mapscene=12
 blockrange=no
 
 [boulder_group]
-name=boulder_group
 model=model_loc_443
 width=2
 length=2
@@ -3098,7 +3068,6 @@ recol6s=16156
 recol6d=6798
 
 [greatrunestone]
-name=greatrunestone
 model=model_loc_493
 width=5
 length=5
@@ -3106,28 +3075,24 @@ sharelight=yes
 occlude=yes
 
 [greatrunestone_mid]
-name=greatrunestone_mid
 model=model_loc_494
 width=6
 length=7
 sharelight=yes
 
 [greatrunestone_uppermid]
-name=greatrunestone_uppermid
 model=model_loc_495
 width=5
 length=5
 sharelight=yes
 
 [greatrunestone_top]
-name=greatrunestone_top
 model=model_loc_496
 width=5
 length=5
 sharelight=yes
 
 [greatrunestone_top2]
-name=greatrunestone_top2
 model=model_loc_497
 width=5
 length=5
@@ -3262,7 +3227,6 @@ model=model_loc_513
 model=model_loc_514
 
 [greatrunestone_top_glow]
-name=greatrunestone_top_glow
 model=model_loc_515
 width=7
 length=7
@@ -4100,62 +4064,51 @@ recol1d=6241
 
 [floorlever_on]
 model=model_loc_669
-name=floorlever_on
 
 [floorlever_off]
 model=model_loc_670
-name=floorlever_off
 
 [catapult]
-name=catapult
 model=model_loc_671
 width=2
 length=3
 hasalpha=yes
 
 [barrel_breaking]
-name=barrel_breaking
 model=model_loc_672
 anim=seq_449
 hasalpha=yes
 
 [gas]
-name=gas
 model=model_loc_673
 anim=seq_523
 hasalpha=yes
 
 [gas_chest]
-name=gas_chest
 model=model_loc_674
 anim=seq_654
 hasalpha=yes
 
 [gas_rocks1]
-name=gas_rocks1
 model=model_loc_675
 anim=seq_523
 hasalpha=yes
 
 [gas_rocks2]
-name=gas_rocks2
 model=model_loc_676
 anim=seq_523
 hasalpha=yes
 
 [gas_rocks3]
-name=gas_rocks3
 model=model_loc_677
 anim=seq_523
 hasalpha=yes
 
 [fishingspot]
-name=fishingspot
 model=model_loc_678
 hasalpha=yes
 
 [fishingspot2]
-name=fishingspot2
 model=model_loc_679
 hasalpha=yes
 
@@ -4216,8 +4169,7 @@ desc=Use this to get changed behind.
 model=model_loc_690
 length=2
 
-[loc_691]
-name=screen
+[screen]
 desc=Use this to get changed behind and retain modesty.
 model=model_loc_690
 length=2
@@ -4421,7 +4373,6 @@ anim=seq_473
 hasalpha=yes
 
 [fire_graphic]
-name=fire_graphic
 desc=Fire !
 model=model_loc_725
 anim=seq_473
@@ -4533,13 +4484,11 @@ model=model_loc_738
 hillskew=yes
 
 [magic_portal]
-name=magic_portal
 model=model_loc_739
 length=2
 ambient=100
 
 [glowing_circle]
-name=glowing_circle
 model=model_loc_740
 anim=seq_504
 ambient=100
@@ -4554,7 +4503,6 @@ length=2
 sharelight=yes
 
 [ladder_old_top]
-name=ladder_old_top
 model=model_loc_742
 length=2
 sharelight=yes
@@ -4589,7 +4537,6 @@ width=2
 length=2
 
 [lineofsight_ruler]
-name=lineofsight_ruler
 model=model_loc_212
 width=16
 
@@ -4768,24 +4715,23 @@ hillskew=yes
 recol1s=7952
 recol1d=20
 
-[loc_771]
-name=gnomeglider_icon1
+[gnomeglider_icon1]
 model=model_loc_771
 mapscene=16
 forcedecor=yes
 active=yes
 
-[loc_772]
+[gnomeglider_icon2]
 model=model_loc_771
 mapscene=17
 forcedecor=yes
 
-[loc_773]
+[gnomeglider_icon3]
 model=model_loc_771
 mapscene=18
 forcedecor=yes
 
-[loc_774]
+[gnomeglider_icon4]
 model=model_loc_771
 mapscene=19
 forcedecor=yes
@@ -5109,21 +5055,21 @@ model=model_loc_829
 
 [loc_830]
 model=model_loc_830
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
 
 [loc_831]
 model=model_loc_831
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
 
 [loc_832]
 model=model_loc_832
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
@@ -6004,7 +5950,7 @@ recol2d=47382
 
 [loc_979]
 model=model_loc_979
-walloff=32
+wallwidth=32
 sharelight=yes
 hillskew=yes
 blockrange=no
@@ -6044,7 +5990,6 @@ sharelight=yes
 hillskew=yes
 
 [poshwallgatetop]
-name=poshwallgatetop
 model=model_loc_986
 sharelight=yes
 hillskew=yes
@@ -6072,7 +6017,6 @@ recol1s=61
 recol1d=5285
 
 [poshwallgatetop_brown]
-name=poshwallgatetop_brown
 model=model_loc_986
 length=3
 sharelight=yes
@@ -7021,8 +6965,7 @@ model=model_loc_1160
 width=2
 length=2
 
-[loc_1161]
-name=cabbage
+[cabbage]
 desc=Cabbage... yuk !
 model=model_loc_1161
 op2=Pick
@@ -8505,7 +8448,6 @@ hillskew=yes
 active=no
 
 [cavewall_facewithledge1]
-name=cavewall_facewithledge1
 model=model_loc_1421
 width=2
 sharelight=yes
@@ -8852,7 +8794,6 @@ recol1s=6689
 recol1d=7952
 
 [cavewall_slopefill_dark]
-name=cavewall_slopefill_dark
 model=model_loc_1431
 sharelight=yes
 hillskew=yes
@@ -9268,7 +9209,6 @@ mirror=yes
 blockrange=no
 
 [towered_gateway_roof]
-name=towered_gateway_roof
 model=model_loc_1566
 length=3
 sharelight=yes
@@ -9525,13 +9465,13 @@ blockrange=no
 
 [timberwall]
 model=model_loc_1602
-walloff=8
+wallwidth=8
 sharelight=yes
 occlude=yes
 
 [loc_1603]
 model=model_loc_1602
-walloff=8
+wallwidth=8
 sharelight=yes
 
 [loc_1604]
@@ -9604,7 +9544,7 @@ recol1d=16
 
 [loc_1615]
 model=model_loc_1615
-walloff=8
+wallwidth=8
 sharelight=yes
 occlude=yes
 
@@ -9635,7 +9575,7 @@ active=no
 
 [loc_1620]
 model=model_loc_1512
-walloff=32
+wallwidth=32
 sharelight=yes
 occlude=yes
 recol1s=2
@@ -9646,7 +9586,7 @@ recol2d=9098
 [loc_1621]
 model=model_loc_1621
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 recol1s=2
 recol1d=23
@@ -9818,7 +9758,6 @@ recol1s=2
 recol1d=23
 
 [oldcastlewallbattlementroof]
-name=oldcastlewallbattlementroof
 model=model_loc_1645
 sharelight=yes
 
@@ -9864,7 +9803,6 @@ model=model_loc_1651
 sharelight=yes
 
 [oldstone_arched_doortop]
-name=oldstone_arched_doortop
 model=model_loc_1577
 length=3
 blockwalk=no
@@ -9875,7 +9813,6 @@ recol2s=2
 recol2d=23
 
 [oldstone_arched_doortop_b_l]
-name=oldstone_arched_doortop_b_l
 model=model_loc_1578
 length=2
 blockwalk=no
@@ -9886,7 +9823,6 @@ recol2s=2
 recol2d=23
 
 [oldstone_arched_doortop_b_r]
-name=oldstone_arched_doortop_b_r
 model=model_loc_1578
 length=2
 blockwalk=no
@@ -9898,7 +9834,6 @@ recol2s=2
 recol2d=23
 
 [oldstone_arched_doorbase_r]
-name=oldstone_arched_doorbase_r
 model=model_loc_1580
 sharelight=yes
 recol1s=61
@@ -9907,7 +9842,6 @@ recol2s=2
 recol2d=23
 
 [oldstone_arched_doorbase_l]
-name=oldstone_arched_doorbase_l
 model=model_loc_1580
 mirror=yes
 sharelight=yes
@@ -9917,7 +9851,6 @@ recol2s=2
 recol2d=23
 
 [crumblywall_with_roof_diag]
-name=crumblywall_with_roof_diag
 model=model_loc_1657
 sharelight=yes
 recol1s=6
@@ -10062,7 +9995,6 @@ model=model_loc_1681
 active=no
 
 [tentroofcentre1]
-name=tentroofcentre1
 model=model_loc_1682
 sharelight=yes
 
@@ -10076,7 +10008,6 @@ sharelight=yes
 occlude=yes
 
 [tentroofcentreold]
-name=tentroofcentreold
 model=model_loc_1685
 sharelight=yes
 
@@ -10553,7 +10484,6 @@ op1=Climb
 
 [climbing_rope_top]
 model=model_loc_1763
-name=climbing_rope_top
 
 [loc_1764]
 name=Climbing rope
@@ -10692,25 +10622,21 @@ model=model_loc_1785
 active=no
 
 [mroof1]
-name=mroof1
 model=model_loc_1786
 width=4
 length=4
 
 [mroof2]
-name=mroof2
 model=model_loc_1787
 width=4
 length=4
 
 [mroof3]
-name=mroof3
 model=model_loc_1788
 width=4
 length=4
 
 [mroof4]
-name=mroof4
 model=model_loc_1789
 width=4
 length=4
@@ -10751,7 +10677,6 @@ recol1s=6
 recol1d=18
 
 [magicwall]
-name=magicwall
 model=model_loc_1796
 length=2
 shadow=no
@@ -10913,12 +10838,10 @@ active=yes
 op1=Pull
 
 [woodfloor_crumbly_l]
-name=woodfloor_crumbly_l
 model=model_loc_1818
 sharelight=yes
 
 [woodfloor_crumbly_r]
-name=woodfloor_crumbly_r
 model=model_loc_1818
 mirror=yes
 sharelight=yes
@@ -11231,13 +11154,11 @@ sharelight=yes
 mirror=yes
 
 [runetemple_ruined]
-name=runetemple_ruined
 model=model_loc_1884
 width=3
 length=3
 
 [runetemple]
-name=runetemple
 model=model_loc_1885
 width=3
 length=3
@@ -11247,7 +11168,6 @@ model=model_loc_1886
 active=no
 
 [runetemple_altar_new]
-name=runetemple_altar_new
 model=model_loc_1887
 width=3
 length=3
@@ -11255,7 +11175,6 @@ anim=seq_503
 hasalpha=yes
 
 [runetemple_altar_old]
-name=runetemple_altar_old
 model=model_loc_1888
 width=3
 length=3
@@ -11397,13 +11316,13 @@ recol1d=10508
 [castlewall]
 model=model_loc_1512
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 
 [loc_1912]
 model=model_loc_1621
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 
 [loc_1913]
@@ -11447,14 +11366,14 @@ active=no
 [loc_1920]
 model=model_loc_1623
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 active=no
 
 [loc_1921]
 model=model_loc_1921
 sharelight=yes
-walloff=32
+wallwidth=32
 occlude=yes
 width=2
 active=no
@@ -11579,12 +11498,10 @@ recol1s=2
 recol1d=23
 
 [woodwall+brickedge_left]
-name=woodwall+brickedge_left
 model=model_loc_1941
 sharelight=yes
 
 [woodwall+brickedge_right]
-name=woodwall+brickedge_right
 model=model_loc_1941
 sharelight=yes
 mirror=yes
@@ -12325,355 +12242,7 @@ resizey=32
 resizez=32
 blockrange=no
 
-[loc_2119]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=4645
-
-[loc_2120]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=4645
-
-[loc_2121]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=2576
-recol2s=10349
-recol2d=7366
-
-[loc_2122]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=2576
-recol2s=10349
-recol2d=7366
-
-[loc_2123]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=53
-recol2s=10349
-recol2d=7366
-
-[loc_2124]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=53
-recol2s=10349
-recol2d=7366
-
-[loc_2125]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=10508
-recol2s=10349
-recol2d=7366
-
-[loc_2126]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=10508
-recol2s=10349
-recol2d=7366
-
-[loc_2127]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=8885
-recol2s=10349
-recol2d=7366
-
-[loc_2128]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=8885
-recol2s=10349
-recol2d=7366
-
-[loc_2129]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=74
-recol2s=10349
-recol2d=7366
-
-[loc_2130]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=74
-recol2s=10349
-recol2d=7366
-
-[loc_2131]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=43297
-recol2s=10349
-recol2d=7366
-
-[loc_2132]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=43297
-recol2s=10349
-recol2d=7366
-
-[loc_2133]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=21662
-recol2s=10349
-recol2d=7366
-
-[loc_2134]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=21662
-recol2s=10349
-recol2d=7366
-
-[loc_2135]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=34099
-recol2s=10349
-recol2d=7366
-
-[loc_2136]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=34099
-recol2s=10349
-recol2d=7366
-
-[loc_2137]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_675
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=6705
-recol2s=10349
-recol2d=7366
-
-[loc_2138]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=6705
-recol2s=10349
-recol2d=7366
-
-[loc_2139]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=39869
-recol2s=10349
-recol2d=7366
-
-[loc_2140]
-name=Rocks
-desc=A rocky outcrop.
-model=model_loc_676
-op1=Mine
-op2=Prospect
-op3=hidden
-mapscene=12
-anim=seq_523
-hasalpha=yes
-blockrange=no
-recol1s=24
-recol1d=55201
-recol2s=10349
-recol2d=7366
-
-[loc_2141]
+[chest_macro_gas]
 name=Chest
 desc=An open chest.
 model=model_loc_674
@@ -13463,7 +13032,6 @@ model=model_loc_10
 op1=Climb=down
 
 [zqdoorhideplant]
-name=zqdoorhideplant
 model=model_loc_1184
 mapscene=5
 
@@ -16521,14 +16089,14 @@ op1=Climb-up
 name=Wall
 desc=Made of wood.
 model=model_loc_1602
-walloff=8
+wallwidth=8
 occlude=yes
 active=yes
 op1=Knock-at
 
 [loc_2855]
 model=model_loc_1602
-walloff=8
+wallwidth=8
 occlude=yes
 
 [loc_2856]
@@ -17747,6 +17315,7 @@ desc=A wooden gate.
 model=model_loc_47
 active=yes
 op1=Open
+category=tutorial_gate
 
 [loc_3016]
 name=Gate
@@ -17755,6 +17324,7 @@ model=model_loc_47
 active=yes
 mirror=yes
 op1=Open
+category=tutorial_gate
 
 [loc_3017]
 name=Door
@@ -17766,6 +17336,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3018]
 name=Door
@@ -17777,6 +17348,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3019]
 name=Door
@@ -17788,6 +17360,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3020]
 name=Gate
@@ -18781,7 +18354,7 @@ model=model_loc_3146
 ambient=15
 contrast=15
 active=no
-walloff=32
+wallwidth=32
 
 [loc_3147]
 model=model_loc_3147
@@ -18820,14 +18393,14 @@ model=model_loc_3152
 ambient=15
 contrast=15
 active=no
-walloff=32
+wallwidth=32
 
 [loc_3153]
 model=model_loc_3153
 ambient=15
 contrast=15
 active=no
-walloff=32
+wallwidth=32
 
 [loc_3154]
 model=model_loc_3154
@@ -19585,7 +19158,6 @@ hillskew=yes
 sharelight=yes
 
 [bridge_bend_left]
-name=bridge_bend_left
 model=model_loc_3251
 width=2
 length=2
@@ -19594,7 +19166,6 @@ recol1s=6689
 recol1d=7952
 
 [bridge_bend_right]
-name=bridge_bend_right
 model=model_loc_3251
 width=2
 length=2
@@ -19604,7 +19175,6 @@ recol1s=6689
 recol1d=7952
 
 [bridge_threeway]
-name=bridge_threeway
 model=model_loc_3253
 sharelight=yes
 recol1s=6689
@@ -19685,7 +19255,6 @@ recol1s=5916
 recol1d=7952
 
 [upass_bridge+support]
-name=upass_bridge+support
 model=model_loc_3250
 sharelight=yes
 hillskew=yes
@@ -20141,7 +19710,6 @@ recol1s=61
 recol1d=7952
 
 [upass_bridge_corner]
-name=upass_bridge_corner
 model=model_loc_3325
 width=2
 length=2
@@ -20187,7 +19755,6 @@ sharelight=yes
 mirror=yes
 
 [upass_templedoor_top]
-name=upass_templedoor_top
 model=model_loc_3332
 length=4
 
@@ -20325,7 +19892,6 @@ recol2s=5916
 recol2d=8076
 
 [iban_temple_throne_top]
-name=iban_temple_throne_top
 model=model_loc_3349
 width=2
 length=2
@@ -20387,7 +19953,6 @@ recol2s=5665
 recol2d=7954
 
 [ibantomb_burnt_left]
-name=ibantomb_burnt_left
 model=model_loc_3353
 width=4
 length=2
@@ -20406,7 +19971,6 @@ recol6s=10560
 recol6d=57
 
 [ibantomb_burnt_right]
-name=ibantomb_burnt_right
 model=model_loc_3353
 width=4
 length=2
@@ -20496,8 +20060,7 @@ desc=Looks like I can climb these.
 model=model_loc_1444
 op1=Climb
 
-[loc_3366]
-name=onion
+[onion]
 model=model_loc_3366
 op2=Pick
 blockwalk=no

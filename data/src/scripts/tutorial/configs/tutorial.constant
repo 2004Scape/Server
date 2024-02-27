@@ -1,7 +1,7 @@
 ^runescape_guide_start = 0
 ^survival_guide_start = 20
 ^chef_start = 140
-^quest_guide_start = 200
+^quest_guide_start = 220
 ^mining_guide_start = 260
 ^combat_guide_start = 370
 ^finance_guide_start = 530

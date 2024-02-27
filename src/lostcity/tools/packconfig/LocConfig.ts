@@ -3,8 +3,9 @@ import Packet from '#jagex2/io/Packet.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, LocModelShape, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { LocModelShape, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { CategoryPack, LocPack, ModelPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 // these suffixes are simply the map editor keybinds
 enum LocShapeSuffix {
@@ -43,12 +44,12 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     const numberKeys = [
         'width', 'length',
         'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
-        'walloff',
+        'wallwidth',
         'ambient', 'contrast',
         'mapfunction',
         'resizex', 'resizey', 'resizez',
         'mapscene',
-        'xoff', 'yoff', 'zoff'
+        'offsetx', 'offsety', 'offsetz'
     ];
     // prettier-ignore
     const booleanKeys = [
@@ -96,7 +97,7 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        if (key === 'walloff' && (number < 0 || number > 32 || number % 8 !== 0)) {
+        if (key === 'wallwidth' && (number < 0 || number > 32 || number % 8 !== 0)) {
             return null;
         }
 
@@ -128,7 +129,7 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
         const models: LocModelShape[] = [];
 
         // if a model matches directly, we know that they want to make another suffix act like _8
-        let model = PACKFILE.get('model')!.indexOf(value);
+        let model = ModelPack.getByName(value);
         if (model !== -1) {
             models.push({ model, shape: LocShapeSuffix._8 });
             return models;
@@ -136,16 +137,16 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 
         // if it doesn't match, we'll have to lookup all model suffixes to see what's supported
         // this shape (centrepiece_default) comes first in their check, so we do it separately
-        model = PACKFILE.get('model')!.indexOf(value + '_8');
+        model = ModelPack.getByName(value + '_8');
         if (model !== -1) {
             models.push({ model, shape: LocShapeSuffix._8 });
         }
-        for (let i = 0; i < 23; i++) {
+        for (let i = 0; i <= 22; i++) {
             if (i === 10) {
                 continue;
             }
 
-            model = PACKFILE.get('model')!.indexOf(value + LocShapeSuffix[i]);
+            model = ModelPack.getByName(value + LocShapeSuffix[i]);
             if (model !== -1) {
                 models.push({ model, shape: i });
             }
@@ -157,14 +158,14 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 
         return null;
     } else if (key === 'category') {
-        const index = PACKFILE.get('category')!.indexOf(value);
+        const index = CategoryPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'anim') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -210,15 +211,13 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 }
 
 function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('loc')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(LocPack.size);
+    idx.p2(LocPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < LocPack.size; i++) {
+        const debugname = LocPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;
@@ -228,6 +227,7 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         const recol_d: number[] = [];
         let models: LocModelShape[] = [];
         let name: string | null = null;
+        let active: number = -1; // not written last, but affects name output
         let desc: string | null = null;
         const params: ParamValue[] = [];
 
@@ -266,6 +266,7 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'active') {
                 dat.p1(19);
                 dat.pbool(value as boolean);
+                active = value ? 1 : 0;
             } else if (key === 'hillskew') {
                 if (value === true) {
                     dat.p1(21);
@@ -285,7 +286,7 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                 if (value === true) {
                     dat.p1(25);
                 }
-            } else if (key === 'walloff') {
+            } else if (key === 'wallwidth') {
                 dat.p1(28);
                 dat.p1(value as number);
             } else if (key === 'ambient') {
@@ -324,13 +325,13 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'forceapproach') {
                 dat.p1(69);
                 dat.p1(value as number);
-            } else if (key === 'xoff') {
+            } else if (key === 'offsetx') {
                 dat.p1(70);
                 dat.p2(value as number);
-            } else if (key === 'yoff') {
+            } else if (key === 'offsety') {
                 dat.p1(71);
                 dat.p2(value as number);
-            } else if (key === 'zoff') {
+            } else if (key === 'offsetz') {
                 dat.p1(72);
                 dat.p2(value as number);
             } else if (key === 'forcedecor') {
@@ -362,6 +363,26 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             for (let k = 0; k < models.length; k++) {
                 dat.p2(models[k].model);
                 dat.p1(models[k].shape);
+            }
+        }
+
+        if (name === null && active !== 0) {
+            // edge case: a loc has no name= property but contains a centrepiece_straight shape or active=yes
+            //   we have to transmit a name - so we fall back to the debugname
+            let shouldTransmit: boolean = active === 1;
+
+            if (active === -1) {
+                for (let k = 0; k < models.length; k++) {
+                    if (models[k].shape === LocShapeSuffix._8) {
+                        // the presence of any _8 shape means we have to transmit a name
+                        shouldTransmit = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldTransmit) {
+                name = debugname;
             }
         }
 

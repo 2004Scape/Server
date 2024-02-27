@@ -5,14 +5,14 @@
 
 // a default melee retaliate script.
 [proc,npc_default_retaliate]
-if (finduid(%npc_attacking_uid) = false) {
-    return;
-}
 // npc flinch
 if (~npc_out_of_combat = true) {
     %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    %npc_attacking_uid = %npc_aggressive_player;
 }
-npc_setmode(opplayer2);
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(opplayer2);
+}
 
 // a default melee attack script.
 [proc,npc_default_attack]
@@ -20,10 +20,16 @@ if (stat(hitpoints) = 0) {
     return;
 }
 if (%npc_action_delay > map_clock) return;
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
 anim(%com_defendanim, 0);
 
 npc_anim(npc_param(attack_anim), 0);
-sound_synth(npc_param(attack_sound), 0, 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
 ~npc_meleeattack;
 
 // a default damage script.
@@ -95,7 +101,7 @@ if (~npc_is_attackable($npc) = false) {
 return (true);
 
 [proc,npc_out_of_combat]()(boolean)
-if (add(%npc_action_delay, 8) < map_clock) {
+if (add(%npc_lastattack, 8) < map_clock | (npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
     return (true);
 }
 return (false);
@@ -136,5 +142,24 @@ error("style of <tostring($style)> not defined in switch for npc_combat_defenceb
 
 [proc,npc_retaliate](int $queue_delay)
 npc_queue(1, 0, $queue_delay);
-%npc_attacking_uid = uid;
+// if in singles and attacking another player, then delay npc action by 8 ticks
+if (~inzone_coord_pair_table(multiway_zones, npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
+    %npc_action_delay = add(map_clock, 8);
+}
+%npc_aggressive_player = uid;
 %npc_lastcombat = map_clock;
+
+[proc,npc_set_attack_vars]
+%lastcombat = map_clock;
+%npc_lastattack = map_clock;
+%aggressive_npc = npc_uid;
+
+[proc,npc_can_attack_player]()(boolean)
+if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
+    return(true);
+}
+if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {
+    return(false);
+}
+
+return(true);

@@ -1,13 +1,3 @@
-[loc_24]
-name=Door
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
 [loc_59]
 name=Door
 model=model_loc_3

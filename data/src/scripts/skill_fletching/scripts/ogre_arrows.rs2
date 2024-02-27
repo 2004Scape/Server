@@ -12,7 +12,7 @@ switch_obj(last_useitem) {
 
 [opheldu,obj_2865]
 switch_obj(last_useitem) {
-    case obj_2861: @make_ogre_arrows;
+    case wolfbone_arrowheads: @make_ogre_arrows;
     case default : @nothing_interesting_happens;
 }
 
@@ -54,7 +54,7 @@ if (stat(crafting) < 5) {
 }
 def_int $tip_count = ~random_range(2, 6);
 inv_del(inv, wolf_bones, 1);
-inv_add(inv, obj_2861, $tip_count);
+inv_add(inv, wolfbone_arrowheads, $tip_count);
 
 mes("You chisel <tostring($tip_count)> wolf bone arrow tips.");
 
@@ -102,7 +102,7 @@ if (stat(fletching) < 5) {
     return;
 }
 def_int $headless_count = min(inv_total(inv, obj_2865), 6);
-def_int $tip_count = min(inv_total(inv, obj_2861), 6);
+def_int $tip_count = min(inv_total(inv, wolfbone_arrowheads), 6);
 def_int $arrow_count = min($headless_count, $tip_count);
 
 if ($arrow_count > 1) {
@@ -112,7 +112,7 @@ if ($arrow_count > 1) {
 }
 
 inv_del(inv, obj_2865, $arrow_count);
-inv_del(inv, obj_2861, $arrow_count);
+inv_del(inv, wolfbone_arrowheads, $arrow_count);
 
 inv_add(inv, ogre_arrow, $arrow_count);
 

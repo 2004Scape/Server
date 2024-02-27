@@ -1,0 +1,4 @@
+[opnpc1,king_percival]
+~chatnpc(happy, "You missed all the excitement!");
+~chatnpc(happy, "I got here and agreed to take over duties as king here, then before my eyes the most miraculous changes occured here... grass and trees were growing outside before our very eyes!");
+~chatnpc(happy, "Thank you very much for showing me the way home.");

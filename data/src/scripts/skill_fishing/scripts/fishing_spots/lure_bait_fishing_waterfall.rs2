@@ -1,3 +1,5 @@
+// im guessing these loc fishing spots didnt have fishing spot random events?
+
 [oploc1,loc_2027]
 // check level
 if (stat(fishing) < 20) {
@@ -6,7 +8,9 @@ if (stat(fishing) < 20) {
     return;
 }
 // check if they have fishing equipment & bait
-~check_fish_equipment(fly_fishing_rod);
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
 %skill_anim = calc(%skill_anim + 1);
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 4);
@@ -18,7 +22,6 @@ if (%skill_anim < map_clock) {
 mes("You cast out your line...");
 p_oploc(3);
 
-
 [oploc3,loc_2027]
 // check level
 if (stat(fishing) < 20) {
@@ -27,7 +30,9 @@ if (stat(fishing) < 20) {
     return;
 }
 // check if they still have fishing equipment & bait
-~check_fish_equipment(fly_fishing_rod);
+if (~check_fish_equipment(fly_fishing_rod) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) = 0) {
     anim(null, 0);
@@ -44,9 +49,9 @@ if (%action_delay < map_clock) {
 }
 if (%action_delay = map_clock) {
     if (stat(fishing) >= 30) {
-        ~fish_roll(raw_trout, raw_salmon, feather);
+        ~fish_roll_waterfall(raw_trout, raw_salmon, feather);
     } else {
-        ~fish_roll(raw_trout, null, feather);
+        ~fish_roll_waterfall(raw_trout, null, feather);
     }
     %skill_anim = calc(map_clock - 1);
     anim(human_fish_onspot, 0);
@@ -63,7 +68,9 @@ if (stat(fishing) < 25) {
     return;
 }
 // check if they have fishing equipment & bait
-~check_fish_equipment(fishing_rod);
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
 %skill_anim = calc(%skill_anim + 1);
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
@@ -82,7 +89,9 @@ if (stat(fishing) < 25) {
     return;
 }
 // check if they still have fishing equipment & bait
-~check_fish_equipment(fishing_rod);
+if (~check_fish_equipment(fishing_rod) = false) {
+    return;
+}
 // check if inv is full
 if (inv_freespace(inv) = 0) {
     anim(null, 0);
@@ -99,7 +108,7 @@ if (%action_delay < map_clock) {
 }
 if (%action_delay = map_clock) {
     %skill_anim = calc(map_clock - 1);
-    ~fish_roll(raw_pike, null, fishing_bait);
+    ~fish_roll_waterfall(raw_pike, null, fishing_bait);
     if (randominc(5) = 5) { // 1/5 chance to recast
         //mes("<tostring(map_clock)>: Recast.");
         p_oploc(2);
@@ -114,9 +123,37 @@ if (%action_delay = map_clock) {
 }
 
 [oplocu,loc_2027]
-~check_correct_fish_equipment(fishing_rod, fly_fishing_rod);
 switch_obj(last_useitem) {
     case fishing_rod : p_oploc(2);
     case fly_fishing_rod : p_oploc(1);
-    case default : @nothing_interesting_happens;
+    case default : @fishing_wrong_spot_message(last_useitem);
+}
+
+[proc,fish_roll_waterfall](namedobj $fish1, namedobj $fish2, namedobj $bait)
+if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
+    def_struct $struct2 = oc_param($fish2, fishing_struct);
+    if (stat_random(stat(fishing), struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
+        if ($bait ! null) {
+            // delete bait
+            inv_del(inv, $bait, 1);
+        }
+        // give fish and display message
+        inv_add(inv, $fish2, 1);
+        givexp(fishing, struct_param($struct2, productexp));
+        mes(struct_param($struct2, productmessage));
+        return;
+    }
+}
+if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
+    def_struct $struct1 = oc_param($fish1, fishing_struct);
+    if (stat_random(stat(fishing), struct_param($struct1, success_low), struct_param($struct1, success_high)) = true) {
+        if ($bait ! null) {
+            // delete bait
+            inv_del(inv, $bait, 1);
+        }
+        // give fish and display message
+        inv_add(inv, $fish1, 1);
+        givexp(fishing, struct_param($struct1, productexp));
+        mes(struct_param($struct1, productmessage));
+    }
 }

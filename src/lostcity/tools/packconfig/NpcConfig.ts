@@ -6,9 +6,10 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
-import { PACKFILE, ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
+import { CategoryPack, HuntPack, ModelPack, NpcPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     // prettier-ignore
@@ -100,28 +101,28 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
 
         return value === 'yes';
     } else if (key.startsWith('model')) {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key.startsWith('head')) {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'readyanim') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'walkanim') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -132,7 +133,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         const indices: number[] = [];
 
         for (const anim of anims) {
-            const index = PACKFILE.get('seq')!.indexOf(anim);
+            const index = SeqPack.getByName(anim);
             if (index === -1) {
                 return null;
             }
@@ -157,7 +158,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             return number;
         }
     } else if (key === 'category') {
-        const index = PACKFILE.get('category')!.indexOf(value);
+        const index = CategoryPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -211,7 +212,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
                 return null;
         }
     } else if (key === 'huntmode') {
-        const index = PACKFILE.get('hunt')!.indexOf(value);
+        const index = HuntPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -228,21 +229,47 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
             default:
                 return null;
         }
+    } else if (key.startsWith('patrol')) {
+        const parts = value.split(',');
+        const coordParts = parts[0].split('_');
+        const delay = parseInt(parts[1]);
+
+        const level = parseInt(coordParts[0]);
+        const mX = parseInt(coordParts[1]);
+        const mZ = parseInt(coordParts[2]);
+        const lX = parseInt(coordParts[3]);
+        const lZ = parseInt(coordParts[4]);
+
+        if (isNaN(level) || isNaN(mX) || isNaN(mZ) || isNaN(lX) || isNaN(lZ)) {
+            return null;
+        }
+        if (lZ < 0 || lX < 0 || mZ < 0 || mX < 0 || level < 0) {
+            return null;
+        }
+        if (lZ > 63 || lX > 63 || mZ > 255 || mX > 255 || level > 3) {
+            return null;
+        }
+
+        const x = (mX << 6) + lX;
+        const z = (mZ << 6) + lZ;
+        const coord = (z & 0x3fff) | ((x & 0x3fff) << 14) | ((level & 0x3) << 28);
+        if (isNaN(delay)) {
+            return [coord, 0]; // maybe we return null instead?
+        }
+        return [coord, delay];
     } else {
         return undefined;
     }
 }
 
 function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('npc')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(NpcPack.size);
+    idx.p2(NpcPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < NpcPack.size; i++) {
+        const debugname = NpcPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;
@@ -255,6 +282,7 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         const heads: number[] = [];
         const params: ParamValue[] = [];
         const stats: number[] = [1, 1, 1, 1, 1, 1];
+        const patrol = [];
         let vislevel = false;
 
         for (let j = 0; j < config.length; j++) {
@@ -389,7 +417,11 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                         dat.p1(211);
                     }
                 }
-            } else if (key === 'hitpoints') {
+            } else if (key.startsWith('patrol')) {
+                if (transmitAll === true) {
+                    patrol.push(value);
+                }
+            }  else if (key === 'hitpoints') {
                 stats[0] = value as number;
             } else if (key === 'attack') {
                 stats[1] = value as number;
@@ -412,6 +444,10 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                 dat.p2(recol_s[k]);
                 dat.p2(recol_d[k]);
             }
+        }
+
+        if (name === null) {
+            name = debugname;
         }
 
         if (name !== null) {
@@ -448,6 +484,17 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
 
             for (let k = 0; k < stats.length; k++) {
                 dat.p2(stats[k]);
+            }
+        }
+
+        if (transmitAll === true && patrol.length > 0) {
+            dat.p1(212);
+            dat.p1(patrol.length);
+
+            for (let i = 0; i < patrol.length; i++) {
+                const [packedCoord, delay] = patrol[i] as number[];
+                dat.p4(packedCoord);
+                dat.p1(delay);
             }
         }
 

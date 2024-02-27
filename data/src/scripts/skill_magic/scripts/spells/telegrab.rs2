@@ -12,25 +12,41 @@ def_namedobj $rune2;
 def_int $rune_count2;
 def_namedobj $rune3;
 def_int $rune_count3;
+def_boolean $passes;
 // check runes
-$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-
+$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+if ($passes = false) {
+    return;
+}
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random);
+    return;
+}
 // display tea
 if (obj_type = obj_712) {
     ~chatnpc_specific(nc_name(tea_seller), tea_seller, angry, "Hey! Put that back! Those are for display only!");
     return;
 }
+// These use a different mes compared to obj's with the telegrab_disabled param (maybe make a 2nd param)
+if(obj_type = holy_grail | obj_type = ghost_skull | obj_type = obj_78) {
+    mes("I can't use Telekinetic Grab on this object.");
+    return;
+}
+if(oc_param(obj_type, telegrab_disabled) = true) {
+    mes("You can't cast this spell on that object.");
+    return;
+}
 // start anim, sound, and spotanim
 anim(human_casttelegrab, 0);
 sound_synth(telegrab_all, 0, 0);
-spotanim_pl(spotanim_142, 92, 0);
+spotanim_pl(casttelegrab, 92, 0);
 
 // delete runes
 ~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 // delay character for 4 ticks, give item, delay character for 3 ticks
 // play mapanim
-def_int $duration = ~coord_projectile(coord, obj_coord, spotanim_144, 35, 0, 48, 16, -2, 64, 10);
-spotanim_map(spotanim_144, obj_coord, 0, $duration);
+def_int $duration = ~coord_projectile(coord, obj_coord, telegrab_travel, 35, 0, 48, 16, -2, 64, 10);
+spotanim_map(telegrab_hit, obj_coord, 0, $duration);
 p_stopaction;
 // mes("<tostring(map_clock)>: You start telegrabbing.");
 p_delay(2);

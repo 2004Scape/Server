@@ -22,7 +22,7 @@ model=model_2679_obj
 weight=1lb
 members=yes
 
-[obj_2]
+[mcannonball]
 name=Cannonball
 desc=Ammo for the Dwarf Cannon.
 model=model_2413_obj

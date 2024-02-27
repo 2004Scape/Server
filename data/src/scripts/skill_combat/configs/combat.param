@@ -138,3 +138,18 @@ default=0
 [zamorakitem]
 type=int
 default=0
+
+[poison_severity]
+type=int
+default=0
+
+// npcs that reduces the players max hit. Such as strange plant
+[max_dealt]
+type=int
+// high default value to avoid any issues
+default=1000
+
+// 1000 = 1x
+[combat_xp_multiplier]
+type=int
+default=1000

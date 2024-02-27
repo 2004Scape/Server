@@ -1,5 +1,5 @@
 [label,levelup_smithing]
-//Attack level up unlock messages
+//Smithing level up unlock messages
 switch_int(stat_base(smithing)) {
     case 2: ~objbox(bronze_mace,"You can now make @dbl@Bronze Maces@bla@.");
     case 3: ~objboxb(bronze_med_helm,"You can now make @dbl@Bronze Medium Helms@bla@.");
@@ -87,20 +87,4 @@ switch_int(stat_base(smithing)) {
     case 96: ~objboxt(rune_chainbody,"You can now make @dbl@Rune Chainmail Bodies@bla@.");
     case 97: ~objboxt(rune_kiteshield,"You can now make @dbl@Rune Kite Shields@bla@.");
     case 99: ~doubleobjbox(rune_2h_sword,rune_platebody,"You can now make @dbl@Rune Two Handed Swords@bla@, @dbl@Plate|@dbl@Legs@dbl@, @dbl@plate skirts@bla@, and @dbl@Plate Bodies@bla@.");
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

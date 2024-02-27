@@ -1,0 +1,57 @@
+[proc,macro_event_lost_pickaxe_spawn]
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    anim(null, 0);
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
+    return;
+}
+def_namedobj $pickaxe_head = oc_param($pickaxe, pickaxe_head);
+
+// todo: use inv_changeslot?
+if (inv_total(worn, $pickaxe) > 0) {
+    inv_del(worn, $pickaxe, 1);
+    inv_setslot(worn, ^wearpos_rhand, pickaxe_handle, 1);
+    ~update_all($pickaxe);
+} if (inv_total(inv, $pickaxe) > 0) {
+    inv_del(inv, $pickaxe, 1);
+    inv_add(inv, pickaxe_handle, 1);
+}
+def_coord $pickaxe_coord = ~coord_lineofwalk_radius2(coord, 7);
+anim(human_mining_pickaxe_handle, 0);
+sound_synth(lost_pickaxe, 0, 0);
+mes("You swing your pick at the rock.");
+def_int $delay = ~coord_projectile(coord, $pickaxe_coord, pickaxe_head_launch, 35, 0, 14, 16, -2, 64, 10);
+// world_delay(calc($delay/60));
+// https://youtu.be/tev6FR2iowQ?t=16 Looks like it delays the player
+p_delay(calc($delay/60));
+obj_add($pickaxe_coord, $pickaxe_head, 1, ^lootdrop_duration);
+
+[label,reattach_pickaxe](obj $pickaxe_head)
+def_namedobj $pickaxe = oc_param($pickaxe_head, fixed);
+if (inv_total(inv, pickaxe_handle) > 0 & inv_total(inv, $pickaxe_head) > 0) {
+    inv_del(inv, pickaxe_handle, 1);
+    inv_del(inv, $pickaxe_head, 1);
+    inv_add(inv, $pickaxe, 1);
+    sound_synth(attach_handle, 0, 0);
+    mes("You carefully attach the two pieces together."); // https://youtu.be/tev6FR2iowQ?t=34
+}
+
+[opheldu,pickaxe_handle]
+switch_obj(last_useitem) {
+    case bronze_pickaxe_head, iron_pickaxe_head, steel_pickaxe_head, mithril_pickaxe_head, adamant_pickaxe_head, rune_pickaxe_head : @reattach_pickaxe(last_useitem);
+    case default : @nothing_interesting_happens;
+}
+
+[opheldu,bronze_pickaxe_head] @check_pickaxe_head;
+[opheldu,iron_pickaxe_head] @check_pickaxe_head;
+[opheldu,steel_pickaxe_head] @check_pickaxe_head;
+[opheldu,mithril_pickaxe_head] @check_pickaxe_head;
+[opheldu,adamant_pickaxe_head] @check_pickaxe_head;
+[opheldu,rune_pickaxe_head] @check_pickaxe_head;
+
+[label,check_pickaxe_head]
+if (last_useitem = pickaxe_handle) {
+    @reattach_pickaxe(last_item);
+} else {
+    @nothing_interesting_happens;
+}
