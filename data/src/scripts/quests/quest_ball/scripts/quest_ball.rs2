@@ -8,25 +8,27 @@ if(inv_total(inv, ball_doorkey) > 0) { // no bank check (osrs)
 inv_add(inv, ball_doorkey, 1);
 
 [oploc1,loc_2861]
-if(inv_total(inv, ball_doorkey) > 0) {
-    @open_witch_house_door;
+def_boolean $leaving = ~check_axis(coord, loc_coord, loc_angle);
+if(inv_total(inv, ball_doorkey) > 0 | $leaving = true) {
+    @open_witch_house_door($leaving);
 }
 mes("The door is locked.");
 
 [oplocu,loc_2861]
-if(last_useitem = ball_doorkey) {
-    @open_witch_house_door;
+def_boolean $leaving = ~check_axis(coord, loc_coord, loc_angle);
+if(last_useitem = ball_doorkey | $leaving = true) {
+    @open_witch_house_door($leaving);
 }
 @nothing_interesting_happens;
 
-[label,open_witch_house_door]
-if(%ball_progress < ^ball_started | %ball_progress = ^ball_complete) {
+[label,open_witch_house_door](boolean $leaving)
+if($leaving ! true & (%ball_progress < ^ball_started | %ball_progress = ^ball_complete)) {
     ~chatplayer(neutral, "It would be rude to break into this house.");
     return;
 }
 // angles on these doors don't visually match osrs, but they actually do have the same loc_angle
 // prob just something weird with the new models?
-~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door2(loc_1535, $leaving, false);
 
 [oploc1,_ball_irongate]
 if(inv_total(worn, leather_gloves) = 0) {
