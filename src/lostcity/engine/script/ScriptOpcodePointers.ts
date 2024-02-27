@@ -334,6 +334,10 @@ const ScriptOpcodePointers: {
         require: ['p_active_player', 'active_player2'],
         require2: ['p_active_player2', 'active_player']
     },
+    [ScriptOpcode.P_OPPLAYERT]: {
+        require: ['p_active_player', 'active_player2'],
+        require2: ['p_active_player2', 'active_player']
+    },
     [ScriptOpcode.P_PAUSEBUTTON]: {
         require: ['p_active_player'],
         set: ['last_com'],

@@ -1,5 +1,5 @@
 [opnpc2,_]
-if (~player_can_attack_npc = false) {
+if (~player_in_combat_check = false) {
     return;
 }
 @player_combat_start;
@@ -32,7 +32,7 @@ if ($distance > $attackrange) {
     p_aprange($attackrange);
     return;
 }
-if (~player_can_attack_npc = false) {
+if (~player_in_combat_check = false) {
     return;
 }
 p_aprange($attackrange);
@@ -109,15 +109,27 @@ switch_int ($damagetype) {
 }
 error("style of <tostring($damagetype)> not defined in switch for player_defence_roll_specific");
 
-[proc,player_can_attack_npc]()(boolean)
+[proc,.player_defence_roll_specific](int $damagetype)(int)
+switch_int ($damagetype) {
+    case ^stab_style: return(.%com_stabdef);
+    case ^slash_style: return(.%com_slashdef);
+    case ^crush_style: return(.%com_crushdef);
+    case ^ranged_style: return(.%com_rangedef);
+    case ^magic_style: return(.%com_magicdef);
+}
+
+[proc,player_in_combat_check]()(boolean)
 if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
     return(true);
 }
-if (calc(%lastcombat + 8) > map_clock & %defending_npc_uid ! npc_uid & %defending_npc_uid ! null) {
+// player has been attacked in the last 8 ticks, and not by the current npc
+// or player has been attacked in the last 8 ticks, and %aggressive_npc is null (for pvp)
+if (add(%lastcombat, 8) > map_clock & (%aggressive_npc ! npc_uid | %aggressive_npc = null)) {
     mes("I'm already under attack.");
     return(false);
 }
-if (calc(%npc_lastcombat + 8) > map_clock & %npc_defending_uid ! uid) {
+// npc has been attacked in the last 8 ticks, and not by the current player
+if ((add(%npc_lastcombat, 8) > map_clock & %npc_aggressive_player ! uid)) {
     mes("Someone else is fighting that.");
     return(false);
 }

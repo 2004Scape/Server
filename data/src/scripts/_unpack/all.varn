@@ -3,7 +3,7 @@
 [npc_attacking_uid]
 type=player_uid
 
-[npc_defending_uid]
+[npc_aggressive_player]
 type=player_uid
 
 [npc_lastcombat]

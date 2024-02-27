@@ -39,7 +39,7 @@
 38=lastcombat
 39=magic_utility_delay
 40=eat_delay
-41=defending_npc_uid
+41=aggressive_npc
 42=varp_42
 43=attackstyle
 44=com_stabattack
@@ -76,7 +76,7 @@
 75=boat_takeoff
 76=scorpcatcher_progress
 77=barcrawl_progress
-78=varp_78
+78=pk_skull
 79=xplamp
 80=druid_progress
 81=macro_event
@@ -115,11 +115,11 @@
 114=varp_114
 115=bank_noted
 116=zombiequeen_progress
-117=varp_117
-118=varp_118
-119=varp_119
-120=varp_120
-121=varp_121
+117=pk_prey1
+118=pk_prey2
+119=pk_predator1
+120=pk_predator2
+121=pk_predator3
 122=squire_progress
 123=varp_123
 124=skill_anim

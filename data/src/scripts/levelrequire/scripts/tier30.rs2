@@ -28,14 +28,14 @@
 [opheld2,adamant_chainbody] @levelrequire_defence(30, last_slot);
 [opheld2,adamant_platebody] @levelrequire_defence(30, last_slot);
 
-[opheld2,adamant_platebody_t] @levelrequire_defence(30, last_slot);
-[opheld2,adamant_platelegs_t] @levelrequire_defence(30, last_slot);
-[opheld2,adamant_full_helm_t] @levelrequire_defence(30, last_slot);
-[opheld2,adamant_kiteshield_t] @levelrequire_defence(30, last_slot);
-[opheld2,adamant_platebody_g] @levelrequire_defence(30, last_slot);
-[opheld2,adamant_platelegs_g] @levelrequire_defence(30, last_slot);
-[opheld2,adamant_full_helm_g] @levelrequire_defence(30, last_slot);
-[opheld2,adamant_kiteshield_g] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platebody_trim] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platelegs_trim] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_full_helm_trim] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_kiteshield_trim] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platebody_gold] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_platelegs_gold] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_full_helm_gold] @levelrequire_defence(30, last_slot);
+[opheld2,adamant_kiteshield_gold] @levelrequire_defence(30, last_slot);
 
 // Ranged
 [opheld2,maple_longbow] @levelrequire_ranged(30, last_slot);

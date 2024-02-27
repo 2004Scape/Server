@@ -116,6 +116,45 @@ while ($i < $size) {
 }
 return($stabattack, $slashattack, $crushattack, $magicattack, $rangeattack, $stabdefence, $slashdefence, $crushdefence, $magicdefence, $rangedefence, $strengthbonus, $prayerbonus, $rangebonus);
 
+[proc,.equip_get_bonuses]()(int, int, int, int, int, int, int, int, int, int, int, int, int)
+def_int $stabattack = 0;
+def_int $slashattack = 0;
+def_int $crushattack = 0;
+def_int $magicattack = 0;
+def_int $rangeattack = 0;
+def_int $stabdefence = 0;
+def_int $slashdefence = 0;
+def_int $crushdefence = 0;
+def_int $magicdefence = 0;
+def_int $rangedefence = 0;
+def_int $strengthbonus = 0;
+def_int $prayerbonus = 0;
+def_int $rangebonus = 0;
+
+def_int $size = .inv_size(worn);
+def_int $i = 0;
+while ($i < $size) {
+    def_obj $obj = .inv_getobj(worn, $i);
+    if ($obj ! null) {
+        $stabattack = calc($stabattack + oc_param($obj, stabattack));
+        $slashattack = calc($slashattack + oc_param($obj, slashattack));
+        $crushattack = calc($crushattack + oc_param($obj, crushattack));
+        $magicattack = calc($magicattack + oc_param($obj, magicattack));
+        $rangeattack = calc($rangeattack + oc_param($obj, rangeattack));
+        $stabdefence = calc($stabdefence + oc_param($obj, stabdefence));
+        $slashdefence = calc($slashdefence + oc_param($obj, slashdefence));
+        $crushdefence = calc($crushdefence + oc_param($obj, crushdefence));
+        $magicdefence = calc($magicdefence + oc_param($obj, magicdefence));
+        $rangedefence = calc($rangedefence + oc_param($obj, rangedefence));
+        $strengthbonus = calc($strengthbonus + oc_param($obj, strengthbonus));
+        $prayerbonus = calc($prayerbonus + oc_param($obj, prayerbonus));
+        $rangebonus = calc($rangebonus + oc_param($obj, rangebonus));
+    }
+    $i = calc($i + 1);
+}
+return($stabattack, $slashattack, $crushattack, $magicattack, $rangeattack, $stabdefence, $slashdefence, $crushdefence, $magicdefence, $rangedefence, $strengthbonus, $prayerbonus, $rangebonus);
+
+
 [proc,update_bonus_text](component $com, string $name, int $bonus)
 def_string $sign = "+";
 if ($bonus < 0) {

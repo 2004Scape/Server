@@ -1,0 +1,56 @@
+[label,pvp_melee_attack]
+if (%action_delay > map_clock) {
+    p_opplayer(2); // it is guaranteed here that we are already within op distance
+    return;
+}
+
+if (.stat(hitpoints) = 0) {
+    p_stopaction;
+    return;
+}
+
+~player_combat_stat;
+// ~.player_combat_stat; needs .p_active_player pointer for some reason
+
+def_int $damage = 0;
+// not sure if xp multipler exists for us or not?!
+// https://oldschool.runescape.wiki/w/Combat#PvP_bonus_experience
+if (~pvp_hit_roll(%damagetype) = true) {
+    def_int $maxhit = %com_maxhit;
+    if (~.check_protect_prayer(^melee_style) = true) {
+        $maxhit = scale(6, 10, $maxhit); // reduction of 40%
+    }
+    $damage = min(randominc($maxhit), .stat(hitpoints)); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
+    ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
+}
+.if_close;
+anim(%com_attackanim, 0);
+sound_synth(%com_attacksound, 0, 0);
+.sound_synth(.%com_attacksound, 0, 0);
+
+// todo: queue these
+if (.p_finduid(.uid) = true) {
+    ~.pvp_retaliate(uid);
+    ~.pvp_damage_player($damage);
+}
+// .queue(.pvp_retaliate, uid, 0);
+// .queue(.pvp_damage, uid, $damage, 0);
+
+.anim(.%com_defendanim, 20);
+// .sound_synth(.%com_defendsound, 0, 20);
+// sound_synth(.%com_defendsound, 0, 20);
+
+// todo: heropoints
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+if ($weapon = null) {
+    %action_delay = add(map_clock, 4);
+} else {
+    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+}
+
+if (~deserves_pk_skull = true) {
+    ~pk_skull(3000); // 3000 ticks, or 30 minutes
+}
+~set_pk_vars;
+
+p_opplayer(2);
