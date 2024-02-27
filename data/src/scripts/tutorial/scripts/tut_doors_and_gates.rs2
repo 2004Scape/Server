@@ -9,16 +9,16 @@ if (%tutorial_progress = 120) {
 }
 loc_findallzone(coord);
 while(loc_findnext = true) {
-     if(loc_category = tutorial_gate) {
-            def_coord $central_coord = loc_coord;
-            def_int $orig_angle = loc_angle;
-            loc_del(2);
-            if(loc_type = loc_3015) {
-                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
-                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2);
-            }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
-     }
+    if(loc_category = tutorial_gate) {
+        def_coord $central_coord = loc_coord;
+        def_int $orig_angle = loc_angle;
+        def_loc $type = loc_type;
+        loc_change(loc_83, 2);
+        if($type = loc_3015) {
+             loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
+             loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2);
+        }
+    }
 }
 sound_synth(door_open, 0, 0);
 p_delay(0);
@@ -97,4 +97,10 @@ if (%tutorial_progress < 250) {
     }
     return;
 }
-@tutorial_complete;
+%tutorial_progress = 260;
+~set_tutorial_progress;
+// TODO: Animate and whatnot.
+p_teleport(0_48_148_16_48);
+
+// Ladder out of mine to quest guide
+[oploc1,loc_3028]

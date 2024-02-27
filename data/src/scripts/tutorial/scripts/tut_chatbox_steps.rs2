@@ -131,3 +131,25 @@ if_settab(questlist, ^tab_quest_journal);
 [proc,tutorial_step_enter_mine]
 hint_coord(^hint_center, 0_48_48_16_47, 100);
 ~tutorialstep("", "Moving on.|It's time to enter some caves. Click on the ladder to go down to|the next area.");
+
+[proc,tutorial_step_talk_to_mining_instructor]
+~set_hint_icon_mining_instructor;
+~tutorialstep("Mining and smithing.", "Next let's get you a weapon, or more to the point, you can|make your first weapon yourself. Don't panel, the mining|instructor will help you. Talk to him and he'll tell you all about it.");
+
+[proc,tutorial_step_prospect_rocks]
+~tut_hint_icon_rocks;
+if (%tutorial_progress = 270) {
+    ~tutorialstep("Prospecting", "To prospect a mineable rock just right click it and select the|prospect rock option. This will tell you the type of ore you can|mine from it. Try it now on one of the rocks indicated.");
+    return;
+}
+
+if (%tutorial_progress = 275) {
+    ~tutorialstep("It's tin.", "So you know there's tin in the grey rocks, try prospecting|the brown ones next.");
+    return;
+}
+
+if (%tutorial_progress = 280) {
+    ~tutorialstep("It's copper.", "Talk to the mining instructor to find out about these types of|ore and how you can mine them. He'll give you the needed tools|too.");
+    return;
+}
+

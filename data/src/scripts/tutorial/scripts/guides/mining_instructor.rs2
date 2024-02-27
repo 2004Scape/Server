@@ -1,0 +1,41 @@
+[opnpc1,npc_948]
+switch_int(%tutorial_progress) {
+    case 260: @mining_instructor_start;
+}
+
+[label,mining_instructor_start]
+~chatnpc(quiz, "Hi there... You must be new around here.|So what do I call you? 'Newcomer'|seems so impersonal... and if we're going|to be working together, I'd rather call you by name.");
+~chatplayer(neutral, "You can call me <displayname>.");
+~chatnpc(neutral, "Ok then, <displayname>. My name is Dezzick, and I'm a|miner by trade. Let's prospect some of those rocks.");
+%tutorial_progress = 270;
+~set_tutorial_progress;
+
+// quest guide ladder 3088 3120 0
+[proc,set_hint_icon_mining_instructor]
+npc_findallzone(0_48_148_7_33);
+while (npc_findnext = true) {
+    if (npc_type = npc_948) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_148_9_32);
+while (npc_findnext = true) {
+    if (npc_type = npc_948) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_148_7_34);
+while (npc_findnext = true) {
+    if (npc_type = npc_948) {
+        hint_npc(npc_uid);
+    }
+}
+
+npc_findallzone(0_48_148_12_33);
+while (npc_findnext = true) {
+    if (npc_type = npc_948) {
+        hint_npc(npc_uid);
+    }
+}

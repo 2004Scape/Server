@@ -1,0 +1,42 @@
+// Copper Rock
+[oploc1,loc_3042]
+
+// Tin Ore
+[oploc1,loc_3043]
+
+
+[oploc2,loc_3042]
+~tut_prospect;
+if (%tutorial_progress = 270) {
+    %tutorial_progress = 274;
+}
+
+if (%tutorial_progress = 275) {
+    %tutorial_progress = 280;
+}
+~set_tutorial_progress;
+
+[oploc2,loc_3043]
+~tut_prospect;
+if (%tutorial_progress = 270) {
+    %tutorial_progress = 275;
+}
+if (%tutorial_progress = 274) {
+    %tutorial_progress = 280;
+}
+~set_tutorial_progress;
+
+[proc,tut_prospect]
+
+
+[proc,tut_hint_icon_rocks]
+if (%tutorial_progress = 270) {
+    hint_coord(^hint_center, 0_48_148_4_32, 100);
+    return;
+}
+
+if (%tutorial_progress = 275) {
+    hint_coord(^hint_center, 0_48_148_14_29, 100);
+    return;
+}
+
