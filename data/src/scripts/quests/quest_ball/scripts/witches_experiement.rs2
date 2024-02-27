@@ -32,8 +32,7 @@ mes("The shapeshifter turns into a wolf!");
 
 [ai_queue3,witches_experiment_p4](int $arg)
 gosub(npc_death);
-if(npc_findhero = true) {
-    if_close;
+if(npc_findhero = true) { // this doesn't if_close or strongqueue, just regular queue (confirmed on osrs)
     if(p_finduid(uid) = true) { // get protected access, if not then queue
         @defeat_witches_experiment;
     }
@@ -42,5 +41,7 @@ if(npc_findhero = true) {
 
 [queue,queue_defeat_witches_experiment] @defeat_witches_experiment;
 [label,defeat_witches_experiment]
-%ball_progress = ^ball_defeated_experiment;
+if(%ball_progress < ^ball_defeated_experiment) {
+    %ball_progress = ^ball_defeated_experiment;
+}
 mes("You finally kill the shapeshifter once and for all.");

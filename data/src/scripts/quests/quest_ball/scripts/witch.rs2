@@ -2,7 +2,7 @@
 [ai_applayer2,nora_t_hagg]
 // TODO: switch to huntall -> huntnext on a timer instead to get active player instead of using an ap op
 
-// the witch can still get los if you're on the edge of a hedge, this wouldn't match osrs behaviour,
+// the witch can still get los if you're on the edge of a hedge, this wouldn't match osrs behaviour!
 def_int $dz = calc(coordz(coord) - coordz(npc_coord));
 if(($dz > 0 & loc_find(movecoord(coord, 0, 0, -1), loc_1116) = true) | 
     ($dz > 0 & loc_find(movecoord(coord, 0, 0, -1), loc_1117) = true) | 
@@ -20,13 +20,19 @@ p_delay(1);
 npc_say("Klarata... Sepptento... Valkan!");
 spotanim_npc(curse_cast, 92, 0);
 sound_synth(curse_all, 0, 0);
-spotanim_pl(curse_hit, 124, 70);
-def_int $duration = ~player_projectile(npc_coord, coord, uid, curse_travel, 15, 31, 0, 16, 0, 128, 5);
+spotanim_pl(curse_hit, 124, 100);
+~player_projectile(npc_coord, coord, uid, curse_travel, 31, 31, 61, 16, 39, 128, 0);
 p_delay(3);
 if(%ball_progress = ^ball_unlocked_mousedoor) {
     %ball_progress = ^ball_started;
 }
-inv_del(inv, ball_shedkey, inv_total(inv, ball_shedkey));
-inv_del(inv, boy_ball, inv_total(inv, boy_ball));
+def_int $key_count = inv_total(inv, ball_shedkey);
+def_int $ball_count = inv_total(inv, boy_ball);
+if($key_count > 0) {
+    inv_del(inv, ball_shedkey, $key_count);
+}
+if($ball_count > 0) {
+    inv_del(inv, boy_ball, $ball_count);
+}
 p_teleport(0_45_54_49_0);
 npc_setmode(patrol);

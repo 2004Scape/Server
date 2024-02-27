@@ -120,7 +120,6 @@ export default class Npc extends PathingEntity {
         if (npcType.timer !== -1) {
             this.setTimer(npcType.timer);
         }
-        this.resetHeroPoints(); // temp
 
         this.vars = new Int32Array(VarNpcType.count);
         this.mode = npcType.defaultmode;

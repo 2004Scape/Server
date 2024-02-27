@@ -99,6 +99,7 @@ p_arrivedelay;
 switch_coord (loc_coord) {
     case 0_48_52_36_35: p_telejump(movecoord(coord, 0, 1, 4)); // Draynor manor - level 0
     case 1_43_73_16_10: p_telejump(2_43_73_16_13); // Grail castle - level 1
+    case 0_45_54_26_13: p_telejump(1_45_54_26_16); // Witch's house - level 0
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -108,6 +109,7 @@ p_arrivedelay;
 switch_coord (loc_coord) {
     case 1_48_52_36_36: p_telejump(movecoord(coord, 0, -1, -4)); // Draynor manor - level 1
     case 2_43_73_16_11: p_telejump(1_43_73_16_9); // Grail castle - level 2
+    case 1_45_54_26_14: p_telejump(0_45_54_26_12); // Witch's house - level 1
     case default: @unhandled_stairs(loc_coord);
 }
 

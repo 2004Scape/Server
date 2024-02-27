@@ -10959,19 +10959,6 @@ param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
 
-[npc_901]
-vislevel=hide
-name=Mouse
-desc=Deceptively mouse shaped.
-walkanim=rat_walk
-readyanim=rat_ready
-op1=Feed
-recol1s=61
-recol1d=21588
-model1=model_2927_npc
-wanderrange=0
-moverestrict=nomove
-
 [npc_912]
 name=Battle mage
 desc=He kills in the name of Zamorak.

@@ -63,7 +63,7 @@ const NpcOps: CommandHandlers = {
         const npc = new Npc(pos.level, pos.x, pos.z, npcType.size, npcType.size, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
 
         npc.static = false;
-        npc.despawn = -1;
+        npc.despawn = World.currentTick + duration;
         World.addNpc(npc);
         state.activeNpc = npc;
         state.pointerAdd(ActiveNpc[state.intOperand]);

@@ -20,7 +20,7 @@ if(last_useitem = ball_doorkey) {
 @nothing_interesting_happens;
 
 [label,open_witch_house_door]
-if(%ball_progress < ^ball_started) {
+if(%ball_progress < ^ball_started | %ball_progress = ^ball_complete) {
     ~chatplayer(neutral, "It would be rude to break into this house.");
     return;
 }
@@ -77,13 +77,14 @@ loc_change(loc_2868, 500);
 inv_del(inv, cheese, 1);
 npc_findallzone(coord);
 while(npc_findnext = true) {
-    if(npc_type = npc_901) {
+    if(npc_type = ball_mouse) {
         npc_del;
     }
 }
-npc_add(^ball_mouse_coord, npc_901, 50);
+npc_add(^ball_mouse_coord, ball_mouse, 50);
 ~mesbox("A mouse runs out of <$pref> hole.");
 
+// TODO: figure out what oploc1 interaction on this loc and opnpc1 on the mouse is supposed to do here
 [oplocu,loc_2870]
 if(last_useitem = cheese) {
     @ball_cheese("the");
@@ -97,7 +98,7 @@ if(inzone(0_45_54_21_10, 0_45_54_23_11, coord) = true) {
 inv_dropslot(inv, coord, last_slot, 200);
 sound_synth(put_down, 0, 0);
 
-[opnpcu,npc_901]
+[opnpcu,ball_mouse]
 if(last_useitem = magnet) {
     if(%ball_progress >= ^ball_unlocked_mousedoor) {
         mes("You have already unlocked this door.");
@@ -122,6 +123,10 @@ if(%ball_progress < ^ball_unlocked_mousedoor) {
 ~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
 
 [oploc1,loc_2863]
+if(%ball_progress >= ^ball_defeated_experiment) {
+    ~open_and_close_door2(loc_1532, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+}
 mes("The shed door is locked.");
 
 [oplocu,loc_2863]
@@ -133,6 +138,10 @@ if(last_useitem = ball_shedkey) {
         // TODO: change this to use huntall and inzone (i'm almost certain this is what it does on osrs)
         // this mechanic existed on OSRS release (2007), i'm not sure if it originally existed
         // but no proof otherwise
+        if(%ball_shed_entered = false) {
+            %ball_shed_entered = true;
+            %ball_shed_uid = null;
+        }
         if(%ball_shed_uid ! null) {
             ~chatplayer(neutral, "I'd better not go in there yet... I think I can hear someone inside!");
             return;
@@ -142,7 +151,7 @@ if(last_useitem = ball_shedkey) {
         if(npc_finduid(~npc_category_within_distance(coord, witches_experiment, 7)) = true) {
             npc_del;
         }
-        npc_add(0_45_54_55_6, witches_experiment_p1, 500);
+        npc_add(^ball_experiment_spawn_coord, witches_experiment_p1, 500);
     }
     ~open_and_close_door2(loc_1532, $entering, false);
     return;
@@ -170,8 +179,13 @@ if(~obj_gettotal(ball_shedkey) > 0) { // checks bank
 inv_add(inv, ball_shedkey, 1);
 
 [opobj3,boy_ball]
-if(%ball_progress >= ^ball_defeated_experiment) {
-    if(~obj_gettotal(boy_ball) > 0) {
+if(%ball_progress = ^ball_complete) {
+    mes("Another ball! The witch must have found another one. You decide to leave this one");
+    mes("here.");
+    return;
+}
+if(%ball_progress = ^ball_defeated_experiment) {
+    if(inv_total(inv, boy_ball) > 0) { // doesn't check bank
         mes("You already have the boys ball...");
         return;
     }
@@ -182,8 +196,15 @@ if(npc_finduid(~npc_category_within_distance(coord, witches_experiment, 7)) = tr
     stat_sub(attack, calc(1 + ((stat(attack) * 5) / 100)), 0);
     stat_sub(defence, calc(1 + ((stat(defence) * 5) / 100)), 0);
     ~npc_retaliate(0);
-    queue(damage_player, 0, calc(1 + ((stat(defence) * 5) / 100)));
+    queue(damage_player, 0, calc(1 + ((stat(hitpoints) * 5) / 100)));
     return;
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p1, 500);
 mes("A shapeshifter appears, and knocks you back from the ball!");
+
+[queue,ball_quest_complete]
+// https://web.archive.org/web/20060908030634im_/http://www.runeweb.net/fireball/Witchs%20House%20Images/Witch3.PNG
+%ball_progress = ^ball_complete;
+inv_del(inv, boy_ball, 1);
+givexp(hitpoints, 63250);
+~send_quest_complete(questlist:ball, boy_ball, 180, ^ball_questpoints, "You have completed the\\nWitches' House Quest!");

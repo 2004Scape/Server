@@ -159,6 +159,10 @@ if (%grail_progress = ^grail_complete) {
     $questpoints = add($questpoints, ^grail_questpoints);
 }
 
+if (%ball_progress = ^ball_complete) {
+    $questpoints = add($questpoints, ^ball_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -195,6 +199,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:tree, %tree_progress, ^tree_complete);
 ~send_quest_progress_colour(questlist:waterfall, %waterfall_progress, ^waterfall_complete);
 ~send_quest_progress_colour(questlist:grail, %grail_progress, ^grail_complete);
+~send_quest_progress_colour(questlist:ball, %ball_progress, ^ball_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

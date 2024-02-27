@@ -22,7 +22,16 @@ switch_int(%ball_progress) {
                 ~chatplayer(angry, "Well if you're not going to answer, I'll go.");
                 ~mesbox("The boy sniffs slightly.");
         }
-    case ^ball_started:
+    case ^ball_complete:
+        ~chatnpc(happy, "Thank you for getting my ball back!");
+    case default:
+        if(inv_total(inv, boy_ball) > 0) {
+            ~chatplayer(neutral, "Hi, I have got your ball back. It was MUCH harder than I thought it would be.");
+            ~mesbox("You give the ball back.");
+            ~chatnpc(happy, "Thank you so much!");
+            queue(ball_quest_complete, 0);
+            return;
+        }
         ~chatnpc(quiz, "Have you got my ball back yet?");
         ~chatplayer(sad, "Not yet.");
         ~chatnpc(angry, "Well, it's in the shed in that garden.");
