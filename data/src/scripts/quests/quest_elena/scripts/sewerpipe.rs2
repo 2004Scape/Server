@@ -42,8 +42,7 @@ loc_findallzone(^quest_elena_west_ardy_manhole_coord); // the manhole is not in 
 while (loc_findnext = true) {
     // if the manhole is closed we open it when getting out basically.
     if (loc_type = loc_2543) {
-        loc_del(500);
-        loc_add(loc_coord, loc_2544, loc_angle, centrepiece_straight, 500);
+        loc_change(loc_2544, 500);
         loc_add(movecoord(loc_coord, 0, 0, -1), loc_2545, loc_angle, centrepiece_straight, 500);
     }
 }

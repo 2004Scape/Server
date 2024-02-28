@@ -26,8 +26,7 @@ p_arrivedelay;
 anim(human_openchest,0);
 sound_synth(cupboard_open, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_param(cupboard_other), loc_angle, loc_shape, 300);
+loc_change(loc_param(cupboard_other), 300);
 if ($message = true) {
     mes("You open the cupboard.");
 }
@@ -37,8 +36,7 @@ p_arrivedelay;
 anim(human_closechest, 0);
 sound_synth(cupboard_close, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_param(cupboard_other), loc_angle, loc_shape, 300);
+loc_change(loc_param(cupboard_other), 300);
 if ($message = true) {
     mes("You close the cupboard.");
 }

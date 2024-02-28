@@ -75,8 +75,7 @@ switch_loc (loc_type) {
 }
 ~stealing_check_for_reward($data);
 givexp(thieving, $experience);
-loc_del($respawn_ticks);
-loc_add($loc_coord, market_stall, $loc_angle, $loc_shape, $respawn_ticks);
+loc_change(market_stall, $respawn_ticks);
 
 [label,activate_trapped_chest]
 p_arrivedelay;
@@ -109,8 +108,8 @@ anim(human_openchest, 0);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
 givexp(thieving, $experience);
 def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
-loc_del($respawn_ticks);
-loc_add($loc_coord, loc_2574, $loc_angle, $loc_shape, $respawn_ticks);
+
+loc_change(loc_2574, $respawn_ticks);
 
 [proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);

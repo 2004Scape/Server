@@ -66,8 +66,7 @@ if ($entering = true) {
     $dest = movecoord(loc_coord, $x, 0, $z);
 }
 p_teleport($dest);
-loc_del(2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_change(loc_83, 2);
 loc_add(movecoord($loc_coord, 0, 0, -1), oldwall, modulo(add($angle, 1), 4), $shape, 2);
 
 [queue,scorpcatcher_quest_complete]

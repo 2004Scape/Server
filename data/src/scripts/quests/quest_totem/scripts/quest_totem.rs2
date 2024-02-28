@@ -148,8 +148,7 @@ if(inv_total(inv, totem) = 0 & inv_total(bank, totem) = 0) {
 } else {
     mes("The chest is empty.");
 }
-loc_del(300);
-loc_add(loc_coord, loc_2709, loc_angle, loc_shape, 300);
+loc_change(loc_2709, 300);
 
 [oploc2,loc_2710]
 ~close_chest(loc_2709);
