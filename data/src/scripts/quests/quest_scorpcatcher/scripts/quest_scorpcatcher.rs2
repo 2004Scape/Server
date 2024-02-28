@@ -49,25 +49,8 @@ if(%scorpcatcher_progress < ^scorpcatcher_first_hint) {
     return;
 }
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-def_int $x;
-def_int $z;
-def_int $angle = loc_angle;
-def_locshape $shape = loc_shape;
-def_coord $loc_coord = loc_coord;
-$x, $z = ~door_open($angle, loc_shape);
-def_coord $dest = $loc_coord;
-sound_synth(door_open, 0, 0); 
+~open_and_close_door2(oldwall, ~check_axis(coord, loc_coord, loc_angle), false);
 mes("You've found a secret door");
-if ($entering = true) {
-    if (coord ! $loc_coord) {
-        p_teleport($loc_coord);
-        p_delay(1);
-    }
-    $dest = movecoord(loc_coord, $x, 0, $z);
-}
-p_teleport($dest);
-loc_change(loc_83, 2);
-loc_add(movecoord($loc_coord, 0, 0, -1), oldwall, modulo(add($angle, 1), 4), $shape, 2);
 
 [queue,scorpcatcher_quest_complete]
 inv_del(inv, scorpion_cage_all, 1);

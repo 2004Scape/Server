@@ -32,6 +32,8 @@
 ^tree_complete = 9
 ^grandtree_complete = 160
 ^waterfall_complete = 10
+^grail_complete = 10
+^ball_complete = 7
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -63,3 +65,4 @@
 ^tree_questpoints = 2
 ^waterfall_questpoints = 1
 ^grail_questpoints = 2
+^ball_questpoints = 4
