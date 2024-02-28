@@ -204,6 +204,7 @@ if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_
     return;
 }
 inv_dropslot(inv, coord, last_slot, 200);
+sound_synth(put_down, 0, 0);
 
 [oploc1,loc_59]
 if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
@@ -218,7 +219,7 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
         @beggar_dialogue;
     } 
 }
-~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
 
 [oploc1,loc_60]
 p_arrivedelay;

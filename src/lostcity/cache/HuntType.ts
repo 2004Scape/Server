@@ -91,7 +91,7 @@ export default class HuntType extends ConfigType {
         } else if (opcode === 10) {
             this.checkAfk = true;
         } else if (opcode === 11) {
-            this.rate = packet.g1();
+            this.rate = packet.g2();
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {

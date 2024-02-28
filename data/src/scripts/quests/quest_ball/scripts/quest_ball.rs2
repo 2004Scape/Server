@@ -1,0 +1,212 @@
+[oploc1,loc_2867]
+// https://youtu.be/stROSTIJ2q8?si=4wvlodUkO9x6pAV9&t=62
+if(inv_total(inv, ball_doorkey) > 0) { // no bank check (osrs)
+    mes("You don't find anything interesting.");
+    return;
+}
+~mesbox("You find a key hidden under the flower pot.");
+inv_add(inv, ball_doorkey, 1);
+
+[oploc1,loc_2861]
+def_boolean $leaving = ~check_axis(coord, loc_coord, loc_angle);
+if(inv_total(inv, ball_doorkey) > 0 | $leaving = true) {
+    @open_witch_house_door($leaving);
+}
+mes("The door is locked.");
+
+[oplocu,loc_2861]
+def_boolean $leaving = ~check_axis(coord, loc_coord, loc_angle);
+if(last_useitem = ball_doorkey | $leaving = true) {
+    @open_witch_house_door($leaving);
+}
+@nothing_interesting_happens;
+
+[label,open_witch_house_door](boolean $leaving)
+if($leaving ! true & (%ball_progress < ^ball_started | %ball_progress = ^ball_complete)) {
+    ~chatplayer(neutral, "It would be rude to break into this house.");
+    return;
+}
+// angles on these doors don't visually match osrs, but they actually do have the same loc_angle
+// prob just something weird with the new models?
+~open_and_close_door2(loc_1535, $leaving, false);
+
+[oploc1,_ball_irongate]
+if(inv_total(worn, leather_gloves) = 0) {
+    queue(damage_player, 0, calc((stat(hitpoints) / 10) + 1));
+    ~mesbox("As your bare hands touch the gate you feel a shock.");
+    return;
+}
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+def_int $x;
+def_int $z;
+def_locshape $shape = loc_shape;
+def_coord $loc_coord = loc_coord;
+def_int $next_angle = calc(loc_angle - 1);
+def_loc $next_loc = loc_param(next_loc_stage);
+$x, $z = ~door_open(loc_angle, loc_shape);
+sound_synth(grate_open, 0, 0); // iron_door_open
+def_coord $dest = $loc_coord;
+if ($entering = true) {
+    $dest = movecoord($loc_coord, $x, 0, $z);
+}
+if($next_loc = loc_1563) {
+    $next_angle = calc(loc_angle + 1);
+}
+p_teleport($dest);
+loc_change(loc_83, 2);
+loc_add(movecoord($loc_coord, 1, 0, 0), $next_loc, $next_angle, $shape, 2);
+
+// this cupboard just opens/closes with loc_add/del
+[oploc1,loc_2868]
+loc_change(loc_2869, 500);
+
+[oploc1,loc_2869]
+//https://youtu.be/stROSTIJ2q8?si=124VnPXM19WEO-Ny&t=104
+if(~obj_gettotal(magnet) > 0) {
+    mes("You don't find anything interesting.");
+    return;
+}
+~mesbox("You find a magnet in the cupboard.");
+if(%ball_progress = ^ball_started) {
+    %ball_progress = ^ball_found_magnet;
+}
+inv_add(inv, magnet, 1);
+
+[oploc2,loc_2869]
+loc_change(loc_2868, 500);
+
+[label,ball_cheese](string $pref)
+inv_del(inv, cheese, 1);
+npc_findallzone(coord);
+while(npc_findnext = true) {
+    if(npc_type = ball_mouse) {
+        npc_del;
+    }
+}
+npc_add(^ball_mouse_coord, ball_mouse, 50);
+~mesbox("A mouse runs out of <$pref> hole.");
+
+// TODO: figure out what oploc1 interaction on this loc and opnpc1 on the mouse is supposed to do here
+[oplocu,loc_2870]
+if(last_useitem = cheese) {
+    @ball_cheese("the");
+}
+@nothing_interesting_happens;
+
+[opheld5,cheese]
+if(inzone(0_45_54_21_10, 0_45_54_23_11, coord) = true) {
+    @ball_cheese("a");
+}
+inv_dropslot(inv, coord, last_slot, 200);
+sound_synth(put_down, 0, 0);
+
+[opnpcu,ball_mouse]
+if(last_useitem = magnet) {
+    if(%ball_progress >= ^ball_unlocked_mousedoor) {
+        mes("You have already unlocked this door.");
+        return;
+    } else if(%ball_progress < ^ball_found_magnet) {
+        ~mesbox("This doesn't seem to be the right magnet to open this door...");
+        return;
+    }
+    %ball_progress = ^ball_unlocked_mousedoor;
+    inv_del(inv, magnet, 1);
+    npc_del;
+    ~mesbox("You attach the magnet to the mouse's harness. The mouse finishes the cheese and runs back into its hole. You hear some odd noises from inside the walls. There is a strange whirring noise from above the door frame.");
+}
+@nothing_interesting_happens;
+
+[oploc1,loc_2862]
+if(%ball_progress < ^ball_unlocked_mousedoor) {
+    ~mesbox("This door is locked.");
+    ~chatplayer(confused, "Strange... I can't see any kind of lock or handle to open this door...");
+    return;
+}
+~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+
+[oploc1,loc_2863]
+if(%ball_progress >= ^ball_defeated_experiment) {
+    ~open_and_close_door2(loc_1532, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+}
+mes("The shed door is locked.");
+
+[oplocu,loc_2863]
+if(last_useitem = ball_shedkey) {
+    // angles on these doors don't visually match osrs, but they actually do have the same loc_angle
+    // prob just something weird with the new models
+    def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+    if($entering = false) {
+        // TODO: change this to use huntall and inzone (i'm almost certain this is what it does on osrs)
+        // this mechanic existed on OSRS release (2007), i'm not sure if it originally existed
+        // but no proof otherwise
+        if(%ball_shed_entered = false) {
+            %ball_shed_entered = true;
+            %ball_shed_uid = null;
+        }
+        if(%ball_shed_uid ! null) {
+            ~chatplayer(neutral, "I'd better not go in there yet... I think I can hear someone inside!");
+            return;
+        }
+        %ball_shed_uid = uid;
+        softtimer(shed_var_check, 1);
+        if(npc_finduid(~npc_category_within_distance(coord, witches_experiment, 7)) = true) {
+            npc_del;
+        }
+        npc_add(^ball_experiment_spawn_coord, witches_experiment_p1, 500);
+    }
+    ~open_and_close_door2(loc_1532, $entering, false);
+    return;
+}
+mes("The shed door is locked.");
+
+[softtimer,shed_var_check]
+if(inzone(0_45_54_54_3, 0_45_54_57_11, coord) = false) {
+    ~clear_ball_shed_uid;
+    clearsofttimer(shed_var_check);
+} 
+
+[proc,clear_ball_shed_uid]
+if(%ball_shed_uid = uid) {
+    %ball_shed_uid = null;
+}
+
+[oploc2,loc_2864]
+if(~obj_gettotal(ball_shedkey) > 0) { // checks bank
+    mes("There is nothing in the fountain.");
+    return;
+}
+// this does always mention the diary whether you've read/picked it up or not
+~mesbox("You search for the secret compartment mentioned in the diary. Inside it you find a small key. You take the key.");
+inv_add(inv, ball_shedkey, 1);
+
+[opobj3,boy_ball]
+if(%ball_progress = ^ball_complete) {
+    mes("Another ball! The witch must have found another one. You decide to leave this one");
+    mes("here.");
+    return;
+}
+if(%ball_progress = ^ball_defeated_experiment) {
+    if(inv_total(inv, boy_ball) > 0) { // doesn't check bank
+        mes("You already have the boys ball...");
+        return;
+    }
+    @pickup_obj(obj_coord, obj_type, obj_count);
+}
+if(npc_finduid(~npc_category_within_distance(coord, witches_experiment, 7)) = true) {
+    mes("The shapeshifter glares at you. You feel slightly weakened.");
+    stat_sub(attack, calc(1 + ((stat(attack) * 5) / 100)), 0);
+    stat_sub(defence, calc(1 + ((stat(defence) * 5) / 100)), 0);
+    ~npc_retaliate(0);
+    queue(damage_player, 0, calc(1 + ((stat(hitpoints) * 5) / 100)));
+    return;
+}
+npc_add(^ball_experiment_spawn_coord, witches_experiment_p1, 500);
+mes("A shapeshifter appears, and knocks you back from the ball!");
+
+[queue,ball_quest_complete]
+// https://web.archive.org/web/20060908030634im_/http://www.runeweb.net/fireball/Witchs%20House%20Images/Witch3.PNG
+%ball_progress = ^ball_complete;
+inv_del(inv, boy_ball, 1);
+givexp(hitpoints, 63250);
+~send_quest_complete(questlist:ball, boy_ball, 180, ^ball_questpoints, "You have completed the\\nWitches' House Quest!");
