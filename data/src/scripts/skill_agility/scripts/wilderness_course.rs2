@@ -131,6 +131,7 @@ p_delay(1);
 p_telejump(movecoord(coord, 2, 0, 0));
 mes("You lose your footing and fall into the wolf pit.");
 
+// TODO: These double gate doors are broken
 [proc,open_course_gates]
 loc_findallzone(coord);
 while(loc_findnext = true) {
@@ -151,8 +152,7 @@ sound_synth(door_open, 0, 0);
 loc_findallzone(coord);
 while(loc_findnext = true) {
     if(loc_type = loc_2309) {
-        loc_del(2);
-        loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+        loc_change(loc_83, 2);
         loc_add(movecoord(loc_coord, 0, 0, -1), loc_1541, 0, loc_shape, 2);
         sound_synth(door_open, 0, 0);
     }

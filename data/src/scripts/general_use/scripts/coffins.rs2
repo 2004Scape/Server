@@ -1,11 +1,9 @@
 [oploc1,loc_398]
 mes("The coffin creaks open...");
 sound_synth(coffin_open, 0, 0);
-loc_del(485);
-loc_add(loc_coord, loc_399, loc_angle, loc_shape, 485);
+loc_change(loc_399, 485);
 
 [oploc1,loc_399]
 mes("You close the coffin.");
 sound_synth(coffin_close, 0, 0);
-loc_del(100);
-loc_add(loc_coord, loc_398, loc_angle, loc_shape, 485);
+loc_change(loc_398, 485);

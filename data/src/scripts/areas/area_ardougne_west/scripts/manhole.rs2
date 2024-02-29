@@ -21,11 +21,10 @@ facesquare(movecoord(coord, 0, 0, 1)); // north
 
 [label,elena_close_manhole]
 loc_findallzone(^quest_elena_west_ardy_manhole_coord); // the manhole is not in the same zone as the player tele.
+loc_del(500);
 while (loc_findnext = true) {
     // if the manhole is closed we open it when getting out basically.
     if (loc_type = loc_2544) {
         loc_change(loc_param(next_loc_stage), 500);
-    } else if (loc_type = loc_2545) {
-        loc_del(500);
     }
 }

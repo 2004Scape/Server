@@ -1,8 +1,7 @@
 [oploc1,loc_881]
 mes("You pull back the cover from over the manhole.");
 sound_synth(coffin_open, 0, 0);
-loc_del(400);
-loc_add(loc_coord, loc_882, loc_angle, centrepiece_straight, 400);
+loc_change(loc_882, 400);
 loc_add(movecoord(loc_coord, 0, 0, -1), loc_883, loc_angle, loc_shape, 400);
 
 [oploc1,loc_882]
