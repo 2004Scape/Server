@@ -1,0 +1,4 @@
+[opnpc1,mary]
+switch_int(%murder_progress) { 
+    case ^murder_not_started: mes("She is ignoring you.");
+}

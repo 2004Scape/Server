@@ -1,0 +1,5 @@
+[opnpc1,hobbes]
+switch_int(%murder_progress) { 
+    case ^murder_not_started:
+        ~chatnpc(angry, "This is private property! Please leave!");
+}

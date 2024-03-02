@@ -31,12 +31,14 @@ switch_obj(last_useitem) {
     case default: @nothing_interesting_happens;
 }
 
+// for the %handlemort_traps_disabled varp, bit 0 holds the lock completion state (0/1), bits 1-20 store the current lock values (a-z -> 1-25)
+// bit 21 stores the stairs trap state (0/1)
 [if_button,tribal_door2:com_57]
 if_close;
-if(%handelmort_traps_disabled = 0) {
-    if(%tribal_door_lock1 = 10 & %tribal_door_lock2 = 20 & %tribal_door_lock3 = 17 & %tribal_door_lock4 = 19) {
-        %handelmort_traps_disabled = 1;
+if(testbit(%handelmort_traps_disabled, 0) = false) {
+    if(~get_tribal_door_lock(1) = 10 & ~get_tribal_door_lock(2) = 20 & ~get_tribal_door_lock(3) = 17 & ~get_tribal_door_lock(4) = 19) {
         mes("The combination seems correct!");
+        %handelmort_traps_disabled = setbit(%handelmort_traps_disabled, 0);
         return;
     }
     mes("This combination is incorrect.");
@@ -45,21 +47,18 @@ if(%handelmort_traps_disabled = 0) {
 
 // OSRS seems to have a bug with this lock puzzle where the shown letter and the stored varp value 
 // can desync somehow, TODO: figure out how to recreate that
-[if_button,tribal_door2:com_47] @tribal_door_combo1(-1);
-[if_button,tribal_door2:com_49] @tribal_door_combo2(-1);
-[if_button,tribal_door2:com_51] @tribal_door_combo3(-1);
-[if_button,tribal_door2:com_53] @tribal_door_combo4(-1);
+[if_button,tribal_door2:com_47] @tribal_door_combo(1, -1);
+[if_button,tribal_door2:com_49] @tribal_door_combo(2, -1);
+[if_button,tribal_door2:com_51] @tribal_door_combo(3, -1);
+[if_button,tribal_door2:com_53] @tribal_door_combo(4, -1);
 
-[if_button,tribal_door2:com_48] @tribal_door_combo1(1);
-[if_button,tribal_door2:com_50] @tribal_door_combo2(1);
-[if_button,tribal_door2:com_52] @tribal_door_combo3(1);
-[if_button,tribal_door2:com_54] @tribal_door_combo4(1);
+[if_button,tribal_door2:com_48] @tribal_door_combo(1, 1);
+[if_button,tribal_door2:com_50] @tribal_door_combo(2, 1);
+[if_button,tribal_door2:com_52] @tribal_door_combo(3, 1);
+[if_button,tribal_door2:com_54] @tribal_door_combo(4, 1);
 
 [proc,clear_tribaldoor_inter]
-%tribal_door_lock1 = 0;
-%tribal_door_lock2 = 0;
-%tribal_door_lock3 = 0;
-%tribal_door_lock4 = 0;
+%handelmort_traps_disabled = clearbit_range(%handelmort_traps_disabled, 0, 19);
 if_settext(tribal_door2:com_43, enum(int, string, alphabet, 0));
 if_settext(tribal_door2:com_44, enum(int, string, alphabet, 0));
 if_settext(tribal_door2:com_45, enum(int, string, alphabet, 0));
@@ -74,28 +73,22 @@ if($stage > 25) {
 }
 return ($stage);
 
-[label,tribal_door_combo1](int $change)
-def_int $stage = ~calc_tribaldoor_value(%tribal_door_lock1, $change);
-%tribal_door_lock1 = $stage;
-if_settext(tribal_door2:com_43, enum(int, string, alphabet, $stage));
+[proc,get_tribal_door_lock](int $lock_index)(int)
+return (getbit_range(%handelmort_traps_disabled, calc(5 * $lock_index - 4), calc(5 * $lock_index)));
 
-[label,tribal_door_combo2](int $change)
-def_int $stage = ~calc_tribaldoor_value(%tribal_door_lock2, $change);
-%tribal_door_lock2 = $stage;
-if_settext(tribal_door2:com_44, enum(int, string, alphabet, $stage));
-
-[label,tribal_door_combo3](int $change)
-def_int $stage = ~calc_tribaldoor_value(%tribal_door_lock3, $change);
-%tribal_door_lock3= $stage;
-if_settext(tribal_door2:com_45, enum(int, string, alphabet, $stage));
-
-[label,tribal_door_combo4](int $change)
-def_int $stage = ~calc_tribaldoor_value(%tribal_door_lock4, $change);
-%tribal_door_lock4 = $stage;
-if_settext(tribal_door2:com_46, enum(int, string, alphabet, $stage));
+[label,tribal_door_combo](int $lock_index, int $change)
+def_int $current_stage = ~get_tribal_door_lock($lock_index);
+def_int $stage = ~calc_tribaldoor_value($current_stage, $change);
+%handelmort_traps_disabled = setbit_range_toint(%handelmort_traps_disabled, $stage, calc(5 * $lock_index - 4), calc(5 * $lock_index));
+switch_int($lock_index) {
+    case 1: if_settext(tribal_door2:com_43, enum(int, string, alphabet, $stage));
+    case 2: if_settext(tribal_door2:com_44, enum(int, string, alphabet, $stage));
+    case 3: if_settext(tribal_door2:com_45, enum(int, string, alphabet, $stage));
+    case 4: if_settext(tribal_door2:com_46, enum(int, string, alphabet, $stage));
+}
 
 [oploc1,loc_2705]
-if(%handelmort_traps_disabled = 0) {
+if(testbit(%handelmort_traps_disabled, 0) = false) {
     ~clear_tribaldoor_inter;
     if_openmainmodal(tribal_door2);
     return;
@@ -109,7 +102,7 @@ def_coord $start = movecoord(loc_coord, 0, 0, 3);
 p_delay(0);
 p_walk($start);
 p_delay(calc(distance(coord, $start) + 1));
-if(%handelmort_traps_disabled >= 2) {
+if(testbit(%handelmort_traps_disabled, 21) = true) {
     p_telejump(1_41_51_7_57);
     mes("You climb up the stairs.");
     return;
@@ -134,7 +127,7 @@ if(stat(thieving) < 21) {
     return;
 }
 // doesn't use the stage varp here either even though it could
-%handelmort_traps_disabled = 2;
+%handelmort_traps_disabled = setbit(%handelmort_traps_disabled, 21);
 ~mesbox("Your trained senses as a thief enable you to see that there is a trap in these stairs. You make a note of its location for future reference when using these stairs.");
 
 [oploc1,loc_2709]

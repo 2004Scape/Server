@@ -72,16 +72,6 @@ if(~obj_gettotal(holy_grail) > 0) {
 }
 inv_add(inv, holy_grail, 1); // no space check
 
-[opheld5,holy_grail]
-// OSRS has a destroy option and being able to drop this would cause a weird bug that I can't find any
-// proof of happening besides a sentence added to rs3 wiki in 2010, so this is an unconfirmed workaround
-~mesbox("Dropping the grail here will destroy it!");
-def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Are you sure you want to drop the grail?");
-if ($choice = 1) {
-    inv_del(inv, holy_grail, 1);
-}
-if_close;
-
 [opheld1,magic_gold_feather]
 if(%grail_progress ! ^grail_finding_percival) {
     @nothing_interesting_happens;

@@ -1,0 +1,132 @@
+[oploc2,loc_2650]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2651]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2651]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2652]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2653]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2654]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2655]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2656]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2657]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2658]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2659]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2660]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2661]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2662]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc2,loc_2663]
+if(%murder_progress = ^murder_not_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+
+[oploc1,loc_2664] @murder_inspect_gate;
+[oploc1,loc_2665] @murder_inspect_gate;
+
+[label,murder_inspect_gate]
+if(%murder_progress = ^murder_not_started) {
+    // the punc here is intentionally different
+    mes("I need the guard's permission to do that.");
+    return;
+}
+
+[oploc2,loc_2666]
+p_arrivedelay;
+if(%murder_progress = ^murder_not_started) {
+    mes("You need the guards' permission to do that.");
+    return;
+}
+
+[opobj3,criminals_dagger]
+// no map_members check
+if(inv_total(inv, criminals_dagger) > 0) {
+    mes("I already have the murder weapon.");
+    return;
+}
+if(inv_total(bank, criminals_dagger) > 0) {
+    mes("I already have the murder weapon in my bank.");
+    return;
+}
+inv_add(inv, criminals_dagger, 1);
+~mesbox("This knife doesn't seem sturdy enough to have killed Lord Sinclair.");
+
+[opobj3,pungent_pot]
+// no map_members check
+if(inv_total(inv, pungent_pot) > 0) {
+    mes("I already have the poisoned pot.");
+    return;
+}
+if(inv_total(bank, pungent_pot) > 0) {
+    mes("I already have the poisoned pot in my bank.");
+    return;
+}
+inv_add(inv, pungent_pot, 1);
+~mesbox("It seems like Lord Sinclair was drinking from this before he died.");

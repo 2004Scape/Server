@@ -1,0 +1,5 @@
+[opnpc1,louisa]
+switch_int(%murder_progress) { 
+    case ^murder_not_started:
+        ~chatnpc(neutral, "I'm far too upset to talk to random people right now.");
+}

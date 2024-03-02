@@ -1,0 +1,16 @@
+[opnpc1,gossip]
+switch_int(%murder_progress) { 
+    case ^murder_not_started:
+        ~chatnpc(neutral, "There's some kind of commotion up at the Sinclair place I hear. Not surprising all things considered.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm investigating the murder up at the Sinclair place.");
+        ~chatnpc(neutral, "Murder is it? Well, I'm not really surprised...");
+        switch_int(~p_choice4("Patented Multi Purpose Poison?", 1, "Who did you sell Poison to at the house?", 2, "Can I buy some Poison?", 3, "I am so confused about who did it...", 4)) {
+            case 4:
+                ~chatplayer(sad, "I am so confused about who did it...");
+                ~chatplayer(confused, "Think you could give me any hints?");
+                ~chatnpc(neutral, "Well, I don't know if it's related, but I heard from that Poison Salesman in town that he sold some poison to one of the Sinclair family");
+                ~chatnpc(neutral, "the other day. I don't think he has any stock left now though...");
+                
+        }
+}

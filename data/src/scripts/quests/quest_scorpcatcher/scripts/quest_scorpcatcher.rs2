@@ -49,8 +49,8 @@ if(%scorpcatcher_progress < ^scorpcatcher_first_hint) {
     return;
 }
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-~open_and_close_door2(oldwall, ~check_axis(coord, loc_coord, loc_angle), false);
 mes("You've found a secret door");
+~open_and_close_door2(oldwall, ~check_axis(coord, loc_coord, loc_angle), false);
 
 [queue,scorpcatcher_quest_complete]
 inv_del(inv, scorpion_cage_all, 1);

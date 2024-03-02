@@ -1,0 +1,3 @@
+^murder_not_started = 0
+^murder_started = 1
+^murder_complete = 2
