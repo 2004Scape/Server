@@ -3,8 +3,7 @@ p_arrivedelay;
 anim(human_openchest,0);
 p_delay(0);
 // TODO - Sound
-loc_del(300);
-loc_add(loc_coord, loc_param(drawer_other), loc_angle, loc_shape, 300);
+loc_change(loc_param(drawer_other), 300);
 
 [oploc2,_empty_drawer]
 // Treasure Trail
@@ -31,5 +30,4 @@ p_arrivedelay;
 anim(human_closechest,0);
 p_delay(0);
 // TODO - Sound
-loc_del(300);
-loc_add(loc_coord, loc_param(drawer_other), loc_angle, loc_shape, 300);
+loc_change(loc_param(drawer_other), 300);

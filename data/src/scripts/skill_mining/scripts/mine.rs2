@@ -133,8 +133,7 @@ if (random($chance) = ^true) {
     p_delay(0);
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
-    loc_del($respawn);
-    loc_add(loc_coord, loc_param(next_loc_stage_mining), loc_angle, loc_shape, $respawn);
+    loc_change(loc_param(next_loc_stage_mining), $respawn);
     // stop mining, give ore and xp. Sudden says its sound_230
     sound_synth(sound_230, 0, 0);
     anim(null, 0);
@@ -171,8 +170,7 @@ if (random($chance) = ^true) {
 } else if (stat_random(stat(mining), db_getfield($data, mining_table:rock_successchance, 0)) = true) {
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
-    loc_del($respawn);
-    loc_add(loc_coord, loc_param(next_loc_stage_mining), loc_angle, loc_shape, $respawn);
+    loc_change(loc_param(next_loc_stage_mining), $respawn);
     // stop mining, give ore and xp. Sudden says its sound_230
     sound_synth(sound_230, 0, 0);
     anim(null, 0);
@@ -217,8 +215,7 @@ if (stat_random(stat(mining), $low, $high) = true) {
     p_delay(0);
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
-    loc_del($respawn);
-    loc_add(loc_coord, loc_param(next_loc_stage_mining), loc_angle, loc_shape, $respawn);
+    loc_change(loc_param(next_loc_stage_mining), $respawn);
     // stop mining, give ore and xp.
     sound_synth(found_gem, 0, 0);
     anim(null, 0);

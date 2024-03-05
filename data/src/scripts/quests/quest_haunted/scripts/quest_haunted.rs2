@@ -123,26 +123,25 @@ facesquare(movecoord(coord, 1, 0, 0));
 mes("The lever opens the secret door!");
 anim(human_leverdown, 0);
 sound_synth(lever, 0, 0);
-loc_del(3);
-loc_add(loc_coord, loc_161, loc_angle, loc_shape, 3);
+loc_change(loc_161, 3);
 p_teleport(movecoord(coord, 0, 0, 1));
 p_delay(1);
 @manor_bookcase_door(movecoord(coord, 2, 0, 0));
 
+// TODO: This is borked for opening the doors now. Using the lever is fine.
+// Gotta think through how to make this work with find all zone.
 [label,manor_bookcase_door](coord $dest)
 def_coord $start_coord = coord;
 p_delay(0);
 // If you search from the north end of the northern bookcase, you will be in a different zone
-// than the bookcases, this is a small workaround 
-loc_findallzone(movecoord(coord, 0, 0, -1)); 
+// than the bookcases, this is a small workaround
+loc_findallzone(movecoord(coord, 0, 0, -1));
 while (loc_findnext = true) {
     if(loc_type = loc_155) {
-        loc_del(2);
-        loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+        loc_change(loc_83, 2);
         loc_add(movecoord(loc_coord, 0, 0, -1), loc_157, loc_angle, loc_shape, 2);
     } else if(loc_type = loc_156) {
-        loc_del(2);
-        loc_add(loc_coord, loc_83, loc_angle, loc_shape, 2);
+        loc_change(loc_83, 2);
         loc_add(movecoord(loc_coord, 0, 0, 1), loc_157, loc_angle, loc_shape, 2);
     }
 }

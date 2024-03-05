@@ -73,7 +73,7 @@ export default class NpcType extends ConfigType {
     code90 = -1;
     code91 = -1;
     code92 = -1;
-    visonmap = true;
+    minimap = true;
     vislevel = -1;
     resizeh = 128;
     resizev = 128;
@@ -148,7 +148,7 @@ export default class NpcType extends ConfigType {
         } else if (opcode === 92) {
             this.code92 = packet.g2();
         } else if (opcode === 93) {
-            this.visonmap = false;
+            this.minimap = false;
         } else if (opcode === 95) {
             this.vislevel = packet.g2();
         } else if (opcode === 97) {

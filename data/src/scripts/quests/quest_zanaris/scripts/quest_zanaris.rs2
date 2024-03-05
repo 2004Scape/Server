@@ -8,7 +8,6 @@ switch_obj(last_useitem) {
     case default : @nothing_interesting_happens;
 };
 
-
 [oploc1,loc_2409]
 ~require_members_feature;
 def_namedobj $axe = ~woodcutting_axe_checker();
@@ -92,25 +91,7 @@ inv_add(inv, dramenstaff, 1);
 
 [oploc1,loc_2406]
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-def_int $x;
-def_int $z;
-def_int $angle = loc_angle;
-def_locshape $shape = loc_shape;
-def_coord $loc_coord = loc_coord;
-$x, $z = ~door_open($angle, loc_shape);
-def_coord $dest = $loc_coord;
-sound_synth(door_open, 0, 0);
-if ($entering = true) {
-    if (coord ! $loc_coord) {
-        p_teleport($loc_coord);
-        p_delay(1);
-    }
-    $dest = movecoord(loc_coord, $x, 0, $z);
-}
-p_teleport($dest);
-loc_del(2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
-loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+~open_and_close_door2(loc_1532, $entering, false);
 if($entering = false) {
     if(inv_total(worn, dramenstaff) > 0 & map_members = true) {
         mes("The world starts to shimmer..."); // not sure what seq/spotanim would've been played here, just going to assume it was like a normal tele

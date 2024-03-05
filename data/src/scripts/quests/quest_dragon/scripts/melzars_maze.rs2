@@ -140,8 +140,7 @@ mes("You open the chest.");
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, melzar_maze_chest_opened, loc_angle, loc_shape, 300);
+loc_change(melzar_maze_chest_opened, 300);
 
 
 [oploc2,melzar_maze_chest_opened]
@@ -150,8 +149,7 @@ mes("You close the chest.");
 anim(human_closechest, 0);
 sound_synth(chest_close, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, melzar_maze_chest_closed, loc_angle, loc_shape, 300);
+loc_change(melzar_maze_chest_closed, 300);
 
 [oploc1,melzar_maze_chest_opened]
 if (~quest_dragon_getting_map_parts = false | ~obj_gettotal(crandor_map_part1) > 0 | ~obj_gettotal(crandor_map) > 0) {
@@ -163,5 +161,4 @@ if (~quest_dragon_getting_map_parts = false | ~obj_gettotal(crandor_map_part1) >
     ~mesbox("You find a map piece in the chest.");
     inv_add(inv, crandor_map_part1, 1);
 }
-loc_del(300);
-loc_add(loc_coord, melzar_maze_chest_closed, loc_angle, loc_shape, 300);
+loc_change(melzar_maze_chest_closed, 300);

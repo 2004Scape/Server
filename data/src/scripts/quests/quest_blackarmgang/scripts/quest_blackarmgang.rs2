@@ -84,8 +84,7 @@ if ($leaving = true) {
     $dest = movecoord(loc_coord, $x, 0, $z);
 }
 p_teleport($dest);
-loc_del(2);
-loc_add($loc_coord, loc_83, $angle, $shape, 2);
+loc_change(loc_83, 2);
 loc_add(movecoord($loc_coord, $x, 0, $z), loc_1535, modulo(add($angle, 1), 4), $shape, 2);
 
 [opobj3,phoenix_crossbow]
@@ -112,16 +111,14 @@ p_arrivedelay;
 anim(human_openchest,0);
 sound_synth(cupboard_open, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_2401, loc_angle, loc_shape, 300);
+loc_change(loc_2401, 300);
 
 [oploc1,loc_2401]
 p_arrivedelay;
 anim(human_closechest, 0);
 sound_synth(cupboard_close, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, loc_2400, loc_angle, loc_shape, 300);
+loc_change(loc_2400, 300);
 
 [oploc2,loc_2401]
 if(%blackarmgang_progress = ^blackarmgang_complete | inv_total(inv, arravshield2) > 0 | inv_total(bank, arravshield2) > 0) {

@@ -203,8 +203,7 @@ p_delay(0);
 anim(seq_774, 0);
 spotanim_map(spotanim_67, movecoord($rock_coord, 0, 0, 6), 0, 20);
 p_delay(1);
-loc_del(7);
-loc_add($rock_coord, loc_1997, loc_angle, loc_shape, 7);
+loc_change(loc_1997, 7);
 def_int $i = 1;
 while($i < 8) {
     loc_add(movecoord($rock_coord, 0, 0, $i), loc_1998, loc_angle, loc_shape, calc(8 - $i));

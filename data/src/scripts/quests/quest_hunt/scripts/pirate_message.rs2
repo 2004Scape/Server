@@ -9,8 +9,7 @@ if (last_useitem ! hunt_chest_key) {
 
 p_delay(1);
 
-loc_del(8);
-loc_add(loc_coord, hunt_chest_open, loc_angle, loc_shape, 8);
+loc_change(hunt_chest_open, 8);
 sound_synth(chest_open, 0, 0);
 
 mes("All that's in the chest is a message...");

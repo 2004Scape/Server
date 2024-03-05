@@ -1,0 +1,38 @@
+[opnpc1,boy]
+switch_int(%ball_progress) {
+    case ^ball_not_started:
+        ~chatplayer(happy, "Hello young man.");
+        ~mesbox("The boy sobs.");
+        switch_int(~p_choice2("What's the matter?", 1, "Well if you're not going to answer, I'll go.", 2)) {
+            case 1:
+                ~chatplayer(quiz, "What's the matter?");
+                ~chatnpc(sad, "I've kicked my ball over that hedge, into that garden!|The old lady who lives there is scary...|She's locked the ball in her wooden shed!|Can you get my ball back for me please?");
+                switch_int(~p_choice2("Ok, I'll see what I can do.", 1, "Get it back yourself.", 2)) {
+                    case 1:
+                        %ball_progress = ^ball_started;
+                        ~send_quest_progress(questlist:ball, %ball_progress, ^ball_complete);
+                        ~chatplayer(neutral, "Ok, I'll see what I can do.");
+                        ~chatnpc(happy, "Thanks <text_gender("mister", "lady")>!");
+                    case 2:
+                        ~chatplayer(angry, "Get it back yourself.");
+                        ~chatnpc(angry, "You're a meany!");
+                        ~mesbox("The boy starts crying again.");
+                }
+            case 2:
+                ~chatplayer(angry, "Well if you're not going to answer, I'll go.");
+                ~mesbox("The boy sniffs slightly.");
+        }
+    case ^ball_complete:
+        ~chatnpc(happy, "Thank you for getting my ball back!");
+    case default:
+        if(inv_total(inv, boy_ball) > 0) {
+            ~chatplayer(neutral, "Hi, I have got your ball back. It was MUCH harder than I thought it would be.");
+            ~mesbox("You give the ball back.");
+            ~chatnpc(happy, "Thank you so much!");
+            queue(ball_quest_complete, 0);
+            return;
+        }
+        ~chatnpc(quiz, "Have you got my ball back yet?");
+        ~chatplayer(sad, "Not yet.");
+        ~chatnpc(angry, "Well, it's in the shed in that garden.");
+}

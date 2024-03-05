@@ -16184,6 +16184,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=ball_irongate
+param=next_loc_stage,loc_1562
 
 [loc_2866]
 name=Gate
@@ -16195,6 +16197,8 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+category=ball_irongate
+param=next_loc_stage,loc_1563
 
 [loc_2867]
 name=Pot plant

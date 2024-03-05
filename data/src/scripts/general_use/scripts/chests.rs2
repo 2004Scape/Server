@@ -27,13 +27,11 @@ p_arrivedelay;
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, $other_chest, loc_angle, loc_shape, 300);
+loc_change($other_chest, 300);
 
 [proc,close_chest](loc $other_chest)
 p_arrivedelay;
 anim(human_closechest, 0);
 sound_synth(chest_close, 0, 0);
 p_delay(0);
-loc_del(300);
-loc_add(loc_coord, $other_chest, loc_angle, loc_shape, 300);
+loc_change($other_chest, 300);

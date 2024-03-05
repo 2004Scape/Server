@@ -11,6 +11,7 @@ import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import World from '#lostcity/engine/World.js';
+import ObjType from '#lostcity/cache/ObjType.js';
 
 export default class GameMap {
     readonly collisionManager = new CollisionManager();
@@ -67,7 +68,12 @@ export default class GameMap {
 
                     const obj = new Obj(level, mapsquareX + localX, mapsquareZ + localZ, objId, objCount);
 
-                    this.zoneManager.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
+                    const objType = ObjType.get(objId);
+                    if (objType.members === true && World.members === true) {
+                        this.zoneManager.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
+                    } else if (objType.members === false) {
+                        this.zoneManager.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
+                    }
                 }
             }
         }

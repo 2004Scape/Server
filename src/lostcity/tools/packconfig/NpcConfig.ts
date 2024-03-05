@@ -29,7 +29,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
     ];
     // prettier-ignore
     const booleanKeys = [
-        'hasalpha', 'visonmap', 'members'
+        'hasalpha', 'minimap', 'members'
     ];
 
     if (stringKeys.includes(key)) {
@@ -95,11 +95,11 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (value !== 'yes' && value !== 'no' && value !== 'true' && value !== 'false') {
             return null;
         }
 
-        return value === 'yes';
+        return value === 'yes' || value === 'true';
     } else if (key.startsWith('model')) {
         const index = ModelPack.getByName(value);
         if (index === -1) {
@@ -347,7 +347,7 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'resizez') {
                 dat.p1(92);
                 dat.p2(value as number);
-            } else if (key === 'visonmap') {
+            } else if (key === 'minimap') {
                 if (value === false) {
                     dat.p1(93);
                 }

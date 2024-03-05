@@ -392,6 +392,9 @@ export default class Npc extends PathingEntity {
         const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
         let dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]);
 
+        if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
+            this.queueWaypoint(dest.x, dest.z);
+        }
         if(!(this.x == dest.x && this.z == dest.z) && World.currentTick > this.nextPatrolTick) {
             this.teleJump(dest.x, dest.z, dest.level);
         }
