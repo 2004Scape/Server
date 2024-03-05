@@ -10,7 +10,7 @@ switch_int(%tutorial_progress) {
 // https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial13.gif older line breaks
 ~chatnpc(neutral, "Ah... welcome newcomer. I am Lev, the chef.| It is here I will teach you how to |cook food truly fit for a king.");
 ~chatplayer(neutral, "I already know how to cook.|Brynna taught me just now.");
-~chatnpc(neutral, "HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
+~chatnpc(laugh, "HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
 ~chatnpc(neutral, "And no fine meal is complete without good music so|we'll cover that while you're here too.");
 %tutorial_progress = 150;
 ~set_tutorial_progress;
@@ -79,23 +79,6 @@ switch_int($option) {
 }
 
 [proc,set_hint_icon_master_chef]
-npc_findallzone(0_48_48_4_11);
-while (npc_findnext = true) {
-    if (npc_type = npc_942) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_48_6_12);
-while (npc_findnext = true) {
-    if (npc_type = npc_942) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_48_2_16);
-while (npc_findnext = true) {
-    if (npc_type = npc_942) {
-        hint_npc(npc_uid);
-    }
+if (npc_finduid(~npc_within_distance(0_48_48_4_11, npc_942, 10)) = true) {
+    hint_npc(npc_uid);
 }

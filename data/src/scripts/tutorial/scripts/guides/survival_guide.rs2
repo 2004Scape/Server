@@ -148,31 +148,9 @@ switch_int($choice) {
 ~chatnpc(neutral, "Eating food will restore a little health. The harder something is to cook, the more it will heal you. Somewhere around here is a chef who will tell you more about food and cooking it.");
 
 [proc,set_hint_icon_survival_guide]
-npc_findallzone(0_48_48_29_24);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
+if (npc_finduid(~npc_within_distance(0_48_48_31_23, npc_943, 10)) = true) {
+    hint_npc(npc_uid);
 }
 
-npc_findallzone(0_48_48_33_25);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
-}
 
-npc_findallzone(0_48_48_32_21);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_48_29_21);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
-}
 

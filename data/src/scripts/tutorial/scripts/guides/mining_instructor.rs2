@@ -12,30 +12,6 @@ switch_int(%tutorial_progress) {
 
 // quest guide ladder 3088 3120 0
 [proc,set_hint_icon_mining_instructor]
-npc_findallzone(0_48_148_7_33);
-while (npc_findnext = true) {
-    if (npc_type = npc_948) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_148_9_32);
-while (npc_findnext = true) {
-    if (npc_type = npc_948) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_148_7_34);
-while (npc_findnext = true) {
-    if (npc_type = npc_948) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_148_12_33);
-while (npc_findnext = true) {
-    if (npc_type = npc_948) {
-        hint_npc(npc_uid);
-    }
+if (npc_finduid(~npc_within_distance(0_48_148_7_33, npc_948, 10)) = true) {
+    hint_npc(npc_uid);
 }
