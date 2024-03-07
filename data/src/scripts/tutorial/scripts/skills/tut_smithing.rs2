@@ -14,6 +14,7 @@ mes("You hammer the bronze and make dagger.");
 // end smithing if count is less than 1
 $count = calc($count - 1);
 if ($count < 1) {
+    ~set_tutorial_progress;
     return;
 }
 // check if player has enough bars
