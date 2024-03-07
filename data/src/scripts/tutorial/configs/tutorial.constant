@@ -17,7 +17,9 @@
 ^mining_instructor_smith_a_dagger = 340
 ^mining_instructor_finished = 350
 
-^combat_guide_start = 370
+^talk_to_combat_instructor = 360
+
+^combat_instructor_start = 370
 ^finance_guide_start = 530
 ^prayer_guide_start = 550
 ^magic_guide_start = 620

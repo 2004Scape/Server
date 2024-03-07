@@ -135,7 +135,7 @@ hint_coord(^hint_center, 0_48_48_16_47, 100);
 
 [proc,tutorial_step_talk_to_mining_instructor]
 ~set_hint_icon_mining_instructor;
-~tutorialstep("Mining and smithing.", "Next let's get you a weapon, or more to the point, you can|make your first weapon yourself. Don't panel, the mining|instructor will help you. Talk to him and he'll tell you all about it.");
+~tutorialstep("Mining and smithing.", "Next let's get you a weapon, or more to the point, you can|make your first weapon yourself. Don't panic, the mining|instructor will help you. Talk to him and he'll tell you all about it.");
 
 [proc,tutorial_please_wait_prospecting]
 ~tutorialstep("Please wait...", "|Your character is now attempting to prospect the rock. This should take only a few seconds.");

@@ -186,7 +186,7 @@ switch_int(%tutorial_progress) {
 }
 
 [label,tutorial_island_equip](int $slot)
-if (%tutorial_progress < ^combat_guide_start) {
+if (%tutorial_progress < ^combat_instructor_start) {
     ~mesbox("You'll be told how to equip items later.");
     return;
 }

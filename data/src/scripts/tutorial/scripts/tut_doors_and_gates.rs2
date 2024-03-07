@@ -97,10 +97,25 @@ if (%tutorial_progress < 250) {
     }
     return;
 }
-%tutorial_progress = 260;
+if (%tutorial_progress = 250) {
+    %tutorial_progress = 260;
+}
 ~set_tutorial_progress;
-// TODO: Animate and whatnot.
-p_teleport(0_48_148_16_48);
+p_arrivedelay;
+@climb_ladder(movecoord(coord, 0, 0, 6400), false);
 
 // Ladder out of mine to quest guide
 [oploc1,loc_3028]
+p_arrivedelay;
+@climb_ladder(movecoord(coord, 0, 0, -6400), true);
+
+// TODO: THIS WHOLE THING
+[oploc1,loc_3021]
+if (%tutorial_progress < ^mining_instructor_finished) {
+    ~mesbox("Should probs finish that mining part first dood.");
+    return;
+}
+if (%tutorial_progress = ^mining_instructor_finished) {
+    %tutorial_progress = ^talk_to_combat_instructor;
+}
+ ~open_and_close_door(loc_3021, ~check_axis(coord, loc_coord, loc_angle), false);
