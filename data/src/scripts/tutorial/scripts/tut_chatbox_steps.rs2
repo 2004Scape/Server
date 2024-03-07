@@ -1,4 +1,5 @@
 [proc,tutorial_step_getting_started]
+~set_hint_runescape_guide;
 ~tutorialstep("Getting started", "To start the tutorial use your left mouse-button to click on the|'RuneScape Guide' in this room. He is indicated by a flashing|yellow arrow above his head. If you can't see him, use your|keyboard's arrow keys to rotate the view.");
 
 // Relevant in October 2006, Get Ready 435
@@ -136,20 +137,74 @@ hint_coord(^hint_center, 0_48_48_16_47, 100);
 ~set_hint_icon_mining_instructor;
 ~tutorialstep("Mining and smithing.", "Next let's get you a weapon, or more to the point, you can|make your first weapon yourself. Don't panel, the mining|instructor will help you. Talk to him and he'll tell you all about it.");
 
+[proc,tutorial_please_wait_prospecting]
+~tutorialstep("Please wait...", "|Your character is now attempting to prospect the rock. This should take only a few seconds.");
+
 [proc,tutorial_step_prospect_rocks]
-~tut_hint_icon_rocks;
-if (%tutorial_progress = 270) {
+if (%tutorial_progress = ^mining_instructor_begin_prospecting) {
     ~tutorialstep("Prospecting", "To prospect a mineable rock just right click it and select the|prospect rock option. This will tell you the type of ore you can|mine from it. Try it now on one of the rocks indicated.");
+    ~tut_hint_icon_rocks;
     return;
 }
 
-if (%tutorial_progress = 275) {
-    ~tutorialstep("It's tin.", "So you know there's tin in the grey rocks, try prospecting|the brown ones next.");
+if (%tutorial_progress = ^mining_instructor_prospected_copper_first) {
+    ~tutorialstep("It's copper.", "|So you know there's copper in the brown rocks, try prospecting|the grey ones next.");
+    ~tut_hint_icon_rocks;
     return;
 }
 
-if (%tutorial_progress = 280) {
+if (%tutorial_progress = ^mining_instructor_prospected_tin_first) {
+    ~tutorialstep("It's tin.", "|So you know there's tin in the grey rocks, try prospecting|the brown ones next.");
+    ~tut_hint_icon_rocks;
+    return;
+}
+
+if (%tutorial_progress = ^mining_instructor_prospected_tin_second) {
+    hint_stop();
+    ~set_hint_icon_mining_instructor;
+    ~tutorialstep("It's tin.", "Talk to the mining instructor to find out about these types of|ore and how you can mine them. He'll give you the needed tools|too.");
+    return;
+}
+
+if (%tutorial_progress = ^mining_instructor_prospected_copper_second) {
+    hint_stop();
+    ~set_hint_icon_mining_instructor;
     ~tutorialstep("It's copper.", "Talk to the mining instructor to find out about these types of|ore and how you can mine them. He'll give you the needed tools|too.");
     return;
 }
 
+[proc,tutorial_please_wait_mining]
+~tutorialstep("Please wait...", "|Your character is now attempting to mine the rock. This should take only a few seconds.");
+
+[proc,tutorial_step_mining]
+~tut_hint_icon_rocks;
+if (%tutorial_progress = ^mining_instructor_mining_start) {
+    ~tutorialstep("Mining.", "It's quite simple really, all you need to do is right click on the rock and select mine. You can only mine when you have a pickaxe. So give it a try, first mine one tin ore.");
+}
+
+if (%tutorial_progress = ^mining_instructor_minted_copper_first) {
+    ~tutorialstep("Mining.", "Now you have some copper ore you just need some tin ore, then you'll have all you need to create a bronze bar. As you did before right click on the tin rock and select 'mine'.");
+}
+
+if (%tutorial_progress = ^mining_instructor_mined_tin_first) {
+    ~tutorialstep("Mining.", "Now you have some tin ore you just need some copper ore, then you'll have all you need to create a bronze bar. As you did before right click on the copper rock and select 'mine'.");
+}
+
+[proc,tutorial_step_smelting]
+hint_coord(^hint_center, 0_48_148_7_24, 150);
+~tutorialstep("Smelting.", "You should now have some copper and tin ore. So let's smelt|them to make a bronze bar. To do this right click on either tin or|copper ore and select use then left click on the furnace. Try it now.");
+
+[proc,tutorial_step_bronze_bar]
+hint_stop();
+~set_hint_icon_mining_instructor;
+~tutorialstep("You've made a bronze bar!", "|Speak to Dezzick and he'll show you how to make it into a weapon.");
+
+[proc,tutorial_step_smithing_a_dagger]
+hint_stop();
+hint_coord(^hint_center, 0_48_148_11_27, 100);
+~tutorialstep("Smithing a dagger.", "To smith you'll need a hmmer like the one you were given by Dezzick, access to an anvil like the one with the arrow over it|and enough metal bars to make what you are trying to smith.|To start the process use the bar on one of the anvils.");
+
+[proc,tutorial_step_mining_instructor_finished]
+hint_stop();
+hint_coord(^hint_east, 0_48_148_22_30, 125);
+~tutorialstep("You've finished this area.", "So let's move on. Go through the gates shown by the arrow. Remember you may need to move the camera to see your surroundings. Speak to the guide for a recap at any time.");

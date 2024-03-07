@@ -90,8 +90,6 @@ if (%tutorial_progress > 230) {
 }
 
 [proc,tutorial_set_npc_hints]
-~set_hint_runescape_guide;
-
 if (%tutorial_progress = 70) {
     npc_findallzone(0_48_48_29_20);
     while (npc_findnext = true) {
@@ -172,7 +170,19 @@ switch_int(%tutorial_progress) {
 
     // Mining Instructor
     case 260: ~tutorial_step_talk_to_mining_instructor;
-    case 270, 275: ~tutorial_step_prospect_rocks;
+    case ^mining_instructor_begin_prospecting,
+        ^mining_instructor_prospected_copper_first,
+        ^mining_instructor_prospected_tin_first,
+        ^mining_instructor_prospected_tin_second,
+        ^mining_instructor_prospected_copper_second: ~tutorial_step_prospect_rocks;
+    // rework all these steps to go up to 310?
+    case ^mining_instructor_mining_start,
+        ^mining_instructor_minted_copper_first,
+        ^mining_instructor_mined_tin_first: ~tutorial_step_mining;
+    case ^mining_instructor_before_smelt_bronze_bar: ~tutorial_step_smelting;
+    case ^mining_instructor_after_smelt_bronze_bar: ~tutorial_step_bronze_bar;
+    case ^mining_instructor_smith_a_dagger: ~tutorial_step_smithing_a_dagger;
+    case ^mining_instructor_finished: ~tutorial_step_mining_instructor_finished;
 }
 
 [label,tutorial_island_equip](int $slot)
