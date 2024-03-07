@@ -2,7 +2,21 @@
 ^survival_guide_start = 20
 ^chef_start = 140
 ^quest_guide_start = 220
-^mining_guide_start = 260
+
+^mining_instructor_start = 260
+^mining_instructor_begin_prospecting = 270
+^mining_instructor_prospected_copper_first = 274
+^mining_instructor_prospected_tin_first = 275
+^mining_instructor_prospected_tin_second = 279
+^mining_instructor_prospected_copper_second = 280
+^mining_instructor_mining_start = 290
+^mining_instructor_minted_copper_first = 294
+^mining_instructor_mined_tin_first = 295
+^mining_instructor_before_smelt_bronze_bar = 320
+^mining_instructor_after_smelt_bronze_bar = 330
+^mining_instructor_smith_a_dagger = 340
+^mining_instructor_finished = 350
+
 ^combat_guide_start = 370
 ^finance_guide_start = 530
 ^prayer_guide_start = 550
