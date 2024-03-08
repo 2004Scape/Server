@@ -89,6 +89,15 @@ if (%tutorial_progress > 230) {
     if_settab(questlist, ^tab_quest_journal);
 }
 
+if (%tutorial_progress > ^combat_instructor_wielding_weapons) {
+    inv_transmit(worn, wornitems:wear);
+    if_settab(wornitems, ^tab_wornitems);
+}
+
+if (%tutorial_progress > ^combat_instructor_open_combat_interface) {
+    ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
+}
+
 [proc,tutorial_set_npc_hints]
 if (%tutorial_progress = 70) {
     npc_findallzone(0_48_48_29_20);
@@ -97,6 +106,10 @@ if (%tutorial_progress = 70) {
             hint_npc(npc_uid);
         }
     }
+}
+
+if (%tutorial_progress = ^combat_instructor_during_attacking_melee) {
+    ~set_hint_icon_giant_rat;
 }
 
 
@@ -127,6 +140,12 @@ if (%tutorial_progress = 2) {
     ~set_tutorial_progress;
 } else if(%tutorial_progress = 230) {
     %tutorial_progress = 240;
+    ~set_tutorial_progress;
+} else if (%tutorial_progress = ^combat_instructor_wielding_weapons) {
+    %tutorial_progress = ^combat_instructor_worn_inventory;
+    ~set_tutorial_progress;
+} else if (%tutorial_progress = ^combat_instructor_open_combat_interface) {
+    %tutorial_progress = ^combat_instructor_opened_combat_interface;
     ~set_tutorial_progress;
 }
 
@@ -183,13 +202,30 @@ switch_int(%tutorial_progress) {
     case ^mining_instructor_after_smelt_bronze_bar: ~tutorial_step_bronze_bar;
     case ^mining_instructor_smith_a_dagger: ~tutorial_step_smithing_a_dagger;
     case ^mining_instructor_finished: ~tutorial_step_mining_instructor_finished;
+    case ^combat_instructor_start: ~tutorial_step_combat;
+    case ^combat_instructor_wielding_weapons: ~tutorial_step_wielding_weapons;
+    case ^combat_instructor_worn_inventory: ~tutorial_step_worn_inventory;
+    case ^combat_instructor_dagger_equipped: ~tutorial_step_dagger_equipped;
+    case ^combat_instructor_unequipping_items: ~tutorial_step_unequipping_items;
+    case ^combat_instructor_open_combat_interface: ~tutorial_step_open_combat_interface;
+    case ^combat_instructor_opened_combat_interface: ~tutorial_step_opened_combat_interface;
+    case ^combat_instructor_before_attacking_melee: ~tutorial_step_attacking_melee;
+    case ^combat_instructor_during_attacking_melee: ~tutorial_step_sit_back_and_watch_melee;
+    case ^combat_instructor_after_rat_kill_melee: ~tutorial_step_first_kill_melee;
+    case default: ~tutorialstep("Oops! Unhandled Tutorial Step.", "Please contact a server admin for assistance.||tutorial_progress value <tostring(%tutorial_progress)>");
 }
 
 [label,tutorial_island_equip](int $slot)
-if (%tutorial_progress < ^combat_instructor_start) {
+if (%tutorial_progress < ^combat_instructor_worn_inventory) {
     ~mesbox("You'll be told how to equip items later.");
     return;
 }
+
+if (%tutorial_progress = ^combat_instructor_worn_inventory) {
+    %tutorial_progress = ^combat_instructor_dagger_equipped;
+    ~set_tutorial_progress;
+}
+
 @levelrequire_attack(1, $slot);
 
 [proc,tutorial_give_xp](stat $skill, int $xp)

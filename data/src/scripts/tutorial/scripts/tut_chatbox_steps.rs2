@@ -208,3 +208,48 @@ hint_coord(^hint_center, 0_48_148_11_27, 100);
 hint_stop();
 hint_coord(^hint_east, 0_48_148_22_30, 125);
 ~tutorialstep("You've finished this area.", "So let's move on. Go through the gates shown by the arrow. Remember you may need to move the camera to see your surroundings. Speak to the guide for a recap at any time.");
+
+[proc,tutorial_step_combat]
+hint_stop();
+~set_hint_icon_combat_instructor;
+~tutorialstep("", "Combat.|In this area you will find out about combat, both melee and ranged. Speak to the guide and he'll tell you all about it.");
+
+[proc,tutorial_step_wielding_weapons]
+hint_stop();
+~tutorialstep("", "Wielding weapons.|You now have access to a new interface. Click on the flashing icon of a man, the one to the right of your backpack icon.");
+inv_transmit(worn, wornitems:wear);
+if_settab(wornitems, ^tab_wornitems);
+if_settabflash(^tab_wornitems);
+
+[proc,tutorial_step_worn_inventory]
+~tutorialstep("This is your worn inventory.", "From here you can see what items you have equipped. Let's|get one of those slots filled, go back to your inventory and |right click your dagger, select wield from the menu.");
+
+[proc,tutorial_step_dagger_equipped]
+~set_hint_icon_combat_instructor;
+~tutorialstep("You're now holding your dagger.", "If you check your worn inventory you will see it in your right hand. Clothes, armour, weapons and many other items are equipped like this. You can unequip items by clicking on the |worn inventory. Now go and speak to Vannaka to continue.");
+
+[proc,tutorial_step_unequipping_items]
+~tutorialstep("Unequipping items.", "In your worn inventory panel right click on the dagger and|select the remove option from the drop down list. After you've unequipped the dagger wield the sword and shield. As you pass the mouse over an item you will see its name appear at the top left.");
+
+[proc,tutorial_step_open_combat_interface]
+~tutorialstep("Combat interface.", "|Click on the flashing crossed swords icon to see the combat interface.");
+~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
+if_settabflash(^tab_combat_options);
+
+[proc,tutorial_step_opened_combat_interface]
+hint_coord(^hint_west, 0_48_148_39_46, 125);
+~tutorialstep("This is your Combat interface.", "From this interface you can select the type of attack your| character will use. Different monsters have different|weaknesses. Now you have all the tools needed for battle why not slay some rats. Click on the gates indicated to continue.");
+
+[proc,tutorial_step_attacking_melee]
+hint_stop();
+// Highlight rat
+~set_hint_icon_giant_rat;
+~tutorialstep("Attacking.", "|To attack the rat right click it and select the attack option. You will then walk over to it and start hitting it.");
+
+[proc,tutorial_step_sit_back_and_watch_melee]
+~tutorialstep("Sit back and watch.", "While you are fighting you will see a bar over your head. The|bar shows how much health you have left. Your opponent will have one too. You will continue to attack the rat unti it's dead|or you do something else.");
+
+[proc,tutorial_step_first_kill_melee]
+~set_hint_icon_combat_instructor;
+~tutorialstep("Well done, yu've made your first kilL!", "|Pass through the gate and talk to Vannaka, he will give you your next task.");
+

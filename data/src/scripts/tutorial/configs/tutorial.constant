@@ -17,9 +17,17 @@
 ^mining_instructor_smith_a_dagger = 340
 ^mining_instructor_finished = 350
 
-^talk_to_combat_instructor = 360
+^combat_instructor_start = 360
+^combat_instructor_wielding_weapons = 370
+^combat_instructor_worn_inventory = 380
+^combat_instructor_dagger_equipped = 390
+^combat_instructor_unequipping_items = 400
+^combat_instructor_open_combat_interface = 410
+^combat_instructor_opened_combat_interface = 420
+^combat_instructor_before_attacking_melee = 430
+^combat_instructor_during_attacking_melee = 440
+^combat_instructor_after_rat_kill_melee = 450
 
-^combat_instructor_start = 370
 ^finance_guide_start = 530
 ^prayer_guide_start = 550
 ^magic_guide_start = 620
