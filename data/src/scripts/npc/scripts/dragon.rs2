@@ -77,7 +77,7 @@ if (inv_total(worn, dragonfire_shield) > 0) {
 }
 
 if (map_clock < %antifire) {
-    mes("<tostring(map_clock)>, <tostring(%antifire)>");
+    //mes("<tostring(map_clock)>, <tostring(%antifire)>");
     $maxhit = sub($maxhit, 15);
 }
 
