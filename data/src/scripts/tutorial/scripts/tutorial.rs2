@@ -108,7 +108,8 @@ if (%tutorial_progress = 70) {
     }
 }
 
-if (%tutorial_progress = ^combat_instructor_during_attacking_melee) {
+if (%tutorial_progress = ^combat_instructor_during_attacking_melee
+    | %tutorial_progress = ^combat_instructor_before_attacking_ranged) {
     ~set_hint_icon_giant_rat;
 }
 
@@ -212,6 +213,10 @@ switch_int(%tutorial_progress) {
     case ^combat_instructor_before_attacking_melee: ~tutorial_step_attacking_melee;
     case ^combat_instructor_during_attacking_melee: ~tutorial_step_sit_back_and_watch_melee;
     case ^combat_instructor_after_rat_kill_melee: ~tutorial_step_first_kill_melee;
+    case ^combat_instructor_before_attacking_ranged: ~tutorial_step_rat_ranging;
+    case ^combat_instructor_after_attacking_ranged: ~tutorial_step_combat_moving_on;
+
+    case ^tutorial_open_banking: ~tutorial_step_banking;
     case default: ~tutorialstep("Oops! Unhandled Tutorial Step.", "Please contact a server admin for assistance.||tutorial_progress value <tostring(%tutorial_progress)>");
 }
 

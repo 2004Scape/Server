@@ -27,6 +27,11 @@
 ^combat_instructor_before_attacking_melee = 430
 ^combat_instructor_during_attacking_melee = 440
 ^combat_instructor_after_rat_kill_melee = 450
+^combat_instructor_before_attacking_ranged = 460
+^combat_instructor_after_attacking_ranged = 470
+
+^tutorial_open_banking = 500
+^tutorial_opened_bank = 510
 
 ^finance_guide_start = 530
 ^prayer_guide_start = 550

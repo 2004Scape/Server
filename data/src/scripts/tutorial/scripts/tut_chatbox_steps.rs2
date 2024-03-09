@@ -242,7 +242,6 @@ hint_coord(^hint_west, 0_48_148_39_46, 125);
 
 [proc,tutorial_step_attacking_melee]
 hint_stop();
-// Highlight rat
 ~set_hint_icon_giant_rat;
 ~tutorialstep("Attacking.", "|To attack the rat right click it and select the attack option. You will then walk over to it and start hitting it.");
 
@@ -251,5 +250,16 @@ hint_stop();
 
 [proc,tutorial_step_first_kill_melee]
 ~set_hint_icon_combat_instructor;
-~tutorialstep("Well done, yu've made your first kilL!", "|Pass through the gate and talk to Vannaka, he will give you your next task.");
+~tutorialstep("Well done, yu've made your first kill!", "|Pass through the gate and talk to Vannaka, he will give you your next task.");
 
+[proc,tutorial_step_rat_ranging]
+~set_hint_icon_giant_rat;
+~tutorialstep("Rat ranging.", "Now you have a bow and some arrows. before you can use|them you'll need to equip them. Once equipped with the|ranging gear try killing another rat. Remember, to atack right click on the monster and select attack.");
+
+[proc,tutorial_step_combat_moving_on]
+hint_coord(^hint_center, 0_48_148_39_54, 125);
+~tutorialstep("Moving on.", "You have completed the tasks here, to move on click on the ladder shown. If you need to go over any of what you learned here just to Vannaka and he'll tell you what he can.");
+
+[proc,tutorial_step_banking]
+hint_coord(^hint_center, 0_48_48_50_52, 125);
+~tutorialstep("Banking.", "Follow the path and you will come to the front of the building. This is the 'Bank of RuneScape' where you can store all your most valued items. To open your bank box just right click on an open booth indicated and select use.");

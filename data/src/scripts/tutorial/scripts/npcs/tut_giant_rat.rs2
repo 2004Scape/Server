@@ -1,9 +1,28 @@
+[ai_opplayer2,npc_950] @giant_rat_attack;
+
 [opnpc2,npc_950]
 if (%tutorial_progress = ^combat_instructor_before_attacking_melee) {
     %tutorial_progress = ^combat_instructor_during_attacking_melee;
-    ~set_tutorial_progress;
+   ~set_tutorial_progress;
 }
 @player_combat_start;
+
+[label,giant_rat_attack]
+gosub(npc_default_attack);
+
+//[ai_queue1,npc_950](int $arg)
+//if (finduid(%npc_attacking_uid) = false) {
+//    return;
+//}
+//
+//// flinch
+//// set npc to ap if its out of combat
+//if (~npc_out_of_combat = true) {
+//    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+//    npc_setmode(applayer2);
+//    return;
+//}
+//npc_setmode(opplayer2);
 
 // death
 [ai_queue3,npc_950](int $arg)
@@ -11,14 +30,22 @@ gosub(npc_death);
 if (npc_findhero = true) {
     obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
     obj_add(npc_coord, raw_rat_meat, 1, ^lootdrop_duration);
-    if (%tutorial_progress =  ^combat_instructor_during_attacking_melee) {
-        queue(set_melee_rat_kill, 0);
+    if (%tutorial_progress =  ^combat_instructor_during_attacking_melee
+        | %tutorial_progress =  ^combat_instructor_before_attacking_ranged) {
+        queue(set_rat_kill, 0);
     }
 }
 
-[queue,set_melee_rat_kill]
-%tutorial_progress = ^combat_instructor_after_rat_kill_melee;
-~set_tutorial_progress;
+[queue,set_rat_kill]
+if (%tutorial_progress = ^combat_instructor_during_attacking_melee) {
+    %tutorial_progress = ^combat_instructor_after_rat_kill_melee;
+    ~set_tutorial_progress;
+}
+
+if (%tutorial_progress = ^combat_instructor_before_attacking_ranged) {
+    %tutorial_progress = ^combat_instructor_after_attacking_ranged;
+    ~set_tutorial_progress;
+}
 
 [proc,set_hint_icon_giant_rat]
 if (npc_finduid(~npc_within_distance(0_48_148_37_47, npc_950, 10)) = true) {
