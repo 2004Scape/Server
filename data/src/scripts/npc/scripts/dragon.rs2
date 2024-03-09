@@ -1,0 +1,88 @@
+[ai_queue1,green_dragon](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,baby_dragon](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,baby_blue_dragon](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,red_dragon](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,blue_dragon](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,black_dragon](int $arg) ~npc_default_retaliate_ap;
+
+[ai_opplayer2,green_dragon] @dragon_ai_opplayer2;
+[ai_opplayer2,baby_dragon] @dragon_ai_opplayer2;
+[ai_opplayer2,baby_blue_dragon] @dragon_ai_opplayer2;
+[ai_opplayer2,red_dragon] @dragon_ai_opplayer2;
+[ai_opplayer2,blue_dragon] @dragon_ai_opplayer2;
+[ai_opplayer2,black_dragon] @dragon_ai_opplayer2;
+
+[ai_applayer2,green_dragon] @dragon_ai_applayer2;
+[ai_applayer2,baby_dragon] @dragon_ai_applayer2;
+[ai_applayer2,baby_blue_dragon] @dragon_ai_applayer2;
+[ai_applayer2,red_dragon] @dragon_ai_applayer2;
+[ai_applayer2,blue_dragon] @dragon_ai_applayer2;
+[ai_applayer2,black_dragon] @dragon_ai_applayer2;
+
+
+[label,dragon_ai_applayer2]
+// mes("<tostring(map_clock)>: Ap");
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+// 1/2 chance to switch to op, with line of walk check (same as elvarg for now)
+if (random(2) = 0 & lineofwalk(npc_coord, coord) = true) {
+    npc_setmode(opplayer2);
+}
+~dragon_fire;
+
+
+[label,dragon_ai_opplayer2]
+// mes("<tostring(map_clock)>: Op");
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+// 1/8 chance to switch back to ap (same as elvarg for now)
+if (random(8) = 0) {
+    npc_setmode(applayer2);
+}
+~dragon_fire;
+
+
+[proc,dragon_fire]
+if_close;
+spotanim_npc(spotanim_1, 92, 0);
+npc_anim(dragon_firebreath_middle_attack, 0);
+sound_synth(sound_22, 0, 30);
+%npc_action_delay = add(map_clock, 5);
+
+def_int $attack_roll = ~npc_melee_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+
+// damage player
+def_int $maxhit = 30;
+if (inv_total(worn, dragonfire_shield) > 0) {
+    $maxhit = 5;
+} else if (%prayer_protectfrommagic = ^true) {
+    $maxhit = 10;
+} else if (randominc($attack_roll) > randominc($defence_roll)) {
+    $maxhit = add($maxhit, 20);
+    // these messages only show for unprotected or antifire protected players
+    mes("You're horribly burnt by the dragon fire!");
+} else {
+    mes("You manage to resist some of the dragon fire!");
+}
+
+if (map_clock < %antifire) {
+    mes("<tostring(map_clock)>, <tostring(%antifire)>");
+    $maxhit = sub($maxhit, 15);
+}
+
+def_int $damage = randominc(max($maxhit, 0));
+queue(damage_player, 0, $damage);
+queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+%npc_action_delay = add(map_clock, 4);
+~npc_set_attack_vars;
