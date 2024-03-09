@@ -28,6 +28,10 @@ settimer(general_macro_events, 500);
 ~macro_event_general_check;
 // so pk skulls persist after logging back in
 ~set_pk_skull_login;
+// so antifire persists after logging back in
+~set_antifire_login;
+// so antipoison persists after logging back in
+~set_antipoison_login;
 
 
 if (%tutorial_progress < ^tutorial_complete) {
