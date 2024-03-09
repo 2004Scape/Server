@@ -14,19 +14,7 @@ if (%dragon_progress < ^dragon_complete) {
 }
 
 
-//data is only from about 50 hits
-[ai_queue1,elvarg](int $arg)
-if (finduid(%npc_attacking_uid) = false) {
-    return;
-}
-// flinch
-// set npc to ap if its out of combat
-if (~npc_out_of_combat = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    npc_setmode(applayer2);
-    return;
-}
-npc_setmode(opplayer2);
+[ai_queue1,elvarg](int $arg) ~npc_default_retaliate_ap;
 
 // https://twitter.com/JagexAsh/status/1756992041777561878
 // "AP -> OP: 1/2, subject to a line-of-walk check.
@@ -97,7 +85,7 @@ if (inv_total(worn, dragonfire_shield) > 0) {
         // https://youtu.be/lSV2whAirvY?t=41
         mes("Your prayers resist some of the dragon fire!");
     }
-    if (%antifire < map_clock) {
+    if (map_clock < %antifire) {
         $maxhit = sub($maxhit, 3);
         // guess based off this https://youtu.be/UXNFe3FeDgg?t=15
         mes("Your potion protects you from the heat of the dragon fire!");
@@ -106,7 +94,7 @@ if (inv_total(worn, dragonfire_shield) > 0) {
     if (%prayer_protectfrommagic = ^true) {
         $maxhit = sub($maxhit, 15);
     }
-    if (%antifire = ^true) {
+    if (map_clock < %antifire) {
         $maxhit = sub($maxhit, 15);
     }
 }
