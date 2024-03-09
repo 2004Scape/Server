@@ -49,7 +49,7 @@ if (~npc_can_attack_player = false) {
 if (random(8) = 0) {
     npc_setmode(applayer2);
 }
-~dragon_fire;
+~npc_default_attack;
 
 
 [proc,dragon_fire]
