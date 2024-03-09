@@ -58,15 +58,13 @@ npc_anim(dragon_firebreath_middle_attack, 0);
 sound_synth(sound_22, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
-def_int $attack_roll = ~npc_melee_attack_roll;
-def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
-
 // damage player
 def_int $maxhit = ~elvarg_max_hit;
-def_int $damage = 0;
-if (randominc($attack_roll) > randominc($defence_roll)) {
-    $damage = randominc($maxhit);
-}
+def_int $damage = randominc(~elvarg_max_hit);
+
+// not sure if this was a thing, but this video has it https://youtu.be/ucaYfz3ihWs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=130
+stat_sub(prayer, 0 , 10); // 10%
+
 queue(damage_player, 0, $damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 %npc_action_delay = add(map_clock, 4);
