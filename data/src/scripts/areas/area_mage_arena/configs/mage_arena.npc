@@ -132,7 +132,7 @@ head3=model_68_obj_wear
 wanderrange=0
 moverestrict=nomove
 
-[npc_907]
+[kolodion_boss_1]
 vislevel=hide
 name=Kolodion
 desc=He runs the mage arena.
@@ -167,7 +167,7 @@ head3=model_68_obj_wear
 hitpoints=3
 param=attackrate,7
 
-[npc_908]
+[kolodion_boss_2]
 vislevel=hide
 name=Kolodion
 desc=He's a shape shifter.
@@ -198,7 +198,7 @@ param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 
-[npc_909]
+[kolodion_boss_3]
 vislevel=hide
 name=Kolodion
 desc=He's a shape shifter.
@@ -222,7 +222,7 @@ param=defend_sound,insect_2
 param=death_sound,insect_1
 param=death_drop,null
 
-[npc_910]
+[kolodion_boss_4]
 vislevel=hide
 name=Kolodion
 desc=He's a shape shifter.
@@ -255,7 +255,7 @@ model7=model_181_idk
 hitpoints=78
 param=attackrate,7
 
-[npc_911]
+[kolodion_boss_5]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready
