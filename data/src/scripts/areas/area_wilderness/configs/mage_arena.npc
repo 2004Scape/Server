@@ -1,4 +1,4 @@
-[npc_902]
+[gundai]
 vislevel=hide
 name=Gundai
 desc=He must get lonely out here.
@@ -21,7 +21,7 @@ head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_78_npc_head
 
-[npc_903]
+[lundail]
 vislevel=hide
 name=Lundail
 desc=He sells rune stones.
@@ -39,7 +39,7 @@ model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_84_idk_head
 
-[npc_904]
+[chamber_guardian]
 vislevel=hide
 name=Chamber guardian
 desc=He hasn't seen much sun lately.
@@ -66,7 +66,7 @@ model8=model_317_npc
 head1=model_52_idk_head
 head2=model_82_idk_head
 
-[npc_905]
+[kolodion]
 vislevel=hide
 name=Kolodion
 desc=He runs the mage arena.
