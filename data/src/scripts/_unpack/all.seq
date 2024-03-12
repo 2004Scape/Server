@@ -1443,7 +1443,7 @@ frame14=anim_7315
 frame15=anim_7325
 frame16=anim_7334
 
-[giant_seq_134]
+[giant_spawn]
 priority=6
 frame1=anim_7334
 frame2=anim_7325

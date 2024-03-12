@@ -102,3 +102,39 @@ if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
     return (false);
 }
 return (true);
+
+[proc,mage_arena_in_progress]()(boolean)
+if (%magearena_progress < ^mage_arena_complete & %magearena_progress > ^mage_arena_started) {
+    return (true);
+}
+return (false);
+
+[proc,spawn_mage_arena_boss](int $stage, coord $coord)
+def_npc $boss = enum(int, npc, mage_arena_boss_stages, $stage);
+npc_add($coord, $boss, 1000);
+npc_anim(npc_param(spawn_anim), 0);
+spotanim_npc(spotanim_188, 124, 34);
+sound_synth(smokepuff, 0, 0);
+
+
+[queue,teleport_to_mage_arena]
+anim(human_castteleport, 60);
+spotanim_pl(castteleport, 92, 60);
+sound_synth(teleport_all, 0, 0);
+mes("<tostring(map_clock)>: Delay");
+p_delay(3);
+p_teleport(^mage_arena_start_coord);
+anim(null, 0);
+p_delay(2);
+~spawn_mage_arena_boss(%magearena_progress, ~coord_lineofwalk_radius2(coord, 1));
+mes("<tostring(map_clock)>: Delay");
+p_delay(2);
+mes("<tostring(map_clock)>: Delay");
+npc_setmode(applayer2);
+
+[ai_applayer2,kolodion_boss_1]
+npc_say("You must prove yourself... now!");
+
+
+[debugproc,ma]
+queue(teleport_to_mage_arena, 0);

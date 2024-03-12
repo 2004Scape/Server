@@ -1,4 +1,7 @@
 [opnpc1,kolodion]
+if (~mage_arena_in_progress = true) {
+    @kolodion_return;
+}
 ~chatplayer(neutral, "Hello there. What is this place?");
 // https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
 // "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
@@ -53,3 +56,22 @@ if (~can_enter_mage_arena = false) {
 ~chatplayer(happy, "You don't need to worry about that.");
 ~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
 %magearena_progress = 1;
+npc_setmode(opplayer2);
+
+[label,kolodion_return]
+~chatplayer(happy, "Hi.");
+~chatnpc(neutral, "You return, young conjurer. You obviously have a|taste for the dark side of magic.");
+if (~can_enter_mage_arena = false) {
+    ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
+    return;
+}
+// https://youtu.be/gxLEK64MAU8?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=16
+npc_setmode(opplayer2);
+
+
+[ai_opplayer2,kolodion]
+npc_anim(seq_811, 30);
+
+if_close;
+queue(teleport_to_mage_arena, 0);
+npc_setmode(playerfaceclose);

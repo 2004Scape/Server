@@ -194,6 +194,7 @@ param=attackrate,7
 param=attack_anim,giant_attack
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=spawn_anim,giant_spawn
 param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
