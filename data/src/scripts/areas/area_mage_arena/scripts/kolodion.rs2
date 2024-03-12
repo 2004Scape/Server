@@ -1,0 +1,48 @@
+[opnpc1,kolodion]
+~chatplayer(neutral, "Hello there. What is this place?");
+if (stat(magic) < 60) {
+    ~chatnpc(angry, "Do not waste my time with trivial questions. I am the|Great Kolodion, master of battle magic. I have an arena|to run.");
+    ~chatplayer(quiz, "Can I enter?");
+    ~chatnpc(angry, "Hah! A wizard of your level? Don't be absurd.");
+    return;
+}
+~chatnpc(shifty, "I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|Gielinor to fight here.");
+@multi3("Can I fight here?", kolodion_can_i_fight_here, "What's the point of that?", kolodion_whats_the_point, "That's barbaric!", kolodion_barbaric);
+
+
+[label,kolodion_can_i_fight_here]
+~chatplayer(quiz, "Can I fight here?");
+~chatnpc(shifty, "My arena is open to any high level wizard, but this is|no game. Many wizards fall in this arena, never to rise|again. The strongest mages have been destroyed.");
+~chatnpc(quiz, "If you're sure you want in?");
+@multi2("Yes indeedy.", kolodion_yes_indeedy, "No I don't.", kolodion_no_i_dont);
+
+
+[label,kolodion_whats_the_point]
+~chatplayer(quiz, "What's the point of that?");
+~chatnpc(neutral, "We learn how to use our magic to its fullest and how|to channel the forces of the cosmos into our world...");
+~chatnpc(happy, "But mainly, I just like blasting people into dust.");
+@multi2("Can I fight here?", kolodion_can_i_fight_here, "That's barbaric!", kolodion_barbaric);
+
+
+[label,kolodion_barbaric]
+~chatplayer(shock, "That's barbaric!");
+~chatnpc(happy, "Nope, it's magic. But I know what you mean. So do|you want to join us?");
+@multi2("Yes indeedy.", kolodion_yes_indeedy, "No I don't.", kolodion_no_i_dont);
+
+
+[label,kolodion_yes_indeedy]
+~chatplayer(happy, "Yes indeedy.");
+~chatnpc(happy, "Good, good. You have a healthy sense of competition.");
+~chatnpc(neutral, "Remember, traveller - in my arena, hand-to-hand|combat is useless. Your strength will diminish as you|enter the arena, but the spells you can learn are|amongst the most powerful in all of Gielinor.");
+~chatnpc(neutral, "Before I can accept you in, we must duel.");
+@multi2("Okay, let's fight.", kolodion_lets_fight, "No thanks.", exit);
+
+[label,kolodion_no_i_dont]
+~chatplayer(angry, "No I don't.");
+~chatnpc(neutral, "Your loss.");
+
+[label,kolodion_lets_fight]
+~chatplayer(happy, "Okay, let's fight.");
+~chatnpc(neutral, "I must first check that you are up to scratch.");
+~chatplayer(happy, "You don't need to worry about that.");
+~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
