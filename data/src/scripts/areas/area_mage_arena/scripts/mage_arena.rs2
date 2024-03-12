@@ -5,3 +5,44 @@ p_arrivedelay;
 [oploc1,loc_2872]
 p_arrivedelay;
 @climb_ladder(movecoord(coord, 549, 0, -756), true);
+
+
+[oploc1,loc_2878]
+def_int $width = 3;
+def_int $length = 3;
+
+def_int $x = calc(coordx(loc_coord) - coordx(coord));
+def_int $z = calc(coordz(loc_coord) - coordz(coord));
+def_coord $coord;
+def_coord $coord2;
+def_int $dir;
+//mes("X: <tostring($x)>, Z: <tostring($z)>, Width: <tostring($width)>, Length: <tostring($length)>");
+if ($x > 0) {
+    $coord = movecoord(loc_coord, -1, 0, 1); // player is west
+    $coord2 = movecoord($coord, 1, 0, 0);
+    $dir = ^exact_east;
+} else if ($z > 0) {
+    $coord = movecoord(loc_coord, 1, 0, -1); // player is south
+    $coord2 = movecoord($coord, 0, 0, 1);
+    $dir = ^exact_north;
+} else if (calc($z + $length - 1) < 0) {
+    $coord = movecoord(loc_coord, 1, 0, 3); // player is north
+    $coord2 = movecoord($coord, 0, 0, -1);
+    $dir = ^exact_south;
+} else if (calc($x + $width - 1) < 0) {
+    $coord = movecoord(loc_coord, 3, 0, 1); // player is east
+    $coord2 = movecoord($coord, -1, 0, 0);
+    $dir = ^exact_west;
+}
+
+if ($coord ! coord) {
+    ~forcewalk($coord);
+}
+facesquare($coord2);
+mes("You step into the pool.");
+p_delay(0);
+// [proc,agility_exactmove]
+//(seq $anim, int $anim_delay, int $movement_delay, coord $start_coord, coord $end_coord, int $start_cycle, int $end_cycle, int $direction, boolean $merge_with_loc)
+~agility_exactmove(human_walk_f, 0, 0, coord, $coord2, 0, 20, $dir, true);
+~agility_exactmove(human_walk_f, 0, 0, coord, $coord, 0, 20, $dir, true);
+mes("Your boots get wet.");
