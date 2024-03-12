@@ -1,6 +1,8 @@
 [opnpc1,kolodion]
 ~chatplayer(neutral, "Hello there. What is this place?");
-if (stat(magic) < 60) {
+// https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
+// "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
+if (stat_base(magic) < 60) {
     ~chatnpc(angry, "Do not waste my time with trivial questions. I am the|Great Kolodion, master of battle magic. I have an arena|to run.");
     ~chatplayer(quiz, "Can I enter?");
     ~chatnpc(angry, "Hah! A wizard of your level? Don't be absurd.");
@@ -34,7 +36,11 @@ if (stat(magic) < 60) {
 ~chatplayer(happy, "Yes indeedy.");
 ~chatnpc(happy, "Good, good. You have a healthy sense of competition.");
 ~chatnpc(neutral, "Remember, traveller - in my arena, hand-to-hand|combat is useless. Your strength will diminish as you|enter the arena, but the spells you can learn are|amongst the most powerful in all of Gielinor.");
-~chatnpc(neutral, "Before I can accept you in, we must duel.");
+~chatnpc(neutral, "Before I can accept you in, we must duel.|You may not take armour or weapons into the arena."); // second sentence is rsc
+if (~can_enter_mage_arena = false) {
+    ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
+    return;
+}
 @multi2("Okay, let's fight.", kolodion_lets_fight, "No thanks.", exit);
 
 [label,kolodion_no_i_dont]
@@ -46,3 +52,4 @@ if (stat(magic) < 60) {
 ~chatnpc(neutral, "I must first check that you are up to scratch.");
 ~chatplayer(happy, "You don't need to worry about that.");
 ~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
+%magearena_progress = 1;

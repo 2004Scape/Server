@@ -46,3 +46,59 @@ p_delay(0);
 ~agility_exactmove(human_walk_f, 0, 0, coord, $coord2, 0, 20, $dir, true);
 ~agility_exactmove(human_walk_f, 0, 0, coord, $coord, 0, 20, $dir, true);
 mes("Your boots get wet.");
+
+
+// need to find screenshots to confirm these
+[oploc1,loc_2880]
+// if north of the loc
+if (coordz(coord) > coordz(loc_coord)) {
+    if (%magearena_progress < ^mage_arena_complete) {
+        ~mesbox("You cannot enter without the permission of Kolodion."); // rsc, might be mes
+        return;
+    }
+    if (~can_enter_mage_arena = false) {
+        ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
+        return;
+    }
+    p_teleport(movecoord(coord, 0, 0, -1));
+} else {
+    p_teleport(movecoord(loc_coord, 0, 0, 1));
+}
+mes("You pass through the mystical barrier."); //rsc
+
+
+[proc,can_enter_mage_arena]()(boolean)
+if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
+    | (inv_totalcat(inv, armour_helmet) > 0 | inv_totalcat(worn, armour_helmet) > 0) 
+    | (inv_totalcat(inv, armour_body) > 0 | inv_totalcat(worn, armour_body) > 0) 
+    | (inv_totalcat(inv, armour_legs) > 0 | inv_totalcat(worn, armour_legs) > 0) 
+    | (inv_totalcat(inv, armour_shield) > 0 | inv_totalcat(worn, armour_shield) > 0) 
+    | (inv_totalcat(inv, weapon_slash) > 0 | inv_totalcat(worn, weapon_slash) > 0) 
+    | (inv_totalcat(inv, weapon_blunt) > 0 | inv_totalcat(worn, weapon_blunt) > 0) 
+    | (inv_totalcat(inv, category_15) > 0 | inv_totalcat(worn, category_15) > 0)
+    | (inv_totalcat(inv, weapon_stab) > 0 | inv_totalcat(worn, weapon_stab) > 0) 
+    | (inv_totalcat(inv, weapon_crossbow) > 0 | inv_totalcat(worn, weapon_crossbow) > 0) 
+    | (inv_totalcat(inv, weapon_axe) > 0 | inv_totalcat(worn, weapon_axe) > 0) 
+    | (inv_totalcat(inv, weapon_pickaxe) > 0 | inv_totalcat(worn, weapon_pickaxe) > 0) 
+    | (inv_totalcat(inv, weapon_javelin) > 0 | inv_totalcat(worn, weapon_javelin) > 0) 
+    | (inv_totalcat(inv, weapon_2h_sword) > 0 | inv_totalcat(worn, weapon_2h_sword) > 0) 
+    | (inv_totalcat(inv, weapon_spear) > 0 | inv_totalcat(worn, weapon_spear) > 0) 
+    | (inv_totalcat(inv, weapon_spiked) > 0 | inv_totalcat(worn, weapon_spiked) > 0) 
+    | (inv_totalcat(inv, weapon_thrown) > 0 | inv_totalcat(worn, weapon_thrown) > 0) 
+    | (inv_totalcat(inv, weapon_scythe) > 0 | inv_totalcat(worn, weapon_scythe) > 0) 
+    | (inv_totalcat(inv, weapon_bow) > 0 | inv_totalcat(worn, weapon_bow) > 0) 
+    | (inv_totalcat(inv, arrows) > 0 | inv_totalcat(worn, arrows) > 0)
+    | (inv_totalcat(inv, unstrung_bow) > 0)
+    | (inv_total(inv, headless_arrow) > 0) // headless arrows
+    | (inv_total(inv, arrow_shaft) > 0) 
+    | (inv_total(inv, bow_string) > 0)
+    | (inv_totalcat(inv, category_22) > 0) // logs
+    | (inv_totalcat(inv, unstrung_bow) > 0)
+    // not sure if they would think of adding some of these checks but really no way to know :(
+    | (inv_totalcat(inv, trail_clue_easy) > 0)
+    | (inv_totalcat(inv, trail_clue_medium) > 0)
+    | (inv_totalcat(inv, trail_clue_hard) > 0)
+    | (inv_totalcat(inv, cannon_parts) > 0)) {
+    return (false);
+}
+return (true);
