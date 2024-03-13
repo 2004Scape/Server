@@ -1,12 +1,16 @@
-[oploc2,_mining_rock_normal] @prospect_rock;
-[oploc2,_mining_rock_fast] @prospect_rock;
-[oploc2,loc_2491] @prospect_rock;
-[oploc2,gem_rock_1] @prospect_rock;
+[oploc2,_mining_rock_normal] @prospect_rock(finish_prospect_normal);
+[oploc2,_mining_rock_fast] @prospect_rock(finish_prospect_normal);
+[oploc2,loc_2491] @prospect_rock(finish_prospect_essence);
+[oploc2,gem_rock_1] @prospect_rock(finish_prospect_normal);
 
-[label,prospect_rock]
+[label,prospect_rock](label $finish_prospect)
 mes("You examine the rock for ores...");
 p_delay(3);
 sound_synth(prospect, 1, 0);
+jump($finish_prospect);
+
+
+[label,finish_prospect_normal]
 def_int $is_empty = loc_param(mining_rock_empty);
 if ($is_empty = ^true) {
     mes("There is no ore left in this rock.");
@@ -18,3 +22,7 @@ if ($is_empty = ^true) {
     }
     mes("This rock contains <db_getfield($data, mining_table:ore_name, 0)>.");
 }
+
+[label,finish_prospect_essence]
+// 2018 osrs: https://i.imgur.com/eUQV7fG.png
+mes("This rock contains unbound Rune Stone essence.");
