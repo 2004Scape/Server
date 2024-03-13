@@ -1,4 +1,32 @@
 [opnpc1,anna]
 switch_int(%murder_progress) { 
     case ^murder_not_started: mes("She is ignoring you.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "Oh really? What do you want to know then?");
+        def_int $option;
+        if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3);
+        } else {
+            $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
+        }
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(neutral, "It was clearly an intruder.");
+                ~chatplayer(confused, "Well, I don't think it was.");
+                ~chatnpc(angry, "It was one of our lazy servants then.");
+            case 2:
+                ~chatplayer(neutral, "Where were you when the murder happened?");
+                ~chatnpc(neutral, "n the library. No one else was there so you'll just have to take my word for it.");
+            case 3:
+                ~chatplayer(confused, "Do you recognise this thread?");
+                ~mesbox("You show Anna the thread from the study.");
+                if(inv_total(inv, murder_green_thread) > 0) {
+                    // RSC dialogue, confirm w/OSRS
+                    ~chatnpc(neutral, "It's some red thread... it kind of looks like the same material as my trousers. But obviously its not.");
+                    return;
+                }
+                ~chatnpc(neutral, "Not really, no. Thread is fairly common.");
+        }
 }

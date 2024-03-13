@@ -5,7 +5,7 @@ switch_int(%murder_progress) {
         ~chatnpc(sad, "Oh, it's terrible! Lord Sinclair has been murdered and we don't have any clues as to who or why. We're totally baffled!");
         ~chatnpc(sad, "If you can help us we will be very grateful.");
         // https://youtu.be/5CH-NF3kY-c?si=Vd4EiX8q6OsKOyZB&t=38
-        switch_int(~p_choice2("Sure, I'll help.", 1, "I'm sorry, I'm too busy.", 2)) {
+        switch_int(~p_choice2("Sure, I'll help.", 1, "You should do your own dirty work.", 2)) {
             case 1:
                 ~chatplayer(happy, "Sure, I'll help!");
                 %murder_progress = ^murder_started;
@@ -30,6 +30,13 @@ switch_int(%murder_progress) {
 
 [label,murder_guard_who]
 ~chatplayer(happy, "I know who did it!");
+if(testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+    @multi2("I have proof that it wasn't any of the servants.", murder_guard_threadproof, "I have the finger prints of the culprit.", murder_guard_printproof);
+}else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+    @murder_guard_printproof;
+}else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+    @murder_guard_threadproof;
+}
 @murder_guard_quick;
 
 [label,murder_guard_quick]
@@ -47,12 +54,12 @@ switch_int(~p_choice4("It was an intruder!", 1, "The butler did it!", 2, "It was
         switch_int(~p_choice2("It was one of the women...", 1, "It was one of the men...", 2)) {
             case 1:
                 ~chatplayer(neutral, "It was one of the women"); // intentional missing punc
-                ~chatnpc(quiz, "Oh really? Which one?");
+                ~chatnpc(confused, "Oh really? Which one?");
                 ~p_choice2("It was SO obviously Louisa the cook.", 1, "It MUST have been Mary the maid.", 2);
                 @murder_guard_accuse_suspect;
             case 2:
                 ~chatplayer(neutral, "It was one of the men...");
-                ~chatnpc(quiz, "Oh really? Which one?");
+                ~chatnpc(confused, "Oh really? Which one?");
                 @multi4("It can ONLY Be Donovan the handyman.", murder_guard_accuse_suspect, "Pierre the dog handler. No question.", murder_guard_accuse_suspect, "Hobbes the butler. The butler ALWAYS did it.", murder_guard_butler, "You MUST know it was Stanford the gardener...", murder_guard_accuse_suspect);
         }
     case 4:
@@ -85,3 +92,16 @@ p_delay(3);
 ~chatnpc(confused, "You DO have evidence of their crime, right?");
 ~chatplayer(confused, "Uh....");
 ~chatnpc(neutral, "Tch. You wouldn't last a day in the guards with sloppy thinking like that. Come see me when you have some proof of your accusations.");
+
+[label,murder_guard_threadproof]
+~chatplayer(happy, "I have proof that it wasn't any of the servants!");
+~mesbox("You show the guard the thread you found on the window.");
+~chatplayer(neutral, "All the servants dress in black so it couldn't have been one of them.");
+~chatnpc(neutral, "That's some good work there. I guess it wasn't a servant. You still haven't proved who did do it though.");
+
+[label,murder_guard_printproof]
+~chatplayer(happy, "I have the finger prints of the culprit!");
+~chatplayer(neutral, "I have <~murder_get_murderer_name>'s finger prints here. You can see for yourself they match the finger prints on the murder weapon exactly.");
+~mesbox("You show the guard the finger prints evidence.");
+~chatnpc(neutral, "... I'm impressed. How on earth did you think of something like that? I've never heard of such a technique for finding criminals before!");
+~chatnpc(neutral, "This will come in very handy in the future but we can't arrest someone on just this. I'm afraid you'll still need to find more evidence before we can close this case completely.");

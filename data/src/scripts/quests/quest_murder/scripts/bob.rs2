@@ -1,4 +1,32 @@
-[opnpc1,bob]
+[opnpc1,murder_bob]
 switch_int(%murder_progress) { 
     case ^murder_not_started: mes("He is ignoring you.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "I suppose I had better talk to you then.");
+        def_int $option;
+        if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3);
+        } else {
+            $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
+        }
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(neutral, "I don't really care as long as no one thinks it's me. Maybe it was that strange poison seller who headed towards the seers village.");
+            case 2:
+                ~chatplayer(neutral, "Where were you when the murder happened?");
+                ~chatnpc(neutral, "I was walking by myself in the garden.");
+                ~chatplayer(neutral, "And can anyone vouch for that?");
+                ~chatnpc(neutral, "No. But I was.");
+            case 3:
+                ~chatplayer(confused, "Do you recognise this thread?");
+                ~mesbox("You show him the thread you discovered.");
+                if(inv_total(inv, murder_red_thread) > 0) {
+                    // RSC dialogue, confirm on osrs
+                    ~chatnpc(confused, "Its some red thread. I suppose you think thats some kind of clue? It looks like the material my trousers are made of.");
+                    return;
+                }
+                ~chatnpc(confused, "It's some thread. great clue. No, really.");
+        }    
 }

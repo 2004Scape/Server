@@ -3,90 +3,150 @@ if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+mes("It's a heap of compost.");
 
 [oploc2,loc_2651]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
-
-[oploc2,loc_2651]
-if(%murder_progress = ^murder_not_started) {
-    mes("I need the guards' permission to do that.");
-    return;
-}
+mes("It's a very old beehive.");
 
 [oploc2,loc_2652]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+mes("It's the drains from the kitchen.");
 
 [oploc2,loc_2653]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+mes("It looks like a spiders' nest of some kind...");
 
 [oploc2,loc_2654]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+mes("A fountain with large numbers of insects around the base.");
 
 [oploc2,loc_2655]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+mes("The Sinclair Family Crest is hung up here.");
 
 [oploc2,loc_2656]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+if(~obj_gettotal(murder_necklace) > 0) {
+    mes("I already have Anna's Necklace.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom. You take Anna's Silver Necklace.");
+inv_add(inv, murder_necklace, 1);
 
 [oploc2,loc_2657]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+if(~obj_gettotal(murder_cup) > 0) {
+    mes("I already have Bob's cup.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom. You take Bob's silver cup.");
+inv_add(inv, murder_cup, 1);
 
 [oploc2,loc_2658]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+if(~obj_gettotal(murder_bottle) > 0) {
+    mes("I already have Carol's bottle.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom. You take Carol's silver bottle.");
+inv_add(inv, murder_bottle, 1);
 
 [oploc2,loc_2659]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+if(~obj_gettotal(murder_book) > 0) {
+    mes("I already have David's book.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom. You take David's silver book.");
+inv_add(inv, murder_book, 1);
 
 [oploc2,loc_2660]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+if(~obj_gettotal(murder_needle) > 0) {
+    mes("I already have Frank's pot.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom. You take Frank's silver pot.");
+inv_add(inv, murder_needle, 1);
 
 [oploc2,loc_2661]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+if(~obj_gettotal(murder_pot) > 0) {
+    mes("I already have Elizabeth's needle.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom. You take Elizabeth's silver needle.");
+inv_add(inv, murder_pot, 1);
 
-[oploc2,loc_2662]
+[label,murder_flour_barrel]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+if(inv_total(inv, pot_empty) = 0) {
+    mes("A barrel full of finely sifted flour.");
+    mes("You need something to put the flour in.");
+    return;
+}
+inv_del(inv, pot_empty, 1);
+inv_add(inv, pot_of_flour, 1);
+mes("You take some flour from the barrel.");
+mes("There's still plenty of flour left.");
+
+[oploc2,loc_2662] @murder_flour_barrel;
+
+[oplocu,loc_2662]
+if(last_useitem = pot_empty) {
+    @murder_flour_barrel;
+}
+// no nothing interesting happens
 
 [oploc2,loc_2663]
 if(%murder_progress = ^murder_not_started) {
     mes("I need the guards' permission to do that.");
     return;
 }
+~mesbox("There's some flypaper in there. Should I take it?");
+def_int $choice = ~p_choice2("Yes, it might be useful.", 1, "No, I don't see any need for it.", 2);
+if($choice = 2) {
+    return;
+}
+inv_add(inv, flypaper, 1);
+~mesbox("You take a piece of fly paper. There is still plenty of fly paper left.");
 
 [oploc1,loc_2664] @murder_inspect_gate;
 [oploc1,loc_2665] @murder_inspect_gate;
@@ -97,12 +157,34 @@ if(%murder_progress = ^murder_not_started) {
     mes("I need the guard's permission to do that.");
     return;
 }
+~mesbox("As you approach the gate the Guard Dog starts barking loudly at you. There is no way an intruder could have committed the murder. It must have been someone the dog knew to get past it quietly.");
 
 [oploc2,loc_2666]
 p_arrivedelay;
 if(%murder_progress = ^murder_not_started) {
     mes("You need the guards' permission to do that.");
     return;
+}
+~mesbox("Some thread seems to have been caught on a loose nail on the window.");
+if(~obj_gettotal(~get_murder_thread) > 0) {
+    ~mesbox("You have already taken the thread.");
+    return;
+}
+if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+    ~mesbox("Lucky for you there's some thread left. You should be less careless in future.");
+    inv_add(inv, ~get_murder_thread, 1);
+    return;
+}
+%murder_evidence = setbit(%murder_evidence, ^murder_found_thread);
+mes("You take the thread.");
+inv_add(inv, ~get_murder_thread, 1);
+
+[proc,get_murder_thread](namedobj)
+switch_int(%murder_murderer_id) {
+    case ^murderer_anna, ^murderer_david: return (murder_green_thread);
+    case ^murderer_bob, ^murderer_carol: return (murder_red_thread);
+    case ^murderer_elizabeth, ^murderer_frank: return (murder_blue_thread);
+    case default: return (murder_green_thread); // fallback but this should never happen
 }
 
 [opobj3,criminals_dagger]
@@ -130,3 +212,115 @@ if(inv_total(bank, pungent_pot) > 0) {
 }
 inv_add(inv, pungent_pot, 1);
 ~mesbox("It seems like Lord Sinclair was drinking from this before he died.");
+
+[opheldu,_murder_proofobj]
+if(last_useitem = pot_of_flour) {
+    @flour_proofobj(last_item);
+}
+@nothing_interesting_happens;
+
+[opheldu,_murder_flourobj]
+if(last_useitem = flypaper) {
+    @create_flourprints(last_item);
+}
+@nothing_interesting_happens;
+
+[opheldu,unknown_print]
+if(oc_category(last_useitem) = murder_printobj) {
+    @check_murderer_print(last_useitem);
+}
+@nothing_interesting_happens;
+
+[label,flour_proofobj](obj $proof_obj)
+inv_del(inv, $proof_obj, 1);
+inv_add(inv, oc_param($proof_obj, product), 1);
+inv_del(inv, pot_of_flour, 1);
+inv_add(inv, pot_empty, 1);
+switch_obj($proof_obj) {
+    case murder_necklace:
+        mes("You sprinkle the flour on Anna's necklace.");
+        mes("The necklace is now coated with a thin layer of flour.");
+    case murder_bottle:
+        mes("You sprinkle the flour on Carol's bottle.");
+        mes("The bottle is now coated with a thin layer of flour.");
+    case murder_book:
+        mes("You sprinkle the flour on David's book.");
+        mes("The Book is now coated with a thin layer of flour.");
+    case murder_needle:
+        mes("You sprinkle the flour on Elizabeth's needle.");
+        mes("The Needle is now coated with a thin layer of flour.");
+    case murder_pot:
+        mes("You sprinkle the flour on Frank's pot.");
+        mes("The Pot is now coated with a thin layer of flour.");
+    case murder_cup:
+        mes("You sprinkle the flour on Bob's cup.");
+        mes("The cup is now coated with a thin layer of flour.");
+    case criminals_dagger:
+        mes("You sprinkle a small amount of flour on the murderweapon.");
+        mes("The murderweapon is now coated with a thin layer of flour.");
+}
+
+[label,create_flourprints](obj $flour_obj)
+inv_del(inv, $flour_obj, 1);
+inv_add(inv, oc_param($flour_obj, changesto), 1);
+inv_del(inv, flypaper, 1);
+inv_add(inv, oc_param($flour_obj, product), 1);
+switch_obj($flour_obj) {
+    case murder_flournecklace:
+        mes("You use the flypaper on the flour covered necklace.");
+        mes("You have a clean impression of Anna's finger prints.");
+    case murder_flourbottle:
+        mes("You use the flypaper on the flour covered bottle.");
+        mes("You have a clean impression of Carol's finger prints.");
+    case murder_flourbook:
+        mes("You use the flypaper on the flour covered book.");
+        mes("You have a clean impression of David's finger prints.");
+    case murder_flourneedle:
+        mes("You use the flypaper on the flour covered needle.");
+        mes("You have a clean impression of Elizabeth's finger prints.");
+    case murder_flourpot:
+        mes("You use the flypaper on the flour covered pot.");
+        mes("You have a clean impression of Frank's finger prints.");
+    case murder_flourcup:
+        mes("You use the flypaper on the flour covered cup.");
+        mes("You have a clean impression of Bob's finger prints.");
+    case murder_flourdagger:
+        mes("You use the flypaper on the floury dagger.");
+        mes("You have a clean impression of the murderer's finger prints.");
+}
+
+[label,check_murderer_print](obj $checked_print)
+def_string $print_name = oc_name($checked_print);
+def_string $murderer_name = substring($print_name, 0, calc(string_indexof_char($print_name, ' ') - 2));
+if(oc_param($checked_print, murder_id_value) = %murder_murderer_id) {
+    mes("The finger prints are an exact match to <$murderer_name>'s.");
+    %murder_evidence = setbit(%murder_evidence, ^murder_found_fingerprints);
+    inv_del(inv, unknown_print, 1);
+    inv_add(inv, killers_print, 1);
+    return;
+}
+~mesbox("They don't seem to be the same. I guess that clears <$murderer_name> of the crime. You destroy the useless fingerprint.");
+inv_del(inv, $checked_print, 1);
+
+[opobj3,murder_blue_thread]
+~mesbox("Some blue thread. Not enough to be worth taking.");
+
+[opobj3,murder_red_thread]
+~mesbox("Some red thread. Not enough to be worth taking.");
+
+[opobj3,murder_green_thread]
+~mesbox("Some green thread. Not enough to be worth taking.");
+
+[proc,murder_get_murderer_name](string)
+switch_int(%murder_murderer_id) {
+    case 2: return ("Bob");
+    case 3: return ("Carol");
+    case 4: return ("David");
+    case 5: return ("Elizabeth");
+    case 6: return ("Frank");
+    case default: return ("Anna");
+}
+
+[queue,murder_quest_complete]
+%murder_progress = ^murder_complete;
+~send_quest_complete(questlist:murder, coins, 250, ^murder_questpoints, "You have completed the\\nMurder Mystery Quest!");

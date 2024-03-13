@@ -2,4 +2,23 @@
 switch_int(%murder_progress) { 
     case ^murder_not_started:
         ~chatnpc(neutral, "I have no interest in talking to gawkers.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "How can I help?");
+        def_int $option;
+        $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3);
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(neutral, "Oh... I really couldn't say. I wouldn't really want to point any fingers at anybody. If I had to make a guess I'd have to say it was probably Bob though.");
+                ~chatnpc(neutral, "I saw him arguing with Lord Sinclair about some missing silverware from the Kitchen. It was a very heated argument.");
+            case 2:
+                ~chatplayer(neutral, "Where were you at the time of the murder?");
+                ~chatnpc(confused, "Me? I was sound asleep here in the servants Quarters. It's very hard work as a handyman around here, There's always something to do!");
+            case 3:
+                ~chatplayer(neutral, "Did you hear any suspicious noises at all?");
+                ~chatnpc(confused, "Hmmm..... No, I didn't, but I sleep very soundly at night.");
+                ~chatplayer(confused, "So you didn't hear any sounds of a struggle or any barking from the guard dog next to his study window?");
+                ~chatnpc(confused, "Now you mention it, no. It is odd I didn't hear anything like that. But I do sleep very soundly as I said and wouldn't necessarily have heard it if there was any such noise.");
+        }
 }

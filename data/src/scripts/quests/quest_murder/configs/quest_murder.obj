@@ -1,4 +1,4 @@
-[obj_1796]
+[murder_necklace]
 name=Silver necklace
 desc=Annas' shiny silver coated necklace.
 members=yes
@@ -15,8 +15,10 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
+category=murder_proofobj
+param=product,murder_flournecklace
 
-[obj_1797]
+[murder_flournecklace]
 name=Silver necklace
 desc=Annas' shiny silver coated necklace coated with a thin layer of flour.
 members=yes
@@ -33,8 +35,11 @@ wearpos=front
 manwear=model_281_obj_wear,0
 womanwear=model_445_obj_wear,0
 weight=10g
+category=murder_flourobj
+param=product,annas_print
+param=changesto,murder_necklace
 
-[obj_1798]
+[murder_cup]
 name=Silver cup
 desc=Bobs' shiny silver coated tea cup.
 members=yes
@@ -45,8 +50,10 @@ model=model_2347_obj
 2dyan=1980
 2dxan=156
 weight=70g
+category=murder_proofobj
+param=product,murder_flourcup
 
-[obj_1799]
+[murder_flourcup]
 name=Silver cup
 desc=Bobs' shiny silver coated tea cup coated with a thin layer of flour.
 members=yes
@@ -59,8 +66,11 @@ recol1d=82
 2dyan=1980
 2dxan=156
 weight=70g
+category=murder_flourobj
+param=product,bobs_print
+param=changesto,murder_cup
 
-[obj_1800]
+[murder_bottle]
 name=Silver bottle
 desc=Carols' shiny silver coated bottle.
 members=yes
@@ -72,8 +82,10 @@ recol1d=82
 2dyan=192
 2dxan=116
 weight=90g
+category=murder_proofobj
+param=product,murder_flourbottle
 
-[obj_1801]
+[murder_flourbottle]
 name=Silver bottle
 desc=Carols' shiny silver coated bottle coated with a thin layer of flour.
 members=yes
@@ -84,8 +96,11 @@ recol1d=82
 2dyan=1808
 2dxan=76
 weight=90g
+category=murder_flourobj
+param=product,carols_print
+param=changesto,murder_bottle
 
-[obj_1802]
+[murder_book]
 name=Silver book
 desc=Davids' shiny silver coated book.
 members=yes
@@ -96,8 +111,10 @@ recol1d=82
 2dyan=152
 2dxan=256
 weight=8oz
+category=murder_proofobj
+param=product,murder_flourbook
 
-[obj_1803]
+[murder_flourbook]
 name=Silver book
 desc=Davids' shiny silver coated book coated with a thin layer of flour.
 members=yes
@@ -108,8 +125,11 @@ recol1d=82
 2dyan=152
 2dxan=256
 weight=8oz
+category=murder_flourobj
+param=product,davids_print
+param=changesto,murder_book
 
-[obj_1804]
+[murder_needle]
 name=Silver needle
 desc=Elizabeths' shiny silver coated needle.
 members=yes
@@ -122,8 +142,10 @@ recol1d=82
 2dyan=868
 2dxan=368
 weight=1g
+category=murder_proofobj
+param=product,murder_flourneedle
 
-[obj_1805]
+[murder_flourneedle]
 name=Silver needle
 desc=Elizabeths' shiny silver coated needle coated with a thin layer of flour.
 members=yes
@@ -136,8 +158,11 @@ recol1d=82
 2dyan=868
 2dxan=368
 weight=1g
+category=murder_flourobj
+param=product,elizabeths_print
+param=changesto,murder_needle
 
-[obj_1806]
+[murder_pot]
 name=Silver pot
 desc=Franks' shiny silver coated pot.
 members=yes
@@ -150,8 +175,10 @@ recol1d=82
 2dyan=8
 2dxan=112
 weight=2lb
+category=murder_proofobj
+param=product,murder_flourpot
 
-[obj_1807]
+[murder_flourpot]
 name=Silver pot
 desc=Franks' shiny silver coated pot coated with a thin layer of flour.
 members=yes
@@ -164,8 +191,11 @@ recol1d=82
 2dyan=8
 2dxan=112
 weight=2lb
+category=murder_flourobj
+param=product,franks_print
+param=changesto,murder_pot
 
-[obj_1808]
+[murder_red_thread]
 name=Criminals' thread
 desc=Some red thread found at the murder scene.
 members=yes
@@ -179,7 +209,7 @@ recol1d=960
 2dxan=148
 weight=2g
 
-[obj_1809]
+[murder_green_thread]
 name=Criminals' thread
 desc=Some green thread found at the murder scene.
 members=yes
@@ -193,7 +223,7 @@ recol1d=22464
 2dxan=148
 weight=2g
 
-[obj_1810]
+[murder_blue_thread]
 name=Criminals' thread
 desc=Some blue thread found at the murder scene.
 members=yes
@@ -207,7 +237,7 @@ recol1d=43968
 2dxan=148
 weight=2g
 
-[obj_1811]
+[flypaper]
 name=Flypaper
 desc=A piece of fly paper. It's sticky.
 model=model_2350_obj
@@ -245,8 +275,10 @@ recol1d=35344
 2dyan=1276
 2dxan=472
 weight=1lb
+category=murder_proofobj
+param=product,murder_flourdagger
 
-[obj_1814]
+[murder_flourdagger]
 name=Criminals' dagger
 desc=A flimsy looking dagger found at the crime scene coated with a thin layer of flour.
 members=yes
@@ -258,8 +290,11 @@ recol1d=35344
 2dyan=1276
 2dxan=472
 weight=1lb
+category=murder_flourobj
+param=product,unknown_print
+param=changesto,criminals_dagger
 
-[obj_1815]
+[killers_print]
 name=Killers' print
 desc=The fingerprints of the murderer.
 2dxof=2
@@ -271,7 +306,7 @@ members=yes
 model=model_2416_obj
 weight=10g
 
-[obj_1816]
+[annas_print]
 name=Annas' print
 desc=An imprint of Annas' fingerprint.
 members=yes
@@ -282,8 +317,10 @@ model=model_2416_obj
 2dyan=84
 2dxan=320
 weight=10g
+category=murder_printobj
+param=murder_id_value,1
 
-[obj_1817]
+[bobs_print]
 name=Bobs' print
 desc=An imprint of Bobs' fingerprint.
 members=yes
@@ -294,8 +331,10 @@ model=model_2416_obj
 2dyan=84
 2dxan=320
 weight=10g
+category=murder_printobj
+param=murder_id_value,2
 
-[obj_1818]
+[carols_print]
 name=Carols' print
 desc=An imprint of Carols' fingerprint.
 members=yes
@@ -306,8 +345,10 @@ model=model_2416_obj
 2dyan=84
 2dxan=320
 weight=10g
+category=murder_printobj
+param=murder_id_value,3
 
-[obj_1819]
+[davids_print]
 name=Davids' print
 desc=An imprint of Davids' fingerprint.
 members=yes
@@ -318,8 +359,10 @@ model=model_2416_obj
 2dyan=84
 2dxan=320
 weight=10g
+category=murder_printobj
+param=murder_id_value,4
 
-[obj_1820]
+[elizabeths_print]
 name=Elizabeths' print
 desc=An imprint of Elizabeths' fingerprint.
 members=yes
@@ -330,8 +373,10 @@ model=model_2416_obj
 2dyan=84
 2dxan=320
 weight=10g
+category=murder_printobj
+param=murder_id_value,5
 
-[obj_1821]
+[franks_print]
 name=Franks' print
 desc=An imprint of Franks' fingerprint.
 members=yes
@@ -342,8 +387,10 @@ model=model_2416_obj
 2dyan=84
 2dxan=320
 weight=10g
+category=murder_printobj
+param=murder_id_value,6
 
-[obj_1822]
+[unknown_print]
 name=Unknown print
 desc=An unidentified fingerprint taken from the murder weapon.
 members=yes
