@@ -390,6 +390,7 @@ transmit=yes
 [varp_266]
 
 [magearena_progress]
+protect=no
 scope=perm
 
 [varp_268]

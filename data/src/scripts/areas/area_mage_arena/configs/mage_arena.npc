@@ -164,6 +164,7 @@ head1=model_48_npc_head
 head2=model_82_idk_head
 head3=model_68_obj_wear
 // TODO
+param=death_anim,human_castteleport
 hitpoints=3
 param=attackrate,7
 
@@ -192,6 +193,7 @@ model2=model_2871_npc
 hitpoints=65
 param=attackrate,7
 param=attack_anim,giant_attack
+param=magicattack_anim,giant_seq_132
 param=defend_anim,giant_block
 param=death_anim,giant_death
 param=spawn_anim,giant_spawn

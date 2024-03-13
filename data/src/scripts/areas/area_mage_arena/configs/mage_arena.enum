@@ -1,6 +1,7 @@
 [mage_arena_boss_stages]
 inputtype=int
 outputtype=npc
+val=0,kolodion_boss_1
 val=1,kolodion_boss_1
 val=2,kolodion_boss_2
 val=3,kolodion_boss_3

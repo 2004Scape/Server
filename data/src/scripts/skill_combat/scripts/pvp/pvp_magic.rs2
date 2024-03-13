@@ -180,7 +180,7 @@ if (~pvp_hit_roll(^magic_style) = true) {
         ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
     }
     // spell visual
-    .spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
+    .spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
     // auto retal
     if (.p_finduid(.uid) = true) { // todo: queue this
         ~.pvp_retaliate(uid);

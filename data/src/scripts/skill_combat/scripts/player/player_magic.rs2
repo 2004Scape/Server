@@ -204,7 +204,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
         ~give_combat_experience($damagestyle, $damage, npc_param(combat_xp_multiplier));
     }
     // spell visual
-    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
+    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
     // npc auto retal
     ~npc_retaliate(calc($duration / 30 + 1)); // delayed an extra tick in osrs
 

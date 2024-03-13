@@ -110,31 +110,58 @@ if (%magearena_progress < ^mage_arena_complete & %magearena_progress > ^mage_are
 return (false);
 
 [proc,spawn_mage_arena_boss](int $stage, coord $coord)
+// looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
+// https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23
+spotanim_map(spotanim_188, $coord, 124, 0);
+sound_synth(smokepuff, 0, 0);
+p_delay(0);
 def_npc $boss = enum(int, npc, mage_arena_boss_stages, $stage);
 npc_add($coord, $boss, 1000);
 npc_anim(npc_param(spawn_anim), 0);
-spotanim_npc(spotanim_188, 124, 34);
-sound_synth(smokepuff, 0, 0);
 
 
-[queue,teleport_to_mage_arena]
+[queue,teleport_to_mage_arena](int $stage)
+mes("player anim");
 anim(human_castteleport, 60);
 spotanim_pl(castteleport, 92, 60);
 sound_synth(teleport_all, 0, 0);
-mes("<tostring(map_clock)>: Delay");
 p_delay(3);
 p_teleport(^mage_arena_start_coord);
+mes("Teleport");
 anim(null, 0);
-p_delay(2);
-~spawn_mage_arena_boss(%magearena_progress, ~coord_lineofwalk_radius2(coord, 1));
-mes("<tostring(map_clock)>: Delay");
-p_delay(2);
-mes("<tostring(map_clock)>: Delay");
+p_delay(3);
+mes("Spawn");
+~spawn_mage_arena_boss($stage, ~coord_lineofwalk_radius2(coord, 1));
 npc_setmode(applayer2);
-
-[ai_applayer2,kolodion_boss_1]
+p_delay(1);
+mes("Say");
 npc_say("You must prove yourself... now!");
 
+[ai_applayer2,kolodion_boss_1] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
+[ai_applayer2,kolodion_boss_2] ~npc_cast_spell(~random_range(^claws_of_guthix, ^saradomin_strike), 5);
+[ai_applayer2,kolodion_boss_3] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^claws_of_guthix), 5);
+[ai_applayer2,kolodion_boss_4] ~npc_cast_spell(~random_range(^saradomin_strike, ^claws_of_guthix), 5);
+[ai_applayer2,kolodion_boss_5] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
 
-[debugproc,ma]
-queue(teleport_to_mage_arena, 0);
+[ai_opplayer2,kolodion_boss_1] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
+[ai_opplayer2,kolodion_boss_2] ~npc_cast_spell(~random_range(^claws_of_guthix, ^saradomin_strike), 5);
+[ai_opplayer2,kolodion_boss_3] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^claws_of_guthix), 5);
+[ai_opplayer2,kolodion_boss_4] ~npc_cast_spell(~random_range(^saradomin_strike, ^claws_of_guthix), 5);
+[ai_opplayer2,kolodion_boss_5] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
+
+
+[ai_queue3,kolodion_boss_1](int $arg)
+if (finduid(%npc_aggressive_player) = true) {
+    %magearena_progress = 2;
+}
+npc_setmode(none);
+npc_anim(npc_param(death_anim), 0);
+npc_delay(2);
+npc_changetype(kolodion_boss_2);
+npc_anim(npc_param(spawn_anim), 0);
+spotanim_npc(spotanim_188, 124, 34);
+npc_setmode(applayer2);
+
+
+[debugproc,ma](int $stage)
+queue(teleport_to_mage_arena, 0, $stage);

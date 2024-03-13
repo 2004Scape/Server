@@ -153,3 +153,7 @@ default=1000
 [combat_xp_multiplier]
 type=int
 default=1000
+
+[magicattack_anim]
+type=seq
+default=null

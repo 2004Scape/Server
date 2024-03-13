@@ -56,7 +56,9 @@ if (~can_enter_mage_arena = false) {
 ~chatplayer(happy, "You don't need to worry about that.");
 ~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
 %magearena_progress = 1;
-npc_setmode(opplayer2);
+mes("Dialogue over");
+
+@kolodion_teleport;
 
 [label,kolodion_return]
 ~chatplayer(happy, "Hi.");
@@ -66,12 +68,21 @@ if (~can_enter_mage_arena = false) {
     return;
 }
 // https://youtu.be/gxLEK64MAU8?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=16
+mes("Dialogue over");
+
+@kolodion_teleport;
+
+[label,kolodion_teleport]
+if_close;
+def_int $delay = sub(npc_range(coord), 1);
+queue(teleport_to_mage_arena, $delay, %magearena_progress);
 npc_setmode(opplayer2);
+p_delay($delay);
 
 
 [ai_opplayer2,kolodion]
+mes("Npc anim");
 npc_anim(seq_811, 30);
-
 if_close;
-queue(teleport_to_mage_arena, 0);
+
 npc_setmode(playerfaceclose);
