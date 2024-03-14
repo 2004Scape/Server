@@ -65,6 +65,11 @@ model7=model_185_obj_wear
 model8=model_317_npc
 head1=model_52_idk_head
 head2=model_82_idk_head
+param=owned_shop,mage_arena_staffs
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,0
+param=shop_delta,20
+param=shop_title,Mage Arena Staffs.
 
 [kolodion]
 vislevel=hide

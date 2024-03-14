@@ -1,4 +1,17 @@
 [opnpc1,kolodion]
+if (%magearena_progress < ^mage_arena_started) {
+    ~chatplayer(neutral, "Hello there. What is this place?");
+    // https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
+    // "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
+    if (stat_base(magic) < 60) {
+        ~chatnpc(angry, "Do not waste my time with trivial questions. I am the|Great Kolodion, master of battle magic. I have an arena|to run.");
+        ~chatplayer(quiz, "Can I enter?");
+        ~chatnpc(angry, "Hah! A wizard of your level? Don't be absurd.");
+        return;
+    }
+    ~chatnpc(shifty, "I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|Gielinor to fight here.");
+    @multi3("Can I fight here?", kolodion_can_i_fight_here, "What's the point of that?", kolodion_whats_the_point, "That's barbaric!", kolodion_barbaric);
+}
 if (~mage_arena_in_progress = true) {
     @kolodion_return;
 } else if (%magearena_progress = ^mage_arena_started) {
@@ -8,18 +21,34 @@ if (~mage_arena_in_progress = true) {
     ~chatnpc(shifty,  "Hello, young mage. You're a tough one.");
     @kolodion_what_now;
 }
-~chatplayer(neutral, "Hello there. What is this place?");
-// https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
-// "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
-if (stat_base(magic) < 60) {
-    ~chatnpc(angry, "Do not waste my time with trivial questions. I am the|Great Kolodion, master of battle magic. I have an arena|to run.");
-    ~chatplayer(quiz, "Can I enter?");
-    ~chatnpc(angry, "Hah! A wizard of your level? Don't be absurd.");
+
+// default
+~chatplayer(neutral, "Hello, Kolodion.");
+~chatnpc(shifty, "Hey there, how are you? Are you enjoying the|bloodshed?");
+~chatplayer(neutral, "It's not bad; I've seen worse.");
+def_int $choice = ~p_choice3("I think I've had enough for now.", 1, "How can I use my new spells outside of the arena?", 2, "Are there any more challenges available?", 3);
+if ($choice = 1) {
+    ~chatplayer(bored, "I think I've had enough for now.");
+    ~chatnpc(neutral, "A shame. You're a good battle mage. I hope to see you|soon.");
+    return;
+} else if ($choice = 2) {
+    ~chatplayer(quiz, "How can I use my new spells outside of the arena?");
+    ~chatnpc(shifty, "Experience, my friend, experience. Once you've used|the spell enough times in the arena, you'll be able to use|them in the rest of Gielinor.");
+    ~chatplayer(happy, "Good stuff.");
+    ~chatnpc(happy,  "Not so good for the citizens; they won't stand a chance.");
+    ~chatplayer(quiz, "How am I doing so far?");
+    // check for each spell if they're unlocked
+    ~chatnpc(neutral, "You still need to train with the strike spell inside the|arena before you can use it outside.");
+    ~chatnpc(neutral, "You still need to train with the claw spell inside the|arena before you can use it outside.");
+    ~chatnpc(neutral, "You still need to train with the flame spell inside the|arena before you can use it outside.");
+    return;
+} else if ($choice = 3) {
+    ~chatplayer(quiz, "Are there any more challenges available?");
+    // check if the player has learned the god spells
+    ~chatnpc(sad, "You still need to learn how to cast all god spells outside|of the arena.");
+    ~chatnpc(neutral, "I've made a note of the spells you still need to learn in|your journal.");
     return;
 }
-~chatnpc(shifty, "I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|Gielinor to fight here.");
-@multi3("Can I fight here?", kolodion_can_i_fight_here, "What's the point of that?", kolodion_whats_the_point, "That's barbaric!", kolodion_barbaric);
-
 
 [label,kolodion_can_i_fight_here]
 ~chatplayer(quiz, "Can I fight here?");
@@ -87,7 +116,7 @@ p_delay($delay);
 
 [label,kolodion_what_now]
 ~chatplayer(quiz, "What now?");
-~chatnpc(shifty, "Step into the magic pool. It will take you to a chamber.<br>There, you must decide which god you will represent in<br>the arena.");
+~chatnpc(shifty, "Step into the magic pool. It will take you to a chamber.|There, you must decide which god you will represent in|the arena.");
 ~chatplayer(happy, "Thanks, Kolodion.");
 ~chatnpc(happy, "That's what I'm here for.");
 
