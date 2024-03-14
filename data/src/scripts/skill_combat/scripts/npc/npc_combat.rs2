@@ -68,8 +68,8 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
 }
 return(false);
 
+// allows any npc with op2 defined to be attacked
 [proc,npc_is_attackable](npc $npc)(boolean)
-// so this way is more authentic, allows any npc with op2 defined to be attacked
 // https://web.archive.org/web/20060828222012/http://www.trillionareguild.com/runescape/dragon.php at the very end of the guide
 // it says "You have no reason to do that.", so its prob this osrs message.
 // every guide says you have to kill wormbrain, and monster db's say he drops bones. so theres no
@@ -84,6 +84,11 @@ if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(
     // }
     return (false);
 }
+if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+    mes("You are not ready to fight the battle mages.");
+    return(false);
+}
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -93,12 +98,23 @@ if (string_length(nc_op($npc, 2)) > 0) {
 // }
 return (false);
 
+// this proc is primarily used for magic, due to the "You cant attack this npc." message
 [proc,npc_is_attackable_message](npc $npc)(boolean)
-if (~npc_is_attackable($npc) = false) {
-    mes("You can't attack this npc.");
+if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin)) {
+    mes("The goblin is already in prison. You have no reason to attack him.");
     return (false);
 }
-return (true);
+if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+    mes("You are not ready to fight the battle mages.");
+    return(false);
+}
+
+if (string_length(nc_op($npc, 2)) > 0) {
+    return (true);
+}
+mes("You can't attack this npc.");
+return (false);
+
 
 [proc,npc_out_of_combat]()(boolean)
 if (add(%npc_lastattack, 8) < map_clock | (npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {

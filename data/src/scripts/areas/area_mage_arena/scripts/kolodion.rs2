@@ -1,6 +1,12 @@
 [opnpc1,kolodion]
 if (~mage_arena_in_progress = true) {
     @kolodion_return;
+} else if (%magearena_progress = ^mage_arena_started) {
+    @kolodion_lets_fight;
+} else if (%magearena_progress = ^mage_arena_complete) {
+    ~chatplayer(neutral, "Hello, Kolodion.");
+    ~chatnpc(shifty,  "Hello, young mage. You're a tough one.");
+    @kolodion_what_now;
 }
 ~chatplayer(neutral, "Hello there. What is this place?");
 // https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
@@ -40,10 +46,6 @@ if (stat_base(magic) < 60) {
 ~chatnpc(happy, "Good, good. You have a healthy sense of competition.");
 ~chatnpc(neutral, "Remember, traveller - in my arena, hand-to-hand|combat is useless. Your strength will diminish as you|enter the arena, but the spells you can learn are|amongst the most powerful in all of Gielinor.");
 ~chatnpc(neutral, "Before I can accept you in, we must duel.|You may not take armour or weapons into the arena."); // second sentence is rsc
-if (~can_enter_mage_arena = false) {
-    ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
-    return;
-}
 @multi2("Okay, let's fight.", kolodion_lets_fight, "No thanks.", exit);
 
 [label,kolodion_no_i_dont]
@@ -53,6 +55,10 @@ if (~can_enter_mage_arena = false) {
 [label,kolodion_lets_fight]
 ~chatplayer(happy, "Okay, let's fight.");
 ~chatnpc(neutral, "I must first check that you are up to scratch.");
+if (~can_enter_mage_arena = false) {
+    ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
+    return;
+}
 ~chatplayer(happy, "You don't need to worry about that.");
 ~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
 %magearena_progress = 1;
@@ -79,6 +85,11 @@ queue(teleport_to_mage_arena, $delay, %magearena_progress);
 npc_setmode(opplayer2);
 p_delay($delay);
 
+[label,kolodion_what_now]
+~chatplayer(quiz, "What now?");
+~chatnpc(shifty, "Step into the magic pool. It will take you to a chamber.<br>There, you must decide which god you will represent in<br>the arena.");
+~chatplayer(happy, "Thanks, Kolodion.");
+~chatnpc(happy, "That's what I'm here for.");
 
 [ai_opplayer2,kolodion]
 mes("Npc anim");

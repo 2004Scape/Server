@@ -11492,6 +11492,7 @@ attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
+category=battle_mage
 
 [npc_913]
 name=Battle mage
@@ -11525,6 +11526,7 @@ attackrange=10
 respawnrate=150
 hitpoints=120
 magic=50
+category=battle_mage
 
 [npc_914]
 name=Battle mage
@@ -11548,6 +11550,7 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+category=battle_mage
 
 [npc_928]
 vislevel=hide
