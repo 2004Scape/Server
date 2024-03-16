@@ -1,0 +1,9 @@
+// After successfully casting on a chicken - https://youtu.be/GNRPeRShDzQ?t=690
+// Doesn't splash first time on chicken - https://youtu.be/NtZXrGgC8iY?t=638
+// Trying to range chicken - https://youtu.be/ui3I-OPLqzE?t=635
+
+
+[proc,set_hint_icon_chicken]
+if (npc_finduid(~npc_within_distance(0_49_48_3_20, npc_951, 10)) = true) {
+    hint_npc(npc_uid);
+}

@@ -263,3 +263,70 @@ hint_coord(^hint_center, 0_48_148_39_54, 125);
 [proc,tutorial_step_banking]
 hint_coord(^hint_center, 0_48_48_50_52, 125);
 ~tutorialstep("Banking.", "Follow the path and you will come to the front of the building. This is the 'Bank of RuneScape' where you can store all your most valued items. To open your bank box just right click on an open booth indicated and select use.");
+
+[proc,tutorial_step_this_is_your_bank_box]
+hint_coord(^hint_east, 0_48_48_52_52, 150);
+~tutorialstep("This is your bank box.", "You can store stuff here for safe keeping. If you die, anything in your bank will be saved. To deposit something right click it and select store. Once you've had a good look close the window and move on through the door indicated.");
+
+[proc,tutorial_step_financial_advisor]
+~set_hint_icon_financial_advisor;
+~tutorialstep("Financial advice.", "|The guide here will tell you all about making cash. Just click on him to hear what he's going to say.");
+
+[proc,tutorial_financial_advisor_continue_through_door]
+hint_coord(^hint_east, 0_48_48_57_52, 150);
+~tutorialstep("", "|Continue through the next door.");
+
+[proc,tutorial_to_the_chapel]
+~set_hint_icon_brother_brace;
+~tutorialstep("", "Follow the path to the chapel and enter it.|Once inside talk to the monk. He'll tell you all about prayer.");
+
+[proc,tutorial_your_prayer_menu]
+hint_stop();
+if_settabflash(^tab_prayer);
+if_settab(prayer, ^tab_prayer);
+~tutorialstep("", "Your prayer menu.||Click on the flashing icon to open the prayer menu.");
+
+[proc,tutorial_your_prayer_menu_post_click]
+~set_hint_icon_brother_brace;
+~tutorialstep("", "Your prayer menu.||Talk with Brother Brace and he'll tell you about prayers.");
+
+[proc,tutorial_friends_tab]
+hint_stop();
+if_settabflash(^tab_friends);
+if_settab(friends, ^tab_friends);
+~tutorialstep("", "You should now see another new icon. Click on flashing smily to open your friends list.");
+
+[proc,tutorial_ignore_tab]
+if_settabflash(^tab_ignore);
+if_settab(ignore, ^tab_ignore);
+~tutorialstep("This is your friends list.", "|This will be explained by Brother Brace shortly, but first click|on the other flashing icon next to the friends list one.");
+
+[proc,tutorial_your_ignore_list]
+~set_hint_icon_brother_brace;
+~tutorialstep("This is your ignore list.", "The two lists; friends and ignore, can be very helpful for|keeping track of when your friends are online or for blocking messages from people you simply don't like. Speak with|Brother Brace and he will tell you more.");
+
+[proc,tutorial_your_final_instructor]
+hint_coord(^hint_north, 0_48_48_50_30, 125);
+~tutorialstep("", "Your final instructor!|You're almost finished on tutorial island. Pass through the|door to find the path leading to your last instructor.");
+
+[proc,tutorial_your_final_instructor_2]
+~set_hint_icon_magic_instructor;
+~tutorialstep("Your final instructor!", "Just follow the path to the wizards house, where you will be shown how to cast spells. Just talk with the mage indicated to find out more.");
+
+[proc,tutorial_open_your_final_menu]
+if_settabflash(^tab_magic);
+if_settab(magic, ^tab_magic);
+~tutorialstep("Open up your final menu.", "|Open up the Magic menu by clicking on the flashing icon next to the Prayer button you just learned about.");
+
+// https://youtu.be/9NEh8kBrjkk?t=271 full message in 07
+[proc,tutorial_cast_wind_strike]
+~set_hint_icon_chicken;
+~tutorialstep("Cast Wind Strike at a chicken.", "Now you have runes you should see the Wind Strike icon at the top left corner of the Magic interface. Walk over to the caged chickens, click the Wind Strike icon and then select one of the chickens to cast it on. It may take several tries.");
+
+[proc,tutorial_cast_wind_strike_splash]
+~set_hint_icon_chicken;
+~tutorialstep("Cast Wind Strike at a chicken.", "That's it, you cast a spell! Sadly it didn't have any effect this time, but the more you practice, the better you'll get. Repeat this process until you successfully cast the spell. Click the Wind Strike icon again and then select one of the chickens.");
+
+[proc,tutorial_cast_wind_strike_success]
+~set_hint_icon_magic_instructor;
+~tutorialstep("You have almost completed the tutorial!", "|All you need to do now is move on to the mainland. Just speak with Terrova and he'll teleport you to Lumbridge Castle.");

@@ -1,4 +1,4 @@
-[ai_opplayer2,npc_950] @giant_rat_attack;
+[ai_opplayer2,npc_950] ~giant_rat_attack;
 
 [opnpc2,npc_950]
 if (%tutorial_progress = ^combat_instructor_before_attacking_melee) {
@@ -7,22 +7,84 @@ if (%tutorial_progress = ^combat_instructor_before_attacking_melee) {
 }
 @player_combat_start;
 
-[label,giant_rat_attack]
-gosub(npc_default_attack);
+[apnpc2,npc_950]
 
-//[ai_queue1,npc_950](int $arg)
-//if (finduid(%npc_attacking_uid) = false) {
-//    return;
+// No bow and arrow equipped
+// Mesbox - You should equip a bow and some arrow sbefore doing that.
+
+// Arrows equipped but no bow
+// Same as above
+
+// Bow equipped but no arrows
+// Mesbox, you need to equip the arrows you ahve in your inventory.
+
+[proc,giant_rat_attack]
+//gosub(npc_default_attack);
+npc_say("It's Rat Attack Time!");
+if (stat(hitpoints) = 0) {
+    return;
+}
+if (%npc_action_delay > map_clock) return;
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+anim(%com_defendanim, 0);
+npc_anim(npc_param(attack_anim), 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
+
+def_int $attack_roll = ~npc_melee_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+def_int $maxhit = ~npc_melee_maxhit;
+
+npc_say("Clock: <tostring(map_clock)>, NPC A: <tostring($attack_roll)>, Player D: <tostring($defence_roll)>, NPC Max: <tostring($maxhit)>");
+
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    ~playerhit_n_melee(randominc($maxhit), npc_param(attackrate));
+    return;
+}
+~playerhit_n_melee(0, npc_param(attackrate));
+//
+//npc_anim(npc_param(attack_anim), 0);
+//if (npc_param(attack_sound) ! null) {
+//    sound_synth(npc_param(attack_sound), 0, 0);
 //}
 //
-//// flinch
-//// set npc to ap if its out of combat
-//if (~npc_out_of_combat = true) {
-//    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-//    npc_setmode(applayer2);
-//    return;
+//def_int $attack_roll = ~npc_melee_attack_roll;
+//def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+//def_int $maxhit = ~npc_melee_maxhit;
+//def_int $damage = 0;
+//
+//if_close; // close the player interface when taking a hit.
+//// not sure if this is correct
+//if (getqueue(player_death) < 1) {
+//    if (calc(stat(hitpoints) - 1) = 0) {
+//        $damage = 0;
+//    } else {
+//        $damage = 1;
+//    }
+//
+//    queue(drunken_dwarf_player_defend_anim, 1);
+//    queue(damage_player, 1, $damage);
+//    queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
 //}
-//npc_setmode(opplayer2);
+//~npc_set_attack_vars;
+
+[ai_queue1,npc_950](int $arg)
+if (finduid(%npc_attacking_uid) = false) {
+    return;
+}
+
+// flinch
+// set npc to ap if its out of combat
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    npc_setmode(applayer2);
+    return;
+}
+npc_setmode(opplayer2);
 
 // death
 [ai_queue3,npc_950](int $arg)

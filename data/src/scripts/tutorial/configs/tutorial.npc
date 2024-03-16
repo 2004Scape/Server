@@ -335,7 +335,6 @@ model8=model_320_idk
 head1=model_53_idk_head
 wanderrange=0
 moverestrict=nomove
-category=bank_teller
 
 [npc_954]
 vislevel=hide
