@@ -74,8 +74,24 @@ switch_int(%murder_progress) {
             case 4:
                 ~chatplayer(sad, "I am so confused about who did it...");
                 ~chatplayer(confused, "Think you could give me any hints?");
-                ~chatnpc(neutral, "Well, I don't know if it's related, but I heard from that Poison Salesman in town that he sold some poison to one of the Sinclair family");
-                ~chatnpc(neutral, "the other day. I don't think he has any stock left now though...");
-                
+                switch_int(random(5)) {
+                    case 0:
+                        ~chatnpc(neutral, "Well, I don't know if it's related, but I heard from that Poison Salesman in town that he sold some poison to one of the Sinclair family");
+                        ~chatnpc(neutral, "the other day. I don't think he has any stock left now though...");
+                    case 1:
+                        ~chatnpc(neutral, "Well, I don't know how much help this is, but I heard that their guard dog will bark loudly at anyone it doesn't recognise. Maybe you should find out if anyone heard anything suspicious?");
+                    case 2:
+                        ~chatnpc(neutral, "My father used to be in the guard. He always wrote himself notes on a piece of paper so he could keep track of information easily.");
+                        ~chatnpc(neutral, "Maybe you should try that? Don't forget to thank me if I help you solve the case!");
+                    case 3:
+                        ~chatnpc(neutral, "Well, this might be of some help to you. My father was in the guards when he was younger,");
+                        ~chatnpc(neutral, "and he always said that there isn't a crime that can't be solved through careful examination of the crime scene and all surrounding areas.");
+                    case 4:
+                        ~chatnpc(neutral, "I don't know how much help this is to you but my dad was in the guard once, and he told me that the marks on your hands are totally unique. He called them 'finger prints'.");
+                        ~chatnpc(neutral, "He said you can find them easily on any shiny metallic surface by using a fine powder to mark out where the marks are, and then using some sticky paper to lift the print from the object.");
+                        ~chatnpc(neutral, "I bet if you could find a way to get everyone's 'finger prints' you could solve the crime pretty easily!");
+                }
         }
+    // RSC, dialogue was changed w/king's ransom 
+    case ^murder_complete: ~chatnpc(quiz, "I heard you solved the murder.|Was I of any help to you at all?"); 
 }

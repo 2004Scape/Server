@@ -10,6 +10,7 @@ switch_int(%murder_progress) {
                 ~chatplayer(happy, "Sure, I'll help!");
                 %murder_progress = ^murder_started;
                 %murder_murderer_id = ~random_range(1,6);
+                ~send_quest_progress(questlist:murder, %murder_progress, ^murder_complete);
                 ~chatnpc(happy, "Thanks a lot!");
                 @murder_guard_help;
             case 2:
@@ -17,6 +18,10 @@ switch_int(%murder_progress) {
                 ~chatnpc(neutral, "Get lost then, this is private property! ...Unless you'd like to be taken in for questioning yourself?");
         }
     case ^murder_started: @multi3("What should I be doing to help again?", murder_guard_help, "How did Lord Sinclair die?", murder_guard_how, "I know who did it!", murder_guard_who);
+    case ^murder_complete:
+        ~chatnpc(happy, "Excellent work on solving the murder! All of the guards I know are very impressed, and don't worry, we have the murderer under guard until they can be taken to trial.");
+        ~chatplayer(confused, "Is there anything else I can do?");
+        ~chatnpc(happy, "No, your work here is done.");
 }
 
 [label,murder_guard_help]
@@ -30,11 +35,19 @@ switch_int(%murder_progress) {
 
 [label,murder_guard_who]
 ~chatplayer(happy, "I know who did it!");
-if(testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+if(%murder_poisonproof_progress = ^poisonproof_searched_loc & testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+    @murder_guard_conclusive_proof;
+} else if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
+    @multi2("I have proof that it wasn't any of the servants.", murder_guard_threadproof, "I have proof one of the family lied about the poison.", murder_guard_poisonproof);
+} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
+    @multi2("I have proof one of the family lied about the poison.", murder_guard_poisonproof, "I have the finger prints of the culprit.", murder_guard_printproof);
+} else if(testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
     @multi2("I have proof that it wasn't any of the servants.", murder_guard_threadproof, "I have the finger prints of the culprit.", murder_guard_printproof);
-}else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
     @murder_guard_printproof;
-}else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+} else if(%murder_poisonproof_progress = ^poisonproof_searched_loc) {
+    @murder_guard_poisonproof;
+} else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
     @murder_guard_threadproof;
 }
 @murder_guard_quick;
@@ -105,3 +118,51 @@ p_delay(3);
 ~mesbox("You show the guard the finger prints evidence.");
 ~chatnpc(neutral, "... I'm impressed. How on earth did you think of something like that? I've never heard of such a technique for finding criminals before!");
 ~chatnpc(neutral, "This will come in very handy in the future but we can't arrest someone on just this. I'm afraid you'll still need to find more evidence before we can close this case completely.");
+
+[label,murder_guard_poisonproof]
+~chatplayer(confused, "I have proof that <~murder_get_murderer_name> is lying about the poison.");
+~chatnpc(neutral, "Oh really? How did you get that?");
+switch_int(%murder_murderer_id) {
+    case 5: ~mesbox("You tell the guard about the mosquitos at the <~murder_get_poisoned_loc_name>."); // RSC
+    case 6: ~mesbox("You tell the guard about the tarnished <~murder_get_poisoned_loc_name>."); // RSC again
+    case default: ~mesbox("You tell the guard about the <~murder_get_poisoned_loc_name>.");
+}
+~chatnpc(neutral, "Hmm. That's some good detective work there. We need more evidence before we can close the case though. Keep up the good work!");
+
+[label,murder_guard_conclusive_proof]
+~chatplayer(happy, "I have conclusive proof who the killer was.");
+~chatnpc(happy, "You do? That's excellent work. Let's hear it then.");
+~chatplayer(neutral, "I don't think it was an intruder, and I don't think Lord Sinclair was killed by being stabbed.");
+~chatnpc(neutral, "Hmmm? Really? Why not?");
+~chatplayer(happy, "Nobody heard the guard dog barking, which it would have if it had been an intruder who was responsible.");
+~chatplayer(neutral, "Nobody heard any signs of a struggle either. I think the knife was there to throw suspicion away from the real culprit.");
+~chatnpc(neutral, "Yes, that makes sense. But who did do it then?");
+~mesbox("You prove to the guard the thread matches <~murder_get_murderer_name>'s clothes.");
+~chatnpc(neutral, "Yes, I'd have to agree with that... but we need more evidence!");
+~mesbox("You prove to the guard <~murder_get_murderer_name> did not use poison on the <~murder_get_poisoned_loc_name>.");
+~chatnpc(neutral, "Excellent work - have you considered a career as a detective? But I'm afraid it's still not quite enough...");
+~mesbox("You match <~murder_get_murderer_name>'s finger prints with those on the dagger found in the body of Lord Sinclair.");
+~chatnpc(happy, "Yes. There's no doubt about it. It must have been <~murder_get_murderer_name> who killed <~murder_get_murderer_pronoun> father. All of the guards must congratulate you on your excellent work in helping us to solve this case.");
+~chatnpc(neutral, "We don't have many murders here in RuneScape and I'm afraid we wouldn't have been able to solve it by ourselves. We will hold him here under house arrest until such time as we bring him to trial.");
+~chatnpc(neutral, "You have our gratitude, and I'm sure the rest of the family's as well, in helping to apprehend the murderer. I'll just take the evidence from you now.");
+~mesbox("You hand over all the evidence.");
+~murder_clear_evidence;
+~chatnpc(happy, "Please accept this reward from the family!");
+// this is correct, doesnt queue reward until here, quest isnt marked as complete when clearing evidence (not like it matters since theres no obj checks)
+queue(murder_quest_complete, 0);
+
+[proc,murder_get_poisoned_loc_name](string)
+switch_int(%murder_murderer_id) {
+    case 2: return ("beehive");
+    case 3: return ("drain");
+    case 4: return ("spiders nest");
+    case 5: return ("fountain");
+    case 6: return ("Sinclair Crest");
+    case default: return ("compost heap");
+}
+
+[proc,murder_get_murderer_pronoun](string)
+switch_int(%murder_murderer_id) {
+    case 2,4,6: return ("him");
+    case default: return ("her");
+}

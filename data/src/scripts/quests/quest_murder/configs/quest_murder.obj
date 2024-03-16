@@ -17,6 +17,8 @@ womanwear=model_445_obj_wear,0
 weight=10g
 category=murder_proofobj
 param=product,murder_flournecklace
+param=game_message,You sprinkle the flour on Anna's necklace.
+param=game_message2,The necklace is now coated with a thin layer of flour.
 
 [murder_flournecklace]
 name=Silver necklace
@@ -38,6 +40,8 @@ weight=10g
 category=murder_flourobj
 param=product,annas_print
 param=changesto,murder_necklace
+param=game_message,You use the flypaper on the flour covered necklace.
+param=game_message2,You have a clean impression of Anna's finger prints.
 
 [murder_cup]
 name=Silver cup
@@ -52,6 +56,8 @@ model=model_2347_obj
 weight=70g
 category=murder_proofobj
 param=product,murder_flourcup
+param=game_message,You sprinkle the flour on Bob's cup.
+param=game_message2,The cup is now coated with a thin layer of flour.
 
 [murder_flourcup]
 name=Silver cup
@@ -69,6 +75,8 @@ weight=70g
 category=murder_flourobj
 param=product,bobs_print
 param=changesto,murder_cup
+param=game_message,You use the flypaper on the flour covered cup.
+param=game_message2,You have a clean impression of Bob's finger prints.
 
 [murder_bottle]
 name=Silver bottle
@@ -84,6 +92,8 @@ recol1d=82
 weight=90g
 category=murder_proofobj
 param=product,murder_flourbottle
+param=game_message,You sprinkle the flour on Carol's bottle.
+param=game_message2,The bottle is now coated with a thin layer of flour.
 
 [murder_flourbottle]
 name=Silver bottle
@@ -99,6 +109,8 @@ weight=90g
 category=murder_flourobj
 param=product,carols_print
 param=changesto,murder_bottle
+param=game_message,You use the flypaper on the flour covered bottle.
+param=game_message2,You have a clean impression of Carol's finger prints.
 
 [murder_book]
 name=Silver book
@@ -113,6 +125,8 @@ recol1d=82
 weight=8oz
 category=murder_proofobj
 param=product,murder_flourbook
+param=game_message,You sprinkle the flour on David's book.
+param=game_message2,The Book is now coated with a thin layer of flour.
 
 [murder_flourbook]
 name=Silver book
@@ -128,6 +142,8 @@ weight=8oz
 category=murder_flourobj
 param=product,davids_print
 param=changesto,murder_book
+param=game_message,You use the flypaper on the flour covered book.
+param=game_message2,You have a clean impression of David's finger prints.
 
 [murder_needle]
 name=Silver needle
@@ -144,6 +160,8 @@ recol1d=82
 weight=1g
 category=murder_proofobj
 param=product,murder_flourneedle
+param=game_message,You sprinkle the flour on Elizabeth's needle.
+param=game_message2,The Needle is now coated with a thin layer of flour.
 
 [murder_flourneedle]
 name=Silver needle
@@ -161,6 +179,8 @@ weight=1g
 category=murder_flourobj
 param=product,elizabeths_print
 param=changesto,murder_needle
+param=game_message,You use the flypaper on the flour covered needle.
+param=game_message2,You have a clean impression of Elizabeth's finger prints.
 
 [murder_pot]
 name=Silver pot
@@ -177,6 +197,8 @@ recol1d=82
 weight=2lb
 category=murder_proofobj
 param=product,murder_flourpot
+param=game_message,You sprinkle the flour on Frank's pot.
+param=game_message2,The Pot is now coated with a thin layer of flour.
 
 [murder_flourpot]
 name=Silver pot
@@ -194,6 +216,8 @@ weight=2lb
 category=murder_flourobj
 param=product,franks_print
 param=changesto,murder_pot
+param=game_message,You use the flypaper on the flour covered pot.
+param=game_message2,You have a clean impression of Frank's finger prints.
 
 [murder_red_thread]
 name=Criminals' thread
@@ -277,6 +301,8 @@ recol1d=35344
 weight=1lb
 category=murder_proofobj
 param=product,murder_flourdagger
+param=game_message,You sprinkle a small amount of flour on the murderweapon.
+param=game_message2,The murderweapon is now coated with a thin layer of flour.
 
 [murder_flourdagger]
 name=Criminals' dagger
@@ -293,6 +319,8 @@ weight=1lb
 category=murder_flourobj
 param=product,unknown_print
 param=changesto,criminals_dagger
+param=game_message,You use the flypaper on the floury dagger.
+param=game_message2,You have a clean impression of the murderer's finger prints.
 
 [killers_print]
 name=Killers' print

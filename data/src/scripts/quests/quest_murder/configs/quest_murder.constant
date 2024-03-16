@@ -1,8 +1,9 @@
 ^murder_not_started = 0
 ^murder_started = 1
-^murder_complete = 2
 
 ^poisonproof_spoken_salesman = 1
+^poisonproof_spoken_murderer = 2
+^poisonproof_searched_loc = 3
 
 // flags for various pieces of evidence found in the case
 ^murder_found_thread = 1

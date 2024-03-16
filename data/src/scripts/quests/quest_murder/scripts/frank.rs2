@@ -6,8 +6,12 @@ switch_int(%murder_progress) {
         ~chatnpc(neutral, "Good for you. Now what do you want?");
         ~chatnpc(sad, "...And can you spare me any money? I'm a little short...");
         def_int $option;
-        if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+        if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3, "Why'd you buy poison the other day?", 4);
+        } else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
             $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3);
+        } else if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Why'd you buy poison the other day?", 4);
         } else {
             $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
         }
@@ -28,5 +32,13 @@ switch_int(%murder_progress) {
                     return;
                 }
                 ~chatnpc(confused, "It looks like thread to me, but I'm not exactly an expert. Is it worth something? Can I have it? Actually, can you spare me a few gold?");
+            case 4:
+                ~chatplayer(neutral, "Why'd you buy poison the other day?");
+                ~chatnpc(neutral, "Would you like to buy some? I'm kind of strapped for cash right now, I'll sell it to you cheap, it's hardly been used at all.");
+                ~chatnpc(neutral, "I just used a bit to clean that family crest outside up a bit. Do you think I can get much money For the family crest, actually? It's cleaned up a bit now.");
+                if(%murder_murderer_id = ^murderer_frank & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                    %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
+                }
         }
+    case ^murder_complete: ~chatnpc(neutral, "Apparently you aren't as stupid as you look.");
 }

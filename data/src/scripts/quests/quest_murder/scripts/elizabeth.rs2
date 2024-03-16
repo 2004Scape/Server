@@ -5,8 +5,12 @@ switch_int(%murder_progress) {
         ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
         ~chatnpc(neutral, "What's so important you need to bother me with then?");
         def_int $option;
-        if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+        if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3, "Why'd you buy poison the other day?", 4);
+        } else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
             $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3);
+        } else if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Why'd you buy poison the other day?", 4);
         } else {
             $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
         }
@@ -29,5 +33,13 @@ switch_int(%murder_progress) {
                     return;
                 }
                 ~chatnpc(confused, "It's some thread. You're not very good at this whole investigation thing are you?");
+            case 4:
+                ~chatplayer(neutral, "Why'd you buy poison the other day?");
+                ~chatnpc(confused, "I don't see what on earth it has to do with you, but the drain outside was");
+                ~chatnpc(angry, "blocked, and as nobody else here has the intelligence to even unblock a simple drain I felt I had to do it myself.");
+                if(%murder_murderer_id = ^murderer_carol & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                    %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
+                }
         }
+    case ^murder_complete: ~chatnpc(neutral, "Apparently you aren't as stupid as you look.");
 }

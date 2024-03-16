@@ -27,8 +27,8 @@ switch_int(%murder_progress) {
             case 2:
                 ~chatplayer(neutral, "Who did you sell Poison to at the house?");
                 ~chatnpc(happy, "Well, Peter Potter's Patented Multi Purpose Poison is a product of such obvious quality that I am glad to say I managed to sell a bottle to each of the Sinclairs!");
-                %murder_poisonproof_progress = ^poisonproof_spoken_salesman;
                 ~chatnpc(happy, "Anna, Bob, Carol, David, Elizabeth and Frank all bought a bottle! In fact they bought the last of my supplies!");
+                %murder_poisonproof_progress = ^poisonproof_spoken_salesman;
                 ~chatnpc(happy, "Maybe I can take your name and address and I will personally come and visit you when stocks return?");
                 ~chatplayer(confused, "Uh... no, it's ok.");
             case 3:
@@ -45,4 +45,5 @@ switch_int(%murder_progress) {
                 ~chatplayer(confused, "Perhaps someone else put it in his wine?");
                 ~chatnpc(confused, "Yes... I suppose that could have happened...");
         }
+    case ^murder_complete: ~chatnpc(neutral, "I hear you're pretty smart to have solved the Sinclair Murder!");
 }

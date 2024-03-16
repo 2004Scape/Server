@@ -6,7 +6,11 @@ switch_int(%murder_progress) {
         ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
         ~chatnpc(neutral, "How can I help?");
         def_int $option;
-        $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3);
+        if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3, "Do you know why so much poison was bought recently?", 4);
+        } else {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3);
+        }
         switch_int($option) {
             case 1:
                 ~chatplayer(neutral, "Who do you think is responsible?");
@@ -20,5 +24,12 @@ switch_int(%murder_progress) {
                 ~chatnpc(confused, "Hmmm..... No, I didn't, but I sleep very soundly at night.");
                 ~chatplayer(confused, "So you didn't hear any sounds of a struggle or any barking from the guard dog next to his study window?");
                 ~chatnpc(confused, "Now you mention it, no. It is odd I didn't hear anything like that. But I do sleep very soundly as I said and wouldn't necessarily have heard it if there was any such noise.");
+            case 4:
+                ~chatplayer(neutral, "Do you know why so much poison was bought recently?");
+                ~chatnpc(neutral, "Well, I do know Frank bought some poison recently to clean the family crest that's outside.");
+                // end space intentional
+                ~chatnpc(neutral, "It's very old and rusty, and I couldn't clean it myself, so he said he would buy some cleaner and clean it himself. He probably just got some from that Poison Salesman who ");
+                ~chatnpc(neutral, "You'd really have to ask him though.");
         }
+    case ^murder_complete: ~chatnpc(happy, "Thank you for all your help in solving the murder.");
 }
