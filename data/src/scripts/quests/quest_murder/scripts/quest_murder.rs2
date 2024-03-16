@@ -26,7 +26,7 @@ if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
         %murder_poisonproof_progress = ^poisonproof_searched_loc;
         ~mesbox("The beehive buzzes with activity.|These bees definitely don't seem poisoned at all.");
     } else {
-        ~mesbox("The hive is empty. There are a few dead bees and a faint smell of poison.");
+        ~mesbox("The hive is empty. There are a few dead bees|and a faint smell of poison.");
     }
     return;
 }
@@ -58,7 +58,7 @@ if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
     if(%murder_murderer_id = ^murderer_david) {
         // https://youtu.be/P1IDGCA2f9o?si=6aKZAUVbGoVmUF8t&t=327
         %murder_poisonproof_progress = ^poisonproof_searched_loc;
-        ~mesbox("There is a spiders' nest here.|You estimate there must be at least a few hundred spiders ready to hatch.|It's certainly clear nobody's used poison here.");
+        ~mesbox("There is a spiders' nest here. You estimate there must be at least a few hundred spiders ready to hatch. It's certainly clear nobody's used poison here.");
     } else {
         ~mesbox("A faint smell of poison and a few dead spiders|is all that remains of the spiders nest.");
     }
