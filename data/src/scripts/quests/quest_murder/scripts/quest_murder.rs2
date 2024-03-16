@@ -193,6 +193,10 @@ mes("There's still plenty of flour left.");
 [oploc2,loc_2662] @murder_flour_barrel;
 
 [oplocu,loc_2662]
+if(last_useitem = pungent_pot) {
+    ~mesbox("You probably shouldn't use evidence from a crime|scene to keep flour in...");
+    return;
+}
 if(last_useitem = pot_empty) {
     @murder_flour_barrel;
 }
