@@ -134,47 +134,53 @@ if (%magearena_progress < ^mage_arena_complete & %magearena_progress > ^mage_are
 }
 return (false);
 
-[proc,spawn_mage_arena_boss](int $stage, coord $coord)
-// looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
-// https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23
-spotanim_map(spotanim_188, $coord, 124, 0);
-sound_synth(smokepuff, 0, 0);
-p_delay(0);
-def_npc $boss = enum(int, npc, mage_arena_boss_stages, $stage);
-npc_add($coord, $boss, 1000);
-npc_anim(npc_param(spawn_anim), 0);
-
-
-[queue,teleport_to_mage_arena](int $stage)
-mes("player anim");
-anim(human_castteleport, 60);
-spotanim_pl(castteleport, 92, 60);
-sound_synth(teleport_all, 0, 0);
-p_delay(3);
-p_teleport(^mage_arena_start_coord);
-mes("Teleport");
-anim(null, 0);
-p_delay(3);
-mes("Spawn");
-~spawn_mage_arena_boss($stage, ~coord_lineofwalk_radius2(coord, 1));
-npc_setmode(applayer2);
-p_delay(1);
-mes("Say");
-npc_say("You must prove yourself... now!");
-
-
 [queue,finish_mage_arena]
 anim(human_castteleport, 60);
 spotanim_pl(castteleport, 92, 60);
 sound_synth(teleport_all, 0, 0);
 p_delay(3);
 p_teleport(~coord_lineofwalk_radius(^mage_arena_finish_coord, 2));
-if (npc_finduid(~npc_within_distance(coord, kolodion, 2)) = true) {
+anim(null, 0);
+if (npc_finduid(~npc_within_distance(coord, kolodion, 5)) = true) {
     ~chatnpc(happy, "Well done, young adventurer; you truly are a worthy|battle mage.");
     @kolodion_what_now;
     return;
 }
 
 
+[proc,mage_arena_exactmove](coord $spawn_coord)
+def_int $x = calc(coordx($spawn_coord) - coordx(^mage_arena_start_coord));
+def_int $z = calc(coordz($spawn_coord) - coordz(^mage_arena_start_coord));
+anim(seq_846, 15);
+if (abs($x) > abs($z)) {
+    if ($x > 0) {
+        // check east, move west
+        p_exactmove(coord, movecoord(coord, -2, 0, 0), 15, 35, ^exact_east);
+    } else {
+        // check west, move east
+        p_exactmove(coord, movecoord(coord, 2, 0, 0), 15, 35, ^exact_west);
+    }
+} else {
+    if ($z > 0) {
+        // check north, move south
+        p_exactmove(coord, movecoord(coord, 0, 0, -2), 15, 35, ^exact_north);
+    } else {
+        // check south, move north
+        p_exactmove(coord, movecoord(coord, 0, 0, 2), 15, 35, ^exact_south);
+    }
+}
+facesquare($spawn_coord);
+p_delay(0);
+anim(null, 0);
+
+[proc,spawn_mage_arena_boss](coord $coord, npc $boss, int $action_delay)
+npc_add($coord, $boss, 1000);
+npc_anim(npc_param(spawn_anim), 0);
+npc_setmode(null);
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, $action_delay);
+    %npc_attacking_uid = %npc_aggressive_player;
+}
+
 [debugproc,ma](int $stage)
-queue(teleport_to_mage_arena, 0, $stage);
+// queue(teleport_to_mage_arena, 0, $stage);

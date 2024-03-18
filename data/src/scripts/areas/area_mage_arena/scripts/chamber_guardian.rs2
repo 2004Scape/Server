@@ -7,7 +7,7 @@ if (%magearena_progress <= ^mage_arena_complete) {
     ~chatnpc(shifty, "Go chant at the statue of the god you most wish to|represent in this world, you will be rewarded.");
     ~chatnpc(shifty, "Once you are done, come back to me. I shall supply|you with a mage staff ready for battle.");
     return;
-} else if (%magearena_progress > ^mage_arena_prayed_at_statue) {
+} else if (%magearena_progress > ^mage_arena_prayed_at_statue & %magearena_progress < ^mage_arena_staff_given) {
     // after praying at the statue:
     ~chatplayer(neutral, "Hi.");
     ~chatnpc(quiz, "Hello adventurer, have you made your choice?");

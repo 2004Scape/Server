@@ -91,7 +91,6 @@ if (~can_enter_mage_arena = false) {
 ~chatplayer(happy, "You don't need to worry about that.");
 ~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
 %magearena_progress = 1;
-mes("Dialogue over");
 
 @kolodion_teleport;
 
@@ -103,16 +102,8 @@ if (~can_enter_mage_arena = false) {
     return;
 }
 // https://youtu.be/gxLEK64MAU8?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=16
-mes("Dialogue over");
 
 @kolodion_teleport;
-
-[label,kolodion_teleport]
-if_close;
-def_int $delay = sub(npc_range(coord), 1);
-queue(teleport_to_mage_arena, $delay, %magearena_progress);
-npc_setmode(opplayer2);
-p_delay($delay);
 
 [label,kolodion_what_now]
 ~chatplayer(quiz, "What now?");
@@ -120,9 +111,81 @@ p_delay($delay);
 ~chatplayer(happy, "Thanks, Kolodion.");
 ~chatnpc(happy, "That's what I'm here for.");
 
-[ai_opplayer2,kolodion]
-mes("Npc anim");
-npc_anim(seq_811, 30);
+[label,kolodion_teleport]
+// for some reason you can move for 1 tick during this
 if_close;
+def_int $delay = max(sub(npc_range(coord), 1), 0);
+npc_queue(4, 30, $delay);
+npc_setmode(opplayer2);
+def_coord $npc_coord = npc_coord;
+p_delay($delay);
+anim(human_castteleport, 60);
+spotanim_pl(castteleport, 92, 60);
+sound_synth(teleport_all, 0, 0);
+// spawn coord is relative between the player and kolodion at the safe area
+def_coord $spawn_coord = movecoord(^mage_arena_start_coord, sub(coordx($npc_coord), coordx(coord)), 0, sub(coordz($npc_coord), coordz(coord)));
+p_delay(3);
+p_teleport(^mage_arena_start_coord);
+anim(null, 0);
+def_npc $boss = enum(int, npc, mage_arena_boss_stages, %magearena_progress);
+switch_int (%magearena_progress) {
+    case ^mage_arena_started:
+        // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
+        // https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23
+        p_delay(3);
+        spotanim_map(spotanim_188, $spawn_coord, 124, 0);
+        sound_synth(smokepuff, 0, 0);
+        p_delay(0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
+        p_delay(1);
+        npc_say("You must prove yourself... now!");
+        npc_setmode(applayer2);
+    case ^mage_arena_ogre:
+        p_delay(1);
+        sound_synth(smokepuff, 0, 0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
+        spotanim_npc(spotanim_188, 124, 34);
+        p_delay(1); // not a mistake
+        npc_setmode(applayer2);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+    case ^mage_arena_arachnid:
+        // exact move
+        p_delay(2);
+        ~mage_arena_exactmove(movecoord($spawn_coord, 1, 0, 1));
+        sound_synth(teleport_reverse, 0, 0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 4);
+        spotanim_npc(spotanim_190, 16, 35);
+        p_delay(0);
+        npc_setmode(applayer2);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+    case ^mage_arena_ethereal:
+        p_delay(2);
+        spotanim_npc(spotanim_188, 124, 10);
+        p_delay(0);
+        sound_synth(teleport_reverse, 0, 0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 6);
+        p_delay(0); // not a mistake
+        npc_setmode(applayer2);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+    case ^mage_arena_demon:
+        p_delay(1);
+        $spawn_coord = movecoord($spawn_coord, 1, 0, 1);
+        ~mage_arena_exactmove($spawn_coord);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
+        spotanim_npc(spotanim_191, 16, 35);
+        sound_synth(teleport_reverse, 0, 0);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+        npc_setmode(applayer2);
+}
 
+// demon is middle tile
+
+[ai_opplayer2,kolodion]
 npc_setmode(playerfaceclose);
+
+[ai_queue4,kolodion](int $anim_delay)
+npc_anim(seq_811, $anim_delay);

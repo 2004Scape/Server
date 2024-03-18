@@ -5,7 +5,7 @@
 [label,pray_at_statue](string $name, namedobj $cape, int $stage)
 ~forcewalk(movecoord(loc_coord, 0, 0, -2));
 facesquare(loc_coord);
-if (%magearena_progress < ^mage_arena_prayed_at_statue) { // first time
+if (%magearena_progress <= ^mage_arena_prayed_at_statue) { // first time
     %magearena_progress = $stage;
     ~mesbox("You kneel and begin to chant to <$name>...");
     if_close;
