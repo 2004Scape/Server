@@ -1,0 +1,97 @@
+[opnpc1,gossip]
+switch_int(%murder_progress) { 
+    case ^murder_not_started:
+        ~chatnpc(neutral, "There's some kind of commotion up at the Sinclair place I hear. Not surprising all things considered.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm investigating the murder up at the Sinclair place.");
+        ~chatnpc(neutral, "Murder is it? Well, I'm not really surprised...");
+        switch_int(~p_choice4("What can you tell me about the Sinclairs?", 1, "Who do you think was responsible?", 2, "I think the butler did it.", 3, "I am so confused about who did it.", 4)) {
+            case 1:
+                ~chatplayer(neutral, "What can you tell me about the Sinclairs?");
+                ~chatnpc(neutral, "Well, what do you want to know?");
+                switch_int(~p_choice4("Tell me about Lord Sinclair.", 1, "Who do you think was responsible?", 2, "What can you tell me about his sons?", 3, "I am so confused about who did it.", 4)) {
+                    case 1:
+                        ~chatplayer(neutral, "Tell me about Lord Sinclair.");
+                        ~chatnpc(neutral, "Old Lord Sinclair was a great man with a lot of respect in these parts. More than his worthless children have anyway.");
+                        ~chatnpc(neutral, "His children? They have something to gain by his death?");
+                        ~chatnpc(neutral, "Yes. You could say that. Not that I'm one to gossip.");
+                    case 2:
+                        ~chatplayer(neutral, "Why do the Sinclairs live so far from town?");
+                        ~chatnpc(neutral, "Well, they used to live in the big castle, but old Lord Sinclair gave it up so that those strange knights could live there instead. So the king built him a new house to the North.");
+                        ~chatnpc(neutral, "It's more cramped than his old place, but he seemed to like it. His children were furious at him for doing it though!");
+                    case 3:
+                        ~chatplayer(neutral, "What can you tell me about his sons?");
+                        ~chatnpc(neutral, "His sons eh? They all have their own skeletons in their cupboards. You'll have to be more specific. Who are you interested in exactly?");
+                        switch_int(~p_choice3("Tell me about Bob.", 1, "Tell me about David.", 2, "Tell me about Frank.", 3)) {
+                            case 1:
+                                ~chatplayer(neutral, "Tell me about Bob.");
+                                ~chatnpc(neutral, "Bob is an odd character indeed... I'm not one to gossip, but I heard Bob is addicted to Tea. He can't make");
+                                ~chatnpc(neutral, "it through the day without having at least 20 cups!");
+                                ~chatnpc(neutral, "You might not think that's such a big thing, but he has spent thousands of gold to feed his habit!");
+                                ~chatnpc(neutral, "At one point he stole a lot of silverware from the kitchen and pawned it just so he could afford to buy his daily tea allowance.");
+                                ~chatnpc(shock, "If his father ever found out, he would be in so much trouble... he might even get disowned!");
+                            case 2:
+                                ~chatplayer(neutral, "Tell me about David.");
+                                ~chatnpc(neutral, "David... oh David... not many people know this, but David really has an anger problem. He's always screaming and shouting");
+                                ~chatnpc(neutral, "at the household servants when he's angry, and they live in a state of fear, always walking on eggshells around him, but none of them have the courage");
+                                ~chatnpc(neutral, "to talk to his father about his behaviour. If they did, Lord Sinclair would almost certainly");
+                                ~chatnpc(neutral, "kick him out of the house, as some of the servants have been there longer than he has, and he definitely has no right to treat them like he does... but I'm not one to gossip about people.");
+                            case 3:
+                                ~chatplayer(neutral, "Tell me about Frank.");
+                                ~chatnpc(neutral, "I'm not one to talk ill of people behind their back, but Frank is a real piece of work. He is an absolutely terrible gambler... he can't pass 2 dogs in the street without putting a bet on which one will bark first!");
+                                ~chatnpc(neutral, "He has already squandered all of his allowance, and I heard he had stolen a number of paintings of his fathers to sell to try and cover his debts, but he still owes a lot of");
+                                ~chatnpc(neutral, "people a lot of money. If his father ever found out, he would stop his income, and then he would be in serious trouble!");
+                        }     
+                    case 4:
+                        ~chatplayer(neutral, "What can you tell me about his daughters?");
+                        ~chatnpc(neutral, "His daughters eh? They're all nasty pieces of work. which of them specifically did you want to know about?");
+                        switch_int(~p_choice3("Tell me about Anna.", 1, "Tell me about Carol.", 2, "Tell me about Elizabeth.", 3)) {
+                            case 1:
+                                ~chatplayer(neutral, "Tell me about Anna.");
+                                ~chatnpc(neutral, "Anna... ah yes... Anna has 2 great loves:");
+                                ~chatnpc(neutral, "Sewing and gardening. But one thing she has kept secret is that she once had an affair with Stanford the gardener, and tried to get him fired when they broke up,");
+                                ~chatnpc(neutral, "by killing all of the flowers in the garden. If her father ever found out she had done that he would be so furious he would probably disown her.");
+                            case 2:
+                                ~chatplayer(neutral, "Tell me about Carol.");
+                                ~chatnpc(neutral, "Oh Carol... she is such a fool. You didn't hear this from me, but I heard a while ago she was conned out of a lot of money by a travelling salesman who sold her a box full");
+                                ~chatnpc(neutral, "of beans by telling her they were magic. But they weren't. She sold some rare books from the library to cover her debts, but");
+                                ~chatnpc(shock, "her father would be incredibly annoyed if he ever found out - he might even throw her out of the house!");
+                            case 3:
+                                ~chatplayer(neutral, "Tell me about Elizabeth.");
+                                ~chatnpc(neutral, "Elizabeth? Elizabeth has a strange problem... She cannot help herself, but is always stealing small objects - it's pretty sad that she is rich enough to afford to buy things, but would rather steal them instead.");
+                                ~chatnpc(neutral, "Now, I don't want to spread stories, but I heard she even stole a silver needle from her father that had great sentimental value for him.");
+                                ~chatnpc(sad, "He was devastated when it was lost, and cried for a week thinking he had lost it!");
+                                ~chatnpc(shock, "If he ever found out that it was her who had stolen it he would go absolutely mental, maybe even disowning her!");
+                        }    
+                }
+            case 2:
+                ~chatplayer(neutral, "Who do you think was responsible?");
+                ~chatnpc(neutral, "Well, I guess it could have been an intruder, but with that big guard dog of theirs I seriously doubt it. I suspect it was someone closer to home...");
+                ~chatnpc(neutral, "Especially as I heard that the poison salesman in the Seers' village made a big sale to one of the family the other day.");
+            case 3:
+                ~chatplayer(neutral, "I think the butler did it.");
+                ~chatnpc(neutral, "And I think you've been reading too many cheap detective novels. Hobbes is kind of uptight, but his loyalty to old Lord Sinclair is beyond question.");
+            case 4:
+                ~chatplayer(sad, "I am so confused about who did it...");
+                ~chatplayer(confused, "Think you could give me any hints?");
+                switch_int(random(5)) {
+                    case 0:
+                        ~chatnpc(neutral, "Well, I don't know if it's related, but I heard from that Poison Salesman in town that he sold some poison to one of the Sinclair family");
+                        ~chatnpc(neutral, "the other day. I don't think he has any stock left now though...");
+                    case 1:
+                        ~chatnpc(neutral, "Well, I don't know how much help this is, but I heard that their guard dog will bark loudly at anyone it doesn't recognise. Maybe you should find out if anyone heard anything suspicious?");
+                    case 2:
+                        ~chatnpc(neutral, "My father used to be in the guard. He always wrote himself notes on a piece of paper so he could keep track of information easily.");
+                        ~chatnpc(neutral, "Maybe you should try that? Don't forget to thank me if I help you solve the case!");
+                    case 3:
+                        ~chatnpc(neutral, "Well, this might be of some help to you. My father was in the guards when he was younger,");
+                        ~chatnpc(neutral, "and he always said that there isn't a crime that can't be solved through careful examination of the crime scene and all surrounding areas.");
+                    case 4:
+                        ~chatnpc(neutral, "I don't know how much help this is to you but my dad was in the guard once, and he told me that the marks on your hands are totally unique. He called them 'finger prints'.");
+                        ~chatnpc(neutral, "He said you can find them easily on any shiny metallic surface by using a fine powder to mark out where the marks are, and then using some sticky paper to lift the print from the object.");
+                        ~chatnpc(neutral, "I bet if you could find a way to get everyone's 'finger prints' you could solve the crime pretty easily!");
+                }
+        }
+    // RSC, dialogue was changed w/king's ransom 
+    case ^murder_complete: ~chatnpc(quiz, "I heard you solved the murder.|Was I of any help to you at all?"); 
+}

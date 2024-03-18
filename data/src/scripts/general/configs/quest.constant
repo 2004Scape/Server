@@ -34,6 +34,7 @@
 ^waterfall_complete = 10
 ^grail_complete = 10
 ^ball_complete = 7
+^murder_complete = 2
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -66,3 +67,4 @@
 ^waterfall_questpoints = 1
 ^grail_questpoints = 2
 ^ball_questpoints = 4
+^murder_questpoints = 3

@@ -1,0 +1,168 @@
+[opnpc1,murder_guard]
+switch_int(%murder_progress) { 
+    case ^murder_not_started:
+        ~chatplayer(neutral, "What's going on here?");
+        ~chatnpc(sad, "Oh, it's terrible! Lord Sinclair has been murdered and we don't have any clues as to who or why. We're totally baffled!");
+        ~chatnpc(sad, "If you can help us we will be very grateful.");
+        // https://youtu.be/5CH-NF3kY-c?si=Vd4EiX8q6OsKOyZB&t=38
+        switch_int(~p_choice2("Sure, I'll help.", 1, "You should do your own dirty work.", 2)) {
+            case 1:
+                ~chatplayer(happy, "Sure, I'll help!");
+                %murder_progress = ^murder_started;
+                %murder_murderer_id = ~random_range(1,6);
+                ~send_quest_progress(questlist:murder, %murder_progress, ^murder_complete);
+                ~chatnpc(happy, "Thanks a lot!");
+                @murder_guard_help;
+            case 2:
+                ~chatplayer(neutral, "You should do your own dirty work.");
+                ~chatnpc(neutral, "Get lost then, this is private property! ...Unless you'd like to be taken in for questioning yourself?");
+        }
+    case ^murder_started: @multi3("What should I be doing to help again?", murder_guard_help, "How did Lord Sinclair die?", murder_guard_how, "I know who did it!", murder_guard_who);
+    case ^murder_complete:
+        ~chatnpc(happy, "Excellent work on solving the murder! All of the guards I know are very impressed, and don't worry, we have the murderer under guard until they can be taken to trial.");
+        ~chatplayer(confused, "Is there anything else I can do?");
+        ~chatnpc(happy, "No, your work here is done.");
+}
+
+[label,murder_guard_help]
+~chatplayer(neutral, "What should I be doing to help?");
+~chatnpc(neutral, "Look around and investigate who might be responsible. The Sarge said every murder leaves clues to who done it, but frankly we're out of our depth here.");
+
+[label,murder_guard_how]
+~chatplayer(neutral, "How did Lord Sinclair die?");
+~chatnpc(confused, "Well, it's all very mysterious. Mary, the maid, found the body in the study next to his bedroom on the east wing of the ground floor.");
+~chatnpc(neutral, "The door was found locked from the inside, and he seemed to have been stabbed, but there was an odd smell in the room. Frankly, I'm stumped.");
+
+[label,murder_guard_who]
+~chatplayer(happy, "I know who did it!");
+if(%murder_poisonproof_progress = ^poisonproof_searched_loc & testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+    @murder_guard_conclusive_proof;
+} else if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
+    @multi2("I have proof that it wasn't any of the servants.", murder_guard_threadproof, "I have proof one of the family lied about the poison.", murder_guard_poisonproof);
+} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true & %murder_poisonproof_progress = ^poisonproof_searched_loc) {
+    @multi2("I have proof one of the family lied about the poison.", murder_guard_poisonproof, "I have the finger prints of the culprit.", murder_guard_printproof);
+} else if(testbit(%murder_evidence, ^murder_found_thread) = true & testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+    @multi2("I have proof that it wasn't any of the servants.", murder_guard_threadproof, "I have the finger prints of the culprit.", murder_guard_printproof);
+} else if(testbit(%murder_evidence, ^murder_found_fingerprints) = true) {
+    @murder_guard_printproof;
+} else if(%murder_poisonproof_progress = ^poisonproof_searched_loc) {
+    @murder_guard_poisonproof;
+} else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+    @murder_guard_threadproof;
+}
+@murder_guard_quick;
+
+[label,murder_guard_quick]
+~chatnpc(happy, "Really? That was quick work! Who?");
+switch_int(~p_choice4("It was an intruder!", 1, "The butler did it!", 2, "It was one of the servants!", 3, "It was one of his family!", 4)) {
+    case 1:
+        ~chatplayer(neutral, "It was an intruder!");
+        ~chatnpc(neutral, "That's what we were thinking too. That someone broke in to steal something, was discovered by Lord Sinclair, stabbed him and ran.");
+        ~chatnpc(confused, "It's odd that apparently nothing was stolen though... Find out something has been stolen,");
+        ~chatnpc(neutral, "and the case is closed, but the murdered man was a friend of the King, and it's more than my job's worth not to investigate fully.");
+    case 2: @murder_guard_butler;
+    case 3:
+        ~chatplayer(neutral, "It was one of the servants!");
+        ~chatnpc(neutral, "Oh really? Which one?");
+        switch_int(~p_choice2("It was one of the women...", 1, "It was one of the men...", 2)) {
+            case 1:
+                ~chatplayer(neutral, "It was one of the women"); // intentional missing punc
+                ~chatnpc(confused, "Oh really? Which one?");
+                ~p_choice2("It was SO obviously Louisa the cook.", 1, "It MUST have been Mary the maid.", 2);
+                @murder_guard_accuse_suspect;
+            case 2:
+                ~chatplayer(neutral, "It was one of the men...");
+                ~chatnpc(confused, "Oh really? Which one?");
+                @multi4("It can ONLY Be Donovan the handyman.", murder_guard_accuse_suspect, "Pierre the dog handler. No question.", murder_guard_accuse_suspect, "Hobbes the butler. The butler ALWAYS did it.", murder_guard_butler, "You MUST know it was Stanford the gardener...", murder_guard_accuse_suspect);
+        }
+    case 4:
+        ~chatplayer(neutral, "It was one of his family!");
+        ~chatnpc(neutral, "Oh really? Which one?");
+        switch_int(~p_choice2("It was one of the women...", 1, "It was one of the men...", 2)) {
+            case 1:
+                ~chatplayer(neutral, "It was one of the women...");
+                ~chatnpc(confused, "Oh really? Which one?");
+                ~p_choice3("I KNOW it was Anna.", 1, "I am SO sure it was Carol.", 2, "I'll bet you ANYTHING it was Elizabeth.", 3);
+                @murder_guard_accuse_suspect;
+            case 2:
+                ~chatplayer(neutral, "It was one of the men...");
+                ~chatnpc(confused, "Oh really? Which one?");
+                ~p_choice3("I'm certain it was Bob.", 1, "It was David. No doubt about it.", 2, "If it wasn't Frank I'll eat my shoes!", 3);
+                @murder_guard_accuse_suspect;
+        }        
+}
+
+[label,murder_guard_butler]
+~chatplayer(happy, "The butler did it!");
+~chatnpc(confused, "I hope you have proof to that effect. We have to arrest someone for this and it seems to me that only the actual murderer would gain by falsely accusing someone.");
+if_close;
+p_delay(3);
+~chatnpc(neutral, "Although having said that the butler is kind of shifty looking...");
+
+[label,murder_guard_accuse_suspect]
+~mesbox("You tell the guard who you suspect of the crime.");
+~chatnpc(happy, "Great work. Show me the evidence, and we'll take them to the dungeons.");
+~chatnpc(confused, "You DO have evidence of their crime, right?");
+~chatplayer(confused, "Uh....");
+~chatnpc(neutral, "Tch. You wouldn't last a day in the guards with sloppy thinking like that. Come see me when you have some proof of your accusations.");
+
+[label,murder_guard_threadproof]
+~chatplayer(happy, "I have proof that it wasn't any of the servants!");
+~mesbox("You show the guard the thread you found on the window.");
+~chatplayer(neutral, "All the servants dress in black so it couldn't have been one of them.");
+~chatnpc(neutral, "That's some good work there. I guess it wasn't a servant. You still haven't proved who did do it though.");
+
+[label,murder_guard_printproof]
+~chatplayer(happy, "I have the finger prints of the culprit!");
+~chatplayer(neutral, "I have <~murder_get_murderer_name>'s finger prints here. You can see for yourself they match the finger prints on the murder weapon exactly.");
+~mesbox("You show the guard the finger prints evidence.");
+~chatnpc(neutral, "... I'm impressed. How on earth did you think of something like that? I've never heard of such a technique for finding criminals before!");
+~chatnpc(neutral, "This will come in very handy in the future but we can't arrest someone on just this. I'm afraid you'll still need to find more evidence before we can close this case completely.");
+
+[label,murder_guard_poisonproof]
+~chatplayer(confused, "I have proof that <~murder_get_murderer_name> is lying about the poison.");
+~chatnpc(neutral, "Oh really? How did you get that?");
+switch_int(%murder_murderer_id) {
+    case 5: ~mesbox("You tell the guard about the mosquitos at the <~murder_get_poisoned_loc_name>."); // RSC
+    case 6: ~mesbox("You tell the guard about the tarnished <~murder_get_poisoned_loc_name>."); // RSC again
+    case default: ~mesbox("You tell the guard about the <~murder_get_poisoned_loc_name>.");
+}
+~chatnpc(neutral, "Hmm. That's some good detective work there. We need more evidence before we can close the case though. Keep up the good work!");
+
+[label,murder_guard_conclusive_proof]
+~chatplayer(happy, "I have conclusive proof who the killer was.");
+~chatnpc(happy, "You do? That's excellent work. Let's hear it then.");
+~chatplayer(neutral, "I don't think it was an intruder, and I don't think Lord Sinclair was killed by being stabbed.");
+~chatnpc(neutral, "Hmmm? Really? Why not?");
+~chatplayer(happy, "Nobody heard the guard dog barking, which it would have if it had been an intruder who was responsible.");
+~chatplayer(neutral, "Nobody heard any signs of a struggle either. I think the knife was there to throw suspicion away from the real culprit.");
+~chatnpc(neutral, "Yes, that makes sense. But who did do it then?");
+~mesbox("You prove to the guard the thread matches <~murder_get_murderer_name>'s clothes.");
+~chatnpc(neutral, "Yes, I'd have to agree with that... but we need more evidence!");
+~mesbox("You prove to the guard <~murder_get_murderer_name> did not use poison on the <~murder_get_poisoned_loc_name>.");
+~chatnpc(neutral, "Excellent work - have you considered a career as a detective? But I'm afraid it's still not quite enough...");
+~mesbox("You match <~murder_get_murderer_name>'s finger prints with those on the dagger found in the body of Lord Sinclair.");
+~chatnpc(happy, "Yes. There's no doubt about it. It must have been <~murder_get_murderer_name> who killed <~murder_get_murderer_pronoun> father. All of the guards must congratulate you on your excellent work in helping us to solve this case.");
+~chatnpc(neutral, "We don't have many murders here in RuneScape and I'm afraid we wouldn't have been able to solve it by ourselves. We will hold him here under house arrest until such time as we bring him to trial.");
+~chatnpc(neutral, "You have our gratitude, and I'm sure the rest of the family's as well, in helping to apprehend the murderer. I'll just take the evidence from you now.");
+~mesbox("You hand over all the evidence.");
+~murder_clear_evidence;
+~chatnpc(happy, "Please accept this reward from the family!");
+// this is correct, doesnt queue reward until here, quest isnt marked as complete when clearing evidence (not like it matters since theres no obj checks)
+queue(murder_quest_complete, 0);
+
+[proc,murder_get_poisoned_loc_name](string)
+switch_int(%murder_murderer_id) {
+    case 2: return ("beehive");
+    case 3: return ("drain");
+    case 4: return ("spiders nest");
+    case 5: return ("fountain");
+    case 6: return ("Sinclair Crest");
+    case default: return ("compost heap");
+}
+
+[proc,murder_get_murderer_pronoun](string)
+switch_int(%murder_murderer_id) {
+    case 2,4,6: return ("him");
+    case default: return ("her");
+}

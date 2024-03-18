@@ -9495,7 +9495,7 @@ param=slashdefence,39
 param=crushdefence,30
 param=damagetype,^slash_style
 
-[npc_806]
+[donovan]
 vislevel=hide
 name=Donovan the Family Handyman
 desc=He looks very tired...
@@ -9524,7 +9524,7 @@ model9=model_320_idk
 head1=model_52_idk_head
 head2=model_84_idk_head
 
-[npc_807]
+[pierre]
 vislevel=hide
 name=Pierre
 desc=His job doesn't look very fun...
@@ -9551,7 +9551,7 @@ model9=model_322_idk
 head1=model_63_idk_head
 head2=model_68_obj_wear
 
-[npc_808]
+[hobbes]
 vislevel=hide
 name=Hobbes
 desc=He looks kind of stuck up...
@@ -9581,7 +9581,7 @@ model8=model_327_idk
 head1=model_53_idk_head
 head2=model_79_idk_head
 
-[npc_809]
+[louisa]
 vislevel=hide
 name=Louisa
 desc=She looks like she enjoys her job.
@@ -9605,7 +9605,7 @@ model6=model_358_idk
 model7=model_483_npc
 head1=model_103_idk_head
 
-[npc_810]
+[mary]
 vislevel=hide
 name=Mary
 desc=She looks very nervous...
@@ -9630,7 +9630,7 @@ model7=model_483_npc
 model8=model_414_npc
 head1=model_114_idk_head
 
-[npc_811]
+[stanford]
 vislevel=hide
 name=Stanford
 desc=He looks like he spends a lot of time outdoors.
@@ -9659,7 +9659,7 @@ model9=model_283_obj_wear
 head1=model_45_idk_head
 head2=model_83_idk_head
 
-[npc_812]
+[murder_guard]
 vislevel=hide
 name=Guard
 desc=An officer of the Law.
@@ -9685,7 +9685,7 @@ model10=model_323_obj_wear
 head1=model_57_obj_wear
 head2=model_80_idk_head
 
-[npc_813]
+[gossip]
 vislevel=hide
 name=Gossip
 desc=One of those people who love to gossip!
@@ -9708,7 +9708,7 @@ model7=model_181_idk
 head1=model_55_idk_head
 head2=model_81_idk_head
 
-[npc_814]
+[anna]
 vislevel=hide
 name=Anna
 desc=She's dressed in a red top and green trousers.
@@ -9734,7 +9734,7 @@ model6=model_358_idk
 model7=model_417_npc
 head1=model_113_idk_head
 
-[npc_815]
+[murder_bob]
 vislevel=hide
 name=Bob
 desc=He's dressed all in red.
@@ -9759,7 +9759,7 @@ model7=model_185_obj_wear
 head1=model_53_idk_head
 head2=model_80_idk_head
 
-[npc_816]
+[carol]
 vislevel=hide
 name=Carol
 desc=She's wearing a blue top and red trousers.
@@ -9785,7 +9785,7 @@ model6=model_358_idk
 model7=model_414_npc
 head1=model_114_idk_head
 
-[npc_817]
+[david]
 vislevel=hide
 name=David
 desc=He's dressed all in green.
@@ -9809,7 +9809,7 @@ model6=model_267_idk
 model7=model_185_obj_wear
 head1=model_53_idk_head
 
-[npc_818]
+[elizabeth]
 vislevel=hide
 name=Elizabeth
 desc=She's wearing a green top and blue trousers.
@@ -9834,7 +9834,7 @@ model5=model_419_idk
 model6=model_358_idk
 head1=model_113_idk_head
 
-[npc_819]
+[frank]
 vislevel=hide
 name=Frank
 desc=He's dressed all in blue.
@@ -9859,13 +9859,14 @@ model7=model_185_obj_wear
 head1=model_53_idk_head
 head2=model_83_idk_head
 
-[npc_821]
+[sinclair_guard_dog]
 name=Sinclair Guard dog
 desc=Big, noisy, and scary looking!
 walkanim=dog_walk
 readyanim=dog_ready
 vislevel=1
 model1=model_2936_npc
+timer=1
 
 [npc_822]
 vislevel=hide

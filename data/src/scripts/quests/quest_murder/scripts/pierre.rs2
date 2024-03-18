@@ -1,0 +1,35 @@
+[opnpc1,pierre]
+switch_int(%murder_progress) { 
+    case ^murder_not_started:
+        ~chatnpc(neutral, "The guards told me not to talk to anyone.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "How can I help?");
+        def_int $option;
+        if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3, "Do you know why so much poison was bought recently?", 4);
+        } else {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3);
+        }
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(confused, "Honestly? I think it was Carol.");
+                ~chatnpc(neutral, "I saw her in a huge argument with Lord Sinclair in the library the other day. It was something to do with stolen books. She definitely seemed upset enough to have done it afterwards.");
+            case 2:
+                ~chatplayer(confused, "Where were you at the time of the murder?");
+                ~chatnpc(neutral, "I was in town at the Inn. When I got back the house was swarming with guards who told me what had happened. Sorry.");
+            case 3:
+                ~chatplayer(confused, "Did you hear any suspicious noises at all?");
+                ~chatnpc(confused, "Well, like what?");
+                ~chatplayer(neutral, "Any sounds of a struggle with Lord Sinclair?");
+                ~chatnpc(confused, "No, I don't remember hearing anything like that.");
+                ~chatplayer(neutral, "How about the guard dog barking at all?");
+                ~chatnpc(neutral, "I hear him bark all the time. It's one of his favorite things to do. I can't say I did the night of the murder though as I wasn't close enough to hear either way.");
+            case 4:
+                ~chatplayer(neutral, "Do you know why so much poison was bought recently?");
+                ~chatnpc(neutral, "Well, I know David said that he was going to do something about the spiders' nest that's between the two servants' quarters upstairs.");
+                ~chatnpc(neutral, "He made a big deal about it to Mary the Maid, calling her useless and incompetent. I felt quite sorry for her actually. You'd really have to ask him though.");
+        }
+    case ^murder_complete: ~chatnpc(happy, "Thank you for all your help in solving the murder.");
+}

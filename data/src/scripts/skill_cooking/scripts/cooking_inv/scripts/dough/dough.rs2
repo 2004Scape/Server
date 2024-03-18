@@ -1,4 +1,7 @@
 [opheldu,pot_of_flour]
+if(oc_category(last_useitem) = murder_proofobj) {
+    @flour_proofobj(last_useitem);
+}
 switch_obj (last_useitem) {
     case cake_tin : @make_uncooked_cake;
     case swamp_tar: @make_swamp_paste;

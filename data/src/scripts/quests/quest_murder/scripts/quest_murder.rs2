@@ -1,0 +1,538 @@
+[oploc2,loc_2650]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
+    if(%murder_murderer_id = ^murderer_anna) {
+        // https://youtu.be/K8nWqTSdyis?si=6FT4682PaDltSu1Y&t=85
+        %murder_poisonproof_progress = ^poisonproof_searched_loc;
+        ~mesbox("The compost is teeming with maggots.|Somebody should really do something about it.|It's certainly clear nobody's used poison here.");
+    } else {
+        ~mesbox("There is a faint smell of poison behind the smell of the compost.");
+    }
+    return;
+}
+mes("It's a heap of compost.");
+
+[oploc2,loc_2651]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
+    if(%murder_murderer_id = ^murderer_bob) {
+        // https://youtu.be/5CH-NF3kY-c?si=kE4dRh4Dy0PJmxVl&t=342
+        %murder_poisonproof_progress = ^poisonproof_searched_loc;
+        ~mesbox("The beehive buzzes with activity.|These bees definitely don't seem poisoned at all.");
+    } else {
+        ~mesbox("The hive is empty. There are a few dead bees|and a faint smell of poison.");
+    }
+    return;
+}
+mes("It's a very old beehive.");
+
+[oploc2,loc_2652]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
+    if(%murder_murderer_id = ^murderer_carol) {
+        // https://youtu.be/zGE4VgOtfaI?si=SzW4-7G_8e_5fLPp&t=404
+        %murder_poisonproof_progress = ^poisonproof_searched_loc;
+        ~mesbox("The drain is totally blocked.|It really stinks. No, it REALLY smells bad.|It's certainly clear nobody's cleaned it recently.");
+    } else {
+        ~mesbox("The drain seems to have been recently cleaned.|You can still smell the faint aroma of poison.");
+    }
+    return;
+}
+mes("It's the drains from the kitchen.");
+
+[oploc2,loc_2653]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
+    if(%murder_murderer_id = ^murderer_david) {
+        // https://youtu.be/P1IDGCA2f9o?si=6aKZAUVbGoVmUF8t&t=327
+        %murder_poisonproof_progress = ^poisonproof_searched_loc;
+        ~mesbox("There is a spiders' nest here. You estimate there must be at least a few hundred spiders ready to hatch. It's certainly clear nobody's used poison here.");
+    } else {
+        ~mesbox("A faint smell of poison and a few dead spiders|is all that remains of the spiders nest.");
+    }
+    return;
+}
+mes("It looks like a spiders' nest of some kind...");
+
+[oploc2,loc_2654]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
+    if(%murder_murderer_id = ^murderer_elizabeth) {
+        // https://youtu.be/P1IDGCA2f9o?si=6aKZAUVbGoVmUF8t&t=327
+        ~mesbox("The fountain is swarming with mosquitos.|There's a nest of them underneath the fountain.");
+        ~chatplayer(angry, "I hate mosquitos, they're so annoying!");
+        // not 100% sure if the varp is set at this point, the other locs should all be correct
+        %murder_poisonproof_progress = ^poisonproof_searched_loc;
+        ~mesbox("It's certainly clear nobody's used poison here.");
+    } else {
+        ~mesbox("There are a lot of dead mosquitos around|the base of the fountain. A faint smell of|poison is in the air, but the water seems clean.");
+    }
+    return;
+}
+mes("A fountain with large numbers of insects around the base.");
+
+[oploc2,loc_2655]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
+    if(%murder_murderer_id = ^murderer_frank) {
+        // https://youtu.be/P1IDGCA2f9o?si=6aKZAUVbGoVmUF8t&t=327
+        %murder_poisonproof_progress = ^poisonproof_searched_loc;
+        ~mesbox("It looks like the Sinclair family crest|but it is very dirty.|You can barely make it out under all of the grime.|It's certainly clear nobody's cleaned it recently.");
+    } else {
+        ~mesbox("The Sinclair family crest.|It's shiny and freshly polished|and has a slight smell of poison.");
+    }
+    return;
+}
+mes("The Sinclair Family Crest is hung up here.");
+
+[oploc2,loc_2656]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(~obj_gettotal(murder_necklace) > 0) {
+    mes("I already have Anna's Necklace.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom.|You take Anna's Silver Necklace.");
+inv_add(inv, murder_necklace, 1);
+
+[oploc2,loc_2657]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(~obj_gettotal(murder_cup) > 0) {
+    mes("I already have Bob's cup.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom.|You take Bob's silver cup.");
+inv_add(inv, murder_cup, 1);
+
+[oploc2,loc_2658]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(~obj_gettotal(murder_bottle) > 0) {
+    mes("I already have Carol's bottle.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom.|You take Carol's silver bottle.");
+inv_add(inv, murder_bottle, 1);
+
+[oploc2,loc_2659]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(~obj_gettotal(murder_book) > 0) {
+    mes("I already have David's book.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom.|You take David's silver book.");
+inv_add(inv, murder_book, 1);
+
+[oploc2,loc_2660]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(~obj_gettotal(murder_needle) > 0) {
+    mes("I already have Frank's pot.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom.|You take Frank's silver pot.");
+inv_add(inv, murder_needle, 1);
+
+[oploc2,loc_2661]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(~obj_gettotal(murder_pot) > 0) {
+    mes("I already have Elizabeth's needle.");
+    return;
+}
+~mesbox("There's something shiny hidden at the bottom.|You take Elizabeth's silver needle.");
+inv_add(inv, murder_pot, 1);
+
+[label,murder_flour_barrel]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+if(inv_total(inv, pot_empty) = 0) {
+    mes("A barrel full of finely sifted flour.");
+    mes("You need something to put the flour in.");
+    return;
+}
+inv_del(inv, pot_empty, 1);
+inv_add(inv, pot_of_flour, 1);
+mes("You take some flour from the barrel.");
+mes("There's still plenty of flour left.");
+
+[oploc2,loc_2662] @murder_flour_barrel;
+
+[oplocu,loc_2662]
+if(last_useitem = pungent_pot) {
+    ~mesbox("You probably shouldn't use evidence from a crime|scene to keep flour in...");
+    return;
+}
+if(last_useitem = pot_empty) {
+    @murder_flour_barrel;
+}
+// no nothing interesting happens
+
+[oploc2,loc_2663]
+if(%murder_progress ! ^murder_started) {
+    mes("I need the guards' permission to do that.");
+    return;
+}
+~mesbox("There's some flypaper in there.|Should I take it?");
+def_int $choice = ~p_choice2("Yes, it might be useful.", 1, "No, I don't see any need for it.", 2);
+if($choice = 2) {
+    return;
+}
+inv_add(inv, flypaper, 1);
+~mesbox("You take a piece of fly paper.|There is still plenty of fly paper left.");
+
+[oploc1,loc_2664] @murder_inspect_gate;
+[oploc1,loc_2665] @murder_inspect_gate;
+
+[label,murder_inspect_gate]
+if(%murder_progress ! ^murder_started) {
+    // the punc here is intentionally different
+    mes("I need the guard's permission to do that.");
+    return;
+}
+~mesbox("As you approach the gate the Guard Dog starts barking loudly at you. There is no way an intruder could have committed the murder. It must have been someone the dog knew to get past it quietly.");
+
+[oploc2,loc_2666]
+p_arrivedelay;
+// after quest completion, osrs sends the mes "A slightly broken window. Could be easily shattered.", this was probably added with
+// kings ransom since the break op doesn't exist until then (and the mes doesn't exist in RSC)
+if(%murder_progress ! ^murder_started) {
+    mes("You need the guards' permission to do that.");
+    return;
+}
+~mesbox("Some thread seems to have been caught on a loose nail on the window.");
+if(~obj_gettotal(~get_murder_thread) > 0) {
+    ~mesbox("You have already taken the thread.");
+    return;
+}
+if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+    ~mesbox("Lucky for you there's some thread left.|You should be less careless in future.");
+    inv_add(inv, ~get_murder_thread, 1);
+    return;
+}
+%murder_evidence = setbit(%murder_evidence, ^murder_found_thread);
+mes("You take the thread.");
+inv_add(inv, ~get_murder_thread, 1);
+
+[proc,get_murder_thread](namedobj)
+switch_int(%murder_murderer_id) {
+    case ^murderer_anna, ^murderer_david: return (murder_green_thread);
+    case ^murderer_bob, ^murderer_carol: return (murder_red_thread);
+    case ^murderer_elizabeth, ^murderer_frank: return (murder_blue_thread);
+    case default: return (murder_green_thread); // fallback but this should never happen
+}
+
+[opobj3,criminals_dagger]
+// no map_members check
+if(%murder_progress = ^murder_complete) {
+    ~mesbox("I cannot take the flimsy dagger.|The Guards will need it as evidence.");
+    return;
+}
+if(inv_total(inv, criminals_dagger) > 0) {
+    mes("I already have the murder weapon.");
+    return;
+}
+if(inv_total(bank, criminals_dagger) > 0) {
+    mes("I already have the murder weapon in my bank.");
+    return;
+}
+inv_add(inv, criminals_dagger, 1);
+~mesbox("This knife doesn't seem sturdy enough to have killed Lord Sinclair.");
+
+[opobj3,pungent_pot]
+// no map_members check
+if(%murder_progress = ^murder_complete) {
+    ~mesbox("I cannot take the poisoned pot.|The Guards will need it for evidence.");
+    return;
+}
+if(inv_total(inv, pungent_pot) > 0) {
+    mes("I already have the poisoned pot.");
+    return;
+}
+if(inv_total(bank, pungent_pot) > 0) {
+    mes("I already have the poisoned pot in my bank.");
+    return;
+}
+inv_add(inv, pungent_pot, 1);
+~mesbox("It seems like Lord Sinclair was drinking from this before he died.");
+
+[opheldu,_murder_proofobj]
+if(last_item = pot_of_flour) {
+    @flour_proofobj(last_useitem);
+}
+@nothing_interesting_happens;
+
+[opheldu,_murder_flourobj]
+if(last_item = flypaper) {
+    @create_flourprints(last_useitem);
+}
+@nothing_interesting_happens;
+
+[opheldu,unknown_print]
+if(oc_category(last_useitem) = murder_printobj) {
+    @check_murderer_print(last_useitem);
+}
+@nothing_interesting_happens;
+
+[label,flour_proofobj](obj $proof_obj)
+inv_del(inv, $proof_obj, 1);
+inv_add(inv, oc_param($proof_obj, product), 1);
+inv_del(inv, pot_of_flour, 1);
+inv_add(inv, pot_empty, 1);
+mes(oc_param($proof_obj, game_message));
+mes(oc_param($proof_obj, game_message2));
+
+[label,create_flourprints](obj $flour_obj)
+inv_del(inv, $flour_obj, 1);
+inv_add(inv, oc_param($flour_obj, changesto), 1);
+inv_del(inv, flypaper, 1);
+inv_add(inv, oc_param($flour_obj, product), 1);
+mes(oc_param($flour_obj, game_message));
+mes(oc_param($flour_obj, game_message2));
+
+[label,check_murderer_print](obj $checked_print)
+def_string $print_name = oc_name($checked_print);
+def_string $murderer_name = substring($print_name, 0, calc(string_indexof_char($print_name, ' ') - 2));
+if(oc_param($checked_print, murder_id_value) = %murder_murderer_id) {
+    mes("The finger prints are an exact match to <$murderer_name>'s.");
+    %murder_evidence = setbit(%murder_evidence, ^murder_found_fingerprints);
+    inv_del(inv, unknown_print, 1);
+    inv_add(inv, killers_print, 1);
+    return;
+}
+~mesbox("They don't seem to be the same.|I guess that clears <$murderer_name> of the crime.|You destroy the useless fingerprint.");
+inv_del(inv, $checked_print, 1);
+
+[opobj3,murder_blue_thread]
+~mesbox("Some blue thread. Not enough to be worth taking.");
+
+[opobj3,murder_red_thread]
+~mesbox("Some red thread. Not enough to be worth taking.");
+
+[opobj3,murder_green_thread]
+~mesbox("Some green thread. Not enough to be worth taking.");
+
+[proc,murder_get_murderer_name](string)
+switch_int(%murder_murderer_id) {
+    case 2: return ("Bob");
+    case 3: return ("Carol");
+    case 4: return ("David");
+    case 5: return ("Elizabeth");
+    case 6: return ("Frank");
+    case default: return ("Anna");
+}
+
+[proc,murder_clear_evidence]
+// removes each of the related quest items from the player inv and bank, not sure if theres a better way of doing this in
+// runescript...
+if(inv_total(inv, murder_necklace) > 0) {
+    inv_del(inv, murder_necklace, inv_total(inv, murder_necklace));
+}
+if(inv_total(bank, murder_necklace) > 0) {
+    inv_del(bank, murder_necklace, inv_total(bank, murder_necklace));
+}
+if(inv_total(worn, murder_necklace) > 0) {
+    inv_del(worn, murder_necklace, inv_total(worn, murder_necklace));
+}
+if(inv_total(inv, murder_flournecklace) > 0) {
+    inv_del(inv, murder_flournecklace, inv_total(inv, murder_flournecklace));
+}
+if(inv_total(bank, murder_flournecklace) > 0) {
+    inv_del(bank, murder_flournecklace, inv_total(bank, murder_flournecklace));
+}
+if(inv_total(worn, murder_flournecklace) > 0) {
+    inv_del(worn, murder_flournecklace, inv_total(worn, murder_flournecklace));
+}
+if(inv_total(inv, murder_cup) > 0) {
+    inv_del(inv, murder_cup, inv_total(inv, murder_cup));
+}
+if(inv_total(bank, murder_cup) > 0) {
+    inv_del(bank, murder_cup, inv_total(bank, murder_cup));
+}
+if(inv_total(inv, murder_flourcup) > 0) {
+    inv_del(inv, murder_flourcup, inv_total(inv, murder_flourcup));
+}
+if(inv_total(bank, murder_flourcup) > 0) {
+    inv_del(bank, murder_flourcup, inv_total(bank, murder_flourcup));
+}
+if(inv_total(inv, murder_bottle) > 0) {
+    inv_del(inv, murder_bottle, inv_total(inv, murder_bottle));
+}
+if(inv_total(bank, murder_bottle) > 0) {
+    inv_del(bank, murder_bottle, inv_total(bank, murder_bottle));
+}
+if(inv_total(inv, murder_flourbottle) > 0) {
+    inv_del(inv, murder_flourbottle, inv_total(inv, murder_flourbottle));
+}
+if(inv_total(bank, murder_flourbottle) > 0) {
+    inv_del(bank, murder_flourbottle, inv_total(bank, murder_flourbottle));
+}
+if(inv_total(inv, murder_book) > 0) {
+    inv_del(inv, murder_book, inv_total(inv, murder_book));
+}
+if(inv_total(bank, murder_book) > 0) {
+    inv_del(bank, murder_book, inv_total(bank, murder_book));
+}
+if(inv_total(inv, murder_flourbook) > 0) {
+    inv_del(inv, murder_flourbook, inv_total(inv, murder_flourbook));
+}
+if(inv_total(bank, murder_flourbook) > 0) {
+    inv_del(bank, murder_flourbook, inv_total(bank, murder_flourbook));
+}
+if(inv_total(inv, murder_needle) > 0) {
+    inv_del(inv, murder_needle, inv_total(inv, murder_needle));
+}
+if(inv_total(bank, murder_needle) > 0) {
+    inv_del(bank, murder_needle, inv_total(bank, murder_needle));
+}
+if(inv_total(inv, murder_flourneedle) > 0) {
+    inv_del(inv, murder_flourneedle, inv_total(inv, murder_flourneedle));
+}
+if(inv_total(bank, murder_flourneedle) > 0) {
+    inv_del(bank, murder_flourneedle, inv_total(bank, murder_flourneedle));
+}
+if(inv_total(inv, murder_pot) > 0) {
+    inv_del(inv, murder_pot, inv_total(inv, murder_pot));
+}
+if(inv_total(bank, murder_pot) > 0) {
+    inv_del(bank, murder_pot, inv_total(bank, murder_pot));
+}
+if(inv_total(inv, murder_flourpot) > 0) {
+    inv_del(inv, murder_flourpot, inv_total(inv, murder_flourpot));
+}
+if(inv_total(bank, murder_flourpot) > 0) {
+    inv_del(bank, murder_flourpot, inv_total(bank, murder_flourpot));
+}
+if(inv_total(inv, murder_red_thread) > 0) {
+    inv_del(inv, murder_red_thread, inv_total(inv, murder_red_thread));
+}
+if(inv_total(bank, murder_red_thread) > 0) {
+    inv_del(bank, murder_red_thread, inv_total(bank, murder_red_thread));
+}
+if(inv_total(inv, murder_green_thread) > 0) {
+    inv_del(inv, murder_green_thread, inv_total(inv, murder_green_thread));
+}
+if(inv_total(bank, murder_green_thread) > 0) {
+    inv_del(bank, murder_green_thread, inv_total(bank, murder_green_thread));
+}
+if(inv_total(inv, murder_blue_thread) > 0) {
+    inv_del(inv, murder_blue_thread, inv_total(inv, murder_blue_thread));
+}
+if(inv_total(bank, murder_blue_thread) > 0) {
+    inv_del(bank, murder_blue_thread, inv_total(bank, murder_blue_thread));
+}
+if(inv_total(inv, flypaper) > 0) {
+    inv_del(inv, flypaper, inv_total(inv, flypaper));
+}
+if(inv_total(bank, flypaper) > 0) {
+    inv_del(bank, flypaper, inv_total(bank, flypaper));
+}
+if(inv_total(inv, pungent_pot) > 0) {
+    inv_del(inv, pungent_pot, inv_total(inv, pungent_pot));
+}
+if(inv_total(bank, pungent_pot) > 0) {
+    inv_del(bank, pungent_pot, inv_total(bank, pungent_pot));
+}
+if(inv_total(inv, criminals_dagger) > 0) {
+    inv_del(inv, criminals_dagger, inv_total(inv, criminals_dagger));
+}
+if(inv_total(bank, criminals_dagger) > 0) {
+    inv_del(bank, criminals_dagger, inv_total(bank, criminals_dagger));
+}
+if(inv_total(inv, murder_flourdagger) > 0) {
+    inv_del(inv, murder_flourdagger, inv_total(inv, murder_flourdagger));
+}
+if(inv_total(bank, murder_flourdagger) > 0) {
+    inv_del(bank, murder_flourdagger, inv_total(bank, murder_flourdagger));
+}
+if(inv_total(inv, killers_print) > 0) {
+    inv_del(inv, killers_print, inv_total(inv, killers_print));
+}
+if(inv_total(bank, killers_print) > 0) {
+    inv_del(bank, killers_print, inv_total(bank, killers_print));
+}
+if(inv_total(inv, annas_print) > 0) {
+    inv_del(inv, annas_print, inv_total(inv, annas_print));
+}
+if(inv_total(bank, annas_print) > 0) {
+    inv_del(bank, annas_print, inv_total(bank, annas_print));
+}
+if(inv_total(inv, bobs_print) > 0) {
+    inv_del(inv, bobs_print, inv_total(inv, bobs_print));
+}
+if(inv_total(bank, bobs_print) > 0) {
+    inv_del(bank, bobs_print, inv_total(bank, bobs_print));
+}
+if(inv_total(inv, carols_print) > 0) {
+    inv_del(inv, carols_print, inv_total(inv, carols_print));
+}
+if(inv_total(bank, carols_print) > 0) {
+    inv_del(bank, carols_print, inv_total(bank, carols_print));
+}
+if(inv_total(inv, davids_print) > 0) {
+    inv_del(inv, davids_print, inv_total(inv, davids_print));
+}
+if(inv_total(bank, davids_print) > 0) {
+    inv_del(bank, davids_print, inv_total(bank, davids_print));
+}
+if(inv_total(inv, elizabeths_print) > 0) {
+    inv_del(inv, elizabeths_print, inv_total(inv, elizabeths_print));
+}
+if(inv_total(bank, elizabeths_print) > 0) {
+    inv_del(bank, elizabeths_print, inv_total(bank, elizabeths_print));
+}
+if(inv_total(inv, franks_print) > 0) {
+    inv_del(inv, franks_print, inv_total(inv, franks_print));
+}
+if(inv_total(bank, franks_print) > 0) {
+    inv_del(bank, franks_print, inv_total(bank, franks_print));
+}
+if(inv_total(inv, unknown_print) > 0) {
+    inv_del(inv, unknown_print, inv_total(inv, unknown_print));
+}
+if(inv_total(bank, unknown_print) > 0) {
+    inv_del(bank, unknown_print, inv_total(bank, unknown_print));
+}
+
+[queue,murder_quest_complete]
+%murder_progress = ^murder_complete;
+%murder_poisonproof_progress = 0;
+%murder_evidence = 0;
+%murder_murderer_id = 0;
+givexp(crafting, 14060);
+inv_add(inv, coins, 2000);
+~send_quest_complete(questlist:murder, coins, 250, ^murder_questpoints, "You have completed the\\nMurder Mystery Quest!");
