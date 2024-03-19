@@ -1,0 +1,49 @@
+// todo: have mages agro the player after they defeat the boss
+[ai_applayer2,npc_912]
+if (inv_total(worn, zamorakstaff) > 0 & inv_total(worn, obj_2414) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Zamorak!");
+    return;
+}
+npc_say("Feel the wrath of Zamorak.");
+~npc_cast_spell(^flames_of_zamorak, 5);
+
+[ai_applayer2,npc_913]
+if (inv_total(worn, saradominstaff) > 0 & inv_total(worn, obj_2412) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Saradomin!");
+    return;
+}
+npc_say("Feel the wrath of Saradomin.");
+~npc_cast_spell(^saradomin_strike, 5);
+
+[ai_applayer2,npc_914]
+if (inv_total(worn, guthixstaff) > 0 & inv_total(worn, obj_2413) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Guthix!");
+    return;
+}
+npc_say("Feel the wrath of Guthix.");
+~npc_cast_spell(^claws_of_guthix, 5);
+
+
+[ai_opplayer2,npc_912]
+if (inv_total(worn, zamorakstaff) > 0 & inv_total(worn, obj_2414) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Zamorak!");
+    return;
+}
+npc_say("Feel the wrath of Zamorak.");
+~npc_cast_spell(^flames_of_zamorak, 5);
+
+[ai_opplayer2,npc_913]
+if (inv_total(worn, saradominstaff) > 0 & inv_total(worn, obj_2412) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Saradomin!");
+    return;
+}
+npc_say("Feel the wrath of Saradomin.");
+~npc_cast_spell(^saradomin_strike, 5);
+
+[ai_opplayer2,npc_914]
+if (inv_total(worn, guthixstaff) > 0 & inv_total(worn, obj_2413) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Guthix!");
+    return;
+}
+npc_say("Feel the wrath of Guthix.");
+~npc_cast_spell(^claws_of_guthix, 5);

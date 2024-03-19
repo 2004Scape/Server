@@ -114,23 +114,16 @@ if (npc_findhero = false) {
     // no death anim
     return;
 }
-%magearena_progress = ^mage_arena_complete;
+queue(finish_mage_arena, 0);
 npc_delay(0);
+%magearena_progress = ^mage_arena_complete;
+npc_delay(1);
 npc_setmode(none);
 npc_anim(delrith_banish, 30);
-spotanim_npc(spotanim_188, 124, 90);
-queue(finish_mage_arena, 0);
+spotanim_map(spotanim_188, npc_coord, 124, 90);
 npc_delay(2);
-
-def_coord $coord = npc_coord;
-npc_del;
-if (p_finduid(uid) = true) {
-    p_delay(1); // temp
-}
-spotanim_map(spotanim_188, $coord, 124, 0); // not a bug
-sound_synth(smokepuff, 0, 0);
-npc_add($coord, npc_906, 1000);
+npc_changetype(npc_906);
 npc_anim(null, 0);
 npc_setmode(playerface);
-npc_delay(1);
+npc_delay(0);
 npc_del;

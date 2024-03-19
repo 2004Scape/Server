@@ -108,7 +108,7 @@ if ($passes = false) {
 
 if (($spell = ^saradomin_strike & %saradomin_strike_casts < ^mage_arena_spell_finished) | ($spell = ^claws_of_guthix & %claws_of_guthix_casts < ^mage_arena_spell_finished) | ($spell = ^flames_of_zamorak & %flames_of_zamorak_casts < ^mage_arena_spell_finished)) {
     if (~inzone_coord_pair_table(mage_arena, coord) = false) {
-        mes("You are not yet experienced eneough to use this spell outside the Mage Arena.");
+        mes("You are not yet experienced enough to use this spell outside the Mage Arena.");
         p_stopaction;
         return;
     }
