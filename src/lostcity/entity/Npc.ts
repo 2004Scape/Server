@@ -85,6 +85,10 @@ export default class Npc extends PathingEntity {
     target: Player | Npc | Loc | Obj | null = null;
     targetOp: number = -1;
 
+    nextPatrolTick: number = -1;
+    nextPatrolPoint : number = 0;
+    delayedPatrol : boolean = false;
+
     heroPoints: {
         uid: number;
         points: number;
@@ -129,14 +133,14 @@ export default class Npc extends PathingEntity {
 
     addHero(uid: number, points: number) {
         // check if hero already exists, then add points
-        const index = this.heroPoints.findIndex(hero => hero.uid === uid);
+        const index = this.heroPoints.findIndex(hero => hero && hero.uid === uid);
         if (index !== -1) {
             this.heroPoints[index].points += points;
             return;
         }
 
         // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
-        const emptyIndex = this.heroPoints.findIndex(hero => hero.uid === -1);
+        const emptyIndex = this.heroPoints.findIndex(hero => hero && hero.uid === -1);
         if (emptyIndex !== -1) {
             this.heroPoints[emptyIndex] = { uid, points };
             return;
@@ -383,7 +387,30 @@ export default class Npc extends PathingEntity {
     }
 
     patrolMode(): void {
-        // TODO points
+        const type = NpcType.get(this.type);
+        const patrolPoints = type.patrolCoord;
+        const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
+        let dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]);
+
+        if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
+            this.queueWaypoint(dest.x, dest.z);
+        }
+        if(!(this.x == dest.x && this.z == dest.z) && World.currentTick > this.nextPatrolTick) {
+            this.teleJump(dest.x, dest.z, dest.level);
+        }
+        if ((this.x == dest.x && this.z == dest.z) && !this.delayedPatrol) {
+            this.nextPatrolTick = World.currentTick + patrolDelay;
+            this.delayedPatrol = true;
+        }
+        if(this.nextPatrolTick > World.currentTick) { 
+            return;
+        }
+
+        this.nextPatrolPoint = (this.nextPatrolPoint + 1) % patrolPoints.length;
+        this.nextPatrolTick = World.currentTick + 30; // 30 ticks until we force the npc to the next patrol coord
+        this.delayedPatrol = false;
+        dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]); // recalc dest
+        this.queueWaypoint(dest.x, dest.z);
     }
 
     playerEscapeMode(): void {

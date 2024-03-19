@@ -1,4 +1,4 @@
-name: "PR title should be conventional commit format"
+name: PR title should be conventional commit format
 
 on:
   pull_request_target:

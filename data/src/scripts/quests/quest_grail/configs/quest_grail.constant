@@ -1,0 +1,7 @@
+^grail_not_started = 0
+^grail_started = 2
+^grail_spoken_merlin = 3
+^grail_spoken_crone = 4
+^grail_failed_defeat_titan = 7
+^grail_finding_percival = 8
+^grail_given_whistle = 9

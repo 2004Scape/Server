@@ -3,6 +3,7 @@ name=Range
 desc=Ideal for cooking on.
 model=model_loc_114
 length=2
+forceapproach=right
 category=cooking_oven
 
 [loc_2729]

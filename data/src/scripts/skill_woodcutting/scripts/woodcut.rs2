@@ -120,8 +120,7 @@ if (%action_delay = map_clock) {
         if (randominc($deplete_chance) = $deplete_chance) {
             //TODO: depletion sound?
             $respawnrate = ~scale_by_playercount($respawnrate);
-            loc_del($respawnrate);
-            loc_add(loc_coord, loc_param(next_loc_stage), loc_angle, centrepiece_straight, $respawnrate);
+            loc_change(loc_param(next_loc_stage), $respawnrate);
             // set skill anim so it doesnt continue after depletion
             anim(null, 0);
             %skill_sound = calc(map_clock + 1);

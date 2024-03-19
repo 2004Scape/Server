@@ -1,0 +1,44 @@
+[opnpc1,murder_bob]
+switch_int(%murder_progress) { 
+    case ^murder_not_started: mes("He is ignoring you.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "I suppose I had better talk to you then.");
+        def_int $option;
+        if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3, "Why'd you buy poison the other day?", 4);
+        } else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3);
+        } else if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Why'd you buy poison the other day?", 4);
+        } else {
+            $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
+        }
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(neutral, "I don't really care as long as no one thinks it's me. Maybe it was that strange poison seller who headed towards the seers village.");
+            case 2:
+                ~chatplayer(neutral, "Where were you when the murder happened?");
+                ~chatnpc(neutral, "I was walking by myself in the garden.");
+                ~chatplayer(neutral, "And can anyone vouch for that?");
+                ~chatnpc(neutral, "No. But I was.");
+            case 3:
+                ~chatplayer(confused, "Do you recognise this thread?");
+                ~mesbox("You show him the thread you discovered.");
+                if(inv_total(inv, murder_red_thread) > 0) {
+                    // no period
+                    ~chatnpc(confused, "It's some red thread. I suppose you think that's some kind of clue? It looks like the material my trousers are made of");
+                    return;
+                }
+                ~chatnpc(confused, "It's some thread. great clue. No, really.");
+            case 4:
+                ~chatplayer(neutral, "Why'd you buy poison the other day?");
+                ~chatnpc(confused, "What's it to you anyway?");
+                ~chatnpc(angry, "If you absolutely must know, we had a problem with the beehive in the garden, and as all of our servants are so pathetically useless, I decided I would deal with it myself. So I did.");
+                if(%murder_murderer_id = ^murderer_bob & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                    %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
+                }
+        }
+    case ^murder_complete: ~chatnpc(neutral, "Apparently you aren't as stupid as you look.");
+}

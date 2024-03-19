@@ -1,4 +1,4 @@
-[obj_2861]
+[wolfbone_arrowheads]
 name=Wolfbone arrowtips
 desc=I can make an ogre arrow with these.
 members=yes
@@ -94,7 +94,6 @@ param=proj_travel,ogre_arrow_travel
 tradeable=yes
 
 [ogre_arrow_5]
-name=Ogre arrow 5
 stackable=yes
 model=model_2422_obj
 recol1s=5012
@@ -115,7 +114,6 @@ recol5d=9329
 dummyitem=inv_only
 
 [ogre_arrow_4]
-name=Ogre arrow 4
 stackable=yes
 model=model_2421_obj
 recol1s=5012
@@ -136,7 +134,6 @@ recol5d=9329
 dummyitem=inv_only
 
 [ogre_arrow_3]
-name=Ogre arrow 3
 stackable=yes
 model=model_2420_obj
 recol1s=5012
@@ -157,7 +154,6 @@ recol5d=9329
 dummyitem=inv_only
 
 [ogre_arrow_2]
-name=Ogre arrow 2
 stackable=yes
 model=model_2419_obj
 recol1s=5012

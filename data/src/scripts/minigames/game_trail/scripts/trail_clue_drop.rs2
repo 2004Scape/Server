@@ -55,7 +55,7 @@ if (p_finduid(uid) = true) {
 }
 
 
-[proc,trail_hardcluedrop](int $rarity, coord $coord) // leaked from bronze dragon drops
+[proc,trail_hardcluedrop](int $rarity, coord $coord) // Name leaked from bronze dragon droptable script.
 if_close;
 if (p_finduid(uid) = true) {
     if (map_members = false | ~trail_hasclue_all = true) {

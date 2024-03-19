@@ -1,8 +1,10 @@
 import fs from 'fs';
 
-export function readTextNormalize(path: string) {
+import { listDir, listFiles } from '#lostcity/util/NameMap.js';
+
+export function readTextNormalize(path: string): string {
     if (!fs.existsSync(path)) {
-        return null;
+        return '';
     }
 
     return fs.readFileSync(path, 'utf8').replace(/\r/g, '');
@@ -11,8 +13,12 @@ export function readTextNormalize(path: string) {
 // -----
 
 // simple! just reads the file as-is
-export function loadFile(path: string) {
-    return readTextNormalize(path)!.split('\n');
+export function loadFile(path: string): string[] {
+    if (!fs.existsSync(path)) {
+        return [];
+    }
+
+    return readTextNormalize(path).split('\n');
 }
 
 // fully-featured! strips out comments
@@ -91,31 +97,6 @@ export function loadFileFull(path: string) {
 
 // ----
 
-// Generate a list of files inside a directory
-export function listFiles(path: string, out: string[] = []): string[] {
-    if (!fs.existsSync(path)) {
-        return out;
-    }
-
-    const files = fs.readdirSync(path);
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (!fs.existsSync(`${path}/${file}`)) {
-            continue;
-        }
-
-        const isDir = fs.statSync(`${path}/${file}`).isDirectory();
-        if (isDir) {
-            listFiles(`${path}/${file}`, out);
-        } else {
-            out.push(`${path}/${file}`);
-        }
-    }
-
-    return out;
-}
-
 export type LoadDirCallback = (lines: string[], file: string) => void;
 
 // Read all files inside a directory
@@ -123,7 +104,7 @@ export function loadDir(path: string, callback: LoadDirCallback) {
     const files = listFiles(path);
 
     for (let i = 0; i < files.length; i++) {
-        callback(loadFile(files[i]), files[i]);
+        callback(loadFile(files[i]), files[i].substring(files[i].lastIndexOf('/') + 1));
     }
 }
 
@@ -132,37 +113,19 @@ export function loadDirFull(path: string, callback: LoadDirCallback) {
     const files = listFiles(path);
 
     for (let i = 0; i < files.length; i++) {
-        callback(loadFileFull(files[i]), files[i]);
+        callback(loadFileFull(files[i]), files[i].substring(files[i].lastIndexOf('/') + 1));
     }
 }
 
 // ----
 
 // Generate a list of files inside a directory with a specific extension
-export function listFilesExt(path: string, ext: string, out: string[] = []): string[] {
+export function listFilesExt(path: string, ext: string): string[] {
     if (!fs.existsSync(path)) {
-        return out;
+        return [];
     }
 
-    const files = fs.readdirSync(path);
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (!fs.existsSync(`${path}/${file}`)) {
-            continue;
-        }
-
-        const isDir = fs.statSync(`${path}/${file}`).isDirectory();
-        if (isDir) {
-            listFilesExt(`${path}/${file}`, ext, out);
-        } else {
-            if (file.endsWith(ext)) {
-                out.push(`${path}/${file}`);
-            }
-        }
-    }
-
-    return out;
+    return listDir(path).filter(x => x.endsWith(ext));
 }
 
 // Read all files inside a directory with a specific extension

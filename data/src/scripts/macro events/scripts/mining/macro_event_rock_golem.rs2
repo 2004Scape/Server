@@ -18,17 +18,7 @@ sound_synth(rock_spirit_appear, 0, 0);
 npc_delay(2);
 npc_setmode(opplayer2);
 
-[ai_queue1,_macro_event_rock_golem](int $arg)
-if (finduid(%npc_attacking_uid) = false) {
-    return;
-}
-// flinch
-if (~npc_out_of_combat = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    // set to ap, after we reach 2006 dec
-}
-npc_setmode(opplayer2);
-
+// [ai_queue1,_macro_event_rock_golem](int $arg) ~npc_default_retaliate_ap;
 // pretty sure these guys dont have an op attack // https://youtu.be/3SqlpJe90jE?list=PLn23LiLYLb1bQvSMxsNH6T0eM0nRU-5w0&t=139
 // edit: Actually they probably removed the op attack in this update (dec 2006). https://oldschool.runescape.wiki/w/Update:Treasure_Trails,_spiders_and_sheep
 // before then they only melee'd. Ill keep this here for now

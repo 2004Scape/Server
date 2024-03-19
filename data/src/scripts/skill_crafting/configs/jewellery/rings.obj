@@ -113,7 +113,6 @@ category=category_656
 tradeable=yes
 
 [black_ring]
-name=Black ring
 model=model_2677_obj
 recol1s=127
 recol1d=16
@@ -126,6 +125,7 @@ recol2d=16
 2dzan=2024
 2dxan=268
 tradeable=yes
+dummyitem=inv_only
 
 [obj_1649]
 name=Sapphire ring

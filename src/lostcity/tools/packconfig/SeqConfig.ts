@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { AnimPack, ObjPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseSeqConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -62,14 +63,14 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
 
         return value === 'yes';
     } else if (key.startsWith('frame')) {
-        const index = PACKFILE.get('anim')!.indexOf(value);
+        const index = AnimPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key.startsWith('iframe')) {
-        const index = PACKFILE.get('anim')!.indexOf(value);
+        const index = AnimPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -97,7 +98,7 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
             return 0;
         }
 
-        const index = PACKFILE.get('obj')!.indexOf(value);
+        const index = ObjPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -108,7 +109,7 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
             return 0;
         }
 
-        const index = PACKFILE.get('obj')!.indexOf(value);
+        const index = ObjPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -120,15 +121,13 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
 }
 
 function packSeqConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('seq')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(SeqPack.size);
+    idx.p2(SeqPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < SeqPack.size; i++) {
+        const debugname = SeqPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

@@ -14,6 +14,22 @@ if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(opplayer2);
 }
 
+// mostly used for ranged and magic npc's
+[proc,npc_default_retaliate_ap]
+// set npc to ap if its out of combat
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    %npc_attacking_uid = %npc_aggressive_player;
+    if (finduid(%npc_attacking_uid) = true) {
+        npc_setmode(applayer2);
+    }
+    return;
+}
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(opplayer2);
+}
+
+
 // a default melee attack script.
 [proc,npc_default_attack]
 if (stat(hitpoints) = 0) {
@@ -117,7 +133,7 @@ return (false);
 
 
 [proc,npc_out_of_combat]()(boolean)
-if (add(%npc_lastattack, 8) < map_clock | (npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
+if (add(%npc_lastattack, 8) < map_clock | (npc_getmode ! applayer2 & npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
     return (true);
 }
 return (false);

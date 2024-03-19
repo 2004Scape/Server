@@ -1,0 +1,37 @@
+[opnpc1,crone]
+~chatnpc(happy, "Hello deary.");
+~chatplayer(confused, "Um... hello.");
+
+[label,crone_the_grail]
+~chatnpc(quiz, "Did you say the Grail?|You are a Grail knight, yes?|Well you'd better hurry. A Fisher King is in pain.");
+~chatplayer(sad, "Well I would, but I don't know where I am going!");
+~chatnpc(neutral, "Go to where the six heads face,|blow the whistle and away you go!");
+if(%grail_progress = ^grail_spoken_merlin) {
+    %grail_progress = 4;
+}
+@multi4("What are the six heads?", crone_six_heads, "What's a Fisher King?", crone_fisherking, "Ok, I will go searching.", crone_searching, "What do you mean by the whistle?", crone_whistle);
+
+[label,crone_six_heads]
+~chatplayer(quiz, "What are the six heads?");
+~chatnpc(neutral, "The six stone heads have appeared just recently in the world. They all face the point of realm crossing. Find where two of the heads face,");
+~chatnpc(neutral, "and you should be able to pinpoint where it is.");
+@multi4("What's a Fisher King?", crone_fisherking, "Ok, I will go searching.", crone_searching, "What do you mean by the whistle?", crone_whistle, "The point of realm crossing?", crone_realm);
+
+[label,crone_fisherking]
+~chatplayer(quiz, "What's a Fisher King?");
+~chatnpc(neutral, "The Fisher King is the owner and slave of the Grail...");
+@multi3("What are the six heads?", crone_six_heads, "Ok, I will go searching..", crone_searching, "What do you mean by the whistle?", crone_whistle); // .. is intentional
+
+[label,crone_whistle]
+~chatplayer(neutral, "What do you mean by the whistle?");
+~chatnpc(neutral, "You don't know about the whistles yet?|The whistles are easy.");
+~chatnpc(neutral, "You will need one to get to and from the Fisher King's realm. They reside in a haunted manor house in Misthalin, though you may not perceive them unless you carry something from the realm of the Fisher King...");
+@multi3("What are the six heads?", crone_six_heads, "What's a Fisher King?", crone_fisherking, "Ok, I will go searching.", crone_searching);
+
+[label,crone_searching]
+~chatplayer(neutral, "Ok, I will go searching.");
+~chatnpc(neutral, "Good luck with that.");
+
+[label,crone_realm]
+~chatplayer(neutral, "The point of realm crossing?");
+~chatnpc(neutral, "The realm of the Fisher King is not quite of this reality. It is of a reality very close to ours though... Where it is easiest to cross, THAT is a point of realm crossing.");

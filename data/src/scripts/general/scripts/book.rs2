@@ -1,7 +1,7 @@
 [if_button,book:com_2]
 switch_obj (%open_book) {
     case book_on_baxtorian: @book_flip_page(^book_direction_backward, 0, 4, book_on_baxtorian_page);
-    case obj_2408: @book_flip_page(^book_direction_backward, 0, 3, witches_diary);
+    case ball_diary: @book_flip_page(^book_direction_backward, 0, 3, witches_diary);
     case guide_book: @book_flip_page(^book_direction_backward, 0, 3, guide_ardougne);
     case arrav_book: @book_flip_page(^book_direction_backward, 0, 2, shieldofarrav_book);
 }
@@ -10,7 +10,7 @@ p_delay(0);
 [if_button,book:com_4]
 switch_obj (%open_book) {
     case book_on_baxtorian: @book_flip_page(^book_direction_forward, 0, 4, book_on_baxtorian_page);
-    case obj_2408: @book_flip_page(^book_direction_forward, 0, 3, witches_diary);
+    case ball_diary: @book_flip_page(^book_direction_forward, 0, 3, witches_diary);
     case guide_book: @book_flip_page(^book_direction_forward, 0, 3, guide_ardougne);
     case arrav_book: @book_flip_page(^book_direction_forward, 0, 2, shieldofarrav_book);
 }

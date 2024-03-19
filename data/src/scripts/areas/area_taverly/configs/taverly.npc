@@ -138,3 +138,23 @@ model6=model_358_idk
 model7=model_417_npc
 head1=model_113_idk_head
 wanderrange=1
+
+[boy]
+vislevel=hide
+name=Boy
+desc=A sad looking child...
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=22424
+recol1d=39859
+recol2s=11162
+recol2d=5002
+recol3s=6550
+recol3d=7079
+recol4s=6798
+recol4d=7079
+model1=model_2897_npc
+model2=model_2909_npc
+model3=model_2917_npc
+head1=model_53_idk_head

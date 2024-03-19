@@ -1,0 +1,44 @@
+[opnpc1,frank]
+switch_int(%murder_progress) { 
+    case ^murder_not_started: mes("He is ignoring you.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "Good for you. Now what do you want?");
+        ~chatnpc(sad, "...And can you spare me any money? I'm a little short...");
+        def_int $option;
+        if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3, "Why'd you buy poison the other day?", 4);
+        } else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3);
+        } else if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Why'd you buy poison the other day?", 4);
+        } else {
+            $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
+        }
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(neutral, "I don't know.");
+                ~chatnpc(neutral, "You don't know how long it takes an inheritance to come through do you? I could really use that money pretty soon...");
+            case 2:
+                ~chatplayer(neutral, "Where were you when the murder happened?");
+                ~chatnpc(neutral, "I don't know, somewhere around here probably.");
+                ~chatnpc(angry, "Could you spare me a few coins? I'll be able to pay you double tomorrow it's just there's this poker night tonight in town...");
+            case 3:
+                ~chatplayer(confused, "Do you recognise this thread?");
+                ~mesbox("Frank examines the thread from the crime scene.");
+                if(inv_total(inv, murder_blue_thread) > 0) {
+                    ~chatnpc(neutral, "It kind of looks like the same material as my trousers are made of... same colour anyway. Think it's worth anything? Can I have it? Or just some money?");
+                    return;
+                }
+                ~chatnpc(confused, "It looks like thread to me, but I'm not exactly an expert. Is it worth something? Can I have it? Actually, can you spare me a few gold?");
+            case 4:
+                ~chatplayer(neutral, "Why'd you buy poison the other day?");
+                ~chatnpc(neutral, "Would you like to buy some? I'm kind of strapped for cash right now, I'll sell it to you cheap, it's hardly been used at all.");
+                ~chatnpc(neutral, "I just used a bit to clean that family crest outside up a bit. Do you think I can get much money For the family crest, actually? It's cleaned up a bit now.");
+                if(%murder_murderer_id = ^murderer_frank & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                    %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
+                }
+        }
+    case ^murder_complete: ~chatnpc(neutral, "Apparently you aren't as stupid as you look.");
+}

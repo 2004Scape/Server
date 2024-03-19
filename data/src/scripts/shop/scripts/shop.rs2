@@ -29,7 +29,7 @@ def_boolean $item_is_tradable = oc_tradeable(oc_uncert($item));
 if ($item = coins) {
     mes("You can't sell this item to a shop.");
     return (false);
-} else if ($item_is_tradable = false) {
+} else if ($item_is_tradable = false | (map_members = false & oc_members($item) = true)) {
     mes("You can't sell this item.");
     return (false);
 } else if (inv_allstock(%shop) = false & inv_stockbase(%shop, oc_uncert($item)) = -1) {

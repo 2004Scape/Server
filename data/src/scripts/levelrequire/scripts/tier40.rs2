@@ -28,30 +28,31 @@
 [opheld2,rune_chainbody] @levelrequire_defence(40, last_slot);
 [opheld2,rune_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
 
-[opheld2,rune_platebody_t] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
-[opheld2,rune_platelegs_t] @levelrequire_defence(40, last_slot);
-[opheld2,rune_full_helm_t] @levelrequire_defence(40, last_slot);
-[opheld2,rune_kiteshield_t] @levelrequire_defence(40, last_slot);
-[opheld2,rune_platebody_g] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
-[opheld2,rune_platelegs_g] @levelrequire_defence(40, last_slot);
-[opheld2,rune_full_helm_g] @levelrequire_defence(40, last_slot);
-[opheld2,rune_kiteshield_g] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platebody_trim] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,rune_platelegs_trim] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm_trim] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield_trim] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platebody_gold] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,rune_platelegs_gold] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm_gold] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield_gold] @levelrequire_defence(40, last_slot);
 
-[opheld2,zamorak_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
-[opheld2,zamorak_platelegs] @levelrequire_defence(40, last_slot);
-[opheld2,zamorak_full_helm] @levelrequire_defence(40, last_slot);
-[opheld2,zamorak_kiteshield] @levelrequire_defence(40, last_slot);
-[opheld2,saradomin_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
-[opheld2,saradomin_platelegs] @levelrequire_defence(40, last_slot);
-[opheld2,saradomin_full_helm] @levelrequire_defence(40, last_slot);
-[opheld2,saradomin_kiteshield] @levelrequire_defence(40, last_slot);
-[opheld2,guthix_platebody] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
-[opheld2,guthix_platelegs] @levelrequire_defence(40, last_slot);
-[opheld2,guthix_full_helm] @levelrequire_defence(40, last_slot);
-[opheld2,guthix_kiteshield] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platebody_zamorak] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,rune_platelegs_zamorak] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm_zamorak] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield_zamorak] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platebody_saradomin] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,rune_platelegs_saradomin] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm_saradomin] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield_saradomin] @levelrequire_defence(40, last_slot);
+[opheld2,rune_platebody_guthix] @levelrequire_dragon_slayer_quest_defence(40, last_slot);
+[opheld2,rune_platelegs_guthix] @levelrequire_defence(40, last_slot);
+[opheld2,rune_full_helm_guthix] @levelrequire_defence(40, last_slot);
+[opheld2,rune_kiteshield_guthix] @levelrequire_defence(40, last_slot);
 
 // Ranged
-[opheld2,robin_hood_hat] @levelrequire_ranged(40, last_slot);
+[opheld2,trail_robin_hood_hat] @levelrequire_ranged(40, last_slot);
+[opheld2,trail_ranger_boots] @levelrequire_ranged(40, last_slot);
 [opheld2,yew_longbow] @levelrequire_ranged(40, last_slot);
 [opheld2,yew_shortbow] @levelrequire_ranged(40, last_slot);
 [opheld2,dragonhide_body] @levelrequire_dragon_slayer_quest_ranged_and_defence(40, 40, last_slot);

@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import { PACKFILE, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ModelPack, SeqPack, SpotAnimPack } from '#lostcity/util/PackFile.js';
 
 export function parseSpotAnimConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -69,14 +70,14 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
 
         return value === 'yes';
     } else if (key === 'model') {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'anim') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -88,15 +89,13 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
 }
 
 function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('spotanim')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(SpotAnimPack.size);
+    idx.p2(SpotAnimPack.size);
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < SpotAnimPack.size; i++) {
+        const debugname = SpotAnimPack.getById(i);
         const config = configs.get(debugname)!;
 
         const start = dat.pos;

@@ -330,6 +330,11 @@ function convert(com: Component, x = 0, y = 0, lastCom = -1) {
     let str = '';
 
     if (com.id === com.rootLayer) {
+        if (!com.childId) {
+            console.error('Warning: no children for root layer', com.id);
+            return '';
+        }
+
         for (let i = 0; i < com.childId.length; i++) {
             if (i > 0) {
                 str += '\n';

@@ -1,0 +1,4 @@
+[ai_timer,sinclair_guard_dog]
+if(random(40) = 0) { // approximation
+    npc_say("BARK");
+}

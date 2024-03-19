@@ -10854,7 +10854,7 @@ frame5=anim_2399
 
 [seq_775]
 righthand=hide
-lefthand=obj_945
+lefthand=throwingrope
 frame1=anim_1635
 frame2=anim_1926
 frame3=anim_2227

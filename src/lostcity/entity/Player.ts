@@ -399,7 +399,8 @@ export default class Player extends PathingEntity {
     // build area
     loadedX: number = -1;
     loadedZ: number = -1;
-    loadedZones: Record<number, number> = {};
+    newlyTrackedZones: Set<number> = new Set();
+    allTrackedZones: Set<number> = new Set();
     npcs: Set<number> = new Set(); // observed npcs
     players: Set<number> = new Set(); // observed players
     lastMovement: number = 0; // for p_arrivedelay
@@ -553,6 +554,12 @@ export default class Player extends PathingEntity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
+
+        for (const zone of this.newlyTrackedZones) {
+            this.allTrackedZones.add(zone);
+        }
+
+        this.newlyTrackedZones = new Set();
     }
 
     decodeIn() {
@@ -1137,6 +1144,7 @@ export default class Player extends PathingEntity {
 
                 const loc = World.getLoc(x, z, this.level, locId);
                 if (!loc) {
+                    this.unsetMapFlag();
                     continue;
                 }
 
@@ -1259,6 +1267,7 @@ export default class Player extends PathingEntity {
 
                 const npc = World.getNpc(nid);
                 if (!npc || npc.delayed()) {
+                    this.unsetMapFlag();
                     continue;
                 }
 
@@ -1382,6 +1391,7 @@ export default class Player extends PathingEntity {
 
                 const obj = World.getObj(x, z, this.level, objId);
                 if (!obj) {
+                    this.unsetMapFlag();
                     continue;
                 }
 
@@ -1938,94 +1948,87 @@ export default class Player extends PathingEntity {
                 // lookup debugproc with the name and execute it
                 const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
                 if (!script) {
-                    // this.messageGame(`Unable to locate [debugproc,${cmd}].`);
                     return;
                 }
 
-                const params = [];
+                const params = new Array(script.info.parameterTypes.length).fill(-1);
+
                 for (let i = 0; i < script.info.parameterTypes.length; i++) {
                     const type = script.info.parameterTypes[i];
 
-                    switch (type) {
-                        case ScriptVarType.STRING: {
-                            const value = args.shift();
+                    try {
+                        switch (type) {
+                            case ScriptVarType.STRING: {
+                                const value = args.shift();
+                                params[i] = value ?? '';
+                                break;
+                            }
+                            case ScriptVarType.INT: {
+                                const value = args.shift();
+                                params[i] = parseInt(value ?? '0', 10) | 0;
+                                break;
+                            }
+                            case ScriptVarType.OBJ:
+                            case ScriptVarType.NAMEDOBJ: {
+                                const name = args.shift();
+                                params[i] = ObjType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.NPC: {
+                                const name = args.shift();
+                                params[i] = NpcType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.LOC: {
+                                const name = args.shift();
+                                params[i] = LocType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.SEQ: {
+                                const name = args.shift();
+                                params[i] = SeqType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.STAT: {
+                                const name = args.shift();
+                                params[i] = Player.SKILLS.indexOf(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.INV: {
+                                const name = args.shift();
+                                params[i] = InvType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.COORD: {
+                                const args2 = cheat.split('_');
 
-                            params.push(value ?? '');
-                            break;
+                                const level = parseInt(args2[0].slice(6));
+                                const mx = parseInt(args2[1]);
+                                const mz = parseInt(args2[2]);
+                                const lx = parseInt(args2[3]);
+                                const lz = parseInt(args2[4]);
+
+                                params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
+                                break;
+                            }
+                            case ScriptVarType.INTERFACE: {
+                                const name = args.shift();
+                                params[i] = Component.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.SPOTANIM: {
+                                const name = args.shift();
+                                params[i] = SpotanimType.getId(name ?? '');
+                                break;
+                            }
+                            case ScriptVarType.IDKIT: {
+                                const name = args.shift();
+                                params[i] = IdkType.getId(name ?? '');
+                                break;
+                            }
                         }
-                        case ScriptVarType.INT: {
-                            const value = args.shift();
-
-                            // todo: range check? runtime only operates on 32-bits
-                            params.push(parseInt(value ?? '0', 10));
-                            break;
-                        }
-                        case ScriptVarType.NAMEDOBJ: {
-                            const name = args.shift();
-
-                            params.push(ObjType.getId(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.NPC: {
-                            const name = args.shift();
-
-                            params.push(NpcType.getId(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.LOC: {
-                            const name = args.shift();
-
-                            params.push(LocType.getId(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.SEQ: {
-                            const name = args.shift();
-
-                            params.push(SeqType.getId(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.STAT: {
-                            const name = args.shift();
-
-                            params.push(Player.SKILLS.indexOf(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.INV: {
-                            const name = args.shift();
-
-                            params.push(InvType.getId(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.COORD: {
-                            const args2 = cheat.split('_');
-
-                            const level = parseInt(args2[0].slice(6));
-                            const mx = parseInt(args2[1]);
-                            const mz = parseInt(args2[2]);
-                            const lx = parseInt(args2[3]);
-                            const lz = parseInt(args2[4]);
-
-                            params.push(Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz));
-                            break;
-                        }
-                        case ScriptVarType.INTERFACE: {
-                            const name = args.shift();
-
-                            params.push(Component.getId(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.SPOTANIM: {
-                            const name = args.shift();
-
-                            params.push(SpotanimType.getId(name ?? ''));
-                            break;
-                        }
-                        case ScriptVarType.IDKIT: {
-                            const name = args.shift();
-
-                            params.push(IdkType.getId(name ?? ''));
-                            break;
-                        }
+                    } catch (err) {
+                        return;
                     }
                 }
 
@@ -2131,8 +2134,7 @@ export default class Player extends PathingEntity {
             this.refreshZonePresence(this.lastX, this.lastZ, this.level);
 
             // run energy drain
-            if (running) {
-                // TODO: "Moving to an adjacent tile through walking will not drain energy, even if Run is turned on."
+            if (running && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
                 const weightKg = Math.floor(this.runweight / 1000);
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + (67 * clampWeight) / 64;
@@ -2608,16 +2610,20 @@ export default class Player extends PathingEntity {
         // if the build area should be regenerated, do so now
         const { tele } = this.getMovementDir(); // wasteful but saves time on loading lines
         if (dx >= 36 || dz >= 36 || (tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
-            this.loadArea(Position.zone(this.x), Position.zone(this.z));
+            this.rebuildNormal(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
             this.loadedZ = this.z;
-            this.loadedZones = {};
-        }
-    }
 
-    updateZones() {
-        // check nearby zones for updates
+            this.allTrackedZones = new Set();
+            this.newlyTrackedZones = new Set();
+        }
+
+        if (this.tele && this.jump) {
+            this.allTrackedZones = new Set();
+            this.newlyTrackedZones = new Set();
+        }
+
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -2626,38 +2632,79 @@ export default class Player extends PathingEntity {
         const topZ = Position.zone(this.loadedZ) + 6;
         const bottomZ = Position.zone(this.loadedZ) - 6;
 
-        // update 3 zones around the player
+        // update newly tracked zones
         for (let x = centerX - 3; x <= centerX + 3; x++) {
             for (let z = centerZ - 3; z <= centerZ + 3; z++) {
-                // check if the zone is within the build area
                 if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
                     continue;
                 }
 
-                const zone = World.getZone(x << 3, z << 3, this.level);
-
-                // todo: receiver/shared buffer logic
-                if (typeof this.loadedZones[zone.index] === 'undefined') {
-                    // full update necessary to clear client zone memory
-                    this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
-                    this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
+                const zone = x | (z << 11);
+                if (!this.allTrackedZones.has(zone)) {
+                    this.newlyTrackedZones.add(zone);
                 }
-
-                const updates = World.getUpdates(zone.index).filter(event => {
-                    return event.tick > this.loadedZones[zone.index];
-                });
-
-                if (updates.length) {
-                    this.write(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
-
-                    for (let i = 0; i < updates.length; i++) {
-                        // have to copy because encryption will be applied to buffer
-                        this.netOut.push(new Packet(updates[i].buffer));
-                    }
-                }
-
-                this.loadedZones[zone.index] = World.currentTick;
             }
+        }
+
+        // remove old zones from all tracked (outside of 3x3 area around player's current pos)
+        for (const zone of this.allTrackedZones) {
+            const x = zone & 2047;
+            const z = zone >> 11;
+
+            if (x < centerX - 3 || x > centerX + 3 || z > centerZ + 3 || z < centerZ - 3) {
+                this.allTrackedZones.delete(zone);
+            }
+        }
+    }
+
+    updateZones() {
+        // console.log('tracked', this.newlyTrackedZones.size, this.allTrackedZones.size);
+
+        for (const zone of this.newlyTrackedZones) {
+            const x = zone & 2047;
+            const z = zone >> 11;
+
+            this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
+
+            const { locDelCached, locAddCached, staticObjAddCached, staticObjDelCached } = World.getZone(x << 3, z << 3, this.level);
+
+            for (const [packed, buf] of locDelCached) {
+                this.netOut.push(buf.copy());
+            }
+
+            for (const [packed, buf] of locAddCached) {
+                this.netOut.push(buf.copy());
+            }
+
+            for (const buf of staticObjAddCached) {
+                this.netOut.push(buf.copy());
+            }
+
+            for (const buf of staticObjDelCached) {
+                this.netOut.push(buf.copy());
+            }
+
+            if (locDelCached.size > 0 || locAddCached.size > 0) {
+                World.getZone(x << 3, z << 3, this.level).debug();
+            }
+        }
+
+        for (const zone of this.allTrackedZones) {
+            const x = zone & 2047;
+            const z = zone >> 11;
+
+            const { buffer, locAddTimer, locDelTimer, locChangeTimer } = World.getZone(x << 3, z << 3, this.level);
+
+            // shared events
+            if (buffer.length > 0) {
+                this.write(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, x, z, this.loadedX, this.loadedZ, buffer);
+
+                World.getZone(x << 3, z << 3, this.level).debug();
+            } else if (locAddTimer.size > 0 || locDelTimer.size > 0 || locChangeTimer.size > 0) {
+                World.getZone(x << 3, z << 3, this.level).debug();
+            }
+
+            // local events
         }
     }
 
@@ -3887,6 +3934,7 @@ export default class Player extends PathingEntity {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     write(opcode: ServerProt, ...args: any[]) {
         if (opcode < 0 || opcode > 255 || !ServerProtEncoders[opcode]) {
             return;
@@ -3953,8 +4001,7 @@ export default class Player extends PathingEntity {
         this.write(ServerProt.MESSAGE_GAME, msg);
     }
 
-    // todo
-    loadArea(zoneX: number, zoneZ: number) {
+    rebuildNormal(zoneX: number, zoneZ: number) {
         const out = new Packet();
         out.p1(ServerProt.REBUILD_NORMAL);
         out.p2(0);

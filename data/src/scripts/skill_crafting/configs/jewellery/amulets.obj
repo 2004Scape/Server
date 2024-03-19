@@ -94,7 +94,6 @@ tradeable=yes
 param=crafting_jewelry_struct,unstrung_dragonstone_amulet
 
 [black_amulet]
-name=Black amulet
 model=model_2550_obj
 recol1s=127
 recol1d=16
@@ -106,6 +105,7 @@ recol2d=16
 2dyan=100
 2dxan=304
 tradeable=yes
+dummyitem=inv_only
 
 [obj_1687]
 name=Sapphire amulet

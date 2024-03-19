@@ -20,8 +20,7 @@ if (%vampire_progress > ^quest_vampire_not_started) {
     }
 }
 
-loc_del(10);
-loc_add(loc_coord, loc_2615, loc_angle, loc_shape, 10);
+loc_change(loc_2615, 10);
 p_delay(4);
 npc_add(0_48_152_6_46, count_draynor, 500);
 npc_setmode(opplayer2);

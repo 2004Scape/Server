@@ -1,45 +1,42 @@
 import fs from 'fs';
+
 import BZip2 from '#jagex2/io/BZip2.js';
-import { basename } from 'path';
+import { shouldBuild } from '#lostcity/util/PackFile.js';
 
-console.log('Packing jingles');
-//console.time('jingles');
-
-const jingles: string[] = [];
-fs.mkdirSync('data/pack/client/jingles', { recursive: true });
-fs.readdirSync('data/src/jingles').forEach(f => {
-    // TODO: mtime-based check
-    if (fs.existsSync(`data/pack/client/jingles/${f}`)) {
+export function packClientMusic() {
+    if (!shouldBuild('data/src/jingles', '', 'data/pack/client/jingles')) {
         return;
     }
 
-    jingles.push(`data/src/jingles/${f}`);
-});
+    console.log('Packing jingles');
+    //console.time('jingles');
 
-BZip2.compressMany(jingles, true);
-for (let i = 0; i < jingles.length; i++) {
-    fs.renameSync(`${jingles[i]}.bz2`, `data/pack/client/jingles/${basename(jingles[i])}`);
+    fs.mkdirSync('data/pack/client/jingles', { recursive: true });
+    fs.readdirSync('data/src/jingles').forEach(f => {
+        // TODO: mtime-based check
+        if (fs.existsSync(`data/pack/client/jingles/${f}`)) {
+            return;
+        }
+
+        const data = fs.readFileSync(`data/src/jingles/${f}`);
+        fs.writeFileSync(`data/pack/client/jingles/${f}`, BZip2.compress(data, true));
+    });
+    //console.timeEnd('jingles');
+
+    // ----
+
+    console.log('Packing songs');
+    //console.time('songs');
+
+    fs.mkdirSync('data/pack/client/songs', { recursive: true });
+    fs.readdirSync('data/src/songs').forEach(f => {
+        // TODO: mtime-based check
+        if (fs.existsSync(`data/pack/client/songs/${f}`)) {
+            return;
+        }
+
+        const data = fs.readFileSync(`data/src/songs/${f}`);
+        fs.writeFileSync(`data/pack/client/songs/${f}`, BZip2.compress(data, true));
+    });
+    //console.timeEnd('songs');
 }
-//console.timeEnd('jingles');
-
-// ----
-
-console.log('Packing songs');
-//console.time('songs');
-
-const songs: string[] = [];
-fs.mkdirSync('data/pack/client/songs', { recursive: true });
-fs.readdirSync('data/src/songs').forEach(f => {
-    // TODO: mtime-based check
-    if (fs.existsSync(`data/pack/client/songs/${f}`)) {
-        return;
-    }
-
-    songs.push(`data/src/songs/${f}`);
-});
-
-BZip2.compressMany(songs, true);
-for (let i = 0; i < songs.length; i++) {
-    fs.renameSync(`${songs[i]}.bz2`, `data/pack/client/songs/${basename(songs[i])}`);
-}
-//console.timeEnd('songs');

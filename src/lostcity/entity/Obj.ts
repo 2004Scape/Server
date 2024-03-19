@@ -11,6 +11,10 @@ export default class Obj extends NonPathingEntity {
         this.count = count;
     }
 
+    static clone(obj: Obj) {
+        return new Obj(obj.level, obj.x, obj.z, obj.type, obj.count);
+    }
+
     get id() {
         return this.type;
     }

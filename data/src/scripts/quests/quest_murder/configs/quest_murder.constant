@@ -1,0 +1,17 @@
+^murder_not_started = 0
+^murder_started = 1
+
+^poisonproof_spoken_salesman = 1
+^poisonproof_spoken_murderer = 2
+^poisonproof_searched_loc = 3
+
+// flags for various pieces of evidence found in the case
+^murder_found_thread = 1
+^murder_found_fingerprints = 2
+
+^murderer_anna = 1
+^murderer_bob = 2
+^murderer_carol = 3
+^murderer_david = 4
+^murderer_elizabeth = 5
+^murderer_frank = 6

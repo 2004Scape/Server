@@ -1,16 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 import { loadDir, loadOrder, loadPack } from '#lostcity/util/NameMap.js';
-
-// binary formats
-const modelPack = loadPack('data/pack/model.pack');
-
-// config formats
-const objPack = loadPack('data/pack/obj.pack');
-const seqPack = loadPack('data/pack/seq.pack');
-const varpPack = loadPack('data/pack/varp.pack');
-
-const interfacePack = loadPack('data/pack/interface.pack');
-const interfaceOrder = loadOrder('data/pack/interface.order');
+import { InterfacePack, ModelPack, ObjPack, SeqPack, VarpPack } from '#lostcity/util/PackFile.js';
 
 function nameToType(name: string) {
     switch (name) {
@@ -168,11 +158,11 @@ type Component = {
 };
 
 export function packInterface(server: boolean) {
-    console.log('Packing interfaces');
     // console.time('Packing .if');
 
     const component: Record<number, Component> = {};
 
+    const interfaceOrder = loadOrder('data/pack/interface.order');
     for (let i = 0; i < interfaceOrder.length; i++) {
         const id = interfaceOrder[i];
 
@@ -185,7 +175,7 @@ export function packInterface(server: boolean) {
 
     loadDir('data/src/scripts', '.if', (src, file) => {
         const ifName = file.replace('.if', '');
-        const ifId = interfacePack.indexOf(ifName);
+        const ifId = InterfacePack.getByName(ifName);
 
         if (!component[ifId]) {
             console.error('Could not find name <-> ID for interface file, perhaps misnamed?', ifName, ifId);
@@ -196,12 +186,13 @@ export function packInterface(server: boolean) {
         component[ifId].src['width'] = 512;
         component[ifId].src['height'] = 334;
 
+        let comName = '';
         let comId = -1;
         for (let i = 0; i < src.length; i++) {
             const line = src[i];
             if (line.startsWith('[')) {
-                const comName = line.substring(1, line.length - 1);
-                comId = interfacePack.indexOf(`${ifName}:${comName}`);
+                comName = line.substring(1, line.length - 1);
+                comId = InterfacePack.getByName(`${ifName}:${comName}`);
                 if (comId === -1 || typeof component[comId] === 'undefined') {
                     console.error(`Missing component ID ${ifName}:${comName} in data/pack/interface.pack`);
                     process.exit(1);
@@ -216,7 +207,13 @@ export function packInterface(server: boolean) {
             const value = line.substring(line.indexOf('=') + 1);
 
             if (key === 'layer') {
-                const layerId = interfacePack.indexOf(`${ifName}:${value}`);
+                const layerId = InterfacePack.getByName(`${ifName}:${value}`);
+
+                if (component[layerId].children.indexOf(comId) !== -1) {
+                    console.error(`ERROR: Layer ${ifName}:${value} already has ${comName} as a child`);
+                    process.exit(1);
+                }
+
                 component[layerId].children.push(comId);
                 component[ifId].children.splice(component[ifId].children.indexOf(comId), 1);
             }
@@ -234,7 +231,7 @@ export function packInterface(server: boolean) {
     const data = new Packet();
 
     let lastRoot = null;
-    data.p2(interfacePack.length);
+    data.p2(InterfacePack.size);
     for (let i = 0; i < interfaceOrder.length; i++) {
         const id = interfaceOrder[i];
         const com = component[id];
@@ -244,18 +241,18 @@ export function packInterface(server: boolean) {
             data.p2(-1);
 
             if (com.root) {
-                data.p2(interfacePack.indexOf(com.root));
+                data.p2(InterfacePack.getByName(com.root));
                 lastRoot = com.root;
             } else {
                 data.p2(id);
-                lastRoot = interfacePack[id];
+                lastRoot = InterfacePack.getById(id);
             }
         }
 
         data.p2(id);
 
         if (server) {
-            data.pjstr(interfacePack[id]);
+            data.pjstr(InterfacePack.getById(id));
             data.pbool(src.type === 'overlay');
         }
 
@@ -270,7 +267,7 @@ export function packInterface(server: boolean) {
         data.p2(parseInt(src.height as string));
 
         if (src.overlayer) {
-            const layerId = interfacePack.indexOf(`${com.root}:${src.overlayer}`);
+            const layerId = InterfacePack.getByName(`${com.root}:${src.overlayer}`);
             data.p2(layerId + 0x100);
         } else {
             data.p1(0);
@@ -360,12 +357,12 @@ export function packInterface(server: boolean) {
                             data.p2(nameToStat(parts[1]));
                             break;
                         case 'inv_count': {
-                            const comLink = interfacePack.indexOf(parts[1]);
+                            const comLink = InterfacePack.getByName(parts[1]);
                             if (comLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                             }
 
-                            const objLink = objPack.indexOf(parts[2]);
+                            const objLink = ObjPack.getByName(parts[2]);
                             if (objLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
                             }
@@ -375,7 +372,7 @@ export function packInterface(server: boolean) {
                             break;
                         }
                         case 'testvar': {
-                            const varpLink = varpPack.indexOf(parts[1]);
+                            const varpLink = VarpPack.getByName(parts[1]);
                             if (varpLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                             }
@@ -387,12 +384,12 @@ export function packInterface(server: boolean) {
                             data.p2(nameToStat(parts[1]));
                             break;
                         case 'inv_contains': {
-                            const comLink = interfacePack.indexOf(parts[1]);
+                            const comLink = InterfacePack.getByName(parts[1]);
                             if (comLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                             }
 
-                            const objLink = objPack.indexOf(parts[2]);
+                            const objLink = ObjPack.getByName(parts[2]);
                             if (objLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[2]}`);
                             }
@@ -402,7 +399,7 @@ export function packInterface(server: boolean) {
                             break;
                         }
                         case 'testbit': {
-                            const varpLink = varpPack.indexOf(parts[1]);
+                            const varpLink = VarpPack.getByName(parts[1]);
                             if (varpLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);
                             }
@@ -499,7 +496,7 @@ export function packInterface(server: boolean) {
 
         if (type === 6) {
             if (src.model) {
-                const modelId = modelPack.indexOf(src.model as string);
+                const modelId = ModelPack.getByName(src.model as string);
                 if (modelId === -1) {
                     console.error('\nError packing interfaces');
                     console.error(com.root, 'Invalid model:', src.model);
@@ -511,7 +508,7 @@ export function packInterface(server: boolean) {
             }
 
             if (src.activemodel) {
-                const modelId = modelPack.indexOf(src.activemodel as string);
+                const modelId = ModelPack.getByName(src.activemodel as string);
                 if (modelId === -1) {
                     console.error('\nError packing interfaces');
                     console.error(com.root, 'Invalid activemodel:', src.model);
@@ -523,7 +520,7 @@ export function packInterface(server: boolean) {
             }
 
             if (src.anim) {
-                const seqId = seqPack.indexOf(src.anim as string);
+                const seqId = SeqPack.getByName(src.anim as string);
                 if (seqId === -1) {
                     console.error('\nError packing interfaces');
                     console.error(com.root, 'Invalid anim:', src.seqId);
@@ -535,7 +532,7 @@ export function packInterface(server: boolean) {
             }
 
             if (src.activeanim) {
-                const seqId = seqPack.indexOf(src.activeanim as string);
+                const seqId = SeqPack.getByName(src.activeanim as string);
                 if (seqId === -1) {
                     console.error('\nError packing interfaces');
                     console.error(com.root, 'Invalid activeanim:', src.seqId);

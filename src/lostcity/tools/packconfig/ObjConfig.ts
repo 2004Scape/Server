@@ -4,8 +4,9 @@ import ObjType from '#lostcity/cache/ObjType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { PACKFILE, ParamValue, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { ParamValue, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import { CategoryPack, ModelPack, ObjPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseObjConfig(key: string, value: string): ConfigValue | null | undefined {
     // prettier-ignore
@@ -87,14 +88,14 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
 
         return value === 'yes';
     } else if (key === 'model' || key === 'manwear2' || key === 'womanwear2' || key === 'manwear3' || key === 'womanwear3' || key === 'manhead' || key === 'womanhead' || key === 'manhead2' || key === 'womanhead2') {
-        const index = PACKFILE.get('model')!.indexOf(value);
+        const index = ModelPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
     } else if (key === 'code10') {
-        const index = PACKFILE.get('seq')!.indexOf(value);
+        const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -113,7 +114,7 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        const model = PACKFILE.get('model')!.indexOf(parts[0]);
+        const model = ModelPack.getByName(parts[0]);
         if (model === -1) {
             return null;
         }
@@ -163,7 +164,7 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        const obj = PACKFILE.get('obj')!.indexOf(parts[0]);
+        const obj = ObjPack.getByName(parts[0]);
         if (obj === -1) {
             return null;
         }
@@ -175,7 +176,7 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
 
         return [obj, count];
     } else if (key === 'category') {
-        const index = PACKFILE.get('category')!.indexOf(value);
+        const index = CategoryPack.getByName(value);
         if (index === -1) {
             return null;
         }
@@ -204,23 +205,21 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
 }
 
 function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const pack = PACKFILE.get('obj')!;
-
     const dat = new Packet();
     const idx = new Packet();
-    dat.p2(pack.length);
-    idx.p2(pack.length);
+    dat.p2(ObjPack.size);
+    idx.p2(ObjPack.size);
 
-    const template_for_cert = pack.indexOf('template_for_cert');
+    const template_for_cert = ObjPack.getByName('template_for_cert');
     if (template_for_cert === -1) {
         throw packStepError('template_for_cert', 'Template for certificate does not exist.');
     }
 
-    for (let i = 0; i < pack.length; i++) {
-        const debugname = pack[i];
+    for (let i = 0; i < ObjPack.size; i++) {
+        const debugname = ObjPack.getById(i);
         let config;
         if (debugname.startsWith('cert_')) {
-            const uncert = pack.indexOf(debugname.substring('cert_'.length));
+            const uncert = ObjPack.getByName(debugname.substring('cert_'.length));
             if (uncert === -1) {
                 throw packStepError(debugname, 'Cert does not link to anything based on its name.');
             }
@@ -232,8 +231,23 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         } else {
             config = configs.get(debugname)!;
 
+            // if no name we fill with the debug name
+            let hasName = false;
+            for (let j = 0; j < config.length; j++) {
+                if (config[j].key === 'name') {
+                    hasName = true;
+                    break;
+                }
+            }
+
+            if (!hasName && config.length > 0) {
+                const name = debugname.charAt(0).toUpperCase() + debugname.slice(1).replace(/_/g, ' ');
+                config.push({ key: 'name', value: name });
+            }
+
             if (transmitAll === true) {
-                const cert = pack.indexOf('cert_' + debugname);
+                // reverse-lookup the certificate
+                const cert = ObjPack.getByName('cert_' + debugname);
                 if (cert !== -1) {
                     config.push({ key: 'certlink', value: cert });
                 }

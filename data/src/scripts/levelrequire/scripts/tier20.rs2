@@ -12,6 +12,7 @@
 [opheld2,mithril_spear] @levelrequire_attack(20, last_slot);
 [opheld2,mithril_spear_p] @levelrequire_attack(20, last_slot);
 [opheld2,mithril_2h_sword] @levelrequire_attack(20, last_slot);
+[opheld2,excalibur] @levelrequire_attack(20, last_slot);
 
 [opheld2,mithril_dart] @levelrequire_ranged(20, last_slot);
 [opheld2,mithril_dart_p] @levelrequire_ranged(20, last_slot);

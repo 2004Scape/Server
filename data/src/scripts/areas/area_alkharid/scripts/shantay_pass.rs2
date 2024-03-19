@@ -62,7 +62,7 @@ if (%shantay_jail_progress = ^put_in_shantay_jail & npc_finduid(~npc_within_dist
 [oploc1,shantay_pass]
 ~require_members_gate; // guess
 // if player is south of the pass, teleport them north of the pass scot-free.
-if (coordz(coord) < coordz(loc_coord)) {
+if (coordz(coord) <= coordz(loc_coord)) {
     p_delay(0);
     p_telejump(movecoord(coord, 0, 0, 3));
     return;
