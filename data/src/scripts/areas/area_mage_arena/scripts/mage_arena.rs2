@@ -181,13 +181,3 @@ npc_setmode(null);
 %npc_action_delay = add(map_clock, $action_delay);
 %npc_aggressive_player = uid;
 %npc_lastcombat = add(map_clock, 8);
-
-[debugproc,ma](int $stage)
-// queue(teleport_to_mage_arena, 0, $stage);
-
-[debugproc,m]
-if (~inzone_coord_pair_table(mage_arena, coord) = true){
-    mes("True");
-} else {
-    mes("False");
-}

@@ -28,6 +28,7 @@ param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,2
 param=magicdefence,10
+param=lose_cape_message,Saradomin reclaims the cape as it touches the ground.
 
 [guthixcape]
 cost=100
@@ -59,6 +60,7 @@ param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,2
 param=magicdefence,10
+param=lose_cape_message,Guthix reclaims the cape as it touches the ground.
 
 [zamorakcape]
 cost=100
@@ -90,6 +92,7 @@ param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,2
 param=magicdefence,10
+param=lose_cape_message,Zamorak reclaims the cape as it touches the ground.
 
 [saradominstaff]
 name=Staff of saradomin
