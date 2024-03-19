@@ -1,6 +1,6 @@
-[oploc1,loc_2873] @pray_at_statue("Saradomin", obj_2412, ^mage_arena_saradomin);
-[oploc1,loc_2874] @pray_at_statue("Zamorak", obj_2414, ^mage_arena_zamorak);
-[oploc1,loc_2875] @pray_at_statue("Guthix", obj_2413, ^mage_arena_guthix);
+[oploc1,loc_2873] @pray_at_statue("Saradomin", saradomincape, ^mage_arena_saradomin);
+[oploc1,loc_2874] @pray_at_statue("Zamorak", zamorakcape, ^mage_arena_zamorak);
+[oploc1,loc_2875] @pray_at_statue("Guthix", guthixcape, ^mage_arena_guthix);
 
 [label,pray_at_statue](string $name, namedobj $cape, int $stage)
 ~forcewalk(movecoord(loc_coord, 0, 0, -2));
@@ -17,7 +17,7 @@ if (%magearena_progress <= ^mage_arena_prayed_at_statue) { // first time
     ~mesbox("You feel a rush of energy charge through your veins. Suddenly a|cape appears before you.");
     return;
 }
-if (~obj_gettotal(obj_2412) > 0 | ~obj_gettotal(obj_2413) > 0 | ~obj_gettotal(obj_2414) > 0) { // already have a cape
+if (~obj_gettotal(saradomincape) > 0 | ~obj_gettotal(guthixcape) > 0 | ~obj_gettotal(zamorakcape) > 0) { // already have a cape
     anim(human_pray, 10);
     p_delay(2);
     ~mesbox("You kneel and chant to <$name>...|... but there is no response.");

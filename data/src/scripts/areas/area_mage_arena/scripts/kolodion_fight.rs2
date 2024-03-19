@@ -1,26 +1,26 @@
-[ai_applayer2,kolodion_boss_1] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
-[ai_applayer2,kolodion_boss_2] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
-[ai_applayer2,kolodion_boss_3] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^claws_of_guthix), 5);
-[ai_applayer2,kolodion_boss_4] ~npc_cast_spell(~random_range(^saradomin_strike, ^claws_of_guthix), 5);
-[ai_applayer2,kolodion_boss_5] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
+[ai_applayer2,kolodion_human_form] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
+[ai_applayer2,kolodion_ogre_form] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
+[ai_applayer2,kolodion_arachnid_form] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^claws_of_guthix), 5);
+[ai_applayer2,kolodion_ethereal_form] ~npc_cast_spell(~random_range(^saradomin_strike, ^claws_of_guthix), 5);
+[ai_applayer2,kolodion_demon_form] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
 
-[ai_opplayer2,kolodion_boss_1] ~npc_cast_spell(~random_range(^claws_of_guthix, ^saradomin_strike), 5);
-[ai_opplayer2,kolodion_boss_2] ~npc_cast_spell(~random_range(^claws_of_guthix, ^saradomin_strike), 5);
-[ai_opplayer2,kolodion_boss_3] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^claws_of_guthix), 5);
-[ai_opplayer2,kolodion_boss_4] ~npc_cast_spell(~random_range(^saradomin_strike, ^claws_of_guthix), 5);
-[ai_opplayer2,kolodion_boss_5] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
+[ai_opplayer2,kolodion_human_form] ~npc_cast_spell(~random_range(^claws_of_guthix, ^saradomin_strike), 5);
+[ai_opplayer2,kolodion_ogre_form] ~npc_cast_spell(~random_range(^claws_of_guthix, ^saradomin_strike), 5);
+[ai_opplayer2,kolodion_arachnid_form] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^claws_of_guthix), 5);
+[ai_opplayer2,kolodion_ethereal_form] ~npc_cast_spell(~random_range(^saradomin_strike, ^claws_of_guthix), 5);
+[ai_opplayer2,kolodion_demon_form] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
 
 
-[ai_queue1,kolodion_boss_1](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,kolodion_boss_2](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,kolodion_boss_3](int $arg) ~npc_default_retaliate_op;
-[ai_queue1,kolodion_boss_4](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,kolodion_boss_5](int $arg) ~npc_default_retaliate_op;
+[ai_queue1,kolodion_human_form](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,kolodion_ogre_form](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,kolodion_arachnid_form](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,kolodion_ethereal_form](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,kolodion_demon_form](int $arg) ~npc_default_retaliate_ap;
 
 // newer vids do npc_changetype the whole way (buggy with big npc's): https://youtu.be/CKDo9p08iRI?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o 
 // Older vids use npc_del and npc_add the whole way?: https://youtu.be/mQmeH32PdNk?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o
 
-[ai_queue3,kolodion_boss_1](int $arg)
+[ai_queue3,kolodion_human_form](int $arg)
 if (npc_findhero = false) {
     // in osrs, if you dont have kill credit the npc dies and you dont advance
     // with the exception of the last stage, demon
@@ -37,7 +37,7 @@ npc_del;
 if (p_finduid(uid) = true) {
     p_delay(1); // temp
 }
-npc_add($coord, kolodion_boss_2, 1000);
+npc_add($coord, kolodion_ogre_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
 spotanim_npc(spotanim_188, 124, 34);
 npc_setmode(applayer2);
@@ -45,7 +45,7 @@ npc_delay(1);
 npc_say("This is only the beginning; you can't beat me!");
 
 
-[ai_queue3,kolodion_boss_2](int $arg)
+[ai_queue3,kolodion_ogre_form](int $arg)
 if (npc_findhero = false) {
     gosub(npc_death);
     return;
@@ -60,7 +60,7 @@ npc_del;
 if (p_finduid(uid) = true) {
     p_delay(1); // temp
 }
-npc_add($coord, kolodion_boss_3, 1000);
+npc_add($coord, kolodion_arachnid_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
 spotanim_npc(spotanim_190, 16, 35);
 npc_setmode(opplayer2);
@@ -68,7 +68,7 @@ npc_delay(1);
 npc_say("Foolish mortal; I am unstoppable.");
 
 
-[ai_queue3,kolodion_boss_3](int $arg)
+[ai_queue3,kolodion_arachnid_form](int $arg)
 if (npc_findhero = false) {
     gosub(npc_death);
     return;
@@ -83,7 +83,7 @@ npc_del;
 if (p_finduid(uid) = true) {
     p_delay(1); // temp
 }
-npc_add($coord, kolodion_boss_4, 1000);
+npc_add($coord, kolodion_ethereal_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
 spotanim_npc(spotanim_188, 124, 10);
 npc_setmode(opplayer2);
@@ -91,7 +91,7 @@ npc_delay(1);
 npc_say("Now you feel it... The dark energy.");
 
 
-[ai_queue3,kolodion_boss_4](int $arg)
+[ai_queue3,kolodion_ethereal_form](int $arg)
 if (npc_findhero = false) {
     gosub(npc_death);
     return;
@@ -106,7 +106,7 @@ npc_del;
 if (p_finduid(uid) = true) {
     p_delay(1); // temp
 }
-npc_add($coord, kolodion_boss_5, 1000);
+npc_add($coord, kolodion_demon_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
 spotanim_npc(spotanim_191, 16, 0);
 npc_setmode(opplayer2);
@@ -114,7 +114,7 @@ npc_delay(1);
 npc_say("Aaaaaaaarrgghhhh! The power!");
 
 
-[ai_queue3,kolodion_boss_5](int $arg)
+[ai_queue3,kolodion_demon_form](int $arg)
 if (npc_findhero = false) {
     // no death anim
     return;
@@ -127,7 +127,7 @@ npc_setmode(none);
 npc_anim(delrith_banish, 30);
 spotanim_map(spotanim_188, npc_coord, 124, 90);
 npc_delay(2);
-npc_changetype(npc_906);
+npc_changetype(kolodion_defeated);
 npc_anim(null, 0);
 npc_setmode(playerface);
 npc_delay(0);

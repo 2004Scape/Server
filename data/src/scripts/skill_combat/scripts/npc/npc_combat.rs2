@@ -132,7 +132,7 @@ if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progr
     if (enum(npc, int, mage_arena_stages, npc_type) < %magearena_progress) {
         mes("You have already killed Kolodion in his <enum(int, string, mage_arena_boss_names, sub(%magearena_progress, 1))> form.");
     }
-    if (npc_type = kolodion_boss_3 | npc_type = kolodion_boss_5) {
+    if (npc_type = kolodion_arachnid_form | npc_type = kolodion_demon_form) {
         mes("You must now defeat him as <~add_article(enum(int, string, mage_arena_boss_names, %magearena_progress))>.");
     } else {
         mes("You must currently fight Kolodion in his <enum(int, string, mage_arena_boss_names, %magearena_progress)> form.");

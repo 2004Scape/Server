@@ -1,21 +1,21 @@
 [mage_arena_bosses]
 inputtype=int
 outputtype=npc
-val=0,kolodion_boss_1
-val=1,kolodion_boss_1
-val=2,kolodion_boss_2
-val=3,kolodion_boss_3
-val=4,kolodion_boss_4
-val=5,kolodion_boss_5
+val=0,kolodion_human_form
+val=1,kolodion_human_form
+val=2,kolodion_ogre_form
+val=3,kolodion_arachnid_form
+val=4,kolodion_ethereal_form
+val=5,kolodion_demon_form
 
 [mage_arena_stages]
 inputtype=npc
 outputtype=int
-val=kolodion_boss_1,1
-val=kolodion_boss_2,2
-val=kolodion_boss_3,3
-val=kolodion_boss_4,4
-val=kolodion_boss_5,5
+val=kolodion_human_form,1
+val=kolodion_ogre_form,2
+val=kolodion_arachnid_form,3
+val=kolodion_ethereal_form,4
+val=kolodion_demon_form,5
 
 [mage_arena_boss_names]
 inputtype=int
