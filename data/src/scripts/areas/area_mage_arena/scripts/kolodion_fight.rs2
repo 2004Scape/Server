@@ -10,7 +10,12 @@
 [ai_opplayer2,kolodion_boss_4] ~npc_cast_spell(~random_range(^saradomin_strike, ^claws_of_guthix), 5);
 [ai_opplayer2,kolodion_boss_5] ~npc_cast_spell(~random_range(^flames_of_zamorak, ^saradomin_strike), 5);
 
-// todo: set ai_queue1's to the ap one.
+
+[ai_queue1,kolodion_boss_1](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,kolodion_boss_2](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,kolodion_boss_3](int $arg) ~npc_default_retaliate_op;
+[ai_queue1,kolodion_boss_4](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,kolodion_boss_5](int $arg) ~npc_default_retaliate_op;
 
 // newer vids do npc_changetype the whole way (buggy with big npc's): https://youtu.be/CKDo9p08iRI?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o 
 // Older vids use npc_del and npc_add the whole way?: https://youtu.be/mQmeH32PdNk?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o

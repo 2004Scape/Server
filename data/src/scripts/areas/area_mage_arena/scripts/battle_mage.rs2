@@ -1,3 +1,7 @@
+[ai_queue1,npc_912](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,npc_913](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,npc_914](int $arg) ~npc_default_retaliate_ap;
+
 // todo: have mages agro the player after they defeat the boss
 [ai_applayer2,npc_912]
 if (inv_total(worn, zamorakstaff) > 0 & inv_total(worn, obj_2414) > 0 & %npc_aggressive_player ! uid) {
