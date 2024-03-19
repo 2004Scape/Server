@@ -138,7 +138,7 @@ def_coord $spawn_coord = movecoord(^mage_arena_start_coord, sub(coordx(npc_coord
 p_delay(3);
 p_teleport(^mage_arena_start_coord);
 anim(null, 0);
-def_npc $boss = enum(int, npc, mage_arena_boss_stages, %magearena_progress);
+def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena_progress);
 ~npc_del_within_distance2(^mage_arena_start_coord, $boss, 20); // remove the boss if its the same stage, and not in combat
 switch_int (%magearena_progress) {
     case ^mage_arena_started:

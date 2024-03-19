@@ -1,11 +1,4 @@
-[opplayer2,_]
-if (~pvp_level_check = false) {
-    return;
-}
-if (~pvp_in_combat_check = false) {
-    return;
-}
-@pvp_combat_start;
+[opplayer2,_] @pvp_combat_start;
 
 [applayer2,_]
 if (~pvp_level_check = false) {
@@ -34,6 +27,16 @@ p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
+if (~pvp_level_check = false) {
+    return;
+}
+if (~pvp_in_combat_check = false) {
+    return;
+}
+if (~inzone_coord_pair_table(mage_arena, coord) = true) {
+    mes("Kolodion allows only magical combat within the arena."); // osrs
+    return;
+}
 if (%damagetype = ^ranged_style) {
     @pvp_ranged_attack;
 }

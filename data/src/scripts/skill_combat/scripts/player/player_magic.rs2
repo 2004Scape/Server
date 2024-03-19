@@ -64,10 +64,6 @@
 [apnpct,magic:saradomin_strike] @player_magic_spell_attack(^saradomin_strike);
 
 [label,player_magic_spell_attack](int $spell)
-if (calc(%npc_lastcombat + 8) > map_clock & %npc_aggressive_player ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
-    mes("Someone else is fighting that.");
-    return;
-}
 p_stopaction;
 if_close;
 if (npc_stat(hitpoints) = 0) {
@@ -113,6 +109,9 @@ if (($spell = ^saradomin_strike & %saradomin_strike_casts < ^mage_arena_spell_fi
         p_stopaction;
         return;
     }
+}
+if (~player_in_combat_check = false) {
+    return;
 }
 
 // check if npc is attackable

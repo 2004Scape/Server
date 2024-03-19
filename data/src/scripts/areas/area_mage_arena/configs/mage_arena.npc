@@ -171,6 +171,7 @@ head3=model_68_obj_wear
 // TODO
 hitpoints=3
 attackrange=3
+category=kolodion
 
 [kolodion_boss_2]
 vislevel=hide
@@ -204,6 +205,7 @@ param=spawn_anim,giant_spawn
 param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
+category=kolodion
 
 [kolodion_boss_3]
 vislevel=hide
@@ -230,6 +232,7 @@ param=attack_sound,insect_3
 param=defend_sound,insect_2
 param=death_sound,insect_1
 param=death_drop,null
+category=kolodion
 
 [kolodion_boss_4]
 vislevel=hide
@@ -267,6 +270,7 @@ param=spawn_anim,human_castteleport_reverse
 // TODO
 hitpoints=78
 attackrange=5
+category=kolodion
 
 [kolodion_boss_5]
 size=3
@@ -301,3 +305,4 @@ param=attack_sound,black_demon_attack
 param=defend_sound,black_demon_hit
 param=death_sound,black_demon_death
 param=death_drop,ashes
+category=kolodion
