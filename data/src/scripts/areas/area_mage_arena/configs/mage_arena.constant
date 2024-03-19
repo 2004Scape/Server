@@ -14,3 +14,6 @@
 ^mage_arena_finish_coord = 0_39_73_44_44
 ^sparkling_pool_chamber_coord = 0_39_73_13_17
 ^sparkling_pool_return_coord = 0_39_73_46_46
+
+^mage_arena_spell_last_cast = 98
+^mage_arena_spell_finished = 99

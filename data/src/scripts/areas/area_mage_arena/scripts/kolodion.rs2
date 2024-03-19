@@ -38,9 +38,21 @@ if ($choice = 1) {
     ~chatnpc(happy,  "Not so good for the citizens; they won't stand a chance.");
     ~chatplayer(quiz, "How am I doing so far?");
     // check for each spell if they're unlocked
-    ~chatnpc(neutral, "You still need to train with the strike spell inside the|arena before you can use it outside.");
-    ~chatnpc(neutral, "You still need to train with the claw spell inside the|arena before you can use it outside.");
-    ~chatnpc(neutral, "You still need to train with the flame spell inside the|arena before you can use it outside.");
+    if (%saradomin_strike_casts < ^mage_arena_spell_finished) {
+        ~chatnpc(neutral, "You still need to train with the strike spell inside the|arena before you can use it outside.");
+    } else {
+        ~chatnpc(happy, "You're experienced enough to use the strike spell|anywhere.");
+    }
+    if (%claws_of_guthix_casts < ^mage_arena_spell_finished) {
+        ~chatnpc(neutral, "You still need to train with the claw spell inside the|arena before you can use it outside.");
+    } else {
+        ~chatnpc(happy, "You're experienced enough to use the claw spell|anywhere.");
+    }
+    if (%flames_of_zamorak_casts < ^mage_arena_spell_finished) {
+        ~chatnpc(neutral, "You still need to train with the flame spell inside the|arena before you can use it outside.");
+    } else {
+        ~chatnpc(happy, "You're experienced enough to use the flame spell|anywhere.");
+    }
     return;
 } else if ($choice = 3) {
     ~chatplayer(quiz, "Are there any more challenges available?");

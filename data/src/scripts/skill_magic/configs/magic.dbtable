@@ -10,6 +10,7 @@ column=members,boolean
 column=levelrequired,int
 column=runesrequired,namedobj,int,namedobj,int,namedobj,int
 column=wornrequired,namedobj
+column=worn_reqmessage,string
 column=experience,int
 column=loc_type,loc
 column=convertobj,obj,namedobj,seq,spotanim,synth

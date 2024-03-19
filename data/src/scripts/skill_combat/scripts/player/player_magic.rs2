@@ -29,6 +29,9 @@
 [opnpct,magic:enfeeble] @player_magic_spell_attack(^enfeeble);
 [opnpct,magic:stun] @player_magic_spell_attack(^stun);
 [opnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
+[opnpct,magic:flames_of_zamorak] @player_magic_spell_attack(^flames_of_zamorak);
+[opnpct,magic:claws_of_guthix] @player_magic_spell_attack(^claws_of_guthix);
+[opnpct,magic:saradomin_strike] @player_magic_spell_attack(^saradomin_strike);
 
 [apnpct,magic:wind_strike] @player_magic_spell_attack(^wind_strike);
 [apnpct,magic:water_strike] @player_magic_spell_attack(^water_strike);
@@ -56,6 +59,9 @@
 [apnpct,magic:enfeeble] @player_magic_spell_attack(^enfeeble);
 [apnpct,magic:stun] @player_magic_spell_attack(^stun);
 [apnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
+[apnpct,magic:flames_of_zamorak] @player_magic_spell_attack(^flames_of_zamorak);
+[apnpct,magic:claws_of_guthix] @player_magic_spell_attack(^claws_of_guthix);
+[apnpct,magic:saradomin_strike] @player_magic_spell_attack(^saradomin_strike);
 
 [label,player_magic_spell_attack](int $spell)
 if (calc(%npc_lastcombat + 8) > map_clock & %npc_aggressive_player ! uid & ~inzone_coord_pair_table(multiway_zones, npc_coord) = false) {
@@ -78,6 +84,13 @@ if (map_clock < %action_delay) {
     return;
 }
 
+// check if worn is correct
+if (db_getfieldcount($spell_data, magic_spell_table:wornrequired) > 0 & inv_total(worn, db_getfield($spell_data, magic_spell_table:wornrequired, 0)) < 1) {
+    mes(db_getfield($spell_data, magic_spell_table:worn_reqmessage, 0));
+    p_stopaction;
+    return;
+}
+
 // define spell runes
 def_namedobj $rune1;
 def_int $rune_count1;
@@ -92,6 +105,15 @@ $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~che
 if ($passes = false) {
     return;
 }
+
+if (($spell = ^saradomin_strike & %saradomin_strike_casts < ^mage_arena_spell_finished) | ($spell = ^claws_of_guthix & %claws_of_guthix_casts < ^mage_arena_spell_finished) | ($spell = ^flames_of_zamorak & %flames_of_zamorak_casts < ^mage_arena_spell_finished)) {
+    if (~inzone_coord_pair_table(mage_arena, coord) = false) {
+        mes("You are not yet experienced eneough to use this spell outside the Mage Arena.");
+        p_stopaction;
+        return;
+    }
+}
+
 // check if npc is attackable
 if (~npc_is_attackable_message(npc_type) = false) {
     p_stopaction;
@@ -175,7 +197,7 @@ anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
 spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
 // shoot spell projectile
 %action_delay = add(map_clock, 5);
-def_int $duration = 0;
+def_int $duration = 64;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
     $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
 }
@@ -246,6 +268,33 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     ~npc_retaliate(0);
 }
 npc_heropoints($damage);
+
+if ($spell = ^saradomin_strike) {
+    if (%saradomin_strike_casts = ^mage_arena_spell_last_cast) {
+        mes("You can now cast Saradomin Strike outside the arena.");
+        %saradomin_strike_casts = ^mage_arena_spell_finished;
+        ~mesbox("Congratulations. Your ability to summon a Saradomin Strike has|improved. You may now use this spell outside of the Arena."); // osrs
+    } else if (%saradomin_strike_casts < ^mage_arena_spell_last_cast) {
+        %saradomin_strike_casts = add(%saradomin_strike_casts, 1);
+    }
+} else if ($spell = ^claws_of_guthix) {
+    if (%claws_of_guthix_casts = ^mage_arena_spell_last_cast) {
+        mes("You can now cast Claws of Guthix outside the arena.");
+        %claws_of_guthix_casts = ^mage_arena_spell_finished;
+        ~mesbox("Congratulations. Your ability to summon the Claws of Guthix has|improved. You may now use this spell outside of the Arena.");
+    } else if (%claws_of_guthix_casts < ^mage_arena_spell_last_cast) {
+        %claws_of_guthix_casts = add(%claws_of_guthix_casts, 1);
+    }
+} else if ($spell = ^flames_of_zamorak) {
+    if (%flames_of_zamorak_casts = ^mage_arena_spell_last_cast) {
+        // https://youtu.be/cX7x62vqRV0?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=439
+        mes("You can now cast Flames of Zamorak outside the arena.");
+        %flames_of_zamorak_casts = ^mage_arena_spell_finished;
+        ~mesbox("Congratulations. Your ability to summon the Flames of Zamorak has|improved. You may now use this spell outside of the Arena.");
+    } else if (%flames_of_zamorak_casts < ^mage_arena_spell_last_cast) {
+        %flames_of_zamorak_casts = add(%flames_of_zamorak_casts, 1);
+    }
+}
 
 // debug code
 // if(testbit(%attackstyle_magic, 0) = true) {

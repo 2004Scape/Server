@@ -177,10 +177,8 @@ anim(null, 0);
 npc_add($coord, $boss, 1000);
 npc_anim(npc_param(spawn_anim), 0);
 npc_setmode(null);
-if (~npc_out_of_combat = true) {
-    %npc_action_delay = add(map_clock, $action_delay);
-    %npc_attacking_uid = %npc_aggressive_player;
-}
+%npc_action_delay = add(map_clock, $action_delay);
+%npc_aggressive_player = uid;
 %npc_lastcombat = add(map_clock, 8);
 
 [debugproc,ma](int $stage)
