@@ -394,14 +394,18 @@ protect=no
 scope=perm
 
 [saradomin_strike_casts]
+scope=perm
 
 [claws_of_guthix_casts]
+scope=perm
 
 [flames_of_zamorak_casts]
+scope=perm
 
 [varp_271]
 
-[varp_272]
+[charge_god_spell]
+scope=perm
 
 [varp_274]
 

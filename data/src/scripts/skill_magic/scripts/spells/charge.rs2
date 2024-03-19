@@ -1,0 +1,58 @@
+[if_button,magic:charge]
+if_close;
+if (p_finduid(uid) = true) {
+    if (%magearena_progress < ^mage_arena_staff_given) {
+        mes("This spell can only be learnt in the Mage Arena.");
+        return;
+    }
+
+    if (%charge_god_spell > 300) {
+        mes("You can't recast that yet, your current Charge is too strong.");
+        return;
+    }
+
+    def_dbrow $spell_data = ~get_spell_data(^charge);
+    // define spell runes
+    def_namedobj $rune1;
+    def_int $rune_count1;
+    def_namedobj $rune2;
+    def_int $rune_count2;
+    def_namedobj $rune3;
+    def_int $rune_count3;
+    def_boolean $passes;
+    // check runes
+    $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
+    if ($passes = false) {
+        return;
+    }
+    %charge_god_spell = 350;
+    // timer in osrs, can pause with interface
+    settimer(charge, 2);
+    mes("You feel charged with magic power.");
+    anim(seq_811, 0);
+    spotanim_pl(castteleport, 128, 32);
+    sound_synth(charge, 0, 0);
+}
+
+
+[timer,charge]
+%charge_god_spell = sub(%charge_god_spell, 1);
+if (%charge_god_spell < 1) {
+    mes("Your magical charge fades away.");
+    sound_synth(charge_gone, 0, 0);
+    cleartimer(charge);
+    return;
+}
+
+
+[proc,has_god_cape_and_staff]()(boolean)
+if (inv_total(worn, obj_2412) > 0 & inv_total(worn, saradominstaff) > 0) {
+    return (true);
+}
+if (inv_total(worn, obj_2413) > 0 & inv_total(worn, guthixstaff) > 0) {
+    return (true);
+}
+if (inv_total(worn, obj_2414) > 0 & inv_total(worn, zamorakstaff) > 0) {
+    return (true);
+}
+return (false);

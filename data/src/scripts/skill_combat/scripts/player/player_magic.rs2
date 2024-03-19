@@ -108,7 +108,9 @@ if ($passes = false) {
 
 if (($spell = ^saradomin_strike & %saradomin_strike_casts < ^mage_arena_spell_finished) | ($spell = ^claws_of_guthix & %claws_of_guthix_casts < ^mage_arena_spell_finished) | ($spell = ^flames_of_zamorak & %flames_of_zamorak_casts < ^mage_arena_spell_finished)) {
     if (~inzone_coord_pair_table(mage_arena, coord) = false) {
-        mes("You are not yet experienced enough to use this spell outside the Mage Arena.");
+        // https://youtu.be/TrxuRyogdEo?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=60
+        mes("You are not yet experienced enough to use this spell outside the");
+        mes("Mage Arena.");
         p_stopaction;
         return;
     }
@@ -203,6 +205,9 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
 }
 
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
+if (%charge_god_spell > 0 & ~has_god_cape_and_staff = true & ($spell = ^saradomin_strike | $spell = ^claws_of_guthix | $spell = ^flames_of_zamorak)) {
+    $maxhit = 30;
+}
 def_int $damage = 0;
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {

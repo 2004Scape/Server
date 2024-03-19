@@ -11550,6 +11550,8 @@ param=death_anim,midget_death
 param=attack_sound,gnome_attack
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
+param=magicattack_anim,midget_seq_197
+param=defend_anim,midget_block
 category=battle_mage
 
 [npc_928]
