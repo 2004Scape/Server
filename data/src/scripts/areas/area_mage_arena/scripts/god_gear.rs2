@@ -13,6 +13,7 @@ if (inv_total(worn, $item1) > 0 | inv_total(worn, $item2) > 0) {
     mes("The conflicting powers of staff and cape drive them apart.");
     return(false);
 }
+return(true);
 
 [proc,check_conflicting_god_staff](namedobj $item1, namedobj $item2)(boolean)
 if (inv_total(worn, $item1) > 0 | inv_total(worn, $item2) > 0) {
@@ -20,6 +21,7 @@ if (inv_total(worn, $item1) > 0 | inv_total(worn, $item2) > 0) {
     mes("The conflicting powers of staff and cape drive them apart.");
     return(false);
 }
+return(true);
 
 [opheld5,saradomincape] @drop_god_cape;
 [opheld5,zamorakcape] @drop_god_cape;
