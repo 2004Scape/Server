@@ -83,7 +83,7 @@ npc_del;
 if (p_finduid(uid) = true) {
     p_delay(1); // temp
 }
-npc_add($coord, kolodion_ethereal_form, 1000);
+npc_add(movecoord($coord, 1, 0, 1), kolodion_ethereal_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
 spotanim_npc(spotanim_188, 124, 10);
 npc_setmode(opplayer2);
