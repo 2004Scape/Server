@@ -3,152 +3,137 @@
 // add it to the spell table in ../configs/magic/magic_combat_spells.dbrow
 // create an opnpct and apnpct trigger for it in this script
 
-[opnpct,magic:wind_strike] @player_magic_spell_attack(^wind_strike);
-[opnpct,magic:water_strike] @player_magic_spell_attack(^water_strike);
-[opnpct,magic:earth_strike] @player_magic_spell_attack(^earth_strike);
-[opnpct,magic:fire_strike] @player_magic_spell_attack(^fire_strike);
-[opnpct,magic:wind_bolt] @player_magic_spell_attack(^wind_bolt);
-[opnpct,magic:water_bolt] @player_magic_spell_attack(^water_bolt);
-[opnpct,magic:earth_bolt] @player_magic_spell_attack(^earth_bolt);
-[opnpct,magic:fire_bolt] @player_magic_spell_attack(^fire_bolt);
-[opnpct,magic:wind_blast] @player_magic_spell_attack(^wind_blast);
-[opnpct,magic:water_blast] @player_magic_spell_attack(^water_blast);
-[opnpct,magic:earth_blast] @player_magic_spell_attack(^earth_blast);
-[opnpct,magic:fire_blast] @player_magic_spell_attack(^fire_blast);
-[opnpct,magic:wind_wave] @player_magic_spell_attack(^wind_wave);
-[opnpct,magic:water_wave] @player_magic_spell_attack(^water_wave);
-[opnpct,magic:earth_wave] @player_magic_spell_attack(^earth_wave);
-[opnpct,magic:fire_wave] @player_magic_spell_attack(^fire_wave);
-[opnpct,magic:curse] @player_magic_spell_attack(^curse);
-[opnpct,magic:weaken] @player_magic_spell_attack(^weaken);
-[opnpct,magic:confuse] @player_magic_spell_attack(^confuse);
-[opnpct,magic:bind] @player_magic_spell_attack(^bind);
-[opnpct,magic:snare] @player_magic_spell_attack(^snare);
-[opnpct,magic:entangle] @player_magic_spell_attack(^entangle);
-[opnpct,magic:vulnerability] @player_magic_spell_attack(^vulnerability);
-[opnpct,magic:enfeeble] @player_magic_spell_attack(^enfeeble);
-[opnpct,magic:stun] @player_magic_spell_attack(^stun);
-[opnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
-[opnpct,magic:flames_of_zamorak] @player_magic_spell_attack(^flames_of_zamorak);
-[opnpct,magic:claws_of_guthix] @player_magic_spell_attack(^claws_of_guthix);
-[opnpct,magic:saradomin_strike] @player_magic_spell_attack(^saradomin_strike);
+[opnpct,magic:wind_strike] ~pvm_default_spell(^wind_strike);
+[opnpct,magic:water_strike] ~pvm_default_spell(^water_strike);
+[opnpct,magic:earth_strike] ~pvm_default_spell(^earth_strike);
+[opnpct,magic:fire_strike] ~pvm_default_spell(^fire_strike);
+[opnpct,magic:wind_bolt] ~pvm_default_spell(^wind_bolt);
+[opnpct,magic:water_bolt] ~pvm_default_spell(^water_bolt);
+[opnpct,magic:earth_bolt] ~pvm_default_spell(^earth_bolt);
+[opnpct,magic:fire_bolt] ~pvm_default_spell(^fire_bolt);
+[opnpct,magic:wind_blast] ~pvm_default_spell(^wind_blast);
+[opnpct,magic:water_blast] ~pvm_default_spell(^water_blast);
+[opnpct,magic:earth_blast] ~pvm_default_spell(^earth_blast);
+[opnpct,magic:fire_blast] ~pvm_default_spell(^fire_blast);
+[opnpct,magic:wind_wave] ~pvm_default_spell(^wind_wave);
+[opnpct,magic:water_wave] ~pvm_default_spell(^water_wave);
+[opnpct,magic:earth_wave] ~pvm_default_spell(^earth_wave);
+[opnpct,magic:fire_wave] ~pvm_default_spell(^fire_wave);
+[opnpct,magic:curse] ~pvm_default_spell(^curse);
+[opnpct,magic:weaken] ~pvm_default_spell(^weaken);
+[opnpct,magic:confuse] ~pvm_default_spell(^confuse);
+[opnpct,magic:bind] ~pvm_default_spell(^bind);
+[opnpct,magic:snare] ~pvm_default_spell(^snare);
+[opnpct,magic:entangle] ~pvm_default_spell(^entangle);
+[opnpct,magic:vulnerability] ~pvm_default_spell(^vulnerability);
+[opnpct,magic:enfeeble] ~pvm_default_spell(^enfeeble);
+[opnpct,magic:stun] ~pvm_default_spell(^stun);
+[opnpct,magic:crumble_undead] ~pvm_default_spell(^crumble_undead);
 
-[apnpct,magic:wind_strike] @player_magic_spell_attack(^wind_strike);
-[apnpct,magic:water_strike] @player_magic_spell_attack(^water_strike);
-[apnpct,magic:earth_strike] @player_magic_spell_attack(^earth_strike);
-[apnpct,magic:fire_strike] @player_magic_spell_attack(^fire_strike);
-[apnpct,magic:wind_bolt] @player_magic_spell_attack(^wind_bolt);
-[apnpct,magic:water_bolt] @player_magic_spell_attack(^water_bolt);
-[apnpct,magic:earth_bolt] @player_magic_spell_attack(^earth_bolt);
-[apnpct,magic:fire_bolt] @player_magic_spell_attack(^fire_bolt);
-[apnpct,magic:wind_blast] @player_magic_spell_attack(^wind_blast);
-[apnpct,magic:water_blast] @player_magic_spell_attack(^water_blast);
-[apnpct,magic:earth_blast] @player_magic_spell_attack(^earth_blast);
-[apnpct,magic:fire_blast] @player_magic_spell_attack(^fire_blast);
-[apnpct,magic:wind_wave] @player_magic_spell_attack(^wind_wave);
-[apnpct,magic:water_wave] @player_magic_spell_attack(^water_wave);
-[apnpct,magic:earth_wave] @player_magic_spell_attack(^earth_wave);
-[apnpct,magic:fire_wave] @player_magic_spell_attack(^fire_wave);
-[apnpct,magic:curse] @player_magic_spell_attack(^curse);
-[apnpct,magic:weaken] @player_magic_spell_attack(^weaken);
-[apnpct,magic:confuse] @player_magic_spell_attack(^confuse);
-[apnpct,magic:bind] @player_magic_spell_attack(^bind);
-[apnpct,magic:snare] @player_magic_spell_attack(^snare);
-[apnpct,magic:entangle] @player_magic_spell_attack(^entangle);
-[apnpct,magic:vulnerability] @player_magic_spell_attack(^vulnerability);
-[apnpct,magic:enfeeble] @player_magic_spell_attack(^enfeeble);
-[apnpct,magic:stun] @player_magic_spell_attack(^stun);
-[apnpct,magic:crumble_undead] @player_magic_spell_attack(^crumble_undead);
-[apnpct,magic:flames_of_zamorak] @player_magic_spell_attack(^flames_of_zamorak);
-[apnpct,magic:claws_of_guthix] @player_magic_spell_attack(^claws_of_guthix);
-[apnpct,magic:saradomin_strike] @player_magic_spell_attack(^saradomin_strike);
+[apnpct,magic:wind_strike] ~pvm_default_spell(^wind_strike);
+[apnpct,magic:water_strike] ~pvm_default_spell(^water_strike);
+[apnpct,magic:earth_strike] ~pvm_default_spell(^earth_strike);
+[apnpct,magic:fire_strike] ~pvm_default_spell(^fire_strike);
+[apnpct,magic:wind_bolt] ~pvm_default_spell(^wind_bolt);
+[apnpct,magic:water_bolt] ~pvm_default_spell(^water_bolt);
+[apnpct,magic:earth_bolt] ~pvm_default_spell(^earth_bolt);
+[apnpct,magic:fire_bolt] ~pvm_default_spell(^fire_bolt);
+[apnpct,magic:wind_blast] ~pvm_default_spell(^wind_blast);
+[apnpct,magic:water_blast] ~pvm_default_spell(^water_blast);
+[apnpct,magic:earth_blast] ~pvm_default_spell(^earth_blast);
+[apnpct,magic:fire_blast] ~pvm_default_spell(^fire_blast);
+[apnpct,magic:wind_wave] ~pvm_default_spell(^wind_wave);
+[apnpct,magic:water_wave] ~pvm_default_spell(^water_wave);
+[apnpct,magic:earth_wave] ~pvm_default_spell(^earth_wave);
+[apnpct,magic:fire_wave] ~pvm_default_spell(^fire_wave);
+[apnpct,magic:curse] ~pvm_default_spell(^curse);
+[apnpct,magic:weaken] ~pvm_default_spell(^weaken);
+[apnpct,magic:confuse] ~pvm_default_spell(^confuse);
+[apnpct,magic:bind] ~pvm_default_spell(^bind);
+[apnpct,magic:snare] ~pvm_default_spell(^snare);
+[apnpct,magic:entangle] ~pvm_default_spell(^entangle);
+[apnpct,magic:vulnerability] ~pvm_default_spell(^vulnerability);
+[apnpct,magic:enfeeble] ~pvm_default_spell(^enfeeble);
+[apnpct,magic:stun] ~pvm_default_spell(^stun);
+[apnpct,magic:crumble_undead] ~pvm_default_spell(^crumble_undead);
 
-[label,player_magic_spell_attack](int $spell)
-p_stopaction;
-if_close;
-if (npc_stat(hitpoints) = 0) {
-    p_stopaction;
-    return; // this means the npc is not avail to fight i.e dead
-}
-// look for spell in db
+[proc,pvm_default_spell](int $spell)
 def_dbrow $spell_data = ~get_spell_data($spell);
+if (~pvm_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (~pvm_freeze_allowed($spell_data) = false) {
+    return;
+}
+if (~pvm_debuff_allowed($spell_data) = false) {
+    return;
+}
+def_int $duration = ~pvm_spell_cast($spell_data);
+// if player DOESNT splash:
+if (~player_npc_hit_roll(^magic_style) = true) {
+    ~pvm_spell_success($spell_data, ~magic_spell_maxhit($spell_data), $duration);
+    ~pvm_stat_change_effect($spell_data);
+    ~pvm_freeze_effect($spell_data);
+} else {
+    ~pvm_spell_fail($spell_data, $duration);
+}
 
-// mes("<tostring(map_clock)>, <tostring(%action_delay)>");
+[proc,pvm_combat_spell_checks](dbrow $spell_data)(boolean)
+if_close;
+p_stopaction;
+if (npc_stat(hitpoints) = 0) {
+    return(false); // this means the npc is not avail to fight i.e dead
+}
 if (map_clock < %action_delay) {
     p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
-    return;
+    return(false);
 }
-
-// check if worn is correct
-if (db_getfieldcount($spell_data, magic_spell_table:wornrequired) > 0 & inv_total(worn, db_getfield($spell_data, magic_spell_table:wornrequired, 0)) < 1) {
-    mes(db_getfield($spell_data, magic_spell_table:worn_reqmessage, 0));
-    p_stopaction;
-    return;
-}
-
 if (~check_spell_requirements($spell_data) = false) {
-    return;
-}
-
-if (($spell = ^saradomin_strike & %saradomin_strike_casts < ^mage_arena_spell_finished) | ($spell = ^claws_of_guthix & %claws_of_guthix_casts < ^mage_arena_spell_finished) | ($spell = ^flames_of_zamorak & %flames_of_zamorak_casts < ^mage_arena_spell_finished)) {
-    if (~inzone_coord_pair_table(mage_arena, coord) = false) {
-        // https://youtu.be/TrxuRyogdEo?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=60
-        mes("You are not yet experienced enough to use this spell outside the");
-        mes("Mage Arena.");
-        p_stopaction;
-        return;
-    }
+    return(false);
 }
 if (~player_in_combat_check = false) {
-    return;
+    return(false);
 }
-
 // check if npc is attackable
 if (~npc_is_attackable_message(npc_type) = false) {
-    p_stopaction;
-    return;
+    return(false);
 }
-
 if (npc_type = delrith) {
     if (%demon_progress < ^demon_complete) {
         if (inv_getobj(worn, 3) ! silverlight) {
-           return;
+           return(false);
         }
     } else {
-        return;
+        return(false);
     }
 }
+return(true);
 
-// check if crumble undead & npc is undead
-if ($spell = ^crumble_undead & npc_param(undead) = ^false) {
-    mes("This spell only affects skeletons, zombies, ghosts and shades.");
-    p_stopaction;
-    return;
-}
-
+[proc,pvm_freeze_allowed](dbrow $spell_data)(boolean)
 // check if npc is already frozen
 if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
     if (%npc_stunned > map_clock) {
         mes("Your target is already held by a magical force.");
-        p_stopaction;
-        return;
+        return(false);
     }
     // immune message existed in 2005 https://oldschool.runescape.wiki/w/Update:Magic_and_Wilderness_Updates
     if (calc(%npc_stunned + 5) > map_clock) {
         // osrs wiki trivia says that snare didnt have this? No proof though
         // ive found proof of bind and entangle having this in 2006: https://imgur.com/a/jBb1awE
         mes("Your target is currently immume to that spell.");
-        p_stopaction;
-        return;
+        return(false);
     }
 }
+return(true);
 
+[proc,pvm_debuff_allowed](dbrow $spell_data)(boolean)
 // check if npc can be stat reduced
 def_stat $stat;
 def_int $constant;
 def_int $percent;
 def_npc_stat $npc_stat;
 def_int $i = 0;
+def_int $spell = db_getfield($spell_data, magic_spell_table:spell, 0);
 while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change) & $spell ! ^flames_of_zamorak & $spell ! ^claws_of_guthix & $spell ! ^saradomin_strike) {
     $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
     $npc_stat = ~convert_stat_to_npc_stat($stat);
@@ -160,138 +145,125 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change) & $spel
             mes("Your foe's <lowercase(~stat_name($stat))> has already been weakened.");
         }
         p_stopaction;
-        return;
+        return(false);
     }
     $i = add($i, 1);
 }
+return(true);
 
+
+// check if crumble undead & npc is undead
+if ($spell = ^crumble_undead & npc_param(undead) = ^false) {
+    mes("This spell only affects skeletons, zombies, ghosts and shades.");
+    return(false);
+}
+
+[proc,pvm_spell_cast](dbrow $spell_data)(int)
 ~player_combat_stat;
-
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
-// damage npc if spell has max hit.
-// give xp for damage
-// if auto cast isnt defined, then just assume they're using a spell straight from the spellbook
-def_int $damagestyle = %damagestyle;
+
 // in osrs you can only defensive cast with a staff. Not sure if this is the case in 2004
 // Might be confusing for players if they just so happen to have their non-magic weapon on defensive, and end up gaining def xp from manual casting.
 // so maybe jagex did it this way?
-if ($damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
-    $damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
+if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
+    %damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
 } else {
-    $damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
+    %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
 }
+
 // spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
 // player spell visual effect
 spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
 // shoot spell projectile
 %action_delay = add(map_clock, 5);
-def_int $duration = 64;
+def_int $duration = 0;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
     $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
 }
-
-def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
-if (%charge_god_spell > 0 & ~has_god_cape_and_staff = true & ($spell = ^saradomin_strike | $spell = ^claws_of_guthix | $spell = ^flames_of_zamorak)) {
-    $maxhit = 30;
+// OSRS:
+// only continue fighting if auto cast is turned on
+// freezes, and stat reductions dont continue ever, even if you have autocast enabled.
+// crumble undead continues autocast for some reason
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+    p_opnpct(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
 }
-def_int $damage = 0;
-// if player DOESNT splash:
-if (~player_npc_hit_roll(^magic_style) = true) {
-    // play spell success sound
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    // roll 0-maxhit
-    $damage = randominc(min($maxhit, npc_param(max_dealt)));
-    $damage = min($damage, npc_stat(hitpoints));
-    // if maxhit is defined then damage npc
-    if ($maxhit ! null) {
-        // damage npc
-        // mes("Duration: <tostring($duration)>, Duration (ticks): <tostring(calc($duration / 30))>");
-        npc_queue(2, $damage, calc($duration / 30 + 1)); // delayed an extra tick in osrs
-        // npcs didnt have a flinch anim until sept 20 2006. https://youtu.be/UFgMqvI4to8
-        // https://oldschool.runescape.wiki/w/Update:Slug_Menace
-        // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
-        // npc sound
-        if (npc_param(defend_sound) ! null) {
-            sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
-        }
-        ~give_combat_experience($damagestyle, $damage, npc_param(combat_xp_multiplier));
-    }
-    // spell visual
-    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
-    // npc auto retal
-    ~npc_retaliate(calc($duration / 30 + 1)); // delayed an extra tick in osrs
+return($duration);
 
-    // other effects:
-    // reduce stat
-    $i = 0;
-    while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
-        if (($spell = ^flames_of_zamorak | $spell = ^claws_of_guthix | $spell = ^saradomin_strike) & ~has_god_cape_and_staff = true) {
-            $i = db_getfieldcount($spell_data, magic_spell_table:stat_change);
-        }
-        $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
-        $npc_stat = ~convert_stat_to_npc_stat($stat);
-        if (npc_stat($npc_stat) >= npc_basestat($npc_stat)) {
-            if ($constant > 0 & $percent > 0) {
-                // if both positive assume statadd
-                // nothing ever uses this but i guess if someone wants to add some heal spell or something
-                npc_statadd($npc_stat, $constant, $percent);
-            } else {
-                if ($constant < 0) $constant = multiply($constant, -1);
-                if ($percent < 0) $percent = multiply($percent, -1);
-                npc_statsub($npc_stat, $constant, $percent);
-            }
-        }
-        $i = add($i, 1);
+
+[proc,pvm_spell_success](dbrow $spell_data, int $maxhit, int $duration)
+// play spell success sound
+sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+// roll 0-maxhit
+def_int $damage = randominc(min($maxhit, npc_param(max_dealt)));
+$damage = min($damage, npc_stat(hitpoints));
+// if maxhit is defined then damage npc
+if ($maxhit ! null) {
+    // damage npc
+    // mes("Duration: <tostring($duration)>, Duration (ticks): <tostring(calc($duration / 30))>");
+    npc_queue(2, $damage, calc($duration / 30 + 1)); // delayed an extra tick in osrs
+    // npcs didnt have a flinch anim until sept 20 2006. https://youtu.be/UFgMqvI4to8
+    // https://oldschool.runescape.wiki/w/Update:Slug_Menace
+    // npc_anim(npc_param(defend_anim), $duration); // delay npc this tick
+    // npc sound
+    if (npc_param(defend_sound) ! null) {
+        sound_synth(npc_param(defend_sound), 0, $duration); // delay 1 client tick for the hit queue
     }
-    // freeze npc if spell has freeze effect
-    if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-        %npc_stunned = calc(map_clock + db_getfield($spell_data, magic_spell_table:freeze_time, 0) + 1);
-        npc_setmovecheck(npc_stunned_magic);
-    }
-} else {
-    // splash
-    if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
-        sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
-    } else {
-        // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
-        // every time?
-        sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    }
-    // splash sound would play here, doesnt exist in this rev?
-    // sound_synth(, 0, $duration);
-    spotanim_npc(spotanim_85, 92, $duration);
-    // splashing in osrs causes insta auto retal
-    ~npc_retaliate(0);
+    ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
 }
+// spell visual
+spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
+// npc auto retal
+~npc_retaliate(calc($duration / 30 + 1)); // delayed an extra tick in osrs
 npc_heropoints($damage);
 
-if ($spell = ^saradomin_strike) {
-    if (%saradomin_strike_casts = ^mage_arena_spell_last_cast) {
-        mes("You can now cast Saradomin Strike outside the arena.");
-        %saradomin_strike_casts = ^mage_arena_spell_finished;
-        ~mesbox("Congratulations. Your ability to summon a Saradomin Strike has|improved. You may now use this spell outside of the Arena."); // osrs
-    } else if (%saradomin_strike_casts < ^mage_arena_spell_last_cast) {
-        %saradomin_strike_casts = add(%saradomin_strike_casts, 1);
+
+[proc,pvm_spell_fail](dbrow $spell_data, int $duration)
+// splash
+if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
+    sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
+} else {
+    // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
+    // every time?
+    sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+}
+// splash sound would play here, doesnt exist in this rev?
+// sound_synth(, 0, $duration);
+spotanim_npc(spotanim_85, 92, $duration);
+// splashing in osrs causes insta auto retal
+~npc_retaliate(0);
+
+
+[proc,pvm_stat_change_effect](dbrow $spell_data)
+def_stat $stat;
+def_int $constant;
+def_int $percent;
+def_npc_stat $npc_stat;
+def_int $i = 0;
+while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
+    $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
+    $npc_stat = ~convert_stat_to_npc_stat($stat);
+    if (npc_stat($npc_stat) >= npc_basestat($npc_stat)) {
+        if ($constant > 0 & $percent > 0) {
+            // if both positive assume statadd
+            // nothing ever uses this but i guess if someone wants to add some heal spell or something
+            npc_statadd($npc_stat, $constant, $percent);
+        } else {
+            if ($constant < 0) $constant = multiply($constant, -1);
+            if ($percent < 0) $percent = multiply($percent, -1);
+            npc_statsub($npc_stat, $constant, $percent);
+        }
     }
-} else if ($spell = ^claws_of_guthix) {
-    if (%claws_of_guthix_casts = ^mage_arena_spell_last_cast) {
-        mes("You can now cast Claws of Guthix outside the arena.");
-        %claws_of_guthix_casts = ^mage_arena_spell_finished;
-        ~mesbox("Congratulations. Your ability to summon the Claws of Guthix has|improved. You may now use this spell outside of the Arena.");
-    } else if (%claws_of_guthix_casts < ^mage_arena_spell_last_cast) {
-        %claws_of_guthix_casts = add(%claws_of_guthix_casts, 1);
-    }
-} else if ($spell = ^flames_of_zamorak) {
-    if (%flames_of_zamorak_casts = ^mage_arena_spell_last_cast) {
-        // https://youtu.be/cX7x62vqRV0?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=439
-        mes("You can now cast Flames of Zamorak outside the arena.");
-        %flames_of_zamorak_casts = ^mage_arena_spell_finished;
-        ~mesbox("Congratulations. Your ability to summon the Flames of Zamorak has|improved. You may now use this spell outside of the Arena.");
-    } else if (%flames_of_zamorak_casts < ^mage_arena_spell_last_cast) {
-        %flames_of_zamorak_casts = add(%flames_of_zamorak_casts, 1);
-    }
+    $i = add($i, 1);
+}
+
+
+[proc,pvm_freeze_effect](dbrow $spell_data)
+// freeze npc if spell has freeze effect
+if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
+    %npc_stunned = calc(map_clock + db_getfield($spell_data, magic_spell_table:freeze_time, 0) + 1);
+    npc_setmovecheck(npc_stunned_magic);
 }
 
 // debug code
@@ -304,15 +276,6 @@ if ($spell = ^saradomin_strike) {
 // if (db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
 //     mes("Spell can continue by autocast");
 // }
-
-// OSRS:
-// only continue fighting if auto cast is turned on
-// freezes, and stat reductions dont continue ever, even if you have autocast enabled.
-// crumble undead continues autocast for some reason
-if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
-    p_opnpct(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
-    return;
-}
 
 [ai_movecheck,npc_stunned_magic]()(boolean)
 if (map_clock < %npc_stunned) {

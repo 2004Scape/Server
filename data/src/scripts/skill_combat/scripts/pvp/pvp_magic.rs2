@@ -53,7 +53,6 @@
 // [applayert,magic:crumble_undead] ~pvp_default_spell(^crumble_undead);
 
 [proc,pvp_default_spell](int $spell)
-// look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 if (~pvp_combat_spell_checks($spell_data) = false) {
     return;
@@ -81,6 +80,7 @@ if (~pvp_hit_roll(^magic_style) = true) {
 
 [proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
+p_stopaction;
 if (.stat(hitpoints) = 0) {
     return(false);
 }
