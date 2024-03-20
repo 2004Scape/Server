@@ -86,18 +86,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:wornrequired) > 0 & inv_tota
     return;
 }
 
-// define spell runes
-def_namedobj $rune1;
-def_int $rune_count1;
-def_namedobj $rune2;
-def_int $rune_count2;
-def_namedobj $rune3;
-def_int $rune_count3;
-def_boolean $passes;
-// check runes
-$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-// mes("<tostring(map_clock)>: Cast");
-if ($passes = false) {
+if (~check_spell_requirements($spell_data) = false) {
     return;
 }
 
@@ -158,10 +147,11 @@ if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
 def_stat $stat;
 def_int $constant;
 def_int $percent;
+def_npc_stat $npc_stat;
 def_int $i = 0;
-while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
+while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change) & $spell ! ^flames_of_zamorak & $spell ! ^claws_of_guthix & $spell ! ^saradomin_strike) {
     $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
-    def_npc_stat $npc_stat = ~convert_stat_to_npc_stat($stat);
+    $npc_stat = ~convert_stat_to_npc_stat($stat);
     if (npc_stat($npc_stat) < npc_basestat($npc_stat)) {
         // in osrs, confuse and weaken spell have a different message
         if (($npc_stat = strength & $spell = ^weaken) | ($npc_stat = attack & $spell = ^confuse)) {
@@ -177,7 +167,7 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
 
 ~player_combat_stat;
 
-~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 // damage npc if spell has max hit.
 // give xp for damage
@@ -237,16 +227,21 @@ if (~player_npc_hit_roll(^magic_style) = true) {
     // reduce stat
     $i = 0;
     while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
+        if (($spell = ^flames_of_zamorak | $spell = ^claws_of_guthix | $spell = ^saradomin_strike) & ~has_god_cape_and_staff = true) {
+            $i = db_getfieldcount($spell_data, magic_spell_table:stat_change);
+        }
         $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
-        def_npc_stat $npc_stat = ~convert_stat_to_npc_stat($stat);
-        if ($constant > 0 & $percent > 0) {
-            // if both positive assume statadd
-            // nothing ever uses this but i guess if someone wants to add some heal spell or something
-            npc_statadd($npc_stat, $constant, $percent);
-        } else {
-            if ($constant < 0) $constant = multiply($constant, -1);
-            if ($percent < 0) $percent = multiply($percent, -1);
-            npc_statsub($npc_stat, $constant, $percent);
+        $npc_stat = ~convert_stat_to_npc_stat($stat);
+        if (npc_stat($npc_stat) >= npc_basestat($npc_stat)) {
+            if ($constant > 0 & $percent > 0) {
+                // if both positive assume statadd
+                // nothing ever uses this but i guess if someone wants to add some heal spell or something
+                npc_statadd($npc_stat, $constant, $percent);
+            } else {
+                if ($constant < 0) $constant = multiply($constant, -1);
+                if ($percent < 0) $percent = multiply($percent, -1);
+                npc_statsub($npc_stat, $constant, $percent);
+            }
         }
         $i = add($i, 1);
     }

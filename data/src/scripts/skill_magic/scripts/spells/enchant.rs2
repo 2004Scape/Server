@@ -12,17 +12,7 @@ if (map_clock < %magic_utility_delay | inv_total(inv, $initial_obj) < 1) {
 }
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
-// define spell runes
-def_namedobj $rune1;
-def_int $rune_count1;
-def_namedobj $rune2;
-def_int $rune_count2;
-def_namedobj $rune3;
-def_int $rune_count3;
-def_boolean $passes;
-// check runes
-$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-if ($passes = false) {
+if (~check_spell_requirements($spell_data) = false) {
     return;
 }
 def_namedobj $final_obj;
@@ -47,7 +37,7 @@ if (oc_members($final_obj) = true) {
 }
 // enchanting always sets slot instead of deleting
 inv_setslot(inv, $slot, $final_obj, 1);
-~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 
 anim($anim, 0);

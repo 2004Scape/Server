@@ -1,0 +1,29 @@
+[opplayert,magic:flames_of_zamorak] ~pvp_flames_of_zamorak(^flames_of_zamorak);
+// [applayert,magic:flames_of_zamorak] ~pvp_flames_of_zamorak(^flames_of_zamorak);
+
+[proc,pvp_flames_of_zamorak](int $spell)
+// look for spell in db
+def_dbrow $spell_data = ~get_spell_data($spell);
+if (~pvp_combat_spell_checks($spell_data) = false) {
+    return;
+}
+~pvp_spell_cast($spell_data);
+// spell hit
+if (~pvp_hit_roll(^magic_style) = true) {
+    ~pvp_spell_success($spell_data, ~god_spell_maxhit($spell_data), 64);
+    if (~has_god_cape_and_staff = true & .stat(magic) >= .stat_base(magic)) {
+        .stat_sub(magic, 1, 5);
+        .mes("You feel your magical powers weaken.");
+    }
+} else {
+    ~pvp_spell_fail($spell_data, 64);
+}
+// todo: heropoints
+~set_pk_vars; // skulls
+
+[proc,god_spell_maxhit](dbrow $spell_data)(int)
+def_int $maxhit = ~magic_spell_maxhit($spell_data);
+if (%charge_god_spell > 0 & ~has_god_cape_and_staff = true) {
+    return (scale(3, 2, $maxhit));
+}
+return ($maxhit);

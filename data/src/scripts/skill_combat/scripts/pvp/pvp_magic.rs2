@@ -1,118 +1,131 @@
-[opplayert,magic:wind_strike] @pvp_magic_spell_attack(^wind_strike);
-[opplayert,magic:water_strike] @pvp_magic_spell_attack(^water_strike);
-[opplayert,magic:earth_strike] @pvp_magic_spell_attack(^earth_strike);
-[opplayert,magic:fire_strike] @pvp_magic_spell_attack(^fire_strike);
-[opplayert,magic:wind_bolt] @pvp_magic_spell_attack(^wind_bolt);
-[opplayert,magic:water_bolt] @pvp_magic_spell_attack(^water_bolt);
-[opplayert,magic:earth_bolt] @pvp_magic_spell_attack(^earth_bolt);
-[opplayert,magic:fire_bolt] @pvp_magic_spell_attack(^fire_bolt);
-[opplayert,magic:wind_blast] @pvp_magic_spell_attack(^wind_blast);
-[opplayert,magic:water_blast] @pvp_magic_spell_attack(^water_blast);
-[opplayert,magic:earth_blast] @pvp_magic_spell_attack(^earth_blast);
-[opplayert,magic:fire_blast] @pvp_magic_spell_attack(^fire_blast);
-[opplayert,magic:wind_wave] @pvp_magic_spell_attack(^wind_wave);
-[opplayert,magic:water_wave] @pvp_magic_spell_attack(^water_wave);
-[opplayert,magic:earth_wave] @pvp_magic_spell_attack(^earth_wave);
-[opplayert,magic:fire_wave] @pvp_magic_spell_attack(^fire_wave);
-[opplayert,magic:curse] @pvp_magic_spell_attack(^curse);
-[opplayert,magic:weaken] @pvp_magic_spell_attack(^weaken);
-[opplayert,magic:confuse] @pvp_magic_spell_attack(^confuse);
-[opplayert,magic:bind] @pvp_magic_spell_attack(^bind);
-[opplayert,magic:snare] @pvp_magic_spell_attack(^snare);
-[opplayert,magic:entangle] @pvp_magic_spell_attack(^entangle);
-[opplayert,magic:vulnerability] @pvp_magic_spell_attack(^vulnerability);
-[opplayert,magic:enfeeble] @pvp_magic_spell_attack(^enfeeble);
-[opplayert,magic:stun] @pvp_magic_spell_attack(^stun);
-[opplayert,magic:crumble_undead] @pvp_magic_spell_attack(^crumble_undead);
+[opplayert,magic:wind_strike] ~pvp_default_spell(^wind_strike);
+[opplayert,magic:water_strike] ~pvp_default_spell(^water_strike);
+[opplayert,magic:earth_strike] ~pvp_default_spell(^earth_strike);
+[opplayert,magic:fire_strike] ~pvp_default_spell(^fire_strike);
+[opplayert,magic:wind_bolt] ~pvp_default_spell(^wind_bolt);
+[opplayert,magic:water_bolt] ~pvp_default_spell(^water_bolt);
+[opplayert,magic:earth_bolt] ~pvp_default_spell(^earth_bolt);
+[opplayert,magic:fire_bolt] ~pvp_default_spell(^fire_bolt);
+[opplayert,magic:wind_blast] ~pvp_default_spell(^wind_blast);
+[opplayert,magic:water_blast] ~pvp_default_spell(^water_blast);
+[opplayert,magic:earth_blast] ~pvp_default_spell(^earth_blast);
+[opplayert,magic:fire_blast] ~pvp_default_spell(^fire_blast);
+[opplayert,magic:wind_wave] ~pvp_default_spell(^wind_wave);
+[opplayert,magic:water_wave] ~pvp_default_spell(^water_wave);
+[opplayert,magic:earth_wave] ~pvp_default_spell(^earth_wave);
+[opplayert,magic:fire_wave] ~pvp_default_spell(^fire_wave);
+[opplayert,magic:curse] ~pvp_default_spell(^curse);
+[opplayert,magic:weaken] ~pvp_default_spell(^weaken);
+[opplayert,magic:confuse] ~pvp_default_spell(^confuse);
+[opplayert,magic:bind] ~pvp_default_spell(^bind);
+[opplayert,magic:snare] ~pvp_default_spell(^snare);
+[opplayert,magic:entangle] ~pvp_default_spell(^entangle);
+[opplayert,magic:vulnerability] ~pvp_default_spell(^vulnerability);
+[opplayert,magic:enfeeble] ~pvp_default_spell(^enfeeble);
+[opplayert,magic:stun] ~pvp_default_spell(^stun);
+[opplayert,magic:crumble_undead] ~pvp_default_spell(^crumble_undead);
 
-// [applayert,magic:wind_strike] @pvp_magic_spell_attack(^wind_strike);
-// [applayert,magic:water_strike] @pvp_magic_spell_attack(^water_strike);
-// [applayert,magic:earth_strike] @pvp_magic_spell_attack(^earth_strike);
-// [applayert,magic:fire_strike] @pvp_magic_spell_attack(^fire_strike);
-// [applayert,magic:wind_bolt] @pvp_magic_spell_attack(^wind_bolt);
-// [applayert,magic:water_bolt] @pvp_magic_spell_attack(^water_bolt);
-// [applayert,magic:earth_bolt] @pvp_magic_spell_attack(^earth_bolt);
-// [applayert,magic:fire_bolt] @pvp_magic_spell_attack(^fire_bolt);
-// [applayert,magic:wind_blast] @pvp_magic_spell_attack(^wind_blast);
-// [applayert,magic:water_blast] @pvp_magic_spell_attack(^water_blast);
-// [applayert,magic:earth_blast] @pvp_magic_spell_attack(^earth_blast);
-// [applayert,magic:fire_blast] @pvp_magic_spell_attack(^fire_blast);
-// [applayert,magic:wind_wave] @pvp_magic_spell_attack(^wind_wave);
-// [applayert,magic:water_wave] @pvp_magic_spell_attack(^water_wave);
-// [applayert,magic:earth_wave] @pvp_magic_spell_attack(^earth_wave);
-// [applayert,magic:fire_wave] @pvp_magic_spell_attack(^fire_wave);
-// [applayert,magic:curse] @pvp_magic_spell_attack(^curse);
-// [applayert,magic:weaken] @pvp_magic_spell_attack(^weaken);
-// [applayert,magic:confuse] @pvp_magic_spell_attack(^confuse);
-// [applayert,magic:bind] @pvp_magic_spell_attack(^bind);
-// [applayert,magic:snare] @pvp_magic_spell_attack(^snare);
-// [applayert,magic:entangle] @pvp_magic_spell_attack(^entangle);
-// [applayert,magic:vulnerability] @pvp_magic_spell_attack(^vulnerability);
-// [applayert,magic:enfeeble] @pvp_magic_spell_attack(^enfeeble);
-// [applayert,magic:stun] @pvp_magic_spell_attack(^stun);
-// [applayert,magic:crumble_undead] @pvp_magic_spell_attack(^crumble_undead);
+// [applayert,magic:wind_strike] ~pvp_default_spell(^wind_strike);
+// [applayert,magic:water_strike] ~pvp_default_spell(^water_strike);
+// [applayert,magic:earth_strike] ~pvp_default_spell(^earth_strike);
+// [applayert,magic:fire_strike] ~pvp_default_spell(^fire_strike);
+// [applayert,magic:wind_bolt] ~pvp_default_spell(^wind_bolt);
+// [applayert,magic:water_bolt] ~pvp_default_spell(^water_bolt);
+// [applayert,magic:earth_bolt] ~pvp_default_spell(^earth_bolt);
+// [applayert,magic:fire_bolt] ~pvp_default_spell(^fire_bolt);
+// [applayert,magic:wind_blast] ~pvp_default_spell(^wind_blast);
+// [applayert,magic:water_blast] ~pvp_default_spell(^water_blast);
+// [applayert,magic:earth_blast] ~pvp_default_spell(^earth_blast);
+// [applayert,magic:fire_blast] ~pvp_default_spell(^fire_blast);
+// [applayert,magic:wind_wave] ~pvp_default_spell(^wind_wave);
+// [applayert,magic:water_wave] ~pvp_default_spell(^water_wave);
+// [applayert,magic:earth_wave] ~pvp_default_spell(^earth_wave);
+// [applayert,magic:fire_wave] ~pvp_default_spell(^fire_wave);
+// [applayert,magic:curse] ~pvp_default_spell(^curse);
+// [applayert,magic:weaken] ~pvp_default_spell(^weaken);
+// [applayert,magic:confuse] ~pvp_default_spell(^confuse);
+// [applayert,magic:bind] ~pvp_default_spell(^bind);
+// [applayert,magic:snare] ~pvp_default_spell(^snare);
+// [applayert,magic:entangle] ~pvp_default_spell(^entangle);
+// [applayert,magic:vulnerability] ~pvp_default_spell(^vulnerability);
+// [applayert,magic:enfeeble] ~pvp_default_spell(^enfeeble);
+// [applayert,magic:stun] ~pvp_default_spell(^stun);
+// [applayert,magic:crumble_undead] ~pvp_default_spell(^crumble_undead);
 
-[label,pvp_magic_spell_attack](int $spell)
-p_stopaction;
-if_close;
-if (.stat(hitpoints) = 0) {
-    p_stopaction;
-    return;
-}
-
+[proc,pvp_default_spell](int $spell)
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
-
-// mes("<tostring(map_clock)>, <tostring(%action_delay)>");
-if (map_clock < %action_delay) {
-    p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+if (~pvp_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (~pvp_freeze_allowed($spell_data) = false) {
+    return;
+}
+if (~pvp_debuff_allowed($spell_data) = false) {
     return;
 }
 
-// define spell runes
-def_namedobj $rune1;
-def_int $rune_count1;
-def_namedobj $rune2;
-def_int $rune_count2;
-def_namedobj $rune3;
-def_int $rune_count3;
-def_boolean $passes;
-// check runes
-$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-// mes("<tostring(map_clock)>: Cast");
-if ($passes = false) {
-    return;
+def_int $duration = ~pvp_spell_cast($spell_data);
+
+// spell hit
+if (~pvp_hit_roll(^magic_style) = true) {
+    ~pvp_spell_success($spell_data, ~magic_spell_maxhit($spell_data), $duration);
+    ~pvp_stat_change_effect($spell_data);
+    ~pvp_freeze_effect($spell_data);
+} else {
+    ~pvp_spell_fail($spell_data, $duration);
+}
+// todo: heropoints
+~set_pk_vars; // skulls
+
+
+[proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)
+if_close;
+if (.stat(hitpoints) = 0) {
+    return(false);
+}
+if (map_clock < %action_delay) {
+    p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    return(false);
+}
+if (~check_spell_requirements($spell_data) = false) {
+    return(false);
 }
 // these go after rune check
 if (~pvp_level_check = false) {
-    return;
+    return(false);
 }
 if (~pvp_in_combat_check = false) {
-    return;
+    return(false);
 }
+return(true);
 
+
+[proc,pvp_freeze_allowed](dbrow $spell_data)(boolean)
 // check if player is already frozen
 if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
     if (.%stunned > map_clock) {
         mes("Your target is already held by a magical force.");
-        p_stopaction;
-        return;
+        return(false);
     }
     // immune message existed in 2005 https://oldschool.runescape.wiki/w/Update:Magic_and_Wilderness_Updates
     if (calc(.%stunned + 5) > map_clock) {
         // osrs wiki trivia says that snare didnt have this? No proof though
         // ive found proof of bind and entangle having this in 2006: https://imgur.com/a/jBb1awE
         mes("Your target is currently immume to that spell.");
-        p_stopaction;
-        return;
+        return(false);
     }
 }
+return(true);
 
+
+[proc,pvp_debuff_allowed](dbrow $spell_data)(boolean)
 // check if player can be stat reduced
 def_stat $stat;
 def_int $constant;
 def_int $percent;
 def_int $i = 0;
+def_int $spell = db_getfield($spell_data, magic_spell_table:spell, 0);
 while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
     $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
     if (.stat($stat) < .stat_base($stat)) {
@@ -126,16 +139,94 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
             mes("Your foe's <lowercase(~stat_name($stat))> has already been weakened.");
         }
         p_stopaction;
-        return;
+        return(false);
+    }
+    $i = add($i, 1);
+}
+return(true);
+
+[proc,pvp_stat_change_effect](dbrow $spell_data)
+def_stat $stat;
+def_int $constant;
+def_int $percent;
+def_int $i = 0;
+while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
+    $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
+    if (.stat($stat) >= .stat_base($stat)) {
+        if ($constant > 0 & $percent > 0) {
+            // if both positive assume statadd
+            // nothing ever uses this but i guess if someone wants to add some heal spell or something
+            .stat_add($stat, $constant, $percent);
+        } else {
+            if ($constant < 0) $constant = multiply($constant, -1);
+            if ($percent < 0) $percent = multiply($percent, -1);
+            .mes("You feel weakened.");
+            .stat_sub($stat, $constant, $percent);
+        }
     }
     $i = add($i, 1);
 }
 
+[proc,pvp_freeze_effect](dbrow $spell_data)
+def_int $freeze_time = db_getfield($spell_data, magic_spell_table:freeze_time, 0);
+if ($freeze_time > 0) {
+    if (~.check_protect_prayer(^magic_style) = true) {
+        $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
+    }
+    //.queue(.freeze_player, 0, $freeze_time);
+    if (.p_finduid(.uid) = true) { // todo: queue this
+        .%stunned = calc(map_clock + $freeze_time + 1);
+        //.setmovecheck(.frozen);
+    }
+}
+
+[proc,pvp_spell_success](dbrow $spell_data, int $maxhit, int $duration)
+sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+.sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+
+if (~.check_protect_prayer(^magic_style) = true) {
+    $maxhit = scale(6, 10, $maxhit); // reduction of 40%
+}
+def_int $damage = randominc($maxhit); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
+$damage = min($damage, .stat(hitpoints));
+if ($maxhit ! null) {
+    //.queue(pvp_damage_player, $damage, calc($duration / 30 + 1)); // delayed an extra tick in osrs
+    if (.p_finduid(.uid) = true) { // todo: queue this
+        ~.pvp_damage_player($damage);
+    }
+    // didnt have a flinch anim until sept 20 2006: https://oldschool.runescape.wiki/w/Update:Slug_Menace
+    
+    ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
+}
+// spell visual
+.spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
+// auto retal
+if (.p_finduid(.uid) = true) { // todo: queue this
+    ~.pvp_retaliate(uid);
+}
+
+[proc,pvp_spell_fail](dbrow $spell_data, int $duration)
+// splash
+if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
+    sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
+    .sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
+} else {
+    // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
+    // every time?
+    sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+    .sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+}
+// no splash sound?
+.spotanim_pl(spotanim_85, 92, $duration);
+
+if (.p_finduid(.uid) = true) { // todo: queue this
+    ~.pvp_retaliate(uid);
+}
+
+[proc,pvp_spell_cast](dbrow $spell_data)(int)
 .if_close;
-
 ~player_combat_stat;
-
-~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
 
 if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
@@ -155,99 +246,15 @@ if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
     $duration = ~player_projectile(coord, .coord, .uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
 }
 
-def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
-
-def_boolean $has_prot_prayer = ~.check_protect_prayer(^magic_style);
-if ($has_prot_prayer = true) {
-    $maxhit = scale(6, 10, $maxhit); // reduction of 40%
-}
-
-def_int $damage = 0;
-// if spell is successful
-if (~pvp_hit_roll(^magic_style) = true) {
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    .sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-
-    $damage = randominc($maxhit); // tick eating existed! https://oldschool.runescape.wiki/w/Update:The_Wintertodt
-    $damage = min($damage, .stat(hitpoints));
-    if ($maxhit ! null) {
-        //.queue(pvp_damage_player, $damage, calc($duration / 30 + 1)); // delayed an extra tick in osrs
-        if (.p_finduid(.uid) = true) { // todo: queue this
-            ~.pvp_damage_player($damage);
-        }
-        // didnt have a flinch anim until sept 20 2006: https://oldschool.runescape.wiki/w/Update:Slug_Menace
-        
-        ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
-    }
-    // spell visual
-    .spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
-    // auto retal
-    if (.p_finduid(.uid) = true) { // todo: queue this
-        ~.pvp_retaliate(uid);
-    }
-    
-
-    // apply spell effects
-
-    // reduce stat effect:
-    $i = 0;
-    while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
-        $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
-        if ($constant > 0 & $percent > 0) {
-            // if both positive assume statadd
-            // nothing ever uses this but i guess if someone wants to add some heal spell or something
-            //mes("Increased stat: <~stat_name($stat)>, <tostring($constant)>, <tostring($percent)>");
-            .stat_add($stat, $constant, $percent);
-        } else {
-            if ($constant < 0) $constant = multiply($constant, -1);
-            if ($percent < 0) $percent = multiply($percent, -1);
-            //mes("Reduced stat: <~stat_name($stat)>, <tostring($constant)>, <tostring($percent)>");
-            .stat_sub($stat, $constant, $percent);
-        }
-        $i = add($i, 1);
-    }
-    // freeze player if spell has freeze effect
-    def_int $freeze_time = db_getfield($spell_data, magic_spell_table:freeze_time, 0);
-    if ($freeze_time > 0) {
-        if ($has_prot_prayer = true) {
-            $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
-        }
-        //.queue(.freeze_player, 0, $freeze_time);
-        if (.p_finduid(.uid) = true) { // todo: queue this
-            .%stunned = calc(map_clock + $freeze_time + 1);
-            //.setmovecheck(.frozen);
-        }
-    }
-} else {
-    // splash
-    if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
-        sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
-        .sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
-    } else {
-        // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
-        // every time?
-        sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-        .sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    }
-    // no splash sound?
-    .spotanim_pl(spotanim_85, 92, $duration);
-
-    if (.p_finduid(.uid) = true) { // todo: queue this
-        ~.pvp_retaliate(uid);
-    }
-}
-
-// todo: heropoints
-
-if (~deserves_pk_skull = true) {
-    ~pk_skull(3000); // 3000 ticks, or 30 minutes
-}
-~set_pk_vars;
-
+// continue by autocast
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
     p_opplayert(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
-    return;
 }
+return($duration);
+
+[proc,magic_spell_maxhit](dbrow $spell_data)(int)
+def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
+return($maxhit);
 
 // todo: .movecheck
 // [movecheck,.frozen]()(boolean)
