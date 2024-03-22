@@ -1,0 +1,53 @@
+[ai_queue1,battle_mage_zamorak](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,battle_mage_saradomin](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,battle_mage_guthix](int $arg) ~npc_default_retaliate_ap;
+
+// todo: have mages agro the player after they defeat the boss
+[ai_applayer2,battle_mage_zamorak]
+if (inv_total(worn, zamorakstaff) > 0 & inv_total(worn, zamorakcape) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Zamorak!");
+    return;
+}
+npc_say("Feel the wrath of Zamorak.");
+~npc_cast_spell(^flames_of_zamorak, 5);
+
+[ai_applayer2,battle_mage_saradomin]
+if (inv_total(worn, saradominstaff) > 0 & inv_total(worn, saradomincape) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Saradomin!");
+    return;
+}
+npc_say("Feel the wrath of Saradomin.");
+~npc_cast_spell(^saradomin_strike, 5);
+
+[ai_applayer2,battle_mage_guthix]
+if (inv_total(worn, guthixstaff) > 0 & inv_total(worn, guthixcape) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Guthix!");
+    return;
+}
+npc_say("Feel the wrath of Guthix.");
+~npc_cast_spell(^claws_of_guthix, 5);
+
+
+[ai_opplayer2,battle_mage_zamorak]
+if (inv_total(worn, zamorakstaff) > 0 & inv_total(worn, zamorakcape) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Zamorak!");
+    return;
+}
+npc_say("Feel the wrath of Zamorak.");
+~npc_cast_spell(^flames_of_zamorak, 5);
+
+[ai_opplayer2,battle_mage_saradomin]
+if (inv_total(worn, saradominstaff) > 0 & inv_total(worn, saradomincape) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Saradomin!");
+    return;
+}
+npc_say("Feel the wrath of Saradomin.");
+~npc_cast_spell(^saradomin_strike, 5);
+
+[ai_opplayer2,battle_mage_guthix]
+if (inv_total(worn, guthixstaff) > 0 & inv_total(worn, guthixcape) > 0 & %npc_aggressive_player ! uid) {
+    npc_say("Hail Guthix!");
+    return;
+}
+npc_say("Feel the wrath of Guthix.");
+~npc_cast_spell(^claws_of_guthix, 5);

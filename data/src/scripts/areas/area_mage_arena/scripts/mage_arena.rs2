@@ -5,3 +5,179 @@ p_arrivedelay;
 [oploc1,loc_2872]
 p_arrivedelay;
 @climb_ladder(movecoord(coord, 549, 0, -756), true);
+
+
+[oploc1,loc_2878] @jump_in_sparkling_pool(^sparkling_pool_chamber_coord);
+[oploc1,loc_2879] @jump_in_sparkling_pool(^sparkling_pool_return_coord);
+
+[label,jump_in_sparkling_pool](coord $tele_coord)
+def_int $width = 3;
+def_int $length = 3;
+
+def_int $x = calc(coordx(loc_coord) - coordx(coord));
+def_int $z = calc(coordz(loc_coord) - coordz(coord));
+def_coord $outside_edge;
+def_coord $inside_edge;
+def_coord $middle = movecoord(loc_coord, 1, 0, 1);
+def_int $dir;
+//mes("X: <tostring($x)>, Z: <tostring($z)>, Width: <tostring($width)>, Length: <tostring($length)>");
+if ($x > 0) {
+    $outside_edge = movecoord(loc_coord, -1, 0, 1); // player is west
+    $inside_edge = movecoord($outside_edge, 1, 0, 0);
+    $dir = ^exact_east;
+} else if ($z > 0) {
+    $outside_edge = movecoord(loc_coord, 1, 0, -1); // player is south
+    $inside_edge = movecoord($outside_edge, 0, 0, 1);
+    $dir = ^exact_north;
+} else if (calc($z + $length - 1) < 0) {
+    $outside_edge = movecoord(loc_coord, 1, 0, 3); // player is north
+    $inside_edge = movecoord($outside_edge, 0, 0, -1);
+    $dir = ^exact_south;
+} else if (calc($x + $width - 1) < 0) {
+    $outside_edge = movecoord(loc_coord, 3, 0, 1); // player is east
+    $inside_edge = movecoord($outside_edge, -1, 0, 0);
+    $dir = ^exact_west;
+}
+
+if (%magearena_progress >= ^mage_arena_complete) {
+    ~mesbox("You step into the pool of sparkling water. You feel energy rush through your veins.");
+    if_close;
+}
+
+if ($outside_edge ! coord) {
+    ~forcewalk($outside_edge);
+}
+facesquare($inside_edge);
+mes("You step into the pool.");
+p_delay(0);
+
+if (%magearena_progress < ^mage_arena_complete) {
+    anim(human_walk_f, 0);
+    p_locmerge(0, 60, movecoord(loc_coord, -1, 0, -1), movecoord(loc_coord, 3, 0, 3));
+    p_exactmove($inside_edge, $outside_edge, 20, 40, $dir);
+    p_delay(0);
+    mes("Your boots get wet.");
+    p_delay(0);
+    return;
+}
+anim(human_jump_stones, 5);
+p_locmerge(0, 120, movecoord(loc_coord, -1, 0, -1), movecoord(loc_coord, 3, 0, 3));
+p_exactmove(coord, $middle, 20, 35, $dir);
+p_delay(1);
+anim(seq_804, 0);
+spotanim_pl(watersplash, 0, 20);
+sound_synth(pool_plop, 0, 0);
+p_delay(1);
+p_teleport($tele_coord);
+anim(null, 0);
+
+
+
+// need to find screenshots to confirm these
+[oploc1,loc_2880]
+// if north of the loc
+if (coordz(coord) > coordz(loc_coord)) {
+    if (%magearena_progress < ^mage_arena_complete) {
+        ~mesbox("You cannot enter without the permission of Kolodion."); // rsc, might be mes
+        return;
+    }
+    if (~can_enter_mage_arena = false) {
+        ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
+        return;
+    }
+    p_teleport(movecoord(coord, 0, 0, -1));
+} else {
+    p_teleport(movecoord(loc_coord, 0, 0, 1));
+}
+mes("You pass through the mystical barrier."); //rsc
+
+
+[proc,can_enter_mage_arena]()(boolean)
+if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
+    | (inv_totalcat(inv, armour_helmet) > 0 | inv_totalcat(worn, armour_helmet) > 0) 
+    | (inv_totalcat(inv, armour_body) > 0 | inv_totalcat(worn, armour_body) > 0) 
+    | (inv_totalcat(inv, armour_legs) > 0 | inv_totalcat(worn, armour_legs) > 0) 
+    | (inv_totalcat(inv, armour_shield) > 0 | inv_totalcat(worn, armour_shield) > 0) 
+    | (inv_totalcat(inv, weapon_slash) > 0 | inv_totalcat(worn, weapon_slash) > 0) 
+    | (inv_totalcat(inv, weapon_blunt) > 0 | inv_totalcat(worn, weapon_blunt) > 0) 
+    | (inv_totalcat(inv, category_15) > 0 | inv_totalcat(worn, category_15) > 0)
+    | (inv_totalcat(inv, weapon_stab) > 0 | inv_totalcat(worn, weapon_stab) > 0) 
+    | (inv_totalcat(inv, weapon_crossbow) > 0 | inv_totalcat(worn, weapon_crossbow) > 0) 
+    | (inv_totalcat(inv, weapon_axe) > 0 | inv_totalcat(worn, weapon_axe) > 0) 
+    | (inv_totalcat(inv, weapon_pickaxe) > 0 | inv_totalcat(worn, weapon_pickaxe) > 0) 
+    | (inv_totalcat(inv, weapon_javelin) > 0 | inv_totalcat(worn, weapon_javelin) > 0) 
+    | (inv_totalcat(inv, weapon_2h_sword) > 0 | inv_totalcat(worn, weapon_2h_sword) > 0) 
+    | (inv_totalcat(inv, weapon_spear) > 0 | inv_totalcat(worn, weapon_spear) > 0) 
+    | (inv_totalcat(inv, weapon_spiked) > 0 | inv_totalcat(worn, weapon_spiked) > 0) 
+    | (inv_totalcat(inv, weapon_thrown) > 0 | inv_totalcat(worn, weapon_thrown) > 0) 
+    | (inv_totalcat(inv, weapon_scythe) > 0 | inv_totalcat(worn, weapon_scythe) > 0) 
+    | (inv_totalcat(inv, weapon_bow) > 0 | inv_totalcat(worn, weapon_bow) > 0) 
+    | (inv_totalcat(inv, arrows) > 0 | inv_totalcat(worn, arrows) > 0)
+    | (inv_totalcat(inv, unstrung_bow) > 0)
+    | (inv_total(inv, headless_arrow) > 0) // headless arrows
+    | (inv_total(inv, arrow_shaft) > 0) 
+    | (inv_total(inv, bow_string) > 0)
+    | (inv_totalcat(inv, category_22) > 0) // logs
+    | (inv_totalcat(inv, unstrung_bow) > 0)
+    // not sure if they would think of adding some of these checks but really no way to know :(
+    | (inv_totalcat(inv, trail_clue_easy) > 0)
+    | (inv_totalcat(inv, trail_clue_medium) > 0)
+    | (inv_totalcat(inv, trail_clue_hard) > 0)
+    | (inv_totalcat(inv, cannon_parts) > 0)) {
+    return (false);
+}
+return (true);
+
+[proc,mage_arena_in_progress]()(boolean)
+if (%magearena_progress < ^mage_arena_complete & %magearena_progress > ^mage_arena_started) {
+    return (true);
+}
+return (false);
+
+[queue,finish_mage_arena]
+p_delay(3);
+anim(human_castteleport, 60);
+spotanim_pl(castteleport, 92, 60);
+sound_synth(teleport_all, 0, 0);
+p_delay(2);
+p_teleport(~coord_lineofwalk_radius(^mage_arena_finish_coord, 2));
+anim(null, 0);
+if (npc_finduid(~npc_within_distance(coord, kolodion, 5)) = true) {
+    ~chatnpc(happy, "Well done, young adventurer; you truly are a worthy|battle mage.");
+    @kolodion_what_now;
+    return;
+}
+
+
+[proc,mage_arena_exactmove](coord $spawn_coord)
+def_int $x = calc(coordx($spawn_coord) - coordx(^mage_arena_start_coord));
+def_int $z = calc(coordz($spawn_coord) - coordz(^mage_arena_start_coord));
+anim(seq_846, 15);
+if (abs($x) > abs($z)) {
+    if ($x > 0) {
+        // check east, move west
+        p_exactmove(coord, movecoord(coord, -2, 0, 0), 15, 35, ^exact_east);
+    } else {
+        // check west, move east
+        p_exactmove(coord, movecoord(coord, 2, 0, 0), 15, 35, ^exact_west);
+    }
+} else {
+    if ($z > 0) {
+        // check north, move south
+        p_exactmove(coord, movecoord(coord, 0, 0, -2), 15, 35, ^exact_north);
+    } else {
+        // check south, move north
+        p_exactmove(coord, movecoord(coord, 0, 0, 2), 15, 35, ^exact_south);
+    }
+}
+facesquare($spawn_coord);
+p_delay(0);
+anim(null, 0);
+
+[proc,spawn_mage_arena_boss](coord $coord, npc $boss, int $action_delay)
+npc_add($coord, $boss, 1000);
+npc_anim(npc_param(spawn_anim), 0);
+npc_setmode(null);
+%npc_action_delay = add(map_clock, $action_delay);
+%npc_aggressive_player = uid;
+%npc_lastcombat = add(map_clock, 8);

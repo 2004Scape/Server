@@ -29,12 +29,16 @@ if_close;
 def_dbrow $spell_data = ~get_spell_data($spell);
 
 // spell anim
-npc_anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
+if (npc_param(magicattack_anim) = null) {
+    npc_anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
+} else {
+    npc_anim(npc_param(magicattack_anim), 0);
+}
 // origin spell visual effect
 spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
 // shoot spell projectile
 %npc_action_delay = add(map_clock, 5);
-def_int $duration = 0;
+def_int $duration = 64;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
     $duration = ~player_projectile(npc_coord, coord, uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
 }
@@ -60,7 +64,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
         // anim(~combat_defend_anim(inv_getobj(worn, ^wearpos_rhand)), $duration);
     }
     // spell visual
-    spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), 124, $duration);
+    spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
     // player auto retal
     if (getqueue(player_death) < 1) {
         queue(playerhit_n_retaliate, calc($duration / 30), npc_uid);

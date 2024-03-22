@@ -1,4 +1,4 @@
-[npc_902]
+[gundai]
 vislevel=hide
 name=Gundai
 desc=He must get lonely out here.
@@ -21,7 +21,7 @@ head1=model_53_idk_head
 head2=model_85_idk_head
 head3=model_78_npc_head
 
-[npc_903]
+[lundail]
 vislevel=hide
 name=Lundail
 desc=He sells rune stones.
@@ -39,7 +39,7 @@ model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_84_idk_head
 
-[npc_904]
+[chamber_guardian]
 vislevel=hide
 name=Chamber guardian
 desc=He hasn't seen much sun lately.
@@ -65,8 +65,13 @@ model7=model_185_obj_wear
 model8=model_317_npc
 head1=model_52_idk_head
 head2=model_82_idk_head
+param=owned_shop,mage_arena_staffs
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,0
+param=shop_delta,20
+param=shop_title,Mage Arena Staffs.
 
-[npc_905]
+[kolodion]
 vislevel=hide
 name=Kolodion
 desc=He runs the mage arena.
@@ -99,7 +104,7 @@ head2=model_82_idk_head
 head3=model_68_obj_wear
 wanderrange=2
 
-[npc_906]
+[kolodion_defeated]
 vislevel=hide
 name=Kolodion
 desc=He runs the mage arena.
@@ -132,7 +137,7 @@ head3=model_68_obj_wear
 wanderrange=0
 moverestrict=nomove
 
-[npc_907]
+[kolodion_human_form]
 vislevel=hide
 name=Kolodion
 desc=He runs the mage arena.
@@ -165,9 +170,10 @@ head2=model_82_idk_head
 head3=model_68_obj_wear
 // TODO
 hitpoints=3
-param=attackrate,7
+attackrange=3
+category=kolodion
 
-[npc_908]
+[kolodion_ogre_form]
 vislevel=hide
 name=Kolodion
 desc=He's a shape shifter.
@@ -190,15 +196,18 @@ model1=model_2863_npc
 model2=model_2871_npc
 // TODO
 hitpoints=65
-param=attackrate,7
+attackrange=5
 param=attack_anim,giant_attack
+param=magicattack_anim,giant_seq_132
 param=defend_anim,giant_block
 param=death_anim,giant_death
+param=spawn_anim,giant_spawn
 param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
+category=kolodion
 
-[npc_909]
+[kolodion_arachnid_form]
 vislevel=hide
 name=Kolodion
 desc=He's a shape shifter.
@@ -213,16 +222,19 @@ recol1d=43197
 model1=model_2884_npc
 // TODO
 hitpoints=65
-param=attackrate,7
+attackrange=5
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
+param=magicattack_anim,giantspider_seq_147
+param=spawn_anim,giantspider_seq_149
 param=attack_sound,insect_3
 param=defend_sound,insect_2
 param=death_sound,insect_1
 param=death_drop,null
+category=kolodion
 
-[npc_910]
+[kolodion_ethereal_form]
 vislevel=hide
 name=Kolodion
 desc=He's a shape shifter.
@@ -251,11 +263,16 @@ model4=model_162_idk
 model5=model_176_idk
 model6=model_267_idk
 model7=model_181_idk
+param=attack_anim,seq_843
+param=defend_anim,seq_844
+param=death_anim,seq_845
+param=spawn_anim,human_castteleport_reverse
 // TODO
 hitpoints=78
-param=attackrate,7
+attackrange=5
+category=kolodion
 
-[npc_911]
+[kolodion_demon_form]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready
@@ -277,11 +294,110 @@ attack=85
 strength=98
 defence=105
 magic=80
+attackrange=5
 param=attack_anim,demon_attack
+param=magicattack_anim,demon_seq_69
 param=defend_anim,demon_block
 param=death_anim,demon_death
+param=spawn_anim,demon_seq_72
 param=demonbane_vulnerable,yes
-param=attack_sound,demon_2
-param=defend_sound,demon_3
-param=death_sound,demon_1
+param=attack_sound,black_demon_attack
+param=defend_sound,black_demon_hit
+param=death_sound,black_demon_death
 param=death_drop,ashes
+category=kolodion
+
+[battle_mage_zamorak]
+name=Battle mage
+desc=He kills in the name of Zamorak.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op2=Attack
+vislevel=54
+recol1s=11200
+recol1d=926
+recol2s=7700
+recol2d=0
+recol3s=8741
+recol3d=20
+recol4s=25238
+recol4d=20
+recol5s=4550
+recol5d=5347
+recol6s=4626
+recol6d=0
+model1=model_207_npc
+model2=model_246_idk
+model3=model_243_obj_wear
+model4=model_310_idk
+model5=model_168_npc
+model6=model_176_idk
+model7=model_260_npc
+model8=model_323_obj_wear
+model9=model_185_obj_wear
+model10=model_544_obj_wear
+attackrange=10
+respawnrate=150
+hitpoints=120
+magic=50
+category=battle_mage
+
+[battle_mage_saradomin]
+name=Battle mage
+desc=He kills in the name of Saradomin.
+walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op2=Attack
+vislevel=54
+recol1s=8741
+recol1d=127
+recol2s=25238
+recol2d=127
+recol3s=4626
+recol3d=10473
+recol4s=926
+recol4d=127
+recol5s=7700
+recol5d=43943
+recol6s=4550
+recol6d=4645
+model1=model_217_idk
+model2=model_250_idk
+model3=model_292_idk
+model4=model_170_idk
+model5=model_176_idk
+model6=model_265_obj_wear
+model7=model_323_obj_wear
+model8=model_185_obj_wear
+model9=model_554_obj_wear
+attackrange=10
+respawnrate=150
+hitpoints=120
+magic=50
+category=battle_mage
+
+[battle_mage_guthix]
+name=Battle mage
+desc=He kills in the name of Guthix.
+walkanim=midget_walk
+readyanim=midget_ready
+op2=Attack
+vislevel=54
+recol1s=22426
+recol1d=8090
+recol2s=926
+recol2d=22426
+model1=model_2909_npc
+model2=model_2898_npc
+model3=model_2920_npc
+attackrange=10
+respawnrate=150
+hitpoints=120
+magic=50
+param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
+param=magicattack_anim,midget_seq_197
+param=defend_anim,midget_block
+category=battle_mage

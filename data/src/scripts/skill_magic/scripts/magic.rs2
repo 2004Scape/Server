@@ -4,13 +4,12 @@ db_find(magic_spell_table:spell, $spell);
 def_dbrow $spell_data = db_findnext;
 if ($spell_data = null) {
     error("$spell_data is null.");
-    @nothing_interesting_happens;
 }
 return ($spell_data);
 
 // takes all 3 runes and their counts as arguments, checks if player has required runes
 // accounts for staff and returns runes and their adjusted counts.
-[proc,check_spell_requirements](dbrow $spell_data)(boolean, namedobj, int, namedobj, int, namedobj, int)
+[proc,check_spell_requirements](dbrow $spell_data)(boolean)
 // check if members
 if (db_getfield($spell_data, magic_spell_table:members, 0) = true) {
     ~require_members_spell;
@@ -18,8 +17,36 @@ if (db_getfield($spell_data, magic_spell_table:members, 0) = true) {
 // check if high enough level
 if (stat(magic) < db_getfield($spell_data, magic_spell_table:levelrequired, 0)) {
     mes("Your Magic level is not high enough for this spell.");
-    return (false, null, null, null, null, null, null);
+    return (false);
 }
+def_namedobj $rune1;
+def_int $rune_count1;
+def_namedobj $rune2;
+def_int $rune_count2;
+def_namedobj $rune3;
+def_int $rune_count3;
+$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~staff_runes($spell_data);
+// check if player has required runes
+if (inv_total(inv, $rune1) < $rune_count1 & $rune1 ! null) {
+    mes("You do not have enough <~string_removeright(oc_name($rune1), 5)> Runes to cast this spell.");
+    return (false);
+}
+if (inv_total(inv, $rune2) < $rune_count2 & $rune2 ! null) {
+    mes("You do not have enough <~string_removeright(oc_name($rune2), 5)> Runes to cast this spell.");
+    return (false);
+}
+if (inv_total(inv, $rune3) < $rune_count3 & $rune3 ! null) {
+    mes("You do not have enough <~string_removeright(oc_name($rune3), 5)> Runes to cast this spell.");
+    return (false);
+}
+// check if worn is correct
+if (db_getfieldcount($spell_data, magic_spell_table:wornrequired) > 0 & inv_total(worn, db_getfield($spell_data, magic_spell_table:wornrequired, 0)) < 1) {
+    mes(db_getfield($spell_data, magic_spell_table:worn_reqmessage, 0));
+    return(false);
+}
+return (true);
+
+[proc,staff_runes](dbrow $spell_data)(namedobj, int, namedobj, int, namedobj, int)
 // define spells
 def_namedobj $rune1;
 def_int $rune_count1;
@@ -46,22 +73,15 @@ if ($staff_rune = $rune2) {
 if ($staff_rune = $rune3) {
     $rune_count3 = null;
 }
-// check if player has required runes
-if (inv_total(inv, $rune1) < $rune_count1 & $rune1 ! null) {
-    mes("You do not have enough <~string_removeright(oc_name($rune1), 5)> Runes to cast this spell.");
-    return (false, null, null, null, null, null, null);
-}
-if (inv_total(inv, $rune2) < $rune_count2 & $rune2 ! null) {
-    mes("You do not have enough <~string_removeright(oc_name($rune2), 5)> Runes to cast this spell.");
-    return (false, null, null, null, null, null, null);
-}
-if (inv_total(inv, $rune3) < $rune_count3 & $rune3 ! null) {
-    mes("You do not have enough <~string_removeright(oc_name($rune3), 5)> Runes to cast this spell.");
-    return (false, null, null, null, null, null, null);
-}
-return (true, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 
-[proc,delete_spell_runes](namedobj $rune1, int $rune_count1, namedobj $rune2, int $rune_count2, namedobj $rune3, int $rune_count3)
+[proc,delete_spell_runes](dbrow $spell_data)
+def_namedobj $rune1;
+def_int $rune_count1;
+def_namedobj $rune2;
+def_int $rune_count2;
+def_namedobj $rune3;
+def_int $rune_count3;
+$rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~staff_runes($spell_data);
 if ($rune_count1 > 0) {
     inv_del(inv, $rune1, $rune_count1);
 }

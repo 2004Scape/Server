@@ -192,3 +192,11 @@ data=members,false
 data=levelrequired,33
 data=runesrequired,airrune,1,lawrune,1,null,null
 data=experience,430
+
+[magic_spell_charge]
+table=magic_spell_table
+data=spell,^charge
+data=members,true
+data=levelrequired,80
+data=runesrequired,firerune,3,bloodrune,3,airrune,3
+data=experience,1800
