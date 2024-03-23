@@ -54,6 +54,7 @@ import Environment from '#lostcity/util/Environment.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -399,8 +400,7 @@ export default class Player extends PathingEntity {
     // build area
     loadedX: number = -1;
     loadedZ: number = -1;
-    newlyTrackedZones: Set<number> = new Set();
-    allTrackedZones: Set<number> = new Set();
+    loadedZones: Record<number, number> = {};
     npcs: Set<number> = new Set(); // observed npcs
     players: Set<number> = new Set(); // observed players
     lastMovement: number = 0; // for p_arrivedelay
@@ -554,12 +554,6 @@ export default class Player extends PathingEntity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
-
-        for (const zone of this.newlyTrackedZones) {
-            this.allTrackedZones.add(zone);
-        }
-
-        this.newlyTrackedZones = new Set();
     }
 
     decodeIn() {
@@ -2614,16 +2608,16 @@ export default class Player extends PathingEntity {
 
             this.loadedX = this.x;
             this.loadedZ = this.z;
-
-            this.allTrackedZones = new Set();
-            this.newlyTrackedZones = new Set();
+            this.loadedZones = {};
         }
 
         if (this.tele && this.jump) {
-            this.allTrackedZones = new Set();
-            this.newlyTrackedZones = new Set();
+            this.loadedZones = {};
         }
+    }
 
+    updateZones() {
+        // check nearby zones for updates
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -2632,79 +2626,38 @@ export default class Player extends PathingEntity {
         const topZ = Position.zone(this.loadedZ) + 6;
         const bottomZ = Position.zone(this.loadedZ) - 6;
 
-        // update newly tracked zones
+        // update 3 zones around the player
         for (let x = centerX - 3; x <= centerX + 3; x++) {
             for (let z = centerZ - 3; z <= centerZ + 3; z++) {
+                // check if the zone is within the build area
                 if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
                     continue;
                 }
 
-                const zone = x | (z << 11);
-                if (!this.allTrackedZones.has(zone)) {
-                    this.newlyTrackedZones.add(zone);
+                const zone = World.getZone(x << 3, z << 3, this.level);
+
+                // todo: receiver/shared buffer logic
+                if (typeof this.loadedZones[zone.index] === 'undefined') {
+                    // full update necessary to clear client zone memory
+                    this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
+                    this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
                 }
+
+                const updates = World.getUpdates(zone.index).filter((event: ZoneEvent): boolean => {
+                    return event.tick > this.loadedZones[zone.index];
+                });
+
+                if (updates.length) {
+                    this.write(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
+
+                    for (let i = 0; i < updates.length; i++) {
+                        // have to copy because encryption will be applied to buffer
+                        this.netOut.push(new Packet(updates[i].buffer));
+                    }
+                }
+
+                this.loadedZones[zone.index] = World.currentTick;
             }
-        }
-
-        // remove old zones from all tracked (outside of 3x3 area around player's current pos)
-        for (const zone of this.allTrackedZones) {
-            const x = zone & 2047;
-            const z = zone >> 11;
-
-            if (x < centerX - 3 || x > centerX + 3 || z > centerZ + 3 || z < centerZ - 3) {
-                this.allTrackedZones.delete(zone);
-            }
-        }
-    }
-
-    updateZones() {
-        // console.log('tracked', this.newlyTrackedZones.size, this.allTrackedZones.size);
-
-        for (const zone of this.newlyTrackedZones) {
-            const x = zone & 2047;
-            const z = zone >> 11;
-
-            this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
-
-            const { locDelCached, locAddCached, staticObjAddCached, staticObjDelCached } = World.getZone(x << 3, z << 3, this.level);
-
-            for (const [packed, buf] of locDelCached) {
-                this.netOut.push(buf.copy());
-            }
-
-            for (const [packed, buf] of locAddCached) {
-                this.netOut.push(buf.copy());
-            }
-
-            for (const buf of staticObjAddCached) {
-                this.netOut.push(buf.copy());
-            }
-
-            for (const buf of staticObjDelCached) {
-                this.netOut.push(buf.copy());
-            }
-
-            if (locDelCached.size > 0 || locAddCached.size > 0) {
-                World.getZone(x << 3, z << 3, this.level).debug();
-            }
-        }
-
-        for (const zone of this.allTrackedZones) {
-            const x = zone & 2047;
-            const z = zone >> 11;
-
-            const { buffer, locAddTimer, locDelTimer, locChangeTimer } = World.getZone(x << 3, z << 3, this.level);
-
-            // shared events
-            if (buffer.length > 0) {
-                this.write(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, x, z, this.loadedX, this.loadedZ, buffer);
-
-                World.getZone(x << 3, z << 3, this.level).debug();
-            } else if (locAddTimer.size > 0 || locDelTimer.size > 0 || locChangeTimer.size > 0) {
-                World.getZone(x << 3, z << 3, this.level).debug();
-            }
-
-            // local events
         }
     }
 

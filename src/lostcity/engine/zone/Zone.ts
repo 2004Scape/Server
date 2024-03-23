@@ -3,255 +3,192 @@ import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
-import { ServerProt, ServerProtEncoders } from '#lostcity/server/ServerProt.js';
+import { ServerProt } from '#lostcity/server/ServerProt.js';
 import World from '#lostcity/engine/World.js';
 import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import LocType from '#lostcity/cache/LocType.js';
-import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import ZoneManager from './ZoneManager.js';
+
+export class ZoneEvent {
+    type = -1;
+    receiverId = -1;
+    buffer: Packet = new Packet();
+    tick = -1;
+    static = false;
+
+    // temp
+    x = -1;
+    z = -1;
+
+    // loc
+    layer = -1;
+
+    constructor(type: number) {
+        this.type = type;
+    }
+}
 
 export default class Zone {
+    static mapAnim(srcX: number, srcZ: number, id: number, height: number, delay: number) {
+        const out = new Packet();
+        out.p1(ServerProt.MAP_ANIM);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p2(id);
+        out.p1(height);
+        out.p2(delay);
+
+        return out;
+    }
+
+    // variables fully broken out for now
+    //coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $startDelay, int $endDelay, int $peak, int $arc
+    static mapProjAnim(srcX: number, srcZ: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
+        const out = new Packet();
+        out.p1(ServerProt.MAP_PROJANIM);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p1(dstX - srcX);
+        out.p1(dstZ - srcZ);
+        out.p2(target); // 0: coord, > 0: npc, < 0: player
+        out.p2(spotanim);
+        out.p1(srcHeight);
+        out.p1(dstHeight);
+        out.p2(startDelay);
+        out.p2(endDelay);
+        out.p1(peak);
+        out.p1(arc);
+
+        return out;
+    }
+
+    static locAddChange(srcX: number, srcZ: number, id: number, shape: number, angle: number) {
+        const out = new Packet();
+        out.p1(ServerProt.LOC_ADD_CHANGE);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p1((shape << 2) | (angle & 3));
+        out.p2(id);
+
+        return out;
+    }
+
+    static locDel(srcX: number, srcZ: number, shape: number, angle: number) {
+        const out = new Packet();
+        out.p1(ServerProt.LOC_DEL);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p1((shape << 2) | (angle & 3));
+
+        return out;
+    }
+
+    // merge player with loc, e.g. agility training through pipes
+    // useful due to draw prioritizes
+    static locMerge(srcX: number, srcZ: number, shape: number, angle: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number) {
+        const out = new Packet();
+        out.p1(ServerProt.LOC_MERGE);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p1((shape << 2) | (angle & 3));
+        out.p2(locId);
+        out.p2(startCycle);
+        out.p2(endCycle);
+        out.p2(pid);
+        out.p1(east - srcX);
+        out.p1(south - srcZ);
+        out.p1(west - srcX);
+        out.p1(north - srcZ);
+
+        return out;
+    }
+
+    static locAnim(srcX: number, srcZ: number, shape: number, angle: number, id: number) {
+        const out = new Packet();
+        out.p1(ServerProt.LOC_ANIM);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p1((shape << 2) | (angle & 3));
+        out.p2(id);
+
+        return out;
+    }
+
+    static objAdd(srcX: number, srcZ: number, id: number, count: number) {
+        const out = new Packet();
+        out.p1(ServerProt.OBJ_ADD);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p2(id);
+
+        if (count > 65535) {
+            count = 65535;
+        }
+        out.p2(count);
+
+        return out;
+    }
+
+    static objCount(srcX: number, srcZ: number, id: number, count: number) {
+        const out = new Packet();
+        out.p1(ServerProt.OBJ_COUNT);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p2(id);
+
+        if (count > 65535) {
+            count = 65535;
+        }
+        out.p2(count);
+
+        return out;
+    }
+
+    static objDel(srcX: number, srcZ: number, id: number, count: number) {
+        const out = new Packet();
+        out.p1(ServerProt.OBJ_DEL);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p2(id);
+
+        return out;
+    }
+
+    static objReveal(srcX: number, srcZ: number, id: number, count: number, receiverId: number) {
+        const out = new Packet();
+        out.p1(ServerProt.OBJ_REVEAL);
+
+        out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        out.p2(id);
+        out.p2(count);
+        out.p2(receiverId);
+
+        return out;
+    }
+
     index = -1; // packed coord
-    level = 0;
-    buffer: Packet = new Packet();
-    events: Packet[] = [];
 
     // zone entities
     players: Set<number> = new Set(); // list of player uids
     npcs: Set<number> = new Set(); // list of npc nids (not uid because type may change)
+    staticLocs: Loc[] = []; // source of truth from map data
+    locs: Loc[] = []; // dynamic locs
+    staticObjs: Obj[] = []; // source of truth from server map data
+    objs: Obj[] = []; // dynamic objs
 
-    // locs - bits 0-2 = x (local), bits 3-5 = z (local), bits 6-7 = layer, bit 8 = static
-    // loc info - bits 0-15 = type, bits 16-20 = shape, bits 21-23 = angle
-    locs: Set<number> = new Set();
-    locInfo: Map<number, number> = new Map();
-    locDelEvent: Set<number> = new Set();
-    locAddEvent: Set<number> = new Set();
-    locDelCached: Map<number, Packet> = new Map();
-    locAddCached: Map<number, Packet> = new Map();
-    locDelTimer: Map<number, number> = new Map();
-    locAddTimer: Map<number, number> = new Map();
-    locChangeTimer: Map<number, number> = new Map();
+    // zone events
+    updates: ZoneEvent[] = [];
+    lastEvent = -1;
+    buffer: Packet = new Packet();
 
-    staticObjs: Obj[] = []; // source of truth from map
-    staticObjAddCached: Packet[] = [];
-    staticObjDelCached: Packet[] = [];
-    objs: Obj[] = []; // objs actually in the zone
-
-    constructor(index: number, level: number) {
+    constructor(index: number) {
         this.index = index;
-        this.level = level;
     }
-
-    debug() {
-        // console.log('zone', this.index);
-
-        if (this.buffer.length > 0) {
-            // console.log('buffer', this.buffer);
-        }
-
-        if (this.locDelEvent.size > 0 || this.locAddEvent.size > 0) {
-            // console.log('events', this.locDelEvent.size, this.locAddEvent.size);
-        }
-
-        if (this.locDelCached.size > 0 || this.locAddCached.size > 0) {
-            // console.log('cached', this.locDelCached.size, this.locAddCached.size);
-        }
-
-        if (this.locDelTimer.size > 0 || this.locAddTimer.size > 0 || this.locChangeTimer.size > 0) {
-            // console.log('timer', this.locDelTimer.size, this.locAddTimer.size, this.locChangeTimer.size);
-        }
-
-        for (const [packed, timer] of this.locDelTimer) {
-            // console.log('del', packed, timer - World.currentTick);
-        }
-
-        for (const [packed, timer] of this.locAddTimer) {
-            // console.log('add', packed, timer - World.currentTick);
-        }
-
-        for (const [packed, timer] of this.locChangeTimer) {
-            // console.log('change', packed, timer - World.currentTick);
-        }
-
-        // console.log('----');
-    }
-
-    cycle() {
-        // despawn
-        for (const [packed, timer] of this.locAddTimer) {
-            if (timer - World.currentTick <= 0) {
-                // console.log('locAddTimer: despawning loc on tile');
-                this.locAddTimer.delete(packed);
-                this.locAddCached.delete(packed);
-
-                const isStatic = (packed >> 8) & 1;
-                if (!isStatic) {
-                    this.locDelEvent.add(packed);
-                }
-            }
-        }
-
-        for (const obj of this.objs) {
-            //
-        }
-
-        // respawn
-        for (const [packed, timer] of this.locDelTimer) {
-            if (timer - World.currentTick <= 0) {
-                // console.log('locDelTimer: despawning loc on tile');
-                this.locDelTimer.delete(packed);
-                this.locDelCached.delete(packed);
-
-                const staticPacked = packed | (1 << 8);
-                if (this.locs.has(staticPacked)) {
-                    // console.log('locDelTimer: respawning static loc on tile');
-                    this.locs.delete(packed);
-                    this.locInfo.delete(packed);
-                    this.locAddEvent.add(staticPacked);
-                }
-            }
-        }
-
-        for (const [packed, timer] of this.locChangeTimer) {
-            if (timer - World.currentTick <= 0) {
-                // console.log('locChangeTimer: changing loc on tile');
-                this.locs.delete(packed);
-                this.locInfo.delete(packed);
-                this.locChangeTimer.delete(packed);
-                this.locAddCached.delete(packed);
-
-                const staticPacked = packed | (1 << 8);
-                this.locAddEvent.add(staticPacked);
-            }
-        }
-
-        for (const obj of this.staticObjs) {
-            //
-        }
-
-        // shared events (this tick)
-        this.computeSharedEvents();
-    }
-
-    computeSharedEvents() {
-        this.buffer = new Packet();
-
-        for (const packed of this.locDelEvent) {
-            let info = this.locInfo.get(packed);
-            if (typeof info === 'undefined') {
-                // deleted static loc
-                info = this.locInfo.get(packed | (1 << 8));
-            }
-
-            if (typeof info === 'undefined') {
-                continue;
-            }
-
-            const x = packed & 0x7;
-            const z = (packed >> 3) & 0x7;
-
-            const id = info & 0xFFFF;
-            const shape = (info >> 16) & 0x1F;
-            const angle = (info >> 21) & 3;
-
-            const buf = Zone.write(ServerProt.LOC_DEL, x, z, shape, angle);
-            this.buffer.pdata(buf);
-
-            const isStatic = (packed >> 8) & 1;
-            if (isStatic) {
-                this.locDelCached.set(packed, buf);
-            } else {
-                this.locs.delete(packed);
-                this.locInfo.delete(packed);
-            }
-
-            const type = LocType.get(id);
-            const { x: zoneX, z: zoneZ } = ZoneManager.unpackIndex(this.index);
-            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, false);
-
-            // console.log('locDelEvent:', x, z, id, shape, angle, isStatic);
-        }
-
-        for (const packed of this.locAddEvent) {
-            const info = this.locInfo.get(packed);
-            if (typeof info === 'undefined') {
-                // console.log('locAddEvent: missing loc info');
-                continue;
-            }
-
-            const x = packed & 0x7;
-            const z = (packed >> 3) & 0x7;
-
-            const id = info & 0xFFFF;
-            const shape = (info >> 16) & 0x1F;
-            const angle = (info >> 21) & 3;
-
-            const buf = Zone.write(ServerProt.LOC_ADD_CHANGE, x, z, shape, angle, id);
-            this.buffer.pdata(buf);
-
-            const isStatic = (packed >> 8) & 1;
-            if (!isStatic) {
-                this.locAddCached.set(packed, buf);
-            }
-
-            const type = LocType.get(id);
-            const { x: zoneX, z: zoneZ } = ZoneManager.unpackIndex(this.index);
-            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, zoneX + x, zoneZ + z, this.level, type.blockwalk);
-
-            // console.log('locAddEvent:', x, z, id, shape, angle, isStatic);
-        }
-
-        for (const event of this.events) {
-            this.buffer.pdata(event);
-        }
-
-        this.locDelEvent = new Set();
-        this.locAddEvent = new Set();
-        this.events = [];
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private static write(opcode: ServerProt, ...args: any[]) {
-        const buf = new Packet();
-        buf.p1(opcode);
-        ServerProtEncoders[opcode](buf, ...args);
-        return buf;
-    }
-
-    anim(x: number, z: number, spotanim: number, height: number, delay: number) {
-        this.events.push(Zone.write(ServerProt.MAP_ANIM, x, z, spotanim, height, delay));
-    }
-
-    projanim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
-        this.events.push(Zone.write(ServerProt.MAP_PROJANIM, x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc));
-    }
-
-    locmerge(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
-        this.events.push(Zone.write(ServerProt.LOC_MERGE, loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north));
-    }
-
-    locanim(loc: Loc, seq: number) {
-        this.events.push(Zone.write(ServerProt.LOC_ANIM, loc.x, loc.z, loc.shape, loc.angle, seq));
-    }
-
-    // ----
 
     enter(entity: PathingEntity) {
         if (entity instanceof Player && !this.players.has(entity.uid)) {
             this.players.add(entity.uid);
         } else if (entity instanceof Npc && !this.npcs.has(entity.nid)) {
             this.npcs.add(entity.nid);
-
-            switch (entity.blockWalk) {
-                case BlockWalk.NPC:
-                    World.collisionManager.changeNpcCollision(entity.width, entity.x, entity.z, entity.level, true);
-                    break;
-                case BlockWalk.ALL:
-                    World.collisionManager.changeNpcCollision(entity.width, entity.x, entity.z, entity.level, true);
-                    World.collisionManager.changePlayerCollision(entity.width, entity.x, entity.z, entity.level, true);
-                    break;
-            }
         }
     }
 
@@ -260,191 +197,202 @@ export default class Zone {
             this.players.delete(entity.uid);
         } else if (entity instanceof Npc) {
             this.npcs.delete(entity.nid);
-
-            switch (entity.blockWalk) {
-                case BlockWalk.NPC:
-                    World.collisionManager.changeNpcCollision(entity.width, entity.x, entity.z, entity.level, false);
-                    break;
-                case BlockWalk.ALL:
-                    World.collisionManager.changeNpcCollision(entity.width, entity.x, entity.z, entity.level, false);
-                    World.collisionManager.changePlayerCollision(entity.width, entity.x, entity.z, entity.level, false);
-                    break;
-            }
         }
+    }
+
+    // ---- not tied to any entities ----
+
+    animMap(x: number, z: number, spotanim: number, height: number, delay: number) {
+        const event = new ZoneEvent(ServerProt.MAP_ANIM);
+
+        event.buffer = Zone.mapAnim(x, z, spotanim, height, delay);
+        event.x = x;
+        event.z = z;
+        event.tick = World.currentTick;
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+    }
+
+    mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
+        const event = new ZoneEvent(ServerProt.MAP_PROJANIM);
+
+        event.buffer = Zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
+        event.x = x;
+        event.z = z;
+        event.tick = World.currentTick;
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+    }
+
+    // ---- static locs/objs are added during world init ----
+
+    addStaticLoc(loc: Loc) {
+        this.staticLocs.push(loc);
+    }
+
+    addStaticObj(obj: Obj) {
+        this.staticObjs.push(obj);
+
+        const event = new ZoneEvent(ServerProt.OBJ_ADD);
+        event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
+        event.tick = World.currentTick;
+        event.static = true;
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 
     // ----
 
-    addStaticLoc(absX: number, absZ: number, id: number, shape: number, angle: number) {
-        const x = absX & 0x7;
-        const z = absZ & 0x7;
+    addLoc(loc: Loc, duration: number) {
+        if (this.staticLocs.indexOf(loc) === -1) {
+            loc.despawn = World.currentTick + duration;
+            this.locs.push(loc);
+        }
 
-        const packed = x | (z << 3) | (LocShapes.layer(shape) << 6) | (1 << 8);
-        const packedInfo = id | (shape << 16) | (angle << 21);
+        const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
+        event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.angle);
+        event.x = loc.x;
+        event.z = loc.z;
+        event.tick = World.currentTick;
+        event.layer = LocShapes.layer(loc.shape);
 
-        this.locs.add(packed);
-        this.locInfo.set(packed, packedInfo);
-
-        const type = LocType.get(id);
-        World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, type.blockwalk);
-    }
-
-    addLoc(absX: number, absZ: number, id: number, shape: number, angle: number, duration: number) {
-        const x = absX & 0x7;
-        const z = absZ & 0x7;
-
-        const packed = x | (z << 3) | (LocShapes.layer(shape) << 6);
-        const packedInfo = id | (shape << 16) | (angle << 21);
-
-        const staticPacked = packed | (1 << 8);
-        const staticInfo = this.locInfo.get(staticPacked);
-
-        if (this.locs.has(staticPacked) && typeof staticInfo !== 'undefined') {
-            const id = packedInfo & 0xFFFF;
-            const staticId = staticInfo & 0xFFFF;
-
-            if (id === staticId) {
-                this.locs.delete(packed);
-                this.locInfo.delete(packed);
-                this.locAddEvent.add(staticPacked);
-                return;
+        this.updates = this.updates.filter(event => {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
+                return false;
             }
-        }
 
-        this.locs.add(packed);
-        this.locInfo.set(packed, packedInfo);
-        // console.log('addLoc(): adding loc on tile');
+            return true;
+        });
 
-        const type = LocType.get(id);
-        World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, type.blockwalk);
-
-        if (this.locDelEvent.has(packed)) {
-            // console.log('addLoc(): clearing old delete event');
-            this.locDelEvent.delete(packed);
-            this.locDelCached.delete(packed);
-            this.locDelTimer.delete(packed);
-        }
-
-        this.locAddEvent.add(packed);
-        this.locAddTimer.set(packed, World.currentTick + duration);
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 
-    changeLoc(absX: number, absZ: number, id: number, shape: number, angle: number, duration: number) {
-        const x = absX & 0x7;
-        const z = absZ & 0x7;
+    removeLoc(loc: Loc, duration: number) {
+        const event = new ZoneEvent(ServerProt.LOC_DEL);
 
-        const packed = x | (z << 3) | (LocShapes.layer(shape) << 6);
+        const dynamicIndex = this.locs.indexOf(loc);
+        if (dynamicIndex !== -1) {
+            this.locs.splice(dynamicIndex, 1);
+        } else {
+            // static locs remain forever in memory, just create a zone event
+            loc.respawn = World.currentTick + duration;
+            event.static = true;
+        }
 
-        // console.log('changeLoc(): changing loc on tile');
-        this.locs.add(packed);
-        this.locInfo.set(packed, id | (shape << 16) | (angle << 21));
-        this.locAddEvent.add(packed);
-        this.locChangeTimer.set(packed, World.currentTick + duration);
+        event.buffer = Zone.locDel(loc.x, loc.z, loc.shape, loc.angle);
+        event.x = loc.x;
+        event.z = loc.z;
+        event.tick = World.currentTick;
+        event.layer = LocShapes.layer(loc.shape);
+
+        this.updates = this.updates.filter(event => {
+            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
+                return false;
+            }
+
+            return true;
+        });
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 
-    removeLoc(absX: number, absZ: number, shape: number, duration: number) {
-        const x = absX & 0x7;
-        const z = absZ & 0x7;
-
-        // delete dynamic loc if it exists
-        const packed = x | (z << 3) | (LocShapes.layer(shape) << 6);
-        const info = this.locInfo.get(packed);
-        if (this.locs.has(packed) && typeof info !== 'undefined') {
-            // console.log('removeLoc(): deleting loc on tile');
-            // this.locs.delete(packed);
-            // this.locInfo.delete(packed);
-
-            const type = LocType.get(info & 0xFFFF);
-            const angle = (info >> 21) & 3;
-
-            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, false);
+    getLoc(x: number, z: number, type: number): Loc | null {
+        const dynamicLoc = this.locs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type);
+        if (dynamicLoc !== -1) {
+            return this.locs[dynamicLoc];
         }
 
-        // (temporarily) delete static loc if it exists
-        const staticPacked = packed | (1 << 8);
-        const staticInfo = this.locInfo.get(staticPacked);
-        if (this.locs.has(staticPacked) && typeof staticInfo !== 'undefined') {
-            // console.log('removeLoc(): deleting static loc on tile');
-            this.locs.add(packed); // temporarily add dynamic loc to prevent static loc from respawning
-            this.locInfo.delete(packed);
-
-            const type = LocType.get(staticInfo & 0xFFFF);
-            const angle = (staticInfo >> 21) & 3;
-
-            World.collisionManager.changeLocCollision(shape, angle, type.blockrange, type.length, type.width, type.active, absX, absZ, this.level, false);
-        }
-
-        if (this.locAddEvent.has(packed)) {
-            // console.log('removeLoc(): clearing old add event');
-            this.locAddEvent.delete(packed);
-            this.locAddCached.delete(packed);
-            this.locAddTimer.delete(packed);
-        }
-
-        this.locDelEvent.add(packed);
-        this.locDelTimer.set(packed, World.currentTick + duration);
-    }
-
-    getLoc(absX: number, absZ: number, layer: number): Loc | null {
-        const x = absX & 0x7;
-        const z = absZ & 0x7;
-
-        // dynamic loc on the same layer takes precedence over static loc
-        const packed = x | (z << 3) | (layer << 6);
-        const info = this.locInfo.get(packed);
-
-        if (this.locs.has(packed) && typeof info === 'undefined') {
-            // static loc has been despawned
-            return null;
-        } else if (this.locs.has(packed) && typeof info !== 'undefined') {
-            const id = info & 0xFFFF;
-            const shape = (info >> 16) & 0x1F;
-            const angle = (info >> 21) & 3;
-
-            // legacy code compatibility
-            const type = LocType.get(id);
-            return new Loc(this.level, absX, absZ, type.width, type.length, id, shape, angle);
-        }
-
-        // static loc
-        const staticPacked = packed | (1 << 8);
-        const staticInfo = this.locInfo.get(staticPacked);
-
-        if (this.locs.has(staticPacked) && typeof staticInfo !== 'undefined') {
-            const id = staticInfo & 0xFFFF;
-            const shape = (staticInfo >> 16) & 0x1F;
-            const angle = (staticInfo >> 21) & 3;
-
-            // legacy code compatibility
-            const type = LocType.get(id);
-            return new Loc(this.level, absX, absZ, type.width, type.length, id, shape, angle);
+        const staticLoc = this.staticLocs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type && loc.respawn < World.currentTick);
+        if (staticLoc !== -1) {
+            return this.staticLocs[staticLoc];
         }
 
         return null;
     }
 
+    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
+        const event = new ZoneEvent(ServerProt.LOC_MERGE);
+
+        event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
+        event.x = loc.x;
+        event.z = loc.z;
+        event.tick = World.currentTick;
+        event.layer = LocShapes.layer(loc.shape);
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+    }
+
+    animLoc(loc: Loc, seq: number) {
+        const event = new ZoneEvent(ServerProt.LOC_ANIM);
+
+        event.buffer = Zone.locAnim(loc.x, loc.z, loc.shape, loc.angle, seq);
+        event.x = loc.x;
+        event.z = loc.z;
+        event.tick = World.currentTick;
+        event.layer = LocShapes.layer(loc.shape);
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+    }
+
     // ----
 
-    addStaticObj(obj: Obj) {
-        this.staticObjs.push(obj);
-        this.addObj(Obj.clone(obj), null, -1); // temp
-
-        const buf = Zone.write(ServerProt.OBJ_ADD, obj.x, obj.z, obj.type, obj.count);
-        this.staticObjAddCached.push(buf);
-    }
-
     addObj(obj: Obj, receiver: Player | null, duration: number) {
-        this.objs.push(obj);
+        const event = new ZoneEvent(ServerProt.OBJ_ADD);
+        if (this.staticObjs.indexOf(obj) === -1) {
+            obj.despawn = World.currentTick + duration;
+            this.objs.push(obj);
+        } else {
+            event.static = true;
+        }
+
+        if (receiver) {
+            event.receiverId = receiver.uid;
+        }
+        event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
+        event.x = obj.x;
+        event.z = obj.z;
+        event.tick = World.currentTick;
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 
-    removeObj(obj: Obj, receiver: Player | null) {
+    removeObj(obj: Obj, receiver: Player | null, subtractTick: number = 0) {
+        const event = new ZoneEvent(ServerProt.OBJ_DEL);
+
+        const dynamicIndex = this.objs.indexOf(obj);
+        if (dynamicIndex !== -1) {
+            this.objs.splice(dynamicIndex, 1);
+
+            if (receiver) {
+                event.receiverId = receiver.uid;
+            }
+        }
+
+        event.buffer = Zone.objDel(obj.x, obj.z, obj.id, obj.count);
+        event.x = obj.x;
+        event.z = obj.z;
+        event.tick = World.currentTick - subtractTick;
+
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
     }
 
     getObj(x: number, z: number, type: number): Obj | null {
-        for (const obj of this.objs) {
-            if (obj.x === x && obj.z === z && obj.type === type) {
-                return obj;
-            }
+        const dynamicObj = this.objs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type);
+        if (dynamicObj !== -1) {
+            return this.objs[dynamicObj];
+        }
+
+        const staticObj = this.staticObjs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type && obj.respawn < World.currentTick);
+        if (staticObj !== -1) {
+            return this.staticObjs[staticObj];
         }
 
         return null;
