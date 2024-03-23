@@ -119,7 +119,8 @@ readyanim=fairy_ready
 op1=Talk-to
 model1=model_2860_npc
 head1=model_14_npc_head
-wanderrange=2
+wanderrange=0
+moverestrict=nomove
 
 [npc_499]
 vislevel=hide

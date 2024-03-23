@@ -50,7 +50,7 @@ model6=model_358_idk
 model7=model_376_obj_wear
 head1=model_115_idk_head
 head2=model_101_obj_wear
-wanderrange=3
+wanderrange=5
 
 [joe_guard]
 name=Joe
@@ -74,7 +74,7 @@ model6=model_268_obj_wear
 model7=model_185_obj_wear
 model8=model_502_obj_wear
 head1=model_55_idk_head
-wanderrange=4
+wanderrange=5
 
 [aggie]
 name=Aggie
@@ -123,7 +123,7 @@ model5=model_428_idk
 model6=model_358_idk
 head1=model_113_idk_head
 respawnrate=100
-wanderrange=4
+wanderrange=5
 
 [prince_ali]
 name=Prince Ali

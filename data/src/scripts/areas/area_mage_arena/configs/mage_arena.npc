@@ -102,7 +102,7 @@ model9=model_290_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
 head3=model_68_obj_wear
-wanderrange=2
+wanderrange=1
 
 [kolodion_defeated]
 vislevel=hide

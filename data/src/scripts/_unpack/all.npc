@@ -307,6 +307,8 @@ param=rangedefence,20
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 category=guard
+wanderrange=2
+attackrange=4
 
 [guard_crossbow]
 name=Guard
@@ -5329,7 +5331,8 @@ model7=model_2986_npc
 model8=model_2991_npc
 head1=model_0_npc_head
 head2=model_6_npc_head
-wanderrange=3
+wanderrange=5
+attackrange=12
 hitpoints=16
 attack=8
 strength=6
@@ -8641,7 +8644,6 @@ param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
-huntmode=cowardly
 
 [npc_726]
 vislevel=hide
@@ -9213,7 +9215,8 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=4
+wanderrange=5
+moverestrict=indoors
 
 [npc_783]
 vislevel=hide
@@ -9247,7 +9250,8 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=4
+wanderrange=5
+moverestrict=indoors
 
 [npc_788]
 vislevel=hide
@@ -12045,7 +12049,7 @@ size=3
 op2=Attack
 vislevel=78
 model1=model_2884_npc
-wanderrange=9
+wanderrange=10
 attackrange=10
 respawnrate=50
 hitpoints=78
@@ -12285,6 +12289,8 @@ model7=model_176_idk
 model8=model_265_obj_wear
 model9=model_544_obj_wear
 // TODO respawnrate?
+wanderrange=3
+attackrange=5
 hitpoints=76
 attack=24
 strength=24
@@ -12320,6 +12326,8 @@ param=death_sound,insect_1
 param=death_drop,null
 // Tested this npc in osrs, doesnt seem to poison? Seems like the chests have a chance to poison
 huntmode=cowardly
+wanderrange=10
+attackrange=12
 
 [npc_1010]
 vislevel=hide

@@ -198,7 +198,8 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,800
 param=shop_delta,20
 param=shop_title,Ardougne Baker's Stall.
-wanderrange=2
+wanderrange=0
+moverestrict=nomove
 
 [spice_seller]
 vislevel=hide
@@ -261,7 +262,7 @@ param=shop_sell_multiplier,1200
 param=shop_buy_multiplier,950
 param=shop_delta,20
 param=shop_title,Ardougne Fur Stall.
-wanderrange=2
+wanderrange=4
 
 [silk_merchant]
 vislevel=hide
