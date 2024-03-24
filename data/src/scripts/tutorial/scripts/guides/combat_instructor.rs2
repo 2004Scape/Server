@@ -2,8 +2,8 @@
 switch_int(%tutorial_progress) {
     case ^combat_instructor_start: @combat_instructor_start;
     // Todo: Dialogue when not clicking worn items slot
-    case ^combat_instructor_wielding_weapons: ;
-    case ^combat_instructor_worn_inventory: ;
+    case ^combat_instructor_wielding_weapons: @combat_instructor_lets_teach_you_wield;
+    case ^combat_instructor_worn_inventory: @combat_instructor_lets_teach_you_wield;
     case ^combat_instructor_dagger_equipped: @combat_instructor_dagger_equipped;
     case ^combat_instructor_unequipping_items: @combat_instructor_equipping_sword_and_shield;
     case ^combat_instructor_open_combat_interface: @combat_instructor_check_combat_interface;
@@ -23,6 +23,10 @@ if (%tutorial_progress = ^combat_instructor_start) {
     %tutorial_progress = ^combat_instructor_wielding_weapons;
     ~set_tutorial_progress;
 }
+
+[label,combat_instructor_lets_teach_you_wield]
+~chatnpc(neutral, "Let's get started by teaching you to wield a weapon.");
+~combat_instructor_replace_items;
 
 [label,combat_instructor_dagger_equipped]
 ~chatnpc(neutral, "Very good, but that little butter knife isn't going to protect you much. Here, take these.");
@@ -47,7 +51,7 @@ if (%tutorial_progress = ^combat_instructor_dagger_equipped) {
 ~chatnpc(neutral, "You're not ready to continue yet.|You need to know about combat before you go on.");
 
 [label,combat_instructor_time_for_combat]
-~chatnpc(neutral, "Time for some actual combat! Head into the pen and kill one of those rats.");
+~chatnpc(neutral, "Time for some actual combat!|Head into the pen and kill one of those rats.");
 ~combat_instructor_replace_items;
 
 [label,combat_instructor_killed_giant_rat_melee]
@@ -122,6 +126,14 @@ if (inv_freespace(inv) = 0) {
     ~mesbox("You need some new weapons for this section of the tutorial but you don't have enough inventory room. You'll need to drop something. To do so, right click on an item you don't want and select drop. Once you've done that, speak to the combat instructor again.");
     return;
 }
+
+if (%tutorial_progress > ^combat_instructor_start
+    & %tutorial_progress < ^combat_instructor_dagger_equipped) {
+        if (inv_total(inv, bronze_dagger) < 1 & inv_freespace(inv) > 0) {
+            inv_add(inv, bronze_dagger, 1);
+            ~objbox(bronze_dagger, "The Combat Guide gives you a |@blu@Bronze dagger!");
+        }
+    }
 if (%tutorial_progress > ^combat_instructor_worn_inventory
     & %tutorial_progress ! ^combat_instructor_after_rat_kill_melee
     & %tutorial_progress ! ^combat_instructor_before_attacking_ranged) {

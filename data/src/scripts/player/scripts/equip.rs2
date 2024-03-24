@@ -22,13 +22,15 @@ if (p_finduid(uid) = true) {
     }
 
     // TODO: this needs a better home...
-    if (%tutorial_progress = ^combat_instructor_unequipping_items) {
-        def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-        def_obj $shield = inv_getobj(worn, ^wearpos_lhand);
+    if (%tutorial_progress < ^tutorial_complete) {
+     if (%tutorial_progress = ^combat_instructor_unequipping_items) {
+            def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+            def_obj $shield = inv_getobj(worn, ^wearpos_lhand);
 
-        if ($weapon = bronze_sword & $shield = wooden_shield) {
-            %tutorial_progress = ^combat_instructor_open_combat_interface;
-            ~set_tutorial_progress;
+            if ($weapon = bronze_sword & $shield = wooden_shield) {
+                %tutorial_progress = ^combat_instructor_open_combat_interface;
+                ~set_tutorial_progress;
+            }
         }
     }
 

@@ -74,7 +74,8 @@ if (%tutorial_progress = 180) {
 // Door to Quest Guide's house
 [oploc1,loc_3019]
 if (%tutorial_progress < 200) {
-    ~mesbox("Get this message Brian, don't PR it without fixing this.");
+    // This message is made up. I haven't found a source where this has happened, and it was made optional in OSRS in 2018.
+    ~mesbox("You should try turning run on before continuing.");
     return;
 }
 
@@ -108,7 +109,7 @@ p_arrivedelay;
 // Gate to Combat Instructor
 [oploc1,loc_3021]
 if (%tutorial_progress < ^mining_instructor_finished) {
-    ~mesbox("Should probs finish that mining part first dood.");
+    ~mesbox("You need to finish with Mining and Smithing first.");
     return;
 }
 if (%tutorial_progress = ^mining_instructor_finished) {

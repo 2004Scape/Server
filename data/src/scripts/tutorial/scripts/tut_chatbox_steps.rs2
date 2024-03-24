@@ -229,6 +229,7 @@ if_settabflash(^tab_wornitems);
 ~tutorialstep("You're now holding your dagger.", "If you check your worn inventory you will see it in your right hand. Clothes, armour, weapons and many other items are equipped like this. You can unequip items by clicking on the |worn inventory. Now go and speak to Vannaka to continue.");
 
 [proc,tutorial_step_unequipping_items]
+hint_stop();
 ~tutorialstep("Unequipping items.", "In your worn inventory panel right click on the dagger and|select the remove option from the drop down list. After you've unequipped the dagger wield the sword and shield. As you pass the mouse over an item you will see its name appear at the top left.");
 
 [proc,tutorial_step_open_combat_interface]
@@ -250,7 +251,7 @@ hint_stop();
 
 [proc,tutorial_step_first_kill_melee]
 ~set_hint_icon_combat_instructor;
-~tutorialstep("Well done, yu've made your first kill!", "|Pass through the gate and talk to Vannaka, he will give you your next task.");
+~tutorialstep("Well done, you've made your first kill!", "|Pass through the gate and talk to Vannaka, he will give you your next task.");
 
 [proc,tutorial_step_rat_ranging]
 ~set_hint_icon_giant_rat;

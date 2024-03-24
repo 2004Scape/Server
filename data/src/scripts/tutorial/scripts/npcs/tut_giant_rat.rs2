@@ -12,6 +12,7 @@ if (npc_findhero = true) {
     }
 }
 
+// Highkey stole this from the drunken dwarf random.
 [ai_opplayer2,npc_950]
 if (stat(hitpoints) = 0) {
     return;
@@ -96,13 +97,6 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
     }
 }
 
-// mes("<tostring(%attackstyle_magic)>");
-// if (testbit(%attackstyle_magic, 0) = true){
-//     mes("TRUE");
-// }
-
-// mes("<tostring(%autocast_spell)>");
-// if auto cast is enabled, and autocast spell is set
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
     $attackrange = 10;
 }
@@ -128,8 +122,6 @@ if (~npc_out_of_combat = true) {
 if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(opplayer2);
 }
-npc_say("It's Rat Attack Time!");
-
 
 [queue,set_rat_kill]
 if (%tutorial_progress = ^combat_instructor_during_attacking_melee) {
