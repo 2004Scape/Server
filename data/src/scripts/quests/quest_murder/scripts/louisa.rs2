@@ -1,0 +1,36 @@
+[opnpc1,louisa]
+switch_int(%murder_progress) { 
+    case ^murder_not_started:
+        ~chatnpc(neutral, "I'm far too upset to talk to random people right now.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "How can I help?");
+        def_int $option;
+        if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3, "Do you know why so much poison was bought recently?", 4);
+        } else {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3);
+        }
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(neutral, "Elizabeth.");
+                ~chatnpc(neutral, "Her father confronted her about her constant petty thieving, and was devestated to find she had stolen a silver needle which had meant a lot to him.");
+                ~chatnpc(sad, "You could hear their argument from Lumbridge!");
+            case 2:
+                ~chatplayer(confused, "Where were you at the time of the murder?");
+                ~chatnpc(confused, "I was right here with Hobbes and Mary. You can't suspect me surely!");
+            case 3:
+                ~chatplayer(neutral, "Did you hear any suspicious noises at all?");
+                ~chatnpc(neutral, "suspicious? what do you mean suspicious?"); // intentional no capital
+                ~chatplayer(neutral, "Any sounds of a struggle with an intruder for example?");
+                ~chatnpc(confused, "No, I'm sure I don't recall any such thing.");
+                ~chatplayer(neutral, "How about the guard dog barking at an intruder?");
+                ~chatnpc(neutral, "No, I didn't. If you don't have anything else to ask can You go and leave me alone now? I have a lot of cooking to do for this evening.");
+            case 4:
+                ~chatplayer(neutral, "Do you know why so much poison was bought recently?");
+                ~chatnpc(neutral, "I told Carol to buy some from that strange poison salesman and clean the drains before they began to smell any worse. She was the one who blocked them in the first place with a load");
+                ~chatnpc(neutral, "of beans that she bought for some reason. There were far too many to eat, and they were almost rotten when she bought them anyway! You'd really have to ask her though.");
+        }
+    case ^murder_complete: ~chatnpc(happy, "Thank you for all your help in solving the murder.");
+}

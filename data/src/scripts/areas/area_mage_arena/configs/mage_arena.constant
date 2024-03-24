@@ -1,0 +1,19 @@
+^mage_arena_started = 1
+^mage_arena_ogre = 2
+^mage_arena_arachnid = 3
+^mage_arena_ethereal = 4
+^mage_arena_demon = 5
+^mage_arena_complete = 6
+^mage_arena_prayed_at_statue = 7
+^mage_arena_saradomin = 8
+^mage_arena_guthix = 9
+^mage_arena_zamorak = 10
+^mage_arena_staff_given = 11
+^mage_arena_start_coord = 0_48_61_33_30
+
+^mage_arena_finish_coord = 0_39_73_44_44
+^sparkling_pool_chamber_coord = 0_39_73_13_17
+^sparkling_pool_return_coord = 0_39_73_46_46
+
+^mage_arena_spell_last_cast = 98
+^mage_arena_spell_finished = 99

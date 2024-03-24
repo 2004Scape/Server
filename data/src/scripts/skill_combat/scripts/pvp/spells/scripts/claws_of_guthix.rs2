@@ -1,0 +1,27 @@
+[opplayert,magic:claws_of_guthix] ~pvp_claws_of_guthix(^claws_of_guthix);
+// [applayert,magic:claws_of_guthix] ~pvp_claws_of_guthix(^claws_of_guthix);
+
+[proc,pvp_claws_of_guthix](int $spell)
+// look for spell in db
+def_dbrow $spell_data = ~get_spell_data($spell);
+if (~pvp_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (%claws_of_guthix_casts < ^mage_arena_spell_finished & ~inzone_coord_pair_table(mage_arena, coord) = false) {
+    // https://youtu.be/TrxuRyogdEo?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=60
+    mes("You are not yet experienced enough to use this spell outside the");
+    mes("Mage Arena.");
+    return;
+}
+~pvp_spell_cast($spell_data);
+// spell hit
+if (~pvp_hit_roll(^magic_style) = true) {
+    ~pvp_spell_success($spell_data, ~god_spell_maxhit($spell_data), 64);
+    if (~has_god_cape_and_staff = true) {
+        ~pvp_stat_change_effect($spell_data);
+    }
+} else {
+    ~pvp_spell_fail($spell_data, 64);
+}
+// todo: heropoints
+~set_pk_vars; // skulls

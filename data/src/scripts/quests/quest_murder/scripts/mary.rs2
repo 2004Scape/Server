@@ -1,0 +1,35 @@
+[opnpc1,mary]
+switch_int(%murder_progress) { 
+    case ^murder_not_started: mes("She is ignoring you.");
+        case ^murder_started:
+            ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+            ~chatnpc(confused, "How can I help?");
+            def_int $option;
+            if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+                $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3, "Do you know why so much poison was bought recently?", 4);
+            } else {
+                $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you at the time of the murder?", 2, "Did you hear any suspicious noises at all?", 3);
+            }
+            switch_int($option) {
+                case 1:
+                    ~chatplayer(confused, "Who do you think is responsible?");
+                    ~chatnpc(neutral, "Oh I don't know... Frank was acting kind of funny... After that big argument him and the Lord had the other day by the beehive... so");
+                    ~chatnpc(confused, "I guess maybe him... but it's really scary to think someone here might have been responsible. I actually hope it was a burglar...");
+                case 2:
+                    ~chatplayer(confused, "Where were you at the time of the murder?");
+                    ~chatnpc(sad, "I was with Hobbes and Louisa in the Kitchen helping to prepare Lord Sinclair's meal, and then when I took it to his study... I saw... oh, it was horrible... he was....");
+                    ~mesbox("She seems to be on the verge of crying. You decide not to push her anymore for details.");
+                case 3:
+                    ~chatplayer(neutral, "Did you hear any suspicious noises at all?");
+                    ~chatnpc(neutral, "I don't really remember hearing anything out of the ordinary."); 
+                    ~chatplayer(neutral, "No sounds of a struggle then?");
+                    ~chatnpc(confused, "No, I don't remember hearing anything like that.");
+                    ~chatplayer(neutral, "How about the guard dog barking?");
+                    ~chatnpc(neutral, "Oh that horrible dog is always barking at nothing but I don't think I did...");
+                case 4:
+                    ~chatplayer(neutral, "Do you know why so much poison was bought recently?");
+                    ~chatnpc(neutral, "I overheard Anna saying to Stanford that if he didn't do something about the state of his compost heap, she was going to.");
+                    ~chatnpc(neutral, "She really doesn't get on well with Stanford. I really have no idea why. You'd really have to ask her though.");
+            }
+        case ^murder_complete: ~chatnpc(happy, "Thank you for all your help in solving the murder.");
+}

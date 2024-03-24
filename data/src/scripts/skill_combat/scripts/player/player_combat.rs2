@@ -1,10 +1,27 @@
 [opnpc2,_]
+if (~inzone_coord_pair_table(mage_arena, coord) = true) {
+    // Lotta forums posts where people are confused whether 
+    // or not they can use auto cast. Some people say you can,
+    // some people say you cant. I assume you could autocast,
+    // but only if you cast a manual spell first (and have autocast on).
+    // Some guides say you cant click on npc's with autocast.
+    if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+        mes("You are not ready to fight the battle mages."); // for some reason this message appears before the singles combat messages, if you're not casting spells
+    }
+    return;
+}
 if (~player_in_combat_check = false) {
     return;
 }
 @player_combat_start;
 
 [apnpc2,_]
+if (~inzone_coord_pair_table(mage_arena, coord) = true) {
+    if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+        mes("You are not ready to fight the battle mages."); // for some reason this message appears before the singles combat messages, if you're not casting spells
+    }
+    return;
+}
 def_int $distance = npc_range(coord);
 def_int $attackrange = 0;
 if (inv_getobj(worn, ^wearpos_rhand) ! null) {
@@ -18,7 +35,6 @@ if (inv_getobj(worn, ^wearpos_rhand) ! null) {
 // if (testbit(%attackstyle_magic, 0) = true){
 //     mes("TRUE");
 // }
-
 // mes("<tostring(%autocast_spell)>");
 // if auto cast is enabled, and autocast spell is set
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
@@ -50,26 +66,10 @@ if (%damagetype = ^ranged_style) {
 // }
 // if autocast is enabled and spell is selected
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
-    // look for spell in db
     def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
-    def_boolean $passes;
-
-    // define spell runes
-    def_namedobj $rune1;
-    def_int $rune_count1;
-    def_namedobj $rune2;
-    def_int $rune_count2;
-    def_namedobj $rune3;
-    def_int $rune_count3;
-
-    // check runes
-    $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-    if ($passes = false) {
-        return;
-    }
-
-    // in osrs you cant tick manip with autocast delay, so its prob its on varp?
-    p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    if (~check_spell_requirements($spell_data) = true) {
+        p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
+    }  
     return;
 }
 

@@ -1,0 +1,203 @@
+[opnpc1,kolodion]
+if (%magearena_progress < ^mage_arena_started) {
+    ~chatplayer(neutral, "Hello there. What is this place?");
+    // https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
+    // "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
+    if (stat_base(magic) < 60) {
+        ~chatnpc(angry, "Do not waste my time with trivial questions. I am the|Great Kolodion, master of battle magic. I have an arena|to run.");
+        ~chatplayer(quiz, "Can I enter?");
+        ~chatnpc(angry, "Hah! A wizard of your level? Don't be absurd.");
+        return;
+    }
+    ~chatnpc(shifty, "I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|Gielinor to fight here.");
+    @multi3("Can I fight here?", kolodion_can_i_fight_here, "What's the point of that?", kolodion_whats_the_point, "That's barbaric!", kolodion_barbaric);
+}
+if (~mage_arena_in_progress = true) {
+    @kolodion_return;
+} else if (%magearena_progress = ^mage_arena_started) {
+    @kolodion_lets_fight;
+} else if (%magearena_progress = ^mage_arena_complete) {
+    ~chatplayer(neutral, "Hello, Kolodion.");
+    ~chatnpc(shifty,  "Hello, young mage. You're a tough one.");
+    @kolodion_what_now;
+}
+
+// default
+~chatplayer(neutral, "Hello, Kolodion.");
+~chatnpc(shifty, "Hey there, how are you? Are you enjoying the|bloodshed?");
+~chatplayer(neutral, "It's not bad; I've seen worse.");
+def_int $choice = ~p_choice3("I think I've had enough for now.", 1, "How can I use my new spells outside of the arena?", 2, "Are there any more challenges available?", 3);
+if ($choice = 1) {
+    ~chatplayer(bored, "I think I've had enough for now.");
+    ~chatnpc(neutral, "A shame. You're a good battle mage. I hope to see you|soon.");
+    return;
+} else if ($choice = 2) {
+    ~chatplayer(quiz, "How can I use my new spells outside of the arena?");
+    ~chatnpc(shifty, "Experience, my friend, experience. Once you've used|the spell enough times in the arena, you'll be able to use|them in the rest of Gielinor.");
+    ~chatplayer(happy, "Good stuff.");
+    ~chatnpc(happy,  "Not so good for the citizens; they won't stand a chance.");
+    ~chatplayer(quiz, "How am I doing so far?");
+    // check for each spell if they're unlocked
+    if (%saradomin_strike_casts < ^mage_arena_spell_finished) {
+        ~chatnpc(neutral, "You still need to train with the strike spell inside the|arena before you can use it outside.");
+    } else {
+        ~chatnpc(happy, "You're experienced enough to use the strike spell|anywhere.");
+    }
+    if (%claws_of_guthix_casts < ^mage_arena_spell_finished) {
+        ~chatnpc(neutral, "You still need to train with the claw spell inside the|arena before you can use it outside.");
+    } else {
+        ~chatnpc(happy, "You're experienced enough to use the claw spell|anywhere.");
+    }
+    if (%flames_of_zamorak_casts < ^mage_arena_spell_finished) {
+        ~chatnpc(neutral, "You still need to train with the flame spell inside the|arena before you can use it outside.");
+    } else {
+        ~chatnpc(happy, "You're experienced enough to use the flame spell|anywhere.");
+    }
+    return;
+} else if ($choice = 3) {
+    ~chatplayer(quiz, "Are there any more challenges available?");
+    // check if the player has learned the god spells
+    ~chatnpc(sad, "You still need to learn how to cast all god spells outside|of the arena.");
+    ~chatnpc(neutral, "I've made a note of the spells you still need to learn in|your journal.");
+    return;
+}
+
+[label,kolodion_can_i_fight_here]
+~chatplayer(quiz, "Can I fight here?");
+~chatnpc(shifty, "My arena is open to any high level wizard, but this is|no game. Many wizards fall in this arena, never to rise|again. The strongest mages have been destroyed.");
+~chatnpc(quiz, "If you're sure you want in?");
+@multi2("Yes indeedy.", kolodion_yes_indeedy, "No I don't.", kolodion_no_i_dont);
+
+
+[label,kolodion_whats_the_point]
+~chatplayer(quiz, "What's the point of that?");
+~chatnpc(neutral, "We learn how to use our magic to its fullest and how|to channel the forces of the cosmos into our world...");
+~chatnpc(happy, "But mainly, I just like blasting people into dust.");
+@multi2("Can I fight here?", kolodion_can_i_fight_here, "That's barbaric!", kolodion_barbaric);
+
+
+[label,kolodion_barbaric]
+~chatplayer(shock, "That's barbaric!");
+~chatnpc(happy, "Nope, it's magic. But I know what you mean. So do|you want to join us?");
+@multi2("Yes indeedy.", kolodion_yes_indeedy, "No I don't.", kolodion_no_i_dont);
+
+
+[label,kolodion_yes_indeedy]
+~chatplayer(happy, "Yes indeedy.");
+~chatnpc(happy, "Good, good. You have a healthy sense of competition.");
+~chatnpc(neutral, "Remember, traveller - in my arena, hand-to-hand|combat is useless. Your strength will diminish as you|enter the arena, but the spells you can learn are|amongst the most powerful in all of Gielinor.");
+~chatnpc(neutral, "Before I can accept you in, we must duel.|You may not take armour or weapons into the arena."); // second sentence is rsc
+@multi2("Okay, let's fight.", kolodion_lets_fight, "No thanks.", exit);
+
+[label,kolodion_no_i_dont]
+~chatplayer(angry, "No I don't.");
+~chatnpc(neutral, "Your loss.");
+
+[label,kolodion_lets_fight]
+~chatplayer(happy, "Okay, let's fight.");
+~chatnpc(neutral, "I must first check that you are up to scratch.");
+if (~can_enter_mage_arena = false) {
+    ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
+    return;
+}
+~chatplayer(happy, "You don't need to worry about that.");
+~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
+%magearena_progress = 1;
+
+@kolodion_teleport;
+
+[label,kolodion_return]
+~chatplayer(happy, "Hi.");
+~chatnpc(neutral, "You return, young conjurer. You obviously have a|taste for the dark side of magic.");
+if (~can_enter_mage_arena = false) {
+    ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
+    return;
+}
+// https://youtu.be/gxLEK64MAU8?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=16
+
+@kolodion_teleport;
+
+[label,kolodion_what_now]
+~chatplayer(quiz, "What now?");
+~chatnpc(shifty, "Step into the magic pool. It will take you to a chamber.|There, you must decide which god you will represent in|the arena.");
+~chatplayer(happy, "Thanks, Kolodion.");
+~chatnpc(happy, "That's what I'm here for.");
+
+[label,kolodion_teleport]
+// for some reason you can move for 1 tick during this
+if_close;
+def_int $delay = max(sub(npc_range(coord), 1), 0);
+npc_queue(4, 30, $delay);
+npc_setmode(opplayer2);
+p_delay($delay);
+anim(human_castteleport, 60);
+spotanim_pl(castteleport, 92, 60);
+sound_synth(teleport_all, 0, 0);
+// spawn coord is relative between the player and kolodion at the safe area
+def_coord $spawn_coord = movecoord(^mage_arena_start_coord, sub(coordx(npc_coord), coordx(coord)), 0, sub(coordz(npc_coord), coordz(coord)));
+p_delay(3);
+p_teleport(^mage_arena_start_coord);
+anim(null, 0);
+def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena_progress);
+~npc_del_within_distance2(^mage_arena_start_coord, $boss, 20); // remove the boss if its the same stage, and not in combat
+switch_int (%magearena_progress) {
+    case ^mage_arena_started:
+        // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
+        // https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23
+        p_delay(3);
+        spotanim_map(spotanim_188, $spawn_coord, 124, 0);
+        sound_synth(smokepuff, 0, 0);
+        p_delay(0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
+        p_delay(1);
+        npc_say("You must prove yourself... now!");
+        npc_setmode(applayer2);
+    case ^mage_arena_ogre:
+        p_delay(1);
+        sound_synth(smokepuff, 0, 0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
+        spotanim_npc(spotanim_188, 124, 34);
+        p_delay(1); // not a mistake
+        npc_setmode(applayer2);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+    case ^mage_arena_arachnid:
+        // exact move
+        p_delay(2);
+        ~mage_arena_exactmove(movecoord($spawn_coord, 1, 0, 1));
+        sound_synth(teleport_reverse, 0, 0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 4);
+        spotanim_npc(spotanim_190, 16, 35);
+        p_delay(0);
+        npc_setmode(applayer2);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+    case ^mage_arena_ethereal:
+        p_delay(2);
+        spotanim_npc(spotanim_188, 124, 10);
+        p_delay(0);
+        sound_synth(teleport_reverse, 0, 0);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 6);
+        p_delay(0); // not a mistake
+        npc_setmode(applayer2);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+    case ^mage_arena_demon:
+        p_delay(1);
+        $spawn_coord = movecoord($spawn_coord, 1, 0, 1);
+        ~mage_arena_exactmove($spawn_coord);
+        ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
+        spotanim_npc(spotanim_191, 16, 35);
+        sound_synth(teleport_reverse, 0, 0);
+        p_delay(0);
+        npc_say("Let us continue with our battle");
+        npc_setmode(applayer2);
+}
+
+// demon is middle tile
+
+[ai_opplayer2,kolodion]
+npc_setmode(playerfaceclose);
+
+[ai_queue4,kolodion](int $anim_delay)
+npc_anim(seq_811, $anim_delay);

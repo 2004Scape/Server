@@ -1,0 +1,114 @@
+[loc_2650]
+name=Sinclair family compost heap
+desc=A pile of smelly rotting waste.
+model=model_loc_152
+width=2
+length=2
+op2=Investigate
+
+[loc_2651]
+name=Sinclair family beehive
+desc=A sturdily constructed home for bees.
+model=model_loc_68
+op2=Investigate
+
+[loc_2652]
+name=Sinclair mansion drain
+desc=Looks like this is where waste from the kitchens comes out.
+model=model_loc_876
+op2=Investigate
+
+[loc_2653]
+name=Spiders' nest
+desc=It looks like a spiders nest to me.
+model=model_loc_706_q
+op2=Investigate
+recol1s=9152
+recol1d=82
+
+[loc_2654]
+name=Sinclair family fountain
+desc=This fountain suits the garden.
+model=model_loc_153
+width=2
+length=2
+mapscene=8
+op2=Investigate
+
+[loc_2655]
+name=Sinclair family crest
+desc=Its the Sinclair Family coat of arms.
+model=model_loc_2655
+op2=Investigate
+
+[loc_2656]
+name=Annas' barrel
+desc=looks like this is where Anna keeps her stuff.
+model=model_loc_362
+op2=Search
+
+[loc_2657]
+name=Bobs' barrel
+desc=looks like this is where Bob keeps his stuff.
+model=model_loc_362
+op2=Search
+
+[loc_2658]
+name=Carols' barrel
+desc=looks like this is where Carol keeps her stuff.
+model=model_loc_362
+op2=Search
+
+[loc_2659]
+name=Davids' barrel
+desc=looks like this is where David keeps his stuff.
+model=model_loc_362
+op2=Search
+
+[loc_2660]
+name=Elizabeths' barrel
+desc=looks like this is where Elizabeth keeps her stuff.
+model=model_loc_362
+op2=Search
+
+[loc_2661]
+name=Franks' barrel
+desc=looks like this is where Frank keeps his stuff.
+model=model_loc_362
+op2=Search
+
+[loc_2662]
+name=Barrel of flour
+desc=Looks like this is where the cook stores her flour.
+model=model_loc_362
+op2=Take From
+
+[loc_2663]
+name=Sacks
+desc=some sacks of general garden items.
+model=model_loc_23
+op2=Investigate
+
+[loc_2664]
+name=Sturdy wooden gate
+desc=luckily its what keeps that vicious dog inside.
+model=model_loc_47
+op1=Investigate
+
+[loc_2665]
+name=Sturdy wooden gate
+desc=luckily its what keeps that vicious dog inside.
+model=model_loc_47
+mirror=yes
+op1=Investigate
+
+[loc_2666]
+name=Smashed window
+desc=looks like the killer smashed this to leave the mansion.
+model=model_loc_1843_q
+active=yes
+op2=Investigate
+recol1s=2
+recol1d=45
+recol2s=24
+recol2d=4762

@@ -3,15 +3,3 @@ scope=perm
 
 [handelmort_traps_disabled]
 scope=perm
-
-[tribal_door_lock1]
-scope=perm
-
-[tribal_door_lock2]
-scope=perm
-
-[tribal_door_lock3]
-scope=perm
-
-[tribal_door_lock4]
-scope=perm

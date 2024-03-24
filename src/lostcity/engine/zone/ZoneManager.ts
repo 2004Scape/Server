@@ -20,7 +20,7 @@ export default class ZoneManager {
         const zoneIndex = ZoneManager.zoneIndex(absoluteX, absoluteZ, level);
         let zone = this.zones.get(zoneIndex);
         if (typeof zone == 'undefined') {
-            zone = new Zone(zoneIndex, level);
+            zone = new Zone(zoneIndex);
             this.zones.set(zoneIndex, zone);
         }
         return zone;

@@ -5,17 +5,7 @@
 [label,magic_spell_telegrab]
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data(^telekinetic_grab);
-// define spell runes
-def_namedobj $rune1;
-def_int $rune_count1;
-def_namedobj $rune2;
-def_int $rune_count2;
-def_namedobj $rune3;
-def_int $rune_count3;
-def_boolean $passes;
-// check runes
-$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-if ($passes = false) {
+if (~check_spell_requirements($spell_data) = false) {
     return;
 }
 if (afk_event = ^true) {
@@ -42,7 +32,7 @@ sound_synth(telegrab_all, 0, 0);
 spotanim_pl(casttelegrab, 92, 0);
 
 // delete runes
-~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~delete_spell_runes($spell_data);
 // delay character for 4 ticks, give item, delay character for 3 ticks
 // play mapanim
 def_int $duration = ~coord_projectile(coord, obj_coord, telegrab_travel, 35, 0, 48, 16, -2, 64, 10);

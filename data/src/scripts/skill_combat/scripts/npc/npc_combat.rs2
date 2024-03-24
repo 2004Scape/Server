@@ -14,6 +14,22 @@ if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(opplayer2);
 }
 
+// mostly used for ranged and magic npc's
+[proc,npc_default_retaliate_ap]
+// set npc to ap if its out of combat
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    %npc_attacking_uid = %npc_aggressive_player;
+    if (finduid(%npc_attacking_uid) = true) {
+        npc_setmode(applayer2);
+    }
+    return;
+}
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(opplayer2);
+}
+
+
 // a default melee attack script.
 [proc,npc_default_attack]
 if (stat(hitpoints) = 0) {
@@ -67,8 +83,8 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
 }
 return(false);
 
+// allows any npc with op2 defined to be attacked
 [proc,npc_is_attackable](npc $npc)(boolean)
-// so this way is more authentic, allows any npc with op2 defined to be attacked
 // https://web.archive.org/web/20060828222012/http://www.trillionareguild.com/runescape/dragon.php at the very end of the guide
 // it says "You have no reason to do that.", so its prob this osrs message.
 // every guide says you have to kill wormbrain, and monster db's say he drops bones. so theres no
@@ -83,6 +99,11 @@ if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(
     // }
     return (false);
 }
+if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+    mes("You are not ready to fight the battle mages.");
+    return(false);
+}
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -92,15 +113,40 @@ if (string_length(nc_op($npc, 2)) > 0) {
 // }
 return (false);
 
+// this proc is primarily used for magic, due to the "You cant attack this npc." message
 [proc,npc_is_attackable_message](npc $npc)(boolean)
-if (~npc_is_attackable($npc) = false) {
-    mes("You can't attack this npc.");
+if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin)) {
+    mes("The goblin is already in prison. You have no reason to attack him.");
     return (false);
 }
-return (true);
+if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
+    mes("You are not ready to fight the battle mages.");
+    return(false);
+}
+if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progress) ! npc_type) {
+    if (%magearena_progress > ^mage_arena_complete) {
+        mes("You have already proven yourself against Kolodion.");
+        return(false);
+    }
+    if (enum(npc, int, mage_arena_stages, npc_type) < %magearena_progress) {
+        mes("You have already killed Kolodion in his <enum(int, string, mage_arena_boss_names, sub(%magearena_progress, 1))> form.");
+    }
+    if (npc_type = kolodion_arachnid_form | npc_type = kolodion_demon_form) {
+        mes("You must now defeat him as <~add_article(enum(int, string, mage_arena_boss_names, %magearena_progress))>.");
+    } else {
+        mes("You must currently fight Kolodion in his <enum(int, string, mage_arena_boss_names, %magearena_progress)> form.");
+    }
+    return(false);
+}
+if (string_length(nc_op($npc, 2)) > 0) {
+    return (true);
+}
+mes("You can't attack this npc.");
+return (false);
+
 
 [proc,npc_out_of_combat]()(boolean)
-if (add(%npc_lastattack, 8) < map_clock | (npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
+if (add(%npc_lastattack, 8) < map_clock | (npc_getmode ! applayer2 & npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
     return (true);
 }
 return (false);

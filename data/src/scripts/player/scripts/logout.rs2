@@ -24,6 +24,8 @@ if (%tradepartner ! null) {
 }
 ~reset_stall_trade_timers;
 ~set_pk_skull_logout;
+~set_antifire_logout;
+~set_antipoison_logout;
 ~clear_ball_shed_uid;
 
 return(true);

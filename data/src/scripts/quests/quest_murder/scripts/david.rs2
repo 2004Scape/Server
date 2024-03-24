@@ -1,0 +1,43 @@
+[opnpc1,david]
+switch_int(%murder_progress) { 
+    case ^murder_not_started: mes("He is ignoring you.");
+    case ^murder_started:
+        ~chatplayer(neutral, "I'm here to help the guards with their investigation.");
+        ~chatnpc(neutral, "And? Make this quick, I have better things to do|than be interrogated by halfwits all day.");
+        def_int $option;
+        if(testbit(%murder_evidence, ^murder_found_thread) = true & %murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice4("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3, "Why'd you buy poison the other day?", 4);
+        } else if(testbit(%murder_evidence, ^murder_found_thread) = true) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Do you recognise this thread?", 3);
+        } else if(%murder_poisonproof_progress >= ^poisonproof_spoken_salesman) {
+            $option = ~p_choice3("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2, "Why'd you buy poison the other day?", 4);
+        } else {
+            $option = ~p_choice2("Who do you think is responsible?", 1, "Where were you when the murder happened?", 2);
+        }
+        switch_int($option) {
+            case 1:
+                ~chatplayer(neutral, "Who do you think is responsible?");
+                ~chatnpc(neutral, "I don't really know or care.|Frankly, the old man deserved to die.");
+                ~chatnpc(neutral, "There was a suspicious red headed man who came|to the house the other day selling poison now I|think about it. Last I saw he was headed towards|the tavern in the Seers village.");
+            case 2:
+                ~chatplayer(neutral, "Where were you when the murder happened?");
+                ~chatnpc(angry, "That is none of your business.|Are we finished now, or are you just going|to stand there irritating me with your|idiotic questions all day?");
+            case 3:
+                ~chatplayer(confused, "Do you recognise this thread?");
+                ~mesbox("You show him the thread you found on the study window");
+                if(inv_total(inv, murder_green_thread) > 0) {
+                    // no period
+                    ~chatnpc(angry, "It's some Green thread, like my trousers are made of.|Are you finished? I'm not sure which I dislike more|about you, your face or your general bad odour");
+                    return;
+                }
+                ~chatnpc(confused, "No. Can I go yet? Your face irritates me.");
+            case 4:
+                ~chatplayer(neutral, "Why'd you buy poison the other day?");
+                ~chatnpc(angry, "There was a nest of spiders upstairs between the two servants' quarters. Obviously I had to kill them before our pathetic servants whined at my father some more.");
+                ~chatnpc(confused, "Honestly, it's like they expect to be treated like royalty! If I had my way I would fire the whole workshy lot of them!");
+                if(%murder_murderer_id = ^murderer_david & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                    %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
+                }
+        }
+    case ^murder_complete: ~chatnpc(neutral, "Apparently you aren't as stupid as you look.");
+}

@@ -6,3 +6,16 @@ def_obj $consumable = last_item;
 // change item to its next stage. default is null
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 ~consume_effect_messages($consumable, stat(hitpoints), false);
+
+[proc,set_antifire_login]
+if (%antifire < 1) {
+    return;
+}
+%antifire = add(map_clock, %antifire);
+
+[proc,set_antifire_logout]
+if (%antifire < map_clock) {
+    %antifire = null;
+    return;
+}
+%antifire = sub(%antifire, map_clock);
