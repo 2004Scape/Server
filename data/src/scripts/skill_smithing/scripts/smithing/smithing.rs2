@@ -34,7 +34,7 @@
 if (%tutorial_progress < ^tutorial_complete) {
     // This happens with any item, not just bars.
     if (%tutorial_progress < ^mining_instructor_before_smelt_bronze_bar) {
-        ~mesbox("This is an avil used for smithing.|You'll lean how to use it soon.");
+        ~mesbox("This is an anvil used for smithing.|You'll lean how to use it soon.");
         return;
     }
 

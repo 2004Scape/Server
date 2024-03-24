@@ -1,4 +1,10 @@
 [opnpc1,npc_953] @tut_banker;
+[apnpc1,npc_953]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+@tut_banker;
 
 [label,tut_banker]
 ~chatnpc(quiz, "Good day, would you like to access your bank account?");

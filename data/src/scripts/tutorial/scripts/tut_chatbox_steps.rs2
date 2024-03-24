@@ -111,7 +111,7 @@ queue(set_run, 0, 0);
 ~tutorialstep("Running.", "In this menu you will see many options from waving to walking.|At the top of the panel there are two buttons. One is walk the|other one is run. Click on the run button.");
 
 [proc,tutorial_step_enter_quest_guide_house]
-hint_coord(^hint_north, 0_48_48_14_54, 150);
+hint_coord(^hint_south, 0_48_48_14_54, 150);
 ~tutorialstep("Run to the next guide.", "Now that you have run turned on follow the path, until you|come to the end. You may notice that your energy left goes|down. If this reaches zero you'll stop running. Click on the door|to pass through it.");
 
 [proc,tutorial_step_talk_to_quest_guide]

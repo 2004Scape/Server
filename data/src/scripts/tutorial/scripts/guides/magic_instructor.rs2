@@ -47,7 +47,6 @@ if (inv_total(inv, airrune) < 25 & inv_total(inv, mindrune) < 25) {
     inv_del(inv, mindrune, inv_total(inv, mindrune));
     inv_add(inv, airrune, 5);
     inv_add(inv, mindrune, 5);
-    return;
 }
 
 [label,magic_instructor_successfully_cast_wind_strike]
