@@ -17410,6 +17410,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3025]
 name=Door
@@ -17421,6 +17422,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3026]
 name=Door
@@ -17432,6 +17434,7 @@ recol1s=2
 recol1d=45
 recol2s=24
 recol2d=4762
+param=next_loc_stage,loc_1535
 
 [loc_3027]
 name=Door
