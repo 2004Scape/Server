@@ -2,7 +2,6 @@
 // create a constant (^spellname) in ../configs/magic/spells.constant
 // add it to the spell table in ../configs/magic/magic_combat_spells.dbrow
 // create an opnpct and apnpct trigger for it in this script
-
 [opnpct,magic:wind_strike] ~pvm_default_spell(^wind_strike);
 [opnpct,magic:water_strike] ~pvm_default_spell(^water_strike);
 [opnpct,magic:earth_strike] ~pvm_default_spell(^earth_strike);
@@ -30,7 +29,12 @@
 [opnpct,magic:stun] ~pvm_default_spell(^stun);
 [opnpct,magic:crumble_undead] ~pvm_default_spell(^crumble_undead);
 
-[apnpct,magic:wind_strike] ~pvm_default_spell(^wind_strike);
+[apnpct,magic:wind_strike]
+if (%tutorial_progress < ^tutorial_complete) {
+   ~pvm_tutorial_spell(^wind_strike);
+} else {
+   ~pvm_default_spell(^wind_strike);
+}
 [apnpct,magic:water_strike] ~pvm_default_spell(^water_strike);
 [apnpct,magic:earth_strike] ~pvm_default_spell(^earth_strike);
 [apnpct,magic:fire_strike] ~pvm_default_spell(^fire_strike);

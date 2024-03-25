@@ -77,11 +77,12 @@ if (%tutorial_progress = ^combat_instructor_after_rat_kill_melee) {
 @combat_instructor_recap_questions;
 
 [label,combat_instructor_recap_questions]
-@multi4(
+@multi4_header(
     "Tell me about combat stats.", combat_instructor_combat_stats_recap,
     "Tell me about melee combat again.", combat_instructor_melee_combat_recap,
     "Tell me about ranged combat again.", combat_instructor_ranged_combat_recap,
-    "Nope, I'm ready to move on!", combat_instructor_moving_on
+    "Nope, I'm ready to move on!", combat_instructor_moving_on,
+    "What would you like to hear more about?"
 );
 
 [label,combat_instructor_combat_stats_recap]

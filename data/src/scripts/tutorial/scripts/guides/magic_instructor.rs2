@@ -42,11 +42,30 @@ if (inv_total(inv, airrune) >= 25 & inv_total(inv, mindrune) >= 25) {
 
 if (inv_total(inv, airrune) < 25 & inv_total(inv, mindrune) < 25) {
     ~doubleobjbox(airrune, mindrune, "Terrova gives you some |@blu@Air runes| and some |@blu@Mind runes!");
-   // Do some math here...
-    inv_del(inv, airrune, inv_total(inv, airrune));
-    inv_del(inv, mindrune, inv_total(inv, mindrune));
-    inv_add(inv, airrune, 5);
-    inv_add(inv, mindrune, 5);
+    inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
+    inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
+    return;
+}
+
+if (inv_total(inv, airrune) < 25) {
+    ~objboxt(airrune, "Terrova gives you some |@blu@Air runes!");
+    inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
+    return;
+}
+
+if (inv_total(inv, mindrune) < 25) {
+    ~objboxt(mindrune, "Terrova gives you some |@blu@Mind runes!");
+    inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
+    return;
+}
+
+[proc,magic_instructor_runes_to_give](obj $obj)(int)
+def_int $total_runes = inv_total(inv, $obj);
+
+if (calc(25 - $total_runes) >= 5) {
+    return (5);
+} else {
+    return(calc(25 - $total_runes));
 }
 
 [label,magic_instructor_successfully_cast_wind_strike]
@@ -55,9 +74,10 @@ if (%tutorial_progress = ^tutorial_successful_wind_strike) {
     %tutorial_progress = ^magic_instructor_finished;
 }
 
-@multi2(
+@multi2_header(
     "Yes.", magic_instructor_to_mainland,
-    "No.", magic_instructor_decline_mainland
+    "No.", magic_instructor_decline_mainland,
+    "Do you want to go to the mainland?"
 );
 
 

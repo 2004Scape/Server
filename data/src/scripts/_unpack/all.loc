@@ -17258,6 +17258,7 @@ model=model_loc_52
 op1=Open
 active=yes
 blockrange=no
+category=tut_mining_exit
 
 [loc_3021]
 name=Gate
@@ -17267,6 +17268,7 @@ op1=Open
 mirror=yes
 active=yes
 blockrange=no
+category=tut_mining_exit
 
 [loc_3022]
 name=Gate

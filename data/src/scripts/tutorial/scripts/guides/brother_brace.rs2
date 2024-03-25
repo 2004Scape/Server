@@ -50,10 +50,11 @@ if (%tutorial_progress = ^brother_brace_after_friends_tab) {
 @brother_brace_recap_questions;
 
 [label,brother_brace_recap_questions]
-@multi3(
+@multi3_header(
     "Tell me about Prayers again.", brother_brace_prayer_recap,
     "Tell me about my Friends List again", brother_brace_friends_recap,
-    "Nope, I'm ready to move on!", brother_brace_no_thanks
+    "Nope, I'm ready to move on!", brother_brace_no_thanks,
+    "What would you like to hear more about?"
 );
 
 [label,brother_brace_prayer_recap]

@@ -22,9 +22,10 @@ if (%tutorial_progress = ^tutorial_opened_financial_advisor_door) {
 
 [label,financial_advisor_recap_questions]
 // Header of Would you like to hear about making money again
-@multi2(
+@multi2_header(
     "Yes!", financial_advisor_recap,
-    "No thanks.", financial_advisor_no_thanks
+    "No thanks.", financial_advisor_no_thanks,
+    "Would you like to hear about making money again?"
 );
 
 [label,financial_advisor_recap]

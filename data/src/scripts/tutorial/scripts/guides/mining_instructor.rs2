@@ -26,9 +26,10 @@ switch_int(%tutorial_progress) {
 
 [label,mining_instructor_during_prospecting]
 ~mining_instructor_replace_items;
-@multi2(
+@multi2_header(
     "Tell me about prospecting again.", mining_instructor_prospecting_recap,
-    "Nope, I'm ready to move on!", mining_instructor_ready_to_move_on
+    "Nope, I'm ready to move on!", mining_instructor_ready_to_move_on,
+    "What would you like to hear more about?"
 );
 
 [label,mining_instructor_during_mining]
@@ -60,12 +61,13 @@ switch_int(%tutorial_progress) {
 
 [label,mining_instructor_recap]
 ~mining_instructor_replace_items;
-@multi5(
+@multi5_header(
     "Tell me about prospecting again.", mining_instructor_prospecting_recap,
     "Tell me about Mining again.", mining_instructor_mining_recap,
     "Tell me about smelting again.", mining_instructor_smelting_recap,
     "Tell me about Smithing again.", mining_instructor_smithing_recap,
-    "Nope, I'm ready to move on!", mining_instructor_ready_to_move_on
+    "Nope, I'm ready to move on!", mining_instructor_ready_to_move_on,
+    "What would you like to hear more about?"
 );
 
 [label,mining_instructor_prospecting_recap]
