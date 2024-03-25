@@ -117,12 +117,7 @@ if (%tutorial_progress = ^mining_instructor_finished) {
 }
 ~tut_open_mining_gate;
 
-//mes("Loc coord:");
-//mes(~coord_tostring(loc_coord));
-//mes("Player coord:");
-//mes(~coord_tostring(coord));
-//def_int $x = coordx(coord);
-//mes("<tostring($x)>");
+// This gate is really weird for coord, so we're manually checking it.
 if (coordx(coord) = 3095) {
     p_teleport(movecoord(coord, -1, 0, 0));
 } else {
@@ -131,18 +126,12 @@ if (coordx(coord) = 3095) {
 p_delay(1);
 
 
-// 3094, 9503, 0
 [proc,tut_open_mining_gate]
 loc_findallzone(coord);
 while(loc_findnext = true) {
      if(loc_category = tut_mining_exit) {
             def_coord $central_coord = loc_coord;
             def_int $orig_angle = loc_angle;
-//
-//            mes("Loc coord:");
-//            mes(~coord_tostring(loc_coord));
-//            mes("Angle coord:");
-//            mes(tostring(loc_angle));
 
             loc_del(2);
             if(loc_type = loc_3020) {
@@ -154,7 +143,6 @@ while(loc_findnext = true) {
 }
 sound_synth(door_open, 0, 0);
 
-// TODO: this whole thing again
 // Gate into Rat Pen
 [oploc1,_rat_pit_cage]
 if (%tutorial_progress < ^combat_instructor_opened_combat_interface
