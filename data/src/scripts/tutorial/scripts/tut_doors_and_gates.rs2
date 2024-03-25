@@ -105,9 +105,8 @@ if (%tutorial_progress = 250) {
 p_arrivedelay;
 @climb_ladder(movecoord(coord, 0, 0, -6400), true);
 
-// TODO: THIS WHOLE THING
 // Gate to Combat Instructor
-[oploc1,loc_3021]
+[oploc1,_tut_mining_exit]
 if (%tutorial_progress < ^mining_instructor_finished) {
     ~mesbox("You need to finish with Mining and Smithing first.");
     return;
@@ -116,11 +115,48 @@ if (%tutorial_progress = ^mining_instructor_finished) {
     %tutorial_progress = ^combat_instructor_start;
     ~set_tutorial_progress;
 }
- ~open_and_close_door(loc_3021, ~check_axis(coord, loc_coord, loc_angle), false);
+~tut_open_mining_gate;
+
+//mes("Loc coord:");
+//mes(~coord_tostring(loc_coord));
+//mes("Player coord:");
+//mes(~coord_tostring(coord));
+//def_int $x = coordx(coord);
+//mes("<tostring($x)>");
+if (coordx(coord) = 3095) {
+    p_teleport(movecoord(coord, -1, 0, 0));
+} else {
+    p_teleport(movecoord(coord, 1, 0, 0));
+}
+p_delay(1);
+
+
+// 3094, 9503, 0
+[proc,tut_open_mining_gate]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = tut_mining_exit) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+//
+//            mes("Loc coord:");
+//            mes(~coord_tostring(loc_coord));
+//            mes("Angle coord:");
+//            mes(tostring(loc_angle));
+
+            loc_del(2);
+            if(loc_type = loc_3020) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_1562, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 1, 0, -1), loc_1563, 3, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+sound_synth(door_open, 0, 0);
 
 // TODO: this whole thing again
 // Gate into Rat Pen
-[oploc1,loc_3022]
+[oploc1,_rat_pit_cage]
 if (%tutorial_progress < ^combat_instructor_opened_combat_interface
     | %tutorial_progress > ^combat_instructor_before_attacking_ranged) {
     if (npc_finduid(~npc_within_distance(0_48_148_35_38, npc_944, 10)) = true) {
@@ -128,7 +164,7 @@ if (%tutorial_progress < ^combat_instructor_opened_combat_interface
     }
 }
 
-if (%tutorial_progress > ^combat_instructor_before_attacking_ranged) {
+if (%tutorial_progress = ^combat_instructor_before_attacking_ranged) {
     if (npc_finduid(~npc_within_distance(0_48_148_35_38, npc_944, 10)) = true) {
         @combat_instructor_dont_enter_the_pit_ranged;
     }
@@ -138,7 +174,31 @@ if (%tutorial_progress = ^combat_instructor_opened_combat_interface) {
     %tutorial_progress = ^combat_instructor_before_attacking_melee;
     ~set_tutorial_progress;
 }
- ~open_and_close_door(loc_3022, ~check_axis(coord, loc_coord, loc_angle), false);
+~tut_open_rat_pit;
+
+if (coordx(coord) < coordx(loc_coord)) {
+    p_teleport(movecoord(coord, 1, 0, 0));
+} else {
+    p_teleport(movecoord(coord, -1, 0, 0));
+}
+p_delay(1);
+
+[proc,tut_open_rat_pit]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = rat_pit_cage) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_3022) {
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 2);
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+sound_synth(door_open, 0, 0);
+
 
 [oploc1,loc_3030]
 if (%tutorial_progress < ^combat_instructor_after_attacking_ranged) {

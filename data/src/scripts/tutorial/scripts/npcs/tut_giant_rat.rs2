@@ -42,10 +42,8 @@ if_close; // close the player interface when taking a hit.
 // not sure if this is correct
 if (getqueue(player_death) < 1) {
     if (stat(hitpoints) = 1) {
-        npc_say("Gah, I can't getcha!");
         $damage = 0;
     } else {
-        npc_say("Imma getcha!");
         $damage = 1;
     }
 
