@@ -1,5 +1,5 @@
-[opnpc1,npc_953] @tut_banker;
-[apnpc1,npc_953]
+[opnpc1,tut_banker] @tut_banker;
+[apnpc1,tut_banker]
 if (npc_range(coord) > 2) {
     p_aprange(2);
     return;

@@ -1,4 +1,4 @@
-[opnpc1,npc_949]
+[opnpc1,quest_guide]
 switch_int(%tutorial_progress) {
     case ^quest_guide_start: @quest_guide_start;
     case 230: @quest_guide_menu_not_opened;
@@ -42,6 +42,6 @@ if ($choice = 1) {
 ~chatnpc(quiz, "I don't think you're ready to go down there yet.");
 
 [proc,set_hint_icon_quest_guide]
-if (npc_finduid(~npc_within_distance(0_48_48_12_52, npc_949, 10)) = true) {
+if (npc_finduid(~npc_within_distance(0_48_48_12_52, quest_guide, 10)) = true) {
     hint_npc(npc_uid);
 }

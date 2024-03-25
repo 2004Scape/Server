@@ -118,7 +118,7 @@ if (%tutorial_progress > ^tutorial_open_magic_tab) {
 if (%tutorial_progress = 70) {
     npc_findallzone(0_48_48_29_20);
     while (npc_findnext = true) {
-        if (npc_coord = 0_48_48_29_20 & npc_type = npc_952) {
+        if (npc_coord = 0_48_48_29_20 & npc_type = tut_fishing_spot) {
             hint_npc(npc_uid);
         }
     }
@@ -165,7 +165,7 @@ if (%tutorial_progress = 2) {
     %tutorial_progress = ^brother_brace_after_friends_tab;
 } else if (%tutorial_progress = ^tutorial_open_magic_tab) {
     %tutorial_progress = ^tutorial_opened_magic_tab;
-    if (npc_finduid(~npc_within_distance(0_49_48_5_17, npc_946, 10)) = true) {
+    if (npc_finduid(~npc_within_distance(0_49_48_5_17, magic_instructor, 10)) = true) {
         hint_npc(npc_uid);
         @magic_instructor_opened_tab;
     }

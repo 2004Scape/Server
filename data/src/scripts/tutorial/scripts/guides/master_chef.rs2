@@ -1,4 +1,4 @@
-[opnpc1,npc_942]
+[opnpc1,master_chef]
 switch_int(%tutorial_progress) {
     case ^chef_start: @master_chef_start;
     case 150: @master_chef_after_start;
@@ -79,6 +79,6 @@ switch_int($option) {
 }
 
 [proc,set_hint_icon_master_chef]
-if (npc_finduid(~npc_within_distance(0_48_48_4_11, npc_942, 10)) = true) {
+if (npc_finduid(~npc_within_distance(0_48_48_4_11, master_chef, 10)) = true) {
     hint_npc(npc_uid);
 }

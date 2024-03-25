@@ -1,4 +1,4 @@
-[opnpc1,npc_954]
+[opnpc1,brother_brace]
 switch_int(%tutorial_progress) {
     case ^tutorial_exit_financial_advisors_room: @brother_brace_intro;
     case ^brother_brace_open_prayer_tab: @brother_brace_open_indicated_menu_prayer;
@@ -74,6 +74,6 @@ if (%tutorial_progress = ^brother_brace_after_friends_tab) {
 ~chatnpc(neutral, "Ok then, <displayname>.");
 
 [proc,set_hint_icon_brother_brace]
-if (npc_finduid(~npc_within_distance(0_48_48_53_34, npc_954, 10)) = true) {
+if (npc_finduid(~npc_within_distance(0_48_48_53_34, brother_brace, 10)) = true) {
     hint_npc(npc_uid);
 }

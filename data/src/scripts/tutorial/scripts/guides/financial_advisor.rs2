@@ -1,4 +1,4 @@
-[opnpc1,npc_947]
+[opnpc1,financial_advisor]
 if (%tutorial_progress = ^tutorial_opened_financial_advisor_door) {
     @financial_advisor_incomplete;
 } else {
@@ -39,6 +39,6 @@ if (%tutorial_progress = ^tutorial_opened_financial_advisor_door) {
 [label,financial_advisor_no_thanks]
 
 [proc,set_hint_icon_financial_advisor]
-if (npc_finduid(~npc_within_distance(0_48_48_56_52, npc_947, 5)) = true) {
+if (npc_finduid(~npc_within_distance(0_48_48_56_52, financial_advisor, 5)) = true) {
     hint_npc(npc_uid);
 }

@@ -1,4 +1,4 @@
-[opnpc1,npc_943]
+[opnpc1,survival_expert]
 switch_int(%tutorial_progress) {
     case 10: @survival_guide_start;
     case 20: @survival_guide_look_at_menu;
@@ -66,7 +66,7 @@ if (inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
 ~chatnpc(neutral, "There's nothing like a good fire to warm the bones.|Next thing is getting food in our bellies. We'll need|something to cook. There are shrimp in the pond there.|So let's catch and cook some.");
 npc_findallzone(0_48_48_29_20);
 while (npc_findnext = true) {
-    if (npc_coord = 0_48_48_29_20 & npc_type = npc_952) {
+    if (npc_coord = 0_48_48_29_20 & npc_type = tut_fishing_spot) {
         hint_npc(npc_uid);
     }
 }
@@ -148,7 +148,7 @@ switch_int($choice) {
 ~chatnpc(neutral, "Eating food will restore a little health. The harder something is to cook, the more it will heal you. Somewhere around here is a chef who will tell you more about food and cooking it.");
 
 [proc,set_hint_icon_survival_guide]
-if (npc_finduid(~npc_within_distance(0_48_48_31_23, npc_943, 10)) = true) {
+if (npc_finduid(~npc_within_distance(0_48_48_31_23, survival_expert, 10)) = true) {
     hint_npc(npc_uid);
 }
 

@@ -1,5 +1,5 @@
-[opnpcu,npc_952] @tutorial_fishing;
-[opnpc1,npc_952] @tutorial_fishing;
+[opnpcu,tut_fishing_spot] @tutorial_fishing;
+[opnpc1,tut_fishing_spot] @tutorial_fishing;
 
 [label,tutorial_fishing]
 if (inv_total(inv, net) < 1) {
