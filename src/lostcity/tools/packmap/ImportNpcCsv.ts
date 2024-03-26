@@ -94,7 +94,7 @@ loadDir('data/src/maps', (lines: string[], file: string) => {
         lines.push('');
     }
 
-    fs.writeFileSync(file, lines.join('\n'));
+    fs.writeFileSync('data/src/maps/' + file, lines.join('\n'));
 });
 
 if (allNpcs.length > 0) {
