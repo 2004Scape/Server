@@ -724,7 +724,7 @@ const PlayerOps: CommandHandlers = {
         const north = nw.z;
 
         const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).locmerge(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
+        World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {

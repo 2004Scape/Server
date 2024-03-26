@@ -1,0 +1,32 @@
+[opnpct,magic:flames_of_zamorak] ~pvm_flames_of_zamorak;
+[apnpct,magic:flames_of_zamorak] ~pvm_flames_of_zamorak;
+
+[proc,pvm_flames_of_zamorak]
+def_dbrow $spell_data = ~get_spell_data(^claws_of_guthix);
+if (~pvm_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (%flames_of_zamorak_casts < ^mage_arena_spell_finished & ~inzone_coord_pair_table(mage_arena, coord) = false) {
+    // https://youtu.be/TrxuRyogdEo?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=60
+    mes("You are not yet experienced enough to use this spell outside the");
+    mes("Mage Arena.");
+    return;
+}
+~pvm_spell_cast($spell_data);
+
+if (~player_npc_hit_roll(^magic_style) = true) {
+    ~pvm_spell_success($spell_data, ~god_spell_maxhit($spell_data), 64);
+    if (~has_god_cape_and_staff = true) {
+        ~pvm_stat_change_effect($spell_data);
+    }
+} else {
+    ~pvm_spell_fail($spell_data, 64);
+}
+if (%flames_of_zamorak_casts = ^mage_arena_spell_last_cast) {
+    // https://youtu.be/cX7x62vqRV0?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=439
+    mes("You can now cast Flames of Zamorak outside the arena.");
+    %flames_of_zamorak_casts = ^mage_arena_spell_finished;
+    ~mesbox("Congratulations. Your ability to summon the Flames of Zamorak has|improved. You may now use this spell outside of the Arena.");
+} else if (%flames_of_zamorak_casts < ^mage_arena_spell_last_cast) {
+    %flames_of_zamorak_casts = add(%flames_of_zamorak_casts, 1);
+}

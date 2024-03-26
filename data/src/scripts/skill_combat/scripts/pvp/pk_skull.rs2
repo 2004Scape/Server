@@ -11,6 +11,9 @@ if (.%pk_prey1 = uid | .%pk_prey2 = uid | %pk_predator1 = .uid | %pk_predator2 =
 return(true);
 
 [proc,set_pk_vars]
+if (~deserves_pk_skull = true) {
+    ~pk_skull(3000); // 3000 ticks, or 30 minutes
+}
 // for preys
 %pk_prey2 = %pk_prey1;
 %pk_prey1 = .uid; 

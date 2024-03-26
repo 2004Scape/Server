@@ -1,11 +1,4 @@
-[opplayer2,_]
-if (~pvp_level_check = false) {
-    return;
-}
-if (~pvp_in_combat_check = false) {
-    return;
-}
-@pvp_combat_start;
+[opplayer2,_] @pvp_combat_start;
 
 [applayer2,_]
 if (~pvp_level_check = false) {
@@ -34,6 +27,16 @@ p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
+if (~pvp_level_check = false) {
+    return;
+}
+if (~pvp_in_combat_check = false) {
+    return;
+}
+if (~inzone_coord_pair_table(mage_arena, coord) = true) {
+    mes("Kolodion allows only magical combat within the arena."); // osrs
+    return;
+}
 if (%damagetype = ^ranged_style) {
     @pvp_ranged_attack;
 }
@@ -42,19 +45,7 @@ if (%damagetype = ^ranged_style) {
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
     // look for spell in db
     def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
-    def_boolean $passes;
-
-    // define spell runes
-    def_namedobj $rune1;
-    def_int $rune_count1;
-    def_namedobj $rune2;
-    def_int $rune_count2;
-    def_namedobj $rune3;
-    def_int $rune_count3;
-
-    // check runes
-    $passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-    if ($passes = false) {
+    if (~check_spell_requirements($spell_data) = false) {
         %attackstyle_magic = 0;
         return;
     }

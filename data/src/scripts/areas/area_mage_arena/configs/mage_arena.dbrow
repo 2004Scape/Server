@@ -1,0 +1,6 @@
+[mage_arena]
+table=coord_pair_table
+data=coord_pair,0_48_61_12_15,0_48_61_54_40
+data=coord_pair,0_48_61_16_40,0_48_61_51_44
+data=coord_pair,0_48_61_21_45,0_48_61_46_49
+data=coord_pair,0_48_61_17_10,0_48_61_49_14

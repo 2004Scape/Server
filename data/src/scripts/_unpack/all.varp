@@ -392,17 +392,22 @@ transmit=yes
 [varp_266]
 
 [magearena_progress]
+protect=no
 scope=perm
 
-[varp_268]
+[saradomin_strike_casts]
+scope=perm
 
-[varp_269]
+[claws_of_guthix_casts]
+scope=perm
 
-[varp_270]
+[flames_of_zamorak_casts]
+scope=perm
 
 [varp_271]
 
-[varp_272]
+[charge_god_spell]
+scope=perm
 
 [varp_274]
 

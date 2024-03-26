@@ -307,6 +307,8 @@ param=rangedefence,20
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 category=guard
+wanderrange=2
+attackrange=4
 
 [guard_crossbow]
 name=Guard
@@ -5329,7 +5331,8 @@ model7=model_2986_npc
 model8=model_2991_npc
 head1=model_0_npc_head
 head2=model_6_npc_head
-wanderrange=3
+wanderrange=5
+attackrange=12
 hitpoints=16
 attack=8
 strength=6
@@ -8641,7 +8644,6 @@ param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
-huntmode=cowardly
 
 [npc_726]
 vislevel=hide
@@ -9213,7 +9215,8 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=4
+wanderrange=5
+moverestrict=indoors
 
 [npc_783]
 vislevel=hide
@@ -9247,7 +9250,8 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=4
+wanderrange=5
+moverestrict=indoors
 
 [npc_788]
 vislevel=hide
@@ -10963,96 +10967,6 @@ param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
 
-[npc_912]
-name=Battle mage
-desc=He kills in the name of Zamorak.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=54
-recol1s=11200
-recol1d=926
-recol2s=7700
-recol2d=0
-recol3s=8741
-recol3d=20
-recol4s=25238
-recol4d=20
-recol5s=4550
-recol5d=5347
-recol6s=4626
-recol6d=0
-model1=model_207_npc
-model2=model_246_idk
-model3=model_243_obj_wear
-model4=model_310_idk
-model5=model_168_npc
-model6=model_176_idk
-model7=model_260_npc
-model8=model_323_obj_wear
-model9=model_185_obj_wear
-model10=model_544_obj_wear
-attackrange=10
-respawnrate=150
-hitpoints=120
-magic=50
-
-[npc_913]
-name=Battle mage
-desc=He kills in the name of Saradomin.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=54
-recol1s=8741
-recol1d=127
-recol2s=25238
-recol2d=127
-recol3s=4626
-recol3d=10473
-recol4s=926
-recol4d=127
-recol5s=7700
-recol5d=43943
-recol6s=4550
-recol6d=4645
-model1=model_217_idk
-model2=model_250_idk
-model3=model_292_idk
-model4=model_170_idk
-model5=model_176_idk
-model6=model_265_obj_wear
-model7=model_323_obj_wear
-model8=model_185_obj_wear
-model9=model_554_obj_wear
-attackrange=10
-respawnrate=150
-hitpoints=120
-magic=50
-
-[npc_914]
-name=Battle mage
-desc=He kills in the name of Guthix.
-walkanim=midget_walk
-readyanim=midget_ready
-op2=Attack
-vislevel=54
-recol1s=22426
-recol1d=8090
-recol2s=926
-recol2d=22426
-model1=model_2909_npc
-model2=model_2898_npc
-model3=model_2920_npc
-attackrange=10
-respawnrate=150
-hitpoints=120
-magic=50
-param=death_anim,midget_death
-param=attack_sound,gnome_attack
-param=defend_sound,gnome_hit
-param=death_sound,gnome_death
-
 [npc_928]
 vislevel=hide
 name=Gujuo
@@ -12135,7 +12049,7 @@ size=3
 op2=Attack
 vislevel=78
 model1=model_2884_npc
-wanderrange=9
+wanderrange=10
 attackrange=10
 respawnrate=50
 hitpoints=78
@@ -12375,6 +12289,8 @@ model7=model_176_idk
 model8=model_265_obj_wear
 model9=model_544_obj_wear
 // TODO respawnrate?
+wanderrange=3
+attackrange=5
 hitpoints=76
 attack=24
 strength=24
@@ -12410,6 +12326,8 @@ param=death_sound,insect_1
 param=death_drop,null
 // Tested this npc in osrs, doesnt seem to poison? Seems like the chests have a chance to poison
 huntmode=cowardly
+wanderrange=10
+attackrange=12
 
 [npc_1010]
 vislevel=hide

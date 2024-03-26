@@ -12,7 +12,7 @@ def_int $length = 1;
 
 def_int $x = calc(coordx(loc_coord) - coordx(coord));
 def_int $z = calc(coordz(loc_coord) - coordz(coord));
-mes("X: <tostring($x)>, Z: <tostring($z)>, Width: <tostring($width)>, Length: <tostring($length)>");
+//mes("X: <tostring($x)>, Z: <tostring($z)>, Width: <tostring($width)>, Length: <tostring($length)>");
 if ($x > 0) {
     $obj_coord = movecoord(coord, 1, 0, 0); // player is west of table
 } else if ($z > 0) {

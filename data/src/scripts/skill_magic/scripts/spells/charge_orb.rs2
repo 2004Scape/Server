@@ -10,17 +10,7 @@ if (inv_total(inv, stafforb) < 1) {
     return;
 }
 def_dbrow $spell_data = ~get_spell_data($spell);
-// define spell runes
-def_namedobj $rune1;
-def_int $rune_count1;
-def_namedobj $rune2;
-def_int $rune_count2;
-def_namedobj $rune3;
-def_int $rune_count3;
-def_boolean $passes;
-// check runes
-$passes, $rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3 = ~check_spell_requirements($spell_data);
-if ($passes = false) {
+if (~check_spell_requirements($spell_data) = false) {
     return;
 }
 // check if used on correct loc
@@ -39,7 +29,7 @@ def_synth $sound;
 $final_obj, $anim, $spotanim, $sound = ~magic_spell_search_convertobj($spell_data, stafforb);
 // delete old, add new, play animations
 inv_del(inv, stafforb, 1);
-~delete_spell_runes($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
+~delete_spell_runes($spell_data);
 inv_add(inv, $final_obj, 1);
 ~give_spell_xp($spell_data);
 anim($anim, 0);
