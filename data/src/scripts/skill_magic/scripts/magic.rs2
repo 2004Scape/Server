@@ -73,6 +73,7 @@ if ($staff_rune = $rune2) {
 if ($staff_rune = $rune3) {
     $rune_count3 = null;
 }
+return($rune1, $rune_count1, $rune2, $rune_count2, $rune3, $rune_count3);
 
 [proc,delete_spell_runes](dbrow $spell_data)
 def_namedobj $rune1;
