@@ -202,7 +202,7 @@ hint_stop();
 [proc,tutorial_step_smithing_a_dagger]
 hint_stop();
 hint_coord(^hint_center, 0_48_148_11_27, 100);
-~tutorialstep("Smithing a dagger.", "To smith you'll need a hmmer like the one you were given by Dezzick, access to an anvil like the one with the arrow over it|and enough metal bars to make what you are trying to smith.|To start the process use the bar on one of the anvils.");
+~tutorialstep("Smithing a dagger.", "To smith you'll need a hammer like the one you were given by Dezzick, access to an anvil like the one with the arrow over it|and enough metal bars to make what you are trying to smith.|To start the process use the bar on one of the anvils.");
 
 [proc,tutorial_step_mining_instructor_finished]
 hint_stop();
@@ -212,7 +212,7 @@ hint_coord(^hint_east, 0_48_148_22_30, 125);
 [proc,tutorial_step_combat]
 hint_stop();
 ~set_hint_icon_combat_instructor;
-~tutorialstep("", "Combat.|In this area you will find out about combat, both melee and ranged. Speak to the guide and he'll tell you all about it.");
+~tutorialstep("Combat.", "In this area you will find out about combat,|both melee and ranged.|Speak to the guide and he'll tell you all about it.");
 
 [proc,tutorial_step_wielding_weapons]
 hint_stop();
