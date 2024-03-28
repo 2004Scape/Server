@@ -7,16 +7,28 @@ if ($item = null) {
 }
 @cut_web($item);
 
+[oplocu,loc_733]
+def_obj $item = last_useitem;
+if (oc_param($item, slashattack_anim) = human_unarmedpunch & $item ! knife) {
+    mes("Only a sharp blade can cut through this sticky web.");
+    return;
+}
+@cut_web($item);
+
 [label,cut_web](obj $item)
+def_int $chance;
 if ($item = knife) {
     anim(human_knife_slash, 0);
+    $chance = 2;
 } else {
     anim(oc_param($item, slashattack_anim), 0);
+    $chance = 5;
 }
 sound_synth(hacksword_slash, 0, 15);
 
-if (random(2) = 1) {
+if (random($chance) = 1) {
     mes("You slash the web apart.");
+    p_delay(0); // osrs
     loc_change(loc_734, 100);
 } else {
     mes("You fail to cut through it.");
