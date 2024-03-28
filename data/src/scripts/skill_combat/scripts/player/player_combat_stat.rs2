@@ -180,10 +180,10 @@ def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_l
 // defence rolls and attack rolls
 .%com_stabattack = ~combat_stat($effective_attack, $stabattack);
 .%com_stabdef = ~combat_stat($effective_defence, $stabdefence);
-.%com_slashattack = ~combat_stat($effective_attack, $stabattack);
-.%com_slashdef = ~combat_stat($effective_defence, $stabdefence);
-.%com_crushattack = ~combat_stat($effective_attack, $stabattack);
-.%com_crushdef = ~combat_stat($effective_defence, $stabdefence);
+.%com_slashattack = ~combat_stat($effective_attack, $slashattack);
+.%com_slashdef = ~combat_stat($effective_defence, $slashdefence);
+.%com_crushattack = ~combat_stat($effective_attack, $crushattack);
+.%com_crushdef = ~combat_stat($effective_defence, $crushdefence);
 .%com_magicattack = ~combat_stat($effective_magic, $magicattack);
 .%com_magicdef = ~combat_stat($effective_magic, $magicdefence);
 .%com_rangeattack = ~combat_stat($effective_ranged, $rangeattack);
