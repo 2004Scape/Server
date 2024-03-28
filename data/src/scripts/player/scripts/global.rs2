@@ -33,13 +33,17 @@ settimer(general_macro_events, 500);
 // so antipoison persists after logging back in
 ~set_antipoison_login;
 
-
 if (%tutorial_progress < ^tutorial_complete) {
     // This is a check to not bork every account that currently has a tutorial complete progress of 5.
-    if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
+     if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
         %tutorial_progress = ^tutorial_complete;
         last_login_info;
         ~initalltabs;
+    // Checking if you're off tutorial island but it's not complete
+    } else if (~inzone_coord_pair_table(tutorial_island, coord) = false & %tutorial_progress < ^tutorial_complete) {
+        ~update_bas;
+        @tutorial_complete;
+    // regular start tutorial
     } else {
         ~update_bas;
         @start_tutorial;
