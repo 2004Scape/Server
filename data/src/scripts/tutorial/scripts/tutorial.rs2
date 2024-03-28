@@ -46,7 +46,7 @@ if_settab(null, ^tab_musicplayer);
 ~tutorial_set_active_tabs;
 ~tutorial_set_npc_hints;
 
-if (%tutorial_progress = 0) {
+if (%tutorial_progress = ^runescape_guide_start) {
     p_telejump(0_48_48_22_34);
     if_close; // workaround w/ receivedFirstClose
     if_openmainmodal(player_kit);
@@ -55,7 +55,7 @@ if (%tutorial_progress = 0) {
 ~set_tutorial_progress;
 
 [proc,tutorial_set_active_tabs]
-if (%tutorial_progress > 0) {
+if (%tutorial_progress > ^runescape_guide_start) {
     if (lowmemory = true) {
         if_settab(options_ld, ^tab_game_options);
     } else {
@@ -63,16 +63,16 @@ if (%tutorial_progress > 0) {
     }
 }
 
-if (%tutorial_progress > 20) {
+if (%tutorial_progress > ^survival_guide_open_inventory) {
     inv_transmit(inv, inventory:inv);
     if_settab(inventory, ^tab_inventory);
 }
 
-if (%tutorial_progress > 50) {
+if (%tutorial_progress > ^survival_guide_open_skill_menu) {
     if_settab(stats, ^tab_skills);
 }
 
-if (%tutorial_progress > 170) {
+if (%tutorial_progress > ^chef_baked_bread) {
     if (lowmemory = true) {
         if_settab(music_ld, ^tab_musicplayer);
     } else {
@@ -80,11 +80,11 @@ if (%tutorial_progress > 170) {
     }
 }
 
-if (%tutorial_progress > 180) {
+if (%tutorial_progress > ^chef_opened_music_tab) {
     if_settab(controls, ^tab_player_controls);
 }
 
-if (%tutorial_progress > 230) {
+if (%tutorial_progress > ^quest_guide_open_menu) {
     ~update_quests;
     if_settab(questlist, ^tab_quest_journal);
 }
@@ -115,7 +115,7 @@ if (%tutorial_progress > ^tutorial_open_magic_tab) {
 }
 
 [proc,tutorial_set_npc_hints]
-if (%tutorial_progress = 70) {
+if (%tutorial_progress = ^survival_guide_fish_shrimps) {
     npc_findallzone(0_48_48_29_20);
     while (npc_findnext = true) {
         if (npc_coord = 0_48_48_29_20 & npc_type = tut_fishing_spot) {
@@ -134,25 +134,25 @@ if (%tutorial_progress = ^combat_instructor_during_attacking_melee
 if_close;
 
 [if_close,player_kit]
-%tutorial_progress = 1;
+%tutorial_progress = ^runescape_guide_designed_character;
 allowdesign(false);
 
 [tutorial_clickside,_]
 if (%tutorial_progress = 2) {
     %tutorial_progress = 3;
     ~tutorial_step_player_controls_left_click;
-} else if (%tutorial_progress = 20) {
+} else if (%tutorial_progress = ^survival_guide_open_inventory) {
     inv_add(inv, bronze_axe, 1);
     inv_add(inv, tinderbox, 1);
-    %tutorial_progress = 30;
-} else if (%tutorial_progress = 50) {
-    %tutorial_progress = 60;
-} else if (%tutorial_progress = 170) {
-    %tutorial_progress = 180;
-} else if (%tutorial_progress = 190) {
-    %tutorial_progress = 195;
-} else if(%tutorial_progress = 230) {
-    %tutorial_progress = 240;
+    %tutorial_progress = ^survival_guide_cut_tree;
+} else if (%tutorial_progress = ^survival_guide_open_skill_menu) {
+    %tutorial_progress = ^survival_guide_opened_skill_menu;
+} else if (%tutorial_progress = ^chef_baked_bread) {
+    %tutorial_progress = ^chef_opened_music_tab;
+} else if (%tutorial_progress = ^chef_completed) {
+    %tutorial_progress = ^tutorial_open_player_controls;
+} else if(%tutorial_progress = ^quest_guide_open_menu) {
+    %tutorial_progress = ^quest_guide_opened_menu;
 } else if (%tutorial_progress = ^combat_instructor_wielding_weapons) {
     %tutorial_progress = ^combat_instructor_worn_inventory;
 } else if (%tutorial_progress = ^combat_instructor_open_combat_interface) {
@@ -176,43 +176,44 @@ if (%tutorial_progress = 2) {
 [proc,set_tutorial_progress]
 switch_int(%tutorial_progress) {
     // Runescape Guide's House
-    case 0, 1: ~tutorial_step_getting_started;
+    case ^runescape_guide_start,
+        ^runescape_guide_designed_character: ~tutorial_step_getting_started;
     // Not Relelvant until October 2006
     case 2: ~tutorial_step_player_controls_spanner;
     case 3: ~tutorial_step_player_controls_left_click;
-    case 4: ~tutorial_step_interact_with_scenery;
-    case 10: ~tutorial_step_moving_around;
+    case ^runescape_guide_interact_with_scenery: ~tutorial_step_interact_with_scenery;
+    case ^runescape_guide_interacted_with_door: ~tutorial_step_moving_around;
 
     // Survival Tutor
-    case 20: ~tutorial_step_view_inventory;
-    case 30: ~tutorial_step_cut_tree;
-    case 40: ~tutorial_step_build_fire;
-    case 50: ~tutorial_step_you_gained_experience;
-    case 60: ~tutorial_step_view_stats;
-    case 70: ~tutorial_step_catch_shrimp;
-    case 80: ~tutorial_step_cook_shrimp;
-    case 90: ~tutorial_step_burn_shrimp;
-    case 120: ~tutorial_step_survival_recap;
+    case ^survival_guide_open_inventory: ~tutorial_step_view_inventory;
+    case ^survival_guide_cut_tree: ~tutorial_step_cut_tree;
+    case ^survival_guide_build_fire: ~tutorial_step_build_fire;
+    case ^survival_guide_open_skill_menu: ~tutorial_step_you_gained_experience;
+    case ^survival_guide_opened_skill_menu: ~tutorial_step_view_stats;
+    case ^survival_guide_fish_shrimps: ~tutorial_step_catch_shrimp;
+    case ^survival_guide_cook_shrimps: ~tutorial_step_cook_shrimp;
+    case ^survival_guide_burnt_shrimps: ~tutorial_step_burn_shrimp;
+    case ^survival_guide_complete: ~tutorial_step_survival_recap;
 
     // Master Chef
-    case 130: ~tutorial_step_go_to_chef;
-    case 140: ~tutorial_step_talk_to_chef;
-    case 150: ~tutorial_step_make_dough;
-    case 160: ~tutorial_step_cooking_dough;
-    case 170: ~tutorial_step_click_music_player;
-    case 180: ~tutorial_step_music_player;
-    case 190: ~tutorial_step_click_run_icon;
-    case 195: ~tutorial_step_enable_run;
+    case ^tutorial_opened_gate_to_chef : ~tutorial_step_go_to_chef;
+    case ^chef_start: ~tutorial_step_talk_to_chef;
+    case ^chef_make_dough: ~tutorial_step_make_dough;
+    case ^chef_mixed_dough: ~tutorial_step_cooking_dough;
+    case ^chef_baked_bread: ~tutorial_step_click_music_player;
+    case ^chef_opened_music_tab: ~tutorial_step_music_player;
+    case ^chef_completed: ~tutorial_step_click_run_icon;
+    case ^tutorial_open_player_controls: ~tutorial_step_enable_run;
 
     // Quest Guide
-    case 200: ~tutorial_step_enter_quest_guide_house;
-    case 220: ~tutorial_step_talk_to_quest_guide;
-    case 230: ~tutorial_step_open_quest_journal;
-    case 240: ~tutorial_step_quest_journal;
-    case 250: ~tutorial_step_enter_mine;
+    case ^tutorial_has_toggled_on_run: ~tutorial_step_enter_quest_guide_house;
+    case ^quest_guide_start : ~tutorial_step_talk_to_quest_guide;
+    case ^quest_guide_open_menu: ~tutorial_step_open_quest_journal;
+    case ^quest_guide_opened_menu: ~tutorial_step_quest_journal;
+    case ^quest_guide_finished: ~tutorial_step_enter_mine;
 
     // Mining Instructor
-    case 260: ~tutorial_step_talk_to_mining_instructor;
+    case ^mining_instructor_start: ~tutorial_step_talk_to_mining_instructor;
     case ^mining_instructor_begin_prospecting,
         ^mining_instructor_prospected_copper_first,
         ^mining_instructor_prospected_tin_first,

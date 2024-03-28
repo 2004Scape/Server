@@ -1,7 +1,33 @@
 ^runescape_guide_start = 0
-^survival_guide_start = 20
+^runescape_guide_designed_character = 1
+^runescape_guide_interact_with_scenery = 4
+^runescape_guide_interacted_with_door = 10
+
+^survival_guide_open_inventory = 20
+^survival_guide_cut_tree = 30
+^survival_guide_build_fire = 40
+^survival_guide_open_skill_menu = 50
+^survival_guide_opened_skill_menu = 60
+^survival_guide_fish_shrimps = 70
+^survival_guide_cook_shrimps = 80
+^survival_guide_burnt_shrimps = 90
+^survival_guide_complete = 120
+
+^tutorial_opened_gate_to_chef = 130
 ^chef_start = 140
+^chef_make_dough = 150
+^chef_mixed_dough = 160
+^chef_baked_bread = 170
+^chef_opened_music_tab = 180
+^chef_completed = 190
+
+^tutorial_open_player_controls = 195
+^tutorial_has_toggled_on_run = 200
+
 ^quest_guide_start = 220
+^quest_guide_open_menu = 230
+^quest_guide_opened_menu = 240
+^quest_guide_finished = 250
 
 ^mining_instructor_start = 260
 ^mining_instructor_begin_prospecting = 270

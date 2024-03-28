@@ -1,5 +1,5 @@
 [oplocu,furnace_tutorial]
-if (%tutorial_progress < 320) {
+if (%tutorial_progress < ^mining_instructor_before_smelt_bronze_bar) {
     ~mesbox("This is a furnace for smelting metal.|You'll learn how to use it soon.");
     return;
 }

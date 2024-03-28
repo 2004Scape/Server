@@ -35,7 +35,7 @@ inv_add(inv, tin_ore, 1);
 ~mesbox("You manage to mine some tin.");
 
 [proc,tut_mining](string $ore_name)(boolean)
-if (%tutorial_progress < 290) {
+if (%tutorial_progress < ^mining_instructor_mining_start) {
     anim(null, 0);
     ~mesbox("You are not ready to mine yet.|Please follow the tutorial and you'll be mining in no time.");
     return(false);

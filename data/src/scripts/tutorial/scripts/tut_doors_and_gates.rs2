@@ -1,10 +1,10 @@
 [proc,tut_island_survial_gate]
-if (%tutorial_progress < 120) {
+if (%tutorial_progress < ^survival_guide_complete) {
     ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
     return;
 }
-if (%tutorial_progress = 120) {
-    %tutorial_progress = 130;
+if (%tutorial_progress = ^survival_guide_complete) {
+    %tutorial_progress = ^tutorial_opened_gate_to_chef;
     ~set_tutorial_progress;
 }
 loc_findallzone(coord);
@@ -35,15 +35,15 @@ p_teleport(loc_coord);
 
 // Runescape guide door
 [oploc1,loc_3014]
-if (%tutorial_progress < 4) {
+if (%tutorial_progress < ^runescape_guide_interact_with_scenery) {
     ~mesbox("You need to talk to the 'Runescape Guide' before you are allowed to proceed through this door.");
     return;
 }
 
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 4) {
-    %tutorial_progress = 10;
+if (%tutorial_progress = ^runescape_guide_interact_with_scenery) {
+    %tutorial_progress = ^runescape_guide_interacted_with_door;
     ~tutorial_step_moving_around;
 }
 
@@ -51,29 +51,29 @@ if (%tutorial_progress = 4) {
 [oploc1,loc_3017]
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 130) {
+if (%tutorial_progress = ^tutorial_opened_gate_to_chef) {
     %tutorial_progress = ^chef_start;
     ~set_tutorial_progress;
 }
 
 // Door exiting Master Chef's house
 [oploc1,loc_3018]
-if (%tutorial_progress < 180) {
+if (%tutorial_progress < ^chef_opened_music_tab) {
     ~mesbox("You need to finish the Cooking Guide's tasks first.");
     return;
 }
 
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 180) {
+if (%tutorial_progress = ^chef_opened_music_tab) {
     hint_stop();
-    %tutorial_progress = 190;
+    %tutorial_progress = ^chef_completed;
     ~set_tutorial_progress;
 }
 
 // Door to Quest Guide's house
 [oploc1,loc_3019]
-if (%tutorial_progress < 200) {
+if (%tutorial_progress < ^tutorial_has_toggled_on_run) {
     // This message is made up. I haven't found a source where this has happened, and it was made optional in OSRS in 2018.
     ~mesbox("You should try turning run on before continuing.");
     return;
@@ -81,21 +81,21 @@ if (%tutorial_progress < 200) {
 
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 200) {
+if (%tutorial_progress = ^tutorial_has_toggled_on_run) {
     %tutorial_progress = ^quest_guide_start;
     ~set_tutorial_progress;
 }
 
 // Ladder to Mine
 [oploc1,loc_3029]
-if (%tutorial_progress < 250) {
+if (%tutorial_progress < ^quest_guide_finished) {
     if (npc_finduid(~npc_within_distance(0_48_48_12_52, quest_guide, 10)) = true) {
         @quest_guide_not_ready_to_leave_yet;
     }
 }
 p_arrivedelay;
-if (%tutorial_progress = 250) {
-    %tutorial_progress = 260;
+if (%tutorial_progress = ^quest_guide_finished) {
+    %tutorial_progress = ^mining_instructor_start;
 }
 ~set_tutorial_progress;
 @climb_ladder(movecoord(coord, 0, 0, 6400), false);
