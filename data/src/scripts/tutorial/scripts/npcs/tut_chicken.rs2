@@ -3,7 +3,7 @@
 // Trying to range chicken - https://youtu.be/ui3I-OPLqzE?t=635
 [apnpc2,tut_chicken]
 // Message is the same even before talking to Terrova.
-mes("Cast the Wind Strike spell from your spellbook to fight the chicken.");
+~mesbox("Cast the Wind Strike spell from your spellbook to fight the chicken.");
 return;
 
 
