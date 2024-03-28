@@ -83,7 +83,7 @@ def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_l
 %com_crushattack = ~combat_stat($effective_attack, $stabattack);
 %com_crushdef = ~combat_stat($effective_defence, $stabdefence);
 %com_magicattack = ~combat_stat($effective_magic, $magicattack);
-%com_magicdef = ~combat_stat($effective_magic, $magicdefence);
+%com_magicdef = add(scale(7, 10, ~combat_stat($effective_magic, $magicdefence)), scale(3, 10, ~combat_stat($effective_defence, $magicdefence)));
 %com_rangeattack = ~combat_stat($effective_ranged, $rangeattack);
 %com_rangedef = ~combat_stat($effective_ranged, $rangedefence);
 
@@ -185,7 +185,7 @@ def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_l
 .%com_crushattack = ~combat_stat($effective_attack, $stabattack);
 .%com_crushdef = ~combat_stat($effective_defence, $stabdefence);
 .%com_magicattack = ~combat_stat($effective_magic, $magicattack);
-.%com_magicdef = ~combat_stat($effective_magic, $magicdefence);
+.%com_magicdef = add(scale(7, 10, ~combat_stat($effective_magic, $magicdefence)), scale(3, 10, ~combat_stat($effective_defence, $magicdefence)));
 .%com_rangeattack = ~combat_stat($effective_ranged, $rangeattack);
 .%com_rangedef = ~combat_stat($effective_ranged, $rangedefence);
 
