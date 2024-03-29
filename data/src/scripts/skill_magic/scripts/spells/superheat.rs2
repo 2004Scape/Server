@@ -1,10 +1,6 @@
 [opheldt,magic:superheat_item]@magic_spell_superheat(^superheat_item, last_item);
 
 [label,magic_spell_superheat](int $spell, obj $ore1)
-// if player has casted a spell recently then return
-if (map_clock < %magic_utility_delay) {
-    return;
-}
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 if (~check_spell_requirements($spell_data)= false) {
@@ -54,8 +50,7 @@ if ($ore2 ! null) {
     inv_del(inv, $ore2, struct_param($bar_struct, ingredient_secondary_count));
 }
 inv_add(inv, $bar, 1);
-// delay magic utility by 3 ticks
-%magic_utility_delay = calc(map_clock + 3);
+p_delay(2);
 
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);

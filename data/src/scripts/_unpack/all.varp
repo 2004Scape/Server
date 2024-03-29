@@ -14,13 +14,15 @@ scope=perm
 scope=perm
 
 [damagetype]
+protect=no
 
 [damagestyle]
+protect=no
 
 [lastcombat]
 protect=no
 
-[magic_utility_delay]
+[varp_39]
 
 [eat_delay]
 
@@ -35,35 +37,49 @@ transmit=yes
 scope=perm
 
 [com_stabattack]
+protect=no
 
 [com_stabdef]
+protect=no
 
 [com_slashattack]
+protect=no
 
 [com_slashdef]
+protect=no
 
 [com_crushattack]
+protect=no
 
 [com_crushdef]
+protect=no
 
 [com_magicattack]
+protect=no
 
 [com_magicdef]
+protect=no
 
 [com_rangeattack]
+protect=no
 
 [com_rangedef]
+protect=no
 
 [com_attackanim]
+protect=no
 type=seq
 
 [com_defendanim]
+protect=no
 type=seq
 
 [com_attacksound]
+protect=no
 type=synth
 
 [com_maxhit]
+protect=no
 
 [action_delay]
 

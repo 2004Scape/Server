@@ -24,7 +24,7 @@ if (%action_delay > map_clock) {
 
 
 ~player_combat_stat;
-// ~.player_combat_stat; needs .p_active_player pointer for some reason
+~.player_combat_stat;
 
 def_int $damage = 0;
 // not sure if xp multipler exists for us or not?!
