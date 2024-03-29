@@ -1,0 +1,44 @@
+[opnpc1,financial_advisor]
+if (%tutorial_progress = ^tutorial_opened_financial_advisor_door) {
+    @financial_advisor_incomplete;
+} else {
+    @financial_advisor_recap_questions;
+}
+
+[label,financial_advisor_incomplete]
+~chatplayer(quiz, "Hello... Who are you?");
+~chatnpc(neutral, "I'm a financial advisor. |I'm here to tell people how ot make money.");
+~chatplayer(quiz, "OK... How can I make money then?");
+~chatnpc(neutral, "...how can you make money. Quite.");
+~chatnpc(neutral, "Well there are three basic ways of making money here; Combat, Quests and Trading. I will talk you through each of tem very quickly.");
+~chatnpc(neutral, "Let's start with combat, as it is probably still fresh in your mind. Many enemies, both human and monster will drop items when they die.");
+~chatnpc(neutral, "Now, the next way to earn money quickly is by quests. Many people on RuneScape have things they need doing, which they will reward you for.");
+~chatnpc(neutral, "By getting a high level in skills such as cooking, mining, smithing or fishing, you can create your own items and sell them for pure profit.");
+~chatnpc(neutral, "Well that's about covers it. Come back if you'd like to go over this again.");
+if (%tutorial_progress = ^tutorial_opened_financial_advisor_door) {
+    %tutorial_progress = ^financial_advisor_talked_to;
+    ~set_tutorial_progress;
+}
+
+[label,financial_advisor_recap_questions]
+// Header of Would you like to hear about making money again
+@multi2_header(
+    "Yes!", financial_advisor_recap,
+    "No thanks.", financial_advisor_no_thanks,
+    "Would you like to hear about making money again?"
+);
+
+[label,financial_advisor_recap]
+~chatnpc(neutral, "Okay, making money. Quite.");
+~chatnpc(happy, "Well there are three basic ways of making money here; Combat, Quests and Trading. I will talk you through each of tem very quickly.");
+~chatnpc(happy, "Let's start with combat, as it is probably still fresh in your mind. Many enemies, both human and monster will drop items when they die.");
+~chatnpc(happy, "Now, the next way to earn money quickly is by quests. Many people on RuneScape have things they need doing, which they will reward you for.");
+~chatnpc(happy, "By getting a high level in skills such as cooking, mining, smithing or fishing, you can create your own items and sell them for pure profit.");
+~chatnpc(happy, "Well that's about covers it. Come back if you'd like to go over this again.");
+
+[label,financial_advisor_no_thanks]
+
+[proc,set_hint_icon_financial_advisor]
+if (npc_finduid(~npc_within_distance(0_48_48_56_52, financial_advisor, 5)) = true) {
+    hint_npc(npc_uid);
+}

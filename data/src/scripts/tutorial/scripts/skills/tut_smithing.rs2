@@ -1,0 +1,31 @@
+[proc,tut_smithing_anvil](int $count)
+if (%tutorial_progress = ^mining_instructor_smith_a_dagger) {
+    %tutorial_progress = ^mining_instructor_finished;
+}
+p_delay(1);
+// delete bars
+inv_del(inv, bronze_bar, 1);
+// add product
+inv_add(inv, bronze_dagger, 1);
+// add smithing xp
+~tutorial_give_xp(smithing, 62);
+// display message
+mes("You hammer the bronze and make dagger.");
+// end smithing if count is less than 1
+$count = calc($count - 1);
+if ($count < 1) {
+    ~set_tutorial_progress;
+    return;
+}
+// check if player has enough bars
+if (inv_total(inv, bronze_bar) < 1) {
+    ~mesbox("You don't have enough bronze bars to make any more."); // https://youtu.be/Xud7h207rZc?t=286
+    return;
+}
+p_delay(2);
+// play anim and sound
+anim(human_smithing, 0);
+sound_synth(anvil_4, 0, 0);
+~set_tutorial_progress;
+// recall proc
+~tut_smithing_anvil($count);

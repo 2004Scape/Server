@@ -1,8 +1,8 @@
-[opnpc1,npc_942]
+[opnpc1,master_chef]
 switch_int(%tutorial_progress) {
     case ^chef_start: @master_chef_start;
-    case 150: @master_chef_after_start;
-    case 160: @master_chef_after_start;
+    case ^chef_make_dough: @master_chef_after_start;
+    case ^chef_mixed_dough: @master_chef_after_start;
     case default: @master_chef_recap;
 }
 
@@ -10,9 +10,9 @@ switch_int(%tutorial_progress) {
 // https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial13.gif older line breaks
 ~chatnpc(neutral, "Ah... welcome newcomer. I am Lev, the chef.| It is here I will teach you how to |cook food truly fit for a king.");
 ~chatplayer(neutral, "I already know how to cook.|Brynna taught me just now.");
-~chatnpc(neutral, "HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
+~chatnpc(laugh, "HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
 ~chatnpc(neutral, "And no fine meal is complete without good music so|we'll cover that while you're here too.");
-%tutorial_progress = 150;
+%tutorial_progress = ^chef_make_dough;
 ~set_tutorial_progress;
 ~master_chef_give_ingredients;
 
@@ -21,7 +21,7 @@ switch_int(%tutorial_progress) {
 ~master_chef_give_ingredients;
 
 [proc,master_chef_give_ingredients]
-if (inv_freespace(inv) = 0 & %tutorial_progress < 170) {
+if (inv_freespace(inv) = 0 & %tutorial_progress < ^chef_baked_bread) {
     ~mesbox("You need some ingredients for this section of the tutorial but you don't have enough inventory room. You'll need to drop something. To do so, right-click on an item you don't want and select drop. Once you've done that speak to the Cooking Guide again.");
     return;
 }
@@ -56,7 +56,7 @@ if (inv_freespace(inv) > 1 & inv_total(inv, pot_of_flour) < 1 & inv_total(inv, b
 ~master_chef_recap_options;
 
 [proc,master_chef_recap_options]
-if (%tutorial_progress < 180) {
+if (%tutorial_progress < ^chef_opened_music_tab) {
     ~master_chef_recap_response(~p_choice3_header("Making dough.", 1, "Range cooking.", 2, "Nothing, thanks.", 4, "What would you like to hear more about?"));
 } else {
     ~master_chef_recap_response(~p_choice4_header("Making dough.", 1, "Range cooking.", 2, "Music.", 3, "Nothing, thanks.", 4, "What would you like to hear more about?"));
@@ -79,23 +79,6 @@ switch_int($option) {
 }
 
 [proc,set_hint_icon_master_chef]
-npc_findallzone(0_48_48_4_11);
-while (npc_findnext = true) {
-    if (npc_type = npc_942) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_48_6_12);
-while (npc_findnext = true) {
-    if (npc_type = npc_942) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_48_2_16);
-while (npc_findnext = true) {
-    if (npc_type = npc_942) {
-        hint_npc(npc_uid);
-    }
+if (npc_finduid(~npc_within_distance(0_48_48_4_11, master_chef, 10)) = true) {
+    hint_npc(npc_uid);
 }

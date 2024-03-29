@@ -1,0 +1,27 @@
+[oplocu,furnace_tutorial]
+if (%tutorial_progress < ^mining_instructor_before_smelt_bronze_bar) {
+    ~mesbox("This is a furnace for smelting metal.|You'll learn how to use it soon.");
+    return;
+}
+
+if (last_useitem = copper_ore | last_useitem = tin_ore) {
+    @tut_smelting;
+} else {
+    @nothing_interesting_happens;
+}
+
+[label,tut_smelting]
+p_arrivedelay();
+anim(human_furnace, 0);
+sound_synth(furnace, 0, 0);
+mes("You smelt the copper and tin together in the furnace.");
+p_delay(3);
+if (%tutorial_progress = ^mining_instructor_before_smelt_bronze_bar) {
+    %tutorial_progress = ^mining_instructor_after_smelt_bronze_bar;
+}
+inv_del(inv, copper_ore, 1);
+inv_del(inv, tin_ore, 1);
+~tutorial_give_xp(smithing, 62);
+inv_add(inv, bronze_bar, 1);
+~set_tutorial_progress;
+mes("You retrive a bar of bronze.");

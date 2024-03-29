@@ -1,18 +1,20 @@
-[opnpc1,npc_943]
+[opnpc1,survival_expert]
 switch_int(%tutorial_progress) {
-    case 10: @survival_guide_start;
-    case 20: @survival_guide_look_at_menu;
-    case 30, 40: @survival_guide_fire;
-    case 50: @survival_guide_look_at_menu;
-    case 60: @survival_guide_fishing;
-    case 70, 80, 90: @survival_guide_fishing_after_burning;
+    case ^runescape_guide_interacted_with_door: @survival_guide_start;
+    case ^survival_guide_open_inventory: @survival_guide_look_at_menu;
+    case ^survival_guide_cut_tree, ^survival_guide_build_fire: @survival_guide_fire;
+    case ^survival_guide_open_skill_menu: @survival_guide_look_at_menu;
+    case ^survival_guide_opened_skill_menu: @survival_guide_fishing;
+    case ^survival_guide_fish_shrimps,
+        ^survival_guide_cook_shrimps,
+        ^survival_guide_burnt_shrimps: @survival_guide_fishing_after_burning;
     case default: @survival_guide_recap;
 }
 
 [label,survival_guide_start]
 ~chatnpc(neutral, "Hello there newcomer. My name is Brynna. My job is|to teach you a few survival tips and tricks. First off|we're going to start with the most basic survival skill of|all; making a fire.");
 ~doubleobjbox(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
-%tutorial_progress = 20;
+%tutorial_progress = ^survival_guide_open_inventory;
 ~tutorial_step_view_inventory;
 
 [label,survival_guide_look_at_menu]
@@ -43,7 +45,7 @@ if (inv_total(inv, tinderbox) < 1 & inv_freespace(inv) > 0) {
     ~objboxt(tinderbox, "The Survival Guide gives you a |@blu@Tinderbox!");
 }
 
-if (%tutorial_progress > 50 & inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
+if (%tutorial_progress > ^survival_guide_open_skill_menu & inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
     inv_add(inv, net, 1);
     ~objbox(net, "The Survival Guide gives you a |@blu@Net!");
 }
@@ -66,12 +68,12 @@ if (inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
 ~chatnpc(neutral, "There's nothing like a good fire to warm the bones.|Next thing is getting food in our bellies. We'll need|something to cook. There are shrimp in the pond there.|So let's catch and cook some.");
 npc_findallzone(0_48_48_29_20);
 while (npc_findnext = true) {
-    if (npc_coord = 0_48_48_29_20 & npc_type = npc_952) {
+    if (npc_coord = 0_48_48_29_20 & npc_type = tut_fishing_spot) {
         hint_npc(npc_uid);
     }
 }
 inv_add(inv, net, 1);
-%tutorial_progress = 70;
+%tutorial_progress = ^survival_guide_fish_shrimps;
 ~tutorial_step_catch_shrimp;
 ~objbox(net, "The Survival Guide gives you a |@blu@Net!");
 ~survival_guide_replace_items;
@@ -148,31 +150,9 @@ switch_int($choice) {
 ~chatnpc(neutral, "Eating food will restore a little health. The harder something is to cook, the more it will heal you. Somewhere around here is a chef who will tell you more about food and cooking it.");
 
 [proc,set_hint_icon_survival_guide]
-npc_findallzone(0_48_48_29_24);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
+if (npc_finduid(~npc_within_distance(0_48_48_31_23, survival_expert, 10)) = true) {
+    hint_npc(npc_uid);
 }
 
-npc_findallzone(0_48_48_33_25);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
-}
 
-npc_findallzone(0_48_48_32_21);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_48_29_21);
-while (npc_findnext = true) {
-    if (npc_type = npc_943) {
-        hint_npc(npc_uid);
-    }
-}
 

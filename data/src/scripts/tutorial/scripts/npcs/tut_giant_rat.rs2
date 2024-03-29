@@ -1,0 +1,138 @@
+[ai_queue1,tut_giant_rat](int $arg) gosub(giant_rat_attack);
+
+// death
+[ai_queue3,tut_giant_rat](int $arg)
+gosub(npc_death);
+if (npc_findhero = true) {
+    obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+    obj_add(npc_coord, raw_rat_meat, 1, ^lootdrop_duration);
+    if (%tutorial_progress =  ^combat_instructor_during_attacking_melee
+        | %tutorial_progress =  ^combat_instructor_before_attacking_ranged) {
+        queue(set_rat_kill, 0);
+    }
+}
+
+// Highkey stole this from the drunken dwarf random.
+[ai_opplayer2,tut_giant_rat]
+if (stat(hitpoints) = 0) {
+    return;
+}
+if (map_clock < %npc_action_delay) {
+    return;
+}
+
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+anim(%com_defendanim, 0);
+
+npc_anim(npc_param(attack_anim), 0);
+%npc_action_delay = add(map_clock, npc_param(attackrate));
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
+
+def_int $attack_roll = ~npc_melee_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+def_int $maxhit = ~npc_melee_maxhit;
+def_int $damage = 0;
+
+if_close; // close the player interface when taking a hit.
+// not sure if this is correct
+if (getqueue(player_death) < 1) {
+    if (stat(hitpoints) = 1) {
+        $damage = 0;
+    } else {
+        $damage = 1;
+    }
+
+    queue(drunken_dwarf_player_defend_anim, 1);
+    queue(damage_player, 1, $damage);
+    queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
+}
+~npc_set_attack_vars;
+
+[opnpc2,tut_giant_rat]
+if (~player_in_combat_check = false) {
+    return;
+}
+if (%tutorial_progress = ^combat_instructor_before_attacking_melee) {
+    %tutorial_progress = ^combat_instructor_during_attacking_melee;
+   ~set_tutorial_progress;
+}
+@player_combat_start;
+
+[apnpc2,tut_giant_rat]
+if (%tutorial_progress > ^combat_instructor_before_attacking_ranged
+    & %tutorial_progress < ^tutorial_complete) {
+    if (inv_total(worn, shortbow) < 1 & inv_total(worn, bronze_arrow) < 1
+        | inv_total(worn, shortbow) < 1 & inv_total(worn, bronze_arrow) > 1) {
+        ~mesbox("You should equip a bow and some arrows before doing that.");
+        return;
+    }
+
+    if (inv_total(worn, shortbow) > 0 & inv_total(worn, bronze_arrow) < 1) {
+        ~mesbox("You need to equip the arrows you have in your inventory.");
+        return;
+    }
+}
+
+// 2013 Vid shows that maybe the check is > tut_step && less than tut complete
+// https://youtu.be/7zsi7hiF4SQ?t=536
+if (%tutorial_progress > ^combat_instructor_after_attacking_ranged
+    & %tutorial_progress < ^tutorial_complete) {
+    ~mesbox("You've already done that.|Perhaps you should move on.");
+    return;
+}
+
+def_int $distance = npc_range(coord);
+def_int $attackrange = 0;
+if (inv_getobj(worn, ^wearpos_rhand) ! null) {
+    $attackrange = min(oc_param(inv_getobj(worn, ^wearpos_rhand), attackrange), 10);
+    if (%damagestyle = ^style_ranged_longrange) {
+        $attackrange = min(add($attackrange, 2), 10);
+    }
+}
+
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0){
+    $attackrange = 10;
+}
+if ($attackrange <= 1) {
+    p_aprange($attackrange); // walk then op again
+    return;
+}
+if ($distance > $attackrange) {
+    p_aprange($attackrange);
+    return;
+}
+if (~player_in_combat_check = false) {
+    return;
+}
+p_aprange($attackrange);
+@player_combat_start;
+
+[proc,giant_rat_attack]
+if (~npc_out_of_combat = true) {
+    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
+    %npc_attacking_uid = %npc_aggressive_player;
+}
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(opplayer2);
+}
+
+[queue,set_rat_kill]
+if (%tutorial_progress = ^combat_instructor_during_attacking_melee) {
+    %tutorial_progress = ^combat_instructor_after_rat_kill_melee;
+    ~set_tutorial_progress;
+}
+
+if (%tutorial_progress = ^combat_instructor_before_attacking_ranged) {
+    %tutorial_progress = ^combat_instructor_after_attacking_ranged;
+    ~set_tutorial_progress;
+}
+
+[proc,set_hint_icon_giant_rat]
+if (npc_finduid(~npc_within_distance(0_48_148_37_47, tut_giant_rat, 10)) = true) {
+    hint_npc(npc_uid);
+}

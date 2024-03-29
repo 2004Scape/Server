@@ -114,30 +114,58 @@ if(npc_type = black_knight_titan) {
     givexp(hitpoints, scale(133, 100, $base));
     return;
 }
-switch_int($damagestyle) {
-    case ^style_melee_accurate : 
-        givexp(attack, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_melee_aggressive : 
-        givexp(strength, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_melee_defensive : 
-        givexp(defence, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_melee_controlled : 
-        givexp(attack, scale($multiplier, 1000, scale(133, 100, $base)));
-        givexp(strength, scale($multiplier, 1000, scale(133, 100, $base)));
-        givexp(defence, scale($multiplier, 1000, scale(133, 100, $base)));
-    case ^style_ranged_accurate, ^style_ranged_rapid : 
-        givexp(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
-    case ^style_ranged_longrange : 
-        givexp(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
-        givexp(defence, scale($multiplier, 1000, scale(200, 100, $base)));
-    case ^style_magic_normal :
-        givexp(magic, scale($multiplier, 1000, scale(200, 100, $base)));
-    case ^style_magic_defensive : 
-        givexp(magic, scale($multiplier, 1000, scale(133, 100, $base)));
-        givexp(defence, scale($multiplier, 1000, scale(100, 100, $base)));
-    case default : return;
+if (%tutorial_progress < ^tutorial_complete) {
+    switch_int($damagestyle) {
+        case ^style_melee_accurate :
+            ~tutorial_give_xp(attack, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_melee_aggressive :
+            ~tutorial_give_xp(strength, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_melee_defensive :
+            ~tutorial_give_xp(defence, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_melee_controlled :
+            ~tutorial_give_xp(attack, scale($multiplier, 1000, scale(133, 100, $base)));
+            ~tutorial_give_xp(strength, scale($multiplier, 1000, scale(133, 100, $base)));
+            ~tutorial_give_xp(defence, scale($multiplier, 1000, scale(133, 100, $base)));
+        case ^style_ranged_accurate, ^style_ranged_rapid :
+            ~tutorial_give_xp(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_ranged_longrange :
+            ~tutorial_give_xp(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
+            ~tutorial_give_xp(defence, scale($multiplier, 1000, scale(200, 100, $base)));
+        case ^style_magic_normal :
+            ~tutorial_give_xp(magic, scale($multiplier, 1000, scale(200, 100, $base)));
+        case ^style_magic_defensive :
+            ~tutorial_give_xp(magic, scale($multiplier, 1000, scale(133, 100, $base)));
+            ~tutorial_give_xp(defence, scale($multiplier, 1000, scale(100, 100, $base)));
+        case default : return;
+    }
+    ~tutorial_give_xp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
+} else {
+    switch_int($damagestyle) {
+        case ^style_melee_accurate :
+            givexp(attack, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_melee_aggressive :
+            givexp(strength, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_melee_defensive :
+            givexp(defence, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_melee_controlled :
+            givexp(attack, scale($multiplier, 1000, scale(133, 100, $base)));
+            givexp(strength, scale($multiplier, 1000, scale(133, 100, $base)));
+            givexp(defence, scale($multiplier, 1000, scale(133, 100, $base)));
+        case ^style_ranged_accurate, ^style_ranged_rapid :
+            givexp(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
+        case ^style_ranged_longrange :
+            givexp(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
+            givexp(defence, scale($multiplier, 1000, scale(200, 100, $base)));
+        case ^style_magic_normal :
+            givexp(magic, scale($multiplier, 1000, scale(200, 100, $base)));
+        case ^style_magic_defensive :
+            givexp(magic, scale($multiplier, 1000, scale(133, 100, $base)));
+            givexp(defence, scale($multiplier, 1000, scale(100, 100, $base)));
+        case default : return;
+    }
+    givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 }
-givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
+
 
 // returns the defend anim to use for this combat
 [proc,combat_defend_anim](obj $weapon)(seq)
