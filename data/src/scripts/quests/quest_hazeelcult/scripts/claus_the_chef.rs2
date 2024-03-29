@@ -1,0 +1,14 @@
+[opnpc1,claus_the_chef]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_clivet_decision:
+        ~chatplayer(neutral, "Hiya.");
+        ~chatnpc(quiz, "You're that adventurer the family asked to help get those weird cultists who keep breaking in, right?");
+        ~chatplayer(neutral, "That's me.");
+        ~chatnpc(neutral, "Good luck with that!");
+    case default:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(neutral, "Sorry! Can't stop to chat! You would be AMAZED at how many meals this family gets through daily!");
+}
+
+[oplocu,loc_2859]
+~chatnpc_specific(nc_name(claus_the_chef), claus_the_chef, angry, "Oi! I don't want people messing around with my range!");

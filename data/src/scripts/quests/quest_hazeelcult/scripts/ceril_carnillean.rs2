@@ -1,0 +1,53 @@
+[opnpc1,ceril_carnillean]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_not_started:
+        // OSRS changed this dialogue quite a bit in 2023 (of course), using wiki/RSC + the linked video as reference
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(angry, "Blooming, thieving, weirdo cultists! Why don't they leave me alone? String 'em all up, that's what I say!");
+        // https://youtu.be/R5MdMtqvxaM?si=OepNhbR7fcTPaijN&t=19
+        switch_int(~p_choice3("What's wrong?", 1, "You probably deserve it.", 2, "You seem uptight, I'll leave you alone.", 3)) {
+            case 1:
+                ~chatplayer(quiz, "What's wrong?");
+                ~chatnpc(angry, "It's those blooming cultists from the forest! Those freaks keep breaking into my house!");
+                ~chatplayer(quiz, "Have they taken much?");
+                ~chatnpc(angry, "They first broke in months ago and stole a suit of armour. The strange thing is that they've broken in four more times since but taken nothing.");
+                ~chatplayer(quiz, "And you are...?");
+                ~chatnpc(angry, "Why, I am Sir Ceril Carnillean! We really are quite a famous bloodline... who've played a vital role in the politics of Ardougne for many generations.");
+                ~chatnpc(angry, "Perhaps you would be able to assist me in returning the stolen armour? For a modest cash reward of course!");
+                switch_int(~p_choice2("No thanks. I've got other plans.", 1, "Yes, of course, I'd be happy to help.", 2)) {
+                    case 1:
+                        ~chatplayer(neutral, "No thanks. I've got other plans.");
+                        ~chatnpc(angry, "Well no wonder I'm the one with the big house and you're the one on the streets.");
+                    case 2:
+                        ~chatplayer(neutral, "Yes, of course, I'd be happy to help.");
+                        ~chatnpc(neutral, "That's very noble of you sirrah! I caught a glimpse of the thieves leaving but due to... uh.. yeah, my cold I was unable to give chase.");
+                        ~chatnpc(neutral, "They're some kind of crazy cult who dress all in black, and hang out near the cave entrance in the forest south of here.");
+                        ~chatplayer(quiz, "How do you know that?");
+                        ~chatnpc(neutral, "My old butler, Higson, once followed them to their hideout there. Unfortunately the next night he died in his sleep.");
+                        ~chatplayer(shock, "That's awful!");
+                        %hazeelcult_progress = ^hazeelcult_started;
+                        ~chatnpc(neutral, "No, it's ok. A replacement arrived the next day. He's been great - cooks an excellent broth!");
+                        ~chatplayer(neutral, "Ok. I'll see what I can do.");
+                }
+            case 2:
+                ~chatplayer(neutral, "You probably deserve it.");
+                ~chatnpc(angry, "And who are YOU to judge ME? Hmmm. You look like a peasant anyway. I'm wasting my time talking to you.");
+            case 3:
+                ~chatplayer(neutral, "You seem uptight. I'll leave you alone.");
+                ~chatnpc(neutral, "Yes, I doubt you could help anyway.");
+        }
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet:
+        ~chatplayer(neutral, "Hello Ceril.");
+        ~chatnpc(angry, "That's SIR Ceril to you, you impudent scamp. Show a bit of respect to your betters. And shouldn't you be recovering my armour?");
+        ~chatplayer(neutral, "Yeah yeah, I'm on it, I'm ON it.");
+    case ^hazeelcult_clivet_decision:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(quiz, "Have you had any luck yet?");
+            ~chatplayer(neutral, "Hello Ceril. Yes, I found their hideout.");
+            ~chatnpc(happy, "SIR Ceril to you. But good work there! BLOOMING good work! Hand over the armour then.");
+            ~chatplayer(confused, "Uh... yeah... about that... I interrogated a cult member at the hideout's entrance, but he managed to escape into the sewer system.");
+            ~chatplayer(neutral, "Seems they have some sort of grievance against you and your family. Something about some guy called Hazeel?");
+            ~chatnpc(confused, "Hazeel? Uh... umm... err.. hmmmm.");
+            ~chatnpc(angry, "Nope, they're obviously a bunch of blooming loonies! Go find them and bring me back my blooming armour! Nobody steals from Sir Ceril Carnillean!!!");
+        }
+}

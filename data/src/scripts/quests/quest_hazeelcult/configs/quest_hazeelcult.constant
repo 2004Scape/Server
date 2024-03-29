@@ -1,0 +1,7 @@
+^hazeelcult_not_started = 0
+^hazeelcult_started = 2
+^hazeelcult_spoken_clivet = 3
+^hazeelcult_clivet_decision = 4
+
+^hazeelcult_goodside = 0
+^hazeelcult_evilside = 1

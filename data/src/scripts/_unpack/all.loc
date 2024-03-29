@@ -15895,6 +15895,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,0
 
 [loc_2845]
 name=Sewer valve
@@ -15903,6 +15905,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,1
 
 [loc_2846]
 name=Sewer valve
@@ -15911,6 +15915,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,2
 
 [loc_2847]
 name=Sewer valve
@@ -15919,6 +15925,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,3
 
 [loc_2848]
 name=Sewer valve
@@ -15927,6 +15935,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,4
 
 [loc_2849]
 name=Raft

@@ -1,0 +1,13 @@
+[opnpc1,carnillean_guard]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_not_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(neutral, "Hello there. I haven't seen you around here before. If you've come to admire the Carnillean family home I must warn you not to cause any trouble.");
+        ~chatnpc(neutral, "Due to recent criminal activities against such prominent Ardougnians, I have been sent here on special guard duty to ensure the Carnilleans' security.");
+        ~chatnpc(neutral, "Anyone caught interfering with the person or possessions of any Carnilleans will be taken to jail so quickly that their feet won't even touch the floor!");
+        ~chatplayer(confused, "Well, I wasn't actually planning on doing anything like that...");
+        ~chatnpc(happy, "Glad to hear it. Let's keep it that way, hmmm?");
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(neutral, "Hello. I hear tell you're after that loony cult who broke in the other night. It always gladdens me when civilians assist the law like this.");
+}

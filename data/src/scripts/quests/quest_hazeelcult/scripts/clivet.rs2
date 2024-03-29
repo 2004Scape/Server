@@ -1,0 +1,79 @@
+[opnpc1,clivet]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_not_started:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(shifty, "What do you want adventurer?");
+        ~chatplayer(neutral, "Just passing by.");
+        ~chatnpc(neutral, "You have no business here. Leave.... now.");
+    case ^hazeelcult_started:
+        ~chatplayer(quiz, "Do you know the Carnilleans?");
+        ~chatnpc(angry, "You mind your business, I'll mind mine.");
+        ~chatplayer(angry, "Look, I KNOW you're hiding something. I've heard theres a cult hideout down here.");
+        ~chatnpc(angry, "If you want to stay healthy you'll leave now.");
+        ~chatplayer(angry, "I have my orders.");
+        ~chatnpc(neutral, "So... that two faced cold hearted snob has made you fall for his propaganda eh?");
+        ~chatplayer(angry, "Sir Ceril Carnillean is a man of honour!");
+        ~chatnpc(neutral, "Is he now? Is he REALLY? There is a lot more to the Carnilleans than meets the eye you fool...");
+        ~chatnpc(angry, "And none of it is honourable.");
+        %hazeelcult_progress = ^hazeelcult_spoken_clivet;
+        @multi2("What do you mean?", clivet_what_do_you_mean, "I've heard enough of your rubbish.", clivet_rubbish);
+    case ^hazeelcult_spoken_clivet:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(neutral, "So. You've returned. Now do you want to know the truth about the 'honourable' Carnilleans?");
+        @multi2("What do you mean?", clivet_what_do_you_mean, "I've heard enough of your rubbish.", clivet_rubbish);  
+    case ^hazeelcult_clivet_decision:
+        ~chatplayer(neutral, "Hello there.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            // guessing mesanims here
+            ~chatnpc(angry, "Oh no... not you again.");
+            ~chatplayer(quiz, "WHERE is the cult hideout?");
+            ~chatnpc(angry, "You're more of a fool than you look if you think you will ever find it. When Lord Hazeel is revived you will be first to grovel for his mercy!");
+        } else {
+            // guessing here as well
+            ~chatnpc(neutral, "You have a mission for us adventurer. Go to the Carnilliean household and poison their meal to prove your loyalty.");
+        }
+}
+
+[label,clivet_what_do_you_mean]
+~chatplayer(quiz, "What do you mean?");
+~chatnpc(neutral, "The Carnillean home does not belong to them. The builder of the house was Lord Hazeel, one of the Mahjarrat followers of Zamorak. Many years ago there was a civil war");
+~chatnpc(neutral, "in this land, and the hateful Saradominists declared war upon all Zamorakians who lived here. Lord Hazeel nobly would not repent his beliefs, and the Carnilleans harrassed");
+~chatnpc(neutral, "Hazeel and his followers for many decades. One fateful night, under cover of darkness, they stormed his home in an angry mob torturing and butchering all loyal");
+~chatnpc(neutral, "Zamorakians they encountered inside. The following morning, the Carnillean forefathers moved into the empty household and claimed it as their own.");
+~chatnpc(neutral, "They have grown fat on the hard work of Lord Hazeel ever since. Unluckily for them Lord Hazeel as a Mahjarrat had access to powers and enchantments they knew nothing");
+~chatnpc(neutral, "about, and made preparations for his return when first they began to storm his home. Soon the day will come when he will return to wreak his vengeance upon the thieves!");
+~chatplayer(neutral, "The politics and histories of Ardougne do not concern me. I have been given a job and intend to see it through to the end.");
+~chatnpc(neutral, "Well then friend, perhaps I can offer you a different job then? Sooner or later Our master WILL return to this land; those faithful to him will be well rewarded.");
+~chatnpc(neutral, "Join our cult and assist us in his restoration, and you will be well rewarded; try and prevent his return and suffer the wrath of Zamorak and the Mahjarrat.");
+switch_int(~p_choice2("You're crazy, I'd never help you.", 1, "So what would I have to do?", 2)) {
+    case 1:
+        ~chatplayer(angry, "You're crazy, I'd never help you.");
+        @clivet_fool;
+    case 2:
+        ~chatplayer(quiz, "So what would I have to do?");
+        ~chatnpc(neutral, "You must prove your loyalty to our cause. Killing one of the Carnillean household should be sufficient proof of your dedication to resurrecting our master Lord Hazeel.");
+        ~chatnpc(quiz, "So what say you adventurer? Join our side against the Carnillean thieves?");
+        switch_int(~p_choice2("No. I won't do it.", 1, "Ok, count me in.", 2)) {
+            case 1:
+            case 2:
+                ~chatplayer(neutral, "Ok, count me in.");
+                ~chatnpc(neutral, "Excellent. It takes a rare character to see through the cursed Carnillean lies. I can tell you are a <text_gender("man", "lady")> of exactly the right character to join the followers of Hazeel.");
+                ~chatnpc(neutral, "Here. Take this poison. Pour it into their food, and once the deed is done, return here and speak to me once more.");
+                inv_add(inv, poison, 1);
+                %hazeelcult_side = ^hazeelcult_evilside;
+                %hazeelcult_progress = ^hazeelcult_clivet_decision;
+        }
+}
+
+[label,clivet_rubbish]
+// https://youtu.be/R5MdMtqvxaM?si=J64ldVsZ-1de4-26&t=117
+~chatplayer(angry, "I've heard enough of your rubbish!");
+~chatnpc(angry, "Then leave, fool!");
+
+[label,clivet_fool]
+~chatnpc(neutral, "Then you are a fool. Go back to your small minded mundane little life; you will never know the glories you could have tasted as one of us!");
+~mesbox("The man jumps onto the raft and pushes off down into the sewer system.");
+%hazeelcult_side = ^hazeelcult_goodside;
+%hazeelcult_progress = ^hazeelcult_clivet_decision;
+npc_del;
+mes("Clivet: You'll never find us...");

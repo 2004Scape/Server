@@ -64,6 +64,9 @@ if_settext(tribal_door2:com_44, enum(int, string, alphabet, 0));
 if_settext(tribal_door2:com_45, enum(int, string, alphabet, 0));
 if_settext(tribal_door2:com_46, enum(int, string, alphabet, 0));
 
+[debugproc,wildy]
+if_openmainmodal(wilderness_warning);
+
 [proc,calc_tribaldoor_value](int $current, int $change)(int)
 def_int $stage = calc($current + $change);
 if($stage > 25) {

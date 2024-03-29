@@ -1,0 +1,44 @@
+// This quest was changed quite a bit with Secrets of the North on OSRS, so referencing 2013 OSRS videos
+// and OSRS wiki a lot here
+[oploc1,loc_2852]
+mes("You enter the cave.");
+p_teleport(0_40_151_10_18);
+
+[oploc1,loc_2853]
+mes("You climb up the stairs.");
+p_teleport(0_40_50_27_37);
+
+[oploc1,loc_2849]
+if(loc_coord ! 0_40_151_7_15) {
+    p_teleport(0_40_151_7_16);
+    ~mesbox("The raft flows with the current back to the cave entrance.");
+    return;
+}
+if(%hazeelcult_progress = ^hazeelcult_not_started) {
+    ~chatnpc_specific(nc_name(clivet), clivet, angry, "Hey! I don't remember saying you could use that raft!");
+    return;
+}
+def_int $valves_value = getbit_range(%hazeelcult_valves, 0, 4);
+if($valves_value = calc(pow(2,5) - pow(2,2) - 1)) {
+    p_teleport(0_40_151_46_28);
+    ~mesbox("The raft washes up the sewer, past the islands until it reaches the end of the sewer passage.");
+}
+
+// loc_2846 defaults right and you turn left for quest, the others default left -> turn right
+[oploc1,_hazeelcult_valve]
+if(loc_type = loc_2846) {
+    %hazeelcult_valves = setbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+} else {
+    %hazeelcult_valves = clearbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+}
+mes(tostring(%hazeelcult_valves));
+~mesbox("You turn the large metal valve to the left. Beneath your feet you can hear the sudden sound of rushing water from the sewer.");
+
+[oploc2,_hazeelcult_valve]
+if(loc_type = loc_2846) {
+    %hazeelcult_valves = clearbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+} else {
+    %hazeelcult_valves = setbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+}
+mes(tostring(%hazeelcult_valves));
+~mesbox("You turn the large metal valve to the right. Beneath your feet you can hear the sudden sound of rushing water from the sewer.");

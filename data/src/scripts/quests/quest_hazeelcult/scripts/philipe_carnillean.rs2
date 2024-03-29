@@ -1,0 +1,14 @@
+[opnpc1,philipe_carnillean]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_not_started:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(quiz, "What have you brought me? I want some more toys!");
+        ~chatplayer(neutral, "I'm afraid I don't have any toys.");
+        ~chatnpc(angry, "TOYS! I WANT TOYS!");
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(quiz, "Mommy said you're here to kill all the nasty people that keep breaking in.");
+        ~chatplayer(confused, "Something like that.");
+        ~chatnpc(quiz, "Can I watch?");
+        ~chatplayer(shock, "No!");
+}

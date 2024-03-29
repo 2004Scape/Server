@@ -1,0 +1,29 @@
+[opnpc1,butler_jones]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_clivet_decision: @butler_jones_howlong;
+    case ^hazeelcult_started:
+        // TODO: check RS3 for mesanims, osrs removed this dialogue entirely 
+        ~chatplayer(quiz, "Hello. What is this building?");
+        ~chatnpc(neutral, "This is the home of Sir Ceril Carnillean of the noble Carnillean family. You're welcome to look around, but I'm afraid I'll have to keep an eye on you.");
+        ~chatnpc(neutral, "Recently we've been having a real problem with thieves and strange cultists coming out of the forest for some reason.");
+        ~chatplayer(neutral, "That's a shame.");
+        ~chatnpc(neutral, "Yes, well, these things are bound to happen when you're as wealthy as the Carnilleans.");
+        @multi3("Have you any more info on the Carnilleans?", butler_jones_info, "How long have you worked here?", butler_jones_howlong, "Ok then, take care.", butler_jones_takecare);
+    case ^hazeelcult_not_started, ^hazeelcult_spoken_clivet:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(neutral, "Hello. How are you today?");
+        ~chatplayer(neutral, "Good thank you, and yourself?");
+        ~chatnpc(neutral, "Fine and dandy.");
+}
+
+[label,butler_jones_info]
+~chatplayer(quiz, "Have you any more info on the Carnilleans?");
+~chatnpc(neutral, "There's a lot I could tell you about the Carnillean family history. However, I'm afraid if I did speak about such matters I would be at risk of losing my job.");
+
+[label,butler_jones_howlong]
+~chatplayer(quiz, "How long have you worked here?");
+~chatnpc(neutral, "Long enough to know the Carnilleans are not as innocent or noble as they seem.");
+
+[label,butler_jones_takecare]
+~chatplayer(neutral, "Ok then, take care.");
+~chatnpc(neutral, "You too.");
