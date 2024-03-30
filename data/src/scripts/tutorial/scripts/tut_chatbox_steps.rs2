@@ -32,7 +32,7 @@ hint_coord(^hint_west, 0_48_48_28_23, 175);
 ~tutorialstep("Cut down a tree", "You can click on the backpack icon at any time to view|the items you currently have in your inventory. You will see that you now have an axe in your inventory. Use this to get some logs by clicking on the indicated tree.");
 
 [proc,tutorial_please_wait_woodcutting]
-~tutorialstep("Please wait...", "|Your character is now attempting to cut down the tree. Sit back|for a moment whilst he does all the hard work.");
+~tutorialstep("Please wait...", "|Your character is now attempting to cut down the tree. Sit back|for a moment whilst <text_gender("he", "she")> does all the hard work.");
 
 [proc,tutorial_step_build_fire]
 ~tutorialstep("Building a fire", "Well done - you managed to cut some logs from the tree! Next, use the tinderbox in your inventory to light the logs.|a) First click on the tinderbox to use it.|b) Then click on the logs in your inventory to light them.");
