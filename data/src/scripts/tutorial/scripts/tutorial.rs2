@@ -81,6 +81,7 @@ if (%tutorial_progress > ^chef_baked_bread) {
 }
 
 if (%tutorial_progress > ^chef_opened_music_tab) {
+    ~update_weight; // update weight
     if_settab(controls, ^tab_player_controls);
 }
 
@@ -89,7 +90,9 @@ if (%tutorial_progress > ^quest_guide_open_menu) {
     if_settab(questlist, ^tab_quest_journal);
 }
 
+
 if (%tutorial_progress > ^combat_instructor_wielding_weapons) {
+    ~update_bonuses; // update bonuses if
     inv_transmit(worn, wornitems:wear);
     if_settab(wornitems, ^tab_wornitems);
 }

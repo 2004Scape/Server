@@ -97,6 +97,7 @@ hint_coord(^hint_east, 0_48_48_0_18, 150);
 ~tutorialstep("The Music Player.", "From this interface you can control the music that is played.|As you explore the world more of the tunes will become unlocked.|Once you've examined this menu use the next door|to continue.");
 
 [proc,tutorial_step_click_run_icon]
+~update_weight; // update weight
 if_settabflash(^tab_player_controls);
 if_settab(controls, ^tab_player_controls);
 
@@ -217,6 +218,7 @@ hint_stop();
 [proc,tutorial_step_wielding_weapons]
 hint_stop();
 ~tutorialstep("", "Wielding weapons.|You now have access to a new interface. Click on the flashing icon of a man, the one to the right of your backpack icon.");
+~update_bonuses; // update bonuses if
 inv_transmit(worn, wornitems:wear);
 if_settab(wornitems, ^tab_wornitems);
 if_settabflash(^tab_wornitems);
