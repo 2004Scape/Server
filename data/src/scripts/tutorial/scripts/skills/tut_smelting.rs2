@@ -11,6 +11,17 @@ if (last_useitem = copper_ore | last_useitem = tin_ore) {
 }
 
 [label,tut_smelting]
+
+if (inv_total(inv, tin_ore) < 1) {
+    ~mesbox("You also need some tin ore to make a bronze bar.");
+    return;
+}
+
+if (inv_total(inv, copper_ore) < 1) {
+    ~mesbox("You also need some copper ore to make a bronze bar.");
+    return;
+}
+
 p_arrivedelay();
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
