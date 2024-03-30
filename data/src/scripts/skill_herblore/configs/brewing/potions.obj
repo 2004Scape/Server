@@ -16,6 +16,8 @@ weight=35g
 category=category_69
 tradeable=yes
 param=next_obj_stage,3dose1strength
+param=decant_potion_enum,potion_1strength
+param=dose_count,4
 // jagex name
 
 [3dose1strength]
@@ -34,6 +36,8 @@ weight=30g
 category=category_69
 tradeable=yes
 param=next_obj_stage,2dose1strength
+param=decant_potion_enum,potion_1strength
+param=dose_count,3
 // jagex name
 
 [2dose1strength]
@@ -52,6 +56,8 @@ recol1d=11080
 weight=25g
 tradeable=yes
 param=next_obj_stage,1dose1strength
+param=decant_potion_enum,potion_1strength
+param=dose_count,2
 // jagex name
 
 [1dose1strength]
@@ -70,6 +76,8 @@ recol1d=11080
 weight=20g
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_1strength
+param=dose_count,1
 // jagex name
 
 [3dose1attack]
@@ -89,6 +97,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose1attack
+param=decant_potion_enum,potion_1attack
+param=dose_count,3
 // jagex name
 
 [2dose1attack]
@@ -108,6 +118,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose1attack
+param=decant_potion_enum,potion_1attack
+param=dose_count,2
 // jagex name
 
 [1dose1attack]
@@ -127,6 +139,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_1attack
+param=dose_count,1
 // jagex name
 
 [3dose1restore]
@@ -146,6 +160,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose1restore
+param=decant_potion_enum,potion_1restore
+param=dose_count,3
 // jagex name
 
 [2dose1restore]
@@ -165,6 +181,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose1restore
+param=decant_potion_enum,potion_1restore
+param=dose_count,2
 // jagex name
 
 [1dose1restore]
@@ -184,6 +202,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_1restore
+param=dose_count,1
 // jagex name
 
 [3dose1defense]
@@ -203,6 +223,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose1defense
+param=decant_potion_enum,potion_1defense
+param=dose_count,3
 // jagex name
 
 [2dose1defense]
@@ -222,6 +244,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose1defense
+param=decant_potion_enum,potion_1defense
+param=dose_count,2
 // jagex name
 
 [1dose1defense]
@@ -241,6 +265,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_1defense
+param=dose_count,1
 // jagex name
 
 [3doseprayerrestore]
@@ -260,6 +286,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2doseprayerrestore
+param=decant_potion_enum,potion_prayerrestore
+param=dose_count,3
 // jagex name
 
 [2doseprayerrestore]
@@ -279,6 +307,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1doseprayerrestore
+param=decant_potion_enum,potion_prayerrestore
+param=dose_count,2
 // jagex name
 
 [1doseprayerrestore]
@@ -298,6 +328,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_prayerrestore
+param=dose_count,1
 // jagex name
 
 [3dose2attack]
@@ -317,6 +349,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose2attack
+param=decant_potion_enum,potion_2attack
+param=dose_count,3
 // jagex name
 
 [2dose2attack]
@@ -336,6 +370,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose2attack
+param=decant_potion_enum,potion_2attack
+param=dose_count,2
 // jagex name
 
 [1dose2attack]
@@ -355,6 +391,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_2attack
+param=dose_count,1
 // jagex name
 
 [3dosefisherspotion]
@@ -374,6 +412,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dosefisherspotion
+param=decant_potion_enum,potion_fisherspotion
+param=dose_count,3
 // jagex name
 
 [2dosefisherspotion]
@@ -393,6 +433,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dosefisherspotion
+param=decant_potion_enum,potion_fisherspotion
+param=dose_count,2
 // jagex name
 
 [1dosefisherspotion]
@@ -412,6 +454,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_fisherspotion
+param=dose_count,1
 // jagex name
 
 [3dose2strength]
@@ -431,6 +475,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose2strength
+param=decant_potion_enum,potion_2strength
+param=dose_count,3
 // jagex name
 
 [2dose2strength]
@@ -450,6 +496,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose2strength
+param=decant_potion_enum,potion_2strength
+param=dose_count,2
 // jagex name
 
 [1dose2strength]
@@ -469,6 +517,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_2strength
+param=dose_count,1
 // jagex name
 
 [3dose2defense]
@@ -488,6 +538,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose2defense
+param=decant_potion_enum,potion_2defense
+param=dose_count,3
 // jagex name
 
 [2dose2defense]
@@ -507,6 +559,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose2defense
+param=decant_potion_enum,potion_2defense
+param=dose_count,2
 // jagex name
 
 [1dose2defense]
@@ -526,6 +580,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_2defense
+param=dose_count,1
 // jagex name
 
 [3doserangerspotion]
@@ -545,6 +601,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2doserangerspotion
+param=decant_potion_enum,potion_rangerspotion
+param=dose_count,3
 // jagex name
 
 [2doserangerspotion]
@@ -564,6 +622,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1doserangerspotion
+param=decant_potion_enum,potion_rangerspotion
+param=dose_count,2
 // jagex name
 
 [1doserangerspotion]
@@ -583,6 +643,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_rangerspotion
+param=dose_count,1
 // jagex name
 
 [3doseantipoison]
@@ -602,6 +664,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2doseantipoison
+param=decant_potion_enum,potion_antipoison
+param=dose_count,3
 // jagex name
 
 [2doseantipoison]
@@ -621,6 +685,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1doseantipoison
+param=decant_potion_enum,potion_antipoison
+param=dose_count,2
 // jagex name
 
 [1doseantipoison]
@@ -640,6 +706,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_antipoison
+param=dose_count,1
 // jagex name
 
 [3dose2antipoison]
@@ -659,6 +727,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose2antipoison
+param=decant_potion_enum,potion_2antipoison
+param=dose_count,3
 // jagex name
 
 [2dose2antipoison]
@@ -678,6 +748,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose2antipoison
+param=decant_potion_enum,potion_2antipoison
+param=dose_count,2
 // jagex name
 
 [1dose2antipoison]
@@ -697,6 +769,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_2antipoison
+param=dose_count,1
 // jagex name
 
 [weapon_poison]
@@ -733,6 +807,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dosepotionofzamorak
+param=decant_potion_enum,potion_potionofzamorak
+param=dose_count,3
 // jagex name
 
 [2dosepotionofzamorak]
@@ -752,6 +828,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dosepotionofzamorak
+param=decant_potion_enum,potion_potionofzamorak
+param=dose_count,2
 // jagex name
 
 [1dosepotionofzamorak]
@@ -771,6 +849,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_potionofzamorak
+param=dose_count,1
 // jagex name
 
 [4dose1attack]
@@ -790,6 +870,8 @@ weight=35g
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose1attack
+param=decant_potion_enum,potion_1attack
+param=dose_count,4
 // jagex name
 
 [4dose1restore]
@@ -809,6 +891,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose1restore
+param=decant_potion_enum,potion_1restore
+param=dose_count,1
 // jagex name
 
 [4dose1defense]
@@ -828,6 +912,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose1defense
+param=decant_potion_enum,potion_1defense
+param=dose_count,4
 // jagex name
 
 [4doseprayerrestore]
@@ -847,6 +933,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3doseprayerrestore
+param=decant_potion_enum,potion_prayerrestore
+param=dose_count,4
 // jagex name
 
 [4dose2attack]
@@ -866,6 +954,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose2attack
+param=decant_potion_enum,potion_2attack
+param=dose_count,4
 // jagex name
 
 [4dosefisherspotion]
@@ -885,6 +975,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dosefisherspotion
+param=decant_potion_enum,potion_fisherspotion
+param=dose_count,4
 // jagex name
 
 [4dose2strength]
@@ -904,6 +996,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose2strength
+param=decant_potion_enum,potion_2strength
+param=dose_count,4
 // jagex name
 
 [4dose2defense]
@@ -923,6 +1017,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose2defense
+param=decant_potion_enum,potion_2defense
+param=dose_count,4
 // jagex name
 
 [4doserangerspotion]
@@ -942,6 +1038,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3doserangerspotion
+param=decant_potion_enum,potion_rangerspotion
+param=dose_count,4
 // jagex name
 
 [4doseantipoison]
@@ -961,6 +1059,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3doseantipoison
+param=decant_potion_enum,potion_antipoison
+param=dose_count,4
 // jagex name
 
 [4dose2antipoison]
@@ -980,6 +1080,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose2antipoison
+param=decant_potion_enum,potion_2antipoison
+param=dose_count,4
 // jagex name
 
 [4dosepotionofzamorak]
@@ -999,6 +1101,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dosepotionofzamorak
+param=decant_potion_enum,potion_potionofzamorak
+param=dose_count,4
 // jagex name
 
 [4dose1antidragon]
@@ -1018,6 +1122,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,3dose1antidragon
+param=decant_potion_enum,potion_1antidragon
+param=dose_count,4
 // jagex name
 
 [3dose1antidragon]
@@ -1037,6 +1143,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,2dose1antidragon
+param=decant_potion_enum,potion_1antidragon
+param=dose_count,3
 // jagex name
 
 [2dose1antidragon]
@@ -1056,6 +1164,8 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,1dose1antidragon
+param=decant_potion_enum,potion_1antidragon
+param=dose_count,2
 // jagex name
 
 [1dose1antidragon]
@@ -1075,3 +1185,5 @@ category=category_69
 members=yes
 tradeable=yes
 param=next_obj_stage,vial_empty
+param=decant_potion_enum,potion_1antidragon
+param=dose_count,1
