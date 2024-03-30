@@ -1,12 +1,4 @@
 [proc,tut_island_survial_gate]
-if (%tutorial_progress < ^survival_guide_complete) {
-    ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
-    return;
-}
-if (%tutorial_progress = ^survival_guide_complete) {
-    %tutorial_progress = ^tutorial_opened_gate_to_chef;
-    ~set_tutorial_progress;
-}
 loc_findallzone(coord);
 while(loc_findnext = true) {
     if(loc_category = tutorial_gate) {
@@ -25,6 +17,14 @@ p_delay(0);
 
 // Survival Tutor Gate
 [oploc1,_tutorial_gate]
+if (%tutorial_progress < ^survival_guide_complete) {
+    ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
+    return;
+}
+if (%tutorial_progress = ^survival_guide_complete) {
+    %tutorial_progress = ^tutorial_opened_gate_to_chef;
+    ~set_tutorial_progress;
+}
 if(coordx(coord) <= coordx(loc_coord)) {
     p_teleport(movecoord(loc_coord, 1, 0, 0));
     ~tut_island_survial_gate;
