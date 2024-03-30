@@ -312,7 +312,7 @@ inv_add(inv, wooden_shield, 1);
 inv_add(inv, shortbow, 1);
 inv_add(inv, bronze_arrow, 25);
 inv_add(inv, airrune, 25);
-inv_add(inv, mindrune, 16);
+inv_add(inv, mindrune, 15);
 inv_add(inv, waterrune, 6);
 inv_add(inv, earthrune, 4);
 inv_add(inv, bodyrune, 2);
