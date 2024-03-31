@@ -35,6 +35,9 @@ param=magicdefence,-4
 param=crushdefence,15
 param=attackrate,6
 param=damagetype,^stab_style
+param=attack_anim,human_spear_stab
+param=attack_sound,staff_stab
+param=defend_anim,human_spear_defend
 
 [black_knight_knight]
 vislevel=hide
