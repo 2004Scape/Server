@@ -5067,6 +5067,9 @@ param=slashdefence,79
 param=crushdefence,59
 param=damagetype,^slash_style
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [chaos_druid_warrior]
 name=Chaos druid warrior
