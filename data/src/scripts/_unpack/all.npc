@@ -426,7 +426,7 @@ param=slashdefence,1
 param=attackrate,6
 category=barbarian
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [wizard]
