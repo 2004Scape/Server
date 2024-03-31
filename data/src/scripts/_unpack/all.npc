@@ -1280,7 +1280,7 @@ vislevel=1
 model1=model_2848_npc
 moverestrict=blocked
 
-[npc_41]
+[chicken]
 name=Chicken
 desc=Yep, definitely a chicken.
 walkanim=chicken_walk
@@ -1831,7 +1831,7 @@ param=death_sound,insect_1
 param=death_drop,null
 huntmode=cowardly
 
-[npc_61]
+[spider]
 walkanim=spider_walk
 name=Spider
 desc=Incey wincey.
@@ -1854,6 +1854,9 @@ param=attack_anim,spider_attack
 param=defend_anim,spider_block
 param=death_anim,spider_death
 param=death_drop,null
+param=attack_sound,insect_3
+param=defend_sound,insect_2 //most likely candidates?
+param=death_sound,insect_1
 
 [npc_62]
 walkanim=giantspider_walk
@@ -3586,7 +3589,7 @@ param=rangedefence,30
 param=damagetype,^crush_style
 huntmode=cowardly
 
-[npc_125]
+[ice_warrior]
 hasalpha=yes
 walkanim=seq_841
 readyanim=seq_842
@@ -3629,6 +3632,9 @@ param=damagetype,^slash_style
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_slash
 
 [otherworldly_being]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4783,6 +4789,9 @@ param=slashdefence,2
 param=damagetype,^slash_style
 category=pirate
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_slash
 
 [npc_185]
 name=Pirate
@@ -4851,6 +4860,9 @@ param=slashdefence,3
 param=crushdefence,3
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_stab
 
 [rogue]
 name=Rogue
