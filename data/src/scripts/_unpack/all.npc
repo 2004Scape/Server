@@ -429,7 +429,7 @@ param=attack_anim,human_baxe_slash
 param=defend_anim,human_blunt_defend
 param=attack_sound,baxe_slash
 
-[npc_13]
+[wizard]
 name=Wizard
 desc=Slightly magical.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -459,6 +459,7 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
+huntmode=ranged
 
 [druid]
 name=Druid
@@ -1855,7 +1856,7 @@ param=defend_anim,spider_block
 param=death_anim,spider_death
 param=death_drop,null
 param=attack_sound,insect_3
-param=defend_sound,insect_2 //most likely candidates?
+param=defend_sound,insect_2
 param=death_sound,insect_1
 
 [npc_62]
