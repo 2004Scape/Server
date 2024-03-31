@@ -423,7 +423,7 @@
 422=human_unarmedpunch
 423=human_unarmedkick
 424=human_unarmedblock
-425=seq_425
+425=human_defend_cowardly
 426=human_bow
 427=human_crossbow
 428=human_spear_stab
