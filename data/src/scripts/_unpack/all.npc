@@ -5291,7 +5291,7 @@ param=magicdefence,-1
 param=rangedefence,11
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_baxe_defend
 
 [npc_200]
 name=Lord Daquarius
