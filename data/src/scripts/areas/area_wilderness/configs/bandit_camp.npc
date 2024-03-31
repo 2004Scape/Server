@@ -104,6 +104,9 @@ param=defend_sound,female_hit
 param=death_sound,female_death
 category=bandit_camp_leader
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [donny_the_lad]
 name=Donny the lad
@@ -144,6 +147,9 @@ param=crushdefence,10
 param=damagetype,^slash_style
 category=bandit_camp_leader
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [speedy_keith]
 name=Speedy Keith
@@ -184,3 +190,6 @@ param=crushdefence,10
 param=damagetype,^slash_style
 category=bandit_camp_leader
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend

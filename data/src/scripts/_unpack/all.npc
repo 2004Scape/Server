@@ -5170,6 +5170,9 @@ param=slashdefence,3
 param=crushdefence,2
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
+param=defend_anim,human_sword_defend
 
 [guard_bandit]
 name=Guard Bandit
@@ -5210,6 +5213,9 @@ param=magicdefence,1
 param=rangedefence,4
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
+param=defend_anim,human_sword_defend
 
 [npc_197]
 name=Barbarian guard
