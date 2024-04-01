@@ -785,7 +785,7 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
 
-                if (hunt.checkNotCombat !== -1 && player.getVarp(hunt.checkNotCombat) >= World.currentTick) {
+                if (hunt.checkNotCombat !== -1 && player.getVarp(hunt.checkNotCombat) + 8 > World.currentTick) {
                     continue;
                 } else if (hunt.checkNotCombatSelf !== -1 && this.getVar(hunt.checkNotCombatSelf) >= World.currentTick) {
                     continue;

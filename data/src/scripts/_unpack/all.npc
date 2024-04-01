@@ -2395,6 +2395,8 @@ param=defend_sound,demon_3
 param=death_sound,demon_1
 param=death_drop,ashes
 huntmode=cowardly
+// huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
+huntrange=2
 
 [greater_demon]
 size=3
@@ -2666,6 +2668,8 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+// huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
+huntrange=1
 
 [npc_93]
 name=Skeleton
@@ -2701,6 +2705,8 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+// huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
+huntrange=1
 
 [npc_94]
 name=Skeleton Mage
