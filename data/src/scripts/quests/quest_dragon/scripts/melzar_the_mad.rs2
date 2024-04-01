@@ -76,7 +76,7 @@ spotanim_map(spotanim_86, $cabbage_coord, 124, 0);
 [proc,npc_zap_attack]
 if_close;
 
-npc_anim(seq_707, 0);
+npc_anim(zap, 0);
 spotanim_npc(spotanim_82, 92, 0);
 sound_synth(zap, 0, 0);
 

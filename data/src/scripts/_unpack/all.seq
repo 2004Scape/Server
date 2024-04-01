@@ -9739,7 +9739,7 @@ frame94=anim_6249
 frame95=anim_6251
 frame96=anim_6253
 
-[seq_707]
+[zap]
 lefthand=hide
 righthand=hide
 priority=6
@@ -9782,7 +9782,7 @@ frame15=anim_1900
 frame16=anim_2198
 frame17=anim_484
 
-[seq_709]
+[monk_heal]
 lefthand=hide
 righthand=hide
 priority=6
