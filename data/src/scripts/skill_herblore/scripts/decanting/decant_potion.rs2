@@ -1,0 +1,44 @@
+[opheldu,_category_69]
+if(oc_category(last_useitem) = category_69) {
+    @decant_potion(last_item, last_useitem);
+}
+@nothing_interesting_happens;
+
+[label,decant_potion](obj $potion, obj $used_potion)
+def_enum $potion_enum = ~get_potion_type($potion, $used_potion);
+def_int $doses = oc_param($potion, dose_count);
+def_int $used_doses = oc_param($used_potion, dose_count);
+if($doses = 4 | $used_doses = 4) {
+    @nothing_interesting_happens; // we can't decant with a 4 dose pot
+}
+def_int $total_doses = calc($doses + $used_doses);
+def_int $remainder_doses = 0;
+if($total_doses > 4) {
+    $remainder_doses = calc($total_doses - 4);
+    $total_doses = 4;
+}
+def_namedobj $decanted_potion = enum(int, namedobj, $potion_enum, $total_doses);
+def_namedobj $remainder_potion = vial_empty;
+if($remainder_doses > 0) {
+    $remainder_potion = enum(int, namedobj, $potion_enum, $remainder_doses);
+}
+inv_setslot(inv, last_useslot, $decanted_potion, 1);
+inv_setslot(inv, last_slot, $remainder_potion, 1);
+mes("You have combined the liquid into <~doses_made($total_doses)> doses.");
+
+[proc,doses_made](int $total_doses)(string)
+switch_int($total_doses) {
+    case 2: return("two");
+    case 3: return("three");
+    case 4: return("four");
+    case default: return("one");
+}
+
+[proc,get_potion_type](obj $potion, obj $used_potion)(enum)
+def_enum $first_enum = oc_param($potion, decant_potion_enum);
+def_enum $second_enum = oc_param($used_potion, decant_potion_enum);
+// if either one of these is not a decantable potion, or if they are different potion types
+if ($first_enum = null | $second_enum = null | $first_enum ! $second_enum) {
+    @nothing_interesting_happens;
+}
+return($first_enum);
