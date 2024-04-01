@@ -1,24 +1,24 @@
 [proc,tut_island_survial_gate]
-if (%tutorial_progress < 120) {
+if (%tutorial_progress < ^survival_guide_complete) {
     ~mesbox("You need to talk to the Survival Guide and complete her tasks before you are allowed to proceed through this gate.");
     return;
 }
-if (%tutorial_progress = 120) {
-    %tutorial_progress = 130;
+if (%tutorial_progress = ^survival_guide_complete) {
+    %tutorial_progress = ^tutorial_opened_gate_to_chef;
     ~set_tutorial_progress;
 }
 loc_findallzone(coord);
 while(loc_findnext = true) {
-     if(loc_category = tutorial_gate) {
-            def_coord $central_coord = loc_coord;
-            def_int $orig_angle = loc_angle;
-            loc_del(2);
-            if(loc_type = loc_3015) {
-                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
-                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2);
-            }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
-     }
+    if(loc_category = tutorial_gate) {
+        def_coord $central_coord = loc_coord;
+        def_int $orig_angle = loc_angle;
+        def_loc $type = loc_type;
+        loc_change(loc_83, 2);
+        if($type = loc_3015) {
+             loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
+             loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2);
+        }
+    }
 }
 sound_synth(door_open, 0, 0);
 p_delay(0);
@@ -35,66 +35,212 @@ p_teleport(loc_coord);
 
 // Runescape guide door
 [oploc1,loc_3014]
-if (%tutorial_progress < 4) {
+if (%tutorial_progress < ^runescape_guide_interact_with_scenery) {
     ~mesbox("You need to talk to the 'Runescape Guide' before you are allowed to proceed through this door.");
     return;
 }
 
-hint_stop();
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 4) {
-    %tutorial_progress = 10;
+if (%tutorial_progress = ^runescape_guide_interact_with_scenery) {
+    %tutorial_progress = ^runescape_guide_interacted_with_door;
     ~tutorial_step_moving_around;
 }
 
 // Door to Master Chef
 [oploc1,loc_3017]
-hint_stop();
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 130) {
+if (%tutorial_progress = ^tutorial_opened_gate_to_chef) {
     %tutorial_progress = ^chef_start;
     ~set_tutorial_progress;
 }
 
 // Door exiting Master Chef's house
 [oploc1,loc_3018]
-if (%tutorial_progress < 180) {
+if (%tutorial_progress < ^chef_opened_music_tab) {
     ~mesbox("You need to finish the Cooking Guide's tasks first.");
     return;
 }
 
-hint_stop();
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 180) {
-    %tutorial_progress = 190;
+if (%tutorial_progress = ^chef_opened_music_tab) {
+    hint_stop();
+    %tutorial_progress = ^chef_completed;
     ~set_tutorial_progress;
 }
 
 // Door to Quest Guide's house
 [oploc1,loc_3019]
-hint_stop();
+if (%tutorial_progress < ^tutorial_has_toggled_on_run) {
+    // This message is made up. I haven't found a source where this has happened, and it was made optional in OSRS in 2018.
+    ~mesbox("You should try turning run on before continuing.");
+    return;
+}
+
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
 ~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
-if (%tutorial_progress = 200) {
+if (%tutorial_progress = ^tutorial_has_toggled_on_run) {
     %tutorial_progress = ^quest_guide_start;
     ~set_tutorial_progress;
 }
 
 // Ladder to Mine
 [oploc1,loc_3029]
-if (%tutorial_progress < 250) {
-    npc_findallzone(0_48_48_12_52);
-    while (npc_findnext = true) {
-        if (npc_type = npc_949) @quest_guide_not_ready_to_leave_yet;
+if (%tutorial_progress < ^quest_guide_finished) {
+    if (npc_finduid(~npc_within_distance(0_48_48_12_52, quest_guide, 10)) = true) {
+        @quest_guide_not_ready_to_leave_yet;
     }
+}
+p_arrivedelay;
+if (%tutorial_progress = ^quest_guide_finished) {
+    %tutorial_progress = ^mining_instructor_start;
+}
+~set_tutorial_progress;
+@climb_ladder(movecoord(coord, 0, 0, 6400), false);
 
-    npc_findallzone(0_48_48_16_48);
-    while (npc_findnext = true) {
-        if (npc_type = npc_949) @quest_guide_not_ready_to_leave_yet;
-    }
+// Ladder out of mine to quest guide
+[oploc1,loc_3028]
+p_arrivedelay;
+@climb_ladder(movecoord(coord, 0, 0, -6400), true);
+
+// Gate to Combat Instructor
+[oploc1,_tut_mining_exit]
+if (%tutorial_progress < ^mining_instructor_finished) {
+    ~mesbox("You need to finish with Mining and Smithing first.");
     return;
 }
-@tutorial_complete;
+if (%tutorial_progress = ^mining_instructor_finished) {
+    %tutorial_progress = ^combat_instructor_start;
+    ~set_tutorial_progress;
+}
+~tut_open_mining_gate;
+
+// This gate is really weird for coord, so we're manually checking it.
+if (coordx(coord) = 3095) {
+    p_teleport(movecoord(coord, -1, 0, 0));
+} else {
+    p_teleport(movecoord(coord, 1, 0, 0));
+}
+p_delay(1);
+
+
+[proc,tut_open_mining_gate]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = tut_mining_exit) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+
+            loc_del(2);
+            if(loc_type = loc_3020) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_1562, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 1, 0, -1), loc_1563, 3, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+sound_synth(door_open, 0, 0);
+
+// Gate into Rat Pen
+[oploc1,_rat_pit_cage]
+if (%tutorial_progress < ^combat_instructor_opened_combat_interface
+    | %tutorial_progress > ^combat_instructor_before_attacking_ranged) {
+    if (npc_finduid(~npc_within_distance(0_48_148_35_38, combat_instructor, 10)) = true) {
+        @combat_instructor_get_away_from_there;
+    }
+}
+
+if (%tutorial_progress = ^combat_instructor_before_attacking_ranged) {
+    if (npc_finduid(~npc_within_distance(0_48_148_35_38, combat_instructor, 10)) = true) {
+        @combat_instructor_dont_enter_the_pit_ranged;
+    }
+}
+
+if (%tutorial_progress = ^combat_instructor_opened_combat_interface) {
+    %tutorial_progress = ^combat_instructor_before_attacking_melee;
+    ~set_tutorial_progress;
+}
+~tut_open_rat_pit;
+
+if (coordx(coord) < coordx(loc_coord)) {
+    p_teleport(movecoord(coord, 1, 0, 0));
+} else {
+    p_teleport(movecoord(coord, -1, 0, 0));
+}
+p_delay(1);
+
+[proc,tut_open_rat_pit]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = rat_pit_cage) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_3022) {
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 2);
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+sound_synth(door_open, 0, 0);
+
+
+[oploc1,loc_3030]
+if (%tutorial_progress < ^combat_instructor_after_attacking_ranged) {
+    if (npc_finduid(~npc_within_distance(0_48_148_35_38, combat_instructor, 10)) = true) {
+        @combat_instructor_youre_not_ready_to_continue;
+    }
+}
+p_arrivedelay;
+if(%tutorial_progress = ^combat_instructor_after_attacking_ranged) {
+    %tutorial_progress = ^tutorial_open_banking;
+    ~set_tutorial_progress;
+}
+@climb_ladder(movecoord(coord, 0, 0, -6400), true);
+
+[oploc1,loc_3031]
+p_arrivedelay;
+@climb_ladder(movecoord(coord, 0, 0, 6400), false);
+
+[oploc1,loc_3024]
+if (%tutorial_progress < ^tutorial_opened_bank) {
+    ~mesbox("You need to open your bank first.");
+    return;
+}
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = ^tutorial_opened_bank) {
+    hint_stop();
+    %tutorial_progress = ^tutorial_opened_financial_advisor_door;
+    ~set_tutorial_progress;
+}
+
+[oploc1,loc_3025]
+if (%tutorial_progress < ^financial_advisor_talked_to) {
+    ~mesbox("You need to talk to the Financial Advisor before you are allowed to proceed through this door.");
+    return;
+}
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = ^financial_advisor_talked_to) {
+    hint_stop();
+    %tutorial_progress = ^tutorial_exit_financial_advisors_room;
+    ~set_tutorial_progress;
+}
+
+[oploc1,loc_3026]
+if (%tutorial_progress < ^brother_brace_finish) {
+    ~mesbox("You need to finish Brother Brace's tasks before you are allowed to proceed through this door.");
+    return;
+}
+
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);
+if (%tutorial_progress = ^brother_brace_finish) {
+    hint_stop();
+    %tutorial_progress = ^tutorial_exit_chapel;
+    ~set_tutorial_progress;
+}

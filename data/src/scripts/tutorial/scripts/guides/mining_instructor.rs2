@@ -1,0 +1,128 @@
+[opnpc1,mining_instructor]
+switch_int(%tutorial_progress) {
+    case ^mining_instructor_start: @mining_instructor_start;
+    case
+        ^mining_instructor_begin_prospecting,
+        ^mining_instructor_prospected_copper_first,
+        ^mining_instructor_prospected_tin_first: @mining_instructor_during_prospecting;
+    case
+        ^mining_instructor_prospected_tin_second,
+        ^mining_instructor_prospected_copper_second: @mining_instructor_after_prospecting;
+    case ^mining_instructor_mining_start,
+        ^mining_instructor_minted_copper_first,
+        ^mining_instructor_mined_tin_first: @mining_instructor_during_mining;
+    case ^mining_instructor_before_smelt_bronze_bar: @mining_instructor_before_smelting;
+    case ^mining_instructor_after_smelt_bronze_bar: @mining_instructor_after_smelting;
+    case ^mining_instructor_smith_a_dagger: @mining_instructor_smith_a_dagger;
+    case default: @mining_instructor_recap;
+}
+
+[label,mining_instructor_start]
+~chatnpc(quiz, "Hi there... You must be new around here.|So what do I call you? 'Newcomer'|seems so impersonal... and if we're going|to be working together, I'd rather call you by name.");
+~chatplayer(neutral, "You can call me <displayname>.");
+~chatnpc(neutral, "Ok then, <displayname>. My name is Dezzick, and I'm a|miner by trade. Let's prospect some of those rocks.");
+%tutorial_progress = ^mining_instructor_begin_prospecting;
+~set_tutorial_progress;
+
+[label,mining_instructor_during_prospecting]
+~mining_instructor_replace_items;
+@multi2_header(
+    "Tell me about prospecting again.", mining_instructor_prospecting_recap,
+    "Nope, I'm ready to move on!", mining_instructor_ready_to_move_on,
+    "What would you like to hear more about?"
+);
+
+[label,mining_instructor_during_mining]
+~chatnpc(neutral, "The rocks around here contain tin and copper. You should try mining some.");
+~mining_instructor_replace_items;
+
+[label,mining_instructor_after_prospecting]
+~chatplayer(neutral, "I prospected both types of rock! One set contains tin and the other has copper ore inside.");
+~chatnpc(neutral, "Absolutely right <displayname>. These two ore types can be smelted together to make bronze.");
+~chatnpc(neutral, "So now you know what ore is in the rocks over there, why don't you have a go at mining some tin and copper? Here, you'll need this to start with.");
+%tutorial_progress = ^mining_instructor_mining_start;
+~mining_instructor_replace_items;
+~set_tutorial_progress;
+
+[label,mining_instructor_before_smelting]
+~chatnpc(neutral, "Now that you have some ore, you should smelt it into a bronze bar. You can use the furnace over there to do so.");
+~mining_instructor_replace_items;
+
+[label,mining_instructor_after_smelting]
+~chatplayer(quiz, "How do I make a weapon out of this?");
+~chatnpc(neutral, "Okay, I'll show you how to make a dagger out of it. You'll be needing this...");
+%tutorial_progress = ^mining_instructor_smith_a_dagger;
+~mining_instructor_replace_items;
+~set_tutorial_progress;
+
+[label,mining_instructor_smith_a_dagger]
+~chatnpc(neutral, "See if you can use the anvil here to make a bronze dagger.");
+~mining_instructor_replace_items;
+
+[label,mining_instructor_recap]
+~mining_instructor_replace_items;
+@multi5_header(
+    "Tell me about prospecting again.", mining_instructor_prospecting_recap,
+    "Tell me about Mining again.", mining_instructor_mining_recap,
+    "Tell me about smelting again.", mining_instructor_smelting_recap,
+    "Tell me about Smithing again.", mining_instructor_smithing_recap,
+    "Nope, I'm ready to move on!", mining_instructor_ready_to_move_on,
+    "What would you like to hear more about?"
+);
+
+[label,mining_instructor_prospecting_recap]
+~chatplayer(neutral, "Tell me about prospecting again.");
+~chatnpc(neutral, "It's really very simple. Usually when you go mining you can see if there is ore in a rock or not by its color.");
+~chatnpc(neutral, "If you come across a rock you've not seen before and want to know what it is, or if you can't tell if a rock contains ore just by sight,");
+~chatnpc(neutral, "then simply right click on the rock and select 'prospect' to check closely. Anything else you wanted to know?");
+@mining_instructor_recap;
+
+[label,mining_instructor_mining_recap]
+~chatplayer(neutral, "Tell me about mining again.");
+~chatnpc(neutral, "Certainly, <displayname>. To mine you need a pickaxe. Different pickaxes let you mine more efficiently.");
+~chatnpc(neutral, "You have a bronze pickaxe there, which is the most inefficient pickaxe available, but is perfect for a beginner.");
+~chatnpc(neutral, "To mine, simply click on a rock that contains ore while you have a pickaxe with you, and you will keep mining the rock until you manage to get some ore, or until it is empty.");
+~chatnpc(neutral, "The better the pickaxe you use, the faster you will get ore from the rock you're mining.");
+~chatnpc(neutral, "You will be able to buy better pickaxes from the Dwarven Mine when you reach the mainland, but they can be expensive.");
+~chatnpc(neutral, "Also, the better the pickaxe the higher the Mining level required to use it will be. Was there anything else you wanted to hear?");
+@mining_instructor_recap;
+
+[label,mining_instructor_smelting_recap]
+~chatplayer(neutral, "Tell me about smelting again.");
+~chatnpc(neutral, "Smelting is very easy. Simply take the ores required to make a metal to a furnace, then use the ores on the furnace to smelt them into a bar of metal.");
+~chatnpc(neutral, "Furnaces are expensive to build and maintain, so there are not that many scattered around the world. I suggest when you find one you remember its location for future use.");
+~chatnpc(neutral, "An alternative to using a furnace to smelt your ore is to use high-level magic to do it.");
+~chatnpc(neutral, "As well as letting you smelt ore anywhere, it has a guaranteed success rate in smelting all ores.");
+~chatnpc(neutral, "Some metals, such as iron, contain impurities and can be destroyed during the smelting process in a traditional furnace, but magical heat does not destroy them.");
+~chatnpc(quiz, "Anything else?");
+@mining_instructor_recap;
+
+[label,mining_instructor_smithing_recap]
+~chatplayer(neutral, "Tell me about Smithing again.");
+~chatnpc(neutral, "Take the hammer I have given you, or buy a new one from a general store, and proceed to a nearby anvil.");
+// be be is an intentional typo: https://youtu.be/7zsi7hiF4SQ?t=387
+~chatnpc(neutral, "When you use a metal bar on an anvil you will be be able to choose the item you want to smith, as long as you have a high enough Smithing level and the correct number of bars.");
+~chatnpc(neutral, "It's a pretty straightfoward skill as I'm sure you discovered while making me that lovely bronze dagger.");
+~chatnpc(neutral, "The higher Smithing level you reach, the better quality of metal you can work with. You start off on bronze and work your way up as your Smithing skills increase.");
+~chatnpc(quiz, "Anything else, <displayname>?");
+
+[label,mining_instructor_ready_to_move_on]
+~chatplayer(neutral, "Nope, I'm ready to move on!");
+~chatnpc(neutral, "Ok then, <displayname>.");
+
+[proc,mining_instructor_replace_items]
+if (%tutorial_progress > ^mining_instructor_prospected_copper_second & inv_total(inv, bronze_pickaxe) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, bronze_pickaxe, 1);
+    ~objboxt(bronze_pickaxe, "Dezzick gives you a |@blu@Bronze pickaxe!");
+}
+
+if (%tutorial_progress > ^mining_instructor_before_smelt_bronze_bar & inv_total(inv, hammer) < 1 & inv_freespace(inv) > 0) {
+    inv_add(inv, hammer, 1);
+    ~objboxt(hammer, "Dezzick gives you a |@blu@Hammer!");
+}
+
+// quest guide ladder 3088 3120 0
+[proc,set_hint_icon_mining_instructor]
+if (npc_finduid(~npc_within_distance(0_48_148_7_33, mining_instructor, 10)) = true) {
+    hint_npc(npc_uid);
+}

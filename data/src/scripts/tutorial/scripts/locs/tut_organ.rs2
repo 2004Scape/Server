@@ -1,0 +1,6 @@
+[oploc1,loc_416]
+if(random(1) = 0) {
+    midi_song("organ_music_1");
+} else {
+    midi_song("organ_music_2");
+}

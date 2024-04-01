@@ -1,0 +1,13 @@
+// After successfully casting on a chicken - https://youtu.be/GNRPeRShDzQ?t=690
+// Doesn't splash first time on chicken - https://youtu.be/NtZXrGgC8iY?t=638
+// Trying to range chicken - https://youtu.be/ui3I-OPLqzE?t=635
+[apnpc2,tut_chicken]
+// Message is the same even before talking to Terrova.
+~mesbox("Cast the Wind Strike spell from your spellbook to fight the chicken.");
+return;
+
+
+[proc,set_hint_icon_chicken]
+if (npc_finduid(~npc_within_distance(0_49_48_3_20, tut_chicken, 10)) = true) {
+    hint_npc(npc_uid);
+}

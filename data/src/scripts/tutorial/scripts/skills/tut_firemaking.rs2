@@ -94,8 +94,8 @@ obj_del();
 ~tutorial_give_xp(firemaking, oc_param($log, productexp));
 sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
-if (%tutorial_progress = 40) {
-    %tutorial_progress = 50;
+if (%tutorial_progress = ^survival_guide_build_fire) {
+    %tutorial_progress = ^survival_guide_open_skill_menu;
     ~tutorial_step_you_gained_experience;
 } else {
     ~set_tutorial_progress;

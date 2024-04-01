@@ -1,0 +1,188 @@
+[opnpc1,combat_instructor]
+switch_int(%tutorial_progress) {
+    case ^combat_instructor_start: @combat_instructor_start;
+    // Todo: Dialogue when not clicking worn items slot
+    case ^combat_instructor_wielding_weapons: @combat_instructor_lets_teach_you_wield;
+    case ^combat_instructor_worn_inventory: @combat_instructor_lets_teach_you_wield;
+    case ^combat_instructor_dagger_equipped: @combat_instructor_dagger_equipped;
+    case ^combat_instructor_unequipping_items: @combat_instructor_equipping_sword_and_shield;
+    case ^combat_instructor_open_combat_interface: @combat_instructor_check_combat_interface;
+    case ^combat_instructor_opened_combat_interface,
+        ^combat_instructor_during_attacking_melee: @combat_instructor_time_for_combat;
+    case ^combat_instructor_after_rat_kill_melee: @combat_instructor_killed_giant_rat_melee;
+    case ^combat_instructor_before_attacking_ranged: @combat_instructor_during_giant_rat_ranged;
+    case default: @combat_instructor_recap;
+}
+
+[label,combat_instructor_start]
+~chatplayer(happy, "Hi! My name's <displayname>.");
+~chatnpc(angry, "Do I look like I care? To me you're just another newcomer who thinks they're ready to fight.");
+~chatnpc(neutral, "I am Vannaka, the greatest swordsman alive.");
+~chatnpc(neutral, "Let's get started by teaching you to wield a weapon.");
+if (%tutorial_progress = ^combat_instructor_start) {
+    %tutorial_progress = ^combat_instructor_wielding_weapons;
+    ~set_tutorial_progress;
+}
+
+[label,combat_instructor_lets_teach_you_wield]
+~chatnpc(neutral, "Let's get started by teaching you to wield a weapon.");
+~combat_instructor_replace_items;
+
+[label,combat_instructor_dagger_equipped]
+~chatnpc(neutral, "Very good, but that little butter knife isn't going to protect you much. Here, take these.");
+if (%tutorial_progress = ^combat_instructor_dagger_equipped) {
+    %tutorial_progress = ^combat_instructor_unequipping_items;
+    ~set_tutorial_progress;
+}
+~combat_instructor_replace_items;
+
+[label,combat_instructor_equipping_sword_and_shield]
+~chatnpc(neutral, "Let's get you equipped.");
+~combat_instructor_replace_items;
+
+[label,combat_instructor_check_combat_interface]
+~chatnpc(neutral, "You should check out the combat interface.");
+
+[label,combat_instructor_get_away_from_there]
+// Turn to face Vannaka
+~chatnpc(neutral, "Oi! Get away from there.|Only enter the rat cage when I say so.");
+
+[label,combat_instructor_youre_not_ready_to_continue]
+~chatnpc(neutral, "You're not ready to continue yet.|You need to know about combat before you go on.");
+
+[label,combat_instructor_time_for_combat]
+~chatnpc(neutral, "Time for some actual combat!|Head into the pen and kill one of those rats.");
+~combat_instructor_replace_items;
+
+[label,combat_instructor_killed_giant_rat_melee]
+~chatplayer(neutral, "I did it! I killed a Giant Rat!");
+~chatnpc(neutral, "I saw <displayname>. You seem better at this than I at |first took you for. Well, you seem to have the hang of |basic swordplay. Let's move on.");
+~chatnpc(neutral, "Let's try some ranged attacking, with this you can kill foes from a distance. Also foes unable to reach you are as good as dead. You'll be able to attack the rats without entering the pit.");
+if (%tutorial_progress = ^combat_instructor_after_rat_kill_melee) {
+    %tutorial_progress = ^combat_instructor_before_attacking_ranged;
+    ~set_tutorial_progress;
+}
+~combat_instructor_replace_items;
+
+[label,combat_instructor_during_giant_rat_ranged]
+~chatnpc(neutral, "Use your bow and arrows to kill one of those rats from outside the pen.");
+~combat_instructor_replace_items;
+
+[label,combat_instructor_dont_enter_the_pit_ranged]
+~chatnpc(neutral, "No, don't enter the pit.|Range the rats from outside the cage.");
+
+[label,combat_instructor_recap]
+~combat_instructor_replace_items;
+~chatnpc(neutral, "What now?");
+@combat_instructor_recap_questions;
+
+[label,combat_instructor_recap_questions]
+@multi4_header(
+    "Tell me about combat stats.", combat_instructor_combat_stats_recap,
+    "Tell me about melee combat again.", combat_instructor_melee_combat_recap,
+    "Tell me about ranged combat again.", combat_instructor_ranged_combat_recap,
+    "Nope, I'm ready to move on!", combat_instructor_moving_on,
+    "What would you like to hear more about?"
+);
+
+[label,combat_instructor_combat_stats_recap]
+~chatplayer(quiz, "Tell me about combat stats again.");
+~chatnpc(neutral, "Certainly. You have three main combat stats: Strength, Defence and Attack.");
+~chatnpc(neutral, "Strength determines the maximum hit you will be able to deal with your blows, Defence determines the amount of damage you will be able to defend and Attack determines the accuracy of your blows.");
+~chatnpc(neutral, "Other stats are used in combat such as Prayer, Hitpoints, Magic and Ranged. All of these stats can go towards determining your Combat level, which is shown at the bottom of your skills interface.");
+~chatnpc(neutral, "You will find out on the mainland that certain items can also affect your stats. There are potions that can be drunk that can alter your stats temporarily, such as raising Strength.");
+~chatnpc(neutral, "You will also raise your Defence and Attack values by using different weapons and armours.");
+~chatnpc(neutral, "Before going into combat with an opponent it is wise to put the mouse over them and see what combat level they are.");
+~chatnpc(neutral, "Green coloured writing usually means it will be an easy fight for you, red means you will probably lose, yellow means they ar around your level and orange means they are slightly stronger.");
+~chatnpc(neutral, "Sometimes things will go your way, sometimes they won't. There is no such thing as a guaranteed win, but if the odds are  on your side, you stand the best chance of walking away victorious.");
+~chatnpc(quiz, "Now, was there something else you wanted to hear about again.");
+@combat_instructor_recap_questions;
+
+[label,combat_instructor_melee_combat_recap]
+~chatplayer(quiz, "Tell me about melee combat again.");
+~chatnpc(neutral, "Ah, my specialty. Close combat fighting, which is also known as melee fighting, covers all combat done at close range to your opponent.");
+~chatnpc(neutral, "Melee fighting depends entirely upon your three basic combat stats: Attack, Defence and Strength.");;
+~chatnpc(neutral, "Also, of course, it depends on the quality of your armour and weaponry. A high-levelled fighter with good armour and weapons will be deadly up close.");
+~chatnpc(neutral, "If this is the path you wish to take, remember your success depends on getting as close to your enemy as quickly as possible.");
+~chatnpc(neutral, "Personally, I consider the fine art of melee combat to be the only combat method worth using.");
+~chatnpc(neutral, "Now, did you want to hear anything else?");
+@combat_instructor_recap_questions;
+
+[label,combat_instructor_ranged_combat_recap]
+~chatplayer(quiz, "Tell me about ranged combat again.");
+~chatnpc(neutral, "Thinking of being a ranger, eh? Well, okay. I don't enjoy it myself, but I can see the appeal.");
+~chatnpc(neutral, "Ranging employs a lot of different weapons as a skill, not just the shortbow you have there. Spears, throwing knives, and crossbows are all used best at a distance from your enemy.");
+~chatnpc(neutral, "Now, those rats were easy pickings, but on the mainland you will be very lucky if you can find a spot where you can shoot at your enemies without them being able to retaliate.");
+~chatnpc(neutral, "At close range, rangers often do badly in combat. Your best tactic as a ranger is to hit and run, keeping your foe at a distance.");
+~chatnpc(neutral, "Your effectiveness as a ranger is almost entirely dependent on your Ranged stat. As with all skills, the more you train it, the more powerful it will become.");
+~chatnpc(quiz, "Anything else you wanted to know?");
+@combat_instructor_recap_questions;
+
+[label,combat_instructor_moving_on]
+~chatplayer(neutral, "Nope, I'm ready to move on!");
+~chatnpc(neutral, "Ok then, <displayname>.");
+
+[proc,combat_instructor_replace_items]
+if (inv_freespace(inv) = 0) {
+    ~mesbox("You need some new weapons for this section of the tutorial but you don't have enough inventory room. You'll need to drop something. To do so, right click on an item you don't want and select drop. Once you've done that, speak to the combat instructor again.");
+    return;
+}
+
+if (%tutorial_progress > ^combat_instructor_start
+    & %tutorial_progress < ^combat_instructor_dagger_equipped) {
+        if (inv_total(inv, bronze_dagger) < 1 & inv_freespace(inv) > 0) {
+            inv_add(inv, bronze_dagger, 1);
+            ~objbox(bronze_dagger, "The Combat Guide gives you a |@blu@Bronze dagger!");
+        }
+    }
+if (%tutorial_progress > ^combat_instructor_worn_inventory
+    & %tutorial_progress ! ^combat_instructor_after_rat_kill_melee
+    & %tutorial_progress ! ^combat_instructor_before_attacking_ranged) {
+    if (inv_total(inv, bronze_sword) < 1 & inv_total(worn, bronze_sword) < 1
+        & inv_total(inv, wooden_shield) < 1 & inv_total(worn, wooden_shield) < 1
+        & inv_freespace(inv) > 1) {
+        inv_add(inv, bronze_sword, 1);
+        inv_add(inv, wooden_shield, 1);
+        ~doubleobjbox(bronze_sword, wooden_shield, "The Combat Guide gives you a |@blu@Bronze sword@bla@ |and a |@blu@Wooden Shield!");
+    }
+
+    if (inv_total(inv, bronze_sword) < 1 & inv_total(worn, bronze_sword) < 1
+        & inv_freespace(inv) > 0) {
+        inv_add(inv, bronze_sword, 1);
+        ~objboxt(bronze_sword, "The Combat Guide gives you a |@blu@Bronze sword!");
+    }
+
+    if (inv_total(inv, wooden_shield) < 1 & inv_total(worn, wooden_shield) < 1
+        & inv_freespace(inv) > 0) {
+        inv_add(inv, wooden_shield, 1);
+        ~objboxt(wooden_shield, "The Combat Guide gives you a |@blu@Wooden Shield!");
+    }
+}
+
+if (%tutorial_progress > ^combat_instructor_after_rat_kill_melee) {
+    if (inv_total(inv, bronze_arrow) < 1 & inv_total(worn, bronze_arrow) < 1
+        & inv_total(inv, shortbow) < 1 & inv_total(worn, shortbow) < 1
+        & inv_freespace(inv) > 1) {
+        inv_add(inv, bronze_arrow, 50);
+        inv_add(inv, shortbow, 1);
+        ~doubleobjbox(bronze_arrow_5, shortbow, "The Combat Guide gives you some |@blu@Bronze arrows@bla@ |and a |@blu@Shortbow!");
+    }
+
+    if (inv_total(inv, bronze_arrow) < 1 & inv_total(worn, bronze_arrow) < 1
+        & inv_freespace(inv) > 0) {
+        inv_add(inv, bronze_arrow, 50);
+        ~objboxt(bronze_arrow_5, "The Combat Guide gives you some |@blu@Bronze arrows!");
+    }
+
+    if (inv_total(inv, shortbow) < 1 & inv_total(worn, shortbow) < 1
+        & inv_freespace(inv) > 0) {
+        inv_add(inv, shortbow, 1);
+        ~objboxt(shortbow, "The Combat Guide gives you a |@blu@Shortbow!");
+    }
+}
+
+[proc,set_hint_icon_combat_instructor]
+if (npc_finduid(~npc_within_distance(0_48_148_35_38, combat_instructor, 10)) = true) {
+    hint_npc(npc_uid);
+}
+

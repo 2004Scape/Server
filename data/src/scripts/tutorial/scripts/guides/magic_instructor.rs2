@@ -1,0 +1,109 @@
+[opnpc1,magic_instructor]
+
+switch_int(%tutorial_progress) {
+    case ^tutorial_exit_chapel: @magic_instructor_start;
+    case ^tutorial_open_magic_tab: @magic_instructor_open_tab;
+    case ^tutorial_opened_magic_tab: @magic_instructor_opened_tab;
+    case ^tutorial_cast_wind_strike: @magic_instructor_cast_wind_strike;
+    case ^tutorial_unsuccessful_wind_strike: @magic_instructor_cast_wind_strike;
+    case ^tutorial_successful_wind_strike: @magic_instructor_successfully_cast_wind_strike;
+    case default: @magic_instructor_successfully_cast_wind_strike;
+}
+
+[label,magic_instructor_start]
+~chatplayer(neutral, "Hello.");
+~chatnpc(neutral, "Good day newcomer.|My name is Terrova.|I'm here to tell you about magic.|Let's start by opening your spell list. ");
+if (%tutorial_progress = ^tutorial_exit_chapel) {
+    %tutorial_progress = ^tutorial_open_magic_tab;
+    ~set_tutorial_progress;
+}
+
+[label,magic_instructor_open_tab]
+~chatnpc(neutral, "All you have to do is open the magic interface by clicking on the flashing icon.");
+
+// This automagically triggers?!
+// https://youtu.be/Ln_NMq4eQss?t=264
+// https://youtu.be/Usd2R9PH_bk?t=246
+// https://youtu.be/GNRPeRShDzQ?t=660 can just keep claiming runes until you reach 25.
+[label,magic_instructor_opened_tab]
+~chatnpc(neutral, "Good. This is a list of your spells. Currently you can only cast one offensive spell called Wind Strike. Let's try it out on one of those chickens.");
+~magic_instructor_give_runes;
+// This weirdly comes after giving runes...
+if (%tutorial_progress = ^tutorial_opened_magic_tab) {
+    %tutorial_progress = ^tutorial_cast_wind_strike;
+    ~set_tutorial_progress;
+}
+
+[label,magic_instructor_cast_wind_strike]
+if (inv_total(inv, airrune) >= 25 & inv_total(inv, mindrune) >= 25) {
+    ~chatnpc(neutral, "Sorry, I don't have any more runes just now. But I do see you have plenty.");
+    return;
+}
+
+if (inv_total(inv, airrune) < 25 & inv_total(inv, mindrune) < 25) {
+    ~doubleobjbox(airrune, mindrune, "Terrova gives you some |@blu@Air runes| and some |@blu@Mind runes!");
+    inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
+    inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
+    return;
+}
+
+if (inv_total(inv, airrune) < 25) {
+    ~objboxt(airrune, "Terrova gives you some |@blu@Air runes!");
+    inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
+    return;
+}
+
+if (inv_total(inv, mindrune) < 25) {
+    ~objboxt(mindrune, "Terrova gives you some |@blu@Mind runes!");
+    inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
+    return;
+}
+
+[proc,magic_instructor_runes_to_give](obj $obj)(int)
+def_int $total_runes = inv_total(inv, $obj);
+
+if (calc(25 - $total_runes) >= 5) {
+    return (5);
+} else {
+    return(calc(25 - $total_runes));
+}
+
+[label,magic_instructor_successfully_cast_wind_strike]
+~chatnpc(neutral, "Well you're all finished here now. I'll give a reasonable number of runes when you leave.");
+if (%tutorial_progress = ^tutorial_successful_wind_strike) {
+    %tutorial_progress = ^magic_instructor_finished;
+}
+
+@multi2_header(
+    "Yes.", magic_instructor_to_mainland,
+    "No.", magic_instructor_decline_mainland,
+    "Do you want to go to the mainland?"
+);
+
+
+[label,magic_instructor_to_mainland]
+// Removed until a later date. Not added yet in 2007.
+//npc_anim(vulnerability_casting, 0);
+//spotanim_npc(curse_cast, 92, 0);
+//sound_synth(curse_all, 0, 0);
+//def_int $duration = ~player_projectile(npc_coord, coord, uid, curse_travel, 31, 31, 61, 16, 0, 128, 5);
+//spotanim_pl(curse_hit, 124, 70);
+//p_delay(4);
+@tutorial_complete;
+
+[label,magic_instructor_decline_mainland]
+
+[proc,magic_instructor_give_runes]
+// check inventory space...
+// There's no inventory full message on OSRS it still shows the interface just no runes are given...
+~doubleobjbox(airrune, mindrune, "Terrova gives you five |@blu@Air runes| and five |@blu@Mind runes!");
+if (inv_freespace(inv) < 1) {
+    return;
+}
+inv_add(inv, airrune, 5);
+inv_add(inv, mindrune, 5);
+
+[proc,set_hint_icon_magic_instructor]
+if (npc_finduid(~npc_within_distance(0_49_48_5_17, magic_instructor, 10)) = true) {
+    hint_npc(npc_uid);
+}

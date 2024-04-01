@@ -1,20 +1,20 @@
-[opnpc1,npc_949]
+[opnpc1,quest_guide]
 switch_int(%tutorial_progress) {
     case ^quest_guide_start: @quest_guide_start;
-    case 230: @quest_guide_menu_not_opened;
-    case 240: @quest_guide_journal_info;
+    case ^quest_guide_open_menu : @quest_guide_menu_not_opened;
+    case ^quest_guide_opened_menu: @quest_guide_journal_info;
     case default: @quest_guide_recap;
 }
 
 [label,quest_guide_start]
 ~chatnpc(neutral, "Ah... welcome adventurer. I'm here to tell you all about|quests. Let's start by opening the quest side panel.");
-%tutorial_progress = 230;
+%tutorial_progress = ^quest_guide_open_menu;
 ~set_tutorial_progress;
 
 [label,quest_guide_journal_info]
 ~chatnpc(neutral, "Now you have the journal open I'll tell you a bit about|it. As you see at the moment all the quests are shown|in red, a quest shown in red is unstarted.");
 ~quest_guide_journal_info_no_intro;
-%tutorial_progress = 250;
+%tutorial_progress = ^quest_guide_finished;
 ~set_tutorial_progress;
 
 [proc,quest_guide_journal_info_no_intro]
@@ -42,16 +42,6 @@ if ($choice = 1) {
 ~chatnpc(quiz, "I don't think you're ready to go down there yet.");
 
 [proc,set_hint_icon_quest_guide]
-npc_findallzone(0_48_48_12_52);
-while (npc_findnext = true) {
-    if (npc_type = npc_949) {
-        hint_npc(npc_uid);
-    }
-}
-
-npc_findallzone(0_48_48_16_48);
-while (npc_findnext = true) {
-    if (npc_type = npc_949) {
-        hint_npc(npc_uid);
-    }
+if (npc_finduid(~npc_within_distance(0_48_48_12_52, quest_guide, 10)) = true) {
+    hint_npc(npc_uid);
 }

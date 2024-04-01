@@ -1,4 +1,4 @@
-[npc_942]
+[master_chef]
 vislevel=hide
 name=Master Chef
 desc=An expert on all things culinary.
@@ -32,7 +32,7 @@ head2=model_82_idk_head
 head3=model_41_obj_wear
 wanderrange=2
 
-[npc_943]
+[survival_expert]
 vislevel=hide
 name=Survival Expert
 desc=Very much an outdoors type.
@@ -62,7 +62,7 @@ model8=model_482_npc
 head1=model_108_npc_head
 wanderrange=2
 
-[npc_944]
+[combat_instructor]
 vislevel=146
 name=Combat Instructor
 desc=An expert on all forms of combat.
@@ -129,7 +129,7 @@ head2=model_81_idk_head
 head3=model_40_obj_wear
 wanderrange=2
 
-[npc_946]
+[magic_instructor]
 vislevel=hide
 name=Magic Instructor
 desc=A Master of Magics.
@@ -163,7 +163,7 @@ head2=model_82_idk_head
 head3=model_44_obj_wear
 wanderrange=2
 
-[npc_947]
+[financial_advisor]
 vislevel=hide
 name=Financial Advisor
 desc=An official representative from the First National Bank of RuneScape.
@@ -194,7 +194,7 @@ head1=model_53_idk_head
 head2=model_79_idk_head
 wanderrange=2
 
-[npc_948]
+[mining_instructor]
 vislevel=hide
 name=Mining Instructor
 desc=An expert on mining related skills.
@@ -224,7 +224,7 @@ head1=model_50_npc_head
 head2=model_81_idk_head
 wanderrange=2
 
-[npc_949]
+[quest_guide]
 vislevel=hide
 name=Quest Guide
 desc=Your introduction to the world of RuneScape.
@@ -254,7 +254,7 @@ head1=model_63_idk_head
 head2=model_81_idk_head
 wanderrange=2
 
-[npc_950]
+[tut_giant_rat]
 vislevel=3
 size=2
 walkanim=giantrat_walk
@@ -277,9 +277,8 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
-huntmode=cowardly
 
-[npc_951]
+[tut_chicken]
 vislevel=3
 name=Chicken
 desc=Yep definitely a chicken.
@@ -296,7 +295,7 @@ param=defend_sound,chicken_hit
 param=death_sound,chicken_death
 category=chicken
 
-[npc_952]
+[tut_fishing_spot]
 vislevel=hide
 name=Fishing spot
 desc=I can see fish swimming in the water.
@@ -310,7 +309,7 @@ model1=model_loc_42_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_953]
+[tut_banker]
 vislevel=hide
 name=Banker
 desc=He can look after my money.
@@ -336,9 +335,8 @@ model8=model_320_idk
 head1=model_53_idk_head
 wanderrange=0
 moverestrict=nomove
-category=bank_teller
 
-[npc_954]
+[brother_brace]
 vislevel=hide
 name=Brother Brace
 desc=A holy man.

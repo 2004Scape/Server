@@ -1,27 +1,31 @@
-// Sources:
-// https://www.youtube.com/watch?v=Quwc_TfPW8Q&t=433s
-// https://www.youtube.com/watch?v=yjxsitgrHpE&list=PL9FE4AE865F753045&index=61&t=72s
-// https://www.youtube.com/watch?v=xZ0pz8ZUit4&list=PL9FE4AE865F753045&index=28
-// https://www.youtube.com/watch?v=L15kCsQZNiA - Feb 23, 2013 OSRS - Guy fishes forever
-// https://www.youtube.com/watch?v=9NEh8kBrjkk - March 1, 2013 OSRS
-// https://www.youtube.com/watch?v=TSx2-jjPeIs - July 31, 2013 OSRS - Guy does a lot of accidental not step related things
-// https://www.youtube.com/watch?v=ui3I-OPLqzE - March 5, 2013 OSRS - Does some scrolling on scrollbar chat interfaces
-// https://www.youtube.com/watch?v=b786yUpSUnU - March 13, 2013 OSRS - Gets level 3 in all skills
-// https://www.youtube.com/watch?v=wrA5lcCcBts - October 29, 2007 - Dies on Tutorial Island
+// Sources organized by Date/OSRS:
+// https://www.youtube.com/watch?v=Quwc_TfPW8Q&t=433s - Sep 24, 2006 -
+// https://www.youtube.com/watch?v=xZ0pz8ZUit4&list=PL9FE4AE865F753045&index=28 - Oct 10, 2006 -
 // https://www.youtube.com/watch?v=WI-4Gi0WU3E - Dec 28, 2006 - actual audio for some of it
-// https://web.archive.org/web/20051215201825/http://runevillage.com:80/rs2specialTutorial.php - has pictures, yahoo!
-// https://youtu.be/NtZXrGgC8iY?t=311 - Mar 4, 2013 - talks to chef again after opening music tab
+// https://www.youtube.com/watch?v=Ln_NMq4eQss&t=70s - April 9, 2007 - Mines copper then Tin
+// https://www.youtube.com/watch?v=yjxsitgrHpE&list=PL9FE4AE865F753045&index=61&t=72s - Feb 18, 2007 -
+// https://www.youtube.com/watch?v=wrA5lcCcBts - October 29, 2007 - Dies on Tutorial Island
+
+// https://www.youtube.com/watch?v=L15kCsQZNiA - Feb 23, 2013 OSRS - Guy fishes forever
 // https://youtu.be/KxWGUTUSQAQ?t=304 - Feb 23, 2013 - talks to chef again before opening music tab
 // https://youtu.be/GNRPeRShDzQ?t=270 -  Feb 24, 2013 - Different messages around cooking and burning shrimps
-// https://www.youtube.com/watch?v=cup6iXhjJLs - much later vid - Can still woodcut when on the last step of tut island
-// https://www.youtube.com/watch?v=c3EYlEqyIu0 - Jul 2, 2009 - different vid from above
+// https://youtu.be/NtZXrGgC8iY?t=311 - Mar 4, 2013 - talks to chef again after opening music tab
+// https://www.youtube.com/watch?v=ui3I-OPLqzE - March 5, 2013 OSRS - Does some scrolling on scrollbar chat interfaces
+// https://www.youtube.com/watch?v=b786yUpSUnU - March 13, 2013 OSRS - Gets level 3 in all skills
+// https://www.youtube.com/watch?v=9NEh8kBrjkk - March 1, 2013 OSRS
+// https://www.youtube.com/watch?v=TSx2-jjPeIs - July 31, 2013 OSRS - Guy does a lot of accidental not step related things
+
+// https://www.youtube.com/watch?v=Usd2R9PH_bk&pp=ygUbdHV0b3JpYWwgaXNsYW5kIGJlZm9yZToyMDE0 - Feb 27, 2008 - Guy mines copper then tin
 // https://youtu.be/wFo6zU5VNjI?t=246 - Dec 31, 2008 - Different options when talking to survival guide
+// https://www.youtube.com/watch?v=c3EYlEqyIu0 - Jul 2, 2009 - different vid from above
+// https://www.youtube.com/watch?v=cup6iXhjJLs - much later vid - Can still woodcut when on the last step of tut island
 // https://youtu.be/7zsi7hiF4SQ?t=219 - Dec 3, 2012 - Combat Beta Bug
 
 // Varp info: https://oldschool.runescape.wiki/w/RuneScape:Varplayer/281
 
 // https://web.archive.org/web/20051210062857/http://runehq.com/RHQSpecialReportsView.php?id=00461
 // https://web.archive.org/web/20051215201825/http://runevillage.com:80/rs2specialTutorial.php
+// https://web.archive.org/web/20051215201825/http://runevillage.com:80/rs2specialTutorial.php - has pictures, yahoo!
 
 [label,start_tutorial]
 // logging into a new character might show old tabs so we're going to clear them
@@ -42,7 +46,7 @@ if_settab(null, ^tab_musicplayer);
 ~tutorial_set_active_tabs;
 ~tutorial_set_npc_hints;
 
-if (%tutorial_progress = 0) {
+if (%tutorial_progress = ^runescape_guide_start) {
     p_telejump(0_48_48_22_34);
     if_close; // workaround w/ receivedFirstClose
     if_openmainmodal(player_kit);
@@ -51,7 +55,7 @@ if (%tutorial_progress = 0) {
 ~set_tutorial_progress;
 
 [proc,tutorial_set_active_tabs]
-if (%tutorial_progress > 0) {
+if (%tutorial_progress > ^runescape_guide_start) {
     if (lowmemory = true) {
         if_settab(options_ld, ^tab_game_options);
     } else {
@@ -59,16 +63,16 @@ if (%tutorial_progress > 0) {
     }
 }
 
-if (%tutorial_progress > 20) {
+if (%tutorial_progress > ^survival_guide_open_inventory) {
     inv_transmit(inv, inventory:inv);
     if_settab(inventory, ^tab_inventory);
 }
 
-if (%tutorial_progress > 50) {
+if (%tutorial_progress > ^survival_guide_open_skill_menu) {
     if_settab(stats, ^tab_skills);
 }
 
-if (%tutorial_progress > 170) {
+if (%tutorial_progress > ^chef_baked_bread) {
     if (lowmemory = true) {
         if_settab(music_ld, ^tab_musicplayer);
     } else {
@@ -76,32 +80,53 @@ if (%tutorial_progress > 170) {
     }
 }
 
-if (%tutorial_progress > 180) {
+if (%tutorial_progress > ^chef_opened_music_tab) {
     if_settab(controls, ^tab_player_controls);
 }
 
-if (%tutorial_progress > 230) {
+if (%tutorial_progress > ^quest_guide_open_menu) {
     ~update_quests;
     if_settab(questlist, ^tab_quest_journal);
 }
 
+if (%tutorial_progress > ^combat_instructor_wielding_weapons) {
+    inv_transmit(worn, wornitems:wear);
+    if_settab(wornitems, ^tab_wornitems);
+}
+
+if (%tutorial_progress > ^combat_instructor_open_combat_interface) {
+    ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
+}
+
+if (%tutorial_progress > ^brother_brace_open_prayer_tab) {
+    if_settab(prayer, ^tab_prayer);
+}
+
+if (%tutorial_progress > ^brother_brace_after_prayer_tab) {
+    if_settab(friends, ^tab_friends);
+}
+
+if (%tutorial_progress > ^brother_brace_open_friends_tab) {
+    if_settab(ignore, ^tab_ignore);
+}
+
+if (%tutorial_progress > ^tutorial_open_magic_tab) {
+    if_settab(magic, ^tab_magic);
+}
+
 [proc,tutorial_set_npc_hints]
-if (%tutorial_progress < 4) {
-    npc_findallzone(0_48_48_21_35);
+if (%tutorial_progress = ^survival_guide_fish_shrimps) {
+    npc_findallzone(0_48_48_29_20);
     while (npc_findnext = true) {
-        if (npc_type = runescape_guide) {
+        if (npc_coord = 0_48_48_29_20 & npc_type = tut_fishing_spot) {
             hint_npc(npc_uid);
         }
     }
 }
 
-if (%tutorial_progress = 70) {
-    npc_findallzone(0_48_48_29_20);
-    while (npc_findnext = true) {
-        if (npc_coord = 0_48_48_29_20 & npc_type = npc_952) {
-            hint_npc(npc_uid);
-        }
-    }
+if (%tutorial_progress = ^combat_instructor_during_attacking_melee
+    | %tutorial_progress = ^combat_instructor_before_attacking_ranged) {
+    ~set_hint_icon_giant_rat;
 }
 
 
@@ -109,77 +134,148 @@ if (%tutorial_progress = 70) {
 if_close;
 
 [if_close,player_kit]
-%tutorial_progress = 1;
+%tutorial_progress = ^runescape_guide_designed_character;
 allowdesign(false);
 
 [tutorial_clickside,_]
 if (%tutorial_progress = 2) {
     %tutorial_progress = 3;
     ~tutorial_step_player_controls_left_click;
-} else if (%tutorial_progress = 20) {
+} else if (%tutorial_progress = ^survival_guide_open_inventory) {
     inv_add(inv, bronze_axe, 1);
     inv_add(inv, tinderbox, 1);
-    %tutorial_progress = 30;
-    ~tutorial_step_cut_tree;
-} else if (%tutorial_progress = 50) {
-    %tutorial_progress = 60;
-    ~tutorial_step_view_stats;
-} else if (%tutorial_progress = 170) {
-    %tutorial_progress = 180;
-    ~set_tutorial_progress;
-} else if (%tutorial_progress = 190) {
-    %tutorial_progress = 195;
-    ~set_tutorial_progress;
-} else if(%tutorial_progress = 230) {
-    %tutorial_progress = 240;
-    ~set_tutorial_progress;
+    %tutorial_progress = ^survival_guide_cut_tree;
+} else if (%tutorial_progress = ^survival_guide_open_skill_menu) {
+    %tutorial_progress = ^survival_guide_opened_skill_menu;
+} else if (%tutorial_progress = ^chef_baked_bread) {
+    %tutorial_progress = ^chef_opened_music_tab;
+} else if (%tutorial_progress = ^chef_completed) {
+    %tutorial_progress = ^tutorial_open_player_controls;
+} else if(%tutorial_progress = ^quest_guide_open_menu) {
+    %tutorial_progress = ^quest_guide_opened_menu;
+} else if (%tutorial_progress = ^combat_instructor_wielding_weapons) {
+    %tutorial_progress = ^combat_instructor_worn_inventory;
+} else if (%tutorial_progress = ^combat_instructor_open_combat_interface) {
+    %tutorial_progress = ^combat_instructor_opened_combat_interface;
+} else if (%tutorial_progress = ^brother_brace_open_prayer_tab) {
+    %tutorial_progress = ^brother_brace_opened_prayer_tab;
+} else if (%tutorial_progress = ^brother_brace_after_prayer_tab) {
+    %tutorial_progress = ^brother_brace_open_friends_tab;
+} else if (%tutorial_progress = ^brother_brace_open_friends_tab) {
+    %tutorial_progress = ^brother_brace_after_friends_tab;
+} else if (%tutorial_progress = ^tutorial_open_magic_tab) {
+    %tutorial_progress = ^tutorial_opened_magic_tab;
+    if (npc_finduid(~npc_within_distance(0_49_48_5_17, magic_instructor, 10)) = true) {
+        hint_npc(npc_uid);
+        @magic_instructor_opened_tab;
+    }
 }
+~set_tutorial_progress;
+
 
 [proc,set_tutorial_progress]
 switch_int(%tutorial_progress) {
     // Runescape Guide's House
-    case 0, 1: ~tutorial_step_getting_started;
+    case ^runescape_guide_start,
+        ^runescape_guide_designed_character: ~tutorial_step_getting_started;
     // Not Relelvant until October 2006
     case 2: ~tutorial_step_player_controls_spanner;
     case 3: ~tutorial_step_player_controls_left_click;
-    case 4: ~tutorial_step_interact_with_scenery;
-    case 10: ~tutorial_step_moving_around;
+    case ^runescape_guide_interact_with_scenery: ~tutorial_step_interact_with_scenery;
+    case ^runescape_guide_interacted_with_door: ~tutorial_step_moving_around;
 
     // Survival Tutor
-    case 20: ~tutorial_step_view_inventory;
-    case 30: ~tutorial_step_cut_tree;
-    case 40: ~tutorial_step_build_fire;
-    case 50: ~tutorial_step_you_gained_experience;
-    case 60: ~tutorial_step_view_stats;
-    case 70: ~tutorial_step_catch_shrimp;
-    case 80: ~tutorial_step_cook_shrimp;
-    case 90: ~tutorial_step_burn_shrimp;
-    case 120: ~tutorial_step_survival_recap;
+    case ^survival_guide_open_inventory: ~tutorial_step_view_inventory;
+    case ^survival_guide_cut_tree: ~tutorial_step_cut_tree;
+    case ^survival_guide_build_fire: ~tutorial_step_build_fire;
+    case ^survival_guide_open_skill_menu: ~tutorial_step_you_gained_experience;
+    case ^survival_guide_opened_skill_menu: ~tutorial_step_view_stats;
+    case ^survival_guide_fish_shrimps: ~tutorial_step_catch_shrimp;
+    case ^survival_guide_cook_shrimps: ~tutorial_step_cook_shrimp;
+    case ^survival_guide_burnt_shrimps: ~tutorial_step_burn_shrimp;
+    case ^survival_guide_complete: ~tutorial_step_survival_recap;
 
     // Master Chef
-    case 130: ~tutorial_step_go_to_chef;
-    case 140: ~tutorial_step_talk_to_chef;
-    case 150: ~tutorial_step_make_dough;
-    case 160: ~tutorial_step_cooking_dough;
-    case 170: ~tutorial_step_click_music_player;
-    case 180: ~tutorial_step_music_player;
-    case 190: ~tutorial_step_click_run_icon;
-    case 195: ~tutorial_step_enable_run;
+    case ^tutorial_opened_gate_to_chef : ~tutorial_step_go_to_chef;
+    case ^chef_start: ~tutorial_step_talk_to_chef;
+    case ^chef_make_dough: ~tutorial_step_make_dough;
+    case ^chef_mixed_dough: ~tutorial_step_cooking_dough;
+    case ^chef_baked_bread: ~tutorial_step_click_music_player;
+    case ^chef_opened_music_tab: ~tutorial_step_music_player;
+    case ^chef_completed: ~tutorial_step_click_run_icon;
+    case ^tutorial_open_player_controls: ~tutorial_step_enable_run;
 
     // Quest Guide
-    case 200: ~tutorial_step_enter_quest_guide_house;
-    case 220: ~tutorial_step_talk_to_quest_guide;
-    case 230: ~tutorial_step_open_quest_journal;
-    case 240: ~tutorial_step_quest_journal;
-    case 250: ~tutorial_step_enter_mine;
+    case ^tutorial_has_toggled_on_run: ~tutorial_step_enter_quest_guide_house;
+    case ^quest_guide_start : ~tutorial_step_talk_to_quest_guide;
+    case ^quest_guide_open_menu: ~tutorial_step_open_quest_journal;
+    case ^quest_guide_opened_menu: ~tutorial_step_quest_journal;
+    case ^quest_guide_finished: ~tutorial_step_enter_mine;
+
+    // Mining Instructor
+    case ^mining_instructor_start: ~tutorial_step_talk_to_mining_instructor;
+    case ^mining_instructor_begin_prospecting,
+        ^mining_instructor_prospected_copper_first,
+        ^mining_instructor_prospected_tin_first,
+        ^mining_instructor_prospected_tin_second,
+        ^mining_instructor_prospected_copper_second: ~tutorial_step_prospect_rocks;
+    // rework all these steps to go up to 310?
+    case ^mining_instructor_mining_start,
+        ^mining_instructor_minted_copper_first,
+        ^mining_instructor_mined_tin_first: ~tutorial_step_mining;
+    case ^mining_instructor_before_smelt_bronze_bar: ~tutorial_step_smelting;
+    case ^mining_instructor_after_smelt_bronze_bar: ~tutorial_step_bronze_bar;
+    case ^mining_instructor_smith_a_dagger: ~tutorial_step_smithing_a_dagger;
+    case ^mining_instructor_finished: ~tutorial_step_mining_instructor_finished;
+    case ^combat_instructor_start: ~tutorial_step_combat;
+    case ^combat_instructor_wielding_weapons: ~tutorial_step_wielding_weapons;
+    case ^combat_instructor_worn_inventory: ~tutorial_step_worn_inventory;
+    case ^combat_instructor_dagger_equipped: ~tutorial_step_dagger_equipped;
+    case ^combat_instructor_unequipping_items: ~tutorial_step_unequipping_items;
+    case ^combat_instructor_open_combat_interface: ~tutorial_step_open_combat_interface;
+    case ^combat_instructor_opened_combat_interface: ~tutorial_step_opened_combat_interface;
+    case ^combat_instructor_before_attacking_melee: ~tutorial_step_attacking_melee;
+    case ^combat_instructor_during_attacking_melee: ~tutorial_step_sit_back_and_watch_melee;
+    case ^combat_instructor_after_rat_kill_melee: ~tutorial_step_first_kill_melee;
+    case ^combat_instructor_before_attacking_ranged: ~tutorial_step_rat_ranging;
+    case ^combat_instructor_after_attacking_ranged: ~tutorial_step_combat_moving_on;
+
+    case ^tutorial_open_banking: ~tutorial_step_banking;
+    case ^tutorial_opened_bank: ~tutorial_step_this_is_your_bank_box;
+    case ^tutorial_opened_financial_advisor_door: ~tutorial_step_financial_advisor;
+    case ^financial_advisor_talked_to: ~tutorial_financial_advisor_continue_through_door;
+    case ^tutorial_exit_financial_advisors_room: ~tutorial_to_the_chapel;
+
+    case ^brother_brace_open_prayer_tab: ~tutorial_your_prayer_menu;
+    case ^brother_brace_opened_prayer_tab: ~tutorial_your_prayer_menu_post_click;
+    case ^brother_brace_after_prayer_tab: ~tutorial_friends_tab;
+    case ^brother_brace_open_friends_tab: ~tutorial_ignore_tab;
+    case ^brother_brace_after_friends_tab: ~tutorial_your_ignore_list;
+    case ^brother_brace_finish: ~tutorial_your_final_instructor;
+
+    case ^tutorial_exit_chapel: ~tutorial_your_final_instructor_2;
+    case ^tutorial_open_magic_tab: ~tutorial_open_your_final_menu;
+    case ^tutorial_cast_wind_strike: ~tutorial_cast_wind_strike;
+    case ^tutorial_unsuccessful_wind_strike: ~tutorial_cast_wind_strike_splash;
+    case ^tutorial_successful_wind_strike: ~tutorial_cast_wind_strike_success;
+    case ^magic_instructor_finished: ~tutorial_cast_wind_strike_success;
+    case default: ~tutorialstep("Oops! Unhandled Tutorial Step.", "Please contact a server admin for assistance.||tutorial_progress value <tostring(%tutorial_progress)>");
 }
 
 [label,tutorial_island_equip](int $slot)
-if (%tutorial_progress < ^combat_guide_start) {
+if (%tutorial_progress < ^combat_instructor_worn_inventory) {
     ~mesbox("You'll be told how to equip items later.");
     return;
 }
+
+if (%tutorial_progress = ^combat_instructor_worn_inventory) {
+    %tutorial_progress = ^combat_instructor_dagger_equipped;
+    ~set_tutorial_progress;
+}
+
 @levelrequire_attack(1, $slot);
+if_settab(null, ^tab_combat_options);
+
 
 [proc,tutorial_give_xp](stat $skill, int $xp)
 if (stat_base($skill) >= 3) {
@@ -212,6 +308,10 @@ inv_add(inv, mindrune, 16);
 inv_add(inv, waterrune, 6);
 inv_add(inv, earthrune, 4);
 inv_add(inv, bodyrune, 2);
+
+inv_clear(worn);
+inv_clear(bank);
+inv_add(bank, coins, 25);
 
 ~initalltabs;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));

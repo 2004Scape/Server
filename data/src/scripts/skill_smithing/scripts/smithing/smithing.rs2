@@ -31,6 +31,19 @@
 
 
 [oplocu,anvil]
+if (%tutorial_progress < ^tutorial_complete) {
+    // This happens with any item, not just bars.
+    if (%tutorial_progress < ^mining_instructor_before_smelt_bronze_bar) {
+        ~mesbox("This is an anvil used for smithing.|You'll lean how to use it soon.");
+        return;
+    }
+
+    if (%tutorial_progress < ^mining_instructor_smith_a_dagger) {
+        ~mesbox("You need a hammer to work the metal with.|Talk to the mining instructor to get one");
+        return;
+    }
+}
+
 if (oc_category(last_useitem) = category_151) @smithing_anvil_interface(last_useitem);
 else if (last_useitem = shield_left_half | last_useitem = shield_right_half) @make_dragon_sq;
 
@@ -87,7 +100,11 @@ if ($last_item ! steel_bar) {
 switch_obj ($last_item)
 {
     case bronze_bar :
-        %smithing_level = calc($player_level + 1);
+        if (%tutorial_progress < ^tutorial_complete) {
+            %smithing_level = 1;
+        } else {
+            %smithing_level = calc($player_level + 1);
+        }
         inv_transmit(bronze1, smithing:column1);
         inv_transmit(bronze2, smithing:column2);
         inv_transmit(bronze3, smithing:column3);
@@ -156,6 +173,13 @@ if ($data = null) {
 //             return;
 //         }
 // }
+
+// This check comes after darts but before mems, confirmed.
+if (inzone(0_48_148_0_0, 0_48_148_63_63,coord) = true & last_item ! bronze_dagger) {
+    ~mesbox("You cannot make this on Tutorial Island.");
+    return;
+}
+
 // check if mems obj is selected
 if (oc_members($last_item) = true) {
     ~require_members_make_item;
@@ -179,7 +203,11 @@ sound_synth(anvil_4, 0, 0);
 // delay player during whole smithing sesh
 // https://oldschool.runescape.wiki/w/Update:Dev_Blog:_Third_Old_School_RuneScape_Content_Poll
 p_delay(0);
-~smithing_anvil($data, $count);
+if (%tutorial_progress < ^tutorial_complete) {
+    ~tut_smithing_anvil($count);
+} else {
+    ~smithing_anvil($data, $count);
+}
 //--------------------------
 
 //--------------------------

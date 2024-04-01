@@ -1,9 +1,9 @@
 [opnpc1,runescape_guide]
 
 switch_int(%tutorial_progress) {
-    case 1: @runescape_guide_welcome;
+    case ^runescape_guide_designed_character: @runescape_guide_welcome;
 //    case 2: @runescape_guide_spanner;
-    case 4: @runescape_guide_return;
+    case ^runescape_guide_interact_with_scenery: @runescape_guide_return;
     case default: @runescape_guide_return;
 }
 
@@ -22,8 +22,8 @@ if (map_localdev = true) {
 ~chatnpc(neutral, "You will find many inhabitants of this world have useful|things to say to you. By clicking on them with your|mouse you can talk to them.");
 ~chatnpc(neutral, "I would also suggest reading through some of the|supporting information on the website. There you can|find maps, a bestiary, and much more.");
 ~chatnpc(neutral, "To continue the tutorial go through that door over there, and speak to your first instructor!");
-%tutorial_progress = 4;
-~tutorial_step_interact_with_scenery;
+%tutorial_progress = ^runescape_guide_interact_with_scenery;
+~set_tutorial_progress;
 // The below commented out code will be relevant in October 2006, but was absent in September 2006.
 //~chatnpc(neutral, "You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");
 //%tutorial_progress = 2;
@@ -38,3 +38,10 @@ if (map_localdev = true) {
 ~chatnpc(neutral, "Welcome back. You have already learnt the first thing needed to succeed in this world: talking to other people!");
 ~chatnpc(neutral, "You will find many inhabitants of this world have useful things to say to you. By clicking on them, you can talk to them.");
 ~chatnpc(neutral, "To continue the tutorial go through that door over there, and speak to your first instructor!");
+
+[proc,set_hint_runescape_guide]
+if (%tutorial_progress < ^runescape_guide_interact_with_scenery) {
+    if (npc_finduid(~npc_within_distance(0_48_48_21_35, runescape_guide, 10)) = true) {
+      hint_npc(npc_uid);
+    }
+}
