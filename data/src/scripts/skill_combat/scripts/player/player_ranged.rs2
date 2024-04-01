@@ -96,10 +96,11 @@ if ($weapon_cat = weapon_crossbow & $ammo_cat ! bolts) {
     mes("You can't use that ammo with your crossbow."); // TODO confirm this for 2004.
     return(null);
 }
-if (oc_param($ammo, levelrequire) > oc_param($rhand, levelrequire)) {
+if (oc_param($ammo, levelrequire) > oc_param($rhand, levelrequire)) { //TODO confirm crossbows could use all bolts at lvl 1
     mes("Your bow isn't powerful enough for those arrows."); // TODO confirm this for 2004.
     return(null);
 }
+
 return($ammo);
 
 [proc,player_ranged_use_weapon](obj $rhand, obj $ammo)(int)
