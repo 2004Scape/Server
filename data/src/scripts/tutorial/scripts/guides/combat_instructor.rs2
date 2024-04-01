@@ -93,7 +93,7 @@ if (%tutorial_progress = ^combat_instructor_after_rat_kill_melee) {
 ~chatnpc(neutral, "You will find out on the mainland that certain items can also affect your stats. There are potions that can be drunk that can alter your stats temporarily, such as raising Strength.");
 ~chatnpc(neutral, "You will also raise your Defence and Attack values by using different weapons and armours.");
 ~chatnpc(neutral, "Before going into combat with an opponent it is wise to put the mouse over them and see what combat level they are.");
-~chatnpc(neutral, "Green coloured writing usually means it will be an easy fight for you, red means you will probably lose, yellow means they ar around your level and orange means they are slightly stronger.");
+~chatnpc(neutral, "Green coloured writing usually means it will be an easy fight for you, red means you will probably lose, yellow means they are around your level and orange means they are slightly stronger.");
 ~chatnpc(neutral, "Sometimes things will go your way, sometimes they won't. There is no such thing as a guaranteed win, but if the odds are  on your side, you stand the best chance of walking away victorious.");
 ~chatnpc(quiz, "Now, was there something else you wanted to hear about again.");
 @combat_instructor_recap_questions;

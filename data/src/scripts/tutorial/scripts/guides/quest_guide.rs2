@@ -21,7 +21,7 @@ switch_int(%tutorial_progress) {
 ~chatnpc(neutral, "When you start a quest it will change colour to yellow,|and green when you've finished. This is so you can|easily see what's complete, what's started, and what's left|to begin.");
 ~chatnpc(neutral, "The start of quests are easy to find. Look out for the|star icons on the minimap, like the one you should see|marking my house.");
 ~chatnpc(neutral, "The quests themselves can vary greatly from collecting|beads to hunting down dragons. Generally quests are|started by talking to a non player character and will|involve a series of tasks.");
-~chatnpc(neutral, "There's not a lot more I can tell you about questing.|You have to experience the thrill of it yourself to fully|understand; You may find some adventure in the caves|under my house.");
+~chatnpc(neutral, "There's not a lot more I can tell you about questing.|You have to experience the thrill of it yourself to fully|understand. You may find some adventure in the caves|under my house.");
 
 [label,quest_guide_menu_not_opened]
 ~chatnpc(quiz, "Have you not opened that menu yet?");

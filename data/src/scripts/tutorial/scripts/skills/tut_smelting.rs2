@@ -35,4 +35,4 @@ inv_del(inv, tin_ore, 1);
 ~tutorial_give_xp(smithing, 62);
 inv_add(inv, bronze_bar, 1);
 ~set_tutorial_progress;
-mes("You retrive a bar of bronze.");
+mes("You retreive a bar of bronze.");
