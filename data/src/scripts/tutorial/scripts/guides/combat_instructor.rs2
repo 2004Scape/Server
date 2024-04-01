@@ -123,19 +123,14 @@ if (%tutorial_progress = ^combat_instructor_after_rat_kill_melee) {
 ~chatnpc(neutral, "Ok then, <displayname>.");
 
 [proc,combat_instructor_replace_items]
-if (inv_freespace(inv) = 0) {
-    ~mesbox("You need some new weapons for this section of the tutorial but you don't have enough inventory room. You'll need to drop something. To do so, right click on an item you don't want and select drop. Once you've done that, speak to the combat instructor again.");
-    return;
-}
-
 if (%tutorial_progress > ^combat_instructor_start
     & (%tutorial_progress < ^combat_instructor_dagger_equipped
         | %tutorial_progress > ^combat_instructor_before_attacking_ranged) ) {
-        if (~tutorial_has_obj_on_person(bronze_dagger) = false & inv_freespace(inv) > 0) {
-            inv_add(inv, bronze_dagger, 1);
-            ~objbox(bronze_dagger, "The Combat Guide gives you a |@blu@Bronze dagger!");
-        }
+    if (~tutorial_has_obj_on_person(bronze_dagger) = false & inv_freespace(inv) > 0) {
+        inv_add(inv, bronze_dagger, 1);
+        ~objbox(bronze_dagger, "The Combat Guide gives you a |@blu@Bronze dagger!");
     }
+}
 if (%tutorial_progress > ^combat_instructor_worn_inventory
     & %tutorial_progress ! ^combat_instructor_after_rat_kill_melee
     & %tutorial_progress ! ^combat_instructor_before_attacking_ranged) {
