@@ -16,26 +16,28 @@ def_int $i = 0;
 def_int $size = inv_size(inv);
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
 while ($i < $size) {
-    if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
-        inv_delslot(inv, $i);
-        mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
-    } else if (inv_getnum(inv, $i) > 0) {
-        inv_dropslot(inv, coord, $i, 200);
+    if (inv_getnum(inv, $i) > 0) {
+        if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
+            inv_delslot(inv, $i);
+        } else {
+            inv_dropslot(inv, coord, $i, 200);
+        }
     }
-
     $i = calc($i + 1);
 }
 
 $i = 0;
 $size = inv_size(worn);
 while ($i < $size) {
-    if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
-        inv_delslot(inv, $i);
-        mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
-    } else if (inv_getnum(worn, $i) > 0) {
-        inv_dropslot(worn, coord, $i, 200);
+    if (inv_getnum(worn, $i) > 0) {
+        if (oc_category(inv_getobj(worn, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
+            inv_delslot(worn, $i);
+        } else {
+            inv_dropslot(worn, coord, $i, 200);
+        }
     }
-
     $i = calc($i + 1);
 }
 buildappearance(worn);
