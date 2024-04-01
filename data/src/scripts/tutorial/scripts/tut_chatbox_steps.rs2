@@ -261,7 +261,7 @@ hint_stop();
 
 [proc,tutorial_step_combat_moving_on]
 hint_coord(^hint_center, 0_48_148_39_54, 125);
-~tutorialstep("Moving on.", "You have completed the tasks here, to move on click on the ladder shown. If you need to go over any of what you learned here just to Vannaka and he'll tell you what he can.");
+~tutorialstep("Moving on.", "You have completed the tasks here, to move on click on the|ladder shown. If you need to go over any of what you learned|here just talk to Vannaka and he'll tell you what he can.");
 
 [proc,tutorial_step_banking]
 hint_coord(^hint_center, 0_48_48_50_52, 125);
