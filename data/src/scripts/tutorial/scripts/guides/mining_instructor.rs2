@@ -111,12 +111,12 @@ switch_int(%tutorial_progress) {
 ~chatnpc(neutral, "Ok then, <displayname>.");
 
 [proc,mining_instructor_replace_items]
-if (%tutorial_progress > ^mining_instructor_prospected_copper_second & ~tutorial_has_obj_on_person(bronze_pickaxe) = false & inv_freespace(inv) > 0) {
+if (%tutorial_progress > ^mining_instructor_prospected_copper_second & ~tutorial_has_obj_on_person(bronze_pickaxe) = false) {
     inv_add(inv, bronze_pickaxe, 1);
     ~objboxt(bronze_pickaxe, "Dezzick gives you a |@blu@Bronze pickaxe!");
 }
 
-if (%tutorial_progress > ^mining_instructor_before_smelt_bronze_bar & inv_total(inv, hammer) < 1 & inv_freespace(inv) > 0) {
+if (%tutorial_progress > ^mining_instructor_before_smelt_bronze_bar & inv_total(inv, hammer) < 1) {
     inv_add(inv, hammer, 1);
     ~objboxt(hammer, "Dezzick gives you a |@blu@Hammer!");
 }
