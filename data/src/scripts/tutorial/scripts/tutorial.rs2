@@ -270,7 +270,9 @@ if (%tutorial_progress < ^combat_instructor_worn_inventory) {
     return;
 }
 
-if (%tutorial_progress = ^combat_instructor_worn_inventory) {
+def_obj $weapon = inv_getobj(inv, $slot);
+
+if (%tutorial_progress = ^combat_instructor_worn_inventory & $weapon = bronze_dagger) {
     %tutorial_progress = ^combat_instructor_dagger_equipped;
     ~set_tutorial_progress;
 }

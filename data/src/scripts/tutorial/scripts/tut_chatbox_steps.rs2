@@ -131,7 +131,7 @@ if_settab(questlist, ^tab_quest_journal);
 ~tutorialstep("", "Your Quest journal.|This is your quest journal, a list of all the quests in the game.|Talk to the instructor again for an explanation.");
 
 [proc,tutorial_step_enter_mine]
-hint_coord(^hint_center, 0_48_48_16_47, 100);
+hint_coord(^hint_center, 0_48_48_16_47, 0);
 ~tutorialstep("", "Moving on.|It's time to enter some caves. Click on the ladder to go down to|the next area.");
 
 [proc,tutorial_step_talk_to_mining_instructor]
@@ -269,7 +269,7 @@ hint_coord(^hint_center, 0_48_48_50_52, 125);
 
 [proc,tutorial_step_this_is_your_bank_box]
 hint_coord(^hint_east, 0_48_48_52_52, 150);
-~tutorialstep("This is your bank box.", "You can store stuff here for safe keeping. If you die, anything in your bank will be saved. To deposit something right click it and select store. Once you've had a good look close the window and move on through the door indicated.");
+~tutorialstep("This is your bank box.", "You can store stuff here for safe keeping. If you die,|anything in your bank will be saved. To deposit something right|click it and select store. Once you've had a good look close the|window and move on through the door indicated.");
 
 [proc,tutorial_step_financial_advisor]
 ~set_hint_icon_financial_advisor;

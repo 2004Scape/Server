@@ -33,7 +33,7 @@ if (%tutorial_progress = ^brother_brace_opened_prayer_tab) {
 
 [label,brother_brace_friends_and_ignore_tabs]
 ~chatnpc(neutral, "Good. Now you have both menus open I'll tell you a little about each. You can add people to either list by clicking the add button then typing in their name into the box that appears.");
-~chatnpc(neutral, "You remove people from the lists in the same way. if you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
+~chatnpc(neutral, "You remove people from the lists in the same way. If you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
 ~chatnpc(neutral, "Your friends list shows the online status of your friends. Friends in red are offline, green online and on the same server, and yellow online but on a different server.");
 ~chatplayer(quiz, "Are there rules on ingame behavior?");
 ~chatnpc(neutral, "Yes you should read the rules of conduct on our frontpage to make sure you do nothing to get yourself banned.");
@@ -65,7 +65,7 @@ if (%tutorial_progress = ^brother_brace_after_friends_tab) {
 
 [label,brother_brace_friends_recap]
 ~chatnpc(neutral, "Your friends and ignore lists, yes... I'll tell you a little about each. You can add people to either list by clicking the add button then typing in their name into the box that appears.");
-~chatnpc(neutral, "You remove people from the lists in the same way. if you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
+~chatnpc(neutral, "You remove people from the lists in the same way. If you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
 ~chatnpc(neutral, "Your friends list shows the online status of your friends. Friends in red are offline, green online and on the same server, and yellow online but on a different server.");
 @brother_brace_recap_questions;
 
