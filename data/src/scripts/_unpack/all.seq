@@ -4120,7 +4120,7 @@ frame6=anim_685
 frame7=anim_974
 frame8=anim_1259
 
-[human_baxe_defend]
+[human_blunt_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1481
 frame2=anim_1781
@@ -4133,7 +4133,7 @@ frame8=anim_2379
 frame9=anim_2080
 frame10=anim_1781
 
-[seq_398]
+[human_baxe_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1730
 frame2=anim_2029
@@ -4159,7 +4159,7 @@ frame8=anim_734
 frame9=anim_2445
 frame10=anim_2148
 
-[human_baxe_stab]
+[human_blunt_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1149
@@ -4169,7 +4169,7 @@ frame4=anim_2034
 frame5=anim_2338
 frame6=anim_619
 
-[human_baxe_crush]
+[human_blunt_swing]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2027
@@ -4193,7 +4193,7 @@ frame6=anim_685
 frame7=anim_974
 frame8=anim_1259
 
-[human_blunt_defend]
+[human_blunt_defend2]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1481
 frame2=anim_1781
@@ -4457,7 +4457,7 @@ frame6=anim_1602
 frame7=anim_1315
 frame8=anim_1030
 
-[seq_425]
+[human_defend_cowardly]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1928
 frame2=anim_2228
@@ -4554,7 +4554,7 @@ frame6=anim_1391
 frame7=anim_526
 frame8=anim_2245
 
-[seq_433]
+[farmer_attack]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_889
@@ -4564,7 +4564,7 @@ frame4=anim_1759
 frame5=anim_2058
 frame6=anim_2362
 
-[seq_434]
+[farmer_hit]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_477
 frame2=anim_778
@@ -9739,7 +9739,7 @@ frame94=anim_6249
 frame95=anim_6251
 frame96=anim_6253
 
-[seq_707]
+[zap]
 lefthand=hide
 righthand=hide
 priority=6
@@ -9782,7 +9782,7 @@ frame15=anim_1900
 frame16=anim_2198
 frame17=anim_484
 
-[seq_709]
+[monk_heal]
 lefthand=hide
 righthand=hide
 priority=6

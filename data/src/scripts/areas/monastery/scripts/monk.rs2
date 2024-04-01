@@ -1,3 +1,19 @@
+[ai_opplayer2,monk]
+if (%npc_action_delay > map_clock) return;
+def_int $heal = random(5); //guessing
+if ($heal = 0) {
+    @monk_heal_self;
+} else {
+    ~npc_default_attack;
+}
+
+[label,monk_heal_self]
+sound_synth(selfheal,0,0);
+npc_statheal(hitpoints,2,0);
+npc_anim(monk_heal,0);
+%npc_action_delay = add(map_clock, 4);
+%npc_attacking_uid = %npc_aggressive_player;
+
 [opnpc1,monk]
 ~chatnpc(quiz, "Greetings traveller.");
 if (%prayer_guild < 1) {

@@ -1,0 +1,14 @@
+[ai_opplayer2,monk_of_zamorak_22] @monk_of_zamorak_combat;
+[ai_opplayer2,monk_of_zamorak_17] @monk_of_zamorak_combat;
+[ai_opplayer2,monk_of_zamorak_45] @monk_of_zamorak_combat;
+
+[label,monk_of_zamorak_combat]
+if (%npc_action_delay > map_clock) return;
+def_int $whichattack = random(3); //no clue.
+if ($whichattack = 0) {
+    ~npc_zap_attack;
+    %npc_action_delay = add(map_clock, 3); //no clue
+    %npc_attacking_uid = %npc_aggressive_player;
+} else {
+    ~npc_default_attack;
+}

@@ -234,12 +234,12 @@ defence=8
 param=attackrate,6
 param=attackbonus,5
 param=strengthbonus,6
-param=attack_anim,human_spear_stab
+param=attack_anim,farmer_attack
 param=attack_sound,staff_stab
-param=defend_anim,human_spear_defend
+param=defend_anim,farmer_hit
 param=damagetype,^stab_style
 
-[npc_8]
+[thief]
 name=Thief
 desc=Known for his lightfingered qualities.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -306,6 +306,7 @@ param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
 category=guard
 wanderrange=2
 attackrange=4
@@ -382,7 +383,7 @@ param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
 
-[npc_12]
+[barbarian]
 name=Barbarian
 desc=Not very civilised looking.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -425,9 +426,10 @@ param=slashdefence,1
 param=attackrate,6
 category=barbarian
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_baxe_defend
+param=attack_sound,baxe_slash
 
-[npc_13]
+[wizard]
 name=Wizard
 desc=Slightly magical.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -457,6 +459,7 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
+huntmode=ranged
 
 [druid]
 name=Druid
@@ -523,8 +526,10 @@ param=rangedefence,38
 param=damagetype,^stab_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
 
-[npc_17]
+[barbarian_woman]
 name=Barbarian woman
 desc=Scary in an argument!
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -566,6 +571,7 @@ param=death_sound,female_death
 category=barbarian
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_defend
+param=attack_sound,staff_stab
 
 [alkharid_warrior]
 name=Al-Kharid warrior
@@ -609,6 +615,9 @@ param=magicdefence,-1
 param=rangedefence,12
 param=damagetype,^slash_style
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [npc_19]
 name=White Knight
@@ -694,6 +703,9 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [hero]
 name=Hero
@@ -738,8 +750,11 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
-[npc_22]
+[forester]
 name=Forester
 desc=They love the forests.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -775,6 +790,9 @@ param=stabdefence,4
 param=slashdefence,3
 param=crushdefence,5
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,human_blunt_defend
+param=attack_sound,baxe_slash
 
 [knight_of_ardougne_1]
 name=Knight of Ardougne
@@ -1090,6 +1108,9 @@ param=magicdefence,4
 param=rangedefence,16
 param=damagetype,^crush_style
 category=guard
+param=attack_anim,human_blunt_swing
+param=attack_sound,mace_crush
+param=defend_anim,human_blunt_defend2
 
 [watchman]
 name=Watchman
@@ -1217,8 +1238,8 @@ defence=10
 param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=attack_anim,human_blunt_swing
+param=defend_anim,human_blunt_defend
 
 [npc_39]
 name=Shipyard worker
@@ -1249,8 +1270,8 @@ defence=10
 param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=attack_anim,human_blunt_swing
+param=defend_anim,human_blunt_defend
 
 [npc_40]
 name=Shark
@@ -1260,7 +1281,7 @@ vislevel=1
 model1=model_2848_npc
 moverestrict=blocked
 
-[npc_41]
+[chicken]
 name=Chicken
 desc=Yep, definitely a chicken.
 walkanim=chicken_walk
@@ -1811,7 +1832,7 @@ param=death_sound,insect_1
 param=death_drop,null
 huntmode=cowardly
 
-[npc_61]
+[spider]
 walkanim=spider_walk
 name=Spider
 desc=Incey wincey.
@@ -1834,6 +1855,9 @@ param=attack_anim,spider_attack
 param=defend_anim,spider_block
 param=death_anim,spider_death
 param=death_drop,null
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 
 [npc_62]
 walkanim=giantspider_walk
@@ -3566,7 +3590,7 @@ param=rangedefence,30
 param=damagetype,^crush_style
 huntmode=cowardly
 
-[npc_125]
+[ice_warrior]
 hasalpha=yes
 walkanim=seq_841
 readyanim=seq_842
@@ -3609,6 +3633,9 @@ param=damagetype,^slash_style
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_slash
 
 [otherworldly_being]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4623,7 +4650,7 @@ param=defend_anim,human_sword_defend
 param=attack_sound,stabsword_slash
 huntmode=cowardly
 
-[npc_181]
+[chaos_druid]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Chaos druid
@@ -4763,6 +4790,9 @@ param=slashdefence,2
 param=damagetype,^slash_style
 category=pirate
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_slash
 
 [npc_185]
 name=Pirate
@@ -4831,6 +4861,9 @@ param=slashdefence,3
 param=crushdefence,3
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_stab
 
 [rogue]
 name=Rogue
@@ -4867,7 +4900,7 @@ param=crushdefence,11
 param=damagetype,^stab_style
 huntmode=cowardly
 
-[npc_188]
+[monk_of_zamorak_22]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Monk of Zamorak
@@ -4899,7 +4932,7 @@ param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
 
-[npc_189]
+[monk_of_zamorak_17]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Monk of Zamorak
@@ -4931,7 +4964,7 @@ param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
 
-[npc_190]
+[monk_of_zamorak_45]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Monk of Zamorak
@@ -5034,6 +5067,9 @@ param=slashdefence,79
 param=crushdefence,59
 param=damagetype,^slash_style
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [chaos_druid_warrior]
 name=Chaos druid warrior
@@ -5134,6 +5170,9 @@ param=slashdefence,3
 param=crushdefence,2
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
+param=defend_anim,human_sword_defend
 
 [guard_bandit]
 name=Guard Bandit
@@ -5174,6 +5213,9 @@ param=magicdefence,1
 param=rangedefence,4
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
+param=defend_anim,human_sword_defend
 
 [npc_197]
 name=Barbarian guard
@@ -5249,7 +5291,7 @@ param=magicdefence,-1
 param=rangedefence,11
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_baxe_defend
 
 [npc_200]
 name=Lord Daquarius
@@ -5560,7 +5602,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_254]
@@ -5599,7 +5641,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_255]
@@ -5637,7 +5679,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_256]
@@ -5676,7 +5718,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_257]

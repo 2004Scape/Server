@@ -111,7 +111,7 @@ default=null
 
 [defend_anim]
 type=seq
-default=human_unarmedblock
+default=human_defend_cowardly
 autodisable=yes
 
 [rangeattack_anim]
