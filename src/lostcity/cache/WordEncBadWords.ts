@@ -164,7 +164,7 @@ export default class WordEncBadWords {
                     }
                     index++;
                     count++;
-                    if ((count * 100) / (index - startIndex) > 90) {
+                    if (((count * 100) / (index - startIndex) | 0) > 90) {
                         break;
                     }
                 }
