@@ -360,7 +360,7 @@ export default class WordEncBadWords {
         let end = combos.length - 1;
 
         while (start <= end) {
-            const mid = Math.floor((start + end) / 2); // client does not floor here
+            const mid = ((start + end) / 2) | 0;
             if (combos[mid][0] === currentIndex && combos[mid][1] === nextIndex) {
                 return true;
             } else if (currentIndex < combos[mid][0] || (currentIndex === combos[mid][0] && nextIndex < combos[mid][1])) {
