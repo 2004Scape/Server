@@ -29,30 +29,26 @@ switch_int(%tutorial_progress) {
 // https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial10.gif
 // Looks like the exclamation points don't switch back to black.
 [proc,survival_guide_replace_items]
-if (inv_total(inv, bronze_axe) < 1 & inv_total(inv, tinderbox) < 1 & inv_freespace(inv) > 1) {
+if (~tutorial_has_obj_on_person(bronze_axe) = false & inv_total(inv, tinderbox) < 1) {
     inv_add(inv, bronze_axe, 1);
     inv_add(inv, tinderbox, 1);
     ~doubleobjbox(tinderbox, bronze_axe, "The Survival Guide gives you a |@blu@Tinderbox@bla@ |and a |@blu@Bronze Hatchet!");
-}
-
-if (inv_total(inv, bronze_axe) < 1 & inv_freespace(inv) > 0) {
+} else if (~tutorial_has_obj_on_person(bronze_axe) = false) {
     inv_add(inv, bronze_axe, 1);
     ~objboxt(bronze_axe, "The Survival Guide gives you a |@blu@Bronze Hatchet!");
-}
-
-if (inv_total(inv, tinderbox) < 1 & inv_freespace(inv) > 0) {
+}else if (inv_total(inv, tinderbox) < 1) {
     inv_add(inv, tinderbox, 1);
     ~objboxt(tinderbox, "The Survival Guide gives you a |@blu@Tinderbox!");
 }
 
-if (%tutorial_progress > ^survival_guide_open_skill_menu & inv_total(inv, net) < 1 & inv_freespace(inv) > 0) {
+if (%tutorial_progress > ^survival_guide_open_skill_menu & inv_total(inv, net) < 1) {
     inv_add(inv, net, 1);
     ~objbox(net, "The Survival Guide gives you a |@blu@Net!");
 }
 
 // Used later for OSRS so we'll leave it.
 [proc,survival_guide_replace_items_no_objboxes]
-if (inv_total(inv, bronze_axe) < 1 & inv_freespace(inv) > 0) {
+if (~tutorial_has_obj_on_person(bronze_axe) = false & inv_freespace(inv) > 0) {
     inv_add(inv, bronze_axe, 1);
 }
 

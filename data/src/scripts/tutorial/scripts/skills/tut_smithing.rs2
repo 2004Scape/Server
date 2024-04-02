@@ -10,7 +10,7 @@ inv_add(inv, bronze_dagger, 1);
 // add smithing xp
 ~tutorial_give_xp(smithing, 62);
 // display message
-mes("You hammer the bronze and make dagger.");
+mes("You hammer the bronze and make a dagger.");
 // end smithing if count is less than 1
 $count = calc($count - 1);
 if ($count < 1) {
