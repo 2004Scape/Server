@@ -1,0 +1,26 @@
+[oploc1,loc_1816]
+p_delay(0); // delay in osrs? isntead of arrivedelay
+anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
+sound_synth(lever, 0, 0);
+loc_change(loc_161, 6);
+if_close;
+p_delay(0);
+mes("You pull the lever...");
+p_delay(0);
+
+
+~player_teleport_normal(0_42_153_29_9); // not sure if its an area or just right next to the lever
+mes("...And teleport into the Dragon's Lair.");
+
+[oploc1,loc_1817]
+p_arrivedelay;
+anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
+sound_synth(lever, 0, 0);
+loc_change(loc_161, 6);
+if_close;
+p_delay(0);
+mes("You pull the lever...");
+p_delay(0);
+
+~player_teleport_normal(0_47_160_59_14); // not sure if its an area or just right next to the lever
+mes("...And teleport out of the Dragon's Lair.");
