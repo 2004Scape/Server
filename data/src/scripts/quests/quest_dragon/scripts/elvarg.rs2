@@ -14,8 +14,7 @@ if (%dragon_progress < ^dragon_complete) {
     queue(dragon_complete, 0);
 }
 
-
-[ai_queue1,elvarg](int $arg) ~npc_default_retaliate_ap;
+// [ai_queue1,elvarg](int $arg) ~npc_default_retaliate_ap;
 
 // https://twitter.com/JagexAsh/status/1756992041777561878
 // "AP -> OP: 1/2, subject to a line-of-walk check.
@@ -46,11 +45,20 @@ if (~npc_can_attack_player = false) {
     return;
 }
 // 1/8 chance to switch back to ap
-if (random(8) = 0) {
-    npc_setmode(applayer2);
-}
-~npc_default_attack;
+// if (random(8) = 0) {
+//     npc_setmode(applayer2);
+// }
 
+// from 89 hits from 2 2006 videos: https://youtu.be/ucaYfz3ihWs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0
+// https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=104
+// seems like a 75% chance to melee, and 25% chance to dragon fire
+// these videos also show that elvarg likely didnt have an ap attack!
+if (random(4) = 0) {
+    ~elvarg_dragon_fire;
+} else {
+    ~npc_default_attack;
+
+}
 
 [proc,elvarg_dragon_fire]
 if_close;
