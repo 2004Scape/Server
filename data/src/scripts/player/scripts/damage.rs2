@@ -3,6 +3,7 @@
 
 [proc,combat_clearqueue]
 clearqueue(playerhit_n_retaliate);
+clearqueue(damage_player);
 
 [queue,player_death]
 p_stopaction;
