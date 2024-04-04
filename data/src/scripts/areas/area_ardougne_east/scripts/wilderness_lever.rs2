@@ -1,3 +1,5 @@
+
+// preferebly another video of this lever. https://youtu.be/GnaZfzxIyt8?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=164
 [oploc1,ardougne_to_wilderness_lever]
 p_arrivedelay;
 ~mesbox("Warning! Pulling the lever will teleport you deep into the wilderness.");
@@ -10,9 +12,12 @@ if ($choice = 2) {
 // teleport to wilderness
 anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
 sound_synth(lever, 0, 0);
+loc_change(loc_161, 6);
 if_close;
-p_delay(2);
+p_delay(1);
 mes("You pull the lever...");
+p_delay(0);
+
 ~player_teleport_normal(^ardougne_to_wilderness_coord);
 mes("...And teleport into the wilderness.");
 
@@ -22,8 +27,11 @@ p_arrivedelay;
 // teleport to wilderness
 anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
 sound_synth(lever, 0, 0);
+loc_change(loc_161, 6);
 if_close;
-p_delay(2);
+p_delay(0);
 mes("You pull the lever...");
+p_delay(0);
+
 ~player_teleport_normal(^wilderness_to_ardougne_coord);
 mes("...And teleport out of the wilderness.");
