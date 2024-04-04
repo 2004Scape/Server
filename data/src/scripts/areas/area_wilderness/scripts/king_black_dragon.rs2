@@ -1,3 +1,233 @@
+[ai_queue1,king_black_dragon](int $arg) ~npc_default_retaliate_ap;
+
+[ai_applayer2,king_black_dragon]
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+// 1/3 chance to switch to op, if player is within melee range
+if (random(3) = 0 & npc_range(coord) < 2) {
+    npc_setmode(opplayer2);
+}
+~kbd_dragonfire_far;
+
+[ai_opplayer2,king_black_dragon]
+//mes("<tostring(map_clock)>: Op");
+if (%npc_action_delay > map_clock) {
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+// 1/3 chance to do melee/fire/special
+def_int $random_attack = random(3);
+if ($random_attack = 0) {
+    ~kbd_dragonfire_close;
+} else if ($random_attack = 1) {
+    ~kbd_special_breath;
+} else {
+    ~npc_default_attack;
+}
+
+
+// ------------
+// far range fire breath
+[proc,kbd_dragonfire_far]
+if_close;
+def_int $duration = ~player_projectile(movecoord(npc_coord, 2, 0, 2), coord, uid, spotanim_54, 92, 31, 51, 16, -5, 64, 10);
+
+npc_anim(dragon_firebreath_middle_attack, 0);
+sound_synth(sound_22, 0, 30);
+%npc_action_delay = add(map_clock, 5);
+
+def_int $maxhit = ~kbd_fiery_breath_maxhit;
+def_int $damage = 0;
+
+def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
+def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+    if (%prayer_protectfrommagic = ^false & inv_total(worn, dragonfire_shield) < 1) {
+        mes("You're horribly burnt by the dragon's fiery breath!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=78
+    }
+}
+queue(damage_player, calc($duration / 30), $damage);
+queue(playerhit_n_retaliate, calc($duration / 30), npc_uid); // this should be a queue* command
+~npc_set_attack_vars;
+// ------------
+
+
+// ------------
+// close range fire breath
+[proc,kbd_dragonfire_close]
+if_close;
+spotanim_npc(spotanim_1, 92, 0);
+npc_anim(dragon_firebreath_middle_attack, 0);
+sound_synth(sound_22, 0, 30);
+%npc_action_delay = add(map_clock, 5);
+
+def_int $maxhit = ~kbd_fiery_breath_maxhit;
+def_int $damage = 0;
+
+def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
+def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+    if (%prayer_protectfrommagic = ^false & inv_total(worn, dragonfire_shield) < 1) {
+        mes("You're horribly burnt by the dragon's fiery breath!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=78
+    }
+
+}
+queue(damage_player, 0, $damage);
+queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+~npc_set_attack_vars;
+
+// ------------
+// toxic breath
+[proc,kbd_toxic_breath]
+if_close;
+spotanim_npc(spotanim_3, 92, 0);
+npc_anim(dragon_firebreath_left_attack, 0);
+
+// spell visual and sound?
+sound_synth(sound_22, 0, 30);
+%npc_action_delay = add(map_clock, 5);
+
+def_int $maxhit = ~kbd_special_breath_maxhit;
+def_int $damage = 0;
+
+def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
+def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+    def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
+    if (%prayer_protectfrommagic = ^true & inv_total(worn, dragonfire_shield) > 0) {
+        $random = random(8); // 1/8 chance (osrs). Not sure what it is exactly, ash says "Well protect player"
+    }
+    if ($random = 0) {
+        queue(poison_player, 0, 36); // poison the player starting at 8 damage
+    }
+}
+queue(damage_player, 0, $damage);
+queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+~npc_set_attack_vars;
+
+// ------------
+// shocking breath
+[proc,kbd_shocking_breath]
+if_close;
+spotanim_npc(spotanim_0, 92, 0);
+npc_anim(dragon_firebreath_all_attack, 0);
+sound_synth(sound_22, 0, 30);
+%npc_action_delay = add(map_clock, 5);
+
+def_int $maxhit = ~kbd_special_breath_maxhit;
+def_int $damage = 0;
+
+def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
+def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+    def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
+    if (%prayer_protectfrommagic = ^true & inv_total(worn, dragonfire_shield) > 0) {
+        $random = random(8); // 1/8 chance (osrs). Not sure what it is exactly, ash says "Well protect player"
+    }
+    if ($random = 0) {
+        mes("You're shocked and weakened!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=106
+        // reduce every stat except hitpoints by 2
+        def_int $i = 0;
+        def_stat $stat;
+        while ($i < enum_getoutputcount(stats)) {
+            $stat = enum(int, stat, stats, $i);
+            if ($stat ! hitpoints) {
+                stat_sub($stat, 2, 0);
+            }
+            $i = calc($i + 1);
+        }
+    }
+}
+queue(damage_player, 0, $damage);
+queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+~npc_set_attack_vars;
+// ------------
+
+// ------------
+// icy breath
+[proc,kbd_icy_breath]
+// find spot anims and dragon anims for this
+if_close;
+
+spotanim_npc(spotanim_2, 92, 0);
+npc_anim(dragon_firebreath_right_attack, 0);
+// spell visual and sound?
+sound_synth(sound_22, 0, 30);
+%npc_action_delay = add(map_clock, 5);
+
+// freeze player
+def_int $maxhit = ~kbd_special_breath_maxhit;
+def_int $damage = 0;
+
+def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
+def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    $damage = randominc($maxhit);
+    def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
+    if (%prayer_protectfrommagic = ^true & inv_total(worn, dragonfire_shield) > 0) {
+        $random = random(8); // 1/8 chance (osrs). Not sure what it is exactly, ash says "Well protect player"
+    }
+    if ($random = 0) { 
+        queue(freeze_player, 0, 10); // freeze the player
+    }
+}
+queue(damage_player, 0, $damage);
+queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+~npc_set_attack_vars;
+// ------------
+
+
+// ------------
+// random attack
+[proc,kbd_special_breath]
+def_int $random_attack = random(3);
+if ($random_attack = 0) {
+    ~kbd_toxic_breath;
+} else if ($random_attack = 1) {
+    ~kbd_icy_breath;
+} else {
+    ~kbd_shocking_breath;
+}
+
+
+[proc,kbd_fiery_breath_maxhit]()(int)
+def_int $maxhit = 65;
+if (%prayer_protectfrommagic = ^true) {
+    mes("You manage to resist some of the dragon's fiery breath!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=78
+    $maxhit = 20;
+}
+if (inv_total(worn, dragonfire_shield) > 0) {
+    mes("Your shield absorbs most of the dragon's fiery breath!");
+    $maxhit = 15;
+}
+if (map_clock < %antifire) {
+    $maxhit = sub($maxhit, 15);
+}
+return($maxhit);
+
+
+[proc,kbd_special_breath_maxhit]()(int)
+def_int $maxhit = 50;
+if (%prayer_protectfrommagic = ^true) {
+    $maxhit = 15;
+}
+if (inv_total(worn, dragonfire_shield) > 0) {
+    $maxhit = 10;
+}
+return($maxhit);
+
 [oploc1,loc_1816]
 p_delay(0); // delay in osrs? isntead of arrivedelay
 anim(human_leverdown, 0); // OSRS uses seq's not in 225, going to assume here
@@ -9,8 +239,8 @@ mes("You pull the lever...");
 p_delay(0);
 
 
-~player_teleport_normal(0_42_153_29_9); // not sure if its an area or just right next to the lever
-mes("...And teleport into the Dragon's Lair.");
+~player_teleport_normal(0_42_153_29_10); // not sure if its an area or just right next to the lever
+mes("...And teleport into the Dragon's lair."); // changed to "Lair" (uppercase), on rev 317
 
 [oploc1,loc_1817]
 p_arrivedelay;
@@ -23,4 +253,4 @@ mes("You pull the lever...");
 p_delay(0);
 
 ~player_teleport_normal(0_47_160_59_14); // not sure if its an area or just right next to the lever
-mes("...And teleport out of the Dragon's Lair.");
+mes("...And teleport out of the Dragon's lair."); // changed to "Lair" (uppercase), on rev 317
