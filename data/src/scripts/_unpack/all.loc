@@ -10809,20 +10809,6 @@ model=model_loc_1813
 sharelight=yes
 occlude=yes
 
-[loc_1814]
-name=Lever
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-
-[loc_1815]
-name=Lever
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-
 [loc_1816]
 name=Lever
 desc=I wonder what this does...
