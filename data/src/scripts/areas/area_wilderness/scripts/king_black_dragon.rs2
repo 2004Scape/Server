@@ -65,8 +65,8 @@ queue(playerhit_n_retaliate, calc($duration / 30), npc_uid); // this should be a
 // close range fire breath
 [proc,kbd_dragonfire_close]
 if_close;
-spotanim_npc(spotanim_1, 92, 0);
-npc_anim(dragon_firebreath_middle_attack, 0);
+spotanim_npc(spotanim_0, 92, 0);
+npc_anim(dragon_firebreath_all_attack, 0);
 sound_synth(sound_22, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
@@ -93,8 +93,7 @@ if_close;
 spotanim_npc(spotanim_3, 92, 0);
 npc_anim(dragon_firebreath_left_attack, 0);
 
-// spell visual and sound?
-sound_synth(sound_22, 0, 30);
+sound_synth(toxicbreath, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
 def_int $maxhit = ~kbd_special_breath_maxhit;
@@ -120,9 +119,10 @@ queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 // shocking breath
 [proc,kbd_shocking_breath]
 if_close;
-spotanim_npc(spotanim_0, 92, 0);
-npc_anim(dragon_firebreath_all_attack, 0);
-sound_synth(sound_22, 0, 30);
+// spotanim_npc(spotanim_4, 92, 0);
+npc_anim(dragon_firebreath_middle_attack, 0);
+sound_synth(lightningbreath, 0, 30);
+spotanim_pl(spotanim_197, 0, 60);
 %npc_action_delay = add(map_clock, 5);
 
 def_int $maxhit = ~kbd_special_breath_maxhit;
@@ -163,8 +163,8 @@ if_close;
 
 spotanim_npc(spotanim_2, 92, 0);
 npc_anim(dragon_firebreath_right_attack, 0);
-// spell visual and sound?
-sound_synth(sound_22, 0, 30);
+
+sound_synth(kingicebreath, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
 // freeze player
@@ -254,3 +254,12 @@ p_delay(0);
 
 ~player_teleport_normal(0_47_160_59_14); // not sure if its an area or just right next to the lever
 mes("...And teleport out of the Dragon's lair."); // changed to "Lair" (uppercase), on rev 317
+
+
+[debugproc,sp]
+if (p_finduid(uid) = false) {
+    return;
+}
+
+[debugproc,h]
+spotanim_pl(spotanim_197, 0, 0);
