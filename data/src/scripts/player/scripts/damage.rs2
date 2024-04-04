@@ -51,6 +51,7 @@ stat_heal(prayer, 99, 0);
 healenergy(10000);
 ~combat_clearqueue;
 ~clear_pk_skull;
+~clear_poison;
 // todo: end poison timer ~player_end_poison
 ~update_all($prev_wep);
 

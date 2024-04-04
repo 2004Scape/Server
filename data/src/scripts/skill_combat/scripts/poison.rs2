@@ -48,3 +48,8 @@ sound_synth($sound, 0, 20);
 if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {
     queue(player_death, 0);
 }
+
+
+[proc,clear_poison]
+%poison = 0;
+cleartimer(poison);
