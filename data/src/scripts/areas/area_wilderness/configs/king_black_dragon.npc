@@ -22,6 +22,8 @@ model1=model_2853_npc
 model2=model_2855_npc
 wanderrange=10
 maxrange=16
+// need to figure out huntrange
+huntrange=16
 attackrange=12
 respawnrate=16
 hitpoints=240
