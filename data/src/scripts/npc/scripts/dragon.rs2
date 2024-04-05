@@ -1,9 +1,18 @@
-[ai_queue1,green_dragon](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,baby_dragon](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,baby_blue_dragon](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,red_dragon](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,blue_dragon](int $arg) ~npc_default_retaliate_ap;
-[ai_queue1,black_dragon](int $arg) ~npc_default_retaliate_ap;
+// - edit: elvarg was reworked after the dragon slayer rework. So no ap
+// - im guessing dragons worked the same
+// [ai_queue1,green_dragon](int $arg) ~npc_default_retaliate_ap;
+// [ai_queue1,baby_dragon](int $arg) ~npc_default_retaliate_ap;
+// [ai_queue1,baby_blue_dragon](int $arg) ~npc_default_retaliate_ap;
+// [ai_queue1,red_dragon](int $arg) ~npc_default_retaliate_ap;
+// [ai_queue1,blue_dragon](int $arg) ~npc_default_retaliate_ap;
+// [ai_queue1,black_dragon](int $arg) ~npc_default_retaliate_ap;
+
+// [ai_applayer2,green_dragon] @dragon_ai_applayer2;
+// [ai_applayer2,baby_dragon] @dragon_ai_applayer2;
+// [ai_applayer2,baby_blue_dragon] @dragon_ai_applayer2;
+// [ai_applayer2,red_dragon] @dragon_ai_applayer2;
+// [ai_applayer2,blue_dragon] @dragon_ai_applayer2;
+// [ai_applayer2,black_dragon] @dragon_ai_applayer2;
 
 [ai_opplayer2,green_dragon] @dragon_ai_opplayer2;
 [ai_opplayer2,baby_dragon] @dragon_ai_opplayer2;
@@ -12,28 +21,21 @@
 [ai_opplayer2,blue_dragon] @dragon_ai_opplayer2;
 [ai_opplayer2,black_dragon] @dragon_ai_opplayer2;
 
-[ai_applayer2,green_dragon] @dragon_ai_applayer2;
-[ai_applayer2,baby_dragon] @dragon_ai_applayer2;
-[ai_applayer2,baby_blue_dragon] @dragon_ai_applayer2;
-[ai_applayer2,red_dragon] @dragon_ai_applayer2;
-[ai_applayer2,blue_dragon] @dragon_ai_applayer2;
-[ai_applayer2,black_dragon] @dragon_ai_applayer2;
-
-
-[label,dragon_ai_applayer2]
-// mes("<tostring(map_clock)>: Ap");
-if (%npc_action_delay > map_clock) {
-    return;
-}
-if (~npc_can_attack_player = false) {
-    npc_setmode(null);
-    return;
-}
-// 1/2 chance to switch to op, with line of walk check (same as elvarg for now)
-if (random(2) = 0 & lineofwalk(npc_coord, coord) = true) {
-    npc_setmode(opplayer2);
-}
-~dragon_fire;
+// edit: elvarg was reworked after the dragon slayer rework.
+// [label,dragon_ai_applayer2]
+// // mes("<tostring(map_clock)>: Ap");
+// if (%npc_action_delay > map_clock) {
+//     return;
+// }
+// if (~npc_can_attack_player = false) {
+//     npc_setmode(null);
+//     return;
+// }
+// // 1/2 chance to switch to op, with line of walk check (same as elvarg for now)
+// if (random(2) = 0 & lineofwalk(npc_coord, coord) = true) {
+//     npc_setmode(opplayer2);
+// }
+// ~dragon_fire;
 
 
 [label,dragon_ai_opplayer2]
@@ -45,11 +47,18 @@ if (~npc_can_attack_player = false) {
     npc_setmode(null);
     return;
 }
+// edit: elvarg was reworked after the dragon slayer rework.
 // 1/8 chance to switch back to ap (same as elvarg for now)
-if (random(8) = 0) {
-    npc_setmode(applayer2);
+// if (random(8) = 0) {
+//     npc_setmode(applayer2);
+// }
+
+// 1/4 chance to dragon fire (same as pre reworked elvarg)
+if (random(4) = 0) {
+    ~dragon_fire;
+} else {
+    ~npc_default_attack;
 }
-~npc_default_attack;
 
 
 [proc,dragon_fire]
@@ -57,7 +66,7 @@ if_close;
 spotanim_npc(spotanim_1, 92, 0);
 npc_anim(dragon_firebreath_middle_attack, 0);
 sound_synth(sound_22, 0, 30);
-%npc_action_delay = add(map_clock, 5);
+%npc_action_delay = add(map_clock, 4);
 
 def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
 def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
