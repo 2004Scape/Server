@@ -78,6 +78,8 @@ switch_obj(last_item) {
     // anti posions
     case 1doseantipoison, 2doseantipoison, 3doseantipoison, 4doseantipoison: 
         @player_consume_item(consume_effect_antipoison, null, null);
+    case 1dose2antipoison, 2dose2antipoison, 3dose2antipoison, 4dose2antipoison: 
+        @player_consume_item(consume_effect_super_antipoison, null, null);
     case default : @player_consume_item(consume_effect_stat, null, null);
 }
 [opheld1,strange_fruit]@player_consume_item(consume_effect_strange_fruit, 2, 3);
