@@ -1,5 +1,80 @@
 [ai_queue1,king_black_dragon](int $arg) ~npc_default_retaliate_ap;
 
+[ai_queue3,king_black_dragon](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// Default drop
+obj_add(npc_coord, dragon_bones, 1, ^lootdrop_duration);
+obj_add(npc_coord, dragonhide_black, 1, ^lootdrop_duration);
+
+// sources used:
+// - https://web.archive.org/web/20050305120920/http://runehq.com:80/cache/viewMonster57.htm
+// - https://web.archive.org/web/20050407104611/http://www.tip.it/runescape/index.php?rs2monster_id=219
+// - https://web.archive.org/web/20050415214837/http://www.trillionareguild.com/runescape/beastiary3.php
+// - https://web.archive.org/web/20040817192737/http://www.runescapecommunity.com/index.php?showtopic=106758
+// - https://web.archive.org/web/20050221193145/http://www.runecrypt.com/index.php?pid=118
+
+
+// clue scroll. Osrs only has elite scrolls for kbd, not sure what the rate would be for hard clues.
+// Im guessing its 1/128 like most high level monsters
+~trail_hardcluedrop(128, npc_coord);
+
+
+def_int $random = random(128);
+
+if ($random < 10) { // osrs
+    obj_add(npc_coord, rune_longsword, 1, ^lootdrop_duration);
+} else if ($random < 19) { // osrs
+    obj_add(npc_coord, adamant_platebody, 1, ^lootdrop_duration);
+} else if ($random < 20) { // osrs
+    obj_add(npc_coord, dragon_med_helm, 1, ^lootdrop_duration);
+} else if ($random < 30) { // osrs's runite bolts (probably added when xbows were released)
+    obj_add(npc_coord, bronze_arrow, 310, ^lootdrop_duration);
+} else if ($random < 40) { // osrs
+    obj_add(npc_coord, iron_arrow, 690, ^lootdrop_duration);
+} else if ($random < 50) { // osrs (count is from monster db's on fansites)
+    obj_add(npc_coord, airrune, 105, ^lootdrop_duration);
+} else if ($random < 60) { // osrs (count is from monster db's on fansites)
+    obj_add(npc_coord, firerune, 105, ^lootdrop_duration);
+} else if ($random < 65) { // osrs (count is from monster db's on fansites)
+    obj_add(npc_coord, bloodrune, 15, ^lootdrop_duration);
+} else if ($random < 70) { // osrs (count is from monster db's on fansites)
+    obj_add(npc_coord, lawrune, 15, ^lootdrop_duration);
+} else if ($random < 75) { // missing from osrs, replaces dragon dart tips? 2 fan sites say 7-45 death runes (45 is from ultrarare)
+    obj_add(npc_coord, deathrune, 7, ^lootdrop_duration);
+} else if ($random < 78) { // osrs's adamant kiteshield?
+    obj_add(npc_coord, adamant_axe, 1, ^lootdrop_duration);
+} else if ($random < 80) { // missing from osrs. drop rate is guessed 2/128
+    obj_add(npc_coord, rune_axe, 1, ^lootdrop_duration);
+} else if ($random < 85) { // osrs, count is from rsc
+    obj_add(npc_coord, adamantite_bar, calc(random(2) + 1), ^lootdrop_duration);
+} else if ($random < 88) { // osrs
+    obj_add(npc_coord, runite_bar, 1, ^lootdrop_duration);
+} else if ($random < 90) { // osrs's gold ore
+    obj_add(npc_coord, cert_coal, 100, ^lootdrop_duration);
+} else if ($random < 95) { // missing from osrs, replaces dragon dart tips
+    obj_add(npc_coord, cert_iron_ore, 100, ^lootdrop_duration);
+} else if ($random < 100) { // osrs, but 5/128 instead of 10/128
+    obj_add(npc_coord, cert_yew_logs, 100, ^lootdrop_duration);
+} else if ($random < 107) { // osrs's amulet of power
+    obj_add(npc_coord, amulet_of_strength, 1, ^lootdrop_duration);
+} else if ($random < 111) { // osrs
+    obj_add(npc_coord, shark, 4, ^lootdrop_duration);
+} else if ($random < 115) { // osrs's rune limbs
+    obj_add(npc_coord, oyster_perls, 4, ^lootdrop_duration);
+} else if ($random < 118) { // missing from osrs
+    obj_add(npc_coord, mithril_battleaxe, 1, ^lootdrop_duration); // https://youtu.be/KDkdsTPeb_8?t=358
+} else if ($random < 126) { // osrs
+    ~lootdrop(npc_coord, ~ultrarare_getitem, ^lootdrop_duration);
+} else { // osrs
+    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+}
+
+
+
+
 [ai_applayer2,king_black_dragon]
 if (%npc_action_delay > map_clock) {
     return;
@@ -13,6 +88,11 @@ if (random(3) = 0 & npc_range(coord) < 2) {
     npc_setmode(opplayer2);
 }
 ~kbd_dragonfire_far;
+// todo: Use huntall
+// if (finduid(~random_player_within_distance(npc_coord, 16)) = true) {
+//     npc_setmode(applayer2);
+// }
+
 
 [ai_opplayer2,king_black_dragon]
 //mes("<tostring(map_clock)>: Op");
@@ -32,6 +112,11 @@ if ($random_attack = 0) {
 } else {
     ~npc_default_attack;
 }
+
+// todo: Use huntall
+// if (finduid(~random_player_within_distance(npc_coord, 16)) = true) {
+//     npc_setmode(applayer2);
+// }
 
 
 // ------------
@@ -104,8 +189,11 @@ def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
 if (randominc($attack_roll) > randominc($defence_roll)) {
     $damage = randominc($maxhit);
     def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
-    if (%prayer_protectfrommagic = ^true & inv_total(worn, dragonfire_shield) > 0) {
-        $random = random(8); // 1/8 chance (osrs). Not sure what it is exactly, ash says "Well protect player"
+    if (inv_total(worn, dragonfire_shield) > 0) { // Not sure what it is exactly, ash says "Well protect player"
+        $random = random(8); // 1/8 chance (osrs).
+        if ($random ! 0) {
+            mes("Your shield absorbs most of the dragon's toxic breath!"); // https://youtu.be/KhI0x-fSKac?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=157
+        }
     }
     if ($random = 0) {
         queue(poison_player, 0, 36); // poison the player starting at 8 damage
@@ -135,9 +223,13 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
     def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
     if (%prayer_protectfrommagic = ^true & inv_total(worn, dragonfire_shield) > 0) {
         $random = random(8); // 1/8 chance (osrs). Not sure what it is exactly, ash says "Well protect player"
+        if ($random ! 0) {
+            mes("Your shield absorbs most of the dragon's shocking breath!"); // https://youtu.be/iXYRtqL-GNw?t=9
+        }
     }
     if ($random = 0) {
-        mes("You're shocked and weakened!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=106
+        // mes("You're shocked and weakened!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=106
+        mes("You're zapped by the dragon's shocking breath!"); // earlier video has this: https://youtu.be/Kc0ZMLmWrYU?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=20
         // reduce every stat except hitpoints by 2
         def_int $i = 0;
         def_stat $stat;
@@ -176,16 +268,31 @@ def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
 if (randominc($attack_roll) > randominc($defence_roll)) {
     $damage = randominc($maxhit);
     def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
-    if (%prayer_protectfrommagic = ^true & inv_total(worn, dragonfire_shield) > 0) {
-        $random = random(8); // 1/8 chance (osrs). Not sure what it is exactly, ash says "Well protect player"
+    if (inv_total(worn, dragonfire_shield) > 0) { // Not sure what it is exactly, ash says "Well protect player"
+        $random = random(8); // 1/8 chance (osrs). 
+        if ($random ! 0) {
+            mes("Your shield absorbs most of the dragon's icy breath!"); // https://youtu.be/91eqk3Lu_Qw?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=70
+        }
     }
     if ($random = 0) { 
-        queue(freeze_player, 0, 10); // freeze the player
+        queue(kbd_freeze_player, 0, 10); // freeze the player
     }
 }
 queue(damage_player, 0, $damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 ~npc_set_attack_vars;
+
+[queue,kbd_freeze_player](int $duration)
+mes("You've been frozen!");
+%stunned = calc(map_clock + $duration + 1);
+setmovecheck(kbd_frozen);
+
+[movecheck,kbd_frozen]()(boolean)
+if (map_clock < %stunned) {
+    mes("You're frozen and can't move!"); // https://youtu.be/7nY0kuIooZk?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=218
+    return(false);
+}
+return(true);
 // ------------
 
 
@@ -213,6 +320,7 @@ if (inv_total(worn, dragonfire_shield) > 0) {
     $maxhit = 15;
 }
 if (map_clock < %antifire) {
+    mes("Your potion protects you from the heat of the dragon's breath!"); // https://youtu.be/7nY0kuIooZk?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=45
     $maxhit = sub($maxhit, 15);
 }
 return($maxhit);
