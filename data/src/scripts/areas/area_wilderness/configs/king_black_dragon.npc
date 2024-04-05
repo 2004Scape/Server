@@ -20,11 +20,12 @@ recol5s=127
 recol5d=7853
 model1=model_2853_npc
 model2=model_2855_npc
-wanderrange=10
-maxrange=16
-// need to figure out huntrange
-huntrange=16
-attackrange=12
+wanderrange=20
+maxrange=20
+// https://youtu.be/KhI0x-fSKac?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=147
+// best video i could find
+huntrange=20
+attackrange=15
 respawnrate=16
 hitpoints=240
 attack=240
