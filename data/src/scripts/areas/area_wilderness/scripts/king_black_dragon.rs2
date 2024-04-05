@@ -129,13 +129,12 @@ npc_anim(dragon_firebreath_middle_attack, 0);
 sound_synth(sound_22, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
-def_int $maxhit = ~kbd_fiery_breath_maxhit;
 def_int $damage = 0;
 
 def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
 def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
 if (randominc($attack_roll) > randominc($defence_roll)) {
-    $damage = randominc($maxhit);
+    $damage = randominc(~kbd_fiery_breath_maxhit);
     if (%prayer_protectfrommagic = ^false & inv_total(worn, dragonfire_shield) < 1) {
         mes("You're horribly burnt by the dragon's fiery breath!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=78
     }
@@ -155,13 +154,12 @@ npc_anim(dragon_firebreath_all_attack, 0);
 sound_synth(sound_22, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
-def_int $maxhit = ~kbd_fiery_breath_maxhit;
 def_int $damage = 0;
 
 def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
 def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
 if (randominc($attack_roll) > randominc($defence_roll)) {
-    $damage = randominc($maxhit);
+    $damage = randominc(~kbd_fiery_breath_maxhit);
     if (%prayer_protectfrommagic = ^false & inv_total(worn, dragonfire_shield) < 1) {
         mes("You're horribly burnt by the dragon's fiery breath!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=78
     }
@@ -181,13 +179,12 @@ npc_anim(dragon_firebreath_left_attack, 0);
 sound_synth(toxicbreath, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
-def_int $maxhit = ~kbd_special_breath_maxhit;
 def_int $damage = 0;
 
 def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
 def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
 if (randominc($attack_roll) > randominc($defence_roll)) {
-    $damage = randominc($maxhit);
+    $damage = randominc(~kbd_special_breath_maxhit);
     def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
     if (inv_total(worn, dragonfire_shield) > 0) { // Not sure what it is exactly, ash says "Well protect player"
         $random = random(8); // 1/8 chance (osrs).
@@ -213,13 +210,12 @@ sound_synth(lightningbreath, 0, 30);
 spotanim_pl(spotanim_197, 0, 60);
 %npc_action_delay = add(map_clock, 5);
 
-def_int $maxhit = ~kbd_special_breath_maxhit;
 def_int $damage = 0;
 
 def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
 def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
 if (randominc($attack_roll) > randominc($defence_roll)) {
-    $damage = randominc($maxhit);
+    $damage = randominc(~kbd_special_breath_maxhit);
     def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
     if (%prayer_protectfrommagic = ^true & inv_total(worn, dragonfire_shield) > 0) {
         $random = random(8); // 1/8 chance (osrs). Not sure what it is exactly, ash says "Well protect player"
@@ -260,13 +256,12 @@ sound_synth(kingicebreath, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
 // freeze player
-def_int $maxhit = ~kbd_special_breath_maxhit;
 def_int $damage = 0;
 
 def_int $attack_roll = ~npc_magic_attack_roll_no_prot;
 def_int $defence_roll = ~player_defence_roll_specific(^magic_style);
 if (randominc($attack_roll) > randominc($defence_roll)) {
-    $damage = randominc($maxhit);
+    $damage = randominc(~kbd_special_breath_maxhit);
     def_int $random = random(2); // 50% chance upon successful hit to inflict a unique effect (osrs)
     if (inv_total(worn, dragonfire_shield) > 0) { // Not sure what it is exactly, ash says "Well protect player"
         $random = random(8); // 1/8 chance (osrs). 
