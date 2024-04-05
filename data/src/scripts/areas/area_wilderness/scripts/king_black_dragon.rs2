@@ -357,12 +357,3 @@ p_delay(0);
 
 ~player_teleport_normal(0_47_160_59_14); // not sure if its an area or just right next to the lever
 mes("...And teleport out of the Dragon's lair."); // changed to "Lair" (uppercase), on rev 317
-
-
-[debugproc,sp]
-if (p_finduid(uid) = false) {
-    return;
-}
-
-[debugproc,h]
-spotanim_pl(spotanim_197, 0, 0);
