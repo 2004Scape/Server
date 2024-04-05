@@ -1,0 +1,135 @@
+// https://youtu.be/2Yy0SAxsWxk?si=9ZgEZP5zUYmL4VGg&t=19
+[oploc1,loc_2416]
+@multi3("Balloon Bonanza.", partyroom_balloons, "Nightly Dance.", partyroom_knights, "No action.", exit);
+
+[label,partyroom_balloons]
+~mesbox("Balloon Bonanza costs 1000 coins.");
+if(inv_total(inv, coins) < 1000) {
+    return;
+}
+def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Continue?");
+if_close;
+if ($choice = 2) {
+    return;
+}
+if (npc_finduid(~npc_within_distance(coord, party_pete, 16)) = true) {
+    ~pull_partylever(1000);
+    npc_queue(10, 0, 0);
+}
+
+[proc,pull_partylever](int $coins)
+// based off the video i'm 99% sure these are correct (changed in 2007)
+loc_anim(partyroom_lever);
+inv_del(inv, coins, $coins);
+anim(seq_798, 0); 
+sound_synth(lever, 0, 0);
+
+[label,partyroom_knights]
+~mesbox("Nightly Dance costs 500 coins.");
+if(inv_total(inv, coins) < 500) {
+    return;
+}
+def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Continue?");
+if_close;
+if ($choice = 2) {
+    return;
+}
+if(npc_finduid(~npc_within_distance(coord, partyroom_dancingknight, 7)) = true) {
+    ~mesbox("The party room knights are already here!");
+    return;
+}
+~pull_partylever(500);
+def_int $knights_spawned = 0;
+while($knights_spawned < 6) {
+    npc_add(movecoord(^partyroom_starting_knight_coord, $knights_spawned, 0, 0), partyroom_dancingknight, 100);
+    $knights_spawned = calc($knights_spawned + 1);
+}
+if(npc_findexact(movecoord(^partyroom_starting_knight_coord, 2, 0, 0), partyroom_dancingknight) = false) {
+    return;
+}
+// 5t delay on first, 4t delay afterwards
+npc_queue(10, 1, 6);
+
+[opnpc1,partyroom_dancingknight]
+~mesbox("He is too busy dancing to talk!");
+
+[ai_queue10,partyroom_dancingknight](int $arg)
+def_int $delay = 5;
+switch_int($arg) {
+    case 1: npc_say("We're Knights of the Party Room");
+    case 2: npc_say("We dance round and round like a loon");
+    case 3: npc_say("Quite often we like to sing");
+    case 4: npc_say("Unfortunately we make a din");
+    case 5: npc_say("We're Knights of the Party Room");
+    case 6: npc_say("Do you like our helmet plumes?");
+    case 7: npc_say("Everyone's happy now we can move");
+    case 8: 
+        $delay = 3;
+        npc_say("Like a party animal in the groove");
+    case 9:
+        npc_queue(10, 10, 4);
+        if (npc_finduid(~npc_within_distance(npc_coord, party_pete, 16)) = true) {
+            npc_say("The party room is a silly place!");
+        }
+        return;
+}
+if($arg < 9) {
+    npc_queue(10, calc($arg + 1), $delay);
+    return;
+}
+npc_findallzone(^partyroom_starting_knight_coord);
+while (npc_findnext = true) {
+    if (npc_type = partyroom_dancingknight) {
+        npc_del;
+    }
+}
+npc_findallzone(movecoord(^partyroom_starting_knight_coord, 6, 0, 0));
+while (npc_findnext = true) {
+    if (npc_type = partyroom_dancingknight) {
+        npc_del;
+    }
+}
+
+[proc,random_balloon](loc)
+switch_int (random(7)) {
+    case 0: return (loc_115);
+    case 1: return (loc_116);
+    case 2: return (loc_117);
+    case 3: return (loc_118);
+    case 4: return (loc_119);
+    case 5: return (loc_120);
+    case 6: return (loc_121);
+    case default: return (loc_115);
+}
+
+[proc,random_partyroom_balloon_coord](coord)
+def_coord $coord1;
+def_coord $coord2;
+$coord1, $coord2 = db_getfield(party_room_zones, coord_pair_table:coord_pair, 0);
+def_int $dx = calc(coordx($coord2) - coordx($coord1));
+def_int $dz = calc(coordz($coord2) - coordz($coord1));
+return (movecoord($coord1, random($dx), 0, random($dz)));
+
+[oploc1,_party_balloon]
+p_arrivedelay;
+p_walk(loc_coord);
+p_delay(0);
+anim(seq_794, 0);
+loc_change(loc_param(next_loc_stage), 5);
+p_delay(0);
+if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true) {
+    def_int $rand_slot = random(calc(inv_size(partyroominv) - inv_freespace(partyroominv)));
+    def_obj $obj = inv_getobj(partyroominv, $rand_slot);
+    def_int $count = 1;
+    if($obj = null) {
+        return;
+    }
+    if(oc_stackable($obj) = true | oc_uncert($obj) ! $obj) {
+        $count = ~random_range(1, inv_getnum(partyroominv, $rand_slot));
+    }
+    inv_del(partyroominv, $obj, $count);
+    obj_add(loc_coord, $obj, $count, 100);
+    return;
+}
+p_delay(0);
+loc_del(1);

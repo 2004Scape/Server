@@ -47,6 +47,7 @@ enum ScriptOpcode {
     LINEOFSIGHT,
     LINEOFWALK,
     MAP_BLOCKED, // official
+    MAP_INDOORS,
     MAP_CLOCK, // official
     MAP_LOCADDUNSAFE, // official
     MAP_MEMBERS, // official

@@ -26,6 +26,7 @@
 [command,coordz](coord $coord)(int)
 [command,playercount]()(int)
 [command,map_blocked](coord $coord)(boolean)
+[command,map_indoors](coord $coord)(boolean)
 [command,lineofsight](coord $from, coord $to)(boolean)
 [command,world_delay](int $delay)
 [command,map_anim](coord $coord, spotanim $spotanim, int $height, int $delay)

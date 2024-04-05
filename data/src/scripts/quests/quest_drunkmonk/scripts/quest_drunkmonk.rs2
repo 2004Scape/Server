@@ -66,32 +66,13 @@ if($delay >= 0) {
 
 [proc,spawn_drunkmonk_balloons](int $count)
 while($count > 0) {
-    def_coord $balloon_coord = ~random_balloon_coord;
-    if(map_blocked($balloon_coord) = false) {
+    def_coord $balloon_coord = movecoord(0_40_50_42_7, random(8), 0, random(11));
+    if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true) {
         loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
     }
     $count = calc($count - 1);
 }
 p_delay(0);
-
-[proc,random_balloon](loc)
-switch_int (random(7)) {
-    case 0: return (loc_115);
-    case 1: return (loc_116);
-    case 2: return (loc_117);
-    case 3: return (loc_118);
-    case 4: return (loc_119);
-    case 5: return (loc_120);
-    case 6: return (loc_121);
-    case default: return (loc_115);
-}
-
-[proc,random_balloon_coord](coord)
-if(random(3) > 0) {
-    return (movecoord(0_40_50_43_7, random(8), 0, random(5)));
-} else {
-    return (movecoord(0_40_50_45_12, random(3), 0, random(7)));
-}
 
 [queue,drunkmonk_complete]
 %drunkmonk_progress = ^drunkmonk_complete;

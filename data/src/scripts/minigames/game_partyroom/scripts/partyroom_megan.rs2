@@ -1,0 +1,25 @@
+[opnpc1,partyroom_megan]
+~chatnpc(happy, "Hi! I'm Megan. Welcome to the Party Room!");
+switch_int(~p_choice3("One beer please Megan!", 1, "Can you dance, Megan?", 2, "Do you have any news?", 3)) {
+    case 1:
+        ~chatplayer(happy, "One beer please Megan!");
+        ~chatnpc(happy, "Coming right up <text_gender("sir", "ma'am")>! That's two gold please.");
+        if(inv_total(inv, coins) < 2) {
+            ~chatplayer(sad, "I'm sorry but I don't have enough money!");
+            return;
+        }
+        inv_del(inv, coins, 2);
+        inv_add(inv, beer, 1);
+        ~objboxb(beer, "Megan has given you a beer.");
+    case 2:
+        ~chatplayer(confused, "Can you dance, Megan?");
+        ~chatnpc(happy, "Can I dance?!");
+        ~chatnpc(laugh, "CAN I dance?!!");
+        ~chatplayer(happy, "Dance with me Megan!");
+        anim(seq_784, 0);
+        npc_anim(seq_784, 0);
+    case 3:
+        ~chatplayer(neutral, "Do you have any news?");
+        ~chatnpc(neutral, "Not at the moment. I've heard that the known world is expanding as new places are discovered.");
+        ~chatnpc(happy, "These are exciting times indeed!");
+}
