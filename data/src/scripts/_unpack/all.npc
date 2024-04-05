@@ -4231,9 +4231,10 @@ moverestrict=nomove
 blockwalk=all
 huntmode=aggressive_melee
 huntrange=1
-// stats are completely guessed
-attack=50
-strength=10
+// https://vxtwitter.com/JagexAsh/status/1775970463061049645?t=dBzjxnZ88IdFRi86mMgqjw&s=19
+// "They have level 20 Attack & Strength" - ash
+attack=20
+strength=20
 param=attack_anim,nasty_tree_attack
 param=attack_sound,nasty_tree_attack
 param=damagetype,^slash_style
