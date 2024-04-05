@@ -155,6 +155,7 @@ inv_stoptransmit(tradeside:inv);
 if (.finduid(%tradepartner) = true) {
     .%tradepartner = null;
     .if_close;
+    .mes("Other player declined trade."); // osrs
 }
 
 %tradepartner = null;
