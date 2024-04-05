@@ -7148,28 +7148,6 @@ head1=model_0_npc_head
 head2=model_8_npc_head
 wanderrange=2
 
-[npc_383]
-vislevel=hide
-walkanim=dwarf_walk
-readyanim=dwarf_ready
-name=Stankers
-desc=He's in control of the coal trucks.
-op1=Talk-to
-recol1s=803
-recol1d=5652
-recol2s=11200
-recol2d=414
-model1=model_2970_npc
-model2=model_2981_npc
-model3=model_2979_npc
-model4=model_2983_npc
-model5=model_2985_npc
-model6=model_2990_npc
-model7=model_2988_npc
-head1=model_0_npc_head
-head2=model_8_npc_head
-wanderrange=2
-
 [thormac]
 vislevel=hide
 name=Thormac
