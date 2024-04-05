@@ -1,10 +1,11 @@
 // https://youtu.be/2Yy0SAxsWxk?si=9ZgEZP5zUYmL4VGg&t=19
+// https://web.archive.org/web/20040607162448/http://www.runehq.com/viewcityguide.php?id=00268, prices changed by https://runescape.wiki/w/Update:Agility,_Potions_and_Parties! (27 Jul 04)
 [oploc1,loc_2416]
 @multi3("Balloon Bonanza.", partyroom_balloons, "Nightly Dance.", partyroom_knights, "No action.", exit);
 
 [label,partyroom_balloons]
-~mesbox("Balloon Bonanza costs 1000 coins.");
-if(inv_total(inv, coins) < 1000) {
+~mesbox("Balloon Bonanza costs 5000 coins.");
+if(inv_total(inv, coins) < 5000) {
     return;
 }
 def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Continue?");
@@ -13,7 +14,7 @@ if ($choice = 2) {
     return;
 }
 if (npc_finduid(~npc_within_distance(coord, party_pete, 16)) = true) {
-    ~pull_partylever(1000);
+    ~pull_partylever(5000);
     npc_queue(10, 0, 0);
 }
 
@@ -25,8 +26,8 @@ anim(seq_798, 0);
 sound_synth(lever, 0, 0);
 
 [label,partyroom_knights]
-~mesbox("Nightly Dance costs 500 coins.");
-if(inv_total(inv, coins) < 500) {
+~mesbox("Nightly Dance costs 2000 coins.");
+if(inv_total(inv, coins) < 2000) {
     return;
 }
 def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "Continue?");
@@ -38,7 +39,7 @@ if(npc_finduid(~npc_within_distance(coord, partyroom_dancingknight, 7)) = true) 
     ~mesbox("The party room knights are already here!");
     return;
 }
-~pull_partylever(500);
+~pull_partylever(2000);
 def_int $knights_spawned = 0;
 while($knights_spawned < 6) {
     npc_add(movecoord(^partyroom_starting_knight_coord, $knights_spawned, 0, 0), partyroom_dancingknight, 100);
@@ -117,7 +118,8 @@ p_delay(0);
 anim(seq_794, 0);
 loc_change(loc_param(next_loc_stage), 5);
 p_delay(0);
-if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true) {
+// TODO: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
+if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0) {
     def_int $rand_slot = random(calc(inv_size(partyroominv) - inv_freespace(partyroominv)));
     def_obj $obj = inv_getobj(partyroominv, $rand_slot);
     def_int $count = 1;

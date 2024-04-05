@@ -38,6 +38,7 @@ inv_moveitem(partyroomoffer, inv, $obj, $total);
 [inv_button3,party_drop_chest_side:inv] @deposit_partychest(last_slot, 10);
 [inv_button4,party_drop_chest_side:inv] @deposit_partychest(last_slot, ^max_32bit_int);
 [inv_button5,party_drop_chest_side:inv] @deposit_partychest(last_slot, null);
+[inv_buttond,party_drop_chest_side:inv] inv_movetoslot(inv, inv, last_slot, last_targetslot);
 
 [label,deposit_partychest](int $slot, int $amount)
 if ($amount <= 0) {

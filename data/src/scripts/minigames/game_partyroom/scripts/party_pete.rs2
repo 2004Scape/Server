@@ -14,15 +14,15 @@ switch_int(~p_choice4("So what's this room for?", 1, "What's the big lever over 
         ~chatplayer(confused, "What's the big lever over there for?");
         ~chatnpc(happy, "Simple. With the lever you can do some fun stuff.");
         ~chatplayer(confused, "What kind of stuff?");
-        ~chatnpc(happy, "A balloon drop costs 1000 gold. For this you get 200 balloons dropped across the whole of the party room. You can then have fun popping the balloons! If there are items in the Party Drop Chest they will be inside");
-        ~chatnpc(happy, "the balloons! For 500 gold you can summon the Party Room Knights who will dance for your delight.");
+        ~chatnpc(happy, "A balloon drop costs 5000 gold. For this you get 200 balloons dropped across the whole of the party room. You can then have fun popping the balloons! If there are items in the Party Drop Chest they will be inside");
+        ~chatnpc(happy, "the balloons! For 2000 gold you can summon the Party Room Knights who will dance for your delight.");
         ~chatnpc(laugh, "Their singing isn't a delight though!");
     case 3:
         ~chatplayer(confused, "What's the gold chest for?");
         ~chatnpc(neutral, "Any items that are in the chest will be dropped inside the balloons when you pull the lever!");
         ~chatplayer(happy, "Cool! Sounds like a fun way to do a drop party!");
         ~chatnpc(laugh, "Exactly!");
-        ~chatnpc(neutral, "A word of warning though. Any items that you put into the chest can't be taken out again and it costs 1000 gold pieces for each balloon drop.");
+        ~chatnpc(neutral, "A word of warning though. Any items that you put into the chest can't be taken out again and it costs 5000 gold pieces for each balloon drop.");
     case 4:
         ~chatplayer(happy, "I wanna party!");
         ~chatnpc(happy, "I've won the Dance Trophy at the Kandarin Ball three years in a trot!");
@@ -31,12 +31,13 @@ switch_int(~p_choice4("So what's this room for?", 1, "What's the big lever over 
         npc_anim(seq_784, 0);
 }
 
+// TODO (for later versions): ai_timer to auto clean up the party chest (27 Jul 2004 and later will do this)
 [ai_queue10,party_pete](int $arg)
 if($arg < 20) {
     def_int $i = 0;
     while($i < 10) {
         def_coord $balloon_coord = ~random_partyroom_balloon_coord;
-        if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true) {
+        if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true & map_locaddunsafe($balloon_coord) = false) {
             loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
         }
         $i = calc($i + 1);
