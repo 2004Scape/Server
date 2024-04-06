@@ -6,6 +6,11 @@ def_int $magicattack = npc_param(magicattack);
 def_int $effective_magic = ~combat_effective_stat(1, npc_stat(magic), 100); // no prayerbonus
 return(~combat_stat($effective_magic, $magicattack));
 
+[proc,npc_magic_attack_roll_no_prot]()(int)
+def_int $magicattack = npc_param(magicattack);
+def_int $effective_magic = ~combat_effective_stat(1, npc_stat(magic), 100); // no prayerbonus
+return(~combat_stat($effective_magic, $magicattack));
+
 [movecheck,frozen]()(boolean)
 if (map_clock < %stunned) {
     mes("A magical force stops you from moving.");
@@ -122,5 +127,6 @@ if (~npc_player_hit_roll(^magic_style) = true) {
 
 // todo: dunno if this should be queued but protected access lol
 [queue,freeze_player](int $duration)
+mes("You've been frozen!");
 %stunned = calc(map_clock + $duration + 1);
 setmovecheck(frozen);
