@@ -3,6 +3,7 @@
 
 [proc,combat_clearqueue]
 clearqueue(playerhit_n_retaliate);
+clearqueue(damage_player);
 
 [queue,player_death]
 p_stopaction;
@@ -50,6 +51,7 @@ mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleap
 healenergy(10000);
 ~combat_clearqueue;
 ~clear_pk_skull;
+~clear_poison;
 // todo: end poison timer ~player_end_poison
 ~update_all($prev_wep);
 

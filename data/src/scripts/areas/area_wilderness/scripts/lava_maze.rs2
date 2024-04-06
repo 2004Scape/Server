@@ -23,3 +23,12 @@ inv_add(inv, chaosrune, 2);
 inv_add(inv, uncut_ruby, 1);
 mes("You find some treasure in the chest!");
 p_delay(0);
+
+[oploc1,loc_1766]
+p_teleport(0_47_60_8_9);
+
+[oploc1,loc_1767]
+p_teleport(0_47_160_8_9);
+
+[oploc1,loc_1768]
+p_teleport(0_47_60_62_16);
