@@ -46,8 +46,7 @@ p_telejump(0_50_50_22_22); // todo: randomize
 anim(null, 0);
 mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
 
-stat_heal(hitpoints, 99, 0);
-stat_heal(prayer, 99, 0);
+~stat_reset_all;
 healenergy(10000);
 ~combat_clearqueue;
 ~clear_pk_skull;
