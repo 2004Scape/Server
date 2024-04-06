@@ -7,12 +7,27 @@ clearqueue(damage_player);
 
 [queue,player_death]
 p_stopaction;
+if_close;
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
 p_delay(6);
 
-// todo: save 3 items + protect items prayer
-// todo: pk skull lose all items
+def_boolean $skulled = false;
+if (%pk_skull > 0) { $skulled = true; }
+def_boolean $protecting_item = false;
+if (%prayer_protectitems = ^true) { $protecting_item = true; }
+inv_clear(tempinv);
+
+if($skulled = false) {
+    ~move_priciest_item_on_hero_to_tempinv;
+    ~move_priciest_item_on_hero_to_tempinv;
+    ~move_priciest_item_on_hero_to_tempinv;
+}
+if($protecting_item = true) {
+    ~move_priciest_item_on_hero_to_tempinv;
+}
+
+
 def_int $i = 0;
 def_int $size = inv_size(inv);
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
@@ -42,7 +57,8 @@ while ($i < $size) {
     $i = calc($i + 1);
 }
 buildappearance(worn);
-
+~moveallinv(tempinv,inv);
+~deactivate_prayers;
 p_telejump(0_50_50_22_22); // todo: randomize
 anim(null, 0);
 mes("Oh dear, you are dead!");
@@ -55,6 +71,53 @@ healenergy(10000);
 ~clear_poison;
 // todo: end poison timer ~player_end_poison
 ~update_all($prev_wep);
+inv_clear(tempinv);
+
+[proc,move_priciest_item_on_hero_to_tempinv]
+def_obj $priciest_item;
+def_obj $currentitem;
+def_int $biggest_price = 0;
+def_int $size_inv = inv_size(inv);
+def_int $size_worn = inv_size(inv);
+def_boolean $is_worn = false;
+def_int $i = 0;
+while ($i < $size_inv) {
+    if (inv_getnum(inv, $i) > 0) {
+        $currentitem = inv_getobj(inv, $i);
+        if (oc_category($currentitem) ! armour_godcape) {
+            if (oc_cost($currentitem) > $biggest_price) {
+                $biggest_price = oc_cost($currentitem);
+                $priciest_item = $currentitem;
+            }
+        }
+    }
+    $i = calc($i + 1);
+}
+while ($i < $size_worn) {
+    if (inv_getnum(worn, $i) > 0) {
+        $currentitem = inv_getobj(worn, $i);
+        if (oc_category($currentitem) ! armour_godcape) {
+            if (oc_cost($currentitem) > $biggest_price) {
+                $is_worn = true;
+                $biggest_price = oc_cost($currentitem);
+                $priciest_item = $currentitem;
+            }
+        }
+    }
+    $i = calc($i + 1);
+}
+
+if($priciest_item = null ) {
+    return;
+}
+if($is_worn = true) {
+    inv_moveitem(worn,tempinv,$priciest_item,1);
+} else {
+    inv_moveitem(inv,tempinv,$priciest_item,1);
+}
+
+[debugproc,death]
+~damage_self(999);
 
 [proc,damage_self](int $amount)
 if_close;
