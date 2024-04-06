@@ -44,19 +44,12 @@ if (inv_total(inv, airrune) < 25 & inv_total(inv, mindrune) < 25) {
     ~doubleobjbox(airrune, mindrune, "Terrova gives you some |@blu@Air runes| and some |@blu@Mind runes!");
     inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
     inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
-    return;
-}
-
-if (inv_total(inv, airrune) < 25) {
+}else if (inv_total(inv, airrune) < 25) {
     ~objboxt(airrune, "Terrova gives you some |@blu@Air runes!");
     inv_add(inv, airrune, ~magic_instructor_runes_to_give(airrune));
-    return;
-}
-
-if (inv_total(inv, mindrune) < 25) {
+}else if (inv_total(inv, mindrune) < 25) {
     ~objboxt(mindrune, "Terrova gives you some |@blu@Mind runes!");
     inv_add(inv, mindrune, ~magic_instructor_runes_to_give(mindrune));
-    return;
 }
 
 [proc,magic_instructor_runes_to_give](obj $obj)(int)
@@ -97,9 +90,6 @@ if (%tutorial_progress = ^tutorial_successful_wind_strike) {
 // check inventory space...
 // There's no inventory full message on OSRS it still shows the interface just no runes are given...
 ~doubleobjbox(airrune, mindrune, "Terrova gives you five |@blu@Air runes| and five |@blu@Mind runes!");
-if (inv_freespace(inv) < 1) {
-    return;
-}
 inv_add(inv, airrune, 5);
 inv_add(inv, mindrune, 5);
 

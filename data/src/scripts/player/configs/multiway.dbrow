@@ -66,5 +66,6 @@ data=coord_pair,0_39_50_8_8,0_39_50_47_47
 data=coord_pair,0_39_50_48_8,0_39_50_55_31
 // varrock sewer
 data=coord_pair,0_49_154_16_0,0_51_154_30_63
-
+// kbd lair
+data=coord_pair,0_42_153_15_0,0_42_153_45_40
 // todo - more underground?

@@ -1,0 +1,13 @@
+[ardougne_to_wilderness_lever]
+name=Lever
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull
+
+[wilderness_to_ardougne_lever]
+name=Lever
+desc=I wonder what this does...
+model=model_loc_34
+active=yes
+op1=Pull

@@ -1,5 +1,3 @@
-[varp_6]
-
 [varp_7]
 
 [varp_8]
@@ -96,8 +94,6 @@ scope=perm
 
 [waterfall_golrie_and_puzzle]
 scope=perm
-
-[varp_69]
 
 [boat_takeoff]
 transmit=yes

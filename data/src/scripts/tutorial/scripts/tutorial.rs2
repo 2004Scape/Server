@@ -81,6 +81,7 @@ if (%tutorial_progress > ^chef_baked_bread) {
 }
 
 if (%tutorial_progress > ^chef_opened_music_tab) {
+    ~update_weight; // update weight
     if_settab(controls, ^tab_player_controls);
 }
 
@@ -89,7 +90,9 @@ if (%tutorial_progress > ^quest_guide_open_menu) {
     if_settab(questlist, ^tab_quest_journal);
 }
 
+
 if (%tutorial_progress > ^combat_instructor_wielding_weapons) {
+    ~update_bonuses; // update bonuses if
     inv_transmit(worn, wornitems:wear);
     if_settab(wornitems, ^tab_wornitems);
 }
@@ -171,7 +174,6 @@ if (%tutorial_progress = 2) {
     }
 }
 ~set_tutorial_progress;
-
 
 [proc,set_tutorial_progress]
 switch_int(%tutorial_progress) {
@@ -268,7 +270,9 @@ if (%tutorial_progress < ^combat_instructor_worn_inventory) {
     return;
 }
 
-if (%tutorial_progress = ^combat_instructor_worn_inventory) {
+def_obj $weapon = inv_getobj(inv, $slot);
+
+if (%tutorial_progress = ^combat_instructor_worn_inventory & $weapon = bronze_dagger) {
     %tutorial_progress = ^combat_instructor_dagger_equipped;
     ~set_tutorial_progress;
 }
@@ -276,6 +280,12 @@ if (%tutorial_progress = ^combat_instructor_worn_inventory) {
 @levelrequire_attack(1, $slot);
 if_settab(null, ^tab_combat_options);
 
+[proc,tutorial_has_obj_on_person](namedobj $obj)(boolean)
+if (inv_total(inv, $obj) > 0 | inv_total(worn, $obj) > 0) {
+    return (true);
+} else {
+    return (false);
+}
 
 [proc,tutorial_give_xp](stat $skill, int $xp)
 if (stat_base($skill) >= 3) {
@@ -304,7 +314,7 @@ inv_add(inv, wooden_shield, 1);
 inv_add(inv, shortbow, 1);
 inv_add(inv, bronze_arrow, 25);
 inv_add(inv, airrune, 25);
-inv_add(inv, mindrune, 16);
+inv_add(inv, mindrune, 15);
 inv_add(inv, waterrune, 6);
 inv_add(inv, earthrune, 4);
 inv_add(inv, bodyrune, 2);

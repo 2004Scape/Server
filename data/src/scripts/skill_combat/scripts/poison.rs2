@@ -3,7 +3,11 @@ if (map_members = false) {
     // nothing poisons in f2p
     return;
 }
-if (%antipoison < map_clock) {
+
+if (%poison = 0) {
+    mes("You have been poisoned!");
+}
+if (%poison = 0 | %antipoison < map_clock) {
     settimer(poison, 30);
 }
 %poison = $severity;
@@ -49,3 +53,8 @@ sound_synth($sound, 0, 20);
 if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {
     queue(player_death, 0);
 }
+
+
+[proc,clear_poison]
+%poison = 0;
+cleartimer(poison);

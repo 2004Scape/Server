@@ -63,7 +63,8 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=bolts
-param=rangebonus,14
+param=rangebonus,22
+//UNKNOWN, setting to same rangebonus as mithril arrow as according to guesses in https://web.archive.org/web/20041204070450/https://www.lunagang.nl/ , used to be 14 as according to osrs. TODO CONFIRM
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
@@ -89,8 +90,10 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=bolts
-param=rangebonus,48
-param=levelrequire,26
+param=rangebonus,16
+//UNKNOWN, set to same rangebonus as steel arrowas according to guesses in https://web.archive.org/web/20041204070450/https://www.lunagang.nl/ , used to be 48 as according to osrs . TODO CONFIRM
+param=levelrequire,1
+//Level requirements are guessed to be nonexistent. osrs/post-crossbow-update puts them at 26
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
 tradeable=yes
@@ -111,7 +114,8 @@ iop2=Wield
 wearpos=quiver
 weight=18g
 category=bolts
-param=rangebonus,12
+param=rangebonus,40
+//UNKNOWN, setting to rangebonus between adamant and rune arrows (31+49/2=40) as according to guesses in https://web.archive.org/web/20041204070450/https://www.lunagang.nl/ , used to be 12 as according to osrs. TODO CONFIRM
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel

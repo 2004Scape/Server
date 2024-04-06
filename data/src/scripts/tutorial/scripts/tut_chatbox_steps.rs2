@@ -32,7 +32,7 @@ hint_coord(^hint_west, 0_48_48_28_23, 175);
 ~tutorialstep("Cut down a tree", "You can click on the backpack icon at any time to view|the items you currently have in your inventory. You will see that you now have an axe in your inventory. Use this to get some logs by clicking on the indicated tree.");
 
 [proc,tutorial_please_wait_woodcutting]
-~tutorialstep("Please wait...", "|Your character is now attempting to cut down the tree. Sit back|for a moment whilst he does all the hard work.");
+~tutorialstep("Please wait...", "|Your character is now attempting to cut down the tree. Sit back|for a moment whilst <text_gender("he", "she")> does all the hard work.");
 
 [proc,tutorial_step_build_fire]
 ~tutorialstep("Building a fire", "Well done - you managed to cut some logs from the tree! Next, use the tinderbox in your inventory to light the logs.|a) First click on the tinderbox to use it.|b) Then click on the logs in your inventory to light them.");
@@ -75,7 +75,7 @@ hint_coord(^hint_east, 0_48_48_6_12, 150);
 
 [proc,tutorial_step_make_dough]
 hint_stop();
-~tutorialstep("Making dough.", "This is the base for many of the meals. To make dough we must|mix flour and water. So first right click the bucket of water and|select use  then left click on the pot of flour.");
+~tutorialstep("Making dough.", "This is the base for many of the meals. To make dough we must|mix flour and water. So first right click the bucket of water and|select use then left click on the pot of flour.");
 
 [proc,tutorial_step_cooking_dough]
 hint_coord(2, 0_48_48_3_9, 100);
@@ -99,6 +99,7 @@ hint_coord(^hint_east, 0_48_48_0_18, 150);
 [proc,tutorial_step_click_run_icon]
 if_settabflash(^tab_player_controls);
 if_settab(controls, ^tab_player_controls);
+~update_weight; // update weight
 
 ~tutorialstep("It's only a short distance to the next guide.", "|Why not try running there. Start by opening the player|controls, that's the flashing icon of a running man.");
 
@@ -130,7 +131,7 @@ if_settab(questlist, ^tab_quest_journal);
 ~tutorialstep("", "Your Quest journal.|This is your quest journal, a list of all the quests in the game.|Talk to the instructor again for an explanation.");
 
 [proc,tutorial_step_enter_mine]
-hint_coord(^hint_center, 0_48_48_16_47, 100);
+hint_coord(^hint_center, 0_48_48_16_47, 0);
 ~tutorialstep("", "Moving on.|It's time to enter some caves. Click on the ladder to go down to|the next area.");
 
 [proc,tutorial_step_talk_to_mining_instructor]
@@ -183,16 +184,16 @@ if (%tutorial_progress = ^mining_instructor_mining_start) {
 }
 
 if (%tutorial_progress = ^mining_instructor_minted_copper_first) {
-    ~tutorialstep("Mining.", "Now you have some copper ore you just need some tin ore, then you'll have all you need to create a bronze bar. As you did before right click on the tin rock and select 'mine'.");
+    ~tutorialstep("Mining.", "Now you have some copper ore you just need some tin ore, then you'll have all you need to create a bronze bar. As you did|before right click on the tin rock and select 'mine'.");
 }
 
 if (%tutorial_progress = ^mining_instructor_mined_tin_first) {
-    ~tutorialstep("Mining.", "Now you have some tin ore you just need some copper ore, then you'll have all you need to create a bronze bar. As you did before right click on the copper rock and select 'mine'.");
+    ~tutorialstep("Mining.", "Now you have some tin ore you just need some copper ore, then you'll have all you need to create a bronze bar. As you did|before right click on the copper rock and select 'mine'.");
 }
 
 [proc,tutorial_step_smelting]
 hint_coord(^hint_center, 0_48_148_7_24, 150);
-~tutorialstep("Smelting.", "You should now have some copper and tin ore. So let's smelt|them to make a bronze bar. To do this right click on either tin or|copper ore and select use then left click on the furnace. Try it now.");
+~tutorialstep("Smelting.", "You should now have both copper and tin ore. So let's smelt|them to make a bronze bar. To do this right click on either tin or|copper ore and select use then left click on the furnace. Try it now.");
 
 [proc,tutorial_step_bronze_bar]
 hint_stop();
@@ -217,6 +218,7 @@ hint_stop();
 [proc,tutorial_step_wielding_weapons]
 hint_stop();
 ~tutorialstep("", "Wielding weapons.|You now have access to a new interface. Click on the flashing icon of a man, the one to the right of your backpack icon.");
+~update_bonuses; // update bonuses if
 inv_transmit(worn, wornitems:wear);
 if_settab(wornitems, ^tab_wornitems);
 if_settabflash(^tab_wornitems);
@@ -259,7 +261,7 @@ hint_stop();
 
 [proc,tutorial_step_combat_moving_on]
 hint_coord(^hint_center, 0_48_148_39_54, 125);
-~tutorialstep("Moving on.", "You have completed the tasks here, to move on click on the ladder shown. If you need to go over any of what you learned here just to Vannaka and he'll tell you what he can.");
+~tutorialstep("Moving on.", "You have completed the tasks here, to move on click on the|ladder shown. If you need to go over any of what you learned|here just talk to Vannaka and he'll tell you what he can.");
 
 [proc,tutorial_step_banking]
 hint_coord(^hint_center, 0_48_48_50_52, 125);
@@ -267,7 +269,7 @@ hint_coord(^hint_center, 0_48_48_50_52, 125);
 
 [proc,tutorial_step_this_is_your_bank_box]
 hint_coord(^hint_east, 0_48_48_52_52, 150);
-~tutorialstep("This is your bank box.", "You can store stuff here for safe keeping. If you die, anything in your bank will be saved. To deposit something right click it and select store. Once you've had a good look close the window and move on through the door indicated.");
+~tutorialstep("This is your bank box.", "You can store stuff here for safe keeping. If you die,|anything in your bank will be saved. To deposit something right|click it and select store. Once you've had a good look close the|window and move on through the door indicated.");
 
 [proc,tutorial_step_financial_advisor]
 ~set_hint_icon_financial_advisor;

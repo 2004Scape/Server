@@ -4,7 +4,7 @@
 3=mcannon_ammo
 4=mcannon_coord
 5=grail_progress
-6=varp_6
+6=coal_truck
 7=varp_7
 8=varp_8
 9=beehive_free
@@ -62,12 +62,12 @@
 61=varp_61
 62=gobdip_progress
 63=runemysteries_progress
-64=exit_essence_mine_coord
+64=warning_wilderness_teleport_lever
 65=waterfall_progress
 66=waterfall_golrie_and_puzzle
 67=hetty_progress
 68=biohazard_progress
-69=varp_69
+69=exit_essence_mine_coord
 70=plantation_employed
 71=hunt_progress
 72=food_store_employed

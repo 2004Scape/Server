@@ -162,6 +162,7 @@ head1=model_52_idk_head
 head2=model_82_idk_head
 head3=model_44_obj_wear
 wanderrange=2
+moverestrict=indoors
 
 [financial_advisor]
 vislevel=hide
