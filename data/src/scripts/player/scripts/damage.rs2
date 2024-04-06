@@ -11,8 +11,6 @@ midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
 p_delay(6);
 
-// todo: save 3 items + protect items prayer
-// todo: pk skull lose all items
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
 def_boolean $protecting_item = false;
