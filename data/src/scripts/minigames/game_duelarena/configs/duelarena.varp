@@ -1,0 +1,10 @@
+[duelpartner]
+type=player_uid
+protect=no
+
+[duelstatus]
+type=int
+protect=no
+
+[duel_settings]
+transmit=yes

@@ -1,0 +1,244 @@
+[opplayer1,_]
+if (.busy = true) {
+    mes("<.displayname> is busy at the moment.");
+    return;
+}
+
+mes("Sending duel offer...");
+%duelpartner = .uid;
+
+if (.%duelpartner = uid) {
+    if_settext(duel_select_type:status, "");
+    if_settext(duel_select_type:otherplayer, "Dueling with: <.displayname>");
+    inv_clear(tempinv);
+    inv_transmit(tempinv, duel_select_type:inv);
+    invother_transmit(.uid, tempinv, duel_select_type:otherinv);
+    inv_transmit(inv, duel_side:inv);
+
+    .if_settext(duel_select_type:status, "");
+    .if_settext(duel_select_type:otherplayer, "Dueling with: <displayname>");
+    .inv_clear(tempinv);
+    .inv_transmit(tempinv, duel_select_type:inv);
+    .invother_transmit(uid, tempinv, duel_select_type:otherinv);
+    .inv_transmit(inv, duel_side:inv);
+
+    if_openmainmodalsideoverlay(duel_select_type, duel_side);
+    .if_openmainmodalsideoverlay(duel_select_type, duel_side);
+    
+    %duelstatus = 0;
+    .%duelstatus = 0;
+} else {
+    .mes("<displayname>:duelreq:");
+}
+
+[if_close,duel_select_type]
+inv_stoptransmit(duel_select_type:inv);
+inv_stoptransmit(duel_select_type:otherinv);
+inv_stoptransmit(duel_side:inv);
+
+
+~moveallinv(tempinv, inv);
+
+if (.finduid(%duelpartner) = true) {
+    .%duelpartner = null;
+    .if_close;
+    .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
+}
+
+%duelpartner = null;
+
+[if_close,duel_confirm]
+inv_stoptransmit(duel_confirm:inv);
+inv_stoptransmit(duel_confirm:otherinv);
+
+~moveallinv(tempinv, inv);
+
+if (.finduid(%duelpartner) = true) {
+    .%duelpartner = null;
+    .if_close;
+    .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
+}
+
+%duelpartner = null;
+
+[if_button,duel_select_type:accept]
+%duelstatus = 1;
+
+if (.finduid(%duelpartner) = true) {
+    if (.%duelstatus = 1) {
+        inv_stoptransmit(duel_select_type:inv);
+        inv_stoptransmit(duel_select_type:otherinv);
+        inv_stoptransmit(duel_side:inv);
+
+        .inv_stoptransmit(duel_select_type:inv);
+        .inv_stoptransmit(duel_select_type:otherinv);
+        .inv_stoptransmit(duel_side:inv);
+        // check if contents of tempinv fits in other player's inv
+        def_int $size = inv_size(tempinv);
+        def_int $slot = 0;
+        while ($slot < $size) {
+            def_obj $obj = inv_getobj(tempinv, $slot);
+            def_int $num = inv_getnum(tempinv, $slot);
+
+            if ($obj ! null) {
+                if (.inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
+                    mes("Other player doesn't have enough inventory space for this duel."); // guess
+                    .mes("You don't have enough inventory space for this duel."); // guess
+
+                    if_close;
+                    .if_close;
+                    return;
+                }
+            }
+
+            $slot = add($slot, 1);
+        }
+
+        // and in the reverse direction
+        $slot = 0;
+        while ($slot < $size) {
+            def_obj $obj = .inv_getobj(tempinv, $slot);
+            def_int $num = .inv_getnum(tempinv, $slot);
+
+            if ($obj ! null) {
+                if (inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
+                    mes("You don't have enough inventory space for this duel."); // guess
+                    .mes("Other player doesn't have enough inventory space for this duel."); // guess
+
+                    if_close;
+                    .if_close;
+                    return;
+                }
+            }
+
+            $slot = add($slot, 1);
+        }
+
+        def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
+        if ($tempinvused < 1) {
+            if_settext(duel_confirm:com_91, "Absolutely nothing!");
+            .if_settext(duel_confirm:com_96, "Absolutely nothing!");
+        } else {
+            if_settext(duel_confirm:com_91, "");
+            .if_settext(duel_confirm:com_96, "");
+
+            inv_transmit(tempinv, duel_confirm:inv);
+            .invother_transmit(uid, tempinv, duel_confirm:otherinv);
+        }
+
+        def_int $other_tempinvused = sub(inv_size(tempinv), .inv_freespace(tempinv));
+        if ($other_tempinvused < 1) {
+            if_settext(duel_confirm:com_96, "Absolutely nothing!");
+            .if_settext(duel_confirm:com_91, "Absolutely nothing!");
+        } else {
+            if_settext(duel_confirm:com_96, "");
+            .if_settext(duel_confirm:com_91, "");
+
+            invother_transmit(.uid, tempinv, duel_confirm:otherinv);
+            .inv_transmit(tempinv, duel_confirm:inv);
+        }
+        if_openmainmodal(duel_confirm);
+        .if_openmainmodal(duel_confirm);
+
+        if_settext(duel_confirm:status, "");
+        .if_settext(duel_confirm:status, "");
+
+        if_settext(duel_confirm:com_97, "Are you sure you want to fight this duel?");
+        .if_settext(duel_confirm:com_97, "Are you sure you want to fight this duel?");
+
+        %duelstatus = 2;
+        .%duelstatus = 2;
+    } else {
+        .if_settext(duel_select_type:status, "Other player has accepted...");
+        if_settext(duel_select_type:status, "Waiting for other player...");
+    }
+}
+
+[if_button,duel_confirm:accept]
+%duelstatus = 3;
+
+if (.finduid(%duelpartner) = true) {
+    if (.%duelstatus = 3) {
+        mes("Accepted stake and duel options.");
+        .mes("Accepted stake and duel options.");
+
+        both_moveinv(tempinv, inv);
+        .both_moveinv(tempinv, inv);
+
+        %duelpartner = null;
+        .%duelpartner = null;
+
+        if_close;
+        .if_close;
+        @start_duel;
+    } else {
+        .if_settext(duel_confirm:status, "Other player has accepted."); // https://youtu.be/HFp6hOkiCns?t=481
+        if_settext(duel_confirm:status, "Waiting for other player."); 
+    }
+}
+
+[inv_button1,duel_select_type:inv] @removefromduel(last_slot, 1);
+[inv_button2,duel_select_type:inv] @removefromduel(last_slot, 5);
+[inv_button3,duel_select_type:inv] @removefromduel(last_slot, 10);
+[inv_button4,duel_select_type:inv] @removefromduel(last_slot, ^max_32bit_int);
+[inv_button5,duel_select_type:inv] @removefromduel(last_slot, null);
+
+[label,removefromduel](int $slot, int $amount)
+if ($amount <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $amount = last_int;
+}
+
+def_obj $obj = inv_getobj(tempinv, $slot);
+def_int $total = inv_total(tempinv, $obj);
+if ($amount < $total) $total = $amount;
+inv_moveitem(tempinv, inv, $obj, $total);
+
+%duelstatus = 0;
+if_settext(duel_select_type:status, "");
+if (.finduid(%duelpartner) = true) {
+    .%duelstatus = 0;
+    .if_settext(duel_select_type:status, "");
+}
+
+[inv_button1,duel_side:inv] @movetoduel(last_slot, 1);
+[inv_button2,duel_side:inv] @movetoduel(last_slot, 5);
+[inv_button3,duel_side:inv] @movetoduel(last_slot, 10);
+[inv_button4,duel_side:inv] @movetoduel(last_slot, ^max_32bit_int);
+[inv_button5,duel_side:inv] @movetoduel(last_slot, null);
+
+
+[label,movetoduel](int $slot, int $amount)
+if ($amount <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $amount = last_int;
+}
+
+def_obj $obj = inv_getobj(inv, $slot);
+
+if (oc_tradeable($obj) = false) {
+    mes("You can't stake this item."); // guess for now
+    return;
+}
+
+if (oc_members($obj) = true & map_members = false) { // cant duel on f2p worlds anyway but just incase
+    mes("You can't stake this item.");
+    return;
+}
+
+def_int $total = inv_total(inv, $obj);
+if ($amount < $total) $total = $amount;
+inv_moveitem(inv, tempinv, $obj, $total);
+
+%duelstatus = 0;
+if_settext(duel_select_type:status, "");
+if (.finduid(%duelpartner) = true) {
+    .%duelstatus = 0;
+    .if_settext(duel_select_type:status, "");
+}
+
+// ---
+
+[label,start_duel]

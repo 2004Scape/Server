@@ -762,7 +762,7 @@ width=218
 height=142
 scroll=216
 
-[com_95]
+[inv]
 layer=com_94
 type=inv
 x=9
@@ -796,7 +796,7 @@ width=220
 height=142
 scroll=216
 
-[com_98]
+[otherinv]
 layer=com_97
 type=inv
 x=9
@@ -824,7 +824,7 @@ y=212
 width=78
 height=42
 
-[com_101]
+[accept]
 layer=com_100
 type=rect
 x=6
@@ -834,7 +834,7 @@ width=66
 height=31
 fill=yes
 
-[com_102]
+[accept_text]
 layer=com_100
 type=text
 x=21
@@ -908,7 +908,7 @@ y=262
 width=78
 height=43
 
-[com_110]
+[decline]
 layer=com_109
 type=rect
 x=6
@@ -918,7 +918,7 @@ width=66
 height=31
 fill=yes
 
-[com_111]
+[decline_text]
 layer=com_109
 type=text
 x=20
@@ -985,7 +985,7 @@ width=25
 height=30
 graphic=steelborder,3
 
-[com_118]
+[otherplayer]
 type=text
 x=21
 y=29
@@ -996,7 +996,7 @@ shadowed=yes
 text=Dueling with:
 colour=0xFFAA44
 
-[com_119]
+[status]
 type=text
 x=194
 y=293
@@ -1021,7 +1021,7 @@ text=Close Window
 colour=0x808080
 overcolour=0xFFFFFF
 
-[com_121]
+[no_forfeit_text]
 type=text
 x=61
 y=210
@@ -1033,7 +1033,7 @@ shadowed=yes
 text=No Forfeit
 colour=0xAA8822
 
-[com_122]
+[no_magic_text]
 type=text
 x=188
 y=250
@@ -1045,7 +1045,7 @@ shadowed=yes
 text=No Magic
 colour=0xAA8822
 
-[com_123]
+[no_ranged_text]
 type=text
 x=188
 y=210
@@ -1057,7 +1057,7 @@ shadowed=yes
 text=No Ranged
 colour=0xAA8822
 
-[com_124]
+[no_melee_text]
 type=text
 x=188
 y=230
@@ -1069,7 +1069,7 @@ shadowed=yes
 text=No Melee
 colour=0xAA8822
 
-[com_125]
+[no_weapons_text]
 type=text
 x=61
 y=250
@@ -1081,7 +1081,7 @@ shadowed=yes
 text=No Weapons
 colour=0xAA8822
 
-[com_126]
+[no_potions_text]
 type=text
 x=298
 y=210
@@ -1093,7 +1093,7 @@ shadowed=yes
 text=No Potions
 colour=0xAA8822
 
-[com_127]
+[no_food_text]
 type=text
 x=298
 y=230
@@ -1105,7 +1105,7 @@ shadowed=yes
 text=No Food
 colour=0xAA8822
 
-[com_128]
+[no_prayer_text]
 type=text
 x=298
 y=250
@@ -1117,7 +1117,7 @@ shadowed=yes
 text=No Prayer
 colour=0xAA8822
 
-[com_129]
+[no_movement_text]
 type=text
 x=61
 y=230
@@ -1129,7 +1129,7 @@ shadowed=yes
 text=No Movement
 colour=0xAA8822
 
-[com_130]
+[no_armour_text]
 type=text
 x=61
 y=270
@@ -1253,7 +1253,7 @@ width=36
 height=36
 graphic=steelborder2,0
 
-[com_145]
+[no_forfeit]
 type=graphic
 x=36
 y=210
@@ -1265,7 +1265,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_146]
+[no_movement]
 type=graphic
 x=36
 y=230
@@ -1277,7 +1277,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_147]
+[no_weapons]
 type=graphic
 x=36
 y=250
@@ -1289,7 +1289,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_148]
+[no_armour]
 type=graphic
 x=36
 y=270
@@ -1301,7 +1301,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_149]
+[no_ranged]
 type=graphic
 x=162
 y=210
@@ -1313,7 +1313,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_150]
+[no_melee]
 type=graphic
 x=162
 y=230
@@ -1325,7 +1325,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_151]
+[no_magic]
 type=graphic
 x=162
 y=250
@@ -1337,7 +1337,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_152]
+[no_potions]
 type=graphic
 x=272
 y=210
@@ -1349,7 +1349,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_153]
+[no_food]
 type=graphic
 x=272
 y=230
@@ -1361,7 +1361,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_154]
+[no_prayer]
 type=graphic
 x=272
 y=250
@@ -1373,7 +1373,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_155]
+[obstacle_text]
 type=text
 x=298
 y=270
@@ -1385,7 +1385,7 @@ shadowed=yes
 text=Obstacles
 colour=0xAA8822
 
-[com_156]
+[obstacles]
 type=graphic
 x=272
 y=270
@@ -1397,7 +1397,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_157]
+[no_jewelry_text]
 type=text
 x=61
 y=290
@@ -1409,7 +1409,7 @@ shadowed=yes
 text=No Jewelry
 colour=0xAA8822
 
-[com_158]
+[flower_power_text]
 type=text
 x=188
 y=270
@@ -1421,7 +1421,7 @@ shadowed=yes
 text=Flower Power
 colour=0xAA8822
 
-[com_159]
+[flower_power]
 type=graphic
 x=162
 y=270
@@ -1433,7 +1433,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_160]
+[no_jewelry]
 type=graphic
 x=36
 y=290

@@ -138,6 +138,9 @@ if (.finduid(%tradepartner) = true) {
         if_openmainmodal(tradeconfirm);
         .if_openmainmodal(tradeconfirm);
 
+        if_settext(tradeconfirm:com_91, "Are you sure you want to make this trade?");
+        .if_settext(tradeconfirm:com_91, "Are you sure you want to make this trade?");
+
         %tradestatus = 2;
         .%tradestatus = 2;
     } else {
