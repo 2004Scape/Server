@@ -141,7 +141,8 @@ if (.finduid(%tradepartner) = true) {
         %tradestatus = 2;
         .%tradestatus = 2;
     } else {
-        if_settext(trademain:status, "Waiting for other player");
+        if_settext(trademain:status, "Waiting for other player..."); // https://youtu.be/uSO-ilQk5XY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=817
+        .if_settext(trademain:status,"Other player has accepted."); // https://storage.googleapis.com/tannerdino/images/06Dec14-16.jpg
     }
 }
 
@@ -176,6 +177,9 @@ if (.finduid(%tradepartner) = true) {
 
         if_close;
         .if_close;
+    } else {
+        .if_settext(tradeconfirm:com_91, "Other player has accepted."); // osrs
+        if_settext(tradeconfirm:com_91, "Waiting for other player."); // https://youtu.be/uSO-ilQk5XY?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=819
     }
 }
 
@@ -191,6 +195,7 @@ if (%tradestatus ! 3) {
     if (.finduid(%tradepartner) = true) {
         .%tradepartner = null;
         .if_close;
+        .mes("Other player declined trade."); // osrs
     }
 
     %tradepartner = null;
