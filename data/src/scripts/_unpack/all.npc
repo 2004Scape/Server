@@ -1203,9 +1203,9 @@ attack=2
 strength=3
 defence=2
 param=damagetype,^stab_style
-param=attack_anim,human_spear_stab
 param=attack_sound,staff_stab
-param=defend_anim,human_spear_defend
+param=attack_anim,farmer_attack
+param=defend_anim,farmer_hit
 
 [npc_38]
 name=Shipyard worker
