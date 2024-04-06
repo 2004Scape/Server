@@ -3,11 +3,10 @@ if (map_members = false) {
     // nothing poisons in f2p
     return;
 }
-
-if (%poison = 0) {
-    mes("You have been poisoned!");
-}
-if (%poison = 0 | %antipoison < map_clock) {
+if (%antipoison < map_clock) { 
+    if (%poison = 0) {
+        mes("You have been poisoned!");
+    }
     settimer(poison, 30);
 }
 %poison = $severity;
