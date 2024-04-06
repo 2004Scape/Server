@@ -3220,6 +3220,7 @@ hitpoints=60
 attack=30
 strength=30
 defence=30
+param=attackrate,6
 param=attackbonus,33
 param=strengthbonus,31
 param=damagetype,^crush_style
