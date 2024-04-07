@@ -43,7 +43,7 @@ while ($i < $size) {
 }
 buildappearance(worn);
 
-p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
+p_teleport(~coord_lineofwalk_radius(0_50_50_21_18, 2));
 anim(null, 0);
 mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
 
