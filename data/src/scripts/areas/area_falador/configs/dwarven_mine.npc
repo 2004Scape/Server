@@ -21,7 +21,7 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,700
 param=shop_delta,20
 param=shop_title,Drogo's Mining Emporium.
-wanderrange=11
+wanderrange=13
 
 [dwarf_generalshop]
 vislevel=hide

@@ -1,4 +1,4 @@
-[opnpc1,ardounge_monk]
+[opnpc1,ardougne_monk]
 switch_int (%drunkmonk_progress) {
     case ^drunkmonk_not_started: npc_say("Peace brother");
     case ^drunkmonk_spoken_to_omad: npc_say("*yawn*");

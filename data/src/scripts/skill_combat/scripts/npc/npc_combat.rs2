@@ -41,7 +41,6 @@ if (~npc_can_attack_player = false) {
     return;
 }
 anim(%com_defendanim, 0);
-
 npc_anim(npc_param(attack_anim), 0);
 if (npc_param(attack_sound) ! null) {
     sound_synth(npc_param(attack_sound), 0, 0);
@@ -198,6 +197,7 @@ if (~inzone_coord_pair_table(multiway_zones, npc_coord) = false & %npc_attacking
 [proc,npc_set_attack_vars]
 %lastcombat = map_clock;
 %npc_lastattack = map_clock;
+%npc_attacking_uid = uid;
 %aggressive_npc = npc_uid;
 
 [proc,npc_can_attack_player]()(boolean)

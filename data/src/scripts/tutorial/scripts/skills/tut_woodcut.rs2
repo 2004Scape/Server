@@ -4,7 +4,7 @@
 [oploc1,loc_3036] @tut_woodcutting;
 
 [label,tut_woodcutting]
-if (%tutorial_progress < 30) {
+if (%tutorial_progress < ^survival_guide_cut_tree) {
     ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
     return;
 }
@@ -15,7 +15,7 @@ if (inv_freespace(inv) = 0) {
     return;
 }
 
-if (%tutorial_progress > 120) {
+if (%tutorial_progress > ^survival_guide_complete) {
     ~mesbox("Perhaps you've done enough woodcutting now.");
     return;
 }
@@ -61,7 +61,7 @@ while (map_clock < %action_delay) {
 anim(null, 0);
 ~tut_woodcutting_swap_loc;
 ~tutorial_give_xp(woodcutting, 250);
-if (%tutorial_progress = 30) {
+if (%tutorial_progress = ^survival_guide_cut_tree) {
     @tut_advance_woodcutting;
 } else {
     @give_logs;
@@ -75,7 +75,7 @@ loc_change(loc_param(next_loc_stage), $respawnrate);
 anim(null, $respawnrate);
 
 [label,tut_advance_woodcutting]
-%tutorial_progress = 40;
+%tutorial_progress = ^survival_guide_build_fire;
 hint_stop();
 inv_add(inv, logs, 1);
 ~tutorial_step_build_fire;
@@ -87,7 +87,7 @@ inv_add(inv, logs, 1);
 ~objboxt(logs, "You get some logs.");
 
 [oploc1,loc_3037]
-if (%tutorial_progress < 30) {
+if (%tutorial_progress < ^survival_guide_cut_tree) {
     ~mesbox("You cannot cut down this tree yet.|You must progress further in the tutorial.");
     return;
 } else {

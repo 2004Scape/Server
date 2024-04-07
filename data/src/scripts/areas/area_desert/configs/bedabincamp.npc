@@ -105,6 +105,7 @@ head1=model_63_idk_head
 head2=model_30_npc_head
 head3=model_80_idk_head
 wanderrange=2
+attackrange=4
 respawnrate=50
 hitpoints=50
 attack=40

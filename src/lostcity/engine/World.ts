@@ -226,6 +226,10 @@ class World {
             VarPlayerType.load('data/pack/server');
         }
 
+        if (this.shouldReload('param')) {
+            ParamType.load('data/pack/server');
+        }
+
         if (this.shouldReload('obj')) {
             ObjType.load('data/pack/server', this.members);
         }
@@ -256,10 +260,6 @@ class World {
 
         if (this.shouldReload('category')) {
             CategoryType.load('data/pack/server');
-        }
-
-        if (this.shouldReload('param')) {
-            ParamType.load('data/pack/server');
         }
 
         if (this.shouldReload('enum')) {
@@ -416,7 +416,7 @@ class World {
                     script.activeNpc.activeScript = script;
                 } else if (state === ScriptState.WORLD_SUSPENDED) {
                     // suspend to world again
-                    this.enqueueScript(script);
+                    this.enqueueScript(script, script.popInt());
                 }
             } catch (err) {
                 console.error(err);

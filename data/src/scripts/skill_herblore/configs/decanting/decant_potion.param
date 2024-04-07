@@ -1,0 +1,7 @@
+[decant_potion_enum]
+type=enum
+default=null
+
+[dose_count]
+type=int
+default=0

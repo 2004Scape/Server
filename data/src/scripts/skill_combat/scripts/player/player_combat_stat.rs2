@@ -69,6 +69,7 @@ def_int $effective_attack = ~combat_effective_stat($attack_stylebonus, $attack_l
 def_int $effective_strength = ~combat_effective_stat($strength_stylebonus, $strength_level, $strength_prayer);
 def_int $effective_defence = ~combat_effective_stat($defence_stylebonus, $defence_level, $defence_prayer);
 def_int $effective_magic = ~combat_effective_stat(1, $magic_level, 100); // no magic prayers
+def_int $effective_magic_defence = calc(scale(7, 10, sub($effective_magic, 8)) + scale(3, 10, sub($effective_defence, 8)) + 8); // sub 8 here because ~combat_effective_stat already adds 8
 def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_level, 100); // no ranged prayers
 
 // style related varps
@@ -78,12 +79,12 @@ def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_l
 // defence rolls and attack rolls
 %com_stabattack = ~combat_stat($effective_attack, $stabattack);
 %com_stabdef = ~combat_stat($effective_defence, $stabdefence);
-%com_slashattack = ~combat_stat($effective_attack, $stabattack);
-%com_slashdef = ~combat_stat($effective_defence, $stabdefence);
-%com_crushattack = ~combat_stat($effective_attack, $stabattack);
-%com_crushdef = ~combat_stat($effective_defence, $stabdefence);
+%com_slashattack = ~combat_stat($effective_attack, $slashattack);
+%com_slashdef = ~combat_stat($effective_defence, $slashdefence);
+%com_crushattack = ~combat_stat($effective_attack, $crushattack);
+%com_crushdef = ~combat_stat($effective_defence, $crushdefence);
 %com_magicattack = ~combat_stat($effective_magic, $magicattack);
-%com_magicdef = ~combat_stat($effective_magic, $magicdefence);
+%com_magicdef = ~combat_stat($effective_magic_defence, $magicdefence);
 %com_rangeattack = ~combat_stat($effective_ranged, $rangeattack);
 %com_rangedef = ~combat_stat($effective_ranged, $rangedefence);
 
@@ -171,6 +172,7 @@ def_int $effective_attack = ~combat_effective_stat($attack_stylebonus, $attack_l
 def_int $effective_strength = ~combat_effective_stat($strength_stylebonus, $strength_level, $strength_prayer);
 def_int $effective_defence = ~combat_effective_stat($defence_stylebonus, $defence_level, $defence_prayer);
 def_int $effective_magic = ~combat_effective_stat(1, $magic_level, 100); // no magic prayers
+def_int $effective_magic_defence = calc(scale(7, 10, sub($effective_magic, 8)) + scale(3, 10, sub($effective_defence, 8)) + 8); // sub 8 here because ~combat_effective_stat already adds 8
 def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_level, 100); // no ranged prayers
 
 // style related varps
@@ -180,12 +182,12 @@ def_int $effective_ranged = ~combat_effective_stat($ranged_stylebonus, $ranged_l
 // defence rolls and attack rolls
 .%com_stabattack = ~combat_stat($effective_attack, $stabattack);
 .%com_stabdef = ~combat_stat($effective_defence, $stabdefence);
-.%com_slashattack = ~combat_stat($effective_attack, $stabattack);
-.%com_slashdef = ~combat_stat($effective_defence, $stabdefence);
-.%com_crushattack = ~combat_stat($effective_attack, $stabattack);
-.%com_crushdef = ~combat_stat($effective_defence, $stabdefence);
+.%com_slashattack = ~combat_stat($effective_attack, $slashattack);
+.%com_slashdef = ~combat_stat($effective_defence, $slashdefence);
+.%com_crushattack = ~combat_stat($effective_attack, $crushattack);
+.%com_crushdef = ~combat_stat($effective_defence, $crushdefence);
 .%com_magicattack = ~combat_stat($effective_magic, $magicattack);
-.%com_magicdef = ~combat_stat($effective_magic, $magicdefence);
+.%com_magicdef = ~combat_stat($effective_magic_defence, $magicdefence);
 .%com_rangeattack = ~combat_stat($effective_ranged, $rangeattack);
 .%com_rangedef = ~combat_stat($effective_ranged, $rangedefence);
 

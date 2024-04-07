@@ -1,0 +1,78 @@
+[proc,pvm_tutorial_spell](int $spell)
+def_dbrow $spell_data = ~get_spell_data($spell);
+if (~pvm_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (~pvm_freeze_allowed($spell_data) = false) {
+    return;
+}
+if (~pvm_debuff_allowed($spell_data) = false) {
+    return;
+}
+
+if (npc_type = tut_chicken & %tutorial_progress >= ^tutorial_successful_wind_strike) {
+        ~mesbox("You've already done that.|Perhaps you should move on.");
+        return;
+}
+
+def_int $duration = ~tut_pvm_spell_cast($spell_data);
+
+if (npc_type = tut_chicken & %tutorial_progress < ^tutorial_successful_wind_strike) {
+    if (%tutorial_progress = ^tutorial_cast_wind_strike) {
+        %tutorial_progress = ^tutorial_unsuccessful_wind_strike;
+        ~pvm_spell_fail($spell_data, $duration);
+        ~set_tutorial_progress;
+    } else if (%tutorial_progress = ^tutorial_unsuccessful_wind_strike) {
+        %tutorial_progress = ^tutorial_successful_wind_strike;
+        ~pvm_spell_success($spell_data, ~magic_spell_maxhit($spell_data), $duration);
+        ~pvm_stat_change_effect($spell_data);
+        ~pvm_freeze_effect($spell_data);
+        ~set_tutorial_progress;
+    }
+} else {
+    // if player DOESNT splash:
+    if (~player_npc_hit_roll(^magic_style) = true) {
+        ~pvm_spell_success($spell_data, ~magic_spell_maxhit($spell_data), $duration);
+        ~pvm_stat_change_effect($spell_data);
+        ~pvm_freeze_effect($spell_data);
+    } else {
+        ~pvm_spell_fail($spell_data, $duration);
+    }
+}
+
+
+[proc,tut_pvm_spell_cast](dbrow $spell_data)(int)
+~player_combat_stat;
+~delete_spell_runes($spell_data);
+~tut_give_spell_xp($spell_data);
+
+// in osrs you can only defensive cast with a staff. Not sure if this is the case in 2004
+// Might be confusing for players if they just so happen to have their non-magic weapon on defensive, and end up gaining def xp from manual casting.
+// so maybe jagex did it this way?
+if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpos_rhand)) = weapon_staff) {
+    %damagestyle = ^style_magic_defensive; // casting a spell with defensive on gives mage + def xp
+} else {
+    %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
+}
+
+// spell anim
+anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
+// player spell visual effect
+spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
+// shoot spell projectile
+%action_delay = add(map_clock, 5);
+def_int $duration = 0;
+if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
+    $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0), 51, 16, -5, 64, 10);
+}
+// OSRS:
+// only continue fighting if auto cast is turned on
+// freezes, and stat reductions dont continue ever, even if you have autocast enabled.
+// crumble undead continues autocast for some reason
+if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0 & db_getfield($spell_data, magic_spell_table:continue_by_autocast, 0) = true) {
+    p_opnpct(db_getfield(~get_spell_data(%autocast_spell), magic_spell_table:spellcom, 0));
+}
+return($duration);
+
+[proc,tut_give_spell_xp](dbrow $spell_data)
+~tutorial_give_xp(magic, db_getfield($spell_data, magic_spell_table:experience, 0));

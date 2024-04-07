@@ -1,0 +1,122 @@
+// Copper Rock
+[oploc1,loc_3042]
+if (~tut_mining("copper") = false) {
+    return;
+}
+
+if (%tutorial_progress = ^mining_instructor_mining_start) {
+    %tutorial_progress = ^mining_instructor_minted_copper_first;
+}
+
+if (%tutorial_progress = ^mining_instructor_mined_tin_first) {
+    %tutorial_progress = ^mining_instructor_before_smelt_bronze_bar;
+}
+~set_tutorial_progress;
+inv_add(inv, copper_ore, 1);
+~tutorial_give_xp(mining, 175);
+~mesbox("You manage to mine some copper.");
+
+// Tin Ore
+[oploc1,loc_3043]
+if (~tut_mining("tin") = false) {
+    return;
+}
+
+if (%tutorial_progress = ^mining_instructor_mining_start) {
+    %tutorial_progress = ^mining_instructor_mined_tin_first;
+}
+
+if (%tutorial_progress = ^mining_instructor_minted_copper_first) {
+    %tutorial_progress = ^mining_instructor_before_smelt_bronze_bar;;
+}
+~set_tutorial_progress;
+inv_add(inv, tin_ore, 1);
+~tutorial_give_xp(mining, 175);
+~mesbox("You manage to mine some tin.");
+
+[proc,tut_mining](string $ore_name)(boolean)
+if (%tutorial_progress < ^mining_instructor_mining_start) {
+    anim(null, 0);
+    ~mesbox("You are not ready to mine yet.|Please follow the tutorial and you'll be mining in no time.");
+    return(false);
+}
+
+def_int $is_empty = loc_param(mining_rock_empty);
+if ($is_empty = ^true) {
+    anim(null, 0);
+    mes("There is currently no ore available in this rock.");
+    sound_synth(prospect, 0, 0);
+    return(false);
+}
+
+if (inv_freespace(inv) < 1) {
+    anim(null, 0);
+    ~mesbox("Your inventory is too fully to hold anymore <$ore_name>");
+    return(false);
+}
+
+def_obj $pickaxe = ~pickaxe_checker;
+if ($pickaxe = null) {
+    anim(null, 0);
+    ~mesbox("You need a pickaxe to mine this rock. You do not have a pickaxe which you have the Mining level to use.");
+    return(false);
+}
+
+~tutorial_please_wait_mining;
+anim(oc_param($pickaxe, mining_animation), 10);
+p_delay(0);
+sound_synth(mine_quick, 0, 10);
+p_delay(0);
+sound_synth(mine_quick, 0, 10);
+p_delay(0);
+sound_synth(sound_230, 0, 10);
+p_delay(0);
+loc_change(empty_rock_1, 10);
+anim(null, 0);
+return(true);
+
+[oploc2,loc_3042]
+~tut_prospect;
+sound_synth(prospect, 1, 0);
+if (%tutorial_progress = ^mining_instructor_begin_prospecting) {
+    %tutorial_progress = ^mining_instructor_prospected_copper_first;
+}
+
+if (%tutorial_progress = ^mining_instructor_prospected_tin_first) {
+    %tutorial_progress = ^mining_instructor_prospected_copper_second;
+}
+~set_tutorial_progress;
+~mesbox("This rock contains copper.");
+
+[oploc2,loc_3043]
+~tut_prospect;
+sound_synth(prospect, 1, 0);
+if (%tutorial_progress = ^mining_instructor_begin_prospecting) {
+    %tutorial_progress = ^mining_instructor_prospected_tin_first;
+}
+if (%tutorial_progress = ^mining_instructor_prospected_copper_first) {
+    %tutorial_progress = ^mining_instructor_prospected_tin_second;
+}
+~set_tutorial_progress;
+~mesbox("This rock contains tin.");
+
+[proc,tut_prospect]
+~tutorial_please_wait_prospecting;
+p_delay(3);
+
+
+[proc,tut_hint_icon_rocks]
+if (%tutorial_progress = ^mining_instructor_begin_prospecting
+    | %tutorial_progress = ^mining_instructor_prospected_copper_first
+    | %tutorial_progress = 290
+    | %tutorial_progress = 294) {
+    hint_coord(^hint_center, 0_48_148_4_32, 100);
+}
+
+if (%tutorial_progress = ^mining_instructor_prospected_tin_first
+    | %tutorial_progress = ^mining_instructor_prospected_tin_second
+    | %tutorial_progress = 295
+    | %tutorial_progress = 299) {
+    hint_coord(^hint_center, 0_48_148_14_29, 100);
+}
+

@@ -1,0 +1,18 @@
+[label,tut_bury_bones](int $slot)
+if (getqueue(finish_bury) > 0) {
+    return;
+}
+
+mes("You dig a hole in the ground...");
+anim(human_pickupfloor, 0);
+sound_synth(bones_down, 1, 0);
+def_obj $last_item = inv_getobj(inv, $slot);
+inv_delslot(inv, $slot);
+// this is strong queue in later revs
+p_stopaction;
+queue(finish_bury, 1, $last_item);
+
+[queue,tut_finish_bury](obj $last_item)
+if_close;
+~tutorial_give_xp(prayer, oc_param($last_item, bone_exp));
+mes("You bury the bones.");

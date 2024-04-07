@@ -7,7 +7,7 @@
 [label,magic_spell_enchant](int $spell, int $slot)
 def_obj $initial_obj = inv_getobj(inv, $slot);
 // if player has casted a spell recently then return
-if (map_clock < %magic_utility_delay | inv_total(inv, $initial_obj) < 1) {
+if (inv_total(inv, $initial_obj) < 1) {
     return;
 }
 // look for spell in db
@@ -48,8 +48,7 @@ if ($initial_obj = dragonstone_amulet) {
 } else {
     mes("You successfully enchant the <lowercase(oc_name($initial_obj))>.");
 }
-// delay magic utility by 3 ticks
-%magic_utility_delay = calc(map_clock + 3);
+p_delay(2);
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
     return;

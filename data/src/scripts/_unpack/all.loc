@@ -10629,20 +10629,6 @@ model=model_loc_1813
 sharelight=yes
 occlude=yes
 
-[loc_1814]
-name=Lever
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-
-[loc_1815]
-name=Lever
-desc=I wonder what this does...
-model=model_loc_34
-active=yes
-op1=Pull
-
 [loc_1816]
 name=Lever
 desc=I wonder what this does...
@@ -12030,13 +12016,6 @@ model=model_loc_1759
 active=yes
 op1=Climb-down
 mapscene=7
-
-[loc_2114]
-name=Coal Truck
-desc=This transports coal!
-model=model_loc_637
-active=yes
-op1=Remove-coal
 
 [loc_2117]
 name=Old wall
@@ -17005,138 +16984,6 @@ active=no
 model=model_loc_3013
 sharelight=yes
 active=no
-
-[loc_3014]
-name=Door
-desc=A nicely fitted door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
-
-[loc_3015]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-active=yes
-op1=Open
-category=tutorial_gate
-
-[loc_3016]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-active=yes
-mirror=yes
-op1=Open
-category=tutorial_gate
-
-[loc_3017]
-name=Door
-desc=A nicely fitted door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
-
-[loc_3018]
-name=Door
-desc=A nicely fitted door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
-
-[loc_3019]
-name=Door
-desc=A nicely fitted door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-param=next_loc_stage,loc_1535
-
-[loc_3020]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_3021]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_3022]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-active=yes
-blockrange=no
-
-[loc_3023]
-name=Gate
-desc=A wrought iron gate.
-model=model_loc_52
-op1=Open
-mirror=yes
-active=yes
-blockrange=no
-
-[loc_3024]
-name=Door
-desc=A closed door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_3025]
-name=Door
-desc=A closed door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
-
-[loc_3026]
-name=Door
-desc=A closed door.
-model=model_loc_3
-active=yes
-op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
 
 [loc_3027]
 name=Door

@@ -218,6 +218,7 @@ switch_coord (loc_coord) {
     case 0_43_73_24_11: p_telejump(1_43_73_25_13); // Grail castle (quest) - ground floor
     case 0_41_73_9_8: p_telejump(1_41_73_10_10); // Grail castle - ground floor
     case 0_41_73_24_11: p_telejump(1_41_73_25_13); // Grail castle- ground floor
+    case 0_48_48_43_35: p_telejump(1_48_48_45_35); // Tutorial Church - ground floor
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -316,6 +317,7 @@ switch_coord (loc_coord) {
     case 1_41_73_10_9: p_telejump(0_41_73_11_9); // Grail castle (quest) - level 1
     case 1_41_73_25_12: p_telejump(0_41_73_26_12); // Grail castle - level 1
     case 1_48_48_11_52: p_telejump(0_48_48_12_52); // Tutorial island Quest Guide house - 1st floor
+    case 1_48_48_44_35: p_telejump(0_48_48_45_35); // Tutorial Church - upper floor
     case default: @unhandled_stairs(loc_coord);
 }
 
