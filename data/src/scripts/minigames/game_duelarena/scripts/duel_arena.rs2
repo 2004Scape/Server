@@ -1,6 +1,11 @@
 [opplayer1,_]
+// prevent people from dueling outside the duel arena, or in a duel
+if (~inzone_coord_pair_table(duel_arena_zones, coord) = false | ~inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
+    mes("You can't do that here."); // osrs pvp arena
+    return;
+}
 if (.busy = true) {
-    mes("<.displayname> is busy at the moment.");
+    mes("<.displayname> is busy at the moment."); // https://youtu.be/YkJQDvB14-U?t=26
     return;
 }
 
@@ -165,12 +170,11 @@ if (.finduid(%duelpartner) = true) {
         both_moveinv(tempinv, inv);
         .both_moveinv(tempinv, inv);
 
-        %duelpartner = null;
-        .%duelpartner = null;
-
         if_close;
         .if_close;
-        @start_duel;
+        if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
+            @start_duel;
+        }
     } else {
         .if_settext(duel_confirm:status, "Other player has accepted."); // https://youtu.be/HFp6hOkiCns?t=481
         if_settext(duel_confirm:status, "Waiting for other player."); 
@@ -242,3 +246,77 @@ if (.finduid(%duelpartner) = true) {
 // ---
 
 [label,start_duel]
+%duelstatus = 4;
+.%duelstatus = 4;
+def_int $random_arena = random(3);
+// random coord between 2 coords, checks if map blocked and not inside dueler
+
+def_coord $coord1;
+def_coord $coord2;
+// if normal fight:
+$coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $random_arena);
+
+def_int $x1 = coordx($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z1 = coordz($coord1);
+def_int $z2 = coordz($coord2);
+def_int $i = 0;
+def_coord $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+while (map_blocked($random_coord1) = true) {
+    $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+    $i = calc($i + 1);
+    if ($i = 50) {
+        return; // no way this is reached
+    }
+}
+
+$i = 0;
+def_coord $random_coord2 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+while (map_blocked($random_coord2) = true) {
+    $random_coord2 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+    $i = calc($i + 1);
+    if ($i = 50) {
+        return; // no way this is reached
+    }
+}
+
+p_teleport($random_coord1);
+.p_teleport($random_coord2);
+
+p_stopaction;
+.p_stopaction;
+
+%stunned = calc(map_clock +  9);
+.%stunned = calc(map_clock + 9);
+
+setmovecheck(duel_arena_start);
+//.setmovecheck(duel_arena_start);
+
+softtimer(duel_arena_start_3, 3); // todo: confirm these timings
+//.softtimer(duel_arena_start_3, 2);
+
+
+[softtimer,duel_arena_start_3]
+say("3");
+softtimer(duel_arena_start_2, 3);
+clearsofttimer(duel_arena_start_3);
+
+[softtimer,duel_arena_start_2]
+say("2");
+softtimer(duel_arena_start_1, 3);
+clearsofttimer(duel_arena_start_2);
+
+[softtimer,duel_arena_start_1]
+say("1");
+softtimer(duel_arena_start_fight, 3);
+clearsofttimer(duel_arena_start_1);
+
+[softtimer,duel_arena_start_fight]
+say("FIGHT!");
+clearsofttimer(duel_arena_start_fight);
+
+[movecheck,duel_arena_start]()(boolean)
+if (map_clock < %stunned) {
+    return(false);
+}
+return(true);

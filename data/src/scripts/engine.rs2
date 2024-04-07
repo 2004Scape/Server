@@ -76,6 +76,7 @@
 [command,p_opnpct](component $spell)
 [command,p_pausebutton]
 [command,p_stopaction]
+[command,.p_stopaction]
 [command,p_telejump](coord $coord)
 [command,p_walk](coord $dest)
 [command,.p_walk](coord $dest)
@@ -131,6 +132,7 @@
 [command,midi_jingle](string $jingle, int $length)
 [command,hint_coord](int $offset, coord $coord, int $height)
 [command,softtimer]/*(softtimer $timer, int $interval, ...)*/
+[command,.softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
@@ -147,6 +149,7 @@
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]
 [command,p_teleport](coord $coord)
+[command,.p_teleport](coord $coord)
 [command,bas_readyanim](seq $seq)
 [command,bas_turnonspot](seq $seq)
 [command,bas_walk_f](seq $seq)
