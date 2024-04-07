@@ -15,7 +15,7 @@ if ($choice = 2) {
 }
 if (npc_finduid(~npc_within_distance(coord, party_pete, 16)) = true) {
     ~pull_partylever(5000);
-    npc_queue(10, 0, 0);
+    @partyroom_drop_balloons(0);
 }
 
 [proc,pull_partylever](int $coins)
@@ -65,10 +65,10 @@ switch_int($arg) {
     case 6: npc_say("Do you like our helmet plumes?");
     case 7: npc_say("Everyone's happy now we can move");
     case 8: 
-        $delay = 3;
+        $delay = 3; // 2t
         npc_say("Like a party animal in the groove");
     case 9:
-        npc_queue(10, 10, 4);
+        npc_queue(10, 10, 3); // 2t
         if (npc_finduid(~npc_within_distance(npc_coord, party_pete, 16)) = true) {
             npc_say("The party room is a silly place!");
         }
@@ -111,13 +111,28 @@ def_int $dx = calc(coordx($coord2) - coordx($coord1));
 def_int $dz = calc(coordz($coord2) - coordz($coord1));
 return (movecoord($coord1, random($dx), 0, random($dz)));
 
+[label,partyroom_drop_balloons](int $balloons_dropped)
+if($balloons_dropped < 200) {
+    def_int $i = 0;
+    while($i < ^balloons_per_drop) {
+        def_coord $balloon_coord = ~random_partyroom_balloon_coord;
+        if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true & map_locaddunsafe($balloon_coord) = false) {
+            loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
+            $balloons_dropped = calc($balloons_dropped + 1);
+        }
+        $i = calc($i + 1);
+    }
+    world_delay(1);
+    @partyroom_drop_balloons($balloons_dropped);
+}
+
 [oploc1,_party_balloon]
 p_arrivedelay;
 p_walk(loc_coord);
 p_delay(0);
 anim(seq_794, 0);
-loc_change(loc_param(next_loc_stage), 5);
 p_delay(0);
+loc_change(loc_param(next_loc_stage), 5);
 // TODO: chance was fixed before Jul 2004, was changed to scale off of chest freespace afterwards (this chance is just a guess unfortunately)
 if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0) {
     def_int $rand_slot = random(calc(inv_size(partyroominv) - inv_freespace(partyroominv)));

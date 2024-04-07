@@ -32,15 +32,3 @@ switch_int(~p_choice4("So what's this room for?", 1, "What's the big lever over 
 }
 
 // TODO (for later versions): ai_timer to auto clean up the party chest (27 Jul 2004 and later will do this)
-[ai_queue10,party_pete](int $arg)
-if($arg < 20) {
-    def_int $i = 0;
-    while($i < 10) {
-        def_coord $balloon_coord = ~random_partyroom_balloon_coord;
-        if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true & map_locaddunsafe($balloon_coord) = false) {
-            loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
-        }
-        $i = calc($i + 1);
-    }
-    npc_queue(10, calc($arg + 1), 4);
-}

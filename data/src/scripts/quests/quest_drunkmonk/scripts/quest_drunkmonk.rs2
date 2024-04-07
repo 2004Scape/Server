@@ -16,12 +16,12 @@ def_npc_uid $omad_uid = npc_uid;
 def_npc_uid $monk_uid = ~random_monk_uid;
 npc_setmode(playerface);
 ~monk_dance("Party!", $omad_uid, 0);
-~spawn_drunkmonk_balloons(4);
-~spawn_drunkmonk_balloons(4);
+~spawn_drunkmonk_balloons;
+~spawn_drunkmonk_balloons;
 ~player_monkdance("Woop!", -1);
-~spawn_drunkmonk_balloons(3);
-~spawn_drunkmonk_balloons(3);
-~spawn_drunkmonk_balloons(4);
+~spawn_drunkmonk_balloons;
+~spawn_drunkmonk_balloons;
+~spawn_drunkmonk_balloons;
 ~monk_dance("Let's boogie!", $omad_uid, 2);
 ~player_monkdance("Oh baby!", 2);
 if($omad_uid ! $monk_uid) {
@@ -64,13 +64,14 @@ if($delay >= 0) {
     p_delay($delay);
 }
 
-[proc,spawn_drunkmonk_balloons](int $count)
-while($count > 0) {
+[proc,spawn_drunkmonk_balloons]
+def_int $count = 0;
+while($count < ^balloons_per_drop) {
     def_coord $balloon_coord = movecoord(0_40_50_42_7, random(8), 0, random(11));
     if(map_blocked($balloon_coord) = false & map_indoors($balloon_coord) = true & map_locaddunsafe($balloon_coord) = false) {
         loc_add($balloon_coord, ~random_balloon, random(4), centrepiece_straight, 200);
     }
-    $count = calc($count - 1);
+    $count = calc($count + 1);
 }
 p_delay(0);
 
