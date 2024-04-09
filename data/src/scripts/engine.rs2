@@ -81,6 +81,7 @@
 [command,p_stopaction]
 [command,.p_stopaction]
 [command,p_telejump](coord $coord)
+[command,.p_telejump](coord $coord)
 [command,p_walk](coord $dest)
 [command,.p_walk](coord $dest)
 [command,say](string $text)

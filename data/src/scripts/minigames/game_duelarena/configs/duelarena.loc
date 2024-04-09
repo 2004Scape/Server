@@ -1,4 +1,4 @@
-[loc_3111]
+[duel_entrance_1]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3111
@@ -12,7 +12,7 @@ blockrange=no
 recol1s=6932
 recol1d=6689
 
-[loc_3112]
+[duel_entrance_2]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3112
@@ -26,7 +26,7 @@ blockrange=no
 recol1s=6932
 recol1d=6689
 
-[loc_3113]
+[duel_entrance_3]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3111
@@ -41,7 +41,7 @@ blockrange=no
 recol1s=6932
 recol1d=6689
 
-[loc_3114]
+[duel_entrance_4]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3112
@@ -88,7 +88,7 @@ desc=Smells pretty bad!
 model=model_loc_3195
 op1=Buy
 
-[loc_3203]
+[duel_trapdoor]
 name=Trapdoor
 desc=Access to the duel arena.
 model=model_loc_3203

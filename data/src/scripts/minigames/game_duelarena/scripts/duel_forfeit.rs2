@@ -1,0 +1,23 @@
+[oploc1,duel_entrance_1] @duel_forfeit;
+[oploc1,duel_entrance_2] @duel_forfeit;
+[oploc1,duel_entrance_3] @duel_forfeit;
+[oploc1,duel_entrance_4] @duel_forfeit;
+[oploc1,duel_trapdoor] @duel_forfeit;
+
+[label,duel_forfeit]
+if (%duel_origin_coord ! null) {
+    p_telejump(%duel_origin_coord);
+}
+if (.finduid(%duelpartner) = true)  {
+    if (.p_finduid(%duelpartner) = true) {
+        if (.%duel_origin_coord ! null) {
+            .p_telejump(.%duel_origin_coord);
+        }
+        .%duelpartner = null;
+        .%duelstatus = 0;
+        // todo: queue win on other player
+    }
+}
+
+%duelpartner = null;
+%duelstatus = 0;

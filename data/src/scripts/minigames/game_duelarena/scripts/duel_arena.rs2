@@ -302,8 +302,8 @@ $random_coord1, $random_coord2 = ~duel_arena_coords;
 if ($random_coord1 = null | $random_coord2 = null) {
     return;
 }
-p_teleport($random_coord1);
-.p_teleport($random_coord2);
+p_telejump($random_coord1);
+.p_telejump($random_coord2);
 
 p_stopaction;
 .p_stopaction;
