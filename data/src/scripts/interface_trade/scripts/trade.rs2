@@ -70,7 +70,7 @@ if (.finduid(%tradepartner) = true) {
             def_int $num = inv_getnum(tempinv, $slot);
 
             if ($obj ! null) {
-                if (.inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
+                if (.inv_itemspace(inv, $obj, $num, sub(.inv_size(inv), $slot)) = false) {
                     mes("Other player doesn't have enough inventory space for this trade.");
                     .mes("You don't have enough inventory space for this trade.");
 

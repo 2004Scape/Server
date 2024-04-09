@@ -42,7 +42,7 @@ inv_stoptransmit(duel_select_type:otherinv);
 inv_stoptransmit(duel_side:inv);
 
 
-if (.finduid(%duelpartner) = true) {
+if (.finduid(%duelpartner) = true & ~enough_duel_space = true & ~.enough_duel_space = true) { // duel space so the decline message doesnt show if not enough duel space
     .%duelpartner = null;
     .if_close;
     .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
@@ -78,44 +78,23 @@ if (.finduid(%duelpartner) = true) {
         .inv_stoptransmit(duel_select_type:otherinv);
         .inv_stoptransmit(duel_side:inv);
         // check if contents of tempinv fits in other player's inv
-        def_int $size = inv_size(tempinv);
-        def_int $slot = 0;
-        while ($slot < $size) {
-            def_obj $obj = inv_getobj(tempinv, $slot);
-            def_int $num = inv_getnum(tempinv, $slot);
-
-            if ($obj ! null) {
-                if (.inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
-                    mes("Other player doesn't have enough inventory space for this duel."); // guess
-                    .mes("You don't have enough inventory space for this duel."); // guess
-
-                    if_close;
-                    .if_close;
-                    return;
-                }
-            }
-
-            $slot = add($slot, 1);
+        
+        
+        // go through all items in each of the player's tempinv
+        if (~enough_duel_space = false) {
+            mes("Other player doesn't have enough inventory space for this duel."); // guess
+            .mes("You don't have enough inventory space for this duel."); // guess
+            if_close;
+            .if_close;
+            return;
         }
-
         // and in the reverse direction
-        $slot = 0;
-        while ($slot < $size) {
-            def_obj $obj = .inv_getobj(tempinv, $slot);
-            def_int $num = .inv_getnum(tempinv, $slot);
-
-            if ($obj ! null) {
-                if (inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
-                    mes("You don't have enough inventory space for this duel."); // guess
-                    .mes("Other player doesn't have enough inventory space for this duel."); // guess
-
-                    if_close;
-                    .if_close;
-                    return;
-                }
-            }
-
-            $slot = add($slot, 1);
+        if (~.enough_duel_space = false) {
+            mes("You don't have enough inventory space for this duel."); // guess
+            .mes("Other player doesn't have enough inventory space for this duel."); // guess
+            if_close;
+            .if_close;
+            return;
         }
 
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
@@ -157,6 +136,69 @@ if (.finduid(%duelpartner) = true) {
         if_settext(duel_select_type:status, "Waiting for other player...");
     }
 }
+
+[proc,enough_duel_space]()(boolean)
+def_int $size = calc(inv_size(tempinv) + .inv_size(tempinv));
+def_int $slot = 0;
+def_int $space_needed = 0;
+while ($slot < $size) {
+    def_obj $obj;
+    def_int $num;
+    if ($slot < inv_size(tempinv)) {
+        $obj = inv_getobj(tempinv, $slot);
+        $num = inv_getnum(tempinv, $slot);
+    } else {
+        $obj = .inv_getobj(tempinv, sub($slot, .inv_size(tempinv)));
+        $num = .inv_getnum(tempinv, sub($slot, .inv_size(tempinv)));
+    }
+    
+    if ($obj ! null) {
+        if (oc_stackable($obj) = false) {
+            $num = 1;
+        }
+        if (.inv_itemspace(inv, $obj, $num, .inv_size(inv)) = true) {
+            $space_needed = calc($space_needed + 1);
+        }
+        if (.inv_freespace(inv) < $space_needed) {
+            return(false);
+        }
+    }
+
+    $slot = add($slot, 1);
+}
+return(true);
+
+[proc,.enough_duel_space]()(boolean)
+def_int $size = calc(.inv_size(tempinv) + inv_size(tempinv));
+def_int $slot = 0;
+def_int $space_needed = 0;
+while ($slot < $size) {
+    def_obj $obj;
+    def_int $num;
+    if ($slot < .inv_size(tempinv)) {
+        $obj = .inv_getobj(tempinv, $slot);
+        $num = .inv_getnum(tempinv, $slot);
+    } else {
+        $obj = inv_getobj(tempinv, sub($slot, inv_size(tempinv)));
+        $num = inv_getnum(tempinv, sub($slot, inv_size(tempinv)));
+    }
+    
+    if ($obj ! null) {
+        if (oc_stackable($obj) = false) {
+            $num = 1;
+        }
+        if (.inv_itemspace(inv, $obj, $num, inv_size(inv)) = true) {
+            $space_needed = calc($space_needed + 1);
+        }
+        if (inv_freespace(inv) < $space_needed) {
+            return(false);
+        }
+    }
+
+    $slot = add($slot, 1);
+}
+return(true);
+
 
 [if_button,duel_confirm:accept]
 %duelstatus = 3;
