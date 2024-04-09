@@ -660,6 +660,8 @@ param=damagetype,^slash_style
 // Despite the slash attack style they still use the crush anim today
 param=attack_anim,human_2h_crush
 param=defend_anim,human_2h_defend
+param=attack_sound,2H_crush
+param=defend_sound,sound_218
 
 [paladin]
 name=Paladin

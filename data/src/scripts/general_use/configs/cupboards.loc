@@ -1,3 +1,68 @@
+[loc_367]
+name=Cupboard
+desc=This may be worth opening.
+model=model_loc_367
+length=2
+forceapproach=right
+op1=Open
+category=cupboard_closed
+param=cupboard_other,loc_370
+
+[loc_368]
+name=Cupboard
+desc=This may be worth opening.
+model=model_loc_368
+length=2
+forceapproach=right
+op1=Open
+category=cupboard_closed
+param=cupboard_other,loc_371
+
+[loc_369]
+name=Large cupboard
+desc=This may be worth opening.
+model=model_loc_369
+width=2
+length=3
+forceapproach=right
+op1=Open
+category=cupboard_closed
+param=cupboard_other,loc_372
+
+[loc_370]
+name=Open Cupboard
+desc=This may be worth searching.
+model=model_loc_370
+length=2
+op1=Search
+op2=Shut
+forceapproach=right
+category=cupboard_opened
+param=cupboard_other,loc_367
+
+[loc_371]
+name=Cupboard
+desc=This may be worth searching.
+model=model_loc_371
+length=2
+op1=Search
+op2=Shut
+forceapproach=right
+category=cupboard_opened
+param=cupboard_other,loc_368
+
+[loc_372]
+name=Large open cupboard
+desc=This may be worth searching.
+model=model_loc_372
+width=2
+length=3
+op1=Search
+op2=Close
+forceapproach=right
+category=cupboard_opened
+param=cupboard_other,loc_369
+
 [loc_2271]
 name=Cupboard
 desc=I wonder what's inside?

@@ -1968,59 +1968,6 @@ model=model_loc_63
 op1=Search
 category=empty_crate
 
-[loc_367]
-name=Cupboard
-desc=This may be worth opening.
-model=model_loc_367
-length=2
-forceapproach=right
-op1=Open
-
-[loc_368]
-name=Cupboard
-desc=This may be worth opening.
-model=model_loc_368
-length=2
-forceapproach=right
-op1=Open
-
-[loc_369]
-name=Large cupboard
-desc=This may be worth opening.
-model=model_loc_369
-width=2
-length=3
-forceapproach=right
-op1=Open
-
-[loc_370]
-name=Open Cupboard
-desc=This may be worth searching.
-model=model_loc_370
-length=2
-op2=Search
-op3=Shut
-forceapproach=right
-
-[loc_371]
-name=Cupboard
-desc=This may be worth searching.
-model=model_loc_371
-length=2
-op2=Search
-op3=Shut
-forceapproach=right
-
-[loc_372]
-name=Large open cupboard
-desc=This may be worth searching.
-model=model_loc_372
-width=2
-length=3
-op2=Search
-op3=Close
-forceapproach=right
-
 [loc_373]
 name=Dresser
 desc=The perfect accompaniment to a bedroom.
