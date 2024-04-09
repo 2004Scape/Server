@@ -1,0 +1,71 @@
+[if_button,duel_select_type:no_forfeit]
+%duel_settings = togglebit(%duel_settings, ^no_forfeit);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_movement]
+%duel_settings = togglebit(%duel_settings, ^no_movement);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_weapons]
+%duel_settings = togglebit(%duel_settings, ^no_weapons);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_armour]
+%duel_settings = togglebit(%duel_settings, ^no_armour);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_potions]
+mes(tostring(%duel_settings));
+%duel_settings = togglebit(%duel_settings, 7);
+mes(tostring(%duel_settings));
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_jewelry]
+%duel_settings = togglebit(%duel_settings, ^no_jewelry);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_ranged]
+if (testbit(%duel_settings, ^no_melee) = true & testbit(%duel_settings, ^no_magic) = true) {
+    mes("You cannot disable all combat styles."); // completely made up
+    return;
+}
+%duel_settings = togglebit(%duel_settings, ^no_ranged);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_melee]
+if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_magic) = true) {
+    mes("You cannot disable all combat styles."); // completely made up
+    return;
+}
+%duel_settings = togglebit(%duel_settings, ^no_melee);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_magic]
+if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_melee) = true) {
+    mes("You cannot disable all combat styles."); // completely made up
+    return;
+}
+%duel_settings = togglebit(%duel_settings, ^no_magic);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_prayer]
+%duel_settings = togglebit(%duel_settings, ^no_prayer);
+~sync_duel_settings;
+
+[if_button,duel_select_type:no_food]
+%duel_settings = togglebit(%duel_settings, ^no_food);
+~sync_duel_settings;
+
+[if_button,duel_select_type:flower_power]
+%duel_settings = togglebit(%duel_settings, ^flower_power);
+~sync_duel_settings;
+
+[if_button,duel_select_type:obstacles]
+%duel_settings = togglebit(%duel_settings, ^obstacles);
+~sync_duel_settings;
+
+
+[proc,sync_duel_settings]
+if (.finduid(%duelpartner) = true) {
+    .%duel_settings = %duel_settings;
+}

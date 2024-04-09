@@ -1,0 +1,13 @@
+^no_forfeit = 0
+^no_movement = 1
+^no_weapons = 2
+^no_armour = 3
+^no_ranged = 4
+^no_melee = 5
+^no_magic = 6
+^no_potions = 7
+^no_food = 8
+^no_prayer = 9
+^obstacles = 10
+^no_jewelry = 11
+^flower_power = 12

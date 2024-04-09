@@ -10,9 +10,11 @@ if (.busy = true) {
 }
 
 mes("Sending duel offer...");
+%duel_settings = 0;
 %duelpartner = .uid;
 
 if (.%duelpartner = uid) {
+    %duel_settings = 0;
     if_settext(duel_select_type:status, "");
     if_settext(duel_select_type:otherplayer, "Dueling with: <.displayname>");
     inv_clear(tempinv);

@@ -8,6 +8,7 @@ protect=no
 
 [duel_settings]
 transmit=yes
+protect=no
 
 [duel_origin_coord]
 type=coord
