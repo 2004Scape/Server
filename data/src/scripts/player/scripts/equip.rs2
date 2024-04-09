@@ -92,6 +92,48 @@ $rangebonus = ~equip_get_bonuses;
 ~update_bonus_text(wornitems:strengthbonus, "Strength", $strengthbonus);
 ~update_bonus_text(wornitems:prayerbonus, "Prayer", $prayerbonus);
 
+[proc,.update_bonuses]
+def_int $stabattack;
+def_int $slashattack;
+def_int $crushattack;
+def_int $magicattack;
+def_int $rangeattack;
+def_int $stabdefence;
+def_int $slashdefence;
+def_int $crushdefence;
+def_int $magicdefence;
+def_int $rangedefence;
+def_int $strengthbonus;
+def_int $prayerbonus;
+def_int $rangebonus;
+
+$stabattack,
+$slashattack,
+$crushattack,
+$magicattack,
+$rangeattack,
+$stabdefence,
+$slashdefence,
+$crushdefence,
+$magicdefence,
+$rangedefence,
+$strengthbonus,
+$prayerbonus,
+$rangebonus = ~.equip_get_bonuses;
+
+~.update_bonus_text(wornitems:stabattack, "Stab", $stabattack);
+~.update_bonus_text(wornitems:slashattack, "Slash", $slashattack);
+~.update_bonus_text(wornitems:crushattack, "Crush", $crushattack);
+~.update_bonus_text(wornitems:magicattack, "Magic", $magicattack);
+~.update_bonus_text(wornitems:rangeattack, "Range", $rangeattack);
+~.update_bonus_text(wornitems:stabdefence, "Stab", $stabdefence);
+~.update_bonus_text(wornitems:slashdefence, "Slash", $slashdefence);
+~.update_bonus_text(wornitems:crushdefence, "Crush", $crushdefence);
+~.update_bonus_text(wornitems:magicdefence, "Magic", $magicdefence);
+~.update_bonus_text(wornitems:rangedefence, "Range", $rangedefence);
+~.update_bonus_text(wornitems:strengthbonus, "Strength", $strengthbonus);
+~.update_bonus_text(wornitems:prayerbonus, "Prayer", $prayerbonus);
+
 [proc,equip_get_bonuses]()(int, int, int, int, int, int, int, int, int, int, int, int, int)
 def_int $stabattack = 0;
 def_int $slashattack = 0;
@@ -176,6 +218,13 @@ if ($bonus < 0) {
 }
 if_settext($com, "<$name>: <$sign><tostring($bonus)>");
 
+[proc,.update_bonus_text](component $com, string $name, int $bonus)
+def_string $sign = "+";
+if ($bonus < 0) {
+    $sign = "";
+}
+.if_settext($com, "<$name>: <$sign><tostring($bonus)>");
+
 [proc,update_weight]
 // TODO
 
@@ -206,6 +255,9 @@ if_settext($com, "<$name>: <$sign><tostring($bonus)>");
 // AND I have enough space in my inv to unequip the stackable obj from my worn inv (does not exceed stack limit by combining worn + inv)
 // THEN I should unequip the stackable obj from my worn and equip the stackable obj from my inv
 // =================================================================================
+
+[proc,.update_weight]
+
 [proc,equip_validate_and_move](obj $obj, int $count, int $slot, int $slot1, int $slot2, int $slot3, boolean $move_item, boolean $colliders, boolean $swapped)(boolean)
 if ($slot1 ! null) {
     def_boolean $primary;

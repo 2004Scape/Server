@@ -39,6 +39,10 @@ softtimer(pk_skull_timer, $duration);
 ~headicon_del(^headicon_skull);
 clearsofttimer(pk_skull_timer);
 
+[proc,.clear_pk_skull]
+~.headicon_del(^headicon_skull);
+// .clearsofttimer(pk_skull_timer); todo
+
 [softtimer,pk_skull_timer]
 ~clear_pk_skull;
 

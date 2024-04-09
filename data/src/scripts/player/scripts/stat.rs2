@@ -88,17 +88,33 @@ if (calc($level - $debuff) < $min_level) {
 stat_sub($stat, $debuff, 0);
 
 [proc,stat_reset](stat $stat)
-def_int $d = abs(sub(stat($stat), stat_base($stat)));
+def_int $d = sub(stat($stat), stat_base($stat));
 
 if ($d > 0) {
-    stat_sub($stat, $d, 0);
+    stat_sub($stat, abs($d), 0);
 } else if ($d < 0) {
-    stat_add($stat, $d, 0);
+    stat_add($stat, abs($d), 0);
 }
 
 [proc,stat_reset_all]
 def_int $i = 0;
 while ($i < enum_getoutputcount(stats)) {
     ~stat_reset(enum(int, stat, stats, $i));
+    $i = calc($i + 1);
+}
+
+[proc,.stat_reset](stat $stat)
+def_int $d = sub(.stat($stat), .stat_base($stat));
+
+if ($d > 0) {
+    .stat_sub($stat, abs($d), 0);
+} else if ($d < 0) {
+    .stat_add($stat, abs($d), 0);
+}
+
+[proc,.stat_reset_all]
+def_int $i = 0;
+while ($i < enum_getoutputcount(stats)) {
+    ~.stat_reset(enum(int, stat, stats, $i));
     $i = calc($i + 1);
 }

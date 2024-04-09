@@ -5,6 +5,10 @@
 clearqueue(playerhit_n_retaliate);
 clearqueue(damage_player);
 
+[proc,.combat_clearqueue]
+clearqueue(playerhit_n_retaliate);
+clearqueue(damage_player);
+
 [queue,player_death]
 p_stopaction;
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);

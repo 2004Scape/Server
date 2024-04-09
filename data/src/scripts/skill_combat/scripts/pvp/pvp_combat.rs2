@@ -160,12 +160,24 @@ if (.stat(hitpoints) = 0) {
         // .anim(human_death, 0);
         // .p_delay(6);
         .p_teleport(.%duel_origin_coord);
+        ~.stat_reset_all;
+        .healenergy(10000);
+        ~.combat_clearqueue;
+        ~.clear_pk_skull;
+        ~.clear_poison;
+        ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
         
+        p_stopaction;
         queue(duel_arena_finished, 0, .displayname, ~.player_combat_level);
         p_delay(0);
         if_close;
-        p_stopaction;
         p_teleport(%duel_origin_coord);
+        ~stat_reset_all;
+        healenergy(10000);
+        ~combat_clearqueue;
+        ~clear_pk_skull;
+        ~clear_poison;
+        ~update_all(inv_getobj(worn, ^wearpos_rhand));
         return;
     }
     // these messages need to be in the death queue https://youtu.be/9Q8BbGi2VWg?t=136

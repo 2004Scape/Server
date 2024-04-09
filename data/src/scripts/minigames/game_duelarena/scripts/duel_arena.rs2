@@ -383,3 +383,8 @@ while ($i < inv_size(tempinv)) {
     $i = calc($i + 1);
 }
 inv_stoptransmit(duel_win:spoils);
+
+[proc,duel_arena_login]
+if (~in_duel_arena = true) {
+    p_telejump(%duel_origin_coord);
+}
