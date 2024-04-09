@@ -164,7 +164,6 @@ if (.stat(hitpoints) = 0) {
         ~.stat_reset_all;
         .healenergy(10000);
         ~.combat_clearqueue;
-        ~.clear_pk_skull;
         ~.clear_poison;
         ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
         
@@ -176,7 +175,6 @@ if (.stat(hitpoints) = 0) {
         ~stat_reset_all;
         healenergy(10000);
         ~combat_clearqueue;
-        ~clear_pk_skull;
         ~clear_poison;
         ~update_all(inv_getobj(worn, ^wearpos_rhand));
         return;
