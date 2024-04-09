@@ -234,12 +234,12 @@ defence=8
 param=attackrate,6
 param=attackbonus,5
 param=strengthbonus,6
-param=attack_anim,human_spear_stab
+param=attack_anim,farmer_attack
 param=attack_sound,staff_stab
-param=defend_anim,human_spear_defend
+param=defend_anim,farmer_hit
 param=damagetype,^stab_style
 
-[npc_8]
+[thief]
 name=Thief
 desc=Known for his lightfingered qualities.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -306,7 +306,10 @@ param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
 category=guard
+wanderrange=2
+attackrange=4
 
 [guard_crossbow]
 name=Guard
@@ -380,7 +383,7 @@ param=crushdefence,-21
 param=magicdefence,-21
 param=rangedefence,-21
 
-[npc_12]
+[barbarian]
 name=Barbarian
 desc=Not very civilised looking.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -423,9 +426,10 @@ param=slashdefence,1
 param=attackrate,6
 category=barbarian
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_baxe_defend
+param=attack_sound,baxe_slash
 
-[npc_13]
+[wizard]
 name=Wizard
 desc=Slightly magical.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -455,6 +459,7 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
+huntmode=ranged
 
 [druid]
 name=Druid
@@ -521,8 +526,10 @@ param=rangedefence,38
 param=damagetype,^stab_style
 param=defend_sound,female_hit
 param=death_sound,female_death
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
 
-[npc_17]
+[barbarian_woman]
 name=Barbarian woman
 desc=Scary in an argument!
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -564,6 +571,7 @@ param=death_sound,female_death
 category=barbarian
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_defend
+param=attack_sound,staff_stab
 
 [alkharid_warrior]
 name=Al-Kharid warrior
@@ -607,6 +615,9 @@ param=magicdefence,-1
 param=rangedefence,12
 param=damagetype,^slash_style
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [npc_19]
 name=White Knight
@@ -692,6 +703,9 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [hero]
 name=Hero
@@ -736,8 +750,11 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
-[npc_22]
+[forester]
 name=Forester
 desc=They love the forests.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -773,6 +790,9 @@ param=stabdefence,4
 param=slashdefence,3
 param=crushdefence,5
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,human_blunt_defend
+param=attack_sound,baxe_slash
 
 [knight_of_ardougne_1]
 name=Knight of Ardougne
@@ -1088,6 +1108,9 @@ param=magicdefence,4
 param=rangedefence,16
 param=damagetype,^crush_style
 category=guard
+param=attack_anim,human_blunt_swing
+param=attack_sound,mace_crush
+param=defend_anim,human_blunt_defend2
 
 [watchman]
 name=Watchman
@@ -1215,8 +1238,8 @@ defence=10
 param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=attack_anim,human_blunt_swing
+param=defend_anim,human_blunt_defend
 
 [npc_39]
 name=Shipyard worker
@@ -1247,8 +1270,8 @@ defence=10
 param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
-param=attack_anim,human_baxe_crush
-param=defend_anim,human_baxe_defend
+param=attack_anim,human_blunt_swing
+param=defend_anim,human_blunt_defend
 
 [npc_40]
 name=Shark
@@ -1258,7 +1281,7 @@ vislevel=1
 model1=model_2848_npc
 moverestrict=blocked
 
-[npc_41]
+[chicken]
 name=Chicken
 desc=Yep, definitely a chicken.
 walkanim=chicken_walk
@@ -1491,51 +1514,6 @@ param=attack_anim,hellhound_attack
 param=defend_anim,hellhound_block
 param=death_anim,hellhound_death
 huntmode=cowardly
-
-[king_black_dragon]
-size=5
-walkanim=dragon_walk
-readyanim=dragon_ready
-resizeh=160
-resizev=160
-name=King black dragon
-desc=The biggest meanest dragon around.
-op2=Attack
-vislevel=238
-recol1s=61
-recol1d=11140
-recol2s=41
-recol2d=11138
-recol3s=0
-recol3d=937
-recol4s=115
-recol4d=7853
-recol5s=127
-recol5d=7853
-model1=model_2853_npc
-model2=model_2855_npc
-wanderrange=10
-attackrange=12
-respawnrate=16
-hitpoints=240
-attack=240
-strength=240
-defence=240
-magic=240
-param=stabdefence,70
-param=slashdefence,90
-param=crushdefence,90
-param=magicdefence,80
-param=rangedefence,70
-param=damagetype,^stab_style
-param=attack_anim,dragon_attack
-param=defend_anim,dragon_block
-param=death_anim,dragon_death
-param=attack_sound,dragon_3
-param=defend_sound,dragon_2
-param=death_sound,dragon_1
-param=death_drop,dragon_bones
-huntmode=aggressive_ranged
 
 [baby_dragon]
 size=2
@@ -1809,7 +1787,7 @@ param=death_sound,insect_1
 param=death_drop,null
 huntmode=cowardly
 
-[npc_61]
+[spider]
 walkanim=spider_walk
 name=Spider
 desc=Incey wincey.
@@ -1832,6 +1810,9 @@ param=attack_anim,spider_attack
 param=defend_anim,spider_block
 param=death_anim,spider_death
 param=death_drop,null
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 
 [npc_62]
 walkanim=giantspider_walk
@@ -2369,6 +2350,8 @@ param=defend_sound,demon_3
 param=death_sound,demon_1
 param=death_drop,ashes
 huntmode=cowardly
+// huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
+huntrange=2
 
 [greater_demon]
 size=3
@@ -2640,6 +2623,8 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+// huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
+huntrange=1
 
 [npc_93]
 name=Skeleton
@@ -2675,6 +2660,8 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+// huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
+huntrange=1
 
 [npc_94]
 name=Skeleton Mage
@@ -3188,6 +3175,7 @@ hitpoints=60
 attack=30
 strength=30
 defence=30
+param=attackrate,6
 param=attackbonus,33
 param=strengthbonus,31
 param=damagetype,^crush_style
@@ -3564,7 +3552,7 @@ param=rangedefence,30
 param=damagetype,^crush_style
 huntmode=cowardly
 
-[npc_125]
+[ice_warrior]
 hasalpha=yes
 walkanim=seq_841
 readyanim=seq_842
@@ -3607,6 +3595,9 @@ param=damagetype,^slash_style
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_slash
 
 [otherworldly_being]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4196,9 +4187,10 @@ moverestrict=nomove
 blockwalk=all
 huntmode=aggressive_melee
 huntrange=1
-// stats are completely guessed
-attack=50
-strength=10
+// https://vxtwitter.com/JagexAsh/status/1775970463061049645?t=dBzjxnZ88IdFRi86mMgqjw&s=19
+// "They have level 20 Attack & Strength" - ash
+attack=20
+strength=20
 param=attack_anim,nasty_tree_attack
 param=attack_sound,nasty_tree_attack
 param=damagetype,^slash_style
@@ -4621,7 +4613,7 @@ param=defend_anim,human_sword_defend
 param=attack_sound,stabsword_slash
 huntmode=cowardly
 
-[npc_181]
+[chaos_druid]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Chaos druid
@@ -4761,6 +4753,9 @@ param=slashdefence,2
 param=damagetype,^slash_style
 category=pirate
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_slash
 
 [npc_185]
 name=Pirate
@@ -4829,6 +4824,9 @@ param=slashdefence,3
 param=crushdefence,3
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend
+param=attack_sound,stabsword_stab
 
 [rogue]
 name=Rogue
@@ -4865,7 +4863,7 @@ param=crushdefence,11
 param=damagetype,^stab_style
 huntmode=cowardly
 
-[npc_188]
+[monk_of_zamorak_22]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Monk of Zamorak
@@ -4897,7 +4895,7 @@ param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
 
-[npc_189]
+[monk_of_zamorak_17]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Monk of Zamorak
@@ -4929,7 +4927,7 @@ param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
 
-[npc_190]
+[monk_of_zamorak_45]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Monk of Zamorak
@@ -5032,6 +5030,9 @@ param=slashdefence,79
 param=crushdefence,59
 param=damagetype,^slash_style
 huntmode=cowardly
+param=attack_anim,human_sword_slash
+param=attack_sound,stabsword_slash
+param=defend_anim,human_sword_defend
 
 [chaos_druid_warrior]
 name=Chaos druid warrior
@@ -5132,6 +5133,9 @@ param=slashdefence,3
 param=crushdefence,2
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
+param=defend_anim,human_sword_defend
 
 [guard_bandit]
 name=Guard Bandit
@@ -5172,6 +5176,9 @@ param=magicdefence,1
 param=rangedefence,4
 param=damagetype,^stab_style
 huntmode=cowardly
+param=attack_anim,human_sword_stab
+param=attack_sound,stabsword_stab
+param=defend_anim,human_sword_defend
 
 [npc_197]
 name=Barbarian guard
@@ -5247,7 +5254,7 @@ param=magicdefence,-1
 param=rangedefence,11
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_baxe_defend
 
 [npc_200]
 name=Lord Daquarius
@@ -5329,7 +5336,8 @@ model7=model_2986_npc
 model8=model_2991_npc
 head1=model_0_npc_head
 head2=model_6_npc_head
-wanderrange=3
+wanderrange=5
+attackrange=12
 hitpoints=16
 attack=8
 strength=6
@@ -5557,7 +5565,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_254]
@@ -5596,7 +5604,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_255]
@@ -5634,7 +5642,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_256]
@@ -5673,7 +5681,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,seq_398
+param=defend_anim,human_baxe_defend
 param=attack_sound,baxe_slash
 
 [npc_257]
@@ -7132,28 +7140,6 @@ walkanim=dwarf_walk
 readyanim=dwarf_ready
 name=Dwarf
 desc=A dwarf who looks after the mining guild.
-op1=Talk-to
-recol1s=803
-recol1d=5652
-recol2s=11200
-recol2d=414
-model1=model_2970_npc
-model2=model_2981_npc
-model3=model_2979_npc
-model4=model_2983_npc
-model5=model_2985_npc
-model6=model_2990_npc
-model7=model_2988_npc
-head1=model_0_npc_head
-head2=model_8_npc_head
-wanderrange=2
-
-[npc_383]
-vislevel=hide
-walkanim=dwarf_walk
-readyanim=dwarf_ready
-name=Stankers
-desc=He's in control of the coal trucks.
 op1=Talk-to
 recol1s=803
 recol1d=5652
@@ -8641,7 +8627,6 @@ param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
-huntmode=cowardly
 
 [npc_726]
 vislevel=hide
@@ -9213,7 +9198,8 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=4
+wanderrange=5
+moverestrict=indoors
 
 [npc_783]
 vislevel=hide
@@ -9247,7 +9233,8 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=4
+wanderrange=5
+moverestrict=indoors
 
 [npc_788]
 vislevel=hide
@@ -11747,7 +11734,7 @@ size=3
 op2=Attack
 vislevel=78
 model1=model_2884_npc
-wanderrange=9
+wanderrange=10
 attackrange=10
 respawnrate=50
 hitpoints=78
@@ -11987,6 +11974,8 @@ model7=model_176_idk
 model8=model_265_obj_wear
 model9=model_544_obj_wear
 // TODO respawnrate?
+wanderrange=3
+attackrange=5
 hitpoints=76
 attack=24
 strength=24
@@ -12022,6 +12011,8 @@ param=death_sound,insect_1
 param=death_drop,null
 // Tested this npc in osrs, doesnt seem to poison? Seems like the chests have a chance to poison
 huntmode=cowardly
+wanderrange=10
+attackrange=12
 
 [npc_1010]
 vislevel=hide

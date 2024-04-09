@@ -37,8 +37,8 @@ queue(set_run, 0, 0);
 
 if_close;
 if (p_finduid(uid) = true) {
-    if (%tutorial_progress = 195) {
-        %tutorial_progress = 200;
+    if (%tutorial_progress = ^tutorial_open_player_controls) {
+        %tutorial_progress = ^tutorial_has_toggled_on_run;
         ~set_tutorial_progress;
     }
     %player_run = ^player_run_on;
@@ -47,8 +47,8 @@ if (p_finduid(uid) = true) {
 queue(set_run, 0, 1);
 
 [queue,set_run](int $value)
-if (%tutorial_progress = 195) {
-    %tutorial_progress = 200;
+if (%tutorial_progress = ^tutorial_open_player_controls) {
+    %tutorial_progress = ^tutorial_has_toggled_on_run;
     ~set_tutorial_progress;
 }
 %player_run = $value;

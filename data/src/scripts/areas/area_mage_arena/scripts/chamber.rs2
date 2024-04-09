@@ -35,4 +35,4 @@ p_delay(2);
 inv_add(inv, $cape, 1);
 spotanim_map(spotanim_188, coord, 60, 0);
 sound_synth(smokepuff, 0, 0);
-~mesbox("You kneel and chant to <$name>...|You feel a rush of energy charge through your veigns.|Suddenly a cape appears in your pack.");
+~mesbox("You kneel and chant to <$name>...|You feel a rush of energy charge through your veins.|Suddenly a cape appears in your pack.");

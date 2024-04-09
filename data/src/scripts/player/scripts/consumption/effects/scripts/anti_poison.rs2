@@ -8,6 +8,16 @@ def_obj $consumable = last_item;
 inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
 ~consume_effect_messages($consumable, stat(hitpoints), false);
 
+[label,consume_effect_super_antipoison]
+sound_synth(liquid, 0, 0);
+anim(human_eat, 0);
+def_obj $consumable = last_item;
+%antipoison = calc(map_clock + 600);
+%poison = 0;
+// change item to its next stage. default is null
+inv_setslot(inv, last_slot, oc_param($consumable, next_obj_stage), 1);
+~consume_effect_messages($consumable, stat(hitpoints), false);
+
 
 [proc,set_antipoison_login]
 if (%antipoison < 1) {

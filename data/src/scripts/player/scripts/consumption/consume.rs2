@@ -67,9 +67,10 @@ if (oc_param(last_item, next_obj_stage) = null) {
 
 // potions
 [opheld1,jangerberries]@player_consume_item(consume_effect_stat, 2, 3);
-[opheld1,obj_197]@player_consume_item(consume_effect_poison_chalice, null, null);
+[opheld1,poison_chalice]@player_consume_item(consume_effect_poison_chalice, null, null);
 [opheld1,cup_of_tea]@player_consume_item(consume_effect_stat_say, 2, 3);
 [opheld1,_category_69]
+p_stopaction; // https://oldschool.runescape.wiki/w/Update:Patch_Notes_(19_September_2013)
 switch_obj(last_item) {
     // anti dragon
     case 1dose1antidragon, 2dose1antidragon, 3dose1antidragon, 4dose1antidragon: 
@@ -77,6 +78,8 @@ switch_obj(last_item) {
     // anti posions
     case 1doseantipoison, 2doseantipoison, 3doseantipoison, 4doseantipoison: 
         @player_consume_item(consume_effect_antipoison, null, null);
+    case 1dose2antipoison, 2dose2antipoison, 3dose2antipoison, 4dose2antipoison: 
+        @player_consume_item(consume_effect_super_antipoison, null, null);
     case default : @player_consume_item(consume_effect_stat, null, null);
 }
 [opheld1,strange_fruit]@player_consume_item(consume_effect_strange_fruit, 2, 3);

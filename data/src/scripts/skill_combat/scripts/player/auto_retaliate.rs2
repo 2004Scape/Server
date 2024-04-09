@@ -5,8 +5,11 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~np
         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
         def_int $delay = 4;
         if ($weapon ! null) {
-            $delay = divide(oc_param($weapon, attackrate), 2);
+            $delay = oc_param($weapon, attackrate);
         }
+        
+        $delay = divide($delay, 2);
+
         if (%damagestyle = ^style_ranged_rapid) {
             $delay = sub($delay, 1);
         }

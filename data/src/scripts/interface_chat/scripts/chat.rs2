@@ -179,6 +179,32 @@ if ($choice = 3) jump($label3);
 if ($choice = 4) jump($label4);
 jump($label5);
 
+[label,multi2_header](string $string1, label $label1, string $string2, label $label2, string $headertext)
+def_int $choice = ~p_choice2_header($string1, 1, $string2, 2, $headertext);
+if ($choice = 1) jump($label1);
+jump($label2);
+
+[label,multi3_header](string $string1, label $label1, string $string2, label $label2, string $string3, label $label3, string $headertext)
+def_int $choice = ~p_choice3_header($string1, 1, $string2, 2, $string3, 3, $headertext);
+if ($choice = 1) jump($label1);
+if ($choice = 2) jump($label2);
+jump($label3);
+
+[label,multi4_header](string $string1, label $label1, string $string2, label $label2, string $string3, label $label3, string $string4, label $label4, string $headertext)
+def_int $choice = ~p_choice4_header($string1, 1, $string2, 2, $string3, 3, $string4, 4, $headertext);
+if ($choice = 1) jump($label1);
+if ($choice = 2) jump($label2);
+if ($choice = 3) jump($label3);
+jump($label4);
+
+[label,multi5_header](string $string1, label $label1, string $string2, label $label2, string $string3, label $label3, string $string4, label $label4, string $string5, label $label5, string $headertext)
+def_int $choice = ~p_choice5_header($string1, 1, $string2, 2, $string3, 3, $string4, 4, $string5, 5, $headertext);
+if ($choice = 1) jump($label1);
+if ($choice = 2) jump($label2);
+if ($choice = 3) jump($label3);
+if ($choice = 4) jump($label4);
+jump($label5);
+
 // ----
 
 [proc,chatplayer_page](int $page)

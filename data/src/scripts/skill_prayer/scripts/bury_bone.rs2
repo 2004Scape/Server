@@ -1,4 +1,9 @@
-[opheld1,bones] @bury_bones(last_slot);
+[opheld1,bones]
+if (%tutorial_progress < ^tutorial_complete) {
+    @tut_bury_bones(last_slot);
+} else {
+    @bury_bones(last_slot);
+}
 [opheld1,burnt_bones] @bury_bones(last_slot);
 [opheld1,bat_bones] @bury_bones(last_slot);
 [opheld1,big_bones] @bury_bones(last_slot);
@@ -25,7 +30,7 @@ if_close;
 givexp(prayer, oc_param($last_item, bone_exp));
 mes("You bury the bones.");
 
-if (1 = ^false | ~macro_event_general_active = true) {
+if (afk_event = ^false | ~macro_event_general_active = true) {
     return;
 }
 @macro_event_prayer;

@@ -64,7 +64,7 @@ export default class WordEncFragments {
         let end = fragmentsLength - 1;
 
         while (start <= end) {
-            const mid = Math.floor((start + end) / 2); // client does not floor here
+            const mid = ((start + end) / 2) | 0;
             if (value === fragments[mid]) {
                 return true;
             } else if (value < fragments[mid]) {

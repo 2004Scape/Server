@@ -3,12 +3,6 @@
 
 [label,magic_spell_high_alch](int $spell, obj $item)
 if_close;
-// if player has casted a spell recently then return
-// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell instead of returning
-if (map_clock < %magic_utility_delay) {
-    return;
-}
-//p_stopaction;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 if (~check_spell_requirements($spell_data) = false) {
@@ -29,11 +23,15 @@ spotanim_pl(casthighlvlalchemy, 92, 0);
 inv_del(inv, $item, 1);
 inv_add(inv, coins, max(scale(6, 10, oc_cost($item)), 1));
 // delay by 5 ticks
-%magic_utility_delay = calc(map_clock + 5);
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
     return;
 }
+// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell. Early osrs it was delay'd
+// https://www.neoseeker.com/forums/2410/t960058-useless-rs-facts/2.htm
+// > When you high alch while your cannon is spinning, it stops spinning until you finish alching
+// Also this video: https://www.youtube.com/watch?v=P_o3Cxg73Tg&t=91s
+p_delay(4);
 
 
 [label,magic_spell_low_alch](int $spell, obj $item)
@@ -41,11 +39,6 @@ if_close;
 // look for spell in db
 def_dbrow $spell_data = ~get_spell_data($spell);
 if (~check_spell_requirements($spell_data) = false) {
-    return;
-}
-// if player has casted a spell recently then return
-// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell instead of returning
-if (map_clock < %magic_utility_delay) {
     return;
 }
 // prevent alchemy
@@ -63,11 +56,11 @@ spotanim_pl(castlowlvlalchemy, 92, 0);
 inv_del(inv, $item, 1);
 inv_add(inv, coins, max(scale(4, 10, oc_cost($item)), 1));
 // delay by 3 ticks
-%magic_utility_delay = calc(map_clock + 3);
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
     return;
 }
+p_delay(2);
 
 
 [proc,is_alchable](obj $item)(boolean)

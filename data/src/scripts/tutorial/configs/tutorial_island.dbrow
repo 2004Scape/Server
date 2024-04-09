@@ -1,0 +1,8 @@
+[tutorial_island]
+table=coord_pair_table
+data=coord_pair,0_48_148_0_0,0_48_148_63_63
+data=coord_pair,0_49_48_0_0,0_49_48_63_63
+data=coord_pair,0_48_48_0_0,0_48_48_63_63
+data=coord_pair,0_48_47_0_0,0_48_47_63_63
+data=coord_pair,0_47_48_0_0,0_47_48_63_63
+data=coord_pair,0_47_47_0_0,0_47_47_63_63

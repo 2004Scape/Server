@@ -1,0 +1,24 @@
+// loops zones around a specified coord.
+// returns a random player within a specified coord and distance
+// this proc shouldnt really ever be used. I think huntall does the job if
+// you need an npc to find a random player within distance.
+[proc,random_player_within_distance](coord $coord, int $distance)(player_uid)
+def_coord $random_coord = ~coord_lineofsight_radius($coord, $distance);
+def_player_uid $closest_player = null;
+def_int $closest_distance = $distance;
+
+// player_findallzone($random_coord);
+// while (player_findnext = true) {
+//     if (.coord = $random_coord) {
+//         return(.uid);
+//     }
+//     if (distance(.coord, $random_coord) <= $closest_distance) {
+//         $closest_distance = distance(.coord, $random_coord);
+//         $closest_player = .uid;
+//     }
+// }
+
+if ($closest_distance < $distance | $closest_player ! null) {
+    return($closest_player);
+}
+return(null);

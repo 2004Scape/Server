@@ -3,11 +3,11 @@ if (last_useitem = bread_dough) {
     anim(human_cooking, 0);
     sound_synth(fry, 0, 0);
     p_delay(2);
-    if (%tutorial_progress = 160) {
+    if (%tutorial_progress = ^chef_mixed_dough) {
         inv_del(inv, bread_dough, 1);
         inv_add(inv, bread, 1);
         ~tutorial_give_xp(cooking, 400);
-        %tutorial_progress = 170;
+        %tutorial_progress = ^chef_baked_bread;
         ~set_tutorial_progress;
     } else {
         inv_del(inv, bread_dough, 1);
@@ -27,29 +27,35 @@ if (last_useitem = bread_dough) {
     p_delay(2);
     inv_del(inv, raw_shrimps, 1);
     @tut_random_shrimp_chance;
-} else {
+} else if (last_useitem = raw_rat_meat) {
+      anim(human_cooking, 0);
+      sound_synth(fry, 0, 0);
+      p_delay(2);
+      inv_del(inv, raw_rat_meat, 1);
+      @tut_random_meat_chance;
+  }else {
     @nothing_interesting_happens;
 }
 
 [label,tut_attempt_cook_item](obj $uncooked_item)
 if ($uncooked_item = raw_shrimps) {
     p_arrivedelay;
-    if (%tutorial_progress = 80) {
+    if (%tutorial_progress = ^survival_guide_cook_shrimps) {
         anim(human_firecooking, 0);
         sound_synth(fry, 0, 0);
         p_delay(2);
         inv_del(inv, raw_shrimps, 1);
         inv_add(inv, burnt_shrimp_anchovies, 1);
-        %tutorial_progress = 90;
+        %tutorial_progress = ^survival_guide_burnt_shrimps;
         ~tutorial_step_burn_shrimp;
-    } else if (%tutorial_progress = 90) {
+    } else if (%tutorial_progress = ^survival_guide_burnt_shrimps) {
         anim(human_firecooking, 0);
         sound_synth(fry, 0, 0);
         p_delay(2);
         inv_del(inv, raw_shrimps, 1);
         inv_add(inv, shrimps, 1);
         ~tutorial_give_xp(cooking, 300);
-        %tutorial_progress = 120;
+        %tutorial_progress = ^survival_guide_complete;
         ~tutorial_step_survival_recap;
     } else {
         anim(human_firecooking, 0);
@@ -58,6 +64,12 @@ if ($uncooked_item = raw_shrimps) {
         inv_del(inv, raw_shrimps, 1);
         @tut_random_shrimp_chance;
     }
+} else if ($uncooked_item = raw_rat_meat) {
+    anim(human_firecooking, 0);
+    sound_synth(fry, 0, 0);
+    p_delay(2);
+    inv_del(inv, raw_rat_meat, 1);
+    @tut_random_meat_chance;
 } else {
     @nothing_interesting_happens;
 }
@@ -73,6 +85,17 @@ if ($rand < calc(3 + stat_base(cooking))) {
     inv_add(inv, burnt_shrimp_anchovies, 1);
 }
 
+[label,tut_random_meat_chance]
+def_int $rand = random(10);
+if ($rand < calc(3 + stat_base(cooking))) {
+    mes("The meat is now nicely cooked.");
+    inv_add(inv, cooked_meat, 1);
+    ~tutorial_give_xp(cooking, 300);
+} else {
+    mes("You accidentally burn the meat.");
+    inv_add(inv, burnt_meat, 1);
+}
+
 [label,tut_make_dough]
 // TODO: See what happens on rs if you have a full invent
 // On a quick test, I made the dough, got that in my invent first, then an empty pot, and no bucket to be found anywhere.
@@ -81,7 +104,7 @@ inv_del(inv, bucket_water, 1);
 inv_add(inv, pot_empty, 1);
 inv_add(inv, bucket_empty, 1);
 inv_add(inv, bread_dough, 1);
-if (%tutorial_progress = 150) {
-    %tutorial_progress = 160;
+if (%tutorial_progress = ^chef_make_dough) {
+    %tutorial_progress = ^chef_mixed_dough;
 }
 ~set_tutorial_progress;

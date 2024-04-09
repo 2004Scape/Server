@@ -256,7 +256,7 @@ if (p_finduid(uid) = true) {
     inv_add(bank, 4doserangerspotion, 100);
     inv_add(bank, 4doseantipoison, 100);
     inv_add(bank, 4dose1antidragon, 100);
-    inv_add(bank, obj_197, 100);
+    inv_add(bank, poison_chalice, 100);
 } else {
     @please_finish;
 }
