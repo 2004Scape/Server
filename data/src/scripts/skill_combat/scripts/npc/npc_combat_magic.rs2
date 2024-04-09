@@ -14,6 +14,7 @@ return(~combat_stat($effective_magic, $magicattack));
 [movecheck,frozen]()(boolean)
 if (map_clock < %stunned) {
     mes("A magical force stops you from moving.");
+    p_stopaction;
     return(false);
 }
 

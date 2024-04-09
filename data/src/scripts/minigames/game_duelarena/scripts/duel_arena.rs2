@@ -388,7 +388,7 @@ softtimer(duel_arena_start_3, 3); // todo: confirm these timings
 // random coord between 2 coords, checks if map blocked and not inside dueler
 def_coord $coord1;
 def_coord $coord2;
-if (testbit(%duel_settings, ^obstacles) = true) {
+if (~duel_arena_obstacles_check = true) {
     $coord1, $coord2 = db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, random(3));
 } else {
     $coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, random(3));
@@ -413,7 +413,7 @@ while (map_blocked($random_coord1) = true) {
 
 $i = 0;
 if (testbit(%duel_settings, ^no_movement) = true) {
-    while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1) {
+    while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1 | lineofwalk($random_coord1, $random_coord2) = false){
         switch_int (random(4)) {
             case 0: $random_coord2 = movecoord($random_coord1, 1, 0, 0);
             case 1: $random_coord2 = movecoord($random_coord1, -1, 0, 0);
@@ -458,7 +458,8 @@ say("FIGHT!");
 clearsofttimer(duel_arena_start_fight);
 
 [movecheck,duel_arena_start]()(boolean)
-if (map_clock < %stunned | testbit(%duel_settings, ^no_movement) = true & ~in_duel_arena = true) {
+if (map_clock < %stunned | ~duel_arena_movement_check = true & ~in_duel_arena = true) {
+    p_stopaction;
     return(false);
 }
 return(true);

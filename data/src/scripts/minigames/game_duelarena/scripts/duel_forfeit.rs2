@@ -5,8 +5,7 @@
 [oploc1,duel_trapdoor] @duel_forfeit;
 
 [label,duel_forfeit]
-if (testbit(%duel_settings, ^no_forfeit) = true) {
-    mes("You can't forfeit this duel."); // cpmplete guess
+if (~duel_arena_forfeit_check = false) {
     return;
 }
 if (%duel_origin_coord ! null) {

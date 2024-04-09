@@ -262,6 +262,7 @@ return($maxhit);
 // [movecheck,.frozen]()(boolean)
 // if (map_clock < .%stunned) {
 //     .mes("A magical force stops you from moving.");
+//      p_stopaction;
 //     return(false);
 // }
 

@@ -7,7 +7,7 @@ if_close;
 [label,equip](int $slot)
 if (p_finduid(uid) = true) {
     def_obj $obj = inv_getobj(inv, $slot);
-    if (~in_duel_arena = true & ~duel_arena_equip_checks($obj) = false) {
+    if (~duel_arena_equip_check($obj) = false) {
         return;
     }
     //// first: we remove the inventory item, so the slot can be filled with inv_add

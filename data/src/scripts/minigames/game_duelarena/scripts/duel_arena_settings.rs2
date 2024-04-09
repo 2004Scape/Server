@@ -72,7 +72,10 @@ while ($i < enum_getoutputcount($enum)) {
     $i = calc($i + 1);
 }
 
-[proc,duel_arena_equip_checks](obj $obj)(boolean)
+[proc,duel_arena_equip_check](obj $obj)(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
 if (testbit(%duel_settings, ^no_weapons) = true & oc_wearpos($obj) = ^wearpos_rhand) {
     mes("Use of weapons has been turned off for this duel."); // guess
     return(false);
@@ -98,3 +101,52 @@ if (testbit(%duel_settings, ^no_jewelry) = true & (
     return(false);
 }
 return(true);
+
+
+[proc,duel_arena_prayer_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_prayer) = true) {
+    mes("Use of prayer has been turned off for this duel."); // real
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_consume_check](obj $obj)(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (oc_category($obj) = category_69 & testbit(%duel_settings, ^no_potions) = true) {
+    mes("Use of potions has been turned off for this duel."); // guess based on no prayer
+    return(false);
+}
+if (testbit(%duel_settings, ^no_food) = true) {
+    mes("Use of food has been turned off for this duel."); // guess based on no prayer
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_obstacles_check]()(boolean)
+return(testbit(%duel_settings, ^obstacles));
+
+
+[proc,duel_arena_movement_check]()(boolean)
+return(testbit(%duel_settings, ^no_movement));
+
+
+[proc,duel_arena_forfeit_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_forfeit) = true) {
+    mes("You can't forfeit this duel."); // guess
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_flower_power_check]()(boolean)
+return(testbit(%duel_settings, ^flower_power));

@@ -479,8 +479,7 @@ if (db_getfield($data, prayers:members, 0) = ^true & map_members = false) {
     mes("You need to be on a members' server to use this Prayer.");
     return(false);
 }
-if (testbit(%duel_settings, ^no_prayer) = true & ~in_duel_arena = true) {
-    mes("Use of prayer has been turned off for this duel.");
+if (~duel_arena_prayer_check = false) {
     return(false);
 }
 return(true);
