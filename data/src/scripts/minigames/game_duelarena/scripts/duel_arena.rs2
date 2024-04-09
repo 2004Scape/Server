@@ -86,16 +86,16 @@ if (.finduid(%duelpartner) = true) {
         
         // go through all items in each of the player's tempinv
         if (~enough_duel_space = false) {
-            mes("Other player doesn't have enough inventory space for this duel."); // guess
-            .mes("You don't have enough inventory space for this duel."); // guess
+            mes("You don't have enough inventory space for this duel."); // guess
+            .mes("Other player doesn't have enough inventory space for this duel."); // guess
             if_close;
             .if_close;
             return;
         }
         // and in the reverse direction
         if (~.enough_duel_space = false) {
-            mes("You don't have enough inventory space for this duel."); // guess
-            .mes("Other player doesn't have enough inventory space for this duel."); // guess
+            .mes("You don't have enough inventory space for this duel."); // guess
+            mes("Other player doesn't have enough inventory space for this duel."); // guess
             if_close;
             .if_close;
             return;
@@ -142,28 +142,53 @@ if (.finduid(%duelpartner) = true) {
 }
 
 [proc,enough_duel_space]()(boolean)
-def_int $size = calc(inv_size(tempinv) + .inv_size(tempinv));
+def_int $no_weapons_size = 0;
+def_int $no_armour_size = 0;
+def_int $no_jewelry_size = 0;
+if (testbit(%duel_settings, ^no_weapons) = true) {
+    $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
+}
+if (testbit(%duel_settings, ^no_armour) = true) {
+    $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
+}
+if (testbit(%duel_settings, ^no_jewelry) = true) {
+    $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
+}
+def_int $size = calc(inv_size(tempinv) + .inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
 def_int $slot = 0;
 def_int $space_needed = 0;
 while ($slot < $size) {
     def_obj $obj;
     def_int $num;
-    if ($slot < inv_size(tempinv)) {
-        $obj = inv_getobj(tempinv, $slot);
-        $num = inv_getnum(tempinv, $slot);
+    if ($slot < $no_weapons_size) {
+        $obj = inv_getobj(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+        $num = inv_getnum(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size)) {
+        $obj = inv_getobj(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+        $num = inv_getnum(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = inv_getobj(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+        $num = inv_getnum(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+    } else if ($slot < calc(.inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = inv_getobj(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = inv_getnum(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
     } else {
-        $obj = .inv_getobj(tempinv, sub($slot, .inv_size(tempinv)));
-        $num = .inv_getnum(tempinv, sub($slot, .inv_size(tempinv)));
+        $obj = .inv_getobj(tempinv, calc($slot - .inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = .inv_getnum(tempinv, calc($slot - .inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
     }
     
     if ($obj ! null) {
         if (oc_stackable($obj) = false) {
             $num = 1;
         }
-        if (.inv_itemspace(inv, $obj, $num, .inv_size(inv)) = true) {
-            $space_needed = calc($space_needed + 1);
+        if (inv_itemspace(inv, $obj, $num, .inv_size(inv)) = true) {
+            if (oc_stackable($obj) = false | (oc_stackable($obj) = true & inv_total(inv, $obj) < 1)) {
+                $space_needed = calc($space_needed + 1);
+            }
+        } else {
+            return(false);
         }
-        if (.inv_freespace(inv) < $space_needed) {
+        if (inv_freespace(inv) < $space_needed) {
             return(false);
         }
     }
@@ -173,18 +198,39 @@ while ($slot < $size) {
 return(true);
 
 [proc,.enough_duel_space]()(boolean)
-def_int $size = calc(.inv_size(tempinv) + inv_size(tempinv));
+def_int $no_weapons_size = 0;
+def_int $no_armour_size = 0;
+def_int $no_jewelry_size = 0;
+if (testbit(.%duel_settings, ^no_weapons) = true) {
+    $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
+}
+if (testbit(.%duel_settings, ^no_armour) = true) {
+    $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
+}
+if (testbit(.%duel_settings, ^no_jewelry) = true) {
+    $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
+}
+def_int $size = calc(.inv_size(tempinv) + inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
 def_int $slot = 0;
 def_int $space_needed = 0;
 while ($slot < $size) {
     def_obj $obj;
     def_int $num;
-    if ($slot < .inv_size(tempinv)) {
-        $obj = .inv_getobj(tempinv, $slot);
-        $num = .inv_getnum(tempinv, $slot);
+    if ($slot < $no_weapons_size) {
+        $obj = .inv_getobj(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+        $num = .inv_getnum(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size)) {
+        $obj = .inv_getobj(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+        $num = .inv_getnum(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = .inv_getobj(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+        $num = .inv_getnum(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+    } else if ($slot < calc(.inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = .inv_getobj(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = .inv_getnum(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
     } else {
-        $obj = inv_getobj(tempinv, sub($slot, inv_size(tempinv)));
-        $num = inv_getnum(tempinv, sub($slot, inv_size(tempinv)));
+        $obj = inv_getobj(tempinv, calc($slot - inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = inv_getnum(tempinv, calc($slot - inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
     }
     
     if ($obj ! null) {
@@ -192,9 +238,13 @@ while ($slot < $size) {
             $num = 1;
         }
         if (.inv_itemspace(inv, $obj, $num, inv_size(inv)) = true) {
-            $space_needed = calc($space_needed + 1);
+            if (oc_stackable($obj) = false | (oc_stackable($obj) = true & .inv_total(inv, $obj) < 1)) {
+                $space_needed = calc($space_needed + 1);
+            }
+        } else {
+            return(false);
         }
-        if (inv_freespace(inv) < $space_needed) {
+        if (.inv_freespace(inv) < $space_needed) {
             return(false);
         }
     }
@@ -310,6 +360,19 @@ p_stopaction;
 
 ~deactivate_prayers;
 ~.deactivate_prayers;
+
+if (testbit(%duel_settings, ^no_weapons) = true) {
+    ~unequip_duel(duel_arena_weapon_slots);
+    ~.unequip_duel(duel_arena_weapon_slots);
+}
+if (testbit(%duel_settings, ^no_armour) = true) {
+    ~unequip_duel(duel_arena_armour_slots);
+    ~.unequip_duel(duel_arena_armour_slots);
+}
+if (testbit(%duel_settings, ^no_jewelry) = true) {
+    ~unequip_duel(duel_arena_jewelry_slots);
+    ~.unequip_duel(duel_arena_jewelry_slots);
+}
 
 %stunned = calc(map_clock +  9);
 .%stunned = calc(map_clock + 9);

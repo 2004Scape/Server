@@ -1,69 +1,100 @@
 [if_button,duel_select_type:no_forfeit]
-%duel_settings = togglebit(%duel_settings, ^no_forfeit);
-~sync_duel_settings;
+~toggle_duel_setting(^no_forfeit);
 
 [if_button,duel_select_type:no_movement]
-%duel_settings = togglebit(%duel_settings, ^no_movement);
-~sync_duel_settings;
+~toggle_duel_setting(^no_movement);
 
 [if_button,duel_select_type:no_weapons]
-%duel_settings = togglebit(%duel_settings, ^no_weapons);
-~sync_duel_settings;
+~toggle_duel_setting(^no_weapons);
 
 [if_button,duel_select_type:no_armour]
-%duel_settings = togglebit(%duel_settings, ^no_armour);
-~sync_duel_settings;
+~toggle_duel_setting(^no_armour);
 
 [if_button,duel_select_type:no_potions]
-%duel_settings = togglebit(%duel_settings, 7);
-~sync_duel_settings;
+~toggle_duel_setting(^no_potions);
 
 [if_button,duel_select_type:no_jewelry]
-%duel_settings = togglebit(%duel_settings, ^no_jewelry);
-~sync_duel_settings;
+~toggle_duel_setting(^no_jewelry);
 
 [if_button,duel_select_type:no_ranged]
 if (testbit(%duel_settings, ^no_melee) = true & testbit(%duel_settings, ^no_magic) = true) {
     mes("You cannot disable all combat styles."); // completely made up
     return;
 }
-%duel_settings = togglebit(%duel_settings, ^no_ranged);
-~sync_duel_settings;
+~toggle_duel_setting(^no_ranged);
 
 [if_button,duel_select_type:no_melee]
 if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_magic) = true) {
     mes("You cannot disable all combat styles."); // completely made up
     return;
 }
-%duel_settings = togglebit(%duel_settings, ^no_melee);
-~sync_duel_settings;
+~toggle_duel_setting(^no_melee);
 
 [if_button,duel_select_type:no_magic]
 if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_melee) = true) {
     mes("You cannot disable all combat styles."); // completely made up
     return;
 }
-%duel_settings = togglebit(%duel_settings, ^no_magic);
-~sync_duel_settings;
+~toggle_duel_setting(^no_magic);
 
 [if_button,duel_select_type:no_prayer]
-%duel_settings = togglebit(%duel_settings, ^no_prayer);
-~sync_duel_settings;
+~toggle_duel_setting(^no_prayer);
 
 [if_button,duel_select_type:no_food]
-%duel_settings = togglebit(%duel_settings, ^no_food);
-~sync_duel_settings;
+~toggle_duel_setting(^no_food);
 
 [if_button,duel_select_type:flower_power]
-%duel_settings = togglebit(%duel_settings, ^flower_power);
-~sync_duel_settings;
+~toggle_duel_setting(^flower_power);
 
 [if_button,duel_select_type:obstacles]
-%duel_settings = togglebit(%duel_settings, ^obstacles);
-~sync_duel_settings;
+~toggle_duel_setting(^obstacles);
 
 
-[proc,sync_duel_settings]
+[proc,toggle_duel_setting](int $setting)
+%duel_settings = togglebit(%duel_settings, $setting);
 if (.finduid(%duelpartner) = true) {
     .%duel_settings = %duel_settings;
+    .%duelstatus = 0;
 }
+%duelstatus = 0;
+
+[proc,unequip_duel](enum $enum)
+def_int $i = 0;
+while ($i < enum_getoutputcount($enum)) {
+    ~try_unequip(enum(int, int, $enum, $i));
+    $i = calc($i + 1);
+}
+
+[proc,.unequip_duel](enum $enum)
+def_int $i = 0;
+while ($i < enum_getoutputcount($enum)) {
+    ~.try_unequip(enum(int, int, $enum, $i));
+    $i = calc($i + 1);
+}
+
+[proc,duel_arena_equip_checks](obj $obj)(boolean)
+if (testbit(%duel_settings, ^no_weapons) = true & oc_wearpos($obj) = ^wearpos_rhand) {
+    mes("Use of weapons has been turned off for this duel."); // guess
+    return(false);
+}
+if (testbit(%duel_settings, ^no_armour) = true & (
+    oc_wearpos($obj) = ^wearpos_hat | 
+    oc_wearpos($obj) = ^wearpos_head |
+    oc_wearpos($obj) = ^wearpos_back | 
+    oc_wearpos($obj) = ^wearpos_lhand | 
+    oc_wearpos($obj) = ^wearpos_torso |
+    oc_wearpos($obj) = ^wearpos_arms |
+    oc_wearpos($obj) = ^wearpos_legs |
+    oc_wearpos($obj) = ^wearpos_hands |
+    oc_wearpos($obj) = ^wearpos_feet |
+    oc_wearpos($obj) = ^wearpos_jaw)) {
+    mes("Use of armour has been turned off for this duel."); // guess
+    return(false);
+}
+if (testbit(%duel_settings, ^no_jewelry) = true & (
+    oc_wearpos($obj) = ^wearpos_ring |
+    oc_wearpos($obj) = ^wearpos_front)) {
+    mes("Use of jewelry has been turned off for this duel."); // guess
+    return(false);
+}
+return(true);

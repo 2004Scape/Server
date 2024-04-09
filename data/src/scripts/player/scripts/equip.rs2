@@ -6,8 +6,11 @@ if_close;
 
 [label,equip](int $slot)
 if (p_finduid(uid) = true) {
-    //// first: we remove the inventory item, so the slot can be filled with inv_add
     def_obj $obj = inv_getobj(inv, $slot);
+    if (~in_duel_arena = true & ~duel_arena_equip_checks($obj) = false) {
+        return;
+    }
+    //// first: we remove the inventory item, so the slot can be filled with inv_add
     def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
 
     def_int $count = inv_getnum(inv, $slot);
@@ -48,6 +51,37 @@ if (p_finduid(uid) = true) {
     }
     inv_moveitem(worn, inv, $obj, sub($count, $overflow));
     ~update_all($obj);
+}
+
+// used for duel arena, no weapon/no armour
+[proc,try_unequip](int $slot)
+if (p_finduid(uid) = true) {
+    def_obj $obj = inv_getobj(worn, $slot);
+    if ($obj = null) {
+        return;
+    }
+    def_int $count = inv_getnum(worn, $slot);
+    def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));
+    if ($overflow >= $count) {
+        return;
+    }
+    inv_moveitem(worn, inv, $obj, sub($count, $overflow));
+    ~update_all($obj);
+}
+
+[proc,.try_unequip](int $slot)
+if (.p_finduid(.uid) = true) {
+    def_obj $obj = .inv_getobj(worn, $slot);
+    if ($obj = null) {
+        return;
+    }
+    def_int $count = .inv_getnum(worn, $slot);
+    def_int $overflow = .inv_itemspace2(inv, $obj, $count, .inv_size(inv));
+    if ($overflow >= $count) {
+        return;
+    }
+    .inv_moveitem(worn, inv, $obj, sub($count, $overflow));
+    ~.update_all($obj);
 }
 
 [proc,update_bonuses]
