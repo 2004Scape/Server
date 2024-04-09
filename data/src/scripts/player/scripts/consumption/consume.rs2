@@ -108,6 +108,17 @@ if ($skill_delay ! null) {
     %action_delay = calc(%action_delay + $skill_delay);
 }
 
+if (~in_duel_arena = true) {
+    if (oc_category($obj) = category_69 & testbit(%duel_settings, ^no_potions) = true) {
+        mes("Use of potions has been turned off for this duel."); // guess based on no prayer
+        return;
+    }
+    if (testbit(%duel_settings, ^no_food) = true) {
+        mes("Use of food has been turned off for this duel."); // guess based on no prayer
+        return;
+    }
+}
+
 // consume effect
 jump($consume_effect);
 
