@@ -17,11 +17,21 @@ if (.finduid(%duelpartner) = true)  {
         if (.%duel_origin_coord ! null) {
             .p_telejump(.%duel_origin_coord);
         }
+        // todo: queue win on other player
+        ~.stat_reset_all;
+        .healenergy(10000);
+        ~.combat_clearqueue;
+        ~.clear_poison;
+        ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
         .%duelpartner = null;
         .%duelstatus = 0;
-        // todo: queue win on other player
     }
 }
 
+~stat_reset_all;
+healenergy(10000);
+~combat_clearqueue;
+~clear_poison;
+~update_all(inv_getobj(worn, ^wearpos_rhand));
 %duelpartner = null;
 %duelstatus = 0;
