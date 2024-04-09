@@ -78,7 +78,7 @@ def_obj $priciest_item;
 def_obj $currentitem;
 def_int $biggest_price = 0;
 def_int $size_inv = inv_size(inv);
-def_int $size_worn = inv_size(inv);
+def_int $size_worn = inv_size(worn);
 def_boolean $is_worn = false;
 def_int $i = 0;
 while ($i < $size_inv) {
