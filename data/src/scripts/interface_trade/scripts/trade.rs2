@@ -62,45 +62,20 @@ if (.finduid(%tradepartner) = true) {
         .inv_stoptransmit(trademain:otherinv);
         .inv_stoptransmit(tradeside:inv);
 
-        // check if contents of tempinv fits in other player's inv
-        def_int $size = inv_size(tempinv);
-        def_int $slot = 0;
-        while ($slot < $size) {
-            def_obj $obj = inv_getobj(tempinv, $slot);
-            def_int $num = inv_getnum(tempinv, $slot);
-
-            if ($obj ! null) {
-                if (.inv_itemspace(inv, $obj, $num, sub(.inv_size(inv), $slot)) = false) {
-                    mes("Other player doesn't have enough inventory space for this trade.");
-                    .mes("You don't have enough inventory space for this trade.");
-
-                    if_close;
-                    .if_close;
-                    return;
-                }
-            }
-
-            $slot = add($slot, 1);
+        if (~enough_trade_space = false) {
+            mes("Other player doesn't have enough inventory space for this trade.");
+            .mes("You don't have enough inventory space for this trade.");
+            if_close;
+            .if_close;
+            return;
         }
 
-        // and in the reverse direction
-        $slot = 0;
-        while ($slot < $size) {
-            def_obj $obj = .inv_getobj(tempinv, $slot);
-            def_int $num = .inv_getnum(tempinv, $slot);
-
-            if ($obj ! null) {
-                if (inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
-                    mes("You don't have enough inventory space for this trade.");
-                    .mes("Other player doesn't have enough inventory space for this trade.");
-
-                    if_close;
-                    .if_close;
-                    return;
-                }
-            }
-
-            $slot = add($slot, 1);
+        if (~.enough_trade_space = false) {
+            mes("You don't have enough inventory space for this trade.");
+            .mes("Other player doesn't have enough inventory space for this trade.");
+            if_close;
+            .if_close;
+            return;
         }
 
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
@@ -153,6 +128,41 @@ if (.finduid(%tradepartner) = true) {
     }
 }
 
+[proc,enough_trade_space]()(boolean)
+// check if contents of tempinv fits in other player's inv
+def_int $size = inv_size(tempinv);
+def_int $slot = 0;
+while ($slot < $size) {
+    def_obj $obj = inv_getobj(tempinv, $slot);
+    def_int $num = inv_getnum(tempinv, $slot);
+
+    if ($obj ! null) {
+        if (.inv_itemspace(inv, $obj, $num, sub(.inv_size(inv), $slot)) = false) {
+            return(false);
+        }
+    }
+
+    $slot = add($slot, 1);
+}
+return(true);
+
+[proc,.enough_trade_space]()(boolean)
+def_int $size = .inv_size(tempinv);
+def_int $slot = 0;
+while ($slot < $size) {
+    def_obj $obj = .inv_getobj(tempinv, $slot);
+    def_int $num = .inv_getnum(tempinv, $slot);
+
+    if ($obj ! null) {
+        if (inv_itemspace(inv, $obj, $num, sub(inv_size(inv), $slot)) = false) {
+            return(false);
+        }
+    }
+
+    $slot = add($slot, 1);
+}
+return(true);
+
 [if_close,trademain]
 inv_stoptransmit(trademain:inv);
 inv_stoptransmit(trademain:otherinv);
@@ -163,7 +173,9 @@ inv_stoptransmit(tradeside:inv);
 if (.finduid(%tradepartner) = true) {
     .%tradepartner = null;
     .if_close;
-    .mes("Other player declined trade."); // osrs
+    if (%tradestatus ! 1 & .%tradestatus ! 1) {
+        .mes("Other player declined trade."); // osrs
+    }
 }
 
 %tradepartner = null;

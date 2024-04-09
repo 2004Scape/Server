@@ -42,10 +42,12 @@ inv_stoptransmit(duel_select_type:otherinv);
 inv_stoptransmit(duel_side:inv);
 
 
-if (.finduid(%duelpartner) = true & ~enough_duel_space = true & ~.enough_duel_space = true) { // duel space so the decline message doesnt show if not enough duel space
+if (.finduid(%duelpartner) = true) {
     .%duelpartner = null;
     .if_close;
-    .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
+    if (%duelstatus ! 1 & .%duelstatus ! 1) {
+        .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
+    }
 }
 
 ~moveallinv(tempinv, inv);
