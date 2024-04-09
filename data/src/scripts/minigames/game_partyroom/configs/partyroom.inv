@@ -1,3 +1,6 @@
 [partyroominv]
 scope=shared
 size=216
+
+[partyroomoffer]
+size=8

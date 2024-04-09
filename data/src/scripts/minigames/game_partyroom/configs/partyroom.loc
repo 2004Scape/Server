@@ -1,3 +1,199 @@
+[loc_115]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_115
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+category=party_balloon
+param=next_loc_stage,loc_123
+
+[loc_116]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_115
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+recol1s=11200
+recol1d=960
+category=party_balloon
+param=next_loc_stage,loc_124
+
+[loc_117]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_115
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+recol1s=11200
+recol1d=43968
+category=party_balloon
+param=next_loc_stage,loc_125
+
+[loc_118]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_115
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+recol1s=11200
+recol1d=22464
+category=party_balloon
+param=next_loc_stage,loc_126
+
+[loc_119]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_115
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+recol1s=11200
+recol1d=53184
+category=party_balloon
+param=next_loc_stage,loc_127
+
+[loc_120]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_115
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+recol1s=11200
+recol1d=127
+category=party_balloon
+param=next_loc_stage,loc_128
+
+[loc_121]
+name=Party Balloon
+desc=Aren't they pretty?
+model=model_loc_115_2
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+category=party_balloon
+param=next_loc_stage,loc_129
+
+[loc_122]
+name=Party Balloon
+desc=Paaaarty!
+model=model_loc_115_3
+anim=seq_498
+blockwalk=no
+blockrange=no
+ambient=60
+op1=Burst
+category=party_balloon
+param=next_loc_stage,loc_130
+
+[loc_123]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_123
+anim=seq_499
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+
+[loc_124]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_123
+anim=seq_499
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+recol1s=11200
+recol1d=960
+
+[loc_125]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_123
+anim=seq_499
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+recol1s=11200
+recol1d=43968
+
+[loc_126]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_123
+anim=seq_499
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+recol1s=11200
+recol1d=22464
+
+[loc_127]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_123
+anim=seq_499
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+recol1s=11200
+recol1d=53184
+
+[loc_128]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_123
+anim=seq_499
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+recol1s=11200
+recol1d=127
+
+[loc_129]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_129
+anim=seq_500
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+
+[loc_130]
+name=Party Balloon
+desc=A party balloon.
+model=model_loc_130
+anim=seq_501
+blockwalk=no
+blockrange=no
+hasalpha=yes
+ambient=60
+
 [loc_2416]
 name=Lever
 desc=Pull me!

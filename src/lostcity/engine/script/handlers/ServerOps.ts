@@ -237,6 +237,17 @@ const ServerOps: CommandHandlers = {
         state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
+    [ScriptOpcode.MAP_INDOORS]: state => {
+        const coord = state.popInt();
+
+        if (coord < 0 || coord > Position.max) {
+            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
+        }
+
+        const pos = Position.unpackCoord(coord);
+        state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.ROOF) ? 1 : 0);
+    },
+
     [ScriptOpcode.LINEOFSIGHT]: state => {
         const [c1, c2] = state.popInts(2);
 

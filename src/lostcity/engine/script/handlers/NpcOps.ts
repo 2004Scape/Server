@@ -121,7 +121,21 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_FINDEXACT]: state => {
-        throw new Error('unimplemented');
+        const [coord, id] = state.popInts(2);
+        const pos = Position.unpackCoord(coord);
+        npcFindResults = World.getZoneNpcs(pos.x, pos.z, pos.level).entries();
+
+        for (const result of npcFindResults) {
+            const npc = World.getNpc(result[1]);
+            if(npc && npc.type === id && npc.x === pos.x && npc.level === pos.level && npc.z === pos.z) {
+                state.activeNpc = npc;
+                state.pointerAdd(ActiveNpc[state.intOperand]);
+                state.pushInt(1);
+                return;
+            }
+        }
+        state.pushInt(0);
+        return;
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, state => {
