@@ -13,6 +13,8 @@ if (%flames_of_zamorak_casts < ^mage_arena_spell_finished & ~inzone_coord_pair_t
     mes("Mage Arena.");
     return;
 }
+
+~set_pk_vars;
 ~pvp_spell_cast($spell_data);
 // spell hit
 if (~pvp_hit_roll(^magic_style) = true) {
@@ -25,7 +27,6 @@ if (~pvp_hit_roll(^magic_style) = true) {
     ~pvp_spell_fail($spell_data, 64);
 }
 // todo: heropoints
-~set_pk_vars; // skulls
 
 [proc,god_spell_maxhit](dbrow $spell_data)(int)
 def_int $maxhit = ~magic_spell_maxhit($spell_data);

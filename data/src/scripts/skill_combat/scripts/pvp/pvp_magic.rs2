@@ -64,6 +64,8 @@ if (~pvp_debuff_allowed($spell_data) = false) {
     return;
 }
 
+~set_pk_vars;
+
 def_int $duration = ~pvp_spell_cast($spell_data);
 
 // spell hit
@@ -75,7 +77,6 @@ if (~pvp_hit_roll(^magic_style) = true) {
     ~pvp_spell_fail($spell_data, $duration);
 }
 // todo: heropoints
-~set_pk_vars; // skulls
 
 
 [proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)

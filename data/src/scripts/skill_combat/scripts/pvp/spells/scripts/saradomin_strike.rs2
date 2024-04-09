@@ -12,6 +12,8 @@ if (%saradomin_strike_casts < ^mage_arena_spell_finished & ~inzone_coord_pair_ta
     mes("Mage Arena.");
     return;
 }
+
+~set_pk_vars;
 ~pvp_spell_cast($spell_data);
 // spell hit
 if (~pvp_hit_roll(^magic_style) = true) {
@@ -23,4 +25,3 @@ if (~pvp_hit_roll(^magic_style) = true) {
     ~pvp_spell_fail($spell_data, 64);
 }
 // todo: heropoints
-~set_pk_vars; // skulls
