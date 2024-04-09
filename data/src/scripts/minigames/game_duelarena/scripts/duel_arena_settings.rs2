@@ -77,7 +77,7 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_weapons) = true & oc_wearpos($obj) = ^wearpos_rhand) {
-    mes("Use of weapons has been turned off for this duel."); // guess
+    mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
     return(false);
 }
 if (testbit(%duel_settings, ^no_armour) = true & (
@@ -91,13 +91,13 @@ if (testbit(%duel_settings, ^no_armour) = true & (
     oc_wearpos($obj) = ^wearpos_hands |
     oc_wearpos($obj) = ^wearpos_feet |
     oc_wearpos($obj) = ^wearpos_jaw)) {
-    mes("Use of armour has been turned off for this duel."); // guess
+    mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
     return(false);
 }
 if (testbit(%duel_settings, ^no_jewelry) = true & (
     oc_wearpos($obj) = ^wearpos_ring |
     oc_wearpos($obj) = ^wearpos_front)) {
-    mes("Use of jewelry has been turned off for this duel."); // guess
+    mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
     return(false);
 }
 return(true);
