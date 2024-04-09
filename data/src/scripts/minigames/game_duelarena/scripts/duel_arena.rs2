@@ -374,6 +374,9 @@ if (testbit(%duel_settings, ^no_jewelry) = true) {
     ~.unequip_duel(duel_arena_jewelry_slots);
 }
 
+hint_player(%duelpartner);
+.hint_player(.%duelpartner);
+
 %stunned = calc(map_clock +  9);
 .%stunned = calc(map_clock + 9);
 

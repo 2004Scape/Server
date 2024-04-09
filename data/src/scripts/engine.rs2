@@ -146,6 +146,7 @@
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
+[command,.hint_stop]
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
@@ -175,6 +176,7 @@
 [command,.gender]()(int)
 [command,hint_npc](npc_uid $npc)
 [command,hint_player](player_uid $player)
+[command,.hint_player](player_uid $player)
 [command,headicons_get]()(int)
 [command,.headicons_get]()(int)
 [command,headicons_set](int $icons)

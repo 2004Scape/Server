@@ -166,6 +166,7 @@ if (.stat(hitpoints) = 0) {
         ~.combat_clearqueue;
         ~.clear_poison;
         ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
+        .hint_stop;
         
         p_stopaction;
         queue(duel_arena_finished, 0, .displayname, ~.player_combat_level);
@@ -177,6 +178,7 @@ if (.stat(hitpoints) = 0) {
         ~combat_clearqueue;
         ~clear_poison;
         ~update_all(inv_getobj(worn, ^wearpos_rhand));
+        hint_stop;
         return;
     }
     // these messages need to be in the death queue https://youtu.be/9Q8BbGi2VWg?t=136
