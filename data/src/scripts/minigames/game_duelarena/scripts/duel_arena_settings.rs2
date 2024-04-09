@@ -15,9 +15,7 @@
 ~sync_duel_settings;
 
 [if_button,duel_select_type:no_potions]
-mes(tostring(%duel_settings));
 %duel_settings = togglebit(%duel_settings, 7);
-mes(tostring(%duel_settings));
 ~sync_duel_settings;
 
 [if_button,duel_select_type:no_jewelry]
