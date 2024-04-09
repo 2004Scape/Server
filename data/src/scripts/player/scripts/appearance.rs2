@@ -69,3 +69,7 @@ return(false);
 [proc,headicons_clear]()
 headicons_set(0);
 buildappearance(worn);
+
+[proc,.headicons_clear]()
+.headicons_set(0);
+.buildappearance(worn);

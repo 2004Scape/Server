@@ -18,6 +18,7 @@ if (.finduid(%duelpartner) = true)  {
             .p_telejump(.%duel_origin_coord);
         }
         // todo: queue win on other player
+        .p_stopaction;
         ~.stat_reset_all;
         .healenergy(10000);
         ~.combat_clearqueue;
@@ -28,6 +29,7 @@ if (.finduid(%duelpartner) = true)  {
     }
 }
 
+p_stopaction;
 ~stat_reset_all;
 healenergy(10000);
 ~combat_clearqueue;

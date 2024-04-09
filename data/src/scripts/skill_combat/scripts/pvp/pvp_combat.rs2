@@ -160,7 +160,7 @@ if (.stat(hitpoints) = 0) {
         // .midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
         // .anim(human_death, 0);
         // .p_delay(6);
-        .p_teleport(.%duel_origin_coord);
+        .p_telejump(.%duel_origin_coord);
         ~.stat_reset_all;
         .healenergy(10000);
         ~.combat_clearqueue;
@@ -171,7 +171,7 @@ if (.stat(hitpoints) = 0) {
         queue(duel_arena_finished, 0, .displayname, ~.player_combat_level);
         p_delay(0);
         if_close;
-        p_teleport(%duel_origin_coord);
+        p_telejump(%duel_origin_coord);
         ~stat_reset_all;
         healenergy(10000);
         ~combat_clearqueue;

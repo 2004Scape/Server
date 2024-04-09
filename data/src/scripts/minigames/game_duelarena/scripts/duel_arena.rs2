@@ -308,6 +308,9 @@ p_telejump($random_coord1);
 p_stopaction;
 .p_stopaction;
 
+~deactivate_prayers;
+~.deactivate_prayers;
+
 %stunned = calc(map_clock +  9);
 .%stunned = calc(map_clock + 9);
 
