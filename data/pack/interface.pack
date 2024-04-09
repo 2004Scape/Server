@@ -6820,7 +6820,7 @@
 6819=duel_win:com_85
 6820=duel_win:com_86
 6821=duel_win:com_87
-6822=duel_win:com_88
+6822=duel_win:spoils
 6823=duel_win:com_89
 6824=duel_win:com_90
 6825=duel_win:com_99
@@ -6837,8 +6837,8 @@
 6836=duel_win:com_102
 6837=duel_win:com_103
 6838=duel_win:com_104
-6839=duel_win:com_105
-6840=duel_win:com_106
+6839=duel_win:combat_level
+6840=duel_win:displayname
 6841=duel_win:com_107
 6842=music:com_160
 6843=music:com_161

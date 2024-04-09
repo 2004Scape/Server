@@ -9,6 +9,8 @@ if (.stat(hitpoints) = 0) {
     return;
 }
 
+p_opplayer(2);
+
 ~player_combat_stat;
 ~.player_combat_stat;
 
@@ -52,5 +54,3 @@ if (~deserves_pk_skull = true) {
     ~pk_skull(3000); // 3000 ticks, or 30 minutes
 }
 ~set_pk_vars;
-
-p_opplayer(2);

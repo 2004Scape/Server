@@ -28,6 +28,9 @@ if (~deserves_pk_skull = true) {
 
 // requires active_player
 [proc,pk_skull](int $duration)
+if (~in_duel_arena = true) {
+    return; // prevent pk skull from being in duel arena
+}
 ~headicon_add(^headicon_skull);
 %pk_skull = add(map_clock, $duration);
 softtimer(pk_skull_timer, $duration);

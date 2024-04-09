@@ -1,7 +1,7 @@
 [opplayer1,_]
 // prevent people from dueling outside the duel arena, or in a duel
-if (~inzone_coord_pair_table(duel_arena_zones, coord) = false | ~inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
-    mes("You can't do that here."); // osrs pvp arena
+if (~inzone_coord_pair_table(duel_arena_zones, coord) = false | ~in_duel_arena = true) {
+    mes("You can't do that here."); // https://youtu.be/nUwvlFkcsqA?t=17
     return;
 }
 if (.busy = true) {
@@ -42,28 +42,27 @@ inv_stoptransmit(duel_select_type:otherinv);
 inv_stoptransmit(duel_side:inv);
 
 
-~moveallinv(tempinv, inv);
-
 if (.finduid(%duelpartner) = true) {
     .%duelpartner = null;
     .if_close;
     .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
 }
 
+~moveallinv(tempinv, inv);
 %duelpartner = null;
 
 [if_close,duel_confirm]
 inv_stoptransmit(duel_confirm:inv);
 inv_stoptransmit(duel_confirm:otherinv);
-
-~moveallinv(tempinv, inv);
-
+if (%duelstatus >= 4) { 
+    return; // duel accepted
+}
 if (.finduid(%duelpartner) = true) {
-    .%duelpartner = null;
     .if_close;
     .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
+    .%duelpartner = null;
 }
-
+~moveallinv(tempinv, inv);
 %duelpartner = null;
 
 [if_button,duel_select_type:accept]
@@ -161,14 +160,18 @@ if (.finduid(%duelpartner) = true) {
 
 [if_button,duel_confirm:accept]
 %duelstatus = 3;
+%duel_origin_coord = coord;
 
 if (.finduid(%duelpartner) = true) {
     if (.%duelstatus = 3) {
         mes("Accepted stake and duel options.");
         .mes("Accepted stake and duel options.");
 
-        both_moveinv(tempinv, inv);
-        .both_moveinv(tempinv, inv);
+        // both_moveinv(inv, inv);
+        // .both_moveinv(tempinv, inv);
+
+        %duelstatus = 4;
+        .%duelstatus = 4;
 
         if_close;
         .if_close;
@@ -246,8 +249,6 @@ if (.finduid(%duelpartner) = true) {
 // ---
 
 [label,start_duel]
-%duelstatus = 4;
-.%duelstatus = 4;
 def_int $random_arena = random(3);
 // random coord between 2 coords, checks if map blocked and not inside dueler
 
@@ -313,6 +314,7 @@ clearsofttimer(duel_arena_start_1);
 
 [softtimer,duel_arena_start_fight]
 say("FIGHT!");
+%duelstatus = 5;
 clearsofttimer(duel_arena_start_fight);
 
 [movecheck,duel_arena_start]()(boolean)
@@ -320,3 +322,64 @@ if (map_clock < %stunned) {
     return(false);
 }
 return(true);
+
+[proc,duel_arena_checks]()(boolean)
+if (~inzone_coord_pair_table(duel_arena_zones, coord) = true & ~in_duel_arena = false) {
+    mes("You cannot attack players in the challenge area."); // https://youtu.be/r606q1TBTJ8?t=53 https://youtu.be/zcFLOWkTSIo?t=3
+    return(false);
+}
+if (.uid ! %duelpartner) {
+    mes("You can only attack your opponent!"); // https://storage.googleapis.com/tannerdino/images/batwifahat-purpl.jpg
+    return(false);
+}
+if (%duelstatus < 5 & .%duelstatus < 5) {
+    mes("The duel has not started yet!"); // https://youtu.be/64GEUr-lgS8?t=106
+    return(false);
+}
+return(true);
+
+[proc,in_duel_arena]()(boolean)
+if (~inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
+    return(true);
+}
+return(false);
+
+[queue,duel_arena_finished](string $displayname, int $combat_level)
+mes("Well done! You have defeated <$displayname>!");
+if_openmainmodal(duel_win);
+if_settext(duel_win:displayname, $displayname);
+if_settext(duel_win:combat_level, tostring($combat_level));
+
+// get stuff back in ur tempinv
+def_int $i = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+        inv_movefromslot(tempinv, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+
+inv_clear(tempinv);
+
+// take stuff from other player's tempinv
+if (.finduid(%duelpartner) = true) {
+    .both_moveinv(tempinv, tempinv);
+    .%duelpartner = null;
+    // display spoils
+    inv_transmit(tempinv, duel_win:spoils);
+}
+
+%duelstatus = 0;
+%duelpartner = null;
+
+[if_close,duel_win]
+// take spoils
+def_int $i = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        inv_movefromslot(tempinv, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+inv_stoptransmit(duel_win:spoils);

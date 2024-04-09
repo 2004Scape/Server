@@ -1,12 +1,19 @@
 [opplayer2,_] @pvp_combat_start;
 
 [applayer2,_]
-if (~pvp_level_check = false) {
-    return;
+if (~in_duel_arena = true) {
+    if (~duel_arena_checks = false) {
+        return;
+    }
+} else {
+    if (~pvp_level_check = false) {
+        return;
+    }
+    if (~pvp_in_combat_check = false) {
+        return;
+    }
 }
-if (~pvp_in_combat_check = false) {
-    return;
-}
+
 def_int $distance = distance(coord, .coord);
 def_int $attackrange = 0;
 if (inv_getobj(worn, ^wearpos_rhand) ! null) {
@@ -27,12 +34,19 @@ p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
-if (~pvp_level_check = false) {
-    return;
+if (~in_duel_arena = true) {
+    if (~duel_arena_checks = false) {
+        return;
+    }
+} else {
+    if (~pvp_level_check = false) {
+        return;
+    }
+    if (~pvp_in_combat_check = false) {
+        return;
+    }
 }
-if (~pvp_in_combat_check = false) {
-    return;
-}
+
 if (~inzone_coord_pair_table(mage_arena, coord) = true) {
     mes("Kolodion allows only magical combat within the arena."); // osrs
     return;
@@ -135,6 +149,25 @@ givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 [proc,.pvp_damage_player](int $damage)
 ~.damage_self($damage);
 if (.stat(hitpoints) = 0) {
+    // todo: duel arena death in the death queue
+    if (~in_duel_arena = true) {
+        %duelstatus = 6;
+        .%duelstatus = 0;
+
+        .if_close;
+        .p_stopaction;
+        // .midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
+        // .anim(human_death, 0);
+        // .p_delay(6);
+        .p_teleport(.%duel_origin_coord);
+        
+        queue(duel_arena_finished, 0, .displayname, ~.player_combat_level);
+        p_delay(0);
+        if_close;
+        p_stopaction;
+        p_teleport(%duel_origin_coord);
+        return;
+    }
     // these messages need to be in the death queue https://youtu.be/9Q8BbGi2VWg?t=136
     def_int $random = random(11);
     switch_int($random) {

@@ -70,6 +70,7 @@
 [command,p_arrivedelay]
 [command,p_countdialog]
 [command,p_delay](int $delay)
+[command,.p_delay](int $delay)
 [command,p_opheld](int $op, int $inv, int $slot)
 [command,p_oploc](int $op)
 [command,p_opnpc](int $op)
@@ -130,6 +131,7 @@
 [command,text_gender](string $male_text, string $female_text)(string)
 [command,midi_song](string $song)
 [command,midi_jingle](string $jingle, int $length)
+[command,.midi_jingle](string $jingle, int $length)
 [command,hint_coord](int $offset, coord $coord, int $height)
 [command,softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,.softtimer]/*(softtimer $timer, int $interval, ...)*/

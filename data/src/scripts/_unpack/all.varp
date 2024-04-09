@@ -439,7 +439,8 @@ scope=perm
 
 [varp_282]
 
-[varp_283]
+[duel_origin_coord]
+type=coord
 
 [varp_288]
 
