@@ -5,6 +5,9 @@
 ~toggle_duel_setting(^no_movement);
 
 [if_button,duel_select_type:no_weapons]
+if (testbit(%duel_settings, ^flower_power) = true) {
+    ~toggle_duel_setting(^flower_power); // turn off flower power
+}
 ~toggle_duel_setting(^no_weapons);
 
 [if_button,duel_select_type:no_armour]
@@ -24,6 +27,9 @@ if (testbit(%duel_settings, ^no_melee) = true & testbit(%duel_settings, ^no_magi
 ~toggle_duel_setting(^no_ranged);
 
 [if_button,duel_select_type:no_melee]
+if (testbit(%duel_settings, ^flower_power) = true) {
+    ~toggle_duel_setting(^flower_power); // turn off flower power
+}
 if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_magic) = true) {
     mes("You cannot disable all combat styles."); // completely made up
     return;
@@ -44,7 +50,18 @@ if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_mel
 ~toggle_duel_setting(^no_food);
 
 [if_button,duel_select_type:flower_power]
-~toggle_duel_setting(^flower_power);
+if (~duel_arena_flower_power_check = true) {
+    if (testbit(%duel_settings, ^flower_power) = false) {
+        if (testbit(%duel_settings, ^no_weapons) = true) {
+            ~toggle_duel_setting(^no_weapons); // turn off no weapons
+        }
+        if (testbit(%duel_settings, ^no_melee) = true) {
+            ~toggle_duel_setting(^no_melee); // turn off no melee
+        }
+    }
+    ~toggle_duel_setting(^flower_power);
+}
+
 
 [if_button,duel_select_type:obstacles]
 ~toggle_duel_setting(^obstacles);
@@ -147,9 +164,46 @@ if (testbit(%duel_settings, ^no_forfeit) = true) {
 }
 return(true);
 
-
 [proc,duel_arena_flower_power_check]()(boolean)
-return(testbit(%duel_settings, ^flower_power));
+if (inv_totalcat(worn, flowers) < 1) {
+    mes("You need to be wielding flowers for this setting."); // guess
+    return(false);
+} else if (.finduid(%duelpartner) = true) {
+    if (.inv_totalcat(worn, flowers) < 1) {
+        mes("Other player needs to be wielding flowers for this setting."); // guess
+        return(false);
+    }
+}
+return(true);
+
+[proc,duel_arena_flower_power_equip_check](obj $obj)(boolean)
+if (oc_wearpos($obj) ! ^wearpos_rhand) {
+    return(true);
+}
+if (oc_category($obj) = flowers) {
+    return(true);
+}
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can only use flowers for this duel."); // guess
+    return(false);
+}
+return(true);
+
+[proc,duel_arena_flower_power_unequip_check](int $slot)(boolean)
+if ($slot ! ^wearpos_rhand) {
+    return(true);
+}
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can only use flowers for this duel."); // guess
+    return(false);
+}
+return(true);
 
 
 [proc,duel_arena_ranged_check]()(boolean)
@@ -180,6 +234,10 @@ if (~in_duel_arena = false) {
 }
 if (testbit(%duel_settings, ^no_magic) = true) {
     mes("Use of magic has been turned off for this duel."); // guess
+    return(false);
+}
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can only attack with flowers in this duel."); // guess
     return(false);
 }
 return(true);

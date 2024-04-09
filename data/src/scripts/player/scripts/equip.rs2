@@ -10,6 +10,9 @@ if (p_finduid(uid) = true) {
     if (~duel_arena_equip_check($obj) = false) {
         return;
     }
+    if (~duel_arena_flower_power_equip_check($obj) = false) {
+        return;
+    }
     //// first: we remove the inventory item, so the slot can be filled with inv_add
     def_obj $previous = inv_getobj(worn, ^wearpos_rhand);
 
@@ -43,6 +46,9 @@ if (p_finduid(uid) = true) {
 [label,unequip](int $slot)
 if (p_finduid(uid) = true) {
     def_obj $obj = inv_getobj(worn, $slot);
+    if (~duel_arena_flower_power_unequip_check($slot) = false) {
+        return;
+    }
     def_int $count = inv_getnum(worn, $slot);
     def_int $overflow = inv_itemspace2(inv, $obj, $count, inv_size(inv));
     if ($overflow >= $count) {
