@@ -22,6 +22,10 @@ if (p_finduid(uid) = true) {
         mes("You can't use this teleport after level 20 wilderness.");
         return;
     }
+    if (~in_duel_arena = true) {
+        mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
+        return;
+    }
     if (afk_event = ^true) {
         ~macro_event_general_spawn(~macro_event_set_random);
         return;
