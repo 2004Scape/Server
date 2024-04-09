@@ -295,38 +295,13 @@ if (.finduid(%duelpartner) = true) {
 // ---
 
 [label,start_duel]
-def_int $random_arena = random(3);
-// random coord between 2 coords, checks if map blocked and not inside dueler
+def_coord $random_coord1;
+def_coord $random_coord2;
+$random_coord1, $random_coord2 = ~duel_arena_coords;
 
-def_coord $coord1;
-def_coord $coord2;
-// if normal fight:
-$coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $random_arena);
-
-def_int $x1 = coordx($coord1);
-def_int $x2 = coordx($coord2);
-def_int $z1 = coordz($coord1);
-def_int $z2 = coordz($coord2);
-def_int $i = 0;
-def_coord $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-while (map_blocked($random_coord1) = true) {
-    $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-    $i = calc($i + 1);
-    if ($i = 50) {
-        return; // no way this is reached
-    }
+if ($random_coord1 = null | $random_coord2 = null) {
+    return;
 }
-
-$i = 0;
-def_coord $random_coord2 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-while (map_blocked($random_coord2) = true) {
-    $random_coord2 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
-    $i = calc($i + 1);
-    if ($i = 50) {
-        return; // no way this is reached
-    }
-}
-
 p_teleport($random_coord1);
 .p_teleport($random_coord2);
 
@@ -341,6 +316,55 @@ setmovecheck(duel_arena_start);
 
 softtimer(duel_arena_start_3, 3); // todo: confirm these timings
 //.softtimer(duel_arena_start_3, 2);
+
+
+[proc,duel_arena_coords]()(coord, coord)
+// random coord between 2 coords, checks if map blocked and not inside dueler
+def_coord $coord1;
+def_coord $coord2;
+$coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, random(3));
+
+def_int $x1 = coordx($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z1 = coordz($coord1);
+def_int $z2 = coordz($coord2);
+def_int $i = 0;
+def_coord $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+def_coord $random_coord2 = $random_coord1;
+
+while (map_blocked($random_coord1) = true) {
+    $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+    $i = calc($i + 1);
+    if ($i = 50) {
+        return(null, null); // no way this is reached
+    }
+}
+
+
+$i = 0;
+if (testbit(%duel_settings, ^no_movement) = true) {
+    while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1) {
+        switch_int (random(4)) {
+            case 0: $random_coord2 = movecoord($random_coord1, 1, 0, 0);
+            case 1: $random_coord2 = movecoord($random_coord1, -1, 0, 0);
+            case 2: $random_coord2 = movecoord($random_coord1, 0, 0, 1);
+            case 3: $random_coord2 = movecoord($random_coord1, 0, 0, -1);
+        }
+        $i = calc($i + 1);
+        if ($i = 50) {
+            return(null, null); // no way this is reached
+        }
+    }
+} else {
+    while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1) {
+        $random_coord2 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+        $i = calc($i + 1);
+        if ($i = 50) {
+            return(null, null); // no way this is reached
+        }
+    }
+}
+return($random_coord1, $random_coord2);
 
 
 [softtimer,duel_arena_start_3]
@@ -364,7 +388,7 @@ say("FIGHT!");
 clearsofttimer(duel_arena_start_fight);
 
 [movecheck,duel_arena_start]()(boolean)
-if (map_clock < %stunned) {
+if (map_clock < %stunned | testbit(%duel_settings, ^no_movement) = true & ~in_duel_arena = true) {
     return(false);
 }
 return(true);

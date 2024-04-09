@@ -153,6 +153,7 @@ if (.stat(hitpoints) = 0) {
     if (~in_duel_arena = true) {
         %duelstatus = 6;
         .%duelstatus = 0;
+        .%duelpartner = null;
 
         .if_close;
         .p_stopaction;
