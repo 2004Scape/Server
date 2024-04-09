@@ -416,7 +416,7 @@ class World {
                     script.activeNpc.activeScript = script;
                 } else if (state === ScriptState.WORLD_SUSPENDED) {
                     // suspend to world again
-                    this.enqueueScript(script);
+                    this.enqueueScript(script, script.popInt());
                 }
             } catch (err) {
                 console.error(err);

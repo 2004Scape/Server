@@ -3,10 +3,10 @@ if (map_members = false) {
     // nothing poisons in f2p
     return;
 }
-if (%poison = 0) {
-    mes("You have been poisoned!");
-}
-if (%poison = 0 | %antipoison < map_clock) {
+if (%antipoison < map_clock) { 
+    if (%poison = 0) {
+        mes("You have been poisoned!");
+    }
     settimer(poison, 30);
 }
 %poison = $severity;
@@ -20,6 +20,10 @@ if (%poison = 0 | %antipoison > map_clock) {
 
 %poison = calc(%poison - 1);
 settimer(poison, 30);
+
+[debugproc,poison](int $severity)
+if_close;
+queue(poison_player,0,$severity);
 
 [proc,poison_damage](int $damage)
 if_close;
