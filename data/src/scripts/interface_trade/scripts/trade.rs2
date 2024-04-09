@@ -12,6 +12,10 @@ while ($i < $size) {
 // ----
 
 [opplayer4,_]
+if (~in_duel_arena = true) {
+    mes("You can't trade in a duel arena."); // https://youtu.be/nUwvlFkcsqA?t=19
+    return; 
+}
 if (.busy = true) {
     mes("<.displayname> is busy at the moment.");
     return;
