@@ -74,7 +74,7 @@ class Login {
 
                 if (status !== 2) {
                     client.writeImmediate(Uint8Array.from([status]));
-                    client.terminate();
+                    client.close();
                     return;
                 }
 
@@ -82,13 +82,13 @@ class Login {
 
                 if (World.getTotalPlayers() >= 2000) {
                     client.writeImmediate(Uint8Array.from([7]));
-                    client.terminate();
+                    client.close();
                     return;
                 }
 
                 if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
                     client.writeImmediate(Uint8Array.from([14]));
-                    client.terminate();
+                    client.close();
                     return;
                 }
 

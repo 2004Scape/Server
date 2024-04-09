@@ -3626,10 +3626,10 @@ export default class Player extends PathingEntity {
         this.varps[varp] = value;
 
         if (varpType.transmit) {
-            if (value < 256) {
-                this.write(ServerProt.VARP_SMALL, varp, value);
-            } else {
+            if (value >= 0x80) {
                 this.write(ServerProt.VARP_LARGE, varp, value);
+            } else {
+                this.write(ServerProt.VARP_SMALL, varp, value);
             }
         }
     }
