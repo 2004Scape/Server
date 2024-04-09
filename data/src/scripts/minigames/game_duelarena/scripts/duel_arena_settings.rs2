@@ -150,3 +150,36 @@ return(true);
 
 [proc,duel_arena_flower_power_check]()(boolean)
 return(testbit(%duel_settings, ^flower_power));
+
+
+[proc,duel_arena_ranged_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_ranged) = true) {
+    mes("Use of ranged has been turned off for this duel."); // guess
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_melee_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_melee) = true) {
+    mes("Use of melee has been turned off for this duel."); // guess
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_magic_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_magic) = true) {
+    mes("Use of magic has been turned off for this duel."); // guess
+    return(false);
+}
+return(true);

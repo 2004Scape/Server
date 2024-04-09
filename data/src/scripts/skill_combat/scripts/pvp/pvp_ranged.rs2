@@ -1,4 +1,7 @@
 [label,pvp_ranged_attack]
+if (~duel_arena_ranged_check = false) {
+    return;
+}
 if (.stat(hitpoints) = 0) {
     p_stopaction;
     return;
