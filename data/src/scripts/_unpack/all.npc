@@ -660,6 +660,8 @@ param=damagetype,^slash_style
 // Despite the slash attack style they still use the crush anim today
 param=attack_anim,human_2h_crush
 param=defend_anim,human_2h_defend
+param=attack_sound,2H_crush
+param=defend_sound,sound_218
 
 [paladin]
 name=Paladin
@@ -1203,9 +1205,9 @@ attack=2
 strength=3
 defence=2
 param=damagetype,^stab_style
-param=attack_anim,human_spear_stab
 param=attack_sound,staff_stab
-param=defend_anim,human_spear_defend
+param=attack_anim,farmer_attack
+param=defend_anim,farmer_hit
 
 [npc_38]
 name=Shipyard worker

@@ -2271,8 +2271,8 @@
 2270=party_drop_chest:com_115
 2271=party_drop_chest:com_116
 2272=party_drop_chest:com_117
-2273=party_drop_chest:com_92
-2274=party_drop_chest:com_97
+2273=party_drop_chest:inv
+2274=party_drop_chest:playerinv
 2275=party_drop_chest:com_118
 2276=combat_stabsword
 2277=combat_stabsword:preview
@@ -5061,8 +5061,8 @@
 5060=book3:com_42
 5061=book3:com_43
 5062=book3:com_44
-5063=storex
-5064=storex:inv
+5063=party_drop_chest_side
+5064=party_drop_chest_side:inv
 5065=friends
 5066=friends:com_0
 5067=friends:com_201

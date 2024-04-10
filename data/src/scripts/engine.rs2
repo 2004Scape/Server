@@ -26,6 +26,7 @@
 [command,coordz](coord $coord)(int)
 [command,playercount]()(int)
 [command,map_blocked](coord $coord)(boolean)
+[command,map_indoors](coord $coord)(boolean)
 [command,lineofsight](coord $from, coord $to)(boolean)
 [command,world_delay](int $delay)
 [command,map_anim](coord $coord, spotanim $spotanim, int $height, int $delay)
@@ -46,8 +47,8 @@
 [command,buffer_full]()(int)
 [command,buildappearance](inv $inv)
 [command,.buildappearance](inv $inv)
-[command,cam_lookat](coord $coord, int $unknown0, int $unknown1, int $unknown2)
-[command,cam_moveto](coord $coord, int $unknown0, int $unknown1, int $unknown2)
+[command,cam_moveto](coord $sourceCoord, int $sourceHeight, int $moveSpeed, int $moveMultiplier)
+[command,cam_lookat](coord $destCoord, int $destHeight, int $rotationSpeed, int $rotationMultiplier)
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
 [command,cam_reset]
 [command,coord]()(coord)

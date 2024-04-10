@@ -1,0 +1,14 @@
+[apnpc1,partyroom_lucy] // opnpc only after july 07
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+~chatnpc(happy, "Hi! I'm Lucy. Welcome to the Party Room!");
+~chatplayer(happy, "One beer please Lucy!");
+~chatnpc(happy, "Coming right up <text_gender("sir", "ma'am")>! That's two gold please.");
+if(inv_total(inv, coins) < 2) {
+    ~chatplayer(sad, "I'm sorry but I don't have enough money!");
+    return;
+}
+inv_del(inv, coins, 2);
+inv_add(inv, beer, 1);

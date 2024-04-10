@@ -2395,7 +2395,7 @@
 [fairy2_starflower_grow]
 [fairy2_starflower_seed]
 [falador_party_room_lever]
-[falador_partyroom_wall_lever]
+[falador_partyroom_lever]
 [falcon_hit]
 [falcon_hit_post]
 [falcon_launch]

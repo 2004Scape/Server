@@ -108,37 +108,31 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, state => {
-        const [coord, speed, height, accel] = state.popInts(4);
+        const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         if (coord < 0 || coord > Position.max) {
             throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
+        const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
+        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
 
-        // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
-        // so this relies on p_telejump first
-        const localX = pos.x - (state.activePlayer.x - 52);
-        const localZ = pos.z - (state.activePlayer.z - 52);
-
-        state.activePlayer.write(ServerProt.CAM_LOOKAT, localX, localZ, speed, height, accel);
+        state.activePlayer.write(ServerProt.CAM_LOOKAT, localX, localZ, height, rotationSpeed, rotationMultiplier);
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, state => {
-        const [coord, speed, height, accel] = state.popInts(4);
+        const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         if (coord < 0 || coord > Position.max) {
             throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
         }
 
         const pos = Position.unpackCoord(coord);
+        const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
+        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
 
-        // TODO: get local coords based on build area (p_telejump doesn't block so it doesn't happen until after this...)
-        // so this relies on p_telejump first
-        const localX = pos.x - (state.activePlayer.x - 52);
-        const localZ = pos.z - (state.activePlayer.z - 52);
-
-        state.activePlayer.write(ServerProt.CAM_MOVETO, localX, localZ, speed, height, accel);
+        state.activePlayer.write(ServerProt.CAM_MOVETO, localX, localZ, height, rotationSpeed, rotationMultiplier);
     }),
 
     [ScriptOpcode.CAM_SHAKE]: checkedHandler(ActivePlayer, state => {
