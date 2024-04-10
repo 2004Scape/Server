@@ -125,7 +125,7 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_prayer) = true) {
-    mes("Use of prayer has been turned off for this duel."); // real
+    mes("Use of prayer has been turned off for this duel."); // https://imgur.com/JDlyaUB
     return(false);
 }
 return(true);
@@ -136,11 +136,11 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (oc_category($obj) = category_69 & testbit(%duel_settings, ^no_potions) = true) {
-    mes("Use of potions has been turned off for this duel."); // guess based on no prayer
+    mes("Use of potions has been turned off for this duel."); // guess based on no food
     return(false);
 }
 if (testbit(%duel_settings, ^no_food) = true) {
-    mes("Use of food has been turned off for this duel."); // guess based on no prayer
+    mes("Use of food has been turned off for this duel."); // https://imgur.com/E0l52P2
     return(false);
 }
 return(true);
@@ -211,7 +211,7 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_ranged) = true) {
-    mes("Use of ranged has been turned off for this duel."); // guess
+    mes("Ranging has been turned off for this duel."); // https://imgur.com/dm6F5xi
     return(false);
 }
 return(true);
@@ -222,7 +222,7 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_melee) = true) {
-    mes("Use of melee has been turned off for this duel."); // guess
+    mes("Melee has been turned off for this duel."); // https://imgur.com/e55BeqU
     return(false);
 }
 return(true);
@@ -233,7 +233,7 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_magic) = true) {
-    mes("Use of magic has been turned off for this duel."); // guess
+    mes("Magic has been turned off for this duel."); // guess
     return(false);
 }
 if (testbit(%duel_settings, ^flower_power) = true) {
