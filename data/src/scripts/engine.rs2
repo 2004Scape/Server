@@ -46,8 +46,8 @@
 [command,.anim](seq $anim, int $delay)
 [command,buffer_full]()(int)
 [command,buildappearance](inv $inv)
-[command,cam_lookat](coord $coord, int $unknown0, int $unknown1, int $unknown2)
-[command,cam_moveto](coord $coord, int $unknown0, int $unknown1, int $unknown2)
+[command,cam_moveto](coord $sourceCoord, int $sourceHeight, int $moveSpeed, int $moveMultiplier)
+[command,cam_lookat](coord $destCoord, int $destHeight, int $rotationSpeed, int $rotationMultiplier)
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
 [command,cam_reset]
 [command,coord]()(coord)

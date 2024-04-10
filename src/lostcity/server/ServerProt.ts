@@ -41,9 +41,9 @@ export enum ServerProt {
     UPDATE_INV_PARTIAL = 213, // NXT naming
 
     // camera control
-    CAM_LOOKAT = 3, // NXT naming
+    CAM_LOOKAT = 74, // NXT naming
     CAM_SHAKE = 13, // NXT naming
-    CAM_MOVETO = 74, // NXT naming
+    CAM_MOVETO = 3, // NXT naming
     CAM_RESET = 239, // NXT naming
 
     // entity updates
@@ -246,12 +246,12 @@ export const ServerProtEncoders: {
         }
     },
 
-    [ServerProt.CAM_LOOKAT]: (buf: Packet, x: number, z: number, y: number, stepBase: number, stepScale: number) => {
+    [ServerProt.CAM_LOOKAT]: (buf: Packet, x: number, z: number, height: number, rotationSpeed: number, rotationMultiplier: number) => {
         buf.p1(x);
         buf.p1(z);
-        buf.p2(y);
-        buf.p1(stepBase);
-        buf.p1(stepScale);
+        buf.p2(height);
+        buf.p1(rotationSpeed);
+        buf.p1(rotationMultiplier);
     },
     [ServerProt.CAM_SHAKE]: (buf: Packet, type: number, jitter: number, amplitude: number, frequency: number) => {
         buf.p1(type); // direction?
@@ -259,12 +259,12 @@ export const ServerProtEncoders: {
         buf.p1(amplitude);
         buf.p1(frequency);
     },
-    [ServerProt.CAM_MOVETO]: (buf: Packet, x: number, z: number, y: number, stepBase: number, stepScale: number) => {
+    [ServerProt.CAM_MOVETO]: (buf: Packet, x: number, z: number, height: number, rotationSpeed: number, rotationMultiplier: number) => {
         buf.p1(x);
         buf.p1(z);
-        buf.p2(y);
-        buf.p1(stepBase);
-        buf.p1(stepScale);
+        buf.p2(height);
+        buf.p1(rotationSpeed);
+        buf.p1(rotationMultiplier);
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     [ServerProt.CAM_RESET]: (_buf: Packet) => {},
