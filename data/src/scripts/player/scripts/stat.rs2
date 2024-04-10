@@ -118,3 +118,23 @@ while ($i < enum_getoutputcount(stats)) {
     ~.stat_reset(enum(int, stat, stats, $i));
     $i = calc($i + 1);
 }
+
+[proc,stat_reset_boosts]
+def_int $i = 0;
+while ($i < enum_getoutputcount(stats)) {
+    def_stat $stat = enum(int, stat, stats, $i);
+    if (stat($stat) > stat_base($stat)) {
+        ~stat_reset($stat);
+    }
+    $i = calc($i + 1);
+}
+
+[proc,.stat_reset_boosts]
+def_int $i = 0;
+while ($i < enum_getoutputcount(stats)) {
+    def_stat $stat = enum(int, stat, stats, $i);
+    if (.stat($stat) > .stat_base($stat)) {
+        ~.stat_reset($stat);
+    }
+    $i = calc($i + 1);
+}

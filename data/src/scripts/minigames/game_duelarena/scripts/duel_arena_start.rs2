@@ -11,9 +11,22 @@ p_telejump($random_coord1);
 
 p_stopaction;
 .p_stopaction;
+// only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
+if (testbit(%duel_settings, ^no_prayer) = true) {
+    ~deactivate_prayers;
+    ~.deactivate_prayers;
+}
 
-~deactivate_prayers;
-~.deactivate_prayers;
+// Doesnt rest stats.
+// - https://youtu.be/zMhQfzn4M0Y?list=PLn23LiLYLb1Zo7wVV7wY2Zj1VV4zz6LBK&t=64
+// But, reset buffs only if no potions is selected:
+// - https://web.archive.org/web/20050930213502/http://runevillage.com:80/rs2specialDuelingarena.php
+//      - "No Potions: This means you can’t use Potions, if you used a Potion before the Duel its effects will be returned to normal."
+// - In 2006, if you had the "No drinks" option selected, the 2nd menu would show  "Boosted stats will be restored." https://imgur.com/ETH1z4L
+if (testbit(%duel_settings, ^no_potions) = true) {
+    ~stat_reset_boosts;
+    ~.stat_reset_boosts;
+}
 
 if (testbit(%duel_settings, ^no_weapons) = true) {
     ~unequip_duel(duel_arena_weapon_slots);
@@ -31,11 +44,10 @@ if (testbit(%duel_settings, ^no_jewelry) = true) {
 hint_player(%duelpartner);
 .hint_player(.%duelpartner);
 
-%stunned = calc(map_clock +  9);
-.%stunned = calc(map_clock + 9);
-
-setmovecheck(duel_arena_start);
-//.setmovecheck(duel_arena_start);
+if (~duel_arena_movement_check = true) {
+    setmovecheck(duel_arena_no_move);
+    //.setmovecheck(duel_arena_no_move);
+}
 
 softtimer(duel_arena_start_3, 3); // todo: confirm these timings
 //.softtimer(duel_arena_start_3, 2);
@@ -95,27 +107,43 @@ return($random_coord1, $random_coord2);
 
 
 [softtimer,duel_arena_start_3]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_3);
+    return;
+}
 say("3");
 softtimer(duel_arena_start_2, 3);
 clearsofttimer(duel_arena_start_3);
 
 [softtimer,duel_arena_start_2]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_2);
+    return;
+}
 say("2");
 softtimer(duel_arena_start_1, 3);
 clearsofttimer(duel_arena_start_2);
 
 [softtimer,duel_arena_start_1]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_1);
+    return;
+}
 say("1");
 softtimer(duel_arena_start_fight, 3);
 clearsofttimer(duel_arena_start_1);
 
 [softtimer,duel_arena_start_fight]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_fight);
+    return;
+}
 say("FIGHT!");
 %duelstatus = 5;
 clearsofttimer(duel_arena_start_fight);
 
-[movecheck,duel_arena_start]()(boolean)
-if (map_clock < %stunned | ~duel_arena_movement_check = true & ~in_duel_arena = true) {
+[movecheck,duel_arena_no_move]()(boolean)
+if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
     p_stopaction;
     return(false);
 }

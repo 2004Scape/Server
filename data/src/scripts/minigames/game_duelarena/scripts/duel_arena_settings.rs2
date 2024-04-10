@@ -72,8 +72,10 @@ if (~duel_arena_flower_power_check = true) {
 if (.finduid(%duelpartner) = true) {
     .%duel_settings = %duel_settings;
     .%duelstatus = 0;
+    .if_settext(duel_select_type:status, "");
 }
 %duelstatus = 0;
+if_settext(duel_select_type:status, "");
 
 [proc,unequip_duel](enum $enum)
 def_int $i = 0;
