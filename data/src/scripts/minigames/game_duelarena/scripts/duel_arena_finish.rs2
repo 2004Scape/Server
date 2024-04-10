@@ -37,3 +37,24 @@ while ($i < inv_size(tempinv)) {
     $i = calc($i + 1);
 }
 inv_stoptransmit(duel_win:spoils);
+
+// https://youtu.be/QggKGBAl_X8?t=111
+[proc,duel_arena_finish_coord](coord $coord)(coord)
+def_coord $coord1 = 0_52_51_27_3;
+def_coord $coord2 = 0_52_51_51_15;
+
+def_int $x1 = coordx($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z1 = coordz($coord1);
+def_int $z2 = coordz($coord2);
+def_int $i = 0;
+def_coord $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+
+while (map_blocked($random_coord) = true) {
+    $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+    $i = calc($i + 1);
+    if ($i = 50) {
+        return($coord); // no way this is reached
+    }
+}
+return($random_coord);

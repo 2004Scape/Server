@@ -8,14 +8,10 @@
 if (~duel_arena_forfeit_check = false) {
     return;
 }
-if (%duel_origin_coord ! null) {
-    p_telejump(%duel_origin_coord);
-}
+p_telejump(~duel_arena_finish_coord(coord));
 if (.finduid(%duelpartner) = true)  {
     if (.p_finduid(%duelpartner) = true) {
-        if (.%duel_origin_coord ! null) {
-            .p_telejump(.%duel_origin_coord);
-        }
+        .p_telejump(~duel_arena_finish_coord(.coord));
         // todo: queue win on other player
         .p_stopaction;
         ~.stat_reset_all;

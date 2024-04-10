@@ -256,7 +256,6 @@ return(true);
 
 [if_button,duel_confirm:accept]
 %duelstatus = 3;
-%duel_origin_coord = coord;
 
 if (.finduid(%duelpartner) = true) {
     if (.%duelstatus = 3) {
@@ -368,5 +367,5 @@ return(false);
 
 [proc,duel_arena_login]
 if (~in_duel_arena = true) {
-    p_telejump(%duel_origin_coord);
+    p_telejump(~duel_arena_finish_coord(coord));
 }
