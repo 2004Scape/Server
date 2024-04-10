@@ -95,3 +95,75 @@ model=model_loc_3203
 op1=Forfeit
 forcedecor=yes
 sharelight=yes
+
+[loc_3077]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3077
+forcedecor=yes
+ambient=30
+contrast=30
+op5=Lean against
+blockrange=no
+
+[loc_3078]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3078
+forcedecor=yes
+ambient=30
+contrast=30
+op5=Lean against
+blockrange=no
+recol1s=6932
+recol1d=6689
+
+[loc_3079]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3079
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+op5=Lean against
+blockrange=no
+
+[loc_3080]
+model=model_loc_3080
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+active=no
+
+[loc_3081]
+model=model_loc_3080
+forcedecor=yes
+ambient=30
+contrast=30
+mirror=yes
+active=no
+blockrange=no
+
+[loc_3082]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3082
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+op5=Lean against
+blockrange=no
+
+[loc_3083]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3083
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+op5=Lean against
+blockrange=no

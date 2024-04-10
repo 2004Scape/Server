@@ -1,0 +1,31 @@
+[oploc5,loc_3077] @lean_on_wall;
+[oploc5,loc_3078] @lean_on_wall;
+[oploc5,loc_3079] @lean_on_wall;
+[oploc5,loc_3082] @lean_on_wall;
+[oploc5,loc_3083] @lean_on_wall;
+
+
+[label,lean_on_wall]
+// find closest coord
+def_int $i = 0;
+def_coord $closest_coord;
+def_int $closest_distance = ^max_32bit_int;
+while ($i < enum_getoutputcount(duel_arena_center_coords)) {
+    if (distance(coord, enum(int, coord, duel_arena_center_coords, $i)) < $closest_distance) {
+        $closest_coord = enum(int, coord, duel_arena_center_coords, $i);
+        $closest_distance = distance(coord, $closest_coord);
+    }
+    $i = calc($i + 1);
+}
+if ($closest_coord = null) {
+    return;
+}
+
+// lean on wall
+anim(seq_915, 0);
+bas_readyanim(seq_916);
+p_delay(0);
+mes("todo: lean on wall");
+
+[debugproc,cr]
+cam_reset;
