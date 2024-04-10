@@ -1,0 +1,39 @@
+[queue,duel_arena_finished](string $displayname, int $combat_level)
+mes("Well done! You have defeated <$displayname>!");
+if_openmainmodal(duel_win);
+if_settext(duel_win:displayname, $displayname);
+if_settext(duel_win:combat_level, tostring($combat_level));
+
+// get stuff back in ur tempinv
+def_int $i = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+        inv_movefromslot(tempinv, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+
+inv_clear(tempinv);
+
+// take stuff from other player's tempinv
+if (.finduid(%duelpartner) = true) {
+    .both_moveinv(tempinv, tempinv);
+    .%duelpartner = null;
+    // display spoils
+    inv_transmit(tempinv, duel_win:spoils);
+}
+
+%duelstatus = 0;
+%duelpartner = null;
+
+[if_close,duel_win]
+// take spoils
+def_int $i = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        inv_movefromslot(tempinv, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+inv_stoptransmit(duel_win:spoils);
