@@ -21,6 +21,7 @@ if (.finduid(%duelpartner) = true)  {
         ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
         .%duelpartner = null;
         .%duelstatus = 0;
+        ~duel_adjust_scoreboard(.displayname, ~.player_combat_level, displayname, ~player_combat_level);
     }
 }
 

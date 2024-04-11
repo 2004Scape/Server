@@ -170,6 +170,7 @@ if (.stat(hitpoints) = 0) {
         
         p_stopaction;
         queue(duel_arena_finished, 0, .displayname, ~.player_combat_level);
+        ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
         p_delay(0);
         if_close;
         p_telejump(~duel_arena_finish_coord(coord));
