@@ -9,3 +9,6 @@ protect=no
 [duel_settings]
 transmit=yes
 protect=no
+
+[duel_lean_clock]
+type=int

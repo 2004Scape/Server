@@ -40,6 +40,16 @@ if ($weapon = null) {
 }
 .buildappearance(worn);
 
+[proc,bas_set_all](seq $seq)
+bas_readyanim($seq);
+bas_turnonspot($seq);
+bas_walk_f($seq);
+bas_walk_b($seq);
+bas_walk_l($seq);
+bas_walk_r($seq);
+bas_running($seq);
+buildappearance(worn);
+
 [proc,headicon_add](int $icon)
 def_int $current = headicons_get;
 def_int $bit = multiply(0x1, pow(2, $icon));

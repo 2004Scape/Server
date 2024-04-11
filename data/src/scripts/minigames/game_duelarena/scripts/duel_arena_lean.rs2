@@ -6,26 +6,103 @@
 
 
 [label,lean_on_wall]
-// find closest coord
-def_int $i = 0;
-def_coord $closest_coord;
-def_int $closest_distance = ^max_32bit_int;
-while ($i < enum_getoutputcount(duel_arena_center_coords)) {
-    if (distance(coord, enum(int, coord, duel_arena_center_coords, $i)) < $closest_distance) {
-        $closest_coord = enum(int, coord, duel_arena_center_coords, $i);
-        $closest_distance = distance(coord, $closest_coord);
+if (coord ! loc_coord & loc_shape ! wall_diagonal) {
+    if (lineofwalk(coord, loc_coord) = false) {
+        mes("I can't reach that.");
+        return;
     }
-    $i = calc($i + 1);
+    anim(null, 0);
+    ~update_bas;
+    cam_reset;
+    clearsofttimer(lean_on_wall);
+    p_teleport(loc_coord);
+    p_delay(0);
 }
-if ($closest_coord = null) {
-    return;
+def_coord $closest_camera;
+def_int $closest_camera_index;
+$closest_camera, $closest_camera_index = ~closest_enum_coord_and_index(coord, duel_arena_camera_coords);
+def_coord $closest_center = enum(int, coord, duel_arena_camera_centers, $closest_camera_index);
+if (loc_shape = wall_diagonal) {
+    // if its a corner then allow all 8 directions with the coord_direction2 proc
+    facesquare(~movecoord_indirection(coord, ~coord_direction2(coord, $closest_center), 1));
+} else {
+    // face square one square in front of you, in the direction of the duel arena
+    facesquare(movecoord(coord, ~door_open_move_player_out_of_way(loc_angle)));
 }
-
-// lean on wall
+p_delay(1);
 anim(seq_915, 0);
-bas_readyanim(seq_916);
 p_delay(0);
-mes("todo: lean on wall");
+softtimer(lean_on_wall, 1);
+%duel_lean_clock = map_clock;
+~handle_duel_camera($closest_camera, $closest_camera_index);
+setmovecheck(lean_on_wall);
+~bas_set_all(seq_916);
+
+
+[softtimer,lean_on_wall]
+if (p_finduid(uid) = true) {
+    if (%duel_lean_clock = map_clock) {
+        %duel_lean_clock = calc(map_clock + 1);
+        return;
+    }
+}
+// anim(null, 0);
+// ~update_bas;
+cam_reset;
+clearsofttimer(lean_on_wall);
+
+[movecheck,lean_on_wall]()(boolean)
+anim(null, 0);
+~update_bas;
+cam_reset;
+clearsofttimer(lean_on_wall);
+return(true);
 
 [debugproc,cr]
 cam_reset;
+
+[debugproc,c]
+// NORTH EAST
+cam_moveto(movecoord(0_52_50_32_41, 6, 0, 2), 1980, 0, 100);
+cam_lookat(movecoord(0_52_50_32_41, 0, 0, -1), 1155, 0, 100);
+// NORTH WEST
+// cam_moveto(movecoord(0_52_50_2_60, -6, 0, 2), 1980, 0, 100);
+// cam_lookat(movecoord(0_52_50_2_60, 0, 0, -1), 1155, 0, 100);
+// SOUTH EAST
+// cam_moveto(movecoord(0_52_50_31_43, 6, 0, -2), 1980, 0, 100);
+// cam_lookat(movecoord(0_52_50_31_43, 0, 0, 1), 1155, 0, 100);
+// SOUTH WEST
+// cam_moveto(movecoord(0_52_50_33_4, -6, 0, -2), 1980, 0, 100);
+// cam_lookat(movecoord(0_52_50_33_4, 0, 0, 1), 1155, 0, 100);
+
+
+[proc,handle_duel_camera](coord $closest_camera_coord, int $closest_camera_index)
+def_int $camera_type = enum(int, int, duel_arena_camera_types, $closest_camera_index);
+switch_int ($camera_type) {
+    case ^north_camera:
+        cam_moveto(movecoord($closest_camera_coord, 0, 0, 8), 1926, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, 0, 0, 3), 1276, 0, 100);
+    case ^south_camera:
+        cam_moveto(movecoord($closest_camera_coord, 0, 0, -8), 1926, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, 0, 0, -3), 1276, 0, 100);
+    case ^east_camera: // todo
+        cam_moveto(movecoord($closest_camera_coord, 8, 0, 0), 1926, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, 3, 0, 0), 1276, 0, 100);
+    case ^west_camera: // todo
+        cam_moveto(movecoord($closest_camera_coord, -8, 0, 0), 1926, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, -3, 0, 0), 1276, 0, 100);
+    case ^north_east_camera:
+        cam_moveto(movecoord($closest_camera_coord, 6, 0, 2), 1980, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, 0, 0, -1), 1155, 0, 100);
+    case ^north_west_camera:
+        cam_moveto(movecoord($closest_camera_coord, -6, 0, 2), 1980, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, 0, 0, -1), 1155, 0, 100);
+    case ^south_east_camera:
+        cam_moveto(movecoord($closest_camera_coord, 6, 0, -2), 1980, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, 0, 0, 1), 1155, 0, 100);
+    case ^south_west_camera:
+        cam_moveto(movecoord($closest_camera_coord, -6, 0, -2), 1980, 0, 100);
+        cam_lookat(movecoord($closest_camera_coord, 0, 0, 1), 1155, 0, 100);
+    case default:
+        error("Invalid camera type.");
+}
