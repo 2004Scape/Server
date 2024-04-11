@@ -16,12 +16,13 @@ switch_int ($random) {
         ~chatnpc(neutral, "I wouldn't want to be the poor guy that has to clean up after the duels.");
         ~chatplayer(neutral, "Me neither.");
     case 2:
-        ~chatnpc(happy, "My son just won his first duel!");
-        ~chatplayer(happy, "Congratulations!");
-        ~chatnpc(happy, "He ripped his opponent in half!");
-        ~chatplayer(happy, "That's gotta hurt!");
-        ~chatnpc(happy, "He's only 10 as well!");
-        ~chatplayer(happy, "You gotta start 'em young!");
+    //https://youtu.be/jUEwHgmSVsw?list=PLn23LiLYLb1Zo7wVV7wY2Zj1VV4zz6LBK
+        ~chatnpc(neutral, "My son just won his first duel!");
+        ~chatplayer(neutral, "Congratulations!");
+        ~chatnpc(neutral, "He ripped his opponent in half!");
+        ~chatplayer(neutral, "That's gotta hurt!");
+        ~chatnpc(neutral, "He's only 10 as well!");
+        ~chatplayer(neutral, "You gotta start 'em young!");
     case 3:
         ~chatnpc(neutral, "Hmph.");
     case 4:
