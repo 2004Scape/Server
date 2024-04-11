@@ -14,7 +14,6 @@ if (coord ! loc_coord & loc_shape ! wall_diagonal) {
     anim(null, 0);
     ~update_bas;
     cam_reset;
-    clearsofttimer(lean_on_wall);
     p_teleport(loc_coord);
     p_delay(0);
 }
@@ -32,30 +31,15 @@ if (loc_shape = wall_diagonal) {
 p_delay(1);
 anim(seq_915, 0);
 p_delay(0);
-softtimer(lean_on_wall, 1);
-%duel_lean_clock = map_clock;
 ~handle_duel_camera($closest_camera, $closest_camera_index);
 setmovecheck(lean_on_wall);
 ~bas_set_all(seq_916);
 
 
-[softtimer,lean_on_wall]
-if (p_finduid(uid) = true) {
-    if (%duel_lean_clock = map_clock) {
-        %duel_lean_clock = calc(map_clock + 1);
-        return;
-    }
-}
-// anim(null, 0);
-// ~update_bas;
-cam_reset;
-clearsofttimer(lean_on_wall);
-
 [movecheck,lean_on_wall]()(boolean)
 anim(null, 0);
 ~update_bas;
 cam_reset;
-clearsofttimer(lean_on_wall);
 return(true);
 
 [debugproc,cr]

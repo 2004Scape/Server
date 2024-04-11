@@ -10,8 +10,5 @@ protect=no
 transmit=yes
 protect=no
 
-[duel_lean_clock]
-type=int
-
 [rotten_tomato_delay]
 type=int
