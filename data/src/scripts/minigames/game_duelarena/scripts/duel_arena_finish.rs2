@@ -8,7 +8,7 @@ if_settext(duel_win:combat_level, tostring($combat_level));
 def_int $i = 0;
 while ($i < inv_size(tempinv)) {
     if (inv_getobj(tempinv, $i) ! null) {
-        mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
         inv_movefromslot(tempinv, inv, $i);
     }
     $i = calc($i + 1);
