@@ -41,8 +41,8 @@ if (testbit(%duel_settings, ^no_jewelry) = true) {
     ~.unequip_duel(duel_arena_jewelry_slots);
 }
 
-hint_player(%duelpartner);
-.hint_player(.%duelpartner);
+hint_player(.uid);
+.hint_player(uid);
 
 if (~duel_arena_movement_check = true) {
     setmovecheck(duel_arena_no_move);
