@@ -26,7 +26,8 @@ maxrange=20
 // best video i could find
 huntrange=20
 attackrange=15
-respawnrate=16
+// based on this video. Should be double the resapwn of this https://youtu.be/P8BxiqEV7ws
+respawnrate=150
 hitpoints=240
 attack=240
 strength=240
@@ -45,4 +46,4 @@ param=attack_sound,dragon_3
 param=defend_sound,dragon_2
 param=death_sound,dragon_1
 param=death_drop,dragon_bones
-huntmode=aggressive_ranged
+huntmode=king_black_dragon

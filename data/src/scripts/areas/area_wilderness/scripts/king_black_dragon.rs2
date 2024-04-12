@@ -86,8 +86,11 @@ if (~npc_can_attack_player = false) {
 // 1/3 chance to switch to op, if player is within melee range
 if (random(3) = 0 & npc_range(coord) < 2) {
     npc_setmode(opplayer2);
+    ~kbd_random_attack;
+} else {
+    ~kbd_dragonfire_far;
 }
-~kbd_dragonfire_far;
+
 // todo: Use huntall
 // if (finduid(~random_player_within_distance(npc_coord, 16)) = true) {
 //     npc_setmode(applayer2);
@@ -103,6 +106,15 @@ if (~npc_can_attack_player = false) {
     npc_setmode(null);
     return;
 }
+~kbd_random_attack;
+
+// todo: Use huntall
+// if (finduid(~random_player_within_distance(npc_coord, 16)) = true) {
+//     npc_setmode(applayer2);
+// }
+
+
+[proc,kbd_random_attack]
 // 1/3 chance to do melee/fire/special
 def_int $random_attack = random(3);
 if ($random_attack = 0) {
@@ -112,13 +124,6 @@ if ($random_attack = 0) {
 } else {
     ~npc_default_attack;
 }
-
-// todo: Use huntall
-// if (finduid(~random_player_within_distance(npc_coord, 16)) = true) {
-//     npc_setmode(applayer2);
-// }
-
-
 // ------------
 // far range fire breath
 [proc,kbd_dragonfire_far]
