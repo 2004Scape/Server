@@ -9,6 +9,15 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("Party Pete won't be happy if you plant your flowers here.");
     return;
 }
+if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
+    // https://youtu.be/L3OwjH-iXQU
+    //  - could still fm in the duel arena. 
+    //  - its just that you cant firemake if movement is restricted
+    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+    mes("You can't plant your flowers here.");
+    return;
+}
 mes("You open the small mithril case.");
 mes("You drop a seed by your feet.");
 inv_del(inv, mithril_seeds, 1);
