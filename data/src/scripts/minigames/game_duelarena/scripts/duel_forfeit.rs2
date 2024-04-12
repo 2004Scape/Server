@@ -24,6 +24,14 @@ if (.finduid(%duelpartner) = true)  {
         ~duel_adjust_scoreboard(.displayname, ~.player_combat_level, displayname, ~player_combat_level);
     }
 }
+def_int $i = 0;
+while ($i < inv_size(duel_arena_arrows)) {
+    if (inv_getobj(duel_arena_arrows, $i) ! null) {
+        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+        inv_movefromslot(duel_arena_arrows, inv, $i);
+    }
+    $i = calc($i + 1);
+}
 
 p_stopaction;
 ~stat_reset_all;
