@@ -40,7 +40,16 @@ if (stat(firemaking) < $level) {
 }
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
-if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true | ~inzone_coord_pair_table(party_room_zones, coord) = true | ~in_duel_arena = true) {
+if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
+    // https://youtu.be/L3OwjH-iXQU
+    //  - could still fm in the duel arena. 
+    //  - its just that you cant firemake if movement is restricted
+    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
     mes("You can't light a fire here.");
     return;
 }
@@ -79,6 +88,15 @@ if ($log = achey_logs & last_item = tinderbox) {
     inv_delslot(inv, $slot);
 }
 if (~inzone_coord_pair_table(bank_zones, coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
+    // https://youtu.be/L3OwjH-iXQU
+    //  - could still fm in the duel arena. 
+    //  - its just that you cant firemake if movement is restricted
+    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
     mes("You can't light a fire here.");
     return;
 }
