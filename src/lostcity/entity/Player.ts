@@ -2269,6 +2269,11 @@ export default class Player extends PathingEntity {
     processQueue() {
         let processedQueueCount = 0;
 
+        // there is a quirk with their LinkList impl that results in a queue speedup bug:
+        // in .head() the next link is cached. on the next iteration, next() will use this cached value, even if it's null
+        // regardless of whether the end of the list has been reached (i.e. the previous iteration added to the end of the list)
+        // - thank you De0 for the explanation
+        // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
         for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
             if (request.type === PlayerQueueType.STRONG) {
                 this.closeModal();
