@@ -26,7 +26,8 @@ maxrange=20
 // best video i could find
 huntrange=20
 attackrange=15
-respawnrate=40
+// based on this video. Should be double the resapwn of this https://youtu.be/P8BxiqEV7ws
+respawnrate=150
 hitpoints=240
 attack=240
 strength=240
