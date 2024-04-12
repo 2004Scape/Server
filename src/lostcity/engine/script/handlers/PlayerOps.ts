@@ -8,7 +8,7 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
-import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueRequest, PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
 
@@ -699,9 +699,18 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GETQUEUE]: state => {
         const scriptId = state.popInt();
 
-        const queue = state.activePlayer.queue.filter(req => req.script.id === scriptId).length;
-        const weakqueue = state.activePlayer.weakQueue.filter(req => req.script.id === scriptId).length;
-        state.pushInt(queue + weakqueue);
+        let count: number = 0;
+        for (let request: EntityQueueRequest | null = state.activePlayer.queue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.queue.next() as EntityQueueRequest | null) {
+            if (request.script.id === scriptId) {
+                count++;
+            }
+        }
+        for (let request: EntityQueueRequest | null = state.activePlayer.weakQueue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.weakQueue.next() as EntityQueueRequest | null) {
+            if (request.script.id === scriptId) {
+                count++;
+            }
+        }
+        state.pushInt(count);
     },
 
     // TODO: check active loc too
@@ -843,8 +852,16 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CLEARQUEUE]: state => {
         const scriptId = state.popInt();
 
-        state.activePlayer.queue = state.activePlayer.queue.filter(req => req.script.id !== scriptId);
-        state.activePlayer.weakQueue = state.activePlayer.weakQueue.filter(req => req.script.id !== scriptId);
+        for (let request: EntityQueueRequest | null = state.activePlayer.queue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.queue.next() as EntityQueueRequest | null) {
+            if (request.script.id === scriptId) {
+                request.unlink();
+            }
+        }
+        for (let request: EntityQueueRequest | null = state.activePlayer.weakQueue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.weakQueue.next() as EntityQueueRequest | null) {
+            if (request.script.id === scriptId) {
+                request.unlink();
+            }
+        }
     },
 
     [ScriptOpcode.HEALENERGY]: state => {

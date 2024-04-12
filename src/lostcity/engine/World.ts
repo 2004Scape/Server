@@ -560,12 +560,6 @@ class World {
                     player.executeScript(player.activeScript, true);
                 }
 
-                player.queue = player.queue.filter(s => s);
-                if (player.queue.find(s => s.type === PlayerQueueType.STRONG)) {
-                    // the presence of a strong script closes modals before anything runs regardless of the order
-                    player.closeModal();
-                }
-
                 player.processQueues();
                 player.processTimers(PlayerTimerType.NORMAL);
                 player.processTimers(PlayerTimerType.SOFT);
@@ -603,9 +597,9 @@ class World {
 
             if (this.currentTick - player.lastResponse >= 100) {
                 // remove after 60 seconds
-                player.queue = [];
-                player.weakQueue = [];
-                player.engineQueue = [];
+                player.queue.clear();
+                player.weakQueue.clear();
+                player.engineQueue.clear();
                 player.clearInteraction();
                 player.closeModal();
                 player.unsetMapFlag();
@@ -617,7 +611,7 @@ class World {
                 continue;
             }
 
-            if (player.queue.length === 0) {
+            if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     console.error('LOGOUT TRIGGER IS BROKEN!');

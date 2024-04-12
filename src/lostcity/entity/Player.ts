@@ -55,6 +55,7 @@ import WordEnc from '#lostcity/cache/WordEnc.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -448,15 +449,9 @@ export default class Player extends PathingEntity {
 
     // script variables
     delay = 0;
-    /**
-     * An array of pending queues.
-     */
-    queue: EntityQueueRequest[] = [];
-    /**
-     * An array of pending weak queues.
-     */
-    weakQueue: EntityQueueRequest[] = [];
-    engineQueue: EntityQueueRequest[] = [];
+    queue: LinkList = new LinkList();
+    weakQueue: LinkList = new LinkList();
+    engineQueue: LinkList = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
@@ -2033,27 +2028,23 @@ export default class Player extends PathingEntity {
     }
 
     processEngineQueue() {
-        while (this.engineQueue.length) {
-            const processedQueueCount = this.processEngineQueueInternal();
-            if (processedQueueCount === 0) {
-                break;
-            }
-        }
+        let processedQueueCount = 0;
+        do {
+            processedQueueCount = this.processEngineQueueInternal();
+        } while (processedQueueCount !== 0);
     }
 
     processEngineQueueInternal() {
         let processedQueueCount = 0;
 
-        for (let i = 0; i < this.engineQueue.length; i++) {
-            const queue = this.engineQueue[i];
-
-            const delay = queue.delay--;
+        for (let request: EntityQueueRequest | null = this.engineQueue.head() as EntityQueueRequest | null; request !== null; request = this.engineQueue.next() as EntityQueueRequest | null) {
+            const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
 
                 processedQueueCount++;
-                this.engineQueue.splice(i--, 1);
+                request.unlink();
             }
         }
 
@@ -2174,7 +2165,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        this.weakQueue = [];
+        this.weakQueue.clear();
         // this.activeScript = null;
 
         if (!this.delayed()) {
@@ -2243,50 +2234,53 @@ export default class Player extends PathingEntity {
         const request = new EntityQueueRequest(type, script, args, delay);
         if (type === PlayerQueueType.ENGINE) {
             request.delay = 0;
-            this.engineQueue.push(request);
+            this.engineQueue.addTail(request);
         } else if (type === PlayerQueueType.WEAK) {
-            this.weakQueue.push(request);
+            this.weakQueue.addTail(request);
         } else {
-            this.queue.push(request);
+            this.queue.addTail(request);
         }
     }
 
     processQueues() {
-        if (this.queue.some(queue => queue.type === PlayerQueueType.STRONG)) {
+        // the presence of a strong script closes modals before anything runs regardless of the order
+        let hasStrong: boolean = false;
+        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+            if (request.type === PlayerQueueType.STRONG) {
+                hasStrong = true;
+                break;
+            }
+        }
+        if (hasStrong) {
             this.closeModal();
         }
 
-        while (this.queue.length) {
-            const processedQueueCount = this.processQueue();
-            if (processedQueueCount === 0) {
-                break;
-            }
-        }
+        let processedQueueCount = 0;
+        do {
+            processedQueueCount = this.processQueue();
+        } while (processedQueueCount !== 0);
 
-        while (this.weakQueue.length) {
-            const processedQueueCount = this.processWeakQueue();
-            if (processedQueueCount === 0) {
-                break;
-            }
-        }
+        let processedWeakQueueCount = 0;
+        do {
+            processedWeakQueueCount = this.processWeakQueue();
+        } while (processedWeakQueueCount !== 0);
     }
 
     processQueue() {
         let processedQueueCount = 0;
 
-        for (let i = 0; i < this.queue.length; i++) {
-            const queue = this.queue[i];
-            if (queue.type === PlayerQueueType.STRONG) {
+        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+            if (request.type === PlayerQueueType.STRONG) {
                 this.closeModal();
             }
 
-            const delay = queue.delay--;
+            const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
 
                 processedQueueCount++;
-                this.queue.splice(i--, 1);
+                request.unlink();
             }
         }
 
@@ -2296,16 +2290,14 @@ export default class Player extends PathingEntity {
     processWeakQueue() {
         let processedQueueCount = 0;
 
-        for (let i = 0; i < this.weakQueue.length; i++) {
-            const queue = this.weakQueue[i];
-
-            const delay = queue.delay--;
+        for (let request: EntityQueueRequest | null = this.weakQueue.head() as EntityQueueRequest | null; request !== null; request = this.weakQueue.next() as EntityQueueRequest | null) {
+            const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
 
                 processedQueueCount++;
-                this.weakQueue.splice(i--, 1);
+                request.unlink();
             }
         }
 
