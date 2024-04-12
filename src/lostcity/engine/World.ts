@@ -51,12 +51,13 @@ import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
-import { PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueState, PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ZoneManager from './zone/ZoneManager.js';
 import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -86,10 +87,7 @@ class World {
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
-    queue: {
-        script: ScriptState;
-        delay: number;
-    }[] = [];
+    queue: LinkList = new LinkList();
 
     friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
 
@@ -392,21 +390,18 @@ class World {
         // - npc spawn scripts
         // - npc hunt
         let worldProcessing = Date.now();
-        for (let i = 0; i < this.queue.length; i++) {
-            const entry = this.queue[i];
-
-            entry.delay--;
-            if (entry.delay > 0) {
+        for (let request: EntityQueueState | null = this.queue.head() as EntityQueueState | null; request !== null; request = this.queue.next() as EntityQueueState | null) {
+            const delay = request.delay--;
+            if (delay > 0) {
                 continue;
             }
 
-            const script = entry.script;
+            const script = request.script;
             try {
                 const state = ScriptRunner.execute(script);
 
                 // remove from queue no matter what, re-adds if necessary
-                this.queue.splice(i, 1);
-                i--;
+                request.unlink();
 
                 if (state === ScriptState.SUSPENDED) {
                     // suspend to player (probably not needed)
@@ -962,7 +957,7 @@ class World {
     }
 
     enqueueScript(script: ScriptState, delay: number = 0) {
-        this.queue.push({ script, delay: delay + 1 });
+        this.queue.addTail(new EntityQueueState(script, delay + 1));
     }
 
     getInventory(inv: number) {

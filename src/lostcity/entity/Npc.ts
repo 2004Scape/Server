@@ -27,6 +27,7 @@ import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
 import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -74,7 +75,7 @@ export default class Npc extends PathingEntity {
     // script variables
     activeScript: ScriptState | null = null;
     delay: number = 0;
-    queue: EntityQueueRequest[] = [];
+    queue: LinkList = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
@@ -296,20 +297,18 @@ export default class Npc extends PathingEntity {
     processQueue() {
         let processedQueueCount = 0;
 
-        for (let i = 0; i < this.queue.length; i++) {
-            const queue = this.queue[i];
-
+        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed()) {
-                queue.delay--;
+                request.delay--;
             }
 
-            if (!this.delayed() && queue.delay <= 0) {
-                const state = ScriptRunner.init(queue.script, this, null, null, queue.args);
+            if (!this.delayed() && request.delay <= 0) {
+                const state = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(state);
 
                 processedQueueCount++;
-                this.queue.splice(i--, 1);
+                request.unlink();
             }
         }
 
@@ -318,7 +317,7 @@ export default class Npc extends PathingEntity {
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
         const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, args, delay);
-        this.queue.push(request);
+        this.queue.addTail(request);
     }
 
     randomWalk(range: number) {
