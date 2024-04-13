@@ -1929,102 +1929,104 @@ export default class Player extends PathingEntity {
                 this.client = null;
                 break;
             }
-            default: {
-                if (cmd.length <= 0) {
-                    return;
-                }
-
-                // lookup debugproc with the name and execute it
-                const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
-                if (!script) {
-                    return;
-                }
-
-                const params = new Array(script.info.parameterTypes.length).fill(-1);
-
-                for (let i = 0; i < script.info.parameterTypes.length; i++) {
-                    const type = script.info.parameterTypes[i];
-
-                    try {
-                        switch (type) {
-                            case ScriptVarType.STRING: {
-                                const value = args.shift();
-                                params[i] = value ?? '';
-                                break;
-                            }
-                            case ScriptVarType.INT: {
-                                const value = args.shift();
-                                params[i] = parseInt(value ?? '0', 10) | 0;
-                                break;
-                            }
-                            case ScriptVarType.OBJ:
-                            case ScriptVarType.NAMEDOBJ: {
-                                const name = args.shift();
-                                params[i] = ObjType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.NPC: {
-                                const name = args.shift();
-                                params[i] = NpcType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.LOC: {
-                                const name = args.shift();
-                                params[i] = LocType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.SEQ: {
-                                const name = args.shift();
-                                params[i] = SeqType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.STAT: {
-                                const name = args.shift();
-                                params[i] = Player.SKILLS.indexOf(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.INV: {
-                                const name = args.shift();
-                                params[i] = InvType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.COORD: {
-                                const args2 = cheat.split('_');
-
-                                const level = parseInt(args2[0].slice(6));
-                                const mx = parseInt(args2[1]);
-                                const mz = parseInt(args2[2]);
-                                const lx = parseInt(args2[3]);
-                                const lz = parseInt(args2[4]);
-
-                                params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
-                                break;
-                            }
-                            case ScriptVarType.INTERFACE: {
-                                const name = args.shift();
-                                params[i] = Component.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.SPOTANIM: {
-                                const name = args.shift();
-                                params[i] = SpotanimType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.IDKIT: {
-                                const name = args.shift();
-                                params[i] = IdkType.getId(name ?? '');
-                                break;
-                            }
-                        }
-                    } catch (err) {
-                        return;
-                    }
-                }
-
-                this.executeScript(ScriptRunner.init(script, this, null, null, params), false);
+            case 'random': {
+                this.afkEventReady = true;
                 break;
             }
         }
+
+        if (cmd.length <= 0) {
+            return;
+        }
+
+        // lookup debugproc with the name and execute it
+        const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
+        if (!script) {
+            return;
+        }
+
+        const params = new Array(script.info.parameterTypes.length).fill(-1);
+
+        for (let i = 0; i < script.info.parameterTypes.length; i++) {
+            const type = script.info.parameterTypes[i];
+
+            try {
+                switch (type) {
+                    case ScriptVarType.STRING: {
+                        const value = args.shift();
+                        params[i] = value ?? '';
+                        break;
+                    }
+                    case ScriptVarType.INT: {
+                        const value = args.shift();
+                        params[i] = parseInt(value ?? '0', 10) | 0;
+                        break;
+                    }
+                    case ScriptVarType.OBJ:
+                    case ScriptVarType.NAMEDOBJ: {
+                        const name = args.shift();
+                        params[i] = ObjType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.NPC: {
+                        const name = args.shift();
+                        params[i] = NpcType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.LOC: {
+                        const name = args.shift();
+                        params[i] = LocType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.SEQ: {
+                        const name = args.shift();
+                        params[i] = SeqType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.STAT: {
+                        const name = args.shift();
+                        params[i] = Player.SKILLS.indexOf(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.INV: {
+                        const name = args.shift();
+                        params[i] = InvType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.COORD: {
+                        const args2 = cheat.split('_');
+
+                        const level = parseInt(args2[0].slice(6));
+                        const mx = parseInt(args2[1]);
+                        const mz = parseInt(args2[2]);
+                        const lx = parseInt(args2[3]);
+                        const lz = parseInt(args2[4]);
+
+                        params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
+                        break;
+                    }
+                    case ScriptVarType.INTERFACE: {
+                        const name = args.shift();
+                        params[i] = Component.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.SPOTANIM: {
+                        const name = args.shift();
+                        params[i] = SpotanimType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.IDKIT: {
+                        const name = args.shift();
+                        params[i] = IdkType.getId(name ?? '');
+                        break;
+                    }
+                }
+            } catch (err) {
+                return;
+            }
+        }
+
+        this.executeScript(ScriptRunner.init(script, this, null, null, params), false);
     }
 
     processEngineQueue() {
