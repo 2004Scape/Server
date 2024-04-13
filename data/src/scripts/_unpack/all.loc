@@ -10357,7 +10357,7 @@ name=Sails
 desc=These sails use the wind to drive the windmill.
 model=model_loc_1780
 
-[loc_1781]
+[millbase]
 name=Flour bin
 desc=The ground flour comes down from the millstones above.
 model=model_loc_1781
@@ -10365,7 +10365,7 @@ width=2
 length=2
 op1=Empty
 
-[loc_1782]
+[millbase_full]
 name=Flour bin
 desc=The ground flour comes down from the millstones above.
 model=model_loc_1782
@@ -14901,61 +14901,61 @@ length=3
 op1=Climb-up
 op2=Investigate
 
-[loc_2713]
+[hopper_full]
 name=Hopper
 desc=Grain goes in here.
 model=model_loc_1783
 width=2
 
-[loc_2714]
+[hopper_lumbridge]
 name=Hopper
 desc=Grain goes in here.
 model=model_loc_1783
 width=2
 
-[loc_2715]
+[hopper_varrock]
 name=Hopper
 desc=Grain goes in here.
 model=model_loc_1783
 width=2
 
-[loc_2716]
+[hopper_zanaris]
 name=Hopper
 desc=Grain goes in here.
 model=model_loc_1783
 width=2
 
-[loc_2717]
+[hopper_ardougne]
 name=Hopper
 desc=Grain goes in here.
 model=model_loc_1783
 width=2
 
-[loc_2718]
+[hoppercontrol_lumbridge]
 name=Hopper controls
 desc=These control the flow of grain from the hopper to the millstones.
 model=model_loc_1785
 op1=Operate
 
-[loc_2719]
+[hoppercontrol_varrock]
 name=Hopper controls
 desc=These control the flow of grain from the hopper to the millstones.
 model=model_loc_1785
 op1=Operate
 
-[loc_2720]
+[hoppercontrol_zanaris]
 name=Hopper controls
 desc=These control the flow of grain from the hopper to the millstones.
 model=model_loc_1785
 op1=Operate
 
-[loc_2721]
+[hoppercontrol_ardougne]
 name=Hopper controls
 desc=These control the flow of grain from the hopper to the millstones.
 model=model_loc_1785
 op1=Operate
 
-[loc_2722]
+[hoppercontrol_inuse]
 name=Hopper controls
 desc=These control the flow of grain from the hopper to the millstones.
 model=model_loc_2722
