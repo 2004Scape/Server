@@ -1,12 +1,16 @@
 [opplayer1,_]
-// prevent people from dueling outside the duel arena, or in a duel
-if (~inzone_coord_pair_table(duel_arena_zones, coord) = false | ~in_duel_arena = true) {
-    mes("You can't do that here."); // https://youtu.be/nUwvlFkcsqA?t=17
-    return;
-}
 if (.busy = true) {
     mes("<.displayname> is busy at the moment."); // https://youtu.be/YkJQDvB14-U?t=26
     return;
+}
+// prevent people from dueling in a duel or if you arent in the duel area
+if (~in_duel_arena = true | ~inzone_coord_pair_table(duel_arena_zones, coord) = false) {
+    mes("You can't do that here."); // https://youtu.be/nUwvlFkcsqA?t=17
+    return;
+}
+// if the other player isnt in the duel area
+if (~inzone_coord_pair_table(duel_arena_zones, .coord) = false) {
+    mes("That player is not in the duel challenge area."); // https://youtu.be/YlnPnlfgMQ4?t=51
 }
 
 mes("Sending duel offer...");
