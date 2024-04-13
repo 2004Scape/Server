@@ -79,6 +79,7 @@
 [command,p_opnpc](int $op)
 [command,p_opnpct](component $spell)
 [command,p_pausebutton]
+[command,.p_pausebutton]
 [command,p_stopaction]
 [command,.p_stopaction]
 [command,p_telejump](coord $coord)
@@ -105,6 +106,7 @@
 [command,p_logout]
 [command,if_setcolour](component $component, int $colour)
 [command,if_openchat](interface $interface)
+[command,.if_openchat](interface $interface)
 [command,if_openmainmodalsideoverlay](interface $interface1, interface $interface2)
 [command,.if_openmainmodalsideoverlay](interface $interface1, interface $interface2)
 [command,if_sethide](component $component, boolean $hide)

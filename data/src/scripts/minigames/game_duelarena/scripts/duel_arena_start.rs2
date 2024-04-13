@@ -4,6 +4,12 @@ def_coord $random_coord2;
 $random_coord1, $random_coord2 = ~duel_arena_coords;
 
 if ($random_coord1 = null | $random_coord2 = null) {
+    %duelstatus = 0;
+    .%duelstatus = 0;
+    %duelpartner = null;
+    .%duelpartner = null;
+    queue(duel_arena_full, 0);
+    ~.mesbox("All arenas of this type are full! Select another type of arena, try|again in a few minutes or try a different server."); // https://youtu.be/TcrIr9O92sw?t=89
     return;
 }
 p_telejump($random_coord1);
@@ -57,20 +63,44 @@ softtimer(duel_arena_start_3, 3); // todo: confirm these timings
 // random coord between 2 coords, checks if map blocked and not inside dueler
 def_coord $coord1;
 def_coord $coord2;
+def_int $i = 0;
+def_int $random_arena;
+// if all arenas are full, return null
 if (~duel_arena_obstacles_check = true) {
-    $coord1, $coord2 = db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, random(3));
+    def_int $obstacle_arenas = db_getfieldcount(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair);
+    while ($i < $obstacle_arenas) {
+        if (map_playercount(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
+            $random_arena = ~random_range($i, $obstacle_arenas);
+            if ($i = calc($obstacle_arenas - 1)) {
+                return(null, null); // if its the last one and it fails, return null
+            }
+        }
+        $i = calc($i + 1);
+    }
+    $coord1, $coord2 = db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $random_arena);
 } else {
-    $coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, random(3));
+    def_int $normal_arenas = db_getfieldcount(duel_arena_fight_zones, coord_pair_table:coord_pair);
+    $i = 0;
+    while ($i < $normal_arenas) {
+        if (map_playercount(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
+            $random_arena = ~random_range($i, $normal_arenas);
+            if ($i = calc($normal_arenas - 1)) {
+                return(null, null);
+            }
+        }
+        $i = calc($i + 1);
+    }
+    $coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $random_arena);
 }
 
 def_int $x1 = coordx($coord1);
 def_int $x2 = coordx($coord2);
 def_int $z1 = coordz($coord1);
 def_int $z2 = coordz($coord2);
-def_int $i = 0;
 def_coord $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
 def_coord $random_coord2 = $random_coord1;
 
+$i = 0;
 while (map_blocked($random_coord1) = true) {
     $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
     $i = calc($i + 1);
@@ -148,3 +178,7 @@ if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
     return(false);
 }
 return(true);
+
+
+[queue,duel_arena_full]
+~mesbox("All arenas of this type are full! Select another type of arena, try|again in a few minutes or try a different server."); // https://youtu.be/TcrIr9O92sw?t=89
