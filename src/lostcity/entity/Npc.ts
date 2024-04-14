@@ -295,8 +295,6 @@ export default class Npc extends PathingEntity {
     }
 
     processQueue() {
-        let processedQueueCount = 0;
-
         for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed()) {
@@ -306,13 +304,9 @@ export default class Npc extends PathingEntity {
             if (!this.delayed() && request.delay <= 0) {
                 const state = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(state);
-
-                processedQueueCount++;
                 request.unlink();
             }
         }
-
-        return processedQueueCount;
     }
 
     enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {

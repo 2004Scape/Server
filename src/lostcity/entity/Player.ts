@@ -2030,27 +2030,15 @@ export default class Player extends PathingEntity {
     }
 
     processEngineQueue() {
-        let processedQueueCount = 0;
-        do {
-            processedQueueCount = this.processEngineQueueInternal();
-        } while (processedQueueCount !== 0);
-    }
-
-    processEngineQueueInternal() {
-        let processedQueueCount = 0;
-
         for (let request: EntityQueueRequest | null = this.engineQueue.head() as EntityQueueRequest | null; request !== null; request = this.engineQueue.next() as EntityQueueRequest | null) {
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
                 const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
 
-                processedQueueCount++;
                 request.unlink();
             }
         }
-
-        return processedQueueCount;
     }
 
     // ----
@@ -2257,20 +2245,11 @@ export default class Player extends PathingEntity {
             this.closeModal();
         }
 
-        let processedQueueCount = 0;
-        do {
-            processedQueueCount = this.processQueue();
-        } while (processedQueueCount !== 0);
-
-        let processedWeakQueueCount = 0;
-        do {
-            processedWeakQueueCount = this.processWeakQueue();
-        } while (processedWeakQueueCount !== 0);
+        this.processQueue();
+        this.processWeakQueue();
     }
 
     processQueue() {
-        let processedQueueCount = 0;
-
         // there is a quirk with their LinkList impl that results in a queue speedup bug:
         // in .head() the next link is cached. on the next iteration, next() will use this cached value, even if it's null
         // regardless of whether the end of the list has been reached (i.e. the previous iteration added to the end of the list)
@@ -2285,30 +2264,20 @@ export default class Player extends PathingEntity {
             if (this.canAccess() && delay <= 0) {
                 const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
-
-                processedQueueCount++;
                 request.unlink();
             }
         }
-
-        return processedQueueCount;
     }
 
     processWeakQueue() {
-        let processedQueueCount = 0;
-
         for (let request: EntityQueueRequest | null = this.weakQueue.head() as EntityQueueRequest | null; request !== null; request = this.weakQueue.next() as EntityQueueRequest | null) {
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
                 const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
-
-                processedQueueCount++;
                 request.unlink();
             }
         }
-
-        return processedQueueCount;
     }
 
     setTimer(type: PlayerTimerType, script: Script, args: ScriptArgument[] = [], interval: number) {
