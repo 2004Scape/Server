@@ -1822,25 +1822,25 @@ export default class Player extends PathingEntity {
             case 'reload': {
                 if (Environment.LOCAL_DEV) {
                     // TODO: only reload config types that have changed to save time
-                    CategoryType.load('data/pack/server');
-                    ParamType.load('data/pack/server');
-                    EnumType.load('data/pack/server');
-                    StructType.load('data/pack/server');
-                    InvType.load('data/pack/server');
-                    IdkType.load('data/pack/server');
-                    VarPlayerType.load('data/pack/server');
-                    ObjType.load('data/pack/server', World.members);
-                    LocType.load('data/pack/server');
-                    NpcType.load('data/pack/server');
-                    Component.load('data/pack/server');
-                    SeqType.load('data/pack/server');
-                    SpotanimType.load('data/pack/server');
-                    MesanimType.load('data/pack/server');
-                    DbTableType.load('data/pack/server');
-                    DbRowType.load('data/pack/server');
-                    HuntType.load('data/pack/server');
+                    CategoryType.load('data/pack');
+                    ParamType.load('data/pack');
+                    EnumType.load('data/pack');
+                    StructType.load('data/pack');
+                    InvType.load('data/pack');
+                    IdkType.load('data/pack');
+                    VarPlayerType.load('data/pack');
+                    ObjType.load('data/pack', World.members);
+                    LocType.load('data/pack');
+                    NpcType.load('data/pack');
+                    Component.load('data/pack');
+                    SeqType.load('data/pack');
+                    SpotanimType.load('data/pack');
+                    MesanimType.load('data/pack');
+                    DbTableType.load('data/pack');
+                    DbRowType.load('data/pack');
+                    HuntType.load('data/pack');
 
-                    const count = ScriptProvider.load('data/pack/server');
+                    const count = ScriptProvider.load('data/pack');
                     this.messageGame(`Reloaded ${count} scripts.`);
                 }
                 break;

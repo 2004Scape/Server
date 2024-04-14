@@ -11,12 +11,12 @@ export default class VarSharedType extends ConfigType {
         VarSharedType.configNames = new Map();
         VarSharedType.configs = [];
 
-        if (!fs.existsSync(`${dir}/vars.dat`)) {
+        if (!fs.existsSync(`${dir}/server/vars.dat`)) {
             console.log('Warning: No vars.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/vars.dat`);
+        const dat = Packet.load(`${dir}/server/vars.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

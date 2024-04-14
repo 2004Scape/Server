@@ -1,8 +1,6 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import InvType from '#lostcity/cache/InvType.js';
 
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { InvPack, ObjPack } from '#lostcity/util/PackFile.js';
 
 export function parseInvConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -94,17 +92,13 @@ export function parseInvConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-export function packInvConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(InvPack.size);
-    idx.p2(InvPack.size);
+export function packInvConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(InvPack.size);
+    const server: PackedData = new PackedData(InvPack.size);
 
     for (let i = 0; i < InvPack.size; i++) {
         const debugname = InvPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         // collect these to write at the end
         const stock = [];
@@ -113,63 +107,63 @@ export function packInvConfigs(configs: Map<string, ConfigLine[]>) {
             const { key, value } = config[j];
 
             if (key === 'scope') {
-                dat.p1(1);
-                dat.p1(value as number);
+                server.p1(1);
+                server.p1(value as number);
             } else if (key === 'size') {
-                dat.p1(2);
-                dat.p2(value as number);
+                server.p1(2);
+                server.p2(value as number);
             } else if (key.startsWith('stock')) {
                 stock.push(value);
             } else if (key === 'stackall') {
                 if (value === true) {
-                    dat.p1(3);
+                    server.p1(3);
                 }
             } else if (key === 'restock') {
                 if (value === true) {
-                    dat.p1(5);
+                    server.p1(5);
                 }
             } else if (key === 'allstock') {
                 if (value === true) {
-                    dat.p1(6);
+                    server.p1(6);
                 }
             } else if (key === 'protect') {
                 if (value === false) {
-                    dat.p1(7);
+                    server.p1(7);
                 }
             } else if (key === 'runweight') {
                 if (value === true) {
-                    dat.p1(8);
+                    server.p1(8);
                 }
             } else if (key === 'dummyinv') {
                 if (value === true) {
-                    dat.p1(9);
+                    server.p1(9);
                 }
             }
         }
 
         if (stock.length > 0) {
-            dat.p1(4);
-            dat.p1(stock.length);
+            server.p1(4);
+            server.p1(stock.length);
 
             for (let i = 0; i < stock.length; i++) {
                 const [id, count, rate] = stock[i] as number[];
-                dat.p2(id);
-                dat.p2(count);
+                server.p2(id);
+                server.p2(count);
 
                 if (typeof rate !== 'undefined') {
-                    dat.p4(rate);
+                    server.p4(rate);
                 } else {
-                    dat.p4(0);
+                    server.p4(0);
                 }
             }
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

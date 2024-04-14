@@ -3,6 +3,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class FloType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -12,17 +13,22 @@ export default class FloType extends ConfigType {
         FloType.configNames = new Map();
         FloType.configs = [];
 
-        if (!fs.existsSync(`${dir}/flo.dat`)) {
+        if (!fs.existsSync(`${dir}/server/flo.dat`)) {
             console.log('Warning: No flo.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/flo.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/flo.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('flo.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new FloType(id);
-            config.decodeType(dat);
+            config.decodeType(server);
+            config.decodeType(client);
 
             FloType.configs[id] = config;
 

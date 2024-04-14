@@ -8,6 +8,7 @@ import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class NpcType extends ConfigType {
     static configNames = new Map();
@@ -17,17 +18,22 @@ export default class NpcType extends ConfigType {
         NpcType.configNames = new Map();
         NpcType.configs = [];
 
-        if (!fs.existsSync(`${dir}/npc.dat`)) {
+        if (!fs.existsSync(`${dir}/server/npc.dat`)) {
             console.log('Warning: No npc.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/npc.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/npc.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('npc.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new NpcType(id);
-            config.decodeType(dat);
+            config.decodeType(server);
+            config.decodeType(client);
 
             NpcType.configs[id] = config;
 
@@ -196,7 +202,7 @@ export default class NpcType extends ConfigType {
         } else if (opcode === 250) {
             this.debugname = packet.gjstr();
         } else {
-            throw new Error(`Unrecognized npc config code: ${opcode}`);
+            throw new Error(`Unrecognized npc config code: ${opcode} while reading npc ${this.id}`);
         }
     }
 }

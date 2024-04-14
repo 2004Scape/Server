@@ -9,6 +9,78 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import { packParamConfigs, parseParamConfig } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { loadDir } from '#lostcity/util/NameMap.js';
 
+import { packFloConfigs, parseFloConfig } from '#lostcity/tools/packconfig/FloConfig.js';
+import { packIdkConfigs, parseIdkConfig } from '#lostcity/tools/packconfig/IdkConfig.js';
+import { packLocConfigs, parseLocConfig } from '#lostcity/tools/packconfig/LocConfig.js';
+import { packNpcConfigs, parseNpcConfig } from '#lostcity/tools/packconfig/NpcConfig.js';
+import { packObjConfigs, parseObjConfig } from '#lostcity/tools/packconfig/ObjConfig.js';
+import { packSeqConfigs, parseSeqConfig } from '#lostcity/tools/packconfig/SeqConfig.js';
+import { packSpotAnimConfigs, parseSpotAnimConfig } from '#lostcity/tools/packconfig/SpotAnimConfig.js';
+import { packVarpConfigs, parseVarpConfig } from '#lostcity/tools/packconfig/VarpConfig.js';
+
+import { AnimPack, CategoryPack, shouldBuildFile } from '#lostcity/util/PackFile.js';
+import { listFilesExt } from '#lostcity/util/Parse.js';
+
+import DbTableType from '#lostcity/cache/DbTableType.js';
+
+import { packDbRowConfigs, parseDbRowConfig } from '#lostcity/tools/packconfig/DbRowConfig.js';
+import { packDbTableConfigs, parseDbTableConfig } from '#lostcity/tools/packconfig/DbTableConfig.js';
+import { packEnumConfigs, parseEnumConfig } from '#lostcity/tools/packconfig/EnumConfig.js';
+import { packInvConfigs, parseInvConfig } from '#lostcity/tools/packconfig/InvConfig.js';
+import { packMesAnimConfigs, parseMesAnimConfig } from '#lostcity/tools/packconfig/MesAnimConfig.js';
+import { packStructConfigs, parseStructConfig } from '#lostcity/tools/packconfig/StructConfig.js';
+import { packHuntConfigs, parseHuntConfig } from '#lostcity/tools/packconfig/HuntConfig.js';
+import { packVarnConfigs, parseVarnConfig } from '#lostcity/tools/packconfig/VarnConfig.js';
+import { packVarsConfigs, parseVarsConfig } from '#lostcity/tools/packconfig/VarsConfig.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
+
+export class PackedData {
+    dat: Packet;
+    idx: Packet;
+    size: number = 0;
+    marker: number;
+
+    constructor(size: number) {
+        this.dat = new Packet();
+        this.idx = new Packet();
+        this.size = size;
+
+        this.dat.p2(size);
+        this.idx.p2(size);
+        this.marker = 2;
+    }
+
+    next() {
+        this.dat.p1(0);
+        this.idx.p2(this.dat.pos - this.marker);
+        this.marker = this.dat.pos;
+    }
+
+    p1(value: number) {
+        this.dat.p1(value);
+    }
+
+    pbool(value: boolean) {
+        this.dat.pbool(value);
+    }
+
+    p2(value: number) {
+        this.dat.p2(value);
+    }
+
+    p3(value: number) {
+        this.dat.p3(value);
+    }
+
+    p4(value: number) {
+        this.dat.p4(value);
+    }
+
+    pjstr(value: string) {
+        this.dat.pjstr(value);
+    }
+}
+
 export const CONSTANTS = new Map<string, string>();
 // console.time('Generating constants');
 loadDir('data/src/scripts', '.constant', src => {
@@ -109,11 +181,11 @@ export type ConfigLine = { key: string; value: ConfigValue };
 
 // we're using null for invalid values, undefined for invalid keys
 export type ConfigParseCallback = (key: string, value: string) => ConfigValue | null | undefined;
-export type ConfigDatIdx = { dat: Packet; idx: Packet };
+export type ConfigDatIdx = { client: PackedData, server: PackedData };
 export type ConfigPackCallback = (configs: Map<string, ConfigLine[]>) => ConfigDatIdx;
 export type ConfigSaveCallback = (dat: Packet, idx: Packet) => void;
 
-export function readConfigs(extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, save: ConfigSaveCallback) {
+export function readConfigs(extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback) {
     const files = readFiles(findFiles('data/src/scripts', extension));
 
     const configs = new Map<string, ConfigLine[]>();
@@ -217,17 +289,403 @@ export function readConfigs(extension: string, requiredProperties: string[], par
         }
     });
 
-    const { dat, idx } = pack(configs);
-    save(dat, idx);
+    const { client, server } = pack(configs);
+    saveClient(client.dat, client.idx);
+    saveServer(server.dat, server.idx);
 }
 
 // We have to pack params for other configs to parse correctly
 if (shouldBuild('data/src/scripts', '.param', 'data/pack/server/param.dat')) {
-    readConfigs('.param', ['type'], parseParamConfig, packParamConfigs, (dat: Packet, idx: Packet) => {
+    readConfigs('.param', ['type'], parseParamConfig, packParamConfigs, () => {}, (dat: Packet, idx: Packet) => {
         dat.save('data/pack/server/param.dat');
         idx.save('data/pack/server/param.idx');
     });
 }
 
 // Now that they're up to date, load them for us to use elsewhere during this process
-ParamType.load('data/pack/server');
+ParamType.load('data/pack');
+
+function noOp() {}
+
+export function packConfigs() {
+    const jag = new Jagfile();
+
+    /* client order:
+    'seq.dat',      'seq.idx',
+    'loc.dat',      'loc.idx',
+    'flo.dat',      'flo.idx',
+    'spotanim.dat', 'spotanim.idx',
+    'obj.dat',      'obj.idx',
+    'npc.dat',      'npc.idx',
+    'idk.dat',      'idk.idx',
+    'varp.dat',     'varp.idx'
+    */
+
+    const rebuildClient =
+        shouldBuild('data/src/scripts', '.seq', 'data/pack/client/config') ||
+        shouldBuild('data/src/scripts', '.loc', 'data/pack/client/config') ||
+        shouldBuild('data/src/scripts', '.flo', 'data/pack/client/config') ||
+        shouldBuild('data/src/scripts', '.spotanim', 'data/pack/client/config') ||
+        shouldBuild('data/src/scripts', '.npc', 'data/pack/client/config') ||
+        shouldBuild('data/src/scripts', '.obj', 'data/pack/client/config') ||
+        shouldBuild('data/src/scripts', '.idk', 'data/pack/client/config') ||
+        shouldBuild('data/src/scripts', '.varp', 'data/pack/client/config') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/client/config');
+
+    // not a config but we want the server to know all the possible categories
+    if (
+        shouldBuildFile('data/pack/category.pack', 'data/pack/server/category.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/category.dat')
+    ) {
+        console.log('Packing categories');
+        //console.time('Packed categories');
+        const dat = new Packet();
+        dat.p2(CategoryPack.size);
+        for (let i = 0; i < CategoryPack.size; i++) {
+            dat.pjstr(CategoryPack.getById(i));
+        }
+        dat.save('data/pack/server/category.dat');
+        //console.timeEnd('Packed categories');
+    }
+
+    // want the server to access frame lengths without loading data from models
+    if (
+        shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/frame_del.dat')
+    ) {
+        console.log('Packing frame_del');
+        //console.time('Packed frame_del');
+        const files = listFilesExt('data/src/models', '.frame');
+        const frame_del = new Packet();
+        for (let i = 0; i < AnimPack.max; i++) {
+            const name = AnimPack.getById(i);
+            if (!name.length) {
+                frame_del.p1(0);
+                continue;
+            }
+
+            const file = files.find(file => file.endsWith(`${name}.frame`));
+            if (!file) {
+                frame_del.p1(0);
+                continue;
+            }
+
+            const data = Packet.load(file);
+
+            data.pos = data.length - 8;
+            const headLength = data.g2();
+            const tran1Length = data.g2();
+            const tran2Length = data.g2();
+            // const delLength = data.g2();
+
+            data.pos = 0;
+            data.pos += headLength;
+            data.pos += tran1Length;
+            data.pos += tran2Length;
+            frame_del.p1(data.g1());
+        }
+
+        frame_del.save('data/pack/server/frame_del.dat');
+        //console.timeEnd('Packed frame_del');
+    }
+
+    // ----
+
+    if (
+        shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbtable.dat')
+    ) {
+        console.log('Packing .dbtable');
+        //console.time('Packed .dbtable');
+        readConfigs('.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/dbtable.dat');
+            idx.save('data/pack/server/dbtable.idx');
+        });
+        //console.timeEnd('Packed .dbtable');
+    }
+
+    DbTableType.load('data/pack'); // dbrow needs to access it
+
+    // todo: rebuild when any data type changes
+    if (
+        shouldBuild('data/src/scripts', '.dbrow', 'data/pack/server/dbrow.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbrow.dat') ||
+        shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbtable.dat')
+    ) {
+        console.log('Packing .dbrow');
+        //console.time('Packed .dbrow');
+        readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/dbrow.dat');
+            idx.save('data/pack/server/dbrow.idx');
+        });
+        //console.timeEnd('Packed .dbrow');
+    }
+
+    if (
+        shouldBuild('data/src/scripts', '.enum', 'data/pack/server/enum.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/enum.dat')
+    ) {
+        console.log('Packing .enum');
+        //console.time('Packed .enum');
+        readConfigs('.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/enum.dat');
+            idx.save('data/pack/server/enum.idx');
+        });
+        //console.timeEnd('Packed .enum');
+    }
+
+    if (
+        shouldBuild('data/src/scripts', '.inv', 'data/pack/server/inv.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/inv.dat')
+    ) {
+        console.log('Packing .inv');
+        //console.time('Packed .inv');
+        readConfigs('.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/inv.dat');
+            idx.save('data/pack/server/inv.idx');
+        });
+        //console.timeEnd('Packed .inv');
+    }
+
+    if (
+        shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/mesanim.dat')
+    ) {
+        console.log('Packing .mesanim');
+        //console.time('Packed .mesanim');
+        readConfigs('.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/mesanim.dat');
+            idx.save('data/pack/server/mesanim.idx');
+        });
+        //console.timeEnd('Packed .mesanim');
+    }
+
+    if (
+        shouldBuild('data/src/scripts', '.struct', 'data/pack/server/struct.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/struct.dat')
+    ) {
+        console.log('Packing .struct');
+        //console.time('Packed .struct');
+        readConfigs('.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/struct.dat');
+            idx.save('data/pack/server/struct.idx');
+        });
+        //console.timeEnd('Packed .struct');
+    }
+
+    // ----
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.seq', 'data/pack/server/seq.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/seq.dat')
+    ) {
+        console.log('Packing .seq');
+        //console.time('Packed .seq');
+        readConfigs('.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, 1638136604) || !Packet.checkcrc(idx, 969051566)) {
+                console.error('.seq CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('seq.dat', dat);
+            jag.write('seq.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/seq.dat');
+            idx.save('data/pack/server/seq.idx');
+        });
+        //console.timeEnd('Packed .seq');
+    }
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.loc', 'data/pack/server/loc.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/loc.dat')
+    ) {
+        console.log('Packing .loc');
+        //console.time('Packed .loc');
+        readConfigs('.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, 891497087) || !Packet.checkcrc(idx, -941401128)) {
+                console.error('.loc CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('loc.dat', dat);
+            jag.write('loc.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/loc.dat');
+            idx.save('data/pack/server/loc.idx');
+        });
+        //console.timeEnd('Packed .loc');
+    }
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.flo', 'data/pack/server/flo.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/flo.dat')
+    ) {
+        console.log('Packing .flo');
+        //console.time('Packed .flo');
+        readConfigs('.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, 1976597026) || !Packet.checkcrc(idx, 561308705)) {
+                console.error('.flo CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('flo.dat', dat);
+            jag.write('flo.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/flo.dat');
+            idx.save('data/pack/server/flo.idx');
+        });
+        //console.timeEnd('Packed .flo');
+    }
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/spotanim.dat')
+    ) {
+        console.log('Packing .spotanim');
+        //console.time('Packed .spotanim');
+        readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, -1279835623) || !Packet.checkcrc(idx, -1696140322)) {
+                console.error('.spotanim CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('spotanim.dat', dat);
+            jag.write('spotanim.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/spotanim.dat');
+            idx.save('data/pack/server/spotanim.idx');
+        });
+        //console.timeEnd('Packed .spotanim');
+    }
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.npc', 'data/pack/server/npc.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/npc.dat')
+    ) {
+        console.log('Packing .npc');
+        //console.time('Packed .npc');
+        readConfigs('.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, -2140681882) || !Packet.checkcrc(idx, -1986014643)) {
+                console.error('.npc CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('npc.dat', dat);
+            jag.write('npc.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/npc.dat');
+            idx.save('data/pack/server/npc.idx');
+        });
+        //console.timeEnd('Packed .npc');
+    }
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/obj.dat')
+    ) {
+        console.log('Packing .obj');
+        //console.time('Packed .obj');
+        readConfigs('.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, -840233510) || !Packet.checkcrc(idx, 669212954)) {
+                console.error('.obj CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('obj.dat', dat);
+            jag.write('obj.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/obj.dat');
+            idx.save('data/pack/server/obj.idx');
+        });
+        //console.timeEnd('Packed .obj');
+    }
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/idk.dat')
+    ) {
+        console.log('Packing .idk');
+        //console.time('Packed .idk');
+        readConfigs('.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, -359342366) || !Packet.checkcrc(idx, 667216411)) {
+                console.error('.idk CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('idk.dat', dat);
+            jag.write('idk.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/idk.dat');
+            idx.save('data/pack/server/idk.idx');
+        });
+        //console.timeEnd('Packed .idk');
+    }
+
+    if (rebuildClient ||
+        shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/varp.dat')
+    ) {
+        console.log('Packing .varp');
+        //console.time('Packed .varp');
+        readConfigs('.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
+            if (!Packet.checkcrc(dat, 705633567) || !Packet.checkcrc(idx, -1843167599)) {
+                console.error('.varp CRC check failed! Custom data detected.');
+                process.exit(1);
+            }
+
+            jag.write('varp.dat', dat);
+            jag.write('varp.idx', idx);
+        }, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/varp.dat');
+            idx.save('data/pack/server/varp.idx');
+        });
+        //console.timeEnd('Packed .varp');
+    }
+
+    if (
+        shouldBuild('data/src/scripts', '.hunt', 'data/pack/server/hunt.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/hunt.dat')
+    ) {
+        console.log('Packing .hunt');
+        //console.time('Packed .hunt');
+        readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/hunt.dat');
+            idx.save('data/pack/server/hunt.idx');
+        });
+        //console.timeEnd('Packed .hunt');
+    }
+
+    if (
+        shouldBuild('data/src/scripts', '.varn', 'data/pack/server/varn.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/varn.dat')
+    ) {
+        console.log('Packing .varn');
+        //console.time('Packed .varn');
+        readConfigs('.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/varn.dat');
+            idx.save('data/pack/server/varn.idx');
+        });
+        //console.timeEnd('Packed .varn');
+    }
+
+    if (
+        shouldBuild('data/src/scripts', '.vars', 'data/pack/server/vars.dat') ||
+        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/vars.dat')
+    ) {
+        console.log('Packing .vars');
+        //console.time('Packed .vars');
+        readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet, idx: Packet) => {
+            dat.save('data/pack/server/vars.dat');
+            idx.save('data/pack/server/vars.idx');
+        });
+        //console.timeEnd('Packed .vars');
+    }
+
+    if (rebuildClient) {
+        console.log('Writing config.jag');
+        // we would check the CRC of the config.jag file too, but bz2 can differ on Windows...
+        jag.save('data/pack/client/config');
+    }
+}

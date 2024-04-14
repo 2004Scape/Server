@@ -1,6 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
-
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { ModelPack, SeqPack, SpotAnimPack } from '#lostcity/util/PackFile.js';
 
 export function parseSpotAnimConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -88,74 +86,60 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
     }
 }
 
-function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(SpotAnimPack.size);
-    idx.p2(SpotAnimPack.size);
+export function packSpotAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(SpotAnimPack.size);
+    const server: PackedData = new PackedData(SpotAnimPack.size);
 
     for (let i = 0; i < SpotAnimPack.size; i++) {
         const debugname = SpotAnimPack.getById(i);
         const config = configs.get(debugname)!;
 
-        const start = dat.pos;
-
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
             if (key === 'model') {
-                dat.p1(1);
-                dat.p2(value as number);
+                client.p1(1);
+                client.p2(value as number);
             } else if (key === 'anim') {
-                dat.p1(2);
-                dat.p2(value as number);
+                client.p1(2);
+                client.p2(value as number);
             } else if (key === 'hasalpha') {
                 if (value === true) {
-                    dat.p1(3);
+                    client.p1(3);
                 }
             } else if (key === 'resizeh') {
-                dat.p1(4);
-                dat.p2(value as number);
+                client.p1(4);
+                client.p2(value as number);
             } else if (key === 'resizev') {
-                dat.p1(5);
-                dat.p2(value as number);
+                client.p1(5);
+                client.p2(value as number);
             } else if (key === 'orientation') {
-                dat.p1(6);
-                dat.p2(value as number);
+                client.p1(6);
+                client.p2(value as number);
             } else if (key === 'ambient') {
-                dat.p1(7);
-                dat.p1(value as number);
+                client.p1(7);
+                client.p1(value as number);
             } else if (key === 'contrast') {
-                dat.p1(8);
-                dat.p1(value as number);
+                client.p1(8);
+                client.p1(value as number);
             } else if (key.startsWith('recol')) {
                 const index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
                 if (key.endsWith('s')) {
-                    dat.p1(40 + index);
-                    dat.p2(value as number);
+                    client.p1(40 + index);
+                    client.p2(value as number);
                 } else {
-                    dat.p1(50 + index);
-                    dat.p2(value as number);
+                    client.p1(50 + index);
+                    client.p2(value as number);
                 }
             }
         }
 
-        if (transmitAll === true) {
-            dat.p1(250);
-            dat.pjstr(debugname);
-        }
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packSpotAnimClient(configs: Map<string, ConfigLine[]>) {
-    return packSpotAnimConfigs(configs, false);
-}
-
-export function packSpotAnimServer(configs: Map<string, ConfigLine[]>) {
-    return packSpotAnimConfigs(configs, true);
+    return { client, server };
 }

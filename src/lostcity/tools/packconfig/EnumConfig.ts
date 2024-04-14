@@ -1,8 +1,6 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { EnumPack } from '#lostcity/util/PackFile.js';
 
@@ -60,17 +58,13 @@ export function parseEnumConfig(key: string, value: string): ConfigValue | null 
     }
 }
 
-export function packEnumConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(EnumPack.size);
-    idx.p2(EnumPack.size);
+export function packEnumConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(EnumPack.size);
+    const server: PackedData = new PackedData(EnumPack.size);
 
     for (let i = 0; i < EnumPack.size; i++) {
         const debugname = EnumPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         // collect these to write at the end
         const val = [];
@@ -85,55 +79,55 @@ export function packEnumConfigs(configs: Map<string, ConfigLine[]>) {
             if (key === 'val') {
                 val.push(value as string);
             } else if (key === 'inputtype') {
-                dat.p1(1);
-                dat.p1(value as number);
+                server.p1(1);
+                server.p1(value as number);
             } else if (key === 'outputtype') {
-                dat.p1(2);
-                dat.p1(value as number);
+                server.p1(2);
+                server.p1(value as number);
             } else if (key === 'default') {
                 if (outputtype === ScriptVarType.STRING) {
-                    dat.p1(3);
-                    dat.pjstr(lookupParamValue(outputtype, value as string) as string);
+                    server.p1(3);
+                    server.pjstr(lookupParamValue(outputtype, value as string) as string);
                 } else {
-                    dat.p1(4);
-                    dat.p4(lookupParamValue(outputtype, value as string) as number);
+                    server.p1(4);
+                    server.p4(lookupParamValue(outputtype, value as string) as number);
                 }
             }
         }
 
         if (outputtype === ScriptVarType.STRING) {
-            dat.p1(5);
+            server.p1(5);
         } else {
-            dat.p1(6);
+            server.p1(6);
         }
 
-        dat.p2(val.length);
+        server.p2(val.length);
         for (let i = 0; i < val.length; i++) {
             if (inputtype === ScriptVarType.AUTOINT) {
-                dat.p4(i);
+                server.p4(i);
             } else {
                 const key = val[i].substring(0, val[i].indexOf(','));
-                dat.p4(lookupParamValue(inputtype, key) as number);
+                server.p4(lookupParamValue(inputtype, key) as number);
             }
 
             if (outputtype === ScriptVarType.AUTOINT) {
-                dat.p4(lookupParamValue(outputtype, val[i]) as number);
+                server.p4(lookupParamValue(outputtype, val[i]) as number);
             } else {
                 const value = val[i].substring(val[i].indexOf(',') + 1);
                 if (outputtype === ScriptVarType.STRING) {
-                    dat.pjstr(lookupParamValue(outputtype, value) as string);
+                    server.pjstr(lookupParamValue(outputtype, value) as string);
                 } else {
-                    dat.p4(lookupParamValue(outputtype, value) as number);
+                    server.p4(lookupParamValue(outputtype, value) as number);
                 }
             }
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

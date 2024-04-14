@@ -1,8 +1,6 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, packStepError, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { CategoryPack, EnumPack, InterfacePack, InvPack, LocPack, NpcPack, ObjPack, ParamPack, SeqPack, SoundPack, SpotAnimPack, StructPack, VarpPack } from '#lostcity/util/PackFile.js';
 
 const stats: (string | null)[] = [
@@ -213,17 +211,13 @@ export function parseParamConfig(key: string, value: string): ConfigValue | null
     }
 }
 
-export function packParamConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(ParamPack.size);
-    idx.p2(ParamPack.size);
+export function packParamConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(ParamPack.size);
+    const server: PackedData = new PackedData(ParamPack.size);
 
     for (let i = 0; i < ParamPack.size; i++) {
         const debugname = ParamPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         // need to read ahead for type info to do default lookup
         const type = config.find(({ key }) => key === 'type')!.value as number;
@@ -232,8 +226,8 @@ export function packParamConfigs(configs: Map<string, ConfigLine[]>) {
             const { key, value } = config[j];
 
             if (key === 'type') {
-                dat.p1(1);
-                dat.p1(value as number);
+                server.p1(1);
+                server.p1(value as number);
             } else if (key === 'default') {
                 const paramValue = lookupParamValue(type, value as string);
                 if (paramValue === null) {
@@ -241,25 +235,25 @@ export function packParamConfigs(configs: Map<string, ConfigLine[]>) {
                 }
 
                 if (type === ScriptVarType.STRING) {
-                    dat.p1(5);
-                    dat.pjstr(paramValue as string);
+                    server.p1(5);
+                    server.pjstr(paramValue as string);
                 } else {
-                    dat.p1(2);
-                    dat.p4(paramValue as number);
+                    server.p1(2);
+                    server.p4(paramValue as number);
                 }
             } else if (key === 'autodisable') {
                 if (value === false) {
-                    dat.p1(4);
+                    server.p1(4);
                 }
             }
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

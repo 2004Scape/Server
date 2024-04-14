@@ -1,6 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
-
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { AnimPack, ObjPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseSeqConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -120,17 +118,13 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-function packSeqConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(SeqPack.size);
-    idx.p2(SeqPack.size);
+export function packSeqConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(SeqPack.size);
+    const server: PackedData = new PackedData(SeqPack.size);
 
     for (let i = 0; i < SeqPack.size; i++) {
         const debugname = SeqPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         // collect these to write at the end
         const frames: number[] = [];
@@ -149,72 +143,62 @@ function packSeqConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean
                 const index = parseInt(key.substring('delay'.length)) - 1;
                 delays[index] = value as number;
             } else if (key === 'replayoff') {
-                dat.p1(2);
-                dat.p2(value as number);
+                client.p1(2);
+                client.p2(value as number);
             } else if (key === 'walkmerge') {
-                dat.p1(3);
+                client.p1(3);
 
                 const labels = value as number[];
-                dat.p1(labels.length);
+                client.p1(labels.length);
                 for (let i = 0; i < labels.length; i++) {
-                    dat.p1(labels[i]);
+                    client.p1(labels[i]);
                 }
             } else if (key === 'stretches') {
                 if (value === true) {
-                    dat.p1(4);
+                    client.p1(4);
                 }
             } else if (key === 'priority') {
-                dat.p1(5);
-                dat.p1(value as number);
+                client.p1(5);
+                client.p1(value as number);
             } else if (key === 'righthand') {
-                dat.p1(6);
-                dat.p2(value as number);
+                client.p1(6);
+                client.p2(value as number);
             } else if (key === 'lefthand') {
-                dat.p1(7);
-                dat.p2(value as number);
+                client.p1(7);
+                client.p2(value as number);
             } else if (key === 'replaycount') {
-                dat.p1(8);
-                dat.p1(value as number);
+                client.p1(8);
+                client.p1(value as number);
             }
         }
 
         if (frames.length > 0) {
-            dat.p1(1);
+            client.p1(1);
 
-            dat.p1(frames.length);
+            client.p1(frames.length);
             for (let j = 0; j < frames.length; j++) {
-                dat.p2(frames[j]);
+                client.p2(frames[j]);
 
                 if (typeof iframes[j] !== 'undefined') {
-                    dat.p2(iframes[j]);
+                    client.p2(iframes[j]);
                 } else {
-                    dat.p2(-1);
+                    client.p2(-1);
                 }
 
                 if (typeof delays[j] !== 'undefined') {
-                    dat.p2(delays[j]);
+                    client.p2(delays[j]);
                 } else {
-                    dat.p2(0);
+                    client.p2(0);
                 }
             }
         }
 
-        if (transmitAll === true) {
-            dat.p1(250);
-            dat.pjstr(debugname);
-        }
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packSeqClient(configs: Map<string, ConfigLine[]>) {
-    return packSeqConfigs(configs, false);
-}
-
-export function packSeqServer(configs: Map<string, ConfigLine[]>) {
-    return packSeqConfigs(configs, true);
+    return { client, server };
 }

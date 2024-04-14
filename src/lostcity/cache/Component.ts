@@ -27,12 +27,12 @@ export default class Component {
         this.componentNames = new Map();
         this.components = [];
 
-        if (!fs.existsSync(`${dir}/interface.dat`)) {
+        if (!fs.existsSync(`${dir}/server/interface.dat`)) {
             console.log('Warning: No interface.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/interface.dat`);
+        const dat = Packet.load(`${dir}/server/interface.dat`);
         dat.g2(); // count
 
         let rootLayer = -1;

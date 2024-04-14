@@ -1,6 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
-
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { FloPack, TexturePack } from '#lostcity/util/PackFile.js';
 
 export function parseFloConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -62,52 +60,41 @@ export function parseFloConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-function packFloConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(FloPack.size);
-    idx.p2(FloPack.size);
+export function packFloConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(FloPack.size);
+    const server: PackedData = new PackedData(FloPack.size);
 
     for (let i = 0; i < FloPack.size; i++) {
         const debugname = FloPack.getById(i);
         const config = configs.get(debugname)!;
 
-        const start = dat.pos;
-
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
             if (key === 'rgb') {
-                dat.p1(1);
-                dat.p3(value as number);
+                client.p1(1);
+                client.p3(value as number);
             } else if (key === 'texture') {
-                dat.p1(2);
-                dat.p1(value as number);
+                client.p1(2);
+                client.p1(value as number);
             } else if (key === 'overlay') {
                 if (value === true) {
-                    dat.p1(3);
+                    client.p1(3);
                 }
             } else if (key === 'occlude') {
                 if (value === false) {
-                    dat.p1(5);
+                    client.p1(5);
                 }
             }
         }
 
-        dat.p1(6); // editname
-        dat.pjstr(debugname);
+        // yes, this was originally transmitted!
+        client.p1(6);
+        client.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packFloClient(configs: Map<string, ConfigLine[]>) {
-    return packFloConfigs(configs, false);
-}
-
-export function packFloServer(configs: Map<string, ConfigLine[]>) {
-    return packFloConfigs(configs, true);
+    return { client, server };
 }

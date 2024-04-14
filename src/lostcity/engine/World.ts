@@ -204,8 +204,8 @@ class World {
         return this.collisionManager.stepValidator;
     }
 
-    shouldReload(type: string): boolean {
-        const current = getModified(`data/pack/server/${type}.dat`);
+    shouldReload(type: string, client: boolean = false): boolean {
+        const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
 
         if (!this.datLastModified.has(type)) {
             this.datLastModified.set(type, current);
@@ -220,56 +220,56 @@ class World {
     }
 
     reload() {
-        if (this.shouldReload('varp')) {
-            VarPlayerType.load('data/pack/server');
+        if (this.shouldReload('varp', true)) {
+            VarPlayerType.load('data/pack');
         }
 
         if (this.shouldReload('param')) {
-            ParamType.load('data/pack/server');
+            ParamType.load('data/pack');
         }
 
-        if (this.shouldReload('obj')) {
-            ObjType.load('data/pack/server', this.members);
+        if (this.shouldReload('obj', true)) {
+            ObjType.load('data/pack', this.members);
         }
 
-        if (this.shouldReload('loc')) {
-            LocType.load('data/pack/server');
+        if (this.shouldReload('loc', true)) {
+            LocType.load('data/pack');
         }
 
-        if (this.shouldReload('npc')) {
-            NpcType.load('data/pack/server');
+        if (this.shouldReload('npc', true)) {
+            NpcType.load('data/pack');
         }
 
-        if (this.shouldReload('idk')) {
-            IdkType.load('data/pack/server');
+        if (this.shouldReload('idk', true)) {
+            IdkType.load('data/pack');
         }
 
         if (this.shouldReload('frame_del')) {
-            SeqFrame.load('data/pack/server');
+            SeqFrame.load('data/pack');
         }
 
-        if (this.shouldReload('seq')) {
-            SeqType.load('data/pack/server');
+        if (this.shouldReload('seq', true)) {
+            SeqType.load('data/pack');
         }
 
-        if (this.shouldReload('spotanim')) {
-            SpotanimType.load('data/pack/server');
+        if (this.shouldReload('spotanim', true)) {
+            SpotanimType.load('data/pack');
         }
 
         if (this.shouldReload('category')) {
-            CategoryType.load('data/pack/server');
+            CategoryType.load('data/pack');
         }
 
         if (this.shouldReload('enum')) {
-            EnumType.load('data/pack/server');
+            EnumType.load('data/pack');
         }
 
         if (this.shouldReload('struct')) {
-            StructType.load('data/pack/server');
+            StructType.load('data/pack');
         }
 
         if (this.shouldReload('inv')) {
-            InvType.load('data/pack/server');
+            InvType.load('data/pack');
 
             for (let i = 0; i < InvType.count; i++) {
                 const inv = InvType.get(i);
@@ -281,39 +281,43 @@ class World {
         }
 
         if (this.shouldReload('mesanim')) {
-            MesanimType.load('data/pack/server');
+            MesanimType.load('data/pack');
         }
 
         if (this.shouldReload('dbtable')) {
-            DbTableType.load('data/pack/server');
+            DbTableType.load('data/pack');
         }
 
         if (this.shouldReload('dbrow')) {
-            DbRowType.load('data/pack/server');
+            DbRowType.load('data/pack');
         }
 
         if (this.shouldReload('hunt')) {
-            HuntType.load('data/pack/server');
+            HuntType.load('data/pack');
         }
 
         if (this.shouldReload('varn')) {
-            VarNpcType.load('data/pack/server');
+            VarNpcType.load('data/pack');
         }
 
         if (this.shouldReload('vars')) {
-            VarSharedType.load('data/pack/server');
+            VarSharedType.load('data/pack');
         }
 
         if (this.shouldReload('interface')) {
-            Component.load('data/pack/server');
+            Component.load('data/pack');
         }
 
         if (this.shouldReload('script')) {
-            const count = ScriptProvider.load('data/pack/server');
-            this.broadcastMes(`Reloaded ${count} scripts.`);
+            const count = ScriptProvider.load('data/pack');
+            if (count === -1) {
+                this.broadcastMes('There was an issue while reloading. Please wait or try again.');
+            } else {
+                this.broadcastMes(`Reloaded ${count} scripts.`);
+            }
         }
 
-        this.allLastModified = getLatestModified('data/pack/server', '.dat');
+        this.allLastModified = getLatestModified('data/pack', '.dat');
     }
 
     broadcastMes(message: string) {
@@ -334,8 +338,8 @@ class World {
             this.npcs[i] = null;
         }
 
-        FontType.load('data/pack/client');
-        WordEnc.load('data/pack/client');
+        FontType.load('data/pack');
+        WordEnc.load('data/pack');
 
         this.reload();
 
@@ -376,7 +380,7 @@ class World {
     async cycle(continueCycle = true) {
         if (Environment.LOCAL_DEV) {
             const lastModified = getLatestModified('data/pack/server', '.dat');
-            if (this.allLastModified !== lastModified) {
+            if (lastModified != this.allLastModified) {
                 console.log('Reloading data...');
                 this.reload();
             }

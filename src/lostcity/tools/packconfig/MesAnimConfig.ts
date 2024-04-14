@@ -1,6 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
-
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { MesAnimPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseMesAnimConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -56,17 +54,13 @@ export function parseMesAnimConfig(key: string, value: string): ConfigValue | nu
     }
 }
 
-export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(MesAnimPack.size);
-    idx.p2(MesAnimPack.size);
+export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(MesAnimPack.size);
+    const server: PackedData = new PackedData(MesAnimPack.size);
 
     for (let i = 0; i < MesAnimPack.size; i++) {
         const debugname = MesAnimPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
@@ -78,17 +72,17 @@ export function packMesAnimConfigs(configs: Map<string, ConfigLine[]>) {
                 }
 
                 const opcode = Math.max(0, len - 1) + 1;
-                dat.p1(opcode);
-                dat.p2(value as number);
+                server.p1(opcode);
+                server.p2(value as number);
             }
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

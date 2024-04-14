@@ -13,12 +13,12 @@ export default class ParamType extends ConfigType {
         ParamType.configNames = new Map();
         ParamType.configs = [];
 
-        if (!fs.existsSync(`${dir}/param.dat`)) {
+        if (!fs.existsSync(`${dir}/server/param.dat`)) {
             console.log('Warning: No param.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/param.dat`);
+        const dat = Packet.load(`${dir}/server/param.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

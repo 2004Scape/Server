@@ -7,7 +7,7 @@ export default class SeqFrame {
     static load(dir: string) {
         SeqFrame.instances = [];
 
-        const frame_del = Packet.load(`${dir}/frame_del.dat`);
+        const frame_del = Packet.load(`${dir}/server/frame_del.dat`);
         for (let i = 0; i < frame_del.length; i++) {
             const frame = new SeqFrame();
 

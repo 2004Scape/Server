@@ -1,8 +1,6 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { VarsPack } from '#lostcity/util/PackFile.js';
 
 export function parseVarsConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -53,33 +51,29 @@ export function parseVarsConfig(key: string, value: string): ConfigValue | null 
     }
 }
 
-export function packVarsConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(VarsPack.size);
-    idx.p2(VarsPack.size);
+export function packVarsConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(VarsPack.size);
+    const server: PackedData = new PackedData(VarsPack.size);
 
     for (let i = 0; i < VarsPack.size; i++) {
         const debugname = VarsPack.getById(i);
         const config = configs.get(debugname)!;
 
-        const start = dat.pos;
-
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
             if (key === 'type') {
-                dat.p1(1);
-                dat.p1(value as number);
+                server.p1(1);
+                server.p1(value as number);
             }
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

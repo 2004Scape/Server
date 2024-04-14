@@ -16,12 +16,12 @@ export default class InvType extends ConfigType {
         InvType.configNames = new Map();
         InvType.configs = [];
 
-        if (!fs.existsSync(`${dir}/inv.dat`)) {
+        if (!fs.existsSync(`${dir}/server/inv.dat`)) {
             console.log('Warning: No inv.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/inv.dat`);
+        const dat = Packet.load(`${dir}/server/inv.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

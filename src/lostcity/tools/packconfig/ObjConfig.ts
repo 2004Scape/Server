@@ -1,10 +1,8 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ObjType from '#lostcity/cache/ObjType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ParamValue, ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { ParamValue, ConfigValue, ConfigLine, packStepError, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { CategoryPack, ModelPack, ObjPack, SeqPack } from '#lostcity/util/PackFile.js';
 
@@ -204,11 +202,9 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(ObjPack.size);
-    idx.p2(ObjPack.size);
+export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(ObjPack.size);
+    const server: PackedData = new PackedData(ObjPack.size);
 
     const template_for_cert = ObjPack.getByName('template_for_cert');
     if (template_for_cert === -1) {
@@ -244,17 +240,7 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
                 const name = debugname.charAt(0).toUpperCase() + debugname.slice(1).replace(/_/g, ' ');
                 config.push({ key: 'name', value: name });
             }
-
-            if (transmitAll === true) {
-                // reverse-lookup the certificate
-                const cert = ObjPack.getByName('cert_' + debugname);
-                if (cert !== -1) {
-                    config.push({ key: 'certlink', value: cert });
-                }
-            }
         }
-
-        const start = dat.pos;
 
         // collect these to write at the end
         const recol_s: number[] = [];
@@ -277,194 +263,175 @@ function packObjConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'param') {
                 params.push(value as ParamValue);
             } else if (key === 'model') {
-                dat.p1(1);
-                dat.p2(value as number);
+                client.p1(1);
+                client.p2(value as number);
             } else if (key === 'desc') {
-                dat.p1(3);
-                dat.pjstr(value as string);
+                client.p1(3);
+                client.pjstr(value as string);
             } else if (key === '2dzoom') {
-                dat.p1(4);
-                dat.p2(value as number);
+                client.p1(4);
+                client.p2(value as number);
             } else if (key === '2dxan') {
-                dat.p1(5);
-                dat.p2(value as number);
+                client.p1(5);
+                client.p2(value as number);
             } else if (key === '2dyan') {
-                dat.p1(6);
-                dat.p2(value as number);
+                client.p1(6);
+                client.p2(value as number);
             } else if (key === '2dxof') {
-                dat.p1(7);
-                dat.p2(value as number);
+                client.p1(7);
+                client.p2(value as number);
             } else if (key === '2dyof') {
-                dat.p1(8);
-                dat.p2(value as number);
+                client.p1(8);
+                client.p2(value as number);
             } else if (key === 'code9') {
                 if (value === true) {
-                    dat.p1(9);
+                    client.p1(9);
                 }
             } else if (key === 'code10') {
-                dat.p1(10);
-                dat.p2(value as number);
+                client.p1(10);
+                client.p2(value as number);
             } else if (key === 'stackable') {
                 if (value === true) {
-                    dat.p1(11);
+                    client.p1(11);
                 }
             } else if (key === 'cost') {
-                dat.p1(12);
-                dat.p4(value as number);
+                client.p1(12);
+                client.p4(value as number);
             } else if (key === 'wearpos') {
-                if (transmitAll === true) {
-                    dat.p1(13);
-                    dat.p1(value as number);
-                }
+                server.p1(13);
+                server.p1(value as number);
             } else if (key === 'wearpos2') {
-                if (transmitAll === true) {
-                    dat.p1(14);
-                    dat.p1(value as number);
-                }
+                server.p1(14);
+                server.p1(value as number);
             } else if (key === 'members') {
                 if (value === true) {
-                    dat.p1(16);
+                    client.p1(16);
                 }
             } else if (key === 'manwear') {
                 const values = value as number[];
-                dat.p1(23);
-                dat.p2(values[0]);
-                dat.p1(values[1]);
+                client.p1(23);
+                client.p2(values[0]);
+                client.p1(values[1]);
             } else if (key === 'manwear2') {
-                dat.p1(24);
-                dat.p2(value as number);
+                client.p1(24);
+                client.p2(value as number);
             } else if (key === 'womanwear') {
                 const values = value as number[];
-                dat.p1(25);
-                dat.p2(values[0]);
-                dat.p1(values[1]);
+                client.p1(25);
+                client.p2(values[0]);
+                client.p1(values[1]);
             } else if (key === 'womanwear2') {
-                dat.p1(26);
-                dat.p2(value as number);
+                client.p1(26);
+                client.p2(value as number);
             } else if (key === 'wearpos3') {
-                if (transmitAll === true) {
-                    dat.p1(27);
-                    dat.p1(value as number);
-                }
+                server.p1(27);
+                server.p1(value as number);
             } else if (key.startsWith('op')) {
                 const index = parseInt(key.substring('op'.length)) - 1;
-                dat.p1(30 + index);
-                dat.pjstr(value as string);
+                client.p1(30 + index);
+                client.pjstr(value as string);
             } else if (key.startsWith('iop')) {
                 const index = parseInt(key.substring('iop'.length)) - 1;
-                dat.p1(35 + index);
-                dat.pjstr(value as string);
+                client.p1(35 + index);
+                client.pjstr(value as string);
             } else if (key === 'weight') {
-                if (transmitAll === true) {
-                    dat.p1(75);
-                    dat.p2(value as number);
-                }
+                server.p1(75);
+                server.p2(value as number);
             } else if (key === 'manwear3') {
-                dat.p1(78);
-                dat.p2(value as number);
+                client.p1(78);
+                client.p2(value as number);
             } else if (key === 'womanwear3') {
-                dat.p1(79);
-                dat.p2(value as number);
+                client.p1(79);
+                client.p2(value as number);
             } else if (key === 'manhead') {
-                dat.p1(90);
-                dat.p2(value as number);
+                client.p1(90);
+                client.p2(value as number);
             } else if (key === 'womanhead') {
-                dat.p1(91);
-                dat.p2(value as number);
+                client.p1(91);
+                client.p2(value as number);
             } else if (key === 'manhead2') {
-                dat.p1(92);
-                dat.p2(value as number);
+                client.p1(92);
+                client.p2(value as number);
             } else if (key === 'womanhead2') {
-                dat.p1(93);
-                dat.p2(value as number);
+                client.p1(93);
+                client.p2(value as number);
             } else if (key === 'category') {
-                if (transmitAll === true) {
-                    dat.p1(94);
-                    dat.p2(value as number);
-                }
+                server.p1(94);
+                server.p2(value as number);
             } else if (key === '2dzan') {
-                dat.p1(95);
-                dat.p2(value as number);
+                client.p1(95);
+                client.p2(value as number);
             } else if (key === 'dummyitem') {
-                if (transmitAll === true) {
-                    dat.p1(96);
-                    dat.p1(value as number);
-                }
+                server.p1(96);
+                server.p1(value as number);
             } else if (key === 'certlink') {
-                dat.p1(97);
-                dat.p2(value as number);
+                client.p1(97);
+                client.p2(value as number);
             } else if (key === 'certtemplate') {
-                dat.p1(98);
-                dat.p2(value as number);
+                client.p1(98);
+                client.p2(value as number);
             } else if (key.startsWith('count')) {
                 const index = parseInt(key.substring('count'.length)) - 1;
                 const values = value as number[];
 
-                dat.p1(100 + index);
-                dat.p2(values[0]);
-                dat.p2(values[1]);
+                client.p1(100 + index);
+                client.p2(values[0]);
+                client.p2(values[1]);
             } else if (key === 'tradeable') {
-                if (transmitAll === true) {
-                    if (value === true) {
-                        dat.p1(200);
-                    }
+                if (value === true) {
+                    server.p1(200);
                 }
             } else if (key === 'respawnrate') {
-                if (transmitAll === true) {
-                    dat.p1(201);
-                    dat.p2(value as number);
-                }
+                server.p1(201);
+                server.p2(value as number);
             }
         }
 
+        // reverse-lookup the certificate (so the server can find it quicker)
+        const cert = ObjPack.getByName('cert_' + debugname);
+        if (cert !== -1) {
+            server.p1(97);
+            server.p2(cert);
+        }
+
         if (recol_s.length > 0) {
-            dat.p1(40);
-            dat.p1(recol_s.length);
+            client.p1(40);
+            client.p1(recol_s.length);
 
             for (let k = 0; k < recol_s.length; k++) {
-                dat.p2(recol_s[k]);
-                dat.p2(recol_d[k]);
+                client.p2(recol_s[k]);
+                client.p2(recol_d[k]);
             }
         }
 
         if (name !== null) {
-            dat.p1(2);
-            dat.pjstr(name);
+            client.p1(2);
+            client.pjstr(name);
         }
 
-        if (transmitAll === true && params.length > 0) {
-            dat.p1(249);
+        if (params.length > 0) {
+            server.p1(249);
 
-            dat.p1(params.length);
+            server.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.id);
-                dat.pbool(paramData.type === ScriptVarType.STRING);
+                server.p3(paramData.id);
+                server.pbool(paramData.type === ScriptVarType.STRING);
 
                 if (paramData.type === ScriptVarType.STRING) {
-                    dat.pjstr(paramData.value as string);
+                    server.pjstr(paramData.value as string);
                 } else {
-                    dat.p4(paramData.value as number);
+                    server.p4(paramData.value as number);
                 }
             }
         }
 
-        if (transmitAll === true) {
-            dat.p1(250);
-            dat.pjstr(debugname);
-        }
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packObjClient(configs: Map<string, ConfigLine[]>) {
-    return packObjConfig(configs, false);
-}
-
-export function packObjServer(configs: Map<string, ConfigLine[]>) {
-    return packObjConfig(configs, true);
+    return { client, server };
 }

@@ -36,12 +36,12 @@ export default class WordEnc {
     private static whitelist = ['cook', "cook's", 'cooks', 'seeks', 'sheet'];
 
     static load(dir: string): void {
-        if (!fs.existsSync(`${dir}/wordenc`)) {
+        if (!fs.existsSync(`${dir}/client/wordenc`)) {
             console.log('Warning: No wordenc found.');
             return;
         }
 
-        const wordenc = Jagfile.load(`${dir}/wordenc`);
+        const wordenc = Jagfile.load(`${dir}/client/wordenc`);
 
         const fragmentsenc = wordenc.read('fragmentsenc.txt');
         if (!fragmentsenc) {

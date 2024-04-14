@@ -1,6 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
-
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
@@ -225,82 +223,78 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
     }
 }
 
-export function packHuntConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(HuntPack.size);
-    idx.p2(HuntPack.size);
+export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(HuntPack.size);
+    const server: PackedData = new PackedData(HuntPack.size);
 
     for (let i = 0; i < HuntPack.size; i++) {
         const debugname = HuntPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
             if (key === 'type') {
                 if (value !== HuntModeType.OFF) {
-                    dat.p1(1);
-                    dat.p1(value as number);
+                    server.p1(1);
+                    server.p1(value as number);
                 }
             } else if (key === 'check_vis') {
                 if (value !== HuntVis.OFF) {
-                    dat.p1(2);
-                    dat.p1(value as number);
+                    server.p1(2);
+                    server.p1(value as number);
                 }
             } else if (key === 'check_nottoostrong') {
                 if (value !== HuntCheckNotTooStrong.OFF) {
-                    dat.p1(3);
-                    dat.p1(value as number);
+                    server.p1(3);
+                    server.p1(value as number);
                 }
             } else if (key === 'check_notbusy') {
                 if (value !== false) {
-                    dat.p1(4);
+                    server.p1(4);
                 }
             } else if (key === 'find_keephunting') {
                 if (value !== false) {
-                    dat.p1(5);
+                    server.p1(5);
                 }
             } else if (key === 'find_newmode') {
                 if (value !== NpcMode.NONE) {
-                    dat.p1(6);
-                    dat.p1(value as number);
+                    server.p1(6);
+                    server.p1(value as number);
                 }
             } else if (key === 'nobodynear') {
                 if (value !== HuntNobodyNear.OFF) {
-                    dat.p1(7);
-                    dat.p1(value as number);
+                    server.p1(7);
+                    server.p1(value as number);
                 }
             } else if (key === 'check_notcombat') {
                 if (value !== null) {
-                    dat.p1(8);
-                    dat.p2(value as number);
+                    server.p1(8);
+                    server.p2(value as number);
                 }
             } else if (key === 'check_notcombat_self') {
                 if (value !== null) {
-                    dat.p1(9);
-                    dat.p2(value as number);
+                    server.p1(9);
+                    server.p2(value as number);
                 }
             } else if (key === 'check_afk') {
                 if (value !== false) {
-                    dat.p1(10);
+                    server.p1(10);
                 }
             } else if (key === 'rate') {
                 if (value !== 1) {
-                    dat.p1(11);
-                    dat.p2(value as number);
+                    server.p1(11);
+                    server.p2(value as number);
                 }
             }
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

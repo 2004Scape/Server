@@ -1,6 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
-
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { IdkPack, ModelPack } from '#lostcity/util/PackFile.js';
 
 export function parseIdkConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -123,17 +121,13 @@ export function parseIdkConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-function packIdkConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(IdkPack.size);
-    idx.p2(IdkPack.size);
+export function packIdkConfigs(configs: Map<string, ConfigLine[]>) {
+    const client: PackedData = new PackedData(IdkPack.size);
+    const server: PackedData = new PackedData(IdkPack.size);
 
     for (let i = 0; i < IdkPack.size; i++) {
         const debugname = IdkPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         // collect these to write at the end
         const recol_s: number[] = [];
@@ -156,61 +150,51 @@ function packIdkConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean
                 const index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
                 recol_d[index] = value as number;
             } else if (key === 'type') {
-                dat.p1(1);
-                dat.p1(value as number);
+                client.p1(1);
+                client.p1(value as number);
             } else if (key === 'disable') {
                 if (value === true) {
-                    dat.p1(3);
+                    client.p1(3);
                 }
             }
         }
 
         if (recol_s.length) {
             for (let i = 0; i < recol_s.length; i++) {
-                dat.p1(40 + i);
-                dat.p2(recol_s[i]);
+                client.p1(40 + i);
+                client.p2(recol_s[i]);
             }
         }
 
         if (recol_d.length) {
             for (let i = 0; i < recol_d.length; i++) {
-                dat.p1(50 + i);
-                dat.p2(recol_d[i]);
+                client.p1(50 + i);
+                client.p2(recol_d[i]);
             }
         }
 
         if (heads.length) {
             for (let i = 0; i < heads.length; i++) {
-                dat.p1(60 + i);
-                dat.p2(heads[i]);
+                client.p1(60 + i);
+                client.p2(heads[i]);
             }
         }
 
         if (models.length) {
-            dat.p1(2);
-            dat.p1(models.length);
+            client.p1(2);
+            client.p1(models.length);
 
             for (let i = 0; i < models.length; i++) {
-                dat.p2(models[i]);
+                client.p2(models[i]);
             }
         }
 
-        if (transmitAll === true) {
-            dat.p1(250);
-            dat.pjstr(debugname);
-        }
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packIdkClient(configs: Map<string, ConfigLine[]>) {
-    return packIdkConfigs(configs, false);
-}
-
-export function packIdkServer(configs: Map<string, ConfigLine[]>) {
-    return packIdkConfigs(configs, true);
+    return { client, server };
 }

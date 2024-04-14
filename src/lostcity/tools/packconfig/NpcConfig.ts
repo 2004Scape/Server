@@ -1,12 +1,10 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
-import { ParamValue, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ParamValue, ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import { CategoryPack, HuntPack, ModelPack, NpcPack, SeqPack } from '#lostcity/util/PackFile.js';
@@ -262,17 +260,13 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(NpcPack.size);
-    idx.p2(NpcPack.size);
+export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(NpcPack.size);
+    const server: PackedData = new PackedData(NpcPack.size);
 
     for (let i = 0; i < NpcPack.size; i++) {
         const debugname = NpcPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         // collect these to write at the end
         const recol_s: number[] = [];
@@ -306,121 +300,95 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'param') {
                 params.push(value as ParamValue);
             } else if (key === 'desc') {
-                dat.p1(3);
-                dat.pjstr(value as string);
+                client.p1(3);
+                client.pjstr(value as string);
             } else if (key === 'size') {
-                dat.p1(12);
-                dat.p1(value as number);
+                client.p1(12);
+                client.p1(value as number);
             } else if (key === 'readyanim') {
-                dat.p1(13);
-                dat.p2(value as number);
+                client.p1(13);
+                client.p2(value as number);
             } else if (key === 'walkanim') {
-                dat.p1(14);
-                dat.p2(value as number);
+                client.p1(14);
+                client.p2(value as number);
             } else if (key === 'hasalpha') {
                 if (value === true) {
-                    dat.p1(16);
+                    client.p1(16);
                 }
             } else if (key === 'walkanims') {
-                dat.p1(17);
+                client.p1(17);
 
                 const anims = value as number[];
-                dat.p2(anims[0]);
-                dat.p2(anims[1]);
-                dat.p2(anims[2]);
-                dat.p2(anims[3]);
+                client.p2(anims[0]);
+                client.p2(anims[1]);
+                client.p2(anims[2]);
+                client.p2(anims[3]);
             } else if (key === 'category') {
-                if (transmitAll === true) {
-                    dat.p1(18);
-                    dat.p2(value as number);
-                }
+                server.p1(18);
+                server.p2(value as number);
             } else if (key.startsWith('op')) {
                 const index = parseInt(key.substring('op'.length)) - 1;
-                dat.p1(30 + index);
-                dat.pjstr(value as string);
+                client.p1(30 + index);
+                client.pjstr(value as string);
             } else if (key === 'resizex') {
-                dat.p1(90);
-                dat.p2(value as number);
+                client.p1(90);
+                client.p2(value as number);
             } else if (key === 'resizey') {
-                dat.p1(91);
-                dat.p2(value as number);
+                client.p1(91);
+                client.p2(value as number);
             } else if (key === 'resizez') {
-                dat.p1(92);
-                dat.p2(value as number);
+                client.p1(92);
+                client.p2(value as number);
             } else if (key === 'minimap') {
                 if (value === false) {
-                    dat.p1(93);
+                    client.p1(93);
                 }
             } else if (key === 'vislevel') {
-                dat.p1(95);
-                dat.p2(value as number);
+                client.p1(95);
+                client.p2(value as number);
                 vislevel = true;
             } else if (key === 'resizeh') {
-                dat.p1(97);
-                dat.p2(value as number);
+                client.p1(97);
+                client.p2(value as number);
             } else if (key === 'resizev') {
-                dat.p1(98);
-                dat.p2(value as number);
+                client.p1(98);
+                client.p2(value as number);
             } else if (key === 'wanderrange') {
-                if (transmitAll === true) {
-                    dat.p1(200);
-                    dat.p1(value as number);
-                }
+                server.p1(200);
+                server.p1(value as number);
             } else if (key === 'maxrange') {
-                if (transmitAll === true) {
-                    dat.p1(201);
-                    dat.p1(value as number);
-                }
+                server.p1(201);
+                server.p1(value as number);
             } else if (key === 'huntrange') {
-                if (transmitAll === true) {
-                    dat.p1(202);
-                    dat.p1(value as number);
-                }
+                server.p1(202);
+                server.p1(value as number);
             } else if (key === 'timer') {
-                if (transmitAll === true) {
-                    dat.p1(203);
-                    dat.p2(value as number);
-                }
+                server.p1(203);
+                server.p2(value as number);
             } else if (key === 'respawnrate') {
-                if (transmitAll === true) {
-                    dat.p1(204);
-                    dat.p2(value as number);
-                }
+                server.p1(204);
+                server.p2(value as number);
             } else if (key === 'moverestrict') {
-                if (transmitAll === true) {
-                    dat.p1(206);
-                    dat.p1(value as number);
-                }
+                server.p1(206);
+                server.p1(value as number);
             } else if (key === 'attackrange') {
-                if (transmitAll === true) {
-                    dat.p1(207);
-                    dat.p1(value as number);
-                }
+                server.p1(207);
+                server.p1(value as number);
             } else if (key === 'blockwalk') {
-                if (transmitAll === true) {
-                    dat.p1(208);
-                    dat.p1(value as number);
-                }
+                server.p1(208);
+                server.p1(value as number);
             } else if (key === 'huntmode') {
-                if (transmitAll === true) {
-                    dat.p1(209);
-                    dat.p1(value as number);
-                }
+                server.p1(209);
+                server.p1(value as number);
             } else if (key === 'defaultmode') {
-                if (transmitAll === true) {
-                    dat.p1(210);
-                    dat.p1(value as number);
-                }
+                server.p1(210);
+                server.p1(value as number);
             } else if (key === 'members') {
-                if (transmitAll === true) {
-                    if (value === true) {
-                        dat.p1(211);
-                    }
+                if (value === true) {
+                    server.p1(211);
                 }
             } else if (key.startsWith('patrol')) {
-                if (transmitAll === true) {
-                    patrol.push(value);
-                }
+                patrol.push(value);
             }  else if (key === 'hitpoints') {
                 stats[0] = value as number;
             } else if (key === 'attack') {
@@ -437,12 +405,12 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         }
 
         if (recol_s.length > 0) {
-            dat.p1(40);
-            dat.p1(recol_s.length);
+            client.p1(40);
+            client.p1(recol_s.length);
 
             for (let k = 0; k < recol_s.length; k++) {
-                dat.p2(recol_s[k]);
-                dat.p2(recol_d[k]);
+                client.p2(recol_s[k]);
+                client.p2(recol_d[k]);
             }
         }
 
@@ -451,86 +419,76 @@ function packNpcConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         }
 
         if (name !== null) {
-            dat.p1(2);
-            dat.pjstr(name);
+            client.p1(2);
+            client.pjstr(name);
         }
 
         if (models.length > 0) {
-            dat.p1(1);
+            client.p1(1);
 
-            dat.p1(models.length);
+            client.p1(models.length);
             for (let k = 0; k < models.length; k++) {
-                dat.p2(models[k]);
+                client.p2(models[k]);
             }
         }
 
         if (heads.length > 0) {
-            dat.p1(60);
+            client.p1(60);
 
-            dat.p1(heads.length);
+            client.p1(heads.length);
             for (let k = 0; k < heads.length; k++) {
-                dat.p2(heads[k]);
+                client.p2(heads[k]);
             }
         }
 
         if (!vislevel) {
             // TODO: calculate NPC level based on stats
-            dat.p1(95);
-            dat.p2(1);
+            client.p1(95);
+            client.p2(1);
         }
 
-        if (transmitAll === true && stats.some(v => v !== 1)) {
-            dat.p1(205);
+        if (stats.some(v => v !== 1)) {
+            server.p1(205);
 
             for (let k = 0; k < stats.length; k++) {
-                dat.p2(stats[k]);
+                server.p2(stats[k]);
             }
         }
 
-        if (transmitAll === true && patrol.length > 0) {
-            dat.p1(212);
-            dat.p1(patrol.length);
+        if (patrol.length > 0) {
+            server.p1(212);
+            server.p1(patrol.length);
 
             for (let i = 0; i < patrol.length; i++) {
                 const [packedCoord, delay] = patrol[i] as number[];
-                dat.p4(packedCoord);
-                dat.p1(delay);
+                server.p4(packedCoord);
+                server.p1(delay);
             }
         }
 
-        if (transmitAll === true && params.length) {
-            dat.p1(249);
+        if (params.length) {
+            server.p1(249);
 
-            dat.p1(params.length);
+            server.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.id);
-                dat.pbool(paramData.type === ScriptVarType.STRING);
+                server.p3(paramData.id);
+                server.pbool(paramData.type === ScriptVarType.STRING);
 
                 if (paramData.type === ScriptVarType.STRING) {
-                    dat.pjstr(paramData.value as string);
+                    server.pjstr(paramData.value as string);
                 } else {
-                    dat.p4(paramData.value as number);
+                    server.p4(paramData.value as number);
                 }
             }
         }
 
-        if (transmitAll === true) {
-            dat.p1(250);
-            dat.pjstr(debugname);
-        }
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packNpcClient(configs: Map<string, ConfigLine[]>) {
-    return packNpcConfig(configs, false);
-}
-
-export function packNpcServer(configs: Map<string, ConfigLine[]>) {
-    return packNpcConfig(configs, true);
+    return { client, server };
 }
