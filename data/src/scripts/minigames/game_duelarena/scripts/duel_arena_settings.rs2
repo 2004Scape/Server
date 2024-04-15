@@ -1,12 +1,21 @@
 [if_button,duel_select_type:no_forfeit]
+if (testbit(%duel_settings, ^no_melee) = true) {
+    mes("You can't have No Forfeit and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
+}
 ~toggle_duel_setting(^no_forfeit);
 
 [if_button,duel_select_type:no_movement]
+if (testbit(%duel_settings, ^no_melee) = true) {
+    mes("You can't have No Movement and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
+}
 ~toggle_duel_setting(^no_movement);
 
 [if_button,duel_select_type:no_weapons]
 if (testbit(%duel_settings, ^flower_power) = true) {
-    ~toggle_duel_setting(^flower_power); // turn off flower power
+    mes("You can't have No Weapons and Flower Power."); // guess based on osrs pvp arena
+    return;
 }
 ~toggle_duel_setting(^no_weapons);
 
@@ -21,24 +30,33 @@ if (testbit(%duel_settings, ^flower_power) = true) {
 
 [if_button,duel_select_type:no_ranged]
 if (testbit(%duel_settings, ^no_melee) = true & testbit(%duel_settings, ^no_magic) = true) {
-    mes("You cannot disable all combat styles."); // completely made up
+    mes("You can't disable all combat styles."); // completely made up
     return;
 }
 ~toggle_duel_setting(^no_ranged);
 
 [if_button,duel_select_type:no_melee]
 if (testbit(%duel_settings, ^flower_power) = true) {
-    ~toggle_duel_setting(^flower_power); // turn off flower power
+    mes("You can't have No Melee and Flower Power."); // guess based on osrs pvp arena
+    return;
+}
+if (testbit(%duel_settings, ^no_forfeit) = true) {
+    mes("You can't have No Forfeit and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
+}
+if (testbit(%duel_settings, ^no_movement) = true) {
+    mes("You can't have No Movement and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
 }
 if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_magic) = true) {
-    mes("You cannot disable all combat styles."); // completely made up
+    mes("You can't disable all combat styles."); // completely made up
     return;
 }
 ~toggle_duel_setting(^no_melee);
 
 [if_button,duel_select_type:no_magic]
 if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_melee) = true) {
-    mes("You cannot disable all combat styles."); // completely made up
+    mes("You can't disable all combat styles."); // completely made up
     return;
 }
 ~toggle_duel_setting(^no_magic);
@@ -51,13 +69,9 @@ if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_mel
 
 [if_button,duel_select_type:flower_power]
 if (~duel_arena_flower_power_check = true) {
-    if (testbit(%duel_settings, ^flower_power) = false) {
-        if (testbit(%duel_settings, ^no_weapons) = true) {
-            ~toggle_duel_setting(^no_weapons); // turn off no weapons
-        }
-        if (testbit(%duel_settings, ^no_melee) = true) {
-            ~toggle_duel_setting(^no_melee); // turn off no melee
-        }
+    if (testbit(%duel_settings, ^no_melee) = true) {
+        mes("You can't have No Melee and Flower Power."); // guess based on osrs pvp arena
+        return;
     }
     ~toggle_duel_setting(^flower_power);
 }
