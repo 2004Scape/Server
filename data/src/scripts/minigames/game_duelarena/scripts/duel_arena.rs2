@@ -75,9 +75,9 @@ if (.finduid(%duelpartner) = true) {
 
 [if_button,duel_select_type:accept]
 %duelstatus = 1;
-
-if (.finduid(%duelpartner) = true) {
-    if (.%duelstatus = 1) {
+if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://youtu.be/WHpZQ5fbr5w
+    if (.%duelstatus = 1 & ~.enough_duel_space = true) {
+        // Accept stake and move onto second screen!
         inv_stoptransmit(duel_select_type:inv);
         inv_stoptransmit(duel_select_type:otherinv);
         inv_stoptransmit(duel_side:inv);
@@ -85,25 +85,6 @@ if (.finduid(%duelpartner) = true) {
         .inv_stoptransmit(duel_select_type:inv);
         .inv_stoptransmit(duel_select_type:otherinv);
         .inv_stoptransmit(duel_side:inv);
-        // check if contents of tempinv fits in other player's inv
-        
-        
-        // go through all items in each of the player's tempinv
-        if (~enough_duel_space = false) {
-            mes("You don't have enough inventory space for this duel."); // guess
-            .mes("Other player doesn't have enough inventory space for this duel."); // guess
-            if_close;
-            .if_close;
-            return;
-        }
-        // and in the reverse direction
-        if (~.enough_duel_space = false) {
-            .mes("You don't have enough inventory space for this duel."); // guess
-            mes("Other player doesn't have enough inventory space for this duel."); // guess
-            if_close;
-            .if_close;
-            return;
-        }
 
         def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
         if ($tempinvused < 1) {
@@ -161,6 +142,7 @@ if (testbit(%duel_settings, ^no_jewelry) = true) {
 def_int $size = calc(inv_size(tempinv) + .inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
 def_int $slot = 0;
 def_int $space_needed = 0;
+def_string $fail_message = "You do not have enough space for the items removed.";
 while ($slot < $size) {
     def_obj $obj;
     def_int $num;
@@ -176,9 +158,11 @@ while ($slot < $size) {
     } else if ($slot < calc(.inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size)) {
         $obj = inv_getobj(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
         $num = inv_getnum(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $fail_message = "You do not have enough space for the stake.";
     } else {
         $obj = .inv_getobj(tempinv, calc($slot - .inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
         $num = .inv_getnum(tempinv, calc($slot - .inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $fail_message = "You do not have enough space for the stake.";
     }
     
     if ($obj ! null) {
@@ -190,9 +174,11 @@ while ($slot < $size) {
                 $space_needed = calc($space_needed + 1);
             }
         } else {
+            if_settext(duel_select_type:status, $fail_message);
             return(false);
         }
         if (inv_freespace(inv) < $space_needed) {
+            if_settext(duel_select_type:status, $fail_message);
             return(false);
         }
     }
