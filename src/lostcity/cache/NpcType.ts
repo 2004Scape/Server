@@ -101,6 +101,7 @@ export default class NpcType extends ConfigType {
     params: ParamMap = new Map();
     patrolCoord: number[] = [];
     patrolDelay: number[] = [];
+    givechase = true;
 
     decode(opcode: number, packet: Packet): void {
         if (opcode === 1) {
@@ -197,6 +198,8 @@ export default class NpcType extends ConfigType {
                 this.patrolCoord[j] = packet.g4();
                 this.patrolDelay[j] = packet.g1();
             }
+        } else if (opcode === 213) {
+            this.givechase = false;
         } else if (opcode === 249) {
             this.params = ParamHelper.decodeParams(packet);
         } else if (opcode === 250) {

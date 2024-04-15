@@ -27,7 +27,7 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
     ];
     // prettier-ignore
     const booleanKeys = [
-        'hasalpha', 'minimap', 'members'
+        'hasalpha', 'minimap', 'members', 'givechase'
     ];
 
     if (stringKeys.includes(key)) {
@@ -401,6 +401,10 @@ export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                 stats[4] = value as number;
             } else if (key === 'ranged') {
                 stats[5] = value as number;
+            } else if (key === 'givechase') {
+                if (value === false) {
+                    server.p1(213);
+                }
             }
         }
 
