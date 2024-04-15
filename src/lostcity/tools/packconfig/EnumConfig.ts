@@ -1,6 +1,6 @@
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { EnumPack } from '#lostcity/util/PackFile.js';
 
@@ -40,11 +40,11 @@ export function parseEnumConfig(key: string, value: string): ConfigValue | null 
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'inputtype') {
         return ScriptVarType.getTypeChar(value);
     } else if (key === 'outputtype') {

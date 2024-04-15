@@ -1,6 +1,6 @@
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, packStepError, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { CategoryPack, EnumPack, InterfacePack, InvPack, LocPack, NpcPack, ObjPack, ParamPack, SeqPack, SoundPack, SpotAnimPack, StructPack, VarpPack } from '#lostcity/util/PackFile.js';
 
 const stats: (string | null)[] = [
@@ -70,11 +70,11 @@ export function lookupParamValue(type: number, value: string): string | number |
 
             return value;
         case ScriptVarType.BOOLEAN:
-            if (value !== 'yes' && value !== 'no' && value !== 'true' && value !== 'false') {
+            if (!isConfigBoolean(value)) {
                 return null;
             }
 
-            return value === 'yes' || value === 'true' ? 1 : 0;
+            return getConfigBoolean(value) ? 1 : 0;
         case ScriptVarType.COORD: {
             const parts = value.split('_');
             if (parts.length !== 5) {
@@ -197,11 +197,11 @@ export function parseParamConfig(key: string, value: string): ConfigValue | null
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'type') {
         return ScriptVarType.getTypeChar(value);
     } else if (key === 'default') {

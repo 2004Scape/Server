@@ -1,7 +1,7 @@
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { LocModelShape, ConfigValue, ConfigLine, ParamValue, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { LocModelShape, ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { CategoryPack, LocPack, ModelPack, SeqPack } from '#lostcity/util/PackFile.js';
 
@@ -117,11 +117,11 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'model') {
         // models are unique in locs, they may specify a model key to match against for a supported shapes
         const models: LocModelShape[] = [];

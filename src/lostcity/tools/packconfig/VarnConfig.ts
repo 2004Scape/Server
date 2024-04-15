@@ -1,6 +1,6 @@
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { VarnPack } from '#lostcity/util/PackFile.js';
 
 export function parseVarnConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -39,11 +39,11 @@ export function parseVarnConfig(key: string, value: string): ConfigValue | null 
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'type') {
         return ScriptVarType.getTypeChar(value);
     } else {

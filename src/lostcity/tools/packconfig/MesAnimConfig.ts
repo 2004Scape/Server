@@ -1,4 +1,4 @@
-import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { MesAnimPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseMesAnimConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -37,11 +37,11 @@ export function parseMesAnimConfig(key: string, value: string): ConfigValue | nu
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key.startsWith('len')) {
         const index = SeqPack.getByName(value);
         if (index === -1) {

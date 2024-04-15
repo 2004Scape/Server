@@ -34,6 +34,14 @@ import { packVarnConfigs, parseVarnConfig } from '#lostcity/tools/packconfig/Var
 import { packVarsConfigs, parseVarsConfig } from '#lostcity/tools/packconfig/VarsConfig.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
 
+export function isConfigBoolean(input: string): boolean {
+    return input === 'yes' || input === 'no' || input === 'true' || input === 'false' || input === '1' || input === '0';
+}
+
+export function getConfigBoolean(input: string): boolean {
+    return input === 'yes' || input === 'true' || input === '1';
+}
+
 export class PackedData {
     dat: Packet;
     idx: Packet;

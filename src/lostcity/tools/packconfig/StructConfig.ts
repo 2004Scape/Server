@@ -1,7 +1,7 @@
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, ParamValue, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { StructPack } from '#lostcity/util/PackFile.js';
 
@@ -41,11 +41,11 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'param') {
         const paramKey = value.substring(0, value.indexOf(','));
         const param = ParamType.getByName(paramKey);

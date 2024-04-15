@@ -1,6 +1,6 @@
 import InvType from '#lostcity/cache/InvType.js';
 
-import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { InvPack, ObjPack } from '#lostcity/util/PackFile.js';
 
 export function parseInvConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -50,11 +50,11 @@ export function parseInvConfig(key: string, value: string): ConfigValue | null |
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'scope') {
         if (value === 'shared') {
             return InvType.SCOPE_SHARED;

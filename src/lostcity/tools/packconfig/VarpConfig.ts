@@ -1,7 +1,7 @@
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 
-import { PackedData, ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { PackedData, ConfigValue, ConfigLine, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { VarpPack } from '#lostcity/util/PackFile.js';
 
 export function parseVarpConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -50,11 +50,11 @@ export function parseVarpConfig(key: string, value: string): ConfigValue | null 
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'scope') {
         if (value === 'perm') {
             return VarPlayerType.SCOPE_PERM;

@@ -1,7 +1,7 @@
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, packStepError, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { DbRowPack, DbTablePack } from '#lostcity/util/PackFile.js';
 
@@ -63,11 +63,11 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'table') {
         const index = DbTablePack.getByName(value);
         if (index === -1) {

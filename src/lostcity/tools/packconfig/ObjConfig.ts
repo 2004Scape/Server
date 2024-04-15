@@ -2,7 +2,7 @@ import ObjType from '#lostcity/cache/ObjType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ParamValue, ConfigValue, ConfigLine, packStepError, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ParamValue, ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { CategoryPack, ModelPack, ObjPack, SeqPack } from '#lostcity/util/PackFile.js';
 
@@ -80,11 +80,11 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'model' || key === 'manwear2' || key === 'womanwear2' || key === 'manwear3' || key === 'womanwear3' || key === 'manhead' || key === 'womanhead' || key === 'manhead2' || key === 'womanhead2') {
         const index = ModelPack.getByName(value);
         if (index === -1) {

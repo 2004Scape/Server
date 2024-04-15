@@ -4,7 +4,7 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 
-import { ParamValue, ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ParamValue, ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import { CategoryPack, HuntPack, ModelPack, NpcPack, SeqPack } from '#lostcity/util/PackFile.js';
@@ -93,11 +93,11 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no' && value !== 'true' && value !== 'false') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes' || value === 'true';
+        return getConfigBoolean(value);
     } else if (key.startsWith('model')) {
         const index = ModelPack.getByName(value);
         if (index === -1) {

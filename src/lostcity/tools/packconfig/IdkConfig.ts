@@ -1,4 +1,4 @@
-import { ConfigValue, ConfigLine, PackedData } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { IdkPack, ModelPack } from '#lostcity/util/PackFile.js';
 
 export function parseIdkConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -47,11 +47,11 @@ export function parseIdkConfig(key: string, value: string): ConfigValue | null |
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'type') {
         let bodypart = 0;
         switch (value) {
