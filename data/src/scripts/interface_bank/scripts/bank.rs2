@@ -41,6 +41,10 @@ if (%bank_noted ! 0) {
     $cert_or_uncert = oc_cert($obj);
 }
 
+if (%bank_noted = ^true & oc_cert($obj) = $obj) {
+    mes("This item can not be withdrawn as a note."); // 2005
+}
+
 if (inv_itemspace($inv, $obj, $amount, inv_size($inv)) = false){
     if (oc_stackable($obj) = true) {
         // https://youtu.be/8vNeG5bHg0Q?t=443
@@ -56,13 +60,11 @@ if (inv_itemspace($inv, $obj, $amount, inv_size($inv)) = false){
 }
 
 def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));
-switch_int (%bank_noted) {
-    case 0 : inv_moveitem_uncert(bank, $inv, $obj, sub($amount, $overflow));
-    case default :
-        if (oc_cert($obj) = $obj) {
-            mes("This item can not be withdrawn as a note."); // 2005
-        }
-        inv_moveitem_cert(bank, $inv, $obj, sub($amount, $overflow));
+if (sub($amount, $overflow) > 0) {
+    switch_int (%bank_noted) {
+        case 0 : inv_moveitem_uncert(bank, $inv, $obj, sub($amount, $overflow));
+        case default : inv_moveitem_cert(bank, $inv, $obj, sub($amount, $overflow));
+    }
 }
 
 [proc,bank_deposit_request](inv $inv, obj $obj, int $amount, int $slot)
