@@ -12,12 +12,12 @@ export default class MesanimType extends ConfigType {
         MesanimType.configNames = new Map();
         MesanimType.configs = [];
 
-        if (!fs.existsSync(`${dir}/mesanim.dat`)) {
+        if (!fs.existsSync(`${dir}/server/mesanim.dat`)) {
             console.log('Warning: No mesanim.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/mesanim.dat`);
+        const dat = Packet.load(`${dir}/server/mesanim.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

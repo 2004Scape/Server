@@ -53,7 +53,7 @@ export function generateServerSymbols() {
     }
     fs.writeFileSync('data/symbols/obj.sym', objSymbols);
 
-    InvType.load('data/pack/server');
+    InvType.load('data/pack');
     let invSymbols = '';
     let writeInvSymbols = '';
     const invs = loadPack('data/pack/inv.pack');
@@ -113,7 +113,7 @@ export function generateServerSymbols() {
     }
     fs.writeFileSync('data/symbols/loc.sym', locSymbols);
 
-    Component.load('data/pack/server');
+    Component.load('data/pack');
     let comSymbols = '';
     let interfaceSymbols = '';
     let overlaySymbols = '';
@@ -141,7 +141,7 @@ export function generateServerSymbols() {
     fs.writeFileSync('data/symbols/interface.sym', interfaceSymbols);
     fs.writeFileSync('data/symbols/overlayinterface.sym', overlaySymbols);
 
-    VarPlayerType.load('data/pack/server');
+    VarPlayerType.load('data/pack');
     let varpSymbols = '';
     const varps = loadPack('data/pack/varp.pack');
     for (let i = 0; i < varps.length; i++) {
@@ -154,7 +154,7 @@ export function generateServerSymbols() {
     }
     fs.writeFileSync('data/symbols/varp.sym', varpSymbols);
 
-    VarNpcType.load('data/pack/server');
+    VarNpcType.load('data/pack');
     let varnSymbols = '';
     const varns = loadPack('data/pack/varn.pack');
     for (let i = 0; i < varns.length; i++) {
@@ -167,7 +167,7 @@ export function generateServerSymbols() {
     }
     fs.writeFileSync('data/symbols/varn.sym', varnSymbols);
 
-    VarSharedType.load('data/pack/server');
+    VarSharedType.load('data/pack');
     let varsSymbols = '';
     const varss = loadPack('data/pack/vars.pack');
     for (let i = 0; i < varss.length; i++) {
@@ -181,7 +181,7 @@ export function generateServerSymbols() {
     fs.writeFileSync('data/symbols/vars.sym', varsSymbols);
 
     console.time('Loading param.dat');
-    ParamType.load('data/pack/server');
+    ParamType.load('data/pack');
     console.timeEnd('Loading param.dat');
 
     let paramSymbols = '';
@@ -316,7 +316,7 @@ export function generateServerSymbols() {
     }
     fs.writeFileSync('data/symbols/commands.sym', commandSymbols);
 
-    DbTableType.load('data/pack/server');
+    DbTableType.load('data/pack');
 
     let dbTableSymbols = '';
     let dbColumnSymbols = '';

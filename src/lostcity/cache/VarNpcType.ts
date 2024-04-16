@@ -13,12 +13,12 @@ export default class VarNpcType extends ConfigType {
         VarNpcType.configNames = new Map();
         VarNpcType.configs = [];
 
-        if (!fs.existsSync(`${dir}/varn.dat`)) {
+        if (!fs.existsSync(`${dir}/server/varn.dat`)) {
             console.log('Warning: No varn.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/varn.dat`);
+        const dat = Packet.load(`${dir}/server/varn.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

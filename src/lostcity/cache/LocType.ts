@@ -4,6 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class LocType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -13,18 +14,23 @@ export default class LocType extends ConfigType {
         LocType.configNames = new Map();
         LocType.configs = [];
 
-        if (!fs.existsSync(`${dir}/loc.dat`)) {
+        if (!fs.existsSync(`${dir}/server/loc.dat`)) {
             console.log('Warning: No loc.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/loc.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/loc.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('loc.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new LocType(id);
             config.active = -1; // so we can infer if active should be automatically determined based on loc shape/ops available
-            config.decodeType(dat);
+            config.decodeType(server);
+            config.decodeType(client);
 
             if (config.active === -1) {
                 config.active = config.shapes.length > 0 && config.shapes[0] === 10 ? 1 : 0;

@@ -13,12 +13,12 @@ export default class EnumType extends ConfigType {
         EnumType.configNames = new Map();
         EnumType.configs = [];
 
-        if (!fs.existsSync(`${dir}/enum.dat`)) {
+        if (!fs.existsSync(`${dir}/server/enum.dat`)) {
             console.log('Warning: No enum.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/enum.dat`);
+        const dat = Packet.load(`${dir}/server/enum.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

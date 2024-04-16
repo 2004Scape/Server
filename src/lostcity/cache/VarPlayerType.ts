@@ -4,6 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class VarPlayerType extends ConfigType {
     static SCOPE_TEMP = 0;
@@ -16,17 +17,22 @@ export default class VarPlayerType extends ConfigType {
         VarPlayerType.configNames = new Map();
         VarPlayerType.configs = [];
 
-        if (!fs.existsSync(`${dir}/varp.dat`)) {
+        if (!fs.existsSync(`${dir}/server/varp.dat`)) {
             console.log('Warning: No varp.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/varp.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/varp.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('varp.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new VarPlayerType(id);
-            config.decodeType(dat);
+            config.decodeType(server);
+            config.decodeType(client);
 
             VarPlayerType.configs[id] = config;
 

@@ -3,6 +3,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class IdkType extends ConfigType {
     private static configNames: Map<string, number> = new Map();
@@ -12,17 +13,21 @@ export default class IdkType extends ConfigType {
         IdkType.configNames = new Map();
         IdkType.configs = [];
 
-        if (!fs.existsSync(`${dir}/idk.dat`)) {
+        if (!fs.existsSync(`${dir}/server/idk.dat`)) {
             console.log('Warning: No idk.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/idk.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/idk.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('idk.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new IdkType(id);
-            config.decodeType(dat);
+            config.decodeType(server);
 
             IdkType.configs[id] = config;
 

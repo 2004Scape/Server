@@ -51,12 +51,13 @@ import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
-import { PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueState, PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ZoneManager from './zone/ZoneManager.js';
 import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -86,10 +87,7 @@ class World {
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
-    queue: {
-        script: ScriptState;
-        delay: number;
-    }[] = [];
+    queue: LinkList = new LinkList();
 
     friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
 
@@ -206,8 +204,8 @@ class World {
         return this.collisionManager.stepValidator;
     }
 
-    shouldReload(type: string): boolean {
-        const current = getModified(`data/pack/server/${type}.dat`);
+    shouldReload(type: string, client: boolean = false): boolean {
+        const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
 
         if (!this.datLastModified.has(type)) {
             this.datLastModified.set(type, current);
@@ -222,56 +220,56 @@ class World {
     }
 
     reload() {
-        if (this.shouldReload('varp')) {
-            VarPlayerType.load('data/pack/server');
+        if (this.shouldReload('varp', true)) {
+            VarPlayerType.load('data/pack');
         }
 
         if (this.shouldReload('param')) {
-            ParamType.load('data/pack/server');
+            ParamType.load('data/pack');
         }
 
-        if (this.shouldReload('obj')) {
-            ObjType.load('data/pack/server', this.members);
+        if (this.shouldReload('obj', true)) {
+            ObjType.load('data/pack', this.members);
         }
 
-        if (this.shouldReload('loc')) {
-            LocType.load('data/pack/server');
+        if (this.shouldReload('loc', true)) {
+            LocType.load('data/pack');
         }
 
-        if (this.shouldReload('npc')) {
-            NpcType.load('data/pack/server');
+        if (this.shouldReload('npc', true)) {
+            NpcType.load('data/pack');
         }
 
-        if (this.shouldReload('idk')) {
-            IdkType.load('data/pack/server');
+        if (this.shouldReload('idk', true)) {
+            IdkType.load('data/pack');
         }
 
         if (this.shouldReload('frame_del')) {
-            SeqFrame.load('data/pack/server');
+            SeqFrame.load('data/pack');
         }
 
-        if (this.shouldReload('seq')) {
-            SeqType.load('data/pack/server');
+        if (this.shouldReload('seq', true)) {
+            SeqType.load('data/pack');
         }
 
-        if (this.shouldReload('spotanim')) {
-            SpotanimType.load('data/pack/server');
+        if (this.shouldReload('spotanim', true)) {
+            SpotanimType.load('data/pack');
         }
 
         if (this.shouldReload('category')) {
-            CategoryType.load('data/pack/server');
+            CategoryType.load('data/pack');
         }
 
         if (this.shouldReload('enum')) {
-            EnumType.load('data/pack/server');
+            EnumType.load('data/pack');
         }
 
         if (this.shouldReload('struct')) {
-            StructType.load('data/pack/server');
+            StructType.load('data/pack');
         }
 
         if (this.shouldReload('inv')) {
-            InvType.load('data/pack/server');
+            InvType.load('data/pack');
 
             for (let i = 0; i < InvType.count; i++) {
                 const inv = InvType.get(i);
@@ -283,39 +281,43 @@ class World {
         }
 
         if (this.shouldReload('mesanim')) {
-            MesanimType.load('data/pack/server');
+            MesanimType.load('data/pack');
         }
 
         if (this.shouldReload('dbtable')) {
-            DbTableType.load('data/pack/server');
+            DbTableType.load('data/pack');
         }
 
         if (this.shouldReload('dbrow')) {
-            DbRowType.load('data/pack/server');
+            DbRowType.load('data/pack');
         }
 
         if (this.shouldReload('hunt')) {
-            HuntType.load('data/pack/server');
+            HuntType.load('data/pack');
         }
 
         if (this.shouldReload('varn')) {
-            VarNpcType.load('data/pack/server');
+            VarNpcType.load('data/pack');
         }
 
         if (this.shouldReload('vars')) {
-            VarSharedType.load('data/pack/server');
+            VarSharedType.load('data/pack');
         }
 
         if (this.shouldReload('interface')) {
-            Component.load('data/pack/server');
+            Component.load('data/pack');
         }
 
         if (this.shouldReload('script')) {
-            const count = ScriptProvider.load('data/pack/server');
-            this.broadcastMes(`Reloaded ${count} scripts.`);
+            const count = ScriptProvider.load('data/pack');
+            if (count === -1) {
+                this.broadcastMes('There was an issue while reloading. Please wait or try again.');
+            } else {
+                this.broadcastMes(`Reloaded ${count} scripts.`);
+            }
         }
 
-        this.allLastModified = getLatestModified('data/pack/server', '.dat');
+        this.allLastModified = getLatestModified('data/pack', '.dat');
     }
 
     broadcastMes(message: string) {
@@ -336,8 +338,8 @@ class World {
             this.npcs[i] = null;
         }
 
-        FontType.load('data/pack/client');
-        WordEnc.load('data/pack/client');
+        FontType.load('data/pack');
+        WordEnc.load('data/pack');
 
         this.reload();
 
@@ -378,7 +380,7 @@ class World {
     async cycle(continueCycle = true) {
         if (Environment.LOCAL_DEV) {
             const lastModified = getLatestModified('data/pack/server', '.dat');
-            if (this.allLastModified !== lastModified) {
+            if (lastModified != this.allLastModified) {
                 console.log('Reloading data...');
                 this.reload();
             }
@@ -392,21 +394,18 @@ class World {
         // - npc spawn scripts
         // - npc hunt
         let worldProcessing = Date.now();
-        for (let i = 0; i < this.queue.length; i++) {
-            const entry = this.queue[i];
-
-            entry.delay--;
-            if (entry.delay > 0) {
+        for (let request: EntityQueueState | null = this.queue.head() as EntityQueueState | null; request !== null; request = this.queue.next() as EntityQueueState | null) {
+            const delay = request.delay--;
+            if (delay > 0) {
                 continue;
             }
 
-            const script = entry.script;
+            const script = request.script;
             try {
                 const state = ScriptRunner.execute(script);
 
                 // remove from queue no matter what, re-adds if necessary
-                this.queue.splice(i, 1);
-                i--;
+                request.unlink();
 
                 if (state === ScriptState.SUSPENDED) {
                     // suspend to player (probably not needed)
@@ -560,12 +559,6 @@ class World {
                     player.executeScript(player.activeScript, true);
                 }
 
-                player.queue = player.queue.filter(s => s);
-                if (player.queue.find(s => s.type === PlayerQueueType.STRONG)) {
-                    // the presence of a strong script closes modals before anything runs regardless of the order
-                    player.closeModal();
-                }
-
                 player.processQueues();
                 player.processTimers(PlayerTimerType.NORMAL);
                 player.processTimers(PlayerTimerType.SOFT);
@@ -603,9 +596,9 @@ class World {
 
             if (this.currentTick - player.lastResponse >= 100) {
                 // remove after 60 seconds
-                player.queue = [];
-                player.weakQueue = [];
-                player.engineQueue = [];
+                player.queue.clear();
+                player.weakQueue.clear();
+                player.engineQueue.clear();
                 player.clearInteraction();
                 player.closeModal();
                 player.unsetMapFlag();
@@ -617,7 +610,7 @@ class World {
                 continue;
             }
 
-            if (player.queue.length === 0) {
+            if (player.queue.head() === null) {
                 const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGOUT, -1, -1);
                 if (!script) {
                     console.error('LOGOUT TRIGGER IS BROKEN!');
@@ -968,7 +961,7 @@ class World {
     }
 
     enqueueScript(script: ScriptState, delay: number = 0) {
-        this.queue.push({ script, delay: delay + 1 });
+        this.queue.addTail(new EntityQueueState(script, delay + 1));
     }
 
     getInventory(inv: number) {

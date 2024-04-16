@@ -1,4 +1,3 @@
-import { packClientConfig } from '#lostcity/tools/packconfig/PackClient.js';
 import { packClientInterface } from '#lostcity/tools/packinterface/PackClient.js';
 import { packClientMap } from '#lostcity/tools/packmap/PackClient.js';
 import { packClientModel } from '#lostcity/tools/client/models/pack.js';
@@ -8,9 +7,10 @@ import { packClientWordenc } from '#lostcity/tools/client/wordenc/pack.js';
 import { packClientTitle } from '#lostcity/tools/client/title/pack.js';
 import { packClientTexture } from '#lostcity/tools/client/textures/pack.js';
 import { packClientMedia } from '#lostcity/tools/client/media/pack.js';
+import { packConfigs } from '#lostcity/tools/packconfig/PackShared.js';
 
 await packClientTitle();
-packClientConfig();
+packConfigs();
 packClientInterface();
 await packClientMedia();
 packClientModel();

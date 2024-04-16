@@ -31,7 +31,8 @@
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev",
     "clean": "npm run client:clean && npm run server:clean",
-    "build": "npm run client:pack && npm run server:build"
+    "build": "npm run client:pack && npm run server:build",
+    "client": "java -cp 225.2004-05-18.jar client 10 0 highmem members"
   },
   "prisma": {
     "seed": "npm run ts-loader src/lostcity/db/seed.ts"

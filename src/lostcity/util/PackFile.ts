@@ -339,6 +339,10 @@ function crawlConfigCategories() {
 }
 
 export function getModified(path: string) {
+    if (!fs.existsSync(path)) {
+        return 0;
+    }
+
     const stats = fs.statSync(path);
     return stats.mtimeMs;
 }

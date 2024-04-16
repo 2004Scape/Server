@@ -1,9 +1,7 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { LocModelShape, ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { LocModelShape, ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { CategoryPack, LocPack, ModelPack, SeqPack } from '#lostcity/util/PackFile.js';
 
@@ -119,11 +117,11 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'model') {
         // models are unique in locs, they may specify a model key to match against for a supported shapes
         const models: LocModelShape[] = [];
@@ -210,17 +208,13 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     }
 }
 
-function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(LocPack.size);
-    idx.p2(LocPack.size);
+export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(LocPack.size);
+    const server: PackedData = new PackedData(LocPack.size);
 
     for (let i = 0; i < LocPack.size; i++) {
         const debugname = LocPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         // collect these to write at the end
         const recol_s: number[] = [];
@@ -250,119 +244,117 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
             } else if (key === 'param') {
                 params.push(value as ParamValue);
             } else if (key === 'width') {
-                dat.p1(14);
-                dat.p1(value as number);
+                client.p1(14);
+                client.p1(value as number);
             } else if (key === 'length') {
-                dat.p1(15);
-                dat.p1(value as number);
+                client.p1(15);
+                client.p1(value as number);
             } else if (key === 'blockwalk') {
                 if (value === false) {
-                    dat.p1(17);
+                    client.p1(17);
                 }
             } else if (key === 'blockrange') {
                 if (value === false) {
-                    dat.p1(18);
+                    client.p1(18);
                 }
             } else if (key === 'active') {
-                dat.p1(19);
-                dat.pbool(value as boolean);
+                client.p1(19);
+                client.pbool(value as boolean);
                 active = value ? 1 : 0;
             } else if (key === 'hillskew') {
                 if (value === true) {
-                    dat.p1(21);
+                    client.p1(21);
                 }
             } else if (key === 'sharelight') {
                 if (value === true) {
-                    dat.p1(22);
+                    client.p1(22);
                 }
             } else if (key === 'occlude') {
                 if (value === true) {
-                    dat.p1(23);
+                    client.p1(23);
                 }
             } else if (key === 'anim') {
-                dat.p1(24);
-                dat.p2(value as number);
+                client.p1(24);
+                client.p2(value as number);
             } else if (key === 'hasalpha') {
                 if (value === true) {
-                    dat.p1(25);
+                    client.p1(25);
                 }
             } else if (key === 'wallwidth') {
-                dat.p1(28);
-                dat.p1(value as number);
+                client.p1(28);
+                client.p1(value as number);
             } else if (key === 'ambient') {
-                dat.p1(29);
-                dat.p1(value as number);
+                client.p1(29);
+                client.p1(value as number);
             } else if (key === 'contrast') {
-                dat.p1(39);
-                dat.p1(value as number);
+                client.p1(39);
+                client.p1(value as number);
             } else if (key.startsWith('op')) {
                 const index = parseInt(key.substring('op'.length)) - 1;
-                dat.p1(30 + index);
-                dat.pjstr(value as string);
+                client.p1(30 + index);
+                client.pjstr(value as string);
             } else if (key === 'mapfunction') {
-                dat.p1(60);
-                dat.p2(value as number);
+                client.p1(60);
+                client.p2(value as number);
             } else if (key === 'mirror') {
                 if (value === true) {
-                    dat.p1(62);
+                    client.p1(62);
                 }
             } else if (key === 'shadow') {
                 if (value === false) {
-                    dat.p1(64);
+                    client.p1(64);
                 }
             } else if (key === 'resizex') {
-                dat.p1(65);
-                dat.p2(value as number);
+                client.p1(65);
+                client.p2(value as number);
             } else if (key === 'resizey') {
-                dat.p1(66);
-                dat.p2(value as number);
+                client.p1(66);
+                client.p2(value as number);
             } else if (key === 'resizez') {
-                dat.p1(67);
-                dat.p2(value as number);
+                client.p1(67);
+                client.p2(value as number);
             } else if (key === 'mapscene') {
-                dat.p1(68);
-                dat.p2(value as number);
+                client.p1(68);
+                client.p2(value as number);
             } else if (key === 'forceapproach') {
-                dat.p1(69);
-                dat.p1(value as number);
+                client.p1(69);
+                client.p1(value as number);
             } else if (key === 'offsetx') {
-                dat.p1(70);
-                dat.p2(value as number);
+                client.p1(70);
+                client.p2(value as number);
             } else if (key === 'offsety') {
-                dat.p1(71);
-                dat.p2(value as number);
+                client.p1(71);
+                client.p2(value as number);
             } else if (key === 'offsetz') {
-                dat.p1(72);
-                dat.p2(value as number);
+                client.p1(72);
+                client.p2(value as number);
             } else if (key === 'forcedecor') {
                 if (value === true) {
-                    dat.p1(73);
+                    client.p1(73);
                 }
             } else if (key === 'category') {
-                if (transmitAll === true) {
-                    dat.p1(200);
-                    dat.p2(value as number);
-                }
+                server.p1(200);
+                server.p2(value as number);
             }
         }
 
         if (recol_s.length > 0) {
-            dat.p1(40);
-            dat.p1(recol_s.length);
+            client.p1(40);
+            client.p1(recol_s.length);
 
             for (let k = 0; k < recol_s.length; k++) {
-                dat.p2(recol_s[k]);
-                dat.p2(recol_d[k]);
+                client.p2(recol_s[k]);
+                client.p2(recol_d[k]);
             }
         }
 
         if (models.length > 0) {
-            dat.p1(1);
+            client.p1(1);
 
-            dat.p1(models.length);
+            client.p1(models.length);
             for (let k = 0; k < models.length; k++) {
-                dat.p2(models[k].model);
-                dat.p1(models[k].shape);
+                client.p2(models[k].model);
+                client.p1(models[k].shape);
             }
         }
 
@@ -387,48 +379,38 @@ function packLocConfig(configs: Map<string, ConfigLine[]>, transmitAll: boolean)
         }
 
         if (name !== null) {
-            dat.p1(2);
-            dat.pjstr(name);
+            client.p1(2);
+            client.pjstr(name);
         }
 
         if (desc !== null) {
-            dat.p1(3);
-            dat.pjstr(desc);
+            client.p1(3);
+            client.pjstr(desc);
         }
 
-        if (transmitAll === true && params.length > 0) {
-            dat.p1(249);
+        if (params.length > 0) {
+            server.p1(249);
 
-            dat.p1(params.length);
+            server.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.id);
-                dat.pbool(paramData.type === ScriptVarType.STRING);
+                server.p3(paramData.id);
+                server.pbool(paramData.type === ScriptVarType.STRING);
 
                 if (paramData.type === ScriptVarType.STRING) {
-                    dat.pjstr(paramData.value as string);
+                    server.pjstr(paramData.value as string);
                 } else {
-                    dat.p4(paramData.value as number);
+                    server.p4(paramData.value as number);
                 }
             }
         }
 
-        if (transmitAll === true) {
-            dat.p1(250);
-            dat.pjstr(debugname);
-        }
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packLocClient(configs: Map<string, ConfigLine[]>) {
-    return packLocConfig(configs, false);
-}
-
-export function packLocServer(configs: Map<string, ConfigLine[]>) {
-    return packLocConfig(configs, true);
+    return { client, server };
 }

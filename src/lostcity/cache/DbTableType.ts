@@ -13,12 +13,12 @@ export default class DbTableType extends ConfigType {
         DbTableType.configNames = new Map();
         DbTableType.configs = [];
 
-        if (!fs.existsSync(`${dir}/dbtable.dat`)) {
+        if (!fs.existsSync(`${dir}/server/dbtable.dat`)) {
             console.log('Warning: No dbtable.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/dbtable.dat`);
+        const dat = Packet.load(`${dir}/server/dbtable.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

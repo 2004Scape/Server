@@ -13,12 +13,12 @@ export default class StructType extends ConfigType implements ParamHolder {
         StructType.configNames = new Map();
         StructType.configs = [];
 
-        if (!fs.existsSync(`${dir}/struct.dat`)) {
+        if (!fs.existsSync(`${dir}/server/struct.dat`)) {
             console.log('Warning: No struct.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/struct.dat`);
+        const dat = Packet.load(`${dir}/server/struct.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

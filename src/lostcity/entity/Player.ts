@@ -55,6 +55,7 @@ import WordEnc from '#lostcity/cache/WordEnc.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -448,15 +449,9 @@ export default class Player extends PathingEntity {
 
     // script variables
     delay = 0;
-    /**
-     * An array of pending queues.
-     */
-    queue: EntityQueueRequest[] = [];
-    /**
-     * An array of pending weak queues.
-     */
-    weakQueue: EntityQueueRequest[] = [];
-    engineQueue: EntityQueueRequest[] = [];
+    queue: LinkList = new LinkList();
+    weakQueue: LinkList = new LinkList();
+    engineQueue: LinkList = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
@@ -1827,25 +1822,25 @@ export default class Player extends PathingEntity {
             case 'reload': {
                 if (Environment.LOCAL_DEV) {
                     // TODO: only reload config types that have changed to save time
-                    CategoryType.load('data/pack/server');
-                    ParamType.load('data/pack/server');
-                    EnumType.load('data/pack/server');
-                    StructType.load('data/pack/server');
-                    InvType.load('data/pack/server');
-                    IdkType.load('data/pack/server');
-                    VarPlayerType.load('data/pack/server');
-                    ObjType.load('data/pack/server', World.members);
-                    LocType.load('data/pack/server');
-                    NpcType.load('data/pack/server');
-                    Component.load('data/pack/server');
-                    SeqType.load('data/pack/server');
-                    SpotanimType.load('data/pack/server');
-                    MesanimType.load('data/pack/server');
-                    DbTableType.load('data/pack/server');
-                    DbRowType.load('data/pack/server');
-                    HuntType.load('data/pack/server');
+                    CategoryType.load('data/pack');
+                    ParamType.load('data/pack');
+                    EnumType.load('data/pack');
+                    StructType.load('data/pack');
+                    InvType.load('data/pack');
+                    IdkType.load('data/pack');
+                    VarPlayerType.load('data/pack');
+                    ObjType.load('data/pack', World.members);
+                    LocType.load('data/pack');
+                    NpcType.load('data/pack');
+                    Component.load('data/pack');
+                    SeqType.load('data/pack');
+                    SpotanimType.load('data/pack');
+                    MesanimType.load('data/pack');
+                    DbTableType.load('data/pack');
+                    DbRowType.load('data/pack');
+                    HuntType.load('data/pack');
 
-                    const count = ScriptProvider.load('data/pack/server');
+                    const count = ScriptProvider.load('data/pack');
                     this.messageGame(`Reloaded ${count} scripts.`);
                 }
                 break;
@@ -1934,130 +1929,116 @@ export default class Player extends PathingEntity {
                 this.client = null;
                 break;
             }
-            default: {
-                if (cmd.length <= 0) {
-                    return;
-                }
-
-                // lookup debugproc with the name and execute it
-                const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
-                if (!script) {
-                    return;
-                }
-
-                const params = new Array(script.info.parameterTypes.length).fill(-1);
-
-                for (let i = 0; i < script.info.parameterTypes.length; i++) {
-                    const type = script.info.parameterTypes[i];
-
-                    try {
-                        switch (type) {
-                            case ScriptVarType.STRING: {
-                                const value = args.shift();
-                                params[i] = value ?? '';
-                                break;
-                            }
-                            case ScriptVarType.INT: {
-                                const value = args.shift();
-                                params[i] = parseInt(value ?? '0', 10) | 0;
-                                break;
-                            }
-                            case ScriptVarType.OBJ:
-                            case ScriptVarType.NAMEDOBJ: {
-                                const name = args.shift();
-                                params[i] = ObjType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.NPC: {
-                                const name = args.shift();
-                                params[i] = NpcType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.LOC: {
-                                const name = args.shift();
-                                params[i] = LocType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.SEQ: {
-                                const name = args.shift();
-                                params[i] = SeqType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.STAT: {
-                                const name = args.shift();
-                                params[i] = Player.SKILLS.indexOf(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.INV: {
-                                const name = args.shift();
-                                params[i] = InvType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.COORD: {
-                                const args2 = cheat.split('_');
-
-                                const level = parseInt(args2[0].slice(6));
-                                const mx = parseInt(args2[1]);
-                                const mz = parseInt(args2[2]);
-                                const lx = parseInt(args2[3]);
-                                const lz = parseInt(args2[4]);
-
-                                params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
-                                break;
-                            }
-                            case ScriptVarType.INTERFACE: {
-                                const name = args.shift();
-                                params[i] = Component.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.SPOTANIM: {
-                                const name = args.shift();
-                                params[i] = SpotanimType.getId(name ?? '');
-                                break;
-                            }
-                            case ScriptVarType.IDKIT: {
-                                const name = args.shift();
-                                params[i] = IdkType.getId(name ?? '');
-                                break;
-                            }
-                        }
-                    } catch (err) {
-                        return;
-                    }
-                }
-
-                this.executeScript(ScriptRunner.init(script, this, null, null, params), false);
+            case 'random': {
+                this.afkEventReady = true;
                 break;
             }
         }
+
+        if (cmd.length <= 0) {
+            return;
+        }
+
+        // lookup debugproc with the name and execute it
+        const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
+        if (!script) {
+            return;
+        }
+
+        const params = new Array(script.info.parameterTypes.length).fill(-1);
+
+        for (let i = 0; i < script.info.parameterTypes.length; i++) {
+            const type = script.info.parameterTypes[i];
+
+            try {
+                switch (type) {
+                    case ScriptVarType.STRING: {
+                        const value = args.shift();
+                        params[i] = value ?? '';
+                        break;
+                    }
+                    case ScriptVarType.INT: {
+                        const value = args.shift();
+                        params[i] = parseInt(value ?? '0', 10) | 0;
+                        break;
+                    }
+                    case ScriptVarType.OBJ:
+                    case ScriptVarType.NAMEDOBJ: {
+                        const name = args.shift();
+                        params[i] = ObjType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.NPC: {
+                        const name = args.shift();
+                        params[i] = NpcType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.LOC: {
+                        const name = args.shift();
+                        params[i] = LocType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.SEQ: {
+                        const name = args.shift();
+                        params[i] = SeqType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.STAT: {
+                        const name = args.shift();
+                        params[i] = Player.SKILLS.indexOf(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.INV: {
+                        const name = args.shift();
+                        params[i] = InvType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.COORD: {
+                        const args2 = cheat.split('_');
+
+                        const level = parseInt(args2[0].slice(6));
+                        const mx = parseInt(args2[1]);
+                        const mz = parseInt(args2[2]);
+                        const lx = parseInt(args2[3]);
+                        const lz = parseInt(args2[4]);
+
+                        params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
+                        break;
+                    }
+                    case ScriptVarType.INTERFACE: {
+                        const name = args.shift();
+                        params[i] = Component.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.SPOTANIM: {
+                        const name = args.shift();
+                        params[i] = SpotanimType.getId(name ?? '');
+                        break;
+                    }
+                    case ScriptVarType.IDKIT: {
+                        const name = args.shift();
+                        params[i] = IdkType.getId(name ?? '');
+                        break;
+                    }
+                }
+            } catch (err) {
+                return;
+            }
+        }
+
+        this.executeScript(ScriptRunner.init(script, this, null, null, params), false);
     }
 
     processEngineQueue() {
-        while (this.engineQueue.length) {
-            const processedQueueCount = this.processEngineQueueInternal();
-            if (processedQueueCount === 0) {
-                break;
-            }
-        }
-    }
-
-    processEngineQueueInternal() {
-        let processedQueueCount = 0;
-
-        for (let i = 0; i < this.engineQueue.length; i++) {
-            const queue = this.engineQueue[i];
-
-            const delay = queue.delay--;
+        for (let request: EntityQueueRequest | null = this.engineQueue.head() as EntityQueueRequest | null; request !== null; request = this.engineQueue.next() as EntityQueueRequest | null) {
+            const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
 
-                processedQueueCount++;
-                this.engineQueue.splice(i--, 1);
+                request.unlink();
             }
         }
-
-        return processedQueueCount;
     }
 
     // ----
@@ -2174,7 +2155,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        this.weakQueue = [];
+        this.weakQueue.clear();
         // this.activeScript = null;
 
         if (!this.delayed()) {
@@ -2243,73 +2224,60 @@ export default class Player extends PathingEntity {
         const request = new EntityQueueRequest(type, script, args, delay);
         if (type === PlayerQueueType.ENGINE) {
             request.delay = 0;
-            this.engineQueue.push(request);
+            this.engineQueue.addTail(request);
         } else if (type === PlayerQueueType.WEAK) {
-            this.weakQueue.push(request);
+            this.weakQueue.addTail(request);
         } else {
-            this.queue.push(request);
+            this.queue.addTail(request);
         }
     }
 
     processQueues() {
-        if (this.queue.some(queue => queue.type === PlayerQueueType.STRONG)) {
+        // the presence of a strong script closes modals before anything runs regardless of the order
+        let hasStrong: boolean = false;
+        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+            if (request.type === PlayerQueueType.STRONG) {
+                hasStrong = true;
+                break;
+            }
+        }
+        if (hasStrong) {
             this.closeModal();
         }
 
-        while (this.queue.length) {
-            const processedQueueCount = this.processQueue();
-            if (processedQueueCount === 0) {
-                break;
-            }
-        }
-
-        while (this.weakQueue.length) {
-            const processedQueueCount = this.processWeakQueue();
-            if (processedQueueCount === 0) {
-                break;
-            }
-        }
+        this.processQueue();
+        this.processWeakQueue();
     }
 
     processQueue() {
-        let processedQueueCount = 0;
-
-        for (let i = 0; i < this.queue.length; i++) {
-            const queue = this.queue[i];
-            if (queue.type === PlayerQueueType.STRONG) {
+        // there is a quirk with their LinkList impl that results in a queue speedup bug:
+        // in .head() the next link is cached. on the next iteration, next() will use this cached value, even if it's null
+        // regardless of whether the end of the list has been reached (i.e. the previous iteration added to the end of the list)
+        // - thank you De0 for the explanation
+        // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
+        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+            if (request.type === PlayerQueueType.STRONG) {
                 this.closeModal();
             }
 
-            const delay = queue.delay--;
+            const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
-
-                processedQueueCount++;
-                this.queue.splice(i--, 1);
+                request.unlink();
             }
         }
-
-        return processedQueueCount;
     }
 
     processWeakQueue() {
-        let processedQueueCount = 0;
-
-        for (let i = 0; i < this.weakQueue.length; i++) {
-            const queue = this.weakQueue[i];
-
-            const delay = queue.delay--;
+        for (let request: EntityQueueRequest | null = this.weakQueue.head() as EntityQueueRequest | null; request !== null; request = this.weakQueue.next() as EntityQueueRequest | null) {
+            const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(queue.script, this, null, null, queue.args);
+                const script = ScriptRunner.init(request.script, this, null, null, request.args);
                 this.executeScript(script, true);
-
-                processedQueueCount++;
-                this.weakQueue.splice(i--, 1);
+                request.unlink();
             }
         }
-
-        return processedQueueCount;
     }
 
     setTimer(type: PlayerTimerType, script: Script, args: ScriptArgument[] = [], interval: number) {

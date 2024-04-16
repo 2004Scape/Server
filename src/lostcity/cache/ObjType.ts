@@ -5,6 +5,7 @@ import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
 import ParamType from '#lostcity/cache/ParamType.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class ObjType extends ConfigType {
     static configNames: Map<string, number> = new Map();
@@ -14,17 +15,22 @@ export default class ObjType extends ConfigType {
         ObjType.configNames = new Map();
         ObjType.configs = [];
 
-        if (!fs.existsSync(`${dir}/obj.dat`)) {
+        if (!fs.existsSync(`${dir}/server/obj.dat`)) {
             console.log('Warning: No obj.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/obj.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/obj.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('obj.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new ObjType(id);
-            config.decodeType(dat);
+            config.decodeType(server);
+            config.decodeType(client);
 
             ObjType.configs[id] = config;
 
