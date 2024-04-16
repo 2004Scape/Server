@@ -112,7 +112,7 @@ switch_category (oc_category($obj)) {
     // melee
     case weapon_2h_sword: ~weapon_category_tab_attack(combat_heavysword:preview, combat_heavysword:name, combat_heavysword, $obj);
     case weapon_axe: ~weapon_category_tab_attack(combat_axe:preview, combat_axe:name, combat_axe, $obj);
-    case weapon_blunt, category_15: ~weapon_category_tab_attack(combat_blunt:preview, combat_blunt:name, combat_blunt, $obj);
+    case weapon_blunt, category_15, flowers: ~weapon_category_tab_attack(combat_blunt:preview, combat_blunt:name, combat_blunt, $obj);
     case weapon_pickaxe: ~weapon_category_tab_attack(combat_pickaxe:preview, combat_pickaxe:name, combat_pickaxe, $obj);
     case weapon_scythe: ~weapon_category_tab_attack(combat_scythe:preview, combat_scythe:name, combat_scythe, $obj);
     case weapon_slash: ~weapon_category_tab_attack(combat_hacksword:preview, combat_hacksword:name, combat_hacksword, $obj);
@@ -139,3 +139,52 @@ if_settab($interface, 0);
 // yes this is actually "unarmed" between beta and 2005-ish.
 if_settext(combat_unarmed:name, "unarmed");
 if_settab(combat_unarmed, 0);
+
+[proc,.update_weapon_category](obj $previous)
+// dont remove attack style if the equipted item is not a weapon
+if ($previous ! null & oc_wearpos($previous) ! ^wearpos_rhand) {
+    return;
+}
+def_obj $obj = .inv_getobj(worn, ^wearpos_rhand);
+if ($previous = null | $obj = null | oc_category($previous) ! oc_category($obj)) {
+    // TODO somehow confirm this
+    // osrs keeps track of selected per category
+    .%attackstyle_magic = 0;
+    .%autocast_spell = null;
+    .%attackstyle = 0;
+}
+if ($obj = null | (map_members = false & oc_members($obj) = true)) {
+    ~weapon_category_tab_attack_unarmed;
+    return;
+}
+switch_category (oc_category($obj)) {
+    // melee
+    case weapon_2h_sword: ~.weapon_category_tab_attack(combat_heavysword:preview, combat_heavysword:name, combat_heavysword, $obj);
+    case weapon_axe: ~.weapon_category_tab_attack(combat_axe:preview, combat_axe:name, combat_axe, $obj);
+    case weapon_blunt, category_15, flowers: ~.weapon_category_tab_attack(combat_blunt:preview, combat_blunt:name, combat_blunt, $obj);
+    case weapon_pickaxe: ~.weapon_category_tab_attack(combat_pickaxe:preview, combat_pickaxe:name, combat_pickaxe, $obj);
+    case weapon_scythe: ~.weapon_category_tab_attack(combat_scythe:preview, combat_scythe:name, combat_scythe, $obj);
+    case weapon_slash: ~.weapon_category_tab_attack(combat_hacksword:preview, combat_hacksword:name, combat_hacksword, $obj);
+    case weapon_spear: ~.weapon_category_tab_attack(combat_spear:preview, combat_spear:name, combat_spear, $obj);
+    case weapon_spiked: ~.weapon_category_tab_attack(combat_spiked:preview, combat_spiked:name, combat_spiked, $obj);
+    case weapon_stab: ~.weapon_category_tab_attack(combat_stabsword:preview, combat_stabsword:name, combat_stabsword, $obj);
+    // ranged
+    case weapon_bow: ~.weapon_category_tab_attack(combat_bow:preview, combat_bow:name, combat_bow, $obj);
+    case weapon_crossbow: ~.weapon_category_tab_attack(combat_crossbow:preview, combat_crossbow:name, combat_crossbow, $obj);
+    case weapon_thrown, weapon_javelin: ~.weapon_category_tab_attack(combat_thrown:preview, combat_thrown:name, combat_thrown, $obj);
+    // magic
+    case weapon_staff: ~.weapon_category_tab_attack(combat_staff_2:preview, combat_staff_2:name, combat_staff_2, $obj);
+    // unarmed everything else
+    case default: ~.weapon_category_tab_attack_unarmed;
+}
+
+[proc,.weapon_category_tab_attack](component $component1, component $component2, interface $interface, obj $obj)
+.if_setobject($component1, $obj, 200);
+.if_settext($component2, "<oc_name($obj)>");
+.if_settab($interface, 0);
+
+// sends the unarmed interface tab
+[proc,.weapon_category_tab_attack_unarmed]
+// yes this is actually "unarmed" between beta and 2005-ish.
+.if_settext(combat_unarmed:name, "unarmed");
+.if_settab(combat_unarmed, 0);

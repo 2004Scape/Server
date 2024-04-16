@@ -30,7 +30,34 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: state => {
-        throw new Error('unimplemented');
+        const [c1, c2] = state.popInts(2);
+    
+        if (c1 < 0 || c1 > Position.max) {
+            throw new Error(`attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
+        } else if (c2 < 0 || c2 > Position.max) {
+            throw new Error(`attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
+        }
+    
+        const from = Position.unpackCoord(c1);
+        const to = Position.unpackCoord(c2);
+    
+        let count = 0;
+        for (let x = Math.floor(from.x / 8); x <= Math.ceil(to.x / 8); x++) {
+            for (let z = Math.floor(from.z / 8); z <= Math.ceil(to.z / 8); z++) {
+                const { players } = World.getZone(x << 3, z << 3, from.level);
+                for (const uid of players) {
+                    const player = World.getPlayerByUid(uid);
+                    if (player === null) {
+                        continue;
+                    }
+                    if (player.x >= from.x && player.x <= to.x && player.z >= from.z && player.z <= to.z) {
+                        count++;
+                    }
+                }
+            }
+        }
+    
+        state.pushInt(count);
     },
 
     [ScriptOpcode.HUNTALL]: state => {

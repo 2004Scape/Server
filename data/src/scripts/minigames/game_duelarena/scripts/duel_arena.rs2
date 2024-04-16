@@ -1,0 +1,379 @@
+[opplayer1,_]
+if (.busy = true) {
+    mes("<.displayname> is busy at the moment."); // https://youtu.be/YkJQDvB14-U?t=26
+    return;
+}
+// prevent people from dueling in a duel or if you arent in the duel area
+if (~in_duel_arena = true | ~inzone_coord_pair_table(duel_arena_zones, coord) = false) {
+    mes("You can't do that here."); // https://youtu.be/nUwvlFkcsqA?t=17
+    return;
+}
+// if the other player isnt in the duel area
+if (~inzone_coord_pair_table(duel_arena_zones, .coord) = false) {
+    mes("That player is not in the duel challenge area."); // https://youtu.be/YlnPnlfgMQ4?t=51
+}
+
+mes("Sending duel offer...");
+%duel_settings = 0;
+%duelpartner = .uid;
+
+if (.%duelpartner = uid) {
+    %duel_settings = 0;
+    if_settext(duel_select_type:status, "");
+    if_settext(duel_select_type:otherplayer, "Dueling with: <.displayname>");
+    inv_clear(tempinv);
+    inv_transmit(tempinv, duel_select_type:inv);
+    invother_transmit(.uid, tempinv, duel_select_type:otherinv);
+    inv_transmit(inv, duel_side:inv);
+
+    .if_settext(duel_select_type:status, "");
+    .if_settext(duel_select_type:otherplayer, "Dueling with: <displayname>");
+    .inv_clear(tempinv);
+    .inv_transmit(tempinv, duel_select_type:inv);
+    .invother_transmit(uid, tempinv, duel_select_type:otherinv);
+    .inv_transmit(inv, duel_side:inv);
+
+    if_openmainmodalsideoverlay(duel_select_type, duel_side);
+    .if_openmainmodalsideoverlay(duel_select_type, duel_side);
+    
+    %duelstatus = 0;
+    .%duelstatus = 0;
+} else {
+    .mes("<displayname>:duelreq:");
+}
+
+[if_close,duel_select_type]
+inv_stoptransmit(duel_select_type:inv);
+inv_stoptransmit(duel_select_type:otherinv);
+inv_stoptransmit(duel_side:inv);
+
+
+if (.finduid(%duelpartner) = true) {
+    .%duelpartner = null;
+    .if_close;
+    if (%duelstatus ! 1 & .%duelstatus ! 1) {
+        .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
+    }
+}
+
+~moveallinv(tempinv, inv);
+%duelpartner = null;
+
+[if_close,duel_confirm]
+inv_stoptransmit(duel_confirm:inv);
+inv_stoptransmit(duel_confirm:otherinv);
+if (%duelstatus >= 4) { 
+    return; // duel accepted
+}
+if (.finduid(%duelpartner) = true) {
+    .if_close;
+    .mes("Other player declined stake and duel options."); // 2006 https://youtu.be/HFp6hOkiCns?t=304
+    .%duelpartner = null;
+}
+~moveallinv(tempinv, inv);
+%duelpartner = null;
+
+[if_button,duel_select_type:accept]
+%duelstatus = 1;
+if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://youtu.be/WHpZQ5fbr5w
+    if (.%duelstatus = 1 & ~.enough_duel_space = true) {
+        // Accept stake and move onto second screen!
+        inv_stoptransmit(duel_select_type:inv);
+        inv_stoptransmit(duel_select_type:otherinv);
+        inv_stoptransmit(duel_side:inv);
+
+        .inv_stoptransmit(duel_select_type:inv);
+        .inv_stoptransmit(duel_select_type:otherinv);
+        .inv_stoptransmit(duel_side:inv);
+
+        def_int $tempinvused = sub(inv_size(tempinv), inv_freespace(tempinv));
+        if ($tempinvused < 1) {
+            if_settext(duel_confirm:com_91, "Absolutely nothing!");
+            .if_settext(duel_confirm:com_96, "Absolutely nothing!");
+        } else {
+            if_settext(duel_confirm:com_91, "");
+            .if_settext(duel_confirm:com_96, "");
+
+            inv_transmit(tempinv, duel_confirm:inv);
+            .invother_transmit(uid, tempinv, duel_confirm:otherinv);
+        }
+
+        def_int $other_tempinvused = sub(inv_size(tempinv), .inv_freespace(tempinv));
+        if ($other_tempinvused < 1) {
+            if_settext(duel_confirm:com_96, "Absolutely nothing!");
+            .if_settext(duel_confirm:com_91, "Absolutely nothing!");
+        } else {
+            if_settext(duel_confirm:com_96, "");
+            .if_settext(duel_confirm:com_91, "");
+
+            invother_transmit(.uid, tempinv, duel_confirm:otherinv);
+            .inv_transmit(tempinv, duel_confirm:inv);
+        }
+        if_openmainmodal(duel_confirm);
+        .if_openmainmodal(duel_confirm);
+
+        if_settext(duel_confirm:status, "");
+        .if_settext(duel_confirm:status, "");
+
+        if_settext(duel_confirm:com_97, "Are you sure you want to fight this duel?");
+        .if_settext(duel_confirm:com_97, "Are you sure you want to fight this duel?");
+
+        %duelstatus = 2;
+        .%duelstatus = 2;
+    } else {
+        .if_settext(duel_select_type:status, "Other player has accepted...");
+        if_settext(duel_select_type:status, "Waiting for other player...");
+    }
+}
+
+[proc,enough_duel_space]()(boolean)
+def_int $no_weapons_size = 0;
+def_int $no_armour_size = 0;
+def_int $no_jewelry_size = 0;
+if (testbit(%duel_settings, ^no_weapons) = true) {
+    $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
+}
+if (testbit(%duel_settings, ^no_armour) = true) {
+    $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
+}
+if (testbit(%duel_settings, ^no_jewelry) = true) {
+    $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
+}
+def_int $size = calc(inv_size(tempinv) + .inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
+def_int $slot = 0;
+def_int $space_needed = 0;
+def_string $fail_message = "You do not have enough space for the items removed.";
+while ($slot < $size) {
+    def_obj $obj;
+    def_int $num;
+    if ($slot < $no_weapons_size) {
+        $obj = inv_getobj(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+        $num = inv_getnum(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size)) {
+        $obj = inv_getobj(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+        $num = inv_getnum(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = inv_getobj(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+        $num = inv_getnum(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+    } else if ($slot < calc(.inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = inv_getobj(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = inv_getnum(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $fail_message = "You do not have enough space for the stake.";
+    } else {
+        $obj = .inv_getobj(tempinv, calc($slot - .inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = .inv_getnum(tempinv, calc($slot - .inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $fail_message = "You do not have enough space for the stake.";
+    }
+    
+    if ($obj ! null) {
+        if (oc_stackable($obj) = false) {
+            $num = 1;
+        }
+        if (inv_itemspace(inv, $obj, $num, .inv_size(inv)) = true) {
+            if (oc_stackable($obj) = false | (oc_stackable($obj) = true & inv_total(inv, $obj) < 1)) {
+                $space_needed = calc($space_needed + 1);
+            }
+        } else {
+            if_settext(duel_select_type:status, $fail_message);
+            return(false);
+        }
+        if (inv_freespace(inv) < $space_needed) {
+            if_settext(duel_select_type:status, $fail_message);
+            return(false);
+        }
+    }
+
+    $slot = add($slot, 1);
+}
+return(true);
+
+[proc,.enough_duel_space]()(boolean)
+def_int $no_weapons_size = 0;
+def_int $no_armour_size = 0;
+def_int $no_jewelry_size = 0;
+if (testbit(.%duel_settings, ^no_weapons) = true) {
+    $no_weapons_size = enum_getoutputcount(duel_arena_weapon_slots);
+}
+if (testbit(.%duel_settings, ^no_armour) = true) {
+    $no_armour_size = enum_getoutputcount(duel_arena_armour_slots);
+}
+if (testbit(.%duel_settings, ^no_jewelry) = true) {
+    $no_jewelry_size = enum_getoutputcount(duel_arena_jewelry_slots);
+}
+def_int $size = calc(.inv_size(tempinv) + inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size);
+def_int $slot = 0;
+def_int $space_needed = 0;
+while ($slot < $size) {
+    def_obj $obj;
+    def_int $num;
+    if ($slot < $no_weapons_size) {
+        $obj = .inv_getobj(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+        $num = .inv_getnum(worn, enum(int, int, duel_arena_weapon_slots, $slot));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size)) {
+        $obj = .inv_getobj(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+        $num = .inv_getnum(worn, enum(int, int, duel_arena_armour_slots, calc($slot - $no_weapons_size)));
+    } else if ($slot < calc($no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = .inv_getobj(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+        $num = .inv_getnum(worn, enum(int, int, duel_arena_jewelry_slots, calc($slot - $no_weapons_size - $no_armour_size)));
+    } else if ($slot < calc(.inv_size(tempinv) + $no_weapons_size + $no_armour_size + $no_jewelry_size)) {
+        $obj = .inv_getobj(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = .inv_getnum(tempinv, calc($slot - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+    } else {
+        $obj = inv_getobj(tempinv, calc($slot - inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+        $num = inv_getnum(tempinv, calc($slot - inv_size(tempinv) - $no_weapons_size - $no_armour_size - $no_jewelry_size));
+    }
+    
+    if ($obj ! null) {
+        if (oc_stackable($obj) = false) {
+            $num = 1;
+        }
+        if (.inv_itemspace(inv, $obj, $num, inv_size(inv)) = true) {
+            if (oc_stackable($obj) = false | (oc_stackable($obj) = true & .inv_total(inv, $obj) < 1)) {
+                $space_needed = calc($space_needed + 1);
+            }
+        } else {
+            return(false);
+        }
+        if (.inv_freespace(inv) < $space_needed) {
+            return(false);
+        }
+    }
+
+    $slot = add($slot, 1);
+}
+return(true);
+
+
+[if_button,duel_confirm:accept]
+%duelstatus = 3;
+
+if (.finduid(%duelpartner) = true) {
+    if (.%duelstatus = 3) {
+        mes("Accepted stake and duel options.");
+        .mes("Accepted stake and duel options.");
+
+        // both_moveinv(inv, inv);
+        // .both_moveinv(tempinv, inv);
+
+        %duelstatus = 4;
+        .%duelstatus = 4;
+
+        if_close;
+        .if_close;
+        if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
+            @start_duel;
+        }
+    } else {
+        .if_settext(duel_confirm:status, "Other player has accepted."); // https://youtu.be/HFp6hOkiCns?t=481
+        if_settext(duel_confirm:status, "Waiting for other player."); 
+    }
+}
+
+[inv_button1,duel_select_type:inv] @removefromduel(last_slot, 1);
+[inv_button2,duel_select_type:inv] @removefromduel(last_slot, 5);
+[inv_button3,duel_select_type:inv] @removefromduel(last_slot, 10);
+[inv_button4,duel_select_type:inv] @removefromduel(last_slot, ^max_32bit_int);
+[inv_button5,duel_select_type:inv] @removefromduel(last_slot, null);
+
+[label,removefromduel](int $slot, int $amount)
+if ($amount <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $amount = last_int;
+}
+
+def_obj $obj = inv_getobj(tempinv, $slot);
+def_int $total = inv_total(tempinv, $obj);
+if ($amount < $total) $total = $amount;
+inv_moveitem(tempinv, inv, $obj, $total);
+
+%duelstatus = 0;
+if_settext(duel_select_type:status, "");
+if (.finduid(%duelpartner) = true) {
+    .%duelstatus = 0;
+    .if_settext(duel_select_type:status, "");
+}
+
+[inv_button1,duel_side:inv] @movetoduel(last_slot, 1);
+[inv_button2,duel_side:inv] @movetoduel(last_slot, 5);
+[inv_button3,duel_side:inv] @movetoduel(last_slot, 10);
+[inv_button4,duel_side:inv] @movetoduel(last_slot, ^max_32bit_int);
+[inv_button5,duel_side:inv] @movetoduel(last_slot, null);
+
+
+[label,movetoduel](int $slot, int $amount)
+if ($amount <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $amount = last_int;
+}
+
+def_obj $obj = inv_getobj(inv, $slot);
+
+if (oc_tradeable($obj) = false) {
+    mes("You can't stake this item."); // guess for now
+    return;
+}
+
+if (oc_members($obj) = true & map_members = false) { // cant duel on f2p worlds anyway but just incase
+    mes("You can't stake this item.");
+    return;
+}
+
+def_int $total = inv_total(inv, $obj);
+if ($amount < $total) $total = $amount;
+inv_moveitem(inv, tempinv, $obj, $total);
+
+%duelstatus = 0;
+if_settext(duel_select_type:status, "");
+if (.finduid(%duelpartner) = true) {
+    .%duelstatus = 0;
+    .if_settext(duel_select_type:status, "");
+}
+
+// ---
+
+[proc,duel_arena_checks]()(boolean)
+if (~inzone_coord_pair_table(duel_arena_zones, coord) = true & ~in_duel_arena = false) {
+    mes("You cannot attack players in the challenge area."); // https://youtu.be/r606q1TBTJ8?t=53 https://youtu.be/zcFLOWkTSIo?t=3
+    return(false);
+}
+if (.uid ! %duelpartner) {
+    mes("You can only attack your opponent!"); // https://storage.googleapis.com/tannerdino/images/batwifahat-purpl.jpg
+    return(false);
+}
+if (%duelstatus < 5 & .%duelstatus < 5) {
+    mes("The duel has not started yet!"); // https://youtu.be/64GEUr-lgS8?t=106
+    return(false);
+}
+return(true);
+
+[proc,in_duel_arena]()(boolean)
+if (~inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
+    return(true);
+}
+return(false);
+
+
+[proc,duel_arena_login]
+if (~in_duel_arena = true) {
+    p_telejump(~duel_arena_finish_coord(coord));
+}
+
+
+[applayeru,rotten_tomato]
+if (%rotten_tomato_delay > map_clock) {
+    return; // this is how it works in osrs, doesnt use action_delay (cant tick manip with it)
+}
+inv_delslot(inv, last_useslot);
+
+anim(human_seq_385, 0);
+sound_synth(thrown, 0, 0);
+spotanim_pl(spotanim_30, 96, 0);
+%rotten_tomato_delay = calc(map_clock + 5);
+
+def_coord $random_coord = ~coord_lineofwalk_radius2(.coord, 2);
+// [proc,coord_projectile](coord $coord, coord $coord2, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
+def_int $duration = ~coord_projectile(coord, $random_coord, spotanim_29, 40, 0, 28, 15, 18, 32, 5);
+//sound_synth todo: find sound, and hit spot anim
+// spotanim_map(?, $random_coord, 96, calc($duration/30));

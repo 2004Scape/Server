@@ -10,6 +10,12 @@
 ^exact_south = 2
 ^exact_west = 3
 
+// for directions procs
+^exact_northeast = 4
+^exact_southeast = 5
+^exact_southwest = 6
+^exact_northwest = 7
+
 // for locangle
 ^loc_west = 0
 ^loc_north = 1

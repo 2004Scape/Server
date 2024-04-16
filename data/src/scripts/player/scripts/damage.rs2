@@ -5,6 +5,10 @@
 clearqueue(playerhit_n_retaliate);
 clearqueue(damage_player);
 
+[proc,.combat_clearqueue]
+clearqueue(playerhit_n_retaliate);
+clearqueue(damage_player);
+
 [queue,player_death]
 p_stopaction;
 if_close;
@@ -57,14 +61,14 @@ while ($i < $size) {
     $i = calc($i + 1);
 }
 buildappearance(worn);
+
 ~moveallinv(tempinv,inv);
 ~deactivate_prayers;
-p_telejump(0_50_50_22_22); // todo: randomize
+p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
 anim(null, 0);
-mes("Oh dear, you are dead!");
+mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
 
-stat_heal(hitpoints, 99, 0);
-stat_heal(prayer, 99, 0);
+~stat_reset_all;
 healenergy(10000);
 ~combat_clearqueue;
 ~clear_pk_skull;

@@ -19,6 +19,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [red_flowers]
 name=Flowers
@@ -47,6 +49,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [blue_flowers]
 name=Flowers
@@ -75,6 +79,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [yellow_flowers]
 name=Flowers
@@ -103,6 +109,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [purple_flowers]
 name=Flowers
@@ -131,6 +139,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [orange_flowers]
 name=Flowers
@@ -159,6 +169,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [mixed_flowers]
 name=Flowers
@@ -187,6 +199,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [white_flowers]
 name=Flowers
@@ -215,6 +229,8 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack
 
 [black_flowers]
 name=Flowers
@@ -243,3 +259,5 @@ param=stabattack,-100
 param=slashattack,-100
 param=crushattack,-50
 param=strengthbonus,-10
+param=crushattack_anim,human_blunt_stab
+param=crush_sound,flower_attack

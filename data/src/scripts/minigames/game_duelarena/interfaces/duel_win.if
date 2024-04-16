@@ -702,7 +702,7 @@ width=36
 height=36
 graphic=steelborder2,0
 
-[com_88]
+[spoils]
 type=inv
 x=109
 y=92
@@ -873,7 +873,7 @@ shadowed=yes
 text=Combat level:
 colour=0xAA8822
 
-[com_105]
+[combat_level]
 type=text
 x=406
 y=121
@@ -884,7 +884,7 @@ shadowed=yes
 text=126
 colour=0xAAAAAA
 
-[com_106]
+[displayname]
 type=text
 x=365
 y=97

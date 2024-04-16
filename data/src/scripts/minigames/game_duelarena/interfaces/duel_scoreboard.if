@@ -759,7 +759,7 @@ text=Close Window
 colour=0x808080
 overcolour=0xFFFFFF
 
-[com_93]
+[duel1]
 type=text
 x=154
 y=78
@@ -771,7 +771,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_94]
+[duel2]
 type=text
 x=154
 y=102
@@ -783,7 +783,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_95]
+[duel3]
 type=text
 x=154
 y=126
@@ -795,7 +795,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_96]
+[duel4]
 type=text
 x=154
 y=150
@@ -807,7 +807,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_97]
+[duel5]
 type=text
 x=154
 y=174
@@ -819,7 +819,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_98]
+[duel6]
 type=text
 x=154
 y=198
@@ -831,7 +831,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_99]
+[duel7]
 type=text
 x=154
 y=222
@@ -843,7 +843,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_100]
+[duel8]
 type=text
 x=154
 y=246
@@ -855,7 +855,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_101]
+[duel9]
 type=text
 x=154
 y=270
@@ -867,7 +867,7 @@ shadowed=yes
 text=Crunchy (126) beat Crunchy2 (126)
 colour=0xAAAAAA
 
-[com_102]
+[duel10]
 type=text
 x=154
 y=294

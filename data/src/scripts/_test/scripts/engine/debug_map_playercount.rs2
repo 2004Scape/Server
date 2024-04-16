@@ -1,0 +1,2 @@
+[debugproc,map_playercount]
+mes(tostring(map_playercount(0_52_50_0_3, 0_53_51_1_61))); // duel arena

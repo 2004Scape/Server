@@ -1,0 +1,184 @@
+[label,start_duel]
+def_coord $random_coord1;
+def_coord $random_coord2;
+$random_coord1, $random_coord2 = ~duel_arena_coords;
+
+if ($random_coord1 = null | $random_coord2 = null) {
+    %duelstatus = 0;
+    .%duelstatus = 0;
+    %duelpartner = null;
+    .%duelpartner = null;
+    queue(duel_arena_full, 0);
+    ~.mesbox("All arenas of this type are full! Select another type of arena, try|again in a few minutes or try a different server."); // https://youtu.be/TcrIr9O92sw?t=89
+    return;
+}
+p_telejump($random_coord1);
+.p_telejump($random_coord2);
+
+p_stopaction;
+.p_stopaction;
+// only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
+if (testbit(%duel_settings, ^no_prayer) = true) {
+    ~deactivate_prayers;
+    ~.deactivate_prayers;
+}
+
+// Doesnt rest stats.
+// - https://youtu.be/zMhQfzn4M0Y?list=PLn23LiLYLb1Zo7wVV7wY2Zj1VV4zz6LBK&t=64
+// But, reset buffs only if no potions is selected:
+// - https://web.archive.org/web/20050930213502/http://runevillage.com:80/rs2specialDuelingarena.php
+//      - "No Potions: This means you can’t use Potions, if you used a Potion before the Duel its effects will be returned to normal."
+// - In 2006, if you had the "No drinks" option selected, the 2nd menu would show  "Boosted stats will be restored." https://imgur.com/ETH1z4L
+if (testbit(%duel_settings, ^no_potions) = true) {
+    ~stat_reset_boosts;
+    ~.stat_reset_boosts;
+}
+
+if (testbit(%duel_settings, ^no_weapons) = true) {
+    ~unequip_duel(duel_arena_weapon_slots);
+    ~.unequip_duel(duel_arena_weapon_slots);
+}
+if (testbit(%duel_settings, ^no_armour) = true) {
+    ~unequip_duel(duel_arena_armour_slots);
+    ~.unequip_duel(duel_arena_armour_slots);
+}
+if (testbit(%duel_settings, ^no_jewelry) = true) {
+    ~unequip_duel(duel_arena_jewelry_slots);
+    ~.unequip_duel(duel_arena_jewelry_slots);
+}
+
+hint_player(.uid);
+.hint_player(uid);
+
+if (~duel_arena_movement_check = true) {
+    setmovecheck(duel_arena_no_move);
+    //.setmovecheck(duel_arena_no_move);
+}
+
+softtimer(duel_arena_start_3, 3); // todo: confirm these timings
+//.softtimer(duel_arena_start_3, 2);
+
+
+[proc,duel_arena_coords]()(coord, coord)
+// random coord between 2 coords, checks if map blocked and not inside dueler
+def_coord $coord1;
+def_coord $coord2;
+def_int $i = 0;
+def_int $random_arena;
+// if all arenas are full, return null
+if (~duel_arena_obstacles_check = true) {
+    def_int $obstacle_arenas = db_getfieldcount(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair);
+    while ($i < $obstacle_arenas) {
+        if (map_playercount(db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
+            $random_arena = ~random_range($i, $obstacle_arenas);
+            if ($i = calc($obstacle_arenas - 1)) {
+                return(null, null); // if its the last one and it fails, return null
+            }
+        }
+        $i = calc($i + 1);
+    }
+    $coord1, $coord2 = db_getfield(duel_arena_obstacle_fight_zones, coord_pair_table:coord_pair, $random_arena);
+} else {
+    def_int $normal_arenas = db_getfieldcount(duel_arena_fight_zones, coord_pair_table:coord_pair);
+    $i = 0;
+    while ($i < $normal_arenas) {
+        if (map_playercount(db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $i)) >= 24) {
+            $random_arena = ~random_range($i, $normal_arenas);
+            if ($i = calc($normal_arenas - 1)) {
+                return(null, null);
+            }
+        }
+        $i = calc($i + 1);
+    }
+    $coord1, $coord2 = db_getfield(duel_arena_fight_zones, coord_pair_table:coord_pair, $random_arena);
+}
+
+def_int $x1 = coordx($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z1 = coordz($coord1);
+def_int $z2 = coordz($coord2);
+def_coord $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+def_coord $random_coord2 = $random_coord1;
+
+$i = 0;
+while (map_blocked($random_coord1) = true) {
+    $random_coord1 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+    $i = calc($i + 1);
+    if ($i = 50) {
+        return(null, null); // no way this is reached
+    }
+}
+
+
+$i = 0;
+if (testbit(%duel_settings, ^no_movement) = true) {
+    while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1 | lineofwalk($random_coord1, $random_coord2) = false){
+        switch_int (random(4)) {
+            case 0: $random_coord2 = movecoord($random_coord1, 1, 0, 0);
+            case 1: $random_coord2 = movecoord($random_coord1, -1, 0, 0);
+            case 2: $random_coord2 = movecoord($random_coord1, 0, 0, 1);
+            case 3: $random_coord2 = movecoord($random_coord1, 0, 0, -1);
+        }
+        $i = calc($i + 1);
+        if ($i = 50) {
+            return(null, null); // no way this is reached
+        }
+    }
+} else {
+    while (map_blocked($random_coord2) = true | $random_coord2 = $random_coord1) {
+        $random_coord2 = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+        $i = calc($i + 1);
+        if ($i = 50) {
+            return(null, null); // no way this is reached
+        }
+    }
+}
+return($random_coord1, $random_coord2);
+
+
+[softtimer,duel_arena_start_3]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_3);
+    return;
+}
+say("3");
+softtimer(duel_arena_start_2, 3);
+clearsofttimer(duel_arena_start_3);
+
+[softtimer,duel_arena_start_2]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_2);
+    return;
+}
+say("2");
+softtimer(duel_arena_start_1, 3);
+clearsofttimer(duel_arena_start_2);
+
+[softtimer,duel_arena_start_1]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_1);
+    return;
+}
+say("1");
+softtimer(duel_arena_start_fight, 3);
+clearsofttimer(duel_arena_start_1);
+
+[softtimer,duel_arena_start_fight]
+if (~in_duel_arena = false) {
+    clearsofttimer(duel_arena_start_fight);
+    return;
+}
+say("FIGHT!");
+%duelstatus = 5;
+clearsofttimer(duel_arena_start_fight);
+
+[movecheck,duel_arena_no_move]()(boolean)
+if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
+    p_stopaction;
+    return(false);
+}
+return(true);
+
+
+[queue,duel_arena_full]
+~mesbox("All arenas of this type are full! Select another type of arena, try|again in a few minutes or try a different server."); // https://youtu.be/TcrIr9O92sw?t=89

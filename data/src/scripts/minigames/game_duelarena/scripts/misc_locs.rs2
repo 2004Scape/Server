@@ -14,3 +14,19 @@ p_arrivedelay;
 
 [oploc3,loc_3194]
 ~open_chest(loc_3193);
+
+// gates https://web.archive.org/web/20060428031722/http://www.runecrypt.com:80/index.php?pid=202
+[oploc1,loc_3197]
+~require_members_gate;
+~open_gate;
+
+[oploc1,loc_3198]
+~require_members_gate;
+def_coord $orig_coord = loc_coord;
+loc_findallzone(~get_pair_coord($orig_coord, loc_angle, true));
+while (loc_findnext = true) {
+    if (distance($orig_coord, loc_coord) <= 1 & loc_category = gate_main_closed) {
+        ~open_gate;
+        return;
+    }
+}

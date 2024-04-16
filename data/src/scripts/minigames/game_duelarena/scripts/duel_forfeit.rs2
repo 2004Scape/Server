@@ -1,0 +1,43 @@
+[oploc1,duel_entrance_1] @duel_forfeit;
+[oploc1,duel_entrance_2] @duel_forfeit;
+[oploc1,duel_entrance_3] @duel_forfeit;
+[oploc1,duel_entrance_4] @duel_forfeit;
+[oploc1,duel_trapdoor] @duel_forfeit;
+
+[label,duel_forfeit]
+if (~duel_arena_forfeit_check = false) {
+    return;
+}
+p_telejump(~duel_arena_finish_coord(coord));
+if (.finduid(%duelpartner) = true)  {
+    if (.p_finduid(%duelpartner) = true) {
+        .p_telejump(~duel_arena_finish_coord(.coord));
+        // todo: queue win on other player
+        .p_stopaction;
+        ~.stat_reset_all;
+        .healenergy(10000);
+        ~.combat_clearqueue;
+        ~.clear_poison;
+        ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
+        .%duelpartner = null;
+        .%duelstatus = 0;
+        ~duel_adjust_scoreboard(.displayname, ~.player_combat_level, displayname, ~player_combat_level);
+    }
+}
+def_int $i = 0;
+while ($i < inv_size(duel_arena_arrows)) {
+    if (inv_getobj(duel_arena_arrows, $i) ! null) {
+        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+        inv_movefromslot(duel_arena_arrows, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+
+p_stopaction;
+~stat_reset_all;
+healenergy(10000);
+~combat_clearqueue;
+~clear_poison;
+~update_all(inv_getobj(worn, ^wearpos_rhand));
+%duelpartner = null;
+%duelstatus = 0;

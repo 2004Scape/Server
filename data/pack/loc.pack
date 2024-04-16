@@ -3109,10 +3109,10 @@
 3108=loc_3108
 3109=loc_3109
 3110=loc_3110
-3111=loc_3111
-3112=loc_3112
-3113=loc_3113
-3114=loc_3114
+3111=duel_entrance_1
+3112=duel_entrance_2
+3113=duel_entrance_3
+3114=duel_entrance_4
 3115=loc_3115
 3116=loc_3116
 3117=loc_3117
@@ -3201,7 +3201,7 @@
 3200=loc_3200
 3201=loc_3201
 3202=loc_3202
-3203=loc_3203
+3203=duel_trapdoor
 3204=loc_3204
 3205=loc_3205
 3206=loc_3206

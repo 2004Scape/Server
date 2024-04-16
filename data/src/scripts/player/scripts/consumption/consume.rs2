@@ -97,6 +97,10 @@ if (oc_members($obj) = true) {
     ~require_members_use_item;
 }
 
+if (~duel_arena_consume_check($obj) = false) {
+    return;
+}
+
 if ($eat_delay ! null) {
     if (%eat_delay >= map_clock) {
         return;

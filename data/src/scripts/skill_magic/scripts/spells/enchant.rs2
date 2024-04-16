@@ -78,6 +78,10 @@ if (~wilderness_level(coord) > 30) {
     mes("You can't use this teleport after level 30 wilderness.");
     return;
 }
+if (~in_duel_arena = true) {
+    mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
+    return;
+}
 mes($message);
 switch_int($choice) {
     case 1: ~player_teleport_normal(0_48_54_15_40);
@@ -95,6 +99,10 @@ if (~wilderness_level(coord) > 20) {
     // yes it actually says this in osrs
     mes("A mysterious force blocks your teleport spell!");
     mes("You can't use this teleport after level 20 wilderness.");
+    return;
+}
+if (~in_duel_arena = true) {
+    mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
     return;
 }
 def_obj $item = last_item;

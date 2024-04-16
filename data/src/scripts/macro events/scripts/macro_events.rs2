@@ -28,6 +28,10 @@ if (%macro_event > 0) {
 // - smithing at furnace. Confirmed? https://youtu.be/a6NobmSGBYw
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
+// area check here, because stuff like bones and alching for example can spawn random events.
+if (~in_duel_arena = true) {
+    return;
+}
 if (~macro_event_general_active = true) {
     return;
 }

@@ -1,0 +1,25 @@
+[oploc1,loc_3192]
+if_settext(duel_scoreboard:duel1, %duel1);
+if_settext(duel_scoreboard:duel2, %duel2);
+if_settext(duel_scoreboard:duel3, %duel3);
+if_settext(duel_scoreboard:duel4, %duel4);
+if_settext(duel_scoreboard:duel5, %duel5);
+if_settext(duel_scoreboard:duel6, %duel6);
+if_settext(duel_scoreboard:duel7, %duel7);
+if_settext(duel_scoreboard:duel8, %duel8);
+if_settext(duel_scoreboard:duel9, %duel9);
+if_settext(duel_scoreboard:duel10, %duel10);
+if_openmainmodal(duel_scoreboard);
+
+
+[proc,duel_adjust_scoreboard](string $winner, int $winner_combat_level, string $loser, int $loser_combat_level)
+%duel10 = %duel9;
+%duel9 = %duel8;
+%duel8 = %duel7;
+%duel7 = %duel6;
+%duel6 = %duel5;
+%duel5 = %duel4;
+%duel4 = %duel3;
+%duel3 = %duel2;
+%duel2 = %duel1;
+%duel1 = "<$winner> (<tostring($winner_combat_level)> beat <$loser> (<tostring($loser_combat_level)>)";

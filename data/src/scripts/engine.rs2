@@ -46,6 +46,7 @@
 [command,.anim](seq $anim, int $delay)
 [command,buffer_full]()(int)
 [command,buildappearance](inv $inv)
+[command,.buildappearance](inv $inv)
 [command,cam_moveto](coord $sourceCoord, int $sourceHeight, int $moveSpeed, int $moveMultiplier)
 [command,cam_lookat](coord $destCoord, int $destHeight, int $rotationSpeed, int $rotationMultiplier)
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
@@ -56,6 +57,7 @@
 [command,.displayname]()(string)
 [command,facesquare](coord $coord)
 [command,healenergy](int $amount)
+[command,.healenergy](int $amount)
 [command,if_close]
 [command,.if_close]
 [command,last_com]()(component)
@@ -71,13 +73,17 @@
 [command,p_arrivedelay]
 [command,p_countdialog]
 [command,p_delay](int $delay)
+[command,.p_delay](int $delay)
 [command,p_opheld](int $op, int $inv, int $slot)
 [command,p_oploc](int $op)
 [command,p_opnpc](int $op)
 [command,p_opnpct](component $spell)
 [command,p_pausebutton]
+[command,.p_pausebutton]
 [command,p_stopaction]
+[command,.p_stopaction]
 [command,p_telejump](coord $coord)
+[command,.p_telejump](coord $coord)
 [command,p_walk](coord $dest)
 [command,.p_walk](coord $dest)
 [command,say](string $text)
@@ -100,17 +106,20 @@
 [command,p_logout]
 [command,if_setcolour](component $component, int $colour)
 [command,if_openchat](interface $interface)
+[command,.if_openchat](interface $interface)
 [command,if_openmainmodalsideoverlay](interface $interface1, interface $interface2)
 [command,.if_openmainmodalsideoverlay](interface $interface1, interface $interface2)
 [command,if_sethide](component $component, boolean $hide)
 [command,.if_sethide](component $component, boolean $hide)
 [command,if_setobject](component $component, obj $obj, int $scale)
+[command,.if_setobject](component $component, obj $obj, int $scale)
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
 [command,if_setrecol](component $component, int $src, int $dest)
 [command,if_settabflash](int $tab)
 [command,if_setanim](component $component,seq $anim)
 [command,if_settab](interface $interface, int $tab)
+[command,.if_settab](interface $interface, int $tab)
 [command,if_openmainmodal](interface $interface)
 [command,.if_openmainmodal](interface $interface)
 [command,if_openmainoverlay](interface $interface)
@@ -130,14 +139,17 @@
 [command,text_gender](string $male_text, string $female_text)(string)
 [command,midi_song](string $song)
 [command,midi_jingle](string $jingle, int $length)
+[command,.midi_jingle](string $jingle, int $length)
 [command,hint_coord](int $offset, coord $coord, int $height)
 [command,softtimer]/*(softtimer $timer, int $interval, ...)*/
+[command,.softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
+[command,.hint_stop]
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
@@ -148,6 +160,7 @@
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]
 [command,p_teleport](coord $coord)
+[command,.p_teleport](coord $coord)
 [command,bas_readyanim](seq $seq)
 [command,bas_turnonspot](seq $seq)
 [command,bas_walk_f](seq $seq)
@@ -155,12 +168,22 @@
 [command,bas_walk_l](seq $seq)
 [command,bas_walk_r](seq $seq)
 [command,bas_running](seq $seq)
+[command,.bas_readyanim](seq $seq)
+[command,.bas_turnonspot](seq $seq)
+[command,.bas_walk_f](seq $seq)
+[command,.bas_walk_b](seq $seq)
+[command,.bas_walk_l](seq $seq)
+[command,.bas_walk_r](seq $seq)
+[command,.bas_running](seq $seq)
 [command,gender]()(int)
 [command,.gender]()(int)
 [command,hint_npc](npc_uid $npc)
 [command,hint_player](player_uid $player)
+[command,.hint_player](player_uid $player)
 [command,headicons_get]()(int)
+[command,.headicons_get]()(int)
 [command,headicons_set](int $icons)
+[command,.headicons_set](int $icons)
 [command,p_opobj](int $op)
 [command,p_opplayer](int $op)
 [command,.p_opplayer](int $op)

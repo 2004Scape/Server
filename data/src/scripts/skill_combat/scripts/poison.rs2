@@ -57,3 +57,7 @@ if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {
 [proc,clear_poison]
 %poison = 0;
 cleartimer(poison);
+
+[proc,.clear_poison]
+.%poison = 0;
+//.cleartimer(poison);

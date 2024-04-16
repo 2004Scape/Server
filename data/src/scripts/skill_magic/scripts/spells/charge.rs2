@@ -30,7 +30,7 @@ if (p_finduid(uid) = true) {
 [timer,charge]
 %charge_god_spell = sub(%charge_god_spell, 1);
 if (%charge_god_spell < 1) {
-    mes("Your magical charge fades away.");
+    mes("Your magical charge fades away."); // https://youtu.be/nRiXrgWEJ40?t=12
     sound_synth(charge_gone, 0, 0);
     cleartimer(charge);
     return;
