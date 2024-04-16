@@ -238,8 +238,8 @@ category=kolodion
 vislevel=hide
 name=Kolodion
 desc=He's a shape shifter.
-walkanim=seq_841
-readyanim=seq_842
+walkanim=earthwarrior_walk
+readyanim=earthwarrior_ready
 hasalpha=yes
 resizeh=192
 resizev=224
@@ -263,11 +263,11 @@ model4=model_162_idk
 model5=model_176_idk
 model6=model_267_idk
 model7=model_181_idk
-param=attack_anim,seq_843
+param=attack_anim,earthwarrior_death
 param=defend_anim,seq_844
 param=death_anim,seq_845
 param=spawn_anim,human_castteleport_reverse
-// TODO
+// TODO check attack animations again death animation cannot be an attack animation   i think this sHould use seq_844 seq_845 seq_846
 hitpoints=78
 attackrange=5
 category=kolodion

@@ -3949,7 +3949,7 @@ frame8=anim_657
 frame9=anim_2378
 frame10=anim_2079
 
-[Human_ibanstaff_2h_defend]
+[human_ibanstaff_2h_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_854
 frame2=anim_1134
@@ -4146,7 +4146,7 @@ frame8=anim_615
 frame9=anim_2333
 frame10=anim_2029
 
-[seq_399]
+[shadowwarrior_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1849
 frame2=anim_2148
@@ -11917,7 +11917,7 @@ frame13=anim_2204
 frame14=anim_489
 frame15=anim_790
 
-[seq_841]
+[earthwarrior_walk]
 stretches=yes
 frame1=anim_509
 frame2=anim_808
@@ -11928,7 +11928,7 @@ frame6=anim_1965
 frame7=anim_2267
 frame8=anim_547
 
-[seq_842]
+[earthwarrior_ready]
 stretches=yes
 frame1=anim_700
 frame2=anim_988
@@ -11943,7 +11943,7 @@ frame10=anim_2013
 frame11=anim_2313
 frame12=anim_590
 
-[seq_843]
+[earthwarrior_death]
 stretches=yes
 priority=10
 lefthand=hide

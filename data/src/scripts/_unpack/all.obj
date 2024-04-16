@@ -223,7 +223,7 @@ param=strengthbonus,5
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -655,15 +655,10 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,50
-param=crushattack_anim,
-param=crushattack_anim,
-param=crushattack_anim,
 param=ready_baseanim,human_staffready
 param=attackrate,5
 param=crushattack_anim,shadowwarrior_crush
-param=defend_anim,Human_ibanstaff_2h_defend
-param=attack_sound,
-param=defend_sound,
+param=defend_anim,human_ibanstaff_2h_defend
 // osrs use attack seq_401 and defend seq_403 + the weapon was already 1 handed in 2006
 
 [broken_iban_staff]

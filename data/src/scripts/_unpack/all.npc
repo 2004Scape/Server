@@ -310,7 +310,6 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
-param=defend_sound,
 category=guard
 // osrs use currently defend seq_387 and earlier year 2023 seq_378 and 2004-2005 defend seq_388
 
@@ -356,7 +355,6 @@ param=rangedefence,15
 param=damagetype,^ranged_style
 param=attack_anim,human_crossbow
 param=attack_sound,crossbow
-param=defend_sound,
 category=guard
 
 [npc_11]
@@ -803,7 +801,6 @@ param=slashdefence,3
 param=crushdefence,5
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=attack_anim,baxe_slash
 param=attack_sound,baxe_slash
 // osrs side woodcutting guild forester use defend seq_398
 
@@ -1193,7 +1190,6 @@ param=rangedefence,16
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 
 [wyson]
 name=Wyson the gardener
@@ -1287,7 +1283,6 @@ param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
-param=attack_sound,
 
 [npc_40]
 name=Shark
@@ -1529,9 +1524,6 @@ param=damagetype,^stab_style
 param=attack_anim,hellhound_attack
 param=defend_anim,hellhound_block
 param=death_anim,hellhound_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 
 [baby_dragon]
@@ -1710,9 +1702,6 @@ model1=model_2856_npc
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_57]
 vislevel=hide
@@ -1724,9 +1713,6 @@ model1=model_2857_npc
 param=attack_anim,fairy_attack
 param=defend_anim,fairy_block
 param=death_anim,fairy_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_58]
 walkanim=giantspider_walk
@@ -2122,9 +2108,6 @@ model1=model_2930_npc
 param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 
 [npc_73]
@@ -2723,12 +2706,6 @@ strength=14
 defence=14
 magic=18
 param=damagetype,^stab_style
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=undead,^true
 
 [npc_95]
@@ -2751,9 +2728,6 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,wolf_bones
 huntmode=cowardly
 
@@ -2781,9 +2755,6 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,wolf_bones
 huntmode=cowardly
 
@@ -2811,9 +2782,6 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,wolf_bones
 huntmode=cowardly
 
@@ -2827,9 +2795,6 @@ model1=model_2935_npc
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_99]
 name=Guard dog
@@ -2851,9 +2816,6 @@ param=damagetype,^crush_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 
 [npc_100]
@@ -3315,9 +3277,6 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 huntmode=cowardly
 
@@ -3345,9 +3304,6 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 huntmode=cowardly
 
@@ -3438,7 +3394,6 @@ param=damagetype,^crush_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
-param=attack_sound,
 
 [npc_119]
 walkanim=dwarf_walk
@@ -3477,7 +3432,6 @@ param=damagetype,^crush_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
-param=attack_sound,
 huntmode=cowardly
 
 [npc_120]
@@ -3508,7 +3462,6 @@ param=damagetype,^crush_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
-param=attack_sound,
 
 [npc_121]
 walkanim=dwarf_walk
@@ -3537,7 +3490,6 @@ param=damagetype,^crush_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
-param=attack_sound,
 
 [npc_122]
 walkanim=hobgoblin_walk
@@ -3557,9 +3509,6 @@ param=damagetype,^crush_style
 param=attack_anim,hobgoblin_attack
 param=defend_anim,hobgoblin_block
 param=death_anim,hobgoblin_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 
 [npc_123]
@@ -3586,9 +3535,6 @@ param=damagetype,^stab_style
 param=attack_anim,hobgoblin_spear_attack
 param=defend_anim,hobgoblin_block
 param=death_anim,hobgoblin_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 
 [npc_124]
@@ -3637,9 +3583,6 @@ param=damagetype,^crush_style
 param=attack_anim,earthwarrior_crush
 param=defend_anim,earthwarrior_defend
 param=death_anim,earthwarrior_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 // osrs defend animation seq_398
 
@@ -3750,9 +3693,6 @@ param=damagetype,^slash_style
 param=attack_anim,magicaxe_attack
 param=defend_anim,magicaxe_block
 param=death_anim,magicaxe_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,iron_battleaxe
 huntmode=cowardly
 
@@ -3789,9 +3729,6 @@ model1=model_2999_npc
 param=attack_anim,skavid_attack
 param=defend_anim,skavid_block
 param=death_anim,skavid_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [yeti]
 name=Yeti
@@ -3805,9 +3742,6 @@ model1=model_3001_npc
 param=attack_anim,yeti_attack
 param=defend_anim,yeti_block
 param=death_anim,yeti_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [penguin]
 name=Penguin
@@ -3978,9 +3912,6 @@ param=damagetype,^stab_style
 param=attack_anim,mounted_terrorbird_attack
 param=defend_anim,mounted_terrorbird_defend
 param=death_anim,mounted_terrorbird_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_138]
 name=Mounted terrorbird gnome
@@ -4007,9 +3938,6 @@ param=damagetype,^stab_style
 param=attack_anim,mounted_terrorbird_attack
 param=defend_anim,mounted_terrorbird_defend
 param=death_anim,mounted_terrorbird_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_139]
 name=Entrana Fire Bird
@@ -4034,9 +3962,6 @@ param=damagetype,^stab_style
 param=attack_anim,firebird_attack
 param=defend_anim,firebird_block
 param=death_anim,firebird_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_140]
 walkanim=souless_walk
@@ -4057,9 +3982,6 @@ param=damagetype,^crush_style
 param=attack_anim,souless_attack
 param=defend_anim,souless_block
 param=death_anim,souless_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 
 [npc_141]
@@ -4088,9 +4010,6 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,wolf_bones
 huntmode=cowardly
 
@@ -4145,9 +4064,6 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,wolf_bones
 huntmode=cowardly
 
@@ -4185,8 +4101,8 @@ huntmode=cowardly
 
 [npc_145]
 hasalpha=yes
-walkanim=seq_841
-readyanim=seq_842
+walkanim=earthwarrior_walk
+readyanim=earthwarrior_ready
 name=Ice warrior
 desc=The Ice Queen's Royal Guard.
 op2=Attack
@@ -4440,9 +4356,6 @@ param=damagetype,^slash_style
 param=attack_anim,shadowwarrior_crush
 param=defend_anim,shadowwarrior_defend
 param=death_anim,earthwarrior_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 huntmode=cowardly
 
 [dark_wizard_earth]
@@ -4666,9 +4579,8 @@ param=rangedefence,72
 param=attackrate,5
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_sound,
 
 [npc_179]
 name=Black Knight
@@ -4711,9 +4623,8 @@ param=rangedefence,72
 param=attackrate,5
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_sound,
 huntmode=aggressive_melee
 
 [highwayman]
@@ -4824,7 +4735,6 @@ param=strengthbonus,9
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 category=pirate
 
 [npc_183]
@@ -4867,7 +4777,6 @@ param=slashdefence,2
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 category=pirate
 
 [npc_184]
@@ -5022,7 +4931,6 @@ param=crushdefence,11
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 huntmode=cowardly
 
 [monk_of_zamorak_22]
@@ -5153,7 +5061,6 @@ param=crushdefence,6
 param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_defend
-param=attack_sound,
 param=poison_severity,55
 
 [dark_warrior]
@@ -5197,7 +5104,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_sound,
 huntmode=cowardly
 
 [chaos_druid_warrior]
@@ -5238,7 +5144,6 @@ param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-param=defend_sound,
 // osrs defend animation is seq_403
 huntmode=cowardly
 
@@ -5382,7 +5287,6 @@ model9=model_550_obj_wear
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
-param=defend_sound,
 // TODO
 
 [gunthor_the_brave]
@@ -5462,7 +5366,6 @@ model7=model_179_obj_wear
 model8=model_323_obj_wear
 wanderrange=3
 attackrange=5
-param=defend_sound,
 // TODO
 
 [salarin_the_twisted]
@@ -5530,8 +5433,6 @@ param=damagetype,^stab_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
-param=attack_sound,
-param=defend_sound,
 
 [npc_207]
 vislevel=hide
@@ -5746,7 +5647,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
-param=defend_sound,
 
 [npc_254]
 name=Khazard Guard
@@ -5786,7 +5686,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
-param=defend_sound,
 
 [npc_255]
 name=Khazard Guard
@@ -5825,7 +5724,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
-param=defend_sound,
 
 [npc_256]
 name=Khazard Guard
@@ -5865,7 +5763,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
-param=defend_sound,
 
 [npc_257]
 name=Khazard Guard
@@ -5901,7 +5798,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
-param=defend_sound,
 
 [general_khazard]
 name=General Khazard
@@ -5932,8 +5828,6 @@ defence=80
 param=damagetype,^slash_style
 param=attack_anim,seq_413
 param=defend_anim,human_khazard_2h_sword_defend
-param=attack_sound,
-param=defend_sound,
 
 [npc_259]
 vislevel=hide
@@ -6172,9 +6066,6 @@ param=damagetype,^stab_style
 param=attack_anim,hellhound_attack
 param=defend_anim,hellhound_block
 param=death_anim,hellhound_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_270]
 name=Khazard Ogre
@@ -6198,9 +6089,6 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_271]
@@ -6274,7 +6162,6 @@ param=crushdefence,7
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 
 [npc_273]
 name=Lucien
@@ -6352,7 +6239,6 @@ param=rangedefence,51
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 
 [npc_275]
 name=Guardian of Armadyl
@@ -6401,7 +6287,6 @@ param=rangedefence,51
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 param=defend_sound,female_hit
 param=death_sound,female_death
 
@@ -6509,7 +6394,6 @@ param=magicdefence,4
 param=rangedefence,9
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 huntmode=cowardly
 
 [head_thief]
@@ -6544,7 +6428,6 @@ param=rangedefence,9
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 huntmode=cowardly
 
 [doric]
@@ -7239,8 +7122,6 @@ param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [npc_366]
 vislevel=hide
@@ -9605,7 +9486,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
 param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
-param=defend_sound,
 
 [npc_794]
 vislevel=hide
@@ -9670,9 +9550,6 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^crush_style
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [pirate_guard]
 name=Pirate Guard
@@ -9712,8 +9589,6 @@ param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [donovan]
 vislevel=hide
@@ -10235,7 +10110,6 @@ defence=7
 param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_unarmedblock
-param=attack_sound,
 huntmode=aggressive_melee
 // Unknown reason osrs side this npc use unarmed attacks --attack seq_422 defend seq_424--
 
@@ -10284,8 +10158,6 @@ param=rangedefence,19
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [npc_829]
 name=Mercenary
@@ -10332,8 +10204,6 @@ param=rangedefence,19
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [npc_830]
 name=Mercenary Captain
@@ -10385,8 +10255,6 @@ param=rangedefence,19
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [npc_831]
 name=Captain Siad
@@ -10475,8 +10343,6 @@ attackrange=3
 // TODO stats data
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [npc_852]
 name=Ogre chieftain
@@ -10506,9 +10372,6 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 huntmode=cowardly
 
@@ -10576,9 +10439,6 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_857]
@@ -10592,12 +10452,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_858]
 name=Ogre guard
@@ -10610,12 +10467,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_859]
 name=Ogre guard
@@ -10628,12 +10482,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_860]
 name=Ogre guard
@@ -10646,12 +10497,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_861]
 name=Ogre guard
@@ -10664,12 +10512,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_862]
 name=City guard
@@ -10697,9 +10542,6 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_863]
@@ -10809,9 +10651,6 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_871]
@@ -10831,9 +10670,6 @@ respawnrate=51
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_872]
@@ -10883,9 +10719,6 @@ attackrange=4
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_874]
@@ -10908,9 +10741,6 @@ attackrange=4
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_875]
@@ -10933,9 +10763,6 @@ attackrange=4
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_876]
@@ -10958,9 +10785,6 @@ attackrange=5
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 param=death_drop,big_bones
 
 [npc_885]
@@ -11157,7 +10981,6 @@ param=slashdefence,6
 param=crushdefence,8
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
 
 [hazeel]
 vislevel=296
@@ -11231,7 +11054,6 @@ param=slashdefence,6
 param=crushdefence,8
 param=attack_anim,Human_stafforb_pound
 param=defend_anim,Human_stafforb_2h_defend
-param=attack_sound,
 
 [npc_894]
 name=Hazeel Cultist
@@ -11269,7 +11091,6 @@ param=slashdefence,6
 param=crushdefence,8
 param=attack_anim,Human_staff_pound
 param=defend_anim,Human_staff_defend
-param=attack_sound,
 
 [npc_928]
 vislevel=hide
@@ -11343,7 +11164,6 @@ param=strengthbonus,3
 param=rangebonus,7
 param=attack_anim,Human_staff_pound
 param=defend_anim,Human_staff_defend
-param=attack_sound,
 
 [npc_930]
 name=Ungadulu
@@ -11388,7 +11208,6 @@ param=strengthbonus,3
 param=rangebonus,7
 param=attack_anim,Human_staff_pound
 param=defend_anim,Human_staff_defend
-param=attack_sound,
 
 [jungle_savage]
 name=Jungle Savage
@@ -11432,7 +11251,6 @@ param=strengthbonus,10
 param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
 param=defend_anim,human_khazard_spear_defend
-param=attack_sound,
 huntmode=cowardly
 
 [npc_932]
@@ -11596,12 +11414,7 @@ param=slashdefence,22
 param=crushdefence,20
 param=magicdefence,-1
 param=rangedefence,20
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
+
 
 [npc_937]
 name=Irvig Senay
@@ -11638,12 +11451,6 @@ param=slashdefence,31
 param=crushdefence,29
 param=magicdefence,-1
 param=rangedefence,29
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_938]
 name=Ranalph Devere
@@ -11681,12 +11488,6 @@ param=stabdefence,38
 param=slashdefence,40
 param=crushdefence,36
 param=rangedefence,38
-param=attack_anim,
-param=defend_anim,
-param=death_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
 
 [npc_939]
 name=Boulder
@@ -12158,8 +11959,6 @@ param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [sir_carl]
 name=Sir Carl
@@ -12201,8 +12000,6 @@ param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [sir_harry]
 name=Sir Harry
@@ -12244,8 +12041,6 @@ param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,
-param=defend_sound,
 
 [npc_991]
 size=2
@@ -12752,12 +12547,6 @@ resizev=180
 op5=Attack
 vislevel=6
 model1=model_3445_obj
-param=attack_anim,
-param=defend_anim,
-param=attack_sound,
-param=defend_sound,
-param=death_sound,
-param=death_anim,
 
 [npc_1016]
 vislevel=hide

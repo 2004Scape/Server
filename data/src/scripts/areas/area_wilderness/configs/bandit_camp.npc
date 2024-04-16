@@ -104,7 +104,7 @@ param=defend_sound,female_hit
 param=death_sound,female_death
 category=bandit_camp_leader
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 huntmode=cowardly
 
@@ -147,7 +147,7 @@ param=crushdefence,10
 param=damagetype,^slash_style
 category=bandit_camp_leader
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 huntmode=cowardly
 
@@ -190,6 +190,6 @@ param=crushdefence,10
 param=damagetype,^slash_style
 category=bandit_camp_leader
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 huntmode=cowardly
