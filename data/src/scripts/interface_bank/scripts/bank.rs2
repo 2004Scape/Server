@@ -45,7 +45,7 @@ if (inv_itemspace($inv, $obj, $amount, inv_size($inv)) = false){
     if (oc_stackable($obj) = true) {
         // https://youtu.be/8vNeG5bHg0Q?t=443
         mes("You're not going to be able to carry all that!");
-    } else if (inv_freespace(inv) = 0) {
+    } else if (inv_freespace($inv) = 0) {
         // https://youtu.be/Zv7Wh3TIDOc?t=22
         mes("You don't have enough inventory space.");
         return;
