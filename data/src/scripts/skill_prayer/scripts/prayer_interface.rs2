@@ -70,14 +70,15 @@ if (getqueue(start_draining) < 1) { // it might be queue(start_draining, getqueu
 
 
 [queue,start_draining]
-// https://youtu.be/UAWSeOYLVHU 5t softtimer
-softtimer(drain_prayer, 5);
+// https://youtu.be/UAWSeOYLVHU 5t
+// https://youtu.be/cQZhL4VP84A?t=179 normal timer instead of softtimer
+settimer(drain_prayer, 5);
 
-[softtimer,drain_prayer]
+[timer,drain_prayer]
 %prayer_drain_counter = calc(%prayer_drain_effect * 5 + max(%prayer_drain_counter, 0));
 // 60 + equipment bonus * 2
 if (~prayers_are_active = false) {
-    clearsofttimer(drain_prayer);
+    cleartimer(drain_prayer);
     //clearqueue(start_draining);
     return;
 }
@@ -87,7 +88,7 @@ if (%prayer_drain_counter >= max(%prayer_drain_resistance, 60)) {
     %prayer_drain_counter = sub(%prayer_drain_counter, multiply(%prayer_drain_resistance, $reduce_points));
     stat_sub(prayer, $reduce_points, 0);
     if (stat(prayer) = 0) {
-        clearsofttimer(drain_prayer);
+        cleartimer(drain_prayer);
         //clearqueue(start_draining);
         mes("You have run out of prayer points, you must recharge at an altar.");
         ~deactivate_prayers;
@@ -207,6 +208,6 @@ if ($headicon > 0) {
     ~headicon_del($headicon);
 }
 if (~prayers_are_active = false) {
-    clearsofttimer(drain_prayer);
+    cleartimer(drain_prayer);
     //clearqueue(start_draining);
 }

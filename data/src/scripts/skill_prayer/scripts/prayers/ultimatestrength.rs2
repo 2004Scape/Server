@@ -15,7 +15,7 @@ if (%prayer_ultimatestrength = ^true) {
         ~headicon_del($headicon);
     }
     if (~prayers_are_active = false) {
-        clearsofttimer(drain_prayer);
+        cleartimer(drain_prayer);
         //clearqueue(start_draining);
     }
 } else {
