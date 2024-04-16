@@ -1,128 +1,128 @@
 [prayer_thick_skin]
 table=prayers
-data=prayer,prayer:prayer_thickskin
-data=prayer_deactivate,prayer:prayer_rockskin
-data=prayer_deactivate,prayer:prayer_steelskin
+data=prayer,^prayer_thickskin
+data=prayer_deactivate,^prayer_rockskin
+data=prayer_deactivate,^prayer_steelskin
 data=name,Thick Skin
 data=level,1
 data=sound,thick_skin
 
 [prayer_strength_burst]
 table=prayers
-data=prayer,prayer:prayer_strengthburst
-data=prayer_deactivate,prayer:prayer_superhumanstrength
-data=prayer_deactivate,prayer:prayer_ultimatestrength
+data=prayer,^prayer_strengthburst
+data=prayer_deactivate,^prayer_superhumanstrength
+data=prayer_deactivate,^prayer_ultimatestrength
 data=name,Burst of Strength
 data=level,4
 data=sound,strength_burst
 
 [prayer_clarity]
 table=prayers
-data=prayer,prayer:prayer_clarity
-data=prayer_deactivate,prayer:prayer_improvedreflexes
-data=prayer_deactivate,prayer:prayer_incrediblereflexes
+data=prayer,^prayer_clarity
+data=prayer_deactivate,^prayer_improvedreflexes
+data=prayer_deactivate,^prayer_incrediblereflexes
 data=name,Clarity of Thought
 data=level,7
 data=sound,clarity
 
 [prayer_rock_skin]
 table=prayers
-data=prayer,prayer:prayer_rockskin
-data=prayer_deactivate,prayer:prayer_thickskin
-data=prayer_deactivate,prayer:prayer_steelskin
+data=prayer,^prayer_rockskin
+data=prayer_deactivate,^prayer_thickskin
+data=prayer_deactivate,^prayer_steelskin
 data=name,Rock Skin
 data=level,10
 data=sound,rock_skin
 
 [prayer_superhuman_strength]
 table=prayers
-data=prayer,prayer:prayer_superhumanstrength
-data=prayer_deactivate,prayer:prayer_strengthburst
-data=prayer_deactivate,prayer:prayer_ultimatestrength
+data=prayer,^prayer_superhumanstrength
+data=prayer_deactivate,^prayer_strengthburst
+data=prayer_deactivate,^prayer_ultimatestrength
 data=name,Superhuman Strength
 data=level,13
 data=sound,superhuman_strength
 
 [prayer_improved_reflexes]
 table=prayers
-data=prayer,prayer:prayer_improvedreflexes
-data=prayer_deactivate,prayer:prayer_clarity
-data=prayer_deactivate,prayer:prayer_incrediblereflexes
+data=prayer,^prayer_improvedreflexes
+data=prayer_deactivate,^prayer_clarity
+data=prayer_deactivate,^prayer_incrediblereflexes
 data=name,Improved Reflexes
 data=level,16
 data=sound,improved_reflexes
 
 [prayer_rapid_restore]
 table=prayers
-data=prayer,prayer:prayer_rapidrestore
+data=prayer,^prayer_rapidrestore
 data=name,Rapid Restore
 data=level,19
 data=sound,rapid_restore
 
 [prayer_rapid_heal]
 table=prayers
-data=prayer,prayer:prayer_rapidheal
+data=prayer,^prayer_rapidheal
 data=name,Rapid Heal
 data=level,22
 data=sound,rapid_heal
 
 [prayer_protect_item]
 table=prayers
-data=prayer,prayer:prayer_protectitems
+data=prayer,^prayer_protectitems
 data=name,Protect Item
 data=level,25
 data=sound,protect_items
 
 [prayer_steel_skin]
 table=prayers
-data=prayer,prayer:prayer_steelskin
-data=prayer_deactivate,prayer:prayer_thickskin
-data=prayer_deactivate,prayer:prayer_rockskin
+data=prayer,^prayer_steelskin
+data=prayer_deactivate,^prayer_thickskin
+data=prayer_deactivate,^prayer_rockskin
 data=name,Steel Skin
 data=level,28
 data=sound,steel_skin
 
 [prayer_ultimate_strength]
 table=prayers
-data=prayer,prayer:prayer_ultimatestrength
-data=prayer_deactivate,prayer:prayer_strengthburst
-data=prayer_deactivate,prayer:prayer_superhumanstrength
+data=prayer,^prayer_ultimatestrength
+data=prayer_deactivate,^prayer_strengthburst
+data=prayer_deactivate,^prayer_superhumanstrength
 data=name,Ultimate Strength
 data=level,31
 data=sound,ultimate_strength
 
 [prayer_incredible_reflexes]
 table=prayers
-data=prayer,prayer:prayer_incrediblereflexes
-data=prayer_deactivate,prayer:prayer_clarity
-data=prayer_deactivate,prayer:prayer_improvedreflexes
+data=prayer,^prayer_incrediblereflexes
+data=prayer_deactivate,^prayer_clarity
+data=prayer_deactivate,^prayer_improvedreflexes
 data=name,Incredible Reflexes
 data=level,34
 data=sound,incredible_reflexes
 
 [prayer_protect_from_magic]
 table=prayers
-data=prayer,prayer:prayer_protectfrommagic
-data=prayer_deactivate,prayer:prayer_protectfrommissiles
-data=prayer_deactivate,prayer:prayer_protectfrommelee
+data=prayer,^prayer_protectfrommagic
+data=prayer_deactivate,^prayer_protectfrommissiles
+data=prayer_deactivate,^prayer_protectfrommelee
 data=name,Protect from Magic
 data=level,37
 data=sound,protect_from_magic
 
 [prayer_protect_from_missiles]
 table=prayers
-data=prayer,prayer:prayer_protectfrommissiles
-data=prayer_deactivate,prayer:prayer_protectfrommagic
-data=prayer_deactivate,prayer:prayer_protectfrommelee
+data=prayer,^prayer_protectfrommissiles
+data=prayer_deactivate,^prayer_protectfrommagic
+data=prayer_deactivate,^prayer_protectfrommelee
 data=name,Protect from Missiles
 data=level,40
 data=sound,protect_from_missiles
 
 [prayer_protect_from_melee]
 table=prayers
-data=prayer,prayer:prayer_protectfrommelee
-data=prayer_deactivate,prayer:prayer_protectfrommagic
-data=prayer_deactivate,prayer:prayer_protectfrommissiles
+data=prayer,^prayer_protectfrommelee
+data=prayer_deactivate,^prayer_protectfrommagic
+data=prayer_deactivate,^prayer_protectfrommissiles
 data=name,Protect from Melee
 data=level,43
 data=sound,protect_from_melee
