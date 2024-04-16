@@ -27,7 +27,7 @@ param=strengthbonus,10
 param=attackrate,7
 param=slashattack_anim,human_2h_slash
 param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
 
@@ -60,7 +60,7 @@ param=strengthbonus,14
 param=attackrate,7
 param=slashattack_anim,human_2h_slash
 param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
 
@@ -91,7 +91,7 @@ param=strengthbonus,22
 param=attackrate,7
 param=slashattack_anim,human_2h_slash
 param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
 
@@ -124,7 +124,7 @@ param=strengthbonus,26
 param=attackrate,7
 param=slashattack_anim,human_2h_slash
 param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
 
@@ -157,7 +157,7 @@ param=strengthbonus,31
 param=attackrate,7
 param=slashattack_anim,human_2h_slash
 param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
 
@@ -190,7 +190,7 @@ param=strengthbonus,44
 param=attackrate,7
 param=slashattack_anim,human_2h_slash
 param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
 
@@ -223,6 +223,7 @@ param=strengthbonus,70
 param=attackrate,7
 param=slashattack_anim,human_2h_slash
 param=crushattack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
+// all 2h swords osrs use defend seq_410

@@ -23,8 +23,8 @@ param=slashattack,-4
 param=crushattack,11
 param=magicattack,-4
 param=strengthbonus,11
-param=crushattack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=crushattack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
 
 [bronze_warhammer]
@@ -52,8 +52,8 @@ param=slashattack,-4
 param=crushattack,10
 param=magicattack,-4
 param=strengthbonus,8
-param=crushattack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=crushattack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
 
 [steel_warhammer]
@@ -80,8 +80,8 @@ param=slashattack,-4
 param=crushattack,18
 param=magicattack,-4
 param=strengthbonus,16
-param=crushattack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=crushattack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
 
 [black_warhammer]
@@ -110,8 +110,8 @@ param=slashattack,-4
 param=crushattack,22
 param=magicattack,-4
 param=strengthbonus,22
-param=crushattack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=crushattack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
 
 [mithril_warhammer]
@@ -140,8 +140,8 @@ param=slashattack,-4
 param=crushattack,25
 param=magicattack,-4
 param=strengthbonus,27
-param=crushattack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=crushattack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
 
 [adamant_warhammer]
@@ -170,8 +170,8 @@ param=slashattack,-4
 param=crushattack,35
 param=magicattack,-4
 param=strengthbonus,39
-param=crushattack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=crushattack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
 
 [rune_warhammer]
@@ -199,6 +199,7 @@ param=slashattack,-4
 param=crushattack,53
 param=magicattack,-4
 param=strengthbonus,48
-param=crushattack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=crushattack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
+// osrs uses seq_403 in all Warhammer weapons used by the player.

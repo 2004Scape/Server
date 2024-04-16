@@ -57,6 +57,8 @@ attack=37
 strength=37
 defence=34
 magic=40
+param=attack_anim,human_unarmedkick
+param=attack_sound,unarmed_kick
 
 [imp_grayzag]
 name=Imp
