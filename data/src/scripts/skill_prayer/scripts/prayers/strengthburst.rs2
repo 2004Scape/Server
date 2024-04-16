@@ -1,0 +1,30 @@
+[if_button,prayer:prayer_strengthburst]
+if_close;
+queue(prayer_activate, 0, 4);
+
+[label,activate_prayer_strengthburst]
+def_dbrow $data = ~get_prayer_data(^prayer_strengthburst);
+if (%prayer_strengthburst = ^true) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_strengthburst));
+    %prayer_strengthburst = ^false;
+    sound_synth(cancel_prayer, 0, 0);
+    def_int $headicon = enum(int, int, prayer_headicons, ^prayer_strengthburst);
+    if ($headicon > 0) {
+        ~headicon_del($headicon);
+    }
+    if (~prayers_are_active = false) {
+        clearsofttimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer_strengthburst = ^false;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer_strengthburst = ^false;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer_strengthburst = ^true;
+        ~prayer_activate($data);
+    }
+}
