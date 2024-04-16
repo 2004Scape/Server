@@ -625,6 +625,11 @@ param=magicdefence,-6
 param=rangedefence,20
 param=attackrate,5
 param=damagetype,^crush_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_slash
+// osrs uses these seqs attack seq_422 defend seq_425
+// for some strange reason the attack animations are missing
 
 [straven]
 name=Straven

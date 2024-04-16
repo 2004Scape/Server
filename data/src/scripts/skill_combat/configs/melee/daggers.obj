@@ -30,7 +30,7 @@ param=magicdefence,1
 param=strengthbonus,4
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -66,7 +66,7 @@ param=magicdefence,1
 param=strengthbonus,3
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -94,7 +94,7 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -130,7 +130,7 @@ param=magicdefence,1
 param=strengthbonus,10
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -166,7 +166,7 @@ param=magicdefence,1
 param=strengthbonus,14
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -202,7 +202,7 @@ param=magicdefence,1
 param=strengthbonus,24
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -231,11 +231,13 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
-param=stabattack_anim,human_sword_stab
-param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=stabattack_anim,human_ddagger_stab
+param=slashattack_anim,human_ddagger_slash
+param=defend_anim,human_dagger_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// TODO check sounds 
+// osrs use defend animation seq_378
 
 [black_dagger]
 model=model_2672_obj
@@ -269,7 +271,7 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -308,7 +310,7 @@ param=magicdefence,1
 param=strengthbonus,4
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -347,7 +349,7 @@ param=magicdefence,1
 param=strengthbonus,3
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -378,7 +380,7 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -417,7 +419,7 @@ param=magicdefence,1
 param=strengthbonus,10
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -456,7 +458,7 @@ param=magicdefence,1
 param=strengthbonus,14
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -495,7 +497,7 @@ param=magicdefence,1
 param=strengthbonus,24
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
@@ -522,11 +524,13 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
-param=stabattack_anim,human_sword_stab
-param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=stabattack_anim,human_ddagger_stab
+param=slashattack_anim,human_ddagger_slash
+param=defend_anim,human_dagger_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// TODO check sounds 
+// osrs use defend animation seq_378
 
 [black_dagger_p]
 members=yes
@@ -563,7 +567,7 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 

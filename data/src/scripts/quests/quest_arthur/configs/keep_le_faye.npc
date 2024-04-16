@@ -29,15 +29,15 @@ hitpoints=48
 attack=28
 strength=28
 defence=28
-param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_stab
 param=attackbonus,20
 param=strengthbonus,16
 param=stabdefence,99
 param=slashdefence,82
 param=crushdefence,62
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_stab
 huntmode=cowardly
 
 [sir_mordred]
@@ -78,15 +78,15 @@ hitpoints=38
 attack=33
 strength=33
 defence=33
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,2H_slash
 param=attackbonus,20
 param=strengthbonus,16
 param=stabdefence,99
 param=slashdefence,82
 param=crushdefence,45
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,2H_slash
 
 [morgan_le_faye]
 vislevel=hide

@@ -120,9 +120,9 @@ param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
 param=attackrate,5
-param=defend_anim,seq_420
-param=crushattack_anim,seq_419
+param=crushattack_anim,shadowwarrior_crush
 param=crush_sound,staff_hit
+// osrs use animations attack seq_401 and defend seq_403
 
 [guthixstaff]
 name=Staff of guthix
@@ -150,9 +150,9 @@ param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
 param=attackrate,5
-param=defend_anim,seq_420
-param=crushattack_anim,seq_419
+param=crushattack_anim,shadowwarrior_crush
 param=crush_sound,staff_hit
+// osrs use animations attack seq_401 and defend seq_403
 
 [zamorakstaff]
 name=Staff of zamorak
@@ -181,6 +181,6 @@ param=crushdefence,1
 param=magicdefence,6
 param=strengthbonus,2
 param=attackrate,5
-param=defend_anim,seq_420
-param=crushattack_anim,seq_419
+param=crushattack_anim,shadowwarrior_crush
 param=crush_sound,staff_hit
+// osrs use animations attack seq_401 and defend seq_403

@@ -341,6 +341,7 @@ respawnrate=150
 hitpoints=120
 magic=50
 category=battle_mage
+// osrs defend seq_415
 
 [battle_mage_saradomin]
 name=Battle mage
@@ -375,6 +376,7 @@ respawnrate=150
 hitpoints=120
 magic=50
 category=battle_mage
+// osrs defend seq_415
 
 [battle_mage_guthix]
 name=Battle mage
