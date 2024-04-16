@@ -65,7 +65,8 @@ def_obj $item = last_item;
 def_int $slot = last_slot;
 // https://youtu.be/Zv7Wh3TIDOc
 mes("You rub the amulet...");
-def_int $choice = ~p_choice5_header("Edgeville", 1, "Karamja", 2, "Draynor Village", 3, "Al Kharid", 4, "Nowhere", 5, "Where would you like to teleport to?");
+// Space after "to" is intentional. Based off of this screenshot: https://storage.googleapis.com/tannerdino/images/rstransport9.gif
+def_int $choice = ~p_choice5_header("Edgeville.", 1, "Karamja.", 2, "Draynor Village.", 3, "Al Kharid.", 4, "Nowhere.", 5, "Where would you like to teleport to ?");
 // https://i.imgur.com/HsKKBnr.png
 if ($choice = 5) {
     mes("You remain where you were.");
