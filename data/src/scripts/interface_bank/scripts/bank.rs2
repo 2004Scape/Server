@@ -41,18 +41,21 @@ if (%bank_noted ! 0) {
     $cert_or_uncert = oc_cert($obj);
 }
 
-def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));
-if ($overflow >= $amount) {
-    if (oc_cert($obj) = $obj) {
+if (inv_itemspace($inv, $obj, $amount, inv_size($inv)) = false){
+    if (oc_stackable($obj) = true) {
         // https://youtu.be/8vNeG5bHg0Q?t=443
         mes("You're not going to be able to carry all that!");
+    } else if (inv_freespace(inv) = 0) {
+        // https://youtu.be/Zv7Wh3TIDOc?t=22
+        mes("You don't have enough inventory space.");
+        return;
     } else {
         // https://youtu.be/HnEZFSGbYqM?t=79
         mes("You don't have enough inventory space to withdraw that many.");
     }
-    return;
 }
 
+def_int $overflow = inv_itemspace2($inv, $cert_or_uncert, $amount, inv_size($inv));
 switch_int (%bank_noted) {
     case 0 : inv_moveitem_uncert(bank, $inv, $obj, sub($amount, $overflow));
     case default :
