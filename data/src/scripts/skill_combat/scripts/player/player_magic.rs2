@@ -27,7 +27,6 @@
 [opnpct,magic:vulnerability] ~pvm_default_spell(^vulnerability);
 [opnpct,magic:enfeeble] ~pvm_default_spell(^enfeeble);
 [opnpct,magic:stun] ~pvm_default_spell(^stun);
-[opnpct,magic:crumble_undead] ~pvm_default_spell(^crumble_undead);
 
 [apnpct,magic:wind_strike]
 if (%tutorial_progress < ^tutorial_complete) {
@@ -59,7 +58,6 @@ if (%tutorial_progress < ^tutorial_complete) {
 [apnpct,magic:vulnerability] ~pvm_default_spell(^vulnerability);
 [apnpct,magic:enfeeble] ~pvm_default_spell(^enfeeble);
 [apnpct,magic:stun] ~pvm_default_spell(^stun);
-[apnpct,magic:crumble_undead] ~pvm_default_spell(^crumble_undead);
 
 [proc,pvm_default_spell](int $spell)
 def_dbrow $spell_data = ~get_spell_data($spell);
