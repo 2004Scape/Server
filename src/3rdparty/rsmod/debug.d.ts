@@ -82,9 +82,9 @@ export declare function changeWall(x: number, z: number, level: number, angle: n
  * @param absoluteX `i32`
  * @param absoluteZ `i32`
  * @param level `i32`
- * @returns `~lib/typedarray/Int32Array`
+ * @returns `~lib/staticarray/StaticArray<i32>`
  */
-export declare function allocateIfAbsent(absoluteX: number, absoluteZ: number, level: number): Int32Array;
+export declare function allocateIfAbsent(absoluteX: number, absoluteZ: number, level: number): ArrayLike<number>;
 /**
  * assembly/index/isFlagged
  * @param x `i32`

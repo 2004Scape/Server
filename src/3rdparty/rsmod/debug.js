@@ -63,8 +63,8 @@ async function instantiate(module, imports = {}) {
       exports.changeWall(x, z, level, angle, shape, blockrange, breakroutefinding, add);
     },
     allocateIfAbsent(absoluteX, absoluteZ, level) {
-      // assembly/index/allocateIfAbsent(i32, i32, i32) => ~lib/typedarray/Int32Array
-      return __liftTypedArray(Int32Array, exports.allocateIfAbsent(absoluteX, absoluteZ, level) >>> 0);
+      // assembly/index/allocateIfAbsent(i32, i32, i32) => ~lib/staticarray/StaticArray<i32>
+      return __liftStaticArray(__getI32, 2, exports.allocateIfAbsent(absoluteX, absoluteZ, level) >>> 0);
     },
     isFlagged(x, z, level, masks) {
       // assembly/index/isFlagged(i32, i32, i32, i32) => bool
@@ -228,7 +228,23 @@ async function instantiate(module, imports = {}) {
       __dataview.getUint32(pointer + 8, true) / constructor.BYTES_PER_ELEMENT
     ).slice();
   }
+  function __liftStaticArray(liftElement, align, pointer) {
+    if (!pointer) return null;
+    const
+      length = __getU32(pointer - 4) >>> align,
+      values = new Array(length);
+    for (let i = 0; i < length; ++i) values[i] = liftElement(pointer + (i << align >>> 0));
+    return values;
+  }
   let __dataview = new DataView(memory.buffer);
+  function __getI32(pointer) {
+    try {
+      return __dataview.getInt32(pointer, true);
+    } catch {
+      __dataview = new DataView(memory.buffer);
+      return __dataview.getInt32(pointer, true);
+    }
+  }
   function __getU32(pointer) {
     try {
       return __dataview.getUint32(pointer, true);
