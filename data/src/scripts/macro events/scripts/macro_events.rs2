@@ -32,9 +32,9 @@ if (%macro_event > 0) {
 if (~in_duel_arena = true) {
     return;
 }
-if (~macro_event_general_active = true) {
-    return;
-}
+// if (~macro_event_general_active = true) {
+//     return;
+// }
 def_coord $event_coord = ~macro_event_coord;
 if ($event_coord = null) {
     return;
@@ -42,6 +42,7 @@ if ($event_coord = null) {
 %macro_event = $event;
 def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
+%macro_event_uid = npc_uid;
 
 switch_int ($event) {
     case ^macro_event_swarm : ~macro_event_swarm_spawn;
@@ -153,8 +154,11 @@ if (inv_freespace(inv) < 1) {
     inv_add(inv, $reward, $count);
 }
 
-[proc,macro_event_lost]()(boolean)
+[proc,macro_event_lost_and_follow]()(boolean)
 if (finduid(%npc_attacking_uid) = false) {
+    return(true);
+}
+if (%macro_event_uid ! npc_uid) {
     return(true);
 }
 
@@ -181,6 +185,21 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
 
 // https://youtu.be/HpmsgVshwxg?t=303
 npc_setmode(playerfollow); // other players can interact with the npc, so setmode to follow after teleporting.
+return(false);
+
+
+[proc,macro_event_lost]()(boolean)
+if (finduid(%npc_attacking_uid) = false) {
+    return(true);
+}
+if (%macro_event_uid ! npc_uid) {
+    return(true);
+}
+
+if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
+    return(true);
+}
+
 return(false);
 
 // based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11

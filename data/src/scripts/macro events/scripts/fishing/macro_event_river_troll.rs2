@@ -18,7 +18,7 @@ npc_delay(2);
 npc_setmode(opplayer2);
 
 [ai_timer,_macro_event_river_troll]
-if (finduid(%npc_attacking_uid) = false) {
+if (~macro_event_lost = true) {
     npc_del;
     return;
 }

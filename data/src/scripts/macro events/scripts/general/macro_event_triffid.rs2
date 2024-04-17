@@ -50,8 +50,9 @@ if (npc_getmode = opplayer2) {
     return;
 }
 // https://youtu.be/t7iOUMQv6Ws?t=148
-if (finduid(%npc_attacking_uid) = false | (npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
+if (~macro_event_lost = true) {
     npc_anim(seq_355, 0);
     npc_delay(1);
     npc_del;
+    return;
 }

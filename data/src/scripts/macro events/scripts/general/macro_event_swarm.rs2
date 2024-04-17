@@ -7,7 +7,7 @@ npc_setmode(opplayer2);
 %npc_attacking_uid = uid;
 
 [ai_timer,macro_event_swarm]
-if (finduid(%npc_attacking_uid) = false) {
+if (~macro_event_lost = true) {
     npc_del;
     return;
 }

@@ -17,27 +17,30 @@ if (%macro_event = ^no_macro_event) {
     ~chatnpc(drunk, "'Ave a good 'un buddy!"); // osrs
     return;
 }
-%macro_event = ^no_macro_event;
 ~macro_event_give_reward(kebab, 1);
 ~macro_event_give_reward(beer, 1);
-// %npc_macro_event_status = ^macro_event_wave;
-// npc_settimer(3);
+%macro_event = ^no_macro_event;
 
-// Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
-npc_del;
-~chatnpc_specific("Drunken Dwarf", macro_event_drunken_dwarf, drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
+npc_queue(5, 0, 0); // say good bye
+~chatnpc(drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
 
 [ai_queue4,macro_event_drunken_dwarf](int $arg) // despawn
 npc_say("Aww, me is all alone.");
 npc_delay(2); // osrs
+if (finduid(%npc_attacking_uid) = true) {
+    %macro_event = ^no_macro_event;
+}
 npc_del;
 
+[ai_queue5,macro_event_drunken_dwarf](int $arg) // say good bye
+// Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
+npc_del;
 
 [ai_timer,macro_event_drunken_dwarf]
 if (~npc_out_of_combat = false) {
     return;
 }
-if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+if (~macro_event_lost_and_follow = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
    // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
     npc_queue(4, 0, 0); // despawn
     return;
