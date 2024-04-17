@@ -13,7 +13,7 @@ if (uid ! %npc_attacking_uid) {
     ~chatnpc(neutral, "Sorry, but I'm trying to talk to <displayname>. However he appears to be ignoring me...");
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
     ~chatnpc(neutral, "Goodbye.");
     return;
 }

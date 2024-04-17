@@ -13,7 +13,7 @@ if (uid ! %npc_attacking_uid) {
     ~chatnpc(drunk, "You're not my matey!"); // osrs
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
     ~chatnpc(drunk, "'Ave a good 'un buddy!"); // osrs
     return;
 }

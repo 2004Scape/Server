@@ -10,7 +10,7 @@ if (uid ! %npc_attacking_uid) {
     ~chatnpc(sad, "Sorry, I'm trying to talk to <text_gender("Master", "Mistress")> <displayname>, but <text_gender("he", "she")> seems to be ignoring me."); // osrs
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
     ~chatnpc(neutral, "Have a nice day, <text_gender("master", "mistress")>.");
     return;
 }
