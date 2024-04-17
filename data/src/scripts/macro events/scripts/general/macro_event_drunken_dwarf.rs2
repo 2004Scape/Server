@@ -25,60 +25,50 @@ if (%macro_event = ^no_macro_event) {
 
 // Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
 npc_del;
-~chatnpc(drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
+~chatnpc_specific("Drunken Dwarf", macro_event_drunken_dwarf, drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
+
+[ai_queue4,macro_event_drunken_dwarf](int $arg) // despawn
+npc_say("Aww, me is all alone.");
+npc_delay(2); // osrs
+npc_del;
+
 
 [ai_timer,macro_event_drunken_dwarf]
-if (npc_getmode = opplayer2) {
+if (~npc_out_of_combat = false) {
     return;
 }
-if (%npc_macro_event_status = ^macro_event_attack | ~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
-    %npc_macro_event_status = ^macro_event_alone; // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
-    npc_settimer(20);
-    return;
-}
-
-if (finduid(%npc_attacking_uid) = false) {
+if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+   // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
+    npc_queue(4, 0, 0); // despawn
     return;
 }
 
 // warnings: https://youtu.be/Ww-PkAr4vt4?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=96
 // todo: confirm these anims
-if (%npc_macro_event_status = 10) {
-    npc_anim(dwarf_seq_103, 20);
-    sound_synth(dwarf_whistle, 0, 0);
-    npc_say("Aww comeon, talk to ikle me <displayname>!");
-} else if (%npc_macro_event_status = 20) {
-    npc_anim(dwarf_seq_105, 20);
-    sound_synth(dwarf_whistle, 0, 0);
-    npc_say("Oi, are you der <displayname>!");
-} else if (%npc_macro_event_status = 30) {
-    sound_synth(dwarf_whistle, 0, 0);
-    npc_say("Dunt ignore your mate, <displayname>!");
-} else if (%npc_macro_event_status = 40) {
-    npc_anim(dwarf_seq_103, 20);
-    sound_synth(dwarf_whistle, 0, 0);
-    npc_say("I hates yoo <displayname>!");
-} else if (%npc_macro_event_status = 50) { // fail
-    // todo: figure out the message that goes here
-    %npc_macro_event_status = ^macro_event_attack;
-    npc_setmode(opplayer2);
-    return;
-} else if (%npc_macro_event_status = ^macro_event_wave) { // wave (unused)
-    %npc_macro_event_status = ^macro_event_disappear;
-    npc_anim(dwarf_seq_105, 20);
-    npc_settimer(3);
-    npc_delay(2);
-    ~macro_event_disappear;
-    return;
-} else if (%npc_macro_event_status = ^macro_event_alone) { // all alone and leave
-    npc_say("Aww, me is all alone.");
-    npc_settimer(4);
-    npc_delay(2); // osrs
-    npc_del;
-    return;
+if (finduid(%npc_attacking_uid) = true) {
+    if (%npc_macro_event_status = 1) {
+        npc_anim(dwarf_seq_103, 20);
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("Aww comeon, talk to ikle me <displayname>!");
+    } else if (%npc_macro_event_status = 2) {
+        npc_anim(dwarf_seq_105, 20);
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("Oi, are you der <displayname>!");
+    } else if (%npc_macro_event_status = 3) {
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("Dunt ignore your mate, <displayname>!");
+    } else if (%npc_macro_event_status = 4) {
+        npc_anim(dwarf_seq_103, 20);
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("I hates yoo <displayname>!");
+    } else if (%npc_macro_event_status >= 5) { // fail
+        // todo: figure out the message that goes here
+        npc_setmode(opplayer2);
+    }
+
+    %npc_macro_event_status = calc(%npc_macro_event_status + 1);
 }
 
-%npc_macro_event_status = calc(%npc_macro_event_status + 1);
 
 // https://youtu.be/8wJZmDwcBKs?t=108
 [ai_opplayer2,macro_event_drunken_dwarf]

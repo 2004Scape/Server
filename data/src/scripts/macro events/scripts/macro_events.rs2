@@ -171,10 +171,16 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
     //         ~macro_event_disappear;
     //         return(true);
     //     }
-    // }
-    npc_tele(coord); // osrs
-    npc_setmode(playerfollow); // only starts following after teleport? https://youtu.be/HpmsgVshwxg?t=303
+    //
+    if (npc_getmode = playerfollow | npc_getmode = playerfaceclose) {
+        npc_tele(coord); // osrs
+    } else {
+        return(true);
+    }
 }
+
+// https://youtu.be/HpmsgVshwxg?t=303
+npc_setmode(playerfollow); // other players can interact with the npc, so setmode to follow after teleporting.
 return(false);
 
 // based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
