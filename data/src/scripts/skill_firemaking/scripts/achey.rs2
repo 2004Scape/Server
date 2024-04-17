@@ -1,0 +1,122 @@
+// achey fm is slightly different so i just made it a whole new label
+[label,light_achey_inv](int $slot)
+def_obj $log = inv_getobj(inv, $slot);
+def_int $level = oc_param($log, levelrequire);
+
+if (stat(firemaking) < $level) {
+    mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
+    return;
+}
+// check if the coord is already occupied by an interactable loc
+if (map_locaddunsafe(coord) = true | map_blocked(coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+// osrs, achey logs drop on ground
+// but only if u tinderbox -> log, and doesnt work if map_blocked
+// add obj to ground
+obj_add(coord, $log, 1, ^lootdrop_duration);
+// delete item slot from inv
+inv_delslot(inv, $slot);
+if (~inzone_coord_pair_table(bank_zones, coord) = true) {
+    mes("You can't light a fire here.");
+    return;
+}
+if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
+    // https://youtu.be/L3OwjH-iXQU
+    //  - could still fm in the duel arena. 
+    //  - its just that you cant firemake if movement is restricted
+    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+    mes("You can't light a fire here.");
+    return;
+}
+// check if they have tinderbox
+if(inv_total(inv, tinderbox) < 1) {
+    mes("You need a tinderbox to light a fire.");
+    return;
+}
+// party pete goes here, after tinderbox check
+if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
+    // osrs
+    mes("Party Pete won't be happy if you light a fire here.");
+    return;
+}
+// there should be no p_stopaction here, p_opobj(4) needs to be fixed
+//mes("%action_delay: <tostring(%action_delay)>, %map_clock: <tostring(map_clock)>");
+// 4t cycle
+if (%action_delay < map_clock) {
+    // stop player movement
+    p_stopaction;
+    // play anim
+    anim(human_createfire, 0);
+    // play sound
+    sound_synth(tinderbox_strike, 0, 0);
+    // mes
+    mes("You attempt to light the logs.");
+    %action_delay = calc(map_clock + 3);
+    p_opobj(4);
+} else if (%action_delay = map_clock) {
+    // firemaking roll
+    if(stat_random(stat(firemaking), 64, 512) = true) {
+        %action_delay = calc(map_clock + 4);
+        def_coord $fire_coord = obj_coord;
+        // attempt to firemaking each direction
+        // west east south north
+        // if the delay is from opheld, the first p_delay used must be p_delay(1). The next ones must be p_delay(0)
+        // firemaking length: https://archive.is/zF5hb
+        // if player isnt standing on the log anymore, the fire is lit
+        // check west
+        if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) {
+            p_teleport(movecoord(coord, -1, 0, 0));
+            p_delay(1);
+        }
+        if (coord ! $fire_coord) {
+            ~firemaking_success($fire_coord, $log);
+            return;
+        }
+        // check east
+        if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) {
+            p_teleport(movecoord(coord, 1, 0, 0));
+            p_delay(0);
+        }
+        if (coord ! $fire_coord) {
+            ~firemaking_success($fire_coord, $log);
+            return;
+        }
+        // check south
+        if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) {
+            p_teleport(movecoord(coord, 0, 0, 1));
+            p_delay(0);
+        }
+        if (coord ! $fire_coord) {
+            ~firemaking_success($fire_coord, $log);
+            return;
+        }
+        // check north
+        if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) {
+            p_teleport(movecoord(coord, 0, 0, -1));
+            p_delay(0);
+        }
+        if (coord ! $fire_coord) {
+            ~firemaking_success($fire_coord, $log);
+            return;
+        }
+        // if fully blocked then just light the log and dont move
+        ~firemaking_success($fire_coord, $log);
+        return;
+    } else {
+        // if fails, then reattempt to light
+        // play anim
+        p_stopaction;
+        anim(human_createfire, 0);
+        // play sound
+        sound_synth(tinderbox_strike, 0, 0);
+        %action_delay = calc(map_clock + 3);
+        p_opobj(4);
+    }
+} else {
+    // stop player movement
+    p_stopaction;
+    p_opobj(4);
+}

@@ -16,3 +16,6 @@ size=9
 [tempinv]
 size=28
 protect=no
+
+[death]
+size=4

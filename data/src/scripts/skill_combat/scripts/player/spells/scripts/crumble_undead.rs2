@@ -1,0 +1,19 @@
+[apnpct,magic:crumble_undead] ~pvm_crumble_undead;
+[opnpct,magic:crumble_undead] ~pvm_crumble_undead;
+
+[proc,pvm_crumble_undead]
+def_dbrow $spell_data = ~get_spell_data(^crumble_undead);
+if (~pvm_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (npc_param(undead) = ^false) {
+    mes("This spell only affects skeletons, zombies, ghosts and shades.");
+    return;
+}
+def_int $duration = ~pvm_spell_cast($spell_data);
+
+if (~player_npc_hit_roll(^magic_style) = true) {
+     ~pvm_spell_success($spell_data, ~magic_spell_maxhit($spell_data), $duration);
+} else {
+    ~pvm_spell_fail($spell_data, $duration);
+}
