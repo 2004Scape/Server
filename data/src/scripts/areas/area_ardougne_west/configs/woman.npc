@@ -22,12 +22,12 @@ head1=model_125_idk_head
 respawnrate=50
 hitpoints=10
 attack=2
-param=defend_sound,female_hit
-param=death_sound,female_death
-param=damagetype,^crush_style
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
+param=damagetype,^crush_style
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_353]
 name=Woman
@@ -54,9 +54,9 @@ attack=2
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
+param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
-param=damagetype,^crush_style
 
 [npc_354]
 name=Woman
@@ -82,9 +82,9 @@ head1=model_103_idk_head
 respawnrate=50
 hitpoints=10
 attack=2
+param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
-param=damagetype,^crush_style
 
 [npc_360]
 name=Woman
@@ -113,6 +113,7 @@ attack=2
 param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
+param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
 
@@ -138,9 +139,9 @@ head1=model_121_npc_head
 respawnrate=50
 hitpoints=10
 attack=2
+param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
-param=damagetype,^crush_style
 
 [npc_363]
 name=Woman
@@ -166,6 +167,6 @@ hitpoints=23
 attack=10
 strength=10
 defence=10
+param=damagetype,^crush_style
 param=defend_sound,female_hit
 param=death_sound,female_death
-param=damagetype,^crush_style

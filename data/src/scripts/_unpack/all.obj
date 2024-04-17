@@ -223,7 +223,7 @@ param=strengthbonus,5
 param=attackrate,5
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=slash_sound,hacksword_slash
 param=stab_sound,hacksword_stab
 
@@ -639,6 +639,8 @@ desc=A Magical staff.
 desc=A highly magical staff.
 cost=42500
 iop2=Wield
+wearpos=righthand
+wearpos2=lefthand
 category=weapon_staff
 manwear=model_514_obj_wear,0
 womanwear=model_514_obj_wear,6
@@ -655,6 +657,9 @@ param=magicdefence,10
 param=strengthbonus,50
 param=ready_baseanim,human_staffready
 param=attackrate,5
+param=crushattack_anim,shadowwarrior_crush
+param=defend_anim,human_ibanstaff_2h_defend
+// osrs use attack seq_401 and defend seq_403 + the weapon was already 1 handed in 2006
 
 [broken_iban_staff]
 name=Broken iban staff
@@ -735,7 +740,7 @@ param=crushdefence,1
 param=strengthbonus,10
 param=ready_baseanim,human_ready_scythe
 param=attackrate,7
-param=slashattack_anim,human_spear_slash
+param=slashattack_anim,human_scythe_slash
 param=crushattack_anim,human_scythe_lunge
 param=stabattack_anim,human_scythe_sweep
 param=defend_anim,human_scythe_block

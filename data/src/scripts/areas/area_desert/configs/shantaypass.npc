@@ -97,8 +97,8 @@ param=magicdefence,6
 param=rangedefence,15
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
-param=defend_anim,human_sword_defend
 
 [shantay_pass_guard]
 name=Shantay Guard

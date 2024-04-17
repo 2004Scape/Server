@@ -224,8 +224,8 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_495_npc
 head1=model_55_idk_head
-wanderrange=12
-attackrange=14
+wanderrange=20
+attackrange=22
 respawnrate=25
 hitpoints=12
 attack=3
@@ -234,10 +234,10 @@ defence=8
 param=attackrate,6
 param=attackbonus,5
 param=strengthbonus,6
-param=attack_anim,farmer_attack
-param=attack_sound,staff_stab
-param=defend_anim,farmer_hit
 param=damagetype,^stab_style
+param=attack_anim,human_farmersfork_stab
+param=defend_anim,human_farmersfork_defend
+param=attack_sound,staff_stab
 
 [thief]
 name=Thief
@@ -292,6 +292,8 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_519_obj_wear
 model9=model_541_obj_wear
+wanderrange=2
+attackrange=4
 respawnrate=50
 hitpoints=22
 attack=19
@@ -306,10 +308,10 @@ param=magicdefence,-4
 param=rangedefence,20
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 category=guard
-wanderrange=2
-attackrange=4
+// osrs use currently defend seq_387 and earlier year 2023 seq_378 and 2004-2005 defend seq_388
 
 [guard_crossbow]
 name=Guard
@@ -333,6 +335,8 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_508_obj_wear
+wanderrange=2
+attackrange=4
 respawnrate=50
 hitpoints=22
 attack=15
@@ -349,6 +353,8 @@ param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,15
 param=damagetype,^ranged_style
+param=attack_anim,human_crossbow
+param=attack_sound,crossbow
 category=guard
 
 [npc_11]
@@ -424,10 +430,10 @@ param=strengthbonus,10
 param=stabdefence,1
 param=slashdefence,1
 param=attackrate,6
-category=barbarian
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
+param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
+category=barbarian
 
 [wizard]
 name=Wizard
@@ -524,10 +530,11 @@ param=crushdefence,37
 param=magicdefence,-10
 param=rangedefence,38
 param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_stab
 param=defend_sound,female_hit
 param=death_sound,female_death
-param=attack_anim,human_sword_stab
-param=attack_sound,stabsword_stab
 
 [barbarian_woman]
 name=Barbarian woman
@@ -566,12 +573,12 @@ param=stabdefence,1
 param=slashdefence,1
 param=attackrate,6
 param=damagetype,^stab_style
-param=defend_sound,female_hit
-param=death_sound,female_death
-category=barbarian
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_defend
 param=attack_sound,staff_stab
+param=defend_sound,female_hit
+param=death_sound,female_death
+category=barbarian
 
 [alkharid_warrior]
 name=Al-Kharid warrior
@@ -616,8 +623,8 @@ param=rangedefence,12
 param=damagetype,^slash_style
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_anim,human_sword_defend
 
 [npc_19]
 name=White Knight
@@ -657,11 +664,12 @@ param=crushdefence,70
 param=magicdefence,-11
 param=rangedefence,74
 param=damagetype,^slash_style
-// Despite the slash attack style they still use the crush anim today
-param=attack_anim,human_2h_crush
-param=defend_anim,human_2h_defend
-param=attack_sound,2H_crush
+param=attack_anim,human_2h_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,2H_slash
 param=defend_sound,sound_218
+// Despite the slash attack style they still use the crush anim today
+// osrs attack seq_406 defend seq_410 sound_2h_crush
 
 [paladin]
 name=Paladin
@@ -706,8 +714,8 @@ param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_anim,human_sword_defend
 
 [hero]
 name=Hero
@@ -753,8 +761,8 @@ param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
+param=defend_anim,human_blunt_defend1
 param=attack_sound,stabsword_slash
-param=defend_anim,human_sword_defend
 
 [forester]
 name=Forester
@@ -793,8 +801,8 @@ param=slashdefence,3
 param=crushdefence,5
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_blunt_defend
 param=attack_sound,baxe_slash
+// osrs side woodcutting guild forester use defend seq_398
 
 [knight_of_ardougne_1]
 name=Knight of Ardougne
@@ -837,8 +845,8 @@ param=magicdefence,-11
 param=rangedefence,36
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_anim,human_sword_defend
 
 [man_cavalier]
 name=Man
@@ -948,8 +956,8 @@ param=magicdefence,-11
 param=rangedefence,36
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_anim,human_sword_defend
 
 [npc_27]
 name=Archer
@@ -984,6 +992,8 @@ param=crushdefence,49
 param=magicdefence,18
 param=rangedefence,45
 param=damagetype,^ranged_style
+param=attack_anim,human_bow
+param=rangeattack_sound,longbow
 
 [npc_28]
 name=Zoo keeper
@@ -1109,10 +1119,10 @@ param=crushdefence,19
 param=magicdefence,4
 param=rangedefence,16
 param=damagetype,^crush_style
-category=guard
-param=attack_anim,human_blunt_swing
-param=attack_sound,mace_crush
+param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
+param=attack_sound,mace_crush
+category=guard
 
 [watchman]
 name=Watchman
@@ -1178,6 +1188,8 @@ param=crushdefence,19
 param=magicdefence,-4
 param=rangedefence,16
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [wyson]
 name=Wyson the gardener
@@ -1205,9 +1217,9 @@ attack=2
 strength=3
 defence=2
 param=damagetype,^stab_style
+param=attack_anim,human_farmersfork_stab
+param=defend_anim,human_farmersfork_defend
 param=attack_sound,staff_stab
-param=attack_anim,farmer_attack
-param=defend_anim,farmer_hit
 
 [npc_38]
 name=Shipyard worker
@@ -1240,8 +1252,6 @@ defence=10
 param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
-param=attack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
 
 [npc_39]
 name=Shipyard worker
@@ -1272,8 +1282,7 @@ defence=10
 param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
-param=attack_anim,human_blunt_swing
-param=defend_anim,human_blunt_defend
+param=attack_anim,human_blunt_crush
 
 [npc_40]
 name=Shark
@@ -1336,12 +1345,12 @@ op2=Attack
 minimap=false
 vislevel=1
 model1=model_2847_npc
-hitpoints=3
+wanderrange=35
+attackrange=40
 moverestrict=blocked
 respawnrate=50
 timer=25
-attackrange=40
-wanderrange=35
+hitpoints=3
 param=attackbonus,-47
 param=strengthbonus,-42
 param=stabdefence,-42
@@ -1350,12 +1359,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^stab_style
+param=defend_anim,duck_defend
+param=death_anim,duck_death
 param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
-param=defend_anim,duck_defend
-param=death_anim,duck_death
 category=duck
 
 [duck]
@@ -1373,12 +1382,12 @@ recol2d=5660
 recol3s=86
 recol3d=5910
 model1=model_2847_npc
-hitpoints=3
+wanderrange=35
+attackrange=40
 moverestrict=blocked
 respawnrate=50
 timer=25
-wanderrange=35
-attackrange=40
+hitpoints=3
 param=attackbonus,-47
 param=strengthbonus,-42
 param=stabdefence,-42
@@ -1387,12 +1396,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^stab_style
+param=defend_anim,duck_defend
+param=death_anim,duck_death
 param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
-param=defend_anim,duck_defend
-param=death_anim,duck_death
 category=duck
 
 [duckling]
@@ -1412,12 +1421,12 @@ recol2d=5838
 recol3s=86
 recol3d=5910
 model1=model_2847_npc
-hitpoints=3
+wanderrange=35
+attackrange=40
 moverestrict=blocked
 respawnrate=50
 timer=50
-wanderrange=35
-attackrange=40
+hitpoints=3
 param=attackbonus,-47
 param=strengthbonus,-42
 param=stabdefence,-42
@@ -1426,12 +1435,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^stab_style
+param=defend_anim,duck_defend
+param=death_anim,duck_death
 param=attack_sound,quack
 param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
-param=defend_anim,duck_defend
-param=death_anim,duck_death
 category=duckling
 
 [rat]
@@ -1690,6 +1699,9 @@ walkanim=dryhad_walk
 readyanim=dryhad_ready
 vislevel=1
 model1=model_2856_npc
+param=attack_anim,dryhad_attack
+param=defend_anim,dryhad_block
+param=death_anim,dryhad_death
 
 [npc_57]
 vislevel=hide
@@ -1698,6 +1710,9 @@ desc=A delicate creature from this strange realm.
 walkanim=fairy_walk
 readyanim=fairy_ready
 model1=model_2857_npc
+param=attack_anim,fairy_attack
+param=defend_anim,fairy_block
+param=death_anim,fairy_death
 
 [npc_58]
 walkanim=giantspider_walk
@@ -1811,10 +1826,10 @@ param=damagetype,^stab_style
 param=attack_anim,spider_attack
 param=defend_anim,spider_block
 param=death_anim,spider_death
-param=death_drop,null
 param=attack_sound,insect_3
 param=defend_sound,insect_2
 param=death_sound,insect_1
+param=death_drop,null
 
 [npc_62]
 walkanim=giantspider_walk
@@ -2777,6 +2792,9 @@ walkanim=dog_walk
 readyanim=dog_ready
 vislevel=hide
 model1=model_2935_npc
+param=attack_anim,dog_attack
+param=defend_anim,dog_block
+param=death_anim,dog_death
 
 [npc_99]
 name=Guard dog
@@ -3035,6 +3053,9 @@ param=damagetype,^slash_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 param=death_drop,null
 huntmode=cowardly
 
@@ -3062,6 +3083,9 @@ param=damagetype,^stab_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 param=death_drop,null
 param=poison_severity,15
 huntmode=cowardly
@@ -3087,6 +3111,9 @@ param=damagetype,^stab_style
 param=attack_anim,smallscorpion_attack
 param=defend_anim,smallscorpion_block
 param=death_anim,smallscorpion_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 param=death_drop,null
 huntmode=cowardly
 
@@ -3336,7 +3363,6 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
-huntmode=cowardly
 
 [npc_118]
 walkanim=dwarf_walk
@@ -3450,6 +3476,8 @@ model3=model_2978_npc
 model4=model_2984_npc
 model5=model_2985_npc
 model6=model_2993_npc
+wanderrange=13
+attackrange=15
 respawnrate=50
 hitpoints=10
 attack=6
@@ -3511,8 +3539,8 @@ huntmode=cowardly
 
 [npc_124]
 hasalpha=yes
-walkanim=seq_841
-readyanim=seq_842
+walkanim=earthwarrior_walk
+readyanim=earthwarrior_ready
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Earth warrior
@@ -3552,12 +3580,16 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^crush_style
+param=attack_anim,earthwarrior_crush
+param=defend_anim,earthwarrior_defend
+param=death_anim,earthwarrior_death
 huntmode=cowardly
+// osrs defend animation seq_398
 
 [ice_warrior]
 hasalpha=yes
-walkanim=seq_841
-readyanim=seq_842
+walkanim=earthwarrior_walk
+readyanim=earthwarrior_ready
 name=Ice warrior
 desc=A cold hearted elemental warrior.
 op2=Attack
@@ -3594,12 +3626,13 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^slash_style
+param=attack_anim,icewarrior_slash
+param=defend_anim,earthwarrior_defend
+param=death_anim,earthwarrior_death
+param=attack_sound,stabsword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
 
 [otherworldly_being]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -3631,7 +3664,6 @@ param=crushdefence,20
 param=magicdefence,-5
 param=rangedefence,15
 param=damagetype,^slash_style
-param=attack_anim,human_unarmedpunch
 param=attack_sound,otherworld_attack
 param=defend_sound,otherworld_hit
 param=death_sound,otherworld_death
@@ -3978,6 +4010,7 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+param=death_drop,wolf_bones
 huntmode=cowardly
 
 [npc_142]
@@ -4031,6 +4064,7 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+param=death_drop,wolf_bones
 huntmode=cowardly
 
 [npc_144]
@@ -4059,13 +4093,16 @@ param=damagetype,^stab_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 param=death_drop,null
 huntmode=cowardly
 
 [npc_145]
 hasalpha=yes
-walkanim=seq_841
-readyanim=seq_842
+walkanim=earthwarrior_walk
+readyanim=earthwarrior_ready
 name=Ice warrior
 desc=The Ice Queen's Royal Guard.
 op2=Attack
@@ -4102,7 +4139,14 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^slash_style
+param=attack_anim,icewarrior_slash
+param=defend_anim,earthwarrior_defend
+param=death_anim,earthwarrior_death
+param=attack_sound,stabsword_slash
+param=defend_sound,ice_warrior_hit
+param=death_sound,ice_warrior_death
 huntmode=cowardly
+// osrs attack animation seq_390 and defend seq_388 + check osrs version sounds
 
 [npc_146]
 name=Gull
@@ -4187,15 +4231,15 @@ model1=model_3014_npc
 wanderrange=0
 moverestrict=nomove
 blockwalk=all
-huntmode=aggressive_melee
-huntrange=1
-// https://vxtwitter.com/JagexAsh/status/1775970463061049645?t=dBzjxnZ88IdFRi86mMgqjw&s=19
-// "They have level 20 Attack & Strength" - ash
 attack=20
 strength=20
 param=attack_anim,nasty_tree_attack
 param=attack_sound,nasty_tree_attack
 param=damagetype,^slash_style
+huntmode=aggressive_melee
+huntrange=1
+// https://vxtwitter.com/JagexAsh/status/1775970463061049645?t=dBzjxnZ88IdFRi86mMgqjw&s=19
+// "They have level 20 Attack & Strength" - ash
 
 [npc_153]
 name=Butterfly
@@ -4268,8 +4312,8 @@ wanderrange=10
 [npc_158]
 name=Shadow warrior
 desc=A fighter from the supernatural world, he's a shadow of his former self.
-walkanim=seq_841
-readyanim=seq_842
+walkanim=earthwarrior_walk
+readyanim=earthwarrior_ready
 hasalpha=yes
 minimap=false
 op2=Attack
@@ -4309,6 +4353,9 @@ param=crushdefence,19
 param=magicdefence,15
 param=rangedefence,38
 param=damagetype,^slash_style
+param=attack_anim,shadowwarrior_crush
+param=defend_anim,shadowwarrior_defend
+param=death_anim,earthwarrior_death
 huntmode=cowardly
 
 [dark_wizard_earth]
@@ -4458,6 +4505,10 @@ model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_377_obj_wear
 hitpoints=10
+param=attack_anim,human_unarmedkick
+param=attack_sound,unarmed_kick
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_177]
 name=Witch
@@ -4482,6 +4533,10 @@ model5=model_428_idk
 model6=model_361_obj_wear
 model7=model_377_obj_wear
 hitpoints=10
+param=attack_anim,human_unarmedkick
+param=attack_sound,unarmed_kick
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_178]
 name=Black Knight
@@ -4524,7 +4579,7 @@ param=rangedefence,72
 param=attackrate,5
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 
 [npc_179]
@@ -4568,7 +4623,7 @@ param=rangedefence,72
 param=attackrate,5
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 huntmode=aggressive_melee
 
@@ -4609,10 +4664,14 @@ param=slashdefence,3
 param=crushdefence,2
 param=rangedefence,2
 param=damagetype,^stab_style
-// https://oldschool.runescape.wiki/w/Highwayman#Trivia
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend1
 param=attack_sound,stabsword_slash
+// https://oldschool.runescape.wiki/w/Highwayman#Trivia
+// year ???? attack seq_390 defend seq_388 these seqs used some reason after update x
+// https://www.youtube.com/watch?v=QqLSZgZLwvA
+// https://www.youtube.com/watch?v=ympIobOpG4M
+// year 2024 attack seq_386 defend seq_387 and same animations used 2007 + original osrs launch
 huntmode=cowardly
 
 [chaos_druid]
@@ -4674,6 +4733,8 @@ defence=20
 param=attackbonus,10
 param=strengthbonus,9
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 category=pirate
 
 [npc_183]
@@ -4714,6 +4775,8 @@ param=strengthbonus,10
 param=stabdefence,3
 param=slashdefence,2
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 category=pirate
 
 [npc_184]
@@ -4753,11 +4816,11 @@ param=strengthbonus,10
 param=stabdefence,3
 param=slashdefence,2
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_slash
 category=pirate
 huntmode=cowardly
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
-param=attack_sound,stabsword_slash
 
 [npc_185]
 name=Pirate
@@ -4793,6 +4856,9 @@ param=attackbonus,10
 param=strengthbonus,9
 param=slashdefence,1
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_slash
 category=pirate
 
 [thug]
@@ -4825,10 +4891,10 @@ param=stabdefence,2
 param=slashdefence,3
 param=crushdefence,3
 param=damagetype,^stab_style
-huntmode=cowardly
 param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
+huntmode=cowardly
 
 [rogue]
 name=Rogue
@@ -4863,6 +4929,8 @@ param=stabdefence,6
 param=slashdefence,9
 param=crushdefence,11
 param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
 huntmode=cowardly
 
 [monk_of_zamorak_22]
@@ -4990,8 +5058,10 @@ param=strengthbonus,5
 param=stabdefence,4
 param=slashdefence,6
 param=crushdefence,6
-param=poison_severity,55
 param=damagetype,^stab_style
+param=attack_anim,human_spear_stab
+param=defend_anim,human_spear_defend
+param=poison_severity,55
 
 [dark_warrior]
 name=Dark warrior
@@ -5031,10 +5101,10 @@ param=stabdefence,96
 param=slashdefence,79
 param=crushdefence,59
 param=damagetype,^slash_style
-huntmode=cowardly
 param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-param=defend_anim,human_sword_defend
+huntmode=cowardly
 
 [chaos_druid_warrior]
 name=Chaos druid warrior
@@ -5071,6 +5141,10 @@ param=crushdefence,14
 param=magicdefence,-4
 param=rangedefence,14
 param=damagetype,^crush_style
+param=attack_anim,human_blunt_crush
+param=defend_anim,human_blunt_defend2
+param=attack_sound,mace_crush
+// osrs defend animation is seq_403
 huntmode=cowardly
 
 [necromancer]
@@ -5134,10 +5208,10 @@ param=strengthbonus,12
 param=slashdefence,3
 param=crushdefence,2
 param=damagetype,^stab_style
-huntmode=cowardly
 param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
-param=defend_anim,human_sword_defend
+huntmode=cowardly
 
 [guard_bandit]
 name=Guard Bandit
@@ -5177,10 +5251,10 @@ param=crushdefence,5
 param=magicdefence,1
 param=rangedefence,4
 param=damagetype,^stab_style
-huntmode=cowardly
 param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
-param=defend_anim,human_sword_defend
+huntmode=cowardly
 
 [npc_197]
 name=Barbarian guard
@@ -5210,6 +5284,9 @@ model6=model_274_idk
 model7=model_242_npc
 model8=model_185_obj_wear
 model9=model_550_obj_wear
+param=attack_anim,human_baxe_slash
+param=defend_anim,human_baxe_defend2
+param=attack_sound,baxe_slash
 // TODO
 
 [gunthor_the_brave]
@@ -5256,7 +5333,8 @@ param=magicdefence,-1
 param=rangedefence,11
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
+param=defend_anim,human_baxe_defend2
+param=attack_sound,baxe_slash
 
 [npc_200]
 name=Lord Daquarius
@@ -5288,6 +5366,7 @@ model7=model_179_obj_wear
 model8=model_323_obj_wear
 wanderrange=3
 attackrange=5
+// TODO
 
 [salarin_the_twisted]
 name=Salarin the twisted
@@ -5316,7 +5395,6 @@ attack=58
 strength=58
 defence=62
 param=damagetype,^slash_style
-param=attack_anim,human_unarmedpunch
 
 [npc_206]
 walkanim=dwarf_walk
@@ -5567,7 +5645,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
+param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 
 [npc_254]
@@ -5606,7 +5684,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
+param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 
 [npc_255]
@@ -5644,7 +5722,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
+param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 
 [npc_256]
@@ -5683,7 +5761,7 @@ param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
 param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend
+param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 
 [npc_257]
@@ -5717,6 +5795,9 @@ param=stabdefence,44
 param=slashdefence,38
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,human_baxe_defend2
+param=attack_sound,baxe_slash
 
 [general_khazard]
 name=General Khazard
@@ -5745,6 +5826,8 @@ attack=75
 strength=78
 defence=80
 param=damagetype,^slash_style
+param=attack_anim,seq_413
+param=defend_anim,human_khazard_2h_sword_defend
 
 [npc_259]
 vislevel=hide
@@ -6033,6 +6116,9 @@ param=damagetype,^stab_style
 param=attack_anim,scorpion_attack
 param=defend_anim,scorpion_parry
 param=death_anim,scorpion_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 param=death_drop,null
 
 [npc_272]
@@ -6074,6 +6160,8 @@ param=stabdefence,6
 param=slashdefence,8
 param=crushdefence,7
 param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
 
 [npc_273]
 name=Lucien
@@ -6149,6 +6237,8 @@ param=crushdefence,50
 param=magicdefence,-12
 param=rangedefence,51
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [npc_275]
 name=Guardian of Armadyl
@@ -6195,6 +6285,8 @@ param=crushdefence,50
 param=magicdefence,-12
 param=rangedefence,51
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 param=defend_sound,female_hit
 param=death_sound,female_death
 
@@ -6300,6 +6392,8 @@ param=slashdefence,13
 param=crushdefence,14
 param=magicdefence,4
 param=rangedefence,9
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
 huntmode=cowardly
 
 [head_thief]
@@ -6332,6 +6426,8 @@ param=crushdefence,15
 param=magicdefence,4
 param=rangedefence,9
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 huntmode=cowardly
 
 [doric]
@@ -7024,6 +7120,8 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [npc_366]
 vislevel=hide
@@ -7417,6 +7515,8 @@ param=crushdefence,45
 param=magicdefence,-12
 param=rangedefence,45
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 param=defend_sound,animated_hit
 param=death_sound,animated_death
 param=death_drop,null
@@ -7590,6 +7690,9 @@ param=damagetype,^crush_style
 param=attack_anim,smallscorpion_attack
 param=defend_anim,smallscorpion_block
 param=death_anim,smallscorpion_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 param=death_drop,null
 
 [npc_500]
@@ -8424,7 +8527,6 @@ model1=model_2909_npc
 model2=model_2901_npc
 model3=model_2916_npc
 head1=model_17_npc_head
-wanderrange=3
 
 [npc_670]
 name=King Narnode Shareen
@@ -8466,7 +8568,6 @@ model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
 head1=model_21_npc_head
-wanderrange=3
 
 [npc_673]
 name=Charlie
@@ -8625,10 +8726,12 @@ param=damagetype,^stab_style
 param=attack_anim,imp_attack
 param=defend_anim,imp_block
 param=death_anim,imp_death
+param=demonbane_vulnerable,yes
 param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
+// https://oldschool.runescape.wiki/w/Demon_(attribute)
 
 [npc_726]
 vislevel=hide
@@ -9200,7 +9303,6 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=5
 moverestrict=indoors
 
 [npc_783]
@@ -9235,7 +9337,6 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
-wanderrange=5
 moverestrict=indoors
 
 [npc_788]
@@ -9382,6 +9483,9 @@ param=stabdefence,16
 param=slashdefence,27
 param=crushdefence,22
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,human_baxe_defend2
+param=attack_sound,baxe_slash
 
 [npc_794]
 vislevel=hide
@@ -9483,6 +9587,8 @@ param=stabdefence,30
 param=slashdefence,39
 param=crushdefence,30
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [donovan]
 vislevel=hide
@@ -9856,6 +9962,7 @@ readyanim=dog_ready
 vislevel=1
 model1=model_2936_npc
 timer=1
+param=death_anim,dog_death
 
 [npc_822]
 vislevel=hide
@@ -10001,7 +10108,10 @@ attack=7
 strength=7
 defence=7
 param=damagetype,^crush_style
+param=attack_anim,human_blunt_crush
+param=defend_anim,human_unarmedblock
 huntmode=aggressive_melee
+// Unknown reason osrs side this npc use unarmed attacks --attack seq_422 defend seq_424--
 
 [npc_828]
 name=Mercenary
@@ -10046,6 +10156,8 @@ param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [npc_829]
 name=Mercenary
@@ -10090,6 +10202,8 @@ param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [npc_830]
 name=Mercenary Captain
@@ -10139,6 +10253,8 @@ param=crushdefence,19
 param=magicdefence,-3
 param=rangedefence,19
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [npc_831]
 name=Captain Siad
@@ -10224,7 +10340,9 @@ model9=model_517_obj_wear
 head1=model_57_obj_wear
 wanderrange=3
 attackrange=3
-// TODO
+// TODO stats data
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [npc_852]
 name=Ogre chieftain
@@ -10334,6 +10452,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_858]
 name=Ogre guard
@@ -10346,6 +10467,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_859]
 name=Ogre guard
@@ -10358,6 +10482,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_860]
 name=Ogre guard
@@ -10370,6 +10497,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_861]
 name=Ogre guard
@@ -10382,6 +10512,9 @@ vislevel=74
 model1=model_2880_npc
 model2=model_2874_npc
 head1=model_141_npc_head
+param=attack_anim,ogre_attack
+param=defend_anim,ogre_block
+param=death_anim,ogre_death
 
 [npc_862]
 name=City guard
@@ -10837,6 +10970,7 @@ model7=model_286_obj_wear
 head1=model_48_npc_head
 head2=model_83_idk_head
 wanderrange=3
+// TODO try to get information about the attack range
 respawnrate=50
 hitpoints=25
 attack=10
@@ -10845,6 +10979,8 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [hazeel]
 vislevel=296
@@ -10916,6 +11052,8 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
+param=attack_anim,Human_stafforb_pound
+param=defend_anim,Human_stafforb_2h_defend
 
 [npc_894]
 name=Hazeel Cultist
@@ -10951,6 +11089,8 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
+param=attack_anim,Human_staff_pound
+param=defend_anim,Human_staff_defend
 
 [npc_928]
 vislevel=hide
@@ -11022,6 +11162,8 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=rangebonus,7
+param=attack_anim,Human_staff_pound
+param=defend_anim,Human_staff_defend
 
 [npc_930]
 name=Ungadulu
@@ -11064,6 +11206,8 @@ magic=0
 ranged=0
 param=strengthbonus,3
 param=rangebonus,7
+param=attack_anim,Human_staff_pound
+param=defend_anim,Human_staff_defend
 
 [jungle_savage]
 name=Jungle Savage
@@ -11105,6 +11249,8 @@ ranged=0
 param=attackbonus,8
 param=strengthbonus,10
 param=damagetype,^stab_style
+param=attack_anim,human_spear_stab
+param=defend_anim,human_khazard_spear_defend
 huntmode=cowardly
 
 [npc_932]
@@ -11268,6 +11414,7 @@ param=slashdefence,22
 param=crushdefence,20
 param=magicdefence,-1
 param=rangedefence,20
+
 
 [npc_937]
 name=Irvig Senay
@@ -11810,6 +11957,8 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [sir_carl]
 name=Sir Carl
@@ -11849,6 +11998,8 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [sir_harry]
 name=Sir Harry
@@ -11888,6 +12039,8 @@ param=crushdefence,76
 param=magicdefence,-10
 param=rangedefence,79
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2
 
 [npc_991]
 size=2
@@ -12226,6 +12379,9 @@ param=damagetype,^stab_style
 param=attack_anim,spider_attack
 param=defend_anim,spider_block
 param=death_anim,spider_death
+param=attack_sound,insect_3
+param=defend_sound,insect_2
+param=death_sound,insect_1
 
 [npc_1005]
 name=Giant bat
@@ -12292,6 +12448,8 @@ op2=Attack
 vislevel=29
 model1=model_2883_npc
 // TODO respawnrates
+wanderrange=10
+attackrange=12
 hitpoints=25
 attack=28
 strength=28
@@ -12311,8 +12469,6 @@ param=death_sound,insect_1
 param=death_drop,null
 // Tested this npc in osrs, doesnt seem to poison? Seems like the chests have a chance to poison
 huntmode=cowardly
-wanderrange=10
-attackrange=12
 
 [npc_1010]
 vislevel=hide
