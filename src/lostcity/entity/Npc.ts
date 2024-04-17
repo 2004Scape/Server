@@ -26,8 +26,9 @@ import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
+// import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 import LinkList from '#jagex2/datastruct/LinkList.js';
+import {CollisionFlag, hasLineOfSight, hasLineOfWalk} from '#3rdparty/rsmod/debug.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -321,7 +322,7 @@ export default class Npc extends PathingEntity {
         const destZ = this.startZ + dz;
 
         if (destX !== this.x || destZ !== this.z) {
-            this.queueWaypoint(destX, destZ);
+            // this.queueWaypoint(destX, destZ);
         }
     }
 
@@ -448,7 +449,7 @@ export default class Npc extends PathingEntity {
             return;
         }
         this.facePlayer(target.pid); // face the player
-        this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
+        // this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
     }
 
     playerFaceMode(): void {
@@ -767,9 +768,9 @@ export default class Npc extends PathingEntity {
             for (let i = 0; i < nearby.length; i++) {
                 const player = nearby[i];
 
-                if (hunt.checkVis === HuntVis.LINEOFSIGHT && !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length)) {
+                if (hunt.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length)) {
                     continue;
-                } else if (hunt.checkVis === HuntVis.LINEOFWALK && !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
+                } else if (hunt.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
                     continue;
                 }
 

@@ -17,39 +17,33 @@ import PlayerCollider from '#lostcity/engine/collision/PlayerCollider.js';
 // all of this above needs to be refactored into an export ^ for one line imports.
 
 import LocType from '#lostcity/cache/LocType.js';
-
 import Loc from '#lostcity/entity/Loc.js';
 
-import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
+import {
+    allocateIfAbsent,
+    changeFloor,
+    changeLoc,
+    changeNpc,
+    changePlayer,
+    changeRoof,
+    changeWall, findPath
+} from '#3rdparty/rsmod/debug.js';
 
 export default class CollisionManager {
     private static readonly SHIFT_23 = Math.pow(2, 23);
 
-    private readonly floorCollider: FloorCollider;
-    private readonly wallCollider: WallCollider;
-    private readonly locCollider: LocCollider;
-    private readonly npcCollider: NpcCollider;
-    private readonly roofCollider: RoofCollider;
-    private readonly playerCollider: PlayerCollider;
-
-    readonly flags: CollisionFlagMap;
-    readonly stepValidator: StepValidator;
-    readonly pathFinder: PathFinder;
-    readonly naivePathFinder: NaivePathFinder;
-    readonly lineValidator: LineValidator;
+    // readonly flags: CollisionFlagMap;
+    // readonly stepValidator: StepValidator;
+    // readonly pathFinder: PathFinder;
+    // readonly naivePathFinder: NaivePathFinder;
+    // readonly lineValidator: LineValidator;
 
     constructor() {
-        this.flags = new CollisionFlagMap();
-        this.stepValidator = new StepValidator(this.flags);
-        this.floorCollider = new FloorCollider(this.flags);
-        this.wallCollider = new WallCollider(this.flags);
-        this.locCollider = new LocCollider(this.flags);
-        this.npcCollider = new NpcCollider(this.flags);
-        this.roofCollider = new RoofCollider(this.flags);
-        this.playerCollider = new PlayerCollider(this.flags);
-        this.pathFinder = new PathFinder(this.flags);
-        this.naivePathFinder = new NaivePathFinder(this.stepValidator);
-        this.lineValidator = new LineValidator(this.flags);
+        // this.flags = new CollisionFlagMap();
+        // this.stepValidator = new StepValidator(this.flags);
+        // this.pathFinder = new PathFinder(this.flags);
+        // this.naivePathFinder = new NaivePathFinder(this.stepValidator);
+        // this.lineValidator = new LineValidator(this.flags);
     }
 
     init(zoneManager: ZoneManager) {
@@ -82,7 +76,8 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changeLandCollision(x: number, z: number, level: number, add: boolean): void {
-        this.floorCollider.change(x, z, level, add);
+        changeFloor(x, z, level, add);
+        //this.floorCollider.change(x, z, level, add);
     }
 
     /**
@@ -101,16 +96,20 @@ export default class CollisionManager {
     changeLocCollision(shape: number, angle: number, blockrange: boolean, length: number, width: number, active: number, x: number, z: number, level: number, add: boolean): void {
         const locLayer: LocLayer = LocShapes.layer(shape);
         if (locLayer === LocLayer.WALL) {
-            this.wallCollider.change(x, z, level, angle, shape, blockrange, add);
+            changeWall(x, z, level, angle, shape, blockrange, false, add);
+            //this.wallCollider.change(x, z, level, angle, shape, blockrange, add);
         } else if (locLayer === LocLayer.GROUND) {
             if (angle === LocAngle.NORTH || angle === LocAngle.SOUTH) {
-                this.locCollider.change(x, z, level, length, width, blockrange, add);
+                changeLoc(x, z, level, length, width, blockrange, false, add);
+                //this.locCollider.change(x, z, level, length, width, blockrange, add);
             } else {
-                this.locCollider.change(x, z, level, width, length, blockrange, add);
+                changeLoc(x, z, level, width, length, blockrange, false, add);
+                //this.locCollider.change(x, z, level, width, length, blockrange, add);
             }
         } else if (locLayer === LocLayer.GROUND_DECOR) {
             if (active === 1) {
-                this.floorCollider.change(x, z, level, add);
+                changeFloor(x, z, level, add);
+                //this.floorCollider.change(x, z, level, add);
             }
         }
     }
@@ -124,7 +123,8 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changeNpcCollision(size: number, x: number, z: number, level: number, add: boolean): void {
-        this.npcCollider.change(x, z, level, size, add);
+        changeNpc(x, z, level, size, add);
+        //this.npcCollider.change(x, z, level, size, add);
     }
 
     /**
@@ -136,7 +136,8 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changePlayerCollision(size: number, x: number, z: number, level: number, add: boolean): void {
-        this.playerCollider.change(x, z, level, size, add);
+        changePlayer(x, z, level, size, add);
+        //this.playerCollider.change(x, z, level, size, add);
     }
 
     /**
@@ -147,7 +148,8 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changeRoofCollision(x: number, z: number, level: number, add: boolean): void {
-        this.roofCollider.change(x, z, level, add);
+        changeRoof(x, z, level, add);
+        //this.roofCollider.change(x, z, level, add);
     }
 
     private decodeLands(lands: Int8Array, packet: Packet): void {
@@ -169,7 +171,8 @@ export default class CollisionManager {
                     const absoluteZ: number = z + mapsquareZ;
 
                     if (x % 7 === 0 && z % 7 === 0) { // allocate per zone
-                        this.flags.allocateIfAbsent(absoluteX, absoluteZ, level);
+                        allocateIfAbsent(absoluteX, absoluteZ, level);
+                        // this.flags.allocateIfAbsent(absoluteX, absoluteZ, level);
                     }
 
                     const land: number = lands[this.packCoord(x, z, level)];

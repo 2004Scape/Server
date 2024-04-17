@@ -50,7 +50,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
+// import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
 import { EntityQueueState, PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
@@ -184,25 +184,25 @@ class World {
         return this.gameMap.collisionManager;
     }
 
-    get collisionFlags(): CollisionFlagMap {
-        return this.collisionManager.flags;
-    }
-
-    get pathFinder(): PathFinder {
-        return this.collisionManager.pathFinder;
-    }
-
-    get naivePathFinder(): NaivePathFinder {
-        return this.collisionManager.naivePathFinder;
-    }
-
-    get lineValidator(): LineValidator {
-        return this.collisionManager.lineValidator;
-    }
-
-    get stepValidator(): StepValidator {
-        return this.collisionManager.stepValidator;
-    }
+    // get collisionFlags(): CollisionFlagMap {
+    //     return this.collisionManager.flags;
+    // }
+    //
+    // get pathFinder(): PathFinder {
+    //     return this.collisionManager.pathFinder;
+    // }
+    //
+    // get naivePathFinder(): NaivePathFinder {
+    //     return this.collisionManager.naivePathFinder;
+    // }
+    //
+    // get lineValidator(): LineValidator {
+    //     return this.collisionManager.lineValidator;
+    // }
+    //
+    // get stepValidator(): StepValidator {
+    //     return this.collisionManager.stepValidator;
+    // }
 
     shouldReload(type: string, client: boolean = false): boolean {
         const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
