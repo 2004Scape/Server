@@ -10,25 +10,26 @@ clearqueue(playerhit_n_retaliate);
 clearqueue(damage_player);
 
 [queue,player_death]
+p_delay(1);
 p_stopaction;
 if_close;
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
-p_delay(6);
+p_delay(3);
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
 def_boolean $protecting_item = false;
 if (%prayer_protectitems = ^true) { $protecting_item = true; }
-inv_clear(tempinv);
+inv_clear(death);
 
 if($skulled = false) {
-    ~move_priciest_item_on_hero_to_tempinv;
-    ~move_priciest_item_on_hero_to_tempinv;
-    ~move_priciest_item_on_hero_to_tempinv;
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
 }
 if($protecting_item = true) {
-    ~move_priciest_item_on_hero_to_tempinv;
+    ~move_priciest_item_on_hero_to_death;
 }
 
 
@@ -62,7 +63,7 @@ while ($i < $size) {
 }
 buildappearance(worn);
 
-~moveallinv(tempinv,inv);
+~moveallinv(death, inv);
 ~deactivate_prayers;
 p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
 anim(null, 0);
@@ -75,9 +76,9 @@ healenergy(10000);
 ~clear_poison;
 // todo: end poison timer ~player_end_poison
 ~update_all($prev_wep);
-inv_clear(tempinv);
+inv_clear(death);
 
-[proc,move_priciest_item_on_hero_to_tempinv]
+[proc,move_priciest_item_on_hero_to_death]
 def_obj $priciest_item;
 def_obj $currentitem;
 def_int $biggest_price = 0;
@@ -116,9 +117,9 @@ if($priciest_item = null ) {
     return;
 }
 if($is_worn = true) {
-    inv_moveitem(worn,tempinv,$priciest_item,1);
+    inv_moveitem(worn,death,$priciest_item,1);
 } else {
-    inv_moveitem(inv,tempinv,$priciest_item,1);
+    inv_moveitem(inv,death,$priciest_item,1);
 }
 
 [debugproc,death]
