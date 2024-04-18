@@ -8,18 +8,13 @@ import StructType from '#lostcity/cache/StructType.js';
 
 import World from '#lostcity/engine/World.js';
 
-import LocLayer from '#lostcity/engine/collision/LocLayer.js';
-import LocAngle from '#lostcity/engine/collision/LocAngle.js';
-import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
-
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 import { Position } from '#lostcity/entity/Position.js';
 
-// import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
-import {CollisionFlag, hasLineOfSight, hasLineOfWalk, isFlagged} from '#3rdparty/rsmod/debug.js';
+import {CollisionFlag, hasLineOfSight, hasLineOfWalk, isFlagged, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: state => {
@@ -380,7 +375,7 @@ const ServerOps: CommandHandlers = {
                 continue;
             }
 
-            const layer = LocShapes.layer(loc.shape);
+            const layer = locShapeLayer(loc.shape);
 
             if (loc.respawn !== -1 && layer === LocLayer.WALL) {
                 continue;

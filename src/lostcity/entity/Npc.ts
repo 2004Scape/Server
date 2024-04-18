@@ -26,9 +26,9 @@ import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
-// import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import {CollisionFlag, hasLineOfSight, hasLineOfWalk} from '#3rdparty/rsmod/debug.js';
+
+import {CollisionFlag, findNaivePath, hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -322,7 +322,7 @@ export default class Npc extends PathingEntity {
         const destZ = this.startZ + dz;
 
         if (destX !== this.x || destZ !== this.z) {
-            // this.queueWaypoint(destX, destZ);
+            this.queueWaypoint(destX, destZ);
         }
     }
 
@@ -449,7 +449,7 @@ export default class Npc extends PathingEntity {
             return;
         }
         this.facePlayer(target.pid); // face the player
-        // this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
+        this.queueWaypoints(findNaivePath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy));
     }
 
     playerFaceMode(): void {

@@ -4,8 +4,6 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37, toDisplayName } from '#jagex2/jstring/JString.js';
 
-// import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
-
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
@@ -56,7 +54,8 @@ import WordPack from '#jagex2/wordenc/WordPack.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import {CollisionFlag, findPath} from '#3rdparty/rsmod/debug.js';
+
+import {CollisionFlag, findPath} from '@2004scape/rsmod-pathfinder';
 
 const levelExperience = new Int32Array(99);
 

@@ -11,8 +11,7 @@ import { Direction, Position } from '#lostcity/entity/Position.js';
 
 import LocType from '#lostcity/cache/LocType.js';
 
-// import { CollisionFlag, CollisionStrategies, CollisionStrategy, ReachStrategy, RouteCoordinates } from '@2004scape/rsmod-pathfinder';
-import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, isFlagged, reached} from '#3rdparty/rsmod/debug.js';
+import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, intersects, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -188,9 +187,10 @@ export default abstract class PathingEntity extends Entity {
      * Queue waypoints to this PathingEntity.
      * @param waypoints The waypoints to queue.
      */
-    queueWaypoints(waypoints: Int32Array): void {
+    queueWaypoints(waypoints: ArrayLike<number>): void {
+        const waypoints2: Int32Array = Int32Array.from(waypoints);
         this.waypoints = [];
-        for (const step of waypoints) {
+        for (const step of waypoints2) {
             this.waypoints.push({ x: step >> 14 & 0x3fff, z: step & 0x3fff });
         }
         this.waypoints.reverse();
@@ -333,11 +333,11 @@ export default abstract class PathingEntity extends Entity {
         if (!target || target.level !== this.level) {
             return false;
         }
-        // if (target instanceof PathingEntity && World.naivePathFinder.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
-        //     // pathing entity has a -2 shape basically (not allow on same tile) for ap.
-        //     // you are not within ap distance of pathing entity if you are underneath it.
-        //     return false;
-        // }
+        if (target instanceof PathingEntity && intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
+            // pathing entity has a -2 shape basically (not allow on same tile) for ap.
+            // you are not within ap distance of pathing entity if you are underneath it.
+            return false;
+        }
         return hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER) && Position.distanceTo(this, target) <= range;
     }
 
