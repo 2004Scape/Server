@@ -9,8 +9,6 @@ import Loc from '#lostcity/entity/Loc.js';
 import {allocateIfAbsent, changeFloor, changeLoc, changeNpc, changePlayer, changeRoof, changeWall, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
 
 export default class CollisionManager {
-    private static readonly SHIFT_23 = Math.pow(2, 23);
-
     init(zoneManager: ZoneManager) {
         console.time('Loading collision');
 
