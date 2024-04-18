@@ -35,7 +35,6 @@ param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,baxe_crush
 
-
 [npc_476]
 name=Khazard trooper
 desc=It's one of General Khazard's warriors.
