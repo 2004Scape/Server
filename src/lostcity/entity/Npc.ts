@@ -436,7 +436,7 @@ export default class Npc extends PathingEntity {
         }
 
         const collisionStrategy = this.getCollisionStrategy();
-        if (!collisionStrategy) {
+        if (collisionStrategy === null) {
             // nomove moverestrict returns as null = no walking allowed.
             this.defaultMode();
             return;
