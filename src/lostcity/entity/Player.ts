@@ -4,8 +4,6 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37, toDisplayName } from '#jagex2/jstring/JString.js';
 
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
-
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
@@ -56,6 +54,8 @@ import WordPack from '#jagex2/wordenc/WordPack.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
+
+import {CollisionFlag, findPath} from '@2004scape/rsmod-pathfinder';
 
 const levelExperience = new Int32Array(99);
 
@@ -1651,7 +1651,7 @@ export default class Player extends PathingEntity {
             if (this.target) {
                 this.pathToTarget();
             } else {
-                this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, pathfindX, pathfindZ).waypoints);
+                this.queueWaypoints(findPath(this.level, this.x, this.z, pathfindX, pathfindZ));
             }
 
             pathfindX = -1;
@@ -1665,12 +1665,12 @@ export default class Player extends PathingEntity {
         }
 
         if (this.target instanceof PathingEntity) {
-            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2).waypoints);
+            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
         } else if (this.target instanceof Loc) {
             const forceapproach = LocType.get(this.target.type).forceapproach;
-            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach).waypoints);
+            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
         } else {
-            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z).waypoints);
+            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z));
         }
     }
 
@@ -1933,6 +1933,15 @@ export default class Player extends PathingEntity {
                 this.afkEventReady = true;
                 break;
             }
+            /*case 'bench': {
+                const start = Date.now();
+                for (let index = 0; index < 100_000; index++) {
+                    findPath(this.level, this.x, this.z, this.x, this.z + 10);
+                }
+                const end = Date.now();
+                console.log(`took = ${end - start} ms`);
+                break;
+            }*/
         }
 
         if (cmd.length <= 0) {

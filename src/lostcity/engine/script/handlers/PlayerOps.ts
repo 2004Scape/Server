@@ -15,6 +15,7 @@ import { Position } from '#lostcity/entity/Position.js';
 import { ServerProt } from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import {findPath} from '@2004scape/rsmod-pathfinder';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -392,7 +393,7 @@ const PlayerOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
-        player.queueWaypoints(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
+        player.queueWaypoints(findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
         player.updateMovement(); // try to walk immediately
     }),
 
