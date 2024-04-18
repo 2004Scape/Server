@@ -114,3 +114,5 @@ defence=60
 param=attackbonus,9
 param=strengthbonus,14
 param=damagetype,^slash_style
+param=attack_anim,human_sword_slash
+param=defend_anim,human_sword_defend2

@@ -445,7 +445,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 92) {
             npcConfig.push(`code92=${npc.g2()}`);
         } else if (code === 93) {
-            npcConfig.push('visonmap=false');
+            npcConfig.push('minimap=no');
         } else if (code === 95) {
             let level: number | string = npc.g2();
             if (level === 0) {

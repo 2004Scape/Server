@@ -12,9 +12,10 @@ import { EntityQueueRequest, PlayerQueueType, ScriptArgument } from '#lostcity/e
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
 
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import {findPath} from '@2004scape/rsmod-pathfinder';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -355,7 +356,12 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.clearInteraction();
         state.activePlayer.closeModal();
         state.activePlayer.unsetMapFlag();
-        // state.activePlayer.activeScript = null;
+    }),
+
+    [ScriptOpcode.P_CLEARPENDINGACTION]: checkedHandler(ProtectedActivePlayer, state => {
+        // clear current interaction but leave walk queue intact
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, state => {
@@ -392,7 +398,7 @@ const PlayerOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
-        player.queueWaypoints(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
+        player.queueWaypoints(findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
         player.updateMovement(); // try to walk immediately
     }),
 
@@ -845,8 +851,12 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.lastTargetSlot);
     },
 
-    [ScriptOpcode.SETMOVECHECK]: state => {
-        state.activePlayer.moveCheck = state.popInt();
+    [ScriptOpcode.WALKTRIGGER]: state => {
+        state.activePlayer.walktrigger = state.popInt();
+    },
+
+    [ScriptOpcode.GETWALKTRIGGER]: state => {
+        state.pushInt(state.activePlayer.walktrigger);
     },
 
     [ScriptOpcode.CLEARQUEUE]: state => {

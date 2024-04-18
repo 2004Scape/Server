@@ -24,8 +24,8 @@ model5=model_185_obj_wear
 model6=model_323_obj_wear
 model7=model_553_npc
 head1=model_51_obj_wear
-param=attack_anim,Human_staff_pound
-param=defend_anim,Human_staff_defend
+param=attack_anim,human_staff_pound
+param=defend_anim,human_staff_defend
 // TODO
 
 [npc_348]
