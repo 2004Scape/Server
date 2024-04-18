@@ -75,6 +75,14 @@ switch_loc($flowers_loc) {
 }
 
 [proc,free_mithseed_spot](coord)
+if (~in_duel_arena = true) {
+        // https://youtu.be/L3OwjH-iXQU
+        //  - could still fm in the duel arena. 
+        //  - It just didnt move the player at all
+        // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+        //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+        return(coord);
+    }
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // E
     return (movecoord(coord, -1, 0, 0));
 } else if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // W

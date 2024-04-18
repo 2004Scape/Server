@@ -19,9 +19,6 @@ if (last_useitem = tinderbox) {
 
 // opheldu for logs is handled in fletching
 [opheldu,tinderbox]
-if (last_useitem = achey_logs) {
-    @light_achey_inv(last_useslot);
-}
 switch_category(oc_category(last_useitem)) {
     case category_22 :
         if (%tutorial_progress < ^tutorial_complete) {
@@ -44,15 +41,6 @@ if (stat(firemaking) < $level) {
 // check if the coord is already occupied by an interactable loc
 // unconfirmed
 if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true) {
-    mes("You can't light a fire here.");
-    return;
-}
-if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
-    // https://youtu.be/L3OwjH-iXQU
-    //  - could still fm in the duel arena. 
-    //  - its just that you cant firemake if movement is restricted
-    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
-    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
     mes("You can't light a fire here.");
     return;
 }
@@ -91,9 +79,21 @@ if (%action_delay < map_clock) {
         // firemaking length: https://archive.is/zF5hb
         // if player isnt standing on the log anymore, the fire is lit
         // check west
+
+        if (~in_duel_arena = true) {
+            // https://youtu.be/L3OwjH-iXQU
+            //  - could still fm in the duel arena. 
+            //  - It just didnt move the player at all
+            // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+            //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+            p_delay(0);
+            anim(null, 0);
+            ~firemaking_success($fire_coord, $log);
+            return;
+        }
         if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) {
             p_teleport(movecoord(coord, -1, 0, 0));
-            mes("move west");
+            //mes("move west");
             p_delay(0);
         }
         if (coord ! $fire_coord) {
@@ -103,7 +103,7 @@ if (%action_delay < map_clock) {
         // check east
         if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) {
             p_teleport(movecoord(coord, 1, 0, 0));
-            mes("move east");
+            //mes("move east");
             p_delay(0);
         }
         if (coord ! $fire_coord) {
@@ -113,7 +113,7 @@ if (%action_delay < map_clock) {
         // check south
         if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) {
             p_teleport(movecoord(coord, 0, 0, 1));
-            mes("move south");
+            //mes("move south");
             p_delay(0);
         }
         if (coord ! $fire_coord) {
@@ -123,7 +123,7 @@ if (%action_delay < map_clock) {
         // check north
         if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) {
             p_teleport(movecoord(coord, 0, 0, -1));
-            mes("move north");
+            //mes("move north");
             p_delay(0);
         }
         if (coord ! $fire_coord) {
@@ -216,9 +216,20 @@ if (%action_delay < map_clock) {
         // firemaking length: https://archive.is/zF5hb
         // if player isnt standing on the log anymore, the fire is lit
         // check west
+        if (~in_duel_arena = true) {
+            // https://youtu.be/L3OwjH-iXQU
+            //  - could still fm in the duel arena. 
+            //  - It just didnt move the player at all
+            // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+            //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+            p_delay(1);
+            anim(null, 0);
+            ~firemaking_success($fire_coord, $log);
+            return;
+        }
         if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) {
             p_teleport(movecoord(coord, -1, 0, 0));
-            mes("move west");
+            //mes("move west");
             p_delay(1);
         }
         if (coord ! $fire_coord) {
@@ -228,7 +239,7 @@ if (%action_delay < map_clock) {
         // check east
         if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) {
             p_teleport(movecoord(coord, 1, 0, 0));
-            mes("move east");
+            //mes("move east");
             p_delay(0);
         }
         if (coord ! $fire_coord) {
@@ -238,7 +249,7 @@ if (%action_delay < map_clock) {
         // check south
         if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) {
             p_teleport(movecoord(coord, 0, 0, 1));
-            mes("move south");
+            //mes("move south");
             p_delay(0);
         }
         if (coord ! $fire_coord) {

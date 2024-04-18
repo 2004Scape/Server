@@ -1,3 +1,10 @@
+[opheldu,achey_logs]
+switch_obj(last_useitem) {
+    case knife: @make_ogre_shafts;
+    case tinderbox: @light_achey_inv(last_slot);
+    case default : @nothing_interesting_happens;
+}
+
 // achey fm is slightly different so i just made it a whole new label
 [label,light_achey_inv](int $slot)
 def_obj $log = inv_getobj(inv, $slot);
@@ -19,15 +26,6 @@ obj_add(coord, $log, 1, ^lootdrop_duration);
 // delete item slot from inv
 inv_delslot(inv, $slot);
 if (~inzone_coord_pair_table(bank_zones, coord) = true) {
-    mes("You can't light a fire here.");
-    return;
-}
-if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
-    // https://youtu.be/L3OwjH-iXQU
-    //  - could still fm in the duel arena. 
-    //  - its just that you cant firemake if movement is restricted
-    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
-    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
     mes("You can't light a fire here.");
     return;
 }
@@ -67,6 +65,17 @@ if (%action_delay < map_clock) {
         // firemaking length: https://archive.is/zF5hb
         // if player isnt standing on the log anymore, the fire is lit
         // check west
+        if (~in_duel_arena = true) {
+            // https://youtu.be/L3OwjH-iXQU
+            //  - could still fm in the duel arena. 
+            //  - It just didnt move the player at all
+            // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+            //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+            p_delay(1);
+            anim(null, 0);
+            ~firemaking_success($fire_coord, $log);
+            return;
+        }
         if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) {
             p_teleport(movecoord(coord, -1, 0, 0));
             p_delay(1);
