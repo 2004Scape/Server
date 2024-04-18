@@ -37,6 +37,8 @@ param=crushdefence,27
 param=magicdefence,10
 param=rangedefence,19
 param=damagetype,^ranged_style
+param=attack_anim,human_bow
+param=rangeattack_sound,longbow
 
 [npc_679]
 vislevel=hide
@@ -166,7 +168,6 @@ param=shop_buy_multiplier,500
 param=shop_delta,10
 param=shop_title,Dargaud's Bow and Arrows.
 
-
 [npc_684]
 vislevel=hide
 name=Tower Advisor
@@ -284,6 +285,8 @@ param=rangebonus,49
 param=magicdefence,34
 param=rangedefence,66
 param=damagetype,^ranged_style
+param=attack_anim,human_bow
+param=rangeattack_sound,longbow
 huntmode=aggressive_ranged
 
 [npc_689]
@@ -317,6 +320,8 @@ param=rangebonus,22
 param=magicdefence,24
 param=rangedefence,40
 param=damagetype,^ranged_style
+param=attack_anim,human_bow
+param=rangeattack_sound,longbow
 huntmode=aggressive_ranged
 
 [npc_690]
@@ -350,6 +355,8 @@ param=rangebonus,31
 param=magicdefence,20
 param=rangedefence,45
 param=damagetype,^ranged_style
+param=attack_anim,human_bow
+param=rangeattack_sound,longbow
 huntmode=aggressive_ranged
 
 [npc_691]
@@ -383,6 +390,8 @@ param=rangebonus,49
 param=magicdefence,34
 param=rangedefence,66
 param=damagetype,^ranged_style
+param=attack_anim,human_bow
+param=rangeattack_sound,longbow
 huntmode=aggressive_ranged
 
 [npc_692]

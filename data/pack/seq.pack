@@ -397,7 +397,7 @@
 396=seq_396
 397=human_baxe_defend1
 398=human_baxe_defend2
-399=shadowwarrior_defend
+399=seq_399
 400=human_blunt_stab
 401=human_blunt_crush
 402=seq_402
@@ -906,9 +906,9 @@
 905=seq_905
 906=seq_906
 907=seq_907
-908=seq_908
-909=seq_909
-910=seq_910
+908=human_bullroarer
+909=human_mapping
+910=human_machette_chop
 911=human_knife_slash
 912=seq_912
 913=seq_913

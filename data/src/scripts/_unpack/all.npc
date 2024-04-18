@@ -2550,6 +2550,8 @@ param=attack_anim,unicorn_attack
 param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
 param=attack_sound,horse_hit
+param=defend_sound,horse_hit
+// osrs unicorns use cow_attack, cow_hit, cow_death sounds
 
 [npc_90]
 name=Skeleton
@@ -3394,6 +3396,7 @@ param=damagetype,^crush_style
 param=attack_anim,dwarf_attack
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
+param=attack_sound,baxe_crush
 
 [npc_119]
 walkanim=dwarf_walk
@@ -3584,7 +3587,7 @@ param=attack_anim,earthwarrior_crush
 param=defend_anim,earthwarrior_defend
 param=death_anim,earthwarrior_death
 huntmode=cowardly
-// osrs defend animation seq_398
+// osrs defend anim seq_398
 
 [ice_warrior]
 hasalpha=yes
@@ -3813,7 +3816,9 @@ param=attack_anim,unicorn_attack
 param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
 param=attack_sound,horse_hit
+param=defend_sound,horse_hit
 huntmode=cowardly
+// osrs unicorns use cow_attack, cow_hit, cow_death sounds
 
 [npc_134]
 walkanim=giantspider_walk
@@ -4354,9 +4359,10 @@ param=magicdefence,15
 param=rangedefence,38
 param=damagetype,^slash_style
 param=attack_anim,shadowwarrior_crush
-param=defend_anim,shadowwarrior_defend
+param=defend_anim,earthwarrior_defend
 param=death_anim,earthwarrior_death
 huntmode=cowardly
+// osrs defend anim seq_399
 
 [dark_wizard_earth]
 name=Dark wizard
@@ -5144,7 +5150,7 @@ param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
-// osrs defend animation is seq_403
+// osrs defend anim seq_403
 huntmode=cowardly
 
 [necromancer]
