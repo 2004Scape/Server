@@ -30,6 +30,7 @@ export default abstract class PathingEntity extends Entity {
     jump: boolean = false;
 
     walktrigger: number = -1;
+    walktriggerArg: number = 0; // used for npcs
 
     orientation: number = Direction.SOUTH;
 

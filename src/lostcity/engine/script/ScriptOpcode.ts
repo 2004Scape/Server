@@ -209,7 +209,7 @@ enum ScriptOpcode {
     NPC_SETHUNT, // official
     NPC_SETHUNTMODE, // official
     NPC_SETMODE, // official
-    NPC_WALKTRIGGER,
+    NPC_WALKTRIGGER, // official
     NPC_SETTIMER,
     NPC_STAT,
     NPC_STATADD,
@@ -220,7 +220,6 @@ enum ScriptOpcode {
     NPC_UID,
     SPOTANIM_NPC,
     NPC_WALK,
-    NPC_GETWALKTRIGGER,
 
     // Loc ops (3000-3499)
     LOC_ADD = 3000, // official

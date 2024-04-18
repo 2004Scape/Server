@@ -2035,14 +2035,14 @@ export default class Player extends PathingEntity {
             }
         }
 
-        this.executeScript(ScriptRunner.init(script, this, null, null, params), false);
+        this.executeScript(ScriptRunner.init(script, this, null, params), false);
     }
 
     processEngineQueue() {
         for (let request: EntityQueueRequest | null = this.engineQueue.head() as EntityQueueRequest | null; request !== null; request = this.engineQueue.next() as EntityQueueRequest | null) {
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, null, request.args);
+                const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
 
                 request.unlink();
@@ -2261,7 +2261,7 @@ export default class Player extends PathingEntity {
 
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, null, request.args);
+                const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
                 request.unlink();
             }
@@ -2272,7 +2272,7 @@ export default class Player extends PathingEntity {
         for (let request: EntityQueueRequest | null = this.weakQueue.head() as EntityQueueRequest | null; request !== null; request = this.weakQueue.next() as EntityQueueRequest | null) {
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, null, request.args);
+                const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
                 request.unlink();
             }
@@ -2308,7 +2308,7 @@ export default class Player extends PathingEntity {
                 // set clock back to interval
                 timer.clock = timer.interval;
 
-                const script = ScriptRunner.init(timer.script, this, null, null, timer.args);
+                const script = ScriptRunner.init(timer.script, this, null, timer.args);
                 this.runScript(script, timer.type === PlayerTimerType.NORMAL);
             }
         }

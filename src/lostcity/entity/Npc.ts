@@ -206,11 +206,12 @@ export default class Npc extends PathingEntity {
         }
 
         if (this.walktrigger !== -1) {
-            const script = ScriptProvider.get(this.walktrigger);
+            const type = NpcType.get(this.type);
+            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + this.walktrigger, type.id, type.category);
             this.walktrigger = -1;
 
             if (script) {
-                const state = ScriptRunner.init(script, this);
+                const state = ScriptRunner.init(script, this, null, [this.walktriggerArg]);
                 ScriptRunner.execute(state);
             }
         }
@@ -298,7 +299,7 @@ export default class Npc extends PathingEntity {
             }
 
             if (!this.delayed() && request.delay <= 0) {
-                const state = ScriptRunner.init(request.script, this, null, null, request.args);
+                const state = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(state);
                 request.unlink();
             }
@@ -569,7 +570,7 @@ export default class Npc extends PathingEntity {
             const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
 
             if (script) {
-                this.executeScript(ScriptRunner.init(script, this, this.target, null, []));
+                this.executeScript(ScriptRunner.init(script, this, this.target));
             }
         }
     }

@@ -265,7 +265,7 @@ while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
 // freeze npc if spell has freeze effect
 if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
     %npc_stunned = calc(map_clock + db_getfield($spell_data, magic_spell_table:freeze_time, 0) + 1);
-    npc_walktrigger(npc_stunned_magic);
+    npc_walktrigger(8, 0);
 }
 
 // debug code
@@ -279,9 +279,8 @@ if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
 //     mes("Spell can continue by autocast");
 // }
 
-[ai_walktrigger,npc_stunned_magic]
+[ai_queue8,_](int $arg)
 if (map_clock < %npc_stunned) {
-    // npc_say("<tostring(map_clock)>");
-    npc_setmode(npc_getmode);
-    npc_walktrigger(npc_stunned_magic);
+    npc_walk(npc_coord);
+    npc_walktrigger(8, 0);
 }

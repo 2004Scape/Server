@@ -393,11 +393,13 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_WALKTRIGGER]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.walktrigger = state.popInt();
-    }),
+        const [queueId, arg] = state.popInts(2);
+        if (queueId < 1 || queueId > 20) {
+            throw new Error(`Invalid ai_queue: ${queueId}`);
+        }
 
-    [ScriptOpcode.NPC_GETWALKTRIGGER]: checkedHandler(ActiveNpc, state => {
-        state.pushInt(state.activeNpc.walktrigger);
+        state.activeNpc.walktrigger = queueId - 1;
+        state.activeNpc.walktriggerArg = arg;
     }),
 
     [ScriptOpcode.NPC_STATADD]: checkedHandler(ActiveNpc, state => {

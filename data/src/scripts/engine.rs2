@@ -248,11 +248,9 @@
 [command,npc_changetype](npc $type)
 [command,npc_getmode]()(npc_mode)
 [command,npc_heropoints](int $damage)
-[command,npc_walktrigger](ai_walktrigger $trigger)
-[command,.npc_walktrigger](ai_walktrigger $trigger)
+[command,npc_walktrigger](int $ai_queue, int $arg)
+[command,.npc_walktrigger](int $ai_queue, int $arg)
 [command,npc_walk](coord $coord)
-[command,npc_getwalktrigger]()(ai_walktrigger)
-[command,.npc_getwalktrigger]()(ai_walktrigger)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
