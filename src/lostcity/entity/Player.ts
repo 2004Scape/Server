@@ -1933,7 +1933,7 @@ export default class Player extends PathingEntity {
                 this.afkEventReady = true;
                 break;
             }
-            case 'bench': {
+            /*case 'bench': {
                 const start = Date.now();
                 for (let index = 0; index < 100_000; index++) {
                     findPath(this.level, this.x, this.z, this.x, this.z + 10);
@@ -1941,7 +1941,7 @@ export default class Player extends PathingEntity {
                 const end = Date.now();
                 console.log(`took = ${end - start} ms`);
                 break;
-            }
+            }*/
         }
 
         if (cmd.length <= 0) {

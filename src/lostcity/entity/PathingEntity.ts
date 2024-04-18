@@ -188,9 +188,9 @@ export default abstract class PathingEntity extends Entity {
      * @param waypoints The waypoints to queue.
      */
     queueWaypoints(waypoints: ArrayLike<number>): void {
-        const waypoints2: Int32Array = Int32Array.from(waypoints);
+        const points: Int32Array = Int32Array.from(waypoints);
         this.waypoints = [];
-        for (const step of waypoints2) {
+        for (const step of points) {
             this.waypoints.push({ x: step >> 14 & 0x3fff, z: step & 0x3fff });
         }
         this.waypoints.reverse();
