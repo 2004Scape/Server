@@ -26,7 +26,7 @@ param=levelrequire,0
 param=attackrate,5
 param=slashattack_anim,human_baxe_slash
 param=crushattack_anim,human_blunt_crush
-// osrs axes use defend animation seq_397
+// osrs defend anim seq_397
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=broken,iron_axe_broken
@@ -61,7 +61,7 @@ param=levelrequire,0
 param=attackrate,5
 param=slashattack_anim,human_baxe_slash
 param=crushattack_anim,human_blunt_crush
-// osrs axes use defend animation seq_397
+// osrs defend anim seq_397
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=broken,bronze_axe_broken
@@ -93,7 +93,7 @@ param=levelrequire,6
 param=attackrate,5
 param=slashattack_anim,human_baxe_slash
 param=crushattack_anim,human_blunt_crush
-// osrs axes use defend animation seq_397
+// osrs defend anim seq_397
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=broken,steel_axe_broken
@@ -127,7 +127,7 @@ param=levelrequire,21
 param=attackrate,5
 param=slashattack_anim,human_baxe_slash
 param=crushattack_anim,human_blunt_crush
-// osrs axes use defend animation seq_397
+// osrs defend anim seq_397
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=broken,mithril_axe_broken
@@ -161,7 +161,7 @@ param=levelrequire,31
 param=attackrate,5
 param=slashattack_anim,human_baxe_slash
 param=crushattack_anim,human_blunt_crush
-// osrs axes use defend animation seq_397
+// osrs defend anim seq_397
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=broken,adamant_axe_broken
@@ -195,7 +195,7 @@ param=levelrequire,41
 param=attackrate,5
 param=slashattack_anim,human_baxe_slash
 param=crushattack_anim,human_blunt_crush
-// osrs axes use defend animation seq_397
+// osrs defend anim seq_397
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=broken,rune_axe_broken
@@ -230,7 +230,7 @@ param=levelrequire,11
 param=attackrate,5
 param=slashattack_anim,human_baxe_slash
 param=crushattack_anim,human_blunt_crush
-// osrs axes use defend animation seq_397
+// osrs defend anim seq_397
 param=slash_sound,baxe_slash
 param=crush_sound,baxe_crush
 param=broken,black_axe_broken

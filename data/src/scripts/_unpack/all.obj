@@ -644,7 +644,6 @@ wearpos2=lefthand
 category=weapon_staff
 manwear=model_514_obj_wear,0
 womanwear=model_514_obj_wear,6
-wearpos=righthand
 weight=5lb
 param=stabattack,10
 param=slashattack,-1

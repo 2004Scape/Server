@@ -27,6 +27,7 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [bronze_mace]
 name=Bronze mace
@@ -57,6 +58,7 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [steel_mace]
 name=Steel mace
@@ -85,6 +87,7 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [black_mace]
 name=Black mace
@@ -115,6 +118,7 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [mithril_mace]
 name=Mithril mace
@@ -145,6 +149,7 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [adamant_mace]
 name=Adamant mace
@@ -175,6 +180,7 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [rune_mace]
 name=Rune mace
@@ -205,6 +211,7 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [dragon_mace]
 members=yes
@@ -235,4 +242,4 @@ param=stabattack_anim,human_blunt_stab
 param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
-// osrs uses seq_403 in all Mace weapons used by the player.
+// osrs defend anim seq_403
