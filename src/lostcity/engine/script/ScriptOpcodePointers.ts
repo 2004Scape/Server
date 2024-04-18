@@ -356,6 +356,10 @@ const ScriptOpcodePointers: {
         require: ['p_active_player'],
         require2: ['p_active_player2']
     },
+    [ScriptOpcode.P_CLEARPENDINGACTION]: {
+        require: ['p_active_player'],
+        require2: ['p_active_player2']
+    },
     [ScriptOpcode.P_TELEJUMP]: {
         require: ['p_active_player'],
         require2: ['p_active_player2']

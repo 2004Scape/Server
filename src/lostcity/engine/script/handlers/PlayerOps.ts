@@ -356,7 +356,12 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.clearInteraction();
         state.activePlayer.closeModal();
         state.activePlayer.unsetMapFlag();
-        // state.activePlayer.activeScript = null;
+    }),
+
+    [ScriptOpcode.P_CLEARPENDINGACTION]: checkedHandler(ProtectedActivePlayer, state => {
+        // clear current interaction but leave walk queue intact
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, state => {
