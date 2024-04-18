@@ -4324,7 +4324,7 @@ frame7=anim_1213
 frame8=anim_1494
 frame9=anim_1794
 
-[Human_staff_pound]
+[human_staff_pound]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1177
@@ -4339,7 +4339,7 @@ frame9=anim_1500
 frame10=anim_1337
 frame11=anim_1624
 
-[Human_staff_defend]
+[human_staff_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1685
 frame2=anim_1983
@@ -4388,7 +4388,7 @@ frame7=anim_1123
 frame8=anim_1407
 frame9=anim_1699
 
-[Human_stafforb_pound]
+[human_stafforb_pound]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2201
@@ -4403,7 +4403,7 @@ frame9=anim_530
 frame10=anim_609
 frame11=anim_904
 
-[Human_stafforb_defend]
+[human_stafforb_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1587
 frame2=anim_1881
@@ -4416,7 +4416,7 @@ frame8=anim_2476
 frame9=anim_2179
 frame10=anim_1881
 
-[Human_stafforb_2h_defend]
+[human_stafforb_2h_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_2353
 frame2=anim_634
