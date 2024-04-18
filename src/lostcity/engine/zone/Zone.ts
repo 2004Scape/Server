@@ -203,7 +203,7 @@ export default class Zone {
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number) {
-        const event = new ZoneEvent(ServerProt.MAP_ANIM);
+        const event = new ZoneEvent(ServerProt.MAP_ANIM.id);
 
         event.buffer = Zone.mapAnim(x, z, spotanim, height, delay);
         event.x = x;
@@ -215,7 +215,7 @@ export default class Zone {
     }
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
-        const event = new ZoneEvent(ServerProt.MAP_PROJANIM);
+        const event = new ZoneEvent(ServerProt.MAP_PROJANIM.id);
 
         event.buffer = Zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
         event.x = x;
@@ -235,7 +235,7 @@ export default class Zone {
     addStaticObj(obj: Obj) {
         this.staticObjs.push(obj);
 
-        const event = new ZoneEvent(ServerProt.OBJ_ADD);
+        const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
         event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
         event.tick = World.currentTick;
         event.static = true;
@@ -251,7 +251,7 @@ export default class Zone {
             this.locs.push(loc);
         }
 
-        const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
+        const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE.id);
         event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.angle);
         event.x = loc.x;
         event.z = loc.z;
@@ -271,7 +271,7 @@ export default class Zone {
     }
 
     removeLoc(loc: Loc, duration: number) {
-        const event = new ZoneEvent(ServerProt.LOC_DEL);
+        const event = new ZoneEvent(ServerProt.LOC_DEL.id);
 
         const dynamicIndex = this.locs.indexOf(loc);
         if (dynamicIndex !== -1) {
@@ -315,7 +315,7 @@ export default class Zone {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
-        const event = new ZoneEvent(ServerProt.LOC_MERGE);
+        const event = new ZoneEvent(ServerProt.LOC_MERGE.id);
 
         event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
         event.x = loc.x;
@@ -328,7 +328,7 @@ export default class Zone {
     }
 
     animLoc(loc: Loc, seq: number) {
-        const event = new ZoneEvent(ServerProt.LOC_ANIM);
+        const event = new ZoneEvent(ServerProt.LOC_ANIM.id);
 
         event.buffer = Zone.locAnim(loc.x, loc.z, loc.shape, loc.angle, seq);
         event.x = loc.x;
@@ -343,7 +343,7 @@ export default class Zone {
     // ----
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
-        const event = new ZoneEvent(ServerProt.OBJ_ADD);
+        const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
         if (this.staticObjs.indexOf(obj) === -1) {
             obj.despawn = World.currentTick + duration;
             this.objs.push(obj);
@@ -364,7 +364,7 @@ export default class Zone {
     }
 
     removeObj(obj: Obj, receiver: Player | null, subtractTick: number = 0) {
-        const event = new ZoneEvent(ServerProt.OBJ_DEL);
+        const event = new ZoneEvent(ServerProt.OBJ_DEL.id);
 
         const dynamicIndex = this.objs.indexOf(obj);
         if (dynamicIndex !== -1) {
