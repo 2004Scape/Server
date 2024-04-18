@@ -7,9 +7,6 @@ switch_obj(last_useitem) {
 }
 
 [label,fletch_log](obj $log)
-if ($log = achey_logs) {
-    @make_ogre_shafts;
-}
 ~require_members_fletching;
 db_find(fletch_bow_table:log, $log);
 def_dbrow $data = db_findnext;
