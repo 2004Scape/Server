@@ -43,7 +43,7 @@ npc_setmode(null);
 
 mes("You've been stunned!");
 %stunned = calc(map_clock + ~random_range(5, 10));
-setmovecheck(stunned);
+walktrigger(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 // if player is in combat, prevent stealing

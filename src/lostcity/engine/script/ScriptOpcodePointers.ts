@@ -387,7 +387,11 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.SETIDKIT]: {
         require: ['p_active_player']
     },
-    [ScriptOpcode.SETMOVECHECK]: {
+    [ScriptOpcode.WALKTRIGGER]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
+    [ScriptOpcode.GETWALKTRIGGER]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
@@ -547,7 +551,7 @@ const ScriptOpcodePointers: {
         require: ['active_npc'],
         require2: ['active_npc2']
     },
-    [ScriptOpcode.NPC_SETMOVECHECK]: {
+    [ScriptOpcode.NPC_WALKTRIGGER]: {
         require: ['active_npc'],
         require2: ['active_npc2']
     },

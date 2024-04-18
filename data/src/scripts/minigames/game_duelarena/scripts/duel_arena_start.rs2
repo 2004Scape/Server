@@ -51,8 +51,8 @@ hint_player(.uid);
 .hint_player(uid);
 
 if (~duel_arena_movement_check = true) {
-    setmovecheck(duel_arena_no_move);
-    //.setmovecheck(duel_arena_no_move);
+    walktrigger(duel_arena_no_move);
+    //.walktrigger(duel_arena_no_move);
 }
 
 softtimer(duel_arena_start_3, 3); // todo: confirm these timings
@@ -172,12 +172,11 @@ say("FIGHT!");
 %duelstatus = 5;
 clearsofttimer(duel_arena_start_fight);
 
-[movecheck,duel_arena_no_move]()(boolean)
+[walktrigger,duel_arena_no_move]
 if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
     p_stopaction;
-    return(false);
+    walktrigger(duel_arena_no_move);
 }
-return(true);
 
 
 [queue,duel_arena_full]

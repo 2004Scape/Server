@@ -192,8 +192,10 @@
 [command,player_findnext]()(boolean)
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
-[command,setmovecheck]
-[command,.setmovecheck]
+[command,walktrigger](walktrigger $trigger)
+[command,.walktrigger](walktrigger $trigger)
+[command,getwalktrigger]()(walktrigger)
+[command,.getwalktrigger]()(walktrigger)
 [command,clearqueue](queue $queue)
 [command,afk_event]()(int)
 [command,lowmemory]()(boolean)
@@ -246,8 +248,11 @@
 [command,npc_changetype](npc $type)
 [command,npc_getmode]()(npc_mode)
 [command,npc_heropoints](int $damage)
-[command,npc_setmovecheck]
+[command,npc_walktrigger](ai_walktrigger $trigger)
+[command,.npc_walktrigger](ai_walktrigger $trigger)
 [command,npc_walk](coord $coord)
+[command,npc_getwalktrigger]()(ai_walktrigger)
+[command,.npc_getwalktrigger]()(ai_walktrigger)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)

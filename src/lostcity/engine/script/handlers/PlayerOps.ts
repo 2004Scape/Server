@@ -851,8 +851,12 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.lastTargetSlot);
     },
 
-    [ScriptOpcode.SETMOVECHECK]: state => {
-        state.activePlayer.moveCheck = state.popInt();
+    [ScriptOpcode.WALKTRIGGER]: state => {
+        state.activePlayer.walktrigger = state.popInt();
+    },
+
+    [ScriptOpcode.GETWALKTRIGGER]: state => {
+        state.pushInt(state.activePlayer.walktrigger);
     },
 
     [ScriptOpcode.CLEARQUEUE]: state => {

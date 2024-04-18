@@ -2072,24 +2072,14 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (this.hasWaypoints() && this.moveCheck !== null) {
-            const trigger = ScriptProvider.get(this.moveCheck);
+        if (this.hasWaypoints() && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+            const trigger = ScriptProvider.get(this.walktrigger);
+            this.walktrigger = -1;
 
             if (trigger) {
                 const script = ScriptRunner.init(trigger, this);
-                const state = this.runScript(script, true);
-                if (state === -1) {
-                    // player cannot move unless protected access is available
-                    return false;
-                }
-
-                const result = script.popInt();
-                if (!result) {
-                    return false;
-                }
+                this.runScript(script, true);
             }
-
-            this.moveCheck = null;
         }
 
         if (running === -1 && !this.forceMove) {

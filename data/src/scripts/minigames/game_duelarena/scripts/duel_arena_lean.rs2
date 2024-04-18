@@ -32,15 +32,14 @@ p_delay(1);
 anim(seq_915, 0);
 p_delay(0);
 ~handle_duel_camera($closest_camera, $closest_camera_index);
-setmovecheck(lean_on_wall);
+walktrigger(lean_on_wall);
 ~bas_set_all(seq_916);
 
 
-[movecheck,lean_on_wall]()(boolean)
+[walktrigger,lean_on_wall]
 anim(null, 0);
 ~update_bas;
 cam_reset;
-return(true);
 
 [debugproc,cr]
 cam_reset;

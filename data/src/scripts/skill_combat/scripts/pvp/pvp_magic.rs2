@@ -184,7 +184,7 @@ if ($freeze_time > 0) {
     //.queue(.freeze_player, 0, $freeze_time);
     if (.p_finduid(.uid) = true) { // todo: queue this
         .%stunned = calc(map_clock + $freeze_time + 1);
-        //.setmovecheck(.frozen);
+        //.walktrigger(.frozen);
     }
 }
 
@@ -266,8 +266,8 @@ return($duration);
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 return($maxhit);
 
-// todo: .movecheck
-// [movecheck,.frozen]()(boolean)
+// todo: .walktrigger
+// [walktrigger,.frozen]()(boolean)
 // if (map_clock < .%stunned) {
 //     .mes("A magical force stops you from moving.");
 //      p_stopaction;

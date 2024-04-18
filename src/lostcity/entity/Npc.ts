@@ -205,19 +205,14 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.moveCheck !== null) {
-            const script = ScriptProvider.get(this.moveCheck);
+        if (this.walktrigger !== -1) {
+            const script = ScriptProvider.get(this.walktrigger);
+            this.walktrigger = -1;
+
             if (script) {
                 const state = ScriptRunner.init(script, this);
                 ScriptRunner.execute(state);
-
-                const result = state.popInt();
-                if (!result) {
-                    return;
-                }
             }
-
-            this.moveCheck = null;
         }
 
         if (running === -1 && !this.forceMove) {

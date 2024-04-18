@@ -392,8 +392,12 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.addHero(state.activePlayer.uid, damage);
     }),
 
-    [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.moveCheck = state.popInt();
+    [ScriptOpcode.NPC_WALKTRIGGER]: checkedHandler(ActiveNpc, state => {
+        state.activeNpc.walktrigger = state.popInt();
+    }),
+
+    [ScriptOpcode.NPC_GETWALKTRIGGER]: checkedHandler(ActiveNpc, state => {
+        state.pushInt(state.activeNpc.walktrigger);
     }),
 
     [ScriptOpcode.NPC_STATADD]: checkedHandler(ActiveNpc, state => {

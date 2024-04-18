@@ -28,7 +28,8 @@ export default abstract class PathingEntity extends Entity {
     forceMove: boolean = false;
     tele: boolean = false;
     jump: boolean = false;
-    moveCheck: number | null = null;
+
+    walktrigger: number = -1;
 
     orientation: number = Direction.SOUTH;
 
