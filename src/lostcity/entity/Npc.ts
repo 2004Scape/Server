@@ -29,6 +29,7 @@ import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.j
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
 import {CollisionFlag, findNaivePath, hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -59,6 +60,7 @@ export default class Npc extends PathingEntity {
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
     vars: Int32Array;
+    varsString: string[];
 
     mask: number = 0;
     faceX: number = -1;
@@ -124,6 +126,7 @@ export default class Npc extends PathingEntity {
         }
 
         this.vars = new Int32Array(VarNpcType.count);
+        this.varsString = new Array(VarNpcType.count);
         this.mode = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
     }
@@ -157,12 +160,19 @@ export default class Npc extends PathingEntity {
         return this.heroPoints[0]?.uid ?? -1;
     }
 
-    getVar(varn: number) {
-        return this.vars[varn];
+    getVar(id: number) {
+        const varn = VarNpcType.get(id);
+        return varn.type === ScriptVarType.STRING ? this.varsString[varn.id] : this.vars[varn.id];
     }
 
-    setVar(varn: number, value: number) {
-        this.vars[varn] = value;
+    setVar(id: number, value: number | string) {
+        const varn = VarNpcType.get(id);
+
+        if (varn.type === ScriptVarType.STRING && typeof value === 'string') {
+            this.varsString[varn.id] = value;
+        } else if (typeof value === 'number') {
+            this.vars[varn.id] = value;
+        }
     }
 
     resetEntity(respawn: boolean) {
@@ -775,9 +785,9 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
 
-                if (hunt.checkNotCombat !== -1 && player.getVarp(hunt.checkNotCombat) + 8 > World.currentTick) {
+                if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
                     continue;
-                } else if (hunt.checkNotCombatSelf !== -1 && this.getVar(hunt.checkNotCombatSelf) >= World.currentTick) {
+                } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
                     continue;
                 }
 

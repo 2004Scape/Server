@@ -268,7 +268,7 @@ export default class Player extends PathingEntity {
 
         const varpCount = sav.g2();
         for (let i = 0; i < varpCount; i++) {
-            player.varps[i] = sav.g4();
+            player.vars[i] = sav.g4();
         }
 
         const invCount = sav.g1();
@@ -324,12 +324,12 @@ export default class Player extends PathingEntity {
             sav.p1(this.levels[i]);
         }
 
-        sav.p2(this.varps.length);
-        for (let i = 0; i < this.varps.length; i++) {
+        sav.p2(this.vars.length);
+        for (let i = 0; i < this.vars.length; i++) {
             const type = VarPlayerType.get(i);
 
             if (type.scope === VarPlayerType.SCOPE_PERM) {
-                sav.p4(this.varps[i]);
+                sav.p4(this.vars[i]);
             } else {
                 sav.p4(0);
             }
@@ -384,7 +384,8 @@ export default class Player extends PathingEntity {
     playtime: number;
     stats: Int32Array = new Int32Array(21);
     levels: Uint8Array = new Uint8Array(21);
-    varps: Int32Array;
+    vars: Int32Array;
+    varsString: string[];
     invs: Map<number, Inventory> = new Map<number, Inventory>();
 
     // runtime variables
@@ -491,7 +492,8 @@ export default class Player extends PathingEntity {
         this.username = username;
         this.username37 = username37;
         this.displayName = toDisplayName(username);
-        this.varps = new Int32Array(VarPlayerType.count);
+        this.vars = new Int32Array(VarPlayerType.count);
+        this.varsString = new Array(VarPlayerType.count);
         this.body = [
             0, // hair
             10, // beard
@@ -651,9 +653,9 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 if (this.runenergy < 100) {
-                    this.setVar('temp_run', 0);
+                    this.setVar(VarPlayerType.getId('temp_run'), 0);
                 } else {
-                    this.setVar('temp_run', running);
+                    this.setVar(VarPlayerType.getId('temp_run'), running);
                 }
                 pathfindRequest = true;
             } else if (packetType === ClientProt.MOVE_OPCLICK) {
@@ -664,9 +666,9 @@ export default class Player extends PathingEntity {
                 }
 
                 if (this.runenergy < 100) {
-                    this.setVar('temp_run', 0);
+                    this.setVar(VarPlayerType.getId('temp_run'), 0);
                 } else {
-                    this.setVar('temp_run', running);
+                    this.setVar(VarPlayerType.getId('temp_run'), running);
                 }
             } else if (packetType === ClientProt.CLIENT_CHEAT) {
                 const cheat = data.gjstr();
@@ -1733,9 +1735,9 @@ export default class Player extends PathingEntity {
         this.write(ServerProt.RESET_ANIMS);
 
         this.write(ServerProt.RESET_CLIENT_VARCACHE);
-        for (let varp = 0; varp < this.varps.length; varp++) {
+        for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
-            const value = this.varps[varp];
+            const value = this.vars[varp];
 
             if (type.transmit) {
                 if (value < 256) {
@@ -1849,7 +1851,7 @@ export default class Player extends PathingEntity {
 
                 const varpType = VarPlayerType.getByName(varp);
                 if (varpType) {
-                    this.setVar(varp, parseInt(value, 10));
+                    this.setVar(varpType.id, parseInt(value, 10));
                     this.messageGame(`Setting var ${varp} to ${value}`);
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
@@ -1865,7 +1867,7 @@ export default class Player extends PathingEntity {
 
                 const varpType = VarPlayerType.getByName(varp);
                 if (varpType) {
-                    this.messageGame(`Var ${varp}: ${this.varps[varpType.id]}`);
+                    this.messageGame(`Var ${varp}: ${this.vars[varpType.id]}`);
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
                 }
@@ -2073,16 +2075,17 @@ export default class Player extends PathingEntity {
 
         if (running === -1 && !this.forceMove) {
             if (this.runenergy < 100) {
-                this.setVar('player_run', 0);
-                this.setVar('temp_run', 0);
+                this.setVar(VarPlayerType.getId('player_run'), 0);
+                this.setVar(VarPlayerType.getId('temp_run'), 0);
             }
 
             running = 0;
-            running |= this.getVarp('player_run') ? 1 : 0;
-            running |= this.getVarp('temp_run') ? 1 : 0;
+            running |= this.getVar(VarPlayerType.getId('player_run')) ? 1 : 0;
+            running |= this.getVar(VarPlayerType.getId('temp_run')) ? 1 : 0;
         }
         if (!super.processMovement(running)) {
-            this.setVar('temp_run', 0);
+            // todo: this is running every idle tick
+            this.setVar(VarPlayerType.getId('temp_run'), 0);
         }
 
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
@@ -2104,8 +2107,8 @@ export default class Player extends PathingEntity {
 
                 this.runenergy = Math.max(this.runenergy - loss, 0);
                 if (this.runenergy === 0) {
-                    this.setVar('player_run', 0);
-                    this.setVar('temp_run', 0);
+                    this.setVar(VarPlayerType.getId('player_run'), 0);
+                    this.setVar(VarPlayerType.getId('temp_run'), 0);
                 }
             }
         }
@@ -3556,36 +3559,25 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    getVarp(varp: string | number) {
-        if (typeof varp === 'string') {
-            varp = VarPlayerType.getId(varp);
-        }
-
-        if (typeof varp !== 'number' || varp === -1) {
-            console.error(`Invalid setVar call: ${varp}`);
-            return -1;
-        }
-
-        return this.varps[varp as number];
+    getVar(id: number) {
+        const varp = VarPlayerType.get(id);
+        return varp.type === ScriptVarType.STRING ? this.varsString[varp.id] : this.vars[varp.id];
     }
 
-    setVar(varp: number | string, value: number) {
-        if (typeof varp === 'string') {
-            varp = VarPlayerType.getId(varp);
-        }
+    setVar(id: number, value: number | string) {
+        const varp = VarPlayerType.get(id);
 
-        if (typeof varp !== 'number' || varp === -1) {
-            throw new Error(`Invalid setVar call: ${varp}, ${value}`);
-        }
+        if (varp.type === ScriptVarType.STRING && typeof value === 'string') {
+            this.varsString[varp.id] = value as string;
+        } else if (typeof value === 'number') {
+            this.vars[varp.id] = value;
 
-        const varpType = VarPlayerType.get(varp);
-        this.varps[varp] = value;
-
-        if (varpType.transmit) {
-            if (value >= 0x80) {
-                this.write(ServerProt.VARP_LARGE, varp, value);
-            } else {
-                this.write(ServerProt.VARP_SMALL, varp, value);
+            if (varp.transmit) {
+                if (value >= 0x80) {
+                    this.write(ServerProt.VARP_LARGE, varp, value);
+                } else {
+                    this.write(ServerProt.VARP_SMALL, varp, value);
+                }
             }
         }
     }
