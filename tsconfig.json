@@ -12,7 +12,7 @@
       "#jagex2/*": ["src/jagex2/*"],
       "#lostcity/*": ["src/lostcity/*"]
     },
-    "types": ["node", "jest"],
+    "types": ["node"],
     "sourceMap": true,
     "allowJs": true,
     "checkJs": false,

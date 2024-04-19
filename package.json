@@ -24,7 +24,7 @@
     "server:clean": "npm run ts-loader src/lostcity/tools/server/clean.ts",
     "server:build": "npm run server:pack && npm run script:compile",
     "server:watch": "watch \"npm run server:build\" ./data/src/scripts ./src/lostcity/tools",
-    "test": "jest",
+    "test": "vitest run",
     "lint": "eslint . --ext .ts --ext .js",
     "drops": "npm run ts-loader src/lostcity/tools/server/drops.ts",
     "db:migrate": "prisma migrate deploy",
@@ -79,6 +79,7 @@
     "prisma-kysely": "^1.7.1",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.5.0"
   }
 }
