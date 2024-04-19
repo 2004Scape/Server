@@ -133,12 +133,13 @@ export default class CollisionManager {
                         continue;
                     }
 
-                    const adjustedLevel: number = (lands[this.packCoord(x, z, 1)] & 0x2) === 2 ? level - 1 : level;
-                    if (adjustedLevel < 0) {
+                    const bridged: boolean = (level === 1 ? land & 0x2 : lands[this.packCoord(x, z, 1)] & 0x2) === 2;
+                    const actualLevel: number = bridged ? level - 1 : level;
+                    if (actualLevel < 0) {
                         continue;
                     }
 
-                    this.changeLandCollision(absoluteX, absoluteZ, adjustedLevel, true);
+                    this.changeLandCollision(absoluteX, absoluteZ, actualLevel, true);
                 }
             }
         }
@@ -170,30 +171,30 @@ export default class CollisionManager {
             while (coordOffset !== 0) {
                 const {x, z, level} = this.unpackCoord(coord += coordOffset - 1);
 
+                const info: number = packet.g1();
+                coordOffset = packet.gsmart();
+
                 const bridged: boolean = (level === 1 ? lands[coord] & 0x2 : lands[this.packCoord(x, z, 1)] & 0x2) === 2;
-                const blevel: number = bridged ? level - 1 : level;
-                if (blevel < 0) {
+                const actualLevel: number = bridged ? level - 1 : level;
+                if (actualLevel < 0) {
                     continue;
                 }
 
                 const type: LocType = LocType.get(locId);
                 const width: number = type.width;
                 const length: number = type.length;
-                const info: number = packet.g1();
                 const shape: number = info >> 2;
                 const angle: number = info & 0x3;
 
                 const absoluteX: number = x + mapsquareX;
                 const absoluteZ: number = z + mapsquareZ;
 
-                zoneManager.getZone(absoluteX, absoluteZ, blevel).addStaticLoc(new Loc(blevel, absoluteX, absoluteZ, width, length, locId, shape, angle));
+                zoneManager.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, locId, shape, angle));
 
                 if (type.blockwalk) {
-                    this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, blevel, true);
+                    this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);
                 }
-                coordOffset = packet.gsmart();
             }
-
             locIdOffset = packet.gsmart();
         }
     }
