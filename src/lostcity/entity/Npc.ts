@@ -76,7 +76,7 @@ export default class Npc extends PathingEntity {
     // script variables
     activeScript: ScriptState | null = null;
     delay: number = 0;
-    queue: LinkList = new LinkList();
+    queue: LinkList<EntityQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
@@ -292,7 +292,7 @@ export default class Npc extends PathingEntity {
     }
 
     processQueue() {
-        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed()) {
                 request.delay--;

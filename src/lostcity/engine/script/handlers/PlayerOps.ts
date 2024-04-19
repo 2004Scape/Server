@@ -706,12 +706,12 @@ const PlayerOps: CommandHandlers = {
         const scriptId = state.popInt();
 
         let count: number = 0;
-        for (let request: EntityQueueRequest | null = state.activePlayer.queue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.queue.next() as EntityQueueRequest | null) {
+        for (let request = state.activePlayer.queue.head(); request !== null; request = state.activePlayer.queue.next()) {
             if (request.script.id === scriptId) {
                 count++;
             }
         }
-        for (let request: EntityQueueRequest | null = state.activePlayer.weakQueue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.weakQueue.next() as EntityQueueRequest | null) {
+        for (let request= state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
             if (request.script.id === scriptId) {
                 count++;
             }
@@ -862,12 +862,12 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CLEARQUEUE]: state => {
         const scriptId = state.popInt();
 
-        for (let request: EntityQueueRequest | null = state.activePlayer.queue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.queue.next() as EntityQueueRequest | null) {
+        for (let request = state.activePlayer.queue.head(); request !== null; request = state.activePlayer.queue.next()) {
             if (request.script.id === scriptId) {
                 request.unlink();
             }
         }
-        for (let request: EntityQueueRequest | null = state.activePlayer.weakQueue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.weakQueue.next() as EntityQueueRequest | null) {
+        for (let request = state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
             if (request.script.id === scriptId) {
                 request.unlink();
             }

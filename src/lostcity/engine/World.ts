@@ -84,7 +84,7 @@ class World {
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
-    queue: LinkList = new LinkList();
+    queue: LinkList<EntityQueueState> = new LinkList();
 
     friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
 
@@ -371,7 +371,7 @@ class World {
         // - npc spawn scripts
         // - npc hunt
         let worldProcessing = Date.now();
-        for (let request: EntityQueueState | null = this.queue.head() as EntityQueueState | null; request !== null; request = this.queue.next() as EntityQueueState | null) {
+        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             const delay = request.delay--;
             if (delay > 0) {
                 continue;
