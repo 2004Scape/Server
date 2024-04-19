@@ -1,4 +1,6 @@
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import VarSharedType from '#lostcity/cache/VarSharedType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -280,14 +282,25 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.PUSH_VARS]: state => {
-        const vars = state.intOperand & 0xffff;
-        state.pushInt(World.vars[vars]);
+        const vars = VarSharedType.get(state.intOperand & 0xFFFF);
+
+        if (vars.type === ScriptVarType.STRING) {
+            state.pushString(World.varsString[vars.id] ?? '');
+        } else {
+            state.pushInt(World.vars[vars.id]);
+        }
     },
 
     [ScriptOpcode.POP_VARS]: state => {
-        const vars = state.intOperand & 0xffff;
-        const value = state.popInt();
-        World.vars[vars] = value;
+        const vars = VarSharedType.get(state.intOperand & 0xFFFF);
+
+        if (vars.type === ScriptVarType.STRING) {
+            const value = state.popString();
+            World.varsString[vars.id] = value;
+        } else {
+            const value = state.popInt();
+            World.vars[vars.id] = value;
+        }
     }
 };
 

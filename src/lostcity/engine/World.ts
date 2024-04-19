@@ -74,6 +74,7 @@ class World {
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
     vars: Int32Array = new Int32Array(); // var shared
+    varsString: string[] = [];
 
     newPlayers: Player[] = []; // players joining at the end of this tick
     players: (Player | null)[] = new Array<Player | null>(2048);
@@ -279,6 +280,20 @@ class World {
 
         if (this.shouldReload('vars')) {
             VarSharedType.load('data/pack');
+
+            if (this.vars.length !== VarSharedType.count) {
+                const old = this.vars;
+                this.vars = new Int32Array(VarSharedType.count);
+                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                    this.vars[i] = old[i];
+                }
+
+                const oldString = this.varsString;
+                this.varsString = new Array(VarSharedType.count);
+                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                    this.varsString[i] = oldString[i];
+                }
+            }
         }
 
         if (this.shouldReload('interface')) {
@@ -323,8 +338,6 @@ class World {
         if (!skipMaps) {
             this.gameMap.init();
         }
-
-        this.vars = new Int32Array(VarSharedType.count);
 
         Login.loginThread.postMessage({
             type: 'reset'
