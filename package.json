@@ -9,7 +9,7 @@
   },
   "scripts": {
     "precommit": "prettier . --write && eslint . --ext .ts --ext .js --fix",
-    "ts-loader": "node --no-warnings --loader ts-node/esm",
+    "ts-loader": "node --enable-source-maps --no-warnings --loader ts-node/esm",
     "start": "npm run ts-loader src/lostcity/app.ts",
     "login": "npm run ts-loader src/lostcity/login.ts",
     "friend": "npm run ts-loader src/lostcity/friend.ts",

@@ -1,6 +1,6 @@
 {
   "ignore": ["node_modules", "data", "dump"],
   "watch": ["src"],
-  "exec": "node --no-warnings --loader ts-node/esm",
+  "exec": "node --enable-source-maps --no-warnings --loader ts-node/esm",
   "ext": "ts,js,json"
 }
