@@ -6,3 +6,5 @@ protect=no
 scope=perm
 protect=no
 type=npc_uid
+
+[macro_whirlpool_counter]
