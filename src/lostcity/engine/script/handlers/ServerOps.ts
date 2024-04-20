@@ -8,17 +8,13 @@ import StructType from '#lostcity/cache/StructType.js';
 
 import World from '#lostcity/engine/World.js';
 
-import LocLayer from '#lostcity/engine/collision/LocLayer.js';
-import LocAngle from '#lostcity/engine/collision/LocAngle.js';
-import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
-
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 import { Position } from '#lostcity/entity/Position.js';
 
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, hasLineOfSight, hasLineOfWalk, isFlagged, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: state => {
@@ -106,7 +102,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(c1);
         const to = Position.unpackCoord(c2);
 
-        state.pushInt(World.lineValidator.hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
+        state.pushInt(hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.STAT_RANDOM]: state => {
@@ -261,7 +257,7 @@ const ServerOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
-        state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
+        state.pushInt(isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_INDOORS]: state => {
@@ -272,7 +268,7 @@ const ServerOps: CommandHandlers = {
         }
 
         const pos = Position.unpackCoord(coord);
-        state.pushInt(World.collisionFlags.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.ROOF) ? 1 : 0);
+        state.pushInt(isFlagged(pos.x, pos.z, pos.level, CollisionFlag.ROOF) ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFSIGHT]: state => {
@@ -287,7 +283,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(c1);
         const to = Position.unpackCoord(c2);
 
-        state.pushInt(World.lineValidator.hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
+        state.pushInt(hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.WORLD_DELAY]: state => {
@@ -379,7 +375,7 @@ const ServerOps: CommandHandlers = {
                 continue;
             }
 
-            const layer = LocShapes.layer(loc.shape);
+            const layer = locShapeLayer(loc.shape);
 
             if (loc.respawn !== -1 && layer === LocLayer.WALL) {
                 continue;

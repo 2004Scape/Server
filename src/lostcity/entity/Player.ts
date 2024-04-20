@@ -4,8 +4,6 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37, toDisplayName } from '#jagex2/jstring/JString.js';
 
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
-
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
 import DbRowType from '#lostcity/cache/DbRowType.js';
@@ -35,9 +33,9 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import { Position } from '#lostcity/entity/Position.js';
 
-import { ClientProt, ClientProtLengths } from '#lostcity/server/ClientProt.js';
+import ClientProt from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import { ServerProt, ServerProtEncoders, ServerProtLengths } from '#lostcity/server/ServerProt.js';
+import ServerProt, { ServerProtEncoders } from '#lostcity/server/ServerProt.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
@@ -56,6 +54,8 @@ import WordPack from '#jagex2/wordenc/WordPack.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
+
+import {CollisionFlag, findPath} from '@2004scape/rsmod-pathfinder';
 
 const levelExperience = new Int32Array(99);
 
@@ -268,7 +268,7 @@ export default class Player extends PathingEntity {
 
         const varpCount = sav.g2();
         for (let i = 0; i < varpCount; i++) {
-            player.varps[i] = sav.g4();
+            player.vars[i] = sav.g4();
         }
 
         const invCount = sav.g1();
@@ -324,12 +324,12 @@ export default class Player extends PathingEntity {
             sav.p1(this.levels[i]);
         }
 
-        sav.p2(this.varps.length);
-        for (let i = 0; i < this.varps.length; i++) {
+        sav.p2(this.vars.length);
+        for (let i = 0; i < this.vars.length; i++) {
             const type = VarPlayerType.get(i);
 
             if (type.scope === VarPlayerType.SCOPE_PERM) {
-                sav.p4(this.varps[i]);
+                sav.p4(this.vars[i]);
             } else {
                 sav.p4(0);
             }
@@ -384,7 +384,8 @@ export default class Player extends PathingEntity {
     playtime: number;
     stats: Int32Array = new Int32Array(21);
     levels: Uint8Array = new Uint8Array(21);
-    varps: Int32Array;
+    vars: Int32Array;
+    varsString: string[];
     invs: Map<number, Inventory> = new Map<number, Inventory>();
 
     // runtime variables
@@ -449,9 +450,9 @@ export default class Player extends PathingEntity {
 
     // script variables
     delay = 0;
-    queue: LinkList = new LinkList();
-    weakQueue: LinkList = new LinkList();
-    engineQueue: LinkList = new LinkList();
+    queue: LinkList<EntityQueueRequest> = new LinkList();
+    weakQueue: LinkList<EntityQueueRequest> = new LinkList();
+    engineQueue: LinkList<EntityQueueRequest> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
@@ -491,7 +492,8 @@ export default class Player extends PathingEntity {
         this.username = username;
         this.username37 = username37;
         this.displayName = toDisplayName(username);
-        this.varps = new Int32Array(VarPlayerType.count);
+        this.vars = new Int32Array(VarPlayerType.count);
+        this.varsString = new Array(VarPlayerType.count);
         this.body = [
             0, // hair
             10, // beard
@@ -560,33 +562,22 @@ export default class Player extends PathingEntity {
         let offset = 0;
         this.lastResponse = World.currentTick;
 
-        const decoded = [];
-        while (offset < this.client.inOffset) {
-            const opcode = this.client.in[offset++];
+        let pathfindRequest = false;
+        let pathfindX = 0;
+        let pathfindZ = 0;
 
-            let length = ClientProtLengths[opcode];
+        while (this.client.inOffset > offset) {
+            const packetType = ClientProt.byId[this.client.in[offset++]];
+            let length = packetType.length;
             if (length == -1) {
                 length = this.client.in[offset++];
             } else if (length == -2) {
                 length = (this.client.in[offset++] << 8) | this.client.in[offset++];
             }
-
-            decoded.push({
-                opcode,
-                data: new Packet(this.client.in.subarray(offset, offset + length))
-            });
-
+            const data = new Packet(this.client.in.subarray(offset, offset + length));
             offset += length;
-        }
 
-        let pathfindRequest = false;
-        let pathfindX = 0;
-        let pathfindZ = 0;
-
-        for (let it = 0; it < decoded.length; it++) {
-            const { opcode, data } = decoded[it];
-
-            if (opcode === ClientProt.REBUILD_GETMAPS) {
+            if (packetType === ClientProt.REBUILD_GETMAPS) {
                 const requested = [];
 
                 for (let i = 0; i < data.length / 3; i++) {
@@ -625,11 +616,11 @@ export default class Player extends PathingEntity {
                         this.write(ServerProt.DATA_LOC_DONE, x, z);
                     }
                 }
-            } else if (opcode === ClientProt.MOVE_GAMECLICK || opcode === ClientProt.MOVE_MINIMAPCLICK) {
+            } else if (packetType === ClientProt.MOVE_GAMECLICK || packetType === ClientProt.MOVE_MINIMAPCLICK) {
                 const running = data.g1();
                 const startX = data.g2();
                 const startZ = data.g2();
-                const offset = opcode === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
+                const offset = packetType === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
                 const checkpoints = (data.available - offset) >> 1;
 
                 pathfindX = startX;
@@ -662,12 +653,12 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 if (this.runenergy < 100) {
-                    this.setVar('temp_run', 0);
+                    this.setVar(VarPlayerType.getId('temp_run'), 0);
                 } else {
-                    this.setVar('temp_run', running);
+                    this.setVar(VarPlayerType.getId('temp_run'), running);
                 }
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.MOVE_OPCLICK) {
+            } else if (packetType === ClientProt.MOVE_OPCLICK) {
                 const running = data.g1();
 
                 if (running < 0 || running > 1) {
@@ -675,11 +666,11 @@ export default class Player extends PathingEntity {
                 }
 
                 if (this.runenergy < 100) {
-                    this.setVar('temp_run', 0);
+                    this.setVar(VarPlayerType.getId('temp_run'), 0);
                 } else {
-                    this.setVar('temp_run', running);
+                    this.setVar(VarPlayerType.getId('temp_run'), running);
                 }
-            } else if (opcode === ClientProt.CLIENT_CHEAT) {
+            } else if (packetType === ClientProt.CLIENT_CHEAT) {
                 const cheat = data.gjstr();
 
                 if (cheat.length > 80) {
@@ -687,7 +678,7 @@ export default class Player extends PathingEntity {
                 }
 
                 this.onCheat(cheat);
-            } else if (opcode === ClientProt.MESSAGE_PUBLIC) {
+            } else if (packetType === ClientProt.MESSAGE_PUBLIC) {
                 const colour = data.g1();
                 const effect = data.g1();
                 const message = WordPack.unpack(data, data.length - 2);
@@ -707,7 +698,7 @@ export default class Player extends PathingEntity {
                 this.mask |= Player.CHAT;
 
                 World.socialPublicMessage(this.username37, message);
-            } else if (opcode === ClientProt.IF_PLAYERDESIGN) {
+            } else if (packetType === ClientProt.IF_PLAYERDESIGN) {
                 const female = data.g1();
 
                 const body = [];
@@ -770,7 +761,7 @@ export default class Player extends PathingEntity {
                 this.body = body;
                 this.colors = colors;
                 this.generateAppearance(InvType.getId('worn'));
-            } else if (opcode === ClientProt.TUTORIAL_CLICKSIDE) {
+            } else if (packetType === ClientProt.TUTORIAL_CLICKSIDE) {
                 const tab = data.g1();
 
                 if (tab < 0 || tab > 13) {
@@ -781,15 +772,15 @@ export default class Player extends PathingEntity {
                 if (script) {
                     this.executeScript(ScriptRunner.init(script, this), true);
                 }
-            } else if (opcode === ClientProt.CLOSE_MODAL) {
+            } else if (packetType === ClientProt.CLOSE_MODAL) {
                 this.closeModal();
-            } else if (opcode === ClientProt.RESUME_PAUSEBUTTON) {
+            } else if (packetType === ClientProt.RESUME_PAUSEBUTTON) {
                 if (!this.activeScript || this.activeScript.execution !== ScriptState.PAUSEBUTTON) {
                     continue;
                 }
 
                 this.executeScript(this.activeScript, true);
-            } else if (opcode === ClientProt.RESUME_P_COUNTDIALOG) {
+            } else if (packetType === ClientProt.RESUME_P_COUNTDIALOG) {
                 const input = data.g4();
                 if (!this.activeScript || this.activeScript.execution !== ScriptState.COUNTDIALOG) {
                     continue;
@@ -797,7 +788,7 @@ export default class Player extends PathingEntity {
 
                 this.lastInt = input;
                 this.executeScript(this.activeScript, true);
-            } else if (opcode === ClientProt.IF_BUTTON) {
+            } else if (packetType === ClientProt.IF_BUTTON) {
                 const comId = data.g2();
 
                 const com = Component.get(comId);
@@ -823,7 +814,7 @@ export default class Player extends PathingEntity {
                         }
                     }
                 }
-            } else if (opcode === ClientProt.INV_BUTTON1 || opcode === ClientProt.INV_BUTTON2 || opcode === ClientProt.INV_BUTTON3 || opcode === ClientProt.INV_BUTTON4 || opcode === ClientProt.INV_BUTTON5) {
+            } else if (packetType === ClientProt.INV_BUTTON1 || packetType === ClientProt.INV_BUTTON2 || packetType === ClientProt.INV_BUTTON3 || packetType === ClientProt.INV_BUTTON4 || packetType === ClientProt.INV_BUTTON5) {
                 // jagex has if_button1-5
                 const item = data.g2();
                 const slot = data.g2();
@@ -835,11 +826,11 @@ export default class Player extends PathingEntity {
                 }
 
                 if (
-                    (opcode === ClientProt.INV_BUTTON1 && !com.inventoryOptions[0]) ||
-                    (opcode === ClientProt.INV_BUTTON2 && !com.inventoryOptions[1]) ||
-                    (opcode === ClientProt.INV_BUTTON3 && !com.inventoryOptions[2]) ||
-                    (opcode === ClientProt.INV_BUTTON4 && !com.inventoryOptions[3]) ||
-                    (opcode === ClientProt.INV_BUTTON5 && !com.inventoryOptions[4])
+                    (packetType === ClientProt.INV_BUTTON1 && !com.inventoryOptions[0]) ||
+                    (packetType === ClientProt.INV_BUTTON2 && !com.inventoryOptions[1]) ||
+                    (packetType === ClientProt.INV_BUTTON3 && !com.inventoryOptions[2]) ||
+                    (packetType === ClientProt.INV_BUTTON4 && !com.inventoryOptions[3]) ||
+                    (packetType === ClientProt.INV_BUTTON5 && !com.inventoryOptions[4])
                 ) {
                     continue;
                 }
@@ -862,13 +853,13 @@ export default class Player extends PathingEntity {
                 this.lastSlot = slot;
 
                 let trigger: ServerTriggerType;
-                if (opcode === ClientProt.INV_BUTTON1) {
+                if (packetType === ClientProt.INV_BUTTON1) {
                     trigger = ServerTriggerType.INV_BUTTON1;
-                } else if (opcode === ClientProt.INV_BUTTON2) {
+                } else if (packetType === ClientProt.INV_BUTTON2) {
                     trigger = ServerTriggerType.INV_BUTTON2;
-                } else if (opcode === ClientProt.INV_BUTTON3) {
+                } else if (packetType === ClientProt.INV_BUTTON3) {
                     trigger = ServerTriggerType.INV_BUTTON3;
-                } else if (opcode === ClientProt.INV_BUTTON4) {
+                } else if (packetType === ClientProt.INV_BUTTON4) {
                     trigger = ServerTriggerType.INV_BUTTON4;
                 } else {
                     trigger = ServerTriggerType.INV_BUTTON5;
@@ -884,7 +875,7 @@ export default class Player extends PathingEntity {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${com.comName}]`);
                     }
                 }
-            } else if (opcode === ClientProt.INV_BUTTOND) {
+            } else if (packetType === ClientProt.INV_BUTTOND) {
                 // jagex has if_buttond
                 const comId = data.g2();
                 const slot = data.g2();
@@ -924,7 +915,7 @@ export default class Player extends PathingEntity {
                         this.messageGame(`No trigger for [inv_buttond,${com.comName}]`);
                     }
                 }
-            } else if (opcode === ClientProt.OPHELD1 || opcode === ClientProt.OPHELD2 || opcode === ClientProt.OPHELD3 || opcode === ClientProt.OPHELD4 || opcode === ClientProt.OPHELD5) {
+            } else if (packetType === ClientProt.OPHELD1 || packetType === ClientProt.OPHELD2 || packetType === ClientProt.OPHELD3 || packetType === ClientProt.OPHELD4 || packetType === ClientProt.OPHELD5) {
                 const item = data.g2();
                 const slot = data.g2();
                 const comId = data.g2();
@@ -935,7 +926,7 @@ export default class Player extends PathingEntity {
                 }
 
                 const type = ObjType.get(item);
-                if ((opcode === ClientProt.OPHELD1 && !type.iops[0]) || (opcode === ClientProt.OPHELD2 && !type.iops[1]) || (opcode === ClientProt.OPHELD3 && !type.iops[2]) || (opcode === ClientProt.OPHELD4 && !type.iops[3])) {
+                if ((packetType === ClientProt.OPHELD1 && !type.iops[0]) || (packetType === ClientProt.OPHELD2 && !type.iops[1]) || (packetType === ClientProt.OPHELD3 && !type.iops[2]) || (packetType === ClientProt.OPHELD4 && !type.iops[3])) {
                     continue;
                 }
 
@@ -960,13 +951,13 @@ export default class Player extends PathingEntity {
                 this.closeModal();
 
                 let trigger: ServerTriggerType;
-                if (opcode === ClientProt.OPHELD1) {
+                if (packetType === ClientProt.OPHELD1) {
                     trigger = ServerTriggerType.OPHELD1;
-                } else if (opcode === ClientProt.OPHELD2) {
+                } else if (packetType === ClientProt.OPHELD2) {
                     trigger = ServerTriggerType.OPHELD2;
-                } else if (opcode === ClientProt.OPHELD3) {
+                } else if (packetType === ClientProt.OPHELD3) {
                     trigger = ServerTriggerType.OPHELD3;
-                } else if (opcode === ClientProt.OPHELD4) {
+                } else if (packetType === ClientProt.OPHELD4) {
                     trigger = ServerTriggerType.OPHELD4;
                 } else {
                     trigger = ServerTriggerType.OPHELD5;
@@ -980,7 +971,7 @@ export default class Player extends PathingEntity {
                         this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${type.debugname}]`);
                     }
                 }
-            } else if (opcode === ClientProt.OPHELDU) {
+            } else if (packetType === ClientProt.OPHELDU) {
                 const item = data.g2();
                 const slot = data.g2();
                 const comId = data.g2();
@@ -1071,7 +1062,7 @@ export default class Player extends PathingEntity {
                     // todo: is this appropriate?
                     this.messageGame('Nothing interesting happens.');
                 }
-            } else if (opcode === ClientProt.OPHELDT) {
+            } else if (packetType === ClientProt.OPHELDT) {
                 const item = data.g2();
                 const slot = data.g2();
                 const comId = data.g2();
@@ -1118,7 +1109,7 @@ export default class Player extends PathingEntity {
                     // todo: is this appropriate?
                     this.messageGame('Nothing interesting happens.');
                 }
-            } else if (opcode === ClientProt.OPLOC1 || opcode === ClientProt.OPLOC2 || opcode === ClientProt.OPLOC3 || opcode === ClientProt.OPLOC4 || opcode === ClientProt.OPLOC5) {
+            } else if (packetType === ClientProt.OPLOC1 || packetType === ClientProt.OPLOC2 || packetType === ClientProt.OPLOC3 || packetType === ClientProt.OPLOC4 || packetType === ClientProt.OPLOC5) {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
@@ -1139,23 +1130,23 @@ export default class Player extends PathingEntity {
 
                 const locType = LocType.get(loc.type);
                 if (
-                    (opcode === ClientProt.OPLOC1 && !locType.ops[0]) ||
-                    (opcode === ClientProt.OPLOC2 && !locType.ops[1]) ||
-                    (opcode === ClientProt.OPLOC3 && !locType.ops[2]) ||
-                    (opcode === ClientProt.OPLOC4 && !locType.ops[3]) ||
-                    (opcode === ClientProt.OPLOC5 && !locType.ops[4])
+                    (packetType === ClientProt.OPLOC1 && !locType.ops[0]) ||
+                    (packetType === ClientProt.OPLOC2 && !locType.ops[1]) ||
+                    (packetType === ClientProt.OPLOC3 && !locType.ops[2]) ||
+                    (packetType === ClientProt.OPLOC4 && !locType.ops[3]) ||
+                    (packetType === ClientProt.OPLOC5 && !locType.ops[4])
                 ) {
                     continue;
                 }
 
                 let mode: ServerTriggerType;
-                if (opcode === ClientProt.OPLOC1) {
+                if (packetType === ClientProt.OPLOC1) {
                     mode = ServerTriggerType.APLOC1;
-                } else if (opcode === ClientProt.OPLOC2) {
+                } else if (packetType === ClientProt.OPLOC2) {
                     mode = ServerTriggerType.APLOC2;
-                } else if (opcode === ClientProt.OPLOC3) {
+                } else if (packetType === ClientProt.OPLOC3) {
                     mode = ServerTriggerType.APLOC3;
-                } else if (opcode === ClientProt.OPLOC4) {
+                } else if (packetType === ClientProt.OPLOC4) {
                     mode = ServerTriggerType.APLOC4;
                 } else {
                     mode = ServerTriggerType.APLOC5;
@@ -1165,7 +1156,7 @@ export default class Player extends PathingEntity {
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPLOCU) {
+            } else if (packetType === ClientProt.OPLOCU) {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
@@ -1216,7 +1207,7 @@ export default class Player extends PathingEntity {
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPLOCT) {
+            } else if (packetType === ClientProt.OPLOCT) {
                 const x = data.g2();
                 const z = data.g2();
                 const locId = data.g2();
@@ -1251,7 +1242,7 @@ export default class Player extends PathingEntity {
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPNPC1 || opcode === ClientProt.OPNPC2 || opcode === ClientProt.OPNPC3 || opcode === ClientProt.OPNPC4 || opcode === ClientProt.OPNPC5) {
+            } else if (packetType === ClientProt.OPNPC1 || packetType === ClientProt.OPNPC2 || packetType === ClientProt.OPNPC3 || packetType === ClientProt.OPNPC4 || packetType === ClientProt.OPNPC5) {
                 const nid = data.g2();
 
                 const npc = World.getNpc(nid);
@@ -1266,23 +1257,23 @@ export default class Player extends PathingEntity {
 
                 const npcType = NpcType.get(npc.type);
                 if (
-                    (opcode === ClientProt.OPNPC1 && !npcType.ops[0]) ||
-                    (opcode === ClientProt.OPNPC2 && !npcType.ops[1]) ||
-                    (opcode === ClientProt.OPNPC3 && !npcType.ops[2]) ||
-                    (opcode === ClientProt.OPNPC4 && !npcType.ops[3]) ||
-                    (opcode === ClientProt.OPNPC5 && !npcType.ops[4])
+                    (packetType === ClientProt.OPNPC1 && !npcType.ops[0]) ||
+                    (packetType === ClientProt.OPNPC2 && !npcType.ops[1]) ||
+                    (packetType === ClientProt.OPNPC3 && !npcType.ops[2]) ||
+                    (packetType === ClientProt.OPNPC4 && !npcType.ops[3]) ||
+                    (packetType === ClientProt.OPNPC5 && !npcType.ops[4])
                 ) {
                     continue;
                 }
 
                 let mode: ServerTriggerType;
-                if (opcode === ClientProt.OPNPC1) {
+                if (packetType === ClientProt.OPNPC1) {
                     mode = ServerTriggerType.APNPC1;
-                } else if (opcode === ClientProt.OPNPC2) {
+                } else if (packetType === ClientProt.OPNPC2) {
                     mode = ServerTriggerType.APNPC2;
-                } else if (opcode === ClientProt.OPNPC3) {
+                } else if (packetType === ClientProt.OPNPC3) {
                     mode = ServerTriggerType.APNPC3;
-                } else if (opcode === ClientProt.OPNPC4) {
+                } else if (packetType === ClientProt.OPNPC4) {
                     mode = ServerTriggerType.APNPC4;
                 } else {
                     mode = ServerTriggerType.APNPC5;
@@ -1292,7 +1283,7 @@ export default class Player extends PathingEntity {
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPNPCU) {
+            } else if (packetType === ClientProt.OPNPCU) {
                 const nid = data.g2();
                 const item = data.g2();
                 const slot = data.g2();
@@ -1336,7 +1327,7 @@ export default class Player extends PathingEntity {
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPNPCT) {
+            } else if (packetType === ClientProt.OPNPCT) {
                 const nid = data.g2();
                 const spellComId = data.g2();
 
@@ -1365,7 +1356,7 @@ export default class Player extends PathingEntity {
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPOBJ1 || opcode === ClientProt.OPOBJ2 || opcode === ClientProt.OPOBJ3 || opcode === ClientProt.OPOBJ4 || opcode === ClientProt.OPOBJ5) {
+            } else if (packetType === ClientProt.OPOBJ1 || packetType === ClientProt.OPOBJ2 || packetType === ClientProt.OPOBJ3 || packetType === ClientProt.OPOBJ4 || packetType === ClientProt.OPOBJ5) {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
@@ -1386,18 +1377,18 @@ export default class Player extends PathingEntity {
 
                 const objType = ObjType.get(obj.type);
                 // todo: validate all options
-                if ((opcode === ClientProt.OPOBJ1 && !objType.ops[0]) || (opcode === ClientProt.OPOBJ4 && !objType.ops[3])) {
+                if ((packetType === ClientProt.OPOBJ1 && !objType.ops[0]) || (packetType === ClientProt.OPOBJ4 && !objType.ops[3])) {
                     continue;
                 }
 
                 let mode: ServerTriggerType;
-                if (opcode === ClientProt.OPOBJ1) {
+                if (packetType === ClientProt.OPOBJ1) {
                     mode = ServerTriggerType.APOBJ1;
-                } else if (opcode === ClientProt.OPOBJ2) {
+                } else if (packetType === ClientProt.OPOBJ2) {
                     mode = ServerTriggerType.APOBJ2;
-                } else if (opcode === ClientProt.OPOBJ3) {
+                } else if (packetType === ClientProt.OPOBJ3) {
                     mode = ServerTriggerType.APOBJ3;
-                } else if (opcode === ClientProt.OPOBJ4) {
+                } else if (packetType === ClientProt.OPOBJ4) {
                     mode = ServerTriggerType.APOBJ4;
                 } else {
                     mode = ServerTriggerType.APOBJ5;
@@ -1407,7 +1398,7 @@ export default class Player extends PathingEntity {
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPOBJU) {
+            } else if (packetType === ClientProt.OPOBJU) {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
@@ -1458,7 +1449,7 @@ export default class Player extends PathingEntity {
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPOBJT) {
+            } else if (packetType === ClientProt.OPOBJT) {
                 const x = data.g2();
                 const z = data.g2();
                 const objId = data.g2();
@@ -1493,7 +1484,7 @@ export default class Player extends PathingEntity {
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPPLAYER1 || opcode === ClientProt.OPPLAYER2 || opcode === ClientProt.OPPLAYER3 || opcode === ClientProt.OPPLAYER4) {
+            } else if (packetType === ClientProt.OPPLAYER1 || packetType === ClientProt.OPPLAYER2 || packetType === ClientProt.OPPLAYER3 || packetType === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
 
                 const player = World.getPlayer(pid);
@@ -1508,11 +1499,11 @@ export default class Player extends PathingEntity {
                 }
 
                 let mode: ServerTriggerType;
-                if (opcode === ClientProt.OPPLAYER1) {
+                if (packetType === ClientProt.OPPLAYER1) {
                     mode = ServerTriggerType.APPLAYER1;
-                } else if (opcode === ClientProt.OPPLAYER2) {
+                } else if (packetType === ClientProt.OPPLAYER2) {
                     mode = ServerTriggerType.APPLAYER2;
-                } else if (opcode === ClientProt.OPPLAYER3) {
+                } else if (packetType === ClientProt.OPPLAYER3) {
                     mode = ServerTriggerType.APPLAYER3;
                 } else {
                     mode = ServerTriggerType.APPLAYER4;
@@ -1522,7 +1513,7 @@ export default class Player extends PathingEntity {
                 pathfindX = player.x;
                 pathfindZ = player.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPPLAYERU) {
+            } else if (packetType === ClientProt.OPPLAYERU) {
                 const pid = data.g2();
                 const item = data.g2();
                 const slot = data.g2();
@@ -1567,7 +1558,7 @@ export default class Player extends PathingEntity {
                 pathfindX = player.x;
                 pathfindZ = player.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.OPPLAYERT) {
+            } else if (packetType === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
                 const spellComId = data.g2();
 
@@ -1598,28 +1589,28 @@ export default class Player extends PathingEntity {
                 pathfindX = player.x;
                 pathfindZ = player.z;
                 pathfindRequest = true;
-            } else if (opcode === ClientProt.FRIENDLIST_ADD) {
+            } else if (packetType === ClientProt.FRIENDLIST_ADD) {
                 const other = data.g8();
 
                 World.socialAddFriend(this.username37, other);
-            } else if (opcode === ClientProt.FRIENDLIST_DEL) {
+            } else if (packetType === ClientProt.FRIENDLIST_DEL) {
                 const other = data.g8();
 
                 World.socialRemoveFriend(this.username37, other);
-            } else if (opcode === ClientProt.IGNORELIST_ADD) {
+            } else if (packetType === ClientProt.IGNORELIST_ADD) {
                 const other = data.g8();
 
                 World.socialAddIgnore(this.username37, other);
-            } else if (opcode === ClientProt.IGNORELIST_DEL) {
+            } else if (packetType === ClientProt.IGNORELIST_DEL) {
                 const other = data.g8();
 
                 World.socialRemoveIgnore(this.username37, other);
-            } else if (opcode === ClientProt.IDLE_TIMER) {
+            } else if (packetType === ClientProt.IDLE_TIMER) {
                 if (!Environment.LOCAL_DEV) {
                     this.logout();
                     this.logoutRequested = true;
                 }
-            } else if (opcode === ClientProt.MESSAGE_PRIVATE) {
+            } else if (packetType === ClientProt.MESSAGE_PRIVATE) {
                 const other = data.g8();
                 const message = WordPack.unpack(data, data.length - 8);
 
@@ -1651,7 +1642,7 @@ export default class Player extends PathingEntity {
             if (this.target) {
                 this.pathToTarget();
             } else {
-                this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, pathfindX, pathfindZ).waypoints);
+                this.queueWaypoints(findPath(this.level, this.x, this.z, pathfindX, pathfindZ));
             }
 
             pathfindX = -1;
@@ -1665,12 +1656,12 @@ export default class Player extends PathingEntity {
         }
 
         if (this.target instanceof PathingEntity) {
-            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2).waypoints);
+            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
         } else if (this.target instanceof Loc) {
             const forceapproach = LocType.get(this.target.type).forceapproach;
-            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach).waypoints);
+            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
         } else {
-            this.queueWaypoints(World.pathFinder.findPath(this.level, this.x, this.z, this.target.x, this.target.z).waypoints);
+            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z));
         }
     }
 
@@ -1744,9 +1735,9 @@ export default class Player extends PathingEntity {
         this.write(ServerProt.RESET_ANIMS);
 
         this.write(ServerProt.RESET_CLIENT_VARCACHE);
-        for (let varp = 0; varp < this.varps.length; varp++) {
+        for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
-            const value = this.varps[varp];
+            const value = this.vars[varp];
 
             if (type.transmit) {
                 if (value < 256) {
@@ -1860,7 +1851,7 @@ export default class Player extends PathingEntity {
 
                 const varpType = VarPlayerType.getByName(varp);
                 if (varpType) {
-                    this.setVar(varp, parseInt(value, 10));
+                    this.setVar(varpType.id, parseInt(value, 10));
                     this.messageGame(`Setting var ${varp} to ${value}`);
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
@@ -1876,7 +1867,7 @@ export default class Player extends PathingEntity {
 
                 const varpType = VarPlayerType.getByName(varp);
                 if (varpType) {
-                    this.messageGame(`Var ${varp}: ${this.varps[varpType.id]}`);
+                    this.messageGame(`Var ${varp}: ${this.vars[varpType.id]}`);
                 } else {
                     this.messageGame(`Unknown var ${varp}`);
                 }
@@ -1933,6 +1924,15 @@ export default class Player extends PathingEntity {
                 this.afkEventReady = true;
                 break;
             }
+            /*case 'bench': {
+                const start = Date.now();
+                for (let index = 0; index < 100_000; index++) {
+                    findPath(this.level, this.x, this.z, this.x, this.z + 10);
+                }
+                const end = Date.now();
+                console.log(`took = ${end - start} ms`);
+                break;
+            }*/
         }
 
         if (cmd.length <= 0) {
@@ -2026,14 +2026,14 @@ export default class Player extends PathingEntity {
             }
         }
 
-        this.executeScript(ScriptRunner.init(script, this, null, null, params), false);
+        this.executeScript(ScriptRunner.init(script, this, null, params), false);
     }
 
     processEngineQueue() {
-        for (let request: EntityQueueRequest | null = this.engineQueue.head() as EntityQueueRequest | null; request !== null; request = this.engineQueue.next() as EntityQueueRequest | null) {
+        for (let request = this.engineQueue.head(); request !== null; request = this.engineQueue.next()) {
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, null, request.args);
+                const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
 
                 request.unlink();
@@ -2063,38 +2063,29 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (this.hasWaypoints() && this.moveCheck !== null) {
-            const trigger = ScriptProvider.get(this.moveCheck);
+        if (this.hasWaypoints() && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+            const trigger = ScriptProvider.get(this.walktrigger);
+            this.walktrigger = -1;
 
             if (trigger) {
                 const script = ScriptRunner.init(trigger, this);
-                const state = this.runScript(script, true);
-                if (state === -1) {
-                    // player cannot move unless protected access is available
-                    return false;
-                }
-
-                const result = script.popInt();
-                if (!result) {
-                    return false;
-                }
+                this.runScript(script, true);
             }
-
-            this.moveCheck = null;
         }
 
         if (running === -1 && !this.forceMove) {
             if (this.runenergy < 100) {
-                this.setVar('player_run', 0);
-                this.setVar('temp_run', 0);
+                this.setVar(VarPlayerType.getId('player_run'), 0);
+                this.setVar(VarPlayerType.getId('temp_run'), 0);
             }
 
             running = 0;
-            running |= this.getVarp('player_run') ? 1 : 0;
-            running |= this.getVarp('temp_run') ? 1 : 0;
+            running |= this.getVar(VarPlayerType.getId('player_run')) ? 1 : 0;
+            running |= this.getVar(VarPlayerType.getId('temp_run')) ? 1 : 0;
         }
         if (!super.processMovement(running)) {
-            this.setVar('temp_run', 0);
+            // todo: this is running every idle tick
+            this.setVar(VarPlayerType.getId('temp_run'), 0);
         }
 
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
@@ -2116,8 +2107,8 @@ export default class Player extends PathingEntity {
 
                 this.runenergy = Math.max(this.runenergy - loss, 0);
                 if (this.runenergy === 0) {
-                    this.setVar('player_run', 0);
-                    this.setVar('temp_run', 0);
+                    this.setVar(VarPlayerType.getId('player_run'), 0);
+                    this.setVar(VarPlayerType.getId('temp_run'), 0);
                 }
             }
         }
@@ -2235,7 +2226,7 @@ export default class Player extends PathingEntity {
     processQueues() {
         // the presence of a strong script closes modals before anything runs regardless of the order
         let hasStrong: boolean = false;
-        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             if (request.type === PlayerQueueType.STRONG) {
                 hasStrong = true;
                 break;
@@ -2255,14 +2246,14 @@ export default class Player extends PathingEntity {
         // regardless of whether the end of the list has been reached (i.e. the previous iteration added to the end of the list)
         // - thank you De0 for the explanation
         // essentially, if a script is before the end of the list, it can be processed this tick and result in inconsistent queue timing (authentic)
-        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             if (request.type === PlayerQueueType.STRONG) {
                 this.closeModal();
             }
 
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, null, request.args);
+                const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
                 request.unlink();
             }
@@ -2270,10 +2261,10 @@ export default class Player extends PathingEntity {
     }
 
     processWeakQueue() {
-        for (let request: EntityQueueRequest | null = this.weakQueue.head() as EntityQueueRequest | null; request !== null; request = this.weakQueue.next() as EntityQueueRequest | null) {
+        for (let request = this.weakQueue.head(); request !== null; request = this.weakQueue.next()) {
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, null, request.args);
+                const script = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(script, true);
                 request.unlink();
             }
@@ -2309,7 +2300,7 @@ export default class Player extends PathingEntity {
                 // set clock back to interval
                 timer.clock = timer.interval;
 
-                const script = ScriptRunner.init(timer.script, this, null, null, timer.args);
+                const script = ScriptRunner.init(timer.script, this, null, timer.args);
                 this.runScript(script, timer.type === PlayerTimerType.NORMAL);
             }
         }
@@ -3568,36 +3559,25 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    getVarp(varp: string | number) {
-        if (typeof varp === 'string') {
-            varp = VarPlayerType.getId(varp);
-        }
-
-        if (typeof varp !== 'number' || varp === -1) {
-            console.error(`Invalid setVar call: ${varp}`);
-            return -1;
-        }
-
-        return this.varps[varp as number];
+    getVar(id: number) {
+        const varp = VarPlayerType.get(id);
+        return varp.type === ScriptVarType.STRING ? this.varsString[varp.id] : this.vars[varp.id];
     }
 
-    setVar(varp: number | string, value: number) {
-        if (typeof varp === 'string') {
-            varp = VarPlayerType.getId(varp);
-        }
+    setVar(id: number, value: number | string) {
+        const varp = VarPlayerType.get(id);
 
-        if (typeof varp !== 'number' || varp === -1) {
-            throw new Error(`Invalid setVar call: ${varp}, ${value}`);
-        }
+        if (varp.type === ScriptVarType.STRING && typeof value === 'string') {
+            this.varsString[varp.id] = value as string;
+        } else if (typeof value === 'number') {
+            this.vars[varp.id] = value;
 
-        const varpType = VarPlayerType.get(varp);
-        this.varps[varp] = value;
-
-        if (varpType.transmit) {
-            if (value >= 0x80) {
-                this.write(ServerProt.VARP_LARGE, varp, value);
-            } else {
-                this.write(ServerProt.VARP_SMALL, varp, value);
+            if (varp.transmit) {
+                if (value >= 0x80) {
+                    this.write(ServerProt.VARP_LARGE, varp, value);
+                } else {
+                    this.write(ServerProt.VARP_SMALL, varp, value);
+                }
             }
         }
     }
@@ -3856,32 +3836,29 @@ export default class Player extends PathingEntity {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    write(opcode: ServerProt, ...args: any[]) {
-        if (opcode < 0 || opcode > 255 || !ServerProtEncoders[opcode]) {
+    write(packetType: ServerProt, ...args: any[]) {
+        if (!ServerProtEncoders[packetType.id]) {
             return;
         }
 
-        // console.log('write', ServerProt[opcode], ServerProtLengths[opcode], args);
-
         const buf = new Packet();
-        buf.p1(opcode);
+        buf.p1(packetType.id);
 
-        if (ServerProtLengths[opcode] === -1) {
+        if (packetType.length === -1) {
             buf.p1(0);
-        } else if (ServerProtLengths[opcode] === -2) {
+        } else if (packetType.length === -2) {
             buf.p2(0);
         }
         const start = buf.pos;
 
-        ServerProtEncoders[opcode](buf, ...args);
+        ServerProtEncoders[packetType.id](buf, ...args);
 
-        if (ServerProtLengths[opcode] === -1) {
+        if (packetType.length === -1) {
             buf.psize1(buf.pos - start);
-        } else if (ServerProtLengths[opcode] === -2) {
+        } else if (packetType.length === -2) {
             buf.psize2(buf.pos - start);
         }
 
-        // console.log(buf.data);
         this.netOut.push(buf);
     }
 
@@ -3913,7 +3890,7 @@ export default class Player extends PathingEntity {
 
     logout() {
         const out = new Packet();
-        out.p1(ServerProt.LOGOUT);
+        out.p1(ServerProt.LOGOUT.id);
 
         this.writeImmediately(out);
     }
@@ -3924,7 +3901,7 @@ export default class Player extends PathingEntity {
 
     rebuildNormal(zoneX: number, zoneZ: number) {
         const out = new Packet();
-        out.p1(ServerProt.REBUILD_NORMAL);
+        out.p1(ServerProt.REBUILD_NORMAL.id);
         out.p2(0);
         const start = out.pos;
 

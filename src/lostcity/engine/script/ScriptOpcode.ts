@@ -162,7 +162,7 @@ enum ScriptOpcode {
     PLAYER_FINDNEXT, // todo: replace with huntnext
     QUEUE,
     SAY,
-    SETMOVECHECK,
+    WALKTRIGGER, // official
     SETTIMER,
     SOFTTIMER, // official
     SOUND_SYNTH, // official, newspost
@@ -180,6 +180,8 @@ enum ScriptOpcode {
     AFK_EVENT,
     LOWMEMORY,
     SETIDKIT,
+    P_CLEARPENDINGACTION, // official
+    GETWALKTRIGGER, // official
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official
@@ -207,7 +209,7 @@ enum ScriptOpcode {
     NPC_SETHUNT, // official
     NPC_SETHUNTMODE, // official
     NPC_SETMODE, // official
-    NPC_SETMOVECHECK,
+    NPC_WALKTRIGGER, // official
     NPC_SETTIMER,
     NPC_STAT,
     NPC_STATADD,

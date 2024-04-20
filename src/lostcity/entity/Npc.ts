@@ -26,8 +26,10 @@ import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
-import { CollisionFlag } from '@2004scape/rsmod-pathfinder';
 import LinkList from '#jagex2/datastruct/LinkList.js';
+
+import {CollisionFlag, findNaivePath, hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -58,6 +60,7 @@ export default class Npc extends PathingEntity {
     // runtime variables
     static: boolean = true; // static (map) or dynamic (scripted) npc
     vars: Int32Array;
+    varsString: string[];
 
     mask: number = 0;
     faceX: number = -1;
@@ -75,7 +78,7 @@ export default class Npc extends PathingEntity {
     // script variables
     activeScript: ScriptState | null = null;
     delay: number = 0;
-    queue: LinkList = new LinkList();
+    queue: LinkList<EntityQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
     mode: NpcMode = NpcMode.NONE;
@@ -123,6 +126,7 @@ export default class Npc extends PathingEntity {
         }
 
         this.vars = new Int32Array(VarNpcType.count);
+        this.varsString = new Array(VarNpcType.count);
         this.mode = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
     }
@@ -156,12 +160,19 @@ export default class Npc extends PathingEntity {
         return this.heroPoints[0]?.uid ?? -1;
     }
 
-    getVar(varn: number) {
-        return this.vars[varn];
+    getVar(id: number) {
+        const varn = VarNpcType.get(id);
+        return varn.type === ScriptVarType.STRING ? this.varsString[varn.id] : this.vars[varn.id];
     }
 
-    setVar(varn: number, value: number) {
-        this.vars[varn] = value;
+    setVar(id: number, value: number | string) {
+        const varn = VarNpcType.get(id);
+
+        if (varn.type === ScriptVarType.STRING && typeof value === 'string') {
+            this.varsString[varn.id] = value;
+        } else if (typeof value === 'number') {
+            this.vars[varn.id] = value;
+        }
     }
 
     resetEntity(respawn: boolean) {
@@ -204,19 +215,15 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.moveCheck !== null) {
-            const script = ScriptProvider.get(this.moveCheck);
+        if (this.walktrigger !== -1) {
+            const type = NpcType.get(this.type);
+            const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + this.walktrigger, type.id, type.category);
+            this.walktrigger = -1;
+
             if (script) {
-                const state = ScriptRunner.init(script, this);
+                const state = ScriptRunner.init(script, this, null, [this.walktriggerArg]);
                 ScriptRunner.execute(state);
-
-                const result = state.popInt();
-                if (!result) {
-                    return;
-                }
             }
-
-            this.moveCheck = null;
         }
 
         if (running === -1 && !this.forceMove) {
@@ -295,14 +302,14 @@ export default class Npc extends PathingEntity {
     }
 
     processQueue() {
-        for (let request: EntityQueueRequest | null = this.queue.head() as EntityQueueRequest | null; request !== null; request = this.queue.next() as EntityQueueRequest | null) {
+        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             // purposely only decrements the delay when the npc is not delayed
             if (!this.delayed()) {
                 request.delay--;
             }
 
             if (!this.delayed() && request.delay <= 0) {
-                const state = ScriptRunner.init(request.script, this, null, null, request.args);
+                const state = ScriptRunner.init(request.script, this, null, request.args);
                 this.executeScript(state);
                 request.unlink();
             }
@@ -435,7 +442,7 @@ export default class Npc extends PathingEntity {
         }
 
         const collisionStrategy = this.getCollisionStrategy();
-        if (!collisionStrategy) {
+        if (collisionStrategy === null) {
             // nomove moverestrict returns as null = no walking allowed.
             this.defaultMode();
             return;
@@ -448,7 +455,7 @@ export default class Npc extends PathingEntity {
             return;
         }
         this.facePlayer(target.pid); // face the player
-        this.queueWaypoints(World.naivePathFinder.findPath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy).waypoints);
+        this.queueWaypoints(findNaivePath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy));
     }
 
     playerFaceMode(): void {
@@ -573,7 +580,7 @@ export default class Npc extends PathingEntity {
             const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
 
             if (script) {
-                this.executeScript(ScriptRunner.init(script, this, this.target, null, []));
+                this.executeScript(ScriptRunner.init(script, this, this.target));
             }
         }
     }
@@ -767,9 +774,9 @@ export default class Npc extends PathingEntity {
             for (let i = 0; i < nearby.length; i++) {
                 const player = nearby[i];
 
-                if (hunt.checkVis === HuntVis.LINEOFSIGHT && !World.lineValidator.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length)) {
+                if (hunt.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length)) {
                     continue;
-                } else if (hunt.checkVis === HuntVis.LINEOFWALK && !World.lineValidator.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
+                } else if (hunt.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
                     continue;
                 }
 
@@ -778,9 +785,9 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
 
-                if (hunt.checkNotCombat !== -1 && player.getVarp(hunt.checkNotCombat) + 8 > World.currentTick) {
+                if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
                     continue;
-                } else if (hunt.checkNotCombatSelf !== -1 && this.getVar(hunt.checkNotCombatSelf) >= World.currentTick) {
+                } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
                     continue;
                 }
 

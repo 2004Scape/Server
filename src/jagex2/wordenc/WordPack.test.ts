@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import Packet from '#jagex2/io/Packet.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
 

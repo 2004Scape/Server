@@ -12,9 +12,10 @@ import { EntityQueueRequest, PlayerQueueType, ScriptArgument } from '#lostcity/e
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { Position } from '#lostcity/entity/Position.js';
 
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import {findPath} from '@2004scape/rsmod-pathfinder';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -355,7 +356,12 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.clearInteraction();
         state.activePlayer.closeModal();
         state.activePlayer.unsetMapFlag();
-        // state.activePlayer.activeScript = null;
+    }),
+
+    [ScriptOpcode.P_CLEARPENDINGACTION]: checkedHandler(ProtectedActivePlayer, state => {
+        // clear current interaction but leave walk queue intact
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, state => {
@@ -392,7 +398,7 @@ const PlayerOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
 
         const player = state.activePlayer;
-        player.queueWaypoints(World.pathFinder.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation).waypoints);
+        player.queueWaypoints(findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
         player.updateMovement(); // try to walk immediately
     }),
 
@@ -700,12 +706,12 @@ const PlayerOps: CommandHandlers = {
         const scriptId = state.popInt();
 
         let count: number = 0;
-        for (let request: EntityQueueRequest | null = state.activePlayer.queue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.queue.next() as EntityQueueRequest | null) {
+        for (let request = state.activePlayer.queue.head(); request !== null; request = state.activePlayer.queue.next()) {
             if (request.script.id === scriptId) {
                 count++;
             }
         }
-        for (let request: EntityQueueRequest | null = state.activePlayer.weakQueue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.weakQueue.next() as EntityQueueRequest | null) {
+        for (let request= state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
             if (request.script.id === scriptId) {
                 count++;
             }
@@ -845,19 +851,23 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(state.activePlayer.lastTargetSlot);
     },
 
-    [ScriptOpcode.SETMOVECHECK]: state => {
-        state.activePlayer.moveCheck = state.popInt();
+    [ScriptOpcode.WALKTRIGGER]: state => {
+        state.activePlayer.walktrigger = state.popInt();
+    },
+
+    [ScriptOpcode.GETWALKTRIGGER]: state => {
+        state.pushInt(state.activePlayer.walktrigger);
     },
 
     [ScriptOpcode.CLEARQUEUE]: state => {
         const scriptId = state.popInt();
 
-        for (let request: EntityQueueRequest | null = state.activePlayer.queue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.queue.next() as EntityQueueRequest | null) {
+        for (let request = state.activePlayer.queue.head(); request !== null; request = state.activePlayer.queue.next()) {
             if (request.script.id === scriptId) {
                 request.unlink();
             }
         }
-        for (let request: EntityQueueRequest | null = state.activePlayer.weakQueue.head() as EntityQueueRequest | null; request !== null; request = state.activePlayer.weakQueue.next() as EntityQueueRequest | null) {
+        for (let request = state.activePlayer.weakQueue.head(); request !== null; request = state.activePlayer.weakQueue.next()) {
             if (request.script.id === scriptId) {
                 request.unlink();
             }

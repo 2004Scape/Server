@@ -1,25 +1,28 @@
+import { vi, describe, it, expect } from 'vitest';
+
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 
 import IdkType from '#lostcity/cache/IdkType.js';
 
+// todo: test needs rewriting now that client/server data is split and loaded separately
 describe('IdkType', () => {
     describe('static load', () => {
         it('should load data from idk.dat', () => {
             const dat = new Packet();
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(dat);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(dat);
 
             IdkType.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/idk.dat');
         });
 
         it('should return early if idk.dat does not exist', () => {
-            fs.existsSync = jest.fn().mockReturnValue(false);
-            Packet.load = jest.fn().mockReturnValue(undefined);
+            fs.existsSync = vi.fn().mockReturnValue(false);
+            Packet.load = vi.fn().mockReturnValue(undefined);
 
             expect(Packet.load).not.toHaveBeenCalled();
         });
@@ -32,12 +35,12 @@ describe('IdkType', () => {
             packet.p1(0); // break
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             IdkType.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/idk.dat');
             expect(IdkType.get(0).debugname).toBe('jordan');
         });
 
@@ -49,12 +52,12 @@ describe('IdkType', () => {
             packet.p1(0); // break
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             IdkType.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/idk.dat');
             expect(IdkType.getId('jordan')).toBe(0);
         });
 
@@ -66,24 +69,24 @@ describe('IdkType', () => {
             packet.p1(0); // break
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             IdkType.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/idk.dat');
             expect(IdkType.getByName('jordan')?.debugname).toBe('jordan');
         });
 
         it('test get by name -1', () => {
             const packet = new Packet();
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             IdkType.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/idk.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/idk.dat');
             expect(IdkType.getByName('jordan')).toBeNull();
         });
     });

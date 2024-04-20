@@ -45,19 +45,16 @@ import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 
-import { ClientProtLengths } from '#lostcity/server/ClientProt.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { CollisionFlagMap, LineValidator, NaivePathFinder, PathFinder, StepValidator } from '@2004scape/rsmod-pathfinder';
-import { EntityQueueState, PlayerQueueType } from '#lostcity/entity/EntityQueueRequest.js';
+import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { Position } from '#lostcity/entity/Position.js';
-import ZoneManager from './zone/ZoneManager.js';
 import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
+import ClientProt from '#lostcity/server/ClientProt.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -77,6 +74,7 @@ class World {
     gameMap = new GameMap();
     invs: Inventory[] = []; // shared inventories (shops)
     vars: Int32Array = new Int32Array(); // var shared
+    varsString: string[] = [];
 
     newPlayers: Player[] = []; // players joining at the end of this tick
     players: (Player | null)[] = new Array<Player | null>(2048);
@@ -87,7 +85,7 @@ class World {
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
     futureUpdates: Map<number, number[]> = new Map();
-    queue: LinkList = new LinkList();
+    queue: LinkList<EntityQueueState> = new LinkList();
 
     friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
 
@@ -182,26 +180,6 @@ class World {
 
     get collisionManager(): CollisionManager {
         return this.gameMap.collisionManager;
-    }
-
-    get collisionFlags(): CollisionFlagMap {
-        return this.collisionManager.flags;
-    }
-
-    get pathFinder(): PathFinder {
-        return this.collisionManager.pathFinder;
-    }
-
-    get naivePathFinder(): NaivePathFinder {
-        return this.collisionManager.naivePathFinder;
-    }
-
-    get lineValidator(): LineValidator {
-        return this.collisionManager.lineValidator;
-    }
-
-    get stepValidator(): StepValidator {
-        return this.collisionManager.stepValidator;
     }
 
     shouldReload(type: string, client: boolean = false): boolean {
@@ -302,6 +280,20 @@ class World {
 
         if (this.shouldReload('vars')) {
             VarSharedType.load('data/pack');
+
+            if (this.vars.length !== VarSharedType.count) {
+                const old = this.vars;
+                this.vars = new Int32Array(VarSharedType.count);
+                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                    this.vars[i] = old[i];
+                }
+
+                const oldString = this.varsString;
+                this.varsString = new Array(VarSharedType.count);
+                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                    this.varsString[i] = oldString[i];
+                }
+            }
         }
 
         if (this.shouldReload('interface')) {
@@ -346,8 +338,6 @@ class World {
         if (!skipMaps) {
             this.gameMap.init();
         }
-
-        this.vars = new Int32Array(VarSharedType.count);
 
         Login.loginThread.postMessage({
             type: 'reset'
@@ -394,7 +384,7 @@ class World {
         // - npc spawn scripts
         // - npc hunt
         let worldProcessing = Date.now();
-        for (let request: EntityQueueState | null = this.queue.head() as EntityQueueState | null; request !== null; request = this.queue.next() as EntityQueueState | null) {
+        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
             const delay = request.delay--;
             if (delay > 0) {
                 continue;
@@ -603,7 +593,7 @@ class World {
                 player.closeModal();
                 player.unsetMapFlag();
                 player.logoutRequested = true;
-                player.setVar('lastcombat', 0); // temp fix for logging out in combat, since logout trigger conditions still run...
+                player.setVar(VarPlayerType.getId('lastcombat'), 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
 
             if (!player.logoutRequested) {
@@ -1017,7 +1007,7 @@ class World {
 
             zone.updates = updates.filter((event: ZoneEvent): boolean => {
                 // filter transient updates
-                if ((event.type === ServerProt.LOC_MERGE || event.type === ServerProt.LOC_ANIM || event.type === ServerProt.MAP_ANIM || event.type === ServerProt.MAP_PROJANIM) && event.tick < this.currentTick) {
+                if ((event.type === ServerProt.LOC_MERGE.id || event.type === ServerProt.LOC_ANIM.id || event.type === ServerProt.MAP_ANIM.id || event.type === ServerProt.MAP_PROJANIM.id) && event.tick < this.currentTick) {
                     return false;
                 }
 
@@ -1037,7 +1027,7 @@ class World {
     getReceiverUpdates(zoneIndex: number, receiverId: number) {
         const updates = this.getUpdates(zoneIndex);
         return updates.filter((event: ZoneEvent): boolean => {
-            if (event.type !== ServerProt.OBJ_ADD && event.type !== ServerProt.OBJ_DEL && event.type !== ServerProt.OBJ_COUNT && event.type !== ServerProt.OBJ_REVEAL) {
+            if (event.type !== ServerProt.OBJ_ADD.id && event.type !== ServerProt.OBJ_DEL.id && event.type !== ServerProt.OBJ_COUNT.id && event.type !== ServerProt.OBJ_REVEAL.id) {
                 return false;
             }
 
@@ -1232,13 +1222,13 @@ class World {
                 stream.data[start] = opcode;
             }
 
-            let length = ClientProtLengths[opcode];
-            if (typeof length === 'undefined') {
+            if (typeof ClientProt.byId[opcode] === 'undefined') {
                 socket.state = -1;
                 socket.close();
                 return;
             }
 
+            let length = ClientProt.byId[opcode].length;
             if (length === -1) {
                 length = stream.g1();
             } else if (length === -2) {

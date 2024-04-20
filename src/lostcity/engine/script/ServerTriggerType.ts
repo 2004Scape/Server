@@ -150,9 +150,11 @@ enum ServerTriggerType {
     LOGOUT = 156,
     TUTORIAL_CLICKSIDE = 157,
 
+    // todo: this probably doesn't exist as-is in 2004
     MOVE = 158,
-    MOVECHECK = 159,
-    AI_MOVECHECK = 160,
+
+    WALKTRIGGER = 159,
+    AI_WALKTRIGGER = 160,
 
     LEVELUP = 161
 }

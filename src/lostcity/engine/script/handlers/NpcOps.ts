@@ -392,8 +392,14 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.addHero(state.activePlayer.uid, damage);
     }),
 
-    [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.moveCheck = state.popInt();
+    [ScriptOpcode.NPC_WALKTRIGGER]: checkedHandler(ActiveNpc, state => {
+        const [queueId, arg] = state.popInts(2);
+        if (queueId < 1 || queueId > 20) {
+            throw new Error(`Invalid ai_queue: ${queueId}`);
+        }
+
+        state.activeNpc.walktrigger = queueId - 1;
+        state.activeNpc.walktriggerArg = arg;
     }),
 
     [ScriptOpcode.NPC_STATADD]: checkedHandler(ActiveNpc, state => {

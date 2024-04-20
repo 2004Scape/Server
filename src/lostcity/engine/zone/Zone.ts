@@ -3,10 +3,10 @@ import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
-import { ServerProt } from '#lostcity/server/ServerProt.js';
+import ServerProt from '#lostcity/server/ServerProt.js';
 import World from '#lostcity/engine/World.js';
-import { LocShapes } from '#lostcity/engine/collision/LocShape.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import {locShapeLayer} from '@2004scape/rsmod-pathfinder';
 
 export class ZoneEvent {
     type = -1;
@@ -30,7 +30,7 @@ export class ZoneEvent {
 export default class Zone {
     static mapAnim(srcX: number, srcZ: number, id: number, height: number, delay: number) {
         const out = new Packet();
-        out.p1(ServerProt.MAP_ANIM);
+        out.p1(ServerProt.MAP_ANIM.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p2(id);
@@ -44,7 +44,7 @@ export default class Zone {
     //coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $startDelay, int $endDelay, int $peak, int $arc
     static mapProjAnim(srcX: number, srcZ: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
         const out = new Packet();
-        out.p1(ServerProt.MAP_PROJANIM);
+        out.p1(ServerProt.MAP_PROJANIM.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p1(dstX - srcX);
@@ -63,7 +63,7 @@ export default class Zone {
 
     static locAddChange(srcX: number, srcZ: number, id: number, shape: number, angle: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOC_ADD_CHANGE);
+        out.p1(ServerProt.LOC_ADD_CHANGE.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p1((shape << 2) | (angle & 3));
@@ -74,7 +74,7 @@ export default class Zone {
 
     static locDel(srcX: number, srcZ: number, shape: number, angle: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOC_DEL);
+        out.p1(ServerProt.LOC_DEL.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p1((shape << 2) | (angle & 3));
@@ -86,7 +86,7 @@ export default class Zone {
     // useful due to draw prioritizes
     static locMerge(srcX: number, srcZ: number, shape: number, angle: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOC_MERGE);
+        out.p1(ServerProt.LOC_MERGE.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p1((shape << 2) | (angle & 3));
@@ -104,7 +104,7 @@ export default class Zone {
 
     static locAnim(srcX: number, srcZ: number, shape: number, angle: number, id: number) {
         const out = new Packet();
-        out.p1(ServerProt.LOC_ANIM);
+        out.p1(ServerProt.LOC_ANIM.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p1((shape << 2) | (angle & 3));
@@ -115,7 +115,7 @@ export default class Zone {
 
     static objAdd(srcX: number, srcZ: number, id: number, count: number) {
         const out = new Packet();
-        out.p1(ServerProt.OBJ_ADD);
+        out.p1(ServerProt.OBJ_ADD.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p2(id);
@@ -130,7 +130,7 @@ export default class Zone {
 
     static objCount(srcX: number, srcZ: number, id: number, count: number) {
         const out = new Packet();
-        out.p1(ServerProt.OBJ_COUNT);
+        out.p1(ServerProt.OBJ_COUNT.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p2(id);
@@ -145,7 +145,7 @@ export default class Zone {
 
     static objDel(srcX: number, srcZ: number, id: number, count: number) {
         const out = new Packet();
-        out.p1(ServerProt.OBJ_DEL);
+        out.p1(ServerProt.OBJ_DEL.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p2(id);
@@ -155,7 +155,7 @@ export default class Zone {
 
     static objReveal(srcX: number, srcZ: number, id: number, count: number, receiverId: number) {
         const out = new Packet();
-        out.p1(ServerProt.OBJ_REVEAL);
+        out.p1(ServerProt.OBJ_REVEAL.id);
 
         out.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         out.p2(id);
@@ -203,7 +203,7 @@ export default class Zone {
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number) {
-        const event = new ZoneEvent(ServerProt.MAP_ANIM);
+        const event = new ZoneEvent(ServerProt.MAP_ANIM.id);
 
         event.buffer = Zone.mapAnim(x, z, spotanim, height, delay);
         event.x = x;
@@ -215,7 +215,7 @@ export default class Zone {
     }
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
-        const event = new ZoneEvent(ServerProt.MAP_PROJANIM);
+        const event = new ZoneEvent(ServerProt.MAP_PROJANIM.id);
 
         event.buffer = Zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
         event.x = x;
@@ -235,7 +235,7 @@ export default class Zone {
     addStaticObj(obj: Obj) {
         this.staticObjs.push(obj);
 
-        const event = new ZoneEvent(ServerProt.OBJ_ADD);
+        const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
         event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
         event.tick = World.currentTick;
         event.static = true;
@@ -251,15 +251,15 @@ export default class Zone {
             this.locs.push(loc);
         }
 
-        const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE);
+        const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE.id);
         event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.angle);
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShapes.layer(loc.shape);
+        event.layer = locShapeLayer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === locShapeLayer(loc.shape)) {
                 return false;
             }
 
@@ -271,7 +271,7 @@ export default class Zone {
     }
 
     removeLoc(loc: Loc, duration: number) {
-        const event = new ZoneEvent(ServerProt.LOC_DEL);
+        const event = new ZoneEvent(ServerProt.LOC_DEL.id);
 
         const dynamicIndex = this.locs.indexOf(loc);
         if (dynamicIndex !== -1) {
@@ -286,10 +286,10 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShapes.layer(loc.shape);
+        event.layer = locShapeLayer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === LocShapes.layer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === locShapeLayer(loc.shape)) {
                 return false;
             }
 
@@ -315,26 +315,26 @@ export default class Zone {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
-        const event = new ZoneEvent(ServerProt.LOC_MERGE);
+        const event = new ZoneEvent(ServerProt.LOC_MERGE.id);
 
         event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShapes.layer(loc.shape);
+        event.layer = locShapeLayer(loc.shape);
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
 
     animLoc(loc: Loc, seq: number) {
-        const event = new ZoneEvent(ServerProt.LOC_ANIM);
+        const event = new ZoneEvent(ServerProt.LOC_ANIM.id);
 
         event.buffer = Zone.locAnim(loc.x, loc.z, loc.shape, loc.angle, seq);
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = LocShapes.layer(loc.shape);
+        event.layer = locShapeLayer(loc.shape);
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
@@ -343,7 +343,7 @@ export default class Zone {
     // ----
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
-        const event = new ZoneEvent(ServerProt.OBJ_ADD);
+        const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
         if (this.staticObjs.indexOf(obj) === -1) {
             obj.despawn = World.currentTick + duration;
             this.objs.push(obj);
@@ -364,7 +364,7 @@ export default class Zone {
     }
 
     removeObj(obj: Obj, receiver: Player | null, subtractTick: number = 0) {
-        const event = new ZoneEvent(ServerProt.OBJ_DEL);
+        const event = new ZoneEvent(ServerProt.OBJ_DEL.id);
 
         const dynamicIndex = this.objs.indexOf(obj);
         if (dynamicIndex !== -1) {
