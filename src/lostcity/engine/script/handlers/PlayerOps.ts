@@ -10,6 +10,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import { EntityQueueRequest, PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
+import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
@@ -738,10 +739,11 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
         const player = state.activePlayer;
-        const client = player.client;
-        if (client == null) {
+        if (!isNetworkPlayer(player) || player.client === null) {
             return;
         }
+
+        const client = player.client;
 
         const remoteAddress = client.remoteAddress;
         if (remoteAddress == null) {

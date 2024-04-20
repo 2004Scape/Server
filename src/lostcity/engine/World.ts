@@ -55,6 +55,7 @@ import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import ClientProt from '#lostcity/server/ClientProt.js';
+import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -462,7 +463,7 @@ class World {
                 continue;
             }
 
-            if (!player.client) {
+            if (!isNetworkPlayer(player)) {
                 continue;
             }
 
@@ -630,6 +631,10 @@ class World {
         for (let i = 0; i < this.newPlayers.length; i++) {
             const player = this.newPlayers[i];
 
+            if (!isNetworkPlayer(player)) {
+                continue;
+            }
+
             const pid = this.getNextPid(player.client);
             if (pid === -1) {
                 if (player.client) {
@@ -766,7 +771,7 @@ class World {
                 continue;
             }
 
-            if (!player.client) {
+            if (!isNetworkPlayer(player)) {
                 continue;
             }
 
@@ -894,7 +899,7 @@ class World {
 
                     player.logoutRequested = true;
 
-                    if (player.client) {
+                    if (isNetworkPlayer(player)) {
                         player.logout(); // visually log out
 
                         // if it's been more than a few ticks and the client just won't leave us alone, close the socket
@@ -1251,12 +1256,7 @@ class World {
         }
     }
 
-    addPlayer(player: Player, client: ClientSocket | null) {
-        if (client) {
-            client.player = player;
-            player.client = client;
-        }
-
+    addPlayer(player: Player) {
         this.newPlayers.push(player);
     }
 
@@ -1266,10 +1266,10 @@ class World {
         }
 
         player.playerLog('Logging out');
-        if (player.client) {
+        if (isNetworkPlayer(player)) {
             // visually disconnect the client
             player.logout();
-            player.client.close();
+            player.client!.close();
             player.client = null;
         }
 

@@ -5,7 +5,7 @@ import { WebSocket } from 'ws';
 import Isaac from '#jagex2/io/Isaac.js';
 import Packet from '#jagex2/io/Packet.js';
 
-import Player from '#lostcity/entity/Player.js';
+import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 
 export default class ClientSocket {
     static TCP = 0;
@@ -33,7 +33,7 @@ export default class ClientSocket {
     out = new Uint8Array(5000);
     outOffset = 0;
 
-    player: Player | null = null;
+    player: NetworkPlayer | null = null;
 
     constructor(socket: Socket | WebSocket | null, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
         this.socket = socket;

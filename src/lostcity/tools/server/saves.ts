@@ -1,13 +1,13 @@
 import fs from 'fs';
 
-import Player from '#lostcity/entity/Player.js';
+import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 
 const saves = fs.readdirSync('data/players');
 
 const sorted = [];
 for (let i = 0; i < saves.length; i++) {
     const username = saves[i].split('.')[0];
-    const player = Player.loadFromFile(username);
+    const player = PlayerLoading.loadFromFile(username);
     sorted.push(player);
 }
 sorted.sort((a, b) => b.playtime - a.playtime);
