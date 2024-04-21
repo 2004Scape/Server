@@ -99,7 +99,7 @@ if ($rand < calc(3 + stat_base(cooking))) {
 [label,tut_make_dough]
 // TODO: See what happens on rs if you have a full invent
 // On a quick test, I made the dough, got that in my invent first, then an empty pot, and no bucket to be found anywhere.
-inv_del(inv, pot_of_flour, 1);
+inv_del(inv, tutorial_pot_of_flour, 1);
 inv_del(inv, bucket_water, 1);
 inv_add(inv, pot_empty, 1);
 inv_add(inv, bucket_empty, 1);
