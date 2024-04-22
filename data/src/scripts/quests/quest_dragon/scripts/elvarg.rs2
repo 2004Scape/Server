@@ -8,13 +8,12 @@ if (npc_findhero = false) {
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 // finish dragon slayer quest
-// this is currently 1t too slow for some reason:
 // https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=222
 if (%dragon_progress < ^dragon_complete) {
     queue(dragon_complete, 0);
 }
 
-// [ai_queue1,elvarg](int $arg) ~npc_default_retaliate_ap;
+[ai_queue1,elvarg](int $arg) ~npc_default_retaliate_ap;
 
 // https://twitter.com/JagexAsh/status/1756992041777561878
 // "AP -> OP: 1/2, subject to a line-of-walk check.
@@ -32,7 +31,7 @@ if (~npc_can_attack_player = false) {
 if (random(2) = 0 & lineofwalk(npc_coord, coord) = true) {
     npc_setmode(opplayer2);
 }
-~elvarg_dragon_fire;
+~elvarg_dragon_fire_ap;
 
 
 [ai_opplayer2,elvarg]
@@ -45,22 +44,20 @@ if (~npc_can_attack_player = false) {
     return;
 }
 // 1/8 chance to switch back to ap
-// if (random(8) = 0) {
-//     npc_setmode(applayer2);
-// }
+if (random(8) = 0) {
+    npc_setmode(applayer2);
+}
 
 // from 89 hits from 2 2006 videos: https://youtu.be/ucaYfz3ihWs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0
 // https://youtu.be/zmYEl97Smxs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=104
 // seems like a 75% chance to melee, and 25% chance to dragon fire
-// these videos also show that elvarg likely didnt have an ap attack!
 if (random(4) = 0) {
-    ~elvarg_dragon_fire;
+    ~elvarg_dragon_fire_op;
 } else {
     ~dragon_melee;
-
 }
 
-[proc,elvarg_dragon_fire]
+[proc,elvarg_dragon_fire_op]
 if_close;
 spotanim_npc(spotanim_1, 92, 0);
 npc_anim(dragon_firebreath_middle_attack, 0);
@@ -76,6 +73,28 @@ stat_sub(prayer, 0 , 10); // 10%
 
 queue(damage_player, 0, $damage);
 queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
+~npc_set_attack_vars;
+
+
+[proc,elvarg_dragon_fire_ap] // https://youtu.be/2TJp-tnFyxc?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=44
+if_close;
+npc_anim(dragon_firebreath_middle_attack, 0);
+sound_synth(fire_wave_all, 0, 0);
+%npc_action_delay = add(map_clock, 4);
+
+// yes its south west tile, as shorn in https://youtu.be/2TJp-tnFyxc?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=44
+def_int $duration = ~player_projectile(npc_coord, coord, uid, fire_blast_travel, 92, 31, 51, 16, -5, 64, 10);
+spotanim_pl(fire_blast_hit, 92, $duration);
+
+// damage player
+def_int $maxhit = ~elvarg_max_hit;
+def_int $damage = randominc($maxhit);
+
+// not sure if this was a thing, but this video has it https://youtu.be/ucaYfz3ihWs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=130
+stat_sub(prayer, 0 , 10); // 10%
+
+queue(damage_player, calc($duration / 30), $damage);
+queue(playerhit_n_retaliate, calc($duration / 30), npc_uid); // this should be a queue* command
 ~npc_set_attack_vars;
 
 
