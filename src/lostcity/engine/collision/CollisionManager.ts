@@ -145,6 +145,9 @@ export default class CollisionManager {
         }
     }
 
+    // TODO (jkm) applyLocCollision was modified in feat/zones but then removed,
+    //            check it
+
     private decodeLand(packet: Packet, collision: number = 0): number {
         const opcode: number = packet.g1();
         if (opcode === 0 || opcode === 1) {
@@ -189,7 +192,7 @@ export default class CollisionManager {
                 const absoluteX: number = x + mapsquareX;
                 const absoluteZ: number = z + mapsquareZ;
 
-                zoneManager.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, locId, shape, angle));
+                zoneManager.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(absoluteX, absoluteZ, locId, shape, angle);
 
                 if (type.blockwalk) {
                     this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);

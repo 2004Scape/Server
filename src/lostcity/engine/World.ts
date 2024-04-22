@@ -39,7 +39,6 @@ import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
-import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -52,10 +51,11 @@ import Environment from '#lostcity/util/Environment.js';
 import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
-import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import ClientProt from '#lostcity/server/ClientProt.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { Position } from '#lostcity/entity/Position.js';
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -83,9 +83,6 @@ class World {
 
     npcs: (Npc | null)[] = new Array<Npc>(8192);
 
-    trackedZones: number[] = [];
-    zoneBuffers: Map<number, Packet> = new Map();
-    futureUpdates: Map<number, number[]> = new Map();
     queue: LinkList<EntityQueueState> = new LinkList();
 
     friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
@@ -683,72 +680,31 @@ class World {
         // - loc/obj despawn/respawn
         // - compute shared buffer
         let zoneProcessing = Date.now();
-        const future = this.futureUpdates.get(this.currentTick);
-        if (future) {
-            // despawn dynamic
-            for (let i = 0; i < future.length; i++) {
-                const zoneIndex = future[i];
-                const zone = this.getZoneIndex(zoneIndex);
-
-                for (let i = 0; i < zone.locs.length; i++) {
-                    const loc = zone.locs[i];
-                    if (!loc || loc.despawn === -1) {
-                        continue;
-                    }
-
-                    if (loc.despawn === this.currentTick) {
-                        this.removeLoc(loc, -1);
-                        i--;
-                    }
-                }
-
-                for (let i = 0; i < zone.objs.length; i++) {
-                    const obj = zone.objs[i];
-                    if (!obj || obj.despawn === -1) {
-                        continue;
-                    }
-
-                    if (obj.despawn === this.currentTick) {
-                        this.removeObj(obj, null);
-                        i--;
-                    }
-                }
+        const activeZones: Set<number> = new Set();
+        for (let i = 0; i < this.players.length; i++) {
+            const player = this.players[i];
+            if (!player) {
+                continue;
             }
 
-            // respawn static
-            for (let i = 0; i < future.length; i++) {
-                const zoneIndex = future[i];
-                const zone = this.getZoneIndex(zoneIndex);
+            const centerX = Position.zone(player.x);
+            const centerZ = Position.zone(player.z);
 
-                for (let i = 0; i < zone.staticLocs.length; i++) {
-                    const loc = zone.staticLocs[i];
-                    if (!loc || loc.respawn === -1) {
-                        continue;
-                    }
-
-                    if (loc.respawn === this.currentTick) {
-                        loc.respawn = -1;
-                        this.addLoc(loc, -1);
-                    }
-                }
-
-                for (let i = 0; i < zone.staticObjs.length; i++) {
-                    const obj = zone.staticObjs[i];
-                    if (!obj || obj.respawn === -1) {
-                        continue;
-                    }
-
-                    if (obj.respawn === this.currentTick) {
-                        obj.respawn = -1;
-                        this.addObj(obj, null, -1);
-                    }
+            for (let x = centerX - 3; x <= centerX + 3; x++) {
+                for (let z = centerZ - 3; z <= centerZ + 3; z++) {
+                    activeZones.add(ZoneManager.zoneIndex(x << 3, z << 3, player.level));
                 }
             }
-
-            this.futureUpdates.delete(this.currentTick);
         }
 
-        this.computeSharedEvents();
+        for (const zoneIndex of activeZones) {
+            const zone = this.getZoneIndex(zoneIndex);
+            if (!zone) {
+                continue;
+            }
+
+            zone.cycle();
+        }
         zoneProcessing = Date.now() - zoneProcessing;
 
         // client output
@@ -974,70 +930,7 @@ class World {
     }
 
     getZoneIndex(zoneIndex: number) {
-        return this.gameMap.zoneManager.zones.get(zoneIndex)!;
-    }
-
-    computeSharedEvents() {
-        this.trackedZones = [];
-        this.zoneBuffers = new Map();
-
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            if (!player) {
-                continue;
-            }
-
-            // TODO: optimize this
-            const zones = Object.keys(player.loadedZones);
-            for (let j = 0; j < zones.length; j++) {
-                const zoneIndex = parseInt(zones[j]);
-                if (!this.trackedZones.includes(zoneIndex)) {
-                    this.trackedZones.push(zoneIndex);
-                }
-            }
-        }
-
-        for (let i = 0; i < this.trackedZones.length; i++) {
-            const zoneIndex = this.trackedZones[i];
-            const zone = this.getZoneIndex(zoneIndex);
-
-            const updates = zone.updates;
-            if (!updates.length) {
-                continue;
-            }
-
-            zone.updates = updates.filter((event: ZoneEvent): boolean => {
-                // filter transient updates
-                if ((event.type === ServerProt.LOC_MERGE.id || event.type === ServerProt.LOC_ANIM.id || event.type === ServerProt.MAP_ANIM.id || event.type === ServerProt.MAP_PROJANIM.id) && event.tick < this.currentTick) {
-                    return false;
-                }
-
-                return true;
-            });
-        }
-    }
-
-    getSharedEvents(zoneIndex: number): Packet | undefined {
-        return this.zoneBuffers.get(zoneIndex);
-    }
-
-    getUpdates(zoneIndex: number) {
-        return this.gameMap.zoneManager.zones.get(zoneIndex)!.updates;
-    }
-
-    getReceiverUpdates(zoneIndex: number, receiverId: number) {
-        const updates = this.getUpdates(zoneIndex);
-        return updates.filter((event: ZoneEvent): boolean => {
-            if (event.type !== ServerProt.OBJ_ADD.id && event.type !== ServerProt.OBJ_DEL.id && event.type !== ServerProt.OBJ_COUNT.id && event.type !== ServerProt.OBJ_REVEAL.id) {
-                return false;
-            }
-
-            // if (event.type === ServerProt.OBJ_DEL && receiverId !== -1 && event.receiverId !== receiverId) {
-            //     return false;
-            // }
-
-            return true;
-        });
+        return this.gameMap.zoneManager.zones.get(zoneIndex);
     }
 
     getZonePlayers(x: number, z: number, level: number) {
@@ -1048,6 +941,23 @@ class World {
         return this.getZone(x, z, level).npcs;
     }
 
+    // todo: rewrite, this is for legacy code compatibility
+    getZoneLocs(x: number, z: number, level: number): Loc[] {
+        const zone = this.getZone(x, z, level);
+        const locs = [];
+        for (let dx = 0; dx < 8; dx++) {
+            for (let dz = 0; dz < 8; dz++) {
+                for (let layer = 0; layer < 4; layer++) {
+                    const loc = zone.getLoc(x + dx, z + dz, layer);
+                    if (loc) {
+                        locs.push(loc);
+                    }
+                }
+            }
+        }
+        return locs;
+    }
+
     addNpc(npc: Npc) {
         this.npcs[npc.nid] = npc;
         npc.x = npc.startX;
@@ -1055,50 +965,24 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
-
-        switch (npc.blockWalk) {
-            case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
-                break;
-            case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
-                break;
-        }
-
-        npc.resetEntity(true);
-        npc.playAnimation(-1, 0);
     }
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.leave(npc);
-
-        switch (npc.blockWalk) {
-            case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
-                break;
-            case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
-                break;
-        }
-
-        if (!npc.static) {
-            this.npcs[npc.nid] = null;
-        } else {
-            const type = NpcType.get(npc.type);
-            npc.despawn = this.currentTick;
-            npc.respawn = this.currentTick + type.respawnrate;
-        }
     }
 
-    getLoc(x: number, z: number, level: number, locId: number) {
-        return this.getZone(x, z, level).getLoc(x, z, locId);
-    }
+    getLoc(x: number, z: number, level: number, locId: number): Loc | null {
+        const zone = this.getZone(x, z, level);
 
-    getZoneLocs(x: number, z: number, level: number) {
-        return [...this.getZone(x, z, level).staticLocs.filter(l => l.respawn < this.currentTick), ...this.getZone(x, z, level).locs];
+        for (let layer = 0; layer < 4; layer++) {
+            const loc = zone.getLoc(x, z, layer);
+            if (loc && loc.type === locId) {
+                return loc;
+            }
+        }
+
+        return null;
     }
 
     getObj(x: number, z: number, level: number, objId: number) {
@@ -1107,103 +991,27 @@ class World {
 
     addLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-        zone.addLoc(loc, duration);
+        zone.addLoc(loc.x, loc.z, loc.type, loc.shape, loc.angle, duration);
+    }
 
-        const type = LocType.get(loc.type);
-        if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
-        }
-
-        loc.despawn = this.currentTick + duration;
-        loc.respawn = -1;
-        if (duration !== -1) {
-            const endTick = this.currentTick + duration;
-            let future = this.futureUpdates.get(endTick);
-            if (!future) {
-                future = [];
-            }
-
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-
-            this.futureUpdates.set(endTick, future);
-        }
+    changeLoc(loc: Loc, duration: number) {
+        const zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.changeLoc(loc.x, loc.z, loc.type, loc.shape, loc.angle, duration);
     }
 
     removeLoc(loc: Loc, duration: number) {
         const zone = this.getZone(loc.x, loc.z, loc.level);
-        zone.removeLoc(loc, duration);
-
-        const type = LocType.get(loc.type);
-        if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
-        }
-
-        loc.despawn = -1;
-        loc.respawn = this.currentTick + duration;
-        if (duration !== -1) {
-            const endTick = this.currentTick + duration;
-            let future = this.futureUpdates.get(endTick);
-            if (!future) {
-                future = [];
-            }
-
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-
-            this.futureUpdates.set(endTick, future);
-        }
+        zone.removeLoc(loc.x, loc.z, loc.shape, duration);
     }
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        const existing = this.getObj(obj.x, obj.z, obj.level, obj.id);
-        if (existing && existing.id == obj.id) {
-            const type = ObjType.get(obj.type);
-            const nextCount = obj.count + existing.count;
-            if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
-                // if an obj of the same type exists and is stackable, then we merge them.
-                obj.count = nextCount;
-                zone.removeObj(existing, receiver);
-            }
-        }
         zone.addObj(obj, receiver, duration);
-
-        obj.despawn = this.currentTick + duration;
-        obj.respawn = -1;
-        if (duration !== -1) {
-            const endTick = this.currentTick + duration;
-            let future = this.futureUpdates.get(endTick);
-            if (!future) {
-                future = [];
-            }
-
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-
-            this.futureUpdates.set(endTick, future);
-        }
     }
 
     removeObj(obj: Obj, receiver: Player | null) {
-        // stackable objs when they overflow are created into another slot on the floor
         const zone = this.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj, receiver);
-        obj.despawn = this.currentTick;
-        obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
-        if (zone.staticObjs.includes(obj)) {
-            let future = this.futureUpdates.get(obj.respawn);
-            if (!future) {
-                future = [];
-            }
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-            this.futureUpdates.set(obj.respawn, future);
-        }
     }
 
     // ----

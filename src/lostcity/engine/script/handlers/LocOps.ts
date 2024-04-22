@@ -54,7 +54,7 @@ const LocOps: CommandHandlers = {
         const seq = state.popInt();
 
         const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).animLoc(loc, seq);
+        World.getZone(loc.x, loc.z, loc.level).locanim(loc, seq);
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, state => {
@@ -68,12 +68,10 @@ const LocOps: CommandHandlers = {
         check(id, LocTypeValid);
         check(duration, DurationValid);
 
-        World.removeLoc(state.activeLoc, duration);
+        const type = LocType.get(id);
+        const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, type.width, type.length, id, state.activeLoc.shape, state.activeLoc.angle);
 
-        const locType = LocType.get(id);
-        const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, id, state.activeLoc.shape, state.activeLoc.angle);
-        World.addLoc(loc, duration);
-
+        World.changeLoc(loc, duration);
         state.activeLoc = loc;
         state.pointerAdd(ActiveLoc[state.intOperand]);
     }),
@@ -97,7 +95,7 @@ const LocOps: CommandHandlers = {
 
         const pos = Position.unpackCoord(coord);
         const loc = World.getLoc(pos.x, pos.z, pos.level, locId);
-        if (!loc || loc.respawn !== -1) {
+        if (!loc) {
             state.pushInt(0);
             return;
         }
