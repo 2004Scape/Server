@@ -122,7 +122,7 @@ if ($random_attack = 0) {
 } else if ($random_attack = 1) {
     ~kbd_special_breath;
 } else {
-    ~npc_default_attack;
+    ~dragon_melee;
 }
 // ------------
 // far range fire breath

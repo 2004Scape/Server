@@ -25,8 +25,8 @@ if (~npc_out_of_combat = true) {
     }
     return;
 }
-if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(opplayer2);
+if (finduid(%npc_attacking_uid) = true & npc_getmode ! applayer2) { 
+    npc_setmode(opplayer2); // only set mode to op if the npc is not currently ap
 }
 
 
@@ -189,6 +189,7 @@ error("style of <tostring($style)> not defined in switch for npc_combat_defenceb
 npc_queue(1, 0, $queue_delay);
 // if in singles and attacking another player, then delay npc action by 8 ticks
 if (~inzone_coord_pair_table(multiway_zones, npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
+    mes("Somehow here!?");
     %npc_action_delay = add(map_clock, 8);
 }
 %npc_aggressive_player = uid;
@@ -205,6 +206,7 @@ if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
     return(true);
 }
 if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {
+    mes("Cannot attack player");
     return(false);
 }
 

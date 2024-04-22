@@ -56,7 +56,7 @@ if (~npc_can_attack_player = false) {
 if (random(4) = 0) {
     ~elvarg_dragon_fire;
 } else {
-    ~npc_default_attack;
+    ~dragon_melee;
 
 }
 

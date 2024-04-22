@@ -143,7 +143,7 @@ if (stat(hitpoints) = 0 & getqueue(player_death) < 1){
 def_int $rand;
 def_synth $sound;
 if (gender() = 0) {
-        $rand = random(2);
+        $rand = random(3);
         switch_int($rand) {
             case 0 : $sound = human_hit2;
             case 1 : $sound = human_hit3;
@@ -151,7 +151,7 @@ if (gender() = 0) {
             case default : $sound = human_hit2;
         }
     } else {
-        $rand = random(1);
+        $rand = random(2);
         switch_int($rand) {
             case 0 : $sound = female_hit;
             case 1 : $sound = female_hit2;
@@ -182,7 +182,7 @@ if (.stat(hitpoints) = 0){
 def_int $rand;
 def_synth $sound;
 if (.gender() = 0) {
-        $rand = random(2);
+        $rand = random(3);
         switch_int($rand) {
             case 0 : $sound = human_hit2;
             case 1 : $sound = human_hit3;
@@ -190,7 +190,7 @@ if (.gender() = 0) {
             case default : $sound = human_hit2;
         }
     } else {
-        $rand = random(1);
+        $rand = random(2);
         switch_int($rand) {
             case 0 : $sound = female_hit;
             case 1 : $sound = female_hit2;

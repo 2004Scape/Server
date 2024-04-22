@@ -67,3 +67,11 @@ if (p_finduid(uid) = true) {
 } else {
     @please_finish;
 }
+
+[debugproc,kbd]
+if_close;
+if (p_finduid(uid) = true) {
+    p_teleport(0_47_160_60_16);
+} else {
+    @please_finish;
+}
