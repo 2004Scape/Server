@@ -533,11 +533,16 @@ const InvOps: CommandHandlers = {
         }
 
         const objType = ObjType.get(obj);
+        let finalObj = obj;
         if (objType.certtemplate === -1 && objType.certlink >= 0) {
-            state.activePlayer.invAdd(toInv, objType.certlink, completed);
-        } else {
-            state.activePlayer.invAdd(toInv, obj, completed);
+            finalObj = objType.certlink;
         }
+        const overflow = count - state.activePlayer.invAdd(toInv, finalObj, completed);
+        if (overflow > 0) {
+            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, finalObj, overflow);
+            World.addObj(floorObj, state.activePlayer, 200);
+        }
+    
     }),
 
     // inv write

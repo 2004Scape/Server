@@ -4,6 +4,7 @@ sound_synth(smokepuff, 0, 0);
 
 npc_anim(emote_bow, 20);
 npc_say("Greetings <displayname>!");
+npc_delay(1);
 npc_setmode(playerfollow);
 %npc_attacking_uid = uid;
 
@@ -95,6 +96,7 @@ if (finduid(%npc_attacking_uid) = true) {
     } else if (%npc_macro_event_status = 4) { // fail
         // https://youtu.be/Ai89wqupYqA?t=45
         ~macro_event_fail_teleport;
+        ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing
     }
     %npc_macro_event_status = calc(%npc_macro_event_status + 1);
 }

@@ -128,6 +128,31 @@ while ($i < inv_size(inv)) {
     $i = calc($i + 1);
 }
 
+// not sure if this is a thing but people seem to remember it being a thing
+[proc,macro_event_fail_note_inv]
+def_int $i = 0;
+while ($i < inv_size(inv)) {
+    def_obj $obj = inv_getobj(inv, $i);
+    // make sure the item is not stackable, and not already noted
+    if ($obj ! null & oc_stackable($obj) = false & oc_cert($obj) ! $obj) {
+        // cert the item in the inv
+        inv_moveitem_cert(inv, inv, $obj, inv_total(inv, $obj));
+    }
+    $i = calc($i + 1);
+}
+
+$i = 0;
+while ($i < inv_size(worn)) {
+    def_obj $obj = inv_getobj(worn, $i);
+    // make sure the item is not stackable, and not already noted
+    if ($obj ! null & oc_stackable($obj) = false & oc_cert($obj) ! $obj) {
+        // cert the item and move it into the inv
+        inv_moveitem_cert(worn, inv, $obj, inv_total(worn, $obj));
+    }
+    $i = calc($i + 1);
+}
+~update_bas;
+
 
 // called when the npc needs to be poofed away
 [proc,macro_event_disappear]
