@@ -55,7 +55,7 @@ import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import ClientProt from '#lostcity/server/ClientProt.js';
-import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -631,13 +631,9 @@ class World {
         for (let i = 0; i < this.newPlayers.length; i++) {
             const player = this.newPlayers[i];
 
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
-
-            const pid = this.getNextPid(player.client);
+            const pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
             if (pid === -1) {
-                if (player.client) {
+                if (player instanceof NetworkPlayer && player.client) {
                     // world full
                     player.client.send(Uint8Array.from([7]));
                     player.client.close();
@@ -673,7 +669,7 @@ class World {
                 player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
             }
 
-            if (player.client) {
+            if (player instanceof NetworkPlayer && player.client) {
                 player.client.state = 1;
                 player.client.send(Uint8Array.from([2]));
             }

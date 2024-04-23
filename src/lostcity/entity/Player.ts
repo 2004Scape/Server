@@ -51,8 +51,10 @@ import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import {CollisionFlag, findPath} from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
+import { NetworkPlayer } from './NetworkPlayer.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -611,6 +613,49 @@ export default class Player extends PathingEntity {
                 }
                 const end = Date.now();
                 console.log(`took = ${end - start} ms`);
+                break;
+            }*/
+            /*case 'bots': {
+                this.messageGame('Adding bots');
+                for (let i = 0; i < 2000; i++) {
+                    const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
+                    bot.onLogin();
+                    World.addPlayer(bot);
+                }
+                break;
+            }
+            case 'teleall': {
+                this.messageGame('Teleporting all players');
+                for (let i = 0; i < World.players.length; i++) {
+                    const player = World.players[i];
+                    if (!player) {
+                        continue;
+                    }
+
+                    player.closeModal();
+
+                    do {
+                        const x = Math.floor(Math.random() * 640) + 3200;
+                        const z = Math.floor(Math.random() * 640) + 3200;
+
+                        player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
+                    } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
+                }
+                break;
+            }
+            case 'moveall': {
+                this.messageGame('Moving all players');
+                console.time('moveall');
+                for (let i = 0; i < World.players.length; i++) {
+                    const player = World.players[i];
+                    if (!player) {
+                        continue;
+                    }
+
+                    player.closeModal();
+                    player.queueWaypoints(findPath(player.level, player.x, player.z, (player.x >>> 6 << 6) + 32, (player.z >>> 6 << 6) + 32));
+                }
+                console.timeEnd('moveall');
                 break;
             }*/
         }
