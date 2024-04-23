@@ -27,9 +27,9 @@ param=damagetype,1
 param=attack_anim,dragon_attack
 param=defend_anim,dragon_block
 param=death_anim,dragon_death
-param=attack_sound,dragon_3
-param=defend_sound,dragon_2
-param=death_sound,dragon_1
+param=attack_sound,dragon_attack
+param=defend_sound,dragon_hit
+param=death_sound,dragon_death
 param=deathanim_delay,1
 huntmode=aggressive_melee
 // https://youtu.be/uETjjZFKWus?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=134
@@ -196,9 +196,9 @@ param=attack_anim,demon_attack
 param=defend_anim,demon_block
 param=death_anim,demon_death
 param=demonbane_vulnerable,yes
-param=attack_sound,demon_2
-param=defend_sound,demon_3
-param=death_sound,demon_1
+param=attack_sound,demon_attack
+param=defend_sound,demon_hit
+param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=aggressive_melee
 

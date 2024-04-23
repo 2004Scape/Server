@@ -83,3 +83,4 @@ model7=model_2988_npc
 head1=model_0_npc_head
 head2=model_8_npc_head
 wanderrange=2
+param=death_anim,dwarf_death

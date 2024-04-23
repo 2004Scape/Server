@@ -542,7 +542,6 @@ param=slashattack_anim,human_ddagger_slash
 param=defend_anim,human_dagger_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
-// TODO check sounds 
 // osrs defend anim seq_378
 
 [black_dagger_p]

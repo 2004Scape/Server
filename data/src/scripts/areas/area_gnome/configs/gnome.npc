@@ -12,6 +12,8 @@ model2=model_2890_npc
 model3=model_2922_npc
 head1=model_21_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [blurberry]
 vislevel=hide
@@ -31,6 +33,8 @@ model2=model_2900_npc
 model3=model_2917_npc
 head1=model_23_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_barman]
 vislevel=hide
@@ -51,6 +55,8 @@ param=shop_title,Blurberry Bar
 param=shop_buy_multiplier,250
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [aluft_gianne]
 name=Aluft Gianne
@@ -64,6 +70,8 @@ model2=model_2889_npc
 model3=model_2917_npc
 head1=model_15_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_851]
 name=Gnome Waiter
@@ -90,6 +98,8 @@ param=shop_title,Gianne's Restaurant
 param=shop_buy_multiplier,250
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_child_yellow]
 name=Gnome child
@@ -118,7 +128,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackunarmed
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_child_blue]
 name=Gnome child
@@ -147,7 +162,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackunarmed
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_child_green]
 name=Gnome child
@@ -174,9 +194,14 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackunarmed
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
-[npc_163]
+[gnome_guard_halberd]
 name=Gnome guard
 desc=A tree gnome guard.
 walkanim=midget_walk
@@ -197,9 +222,15 @@ defence=17
 param=attackbonus,8
 param=strengthbonus,13
 param=damagetype,^slash_style
+param=attack_anim,midget_attacksword
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,scythe_slash
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
+// osrs attack_sound,gnome_attack & defend_sound,scythe_slash
 
-[npc_164]
+[gnome_guard_sword]
 name=Gnome guard
 desc=A tree gnome guard.
 walkanim=midget_walk
@@ -224,7 +255,12 @@ param=slashdefence,9
 param=crushdefence,7
 param=rangedefence,8
 param=damagetype,^slash_style
+param=attack_anim,midget_attacksword
+param=defend_anim,midget_blockshield
 param=death_anim,midget_death
+param=attack_sound,hacksword_slash
+// param=attack_sound,brassclash
+param=death_sound,gnome_death
 
 [npc_165]
 name=Gnome shop keeper
@@ -238,6 +274,8 @@ model1=model_2909_npc
 model2=model_2901_npc
 model3=model_2917_npc
 head1=model_17_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_166]
 name=Gnome banker
@@ -255,6 +293,8 @@ head1=model_23_npc_head
 wanderrange=0
 moverestrict=nomove
 category=bank_teller
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_167]
 name=Gnome baller
@@ -266,6 +306,8 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2924_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_woman_white]
 name=Gnome woman
@@ -294,7 +336,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,shortbow
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_woman_black]
 name=Gnome woman
@@ -329,7 +376,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,shortbow
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [npc_170]
 name=Gnome pilot
@@ -343,6 +395,8 @@ model2=model_2908_npc
 model3=model_2922_npc
 head1=model_19_npc_head
 wanderrange=1
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_171]
 name=Brimstail
@@ -363,6 +417,8 @@ model1=model_2909_npc
 model2=model_2898_npc
 model3=model_2915_npc
 head1=model_18_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_600]
 name=Hudo
@@ -391,6 +447,8 @@ param=shop_title,Grand Tree Groceries
 param=shop_buy_multiplier,550
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_601]
 name=Rometti
@@ -420,6 +478,8 @@ param=shop_title,Fine Fashions
 param=shop_buy_multiplier,550
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_602]
 name=Gulluck
@@ -437,6 +497,8 @@ model1=model_2892_npc
 model2=model_2909_npc
 model3=model_2915_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_603]
 name=Heckel Funch
@@ -464,6 +526,8 @@ param=shop_title,Funch's Fine Groceries
 param=shop_buy_multiplier,550
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [king_bolren]
 vislevel=hide
@@ -479,6 +543,8 @@ model2=model_2891_npc
 model3=model_2916_npc
 head1=model_20_npc_head
 wanderrange=2
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [commander_montai]
 vislevel=hide
@@ -496,6 +562,8 @@ model2=model_2903_npc
 model3=model_2919_npc
 head1=model_22_npc_head
 timer=10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [bolkoy]
 vislevel=hide
@@ -515,6 +583,8 @@ param=shop_sell_multiplier,1300
 param=shop_buy_multiplier,400
 param=shop_delta,30
 param=shop_title,Bolkoy's Village Shop
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [remsai]
 vislevel=hide
@@ -531,6 +601,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [elkoy_outmaze]
 vislevel=hide
@@ -548,6 +620,8 @@ model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [elkoy_maze]
 vislevel=hide
@@ -565,6 +639,8 @@ model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_484]
 vislevel=hide
@@ -579,6 +655,8 @@ model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [local_gnome]
 vislevel=hide
@@ -593,6 +671,8 @@ model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [kalron]
 vislevel=hide
@@ -605,6 +685,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_troop_white]
 name=Gnome troop
@@ -627,12 +709,14 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
+param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,gnome_attack
+param=attack_sound,shortbow
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 category=gnome_troop
+// attack style is missing
 
 [gnome_troop_black]
 name=Gnome troop
@@ -663,9 +747,11 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
+param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,gnome_attack
+param=attack_sound,shortbow
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 category=gnome_troop
+// attack style is missing

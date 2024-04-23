@@ -21,6 +21,8 @@ model5=model_429_idk
 model6=model_361_obj_wear
 head1=model_113_idk_head
 wanderrange=2
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [shantay]
 vislevel=hide
@@ -96,9 +98,9 @@ param=crushdefence,18
 param=magicdefence,6
 param=rangedefence,15
 param=damagetype,^stab_style
-param=attack_anim,human_sword_stab
+param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
-param=attack_sound,stabsword_stab
+param=attack_sound,stabsword_slash
 
 [shantay_pass_guard]
 name=Shantay Guard

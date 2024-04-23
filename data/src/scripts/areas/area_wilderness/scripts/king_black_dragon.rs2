@@ -155,7 +155,7 @@ if (calc($z / 2) <= $x & calc($x / 2) <= $z) { // south-west
 def_int $duration = ~player_projectile($projectile_coord, coord, uid, spotanim_54, 92, 31, 51, 16, -5, 64, 10);
 
 npc_anim(dragon_firebreath_middle_attack, 0);
-sound_synth(sound_22, 0, 30);
+sound_synth(firebreath, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
 def_int $damage = 0;
@@ -180,7 +180,7 @@ queue(playerhit_n_retaliate, calc($duration / 30), npc_uid); // this should be a
 if_close;
 spotanim_npc(spotanim_0, 92, 0);
 npc_anim(dragon_firebreath_all_attack, 0);
-sound_synth(sound_22, 0, 30);
+sound_synth(firebreath, 0, 30);
 %npc_action_delay = add(map_clock, 5);
 
 def_int $damage = 0;

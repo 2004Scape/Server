@@ -1,4 +1,4 @@
-[npc_475]
+[khazard_trooper_mace]
 name=Khazard trooper
 desc=It's one of General Khazard's warriors.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -34,8 +34,10 @@ param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,baxe_crush
+// param=defend_sound,blade2
+// osrs attack sound warhammer_crush
 
-[npc_476]
+[khazard_trooper_spear]
 name=Khazard trooper
 desc=It's one of General Khazard's warriors.
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -69,7 +71,8 @@ param=rangedefence,33
 param=damagetype,^stab_style
 param=attack_anim,human_spear_pound
 param=defend_anim,human_khazard_spear_defend
-param=attack_sound,staff_hit
+param=attack_sound,staff_stab
+// param=defend_sound,blade5
 
 [khazard_warlord]
 name=Khazard warlord
@@ -107,6 +110,8 @@ param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=attack_sound,baxe_crush
+// param=defend_sound,blade2
+// osrs attack sound warhammer_crush
 
 [khazard_commander]
 name=Khazard commander
@@ -139,4 +144,5 @@ param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_defend
 param=attack_sound,staff_stab
+// param=defend_sound,blade2
 huntmode=cowardly

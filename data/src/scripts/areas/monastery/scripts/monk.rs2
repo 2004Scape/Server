@@ -10,7 +10,7 @@ if ($heal = 0) {
 [label,monk_heal_self]
 sound_synth(selfheal,0,0);
 npc_statheal(hitpoints,2,0);
-npc_anim(monk_heal,0);
+npc_anim(human_castheal,0);
 %npc_action_delay = add(map_clock, 4);
 %npc_attacking_uid = %npc_aggressive_player;
 
@@ -28,7 +28,7 @@ if (%prayer_guild < 1) {
 if_close;
 sound_synth(heal, 0, 0);
 spotanim_pl(spotanim_84, 120, 0);
-npc_anim(seq_710, 0);
+npc_anim(human_castheal, 0);
 stat_heal(hitpoints, calc(2 + scale(20, 100, stat_base(hitpoints))), 0);
 mes("You feel a little better.");
 

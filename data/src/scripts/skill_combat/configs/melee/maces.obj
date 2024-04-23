@@ -239,7 +239,6 @@ param=prayerbonus,5
 param=attackrate,5
 param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend2
+param=defend_anim,human_blunt_defend1
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
-// osrs defend anim seq_403

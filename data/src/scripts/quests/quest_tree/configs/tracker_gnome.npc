@@ -13,6 +13,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2915_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [tracker_gnome_2]
 vislevel=hide
@@ -29,6 +31,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2915_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [tracker_gnome_3]
 vislevel=hide
@@ -45,3 +49,5 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2915_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death

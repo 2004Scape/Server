@@ -138,6 +138,7 @@ model6=model_358_idk
 model7=model_417_npc
 head1=model_113_idk_head
 wanderrange=1
+param=death_sound,female_death
 
 [boy]
 vislevel=hide
@@ -158,3 +159,5 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2917_npc
 head1=model_53_idk_head
+param=death_anim,midget_death
+param=death_sound,gnome_death

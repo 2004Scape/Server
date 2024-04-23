@@ -38,6 +38,7 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
+// param=defend_sound,blade4
 huntmode=cowardly
 
 [sir_mordred]
@@ -87,6 +88,7 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,2H_slash
+// param_defend_sound,steel2
 
 [morgan_le_faye]
 vislevel=hide
@@ -114,3 +116,4 @@ model6=model_358_idk
 model7=model_534_obj_wear
 model8=model_414_npc
 head1=model_113_idk_head
+param=death_sound,female_death

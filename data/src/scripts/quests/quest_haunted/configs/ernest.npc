@@ -28,3 +28,5 @@ walkanim=chicken_walk
 readyanim=chicken_ready
 model1=model_2849_npc
 head1=model_53_idk_head
+param=death_anim,chicken_death
+param=death_sound,chicken_death

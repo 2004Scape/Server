@@ -39,6 +39,7 @@ model3=model_2979_npc
 model4=model_2983_npc
 model5=model_2985_npc
 head1=model_1_npc_head
+param=death_anim,dwarf_death
 
 [captain_tobias]
 vislevel=hide
@@ -218,6 +219,7 @@ param=shop_buy_multiplier,600
 param=shop_delta,1
 param=shop_title,Betty's Magic Emporium.
 moverestrict=indoors
+param=death_sound,female_death
 
 [grum]
 vislevel=hide
