@@ -12,14 +12,14 @@ desc=It can't hurt to just have a look, can it?.
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [loc_2183]
 name=Closed chest
 desc=I wonder what is inside...
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2184]
 name=Door

@@ -346,7 +346,7 @@ name=Chest
 desc=I wonder what's inside?
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_76]
 name=Chest
@@ -354,7 +354,7 @@ desc=It's open.
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [loc_77]
 name=Door
@@ -580,7 +580,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_104]
 name=Open chest
@@ -588,7 +588,7 @@ desc=Perhaps I should search it.
 model=model_loc_76
 op1=Search
 op2=Shut
-forceapproach=top
+forceapproach=north
 
 [loc_105]
 name=Trapdoor
@@ -773,7 +773,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=3625
 
@@ -781,7 +781,7 @@ recol1d=3625
 name=Open chest
 desc=Perhaps I should search it.
 model=model_loc_76
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=3625
 
@@ -790,7 +790,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=43069
 
@@ -798,7 +798,7 @@ recol1d=43069
 name=Open chest
 desc=Perhaps I should search it.
 model=model_loc_76
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=43069
 
@@ -919,7 +919,7 @@ width=4
 length=4
 active=yes
 op1=Enter
-forceapproach=left
+forceapproach=west
 
 [loc_195]
 name=Ladder
@@ -928,7 +928,7 @@ model=model_loc_11
 active=yes
 op1=Climb-up
 mapscene=7
-forceapproach=bottom
+forceapproach=south
 
 [loc_196]
 model=model_loc_196
@@ -1214,7 +1214,7 @@ desc=Allows access to other parts of the ship.
 model=model_loc_245
 sharelight=yes
 op1=Climb-up
-forceapproach=bottom
+forceapproach=south
 
 [loc_246]
 name=Ship's ladder
@@ -1222,7 +1222,7 @@ desc=Allows access to other parts of the ship.
 model=model_loc_246
 sharelight=yes
 op1=Climb-down
-forceapproach=bottom
+forceapproach=south
 
 [loc_247]
 model=model_loc_247
@@ -1356,14 +1356,14 @@ name=Ship's ladder
 desc=I can climb up here.
 model=model_loc_272
 op1=Climb-up
-forceapproach=bottom
+forceapproach=south
 
 [loc_273]
 name=Ship's ladder
 desc=I can go below decks with this ladder.
 model=model_loc_273
 op1=Climb-down
-forceapproach=bottom
+forceapproach=south
 
 [loc_274]
 name=Hoisted sail
@@ -1953,7 +1953,7 @@ model=model_loc_363
 name=Barrel
 desc=It's got ale in it.
 model=model_loc_364
-forceapproach=bottom
+forceapproach=south
 
 [loc_365]
 name=Sacks
@@ -1979,7 +1979,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173
 
@@ -1988,7 +1988,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_379]
 name=Open chest
@@ -1996,7 +1996,7 @@ desc=Perhaps I should search it.
 model=model_loc_76
 op2=Search
 op3=Shut
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173
 
@@ -2006,7 +2006,7 @@ desc=A good source of books!
 model=model_loc_380
 length=2
 op1=Search
-forceapproach=right
+forceapproach=east
 category=bookcase
 
 [loc_381]
@@ -2014,7 +2014,7 @@ name=Bookcase
 desc=A good source of books!
 model=model_loc_381
 op1=Search
-forceapproach=right
+forceapproach=east
 category=bookcase
 
 [loc_382]
@@ -2049,23 +2049,23 @@ name=Bookshelves
 desc=This no doubt contains arcane knowledge.
 model=model_loc_387
 length=2
-forceapproach=right
+forceapproach=east
 
 [loc_388]
 name=Wardrobe
 desc=I wonder what this spooky item contains.
 model=model_loc_388
-forceapproach=right
+forceapproach=east
 op1=Open
 
 [loc_389]
 name=Wardrobe
 desc=It smells funny in there.
 model=model_loc_389
-forceapproach=right
+forceapproach=east
 op2=Search
 op3=Close
-forceapproach=right
+forceapproach=east
 
 [loc_390]
 name=Wardrobe
@@ -2089,7 +2089,7 @@ desc=A good source of books!
 model=model_loc_393
 length=2
 op1=Search
-forceapproach=right
+forceapproach=east
 category=bookcase
 
 [loc_394]
@@ -9989,7 +9989,7 @@ model=model_loc_98
 width=2
 length=3
 op1=Climb-down
-forceapproach=top
+forceapproach=north
 sharelight=yes
 mapscene=7
 
@@ -10001,7 +10001,7 @@ width=2
 length=3
 op1=Climb-up
 sharelight=yes
-forceapproach=bottom
+forceapproach=south
 mapscene=7
 
 [loc_1726]
@@ -10012,7 +10012,7 @@ width=2
 length=2
 op1=Climb-down
 sharelight=yes
-forceapproach=top
+forceapproach=north
 mapscene=7
 
 [loc_1727]
@@ -10022,7 +10022,7 @@ model=model_loc_1727
 width=2
 length=3
 op1=Climb-down
-forceapproach=top
+forceapproach=north
 mapscene=7
 
 [loc_1730]
@@ -10032,7 +10032,7 @@ model=model_loc_1730
 width=2
 length=3
 op1=Walk-up
-forceapproach=bottom
+forceapproach=south
 mapscene=7
 
 [loc_1731]
@@ -10042,7 +10042,7 @@ model=model_loc_1731
 width=2
 length=2
 op1=Walk-down
-forceapproach=top
+forceapproach=north
 mapscene=7
 
 [loc_1732]
@@ -10052,7 +10052,7 @@ model=model_loc_1732
 width=2
 length=3
 op1=Climb-down
-forceapproach=top
+forceapproach=north
 mapscene=7
 
 [loc_1735]
@@ -10100,7 +10100,7 @@ name=Staircase
 desc=I can climb down these stairs.
 model=model_loc_1740
 op1=Climb-down
-forceapproach=right
+forceapproach=east
 mapscene=7
 recol1s=11
 recol1d=16
@@ -10149,7 +10149,7 @@ model=model_loc_10
 active=yes
 op1=Climb-down
 mapscene=7
-forceapproach=top
+forceapproach=north
 
 [loc_1750]
 name=Ladder
@@ -10158,7 +10158,7 @@ model=model_loc_11
 active=yes
 op1=Climb-up
 mapscene=7
-forceapproach=top
+forceapproach=north
 
 [loc_1751]
 name=Ladder
@@ -10169,7 +10169,7 @@ op1=Climb
 op2=Climb-up
 op3=Climb-down
 mapscene=7
-forceapproach=top
+forceapproach=north
 
 [loc_1753]
 name=Ladder
@@ -10203,7 +10203,7 @@ model=model_loc_133
 active=yes
 op1=Climb-down
 mapscene=7
-forceapproach=top
+forceapproach=north
 
 [loc_1757]
 name=Ladder
@@ -10212,7 +10212,7 @@ model=model_loc_11
 active=yes
 op1=Climb-up
 mapscene=7
-forceapproach=top
+forceapproach=north
 
 [loc_1758]
 name=Ladder
@@ -10228,7 +10228,7 @@ desc=This leads downwards.
 model=model_loc_1759
 active=yes
 op1=Climb-Down
-forceapproach=right
+forceapproach=east
 
 [loc_1760]
 name=Stepladder
@@ -11764,7 +11764,7 @@ name=Dummy
 desc=I've met less intelligent conversationalists.
 model=model_loc_823
 op1=Hit
-forceapproach=bottom
+forceapproach=south
 
 [loc_2039]
 name=Gate
@@ -11854,7 +11854,7 @@ desc=It's closed.
 model=model_loc_367
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_2057]
 name=Cupboard
@@ -11863,7 +11863,7 @@ model=model_loc_370
 length=2
 op1=Search
 op2=Close
-forceapproach=right
+forceapproach=east
 
 [loc_2058]
 name=Gate
@@ -11892,7 +11892,7 @@ desc=It's closed.
 model=model_loc_367
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_2063]
 name=Cupboard
@@ -11901,7 +11901,7 @@ model=model_loc_370
 length=2
 op1=Search
 op2=Close
-forceapproach=right
+forceapproach=east
 
 [loc_2064]
 name=Crate
@@ -11992,7 +11992,7 @@ blockrange=no
 name=Chest
 desc=An open chest.
 model=model_loc_674
-forceapproach=top
+forceapproach=north
 anim=seq_654
 hasalpha=yes
 blockrange=no
@@ -12159,7 +12159,7 @@ desc=I wonder what's inside?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2192]
 name=Chest
@@ -12167,7 +12167,7 @@ desc=I wonder what's inside?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2193]
 name=Chest
@@ -12175,7 +12175,7 @@ desc=I wonder what's inside?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2194]
 name=Chest
@@ -12184,7 +12184,7 @@ model=model_loc_76
 active=yes
 op1=Close
 op2=Search
-forceapproach=top
+forceapproach=north
 
 [loc_2195]
 name=Chest
@@ -12193,7 +12193,7 @@ model=model_loc_76
 active=yes
 op1=Close
 op2=Search
-forceapproach=top
+forceapproach=north
 
 [loc_2196]
 name=Chest
@@ -12202,7 +12202,7 @@ model=model_loc_76
 active=yes
 op1=Close
 op2=Search
-forceapproach=top
+forceapproach=north
 
 [loc_2197]
 name=Chest
@@ -12210,7 +12210,7 @@ desc=I wonder what's inside?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2198]
 name=Chest
@@ -12219,7 +12219,7 @@ model=model_loc_76
 active=yes
 op1=Close
 op2=Search
-forceapproach=top
+forceapproach=north
 
 [loc_2199]
 name=Keep gate
@@ -13157,14 +13157,14 @@ desc=I wonder what's inside...
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [loc_2361]
 name=Chest
 desc=A sturdy chest to keep things in.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2362]
 name=Brick
@@ -13236,7 +13236,7 @@ name=Cupboard
 desc=A cupboard.
 model=model_loc_367
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_2374]
 name=Cupboard
@@ -13244,7 +13244,7 @@ desc=A cupboard.
 model=model_loc_370
 op1=Search
 op2=Close
-forceapproach=right
+forceapproach=east
 
 [loc_2375]
 name=Specimen tray
@@ -13290,7 +13290,7 @@ desc=I wonder what's inside...
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [loc_2381]
 name=Soil
@@ -13491,7 +13491,7 @@ width=2
 length=3
 active=yes
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_2401]
 name=Cupboard
@@ -13502,7 +13502,7 @@ length=3
 active=yes
 op1=Shut
 op2=Search
-forceapproach=right
+forceapproach=east
 
 [loc_2402]
 name=Bookcase
@@ -13518,7 +13518,7 @@ desc=Might be worth searching.
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173
 
@@ -13529,7 +13529,7 @@ model=model_loc_76
 active=yes
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173
 
@@ -13732,7 +13732,7 @@ name=Cupboard
 desc=This may be worth opening.
 model=model_loc_367
 length=2
-forceapproach=right
+forceapproach=east
 op1=Open
 
 [loc_2435]
@@ -13740,7 +13740,7 @@ name=Cupboard
 desc=This may be worth opening.
 model=model_loc_370
 length=2
-forceapproach=right
+forceapproach=east
 op2=Search
 op3=Close
 
@@ -13749,7 +13749,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2437]
 model=model_loc_76
@@ -14181,7 +14181,7 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [chest_nature_rune]
 name=Chest
@@ -14190,7 +14190,7 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [chest_50_coins]
 name=Chest
@@ -14199,7 +14199,7 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [chest_blood_runes]
 name=Chest
@@ -14208,7 +14208,7 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [chest_ardougne_castle]
 name=Chest
@@ -14217,7 +14217,7 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [loc_2571]
 name=Chest
@@ -14226,7 +14226,7 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [loc_2572]
 name=Chest
@@ -14235,7 +14235,7 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [chest_steel_arrowtips]
 name=Chest
@@ -14244,12 +14244,12 @@ model=wooden_chest
 active=yes
 op1=Open
 op2=Search for traps
-forceapproach=top
+forceapproach=north
 
 [loc_2574]
 model=model_loc_76
 active=no
-forceapproach=top
+forceapproach=north
 
 [loc_2575]
 name=Marshy jungle vine
@@ -14507,7 +14507,7 @@ name=Chest
 desc=I wonder what's inside?
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2633]
 name=Chest
@@ -14515,7 +14515,7 @@ desc=It's open.
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [loc_2634]
 name=Rock slide
@@ -14533,7 +14533,7 @@ desc=I wonder what's inside?
 model=model_loc_368
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_2636]
 name=Cupboard
@@ -14542,7 +14542,7 @@ model=model_loc_371
 length=2
 op1=Search
 op2=Shut
-forceapproach=right
+forceapproach=east
 
 [loc_2637]
 model=model_loc_3
@@ -14639,7 +14639,7 @@ name=Chest
 desc=A solid looking chest, it belongs to Captain Siad.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2678]
 name=Bookcase
@@ -14882,7 +14882,7 @@ name=Chest
 desc=I wonder what's inside?
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2710]
 name=Chest
@@ -14890,7 +14890,7 @@ desc=It's open.
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [loc_2711]
 name=Stairs
@@ -15248,7 +15248,7 @@ desc=I wonder what's inside it.
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2791]
 name=Counter
@@ -15526,7 +15526,7 @@ desc=I wonder what's inside it?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2827]
 name=Chest
@@ -15534,19 +15534,19 @@ desc=I wonder what's inside it?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2828]
 model=model_loc_76
 op1=Close
-forceapproach=top
+forceapproach=north
 active=no
 
 [loc_2829]
 model=model_loc_76
 active=no
 op1=Close
-forceapproach=top
+forceapproach=north
 
 [loc_2830]
 name=Rock
@@ -15688,7 +15688,7 @@ desc=It's closed.
 model=model_loc_368
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_2851]
 name=Cupboard
@@ -15697,7 +15697,7 @@ model=model_loc_371
 length=2
 op1=Search
 op2=Shut
-forceapproach=right
+forceapproach=east
 
 [loc_2852]
 name=Cave entrance
@@ -15735,7 +15735,7 @@ name=Chest
 desc=I wonder what's inside?
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_2857]
 name=Chest
@@ -15743,7 +15743,7 @@ desc=It's open.
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [loc_2858]
 name=Crate
@@ -15842,7 +15842,7 @@ name=Cupboard
 model=model_loc_368
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_2869]
 name=Cupboard
@@ -15850,7 +15850,7 @@ model=model_loc_371
 length=2
 op1=Search
 op2=Shut
-forceapproach=right
+forceapproach=east
 
 [loc_2870]
 name=Mouse hole
@@ -15892,21 +15892,21 @@ name=Statue of Saradomin
 desc=What a good likeness!
 model=model_loc_586
 op1=Pray at
-forceapproach=bottom
+forceapproach=south
 
 [loc_2874]
 name=Statue of Zamorak
 desc=A depiction that chills one to the bone.
 model=model_loc_587
 op1=Pray at
-forceapproach=bottom
+forceapproach=south
 
 [loc_2875]
 name=Statue of Guthix
 desc=I wonder how accurate a representation this is.
 model=model_loc_2875
 op1=Pray at
-forceapproach=bottom
+forceapproach=south
 
 [loc_2876]
 name=Counter
@@ -15972,7 +15972,7 @@ name=Cupboard
 desc=An antique by anyones standards.
 model=model_loc_367
 length=2
-forceapproach=right
+forceapproach=east
 op1=Open
 
 [loc_2886]
@@ -15982,7 +15982,7 @@ model=model_loc_370
 length=2
 op2=Search
 op3=Shut
-forceapproach=right
+forceapproach=east
 
 [loc_2887]
 name=Jungle Tree
@@ -16224,7 +16224,7 @@ model=model_loc_394
 length=2
 op1=Look
 op2=Search
-forceapproach=right
+forceapproach=east
 
 [loc_2912]
 name=Ancient Gate
@@ -17015,7 +17015,7 @@ desc=It's closed.
 model=model_loc_368
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 
 [loc_3041]
 name=Cupboard
@@ -17024,7 +17024,7 @@ model=model_loc_371
 length=2
 op1=Search
 op2=Shut
-forceapproach=right
+forceapproach=east
 
 [loc_3042]
 name=Rocks
@@ -19276,7 +19276,7 @@ recol1d=7952
 name=Barrel
 desc=It's got dwarf brew in it.
 model=model_loc_364
-forceapproach=bottom
+forceapproach=south
 
 [loc_3345]
 model=model_loc_3345

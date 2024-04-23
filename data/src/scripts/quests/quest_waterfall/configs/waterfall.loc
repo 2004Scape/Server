@@ -18,7 +18,7 @@ desc=A good source of books!
 model=model_loc_380
 length=2
 op1=Search
-forceapproach=right
+forceapproach=east
 
 [loc_1990]
 name=Crate
@@ -54,7 +54,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173
 
@@ -64,7 +64,7 @@ desc=Perhaps I should search it.
 model=model_loc_76
 op1=Search
 op2=Shut
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173
 

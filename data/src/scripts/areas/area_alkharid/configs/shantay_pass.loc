@@ -3,7 +3,7 @@ name=Shantay chest
 desc=This is used by Shantay and his men to take items to the bank on your behalf.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [shantay_jail_door]
 name=Prison door

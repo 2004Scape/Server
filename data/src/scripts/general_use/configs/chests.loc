@@ -3,7 +3,7 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 category=chest_closed
 param=chest_other,loc_378
 
@@ -13,6 +13,6 @@ desc=Perhaps I should search it.
 model=model_loc_76
 op2=Search
 op3=Shut
-forceapproach=top
+forceapproach=north
 category=chest_open
 param=chest_other,loc_375

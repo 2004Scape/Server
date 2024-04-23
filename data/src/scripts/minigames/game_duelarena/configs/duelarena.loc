@@ -72,7 +72,7 @@ name=Closed chest
 desc=Used to store players items whilst they duel.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_3194]
 name=Open chest
@@ -80,7 +80,7 @@ desc=Use for quick access to your bank.
 model=model_loc_76
 op2=Bank
 op3=Shut
-forceapproach=top
+forceapproach=north
 
 [loc_3195]
 name=Crate

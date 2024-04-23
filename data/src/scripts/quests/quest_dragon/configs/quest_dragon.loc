@@ -3,7 +3,7 @@ name=Chest
 desc=I wonder what's inside?
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [dragon_slayer_magic_chest_opened]
 name=Chest
@@ -11,7 +11,7 @@ desc=It's closed.
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [lady_lumbridge_hole]
 name=Hole
@@ -151,7 +151,7 @@ name=Chest
 desc=It's closed.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [melzar_maze_chest_opened]
 name=Chest
@@ -159,7 +159,7 @@ desc=It's open.
 model=model_loc_76
 op1=Search
 op2=Close
-forceapproach=top
+forceapproach=north
 
 [melzar_maze_ladder]
 name=Ladder

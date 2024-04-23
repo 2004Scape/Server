@@ -63,7 +63,7 @@ hasalpha=yes
 anim=seq_464
 op1=Fill
 blockwalk=no
-forceapproach=bottom
+forceapproach=south
 
 [loc_2168]
 name=Repaired leak

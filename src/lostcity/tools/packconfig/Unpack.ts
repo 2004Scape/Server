@@ -339,19 +339,19 @@ for (let id = 0; id < count; id++) {
         } else if (code === 68) {
             locConfig.push(`mapscene=${loc.g2()}`);
         } else if (code === 69) {
-            // top = 1
-            // right = 2
-            // bottom = 4
-            // left = 8
+            // north = 1
+            // east = 2
+            // south = 4
+            // west = 8
             const flags = loc.g1();
             if ((flags & 0x1) === 0) {
-                locConfig.push('forceapproach=top');
+                locConfig.push('forceapproach=north');
             } else if ((flags & 0x2) === 0) {
-                locConfig.push('forceapproach=right');
+                locConfig.push('forceapproach=east');
             } else if ((flags & 0x4) === 0) {
-                locConfig.push('forceapproach=bottom');
+                locConfig.push('forceapproach=south');
             } else if ((flags & 0x8) === 0) {
-                locConfig.push('forceapproach=left');
+                locConfig.push('forceapproach=west');
             }
         } else if (code === 70) {
             locConfig.push(`xoff=${loc.g2s()}`);

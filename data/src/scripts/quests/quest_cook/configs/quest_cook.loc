@@ -3,5 +3,5 @@ name=Cooking range
 desc=An appliance for cooking with.
 model=model_loc_114
 length=2
-forceapproach=right
+forceapproach=east
 category=cooking_oven

@@ -4,7 +4,7 @@ desc=Very hot.
 model=model_loc_165
 width=3
 length=3
-forceapproach=right
+forceapproach=east
 category=smithing_furnace
 
 [furnace1]
@@ -14,14 +14,14 @@ model=model_loc_165
 width=3
 length=3
 sharelight=yes
-forceapproach=right
+forceapproach=east
 category=smithing_furnace
 
 [furnace_side]
 name=Furnace
 desc=A hot place for forging things in.
 model=model_loc_2785
-forceapproach=right
+forceapproach=east
 sharelight=yes
 category=smithing_furnace
 
@@ -31,7 +31,7 @@ desc=A hot place for forging things in.
 model=model_loc_2966
 width=3
 length=3
-forceapproach=right
+forceapproach=east
 op1=Look
 op2=Search
 recol1s=7952
@@ -45,7 +45,7 @@ model=model_loc_165
 active=yes
 width=3
 length=3
-forceapproach=right
+forceapproach=east
 category=smithing_furnace
 
 [furnace_legends]
@@ -54,5 +54,5 @@ desc=A hot place for forging things in.
 model=model_loc_2966
 width=3
 length=3
-forceapproach=right
+forceapproach=east
 category=smithing_furnace

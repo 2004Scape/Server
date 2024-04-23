@@ -200,14 +200,14 @@ desc=Pull me!
 model=model_loc_2416
 active=yes
 op1=Pull
-forceapproach=bottom
+forceapproach=south
 
 [loc_2417]
 name=Closed chest
 desc=Place party drop items here.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173
 
@@ -217,6 +217,6 @@ desc=Place party drop items here.
 model=model_loc_76
 op2=Deposit
 op3=Shut
-forceapproach=top
+forceapproach=north
 recol1s=41
 recol1d=11173

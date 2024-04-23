@@ -189,16 +189,16 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     } else if (key === 'forceapproach') {
         let flags = 0b1111;
         switch (value) {
-            case 'top':
+            case 'north':
                 flags &= ~0b0001;
                 break;
-            case 'right':
+            case 'east':
                 flags &= ~0b0010;
                 break;
-            case 'bottom':
+            case 'south':
                 flags &= ~0b0100;
                 break;
-            case 'left':
+            case 'west':
                 flags &= ~0b1000;
                 break;
         }

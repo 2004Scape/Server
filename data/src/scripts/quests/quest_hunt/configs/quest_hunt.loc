@@ -20,9 +20,9 @@ desc=I wonder what's inside?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [hunt_chest_open]
 model=model_loc_76
 active=no
-forceapproach=top
+forceapproach=north
