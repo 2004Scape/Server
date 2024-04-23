@@ -39,7 +39,7 @@ def_int $hitpoints = stat(hitpoints);
 db_find(consume_table:consumable, $consumable);
 def_dbrow $effect_data = db_findnext;
 if ($effect_data = null) {
-    @nothing_interesting_happens;
+    return;
 }
 // stat increase/decrease
 def_int $constant;

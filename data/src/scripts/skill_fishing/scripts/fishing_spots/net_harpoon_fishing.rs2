@@ -156,86 +156,66 @@ if (%skill_anim = calc(map_clock + 2)) {
 p_opnpc(2);
 
 [proc,fish_roll_big_net]
+if (npc_param(is_whirlpool) = ^true) {
+    ~macro_whirlpool_attempt_take_equipment(net_big);
+    return;
+}
 def_int $level = stat(fishing);
-def_boolean $caught = false;
 // leather boots
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, leather_boots, 1);
     mes("You catch some boots.");
     givexp(fishing, 10);
-    $caught = true;
 }
 // seaweed
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, seaweed, 1);
     mes("You catch some seaweed.");
     givexp(fishing, 1);
-    $caught = true;
 }
 // leather gloves
 if (stat_random($level, 5, 5) = true) {
     inv_add(inv, leather_gloves, 1);
     mes("You catch some gloves.");
     givexp(fishing, 10);
-    $caught = true;
 }
 // mackerel
 if (stat_random($level, 5, 65) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
     givexp(fishing, 200);
-    $caught = true;
 }
 // another mackerel
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
     givexp(fishing, 200);
-    $caught = true;
 }
 // oyster
 if (stat_random($level, 3, 7) = true) {
     inv_add(inv, oyster, 1);
     mes("You catch an oyster shell.");
     givexp(fishing, 100);
-    $caught = true;
 }
 // casket
 if (stat_random($level, 1, 2) = true) {
     inv_add(inv, casket, 1);
     mes("You catch a casket.");
     givexp(fishing, 100);
-    $caught = true;
 }
 // cod
-if ($level < 23) {
-    if ($caught = false) {
-        ~macro_event_whirlpool_take_equipment(net_big);
-    }
-    return;
-}
 if (stat_random($level, 4, 55) = true) {
     inv_add(inv, raw_cod, 1);
     mes("You catch a cod.");
     givexp(fishing, 450);
-    $caught = true;
 }
 // bass
-if ($level < 46) {
-    if ($caught = false) {
-        ~macro_event_whirlpool_take_equipment(net_big);
-    }
-    return;
-}
+
 if (stat_random($level, 3, 40) = true) {
     inv_add(inv, raw_bass, 1);
     mes("You catch a bass.");
     givexp(fishing, 1000);
-    $caught = true;
 }
-if ($caught = false) {
-        ~macro_event_whirlpool_take_equipment(net_big);
-    }
 
 // oysters and casket ops
 [opheld1,oyster]

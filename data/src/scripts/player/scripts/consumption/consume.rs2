@@ -4,6 +4,7 @@
 [opheld1,_category_58]@player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,_category_59]@player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,_category_86]@player_consume_item(consume_effect_stat, 2, 3);
+[opheld1,rotten_apples]@nothing_interesting_happens;
 [opheld1,_category_120]@player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,_category_131]@player_consume_item(consume_effect_stat, 2, 3);
 [opheld1,vegetable_batta]@player_consume_item(consume_effect_stat, 2, 3);

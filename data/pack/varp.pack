@@ -79,7 +79,7 @@
 78=pk_skull
 79=xplamp
 80=druid_progress
-81=macro_event
+81=varp_81
 82=prayer_guild
 83=prayer_thickskin
 84=prayer_strengthburst
@@ -202,9 +202,9 @@
 201=handelmort_traps_disabled
 202=varp_202
 203=mill_flour
-204=varp_204
-205=varp_205
-206=varp_206
+204=macro_event
+205=macro_event_uid
+206=macro_whirlpool_counter
 207=varp_207
 208=varp_208
 209=varp_209

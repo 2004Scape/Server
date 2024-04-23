@@ -37,6 +37,11 @@ return(true);
 
 // proc for fish rolls
 [proc,fish_roll](namedobj $fish1, namedobj $fish2, namedobj $equipment, namedobj $bait)
+if (npc_param(is_whirlpool) = ^true) {
+    ~macro_whirlpool_attempt_take_equipment($equipment);
+    return;
+}
+
 if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
     def_struct $struct2 = oc_param($fish2, fishing_struct);
     if (stat_random(stat(fishing), struct_param($struct2, success_low), struct_param($struct2, success_high)) = true) {
@@ -64,8 +69,4 @@ if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
         mes(struct_param($struct1, productmessage));
         return;
     }
-}
-
-if (npc_param(is_whirlpool) = ^true) {
-    ~macro_event_whirlpool_take_equipment($equipment);
 }

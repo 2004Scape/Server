@@ -32,9 +32,9 @@ if (%macro_event > 0) {
 if (~in_duel_arena = true) {
     return;
 }
-if (~macro_event_general_active = true) {
-    return;
-}
+// if (~macro_event_general_active = true) {
+//     return;
+// }
 def_coord $event_coord = ~macro_event_coord;
 if ($event_coord = null) {
     return;
@@ -42,6 +42,7 @@ if ($event_coord = null) {
 %macro_event = $event;
 def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
+%macro_event_uid = npc_uid;
 
 switch_int ($event) {
     case ^macro_event_swarm : ~macro_event_swarm_spawn;
@@ -127,6 +128,31 @@ while ($i < inv_size(inv)) {
     $i = calc($i + 1);
 }
 
+// not sure if this is a thing but people seem to remember it being a thing
+[proc,macro_event_fail_note_inv]
+def_int $i = 0;
+while ($i < inv_size(inv)) {
+    def_obj $obj = inv_getobj(inv, $i);
+    // make sure the item is not stackable, and not already noted
+    if ($obj ! null & oc_stackable($obj) = false & oc_cert($obj) ! $obj) {
+        // cert the item in the inv
+        inv_moveitem_cert(inv, inv, $obj, inv_total(inv, $obj));
+    }
+    $i = calc($i + 1);
+}
+
+$i = 0;
+while ($i < inv_size(worn)) {
+    def_obj $obj = inv_getobj(worn, $i);
+    // make sure the item is not stackable, and not already noted
+    if ($obj ! null & oc_stackable($obj) = false & oc_cert($obj) ! $obj) {
+        // cert the item and move it into the inv
+        inv_moveitem_cert(worn, inv, $obj, inv_total(worn, $obj));
+    }
+    $i = calc($i + 1);
+}
+~update_bas;
+
 
 // called when the npc needs to be poofed away
 [proc,macro_event_disappear]
@@ -153,8 +179,11 @@ if (inv_freespace(inv) < 1) {
     inv_add(inv, $reward, $count);
 }
 
-[proc,macro_event_lost]()(boolean)
+[proc,macro_event_lost_and_follow]()(boolean)
 if (finduid(%npc_attacking_uid) = false) {
+    return(true);
+}
+if (%macro_event_uid ! npc_uid) {
     return(true);
 }
 
@@ -171,10 +200,31 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
     //         ~macro_event_disappear;
     //         return(true);
     //     }
-    // }
-    npc_tele(coord); // osrs
-    npc_setmode(playerfollow); // only starts following after teleport? https://youtu.be/HpmsgVshwxg?t=303
+    //
+    if (npc_getmode = playerfollow | npc_getmode = playerfaceclose) {
+        npc_tele(coord); // osrs
+    } else {
+        return(true);
+    }
 }
+
+// https://youtu.be/HpmsgVshwxg?t=303
+npc_setmode(playerfollow); // other players can interact with the npc, so setmode to follow after teleporting.
+return(false);
+
+
+[proc,macro_event_lost]()(boolean)
+if (finduid(%npc_attacking_uid) = false) {
+    return(true);
+}
+if (%macro_event_uid ! npc_uid) {
+    return(true);
+}
+
+if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
+    return(true);
+}
+
 return(false);
 
 // based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11

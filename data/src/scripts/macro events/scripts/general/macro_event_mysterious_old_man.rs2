@@ -4,6 +4,7 @@ sound_synth(smokepuff, 0, 0);
 
 npc_anim(emote_bow, 20);
 npc_say("Greetings <displayname>!");
+npc_delay(1);
 npc_setmode(playerfollow);
 %npc_attacking_uid = uid;
 
@@ -13,15 +14,14 @@ if (uid ! %npc_attacking_uid) {
     ~chatnpc(neutral, "Sorry, but I'm trying to talk to <displayname>. However he appears to be ignoring me...");
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
     ~chatnpc(neutral, "Goodbye.");
     return;
 }
 %macro_event = ^no_macro_event;
 ~macro_event_give_reward(~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
-%npc_macro_event_status = ^macro_event_wave;
-npc_settimer(3);
+npc_queue(5, 0, 2); // say goodbye to player
 ~chatnpc(neutral, "Ah, so you are there. I hoped you would talk to me, I get so lonely. Here, have a present! I must be going now though.");
 // delays are taken from this video: https://youtu.be/JeQUY1m1wRo?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=137
 
@@ -57,44 +57,46 @@ if ($random < 16) { // 16/150 kebab?
 }
 
 
+[ai_queue4,macro_event_mysterious_old_man_general](int $arg) // despawn
+npc_anim(emote_cry, 20);
+npc_say("I lose more friends that way.");
+npc_delay(2);
+~macro_event_disappear;
+
+[ai_queue5,macro_event_mysterious_old_man_general](int $arg) // say goodbye to player
+npc_anim(emote_wave, 20);
+npc_delay(2);
+~macro_event_disappear;
 
 [ai_timer,macro_event_mysterious_old_man_general]
-if (~macro_event_lost = true) {
-    // only confirmed for mysterious old man
-    npc_delay(2);
-    npc_anim(emote_cry, 20);
-    npc_say("I lose more friends that way.");
-    npc_delay(2);
-    ~macro_event_disappear;
-    return;
-}
-if (finduid(%npc_attacking_uid) = false) {
+if (~macro_event_lost_and_follow = true) {
+    // only confirmed for mysterious old man https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+    npc_queue(4, 0, 0);
     return;
 }
 // other videos:
 // https://youtu.be/_PPxvNjIgq4?t=63
-// https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=374
 
 // warnings https://youtu.be/Ai89wqupYqA
 // https://youtu.be/HpmsgVshwxg?t=267
-if (%npc_macro_event_status = 20) {
-    npc_anim(emote_wave, 20);
-    npc_say("ehem... Hello <displayname>!");
-} else if (%npc_macro_event_status = 40) {
-    npc_anim(emote_think, 20);
-    npc_say("Hello, are you there <displayname>!");
-} else if (%npc_macro_event_status = 60) {
-    npc_anim(emote_angry, 20);
-    npc_say("It's really rude to ignore someone, <displayname>!");
-} else if (%npc_macro_event_status = 80) { // fail
-    // https://youtu.be/Ai89wqupYqA?t=45
-    ~macro_event_fail_teleport;
-    return;
-} else if (%npc_macro_event_status = ^macro_event_wave) { // wave
-    npc_anim(emote_wave, 20);
-    npc_settimer(3);
-    npc_delay(2);
-    ~macro_event_disappear;
-    return;
+if (finduid(%npc_attacking_uid) = true) {
+    if (%macro_event = ^no_macro_event) {
+        npc_queue(5, 0, 2); // just incase
+        return;
+    }
+    if (%npc_macro_event_status = 1) {
+        npc_anim(emote_wave, 20);
+        npc_say("ehem... Hello <displayname>!");
+    } else if (%npc_macro_event_status = 2) {
+        npc_anim(emote_think, 20);
+        npc_say("Hello, are you there <displayname>!");
+    } else if (%npc_macro_event_status = 3) {
+        npc_anim(emote_angry, 20);
+        npc_say("It's really rude to ignore someone, <displayname>!");
+    } else if (%npc_macro_event_status = 4) { // fail
+        // https://youtu.be/Ai89wqupYqA?t=45
+        ~macro_event_fail_teleport;
+        ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing
+    }
+    %npc_macro_event_status = calc(%npc_macro_event_status + 1);
 }
-%npc_macro_event_status = calc(%npc_macro_event_status + 1);

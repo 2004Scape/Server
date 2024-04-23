@@ -414,11 +414,11 @@ export default class Npc extends PathingEntity {
     }
 
     playerEscapeMode(): void {
-        if (!this.static) {
-            this.noMode();
-            World.removeNpc(this);
-            return;
-        }
+        // if (!this.static) {
+        //     this.noMode();
+        //     World.removeNpc(this);
+        //     return;
+        // }
 
         this.defaultMode();
         this.queueWaypoint(this.startX, this.startZ);

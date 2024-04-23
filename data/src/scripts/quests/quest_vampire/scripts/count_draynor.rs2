@@ -41,3 +41,12 @@ anim(human_stake, 0);
 npc_setmode(none);
 npc_queue(4, 0, 0);
 queue(quest_vampire_complete, 3);
+
+[ai_timer,count_draynor]
+if (finduid(%npc_attacking_uid) = true) {
+    if (npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord)) {
+        npc_del;
+    }
+} else {
+    npc_del;
+}
