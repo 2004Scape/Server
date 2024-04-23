@@ -26,6 +26,7 @@ param=strengthbonus,11
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
+// osrs attack seq_403.
 
 [bronze_warhammer]
 cost=47
@@ -55,6 +56,7 @@ param=strengthbonus,8
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
+// osrs attack seq_403.
 
 [steel_warhammer]
 cost=640
@@ -83,6 +85,7 @@ param=strengthbonus,16
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
+// osrs attack seq_403.
 
 [black_warhammer]
 cost=640
@@ -113,6 +116,7 @@ param=strengthbonus,22
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
+// osrs attack seq_403.
 
 [mithril_warhammer]
 cost=1660
@@ -143,6 +147,7 @@ param=strengthbonus,27
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
+// osrs attack seq_403.
 
 [adamant_warhammer]
 cost=4120
@@ -173,6 +178,7 @@ param=strengthbonus,39
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
+// osrs attack seq_403.
 
 [rune_warhammer]
 cost=41500
@@ -202,4 +208,4 @@ param=strengthbonus,48
 param=crushattack_anim,human_blunt_crush
 param=defend_anim,human_blunt_defend2
 param=crush_sound,baxe_crush
-// osrs uses seq_403 in all Warhammer weapons used by the player.
+// osrs attack seq_403.

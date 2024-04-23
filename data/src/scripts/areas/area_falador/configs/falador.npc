@@ -224,6 +224,7 @@ param=shop_buy_multiplier,400
 param=shop_delta,30
 param=shop_title,Falador General Store
 moverestrict=indoors
+param=death_sound,female_death
 
 [cassie]
 vislevel=hide
@@ -260,6 +261,7 @@ param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Cassies' Shield Shop.
 moverestrict=indoors
+param=death_sound,female_death
 
 [wayne]
 vislevel=hide
@@ -348,6 +350,7 @@ model5=model_419_idk
 model6=model_358_idk
 head1=model_103_idk_head
 moverestrict=indoors
+param=death_sound,female_death
 
 [makeover_mage]
 vislevel=hide

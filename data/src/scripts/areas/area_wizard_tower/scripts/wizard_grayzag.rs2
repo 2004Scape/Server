@@ -40,7 +40,7 @@ if ($imp_coord = npc_coord) {
     ~npc_spawn_imp_attack;
     return;
 }
-npc_anim(seq_710, 0);
+npc_anim(human_chaos_druid_cast_bind, 0);
 spotanim_npc(bind_cast, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 world_delay(2); // delay spawn by 2 ticks

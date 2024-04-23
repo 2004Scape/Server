@@ -33,6 +33,10 @@ param=stabdefence,23
 param=slashdefence,35
 param=crushdefence,28
 param=damagetype,^stab_style
+param=attack_anim,human_sword_stab
+param=defend_anim,human_sword_defend2
+param=attack_sound,stabsword_stab
+// param=defend_sound,big_bar_mail
 
 [colonel_radick]
 name=Colonel Radick
@@ -74,6 +78,11 @@ param=stabdefence,39
 param=slashdefence,31
 param=crushdefence,34
 param=damagetype,^slash_style
+param=attack_anim,human_baxe_slash
+param=defend_anim,human_baxe_defend1
+param=attack_sound,baxe_slash
+// param=defend_sound,blade2
+// TODO defend sound, npc hit speeds do not match the osrs version
 
 [sigbert_the_adventurer]
 vislevel=hide
@@ -157,3 +166,4 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,10
 param=shop_title,Frenita's Cookery Shop.
+param=death_sound,female_death

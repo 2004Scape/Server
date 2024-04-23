@@ -52,7 +52,7 @@ if (npc_findhero = false) {
 }
 %magearena_progress = 3;
 npc_setmode(none);
-npc_anim(giant_seq_133, 30);
+npc_anim(giant_despawn, 30);
 npc_delay(2);
 
 def_coord $coord = npc_coord;

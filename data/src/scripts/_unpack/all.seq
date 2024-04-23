@@ -1404,7 +1404,7 @@ frame8=anim_7314
 frame9=anim_7324
 delay9=20000
 
-[giant_seq_132]
+[giant_casting]
 frame1=anim_7292
 frame2=anim_7302
 frame3=anim_7311
@@ -1424,7 +1424,7 @@ frame16=anim_7348
 frame17=anim_7291
 frame18=anim_7301
 
-[giant_seq_133]
+[giant_despawn]
 priority=6
 frame1=anim_7345
 frame2=anim_7288
@@ -1958,7 +1958,7 @@ frame6=anim_7573
 frame7=anim_7603
 frame8=anim_7636
 
-[midget_seq_190]
+[midget_attackbow]
 priority=6
 frame1=anim_7597
 frame2=anim_7627
@@ -1967,7 +1967,7 @@ frame4=anim_7691
 frame5=anim_7514
 frame6=anim_7539
 
-[midget_seq_191]
+[midget_attackunarmed]
 priority=6
 frame1=anim_7673
 frame2=anim_7500
@@ -1978,7 +1978,7 @@ frame6=anim_7616
 frame7=anim_7648
 frame8=anim_7681
 
-[midget_seq_192]
+[midget_attacksword]
 priority=6
 frame1=anim_7540
 frame2=anim_7570
@@ -1995,7 +1995,7 @@ frame2=anim_7505
 frame3=anim_7530
 frame4=anim_7505
 
-[midget_seq_194]
+[midget_blockshield]
 frame1=anim_7565
 frame2=anim_7593
 frame3=anim_7624
@@ -2632,7 +2632,7 @@ frame8=anim_7413
 frame9=anim_7423
 delay9=20000
 
-[skeleton_seq_264]
+[skeleton_trans_ready]
 frame1=anim_7401
 frame2=anim_7410
 frame3=anim_7420
@@ -2642,7 +2642,7 @@ frame6=anim_7385
 frame7=anim_7393
 frame8=anim_7403
 
-[skeleton_seq_265]
+[skeleton_trans_attack]
 priority=6
 frame1=anim_7444
 frame2=anim_7390
@@ -2653,7 +2653,7 @@ frame6=anim_7425
 frame7=anim_7435
 frame8=anim_7446
 
-[skeleton_seq_266]
+[skeleton_trans_block]
 frame1=anim_7400
 frame2=anim_7409
 frame3=anim_7418
@@ -2663,11 +2663,11 @@ frame6=anim_7427
 frame7=anim_7418
 frame8=anim_7409
 
-[skeleton_seq_267]
+[skeleton_trans_walk]
 frame1=anim_7441
 frame2=anim_7387
 
-[skeleton_seq_268]
+[skeleton_trans_death]
 priority=10
 frame1=anim_7434
 frame2=anim_7445
@@ -3031,7 +3031,7 @@ frame6=anim_7463
 frame7=anim_7470
 frame8=anim_7478
 
-[goblin_attack_armed]
+[goblin_attack_unarmed]
 priority=6
 frame1=anim_7473
 frame2=anim_7480
@@ -3042,7 +3042,7 @@ frame6=anim_7461
 frame7=anim_7467
 frame8=anim_7474
 
-[goblin_attack_unarmed]
+[goblin_attack_armed]
 priority=6
 frame1=anim_7481
 frame2=anim_7487
@@ -3397,7 +3397,7 @@ frame6=anim_3408
 frame7=anim_3414
 frame8=anim_3423
 
-[bird_seq_343]
+[bird_death]
 priority=10
 frame1=anim_3416
 frame2=anim_3425
@@ -3413,7 +3413,7 @@ frame11=anim_3429
 frame12=anim_3438
 frame13=anim_3447
 
-[bird_seq_344]
+[bird_attack]
 frame1=anim_3405
 frame2=anim_3411
 frame3=anim_3418
@@ -3427,7 +3427,7 @@ frame10=anim_3430
 frame11=anim_3439
 frame12=anim_3448
 
-[bird_seq_345]
+[bird_hit]
 frame1=anim_3444
 frame2=anim_3398
 frame3=anim_3406
@@ -3443,7 +3443,7 @@ frame12=anim_3440
 frame13=anim_3449
 frame14=anim_3401
 
-[human_seq_346]
+[lord_iban_ready]
 frame1=anim_2046
 frame2=anim_2348
 frame3=anim_629
@@ -3451,7 +3451,7 @@ frame4=anim_923
 frame5=anim_1204
 frame6=anim_1488
 
-[human_seq_347]
+[lord_iban_cast_spell]
 frame1=anim_979
 frame2=anim_1264
 frame3=anim_1545
@@ -4288,7 +4288,7 @@ frame8=anim_2334
 frame9=anim_2030
 frame10=anim_1731
 
-[human_khazard_2h_sword_defend]
+[human_2h_sword_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_2109
 frame2=anim_2407
@@ -4301,7 +4301,7 @@ frame8=anim_975
 frame9=anim_686
 frame10=anim_2407
 
-[seq_412]
+[human_2h_sword_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_996
@@ -4311,7 +4311,7 @@ frame4=anim_1856
 frame5=anim_2154
 frame6=anim_2449
 
-[seq_413]
+[human_2h_sword_swipe]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1455
@@ -9782,7 +9782,7 @@ frame15=anim_1900
 frame16=anim_2198
 frame17=anim_484
 
-[monk_heal]
+[human_castheal]
 lefthand=hide
 righthand=hide
 priority=6
@@ -9808,7 +9808,7 @@ frame19=anim_1355
 frame20=anim_1070
 frame21=anim_785
 
-[seq_710]
+[human_chaos_druid_cast_bind]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9821,7 +9821,7 @@ frame6=anim_617
 frame7=anim_912
 frame8=anim_1193
 
-[human_casting]
+[human_caststrike]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9929,7 +9929,7 @@ frame10=anim_1596
 frame11=anim_1309
 frame12=anim_1024
 
-[seq_716]
+[human_castconfuse]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9946,7 +9946,7 @@ frame10=anim_1584
 frame11=anim_1877
 frame12=anim_2175
 
-[seq_717]
+[human_castweaken]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9963,7 +9963,7 @@ frame10=anim_2398
 frame11=anim_678
 frame12=anim_967
 
-[vulnerability_casting]
+[human_castcurse]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10058,7 +10058,7 @@ frame25=anim_1595
 frame26=anim_1308
 frame27=anim_1023
 
-[seq_722]
+[human_castbonestobananas]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10092,7 +10092,7 @@ frame10=anim_1582
 frame11=anim_1875
 frame12=anim_2172
 
-[seq_724]
+[human_castcrumbleundead]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10191,7 +10191,7 @@ frame12=anim_1205
 frame13=anim_924
 frame14=anim_630
 
-[seq_728]
+[human_castenfeeble]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10208,7 +10208,7 @@ frame10=anim_1290
 frame11=anim_1570
 frame12=anim_1864
 
-[seq_729]
+[human_caststun]
 righthand=hide
 lefthand=hide
 priority=6
@@ -11310,7 +11310,7 @@ frame4=anim_1461
 frame5=anim_1761
 frame6=anim_2060
 
-[seq_800]
+[half-souless_ready]
 frame1=anim_2218
 frame2=anim_503
 frame3=anim_803
@@ -13129,7 +13129,7 @@ frame12=anim_3690
 frame13=anim_3678
 frame14=anim_3681
 
-[seq_931]
+[human_cast_enchantring]
 righthand=hide
 lefthand=hide
 frame1=anim_2481
@@ -13660,7 +13660,7 @@ frame8=anim_3980
 frame9=anim_3982
 frame10=anim_3978
 
-[human_seq_1026]
+[human_ogre_bellows_use]
 lefthand=hide
 righthand=hide
 stretches=yes

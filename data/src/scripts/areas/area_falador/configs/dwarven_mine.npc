@@ -22,6 +22,7 @@ param=shop_buy_multiplier,700
 param=shop_delta,20
 param=shop_title,Drogo's Mining Emporium.
 wanderrange=13
+param=death_anim,dwarf_death
 
 [dwarf_generalshop]
 vislevel=hide
@@ -51,6 +52,7 @@ param=shop_buy_multiplier,300
 param=shop_delta,30
 param=shop_title,Dwarven shopping store
 wanderrange=13
+param=death_anim,dwarf_death
 
 [nurmof]
 vislevel=hide
@@ -81,6 +83,7 @@ param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Nurmof's Pickaxe Shop.
 wanderrange=13
+param=death_anim,dwarf_death
 
 [crest_boot]
 vislevel=hide
@@ -96,3 +99,4 @@ model4=model_2983_npc
 model5=model_2985_npc
 model6=model_2990_npc
 head1=model_1_npc_head
+param=death_anim,dwarf_death

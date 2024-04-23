@@ -7,6 +7,7 @@ readyanim=fairy_ready
 op1=Talk-to
 model1=model_2858_npc
 head1=model_12_npc_head
+param=death_anim,fairy_death
 
 [door_man]
 vislevel=hide
@@ -59,6 +60,7 @@ param=shop_buy_multiplier,600
 param=shop_delta,10
 param=shop_title,jakut
 wanderrange=2
+param=death_anim,fairy_death
 
 [irksol]
 vislevel=hide
@@ -104,6 +106,7 @@ model1=model_2857_npc
 head1=model_11_npc_head
 wanderrange=0
 moverestrict=nomove
+param=death_anim,fairy_death
 
 [lunderwin]
 vislevel=hide
@@ -123,6 +126,7 @@ recol4d=11191
 model1=model_2857_npc
 head1=model_14_npc_head
 wanderrange=2
+param=death_anim,fairy_death
 
 [fairy_shop_keeper]
 vislevel=hide
@@ -145,6 +149,7 @@ param=shop_buy_multiplier,400
 param=shop_delta,30
 param=shop_title,Zanaris General Store
 wanderrange=2
+param=death_anim,fairy_death
 
 [fairy_shop_assistant]
 vislevel=hide
@@ -167,3 +172,4 @@ param=shop_buy_multiplier,400
 param=shop_delta,30
 param=shop_title,Zanaris General Store
 wanderrange=2
+param=death_anim,fairy_death

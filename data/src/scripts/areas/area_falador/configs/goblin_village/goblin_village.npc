@@ -17,6 +17,8 @@ model3=model_2955_npc
 model4=model_2956_npc
 head1=model_145_npc_head
 wanderrange=3
+param=death_anim,goblin_death
+param=death_sound,goblin_death
 
 [general_wartface]
 vislevel=hide
@@ -35,3 +37,5 @@ model3=model_2955_npc
 model4=model_2956_npc
 head1=model_144_npc_head
 wanderrange=3
+param=death_anim,goblin_death
+param=death_sound,goblin_death

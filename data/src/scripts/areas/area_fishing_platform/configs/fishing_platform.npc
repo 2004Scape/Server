@@ -39,6 +39,7 @@ model2=model_2918_npc
 model3=model_2909_npc
 head1=model_53_idk_head
 wanderrange=1
+param=death_anim,midget_death
 
 [holgart_island]
 vislevel=hide

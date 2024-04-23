@@ -7,6 +7,8 @@ name=Camel
 desc=Oh, it's a camel.
 model1=model_2939_npc
 moverestrict=outdoors
+param=death_anim,camel_death
+param=death_sound,cow_death
 
 [npc_839]
 name=Desert Wolf
@@ -29,6 +31,9 @@ param=damagetype,^slash_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+param=attack_sound,wolf_attack
+param=defend_sound,wolf_hit
+param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
 
@@ -54,4 +59,7 @@ param=damagetype,^stab_style
 param=attack_anim,camel_attack
 param=defend_anim,camel_block
 param=death_anim,camel_death
+param=attack_sound,cow_attack
+param=defend_sound,cow_hit
+param=death_sound,cow_death
 huntmode=cowardly

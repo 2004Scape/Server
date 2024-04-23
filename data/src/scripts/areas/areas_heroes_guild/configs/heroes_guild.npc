@@ -24,6 +24,7 @@ model10=model_518_obj_wear
 head1=model_115_idk_head
 head2=model_136_npc_head
 head3=model_101_obj_wear
+param=death_sound,female_death
 
 [helemos]
 vislevel=hide

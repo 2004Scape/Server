@@ -28,6 +28,7 @@ patrol1=0_45_54_50_7,0
 patrol2=0_45_54_24_7,0
 huntmode=ball_caught
 huntrange=3
+param=death_sound,female_death
 
 [witches_experiment_p1]
 name=Witches experiment
@@ -75,9 +76,9 @@ param=damagetype,^crush_style
 param=attack_anim,giantspider_attack
 param=defend_anim,giantspider_block
 param=death_anim,giantspider_death
-param=attack_sound,insect_3
-param=defend_sound,insect_2
-param=death_sound,insect_1
+param=attack_sound,insect_attack
+param=defend_sound,insect_hit
+param=death_sound,insect_death
 param=death_drop,null
 category=witches_experiment
 
@@ -133,6 +134,9 @@ param=damagetype,^stab_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
+// param_attack_sound,
+// param_defend_sound,
+// param_death_sound,
 param=death_drop,null
 category=witches_experiment
 
@@ -148,3 +152,5 @@ recol1d=21588
 model1=model_2927_npc
 wanderrange=0
 moverestrict=nomove
+param=death_anim,rat_death
+param=death_sound,rat_death
