@@ -1,0 +1,15 @@
+^prayer_thickskin = 1
+^prayer_rockskin = 2
+^prayer_steelskin = 3
+^prayer_strengthburst = 4
+^prayer_superhumanstrength = 5
+^prayer_ultimatestrength = 6
+^prayer_clarity = 7
+^prayer_improvedreflexes = 8
+^prayer_incrediblereflexes = 9
+^prayer_rapidrestore = 10
+^prayer_rapidheal = 11
+^prayer_protectitems = 12
+^prayer_protectfrommagic = 13
+^prayer_protectfrommissiles = 14
+^prayer_protectfrommelee = 15

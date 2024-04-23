@@ -1,0 +1,34 @@
+[if_button,prayer:prayer_rapidrestore]
+if_close;
+queue(prayer_activate, 0, 10);
+
+[label,activate_prayer_rapidrestore]
+def_dbrow $data = ~get_prayer_data(^prayer_rapidrestore);
+if (%prayer_rapidrestore = ^true) {
+    %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_rapidrestore));
+    %prayer_rapidrestore = ^false;
+    sound_synth(cancel_prayer, 0, 0);
+    def_int $headicon = enum(int, int, prayer_headicons, ^prayer_rapidrestore);
+    if ($headicon > 0) {
+        ~headicon_del($headicon);
+    }
+    if (~prayers_are_active = false) {
+        cleartimer(drain_prayer);
+        //clearqueue(start_draining);
+    }
+    clearsofttimer(stat_replenish);
+    softtimer(stat_replenish, 100);
+} else {
+    if (~prayer_checks($data) = false) {
+        %prayer_rapidrestore = ^false;
+    } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
+        %prayer_rapidrestore = ^false;
+        sound_synth(prayer_off, 0, 0);
+        ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
+    } else {
+        %prayer_rapidrestore = ^true;
+        clearsofttimer(stat_replenish);
+        softtimer(stat_replenish, 50);
+        ~prayer_activate($data);
+    }
+}
