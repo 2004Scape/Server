@@ -25,8 +25,8 @@ if (~npc_out_of_combat = true) {
     }
     return;
 }
-if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(opplayer2);
+if (finduid(%npc_attacking_uid) = true & npc_getmode ! applayer2) { 
+    npc_setmode(opplayer2); // only set mode to op if the npc is not currently ap
 }
 
 

@@ -57,9 +57,28 @@ if (~npc_can_attack_player = false) {
 if (random(4) = 0) {
     ~dragon_fire;
 } else {
-    ~npc_default_attack;
+    ~dragon_melee;
 }
 
+[proc,dragon_melee]
+if (stat(hitpoints) = 0) {
+    return;
+}
+if (%npc_action_delay > map_clock) return;
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+anim(%com_defendanim, 0);
+if (random(2) = 0) {
+    npc_anim(dragon_attack, 0);
+} else {
+    npc_anim(dragon_head_attack, 0);
+}
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
+~npc_meleeattack;
 
 [proc,dragon_fire]
 if_close;
