@@ -4,10 +4,10 @@ desc=A nicely fitted door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_3015]
@@ -33,10 +33,10 @@ desc=A nicely fitted door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_3018]
@@ -45,10 +45,10 @@ desc=A nicely fitted door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_3019]
@@ -57,10 +57,10 @@ desc=A nicely fitted door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_3020]
@@ -107,10 +107,10 @@ desc=A closed door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_3025]
@@ -119,10 +119,10 @@ desc=A closed door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_3026]
@@ -131,10 +131,10 @@ desc=A closed door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_3033]

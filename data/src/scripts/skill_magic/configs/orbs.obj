@@ -1,7 +1,7 @@
 [stafforb]
 model=model_2428_obj
-recol1s=43117
-recol1d=127
+recol1s=23263
+recol1d=32767
 2dxof=3
 2dyof=3
 2dzoom=790
@@ -18,8 +18,8 @@ param=crafting_glass_struct,stafforb
 
 [fire_orb]
 model=model_2428_obj
-recol1s=43117
-recol1d=960
+recol1s=23263
+recol1d=30753
 2dxof=3
 2dyof=3
 2dzoom=790
@@ -36,8 +36,8 @@ param=crafting_staff_struct,fire_orb
 
 [water_orb]
 model=model_2428_obj
-recol1s=43117
-recol1d=43968
+recol1s=23263
+recol1d=31
 2dxof=3
 2dyof=3
 2dzoom=790
@@ -70,8 +70,8 @@ param=crafting_staff_struct,air_orb
 
 [earth_orb]
 model=model_2428_obj
-recol1s=43117
-recol1d=3501
+recol1s=23263
+recol1d=16678
 2dxof=3
 2dyof=3
 2dzoom=790

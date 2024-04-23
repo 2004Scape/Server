@@ -24,10 +24,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_4]
 name=Door
@@ -35,10 +35,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_10]
 name=Ladder
@@ -61,8 +61,8 @@ name=Rock pile
 desc=A pile of rocks is blocking my path.
 model=model_loc_12
 op1=Climb-over
-recol1s=24
-recol1d=7721
+recol1s=6342
+recol1d=15749
 
 [loc_13]
 name=Mud pile
@@ -304,10 +304,10 @@ model=model_loc_3
 sharelight=yes
 occlude=yes
 op1=Climb-out
-recol1s=2
-recol1d=22
-recol2s=24
-recol2d=3398
+retex1s=wall
+retex1d=elfwood
+recol2s=6342
+recol2d=23020
 
 [loc_67]
 name=Crate
@@ -389,10 +389,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_82]
 name=Door
@@ -400,10 +400,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_83]
 model=model_loc_83
@@ -466,10 +466,10 @@ model=model_loc_3
 active=yes
 op1=Open
 active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_93]
 name=Door
@@ -478,10 +478,10 @@ model=model_loc_3
 active=yes
 op1=Open
 active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_94]
 name=Gate
@@ -508,24 +508,24 @@ width=2
 length=3
 op1=Climb-up
 active=yes
-recol1s=49
-recol1d=8
-recol2s=37
-recol2d=24
-recol3s=7064
-recol3d=7050
+recol1s=12684
+recol1d=2114
+recol2s=9513
+recol2d=6342
+recol3s=12512
+recol3d=5216
 
 [loc_97]
 model=model_loc_55
 width=2
 length=2
 active=no
-recol1s=49
-recol1d=8
-recol2s=37
-recol2d=24
-recol3s=7064
-recol3d=7050
+recol1s=12684
+recol1d=2114
+recol2s=9513
+recol2d=6342
+recol3s=12512
+recol3d=5216
 
 [loc_98]
 name=Stairs
@@ -534,12 +534,12 @@ width=2
 length=3
 op1=Climb-down
 active=yes
-recol1s=49
-recol1d=8
-recol2s=37
-recol2d=24
-recol3s=7064
-recol3d=7050
+recol1s=12684
+recol1d=2114
+recol2s=9513
+recol2d=6342
+recol3s=12512
+recol3d=5216
 
 [loc_99]
 name=Door
@@ -548,10 +548,10 @@ model=model_loc_3
 active=yes
 op1=Open
 active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_100]
 model=model_loc_100
@@ -570,10 +570,10 @@ desc=A sturdy door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
 
 [loc_103]
 name=Closed chest
@@ -605,46 +605,46 @@ blockrange=no
 [loc_107]
 model=model_loc_107
 sharelight=yes
-recol1s=9145
-recol1d=7050
-recol2s=926
-recol2d=904
+recol1s=28321
+recol1d=5216
+recol2s=15360
+recol2d=4096
 
 [loc_108]
 model=model_loc_108
 sharelight=yes
-recol1s=9145
-recol1d=7050
-recol2s=926
-recol2d=904
+recol1s=28321
+recol1d=5216
+recol2s=15360
+recol2d=4096
 
 [loc_109]
 model=model_loc_109
 sharelight=yes
-recol1s=9145
-recol1d=7050
-recol2s=926
-recol2d=904
+recol1s=28321
+recol1d=5216
+recol2s=15360
+recol2d=4096
 
 [loc_110]
 model=model_loc_110
-recol1s=6554
-recol1d=7690
+recol1s=9444
+recol1d=4193
 
 [loc_111]
 model=model_loc_111
-recol1s=6554
-recol1d=7690
+recol1s=9444
+recol1d=4193
 
 [loc_112]
 model=model_loc_112
-recol1s=6554
-recol1d=7690
+recol1s=9444
+recol1d=4193
 
 [loc_113]
 model=model_loc_113
-recol1s=6554
-recol1d=7690
+recol1s=9444
+recol1d=4193
 
 [loc_131]
 name=Door
@@ -652,10 +652,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_132]
 name=Ladder
@@ -675,10 +675,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 category=door_open_and_close
 param=next_loc_stage,loc_1532
 
@@ -694,30 +694,30 @@ op1=Chop down
 name=Bookcase
 desc=Lots of books.
 model=model_loc_155
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_158]
 name=Wall
 desc=This wall looks odd...
 model=model_loc_155
 active=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=16532
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5316
 
 [loc_159]
 name=Wall
 desc=This wall looks odd...
 model=model_loc_155
 active=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=16532
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5316
 
 [loc_160]
 name=Lever
@@ -774,16 +774,16 @@ desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
 forceapproach=north
-recol1s=41
-recol1d=3625
+recol1s=10570
+recol1d=15621
 
 [muddy_chest_opened]
 name=Open chest
 desc=Perhaps I should search it.
 model=model_loc_76
 forceapproach=north
-recol1s=41
-recol1d=3625
+recol1s=10570
+recol1d=15621
 
 [loc_172]
 name=Closed chest
@@ -791,16 +791,16 @@ desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
 forceapproach=north
-recol1s=41
-recol1d=43069
+recol1s=10570
+recol1d=14800
 
 [loc_173]
 name=Open chest
 desc=Perhaps I should search it.
 model=model_loc_76
 forceapproach=north
-recol1s=41
-recol1d=43069
+recol1s=10570
+recol1d=14800
 
 [rubble_1]
 model=model_loc_174
@@ -813,26 +813,26 @@ hillskew=yes
 [loc_176]
 model=model_loc_176
 hillskew=yes
-recol1s=41
-recol1d=7056
-recol2s=70
-recol2d=5910
+recol1s=10570
+recol1d=8352
+recol2s=17969
+recol2d=10433
 
 [loc_177]
 model=model_loc_177
 hillskew=yes
-recol1s=41
-recol1d=7056
-recol2s=70
-recol2d=5910
+recol1s=10570
+recol1d=8352
+recol2s=17969
+recol2d=10433
 
 [loc_178]
 model=model_loc_178
 hillskew=yes
-recol1s=41
-recol1d=7056
-recol2s=70
-recol2d=5910
+recol1s=10570
+recol1d=8352
+recol2s=17969
+recol2d=10433
 
 [gravel_1]
 model=model_loc_179
@@ -857,32 +857,32 @@ length=2
 [loc_184]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=7952
-recol2s=5921
-recol2d=7952
-recol3s=4899
-recol3d=7952
+recol1s=13505
+recol1d=7329
+recol2s=14594
+recol2d=7329
+recol3s=15586
+recol3d=7329
 
 [loc_185]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=7952
-recol2s=5921
-recol2d=7952
-recol3s=4899
-recol3d=7952
+recol1s=13505
+recol1d=7329
+recol2s=14594
+recol2d=7329
+recol3s=15586
+recol3d=7329
 
 [loc_186]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=7952
-recol2s=5921
-recol2d=7952
-recol3s=4899
-recol3d=7952
+recol1s=13505
+recol1d=7329
+recol2s=14594
+recol2d=7329
+recol3s=15586
+recol3d=7329
 
 [loc_187]
 name=Gnome glider
@@ -941,8 +941,8 @@ model=model_loc_196
 anim=seq_481
 ambient=20
 hasalpha=yes
-recol1s=33
-recol1d=6550
+recol1s=8456
+recol1d=8387
 
 [loc_198]
 model=model_loc_198
@@ -976,15 +976,15 @@ model=model_loc_202
 name=Candles
 desc=Posh candlesticks.
 model=model_loc_202
-recol1s=6695
-recol1d=7104
+recol1s=15716
+recol1d=31297
 
 [loc_204]
 name=Candles
 desc=Posh candlesticks.
 model=model_loc_202
-recol1s=6695
-recol1d=18
+recol1s=15716
+recol1d=5252
 
 [loc_205]
 model=model_loc_205
@@ -999,10 +999,10 @@ hasalpha=yes
 model=model_loc_206
 anim=seq_481
 hasalpha=yes
-recol1s=127
-recol1d=7240
-recol2s=90
-recol2d=7227
+recol1s=32767
+recol1d=20048
+recol2s=23254
+recol2d=16877
 
 [loc_208]
 name=Candles
@@ -1025,14 +1025,14 @@ contrast=50
 name=Candles
 desc=It's amazing what bees produce!
 model=model_loc_202
-recol1s=127
-recol1d=43270
-recol2s=6695
-recol2d=43270
-recol3s=7104
-recol3d=43270
-recol4s=6695
-recol4d=43270
+recol1s=32767
+recol1d=1058
+recol2s=15716
+recol2d=1058
+recol3s=31297
+recol3d=1058
+recol4s=15716
+recol4d=1058
 
 [loc_212]
 name=Sail
@@ -1604,82 +1604,82 @@ hillskew=yes
 [dugupsoil1_light]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [dugupsoil2_light]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [dugupsoil3_light]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [loc_322]
 model=model_loc_317
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [loc_323]
 model=model_loc_318
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [dugupsoil1_light2]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=7056
-recol2s=5921
-recol2d=5910
-recol3s=4899
-recol3d=7056
+recol1s=13505
+recol1d=8352
+recol2s=14594
+recol2d=10433
+recol3s=15586
+recol3d=8352
 
 [dugupsoil2_light2]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=7056
-recol2s=5921
-recol2d=5910
-recol3s=4899
-recol3d=7056
+recol1s=13505
+recol1d=8352
+recol2s=14594
+recol2d=10433
+recol3s=15586
+recol3d=8352
 
 [dugupsoil3_light2]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=7056
-recol2s=5921
-recol2d=5910
-recol3s=4899
-recol3d=7056
+recol1s=13505
+recol1d=8352
+recol2s=14594
+recol2d=10433
+recol3s=15586
+recol3d=8352
 
 [loc_327]
 name=Broken cart wheel
@@ -1694,172 +1694,172 @@ active=no
 [loc_329]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=10531
-recol3s=4899
-recol3d=8483
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=11622
+recol3s=15586
+recol3d=11590
 
 [loc_330]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=10531
-recol3s=4899
-recol3d=8483
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=11622
+recol3s=15586
+recol3d=11590
 
 [loc_331]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=10531
-recol3s=4899
-recol3d=8483
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=11622
+recol3s=15586
+recol3d=11590
 
 [loc_332]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=138
-recol2s=5921
-recol2d=138
-recol3s=4899
-recol3d=138
+recol1s=13505
+recol1d=3138
+recol2s=14594
+recol2d=3138
+recol3s=15586
+recol3d=3138
 
 [loc_333]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=138
-recol2s=5921
-recol2d=138
-recol3s=4899
-recol3d=138
+recol1s=13505
+recol1d=3138
+recol2s=14594
+recol2d=3138
+recol3s=15586
+recol3d=3138
 
 [loc_334]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=138
-recol2s=5921
-recol2d=138
-recol3s=4899
-recol3d=138
+recol1s=13505
+recol1d=3138
+recol2s=14594
+recol2d=3138
+recol3s=15586
+recol3d=3138
 
 [loc_335]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=41
-recol2s=5921
-recol2d=41
-recol3s=4899
-recol3d=41
+recol1s=13505
+recol1d=10570
+recol2s=14594
+recol2d=10570
+recol3s=15586
+recol3d=10570
 
 [loc_336]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=41
-recol2s=5921
-recol2d=41
-recol3s=4899
-recol3d=41
+recol1s=13505
+recol1d=10570
+recol2s=14594
+recol2d=10570
+recol3s=15586
+recol3d=10570
 
 [loc_337]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=41
-recol2s=5921
-recol2d=41
-recol3s=4899
-recol3d=41
+recol1s=13505
+recol1d=10570
+recol2s=14594
+recol2d=10570
+recol3s=15586
+recol3d=10570
 
 [loc_338]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=8099
-recol2s=5921
-recol2d=8099
-recol3s=4899
-recol3d=8099
+recol1s=13505
+recol1d=16737
+recol2s=14594
+recol2d=16737
+recol3s=15586
+recol3d=16737
 
 [loc_339]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=8099
-recol2s=5921
-recol2d=8099
-recol3s=4899
-recol3d=8099
+recol1s=13505
+recol1d=16737
+recol2s=14594
+recol2d=16737
+recol3s=15586
+recol3d=16737
 
 [loc_340]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=8099
-recol2s=5921
-recol2d=8099
-recol3s=4899
-recol3d=8099
+recol1s=13505
+recol1d=16737
+recol2s=14594
+recol2d=16737
+recol3s=15586
+recol3d=16737
 
 [loc_341]
 model=model_loc_317
 hillskew=yes
-recol1s=4892
-recol1d=8656
-recol2s=4899
-recol2d=8656
-recol3s=5921
-recol3d=8656
+recol1s=13505
+recol1d=25295
+recol2s=15586
+recol2d=25295
+recol3s=14594
+recol3d=25295
 
 [loc_342]
 model=model_loc_318
 hillskew=yes
-recol1s=4892
-recol1d=8656
-recol2s=4899
-recol2d=8656
-recol3s=5921
-recol3d=8656
+recol1s=13505
+recol1d=25295
+recol2s=15586
+recol2d=25295
+recol3s=14594
+recol3d=25295
 
 [loc_343]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=61985
-recol2s=5921
-recol2d=61985
-recol3s=4899
-recol3d=61985
+recol1s=13505
+recol1d=12423
+recol2s=14594
+recol2d=12423
+recol3s=15586
+recol3d=12423
 
 [loc_344]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=61985
-recol2s=5921
-recol2d=61985
-recol3s=4899
-recol3d=61985
+recol1s=13505
+recol1d=12423
+recol2s=14594
+recol2d=12423
+recol3s=15586
+recol3d=12423
 
 [loc_345]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=61985
-recol2s=5921
-recol2d=61985
-recol3s=4899
-recol3d=61985
+recol1s=13505
+recol1d=12423
+recol2s=14594
+recol2d=12423
+recol3s=15586
+recol3d=12423
 
 [loc_346]
 name=Cabinet
@@ -1890,10 +1890,10 @@ name=Crate
 desc=An old crate for storage.
 model=model_loc_63
 op1=Search
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 category=empty_crate
 
 [loc_357]
@@ -1901,10 +1901,10 @@ name=Crate
 desc=An old crate for storage.
 model=model_loc_0
 op1=Search
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 category=empty_crate
 
 [loc_358]
@@ -1912,10 +1912,10 @@ name=Crate
 desc=An old crate for storage.
 model=model_loc_355
 op1=Search
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 category=empty_crate
 
 [loc_359]
@@ -1980,8 +1980,8 @@ desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_377]
 name=Closed chest
@@ -1997,8 +1997,8 @@ model=model_loc_76
 op2=Search
 op3=Shut
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_380]
 name=Bookcase
@@ -2113,14 +2113,14 @@ model=model_loc_396
 name=Cabinet
 desc=The perfect place to store things.
 model=model_loc_347
-recol1s=7952
-recol1d=43270
-recol2s=5772
-recol2d=43270
-recol3s=8860
-recol3d=43270
-recol4s=70
-recol4d=43270
+recol1s=7329
+recol1d=1058
+recol2s=5217
+recol2d=1058
+recol3s=12610
+recol3d=1058
+recol4s=17969
+recol4d=1058
 
 [loc_400]
 name=Small gravestone
@@ -2213,40 +2213,40 @@ name=Bed
 desc=A stylish looking bed.
 model=model_loc_417
 length=2
-recol1s=33
-recol1d=39145
-recol2s=8770
-recol2d=39498
+recol1s=8456
+recol1d=21279
+recol2s=25224
+recol2d=10778
 
 [loc_419]
 name=Bed
 desc=A drab looking bed.
 model=model_loc_417
 length=2
-recol1s=33
-recol1d=5921
-recol2s=8770
-recol2d=1218
+recol1s=8456
+recol1d=14594
+recol2s=25224
+recol2d=19917
 
 [loc_420]
 name=Bed
 desc=A stylish looking bed.
 model=model_loc_417
 length=2
-recol1s=33
-recol1d=6080
-recol2s=8770
-recol2d=20382
+recol1s=8456
+recol1d=31201
+recol2s=25224
+recol2d=2528
 
 [loc_421]
 name=Bed
 desc=A stylish looking bed.
 model=model_loc_417
 length=2
-recol1s=33
-recol1d=18
-recol2s=8770
-recol2d=801
+recol1s=8456
+recol1d=5252
+recol2s=25224
+recol2d=14402
 
 [loc_422]
 name=Bed
@@ -2274,10 +2274,10 @@ desc=Lovely comfy looking big bed.
 model=model_loc_424
 width=2
 length=3
-recol1s=924
-recol1d=6080
-recol2s=8770
-recol2d=21283
+recol1s=14336
+recol1d=31201
+recol2s=25224
+recol2d=3554
 
 [loc_426]
 name=Bed
@@ -2299,10 +2299,10 @@ desc=A bed fit for a king.
 model=model_loc_427
 width=3
 length=3
-recol1s=8770
-recol1d=21283
-recol2s=924
-recol2d=6080
+recol1s=25224
+recol1d=3554
+recol2s=14336
+recol2d=31201
 
 [loc_429]
 name=Bed
@@ -2356,8 +2356,8 @@ desc=A lump of rock.
 model=model_loc_436
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_437]
 name=Rock
@@ -2365,8 +2365,8 @@ desc=A lump of rock.
 model=model_loc_437
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_438]
 name=Rock
@@ -2374,8 +2374,8 @@ desc=A lump of rock.
 model=model_loc_438
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_439]
 name=Rock
@@ -2383,8 +2383,8 @@ desc=A lump of rock.
 model=model_loc_439
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_440]
 name=Rock
@@ -2466,8 +2466,8 @@ desc=Solid rock from the cave floor.
 model=model_loc_12
 mapscene=12
 blockrange=no
-recol1s=24
-recol1d=7721
+recol1s=6342
+recol1d=15749
 
 [loc_455]
 name=Cave rocks
@@ -2475,55 +2475,55 @@ desc=Solid rock from the cave floor.
 model=model_loc_453
 mapscene=12
 blockrange=no
-recol1s=24
-recol1d=7721
+recol1s=6342
+recol1d=15749
 
 [loc_456]
 model=model_loc_456
 active=no
 blockrange=no
-recol1s=9511
-recol1d=5392
+recol1s=13702
+recol1d=5251
 
 [loc_457]
 model=model_loc_457
 active=no
 mapscene=21
 blockrange=no
-recol1s=9511
-recol1d=5392
+recol1s=13702
+recol1d=5251
 
 [loc_458]
 model=model_loc_458
 active=no
 mapscene=21
 blockrange=no
-recol1s=9511
-recol1d=5392
+recol1s=13702
+recol1d=5251
 
 [loc_459]
 model=model_loc_459
 active=no
 mapscene=21
 blockrange=no
-recol1s=9511
-recol1d=5392
+recol1s=13702
+recol1d=5251
 
 [loc_460]
 model=model_loc_460
 active=no
 mapscene=21
 blockrange=no
-recol1s=9511
-recol1d=5392
+recol1s=13702
+recol1d=5251
 
 [loc_461]
 model=model_loc_461
 active=no
 mapscene=21
 blockrange=no
-recol1s=9511
-recol1d=5392
+recol1s=13702
+recol1d=5251
 
 [loc_462]
 name=Mossy rock
@@ -2547,8 +2547,8 @@ desc=Formed over many years of dripping limestone.
 model=model_loc_464
 width=2
 length=2
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_465]
 name=Column
@@ -2556,8 +2556,8 @@ desc=Formed over many years of dripping limestone.
 model=model_loc_465
 width=2
 length=2
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_466]
 name=Column
@@ -2565,8 +2565,8 @@ desc=Formed over many years of dripping limestone.
 model=model_loc_466
 width=2
 length=2
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_467]
 name=Stalactite
@@ -2650,8 +2650,8 @@ width=2
 length=2
 mapscene=11
 blockrange=no
-recol1s=14228
-recol1d=978
+recol1s=7488
+recol1d=31050
 
 [loc_478]
 name=Mossy rock
@@ -2659,8 +2659,8 @@ desc=Looks slippery!
 model=model_loc_478
 mapscene=12
 blockrange=no
-recol1s=14228
-recol1d=31132
+recol1s=7488
+recol1d=4425
 
 [loc_479]
 name=Rockslide
@@ -2671,8 +2671,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=10262
+recol1s=12580
+recol1d=6341
 
 [loc_480]
 name=Rockslide
@@ -2683,8 +2683,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=10262
+recol1s=12580
+recol1d=6341
 
 [loc_481]
 name=Rockslide
@@ -2697,8 +2697,8 @@ blockrange=no
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=10262
+recol1s=12580
+recol1d=6341
 
 [loc_482]
 name=Rockslide
@@ -2711,8 +2711,8 @@ blockrange=no
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=10262
+recol1s=12580
+recol1d=6341
 
 [loc_483]
 name=Rockslide
@@ -2723,8 +2723,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=61
+recol1s=12580
+recol1d=15855
 
 [loc_484]
 name=Rockslide
@@ -2735,8 +2735,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=61
+recol1s=12580
+recol1d=15855
 
 [loc_485]
 name=Rockslide
@@ -2748,8 +2748,8 @@ shadow=no
 blockrange=no
 hillskew=yes
 mapscene=12
-recol1s=6689
-recol1d=61
+recol1s=12580
+recol1d=15855
 
 [loc_486]
 name=Rockslide
@@ -2761,55 +2761,55 @@ shadow=no
 blockrange=no
 hillskew=yes
 mapscene=12
-recol1s=6689
-recol1d=61
+recol1s=12580
+recol1d=15855
 
 [loc_487]
 model=model_loc_475
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=61
+recol1s=12580
+recol1d=15855
 
 [loc_488]
 model=model_loc_476
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=61
+recol1s=12580
+recol1d=15855
 
 [loc_489]
 model=model_loc_184
 hillskew=yes
 blockrange=no
-recol1s=4892
-recol1d=61
-recol2s=4899
-recol2d=61
-recol3s=5921
-recol3d=61
+recol1s=13505
+recol1d=15855
+recol2s=15586
+recol2d=15855
+recol3s=14594
+recol3d=15855
 
 [loc_490]
 model=model_loc_185
 hillskew=yes
 blockrange=no
-recol1s=4892
-recol1d=61
-recol2s=4899
-recol2d=61
-recol3s=5921
-recol3d=61
+recol1s=13505
+recol1d=15855
+recol2s=15586
+recol2d=15855
+recol3s=14594
+recol3d=15855
 
 [loc_491]
 model=model_loc_186
 hillskew=yes
 blockrange=no
-recol1s=4892
-recol1d=61
-recol2s=4899
-recol2d=61
-recol3s=5921
-recol3d=61
+recol1s=13505
+recol1d=15855
+recol2s=15586
+recol2d=15855
+recol3s=14594
+recol3d=15855
 
 [loc_492]
 name=Rocks
@@ -2821,18 +2821,18 @@ length=2
 occlude=yes
 op1=Climb-down
 blockrange=no
-recol1s=5425
-recol1d=6798
-recol2s=61
-recol2d=5908
-recol3s=45
-recol3d=5772
-recol4s=57
-recol4d=8086
-recol5s=28
-recol5d=5388
-recol6s=16156
-recol6d=6798
+recol1s=15753
+recol1d=6273
+recol2s=15855
+recol2d=9377
+recol3s=11627
+recol3d=5217
+recol4s=14798
+recol4d=11520
+recol5s=7399
+recol5d=4194
+recol6s=8609
+recol6d=6273
 
 [greatrunestone]
 model=model_loc_493
@@ -2928,8 +2928,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_508]
 name=Rockslide
@@ -2940,8 +2940,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_509]
 name=Rockslide
@@ -2954,8 +2954,8 @@ blockrange=no
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_510]
 name=Rockslide
@@ -2967,8 +2967,8 @@ shadow=no
 blockrange=no
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_511]
 name=Rocks
@@ -2976,16 +2976,16 @@ desc=A rock with a pickaxe and mining tools.
 model=model_loc_511
 width=2
 blockrange=no
-recol1s=14494
-recol1d=7465
+recol1s=8486
+recol1d=13671
 
 [loc_512]
 model=model_loc_512
 blockrange=no
-recol1s=41
-recol1d=7465
-recol2s=931
-recol2d=7461
+recol1s=10570
+recol1d=13671
+recol2s=16417
+recol2d=12614
 
 [loc_513]
 model=model_loc_513
@@ -3018,8 +3018,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=7056
+recol1s=12580
+recol1d=8352
 
 [loc_518]
 name=Rockslide
@@ -3030,8 +3030,8 @@ length=2
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=7056
+recol1s=12580
+recol1d=8352
 
 [loc_519]
 name=Rockslide
@@ -3044,8 +3044,8 @@ blockrange=no
 hillskew=yes
 mapscene=12
 blockrange=no
-recol1s=6689
-recol1d=7056
+recol1s=12580
+recol1d=8352
 
 [loc_520]
 name=Rockslide
@@ -3057,8 +3057,8 @@ shadow=no
 blockrange=no
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=7056
+recol1s=12580
+recol1d=8352
 
 [loc_521]
 model=model_loc_521
@@ -3092,8 +3092,8 @@ model=model_loc_464
 width=2
 length=2
 hillskew=yes
-recol1s=5916
-recol1d=45
+recol1s=13537
+recol1d=11627
 
 [loc_524]
 name=Column
@@ -3102,8 +3102,8 @@ model=model_loc_465
 width=2
 length=2
 hillskew=yes
-recol1s=5916
-recol1d=45
+recol1s=13537
+recol1d=11627
 
 [loc_525]
 name=Column
@@ -3112,8 +3112,8 @@ model=model_loc_466
 width=2
 length=2
 hillskew=yes
-recol1s=5916
-recol1d=45
+recol1s=13537
+recol1d=11627
 
 [loc_526]
 name=Column
@@ -3122,8 +3122,8 @@ model=model_loc_464
 width=2
 length=2
 hillskew=yes
-recol1s=5916
-recol1d=8
+recol1s=13537
+recol1d=2114
 
 [loc_527]
 name=Column
@@ -3132,8 +3132,8 @@ model=model_loc_465
 width=2
 length=2
 hillskew=yes
-recol1s=5916
-recol1d=8
+recol1s=13537
+recol1d=2114
 
 [loc_528]
 name=Column
@@ -3142,8 +3142,8 @@ model=model_loc_466
 width=2
 length=2
 hillskew=yes
-recol1s=5916
-recol1d=8
+recol1s=13537
+recol1d=2114
 
 [loc_529]
 name=Stalactite
@@ -3151,16 +3151,16 @@ desc=A limestone ceiling growth.
 model=model_loc_467
 blockwalk=no
 hillskew=yes
-recol1s=5916
-recol1d=8
+recol1s=13537
+recol1d=2114
 
 [loc_530]
 name=Stalagmites
 desc=Formed over many years of dripping limestone.
 model=model_loc_468
 hillskew=yes
-recol1s=5916
-recol1d=8
+recol1s=13537
+recol1d=2114
 
 [loc_531]
 name=Stalactite
@@ -3168,16 +3168,16 @@ desc=A limestone ceiling growth.
 model=model_loc_467
 blockwalk=no
 hillskew=yes
-recol1s=5916
-recol1d=45
+recol1s=13537
+recol1d=11627
 
 [loc_532]
 name=Stalagmites
 desc=limestone ceiling growth.
 model=model_loc_468
 hillskew=yes
-recol1s=5916
-recol1d=45
+recol1s=13537
+recol1d=11627
 
 [loc_533]
 name=Stalactite
@@ -3185,16 +3185,16 @@ desc=A limestone ceiling growth.
 model=model_loc_469
 blockwalk=no
 hillskew=yes
-recol1s=5916
-recol1d=45
+recol1s=13537
+recol1d=11627
 
 [loc_534]
 name=Stalagmite
 desc=A tooth shaped rock formation protruding from the floor.
 model=model_loc_534
 hillskew=yes
-recol1s=5916
-recol1d=45
+recol1s=13537
+recol1d=11627
 
 [loc_535]
 model=model_loc_535
@@ -3229,31 +3229,31 @@ name=Stalagmite
 desc=A tooth shaped rock formation protruding from the floor.
 model=model_loc_468
 hillskew=yes
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_542]
 name=Stalagmite
 desc=A tooth shaped rock formation protruding from the floor.
 model=model_loc_534
 hillskew=yes
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_543]
 name=Stalactite
 desc=A tooth shaped rock formation protruding from the ceiling.
 model=model_loc_469
 blockwalk=no
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_544]
 name=Stalagmite
 desc=A tooth shaped rock formation protruding from the floor.
 model=model_loc_544
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_545]
 name=Boulder
@@ -3286,8 +3286,8 @@ length=2
 mapscene=12
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_549]
 name=Rockslide
@@ -3298,8 +3298,8 @@ length=2
 mapscene=12
 hillskew=yes
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_550]
 name=Rockslide
@@ -3312,8 +3312,8 @@ blockrange=no
 hillskew=yes
 mapscene=12
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_551]
 name=Rockslide
@@ -3325,53 +3325,53 @@ shadow=no
 blockrange=no
 hillskew=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_552]
 model=model_loc_475
 hillskew=yes
 hillskew=yes
 blockwalk=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_553]
 model=model_loc_476
 hillskew=yes
 hillskew=yes
 blockwalk=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_554]
 name=Icicle
 desc=Frozen water has formed an icicle here.
 model=model_loc_554
-recol1s=5916
-recol1d=119
+recol1s=13537
+recol1d=30653
 
 [loc_555]
 name=Icicle
 desc=Frozen water has formed an icicle here.
 model=model_loc_534
-recol1s=5916
-recol1d=119
+recol1s=13537
+recol1d=30653
 
 [loc_556]
 name=Icicle
 desc=Frozen water has formed an icicle here.
 model=model_loc_556
 blockwalk=no
-recol1s=5916
-recol1d=119
+recol1s=13537
+recol1d=30653
 
 [loc_557]
 name=Icicle
 desc=Frozen water has formed an icicle here.
 model=model_loc_544
-recol1s=6044
-recol1d=119
+recol1s=14560
+recol1d=30653
 
 [loc_558]
 name=Cave entrance
@@ -3379,16 +3379,16 @@ desc=It looks cold in there.
 model=model_loc_2
 width=4
 length=2
-recol1s=6036
-recol1d=119
-recol2s=5008
-recol2d=90
-recol3s=1932
-recol3d=61
-recol4s=904
-recol4d=37
-recol5s=900
-recol5d=127
+recol1s=10400
+recol1d=30653
+recol2s=8288
+recol2d=23254
+recol3s=6176
+recol3d=15855
+recol4s=4096
+recol4d=9513
+recol5s=2048
+recol5d=32767
 
 [loc_559]
 model=model_loc_559
@@ -3427,8 +3427,8 @@ model=model_loc_564
 name=Statue of a king
 desc=A sculpture of a monarch.
 model=model_loc_563
-recol1s=61
-recol1d=8103
+recol1s=15855
+recol1d=18849
 
 [loc_566]
 name=Statue of a warrior
@@ -3492,8 +3492,8 @@ model=model_loc_577
 
 [loc_578]
 model=model_loc_577
-recol1s=61
-recol1d=7585
+recol1s=15855
+recol1d=11557
 
 [loc_579]
 name=Statue
@@ -3790,16 +3790,16 @@ name=Corpse
 desc=Now that's what I call slimline!
 model=model_loc_660
 blockrange=no
-recol1s=6241
-recol1d=28
+recol1s=27413
+recol1d=7399
 
 [loc_665]
 name=Corpse
 desc=He looks very relaxed.
 model=model_loc_661
 blockrange=no
-recol1s=6241
-recol1d=28
+recol1s=27413
+recol1d=7399
 
 [loc_666]
 name=Corpse
@@ -3807,10 +3807,10 @@ desc=Now he's just too thin.
 model=model_loc_662
 width=2
 blockrange=no
-recol1s=6241
-recol1d=28
-recol2s=61
-recol2d=20
+recol1s=27413
+recol1d=7399
+recol2s=15855
+recol2d=5285
 
 [loc_667]
 name=Corpse
@@ -3818,16 +3818,16 @@ desc=He hasn't eaten in a long time.
 model=model_loc_663
 width=2
 blockrange=no
-recol1s=6241
-recol1d=28
+recol1s=27413
+recol1d=7399
 
 [loc_668]
 name=Pile of skulls
 desc=Disturbing but tidy.
 model=model_loc_658
 blockrange=no
-recol1s=10361
-recol1d=6241
+recol1s=31709
+recol1d=27413
 
 [floorlever_on]
 model=model_loc_669
@@ -3995,8 +3995,8 @@ model=model_loc_700
 name=Curved bone
 desc=Spooky!
 model=model_loc_700
-recol1s=127
-recol1d=33
+recol1s=32767
+recol1d=8456
 
 [loc_702]
 name=Large bone
@@ -4007,8 +4007,8 @@ model=model_loc_702
 name=Large bone
 desc=A dog's idea of heaven.
 model=model_loc_702
-recol1s=10361
-recol1d=33
+recol1s=31709
+recol1d=8456
 
 [loc_704]
 model=model_loc_704
@@ -4107,16 +4107,16 @@ model=model_loc_2
 width=4
 length=2
 active=no
-recol1s=6036
-recol1d=90
-recol2s=5008
-recol2d=74
-recol3s=1932
-recol3d=57
-recol4s=904
-recol4d=41
-recol5s=900
-recol5d=24
+recol1s=10400
+recol1d=23254
+recol2s=8288
+recol2d=19026
+recol3s=6176
+recol3d=14798
+recol4s=4096
+recol4d=10570
+recol5s=2048
+recol5d=6342
 
 [loc_722]
 model=model_loc_722
@@ -4160,32 +4160,32 @@ hillskew=yes
 [loc_728]
 model=model_loc_184
 hillskew=yes
-recol1s=4892
-recol1d=8656
-recol2s=4899
-recol2d=8656
-recol3s=5921
-recol3d=8656
+recol1s=13505
+recol1d=25295
+recol2s=15586
+recol2d=25295
+recol3s=14594
+recol3d=25295
 
 [loc_729]
 model=model_loc_185
 hillskew=yes
-recol1s=4892
-recol1d=8656
-recol2s=4899
-recol2d=8656
-recol3s=5921
-recol3d=8656
+recol1s=13505
+recol1d=25295
+recol2s=15586
+recol2d=25295
+recol3s=14594
+recol3d=25295
 
 [loc_730]
 model=model_loc_186
 hillskew=yes
-recol1s=4892
-recol1d=8656
-recol2s=4899
-recol2d=8656
-recol3s=5921
-recol3d=8656
+recol1s=13505
+recol1d=25295
+recol2s=15586
+recol2d=25295
+recol3s=14594
+recol3d=25295
 
 [loc_731]
 model=model_loc_731
@@ -4227,15 +4227,15 @@ desc=The noxious liquid bubbles horribly.
 model=model_loc_684
 anim=seq_480
 hasalpha=yes
-recol1s=18192
-recol1d=31514
+recol1s=3297
+recol1d=1418
 
 [loc_736]
 name=Animal skull
 desc=Dead animal head. Lovely.
 model=model_loc_697
-recol1s=10357
-recol1d=57
+recol1s=30652
+recol1d=14798
 
 [loc_737]
 name=Carcass
@@ -4243,8 +4243,8 @@ desc=Whatever it was I'm glad its not alive.
 model=model_loc_699
 width=2
 length=2
-recol1s=10349
-recol1d=57
+recol1s=28538
+recol1d=14798
 
 [loc_738]
 model=model_loc_738
@@ -4350,18 +4350,18 @@ hillskew=yes
 
 [loc_757]
 model=model_loc_756
-recol1s=53
-recol1d=6699
+recol1s=13741
+recol1d=16773
 
 [loc_758]
 model=model_loc_756
-recol1s=53
-recol1d=5039
+recol1s=13741
+recol1d=22817
 
 [loc_759]
 model=model_loc_756
-recol1s=53
-recol1d=41
+recol1s=13741
+recol1d=10570
 
 [loc_760]
 model=model_loc_760
@@ -4369,14 +4369,14 @@ sharelight=yes
 shadow=no
 active=no
 hillskew=yes
-recol1s=5400
-recol1d=16
-recol2s=5660
-recol2d=12
-recol3s=5921
-recol3d=8
-recol4s=6051
-recol4d=4
+recol1s=8388
+recol1d=4228
+recol2s=11491
+recol2d=3171
+recol3s=14594
+recol3d=2114
+recol4s=16673
+recol4d=1057
 
 [loc_761]
 model=model_loc_761
@@ -4384,14 +4384,14 @@ sharelight=yes
 shadow=no
 active=no
 hillskew=yes
-recol1s=5400
-recol1d=16
-recol2s=5660
-recol2d=12
-recol3s=5921
-recol3d=8
-recol4s=6051
-recol4d=4
+recol1s=8388
+recol1d=4228
+recol2s=11491
+recol2d=3171
+recol3s=14594
+recol3d=2114
+recol4s=16673
+recol4d=1057
 
 [loc_762]
 model=model_loc_762
@@ -4399,14 +4399,14 @@ sharelight=yes
 shadow=no
 active=no
 hillskew=yes
-recol1s=5400
-recol1d=16
-recol2s=5660
-recol2d=12
-recol3s=5921
-recol3d=8
-recol4s=6051
-recol4d=4
+recol1s=8388
+recol1d=4228
+recol2s=11491
+recol2d=3171
+recol3s=14594
+recol3d=2114
+recol4s=16673
+recol4d=1057
 
 [loc_763]
 model=model_loc_762
@@ -4415,14 +4415,14 @@ shadow=no
 active=no
 mirror=yes
 hillskew=yes
-recol1s=5400
-recol1d=16
-recol2s=5660
-recol2d=12
-recol3s=5921
-recol3d=8
-recol4s=6051
-recol4d=4
+recol1s=8388
+recol1d=4228
+recol2s=11491
+recol2d=3171
+recol3s=14594
+recol3d=2114
+recol4s=16673
+recol4d=1057
 
 [loc_764]
 model=model_loc_764
@@ -4430,14 +4430,14 @@ sharelight=yes
 shadow=no
 active=no
 hillskew=yes
-recol1s=5400
-recol1d=16
-recol2s=5660
-recol2d=12
-recol3s=5921
-recol3d=8
-recol4s=6051
-recol4d=4
+recol1s=8388
+recol1d=4228
+recol2s=11491
+recol2d=3171
+recol3s=14594
+recol3d=2114
+recol4s=16673
+recol4d=1057
 
 [loc_765]
 model=model_loc_764
@@ -4446,14 +4446,14 @@ shadow=no
 active=no
 mirror=yes
 hillskew=yes
-recol1s=5400
-recol1d=16
-recol2s=5660
-recol2d=12
-recol3s=5921
-recol3d=8
-recol4s=6051
-recol4d=4
+recol1s=8388
+recol1d=4228
+recol2s=11491
+recol2d=3171
+recol3s=14594
+recol3d=2114
+recol4s=16673
+recol4d=1057
 
 [loc_766]
 model=model_loc_766
@@ -4473,14 +4473,14 @@ sharelight=yes
 [loc_769]
 model=model_loc_766
 hillskew=yes
-recol1s=7952
-recol1d=20
+recol1s=7329
+recol1d=5285
 
 [loc_770]
 model=model_loc_767
 hillskew=yes
-recol1s=7952
-recol1d=20
+recol1s=7329
+recol1d=5285
 
 [gnomeglider_icon1]
 model=model_loc_771
@@ -4754,32 +4754,32 @@ model=model_loc_817
 name=Suit of armour
 desc=Looks kind of like a man made of metal.
 model=model_loc_817
-recol1s=61
-recol1d=18
-recol2s=10153
-recol2d=801
+recol1s=15855
+recol1d=5252
+recol2s=20001
+recol2d=14402
 
 [loc_819]
 name=Suit of armour
 desc=Looks kind of like a man made of metal.
 model=model_loc_817
-recol1s=61
-recol1d=43105
-recol2s=41
-recol2d=70
-recol3s=926
-recol3d=40483
-recol4s=10153
-recol4d=40483
+recol1s=15855
+recol1d=21147
+recol2s=10570
+recol2d=17969
+recol3s=15360
+recol3d=4333
+recol4s=20001
+recol4d=4333
 
 [loc_820]
 name=Suit of armour
 desc=Looks kind of like a man made of metal.
 model=model_loc_817
-recol1s=926
-recol1d=6080
-recol2s=10153
-recol2d=20382
+recol1s=15360
+recol1d=31201
+recol2s=20001
+recol2d=2528
 
 [loc_821]
 name=Cannon
@@ -4855,8 +4855,8 @@ name=Sword cabinet
 desc=Break glass in case of emergency.
 model=model_loc_834
 length=2
-recol1s=8860
-recol1d=6080
+recol1s=12610
+recol1d=31201
 
 [loc_836]
 name=Bow cabinet
@@ -4875,18 +4875,18 @@ name=Axe cabinet
 desc=Break glass in case of emergency.
 model=model_loc_837
 length=2
-recol1s=8860
-recol1d=6080
+recol1s=12610
+recol1d=31201
 
 [loc_839]
 name=Bow cabinet
 desc=An attractively laid out collection of ranging weapons.
 model=model_loc_836
 length=2
-recol1s=5772
-recol1d=70
-recol2s=8860
-recol2d=43105
+recol1s=5217
+recol1d=17969
+recol2s=12610
+recol2d=21147
 
 [loc_840]
 model=model_loc_840
@@ -4903,10 +4903,10 @@ ambient=20
 [loc_843]
 model=model_loc_842
 ambient=20
-recol1s=43934
-recol1d=43105
-recol2s=61
-recol2d=40483
+recol1s=15
+recol1d=21147
+recol2s=15855
+recol2d=4333
 
 [loc_844]
 model=model_loc_844
@@ -4915,26 +4915,26 @@ ambient=20
 [loc_845]
 model=model_loc_844
 ambient=20
-recol1s=43934
-recol1d=6080
-recol2s=61
-recol2d=20382
+recol1s=15
+recol1d=31201
+recol2s=15855
+recol2d=2528
 
 [loc_846]
 model=model_loc_841
 ambient=20
-recol1s=43934
-recol1d=20382
-recol2s=61
-recol2d=6080
+recol1s=15
+recol1d=2528
+recol2s=15855
+recol2d=31201
 
 [loc_847]
 model=model_loc_842
 ambient=20
-recol1s=43934
-recol1d=18
-recol2s=61
-recol2d=801
+recol1s=15
+recol1d=5252
+recol2s=15855
+recol2d=14402
 
 [loc_848]
 name=Spear wall
@@ -4963,10 +4963,10 @@ model=model_loc_851
 name=Standard
 desc=A tatty old standard.
 model=model_loc_851
-recol1s=127
-recol1d=28
-recol2s=9021
-recol2d=32910
+recol1s=32767
+recol1d=7399
+recol2s=28355
+recol2d=3204
 
 [loc_853]
 name=Standard
@@ -4992,21 +4992,21 @@ model=model_loc_856
 name=Standard
 desc=A standard of the gnome race.
 model=model_loc_856
-recol1s=127
-recol1d=16949
-recol2s=43934
-recol2d=127
+recol1s=32767
+recol1d=12934
+recol2s=15
+recol2d=32767
 
 [loc_858]
 name=Standard
 desc=A standard of the gnome race.
 model=model_loc_854
-recol1s=39841
-recol1d=127
-recol2s=127
-recol2d=16949
-recol3s=13239
-recol3d=127
+recol1s=208
+recol1d=32767
+recol2s=32767
+recol2d=12934
+recol3s=22337
+recol3d=32767
 
 [loc_859]
 name=Standard
@@ -5132,8 +5132,8 @@ desc=A beautiful landscape.
 model=model_loc_887
 ambient=20
 active=yes
-recol1s=14
-recol1d=13
+retex1s=painting2
+retex1d=painting1
 
 [loc_889]
 name=Painting
@@ -5141,8 +5141,8 @@ desc=A mysterious figure stands alone in this haunting image.
 model=model_loc_887
 ambient=20
 active=yes
-recol1s=14
-recol1d=39
+retex1s=painting2
+retex1d=elfpainting
 
 [loc_890]
 name=Portrait
@@ -5157,8 +5157,8 @@ desc=I don't know much about art, but I like this.
 model=model_loc_890
 ambient=20
 active=yes
-recol1s=14
-recol1d=13
+retex1s=painting2
+retex1d=painting1
 
 [loc_892]
 name=Painting
@@ -5166,8 +5166,8 @@ desc=A painting of some guy standing around somewhere.
 model=model_loc_890
 ambient=20
 active=yes
-recol1s=14
-recol1d=39
+retex1s=painting2
+retex1d=elfpainting
 
 [loc_893]
 name=Painting
@@ -5182,8 +5182,8 @@ desc=Fine brushwork adds to the realism of this serene landscape.
 model=model_loc_893
 ambient=20
 active=yes
-recol1s=14
-recol1d=13
+retex1s=painting2
+retex1d=painting1
 
 [loc_895]
 name=Painting
@@ -5191,8 +5191,8 @@ desc=Pretty good painting.
 model=model_loc_893
 ambient=20
 active=yes
-recol1s=14
-recol1d=39
+retex1s=painting2
+retex1d=elfpainting
 
 [loc_896]
 name=Star chart
@@ -5229,16 +5229,16 @@ model=model_loc_899
 ambient=50
 sharelight=yes
 active=yes
-recol1s=16
-recol1d=19
-recol2s=10176
-recol2d=43105
-recol3s=43930
-recol3d=40483
-recol4s=127
-recol4d=70
-recol5s=9145
-recol5d=43105
+retex1s=wood2
+retex1d=cargonet
+recol2s=31553
+recol2d=21147
+recol3s=13
+recol3d=4333
+recol4s=32767
+recol4d=17969
+recol5s=28321
+recol5d=21147
 
 [loc_901]
 name=Hanging banner
@@ -5255,16 +5255,16 @@ model=model_loc_901
 ambient=50
 sharelight=yes
 active=yes
-recol1s=16
-recol1d=19
-recol2s=10176
-recol2d=43105
-recol3s=43930
-recol3d=40483
-recol4s=127
-recol4d=70
-recol5s=9145
-recol5d=43105
+retex1s=wood2
+retex1d=cargonet
+recol2s=31553
+recol2d=21147
+recol3s=13
+recol3d=4333
+recol4s=32767
+recol4d=17969
+recol5s=28321
+recol5d=21147
 
 [loc_903]
 name=Unicorn's head
@@ -5283,8 +5283,8 @@ name=Dragon's head
 desc=Not what I would pick as wall decoration.
 model=model_loc_904
 active=yes
-recol1s=61
-recol1d=926
+recol1s=15855
+recol1d=15360
 
 [loc_906]
 name=Bull's head
@@ -5394,80 +5394,80 @@ sharelight=yes
 [loc_928]
 model=model_loc_107
 sharelight=yes
-recol1s=926
-recol1d=43105
-recol2s=9145
-recol2d=70
+recol1s=15360
+recol1d=21147
+recol2s=28321
+recol2d=17969
 
 [loc_929]
 model=model_loc_108
 sharelight=yes
-recol1s=926
-recol1d=43105
-recol2s=9145
-recol2d=70
+recol1s=15360
+recol1d=21147
+recol2s=28321
+recol2d=17969
 
 [loc_930]
 model=model_loc_109
 sharelight=yes
-recol1s=926
-recol1d=43105
-recol2s=9145
-recol2d=70
+recol1s=15360
+recol1d=21147
+recol2s=28321
+recol2d=17969
 
 [loc_931]
 model=model_loc_108
 sharelight=yes
-recol1s=926
-recol1d=18
-recol2s=9145
-recol2d=801
+recol1s=15360
+recol1d=5252
+recol2s=28321
+recol2d=14402
 
 [loc_932]
 model=model_loc_109
 sharelight=yes
-recol1s=926
-recol1d=18
-recol2s=9145
-recol2d=801
+recol1s=15360
+recol1d=5252
+recol2s=28321
+recol2d=14402
 
 [loc_933]
 model=model_loc_107
 sharelight=yes
-recol1s=926
-recol1d=18
-recol2s=9145
-recol2d=801
+recol1s=15360
+recol1d=5252
+recol2s=28321
+recol2d=14402
 
 [loc_934]
 model=model_loc_107
 sharelight=yes
-recol1s=926
-recol1d=6080
+recol1s=15360
+recol1d=31201
 recol2s=0
-recol2d=21283
-recol3s=9145
-recol3d=21283
+recol2d=3554
+recol3s=28321
+recol3d=3554
 
 [loc_935]
 model=model_loc_108
 sharelight=yes
-recol1s=926
-recol1d=6080
+recol1s=15360
+recol1d=31201
 recol2s=0
-recol2d=21283
-recol3s=9145
-recol3d=21283
+recol2d=3554
+recol3s=28321
+recol3d=3554
 
 [loc_936]
 model=model_loc_109
 sharelight=yes
-recol1s=926
-recol1d=6080
+recol1s=15360
+recol1d=31201
 recol2s=0
-recol2d=21283
-recol3s=9145
-recol3d=21283
+recol2d=3554
+recol3s=28321
+recol3d=3554
 
 [loc_937]
 model=model_loc_107
@@ -5484,44 +5484,44 @@ sharelight=yes
 [loc_940]
 model=model_loc_107
 sharelight=yes
-recol1s=926
-recol1d=47040
+recol1s=15360
+recol1d=7199
 
 [loc_941]
 model=model_loc_108
 sharelight=yes
-recol1s=926
-recol1d=47040
+recol1s=15360
+recol1d=7199
 
 [loc_942]
 model=model_loc_109
 sharelight=yes
-recol1s=926
-recol1d=47040
+recol1s=15360
+recol1d=7199
 
 [greenrugcorner]
 model=model_loc_107
 sharelight=yes
-recol1s=926
-recol1d=19235
-recol2s=9145
-recol2d=25913
+recol1s=15360
+recol1d=5602
+recol2s=28321
+recol2d=9837
 
 [greenrugside]
 model=model_loc_108
 sharelight=yes
-recol1s=926
-recol1d=19235
-recol2s=9145
-recol2d=25913
+recol1s=15360
+recol1d=5602
+recol2s=28321
+recol2d=9837
 
 [greenrugmiddle]
 model=model_loc_109
 sharelight=yes
-recol1s=926
-recol1d=19235
-recol2s=9145
-recol2d=25913
+recol1s=15360
+recol1d=5602
+recol2s=28321
+recol2d=9837
 
 [loc_946]
 model=model_loc_946
@@ -5656,8 +5656,8 @@ desc=This mentions the monk trapped here...
 model=model_loc_909
 op1=Read
 active=yes
-recol1s=24
-recol1d=8128
+recol1s=6342
+recol1d=31393
 
 [loc_971]
 name=Bow and Arrow
@@ -5692,28 +5692,28 @@ active=yes
 [loc_976]
 model=model_loc_107
 sharelight=yes
-recol1s=926
-recol1d=46249
-recol2s=9145
-recol2d=47378
+recol1s=15360
+recol1d=9484
+recol2s=28321
+recol2d=4198
 
 [loc_977]
 model=model_loc_108
 sharelight=yes
-recol1s=926
-recol1d=46249
-recol2s=9145
-recol2d=47378
+recol1s=15360
+recol1d=9484
+recol2s=28321
+recol2d=4198
 recol3s=0
-recol3d=47382
+recol3d=5255
 
 [loc_978]
 model=model_loc_109
 sharelight=yes
-recol1s=926
-recol1d=46249
+recol1s=15360
+recol1d=9484
 recol2s=0
-recol2d=47382
+recol2d=5255
 
 [loc_979]
 model=model_loc_979
@@ -5766,30 +5766,30 @@ length=3
 model=model_loc_982
 sharelight=yes
 hillskew=yes
-recol1s=61
-recol1d=5285
+recol1s=15855
+recol1d=11559
 
 [loc_988]
 model=model_loc_984
 sharelight=yes
 hillskew=yes
-recol1s=61
-recol1d=5285
+recol1s=15855
+recol1d=11559
 
 [loc_989]
 model=model_loc_985
 sharelight=yes
 hillskew=yes
-recol1s=61
-recol1d=5285
+recol1s=15855
+recol1d=11559
 
 [poshwallgatetop_brown]
 model=model_loc_986
 length=3
 sharelight=yes
 hillskew=yes
-recol1s=61
-recol1d=5285
+recol1s=15855
+recol1d=11559
 
 [loc_991]
 model=model_loc_991
@@ -5818,8 +5818,8 @@ hillskew=yes
 model=model_loc_994
 sharelight=yes
 blockrange=no
-recol1s=5012
-recol1d=8103
+recol1s=10368
+recol1d=18849
 
 [loc_997]
 model=model_loc_14
@@ -5908,8 +5908,8 @@ blockrange=no
 model=model_loc_994
 sharelight=yes
 blockrange=no
-recol1s=5012
-recol1d=40004
+recol1s=10368
+recol1d=15890
 
 [loc_1010]
 name=Shelves
@@ -5989,8 +5989,8 @@ model=model_loc_1025
 [loc_1026]
 model=model_loc_1023
 ambient=50
-recol1s=6028
-recol1d=43270
+recol1s=6240
+recol1d=1058
 
 [loc_1027]
 name=Tanning line
@@ -6052,8 +6052,8 @@ model=model_loc_1039
 
 [loc_1040]
 model=model_loc_1039
-recol1s=5029
-recol1d=5006
+recol1s=17633
+recol1d=7264
 
 [loc_1041]
 model=model_loc_1041
@@ -6063,8 +6063,8 @@ model=model_loc_1042
 
 [loc_1043]
 model=model_loc_1039
-recol1s=5029
-recol1d=5006
+recol1s=17633
+recol1d=7264
 
 [loc_1044]
 model=model_loc_1044
@@ -6146,88 +6146,88 @@ name=Sign
 desc=The Blue Moon Inn - Licensed to sell intoxicating liquor.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1069]
 name=Sign
 desc=The Jolly Boar - Purveyors of fine brews.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1070]
 name=Sign
 desc=The Rusty Anchor - Licensed to sell intoxicating beverages.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1071]
 name=Sign
 desc=The Shrimp and Parrot - Licensed to sell dangerous liquids.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1072]
 name=Sign
 desc=The Dead Man's Chest - Brews to maroon any pirate.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1073]
 name=Sign
 desc=The Rising Sun - Purveyors of fine liquor.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1074]
 name=Sign
 desc=The Forester's Arms - Quality Real Ales.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1075]
 name=Sign
 desc=The Flying Horse - Often seen after 10 pints.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1076]
 name=Sign
 desc=The Dancing Donkey - Licensed to sell intoxicating beverages.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1077]
 name=Sign
 desc=The Dragon Inn - Visit us for a firey frothy brew!
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1078]
 name=Sign
 desc=Karamja Spirits bar - For all your alcohol needs.
 model=model_loc_909
 active=yes
-recol1s=6028
-recol1d=11200
+recol1s=6240
+recol1d=31649
 
 [loc_1079]
 name=Signpost
@@ -6297,18 +6297,18 @@ name=Chair
 desc=A comfortable seat.
 model=model_loc_1090
 blockrange=no
-recol1s=922
-recol1d=6080
+recol1s=13312
+recol1d=31201
 
 [loc_1092]
 name=Chair
 desc=A comfortable seat.
 model=model_loc_1090
 blockrange=no
-recol1s=922
-recol1d=43105
-recol2s=4886
-recol2d=9096
+recol1s=13312
+recol1d=21147
+recol2s=10401
+recol2d=4192
 
 [loc_1093]
 name=Chair
@@ -6345,22 +6345,22 @@ name=Throne
 desc=A kingly seat for a royal behind.
 model=model_loc_1097
 blockrange=no
-recol1s=926
-recol1d=70
-recol2s=9098
-recol2d=43105
-recol3s=8128
-recol3d=43105
+recol1s=15360
+recol1d=17969
+recol2s=5248
+recol2d=21147
+recol3s=31393
+recol3d=21147
 
 [loc_1099]
 name=Throne
 desc=A kingly seat for a royal behind.
 model=model_loc_1097
 blockrange=no
-recol1s=926
-recol1d=6080
-recol2s=9098
-recol2d=6080
+recol1s=15360
+recol1d=31201
+recol2s=5248
+recol2d=31201
 
 [loc_1100]
 name=Barstool
@@ -6373,10 +6373,10 @@ name=Chair
 desc=The perfect way to sit at the bar.
 model=model_loc_1100
 blockrange=no
-recol1s=933
-recol1d=43105
-recol2s=3986
-recol2d=9096
+recol1s=17441
+recol1d=21147
+recol2s=9312
+recol2d=4192
 
 [loc_1102]
 name=Stool
@@ -6467,8 +6467,8 @@ name=Chair
 desc=The ideal thing to sit on.
 model=model_loc_1088
 blockrange=no
-recol1s=4886
-recol1d=43270
+recol1s=10401
+recol1d=1058
 
 [loc_1116]
 name=Hedge
@@ -6540,8 +6540,8 @@ resizey=80
 resizez=80
 mapscene=6
 blockrange=no
-recol1s=5388
-recol1d=8483
+recol1s=4194
+recol1d=11590
 
 [loc_1124]
 name=Bush
@@ -6713,8 +6713,8 @@ name=Potted flower
 desc=I bet bees like this.
 model=model_loc_1156
 blockrange=no
-recol1s=43968
-recol1d=939
+recol1s=31
+recol1d=20513
 
 [loc_1158]
 name=Potted plant
@@ -6758,10 +6758,10 @@ name=Mushroom
 desc=Not good for eating.
 model=model_loc_1163
 blockrange=no
-recol1s=8148
-recol1d=8732
-recol2s=7283
-recol2d=10541
+recol1s=31499
+recol1d=11555
+recol2s=31674
+recol2d=14792
 
 [loc_1165]
 name=Mushroom
@@ -6780,30 +6780,30 @@ name=Mushroom
 desc=Fungal growth.
 model=model_loc_1165
 blockrange=no
-recol1s=2857
-recol1d=2332
-recol2s=7283
-recol2d=8381
-recol3s=6371
-recol3d=9641
+recol1s=18594
+recol1d=9413
+recol2s=31674
+recol2d=17933
+recol3s=29492
+recol3d=14758
 
 [loc_1168]
 name=Mushrooms
 desc=Poisonous no doubt.
 model=model_loc_1166
 blockrange=no
-recol1s=2857
-recol1d=2332
-recol2s=7283
-recol2d=8381
-recol3s=1742
-recol3d=4515
-recol4s=6371
-recol4d=9641
-recol5s=2619
-recol5d=4510
-recol6s=2739
-recol6d=3484
+recol1s=18594
+recol1d=9413
+recol2s=31674
+recol2d=17933
+recol3s=28075
+recol3d=12549
+recol4s=29492
+recol4d=14758
+recol5s=22855
+recol5d=11492
+recol6s=21764
+recol6d=10436
 
 [loc_1169]
 name=Mushroom
@@ -6822,20 +6822,20 @@ name=Fungus
 desc=I doubt that's edible.
 model=model_loc_1170
 blockrange=no
-recol1s=6090
-recol1d=8732
-recol2s=5594
-recol2d=10541
+recol1s=31302
+recol1d=11555
+recol2s=30415
+recol2d=14792
 
 [loc_1172]
 name=Fungus
 desc=I doubt that's edible.
 model=model_loc_1170
 blockrange=no
-recol1s=6090
-recol1d=6575
-recol2s=5594
-recol2d=7867
+recol1s=31302
+recol1d=17830
+recol2s=30415
+recol2d=25157
 
 [loc_1173]
 name=Small fern
@@ -6887,8 +6887,8 @@ desc=Smells lovely!
 model=model_loc_1178
 blockwalk=no
 blockrange=no
-recol1s=31628
-recol1d=29586
+recol1s=197
+recol1d=294
 
 [loc_1179]
 name=Heather
@@ -6937,8 +6937,8 @@ desc=A large curling plant.
 model=model_loc_1184
 blockrange=no
 blockwalk=no
-recol1s=17304
-recol1d=22449
+recol1s=5504
+recol1d=768
 
 [loc_1187]
 name=Flower
@@ -6953,8 +6953,8 @@ desc=Blooming!
 model=model_loc_1187
 blockwalk=no
 blockrange=no
-recol1s=43968
-recol1d=939
+recol1s=31
+recol1d=20513
 
 [daisys]
 name=Daisies
@@ -7004,18 +7004,18 @@ desc=You don't see that many of these.
 model=model_loc_1192
 blockwalk=no
 blockrange=no
-recol1s=910
-recol1d=12224
-recol2s=712
-recol2d=37091
-recol3s=935
-recol3d=40268
-recol4s=695
-recol4d=39485
-recol5s=840
-recol5d=39498
-recol6s=842
-recol6d=38738
+recol1s=7168
+recol1d=28609
+recol2s=26921
+recol2d=18239
+recol3s=18465
+recol3d=14903
+recol4s=22693
+recol4d=6584
+recol5s=28903
+recol5d=10778
+recol6s=28936
+recol6d=11901
 
 [loc_1196]
 name=Flowers
@@ -7023,18 +7023,18 @@ desc=I wonder what these are?
 model=model_loc_1193
 blockwalk=no
 blockrange=no
-recol1s=910
-recol1d=12224
-recol2s=712
-recol2d=37091
-recol3s=935
-recol3d=40268
-recol4s=695
-recol4d=39485
-recol5s=840
-recol5d=39498
-recol6s=842
-recol6d=38738
+recol1s=7168
+recol1d=28609
+recol2s=26921
+recol2d=18239
+recol3s=18465
+recol3d=14903
+recol4s=22693
+recol4d=6584
+recol5s=28903
+recol5d=10778
+recol6s=28936
+recol6d=11901
 
 [loc_1197]
 name=Flower
@@ -7042,16 +7042,16 @@ desc=A rarely found flower.
 model=model_loc_1192
 blockwalk=no
 blockrange=no
-recol1s=910
-recol1d=7101
-recol2s=712
-recol2d=10176
-recol3s=695
-recol3d=7093
-recol4s=840
-recol4d=8128
-recol5s=842
-recol5d=10176
+recol1s=7168
+recol1d=30241
+recol2s=26921
+recol2d=31553
+recol3s=22693
+recol3d=26081
+recol4s=28903
+recol4d=31393
+recol5s=28936
+recol5d=31553
 
 [loc_1198]
 name=Flowers
@@ -7059,16 +7059,16 @@ desc=Very rare flowers.
 model=model_loc_1193
 blockwalk=no
 blockrange=no
-recol1s=910
-recol1d=7101
-recol2s=712
-recol2d=10176
-recol3s=695
-recol3d=7093
-recol4s=840
-recol4d=8128
-recol5s=842
-recol5d=10176
+recol1s=7168
+recol1d=30241
+recol2s=26921
+recol2d=31553
+recol3s=22693
+recol3d=26081
+recol4s=28903
+recol4d=31393
+recol5s=28936
+recol5d=31553
 
 [loc_1199]
 name=Flowerbed
@@ -7083,10 +7083,10 @@ desc=A bed of red flowers.
 model=model_loc_1199
 blockwalk=no
 blockrange=no
-recol1s=43968
-recol1d=960
-recol2s=33728
-recol2d=11200
+recol1s=31
+recol1d=30753
+recol2s=959
+recol2d=31649
 
 [loc_1201]
 name=Flowerbed
@@ -7094,10 +7094,10 @@ desc=These are pretty.
 model=model_loc_1199
 blockwalk=no
 blockrange=no
-recol1s=43968
-recol1d=11200
-recol2s=33728
-recol2d=22455
+recol1s=31
+recol1d=31649
+recol2s=959
+recol2d=864
 
 [loc_1202]
 name=Jungle flower
@@ -7129,10 +7129,10 @@ name=Vine
 desc=The flower of a nasty creeping plant.
 model=model_loc_1206
 hillskew=yes
-recol1s=43934
-recol1d=12221
-recol2s=929
-recol2d=16278
+recol1s=15
+recol1d=27553
+recol2s=15393
+recol2d=6496
 
 [loc_1207]
 name=Vine
@@ -7160,15 +7160,15 @@ sharelight=yes
 model=model_loc_1211
 hillskew=yes
 sharelight=yes
-recol1s=939
-recol1d=17317
+recol1s=20513
+recol1d=8737
 
 [loc_1212]
 model=model_loc_1212
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=17317
+recol1s=15393
+recol1d=8737
 
 [loc_1213]
 model=model_loc_58
@@ -7219,80 +7219,80 @@ sharelight=yes
 model=model_loc_1222
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1223]
 model=model_loc_1223
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1224]
 model=model_loc_1224
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1225]
 model=model_loc_1225
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1226]
 model=model_loc_1226
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1227]
 model=model_loc_1227
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1228]
 model=model_loc_1228
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
+recol1s=15393
+recol1d=14916
 
 [loc_1229]
 model=model_loc_1229
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1230]
 model=model_loc_1230
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=13997
-recol2s=931
-recol2d=13751
+recol1s=15393
+recol1d=14916
+recol2s=16417
+recol2d=17000
 
 [loc_1231]
 name=Vine
@@ -7306,80 +7306,80 @@ sharelight=yes
 model=model_loc_58
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1233]
 model=model_loc_1214
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1234]
 model=model_loc_1215
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1235]
 model=model_loc_1216
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1236]
 model=model_loc_1217
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1237]
 model=model_loc_1218
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1238]
 model=model_loc_1219
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
+recol1s=15393
+recol1d=12423
 
 [loc_1239]
 model=model_loc_1220
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1240]
 model=model_loc_1221
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=61985
-recol2s=931
-recol2d=61985
+recol1s=15393
+recol1d=12423
+recol2s=16417
+recol2d=12423
 
 [loc_1241]
 model=model_loc_1241
@@ -7416,26 +7416,26 @@ hillskew=yes
 [loc_1249]
 model=model_loc_1246
 hillskew=yes
-recol1s=6674
-recol1d=5388
+recol1s=7330
+recol1d=4194
 
 [loc_1250]
 model=model_loc_1247
 hillskew=yes
-recol1s=6674
-recol1d=5388
+recol1s=7330
+recol1d=4194
 
 [loc_1251]
 model=model_loc_1246
 hillskew=yes
-recol1s=6674
-recol1d=6814
+recol1s=7330
+recol1d=13602
 
 [loc_1252]
 model=model_loc_1247
 hillskew=yes
-recol1s=6674
-recol1d=6814
+recol1s=7330
+recol1d=13602
 
 [grass_1]
 model=model_loc_1253
@@ -7452,26 +7452,26 @@ model=model_loc_1256
 [grass_light_1]
 model=model_loc_1253
 hillskew=yes
-recol1s=22422
-recol1d=13865
+recol1s=352
+recol1d=12773
 
 [grass_light_2]
 model=model_loc_1254
 hillskew=yes
-recol1s=22422
-recol1d=13865
+recol1s=352
+recol1d=12773
 
 [grass_light_3]
 model=model_loc_1255
 hillskew=yes
-recol1s=22422
-recol1d=13865
+recol1s=352
+recol1d=12773
 
 [grass_light_4]
 model=model_loc_1256
 hillskew=yes
-recol1s=22422
-recol1d=13865
+recol1s=352
+recol1d=12773
 
 [loc_1261]
 model=model_loc_1261
@@ -7512,23 +7512,23 @@ model=model_loc_1271
 
 [loc_1272]
 model=model_loc_1253
-recol1s=22422
-recol1d=27408
+recol1s=352
+recol1d=1252
 
 [loc_1273]
 model=model_loc_1254
-recol1s=22422
-recol1d=27408
+recol1s=352
+recol1d=1252
 
 [loc_1274]
 model=model_loc_1255
-recol1s=22422
-recol1d=27408
+recol1s=352
+recol1d=1252
 
 [loc_1275]
 model=model_loc_1256
-recol1s=22422
-recol1d=27408
+recol1s=352
+recol1d=1252
 
 [loc_1287]
 name=Dead tree
@@ -7570,8 +7570,8 @@ model=model_loc_1296
 width=3
 length=2
 mapscene=6
-recol1s=5029
-recol1d=3470
+recol1s=17633
+recol1d=5218
 
 [loc_1298]
 name=Fern
@@ -7617,8 +7617,8 @@ model=model_loc_1301
 width=2
 length=2
 mapscene=5
-recol1s=4626
-recol1d=6699
+recol1s=7298
+recol1d=16773
 
 [loc_1304]
 name=Tree
@@ -7627,8 +7627,8 @@ model=model_loc_1302
 width=2
 length=2
 mapscene=5
-recol1s=4626
-recol1d=6699
+recol1s=7298
+recol1d=16773
 
 [loc_1305]
 name=Tree
@@ -7640,8 +7640,8 @@ mapscene=5
 resizex=170
 resizey=170
 resizez=170
-recol1s=4626
-recol1d=6699
+recol1s=7298
+recol1d=16773
 
 [loc_1310]
 name=Tree
@@ -7682,10 +7682,10 @@ model=model_loc_1313
 width=3
 length=2
 mapscene=5
-recol1s=6028
-recol1d=6579
-recol2s=22455
-recol2d=15919
+recol1s=6240
+recol1d=18887
+recol2s=864
+recol2d=12869
 
 [loc_1320]
 name=Mossy branch
@@ -7781,20 +7781,20 @@ name=Hollow log
 desc=This old tree is rotting away.
 model=model_loc_1334
 width=3
-recol1s=4531
-recol1d=5790
-recol2s=4537
-recol2d=127
+recol1s=18823
+recol1d=13570
+recol2s=20904
+recol2d=32767
 
 [loc_1337]
 name=Hollow log
 desc=This old tree is rotting away.
 model=model_loc_1335
 width=2
-recol1s=4531
-recol1d=5790
-recol2s=4537
-recol2d=127
+recol1s=18823
+recol1d=13570
+recol2s=20904
+recol2d=32767
 
 [loc_1338]
 name=Hollow log
@@ -7844,8 +7844,8 @@ model=model_loc_1339
 width=3
 length=3
 mapscene=6
-recol1s=6028
-recol1d=21776
+recol1s=6240
+recol1d=3235
 
 [loc_1364]
 name=Roots
@@ -7854,32 +7854,32 @@ model=model_loc_1340
 width=3
 length=3
 mapscene=6
-recol1s=6028
-recol1d=21776
+recol1s=6240
+recol1d=3235
 
 [loc_1366]
 name=Roots
 desc=A gnarly old tree root.
 model=model_loc_1323
 mapscene=6
-recol1s=6028
-recol1d=21776
+recol1s=6240
+recol1d=3235
 
 [loc_1367]
 name=Roots
 desc=The roots of this tree are exposed.
 model=model_loc_1324
 mapscene=6
-recol1s=6028
-recol1d=21776
+recol1s=6240
+recol1d=3235
 
 [loc_1368]
 name=Roots
 desc=I hope I don't trip over any of these.
 model=model_loc_1325
 mapscene=6
-recol1s=6028
-recol1d=21776
+recol1s=6240
+recol1d=3235
 
 [loc_1369]
 name=Plant
@@ -7888,10 +7888,10 @@ model=model_loc_1313
 width=3
 length=2
 mapscene=5
-recol1s=6028
-recol1d=21646
-recol2s=22455
-recol2d=29592
+recol1s=6240
+recol1d=3203
+recol2s=864
+recol2d=392
 
 [loc_1370]
 name=Hollow log
@@ -7899,10 +7899,10 @@ desc=This old tree is rotting away.
 model=model_loc_1334
 width=3
 mapscene=6
-recol1s=4537
-recol1d=21646
-recol2s=4531
-recol2d=21646
+recol1s=20904
+recol1d=3203
+recol2s=18823
+recol2d=3203
 
 [loc_1371]
 name=Bamboo tree
@@ -7950,68 +7950,68 @@ name=Hollow log
 desc=This old tree is rotting away.
 model=model_loc_1334
 width=3
-recol1s=4537
-recol1d=5388
-recol2s=4531
-recol2d=5388
+recol1s=20904
+recol1d=4194
+recol2s=18823
+recol2d=4194
 
 [loc_1379]
 name=Hollow log
 desc=This old tree is rotting away.
 model=model_loc_1335
 width=2
-recol1s=4537
-recol1d=5388
-recol2s=4531
-recol2d=5388
+recol1s=20904
+recol1d=4194
+recol2s=18823
+recol2d=4194
 
 [loc_1380]
 name=Roots
 desc=A gnarly old tree root.
 model=model_loc_1323
 mapscene=6
-recol1s=6028
-recol1d=5388
+recol1s=6240
+recol1d=4194
 
 [loc_1381]
 name=Roots
 desc=The roots of this tree are exposed.
 model=model_loc_1324
 mapscene=6
-recol1s=6028
-recol1d=5388
+recol1s=6240
+recol1d=4194
 
 [loc_1382]
 name=Roots
 desc=I hope I don't trip over any of these.
 model=model_loc_1325
 mapscene=6
-recol1s=6028
-recol1d=5388
+recol1s=6240
+recol1d=4194
 
 [loc_1385]
 name=Roots
 desc=A gnarly old tree root.
 model=model_loc_1323
 mapscene=6
-recol1s=6028
-recol1d=61985
+recol1s=6240
+recol1d=12423
 
 [loc_1386]
 name=Roots
 desc=The roots of this tree are exposed.
 model=model_loc_1324
 mapscene=6
-recol1s=6028
-recol1d=61985
+recol1s=6240
+recol1d=12423
 
 [loc_1387]
 name=Roots
 desc=I hope I don't trip over any of these.
 model=model_loc_1325
 mapscene=6
-recol1s=6028
-recol1d=61985
+recol1s=6240
+recol1d=12423
 
 [loc_1388]
 name=Roots
@@ -8020,8 +8020,8 @@ model=model_loc_1339
 width=3
 length=3
 mapscene=6
-recol1s=6028
-recol1d=61985
+recol1s=6240
+recol1d=12423
 
 [loc_1389]
 name=Roots
@@ -8030,8 +8030,8 @@ model=model_loc_1340
 width=3
 length=3
 mapscene=6
-recol1s=6028
-recol1d=61985
+recol1s=6240
+recol1d=12423
 
 [loc_1390]
 name=Jungle plant
@@ -8098,8 +8098,8 @@ desc=A leafy fern.
 model=model_loc_1390
 width=2
 blockrange=no
-recol1s=17304
-recol1d=22447
+recol1s=5504
+recol1d=736
 
 [loc_1399]
 name=Jungle plant
@@ -8116,8 +8116,8 @@ model=model_loc_1399
 width=2
 length=2
 blockrange=no
-recol1s=22439
-recol1d=17065
+recol1s=608
+recol1d=9763
 
 [loc_1401]
 name=Jungle plant
@@ -8134,8 +8134,8 @@ model=model_loc_1399
 width=2
 length=2
 blockrange=no
-recol1s=22439
-recol1d=16955
+recol1s=608
+recol1d=14054
 
 [loc_1403]
 name=Cactus
@@ -8310,8 +8310,8 @@ model=model_loc_1436
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=8
+recol1s=12580
+recol1d=2114
 
 [loc_1438]
 model=model_loc_1438
@@ -8329,40 +8329,40 @@ active=no
 model=model_loc_1417
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1441]
 model=model_loc_1434
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1442]
 model=model_loc_1435
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1443]
 model=model_loc_1436
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1444]
 model=model_loc_1444
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1445]
 model=model_loc_1444
@@ -8370,16 +8370,16 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1446]
 model=model_loc_1446
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1447]
 model=model_loc_1446
@@ -8387,16 +8387,16 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1448]
 model=model_loc_1444
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=8
+recol1s=12580
+recol1d=2114
 
 [loc_1449]
 model=model_loc_1444
@@ -8404,16 +8404,16 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=8
+recol1s=12580
+recol1d=2114
 
 [loc_1450]
 model=model_loc_1446
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=8
+recol1s=12580
+recol1d=2114
 
 [loc_1451]
 model=model_loc_1446
@@ -8421,8 +8421,8 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=8
+recol1s=12580
+recol1d=2114
 
 [loc_1452]
 model=model_loc_1444
@@ -8475,16 +8475,16 @@ hillskew=yes
 model=model_loc_1417
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1460]
 model=model_loc_1434
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1461]
 model=model_loc_1461
@@ -8528,52 +8528,52 @@ model=model_loc_1435
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1468]
 model=model_loc_1436
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1469]
 model=model_loc_1428
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1470]
 model=model_loc_1429
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1471]
 model=model_loc_1430
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [cavewall_slopefill_dark]
 model=model_loc_1431
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1473]
 model=model_loc_1444
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1474]
 model=model_loc_1444
@@ -8581,16 +8581,16 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1475]
 model=model_loc_1446
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1476]
 model=model_loc_1446
@@ -8598,8 +8598,8 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1477]
 model=model_loc_1477
@@ -8612,15 +8612,15 @@ model=model_loc_1477
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1479]
 model=model_loc_1417
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=61733
+recol1s=12580
+recol1d=12488
 
 [loc_1480]
 model=model_loc_1444
@@ -8628,8 +8628,8 @@ width=2
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=61985
+recol1s=12580
+recol1d=12423
 
 [loc_1481]
 model=model_loc_1444
@@ -8638,8 +8638,8 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=61985
+recol1s=12580
+recol1d=12423
 
 [loc_1482]
 model=model_loc_1446
@@ -8647,8 +8647,8 @@ width=2
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=61985
+recol1s=12580
+recol1d=12423
 
 [loc_1483]
 model=model_loc_1446
@@ -8657,16 +8657,16 @@ contrast=100
 ambient=50
 mirror=yes
 hillskew=yes
-recol1s=6689
-recol1d=61985
+recol1s=12580
+recol1d=12423
 
 [loc_1484]
 model=model_loc_1434
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=61733
+recol1s=12580
+recol1d=12488
 
 [loc_1485]
 model=model_loc_1434
@@ -8679,96 +8679,96 @@ model=model_loc_1486
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_1487]
 model=model_loc_1486
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=119
+recol1s=12580
+recol1d=30653
 
 [loc_1488]
 model=model_loc_1415
 sharelight=yes
 occlude=yes
-recol1s=10334
-recol1d=43270
+recol1s=25366
+recol1d=1058
 
 [loc_1489]
 model=model_loc_1417
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=45
+recol1s=12580
+recol1d=11627
 
 [loc_1490]
 model=model_loc_1434
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=45
+recol1s=12580
+recol1d=11627
 
 [loc_1491]
 model=model_loc_1428
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=45
+recol1s=12580
+recol1d=11627
 
 [loc_1492]
 model=model_loc_1435
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=45
+recol1s=12580
+recol1d=11627
 
 [loc_1493]
 model=model_loc_1444
 contrast=100
 ambient=50
 hillskew=yes
-recol1s=6689
-recol1d=45
+recol1s=12580
+recol1d=11627
 
 [loc_1494]
 model=model_loc_1425
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=45
+recol1s=12580
+recol1d=11627
 
 [loc_1495]
 model=model_loc_1425
 sharelight=yes
 hillskew=yes
 mirror=yes
-recol1s=6689
-recol1d=45
+recol1s=12580
+recol1d=11627
 
 [loc_1496]
 model=model_loc_1461
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=8
-recol1d=7952
-recol2s=5524
-recol2d=8980
+recol1s=2114
+recol1d=7329
+recol2s=7331
+recol2d=9441
 
 [loc_1497]
 model=model_loc_1462
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=8
-recol1d=7952
-recol2s=5524
-recol2d=8980
+recol1s=2114
+recol1d=7329
+recol2s=7331
+recol2d=9441
 
 [loc_1498]
 model=model_loc_1462
@@ -8776,55 +8776,55 @@ sharelight=yes
 hillskew=yes
 active=no
 mirror=yes
-recol1s=8
-recol1d=7952
-recol2s=5524
-recol2d=8980
+recol1s=2114
+recol1d=7329
+recol2s=7331
+recol2d=9441
 
 [loc_1499]
 model=model_loc_1464
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=8
-recol1d=7952
-recol2s=5524
-recol2d=8980
+recol1s=2114
+recol1d=7329
+recol2s=7331
+recol2d=9441
 
 [loc_1500]
 model=model_loc_1465
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=8
-recol1d=7952
-recol2s=5524
-recol2d=8980
+recol1s=2114
+recol1d=7329
+recol2s=7331
+recol2d=9441
 
 [loc_1501]
 model=model_loc_1466
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=8
-recol1d=7952
-recol2s=5524
-recol2d=8980
+recol1s=2114
+recol1d=7329
+recol2s=7331
+recol2d=9441
 
 [loc_1502]
 model=model_loc_1417
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=8
+recol1s=12580
+recol1d=2114
 
 [loc_1503]
 model=model_loc_1434
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6689
-recol1d=8
+recol1s=12580
+recol1d=2114
 
 [loc_1504]
 name=Door
@@ -9116,8 +9116,8 @@ desc=There is something strange about this wall...
 model=model_loc_3
 active=yes
 op1=Push
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1587]
 name=Wall
@@ -9125,15 +9125,15 @@ desc=There is something strange about this wall...
 model=model_loc_3
 active=yes
 op1=Push
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1588]
 model=model_loc_3
 active=yes
 active=no
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1589]
 name=Gate
@@ -9160,10 +9160,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_1592]
 name=Odd looking wall
@@ -9173,24 +9173,24 @@ width=2
 length=2
 op1=Push
 active=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-recol3s=20
-recol3d=7050
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
+recol3s=5285
+recol3d=5216
 
 [loc_1593]
 model=model_loc_1593
 active=no
 width=2
 length=2
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-recol3s=20
-recol3d=7050
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
+recol3s=5285
+recol3d=5216
 
 [loc_1594]
 name=Dungeon door
@@ -9198,20 +9198,20 @@ desc=An entranceway into the dungeon.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_1595]
 name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_1598]
 name=Gate
@@ -9244,14 +9244,14 @@ sharelight=yes
 [loc_1604]
 model=model_loc_1604
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1605]
 model=model_loc_1604
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1606]
 model=model_loc_1604
@@ -9264,8 +9264,8 @@ model=model_loc_1607
 model=model_loc_1608
 sharelight=yes
 active=no
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1609]
 name=Scaffold
@@ -9299,15 +9299,15 @@ active=yes
 name=Timber
 desc=This timber is broken
 model=model_loc_1613_1
-recol1s=23
-recol1d=16
+retex1s=mossybricks
+retex1d=wood2
 
 [loc_1614]
 name=Timber
 desc=This timber is broken
 model=model_loc_1614_1
-recol1s=23
-recol1d=16
+retex1s=mossybricks
+retex1d=wood2
 
 [loc_1615]
 model=model_loc_1615
@@ -9345,35 +9345,35 @@ model=model_loc_1512
 wallwidth=32
 sharelight=yes
 occlude=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1621]
 model=model_loc_1621
 sharelight=yes
 wallwidth=32
 occlude=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1622]
 model=model_loc_1622
 sharelight=yes
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1623]
 model=model_loc_1623
 sharelight=yes
 occlude=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [crumblywall1]
 model=model_loc_1613
@@ -9421,10 +9421,10 @@ model=model_loc_3
 sharelight=yes
 occlude=yes
 hillskew=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1632]
 model=model_loc_1632
@@ -9433,96 +9433,96 @@ sharelight=yes
 [loc_1633]
 model=model_loc_1632
 sharelight=yes
-recol1s=6
-recol1d=44
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=roof2
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1634]
 model=model_loc_1632
 sharelight=yes
-recol1s=6
-recol1d=18
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=thatched
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1635]
 model=model_loc_1635
 sharelight=yes
-recol1s=6
-recol1d=18
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=thatched
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1636]
 model=model_loc_1635
 sharelight=yes
 mirror=yes
-recol1s=6
-recol1d=18
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=thatched
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1637]
 model=model_loc_1637
 sharelight=yes
-recol1s=6
-recol1d=18
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=thatched
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1638]
 model=model_loc_1638
 sharelight=yes
-recol1s=6
-recol1d=18
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=thatched
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1639]
 model=model_loc_1638
 sharelight=yes
 mirror=yes
-recol1s=2
-recol1d=23
-recol2s=6
-recol2d=18
+retex1s=wall
+retex1d=mossybricks
+retex2s=roof
+retex2d=thatched
 
 [loc_1640]
 model=model_loc_1640
 sharelight=yes
-recol1s=6
-recol1d=16
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=wood2
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1641]
 model=model_loc_1640
 sharelight=yes
-recol1s=6
-recol1d=18
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=thatched
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1642]
 model=model_loc_1640
 sharelight=yes
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1643]
 model=model_loc_1640
 sharelight=yes
-recol1s=6
-recol1d=44
-recol2s=2
-recol2d=23
+retex1s=roof
+retex1d=roof2
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1644]
 model=model_loc_1644
 sharelight=yes
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [oldcastlewallbattlementroof]
 model=model_loc_1645
@@ -9532,8 +9532,8 @@ sharelight=yes
 model=model_loc_1646
 blockrange=no
 ambient=20
-recol1s=49
-recol1d=7331
+recol1s=12684
+recol1d=10535
 
 [loc_1647]
 model=model_loc_1647
@@ -9550,20 +9550,20 @@ active=no
 model=model_loc_1647
 sharelight=yes
 active=no
-recol1s=61
-recol1d=7952
-recol2s=2
-recol2d=23
+recol1s=15855
+recol1d=7329
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1650]
 model=model_loc_1647
 sharelight=yes
 mirror=yes
 active=no
-recol1s=61
-recol1d=7952
-recol2s=2
-recol2d=23
+recol1s=15855
+recol1d=7329
+retex2s=wall
+retex2d=mossybricks
 
 [loc_1651]
 model=model_loc_1651
@@ -9574,20 +9574,20 @@ model=model_loc_1577
 length=3
 blockwalk=no
 sharelight=yes
-recol1s=61
-recol1d=7952
-recol2s=2
-recol2d=23
+recol1s=15855
+recol1d=7329
+retex2s=wall
+retex2d=mossybricks
 
 [oldstone_arched_doortop_b_l]
 model=model_loc_1578
 length=2
 blockwalk=no
 sharelight=yes
-recol1s=61
-recol1d=7952
-recol2s=2
-recol2d=23
+recol1s=15855
+recol1d=7329
+retex2s=wall
+retex2d=mossybricks
 
 [oldstone_arched_doortop_b_r]
 model=model_loc_1578
@@ -9595,55 +9595,55 @@ length=2
 blockwalk=no
 sharelight=yes
 mirror=yes
-recol1s=61
-recol1d=7952
-recol2s=2
-recol2d=23
+recol1s=15855
+recol1d=7329
+retex2s=wall
+retex2d=mossybricks
 
 [oldstone_arched_doorbase_r]
 model=model_loc_1580
 sharelight=yes
-recol1s=61
-recol1d=7952
-recol2s=2
-recol2d=23
+recol1s=15855
+recol1d=7329
+retex2s=wall
+retex2d=mossybricks
 
 [oldstone_arched_doorbase_l]
 model=model_loc_1580
 mirror=yes
 sharelight=yes
-recol1s=61
-recol1d=7952
-recol2s=2
-recol2d=23
+recol1s=15855
+recol1d=7329
+retex2s=wall
+retex2d=mossybricks
 
 [crumblywall_with_roof_diag]
 model=model_loc_1657
 sharelight=yes
-recol1s=6
-recol1d=16
-recol2s=61
-recol2d=7952
+retex1s=roof
+retex1d=wood2
+recol2s=15855
+recol2d=7329
 
 [loc_1658]
 model=model_loc_1658
 sharelight=yes
 occlude=yes
 hillskew=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1659]
 model=model_loc_1659
 sharelight=yes
 occlude=yes
 hillskew=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1660]
 model=model_loc_1660
@@ -9653,38 +9653,38 @@ active=no
 name=Bricks
 desc=A pile of bricks.
 model=model_loc_1661
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1662]
 name=Bricks
 desc=A pile of bricks.
 model=model_loc_1662
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1663]
 name=Bricks
 desc=A pile of bricks.
 model=model_loc_1661
 mirror=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_1664]
 model=model_loc_3
 sharelight=yes
 occlude=yes
-recol1s=2
-recol1d=36
-recol2s=24
-recol2d=5165
+retex1s=wall
+retex1d=elfwall
+recol2s=6342
+recol2d=12650
 
 [loc_1665]
 model=model_loc_1665
@@ -9787,60 +9787,60 @@ model=model_loc_3
 sharelight=yes
 occlude=yes
 active=no
-recol1s=2
-recol1d=48
+retex1s=wall
+retex1d=glyphs
 
 [loc_1688]
 model=model_loc_3
 sharelight=yes
 occlude=yes
 active=no
-recol1s=2
-recol1d=11
+retex1s=wall
+retex1d=mossy
 
 [loc_1689]
 model=model_loc_1613
 sharelight=yes
 active=no
-recol1s=23
-recol1d=11
+retex1s=mossybricks
+retex1d=mossy
 
 [loc_1690]
 model=model_loc_1614
 sharelight=yes
 active=no
-recol1s=23
-recol1d=11
+retex1s=mossybricks
+retex1d=mossy
 
 [loc_1691]
 model=model_loc_1613
 sharelight=yes
 mirror=yes
 active=no
-recol1s=23
-recol1d=11
+retex1s=mossybricks
+retex1d=mossy
 
 [loc_1692]
 model=model_loc_1614
 sharelight=yes
 mirror=yes
 active=no
-recol1s=23
-recol1d=11
+retex1s=mossybricks
+retex1d=mossy
 
 [loc_1693]
 model=model_loc_1613
 sharelight=yes
 active=no
-recol1s=23
-recol1d=48
+retex1s=mossybricks
+retex1d=glyphs
 
 [loc_1694]
 model=model_loc_1614
 sharelight=yes
 active=no
-recol1s=23
-recol1d=48
+retex1s=mossybricks
+retex1d=glyphs
 
 [loc_1695]
 model=model_loc_1695
@@ -9961,20 +9961,20 @@ active=no
 model=model_loc_1714
 width=2
 active=no
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1719]
 model=model_loc_1716
 active=no
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1720]
 model=model_loc_1717
 active=no
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1721]
 model=model_loc_1721
@@ -10079,8 +10079,8 @@ width=2
 length=2
 op1=Climb-up
 mapscene=7
-recol1s=11
-recol1d=16
+retex1s=mossy
+retex1d=wood2
 
 [loc_1743]
 name=Staircase
@@ -10092,8 +10092,8 @@ op1=Climb
 op2=Climb-up
 op3=Climb-down
 mapscene=7
-recol1s=11
-recol1d=16
+retex1s=mossy
+retex1d=wood2
 
 [loc_1744]
 name=Staircase
@@ -10102,8 +10102,8 @@ model=model_loc_1740
 op1=Climb-down
 forceapproach=east
 mapscene=7
-recol1s=11
-recol1d=16
+retex1s=mossy
+retex1d=wood2
 
 [loc_1745]
 name=Staircase
@@ -10113,8 +10113,8 @@ width=2
 length=2
 op1=Climb-down
 mapscene=7
-recol1s=11
-recol1d=16
+retex1s=mossy
+retex1d=wood2
 
 [loc_1746]
 name=Ladder
@@ -10290,19 +10290,19 @@ op1=Climb-up
 model=model_loc_3
 sharelight=yes
 occlude=yes
-recol1s=2
-recol1d=22
-recol2s=24
-recol2d=3398
+retex1s=wall
+retex1d=elfwood
+recol2s=6342
+recol2d=23020
 
 [loc_1770]
 model=model_loc_3
 sharelight=yes
 occlude=yes
-recol1s=2
-recol1d=3
-recol2s=24
-recol2d=4527
+retex1s=wall
+retex1d=planks
+recol2s=6342
+recol2d=16743
 
 [loc_1771]
 model=model_loc_1771
@@ -10415,33 +10415,33 @@ sharelight=yes
 [loc_1791]
 model=model_loc_1790
 sharelight=yes
-recol1s=6
-recol1d=44
+retex1s=roof
+retex1d=roof2
 
 [loc_1792]
 model=model_loc_1790
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1793]
 model=model_loc_1790
 sharelight=yes
-recol1s=6
-recol1d=16
+retex1s=roof
+retex1d=wood2
 
 [loc_1794]
 model=model_loc_1635
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1795]
 model=model_loc_1635
 sharelight=yes
 mirror=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [magicwall]
 model=model_loc_1796
@@ -10469,32 +10469,32 @@ hillskew=yes
 [loc_1801]
 model=model_loc_1798
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [loc_1802]
 model=model_loc_1799
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [loc_1803]
 model=model_loc_1800
 hillskew=yes
-recol1s=4892
-recol1d=6697
-recol2s=5921
-recol2d=6573
-recol3s=4899
-recol3d=6573
+recol1s=13505
+recol1d=15717
+recol2s=14594
+recol2d=16774
+recol3s=15586
+recol3d=16774
 
 [loc_1804]
 name=Door
@@ -10502,10 +10502,10 @@ desc=This door requires a key.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_1805]
@@ -10514,10 +10514,10 @@ desc=The door to the champion's guild.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_1806]
@@ -10534,33 +10534,33 @@ occlude=yes
 model=model_loc_3
 sharelight=yes
 occlude=yes
-recol1s=2
-recol1d=47
-recol2s=24
-recol2d=16532
+retex1s=wall
+retex1d=rockwall
+recol2s=6342
+recol2d=5316
 
 [loc_1809]
 model=model_loc_3
 sharelight=yes
 occlude=yes
-recol1s=2
-recol1d=11
+retex1s=wall
+retex1d=mossy
 
 [loc_1810]
 name=Web
 desc=Here be spiders!
 model=model_loc_727
 op1=Slash
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_1811]
 name=Sliced web
 desc=I can walk through this tarrered web.
 model=model_loc_1811
 blockwalk=no
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_1812]
 name=Portal
@@ -10642,58 +10642,58 @@ ambient=50
 [loc_1830]
 model=model_loc_1829
 ambient=50
-recol1s=9135
-recol1d=61
-recol2s=6449
-recol2d=64419
+recol1s=23073
+recol1d=15855
+recol2s=16808
+recol2d=16419
 
 [loc_1831]
 model=model_loc_1829
 ambient=50
-recol1s=5018
-recol1d=20382
-recol2s=6449
-recol2d=6080
+recol1s=13472
+recol1d=2528
+recol2s=16808
+recol2d=31201
 
 [loc_1832]
 model=model_loc_1829
 ambient=50
-recol1s=9135
-recol1d=61
-recol2s=6449
-recol2d=16037
+recol1s=23073
+recol1d=15855
+recol2s=16808
+recol2d=10723
 
 [loc_1833]
 model=model_loc_1829
 ambient=50
-recol1s=9135
-recol1d=61
-recol2s=6449
-recol2d=60762
+recol1s=23073
+recol1d=15855
+recol2s=16808
+recol2d=28213
 
 [loc_1834]
 model=model_loc_1829
 ambient=50
-recol1s=9135
-recol1d=61
-recol2s=6449
-recol2d=46759
+recol1s=23073
+recol1d=15855
+recol2s=16808
+recol2d=6256
 
 [loc_1835]
 model=model_loc_1829
 ambient=50
-recol1s=9135
-recol1d=61
-recol2s=6449
-recol2d=12
+recol1s=23073
+recol1d=15855
+recol2s=16808
+recol2d=3171
 
 [loc_1836]
 model=model_loc_1829
 ambient=50
-recol1s=9135
-recol1d=61
-recol2s=6449
-recol2d=43105
+recol1s=23073
+recol1d=15855
+recol2s=16808
+recol2d=21147
 
 [loc_1837]
 model=model_loc_1837
@@ -10775,12 +10775,12 @@ model=model_loc_1855
 [loc_1856]
 model=model_loc_1829
 ambient=50
-recol1s=5018
-recol1d=47378
-recol2s=6449
-recol2d=45355
-recol3s=9135
-recol3d=6550
+recol1s=13472
+recol1d=4198
+recol2s=16808
+recol2d=8430
+recol3s=23073
+recol3d=8387
 
 [loc_1857]
 model=model_loc_1857
@@ -10812,8 +10812,8 @@ sharelight=yes
 model=model_loc_1862
 hillskew=yes
 sharelight=yes
-recol1s=61
-recol1d=6697
+recol1s=15855
+recol1d=15717
 
 [loc_1864]
 name=Timber defence
@@ -11042,29 +11042,29 @@ hillskew=yes
 model=model_loc_1904
 sharelight=yes
 occlude=yes
-recol1s=10339
-recol1d=39145
+recol1s=26423
+recol1d=21279
 
 [loc_1908]
 model=model_loc_1905
 sharelight=yes
 occlude=yes
-recol1s=10339
-recol1d=39145
+recol1s=26423
+recol1d=21279
 
 [loc_1909]
 model=model_loc_1904
 sharelight=yes
 occlude=yes
-recol1s=10339
-recol1d=10508
+recol1s=26423
+recol1d=4226
 
 [loc_1910]
 model=model_loc_1905
 sharelight=yes
 occlude=yes
-recol1s=10339
-recol1d=10508
+recol1s=26423
+recol1d=4226
 
 [castlewall]
 model=model_loc_1512
@@ -11150,14 +11150,14 @@ sharelight=yes
 [loc_1925]
 model=model_loc_1640
 sharelight=yes
-recol1s=6
-recol1d=44
+retex1s=roof
+retex1d=roof2
 
 [loc_1926]
 model=model_loc_1640
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1927]
 model=model_loc_1632
@@ -11166,38 +11166,38 @@ sharelight=yes
 [loc_1928]
 model=model_loc_1632
 sharelight=yes
-recol1s=6
-recol1d=44
+retex1s=roof
+retex1d=roof2
 
 [loc_1929]
 model=model_loc_1632
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1930]
 model=model_loc_1637
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1931]
 model=model_loc_1638
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1932]
 model=model_loc_1638
 sharelight=yes
-recol1s=6
-recol1d=18
+retex1s=roof
+retex1d=thatched
 
 [loc_1933]
 model=model_loc_1640
 sharelight=yes
-recol1s=6
-recol1d=16
+retex1s=roof
+retex1d=wood2
 
 [loc_1934]
 model=model_loc_1934
@@ -11205,8 +11205,8 @@ active=no
 sharelight=yes
 occlude=yes
 mapscene=21
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1935]
 model=model_loc_1935
@@ -11214,8 +11214,8 @@ active=no
 sharelight=yes
 occlude=yes
 mapscene=21
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1936]
 model=model_loc_1936
@@ -11223,8 +11223,8 @@ active=no
 sharelight=yes
 occlude=yes
 mapscene=21
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1937]
 model=model_loc_1937
@@ -11241,14 +11241,14 @@ name=Tower
 model=model_loc_1937
 width=2
 length=2
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1940]
 model=model_loc_1651
 sharelight=yes
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [woodwall+brickedge_left]
 model=model_loc_1941
@@ -11271,15 +11271,15 @@ mirror=yes
 [loc_1945]
 model=model_loc_1943
 sharelight=yes
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1946]
 model=model_loc_1943
 sharelight=yes
 mirror=yes
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_1949]
 name=Bricks
@@ -11301,15 +11301,15 @@ mirror=yes
 model=model_loc_1629
 blockwalk=no
 blockrange=no
-recol1s=23
-recol1d=2
+retex1s=mossybricks
+retex1d=wall
 
 [loc_1953]
 model=model_loc_1630
 blockwalk=no
 blockrange=no
-recol1s=23
-recol1d=2
+retex1s=mossybricks
+retex1d=wall
 
 [loc_1954]
 model=model_loc_1659
@@ -11554,10 +11554,10 @@ model=model_loc_1214
 op1=Check
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine
 
 [loc_2014]
@@ -11575,8 +11575,8 @@ model=model_loc_2014
 op1=Take treasure
 width=2
 length=2
-recol1s=43069
-recol1d=28
+recol1s=14800
+recol1d=7399
 
 [loc_2016]
 model=model_loc_2016
@@ -11629,18 +11629,18 @@ desc=It's to wet for firewood.
 model=model_loc_1286
 mapscene=6
 op1=Climb
-recol1s=7054
-recol1d=5388
-recol2s=6028
-recol2d=5388
+recol1s=7296
+recol1d=4194
+recol2s=6240
+recol2d=4194
 
 [loc_2021]
 model=model_loc_1286
 active=no
-recol1s=7054
-recol1d=5388
-recol2s=6028
-recol2d=5388
+recol1s=7296
+recol1d=4194
+recol2s=6240
+recol2d=4194
 
 [loc_2022]
 name=Barrel
@@ -11661,10 +11661,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_2026]
@@ -11723,20 +11723,20 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2033]
 name=Door
 desc=It's open.
 model=model_loc_3
 active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2034]
 name=Door
@@ -11744,20 +11744,20 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2035]
 name=Door
 desc=It's open.
 model=model_loc_3
 active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2038]
 name=Dummy
@@ -11791,41 +11791,41 @@ name=Cauldron
 desc=Something's bubbling away in it.
 model=model_loc_692
 anim=seq_479
-recol1s=22435
-recol1d=8520
-recol2s=22420
-recol2d=6695
+recol1s=544
+recol1d=23181
+recol2s=320
+recol2d=15716
 
 [loc_2044]
 name=Trough
 desc=Like an animal dinner table.
 model=model_loc_40
 width=2
-recol1s=3998
-recol1d=2452
-recol2s=61
-recol2d=33
+recol1s=15520
+recol1d=7299
+recol2s=15855
+recol2d=8456
 
 [loc_2045]
 model=model_loc_107
-recol1s=926
-recol1d=823
-recol2s=9145
-recol2d=43957
+recol1s=15360
+recol1d=24675
+recol2s=28321
+recol2d=26
 
 [loc_2046]
 model=model_loc_108
-recol1s=926
-recol1d=823
-recol2s=9145
-recol2d=43957
+recol1s=15360
+recol1d=24675
+recol2s=28321
+recol2d=26
 
 [loc_2047]
 model=model_loc_109
-recol1s=926
-recol1d=823
+recol1s=15360
+recol1d=24675
 recol2s=0
-recol2d=43957
+recol2d=26
 
 [loc_2050]
 name=Gate
@@ -11915,15 +11915,15 @@ desc=Used for climbing.
 model=model_loc_2065
 op1=Investigate
 mapscene=21
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_2066]
 name=Wall
 model=model_loc_1934
 mapscene=21
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 
 [loc_2067]
 name=Watchtower
@@ -11934,10 +11934,10 @@ op1=Investigate
 [loc_2070]
 model=model_loc_3
 active=no
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2089]
 name=Rockery
@@ -11950,10 +11950,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1532
 
 [loc_2113]
@@ -11973,10 +11973,10 @@ occlude=yes
 hillskew=yes
 op1=Search
 active=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 
 [loc_2118]
 name=Whirlpool
@@ -11996,8 +11996,8 @@ forceapproach=north
 anim=seq_654
 hasalpha=yes
 blockrange=no
-recol1s=61
-recol1d=13877
+recol1s=15855
+recol1d=17030
 
 [loc_2145]
 name=Coffin
@@ -12326,18 +12326,18 @@ hillskew=yes
 occlude=yes
 op1=Look-at
 op2=Search
-recol1s=5425
-recol1d=6798
-recol2s=61
-recol2d=5908
-recol3s=45
-recol3d=5772
-recol4s=57
-recol4d=8086
-recol5s=28
-recol5d=5388
-recol6s=16156
-recol6d=6798
+recol1s=15753
+recol1d=6273
+recol2s=15855
+recol2d=9377
+recol3s=11627
+recol3d=5217
+recol4s=14798
+recol4d=11520
+recol5s=7399
+recol5d=4194
+recol6s=8609
+recol6d=6273
 
 [loc_2219]
 name=Fissure
@@ -12351,18 +12351,18 @@ resizez=192
 occlude=yes
 op1=Look-at
 op2=Search
-recol1s=5425
-recol1d=6798
-recol2s=61
-recol2d=5908
-recol3s=45
-recol3d=5772
-recol4s=57
-recol4d=8086
-recol5s=28
-recol5d=5388
-recol6s=16156
-recol6d=6798
+recol1s=15753
+recol1d=6273
+recol2s=15855
+recol2d=9377
+recol3s=11627
+recol3d=5217
+recol4s=14798
+recol4d=11520
+recol5s=7399
+recol5d=4194
+recol6s=8609
+recol6d=6273
 
 [loc_2220]
 name=Cave in
@@ -12562,8 +12562,8 @@ name=Jungle plant
 desc=A leafy fern.
 model=model_loc_1390
 width=2
-recol1s=17304
-recol1d=22447
+recol1s=5504
+recol1d=736
 
 [loc_2246]
 name=Tomb doors
@@ -12571,8 +12571,8 @@ desc=Large carved tomb doors, they look terrifying.
 model=model_loc_2246
 op1=Open
 op2=Search
-recol1s=900
-recol1d=5231
+recol1s=2048
+recol1d=29562
 
 [loc_2247]
 name=Tomb doors
@@ -12581,10 +12581,10 @@ model=model_loc_2246
 mirror=yes
 op1=Open
 op2=Search
-recol1s=902
-recol1d=5231
-recol2s=898
-recol2d=5231
+recol1s=3072
+recol1d=29562
+recol2s=1024
+recol2d=29562
 
 [loc_2248]
 name=Tomb doors
@@ -12592,10 +12592,10 @@ desc=Large carved tomb doors, they look terrifying.
 model=model_loc_2246
 op1=Open
 op2=Search
-recol1s=900
-recol1d=5231
-recol2s=898
-recol2d=5231
+recol1s=2048
+recol1d=29562
+recol2s=1024
+recol2d=29562
 
 [loc_2249]
 name=Tomb doors
@@ -12603,12 +12603,12 @@ desc=Large carved tomb doors, they look terrifying.
 model=model_loc_2246
 op1=Open
 op2=Search
-recol1s=900
-recol1d=5231
-recol2s=898
-recol2d=5231
-recol3s=902
-recol3d=5231
+recol1s=2048
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=3072
+recol3d=29562
 
 [loc_2250]
 name=Tomb doors
@@ -12617,31 +12617,31 @@ model=model_loc_2246
 mirror=yes
 op1=Open
 op2=Search
-recol1s=902
-recol1d=5231
-recol2s=898
-recol2d=5231
-recol3s=900
-recol3d=5231
+recol1s=3072
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=2048
+recol3d=29562
 
 [loc_2251]
 model=model_loc_2246
-recol1s=900
-recol1d=5231
-recol2s=898
-recol2d=5231
-recol3s=902
-recol3d=5231
+recol1s=2048
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=3072
+recol3d=29562
 
 [loc_2252]
 model=model_loc_2246
 mirror=yes
-recol1s=902
-recol1d=5231
-recol2s=898
-recol2d=5231
-recol3s=900
-recol3d=5231
+recol1s=3072
+recol1d=29562
+recol2s=1024
+recol2d=29562
+recol3s=2048
+recol3d=29562
 
 [loc_2253]
 name=Tomb exit
@@ -12748,10 +12748,10 @@ active=yes
 op1=Open
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2267]
 name=Blacksmiths door
@@ -12760,10 +12760,10 @@ model=model_loc_3
 active=yes
 op1=Open
 active=yes
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2268]
 name=Ladder
@@ -12818,8 +12818,8 @@ model=model_loc_2277
 sharelight=yes
 width=2
 length=2
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_2278]
 name=Rock
@@ -12828,8 +12828,8 @@ model=model_loc_2278
 sharelight=yes
 width=2
 length=2
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_2279]
 name=Ropeswing
@@ -12951,8 +12951,8 @@ hillskew=yes
 ambient=25
 contrast=25
 forcedecor=yes
-recol1s=6689
-recol1d=20
+recol1s=12580
+recol1d=5285
 
 [loc_2330]
 model=model_loc_2231
@@ -12960,8 +12960,8 @@ hillskew=yes
 ambient=25
 contrast=25
 forcedecor=yes
-recol1s=6689
-recol1d=20
+recol1s=12580
+recol1d=5285
 
 [loc_2331]
 model=model_loc_2233
@@ -12969,8 +12969,8 @@ hillskew=yes
 ambient=25
 contrast=25
 forcedecor=yes
-recol1s=6689
-recol1d=20
+recol1s=12580
+recol1d=5285
 
 [blackknight_hole]
 name=Hole
@@ -12984,10 +12984,10 @@ desc=This door is very sturdy looking.
 model=model_loc_1512
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=door_open_and_close
 param=next_loc_stage,loc_1535
 
@@ -12997,10 +12997,10 @@ desc=This door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 category=door_open_and_close
 param=next_loc_stage,loc_1532
 
@@ -13010,10 +13010,10 @@ desc=This door is very sturdy looking.
 model=model_loc_1512
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=door_open_and_close
 param=next_loc_stage,loc_1535
 
@@ -13023,10 +13023,10 @@ desc=This door is very sturdy looking.
 model=model_loc_1512
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [blackknight_pushable_wall]
 name=Wall
@@ -13034,8 +13034,8 @@ desc=There is something strange about this wall...
 model=model_loc_3
 active=yes
 op1=Push
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 category=door_open_and_close
 param=next_loc_stage,loc_1588
 param=game_message,You push against the wall. You find a secret passage.
@@ -13299,14 +13299,14 @@ model=model_loc_184
 hillskew=yes
 active=yes
 blockwalk=no
-recol1s=4899
-recol1d=21902
-recol2s=4892
-recol2d=21782
-recol3s=4899
-recol3d=21782
-recol4s=5921
-recol4d=21902
+recol1s=15586
+recol1d=2210
+recol2s=13505
+recol2d=4324
+recol3s=15586
+recol3d=4324
+recol4s=14594
+recol4d=2210
 
 [loc_2382]
 name=Soil
@@ -13315,12 +13315,12 @@ model=model_loc_185
 hillskew=yes
 active=yes
 blockwalk=no
-recol1s=4899
-recol1d=21902
-recol2s=4892
-recol2d=21782
-recol3s=4899
-recol3d=21782
+recol1s=15586
+recol1d=2210
+recol2s=13505
+recol2d=4324
+recol3s=15586
+recol3d=4324
 
 [loc_2383]
 name=Soil
@@ -13329,82 +13329,82 @@ model=model_loc_186
 hillskew=yes
 active=yes
 blockwalk=no
-recol1s=4899
-recol1d=21902
-recol2s=4892
-recol2d=21782
-recol3s=4899
-recol3d=24854
+recol1s=15586
+recol1d=2210
+recol2s=13505
+recol2d=4324
+recol3s=15586
+recol3d=4325
 
 [loc_2384]
 model=model_loc_498
 sharelight=yes
 hillskew=yes
 forcedecor=yes
-recol1s=7465
-recol1d=5916
-recol2s=7461
-recol2d=4888
+recol1s=13671
+recol1d=13537
+recol2s=12614
+recol2d=11425
 
 [loc_2385]
 model=model_loc_499
 sharelight=yes
 hillskew=yes
 forcedecor=yes
-recol1s=7465
-recol1d=5916
-recol2s=7461
-recol2d=4888
+recol1s=13671
+recol1d=13537
+recol2s=12614
+recol2d=11425
 
 [loc_2386]
 model=model_loc_502
 sharelight=yes
 hillskew=yes
 forcedecor=yes
-recol1s=7465
-recol1d=5916
-recol2s=7461
-recol2d=4888
+recol1s=13671
+recol1d=13537
+recol2s=12614
+recol2d=11425
 
 [loc_2387]
 model=model_loc_503
 sharelight=yes
 hillskew=yes
 forcedecor=yes
-recol1s=7465
-recol1d=5916
-recol2s=7461
-recol2d=4888
+recol1s=13671
+recol1d=13537
+recol2s=12614
+recol2d=11425
 
 [loc_2388]
 model=model_loc_504
 sharelight=yes
 hillskew=yes
 forcedecor=yes
-recol1s=7465
-recol1d=5916
-recol2s=7461
-recol2d=4888
+recol1s=13671
+recol1d=13537
+recol2s=12614
+recol2d=11425
 
 [loc_2389]
 model=model_loc_505
 sharelight=yes
 hillskew=yes
 forcedecor=yes
-recol1s=7465
-recol1d=5916
-recol2s=7461
-recol2d=4888
+recol1s=13671
+recol1d=13537
+recol2s=12614
+recol2d=11425
 
 [loc_2390]
 model=model_loc_506
 sharelight=yes
 hillskew=yes
 forcedecor=yes
-recol1s=7465
-recol1d=5916
-recol2s=7461
-recol2d=4888
+recol1s=13671
+recol1d=13537
+recol2s=12614
+recol2d=11425
 
 [loc_2391]
 name=Gate
@@ -13445,10 +13445,10 @@ desc=Distinctly feminine.
 model=model_loc_424
 width=2
 length=3
-recol1s=924
-recol1d=60762
-recol2s=8770
-recol2d=61111
+recol1s=14336
+recol1d=28213
+recol2s=25224
+recol2d=22700
 
 [loc_2397]
 name=Door
@@ -13456,10 +13456,10 @@ desc=A solid looking door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2398]
 name=Door
@@ -13467,10 +13467,10 @@ desc=A solid looking door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2399]
 name=Door
@@ -13478,10 +13478,10 @@ desc=A solid looking door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2400]
 name=Cupboard
@@ -13519,8 +13519,8 @@ model=wooden_chest
 active=yes
 op1=Open
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_2404]
 name=Chest
@@ -13530,8 +13530,8 @@ active=yes
 op1=Search
 op2=Close
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_2405]
 name=Ladder
@@ -13547,10 +13547,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2407]
 name=Magic door
@@ -13558,10 +13558,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2408]
 name=Ladder
@@ -13594,10 +13594,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2419]
 model=model_loc_771
@@ -13655,10 +13655,10 @@ desc=This door is closed by an unknown mechanism.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2428]
 name=Door
@@ -13666,10 +13666,10 @@ desc=This door is closed by an unknown mechanism.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2429]
 name=Door
@@ -13677,10 +13677,10 @@ desc=This door is closed by an unknown mechanism.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2430]
 name=Door
@@ -13688,10 +13688,10 @@ desc=This door is closed by an unknown mechanism.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2431]
 name=Door
@@ -13699,10 +13699,10 @@ desc=This door is closed by an unknown mechanism.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2432]
 name=Gate
@@ -13710,10 +13710,10 @@ desc=This gate is closed shut.
 model=model_loc_52
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2433]
 name=Gate
@@ -13722,10 +13722,10 @@ model=model_loc_52
 active=yes
 op1=Open
 mirror=yes
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2434]
 name=Cupboard
@@ -13838,15 +13838,15 @@ op1=Climb-down
 name=Daconia rocks
 desc=Some magical rocks.
 model=model_loc_450
-recol1s=24
-recol1d=41240
+recol1s=6342
+recol1d=4264
 
 [loc_2450]
 name=Daconia rocks
 desc=Some magical rocks.
 model=model_loc_12
-recol1s=24
-recol1d=41240
+recol1s=6342
+recol1d=4264
 
 [loc_2451]
 name=Roots
@@ -13904,8 +13904,8 @@ model=model_loc_2498
 anim=seq_502
 ambient=60
 hasalpha=yes
-recol1s=10349
-recol1d=43486
+recol1s=28538
+recol1d=15871
 
 [loc_2501]
 name=Mysterious glow
@@ -13914,8 +13914,8 @@ model=model_loc_2498
 anim=seq_502
 ambient=60
 hasalpha=yes
-recol1s=10349
-recol1d=935
+recol1s=28538
+recol1d=18465
 
 [loc_2502]
 name=Mysterious glow
@@ -13924,8 +13924,8 @@ model=model_loc_2498
 anim=seq_502
 ambient=60
 hasalpha=yes
-recol1s=10349
-recol1d=61733
+recol1s=28538
+recol1d=12488
 
 [loc_2503]
 name=Pillar
@@ -13995,10 +13995,10 @@ model=model_loc_3
 sharelight=yes
 occlude=yes
 op1=Kick
-recol1s=2
-recol1d=22
-recol2s=24
-recol2d=3398
+retex1s=wall
+retex1d=elfwood
+recol2s=6342
+recol2d=23020
 
 [loc_2519]
 name=Crates
@@ -14027,10 +14027,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2551]
 name=Door
@@ -14038,10 +14038,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2552]
 name=Gate
@@ -14066,10 +14066,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2555]
 name=Door
@@ -14077,10 +14077,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
 
 [loc_2556]
 name=Door
@@ -14088,10 +14088,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
 
 [loc_2557]
 name=Door
@@ -14099,10 +14099,10 @@ model=model_loc_37
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2558]
 name=Door
@@ -14110,10 +14110,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2559]
 name=Door
@@ -14121,10 +14121,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Pick Lock
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [silk_stall_stealing]
 name=Silk stall
@@ -14257,18 +14257,18 @@ desc=A marshy jungle vine.
 model=model_loc_1205
 hillskew=yes
 op2=Search
-recol1s=22441
-recol1d=22435
-recol2s=13243
-recol2d=10173
+recol1s=640
+recol1d=544
+recol2s=24449
+recol2d=30497
 
 [loc_2576]
 name=Marshy jungle vine
 desc=A marshy jungle vine.
 model=model_loc_1205
 hillskew=yes
-recol1s=13243
-recol1d=22441
+recol1s=24449
+recol1d=640
 
 [loc_2577]
 name=Palm tree
@@ -14294,10 +14294,10 @@ model=model_loc_2579
 mapscene=5
 hillskew=yes
 op2=Search
-recol1s=4892
-recol1d=4750
-recol2s=4899
-recol2d=7056
+recol1s=13505
+recol1d=6241
+recol2s=15586
+recol2d=8352
 
 [loc_2580]
 name=Scorched earth
@@ -14305,10 +14305,10 @@ desc=The ground has been burnt here by a fire.
 model=model_loc_2579
 mapscene=5
 hillskew=yes
-recol1s=4892
-recol1d=4750
-recol2s=4899
-recol2d=7056
+recol1s=13505
+recol1d=6241
+recol2s=15586
+recol2d=8352
 
 [loc_2581]
 name=Rock
@@ -14331,8 +14331,8 @@ contrast=100
 ambient=50
 active=yes
 op2=Search
-recol1s=6689
-recol1d=22428
+recol1s=12580
+recol1d=448
 
 [loc_2584]
 name=Rocks
@@ -14359,10 +14359,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1535
 
 [loc_2611]
@@ -14391,10 +14391,10 @@ name=Crate
 desc=An old crate for storage.
 model=model_loc_0
 op1=Search
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 category=empty_crate
 
 [loc_2621]
@@ -14402,20 +14402,20 @@ name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2622]
 name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2623]
 name=Door
@@ -14430,10 +14430,10 @@ desc=The entrance to the Hero's Guild.
 model=model_loc_71
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2625]
 name=Door
@@ -14442,40 +14442,40 @@ model=model_loc_71
 active=yes
 op1=Open
 mirror=yes
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2626]
 name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2627]
 name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2628]
 name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2629]
 name=Wall
@@ -14555,10 +14555,10 @@ model=model_loc_153
 width=2
 length=2
 mapscene=8
-recol1s=28
-recol1d=8103
-recol2s=61
-recol2d=9129
+recol1s=7399
+recol1d=18849
+recol2s=15855
+recol2d=19937
 
 [loc_2639]
 model=model_loc_83
@@ -14655,10 +14655,10 @@ desc=A sturdy looking desk which the Captain works on.
 model=model_loc_594
 width=2
 op2=Search
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 
 [loc_2680]
 name=Barrel
@@ -14754,32 +14754,32 @@ name=Rock
 model=model_loc_12
 op2=Climb-to
 blockrange=no
-recol1s=24
-recol1d=7721
+recol1s=6342
+recol1d=15749
 
 [loc_2695]
 name=Rock
 model=model_loc_453
 op2=Climb-to
 blockrange=no
-recol1s=24
-recol1d=7721
+recol1s=6342
+recol1d=15749
 
 [loc_2696]
 name=Rock
 model=model_loc_12
 op2=Climb-to
 blockrange=no
-recol1s=24
-recol1d=7721
+recol1s=6342
+recol1d=15749
 
 [loc_2697]
 name=Rock
 model=model_loc_453
 op2=Climb down
 blockrange=no
-recol1s=24
-recol1d=7721
+recol1s=6342
+recol1d=15749
 
 [loc_2698]
 name=Mine cave
@@ -14802,17 +14802,17 @@ desc=The entrance to the tent.
 model=model_loc_1526
 active=yes
 op1=Walk-through
-recol1s=1948
-recol1d=53
-recol2s=1955
-recol2d=5181
+recol1s=14400
+recol1d=13741
+recol2s=16481
+recol2d=16878
 
 [loc_2701]
 model=model_loc_1527
-recol1s=1948
-recol1d=53
-recol2s=1955
-recol2d=5181
+recol1s=14400
+recol1d=13741
+recol2s=16481
+recol2d=16878
 
 [loc_2702]
 name=Tracks
@@ -14841,18 +14841,18 @@ model=model_loc_453
 op1=Mine
 op2=Prospect
 op3=hidden
-recol1s=24
-recol1d=43038
+recol1s=6342
+recol1d=7400
 
 [loc_2705]
 name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2706]
 name=Door
@@ -14860,10 +14860,10 @@ desc=A nicely fitted door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2707]
 name=Crate
@@ -15450,8 +15450,8 @@ model=model_loc_727
 sharelight=yes
 op1=Leave
 hillskew=yes
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_2818]
 name=Cave exit
@@ -15460,8 +15460,8 @@ model=model_loc_727
 sharelight=yes
 op1=Leave
 hillskew=yes
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_2819]
 name=Cave exit
@@ -15470,8 +15470,8 @@ model=model_loc_727
 sharelight=yes
 op1=Leave
 hillskew=yes
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_2820]
 name=Cave exit
@@ -15480,8 +15480,8 @@ model=model_loc_727
 sharelight=yes
 op1=Leave
 hillskew=yes
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_2821]
 name=Cave exit
@@ -15490,8 +15490,8 @@ model=model_loc_727
 sharelight=yes
 op1=Leave
 hillskew=yes
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_2822]
 name=Cave exit
@@ -15500,8 +15500,8 @@ model=model_loc_727
 sharelight=yes
 op1=Leave
 hillskew=yes
-recol1s=12
-recol1d=26
+recol1s=3171
+recol1d=7366
 
 [loc_2823]
 name=Hole
@@ -15599,26 +15599,26 @@ op1=Search
 [loc_2838]
 model=model_loc_2838
 active=no
-recol1s=18522
-recol1d=32433
+recol1s=22292
+recol1d=3764
 
 [loc_2839]
 model=model_loc_2838
 active=no
-recol1s=18522
-recol1d=10167
+recol1s=22292
+recol1d=27361
 
 [loc_2840]
 model=model_loc_2838
 active=no
-recol1s=18522
-recol1d=55250
+recol1s=22292
+recol1d=31070
 
 [loc_2841]
 model=model_loc_2838
 active=no
-recol1s=22336
-recol1d=127
+recol1s=2978
+recol1d=32767
 
 [loc_2842]
 name=Magical shield
@@ -15771,20 +15771,20 @@ name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2862]
 name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_2863]
 name=Door
@@ -15792,10 +15792,10 @@ desc=The door is closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_2864]
 name=Fountain
@@ -15811,10 +15811,10 @@ name=Gate
 model=model_loc_52
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=ball_irongate
 param=next_loc_stage,loc_1562
 
@@ -15824,10 +15824,10 @@ model=model_loc_52
 active=yes
 op1=Open
 mirror=yes
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=ball_irongate
 param=next_loc_stage,loc_1563
 
@@ -15866,18 +15866,18 @@ model=model_loc_1759
 active=yes
 op1=Climb-down
 mapscene=7
-recol1s=5660
-recol1d=33
-recol2s=5784
-recol2d=28
-recol3s=5908
-recol3d=24
-recol4s=6032
-recol4d=20
-recol5s=5006
-recol5d=16
-recol6s=3980
-recol6d=12
+recol1s=11491
+recol1d=8456
+recol2s=10434
+recol2d=7399
+recol3s=9377
+recol3d=6342
+recol4s=8320
+recol4d=5285
+recol5s=7264
+recol5d=4228
+recol6s=6208
+recol6d=3171
 
 [loc_2872]
 name=Ladder
@@ -15914,8 +15914,8 @@ desc=A counter made from a stone block.
 model=model_loc_2791
 width=2
 hillskew=yes
-recol1s=6036
-recol1d=37
+recol1s=10400
+recol1d=9513
 
 [loc_2877]
 name=Barrel
@@ -16030,8 +16030,8 @@ desc=This tree has been cut down.
 model=model_loc_1341
 mapscene=5
 blockwalk=no
-recol1s=5388
-recol1d=3470
+recol1s=4194
+recol1d=5218
 
 [loc_2892]
 name=Jungle Bush
@@ -16050,8 +16050,8 @@ op1=Chop-down
 op3=hidden
 mapscene=5
 blockwalk=no
-recol1s=17304
-recol1d=22447
+recol1s=5504
+recol1d=736
 
 [loc_2894]
 name=Slashed bush
@@ -16059,8 +16059,8 @@ desc=A jungle bush that has been chopped down.
 model=model_loc_2894
 mapscene=5
 blockwalk=no
-recol1s=17304
-recol1d=22447
+recol1s=5504
+recol1d=736
 
 [loc_2895]
 name=Slashed bush
@@ -16068,8 +16068,8 @@ desc=A jungle bush that has been chopped down.
 model=model_loc_2894
 mapscene=5
 blockwalk=no
-recol1s=17304
-recol1d=22447
+recol1s=5504
+recol1d=736
 
 [loc_2896]
 name=Legends Guild door
@@ -16077,12 +16077,12 @@ desc=A door to the Legends Guild.
 model=model_loc_1573
 active=yes
 op1=Open
-recol1s=10167
-recol1d=43486
-recol2s=9643
-recol2d=41
-recol3s=9137
-recol3d=41191
+recol1s=27361
+recol1d=15871
+recol2s=15814
+recol2d=10570
+recol3s=24129
+recol3d=20159
 
 [loc_2897]
 name=Legends Guild door
@@ -16091,31 +16091,31 @@ model=model_loc_1573
 active=yes
 op1=Open
 mirror=yes
-recol1s=10167
-recol1d=43486
-recol2s=9643
-recol2d=41
-recol3s=9137
-recol3d=41191
+recol1s=27361
+recol1d=15871
+recol2s=15814
+recol2d=10570
+recol3s=24129
+recol3d=20159
 
 [loc_2898]
 model=model_loc_1573
-recol1s=10167
-recol1d=43486
-recol2s=9643
-recol2d=41
-recol3s=9137
-recol3d=41191
+recol1s=27361
+recol1d=15871
+recol2s=15814
+recol2d=10570
+recol3s=24129
+recol3d=20159
 
 [loc_2899]
 model=model_loc_1573
 mirror=yes
-recol1s=10167
-recol1d=43486
-recol2s=9643
-recol2d=41
-recol3s=9137
-recol3d=41191
+recol1s=27361
+recol1d=15871
+recol2s=15814
+recol2d=10570
+recol3s=24129
+recol3d=20159
 
 [loc_2900]
 name=Mossy rock
@@ -16125,8 +16125,8 @@ width=2
 length=2
 mapscene=11
 op1=Search
-recol1s=14228
-recol1d=127
+recol1s=7488
+recol1d=32767
 
 [loc_2901]
 name=Mossy rock
@@ -16134,8 +16134,8 @@ desc=Looks slippery!
 model=model_loc_478
 mapscene=12
 op1=Search
-recol1s=14228
-recol1d=127
+recol1s=7488
+recol1d=32767
 
 [loc_2902]
 name=Rocks
@@ -16165,10 +16165,10 @@ desc=An old crate for storage.
 model=model_loc_63
 op1=Look
 op2=Search
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 
 [loc_2906]
 name=Table
@@ -16300,54 +16300,54 @@ name=Ancient Gate
 model=model_loc_2922
 active=yes
 op1=Open
-recol1s=41
-recol1d=4
-recol2s=61
-recol2d=33
-recol3s=24
-recol3d=4
-recol4s=10275
-recol4d=1942
+recol1s=10570
+recol1d=1057
+recol2s=15855
+recol2d=8456
+recol3s=6342
+recol3d=1057
+recol4s=9512
+recol4d=11328
 
 [loc_2923]
 name=Ancient Gate
 model=model_loc_2923
 active=yes
 op1=Open
-recol1s=41
-recol1d=4
-recol2s=61
-recol2d=33
-recol3s=24
-recol3d=4
-recol4s=10275
-recol4d=1942
+recol1s=10570
+recol1d=1057
+recol2s=15855
+recol2d=8456
+recol3s=6342
+recol3d=1057
+recol4s=9512
+recol4d=11328
 
 [loc_2924]
 name=Ancient Gate
 model=model_loc_2922
 active=yes
-recol1s=41
-recol1d=4
-recol2s=61
-recol2d=33
-recol3s=24
-recol3d=4
-recol4s=10275
-recol4d=1942
+recol1s=10570
+recol1d=1057
+recol2s=15855
+recol2d=8456
+recol3s=6342
+recol3d=1057
+recol4s=9512
+recol4d=11328
 
 [loc_2925]
 name=Ancient Gate
 model=model_loc_2923
 active=yes
-recol1s=41
-recol1d=4
-recol2s=61
-recol2d=33
-recol3s=24
-recol3d=4
-recol4s=10275
-recol4d=1942
+recol1s=10570
+recol1d=1057
+recol2s=15855
+recol2d=8456
+recol3s=6342
+recol3d=1057
+recol4s=9512
+recol4d=11328
 
 [loc_2926]
 name=Jagged wall
@@ -16356,8 +16356,8 @@ model=model_loc_1613
 sharelight=yes
 op1=Look
 op2=Jump-over
-recol1s=23
-recol1d=11
+retex1s=mossybricks
+retex1d=mossy
 
 [loc_2927]
 name=Marked wall
@@ -16374,8 +16374,8 @@ desc=An ornately carved rock with a pointed recepticle.
 model=model_loc_534
 op1=Look
 op2=Search
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_2929]
 name=Buried skeleton
@@ -16406,8 +16406,8 @@ name=Barrel
 desc=Strangely, there's a locked barrel here, I wonder what's inside.
 model=model_loc_362
 op1=Smash
-recol1s=33
-recol1d=677
+recol1s=8456
+recol1d=15459
 
 [loc_2933]
 model=model_loc_672
@@ -16451,52 +16451,52 @@ name=Totem Pole
 desc=A sculpted trunk of wood.
 model=model_loc_870
 op1=Look
-recol1s=6315
-recol1d=7068
-recol2s=8596
-recol2d=5576
-recol3s=127
-recol3d=5904
-recol4s=10126
-recol4d=7068
+recol1s=13672
+recol1d=14592
+recol2s=7363
+recol2d=24140
+recol3s=32767
+recol3d=7297
+recol4s=7360
+recol4d=14592
 
 [loc_2938]
 name=Totem Pole
 desc=A sculpted trunk of wood.
 model=model_loc_870
 op1=Look
-recol1s=6315
-recol1d=5904
-recol2s=8596
-recol2d=5640
-recol3s=127
-recol3d=935
-recol4s=10126
-recol4d=7068
+recol1s=13672
+recol1d=7297
+recol2s=7363
+recol2d=3137
+recol3s=32767
+recol3d=18465
+recol4s=7360
+recol4d=14592
 
 [loc_2939]
 name=Totem Pole
 desc=A sculpted trunk of wood.
 model=model_loc_870
 op1=Look
-recol1s=6315
-recol1d=62992
-recol2s=8596
-recol2d=10178
-recol3s=127
-recol3d=670
-recol4s=10126
-recol4d=10178
+recol1s=13672
+recol1d=6211
+recol2s=7363
+recol2d=31554
+recol3s=32767
+recol3d=13378
+recol4s=7360
+recol4d=31554
 
 [loc_2940]
 name=Table
 desc=A wonderfully dressed table.
 model=model_loc_625
 width=2
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+recol2s=6309
+recol2d=4228
 
 [loc_2941]
 name=Sacred water
@@ -16523,8 +16523,8 @@ model=model_loc_443
 width=2
 length=2
 op1=Look
-recol1s=1
-recol1d=32
+retex1s=water
+retex1d=bark
 
 [loc_2944]
 name=Tall Reeds
@@ -16563,10 +16563,10 @@ resizez=32
 width=3
 length=3
 blockwalk=no
-recol1s=6315
-recol1d=11045
-recol2s=8497
-recol2d=11045
+recol1s=13672
+recol1d=16898
+recol2s=15817
+recol2d=16898
 
 [loc_2948]
 name=Adult Yommi tree
@@ -16583,10 +16583,10 @@ model=model_loc_1278
 width=3
 length=3
 blockwalk=no
-recol1s=6315
-recol1d=11045
-recol2s=8497
-recol2d=11045
+recol1s=13672
+recol1d=16898
+recol2s=15817
+recol2d=16898
 
 [loc_2950]
 name=Felled Yommi tree
@@ -16603,10 +16603,10 @@ model=model_loc_2950
 width=3
 length=3
 blockwalk=no
-recol1s=6315
-recol1d=11045
-recol2s=8497
-recol2d=11045
+recol1s=13672
+recol1d=16898
+recol2s=15817
+recol2d=16898
 
 [loc_2952]
 name=Trimmed Yommi
@@ -16623,10 +16623,10 @@ model=model_loc_2952
 width=3
 length=3
 blockwalk=no
-recol1s=6315
-recol1d=11045
-recol2s=8497
-recol2d=11045
+recol1s=13672
+recol1d=16898
+recol2s=15817
+recol2d=16898
 
 [loc_2954]
 name=Totem pole
@@ -16644,10 +16644,10 @@ model=model_loc_2954
 width=3
 length=3
 blockwalk=no
-recol1s=6315
-recol1d=11045
-recol2s=7333
-recol2d=10925
+recol1s=13672
+recol1d=16898
+recol2s=11591
+recol2d=19012
 
 [loc_2956]
 name=Fertile Soil
@@ -16725,8 +16725,8 @@ width=2
 length=2
 mapscene=11
 op1=Search
-recol1s=14228
-recol1d=978
+recol1s=7488
+recol1d=31050
 
 [loc_2967]
 model=model_loc_2967
@@ -16810,8 +16810,8 @@ resizez=96
 mapscene=12
 hillskew=yes
 op1=Look
-recol1s=6798
-recol1d=8640
+recol1s=6273
+recol1d=23145
 
 [loc_2978]
 name=Sand
@@ -16823,8 +16823,8 @@ resizez=64
 blockwalk=no
 hillskew=yes
 op1=Look
-recol1s=6798
-recol1d=8640
+recol1s=6273
+recol1d=23145
 
 [loc_2979]
 name=Sand
@@ -16836,8 +16836,8 @@ resizez=32
 blockwalk=no
 hillskew=yes
 op1=Look
-recol1s=6798
-recol1d=8640
+recol1s=6273
+recol1d=23145
 
 [loc_2995]
 name=Closed chest
@@ -16850,8 +16850,8 @@ name=Closed chest
 desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_2999]
 model=model_loc_2999
@@ -16938,10 +16938,10 @@ desc=A closed door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_3028]
 name=Ladder
@@ -17032,8 +17032,8 @@ desc=A rocky outcrop.
 model=model_loc_450
 op1=Mine
 op2=Prospect
-recol1s=24
-recol1d=4510
+recol1s=6342
+recol1d=11492
 
 [loc_3043]
 name=Rocks
@@ -17041,8 +17041,8 @@ desc=A rocky outcrop.
 model=model_loc_450
 op1=Mine
 op2=Prospect
-recol1s=24
-recol1d=53
+recol1s=6342
+recol1d=13741
 
 [loc_3045]
 name=Bank booth
@@ -17320,8 +17320,8 @@ model=model_loc_3089
 ambient=60
 contrast=60
 active=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [loc_3090]
 model=model_loc_3090
@@ -17330,10 +17330,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=2485
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=18760
 
 [loc_3091]
 model=model_loc_3091
@@ -17342,10 +17342,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=2485
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=18760
 
 [loc_3092]
 model=model_loc_3092
@@ -17354,10 +17354,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=2485
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=18760
 
 [loc_3093]
 model=model_loc_3092
@@ -17367,10 +17367,10 @@ mirror=yes
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=2485
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=18760
 
 [loc_3094]
 model=model_loc_3094
@@ -17379,10 +17379,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=2485
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=18760
 
 [loc_3095]
 model=model_loc_3094
@@ -17392,10 +17392,10 @@ mirror=yes
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=2485
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=18760
 
 [loc_3096]
 model=model_loc_3090
@@ -17404,10 +17404,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=43063
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=12687
 
 [loc_3097]
 model=model_loc_3091
@@ -17416,10 +17416,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=43063
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=12687
 
 [loc_3098]
 model=model_loc_3092
@@ -17428,10 +17428,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=43063
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=12687
 
 [loc_3099]
 model=model_loc_3092
@@ -17441,10 +17441,10 @@ mirror=yes
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=43063
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=12687
 
 [loc_3100]
 model=model_loc_3094
@@ -17453,10 +17453,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=43063
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=12687
 
 [loc_3101]
 model=model_loc_3094
@@ -17466,10 +17466,10 @@ mirror=yes
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=43063
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=12687
 
 [loc_3102]
 model=model_loc_3090
@@ -17478,10 +17478,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=20810
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=16078
 
 [loc_3103]
 model=model_loc_3091
@@ -17490,10 +17490,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=20810
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=16078
 
 [loc_3104]
 model=model_loc_3092
@@ -17502,10 +17502,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=20810
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=16078
 
 [loc_3105]
 model=model_loc_3092
@@ -17515,10 +17515,10 @@ mirror=yes
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=20810
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=16078
 
 [loc_3106]
 model=model_loc_3094
@@ -17527,10 +17527,10 @@ contrast=60
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=20810
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=16078
 
 [loc_3107]
 model=model_loc_3094
@@ -17540,10 +17540,10 @@ mirror=yes
 length=2
 active=no
 blockrange=no
-recol1s=6932
-recol1d=6689
-recol2s=7626
-recol2d=20810
+recol1s=9409
+recol1d=12580
+recol2s=24205
+recol2d=16078
 
 [loc_3108]
 name=Entrance
@@ -17556,8 +17556,8 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [loc_3109]
 name=Entrance
@@ -17570,15 +17570,15 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [loc_3110]
 model=model_loc_3110
 ambient=60
 contrast=60
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [loc_3115]
 model=model_loc_3115
@@ -17619,20 +17619,20 @@ forcedecor=yes
 hillskew=yes
 mapscene=46
 active=no
-recol1s=6932
-recol1d=6689
-recol2s=6684
-recol2d=6569
+recol1s=9409
+recol1d=12580
+recol2s=11523
+recol2d=14694
 
 [loc_3124]
 model=model_loc_815
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=6932
-recol1d=6689
-recol2s=6684
-recol2d=6569
+recol1s=9409
+recol1d=12580
+recol2s=11523
+recol2d=14694
 
 [loc_3125]
 model=model_loc_814
@@ -17640,12 +17640,12 @@ sharelight=yes
 hillskew=yes
 blockrange=no
 active=no
-recol1s=6932
-recol1d=6689
-recol2s=6684
-recol2d=6569
-recol3s=6930
-recol3d=6565
+recol1s=9409
+recol1d=12580
+recol2s=11523
+recol2d=14694
+recol3s=8353
+recol3d=13637
 
 [loc_3126]
 model=model_loc_3126
@@ -17653,12 +17653,12 @@ sharelight=yes
 hillskew=yes
 blockrange=no
 active=no
-recol1s=6932
-recol1d=6689
-recol2s=6684
-recol2d=6569
-recol3s=6930
-recol3d=6565
+recol1s=9409
+recol1d=12580
+recol2s=11523
+recol2d=14694
+recol3s=8353
+recol3d=13637
 
 [loc_3127]
 model=model_loc_3126
@@ -17667,12 +17667,12 @@ hillskew=yes
 blockrange=no
 active=no
 mirror=yes
-recol1s=6932
-recol1d=6689
-recol2s=6684
-recol2d=6569
-recol3s=6930
-recol3d=6565
+recol1s=9409
+recol1d=12580
+recol2s=11523
+recol2d=14694
+recol3s=8353
+recol3d=13637
 
 [loc_3128]
 model=model_loc_3128
@@ -17874,10 +17874,10 @@ model=model_loc_417
 length=2
 ambient=15
 contrast=15
-recol1s=33
-recol1d=37970
-recol2s=8770
-recol2d=43067
+recol1s=8456
+recol1d=20117
+recol2s=25224
+recol2d=13744
 
 [loc_3160]
 model=model_loc_3160
@@ -17947,70 +17947,70 @@ active=no
 model=model_loc_184
 hillskew=yes
 active=no
-recol1s=4892
-recol1d=6466
-recol2s=4899
-recol2d=6602
-recol3s=5921
-recol3d=6470
+recol1s=13505
+recol1d=21036
+recol2s=15586
+recol2d=24173
+recol3s=14594
+recol3d=22093
 
 [loc_3170]
 model=model_loc_185
 hillskew=yes
 active=no
-recol1s=4892
-recol1d=6466
-recol2s=4899
-recol2d=6602
-recol3s=5921
-recol3d=6470
+recol1s=13505
+recol1d=21036
+recol2s=15586
+recol2d=24173
+recol3s=14594
+recol3d=22093
 
 [loc_3171]
 model=model_loc_186
 hillskew=yes
 active=no
-recol1s=4892
-recol1d=6466
-recol2s=4899
-recol2d=6602
-recol3s=5921
-recol3d=6470
+recol1s=13505
+recol1d=21036
+recol2s=15586
+recol2d=24173
+recol3s=14594
+recol3d=22093
 
 [loc_3172]
 model=model_loc_184
 hillskew=yes
 active=no
 mapscene=49
-recol1s=4892
-recol1d=6466
-recol2s=4899
-recol2d=6602
-recol3s=5921
-recol3d=6470
+recol1s=13505
+recol1d=21036
+recol2s=15586
+recol2d=24173
+recol3s=14594
+recol3d=22093
 
 [loc_3173]
 model=model_loc_185
 hillskew=yes
 active=no
 mapscene=49
-recol1s=4892
-recol1d=6466
-recol2s=4899
-recol2d=6602
-recol3s=5921
-recol3d=6470
+recol1s=13505
+recol1d=21036
+recol2s=15586
+recol2d=24173
+recol3s=14594
+recol3d=22093
 
 [loc_3174]
 model=model_loc_186
 hillskew=yes
 active=no
 mapscene=49
-recol1s=4892
-recol1d=6466
-recol2s=4899
-recol2d=6602
-recol3s=5921
-recol3d=6470
+recol1s=13505
+recol1d=21036
+recol2s=15586
+recol2d=24173
+recol3s=14594
+recol3d=22093
 
 [loc_3175]
 model=model_loc_3175
@@ -18062,8 +18062,8 @@ blockrange=no
 ambient=15
 contrast=15
 active=yes
-recol1s=4886
-recol1d=99
+recol1s=10401
+recol1d=25368
 
 [loc_3183]
 name=Hospital shelves
@@ -18072,8 +18072,8 @@ model=model_loc_1016
 active=yes
 ambient=15
 contrast=15
-recol1s=8076
-recol1d=99
+recol1s=6272
+recol1d=25368
 
 [loc_3184]
 name=Hospital shelves
@@ -18082,8 +18082,8 @@ model=model_loc_1017
 active=yes
 ambient=15
 contrast=15
-recol1s=8076
-recol1d=99
+recol1s=6272
+recol1d=25368
 
 [loc_3185]
 name=Hospital shelves
@@ -18093,8 +18093,8 @@ active=yes
 ambient=15
 contrast=15
 active=yes
-recol1s=8076
-recol1d=99
+recol1s=6272
+recol1d=25368
 
 [loc_3186]
 name=Operating Table
@@ -18122,8 +18122,8 @@ active=no
 name=Damaged armour
 desc=Not much use for anything except scrap.
 model=model_loc_3196
-recol1s=45
-recol1d=5433
+recol1s=11627
+recol1d=18890
 
 [loc_3201]
 model=model_loc_771
@@ -18172,12 +18172,12 @@ desc=A strange crack cuts into the wall.
 model=model_loc_3209
 active=yes
 op1=push
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-recol3s=20
-recol3d=7050
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
+recol3s=5285
+recol3d=5216
 category=double_door_open_and_close_right
 param=next_loc_stage,loc_3210
 param=open_sound,coffin_open
@@ -18187,12 +18187,12 @@ name=Odd looking wall
 desc=A strange crack cuts into the wall.
 model=model_loc_3210
 active=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-recol3s=20
-recol3d=7050
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
+recol3s=5285
+recol3d=5216
 
 [loc_3211]
 name=Odd looking wall
@@ -18200,12 +18200,12 @@ desc=A strange crack cuts into the wall.
 model=model_loc_3211
 active=yes
 op1=push
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-recol3s=20
-recol3d=7050
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
+recol3s=5285
+recol3d=5216
 category=double_door_open_and_close_left
 param=next_loc_stage,loc_3212
 param=open_sound,coffin_open
@@ -18215,12 +18215,12 @@ name=Odd looking wall
 desc=A strange crack cuts into the wall.
 model=model_loc_3212
 active=yes
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
-recol3s=20
-recol3d=7050
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
+recol3s=5285
+recol3d=5216
 
 [loc_3213]
 name=Cave entrance
@@ -18240,18 +18240,18 @@ resizex=200
 resizey=200
 resizez=200
 op1=Leave
-recol1s=6036
-recol1d=7952
-recol2s=5008
-recol2d=6439
-recol3s=1932
-recol3d=5309
-recol4s=904
-recol4d=3284
-recol5s=900
-recol5d=107
+recol1s=10400
+recol1d=7329
+recol2s=8288
+recol2d=12615
+recol3s=6176
+recol3d=17901
+recol4s=4096
+recol4d=23187
+recol5s=2048
+recol5d=27482
 recol6s=0
-recol6d=127
+recol6d=32767
 
 [loc_3215]
 model=model_loc_3215
@@ -18271,14 +18271,14 @@ model=model_loc_1477
 op1=Enter
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
-recol2s=6808
-recol2d=8844
-recol3s=7056
-recol3d=7690
-recol4s=6028
-recol4d=8070
+recol1s=12580
+recol1d=7329
+recol2s=10466
+recol2d=5249
+recol3s=8352
+recol3d=4193
+recol4s=6240
+recol4d=3136
 
 [loc_3218]
 name=Tunnel
@@ -18287,8 +18287,8 @@ model=model_loc_1423
 sharelight=yes
 hillskew=yes
 op1=Pass-through
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3219]
 name=Tunnel
@@ -18298,8 +18298,8 @@ sharelight=yes
 hillskew=yes
 mirror=yes
 op1=Pass-through
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3220]
 name=Door
@@ -18308,8 +18308,8 @@ model=model_loc_3220
 width=2
 length=2
 op1=Open
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3221]
 name=Door
@@ -18319,8 +18319,8 @@ mirror=yes
 width=2
 length=2
 op1=Open
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3222]
 name=Cave Stairs
@@ -18329,14 +18329,14 @@ model=model_loc_1477
 sharelight=yes
 hillskew=yes
 op1=Descend
-recol1s=6689
-recol1d=7952
-recol2s=6808
-recol2d=8844
-recol3s=7056
-recol3d=7690
-recol4s=6028
-recol4d=8070
+recol1s=12580
+recol1d=7329
+recol2s=10466
+recol2d=5249
+recol3s=8352
+recol3d=4193
+recol4s=6240
+recol4d=3136
 
 [loc_3223]
 name=Cave Stairs
@@ -18345,14 +18345,14 @@ model=model_loc_3223
 sharelight=yes
 hillskew=yes
 op1=Ascend
-recol1s=6689
-recol1d=7952
-recol2s=6808
-recol2d=8844
-recol3s=7056
-recol3d=7690
-recol4s=6028
-recol4d=8070
+recol1s=12580
+recol1d=7329
+recol2s=10466
+recol2d=5249
+recol3s=8352
+recol3d=4193
+recol4s=6240
+recol4d=3136
 
 [loc_3224]
 name=Cave
@@ -18361,29 +18361,29 @@ model=model_loc_1477
 op1=Enter
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
-recol2s=6808
-recol2d=8844
-recol3s=7056
-recol3d=7690
-recol4s=6028
-recol4d=8070
+recol1s=12580
+recol1d=7329
+recol2s=10466
+recol2d=5249
+recol3s=8352
+recol3d=4193
+recol4s=6240
+recol4d=3136
 
 [loc_3225]
 model=model_loc_3225
 blockwalk=no
 mirror=yes
 forcedecor=yes
-recol1s=5916
-recol1d=8076
+recol1s=13537
+recol1d=6272
 
 [loc_3226]
 model=model_loc_3225
 blockwalk=no
 forcedecor=yes
-recol1s=5916
-recol1d=8076
+recol1s=13537
+recol1d=6272
 
 [loc_3227]
 name=Trap
@@ -18392,8 +18392,8 @@ model=model_loc_3227
 length=2
 width=2
 blockwalk=no
-recol1s=5916
-recol1d=8076
+recol1s=13537
+recol1d=6272
 
 [loc_3228]
 name=Trap
@@ -18415,8 +18415,8 @@ hillskew=yes
 blockwalk=no
 blockrange=no
 op1=Search
-recol1s=53
-recol1d=6798
+recol1s=13741
+recol1d=6273
 
 [loc_3231]
 name=Plank
@@ -18457,8 +18457,8 @@ desc=I can open the grill from this side.
 model=model_loc_2541
 op1=Squeeze-through
 width=2
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3236]
 name=Obstacle pipe
@@ -18466,8 +18466,8 @@ desc=A pipe I can squeeze through.
 model=model_loc_2288
 op1=Squeeze-through
 width=2
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3237]
 name=Obstacle pipe
@@ -18475,8 +18475,8 @@ desc=A pipe I can squeeze through.
 model=model_loc_2288
 op1=Squeeze-through
 width=2
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3238]
 name=ledge
@@ -18532,8 +18532,8 @@ width=3
 length=3
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3245]
 name=Platform
@@ -18543,8 +18543,8 @@ width=3
 length=3
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3246]
 name=Platform
@@ -18553,16 +18553,16 @@ model=model_loc_3246
 width=2
 length=2
 sharelight=yes
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_3247]
 name=Bridge
 model=model_loc_3247
 hillskew=yes
 sharelight=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3248]
 name=Bridge
@@ -18570,8 +18570,8 @@ model=model_loc_3248
 hillskew=yes
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3249]
 name=Bridge
@@ -18579,8 +18579,8 @@ model=model_loc_3249
 hillskew=yes
 sharelight=yes
 hillskew=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3250]
 name=Bridge
@@ -18593,8 +18593,8 @@ model=model_loc_3251
 width=2
 length=2
 sharelight=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [bridge_bend_right]
 model=model_loc_3251
@@ -18602,14 +18602,14 @@ width=2
 length=2
 sharelight=yes
 mirror=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [bridge_threeway]
 model=model_loc_3253
 sharelight=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3254]
 name=Bridge
@@ -18619,8 +18619,8 @@ length=3
 hillskew=yes
 active=yes
 op1=Cross
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3255]
 name=Bridge
@@ -18630,8 +18630,8 @@ length=3
 hillskew=yes
 active=yes
 op1=Cross
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3256]
 model=model_loc_3256
@@ -18644,17 +18644,17 @@ name=Platform
 model=model_loc_3257
 width=2
 length=2
-recol1s=7952
-recol1d=8070
-recol2s=6798
-recol2d=6020
-recol3s=5772
-recol3d=898
-recol4s=3594
+recol1s=7329
+recol1d=3136
+recol2s=6273
+recol2d=2080
+recol3s=5217
+recol3d=1024
+recol4s=4161
 recol4d=0
-recol5s=3974
+recol5s=3104
 recol5d=0
-recol6s=900
+recol6s=2048
 recol6d=0
 
 [loc_3258]
@@ -18663,8 +18663,8 @@ model=model_loc_3258
 width=2
 length=2
 sharelight=yes
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_3259]
 name=Bridge
@@ -18672,8 +18672,8 @@ model=model_loc_3259
 width=2
 length=3
 sharelight=yes
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [loc_3260]
 name=Bridge
@@ -18682,8 +18682,8 @@ width=2
 length=3
 sharelight=yes
 mirror=yes
-recol1s=5916
-recol1d=7952
+recol1s=13537
+recol1d=7329
 
 [upass_bridge+support]
 model=model_loc_3250
@@ -18709,16 +18709,16 @@ model=model_loc_3264
 width=2
 length=2
 op1=Climb-down
-recol1s=3247
-recol1d=7700
-recol2s=3243
-recol2d=7952
-recol3s=3239
-recol3d=6798
-recol4s=3230
-recol4d=5772
-recol5s=3350
-recol5d=3594
+recol1s=13674
+recol1d=8386
+recol2s=12617
+recol2d=7329
+recol3s=11560
+recol3d=6273
+recol4s=9446
+recol4d=5217
+recol5s=7332
+recol5d=4161
 
 [loc_3265]
 name=Pile of rocks
@@ -18759,10 +18759,10 @@ model=model_loc_3
 active=yes
 op1=Open
 op2=Knock
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_3271]
 name=Door
@@ -18770,10 +18770,10 @@ desc=The door is open.
 model=model_loc_3
 active=yes
 op1=Close
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 
 [loc_3272]
 name=Chest
@@ -18799,8 +18799,8 @@ sharelight=yes
 blockrange=no
 active=no
 mapscene=43
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3276]
 name=Stone bridge
@@ -18810,8 +18810,8 @@ blockrange=no
 active=yes
 op1=Cross
 mapscene=43
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3277]
 model=model_loc_3277
@@ -18819,8 +18819,8 @@ sharelight=yes
 blockrange=no
 active=no
 mapscene=43
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3278]
 model=model_loc_3278
@@ -18828,8 +18828,8 @@ active=no
 sharelight=yes
 blockrange=no
 mapscene=43
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3279]
 model=model_loc_3278_2
@@ -18837,8 +18837,8 @@ active=no
 sharelight=yes
 blockrange=no
 mapscene=43
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3280]
 model=model_loc_3280
@@ -18846,72 +18846,72 @@ active=no
 sharelight=yes
 blockrange=no
 mapscene=43
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3281]
 model=model_loc_3281
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3282]
 model=model_loc_3282
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3283]
 model=model_loc_3283
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3284]
 model=model_loc_3284
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3285]
 model=model_loc_3281_2
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3286]
 model=model_loc_3283_2
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3287]
 model=model_loc_3283_3
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3288]
 model=model_loc_3283_4
 sharelight=yes
 active=no
 blockrange=no
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3289]
 model=model_loc_3289
@@ -18919,8 +18919,8 @@ forcedecor=yes
 sharelight=yes
 hillskew=yes
 mapscene=43
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3290]
 model=model_loc_3290_1
@@ -19003,16 +19003,16 @@ model=model_loc_3264
 width=2
 length=2
 op1=Search
-recol1s=3247
-recol1d=7700
-recol2s=3243
-recol2d=7952
-recol3s=3239
-recol3d=6798
-recol4s=3230
-recol4d=5772
-recol5s=3350
-recol5d=3594
+recol1s=13674
+recol1d=8386
+recol2s=12617
+recol2d=7329
+recol3s=11560
+recol3d=6273
+recol4s=9446
+recol4d=5217
+recol5s=7332
+recol5d=4161
 
 [loc_3306]
 model=model_loc_3306
@@ -19024,8 +19024,8 @@ desc=A pile of rocks.
 model=model_loc_13
 length=2
 op1=Climb
-recol1s=7064
-recol1d=7952
+recol1s=12512
+recol1d=7329
 
 [loc_3308]
 name=Smashed cage
@@ -19042,8 +19042,8 @@ model=model_loc_439
 mapscene=12
 hillskew=yes
 op1=Climb-over
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3310]
 model=model_loc_3310
@@ -19123,22 +19123,22 @@ hillskew=yes
 model=model_loc_1862
 hillskew=yes
 sharelight=yes
-recol1s=61
-recol1d=7952
+recol1s=15855
+recol1d=7329
 
 [loc_3323]
 model=model_loc_3323
 hillskew=yes
 sharelight=yes
-recol1s=61
-recol1d=7952
+recol1s=15855
+recol1d=7329
 
 [loc_3324]
 model=model_loc_3324
 hillskew=yes
 sharelight=yes
-recol1s=61
-recol1d=7952
+recol1s=15855
+recol1d=7329
 
 [upass_bridge_corner]
 model=model_loc_3325
@@ -19146,8 +19146,8 @@ width=2
 length=2
 hillskew=yes
 sharelight=yes
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3326]
 model=model_loc_546
@@ -19167,8 +19167,8 @@ mirror=yes
 name=Dwarf statue
 desc=A depiction of a great dwarf miner.
 model=model_loc_568
-recol1s=61
-recol1d=7952
+recol1s=15855
+recol1d=7329
 
 [loc_3329]
 model=model_loc_3329
@@ -19239,8 +19239,8 @@ model=model_loc_3230
 hillskew=yes
 blockrange=no
 op1=Search
-recol1s=53
-recol1d=6798
+recol1s=13741
+recol1d=6273
 
 [loc_3340]
 name=Guide rope
@@ -19269,8 +19269,8 @@ resizey=50
 resizez=50
 hillskew=yes
 op1=Climb-over
-recol1s=6689
-recol1d=7952
+recol1s=12580
+recol1d=7329
 
 [loc_3344]
 name=Barrel
@@ -19283,10 +19283,10 @@ model=model_loc_3345
 width=2
 length=7
 active=no
-recol1s=4888
-recol1d=7952
-recol2s=5916
-recol2d=8076
+recol1s=11425
+recol1d=7329
+recol2s=13537
+recol2d=6272
 
 [loc_3346]
 model=model_loc_3345
@@ -19294,19 +19294,19 @@ width=2
 length=7
 mirror=yes
 active=no
-recol1s=4888
-recol1d=7952
-recol2s=5916
-recol2d=8076
+recol1s=11425
+recol1d=7329
+recol2s=13537
+recol2d=6272
 
 [loc_3347]
 model=model_loc_3347
 width=4
 active=no
-recol1s=4888
-recol1d=7952
-recol2s=5916
-recol2d=8076
+recol1s=11425
+recol1d=7329
+recol2s=13537
+recol2d=6272
 
 [loc_3348]
 name=Iban's Throne
@@ -19317,20 +19317,20 @@ length=2
 blockrange=no
 blockwalk=no
 sharelight=yes
-recol1s=4888
-recol1d=7952
-recol2s=5916
-recol2d=8076
+recol1s=11425
+recol1d=7329
+recol2s=13537
+recol2d=6272
 
 [iban_temple_throne_top]
 model=model_loc_3349
 width=2
 length=2
 sharelight=yes
-recol1s=4888
-recol1d=7952
-recol2s=5916
-recol2d=8076
+recol1s=11425
+recol1d=7329
+recol2s=13537
+recol2d=6272
 
 [loc_3350]
 model=model_loc_3350
@@ -19364,10 +19364,10 @@ width=4
 length=2
 sharelight=yes
 op1=Search
-recol1s=5669
-recol1d=8078
-recol2s=5665
-recol2d=7954
+recol1s=14628
+recol1d=7328
+recol2s=12548
+recol2d=8385
 
 [loc_3354]
 name=Tomb
@@ -19378,28 +19378,28 @@ length=2
 sharelight=yes
 mirror=yes
 op1=Search
-recol1s=5669
-recol1d=8078
-recol2s=5665
-recol2d=7954
+recol1s=14628
+recol1d=7328
+recol2s=12548
+recol2d=8385
 
 [ibantomb_burnt_left]
 model=model_loc_3353
 width=4
 length=2
 sharelight=yes
-recol1s=5669
-recol1d=20
-recol2s=5665
-recol2d=7954
-recol3s=8078
-recol3d=17284
-recol4s=10700
-recol4d=57
-recol5s=10590
-recol5d=57
-recol6s=10560
-recol6d=57
+recol1s=14628
+recol1d=5285
+recol2s=12548
+recol2d=8385
+recol3s=7328
+recol3d=1088
+recol4s=25357
+recol4d=14798
+recol5s=28531
+recol5d=14798
+recol6s=21131
+recol6d=14798
 
 [ibantomb_burnt_right]
 model=model_loc_3353
@@ -19407,18 +19407,18 @@ width=4
 length=2
 sharelight=yes
 mirror=yes
-recol1s=5669
-recol1d=20
-recol2s=5665
-recol2d=7954
-recol3s=8078
-recol3d=17284
-recol4s=10700
-recol4d=57
-recol5s=10590
-recol5d=57
-recol6s=10560
-recol6d=57
+recol1s=14628
+recol1d=5285
+recol2s=12548
+recol2d=8385
+recol3s=7328
+recol3d=1088
+recol4s=25357
+recol4d=14798
+recol5s=28531
+recol5d=14798
+recol6s=21131
+recol6d=14798
 
 [loc_3357]
 model=model_loc_715
@@ -19444,16 +19444,16 @@ desc=Well of the damned.
 model=model_loc_3264
 width=2
 length=2
-recol1s=3247
-recol1d=7700
-recol2s=3243
-recol2d=7952
-recol3s=3239
-recol3d=6798
-recol4s=3230
-recol4d=5772
-recol5s=3350
-recol5d=3594
+recol1s=13674
+recol1d=8386
+recol2s=12617
+recol2d=7329
+recol3s=11560
+recol3d=6273
+recol4s=9446
+recol4d=5217
+recol5s=7332
+recol5d=4161
 
 [loc_3360]
 name=Crate
@@ -19497,8 +19497,8 @@ op2=Pick
 blockwalk=no
 blockrange=no
 mapscene=9
-recol1s=7283
-recol1d=4552
+recol1s=31674
+recol1d=24108
 
 [loc_3367]
 name=Prison Door
@@ -19535,8 +19535,8 @@ width=2
 anim=spit_anim
 hasalpha=yes
 blockrange=no
-recol1s=4684
-recol1d=10801
+recol1s=26156
+recol1d=19014
 
 [loc_3373]
 name=Ogre spitroast
@@ -19546,8 +19546,8 @@ width=2
 anim=spit_anim
 hasalpha=yes
 blockrange=no
-recol1s=4684
-recol1d=8993
+recol1s=26156
+recol1d=14690
 
 [loc_3374]
 name=Ogre spitroast
@@ -19557,8 +19557,8 @@ width=2
 anim=spit_anim
 hasalpha=yes
 blockrange=no
-recol1s=4684
-recol1d=6798
+recol1s=26156
+recol1d=6273
 
 [loc_3375]
 name=Ogre spitroast
@@ -19578,8 +19578,8 @@ resizex=110
 resizey=74
 resizez=128
 blockrange=no
-recol1s=6036
-recol1d=6689
+recol1s=10400
+recol1d=12580
 
 [loc_3377]
 name=Locked Ogre chest
@@ -19643,20 +19643,20 @@ model=model_loc_1461
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=8
-recol1d=45
-recol2s=5524
-recol2d=7333
+recol1s=2114
+recol1d=11627
+recol2s=7331
+recol2d=11591
 
 [loc_3385]
 model=model_loc_1462
 sharelight=yes
 hillskew=yes
 active=no
-recol1s=8
-recol1d=45
-recol2s=5524
-recol2d=7333
+recol1s=2114
+recol1d=11627
+recol2s=7331
+recol2d=11591
 
 [loc_3386]
 model=model_loc_1462
@@ -19664,7 +19664,7 @@ sharelight=yes
 hillskew=yes
 active=no
 mirror=yes
-recol1s=8
-recol1d=45
-recol2s=5524
-recol2d=7333
+recol1s=2114
+recol1d=11627
+recol2s=7331
+recol2d=11591

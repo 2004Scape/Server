@@ -4,6 +4,7 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 import { ParamValue, ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
+import ColorConversion from '#lostcity/util/ColorConversion.js';
 import { CategoryPack, ModelPack, ObjPack, SeqPack } from '#lostcity/util/PackFile.js';
 
 export function parseObjConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -16,7 +17,6 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
     // prettier-ignore
     const numberKeys = [
         '2dzoom', '2dxan', '2dyan', '2dxof', '2dyof', '2dzan',
-        'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
         'cost', 'respawnrate'
     ];
     // prettier-ignore
@@ -66,10 +66,6 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
-            return null;
-        }
-
         if (key === 'cost' && (number < 0 || number > 0x7fff_ffff)) {
             return null;
         }
@@ -92,6 +88,13 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
         }
 
         return index;
+    } else if (key.startsWith('recol')) {
+        const index = parseInt(key[5]);
+        if (index > 9) {
+            return null;
+        }
+
+        return ColorConversion.rgb15toHsl16(parseInt(value));
     } else if (key === 'code10') {
         const index = SeqPack.getByName(value);
         if (index === -1) {

@@ -3,8 +3,8 @@ name=Tree stump
 desc=This tree has been cut down.
 model=model_loc_1341
 mapscene=6
-recol1s=5388
-recol1d=3470
+recol1s=4194
+recol1d=5218
 
 [loc_1342]
 name=Tree stump
@@ -13,8 +13,8 @@ model=model_loc_1342
 width=2
 length=2
 mapscene=6
-recol1s=5388
-recol1d=3470
+recol1s=4194
+recol1d=5218
 
 // i think this is ardougne zoo
 [loc_1343]
@@ -24,8 +24,8 @@ model=model_loc_1342
 width=2
 length=2
 mapscene=6
-recol1s=5388
-recol1d=5029
+recol1s=4194
+recol1d=17633
 
 // willow tree?
 [loc_1344]
@@ -35,8 +35,8 @@ model=model_loc_1342
 width=2
 length=2
 mapscene=6
-recol1s=5388
-recol1d=5786
+recol1s=4194
+recol1d=11490
 
 // skinny 2x2
 [loc_1345]
@@ -48,8 +48,8 @@ length=2
 resizex=100
 resizey=100
 resizez=100
-recol1s=5388
-recol1d=3470
+recol1s=4194
+recol1d=5218
 
 // way too big
 [loc_1346]
@@ -62,8 +62,8 @@ resizex=448
 resizey=448
 resizez=448
 mapscene=6
-recol1s=5388
-recol1d=3470
+recol1s=4194
+recol1d=5218
 
 // too big, wide. looks dead
 [loc_1347]
@@ -73,8 +73,8 @@ model=model_loc_1347
 width=2
 length=2
 mapscene=6
-recol1s=6674
-recol1d=5388
+recol1s=7330
+recol1d=4194
 
 // looks like 2x2 dead tree, but weird angle
 [loc_1348]
@@ -87,8 +87,8 @@ resizex=100
 resizey=100
 resizez=100
 mapscene=6
-recol1s=6674
-recol1d=5388
+recol1s=7330
+recol1d=4194
 
 // looks like 2x2 dead tree, but weird color
 [loc_1349]
@@ -101,10 +101,10 @@ resizex=100
 resizey=100
 resizez=100
 mapscene=6
-recol1s=5388
-recol1d=6814
-recol2s=6674
-recol2d=6814
+recol1s=4194
+recol1d=13602
+recol2s=7330
+recol2d=13602
 
 //looks like 2x2 dead tree, but weird angle
 [loc_1350]
@@ -117,8 +117,8 @@ resizex=80
 resizey=80
 resizez=80
 mapscene=6
-recol1s=6674
-recol1d=5388
+recol1s=7330
+recol1d=4194
 
 // 1x1?
 [loc_1351]
@@ -133,20 +133,20 @@ name=Tree stump
 desc=This tree has been cut down.
 model=model_loc_1351
 mapscene=6
-recol1s=7054
-recol1d=21646
-recol2s=6028
-recol2d=21646
+recol1s=7296
+recol1d=3203
+recol2s=6240
+recol2d=3203
 
 // dead 1x1?
 [loc_1353]
 name=Tree stump
 desc=This tree has been cut down.
 model=model_loc_1351
-recol1s=7054
-recol1d=5388
-recol2s=6028
-recol2d=5388
+recol1s=7296
+recol1d=4194
+recol2s=6240
+recol2d=4194
 
 // giant oak tree?
 [loc_1354]

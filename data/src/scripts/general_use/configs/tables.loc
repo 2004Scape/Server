@@ -44,10 +44,10 @@ desc=A nice sturdy looking table.
 model=model_loc_594
 width=2
 blockrange=no
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 category=usable_table
 
 [loc_596]
@@ -163,10 +163,10 @@ desc=A handy workbench for a handy person.
 model=model_loc_609
 width=2
 blockrange=no
-recol1s=22
-recol1d=16
-recol2s=29
-recol2d=16
+retex1s=elfwood
+retex1d=wood2
+retex2s=bamboo
+retex2d=wood2
 category=unusable_table
 
 [loc_611]
@@ -266,10 +266,10 @@ model=model_loc_621
 width=5
 length=5
 blockrange=no
-recol1s=12
-recol1d=5543
-recol2s=796
-recol2d=38073
+recol1s=3171
+recol1d=14661
+recol2s=13345
+recol2d=11729
 category=unusable_table
 
 
@@ -280,8 +280,8 @@ model=model_loc_593
 width=2
 length=2
 blockrange=no
-recol1s=4886
-recol1d=43270
+recol1s=10401
+recol1d=1058
 category=usable_table
 
 [loc_624]
@@ -292,8 +292,8 @@ blockrange=no
 resizex=40
 resizey=100
 resizez=100
-recol1s=5
-recol1d=16
-recol2s=22
-recol2d=16
+retex1s=darkwood
+retex1d=wood2
+retex2s=elfwood
+retex2d=wood2
 category=usable_table

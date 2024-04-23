@@ -8,6 +8,7 @@ import { ParamValue, ConfigValue, ConfigLine, PackedData, isConfigBoolean, getCo
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import { CategoryPack, HuntPack, ModelPack, NpcPack, SeqPack } from '#lostcity/util/PackFile.js';
+import ColorConversion from '#lostcity/util/ColorConversion.js';
 
 export function parseNpcConfig(key: string, value: string): ConfigValue | null | undefined {
     // prettier-ignore
@@ -18,7 +19,6 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
     // prettier-ignore
     const numberKeys = [
         'size',
-        'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
         'resizex', 'resizey', 'resizez', // not actually used in client
         'resizeh', 'resizev',
         'wanderrange', 'maxrange', 'huntrange', 'attackrange',
@@ -60,10 +60,6 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         }
 
         if (key === 'size' && (number < 0 || number > 5)) {
-            return null;
-        }
-
-        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
             return null;
         }
 
@@ -112,6 +108,13 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
         }
 
         return index;
+    } else if (key.startsWith('recol')) {
+        const index = parseInt(key[5]);
+        if (index > 9) {
+            return null;
+        }
+
+        return ColorConversion.rgb15toHsl16(parseInt(value));
     } else if (key === 'readyanim') {
         const index = SeqPack.getByName(value);
         if (index === -1) {

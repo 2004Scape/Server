@@ -45,8 +45,8 @@ model=model_loc_47
 op1=Open
 active=yes
 blockrange=no
-recol1s=6040
-recol1d=6689
+recol1s=12480
+recol1d=12580
 category=gate_main_closed
 param=next_loc_stage,loc_3199
 
@@ -58,8 +58,8 @@ mirror=yes
 op1=Open
 active=yes
 blockrange=no
-recol1s=6040
-recol1d=6689
+recol1s=12480
+recol1d=12580
 category=gate_outer_closed
 param=next_loc_stage,loc_3200
 
@@ -68,13 +68,13 @@ param=next_loc_stage,loc_3200
 model=model_loc_47
 active=no
 blockrange=no
-recol1s=6040
-recol1d=6689
+recol1s=12480
+recol1d=12580
 
 [loc_3200]
 model=model_loc_47
 mirror=yes
 active=no
 blockrange=no
-recol1s=6040
-recol1d=6689
+recol1s=12480
+recol1d=12580

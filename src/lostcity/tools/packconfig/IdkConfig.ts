@@ -1,12 +1,11 @@
 import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
+import ColorConversion from '#lostcity/util/ColorConversion.js';
 import { IdkPack, ModelPack } from '#lostcity/util/PackFile.js';
 
 export function parseIdkConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
     // prettier-ignore
-    const numberKeys = [
-        'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d'
-    ];
+    const numberKeys: string[] = [];
     // prettier-ignore
     const booleanKeys = [
         'disable'
@@ -38,10 +37,6 @@ export function parseIdkConfig(key: string, value: string): ConfigValue | null |
         }
 
         if (Number.isNaN(number)) {
-            return null;
-        }
-
-        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
             return null;
         }
 
@@ -116,6 +111,13 @@ export function parseIdkConfig(key: string, value: string): ConfigValue | null |
         }
 
         return index;
+    } else if (key.startsWith('recol')) {
+        const index = parseInt(key[5]);
+        if (index > 9) {
+            return null;
+        }
+
+        return ColorConversion.rgb15toHsl16(parseInt(value));
     } else {
         return undefined;
     }

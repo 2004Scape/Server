@@ -1,7 +1,7 @@
 [obj_538]
 model=model_2521_obj
-recol1s=25238
-recol1d=127
+recol1s=2340
+recol1d=32767
 2dyof=1
 2dzoom=1940
 2dxan=572
@@ -19,8 +19,8 @@ param=prayerbonus,4
 
 [obj_540]
 model=model_2786_obj
-recol1s=8741
-recol1d=127
+recol1s=14724
+recol1d=32767
 2dyof=7
 2dzoom=1370
 2dxan=536
@@ -41,8 +41,8 @@ param=prayerbonus,4
 
 [obj_542]
 model=model_2521_obj
-recol1s=25238
-recol1d=4769
+recol1s=2340
+recol1d=13539
 2dyof=1
 2dzoom=1940
 2dxan=572
@@ -59,8 +59,8 @@ param=prayerbonus,6
 
 [obj_544]
 model=model_2786_obj
-recol1s=8741
-recol1d=4769
+recol1s=14724
+recol1d=13539
 2dyof=7
 2dzoom=1370
 2dxan=536
@@ -80,7 +80,7 @@ param=prayerbonus,5
 
 [obj_546]
 model=model_2786_obj
-recol1s=8741
+recol1s=14724
 recol1d=0
 2dyof=7
 2dzoom=1370
@@ -101,7 +101,7 @@ param=prayerbonus,5
 
 [obj_548]
 model=model_2521_obj
-recol1s=25238
+recol1s=2340
 recol1d=0
 2dyof=1
 2dzoom=1940
