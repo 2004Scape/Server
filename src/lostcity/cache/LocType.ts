@@ -65,6 +65,10 @@ export default class LocType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     models: number[] = [];
     shapes: number[] = [];

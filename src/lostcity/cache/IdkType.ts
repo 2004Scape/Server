@@ -54,6 +54,10 @@ export default class IdkType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     type: number = -1;
     models: number[] = [];

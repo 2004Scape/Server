@@ -50,6 +50,10 @@ export default class ParamType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     type = ScriptVarType.INT;
     defaultInt = -1;

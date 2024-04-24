@@ -77,6 +77,10 @@ export default class ObjType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     static getWearPosId(name: string): number {
         switch (name) {
             case 'hat':
