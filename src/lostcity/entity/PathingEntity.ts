@@ -3,15 +3,12 @@ import World from '#lostcity/engine/World.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Loc from '#lostcity/entity/Loc.js';
-import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import Obj from '#lostcity/entity/Obj.js';
-import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 
 import LocType from '#lostcity/cache/LocType.js';
 
-import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, intersects, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
+import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -290,21 +287,8 @@ export default abstract class PathingEntity extends Entity {
         return this.waypointIndex === 0;
     }
 
-    inOperableDistance(
-        target:
-            | Player
-            | Npc
-            | Loc
-            | Obj
-            | {
-                  x: number;
-                  z: number;
-                  level: number;
-                  width: number;
-                  length: number;
-              }
-    ): boolean {
-        if (!target || target.level !== this.level) {
+    inOperableDistance(target: Entity): boolean {
+        if (target.level !== this.level) {
             return false;
         }
         if (target instanceof PathingEntity) {
@@ -317,30 +301,16 @@ export default abstract class PathingEntity extends Entity {
         return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
     }
 
-    inApproachDistance(
-        range: number,
-        target:
-            | Player
-            | Npc
-            | Loc
-            | Obj
-            | {
-                  x: number;
-                  z: number;
-                  level: number;
-                  width: number;
-                  length: number;
-              }
-    ): boolean {
-        if (!target || target.level !== this.level) {
+    inApproachDistance(range: number, target: Entity): boolean {
+        if (target.level !== this.level) {
             return false;
         }
-        if (target instanceof PathingEntity && intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
+        if (target instanceof PathingEntity && Position.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
             // pathing entity has a -2 shape basically (not allow on same tile) for ap.
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        return hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER) && Position.distanceTo(this, target) <= range;
+        return Position.distanceTo(this, target) <= range && hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER);
     }
 
     getCollisionStrategy(): CollisionType | null {

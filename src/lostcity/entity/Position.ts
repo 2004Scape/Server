@@ -110,5 +110,13 @@ export const Position = {
 
     packCoord(level: number, x: number, z: number): number {
         return (z & 0x3fff) | ((x & 0x3fff) << 14) | ((level & 0x3) << 28);
+    },
+
+    intersects(srcX: number, srcZ: number, srcWidth: number, srcHeight: number, destX: number, destZ: number, destWidth: number, destHeight: number): boolean {
+        const srcHorizontal: number = srcX + srcWidth;
+        const srcVertical: number = srcZ + srcHeight;
+        const destHorizontal: number = destX + destWidth;
+        const destVertical: number = destZ + destHeight;
+        return !(destX >= srcHorizontal || destHorizontal <= srcX || destZ >= srcVertical || destVertical <= srcZ);
     }
 } as const;
