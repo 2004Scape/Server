@@ -101,10 +101,7 @@ const ServerOps: CommandHandlers = {
 
         check(spotanim, SpotAnimTypeValid);
 
-        const pos = Position.unpackCoord(check(coord, CoordValid));
-        const x = pos.x;
-        const z = pos.z;
-        const level = pos.level;
+        const {level, x, z} = Position.unpackCoord(check(coord, CoordValid));
 
         World.getZone(x, z, level).animMap(x, z, spotanim, height, delay);
     },

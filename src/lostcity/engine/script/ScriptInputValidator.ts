@@ -11,117 +11,117 @@ import InvType from '#lostcity/cache/InvType.js';
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import IdkType from '#lostcity/cache/IdkType.js';
 
-export interface ScriptInputValidator<T> {
+interface ScriptInputValidator<T> {
     condition(input: T): boolean;
     throwMessage(): string;
 }
 
-export class ScriptInputNumberNotNullValidator implements ScriptInputValidator<number> {
+class ScriptInputNumberNotNullValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input !== -1;
     throwMessage = (): string => 'An input number was null(-1).';
 }
 
-export class ScriptInputStringNotNullValidator implements ScriptInputValidator<string> {
+class ScriptInputStringNotNullValidator implements ScriptInputValidator<string> {
     condition = (input: string): boolean => input.length > 0;
     throwMessage = (): string => 'An input number was null(-1).';
 }
 
-export class ScriptInputLocTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputLocTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < LocType.count;
     throwMessage = (): string => 'An input for a Loc type was not in a valid range which it is impossible to spawn a null Loc noob!';
 }
 
-export class ScriptInputLocAngleValidator implements ScriptInputValidator<number> {
+class ScriptInputLocAngleValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input <= 3;
     throwMessage = (): string => 'An input for a Loc angle was out of range. Range should be: 0 to 3.';
 }
 
-export class ScriptInputLocShapeValidator implements ScriptInputValidator<number> {
+class ScriptInputLocShapeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input <= 31;
     throwMessage = (): string => 'An input for a Loc shape was out of range. Range should be: 0 to 31.';
 }
 
-export class ScriptInputDurationValidator implements ScriptInputValidator<number> {
+class ScriptInputDurationValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input > 0;
     throwMessage = (): string => 'An input duration was out of range. Range should be greater than 0.';
 }
 
-export class ScriptInputCoordValidator implements ScriptInputValidator<number> {
+class ScriptInputCoordValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input <= 0x3ffffffffff;
     throwMessage = (): string => 'An input coord was out of range. Range should be: 0 to 4398046511103';
 }
 
-export class ScriptInputParamTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputParamTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < ParamType.count;
     throwMessage = (): string => 'An input for a Param type was not in a valid range.';
 }
 
-export class ScriptInputNpcTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputNpcTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < NpcType.count;
     throwMessage = (): string => 'An input for a Npc type was not in a valid range.';
 }
 
-export class ScriptInputNpcStatValidator implements ScriptInputValidator<number> {
+class ScriptInputNpcStatValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < 6;
     throwMessage = (): string => 'An input for a Npc stat was not in a valid range. Range should be: 0 to 5';
 }
 
-export class ScriptInputQueueValidator implements ScriptInputValidator<number> {
+class ScriptInputQueueValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < 20;
     throwMessage = (): string => 'An input for an ai_queue was not in a valid range. Range should be: 0 to 19';
 }
 
-export class ScriptInputHuntTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputHuntTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < HuntType.count;
     throwMessage = (): string => 'An input for a Hunt type was not in a valid range.';
 }
 
-export class ScriptInputNpcModeValidator implements ScriptInputValidator<number> {
+class ScriptInputNpcModeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= -1 && input <= NpcMode.APNPC5;
     throwMessage = (): string => `An input for a Npc mode was not in a valid range. Range should be -1 to ${NpcMode.APNPC5}.`;
 }
 
-export class ScriptInputHitTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputHitTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input <= 2;
     throwMessage = (): string => 'An input for a hit type was not in a valid range. Range should be 0 to 2.';
 }
 
-export class ScriptInputSpotAnimTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputSpotAnimTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < SpotanimType.count;
     throwMessage = (): string => 'An input for a SpotAnim type was not in a valid range.';
 }
 
-export class ScriptInputEnumTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputEnumTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < EnumType.count;
     throwMessage = (): string => 'An input for an Enum type was not in a valid range.';
 }
 
-export class ScriptInputObjTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputObjTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < ObjType.count;
     throwMessage = (): string => 'An input for an Obj type was not in a valid range.';
 }
 
-export class ScriptInputObjCountValidator implements ScriptInputValidator<number> {
+class ScriptInputObjCountValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input > 0 && input <= Inventory.STACK_LIMIT;
     throwMessage = (): string => `An input for an Obj count was not in a valid range. Range should be: 1 to ${Inventory.STACK_LIMIT}.`;
 }
 
-export class ScriptInputObjNotDummyValidator implements ScriptInputValidator<number> {
+class ScriptInputObjNotDummyValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => ObjType.get(input).dummyitem === 0;
     throwMessage = (): string => 'An input for an Obj was a graphic_only dummyitem.';
 }
 
-export class ScriptInputInvTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputInvTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < InvType.count;
     throwMessage = (): string => 'An input for an Inv type was not in a valid range.';
 }
 
-export class ScriptInputCategoryTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputCategoryTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < CategoryType.count;
     throwMessage = (): string => 'An input for an Category type was not in a valid range.';
 }
 
-export class ScriptInputIDKTypeValidator implements ScriptInputValidator<number> {
+class ScriptInputIDKTypeValidator implements ScriptInputValidator<number> {
     condition = (input: number): boolean => input >= 0 && input < IdkType.count;
     throwMessage = (): string => 'An input for an IDK type was not in a valid range.';
 }
