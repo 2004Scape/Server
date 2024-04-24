@@ -13,7 +13,6 @@ type Direction = (typeof Direction)[keyof typeof Direction];
 
 // TODO (jkm) consider making this a class
 export const Position = {
-    max: 0x3ffffffffff,
     zone: (pos: number) => pos >> 3,
     zoneCenter: (pos: number) => Position.zone(pos) - 6,
     zoneOrigin: (pos: number) => Position.zoneCenter(pos) << 3,
