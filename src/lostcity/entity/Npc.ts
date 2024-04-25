@@ -764,7 +764,7 @@ export default class Npc extends PathingEntity {
                             continue;
                         }
 
-                        if (Position.distanceTo(this, player) <= type.huntrange) {
+                        if (Position.distanceToSW(this, player) <= type.huntrange) {
                             nearby.push(player);
                         }
                     }
