@@ -5,10 +5,25 @@ switch_int(%hazeelcult_progress) {
         ~chatnpc(quiz, "What have you brought me? I want some more toys!");
         ~chatplayer(neutral, "I'm afraid I don't have any toys.");
         ~chatnpc(angry, "TOYS! I WANT TOYS!");
-    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(quiz, "Mommy said you're here to kill all the nasty people that keep breaking in.");
-        ~chatplayer(confused, "Something like that.");
-        ~chatnpc(quiz, "Can I watch?");
-        ~chatplayer(shock, "No!");
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision: @philipe_carnillean_breakin;
+    case ^hazeelcult_poured_poison:
+        ~chatplayer(neutral, "Hello youngster.");
+        ~mesbox("The boy looks very upset.");
+        ~chatnpc(sad, "Someone killed scruffy. I liked scruffy. He never told me off.");
+        ~chatplayer(neutral, "Yeah. It's a real shame.");
+        ~chatnpc(sad, "I want my mommy.");
+    case ^hazeelcult_finished_side_task:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatplayer(neutral, "Hello youngster.");
+            @philipe_carnillean_breakin;
+        } else {
+            @philipe_carnillean_breakin;
+        }
 }
+
+[label,philipe_carnillean_breakin]
+~chatplayer(neutral, "Hello.");
+~chatnpc(quiz, "Mommy said you're here to kill all the nasty people that keep breaking in.");
+~chatplayer(confused, "Something like that.");
+~chatnpc(quiz, "Can I watch?");
+~chatplayer(shock, "No!");

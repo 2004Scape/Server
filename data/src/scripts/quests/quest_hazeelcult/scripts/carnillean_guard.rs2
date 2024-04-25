@@ -7,7 +7,16 @@ switch_int(%hazeelcult_progress) {
         ~chatnpc(neutral, "Anyone caught interfering with the person or possessions of any Carnilleans will be taken to jail so quickly that their feet won't even touch the floor!");
         ~chatplayer(confused, "Well, I wasn't actually planning on doing anything like that...");
         ~chatnpc(happy, "Glad to hear it. Let's keep it that way, hmmm?");
-    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision:
+    case ^hazeelcult_poured_poison:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(sad, "Hello. The sarge is furious with me! Apparently those loony cultists have been back somehow without me noticing! I got a right roasting earlier...");
+        ~chatnpc(sad, "I don't exactly know what they got up to in the house... but that's besides the point. Sir Ceril was extremely upset, and I don't blame him.");
+    case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision, ^hazeelcult_finished_side_task:
+        if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(neutral, "Hello again adventurer. Still hanging around here eh? Let me know if you spot any of those loony cultists sniffing around.");
+            return;
+        }
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(neutral, "Hello. I hear tell you're after that loony cult who broke in the other night. It always gladdens me when civilians assist the law like this.");
 }

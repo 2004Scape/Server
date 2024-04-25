@@ -1,5 +1,22 @@
 [opnpc1,claus_the_chef]
 switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_finished_side_task, ^hazeelcult_given_armour:
+        if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
+            ~chatplayer(neutral, "Hello Claus.");
+            ~chatnpc(confused, "I... just CAN'T understand it! How? HOW could someone poison my delicious food without me even noticing??? I... I just don't understand!");
+            ~chatnpc(sad, "Oh man... I hope I don't lose my job over this... but HOW? How did they do it? And why would the villain want to kill poor Scruffy anyway? He was such a good dog...");
+            ~mesbox("Claus wipes away a tear.");
+            ~chatplayer(neutral, "Yeah. It's a real mystery, huh?");
+        } else {
+            ~chatplayer(neutral, "Hello there.");
+            ~chatnpc(neutral, "Hello! How are you today??");
+            ~chatplayer(neutral, "Not bad, thanks.");
+            ~chatnpc(neutral, "Good good.");
+        }
+    case ^hazeelcult_poured_poison:
+        ~chatnpc(neutral, "Hello there. Caught any of those weird thieves yet?");
+        ~chatplayer(neutral, "Nope. Afraid not.");
+        ~chatnpc(neutral, "Well, keep at it!");
     case ^hazeelcult_clivet_decision:
         ~chatplayer(neutral, "Hiya.");
         ~chatnpc(quiz, "You're that adventurer the family asked to help get those weird cultists who keep breaking in, right?");
@@ -11,4 +28,13 @@ switch_int(%hazeelcult_progress) {
 }
 
 [oplocu,loc_2859]
+if(last_useitem = poison) {
+    if(%hazeelcult_progress = ^hazeelcult_clivet_decision & %hazeelcult_side = ^hazeelcult_evilside) {
+        %hazeelcult_progress = ^hazeelcult_poured_poison;
+        inv_del(inv, poison, 1);
+        ~mesbox("You pour the poison into the hot pot.|The poison dissolves into the soup.");
+    } else {
+        ~mesbox("Random murder isn't good"); // no period
+    }
+}
 ~chatnpc_specific(nc_name(claus_the_chef), claus_the_chef, angry, "Oi! I don't want people messing around with my range!");

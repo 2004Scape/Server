@@ -1,4 +1,4 @@
-[obj_2403]
+[scroll_of_hazeel]
 name=Scroll of hazeel
 desc=Scroll containing a powerful enchantment of restoration.
 model=model_2600_obj
@@ -11,7 +11,7 @@ members=yes
 weight=10g
 param=no_alchemy,1
 
-[obj_2404]
+[hazeelcult_key]
 name=Key
 desc=This key opens a chest in the Carnillean household.
 members=yes
@@ -24,7 +24,7 @@ model=model_2372_obj
 weight=10g
 param=no_alchemy,1
 
-[obj_2405]
+[carnillean_armour]
 name=Carnillean armour
 desc=Decorative armour; an heirloom of the Carnillean family.
 cost=65
@@ -52,7 +52,7 @@ param=stabdefence,20
 param=slashdefence,14
 param=crushdefence,8
 
-[obj_2406]
+[mark_of_hazeel]
 name=Mark of hazeel
 desc=Sign of my commitment to Hazeel.
 model=model_2392_obj

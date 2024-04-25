@@ -1,6 +1,10 @@
 [oploc1,loc_2871]
 p_arrivedelay;
-@climb_ladder(movecoord(coord, -549, 0, 756), false);
+// https://youtu.be/uSO-ilQk5XY?si=mj3w1GIB5ZM0BnAZ&t=1089
+anim(human_reachforladdertop, 0);
+p_delay(1);
+p_telejump(movecoord(coord, -549, 0, 756));
+mes("You climb down the ladder.");
 
 [oploc1,loc_2872]
 p_arrivedelay;

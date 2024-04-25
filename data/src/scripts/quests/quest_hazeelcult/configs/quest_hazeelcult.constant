@@ -2,6 +2,10 @@
 ^hazeelcult_started = 2
 ^hazeelcult_spoken_clivet = 3
 ^hazeelcult_clivet_decision = 4
+^hazeelcult_poured_poison = 5
+^hazeelcult_finished_side_task = 6
+^hazeelcult_given_armour = 7
+^hazeelcult_complete = 9
 
 ^hazeelcult_goodside = 0
 ^hazeelcult_evilside = 1

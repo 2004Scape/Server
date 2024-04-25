@@ -29,8 +29,20 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer(quiz, "WHERE is the cult hideout?");
             ~chatnpc(angry, "You're more of a fool than you look if you think you will ever find it. When Lord Hazeel is revived you will be first to grovel for his mercy!");
         } else {
-            // guessing here as well
             ~chatnpc(neutral, "You have a mission for us adventurer. Go to the Carnilliean household and poison their meal to prove your loyalty.");
+            if(inv_total(inv, poison) = 0) { // no bank check
+                ~chatplayer(sad, "I lost the poison you gave me...");
+                inv_add(inv, poison, 1);
+                ~chatnpc(angry, "Useless. Take this and don't mess up this time. Lord Hazeel is depending on you.");
+            }
+        }
+    case ^hazeelcult_finished_side_task:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatplayer(neutral, "Hello again.");
+            ~chatnpc(angry, "You again. Mark my words meddler; when Lord Hazeel returns you will be punished most severely for your interference in our schemes.");
+        } else {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(happy, "Hello once more adventurer. All we need is Hazeels' magical scroll to bring him forth once more to this world.");
         }
 }
 
@@ -55,6 +67,8 @@ switch_int(~p_choice2("You're crazy, I'd never help you.", 1, "So what would I h
         ~chatnpc(quiz, "So what say you adventurer? Join our side against the Carnillean thieves?");
         switch_int(~p_choice2("No. I won't do it.", 1, "Ok, count me in.", 2)) {
             case 1:
+                ~chatplayer(angry, "No. I won't do it.");
+                @clivet_fool;
             case 2:
                 ~chatplayer(neutral, "Ok, count me in.");
                 ~chatnpc(neutral, "Excellent. It takes a rare character to see through the cursed Carnillean lies. I can tell you are a <text_gender("man", "lady")> of exactly the right character to join the followers of Hazeel.");

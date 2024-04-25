@@ -1,0 +1,46 @@
+[opnpc1,hazeel_cultist]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_poured_poison:
+        // guessed mesanims
+        ~chatplayer(neutral, "Hiya.");
+        ~chatnpc(neutral, "Hello. Oh, are you new?");
+        ~chatplayer(neutral, "That's right.");
+        ~chatnpc(neutral, "Well, it's always good to have a new recruit. Soon we shall retrive Hazeels' scroll and the ritual to revive him can begin!");
+    case ^hazeelcult_not_started, ^hazeelcult_started, ^hazeelcult_spoken_clivet:
+        ~chatplayer(neutral, "Hi.");
+        ~chatnpc(shifty, "What? Who are you and why did you come here? It doesn't matter, leave now adventurer. While you still can.");
+    case ^hazeelcult_clivet_decision:
+        ~chatplayer(neutral, "Hello there.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            @hazeel_cultist_goodsidequest;
+        } else {
+            ~chatnpc(angry, "Leave me alone, can't you see I'm busy? We have a lot to do preparing for the imminent return of Lord Hazeel"); // no period
+        }
+    case ^hazeelcult_poured_poison:
+        ~chatplayer(neutral, "Hello.");
+        ~chatplayer(neutral, "I poured the poison into the Carnillean's meal as requested. It didn't quite go to plan however.");
+        ~chatnpc(neutral, "Yes, we heard all about it from one of our sources. Hazeel has eyes everywhere! You have now proved your loyalty and will be rewarded when Hazeel is revived!");
+        ~chatplayer(neutral, "Ok. So what's next?");
+        ~chatnpc(neutral, "Here. Wear this amulet; it is called The Sign Of Hazeel. Not only will it identify you as one of our brotherhood to other followers but it is also key to finding our hideout.");
+        if(inv_total(inv, mark_of_hazeel) > 0) {
+            ~chatnpc(neutral, "But of course, you already knew that, as you already have The Sign Of Hazeel.");
+            return;
+        }
+        inv_add(inv, mark_of_hazeel, 1);
+        ~chatplayer(quiz, "How does this amulet help do that then?");
+        ~chatnpc(neutral, "Hazeel in his wisdom when he built this lair did so by making it inaccessible unless the flow of the sewers is controlled exactly by the sewer valves above ground.");
+        ~chatnpc(neutral, "Each sewer valve must be correctly set before the water level is such that you may enter. The secret of the correct settings is contained in these amulets which honour him.");
+        ~chatnpc(neutral, "Starting from left to right, follow the design of the amulet to locate each sewer valve, and then turn each so as to follow the amulet design.");
+        ~chatnpc(neutral, "When you solve the sequence you may enter our hideout where our leader, Alomone, awaits you.");
+    case ^hazeelcult_finished_side_task:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            @hazeel_cultist_goodsidequest;
+        } else {
+            ~chatplayer(neutral, "Hello there.");
+            ~chatnpc(neutral, "Well hello! Until we have retrieved the scroll of Hazeel we cannot resurrect our master. You must find it and bring it to us.");
+        }
+}
+
+[label,hazeel_cultist_goodsidequest]
+~chatnpc(angry, "What? How did you get in here? Who are you and why do you come here? It doesn't matter, you will not live long enough to tell anyone of our hideout!");
+~npc_retaliate(0);

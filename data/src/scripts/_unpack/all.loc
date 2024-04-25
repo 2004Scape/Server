@@ -15925,23 +15925,6 @@ length=2
 active=yes
 op1=Board
 
-[loc_2850]
-name=Cupboard
-desc=It's closed.
-model=model_loc_368
-length=2
-op1=Open
-forceapproach=right
-
-[loc_2851]
-name=Cupboard
-desc=It's open.
-model=model_loc_371
-length=2
-op1=Search
-op2=Shut
-forceapproach=right
-
 [loc_2852]
 name=Cave entrance
 desc=I can probably squeeze my way inside there.

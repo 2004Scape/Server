@@ -31,6 +31,7 @@ if ($random < 32) {
 }
 if_settext(questscroll:com_3, $questmessage);
 if_settext(questscroll:com_9, tostring($questpoints));
+if_settext(questscroll:com_10, "Quest points.");
 if_setobject(questscroll:com_4, $obj, $objscale);
 if_openmainmodal(questscroll);
 if_setcolour($component, ~rgb15bits(^green_rgb));

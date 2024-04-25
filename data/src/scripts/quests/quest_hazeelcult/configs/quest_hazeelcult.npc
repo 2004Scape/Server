@@ -261,7 +261,7 @@ param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
 
-[npc_894]
+[hazeel_cultist]
 name=Hazeel Cultist
 desc=A member of the Hazeel cult.
 readyanim=human_staffready
