@@ -25,6 +25,7 @@
     "server:build": "npm run server:pack && npm run script:compile",
     "server:watch": "watch \"npm run server:build\" ./data/src/scripts ./src/lostcity/tools",
     "test": "vitest run",
+    "todo": "leasot src/ --skip-unsupported --exit-nicely",
     "lint": "eslint . --ext .ts --ext .js",
     "lint:staged": "eslint --ext .ts --ext .js",
     "drops": "npm run ts-loader src/lostcity/tools/server/drops.ts",
@@ -38,7 +39,8 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "npm run lint:staged"
+      "npm run lint:staged",
+      "leasot --skip-unsupported --exit-nicely"
     ]
   },
   "prisma": {
@@ -84,6 +86,7 @@
     "eslint-plugin-jest": "^27.6.3",
     "husky": "^9.0.11",
     "jest": "^29.7.0",
+    "leasot": "^13.3.0",
     "lint-staged": "^15.2.2",
     "nodemon": "^3.0.2",
     "prettier": "3.2.4",
