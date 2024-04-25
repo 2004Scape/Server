@@ -3,8 +3,8 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { loadPack } from '#lostcity/util/NameMap.js';
 
-if (!fs.existsSync('dump/client/config')) {
-    console.error('dump/client/config does not exist');
+if (!fs.existsSync('data/client/config')) {
+    console.error('data/client/config does not exist');
     process.exit(1);
 }
 
@@ -13,14 +13,14 @@ if (process.argv.includes('--194')) {
     decode194 = true;
 }
 
-fs.mkdirSync('dump/src/scripts', { recursive: true });
-fs.mkdirSync('dump/pack', { recursive: true });
+fs.mkdirSync('data/src/scripts', { recursive: true });
+fs.mkdirSync('data/pack', { recursive: true });
 
-const config = Jagfile.load('dump/client/config');
+const config = Jagfile.load('data/client/config');
 
 // ----
 
-const texturePack = loadPack('dump/pack/texture.pack');
+const texturePack = loadPack('data/src/pack/texture.pack');
 const floPack = [];
 const floConfig = [];
 
@@ -64,13 +64,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/flo.pack',
+    'data/src/pack/flo.pack',
     floPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.flo', floConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.flo', floConfig.join('\n') + '\n');
 
 // ----
 
@@ -169,13 +169,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/idk.pack',
+    'data/src/pack/idk.pack',
     idkPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.idk', idkConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.idk', idkConfig.join('\n') + '\n');
 
 // ----
 
@@ -369,13 +369,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/loc.pack',
+    'data/src/pack/loc.pack',
     locPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.loc', locConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.loc', locConfig.join('\n') + '\n');
 
 // ----
 
@@ -465,13 +465,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/npc.pack',
+    'data/src/pack/npc.pack',
     npcPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.npc', npcConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.npc', npcConfig.join('\n') + '\n');
 
 // ----
 
@@ -572,13 +572,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/obj.pack',
+    'data/src/pack/obj.pack',
     objPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.obj', objConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.obj', objConfig.join('\n') + '\n');
 
 // ----
 
@@ -684,13 +684,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/seq.pack',
+    'data/src/pack/seq.pack',
     seqPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.seq', seqConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.seq', seqConfig.join('\n') + '\n');
 
 // ----
 
@@ -746,13 +746,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/spotanim.pack',
+    'data/src/pack/spotanim.pack',
     spotanimPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.spotanim', spotanimConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.spotanim', spotanimConfig.join('\n') + '\n');
 
 // ----
 
@@ -806,10 +806,10 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/varp.pack',
+    'data/src/pack/varp.pack',
     varpPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.varp', varpConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.varp', varpConfig.join('\n') + '\n');

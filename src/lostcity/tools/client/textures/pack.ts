@@ -73,7 +73,7 @@ export async function packClientTexture() {
     // ----
 
     const pack = fs
-        .readFileSync('data/pack/texture.pack', 'ascii')
+        .readFileSync('data/src/pack/texture.pack', 'ascii')
         .replace(/\r/g, '')
         .split('\n')
         .filter(x => x.length)

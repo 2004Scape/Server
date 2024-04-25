@@ -6,8 +6,8 @@ import Jagfile from '#jagex2/io/Jagfile.js';
 
 Model.unpack(Jagfile.load('data/pack/client/models'));
 
-const models = loadPack('data/pack/model.pack');
-const textures = loadPack('data/pack/texture.pack');
+const models = loadPack('data/src/pack/model.pack');
+const textures = loadPack('data/src/pack/texture.pack');
 
 function convertRecolor(src: string[], file: string, path: string) {
     let changed = false;

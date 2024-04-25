@@ -3,17 +3,17 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { loadPack } from '#lostcity/util/NameMap.js';
 
-const pack = loadPack('dump/pack/interface.pack');
-const objPack = loadPack('dump/pack/obj.pack');
-const seqPack = loadPack('dump/pack/seq.pack');
-const varpPack = loadPack('dump/pack/varp.pack');
-const modelPack = loadPack('dump/pack/model.pack');
+const pack = loadPack('data/src/pack/interface.pack');
+const objPack = loadPack('data/src/pack/obj.pack');
+const seqPack = loadPack('data/src/pack/seq.pack');
+const varpPack = loadPack('data/src/pack/varp.pack');
+const modelPack = loadPack('data/src/pack/model.pack');
 
-const jag = Jagfile.load('dump/client/interface');
+const jag = Jagfile.load('data/client/interface');
 const dat = jag.read('data');
 
 if (!dat) {
-    throw new Error('no data in dump/client/interface');
+    throw new Error('no data in data/client/interface');
 }
 
 type Component = Record<string, any> & {
@@ -228,7 +228,7 @@ while (dat.available > 0) {
     interfaces[id] = com;
 }
 
-fs.writeFileSync('dump/pack/interface.order', order);
+fs.writeFileSync('data/pack/interface.order', order);
 
 const packChildren: Record<number, number> = {};
 
@@ -278,7 +278,7 @@ for (let i = 0; i < pack.length; i++) {
 
     packStr += `${i}=${pack[i]}\n`;
 }
-fs.writeFileSync('dump/pack/interface.pack', packStr);
+fs.writeFileSync('data/src/pack/interface.pack', packStr);
 
 function statToName(stat: number) {
     switch (stat) {
@@ -742,7 +742,7 @@ function convert(com: Component, x = 0, y = 0, lastCom = -1) {
     return str;
 }
 
-fs.mkdirSync('dump/src/scripts/interfaces', { recursive: true });
+fs.mkdirSync('data/src/scripts/interfaces', { recursive: true });
 for (let i = 0; i < interfaces.length; i++) {
     const com = interfaces[i];
     if (!com || com.id !== com.rootLayer) {
@@ -751,5 +751,5 @@ for (let i = 0; i < interfaces.length; i++) {
     }
 
     const name = pack[com.id];
-    fs.writeFileSync(`dump/src/scripts/interfaces/${name}.if`, convert(com));
+    fs.writeFileSync(`data/src/scripts/interfaces/${name}.if`, convert(com));
 }

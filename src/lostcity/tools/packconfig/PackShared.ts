@@ -342,7 +342,7 @@ export function packConfigs() {
 
     // not a config but we want the server to know all the possible categories
     if (
-        shouldBuildFile('data/pack/category.pack', 'data/pack/server/category.dat') ||
+        shouldBuildFile('data/src/pack/category.pack', 'data/pack/server/category.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/category.dat')
     ) {
         console.log('Packing categories');
