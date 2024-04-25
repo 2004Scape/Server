@@ -26,13 +26,20 @@
     "server:watch": "watch \"npm run server:build\" ./data/src/scripts ./src/lostcity/tools",
     "test": "vitest run",
     "lint": "eslint . --ext .ts --ext .js",
+    "lint:staged": "eslint --ext .ts --ext .js",
     "drops": "npm run ts-loader src/lostcity/tools/server/drops.ts",
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev",
     "clean": "npm run client:clean && npm run server:clean",
     "build": "npm run client:pack && npm run server:build",
-    "client": "java -cp 225.2004-05-18.jar client 10 0 highmem members"
+    "client": "java -cp 225.2004-05-18.jar client 10 0 highmem members",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npm run lint:staged"
+    ]
   },
   "prisma": {
     "seed": "npm run ts-loader src/lostcity/db/seed.ts"
@@ -72,7 +79,9 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-plugin-jest": "^27.6.3",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
+    "lint-staged": "^15.2.2",
     "nodemon": "^3.0.2",
     "prettier": "3.2.4",
     "prisma": "^5.7.1",
