@@ -449,7 +449,7 @@ function convert(com: Component, x = 0, y = 0, lastCom = -1) {
                     }
                     case 5: {
                         const varp = com.scripts[i][++j];
-                        str += `testvar,${varpPack[varp] ?? 'varp_' + varp}`;
+                        str += `pushvar,${varpPack[varp] ?? 'varp_' + varp}`;
                         break;
                     }
                     case 6:

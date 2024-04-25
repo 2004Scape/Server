@@ -68,7 +68,7 @@ function nameToScript(name: string) {
             return 3;
         case 'inv_count':
             return 4;
-        case 'testvar':
+        case 'pushvar':
             return 5;
         case 'stat_xp_remaining':
             return 6;
@@ -317,7 +317,7 @@ export function packInterface(server: boolean) {
                         case 'inv_count':
                             opCount += 2;
                             break;
-                        case 'testvar':
+                        case 'pushvar':
                             opCount += 1;
                             break;
                         case 'stat_xp_remaining':
@@ -371,7 +371,7 @@ export function packInterface(server: boolean) {
                             data.p2(objLink);
                             break;
                         }
-                        case 'testvar': {
+                        case 'pushvar': {
                             const varpLink = VarpPack.getByName(parts[1]);
                             if (varpLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);

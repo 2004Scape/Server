@@ -7,7 +7,7 @@ y=6
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_thickskin
+script1op1=pushvar,prayer_thickskin
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -18,7 +18,7 @@ y=6
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_strengthburst
+script1op1=pushvar,prayer_strengthburst
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -29,7 +29,7 @@ y=6
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_clarity
+script1op1=pushvar,prayer_clarity
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -40,7 +40,7 @@ y=42
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_rockskin
+script1op1=pushvar,prayer_rockskin
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -51,7 +51,7 @@ y=42
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_superhumanstrength
+script1op1=pushvar,prayer_superhumanstrength
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -62,7 +62,7 @@ y=42
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_improvedreflexes
+script1op1=pushvar,prayer_improvedreflexes
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -73,7 +73,7 @@ y=78
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_rapidrestore
+script1op1=pushvar,prayer_rapidrestore
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -84,7 +84,7 @@ y=78
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_rapidheal
+script1op1=pushvar,prayer_rapidheal
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -95,7 +95,7 @@ y=78
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_protectitems
+script1op1=pushvar,prayer_protectitems
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -106,7 +106,7 @@ y=114
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_steelskin
+script1op1=pushvar,prayer_steelskin
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -117,7 +117,7 @@ y=114
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_ultimatestrength
+script1op1=pushvar,prayer_ultimatestrength
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -128,7 +128,7 @@ y=114
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_incrediblereflexes
+script1op1=pushvar,prayer_incrediblereflexes
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -139,7 +139,7 @@ y=150
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_protectfrommagic
+script1op1=pushvar,prayer_protectfrommagic
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -150,7 +150,7 @@ y=150
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_protectfrommissiles
+script1op1=pushvar,prayer_protectfrommissiles
 script1=eq,1
 activegraphic=prayerglow,0
 
@@ -161,7 +161,7 @@ y=150
 buttontype=toggle
 width=34
 height=34
-script1op1=testvar,prayer_protectfrommelee
+script1op1=pushvar,prayer_protectfrommelee
 script1=eq,1
 activegraphic=prayerglow,0
 
