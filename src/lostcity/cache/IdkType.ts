@@ -28,6 +28,7 @@ export default class IdkType extends ConfigType {
         for (let id = 0; id < count; id++) {
             const config = new IdkType(id);
             config.decodeType(server);
+            config.decodeType(client);
 
             IdkType.configs[id] = config;
 
