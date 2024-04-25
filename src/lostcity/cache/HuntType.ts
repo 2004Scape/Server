@@ -56,6 +56,10 @@ export default class HuntType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     type: HuntModeType = HuntModeType.OFF;
     checkVis: HuntVis = HuntVis.OFF;

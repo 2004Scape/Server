@@ -16,6 +16,8 @@ import { Position } from '#lostcity/entity/Position.js';
 
 import {CollisionFlag, hasLineOfSight, hasLineOfWalk, isFlagged, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
 
+import {check, CoordValid, SpotAnimTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: state => {
         state.pushInt(World.currentTick);
@@ -27,15 +29,9 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: state => {
         const [c1, c2] = state.popInts(2);
-    
-        if (c1 < 0 || c1 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        } else if (c2 < 0 || c2 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
-        }
-    
-        const from = Position.unpackCoord(c1);
-        const to = Position.unpackCoord(c2);
+
+        const from = Position.unpackCoord(check(c1, CoordValid));
+        const to = Position.unpackCoord(check(c2, CoordValid));
     
         let count = 0;
         for (let x = Math.floor(from.x / 8); x <= Math.ceil(to.x / 8); x++) {
@@ -67,17 +63,9 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.INZONE]: state => {
         const [c1, c2, c3] = state.popInts(3);
 
-        if (c1 < 0 || c1 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        } else if (c2 < 0 || c2 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
-        } else if (c3 < 0 || c3 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c3}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const from = Position.unpackCoord(c1);
-        const to = Position.unpackCoord(c2);
-        const pos = Position.unpackCoord(c3);
+        const from = Position.unpackCoord(check(c1, CoordValid));
+        const to = Position.unpackCoord(check(c2, CoordValid));
+        const pos = Position.unpackCoord(check(c3, CoordValid));
 
         if (pos.x < from.x || pos.x > to.x) {
             state.pushInt(0);
@@ -93,14 +81,8 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.LINEOFWALK]: state => {
         const [c1, c2] = state.popInts(2);
 
-        if (c1 < 0 || c1 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        } else if (c2 < 0 || c2 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const from = Position.unpackCoord(c1);
-        const to = Position.unpackCoord(c2);
+        const from = Position.unpackCoord(check(c1, CoordValid));
+        const to = Position.unpackCoord(check(c2, CoordValid));
 
         state.pushInt(hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
     },
@@ -117,14 +99,9 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.SPOTANIM_MAP]: state => {
         const [spotanim, coord, height, delay] = state.popInts(4);
 
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        check(spotanim, SpotAnimTypeValid);
 
-        const pos = Position.unpackCoord(coord);
-        const x = pos.x;
-        const z = pos.z;
-        const level = pos.level;
+        const {level, x, z} = Position.unpackCoord(check(coord, CoordValid));
 
         World.getZone(x, z, level).animMap(x, z, spotanim, height, delay);
     },
@@ -132,14 +109,8 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.DISTANCE]: state => {
         const [c1, c2] = state.popInts(2);
 
-        if (c1 < 0 || c1 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        } else if (c2 < 0 || c2 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const from = Position.unpackCoord(c1);
-        const to = Position.unpackCoord(c2);
+        const from = Position.unpackCoord(check(c1, CoordValid));
+        const to = Position.unpackCoord(check(c2, CoordValid));
 
         const dx = Math.abs(from.x - to.x);
         const dz = Math.abs(from.z - to.z);
@@ -150,11 +121,7 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.MOVECOORD]: state => {
         const [coord, x, y, z] = state.popInts(4);
 
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const pos = Position.unpackCoord(coord);
+        const pos = Position.unpackCoord(check(coord, CoordValid));
         state.pushInt(Position.packCoord(pos.level + y, pos.x + x, pos.z + z));
     },
 
@@ -216,33 +183,18 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.COORDX]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        state.pushInt((coord >> 14) & 0x3fff);
+        const coord = check(state.popInt(), CoordValid);
+        state.pushInt(Position.unpackCoord(coord).x);
     },
 
     [ScriptOpcode.COORDY]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        state.pushInt((coord >> 28) & 0x3);
+        const coord = check(state.popInt(), CoordValid);
+        state.pushInt(Position.unpackCoord(coord).level);
     },
 
     [ScriptOpcode.COORDZ]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        state.pushInt(coord & 0x3fff);
+        const coord = check(state.popInt(), CoordValid);
+        state.pushInt(Position.unpackCoord(coord).z);
     },
 
     [ScriptOpcode.PLAYERCOUNT]: state => {
@@ -250,22 +202,14 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_BLOCKED]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
         state.pushInt(isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_INDOORS]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
         state.pushInt(isFlagged(pos.x, pos.z, pos.level, CollisionFlag.ROOF) ? 1 : 0);
@@ -274,14 +218,8 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.LINEOFSIGHT]: state => {
         const [c1, c2] = state.popInts(2);
 
-        if (c1 < 0 || c1 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c1}. Range should be: 0 to ${Position.max}`);
-        } else if (c2 < 0 || c2 > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${c2}. Range should be: 0 to ${Position.max}`);
-        }
-
-        const from = Position.unpackCoord(c1);
-        const to = Position.unpackCoord(c2);
+        const from = Position.unpackCoord(check(c1, CoordValid));
+        const to = Position.unpackCoord(check(c2, CoordValid));
 
         state.pushInt(hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
     },
@@ -294,13 +232,8 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.PROJANIM_PL]: state => {
         const [srcCoord, uid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
 
-        if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (spotanim === -1) {
-            throw new Error('attempted to use invalid spotanim: -1');
-        }
+        check(srcCoord, CoordValid);
+        check(spotanim, SpotAnimTypeValid);
 
         const player = World.getPlayerByUid(uid);
         if (!player) {
@@ -315,13 +248,8 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.PROJANIM_NPC]: state => {
         const [srcCoord, npcUid, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
 
-        if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (spotanim === -1) {
-            throw new Error('attempted to use invalid spotanim: -1');
-        }
+        check(srcCoord, CoordValid);
+        check(spotanim, SpotAnimTypeValid);
 
         const slot = npcUid & 0xffff;
         const expectedType = (npcUid >> 16) & 0xffff;
@@ -339,28 +267,16 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.PROJANIM_MAP]: state => {
         const [srcCoord, dstCoord, spotanim, srcHeight, dstHeight, delay, duration, peak, arc] = state.popInts(9);
 
-        if (srcCoord < 0 || srcCoord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${srcCoord}. Range should be: 0 to ${Position.max}`);
-        } else if (dstCoord < 0 || dstCoord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${dstCoord}. Range should be: 0 to ${Position.max}`);
-        }
+        check(spotanim, SpotAnimTypeValid);
 
-        if (spotanim === -1) {
-            throw new Error('attempted to use invalid spotanim: -1');
-        }
-
-        const srcPos = Position.unpackCoord(srcCoord);
-        const dstPos = Position.unpackCoord(dstCoord);
+        const srcPos = Position.unpackCoord(check(srcCoord, CoordValid));
+        const dstPos = Position.unpackCoord(check(dstCoord, CoordValid));
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
         zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight + 100, dstHeight, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.MAP_LOCADDUNSAFE]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
 

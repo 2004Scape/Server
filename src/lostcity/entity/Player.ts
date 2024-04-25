@@ -2359,7 +2359,7 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(seq: number, delay: number) {
-        if (seq > SeqType.count) {
+        if (seq >= SeqType.count) {
             return;
         }
 

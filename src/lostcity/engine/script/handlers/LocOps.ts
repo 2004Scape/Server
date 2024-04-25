@@ -11,6 +11,16 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
 
+import {
+    check,
+    CoordValid,
+    DurationValid,
+    LocAngleValid,
+    LocShapeValid,
+    LocTypeValid,
+    ParamTypeValid
+} from '#lostcity/engine/script/ScriptInputValidator.js';
+
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
 let locFindAllZone: Loc[] = [];
@@ -20,25 +30,11 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: state => {
         const [coord, type, angle, shape, duration] = state.popInts(5);
 
-        if (type == -1) {
-            throw new Error('attempted to use loc was null.');
-        }
-
-        if (duration < 1) {
-            throw new Error(`attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
-        }
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
-
-        if (angle < 0 || angle > 3) {
-            throw new Error(`attempted to use angle that was out of range: ${angle}. Range should be: 0 to 3`);
-        }
-
-        if (shape < 0 || shape > 0x1f) {
-            throw new Error(`attempted to use shape that was out of range: ${shape}. Range should be: 0 to 31`);
-        }
+        check(coord, CoordValid);
+        check(type, LocTypeValid);
+        check(angle, LocAngleValid);
+        check(shape, LocShapeValid);
+        check(duration, DurationValid);
 
         const pos = Position.unpackCoord(coord);
 
@@ -62,16 +58,15 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, state => {
-        const loc = LocType.get(state.activeLoc.type);
-        state.pushInt(loc.category);
+        const locType = LocType.get(state.activeLoc.type);
+        state.pushInt(locType.category);
     }),
 
     [ScriptOpcode.LOC_CHANGE]: checkedHandler(ActiveLoc, state => {
         const [id, duration] = state.popInts(2);
 
-        if (duration < 1) {
-            throw new Error(`attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
-        }
+        check(id, LocTypeValid);
+        check(duration, DurationValid);
 
         World.removeLoc(state.activeLoc, duration);
 
@@ -89,11 +84,7 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, state => {
-        const duration = state.popInt();
-
-        if (duration < 1) {
-            throw new Error(`attempted to use duration that was out of range: ${duration}. Duration should be greater than zero.`);
-        }
+        const duration = check(state.popInt(), DurationValid);
 
         World.removeLoc(state.activeLoc, duration);
     }),
@@ -101,9 +92,8 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_FIND]: state => {
         const [coord, locId] = state.popInts(2);
 
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        check(locId, LocTypeValid);
+        check(coord, CoordValid);
 
         const pos = Position.unpackCoord(coord);
         const loc = World.getLoc(pos.x, pos.z, pos.level, locId);
@@ -118,11 +108,7 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_FINDALLZONE]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
 
@@ -149,7 +135,8 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_PARAM]: checkedHandler(ActiveLoc, state => {
-        const paramId = state.popInt();
+        const paramId = check(state.popInt(), ParamTypeValid);
+
         const param = ParamType.get(paramId);
         const loc = LocType.get(state.activeLoc.type);
         if (param.isString()) {

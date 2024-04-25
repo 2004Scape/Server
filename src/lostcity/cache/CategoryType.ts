@@ -50,6 +50,10 @@ export default class CategoryType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
 
     decode(opcode: number, packet: Packet) {

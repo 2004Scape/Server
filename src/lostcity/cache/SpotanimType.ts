@@ -55,6 +55,10 @@ export default class SpotanimType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
 
     model: number = 0;
