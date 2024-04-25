@@ -4,12 +4,20 @@ import { LoginClient } from '#lostcity/server/LoginServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
-// todo: typing
-const WorldList: any[] = [];
+interface World {
+    id: number
+    region: string
+    address: string
+    portOffset: number
+    players: number
+    members: boolean
+}
+
+const WorldList: World[] = [];
 
 if (fs.existsSync('data/config/worlds.json')) {
     try {
-        const worlds = JSON.parse(fs.readFileSync('data/config/worlds.json', 'utf8'));
+        const worlds: World[] = JSON.parse(fs.readFileSync('data/config/worlds.json', 'utf8'));
 
         for (const world of worlds) {
             world.players = 0;
@@ -35,7 +43,7 @@ if (Environment.LOCAL_DEV) {
         region: 'Local Development',
         members: Environment.MEMBERS_WORLD,
         address,
-        portOffset: (Environment.GAME_PORT as number) - 43594,
+        portOffset: Environment.GAME_PORT - 43594,
         players: 0
     });
 }
