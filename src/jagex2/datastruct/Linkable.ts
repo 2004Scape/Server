@@ -9,7 +9,7 @@ export default class Linkable {
         this.prev = this;
     }
 
-    unlink = (): void => {
+    unlink(): void {
         if (!this.prev || !this.next) {
             return;
         }
@@ -17,5 +17,5 @@ export default class Linkable {
         this.next.prev = this.prev;
         this.next = null;
         this.prev = null;
-    };
+    }
 }

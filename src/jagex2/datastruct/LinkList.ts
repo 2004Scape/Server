@@ -11,7 +11,7 @@ export default class LinkList<T extends Linkable> {
         this.sentinel = head;
     }
 
-    addTail = (node: T): void => {
+    addTail(node: T): void {
         if (node.prev) {
             node.unlink();
         }
@@ -21,9 +21,9 @@ export default class LinkList<T extends Linkable> {
             node.prev.next = node;
         }
         node.next.prev = node;
-    };
+    }
 
-    addHead = (node: T): void => {
+    addHead(node: T): void {
         if (node.prev) {
             node.unlink();
         }
@@ -33,18 +33,18 @@ export default class LinkList<T extends Linkable> {
         if (node.next) {
             node.next.prev = node;
         }
-    };
+    }
 
-    removeHead = (): T | null => {
+    removeHead(): T | null {
         const node: T | null = this.sentinel.next as T | null;
         if (node === this.sentinel) {
             return null;
         }
         node?.unlink();
         return node;
-    };
+    }
 
-    head = (): T | null => {
+    head(): T | null {
         const node: T | null = this.sentinel.next as T | null;
         if (node === this.sentinel) {
             this.cursor = null;
@@ -52,9 +52,9 @@ export default class LinkList<T extends Linkable> {
         }
         this.cursor = node?.next || null;
         return node;
-    };
+    }
 
-    tail = (): T | null => {
+    tail(): T | null {
         const node: T | null = this.sentinel.prev as T | null;
         if (node === this.sentinel) {
             this.cursor = null;
@@ -62,9 +62,9 @@ export default class LinkList<T extends Linkable> {
         }
         this.cursor = node?.prev || null;
         return node;
-    };
+    }
 
-    next = (): T | null => {
+    next(): T | null {
         const node: T | null = this.cursor as T | null;
         if (node === this.sentinel) {
             this.cursor = null;
@@ -72,9 +72,9 @@ export default class LinkList<T extends Linkable> {
         }
         this.cursor = node?.next || null;
         return node;
-    };
+    }
 
-    prev = (): T | null => {
+    prev(): T | null {
         const node: T | null = this.cursor as T | null;
         if (node === this.sentinel) {
             this.cursor = null;
@@ -82,9 +82,9 @@ export default class LinkList<T extends Linkable> {
         }
         this.cursor = node?.prev || null;
         return node;
-    };
+    }
 
-    clear = (): void => {
+    clear(): void {
         // eslint-disable-next-line no-constant-condition
         while (true) {
             const node: T | null = this.sentinel.next as T | null;
@@ -93,5 +93,5 @@ export default class LinkList<T extends Linkable> {
             }
             node?.unlink();
         }
-    };
+    }
 }
