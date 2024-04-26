@@ -2,8 +2,7 @@ out/
 .env
 tsconfig.tsbuildinfo
 
-data/pack/client/
-data/pack/server/
+data/pack/
 
 # since these are generated for the server only, we don't have to share them
 data/src/pack/script.pack
