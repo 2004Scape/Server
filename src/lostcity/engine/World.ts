@@ -1189,12 +1189,9 @@ class World {
     }
 
     removeObj(obj: Obj, receiver: Player | null) {
-        // TODO
         // stackable objs when they overflow are created into another slot on the floor
-        // currently when you pickup from a tile with multiple stackable objs
-        // you will pickup one of them and the other one disappears
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        zone.removeObj(obj, receiver, -1);
+        zone.removeObj(obj, receiver);
         obj.despawn = this.currentTick;
         obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
         if (zone.staticObjs.includes(obj)) {

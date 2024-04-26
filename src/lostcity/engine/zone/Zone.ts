@@ -363,7 +363,7 @@ export default class Zone {
         this.lastEvent = World.currentTick;
     }
 
-    removeObj(obj: Obj, receiver: Player | null, subtractTick: number = 0) {
+    removeObj(obj: Obj, receiver: Player | null) {
         const event = new ZoneEvent(ServerProt.OBJ_DEL.id);
 
         const dynamicIndex = this.objs.indexOf(obj);
@@ -378,7 +378,7 @@ export default class Zone {
         event.buffer = Zone.objDel(obj.x, obj.z, obj.id, obj.count);
         event.x = obj.x;
         event.z = obj.z;
-        event.tick = World.currentTick - subtractTick;
+        event.tick = World.currentTick;
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;

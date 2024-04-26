@@ -60,6 +60,10 @@ export default class NpcType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     name: string | null = null;
     desc: string | null = null;

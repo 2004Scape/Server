@@ -8,7 +8,7 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
-import { EntityQueueRequest, PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
@@ -17,6 +17,19 @@ import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import {findPath} from '@2004scape/rsmod-pathfinder';
+
+import {
+    check,
+    CoordValid,
+    HitTypeValid,
+    IDKTypeValid,
+    InvTypeValid,
+    NpcTypeValid,
+    NumberNotNull,
+    ObjTypeValid,
+    SpotAnimTypeValid,
+    StringNotNull
+} from '#lostcity/engine/script/ScriptInputValidator.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -105,16 +118,15 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, state => {
-        const inv = state.popInt();
+        const inv = check(state.popInt(), InvTypeValid);
+
         state.activePlayer.generateAppearance(inv);
     }),
 
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        check(coord, CoordValid);
 
         const pos = Position.unpackCoord(coord);
         const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
@@ -126,9 +138,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        check(coord, CoordValid);
 
         const pos = Position.unpackCoord(coord);
         const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
@@ -157,14 +167,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-
         state.activePlayer.faceSquare(pos.x, pos.z);
     }),
 
@@ -278,10 +283,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_APRANGE]: checkedHandler(ProtectedActivePlayer, state => {
-        const apRange = state.popInt();
-        if (apRange === -1) {
-            throw new Error('attempted to use a range that was null.');
-        }
+        const apRange = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.apRange = apRange;
         state.activePlayer.apRangeCalled = true;
@@ -366,38 +368,23 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-
         state.activePlayer.teleJump(pos.x, pos.z, pos.level);
     }),
 
     [ScriptOpcode.P_TELEPORT]: checkedHandler(ProtectedActivePlayer, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-
         state.activePlayer.teleport(pos.x, pos.z, pos.level);
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-
         const player = state.activePlayer;
         player.queueWaypoints(findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
         player.updateMovement(); // try to walk immediately
@@ -418,19 +405,23 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.STAT]: checkedHandler(ActivePlayer, state => {
-        const stat = state.popInt();
+        const stat = check(state.popInt(), NumberNotNull);
 
         state.pushInt(state.activePlayer.levels[stat]);
     }),
 
     [ScriptOpcode.STAT_BASE]: checkedHandler(ActivePlayer, state => {
-        const stat = state.popInt();
+        const stat = check(state.popInt(), NumberNotNull);
 
         state.pushInt(state.activePlayer.baseLevels[stat]);
     }),
 
     [ScriptOpcode.STAT_ADD]: checkedHandler(ActivePlayer, state => {
         const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, NumberNotNull);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
 
         const player = state.activePlayer;
         const current = player.levels[stat];
@@ -441,6 +432,10 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.STAT_SUB]: checkedHandler(ActivePlayer, state => {
         const [stat, constant, percent] = state.popInts(3);
 
+        check(stat, NumberNotNull);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
+
         const player = state.activePlayer;
         const current = player.levels[stat];
         const subbed = current - (constant + (current * percent) / 100);
@@ -450,13 +445,17 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, state => {
         const delay = state.popInt();
         const height = state.popInt();
-        const spotanim = state.popInt();
+        const spotanim = check(state.popInt(), SpotAnimTypeValid);
 
         state.activePlayer.spotanim(spotanim, height, delay);
     }),
 
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ActivePlayer, state => {
         const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, NumberNotNull);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
 
         const player = state.activePlayer;
         const base = player.baseLevels[stat];
@@ -474,14 +473,14 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETCOLOUR]: checkedHandler(ActivePlayer, state => {
-        const colour = state.popInt();
-        const com = state.popInt();
+        const colour = check(state.popInt(), NumberNotNull);
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.write(ServerProt.IF_SETCOLOUR, com, colour);
     }),
 
     [ScriptOpcode.IF_OPENCHAT]: checkedHandler(ActivePlayer, state => {
-        const com = state.popInt();
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.openChat(com);
     }),
@@ -489,11 +488,17 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
         const [main, side] = state.popInts(2);
 
+        check(main, NumberNotNull);
+        check(side, NumberNotNull);
+
         state.activePlayer.openMainModalSideOverlay(main, side);
     }),
 
     [ScriptOpcode.IF_SETHIDE]: checkedHandler(ActivePlayer, state => {
         const [com, hide] = state.popInts(2);
+
+        check(com, NumberNotNull);
+        check(hide, NumberNotNull);
 
         state.activePlayer.write(ServerProt.IF_SETHIDE, com, hide === 1);
     }),
@@ -501,11 +506,15 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_SETOBJECT]: checkedHandler(ActivePlayer, state => {
         const [com, obj, scale] = state.popInts(3);
 
+        check(com, NumberNotNull);
+        check(obj, ObjTypeValid);
+        check(scale, NumberNotNull);
+
         state.activePlayer.write(ServerProt.IF_SETOBJECT, com, obj, scale);
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, state => {
-        const tab = state.popInt();
+        const tab = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.write(ServerProt.IF_SHOWSIDE, tab);
     }),
@@ -513,17 +522,22 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_SETMODEL]: checkedHandler(ActivePlayer, state => {
         const [com, model] = state.popInts(2);
 
+        check(com, NumberNotNull);
+        check(model, NumberNotNull);
+
         state.activePlayer.write(ServerProt.IF_SETMODEL, com, model);
     }),
 
     [ScriptOpcode.IF_SETRECOL]: checkedHandler(ActivePlayer, state => {
         const [com, src, dest] = state.popInts(3);
 
+        check(com, NumberNotNull);
+
         state.activePlayer.write(ServerProt.IF_SETRECOL, com, src, dest);
     }),
 
     [ScriptOpcode.IF_SETTABFLASH]: checkedHandler(ActivePlayer, state => {
-        const tab = state.popInt();
+        const tab = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.write(ServerProt.TUTORIAL_FLASHSIDE, tab);
     }),
@@ -531,42 +545,47 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, state => {
         const [com, seq] = state.popInts(2);
 
+        check(com, NumberNotNull);
+
         state.activePlayer.write(ServerProt.IF_SETANIM, com, seq);
     }),
 
     [ScriptOpcode.IF_SETTAB]: checkedHandler(ActivePlayer, state => {
         const [com, tab] = state.popInts(2);
 
+        check(com, NumberNotNull);
+        check(tab, NumberNotNull);
+
         state.activePlayer.setTab(com, tab);
     }),
 
     [ScriptOpcode.IF_OPENMAINMODAL]: checkedHandler(ActivePlayer, state => {
-        const com = state.popInt();
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.openMainModal(com);
     }),
 
     [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, state => {
-        const com = state.popInt();
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.openChatSticky(com);
     }),
 
     [ScriptOpcode.IF_OPENSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
-        const com = state.popInt();
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.openSideOverlay(com);
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, state => {
-        const com = state.popInt();
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.write(ServerProt.IF_SETPLAYERHEAD, com);
     }),
 
     [ScriptOpcode.IF_SETTEXT]: checkedHandler(ActivePlayer, state => {
         const text = state.popString();
-        const com = state.popInt();
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.write(ServerProt.IF_SETTEXT, com, text);
     }),
@@ -574,17 +593,22 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_SETNPCHEAD]: checkedHandler(ActivePlayer, state => {
         const [com, npc] = state.popInts(2);
 
+        check(com, NumberNotNull);
+        check(npc, NpcTypeValid);
+
         state.activePlayer.write(ServerProt.IF_SETNPCHEAD, com, npc);
     }),
 
     [ScriptOpcode.IF_SETPOSITION]: checkedHandler(ActivePlayer, state => {
         const [com, x, y] = state.popInts(3);
 
+        check(com, NumberNotNull);
+
         state.activePlayer.write(ServerProt.IF_SETPOSITION, com, x, y);
     }),
 
     [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, state => {
-        const multi = state.popInt();
+        const multi = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.write(ServerProt.SET_MULTIWAY, multi === 1);
     }),
@@ -592,13 +616,16 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.GIVEXP]: checkedHandler(ProtectedActivePlayer, state => {
         const [stat, xp] = state.popInts(2);
 
+        check(stat, NumberNotNull);
+        check(xp, NumberNotNull);
+
         state.activePlayer.addXp(stat, xp);
     }),
 
     [ScriptOpcode.DAMAGE]: state => {
-        const amount = state.popInt();
-        const type = state.popInt();
-        const uid = state.popInt();
+        const amount = check(state.popInt(), NumberNotNull);
+        const type = check(state.popInt(), HitTypeValid);
+        const uid = check(state.popInt(), NumberNotNull);
 
         const player = World.getPlayerByUid(uid);
         if (!player) {
@@ -672,12 +699,9 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.HINT_COORD]: state => {
         const [offset, coord, height] = state.popInts(3);
 
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        check(coord, CoordValid);
 
         const pos = Position.unpackCoord(coord);
-
         state.activePlayer.hintTile(offset, pos.x, pos.z, height);
     },
 
@@ -692,8 +716,8 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_EXACTMOVE]: checkedHandler(ProtectedActivePlayer, state => {
         const [start, end, startCycle, endCycle, direction] = state.popInts(5);
 
-        const startPos = Position.unpackCoord(start);
-        const endPos = Position.unpackCoord(end);
+        const startPos = Position.unpackCoord(check(start, CoordValid));
+        const endPos = Position.unpackCoord(check(end, CoordValid));
 
         state.activePlayer.unsetMapFlag();
         state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
@@ -724,8 +748,8 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_LOCMERGE]: checkedHandler(ProtectedActivePlayer, state => {
         const [startCycle, endCycle, southEast, northWest] = state.popInts(4);
 
-        const se = Position.unpackCoord(southEast);
-        const nw = Position.unpackCoord(northWest);
+        const se = Position.unpackCoord(check(southEast, CoordValid));
+        const nw = Position.unpackCoord(check(northWest, CoordValid));
 
         const east = se.x;
         const south = se.z;
@@ -790,13 +814,13 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.HINT_NPC]: state => {
-        const npc_uid = state.popInt();
+        const npc_uid = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.hintNpc(npc_uid);
     },
 
     [ScriptOpcode.HINT_PLAYER]: state => {
-        const player_uid = state.popInt();
+        const player_uid = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.hintPlayer(player_uid);
     },
@@ -839,7 +863,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.ALLOWDESIGN]: state => {
-        const allow = state.popInt();
+        const allow = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.allowDesign = allow === 1;
     },
@@ -895,6 +919,8 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.SETIDKIT]: (state) => {
         const [idkit, color] = state.popInts(2);
+
+        check(idkit, IDKTypeValid);
 
         const idk = IdkType.get(idkit);
 

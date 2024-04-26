@@ -50,6 +50,10 @@ export default class EnumType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     // server-side
     inputtype = ScriptVarType.INT;
