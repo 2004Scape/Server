@@ -30,6 +30,7 @@ import {
     SpotAnimTypeValid,
     StringNotNull
 } from '#lostcity/engine/script/ScriptInputValidator.js';
+import ColorConversion from '#lostcity/util/ColorConversion.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -473,10 +474,12 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETCOLOUR]: checkedHandler(ActivePlayer, state => {
-        const colour = check(state.popInt(), NumberNotNull);
-        const com = check(state.popInt(), NumberNotNull);
+        const [com, colour] = state.popInts(2);
 
-        state.activePlayer.write(ServerProt.IF_SETCOLOUR, com, colour);
+        check(com, NumberNotNull);
+        check(colour, NumberNotNull);
+
+        state.activePlayer.write(ServerProt.IF_SETCOLOUR, com, ColorConversion.rgb24to15(colour));
     }),
 
     [ScriptOpcode.IF_OPENCHAT]: checkedHandler(ActivePlayer, state => {

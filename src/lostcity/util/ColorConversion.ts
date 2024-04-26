@@ -33,6 +33,14 @@ export default class ColorConversion {
         return ColorConversion.rgbToHsl(red, green, blue);
     }
 
+    static rgb24to15(rgb: number): number {
+        const r: number = (rgb >> 16) & 0xff;
+        const g: number = (rgb >> 8) & 0xff;
+        const b: number = rgb & 0xff;
+
+        return ((r >> 3) << 10) + ((g >> 3) << 5) + (b >> 3);
+    }
+
     static rgb24toHsl16(rgb: number): number {
         const r: number = (rgb >> 16) & 0xff;
         const g: number = (rgb >> 8) & 0xff;
