@@ -1,20 +1,32 @@
+/**
+ * TODO: Use flat config file as eslintrc is deprecated.
+ * https://eslint.org/docs/latest/use/configure/configuration-files
+ */
 module.exports = {
     env: {
         browser: true,
         es2021: true,
         node: true,
-        jest: true
     },
     extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
     overrides: [
         {
             env: {
                 node: true,
-                jest: true
             },
             files: ['.eslintrc.{js,cjs}'],
             parserOptions: {
                 sourceType: 'script'
+            }
+        },
+        {
+            files: ['src/**/*.test.ts'],
+            extends: ['plugin:vitest/legacy-all'],
+            plugins: ['vitest'],
+            rules: {
+                'vitest/prefer-expect-assertions': 'off',
+                'vitest/prefer-lowercase-title': 'off',
+                'vitest/no-focused-tests': 'error',
             }
         }
     ],
