@@ -237,7 +237,8 @@ param=strengthbonus,6
 param=damagetype,^stab_style
 param=attack_anim,human_farmersfork_stab
 param=defend_anim,human_farmersfork_defend
-// param=attack_sound,farmersfork_stab
+param=attack_sound,staff_stab
+// osrs param=attack_sound,farmersfork_stab
 // possible used earlier staff_stab
 
 [thief]
@@ -8319,6 +8320,8 @@ model5=model_356_obj_wear
 model6=model_429_idk
 model7=model_185_obj_wear
 head1=model_113_idk_head
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_618]
 vislevel=hide
@@ -8342,6 +8345,8 @@ model6=model_348_idk
 model7=model_353_idk
 head1=model_103_idk_head
 head2=model_137_npc_head
+param=defend_sound,female_hit
+param=death_sound,female_death
 
 [npc_619]
 vislevel=hide
@@ -11405,7 +11410,7 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
-param=attack_anim,human_stafforb_pound
+param=attack_anim,human_stafforb_crush
 param=defend_anim,human_stafforb_defend
 // TODO param=attack_sound,
 // TODO get real animation ids and soun osrs
@@ -11445,7 +11450,7 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
-param=attack_anim,human_staff_pound
+param=attack_anim,human_staff_crush
 param=defend_anim,human_staff_defend
 // param=defend_sound,
 // try get real sound datas and wander/attack distances.
@@ -11521,7 +11526,7 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=rangebonus,7
-param=attack_anim,human_staff_pound
+param=attack_anim,human_staff_crush
 param=defend_anim,human_staff_defend
 // param=attack_sound,staff_double
 
@@ -11566,7 +11571,7 @@ magic=0
 ranged=0
 param=strengthbonus,3
 param=rangebonus,7
-param=attack_anim,human_staff_pound
+param=attack_anim,human_staff_crush
 param=defend_anim,human_staff_defend
 // param=attack_sound,staff_double
 // sound and animation data taken normal version ungadulu

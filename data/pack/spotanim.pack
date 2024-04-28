@@ -83,7 +83,7 @@
 82=spotanim_82
 83=spotanim_83
 84=spotanim_84
-85=spotanim_85
+85=superheat_item_fail
 86=spotanim_86
 87=spotanim_87
 88=spotanim_88
@@ -146,13 +146,13 @@
 145=crumble_undead_cast
 146=crumble_undead_travel
 147=crumble_undead_hit
-148=spotanim_148
+148=superheat_item
 149=castchargeorb_water
 150=castchargeorb_air
 151=castchargeorb_earth
 152=castchargeorb_fire
 153=enchantamuletlvl4
-154=spotanim_154
+154=enchantamuletlvl5
 155=fire_wave_cast
 156=fire_wave_travel
 157=fire_wave_hit

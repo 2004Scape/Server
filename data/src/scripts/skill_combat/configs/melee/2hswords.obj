@@ -30,6 +30,7 @@ param=crushattack_anim,human_2h_crush
 param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
+// osrs 2h sword defend seq_410
 
 [iron_2h_sword]
 name=Iron 2h sword
@@ -63,6 +64,7 @@ param=crushattack_anim,human_2h_crush
 param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
+// osrs 2h sword defend seq_410
 
 [steel_2h_sword]
 name=Steel 2h sword
@@ -94,6 +96,7 @@ param=crushattack_anim,human_2h_crush
 param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
+// osrs 2h sword defend seq_410
 
 [black_2h_sword]
 name=Black 2h sword
@@ -127,6 +130,7 @@ param=crushattack_anim,human_2h_crush
 param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
+// osrs 2h sword defend seq_410
 
 [mithril_2h_sword]
 name=Mithril 2h sword
@@ -160,6 +164,7 @@ param=crushattack_anim,human_2h_crush
 param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
+// osrs 2h sword defend seq_410
 
 [adamant_2h_sword]
 name=Adamant 2h sword
@@ -193,6 +198,7 @@ param=crushattack_anim,human_2h_crush
 param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
+// osrs 2h sword defend seq_410
 
 [rune_2h_sword]
 name=Rune 2h sword
@@ -226,4 +232,4 @@ param=crushattack_anim,human_2h_crush
 param=defend_anim,human_sword_defend2
 param=slash_sound,2H_slash
 param=crush_sound,2H_crush
-// all 2h swords osrs use defend seq_410
+// osrs 2h sword defend seq_410

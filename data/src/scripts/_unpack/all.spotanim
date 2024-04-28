@@ -478,7 +478,7 @@ model=model_3074_spotanim
 anim=seq_652
 hasalpha=yes
 
-[spotanim_85]
+[superheat_item_fail]
 model=model_3080_spotanim
 anim=seq_653
 hasalpha=yes
@@ -1051,7 +1051,7 @@ hasalpha=yes
 ambient=40
 contrast=40
 
-[spotanim_148]
+[superheat_item]
 model=model_3111_spotanim
 anim=seq_687
 hasalpha=yes
@@ -1091,7 +1091,7 @@ model=model_3113_spotanim
 anim=seq_689
 hasalpha=yes
 
-[spotanim_154]
+[enchantamuletlvl5]
 model=model_3113_spotanim
 anim=seq_690
 hasalpha=yes

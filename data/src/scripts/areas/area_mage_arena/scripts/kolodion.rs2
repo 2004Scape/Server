@@ -200,4 +200,4 @@ switch_int (%magearena_progress) {
 npc_setmode(playerfaceclose);
 
 [ai_queue4,kolodion](int $anim_delay)
-npc_anim(seq_811, $anim_delay);
+npc_anim(human_kolodion_casting, $anim_delay);

@@ -37,5 +37,5 @@ if (p_finduid(uid) = true) {
     inv_del(inv, $fishing_equipment, 1);
 }
 npc_tele(~fishing_spot_random_coord($old)); // move fishing spot.
-spotanim_map(spotanim_85, npc_coord, 94, 30);
+spotanim_map(superheat_item_fail, npc_coord, 94, 30);
 p_delay(0);

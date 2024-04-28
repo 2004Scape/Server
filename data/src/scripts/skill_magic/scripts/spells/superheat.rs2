@@ -10,7 +10,7 @@ def_namedobj $bar = oc_param($ore1, smeltsto);
 // if player doesnt even superheat an ore
 if ($bar = null) {
     sound_synth(superheat_fail, 0, 0);
-    spotanim_pl(spotanim_85, 92, 0);
+    spotanim_pl(superheat_item_fail, 92, 0);
     mes("You need to cast superheat item on ore.");
     return;
 }
@@ -38,7 +38,7 @@ if ($ore_count1 < 1 | $ore_count2 < struct_param($bar_struct, ingredient_seconda
 }
 // play sound and anim
 sound_synth(superheat_all, 0, 0);
-spotanim_pl(spotanim_148, 92, 0);
+spotanim_pl(superheat_item, 92, 0);
 anim(human_castsuperheatitem, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data);

@@ -654,10 +654,11 @@ param=slashdefence,3
 param=crushdefence,1
 param=magicdefence,10
 param=strengthbonus,50
-param=ready_baseanim,human_staffready
 param=attackrate,5
+param=ready_baseanim,human_staffready
 param=crushattack_anim,shadowwarrior_crush
 param=defend_anim,human_ibanstaff_2h_defend
+param=crush_sound,staff_hit
 // osrs use attack seq_401 and defend seq_403 + the weapon was already 1 handed in 2006
 
 [broken_iban_staff]
@@ -737,14 +738,15 @@ param=crushattack,3
 param=slashdefence,3
 param=crushdefence,1
 param=strengthbonus,10
-param=ready_baseanim,human_ready_scythe
 param=attackrate,7
+param=ready_baseanim,human_ready_scythe
 param=slashattack_anim,human_scythe_slash
 param=crushattack_anim,human_scythe_lunge
 param=stabattack_anim,human_scythe_sweep
 param=defend_anim,human_scythe_block
 param=slash_sound,scythe_slash
 param=crush_sound,scythe_slash
+param=stab_sound,staff_hit
 
 [obj_1464]
 name=Archery ticket

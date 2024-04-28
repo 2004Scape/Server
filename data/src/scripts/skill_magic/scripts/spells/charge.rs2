@@ -19,7 +19,7 @@ if (p_finduid(uid) = true) {
     // timer in osrs, can pause with interface
     settimer(charge, 2);
     mes("You feel charged with magic power.");
-    anim(seq_811, 0);
+    anim(human_castmagearenaspells, 0);
     spotanim_pl(castteleport, 128, 32);
     sound_synth(charge, 0, 0);
     ~delete_spell_runes($spell_data);
