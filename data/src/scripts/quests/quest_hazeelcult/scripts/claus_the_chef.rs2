@@ -3,9 +3,9 @@ switch_int(%hazeelcult_progress) {
     case ^hazeelcult_complete:
         ~chatplayer(neutral, "Hiya.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatnpc(quiz, "Well hello there adventurer! Are we fit and well?");
+            ~chatnpc(happy, "Well hello there adventurer! Are we fit and well?");
             ~chatplayer(neutral, "Yep, fine thanks.");
-            ~chatnpc(neutral, "Glad to hear it.");
+            ~chatnpc(happy, "Glad to hear it.");
         } else {
             ~chatnpc(angry, "Get out of my kitchen scoundrel. You're NOT welcome HERE.");
             ~chatplayer(neutral, "Ok ok, keep your hair on.");
@@ -53,5 +53,6 @@ if(last_useitem = poison) {
     } else {
         ~mesbox("Random murder isn't good"); // no period
     }
+    return;
 }
 ~chatnpc_specific(nc_name(claus_the_chef), claus_the_chef, angry, "Oi! I don't want people messing around with my range!");

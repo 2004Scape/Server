@@ -43,7 +43,7 @@ switch_int(%hazeelcult_progress) {
 ~chatnpc(angry, "TOYS! I WANT TOYS!");
 
 [label,philipe_jones]
-~chatnpc(neutral, "Daddy says you don't like Mr Jones. Mr Jones is nice. He brings me toys and sweets.");
+~chatnpc(angry, "Daddy says you don't like Mr Jones. Mr Jones is nice. He brings me toys and sweets.");
 ~chatplayer(neutral, "Jones is a bad man, Philipe.");
 ~chatnpc(angry, "You're a bad <text_gender("man", "lady")>! I don't like you!");
 ~chatplayer(neutral, "I'll try and console myself about that disappointment somehow.");

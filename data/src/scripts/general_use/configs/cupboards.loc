@@ -111,7 +111,7 @@ desc=It's closed.
 model=model_loc_368
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 category=cupboard_closed
 param=cupboard_other,loc_2851
 
@@ -122,6 +122,6 @@ model=model_loc_371
 length=2
 op1=Search
 op2=Shut
-forceapproach=right
+forceapproach=east
 category=cupboard_opened
 param=cupboard_other,loc_2850

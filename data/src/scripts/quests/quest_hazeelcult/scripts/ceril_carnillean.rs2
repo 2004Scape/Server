@@ -26,6 +26,7 @@ switch_int(%hazeelcult_progress) {
                         ~chatnpc(neutral, "My old butler, Higson, once followed them to their hideout there. Unfortunately the next night he died in his sleep.");
                         ~chatplayer(shock, "That's awful!");
                         %hazeelcult_progress = ^hazeelcult_started;
+                        ~send_quest_progress(questlist:hazeelcult, %hazeelcult_progress, ^hazeelcult_complete);
                         ~chatnpc(neutral, "No, it's ok. A replacement arrived the next day. He's been great - cooks an excellent broth!");
                         ~chatplayer(neutral, "Ok. I'll see what I can do.");
                 }
@@ -61,8 +62,8 @@ switch_int(%hazeelcult_progress) {
         ~chatnpc(sad, "thoughtless and careless? He knows we are all under threat!");
         ~chatplayer(quiz, "Scruffy?");
         ~chatnpc(sad, "He's been with our family for twenty years... that's 140 in dog years! The poor dog... what did HE ever do to deserve such a fate???");
-        ~chatplayer(confused, "Your DOG got poisoned???");
-        ~chatplayer(confused, "That's not right.");
+        ~chatplayer(quiz, "Your DOG got poisoned???");
+        ~chatplayer(angry, "That's not right.");
         ~chatnpc(angry, "I agree! I hope whichever evildoer is responsible gets the full weight of the law brought upon them!");
         ~chatplayer(confused, "Uh.... yeah... me too.");
     case ^hazeelcult_finished_side_task:
@@ -80,7 +81,7 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer(neutral, "Ceril. How are you?");
             ~chatnpc(sad, "Oh cruel world! Scruffy... I knew you well... I... just... don't think I can... go on without...");
             ~mesbox("Sir Ceril breaks down into tears.");
-            ~chatplayer(neutral, "Loosen up already. It was only a DOG.");
+            ~chatplayer(angry, "Loosen up already. It was only a DOG.");
         }
     case ^hazeelcult_given_armour_or_scroll:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
@@ -88,15 +89,15 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc(angry, "I owe you nothing you scoundrel! Now get out or I'll have Jones throw you out!");
         } else {
             ~chatplayer(quiz, "Hello Ceril. How's things?");
-            ~chatnpc(angry, "SIR Ceril! SIR! And I'm not sure but I think the thieves have been back in my house.");
+            ~chatnpc(confused, "SIR Ceril! SIR! And I'm not sure but I think the thieves have been back in my house.");
             ~chatplayer(quiz, "What makes you say that?");
-            ~chatnpc(angry, "Well, either I'm going crazy, or theres been an intruder in Jones' room upstairs!");
+            ~chatnpc(confused, "Well, either I'm going crazy, or theres been an intruder in Jones' room upstairs!");
             ~chatplayer(neutral, "Oh, heh, ok then.");
         }
     case ^hazeelcult_complete:
         ~chatplayer(neutral, "Hello Ceril.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatnpc(happy, "Well hello again adventurer! It's good to see you again! If it wasn't for your quick thinking the treacherous Jones would have poisoned my family and me by now! We are in your debt.");
+            ~chatnpc(neutral, "Well hello again adventurer! It's good to see you again! If it wasn't for your quick thinking the treacherous Jones would have poisoned my family and me by now! We are in your debt.");
             ~chatplayer(neutral, "Don't worry about it, a good deed is its own reward. And that 2000 gold didn't hurt either.");
         } else {
             ~chatnpc(sad, "Oooooh... I may be wrong... but ever since I asked for your help things around here have gone from bad to worse...");

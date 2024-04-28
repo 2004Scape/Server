@@ -30,7 +30,7 @@ switch_int(%hazeelcult_progress) {
                 return;
             } 
             ~chatplayer(happy, "I have it right here.");
-            ~chatnpc(happy, "Incredible!");
+            ~chatnpc(shock, "Incredible!");
             ~chatnpc(neutral, "Quick, get it back to our hideout! These are glorious times indeed adventurer, when the mighty Hazeel returns things are REALLY going to change around here!");
         }
     case ^hazeelcult_finished_side_task:
@@ -38,12 +38,12 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer(neutral, "Jones. We need to talk.");
             ~chatnpc(quiz, "Yes? You need some help with your quest?");
             ~chatplayer(angry, "Drop the act Jones. I know you're in league with the cultists.");
-            ~chatnpc(shifty, "W-what? N-no I'm not, don't be silly!");
+            ~chatnpc(shock, "W-what? N-no I'm not, don't be silly!");
             ~chatplayer(angry, "Listen pal, I went to your hideout, I heard them talking about you. You're fooling nobody.");
             ~chatnpc(angry, "You think you're so smart don't you? You might think you know what's going on but you have no idea.");
-            ~chatplayer(angry, "I know all I need to know and when I reveal the truth you're going directly to jail.");
+            ~chatplayer(neutral, "I know all I need to know and when I reveal the truth you're going directly to jail.");
             ~chatnpc(angry, "Oh, you think so do you? You think that silly old fool Ceril will take YOUR word over MINE? He trusts me completely!");
-            ~chatplayer(angry, "We'll see about that.");
+            ~chatplayer(neutral, "We'll see about that.");
             ~chatnpc(angry, "This is your last warning adventurer: keep your nose out of our business.");
         } else {
             if(inv_total(worn, mark_of_hazeel) > 0) {
@@ -65,7 +65,6 @@ switch_int(%hazeelcult_progress) {
         ~chatnpc(neutral, "Hello friend. I heard about your handiwork. Quite amusing really. I'm sure Hazeel will be pleased anyway; Keep up the good work!");
     case ^hazeelcult_clivet_decision: @butler_jones_howlong;
     case ^hazeelcult_started:
-        // TODO: check RS3 for mesanims, osrs removed this dialogue entirely 
         ~chatplayer(quiz, "Hello. What is this building?");
         ~chatnpc(neutral, "This is the home of Sir Ceril Carnillean of the noble Carnillean family. You're welcome to look around, but I'm afraid I'll have to keep an eye on you.");
         ~chatnpc(neutral, "Recently we've been having a real problem with thieves and strange cultists coming out of the forest for some reason.");

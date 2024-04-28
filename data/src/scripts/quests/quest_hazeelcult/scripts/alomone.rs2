@@ -41,6 +41,7 @@ switch_int(%hazeelcult_progress) {
                 return;
             }
             // TODO: confirm queue usage, and opnpc1 on hazeel, this cutscene has been completely changed unfortunately
+            // https://www.youtube.com/watch?v=NqgES3kGOHI
             ~chatplayer(neutral, "Yep. Got it right here.");
             ~chatnpc(happy, "FINALLY! Quickly, give it to me and I will begin the ritual!");
             ~mesbox("You hand Alomone the scroll of Hazeel.");

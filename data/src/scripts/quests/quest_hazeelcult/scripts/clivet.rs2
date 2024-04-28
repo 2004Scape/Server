@@ -58,7 +58,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc(angry, "You again! You meddle in our affairs too much! When Lord Hazeel returns to this realm he will lay a mighty vengeance upon you!");
         } else {
             ~chatplayer(neutral, "Hello.");
-            ~chatnpc(happy, "Hello once more adventurer. All we need is Hazeels' magical scroll to bring him forth once more to this world.");
+            ~chatnpc(neutral, "Hello once more adventurer. All we need is Hazeels' magical scroll to bring him forth once more to this world.");
         }
     case ^hazeelcult_given_armour_or_scroll:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
@@ -75,6 +75,14 @@ switch_int(%hazeelcult_progress) {
             ~chatplayer(neutral, "Yes, it was in the house all along. Jones can't have looked that hard for it.");
             ~chatnpc(happy, "At last! The pieces are all in place for the glorious resurrection of Lord Hazeel! Now is the starting point for a new page in history, and our chance for vengeance!");
             ~chatnpc(happy, "Quickly now! Take the scroll to Alomone so that we may begin the ritual... and when Lord Hazeel returns I promise you that you shall be well rewarded!");
+        }
+    case ^hazeelcult_complete:
+        ~chatplayer(neutral, "Hello.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "You may have won this battle meddler, but the war rages on. Go bother some goblins or something for when Hazeel returns your destruction is assured.");
+        } else {
+            ~chatnpc(happy, "It is good to see you once more. Did I not tell you how glorious Lord Hazeel is? With each day his power grows, and soon, very soon, we shall rule these lands!");
+            ~chatnpc(happy, " In the meantime I await his return here patiently until he calls upon me.");
         }
 }
 
