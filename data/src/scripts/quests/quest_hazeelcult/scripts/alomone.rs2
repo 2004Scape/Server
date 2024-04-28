@@ -115,7 +115,7 @@ if (npc_finduid($npc) = true) {
 
 [label,defeat_alomone]
 if(%hazeelcult_side = ^hazeelcult_goodside & %hazeelcult_progress >= ^hazeelcult_clivet_decision) {
-    if(~obj_gettotal(carnillean_armour) > 0) {
+    if(~obj_gettotal(carnillean_armour) = 0) {
         if(%hazeelcult_progress < ^hazeelcult_finished_side_task) {
             %hazeelcult_progress = ^hazeelcult_finished_side_task;
         }
