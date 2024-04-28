@@ -1,0 +1,58 @@
+[opnpc1,claus_the_chef]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_complete:
+        ~chatplayer(neutral, "Hiya.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(happy, "Well hello there adventurer! Are we fit and well?");
+            ~chatplayer(neutral, "Yep, fine thanks.");
+            ~chatnpc(happy, "Glad to hear it.");
+        } else {
+            ~chatnpc(angry, "Get out of my kitchen scoundrel. You're NOT welcome HERE.");
+            ~chatplayer(neutral, "Ok ok, keep your hair on.");
+            ~chatnpc(angry, "Is THAT supposed to be FUNNY? OUT! Before I call the Guard!");
+        }
+    case ^hazeelcult_finished_side_task, ^hazeelcult_given_armour_or_scroll:
+        if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
+            ~chatplayer(neutral, "Hello Claus.");
+            ~chatnpc(confused, "I... just CAN'T understand it! How? HOW could someone poison my delicious food without me even noticing??? I... I just don't understand!");
+            ~chatnpc(sad, "Oh man... I hope I don't lose my job over this... but HOW? How did they do it? And why would the villain want to kill poor Scruffy anyway? He was such a good dog...");
+            ~mesbox("Claus wipes away a tear.");
+            ~chatplayer(neutral, "Yeah. It's a real mystery, huh?");
+        } else if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side = ^hazeelcult_evilside) {
+            ~chatplayer(neutral, "Hello there.");
+            ~chatnpc(sad, "Those animals... how could they do that to poor Scruffy? What kind of lowlife would do that???");
+            ~chatplayer(neutral, "Get over it, it was only a dog.");
+        } else {
+            ~chatplayer(neutral, "Hello there.");
+            ~chatnpc(neutral, "Hello! How are you today??");
+            ~chatplayer(neutral, "Not bad, thanks.");
+            ~chatnpc(neutral, "Good good.");
+        }
+    case ^hazeelcult_poured_poison:
+        ~chatnpc(neutral, "Hello there. Caught any of those weird thieves yet?");
+        ~chatplayer(neutral, "Nope. Afraid not.");
+        ~chatnpc(neutral, "Well, keep at it!");
+    case ^hazeelcult_clivet_decision:
+        ~chatplayer(neutral, "Hiya.");
+        ~chatnpc(quiz, "You're that adventurer the family asked to help get those weird cultists who keep breaking in, right?");
+        ~chatplayer(neutral, "That's me.");
+        ~chatnpc(neutral, "Good luck with that!");
+    case default:
+        ~chatplayer(neutral, "Hello there.");
+        ~chatnpc(neutral, "Sorry! Can't stop to chat! You would be AMAZED at how many meals this family gets through daily!");
+}
+
+[oplocu,loc_2859]
+if(last_useitem = poison) {
+    if(%hazeelcult_progress = ^hazeelcult_clivet_decision & %hazeelcult_side = ^hazeelcult_evilside) {
+        %hazeelcult_progress = ^hazeelcult_poured_poison;
+        inv_del(inv, poison, 1);
+        // https://web.archive.org/web/20050519183834im_/http://www.runeweb.net/fireball/Hazeel%20Cult%20Images/Hazeel8.png, there is a linebreak between the 
+        // 2 sentences by aug 2007 https://youtu.be/ZYPB823IyRk?si=6kOX9DoMzwNkrZea&t=149
+        ~mesbox("You pour the poison into the hot pot. The poison dissolves into the soup.");
+    } else {
+        ~mesbox("Random murder isn't good"); // no period
+    }
+    return;
+}
+~chatnpc_specific(nc_name(claus_the_chef), claus_the_chef, angry, "Oi! I don't want people messing around with my range!");

@@ -35,6 +35,7 @@
 ^grail_complete = 10
 ^ball_complete = 7
 ^murder_complete = 2
+^hazeelcult_complete = 9
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -68,3 +69,4 @@
 ^grail_questpoints = 2
 ^ball_questpoints = 4
 ^murder_questpoints = 3
+^hazeelcult_questpoints = 1

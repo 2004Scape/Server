@@ -1,0 +1,47 @@
+[opnpc1,hazeel_cultist]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_poured_poison:
+        // guessed mesanims
+        ~chatplayer(neutral, "Hiya.");
+        ~chatnpc(neutral, "Hello. Oh, are you new?");
+        ~chatplayer(neutral, "That's right.");
+        ~chatnpc(neutral, "Well, it's always good to have a new recruit. Soon we shall retrive Hazeels' scroll and the ritual to revive him can begin!");
+    case ^hazeelcult_not_started, ^hazeelcult_started, ^hazeelcult_spoken_clivet:
+        ~chatplayer(neutral, "Hi.");
+        ~chatnpc(confused, "What? Who are you and why did you come here? It doesn't matter, leave now adventurer. While you still can.");
+    case ^hazeelcult_clivet_decision:
+        ~chatplayer(neutral, "Hello there.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(confused, "What? How did you get in here? Who are you and why do you come here? It doesn't matter, you will not live long enough to tell anyone of our hideout!");
+            ~npc_retaliate(0);
+        } else {
+            ~chatnpc(angry, "Leave me alone, can't you see I'm busy? We have a lot to do preparing for the imminent return of Lord Hazeel"); // no period
+        }
+    case ^hazeelcult_poured_poison, ^hazeelcult_finished_side_task:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            @hazeel_cultist_goodsidequest;
+        } else {
+            ~chatplayer(neutral, "Hello there.");
+            ~chatnpc(neutral, "Well hello! Until we have retrieved the scroll of Hazeel we cannot resurrect our master. You must find it and bring it to us.");
+        }
+    case ^hazeelcult_given_armour_or_scroll:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            @hazeel_cultist_goodsidequest;
+        } else {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(neutral, "Welcome back adventurer! Since you have brought us the scroll of Hazeel we can now perform the resurrection ceremony! Soon our master will return!");
+        }
+    case ^hazeelcult_complete:
+        ~chatplayer(neutral, "Hello.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "It's the meddler! The one who blew Jones' cover! I don't know why you came to this place but it is here that you will die.");
+            ~npc_retaliate(0);
+        } else {
+            ~chatnpc(neutral, "The adventurer returns. We await the return of our Lord from his business in the north here, so that we may wreak vengeance on his enemies.");
+            ~chatnpc(neutral, "I bow before you in honour for your efforts in bringing Lord Hazeel back to this realm to lead us into glory once more!");
+        }
+}
+
+[label,hazeel_cultist_goodsidequest]
+~chatplayer(neutral, "Hello there.");
+~chatnpc(confused, "What? An intruder? HERE? How did you get in here? You must leave! NOW!");

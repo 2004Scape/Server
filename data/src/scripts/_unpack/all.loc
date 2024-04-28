@@ -15641,6 +15641,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,0
 
 [loc_2845]
 name=Sewer valve
@@ -15649,6 +15651,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,1
 
 [loc_2846]
 name=Sewer valve
@@ -15657,6 +15661,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,2
 
 [loc_2847]
 name=Sewer valve
@@ -15665,6 +15671,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,3
 
 [loc_2848]
 name=Sewer valve
@@ -15673,6 +15681,8 @@ model=model_loc_2844
 active=yes
 op1=Turn-left
 op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,4
 
 [loc_2849]
 name=Raft
@@ -15681,23 +15691,6 @@ model=model_loc_1987
 length=2
 active=yes
 op1=Board
-
-[loc_2850]
-name=Cupboard
-desc=It's closed.
-model=model_loc_368
-length=2
-op1=Open
-forceapproach=east
-
-[loc_2851]
-name=Cupboard
-desc=It's open.
-model=model_loc_371
-length=2
-op1=Search
-op2=Shut
-forceapproach=east
 
 [loc_2852]
 name=Cave entrance

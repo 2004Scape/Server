@@ -1,0 +1,124 @@
+[opnpc1,alomone]
+switch_int(%hazeelcult_progress) {
+    case ^hazeelcult_clivet_decision:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "How did YOU get in here?");
+            ~chatplayer(sad, "I've come for the Carnillean family armour. Hand it over, or face the consequences.");
+            ~chatnpc(angry, "I thought I made it clear to the butler you could not be allowed to interfere with our mission. The incompetent fool must be going soft.");
+            ~chatplayer(confused, "So the butler's part of your sordid little cult huh? Why is it ALWAYS the butler? I should have known...");
+            ~chatnpc(angry, "Well you won't live long enough to tell anyone! DIE!!!");
+            ~npc_retaliate(0);
+        } else {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(angry, "Can't you see I'm busy???");
+        }
+    case ^hazeelcult_poured_poison:
+        ~chatplayer(neutral, "Hi there.");
+        ~chatnpc(neutral, "Well well well... So we have a new recruit. Clivet told me of your desire to join us in our glorious task to resurrect the mighty Hazeel from his slumber.");
+        ~chatnpc(neutral, "To accomplish this, we require the ancient words of summoning which will restore his shattered body, so that he can bring vengeance upon his enemies.");
+        ~chatnpc(neutral, "Hazeel in his mighty cunning anticipated that he might be defeated and secured within his home somewhere a powerful magical scroll that could restore him.");
+        ~chatnpc(neutral, "The words to this powerful enchantment are hidden within the Carnillean mansion, right under the nose of his unsuspecting foes. We already have an agent in place there");
+        ~chatnpc(neutral, "in their Butler Jones, a faithful follower to Hazeel. His loyalty to Hazeel is beyond questioning, yet he has been unsuccessful in locating the scroll containing the spell so far.");
+        ~chatnpc(neutral, "Go back to the mansion, and assist us in finding this enchantment, so that together we can restore Hazeel to his true power and glory!");
+        %hazeelcult_progress = ^hazeelcult_finished_side_task;
+    case ^hazeelcult_finished_side_task:
+        ~chatplayer(neutral, "Hello Alomone.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "Out of my way idiot! We are preparing matters your puny mind could not hope to understand!");
+        } else {
+            ~chatnpc(neutral, "Hazeel has waited long enough to return! It is IMPERATIVE you find that spell!");
+            ~chatplayer(neutral, "Yeah yeah yeah, I'm on it, I'm ON it.");
+        }
+    case ^hazeelcult_given_armour_or_scroll:
+        ~chatplayer(neutral, "Hi.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "I have no time to waste with the likes of you do-gooder.");
+        } else {
+            ~chatnpc(quiz, "Have you brought me the scroll of restoration to complete the ritual?");
+            if(inv_total(inv, scroll_of_hazeel) = 0) {
+                ~chatplayer(sad, "Nope, sorry.");
+                ~chatnpc(neutral, "You must find it and bring it to me! Without it we cannot resurrect Hazeel and our efforts to do so will fail!");
+                return;
+            }
+            // TODO: confirm queue usage, and opnpc1 on hazeel, this cutscene has been completely changed unfortunately
+            // https://www.youtube.com/watch?v=NqgES3kGOHI
+            ~chatplayer(neutral, "Yep. Got it right here.");
+            ~chatnpc(happy, "FINALLY! Quickly, give it to me and I will begin the ritual!");
+            ~mesbox("You hand Alomone the scroll of Hazeel.");
+            ~chatnpc(happy, "Yes... YES! With the words contained within this scroll our Lord shall return to this realm and bring destruction to our enemies!");
+            ~chatnpc(happy, "Watch adventurer, and witness the glorious rebirth of Hazeel!");
+            ~chatnpc(neutral, "Lord Hazeel... Lord Zamorak... I call upon the powers of evil... The forces of chaos... The strength of hatred...");
+            ~chatnpc(neutral, "Sentente sillaberi junque dithmento! Ia! Ia! dextrimon encanto! termando... imcando... solly enty rando... sentente! Ia! Ia! Indenti zaggarati g'thxa!");
+            ~mesbox("Alomone continues to recite the scroll. It is a language you have never heard and do not understand at all.");
+            ~chatnpc(neutral, "Dintenta! Sententa! Retenta! Q'exjta! Ia! Sottottott! Ia! Dysmenta junque fammatio svelken! Sottey! Sentey! SOLOMENT!");
+            ~mesbox("As Alomone finishes reading from the scroll you hear a shrill scream emanate from Hazeel's coffin.");
+            if_close;
+            npc_add(0_40_151_47_5, hazeel, 100);
+            npc_anim(seq_801, 0);
+            p_delay(5);
+            queue(hazeel_leave, 0, npc_uid); // this is probably queued here?
+            ~chatnpc(neutral, "My loyal followers. I have pride in you all. Never did I expect to return to this land and I see I have much to attend to.");
+            ~chatnpc(neutral, "Soon this world will cower once more at the name Hazeel, and my fury will blaze across mine enemies just as my loyal followers gain their rewards.");
+            ~mesbox("Hazeel turns to look at your directly.");
+            ~chatnpc(neutral, "Adventurer. I know that thy efforts were principal in my return to this plane of existence. I offer you my thanks directly.");
+            ~chatnpc(neutral, "You may not be a follower of Zamorak directly but your cunning and treachery mark you as a friend to the Mahjarrat. Rest assured; I will call on your assistance again.");
+            ~chatnpc(neutral, "Weak as I am now, my strength shall return, and my followers will be greatly rewarded when my powers peak once more. Join me in my cause as my servant, and all");
+            ~chatnpc(neutral, "the riches of this plane shall be yours to share, in domination over all who oppose my kind. You would be wise to pledge yourself now while you still may.");
+            ~chatplayer(angry, "I serve nobody but myself.");
+            ~chatnpc(neutral, "Your insolence shall be overlooked this time for I am in truth in your debt. Come close: I shall reward you with wealth such as you deserve.");
+            ~chatnpc(neutral, "Although your true reward will be later, when Zamorak and I, together, lay waste to this miserable planet, and you are spared as an ally to us.");
+            ~mesbox("Hazeel gives you some coins. They seem to be extremely ancient.");
+            ~chatnpc(neutral, "And now I must leave you loyal subjects for time is short, and I have many pressing matters to address before I may make my return. I must leave now, and head Northwards");
+            ~chatnpc(neutral, "to join my fellow mahjarrat and regain my strength and powers. I shall return when I am ready to fight my enemies and much blood shall flow across these lands!");
+            ~mesbox("The cultists let out a mighty cheer"); // intentional missing period
+        }
+    case ^hazeelcult_complete:
+        ~chatplayer(neutral, "Hello again.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "You have crossed my path too many times intruder. Leave or face my wrath.");
+            ~chatplayer(neutral, "Yeah, whatever.");
+        } else {
+            ~chatnpc(happy, "Now Lord Hazeel is returned unto us we await his strength to return so that we may smite our enemies!");
+            ~chatplayer(neutral, "Hey, good for you.");
+        }
+    case default:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(angry, "What? An intruder? Kill him!");
+        ~npc_retaliate(0);
+}
+
+[queue,hazeel_leave](npc_uid $npc)
+if_close;
+if(npc_finduid($npc) = true) {
+    p_delay(2);
+    spotanim_map(spotanim_86, npc_coord, 124, 0);
+    p_delay(1);
+    npc_del;
+}
+queue(hazeelcult_quest_complete, 0);
+
+[ai_queue3,alomone](int $arg)
+gosub(npc_death);
+if(npc_findhero = true) {
+    if_close;
+    if(p_finduid(uid) = true) { // get protected access, if not then queue
+        @defeat_alomone;
+        return;
+    }
+    queue(queue_defeat_alomone, 0, npc_uid); //strongqueue probably
+}
+
+[queue,queue_defeat_alomone](npc_uid $npc)
+if (npc_finduid($npc) = true) {
+    @defeat_alomone;
+}
+
+[label,defeat_alomone]
+if(%hazeelcult_side = ^hazeelcult_goodside & %hazeelcult_progress >= ^hazeelcult_clivet_decision) {
+    if(~obj_gettotal(carnillean_armour) = 0) {
+        if(%hazeelcult_progress < ^hazeelcult_finished_side_task) {
+            %hazeelcult_progress = ^hazeelcult_finished_side_task;
+        }
+        obj_add(npc_coord, carnillean_armour, 1, ^lootdrop_duration);
+    }
+}

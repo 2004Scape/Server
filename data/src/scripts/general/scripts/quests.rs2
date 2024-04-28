@@ -31,6 +31,7 @@ if ($random < 32) {
 }
 if_settext(questscroll:com_3, $questmessage);
 if_settext(questscroll:com_9, tostring($questpoints));
+if_settext(questscroll:com_10, "Quest points.");
 if_setobject(questscroll:com_4, $obj, $objscale);
 if_openmainmodal(questscroll);
 if_setcolour($component, ^green_rgb);
@@ -167,6 +168,10 @@ if (%murder_progress = ^murder_complete) {
     $questpoints = add($questpoints, ^murder_questpoints);
 }
 
+if (%hazeelcult_progress = ^hazeelcult_complete) {
+    $questpoints = add($questpoints, ^hazeelcult_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -205,6 +210,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:grail, %grail_progress, ^grail_complete);
 ~send_quest_progress_colour(questlist:ball, %ball_progress, ^ball_complete);
 ~send_quest_progress_colour(questlist:murder, %murder_progress, ^murder_complete);
+~send_quest_progress_colour(questlist:hazeelcult, %hazeelcult_progress, ^hazeelcult_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {
