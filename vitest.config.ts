@@ -7,6 +7,8 @@ const Configuration = defineConfig({
     test: {
         // Use the APIs globally like Jest
         globals: true,
+        // Prevent test cross-contamination when mocking implementations
+        mockReset: true,
     },
 });
 
