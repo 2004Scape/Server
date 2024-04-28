@@ -78,39 +78,10 @@ if(%hazeelcult_progress >= ^hazeelcult_finished_side_task & %hazeelcult_progress
 }
 mes("You can hear there is a hollow behind this wall."); // from rs3
 
-[oploc1,loc_2856]
-mes("This chest is locked shut.");
+[oploc1,loc_2850] @open_cupboard(~cupboards_use_message);
+[oploc2,loc_2851] @close_cupboard(~cupboards_use_message);
 
-[oplocu,loc_2856]
-if(last_useitem = hazeelcult_key) {
-    mes("You unlock the chest.");
-    ~open_chest(loc_2857);
-    return;
-}
-@nothing_interesting_happens;
-
-[oploc1,loc_2857]
-if(inv_total(inv, scroll_of_hazeel) > 0) {
-    mes("The chest is empty.");
-    return;
-}
-~mesbox("Inside the chest you find the Scroll of Hazeel."); 
-inv_add(inv, scroll_of_hazeel, 1);
-if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
-    %hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
-}
-
-[oploc2,loc_2857] ~close_chest(loc_2856);
-
-[oploc1,loc_2858]
-if(inv_total(inv, hazeelcult_key) > 0) {
-    mes("You search the crate, but find nothing of interest.");
-    return;
-}
-~mesbox("You search the crate. Under various food package you find an old rusty key.");
-inv_add(inv, hazeelcult_key, 1);
-
-[label,hazeelcult_search_cupboard]
+[oploc1,loc_2851]
 if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side = ^hazeelcult_goodside) {
     ~mesbox("You search the cupbaord thoroughly. You find a bottle of poison and a mysterious amulet. You pass your discovery on to Ceril.");
     ~chatplayer(angry, "Ceril!");
@@ -151,6 +122,38 @@ if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side 
     return;
 }
 ~mesbox("You search the cupboard thoroughly but find nothing of interest.");
+
+[oploc1,loc_2856]
+mes("This chest is locked shut.");
+
+[oplocu,loc_2856]
+if(last_useitem = hazeelcult_key) {
+    mes("You unlock the chest.");
+    ~open_chest(loc_2857);
+    return;
+}
+@nothing_interesting_happens;
+
+[oploc1,loc_2857]
+if(inv_total(inv, scroll_of_hazeel) > 0) {
+    mes("The chest is empty.");
+    return;
+}
+~mesbox("Inside the chest you find the Scroll of Hazeel."); 
+inv_add(inv, scroll_of_hazeel, 1);
+if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
+    %hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
+}
+
+[oploc2,loc_2857] ~close_chest(loc_2856);
+
+[oploc1,loc_2858]
+if(inv_total(inv, hazeelcult_key) > 0) {
+    mes("You search the crate, but find nothing of interest.");
+    return;
+}
+~mesbox("You search the crate. Under various food package you find an old rusty key.");
+inv_add(inv, hazeelcult_key, 1);
 
 // TODO: confirm this interface, earliest image we have is of the early 2005 quest interface
 [queue,hazeelcult_fake_complete]
