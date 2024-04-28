@@ -1132,7 +1132,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this) === null) {
             this.clearInteraction();
             return;
         }
@@ -1344,13 +1344,15 @@ export default class Player extends PathingEntity {
     updateZones() {
         // console.log('tracked', this.newlyTrackedZones.size, this.allTrackedZones.size);
 
-        for (const zone of this.newlyTrackedZones) {
-            const x = zone & 2047;
-            const z = zone >> 11;
+        for (const zoneXZ of this.newlyTrackedZones) {
+            const x = zoneXZ & 2047;
+            const z = zoneXZ >> 11;
 
             this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
 
-            const { locDelCached, locAddCached, staticObjAddCached, staticObjDelCached } = World.getZone(x << 3, z << 3, this.level);
+            const zone = World.getZone(x << 3, z << 3, this.level);
+
+            const { locDelCached, locAddCached, staticObjAddCached, staticObjDelCached } = zone;
 
             for (const [packed, buf] of locDelCached) {
                 this.netOut.push(buf.copy());
@@ -1371,13 +1373,22 @@ export default class Player extends PathingEntity {
             if (locDelCached.size > 0 || locAddCached.size > 0) {
                 World.getZone(x << 3, z << 3, this.level).debug();
             }
+
+            const dynamicObj = zone.getDynamicObjState(this);
+
+            for (const buf of dynamicObj) {
+                this.netOut.push(buf.copy());
+            }
         }
 
-        for (const zone of this.allTrackedZones) {
-            const x = zone & 2047;
-            const z = zone >> 11;
+        for (const zoneXZ of this.allTrackedZones) {
+            const x = zoneXZ & 2047;
+            const z = zoneXZ >> 11;
 
-            const { buffer, locAddTimer, locDelTimer, locChangeTimer } = World.getZone(x << 3, z << 3, this.level);
+            const zone = World.getZone(x << 3, z << 3, this.level);
+            const { locAddTimer, locDelTimer, locChangeTimer } = zone;
+            
+            const buffer = zone.getEvents(this);
 
             // shared events
             if (buffer.length > 0) {

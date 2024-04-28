@@ -18,4 +18,14 @@ export default class Obj extends NonPathingEntity {
     get id() {
         return this.type;
     }
+
+    equals(obj: Obj) {
+        return (
+            this.level === obj.level
+            && this.x === obj.x 
+            && this.z === obj.z 
+            && this.type === obj.type 
+            && this.count === obj.count
+        );
+    }
 }

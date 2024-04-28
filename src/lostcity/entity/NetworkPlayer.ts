@@ -861,7 +861,7 @@ export class NetworkPlayer extends Player {
                     continue;
                 }
 
-                const obj = World.getObj(x, z, this.level, objId);
+                const obj = World.getObj(x, z, this.level, objId, this);
                 if (!obj) {
                     this.unsetMapFlag();
                     continue;
@@ -922,7 +922,7 @@ export class NetworkPlayer extends Player {
                     continue;
                 }
 
-                const obj = World.getObj(x, z, this.level, objId);
+                const obj = World.getObj(x, z, this.level, objId, this);
                 if (!obj) {
                     continue;
                 }
@@ -960,7 +960,7 @@ export class NetworkPlayer extends Player {
                     continue;
                 }
 
-                const obj = World.getObj(x, z, this.level, objId);
+                const obj = World.getObj(x, z, this.level, objId, this);
                 if (!obj) {
                     continue;
                 }

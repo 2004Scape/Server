@@ -12,9 +12,21 @@ import ZoneManager from './ZoneManager.js';
 import { locShapeLayer } from '@2004scape/rsmod-pathfinder';
 
 export default class Zone {
+    /**
+     * The amount of cycles a dynamic object will be kept in the
+     * zone before being despawned.
+     */
+    public static OBJ_LIFETIME_CYCLES = 300;
+
+    /**
+     * The amount of cycles a dynamic object will be kept private
+     * to the receiver before being made public.
+     */
+    public static OBJ_PRIVATE_LIFETIME_CYCLES = 100;
+
     index = -1; // packed coord
     level = 0;
-    buffer: Packet = new Packet();
+    sharedEventBuffer: Packet = new Packet();
     events: Packet[] = [];
 
     // zone entities
@@ -36,7 +48,30 @@ export default class Zone {
     staticObjs: Obj[] = []; // source of truth from map
     staticObjAddCached: Packet[] = [];
     staticObjDelCached: Packet[] = [];
-    objs: Obj[] = []; // objs actually in the zone
+
+    /**
+     * A list of public objects in the zone.
+     */
+    private publicObjs: { obj: Obj, timer: number }[] = [];
+
+    /**
+     * A map of private objects in the zone, keyed by the player.
+     * 
+     * This is keyed by the Player object because we use uid in most places,
+     * but pid in the OBJ_REVEAL packet.
+     */
+    private privateObjs: Map<Player, { obj: Obj, timer: number, revealTimer: number }[]> = new Map();
+
+    /**
+     * A list of public object events that occurred in the last cycle.
+     */
+    private objEvents: Packet[] = [];
+
+    /**
+     * A map of private object events that occurred in the last cycle,
+     * keyed by the player's uid.
+     */
+    private privateObjEvents: Map<number, Packet[]> = new Map();
 
     constructor(index: number, level: number) {
         this.index = index;
@@ -46,7 +81,7 @@ export default class Zone {
     debug() {
         // console.log('zone', this.index);
 
-        if (this.buffer.length > 0) {
+        if (this.sharedEventBuffer.length > 0) {
             // console.log('buffer', this.buffer);
         }
 
@@ -77,6 +112,24 @@ export default class Zone {
         // console.log('----');
     }
 
+    private revealObj(obj: Obj, timer: number, receiver: Player) {
+        const privateObjs = this.privateObjs.get(receiver) ?? [];
+        const index = privateObjs.findIndex(o => o.obj.equals(obj));
+
+        // TODO (jkm) what to do here?
+        if (index === -1) {
+            console.log('revealObj: obj not found');
+            return;
+        }
+
+        privateObjs.splice(index, 1);
+        this.publicObjs.push({ obj, timer });
+
+        this.addObjEvent(
+            Zone.write(ServerProt.OBJ_REVEAL, obj.x, obj.z, obj.type, obj.count, receiver.pid),
+            null);
+    }
+
     cycle() {
         // despawn
         for (const [packed, timer] of this.locAddTimer) {
@@ -92,8 +145,41 @@ export default class Zone {
             }
         }
 
-        for (const obj of this.objs) {
-            //
+        // objs that are currently private to a player
+        for (const [ player, objs ] of this.privateObjs) {
+            const objsToRemove: number[] = [];
+
+            for (const [ index, obj ] of objs.entries()) {
+                if (obj.revealTimer - World.currentTick == 0) {
+                    this.revealObj(obj.obj, obj.timer, player);
+                }
+
+                // check if obj has expired
+                if (obj.timer - World.currentTick == 0) {
+                    this.addObjEvent(
+                        Zone.write(ServerProt.OBJ_DEL, obj.obj.x, obj.obj.z, obj.obj.type, obj.obj.count),
+                        player.uid);
+
+                    objsToRemove.push(index);
+                }
+            }
+            
+            this.privateObjs.set(player, objs.filter((_, i) => !objsToRemove.includes(i)));
+        }
+
+        // objs that are currently public
+        for (const [ index, obj ] of this.publicObjs.entries()) {
+            const objsToRemove: number[] = [];
+
+            if (obj.timer - World.currentTick == 0) {
+                this.addObjEvent(
+                    Zone.write(ServerProt.OBJ_DEL, obj.obj.x, obj.obj.z, obj.obj.type, obj.obj.count),
+                    null);
+
+                objsToRemove.push(index);
+            }
+
+            this.publicObjs = this.publicObjs.filter((_, i) => !objsToRemove.includes(i));
         }
 
         // respawn
@@ -135,7 +221,7 @@ export default class Zone {
     }
 
     computeSharedEvents() {
-        this.buffer = new Packet();
+        this.sharedEventBuffer = new Packet();
 
         for (const packed of this.locDelEvent) {
             let info = this.locInfo.get(packed);
@@ -156,7 +242,7 @@ export default class Zone {
             const angle = (info >> 21) & 3;
 
             const buf = Zone.write(ServerProt.LOC_DEL, x, z, shape, angle);
-            this.buffer.pdata(buf);
+            this.sharedEventBuffer.pdata(buf);
 
             const isStatic = (packed >> 8) & 1;
             if (isStatic) {
@@ -188,7 +274,7 @@ export default class Zone {
             const angle = (info >> 21) & 3;
 
             const buf = Zone.write(ServerProt.LOC_ADD_CHANGE, x, z, shape, angle, id);
-            this.buffer.pdata(buf);
+            this.sharedEventBuffer.pdata(buf);
 
             const isStatic = (packed >> 8) & 1;
             if (!isStatic) {
@@ -203,12 +289,23 @@ export default class Zone {
         }
 
         for (const event of this.events) {
-            this.buffer.pdata(event);
+            this.sharedEventBuffer.pdata(event);
         }
 
         this.locDelEvent = new Set();
         this.locAddEvent = new Set();
         this.events = [];
+    }
+
+    /**
+     * Get a packet containing all events that occurred in the zone
+     * during the last cycle.
+     * 
+     * @param player The observing player
+     * @returns The packet containing the events
+     */
+    public getEvents(player: Player): Packet {
+        return this.writeObjEvents(player, this.sharedEventBuffer.copy());
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -434,19 +531,169 @@ export default class Zone {
     }
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
-        this.objs.push(obj);
+        if (receiver) {
+            // get the private objects for the receiver
+            let privateObjs = this.privateObjs.get(receiver);
+            if (!privateObjs) {
+                privateObjs = [];
+                this.privateObjs.set(receiver, privateObjs);
+            }
+
+            // create the object
+            privateObjs.push({
+                obj: Obj.clone(obj),
+                timer: World.currentTick + duration,
+                revealTimer: World.currentTick + Zone.OBJ_PRIVATE_LIFETIME_CYCLES
+            });
+
+            // broadcast to the receiver
+            this.addObjEvent(
+                Zone.write(ServerProt.OBJ_ADD, obj.x, obj.z, obj.type, obj.count),
+                receiver.uid);
+        } else {
+            // create the object
+            this.publicObjs.push({ obj, timer: World.currentTick + duration });
+
+            // broadcast to all players
+            this.addObjEvent(
+                Zone.write(ServerProt.OBJ_ADD, obj.x, obj.z, obj.type, obj.count),
+                null);
+        }
     }
 
     removeObj(obj: Obj, receiver: Player | null) {
+        // if a receiver is supplied then check their private objects first
+        if (receiver) {
+            const objs = this.privateObjs.get(receiver) ?? [];
+            const matchingPrivateObjIndex = objs.findIndex(o => o.obj.equals(obj));
+
+            if (matchingPrivateObjIndex !== -1) {
+                // its private so we can broadcast the removal to the receiver only
+                this.addObjEvent(
+                    Zone.write(ServerProt.OBJ_DEL, obj.x, obj.z, obj.type, obj.count),
+                    receiver.uid);
+
+                objs.splice(matchingPrivateObjIndex, 1);
+                
+                return;
+            }
+        }
+
+        // otherwise look publicly
+        const matchingPublicObjIndex = this.publicObjs.findIndex(o => o.obj.equals(obj));
+        if (matchingPublicObjIndex !== -1) {
+            // the obj is public so we need to broadcast the removal to all players
+            this.addObjEvent(
+                Zone.write(ServerProt.OBJ_DEL, obj.x, obj.z, obj.type, obj.count),
+                null);
+
+            this.publicObjs.splice(matchingPublicObjIndex, 1);
+
+            return;
+        }
+
+        // TODO (jkm) what to do here?
+        console.log('removeObj: obj not found');
     }
 
-    getObj(x: number, z: number, type: number): Obj | null {
-        for (const obj of this.objs) {
+    /**
+     * Find an object at a location in the zone, visible to a given player.
+     * 
+     * @param x The x coordinate within the zone 
+     * @param z The z coordinate within the zone
+     * @param type The object type
+     * @param player The observing player
+     * @returns The object, or null if not found
+     */
+    public getObj(x: number, z: number, type: number, player: Player): Obj | null {
+        // look through private objects first
+        const privateObjs = this.privateObjs.get(player) ?? [];
+        for (const { obj } of privateObjs){
+            if (obj.x === x && obj.z === z && obj.type === type) {
+                return obj;
+            }
+        }
+
+        // search all public objects in the zone
+        for (const { obj } of this.publicObjs){
             if (obj.x === x && obj.z === z && obj.type === type) {
                 return obj;
             }
         }
 
         return null;
+    }
+    
+    /**
+     * Broadcast an object event packet.
+     * @param packet The packet to broadcast
+     * @param receiverUid The player uid to broadcast the event to, or null to broadcast to all players
+     */
+    private addObjEvent(packet: Packet, receiverUid: number | null) {
+        if (receiverUid !== null) {
+            let packets = this.privateObjEvents.get(receiverUid);
+
+            if (!packets) {
+                packets = [];
+                this.privateObjEvents.set(receiverUid, packets);
+            }
+
+            packets.push(packet);
+        } else {
+            this.objEvents.push(packet);
+        }
+    }
+
+    /**
+     * Write object events into a packet.
+     * 
+     * @param player The observing player
+     * @param buffer The packet to write the events to
+     * @returns The packet
+     */
+    private writeObjEvents(player: Player, buffer: Packet): Packet {        
+        for (const packet of this.objEvents) {
+            buffer.pdata(packet);
+        }
+
+        const packets = this.privateObjEvents.get(player.uid) ?? [];
+
+        for (const packet of packets) {
+            buffer.pdata(packet);
+        }
+
+        return buffer;
+    }
+
+    /**
+     * Get a packet containing the total representation of all dynamic objects
+     * in the zone.
+     * 
+     * @param player The observing player 
+     * @returns The packet containing the full state of all dynamic objects
+     */
+    public getDynamicObjState(player: Player): Packet[] {
+        const privateObjs = this.privateObjs.get(player) ?? [];
+        const packets: Packet[] = [];
+
+        for (const { obj } of privateObjs) {
+            const buf = Zone.write(ServerProt.OBJ_ADD, obj.x, obj.z, obj.type, obj.count);
+            packets.push(buf);
+        }
+
+        for (const { obj } of this.publicObjs) {
+            const buf = Zone.write(ServerProt.OBJ_ADD, obj.x, obj.z, obj.type, obj.count);
+            packets.push(buf);
+        }
+
+        return packets;
+    }
+
+    /**
+     * Clear any events from the last cycle.
+     */
+    public cleanup() {
+        this.privateObjEvents.clear();
+        this.objEvents = [];
     }
 }

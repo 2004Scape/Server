@@ -82,7 +82,7 @@ const ObjOps: CommandHandlers = {
         const inv = check(state.popInt(), InvTypeValid);
 
         const obj = state.activeObj;
-        if (World.getObj(obj.x, obj.z, obj.level, obj.id)) {
+        if (World.getObj(obj.x, obj.z, obj.level, obj.id, state.activePlayer)) {
             const objType = ObjType.get(obj.type);
             state.activePlayer.playerLog('Picked up item', objType.debugname as string);
 

@@ -743,6 +743,18 @@ class World {
         }
         clientOutput = Date.now() - clientOutput;
 
+        // clear down zone events now that we have broadcast them to the players
+        let zoneCleanup = Date.now();
+        for (const zoneIndex of activeZones) {
+            const zone = this.getZoneIndex(zoneIndex);
+            if (!zone) {
+                continue;
+            }
+
+            zone.cleanup();
+        }
+        zoneCleanup = Date.now() - zoneCleanup;
+
         // reset entity masks
         let cleanup = Date.now();
         for (let i = 0; i < this.players.length; i++) {
@@ -895,7 +907,7 @@ class World {
         // console.log('----');
 
         this.currentTick++;
-        this.lastCycleStats = [end - start, worldProcessing, clientInput, npcProcessing, playerProcessing, playerLogout, playerLogin, zoneProcessing, clientOutput, cleanup];
+        this.lastCycleStats = [end - start, worldProcessing, clientInput, npcProcessing, playerProcessing, playerLogout, playerLogin, zoneProcessing + zoneCleanup, clientOutput, cleanup];
 
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
@@ -985,8 +997,8 @@ class World {
         return null;
     }
 
-    getObj(x: number, z: number, level: number, objId: number) {
-        return this.getZone(x, z, level).getObj(x, z, objId);
+    getObj(x: number, z: number, level: number, objId: number, player: Player) {
+        return this.getZone(x, z, level).getObj(x, z, objId, player);
     }
 
     addLoc(loc: Loc, duration: number) {
