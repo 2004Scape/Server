@@ -1,12 +1,37 @@
 [opnpc1,butler_jones]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_given_armour:
+    case ^hazeelcult_complete:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatplayer(neutral, "Hello stranger.");
+            ~chatnpc(neutral, "Why hello there.");
+            ~chatplayer(quiz, "I take it you're the new butler...?");
+            ~chatnpc(neutral, "That's right. I hear that they had some problems with the last one.");
+            ~chatplayer(neutral, "Yes, you could say that...");
+        } else {
+            ~chatplayer(neutral, "Hello there.");
+            ~chatnpc(neutral, "It's an honour to be in your presence again, adventurer. I hope things are well?");
+            ~chatplayer(neutral, "Not bad, thanks. Yourself?");
+            ~chatnpc(neutral, "Unfortunately, I am still forced to deal with this insufferable family. Many generations have passed, but they are still the enemy. As such, they must be kept a close eye on.");
+            ~chatnpc(neutral, "Still, I have no doubt that the time will soon come for me to leave this place. Our lord will certainly have need of me elsewhere once his current work is complete.");
+            ~chatplayer(neutral, "I see. Well good luck with it all.");
+        }
+    case ^hazeelcult_given_armour_or_scroll:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatnpc(angry, "Cretin. Did you think you could 'save the day' just by accusing me? We've been planning this for YEARS. your meddling has been nothing more than a minor inconvenience.");
             ~chatnpc(angry, "When Lord Hazeel returns, the likes of you and the arrogant Carnilleans will be first to suffer his vengeance.");
             ~chatplayer(angry, "Not if I can help it!");
             ~chatnpc(angry, "That's basically my point. You cannot help it. Now begone!");
         } else {
+            ~chatplayer(neutral, "Hello Jones.");
+            ~chatnpc(neutral, "Have you recovered the scroll?");
+            if(inv_total(inv, scroll_of_hazeel) = 0) {
+                ~chatplayer(confused, "Uh... yeah... about that.. I don't exactly have it right now...");
+                ~chatnpc(angry, "Incompetent fool! The future of our entire plans relies on that scroll! You MUST find it and take it back to our hideout as soon as possible!");
+                return;
+            } 
+            ~chatplayer(happy, "I have it right here.");
+            ~chatnpc(happy, "Incredible!");
+            ~chatnpc(neutral, "Quick, get it back to our hideout! These are glorious times indeed adventurer, when the mighty Hazeel returns things are REALLY going to change around here!");
         }
     case ^hazeelcult_finished_side_task:
         if(%hazeelcult_side = ^hazeelcult_goodside) {

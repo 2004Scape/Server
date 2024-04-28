@@ -82,12 +82,25 @@ switch_int(%hazeelcult_progress) {
             ~mesbox("Sir Ceril breaks down into tears.");
             ~chatplayer(neutral, "Loosen up already. It was only a DOG.");
         }
-    case ^hazeelcult_given_armour:
+    case ^hazeelcult_given_armour_or_scroll:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatplayer(angry, "You owe me money.");
             ~chatnpc(angry, "I owe you nothing you scoundrel! Now get out or I'll have Jones throw you out!");
         } else {
-            // todo
+            ~chatplayer(quiz, "Hello Ceril. How's things?");
+            ~chatnpc(angry, "SIR Ceril! SIR! And I'm not sure but I think the thieves have been back in my house.");
+            ~chatplayer(quiz, "What makes you say that?");
+            ~chatnpc(angry, "Well, either I'm going crazy, or theres been an intruder in Jones' room upstairs!");
+            ~chatplayer(neutral, "Oh, heh, ok then.");
+        }
+    case ^hazeelcult_complete:
+        ~chatplayer(neutral, "Hello Ceril.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(happy, "Well hello again adventurer! It's good to see you again! If it wasn't for your quick thinking the treacherous Jones would have poisoned my family and me by now! We are in your debt.");
+            ~chatplayer(neutral, "Don't worry about it, a good deed is its own reward. And that 2000 gold didn't hurt either.");
+        } else {
+            ~chatnpc(sad, "Oooooh... I may be wrong... but ever since I asked for your help things around here have gone from bad to worse...");
+            ~chatnpc(angry, "I think you'd better keep out of my way. And for the LAST time: it's SIR Ceril. SIR! It's not that hard to blooming remember!");
         }
 }
 

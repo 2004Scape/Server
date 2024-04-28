@@ -12,35 +12,37 @@ switch_int(%hazeelcult_progress) {
     case ^hazeelcult_clivet_decision:
         ~chatplayer(neutral, "Hello there.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            @hazeel_cultist_goodsidequest;
+            ~chatnpc(angry, "What? How did you get in here? Who are you and why do you come here? It doesn't matter, you will not live long enough to tell anyone of our hideout!");
+            ~npc_retaliate(0);
         } else {
             ~chatnpc(angry, "Leave me alone, can't you see I'm busy? We have a lot to do preparing for the imminent return of Lord Hazeel"); // no period
         }
-    case ^hazeelcult_poured_poison:
-        ~chatplayer(neutral, "Hello.");
-        ~chatplayer(neutral, "I poured the poison into the Carnillean's meal as requested. It didn't quite go to plan however.");
-        ~chatnpc(neutral, "Yes, we heard all about it from one of our sources. Hazeel has eyes everywhere! You have now proved your loyalty and will be rewarded when Hazeel is revived!");
-        ~chatplayer(neutral, "Ok. So what's next?");
-        ~chatnpc(neutral, "Here. Wear this amulet; it is called The Sign Of Hazeel. Not only will it identify you as one of our brotherhood to other followers but it is also key to finding our hideout.");
-        if(inv_total(inv, mark_of_hazeel) > 0) {
-            ~chatnpc(neutral, "But of course, you already knew that, as you already have The Sign Of Hazeel.");
-            return;
-        }
-        inv_add(inv, mark_of_hazeel, 1);
-        ~chatplayer(quiz, "How does this amulet help do that then?");
-        ~chatnpc(neutral, "Hazeel in his wisdom when he built this lair did so by making it inaccessible unless the flow of the sewers is controlled exactly by the sewer valves above ground.");
-        ~chatnpc(neutral, "Each sewer valve must be correctly set before the water level is such that you may enter. The secret of the correct settings is contained in these amulets which honour him.");
-        ~chatnpc(neutral, "Starting from left to right, follow the design of the amulet to locate each sewer valve, and then turn each so as to follow the amulet design.");
-        ~chatnpc(neutral, "When you solve the sequence you may enter our hideout where our leader, Alomone, awaits you.");
-    case ^hazeelcult_finished_side_task:
+    case ^hazeelcult_poured_poison, ^hazeelcult_finished_side_task:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             @hazeel_cultist_goodsidequest;
         } else {
             ~chatplayer(neutral, "Hello there.");
             ~chatnpc(neutral, "Well hello! Until we have retrieved the scroll of Hazeel we cannot resurrect our master. You must find it and bring it to us.");
         }
+    case ^hazeelcult_given_armour_or_scroll:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            @hazeel_cultist_goodsidequest;
+        } else {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(neutral, "Welcome back adventurer! Since you have brought us the scroll of Hazeel we can now perform the resurrection ceremony! Soon our master will return!");
+        }
+    case ^hazeelcult_complete:
+        // guessed mesanims
+        ~chatplayer(neutral, "Hello.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "It's the meddler! The one who blew Jones' cover! I don't know why you came to this place but it is here that you will die.");
+            ~npc_retaliate(0);
+        } else {
+            ~chatnpc(happy, "The adventurer returns. We await the return of our Lord from his business in the north here, so that we may wreak vengeance on his enemies.");
+            ~chatnpc(happy, "I bow before you in honour for your efforts in bringing Lord Hazeel back to this realm to lead us into glory once more!");
+        }
 }
 
 [label,hazeel_cultist_goodsidequest]
-~chatnpc(angry, "What? How did you get in here? Who are you and why do you come here? It doesn't matter, you will not live long enough to tell anyone of our hideout!");
-~npc_retaliate(0);
+~chatplayer(neutral, "Hello there.");
+~chatnpc(angry, "What? An intruder? HERE? How did you get in here? You must leave! NOW!");

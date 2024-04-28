@@ -29,20 +29,72 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc(neutral, "Hazeel has waited long enough to return! It is IMPERATIVE you find that spell!");
             ~chatplayer(neutral, "Yeah yeah yeah, I'm on it, I'm ON it.");
         }
-    case ^hazeelcult_given_armour:
+    case ^hazeelcult_given_armour_or_scroll:
+        ~chatplayer(neutral, "Hi.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatplayer(neutral, "Hi.");
             ~chatnpc(angry, "I have no time to waste with the likes of you do-gooder.");
         } else {
-            // todo
+            ~chatnpc(quiz, "Have you brought me the scroll of restoration to complete the ritual?");
+            if(inv_total(inv, scroll_of_hazeel) = 0) {
+                ~chatplayer(sad, "Nope, sorry.");
+                ~chatnpc(neutral, "You must find it and bring it to me! Without it we cannot resurrect Hazeel and our efforts to do so will fail!");
+                return;
+            }
+            // TODO: confirm queue usage, and opnpc1 on hazeel, this cutscene has been completely changed unfortunately
+            ~chatplayer(neutral, "Yep. Got it right here.");
+            ~chatnpc(happy, "FINALLY! Quickly, give it to me and I will begin the ritual!");
+            ~mesbox("You hand Alomone the scroll of Hazeel.");
+            ~chatnpc(happy, "Yes... YES! With the words contained within this scroll our Lord shall return to this realm and bring destruction to our enemies!");
+            ~chatnpc(happy, "Watch adventurer, and witness the glorious rebirth of Hazeel!");
+            ~chatnpc(neutral, "Lord Hazeel... Lord Zamorak... I call upon the powers of evil... The forces of chaos... The strength of hatred...");
+            ~chatnpc(neutral, "Sentente sillaberi junque dithmento! Ia! Ia! dextrimon encanto! termando... imcando... solly enty rando... sentente! Ia! Ia! Indenti zaggarati g'thxa!");
+            ~mesbox("Alomone continues to recite the scroll. It is a language you have never heard and do not understand at all.");
+            ~chatnpc(neutral, "Dintenta! Sententa! Retenta! Q'exjta! Ia! Sottottott! Ia! Dysmenta junque fammatio svelken! Sottey! Sentey! SOLOMENT!");
+            ~mesbox("As Alomone finishes reading from the scroll you hear a shrill scream emanate from Hazeel's coffin.");
+            if_close;
+            npc_add(0_40_151_47_5, hazeel, 100);
+            npc_anim(seq_801, 0);
+            p_delay(5);
+            queue(hazeel_leave, 0, npc_uid); // this is probably queued here?
+            ~chatnpc(neutral, "My loyal followers. I have pride in you all. Never did I expect to return to this land and I see I have much to attend to.");
+            ~chatnpc(neutral, "Soon this world will cower once more at the name Hazeel, and my fury will blaze across mine enemies just as my loyal followers gain their rewards.");
+            ~mesbox("Hazeel turns to look at your directly.");
+            ~chatnpc(neutral, "Adventurer. I know that thy efforts were principal in my return to this plane of existence. I offer you my thanks directly.");
+            ~chatnpc(neutral, "You may not be a follower of Zamorak directly but your cunning and treachery mark you as a friend to the Mahjarrat. Rest assured; I will call on your assistance again.");
+            ~chatnpc(neutral, "Weak as I am now, my strength shall return, and my followers will be greatly rewarded when my powers peak once more. Join me in my cause as my servant, and all");
+            ~chatnpc(neutral, "the riches of this plane shall be yours to share, in domination over all who oppose my kind. You would be wise to pledge yourself now while you still may.");
+            ~chatplayer(angry, "I serve nobody but myself.");
+            ~chatnpc(neutral, "Your insolence shall be overlooked this time for I am in truth in your debt. Come close: I shall reward you with wealth such as you deserve.");
+            ~chatnpc(neutral, "Although your true reward will be later, when Zamorak and I, together, lay waste to this miserable planet, and you are spared as an ally to us.");
+            ~mesbox("Hazeel gives you some coins. They seem to be extremely ancient.");
+            ~chatnpc(neutral, "And now I must leave you loyal subjects for time is short, and I have many pressing matters to address before I may make my return. I must leave now, and head Northwards");
+            ~chatnpc(neutral, "Hazeel: to join my fellow mahjarrat and regain my strength and powers. I shall return when I am ready to fight my enemies and much blood shall flow across these lands!");
+            ~mesbox("The cultists let out a mighty cheer"); // intentional missing period
+        }
+    case ^hazeelcult_complete:
+        ~chatplayer(neutral, "Hello again.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatnpc(angry, "You have crossed my path too many times intruder. Leave or face my wrath.");
+            ~chatplayer(neutral, "Yeah, whatever.");
+        } else {
+            ~chatnpc(happy, "Now Lord Hazeel is returned unto us we await his strength to return so that we may smite our enemies!");
+            ~chatplayer(neutral, "Hey, good for you.");
         }
     case default:
         ~chatplayer(neutral, "Hello.");
-        ~chatnpc(angry, "What? An intruder? Prepare to die!");
-        if (npc_finduid(~npc_within_distance(coord, hazeel_cultist, 8)) = true) { // TODO: not sure how long the range check is, OSRS has it changed
-            ~npc_retaliate(0);
-        }
+        ~chatnpc(angry, "What? An intruder? Kill him!");
+        ~npc_retaliate(0);
 }
+
+[queue,hazeel_leave](npc_uid $npc)
+if_close;
+if(npc_finduid($npc) = true) {
+    p_delay(2);
+    spotanim_map(spotanim_86, npc_coord, 124, 0);
+    p_delay(1);
+    npc_del;
+}
+queue(hazeelcult_quest_complete, 0);
 
 [ai_queue3,alomone](int $arg)
 gosub(npc_death);

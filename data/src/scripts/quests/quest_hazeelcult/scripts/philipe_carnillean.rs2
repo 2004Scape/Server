@@ -1,10 +1,6 @@
 [opnpc1,philipe_carnillean]
 switch_int(%hazeelcult_progress) {
-    case ^hazeelcult_not_started:
-        ~chatplayer(neutral, "Hello there.");
-        ~chatnpc(quiz, "What have you brought me? I want some more toys!");
-        ~chatplayer(neutral, "I'm afraid I don't have any toys.");
-        ~chatnpc(angry, "TOYS! I WANT TOYS!");
+    case ^hazeelcult_not_started: @philipe_toys;
     case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision: @philipe_carnillean_breakin;
     case ^hazeelcult_poured_poison:
         ~chatplayer(neutral, "Hello youngster.");
@@ -19,7 +15,38 @@ switch_int(%hazeelcult_progress) {
         } else {
             @philipe_carnillean_breakin;
         }
+    case ^hazeelcult_given_armour_or_scroll:
+        ~chatplayer(neutral, "Hello youngster.");
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            @philipe_jones;
+        } else {
+            ~chatnpc(quiz, "Why are you still here?");
+            ~chatplayer(neutral, "Just looking around.");
+            ~chatnpc(quiz, "Have you got me some toys?");
+            ~chatplayer(neutral, "Nope.");
+            ~chatnpc(angry, "Then I don't like you!");
+            ~chatplayer(neutral, "Gee. I guess I'll just have to live with that then.");
+        }
+    case ^hazeelcult_complete:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatplayer(neutral, "Hello youngster.");
+            @philipe_jones;
+        } else {
+            @philipe_toys;
+        }
 }
+
+[label,philipe_toys]
+~chatplayer(neutral, "Hello there.");
+~chatnpc(quiz, "What have you brought me? I want some more toys!");
+~chatplayer(neutral, "I'm afraid I don't have any toys.");
+~chatnpc(angry, "TOYS! I WANT TOYS!");
+
+[label,philipe_jones]
+~chatnpc(neutral, "Daddy says you don't like Mr Jones. Mr Jones is nice. He brings me toys and sweets.");
+~chatplayer(neutral, "Jones is a bad man, Philipe.");
+~chatnpc(angry, "You're a bad <text_gender("man", "lady")>! I don't like you!");
+~chatplayer(neutral, "I'll try and console myself about that disappointment somehow.");
 
 [label,philipe_carnillean_breakin]
 ~chatplayer(neutral, "Hello.");

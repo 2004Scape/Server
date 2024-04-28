@@ -36,13 +36,45 @@ switch_int(%hazeelcult_progress) {
                 ~chatnpc(angry, "Useless. Take this and don't mess up this time. Lord Hazeel is depending on you.");
             }
         }
+    case ^hazeelcult_poured_poison:
+        ~chatplayer(neutral, "Hello.");
+        ~chatplayer(neutral, "I poured the poison into the Carnillean's meal as requested. It didn't quite go to plan however.");
+        ~chatnpc(neutral, "Yes, we heard all about it from one of our sources. Hazeel has eyes everywhere! You have now proved your loyalty and will be rewarded when Hazeel is revived!");
+        ~chatplayer(neutral, "Ok. So what's next?");
+        ~chatnpc(neutral, "Here. Wear this amulet; it is called The Sign Of Hazeel. Not only will it identify you as one of our brotherhood to other followers but it is also key to finding our hideout.");
+        if(inv_total(inv, mark_of_hazeel) > 0) {
+            ~chatnpc(neutral, "But of course, you already knew that, as you already have The Sign Of Hazeel.");
+            return;
+        }
+        inv_add(inv, mark_of_hazeel, 1);
+        ~chatplayer(quiz, "How does this amulet help do that then?");
+        ~chatnpc(neutral, "Hazeel in his wisdom when he built this lair did so by making it inaccessible unless the flow of the sewers is controlled exactly by the sewer valves above ground.");
+        ~chatnpc(neutral, "Each sewer valve must be correctly set before the water level is such that you may enter. The secret of the correct settings is contained in these amulets which honour him.");
+        ~chatnpc(neutral, "Starting from left to right, follow the design of the amulet to locate each sewer valve, and then turn each so as to follow the amulet design.");
+        ~chatnpc(neutral, "When you solve the sequence you may enter our hideout where our leader, Alomone, awaits you.");
     case ^hazeelcult_finished_side_task:
+        if(%hazeelcult_side = ^hazeelcult_goodside) {
+            ~chatplayer(neutral, "Hello again.");
+            ~chatnpc(angry, "You again! You meddle in our affairs too much! When Lord Hazeel returns to this realm he will lay a mighty vengeance upon you!");
+        } else {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(happy, "Hello once more adventurer. All we need is Hazeels' magical scroll to bring him forth once more to this world.");
+        }
+    case ^hazeelcult_given_armour_or_scroll:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             ~chatplayer(neutral, "Hello again.");
             ~chatnpc(angry, "You again. Mark my words meddler; when Lord Hazeel returns you will be punished most severely for your interference in our schemes.");
         } else {
-            ~chatplayer(neutral, "Hello.");
-            ~chatnpc(happy, "Hello once more adventurer. All we need is Hazeels' magical scroll to bring him forth once more to this world.");
+            ~chatplayer(neutral, "Hello again.");
+            ~chatnpc(quiz, "Have you acquired the enchanted scroll required to resurrect Hazeel yet?");
+            if(inv_total(inv, scroll_of_hazeel) = 0) {
+                ~chatplayer(confused, "Uh... yeah... about that... I seem to have, errm, misplayed it somewhere...");
+                ~chatnpc(angry, "Incompetent cretin! Return to the Carnillean household and do not return again without it!");
+                return;
+            }
+            ~chatplayer(neutral, "Yes, it was in the house all along. Jones can't have looked that hard for it.");
+            ~chatnpc(happy, "At last! The pieces are all in place for the glorious resurrection of Lord Hazeel! Now is the starting point for a new page in history, and our chance for vengeance!");
+            ~chatnpc(happy, "Quickly now! Take the scroll to Alomone so that we may begin the ritual... and when Lord Hazeel returns I promise you that you shall be well rewarded!");
         }
 }
 

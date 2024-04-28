@@ -292,10 +292,6 @@ transmit=yes
 
 [varp_221]
 
-[hazeelcult_valves]
-
-[hazeelcult_side]
-
 [gnome_drink_ingredient1]
 type=obj
 

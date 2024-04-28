@@ -95,7 +95,7 @@ if(inv_total(inv, scroll_of_hazeel) > 0) {
 ~mesbox("Inside the chest you find the Scroll of Hazeel."); 
 inv_add(inv, scroll_of_hazeel, 1);
 if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
-    %hazeelcult_progress = ^hazeelcult_given_armour;
+    %hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
 }
 
 [oploc2,loc_2857] ~close_chest(loc_2856);
@@ -109,7 +109,7 @@ if(inv_total(inv, hazeelcult_key) > 0) {
 inv_add(inv, hazeelcult_key, 1);
 
 [label,hazeelcult_search_cupboard]
-if(%hazeelcult_progress = ^hazeelcult_given_armour & %hazeelcult_side = ^hazeelcult_goodside) {
+if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side = ^hazeelcult_goodside) {
     ~mesbox("You search the cupbaord thoroughly. You find a bottle of poison and a mysterious amulet. You pass your discovery on to Ceril.");
     ~chatplayer(angry, "Ceril!");
     if (npc_finduid(~npc_within_distance(coord, ceril_carnillean, 6)) = false) { 
@@ -152,7 +152,7 @@ if(%hazeelcult_progress = ^hazeelcult_given_armour & %hazeelcult_side = ^hazeelc
 
 [queue,hazeelcult_fake_complete]
 inv_add(inv, coins, 5);
-%hazeelcult_progress = ^hazeelcult_given_armour;
+%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
 // not sure if it uses random jingle here or just a single one
 def_int $random = random(128);
 if ($random < 32) {
@@ -173,6 +173,7 @@ if_openmainmodal(questscroll);
 
 [queue,hazeelcult_quest_complete]
 %hazeelcult_progress = ^hazeelcult_complete;
+inv_del(inv, scroll_of_hazeel, 1);
 givexp(thieving, 15000);
 inv_add(inv, coins, 2000);
 ~send_quest_complete(questlist:hazeelcult, coins, 250, ^hazeelcult_questpoints, "You have completed the\\nHazeel Cult Quest!");
