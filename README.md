@@ -70,16 +70,11 @@ Whenever you make a change to a config or script file while the server is runnin
 
 ### Running tests
 
-We use `jest` for unit tests.
+We use `vitest` for unit tests.
 
 - You can run the tests with `npm test`.
-- If you're using VS Code, there are two launch options you can use. Both of these options will run in debug mode so you can set breakpoints.
-    - `Debug Jest: All tests` will run all tests in series.
-    - `Debug Jest: Current test file` will run the tests in the currently open test file.
 
 Test files should be colocated with the source files, i.e. `src/foo.ts` should have a test file `src/foo.test.ts`.
-
-Configuration for the tests can be found in `jest.config.ts`.
 
 ### Running linter
 
