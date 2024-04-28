@@ -2,7 +2,7 @@
 name=Spinning wheel
 desc=Used for spinning thread.
 model=model_loc_2644
-forceapproach=bottom
+forceapproach=south
 
 [flax_ground]
 name=Flax

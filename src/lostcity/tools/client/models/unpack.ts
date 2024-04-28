@@ -4,7 +4,7 @@ import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 import Model from '#lostcity/tools/client/models/Model.js';
 
-const models = Jagfile.load('dump/client/models');
+const models = Jagfile.load('data/client/models');
 
 // ----
 
@@ -27,7 +27,7 @@ const models = Jagfile.load('dump/client/models');
         }
 
         const raw = model.convert();
-        raw.save(`dump/src/models/model_${i}.ob2`);
+        raw.save(`data/src/models/model_${i}.ob2`);
     }
 
     let order = '';
@@ -35,15 +35,15 @@ const models = Jagfile.load('dump/client/models');
         order += `${Model.order[i]}\n`;
     }
 
-    fs.writeFileSync('dump/pack/model.pack', pack);
-    fs.writeFileSync('dump/pack/model.order', order);
+    fs.writeFileSync('data/src/pack/model.pack', pack);
+    fs.writeFileSync('data/src/pack/model.order', order);
 }
 
 // ----
 
 {
-    if (!fs.existsSync('dump/src/models/base')) {
-        fs.mkdirSync('dump/src/models/base', { recursive: true });
+    if (!fs.existsSync('data/src/models/base')) {
+        fs.mkdirSync('data/src/models/base', { recursive: true });
     }
 
     let pack = '';
@@ -98,18 +98,18 @@ const models = Jagfile.load('dump/client/models');
         // base.p2(hend - hstart);
         base.p2(tend - tstart);
         base.p2(labelend - labelstart);
-        base.save(`dump/src/models/base/base_${id}.base`);
+        base.save(`data/src/models/base/base_${id}.base`);
     }
 
-    fs.writeFileSync('dump/pack/base.pack', pack);
-    fs.writeFileSync('dump/pack/base.order', order);
+    fs.writeFileSync('data/src/pack/base.pack', pack);
+    fs.writeFileSync('data/src/pack/base.order', order);
 }
 
 // ----
 
 {
-    if (!fs.existsSync('dump/src/models/frame')) {
-        fs.mkdirSync('dump/src/models/frame', { recursive: true });
+    if (!fs.existsSync('data/src/models/frame')) {
+        fs.mkdirSync('data/src/models/frame', { recursive: true });
     }
 
     let pack = '';
@@ -186,9 +186,9 @@ const models = Jagfile.load('dump/client/models');
         frame.p2(t1end - t1start);
         frame.p2(t2end - t2start);
         frame.p2(dend - dstart);
-        frame.save(`dump/src/models/frame/anim_${id}.frame`);
+        frame.save(`data/src/models/frame/anim_${id}.frame`);
     }
 
-    fs.writeFileSync('dump/pack/anim.pack', pack);
-    fs.writeFileSync('dump/pack/anim.order', order);
+    fs.writeFileSync('data/src/pack/anim.pack', pack);
+    fs.writeFileSync('data/src/pack/anim.order', order);
 }

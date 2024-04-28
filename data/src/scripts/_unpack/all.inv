@@ -19,9 +19,6 @@ size=1
 [inv_75]
 size=1
 
-[inv_92]
-size=8
-
 [inv_96]
 size=1
 
@@ -31,9 +28,6 @@ size=1
 [inv_98]
 size=1
 
-[inv_133]
-size=4
-
 [inv_134]
 size=9
 
@@ -42,6 +36,3 @@ size=9
 
 [inv_140]
 size=25
-
-[inv_142]
-size=29

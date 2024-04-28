@@ -12,8 +12,8 @@ desc=Ideal for washing things in.
 model=model_loc_873
 length=2
 blockrange=no
-recol1s=22
-recol1d=16
+retex1s=elfwood
+retex1d=wood2
 category=watersource
 
 [loc_878]
@@ -41,10 +41,10 @@ width=2
 length=2
 mapscene=8
 blockrange=no
-recol1s=28
-recol1d=8103
-recol2s=61
-recol2d=9129
+recol1s=7399
+recol1d=18849
+recol2s=15855
+recol2d=19937
 category=watersource
 
 [loc_884]

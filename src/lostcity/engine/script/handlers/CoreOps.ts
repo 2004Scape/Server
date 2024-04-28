@@ -1,4 +1,7 @@
+import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import VarNpcType from '#lostcity/cache/VarNpcType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import VarSharedType from '#lostcity/cache/VarSharedType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -71,11 +74,12 @@ const CoreOps: CommandHandlers = {
         } else if (!secondary && !state._activePlayer) {
             throw new Error('No active_player.');
         }
-        const varp = state.intOperand & 0xffff;
-        if (!secondary) {
-            state.pushInt(state._activePlayer!.getVarp(varp));
+
+        const varp = VarPlayerType.get(state.intOperand & 0xffff);
+        if (varp.type === ScriptVarType.STRING) {
+            state.pushString(secondary ? state._activePlayer2!.getVar(varp.id) as string : state._activePlayer!.getVar(varp.id) as string);
         } else {
-            state.pushInt(state._activePlayer2!.getVarp(varp));
+            state.pushInt(secondary ? state._activePlayer2!.getVar(varp.id) as number : state._activePlayer!.getVar(varp.id) as number);
         }
     },
 
@@ -87,17 +91,25 @@ const CoreOps: CommandHandlers = {
             throw new Error('No active_player.');
         }
 
-        const varp = state.intOperand & 0xffff;
-        const type = VarPlayerType.get(varp);
-        if (!state.pointerGet(ProtectedActivePlayer[secondary]) && type.protect) {
-            throw new Error(`%${type.debugname} requires protected access`);
+        const varp = VarPlayerType.get(state.intOperand & 0xffff);
+        if (!state.pointerGet(ProtectedActivePlayer[secondary]) && varp.protect) {
+            throw new Error(`%${varp.debugname} requires protected access`);
         }
 
-        const value = state.popInt();
-        if (!secondary) {
-            state._activePlayer!.setVar(varp, value);
+        if (varp.type === ScriptVarType.STRING) {
+            const value = state.popString();
+            if (secondary) {
+                state._activePlayer2!.setVar(varp.id, value);
+            } else {
+                state._activePlayer!.setVar(varp.id, value);
+            }
         } else {
-            state._activePlayer2!.setVar(varp, value);
+            const value = state.popInt();
+            if (secondary) {
+                state._activePlayer2!.setVar(varp.id, value);
+            } else {
+                state._activePlayer!.setVar(varp.id, value);
+            }
         }
     },
 
@@ -108,11 +120,12 @@ const CoreOps: CommandHandlers = {
         } else if (!secondary && !state._activeNpc) {
             throw new Error('No active_npc.');
         }
-        const varn = state.intOperand & 0xffff;
-        if (!secondary) {
-            state.pushInt(state._activeNpc!.getVar(varn));
+
+        const varn = VarNpcType.get(state.intOperand & 0xffff);
+        if (varn.type === ScriptVarType.STRING) {
+            state.pushString(secondary ? state._activeNpc2!.getVar(varn.id) as string : state._activeNpc!.getVar(varn.id) as string);
         } else {
-            state.pushInt(state._activeNpc2!.getVar(varn));
+            state.pushInt(secondary ? state._activeNpc2!.getVar(varn.id) as number : state._activeNpc!.getVar(varn.id) as number);
         }
     },
 
@@ -123,12 +136,22 @@ const CoreOps: CommandHandlers = {
         } else if (!secondary && !state._activeNpc) {
             throw new Error('No active_npc.');
         }
-        const varn = state.intOperand & 0xffff;
-        const value = state.popInt();
-        if (!secondary) {
-            state._activeNpc!.setVar(varn, value);
+
+        const varn = VarNpcType.get(state.intOperand & 0xffff);
+        if (varn.type === ScriptVarType.STRING) {
+            const value = state.popInt();
+            if (secondary) {
+                state._activeNpc2!.setVar(varn.id, value);
+            } else {
+                state._activeNpc!.setVar(varn.id, value);
+            }
         } else {
-            state._activeNpc2!.setVar(varn, value);
+            const value = state.popInt();
+            if (secondary) {
+                state._activeNpc2!.setVar(varn.id, value);
+            } else {
+                state._activeNpc!.setVar(varn.id, value);
+            }
         }
     },
 
@@ -280,14 +303,25 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.PUSH_VARS]: state => {
-        const vars = state.intOperand & 0xffff;
-        state.pushInt(World.vars[vars]);
+        const vars = VarSharedType.get(state.intOperand & 0xFFFF);
+
+        if (vars.type === ScriptVarType.STRING) {
+            state.pushString(World.varsString[vars.id] ?? '');
+        } else {
+            state.pushInt(World.vars[vars.id]);
+        }
     },
 
     [ScriptOpcode.POP_VARS]: state => {
-        const vars = state.intOperand & 0xffff;
-        const value = state.popInt();
-        World.vars[vars] = value;
+        const vars = VarSharedType.get(state.intOperand & 0xFFFF);
+
+        if (vars.type === ScriptVarType.STRING) {
+            const value = state.popString();
+            World.varsString[vars.id] = value;
+        } else {
+            const value = state.popInt();
+            World.vars[vars.id] = value;
+        }
     }
 };
 

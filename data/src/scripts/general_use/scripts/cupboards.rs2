@@ -1,7 +1,7 @@
 [oploc1,_cupboard_closed] @open_cupboard(~cupboards_use_message);
-[oploc2,_cupboard_opened] @close_cupboard(~cupboards_use_message);
+[oploc3,_cupboard_opened] @close_cupboard(~cupboards_use_message);
 
-[oploc1,_cupboard_opened]
+[oploc2,_cupboard_opened]
 switch_coord (loc_coord) {
     case 2_46_52_40_8: // falador castle sir vyvin room
         if(%squire_progress >= 5) {

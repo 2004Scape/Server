@@ -5,7 +5,7 @@ model=model_loc_54
 width=2
 length=3
 op1=Climb-up
-forceapproach=bottom
+forceapproach=south
 sharelight=yes
 mapscene=7
 
@@ -16,7 +16,7 @@ model=model_loc_55
 width=2
 length=2
 op1=Climb-down
-forceapproach=top
+forceapproach=north
 sharelight=yes
 mapscene=7
 
@@ -27,7 +27,7 @@ model=model_loc_1727
 width=2
 length=3
 op1=Climb-down
-forceapproach=top
+forceapproach=north
 mapscene=7
 
 [loc_1729]
@@ -37,7 +37,7 @@ model=model_loc_54
 width=2
 length=3
 op1=Climb-up
-forceapproach=bottom
+forceapproach=south
 mapscene=7
 
 [loc_1733]
@@ -47,7 +47,7 @@ model=model_loc_98
 width=2
 length=3
 op1=Climb-down
-forceapproach=top
+forceapproach=north
 mapscene=7
 
 [loc_1734]
@@ -57,7 +57,7 @@ model=model_loc_54
 width=2
 length=3
 op1=Climb-up
-forceapproach=bottom
+forceapproach=south
 mapscene=7
 
 [loc_1736]
@@ -67,7 +67,7 @@ model=model_loc_1736
 length=2
 op1=Climb-down
 sharelight=yes
-forceapproach=left
+forceapproach=west
 mapscene=7
 
 [loc_1737]
@@ -76,7 +76,7 @@ desc=I can climb up these stairs.
 model=model_loc_1737
 op1=Climb-up
 sharelight=yes
-forceapproach=top
+forceapproach=north
 mapscene=7
 
 [loc_1738]
@@ -104,7 +104,7 @@ name=Staircase
 desc=I can climb down these stairs.
 model=model_loc_1740
 op1=Climb-down
-forceapproach=right
+forceapproach=east
 mapscene=7
 
 [loc_2316]

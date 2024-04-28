@@ -7,8 +7,8 @@ wearpos=righthand
 manwear=model_502_obj_wear,0
 womanwear=model_502_obj_wear,6
 model=model_2464_obj
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 2dyof=-1
 2dzoom=1030
 2dyan=1188
@@ -22,11 +22,12 @@ param=crushattack,9
 param=strengthbonus,7
 param=prayerbonus,1
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [bronze_mace]
 name=Bronze mace
@@ -37,8 +38,8 @@ wearpos=righthand
 manwear=model_502_obj_wear,0
 womanwear=model_502_obj_wear,6
 model=model_2464_obj
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 2dyof=-1
 2dzoom=1030
 2dyan=1188
@@ -52,11 +53,12 @@ param=crushattack,6
 param=strengthbonus,5
 param=prayerbonus,1
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [steel_mace]
 name=Steel mace
@@ -80,11 +82,12 @@ param=crushattack,13
 param=strengthbonus,11
 param=prayerbonus,2
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [black_mace]
 name=Black mace
@@ -95,7 +98,7 @@ wearpos=righthand
 manwear=model_502_obj_wear,0
 womanwear=model_502_obj_wear,6
 model=model_2464_obj
-recol1s=61
+recol1s=15855
 recol1d=0
 2dyof=-1
 2dzoom=1030
@@ -110,11 +113,12 @@ param=crushattack,16
 param=strengthbonus,13
 param=prayerbonus,2
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [mithril_mace]
 name=Mithril mace
@@ -125,8 +129,8 @@ wearpos=righthand
 manwear=model_502_obj_wear,0
 womanwear=model_502_obj_wear,6
 model=model_2464_obj
-recol1s=61
-recol1d=43297
+recol1s=15855
+recol1d=6346
 2dyof=-1
 2dzoom=1030
 2dyan=1188
@@ -140,11 +144,12 @@ param=crushattack,18
 param=strengthbonus,16
 param=prayerbonus,3
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [adamant_mace]
 name=Adamant mace
@@ -155,8 +160,8 @@ wearpos=righthand
 manwear=model_502_obj_wear,0
 womanwear=model_502_obj_wear,6
 model=model_2464_obj
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 2dyof=-1
 2dzoom=1030
 2dyan=1188
@@ -170,11 +175,12 @@ param=crushattack,25
 param=strengthbonus,23
 param=prayerbonus,3
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [rune_mace]
 name=Rune mace
@@ -185,8 +191,8 @@ wearpos=righthand
 manwear=model_502_obj_wear,0
 womanwear=model_502_obj_wear,6
 model=model_2464_obj
-recol1s=61
-recol1d=36133
+recol1s=15855
+recol1d=6476
 2dyof=-1
 2dzoom=1030
 2dyan=1188
@@ -200,11 +206,12 @@ param=crushattack,39
 param=strengthbonus,36
 param=prayerbonus,4
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend2
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab
+// osrs defend anim seq_403
 
 [dragon_mace]
 members=yes
@@ -230,8 +237,8 @@ param=crushattack,60
 param=strengthbonus,55
 param=prayerbonus,5
 param=attackrate,5
-param=crushattack_anim,human_blunt_swing
+param=crushattack_anim,human_blunt_crush
 param=stabattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
+param=defend_anim,human_blunt_defend1
 param=crush_sound,mace_crush
 param=stab_sound,mace_stab

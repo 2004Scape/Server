@@ -1,4 +1,4 @@
-[loc_3111]
+[duel_entrance_1]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3111
@@ -9,10 +9,10 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
-[loc_3112]
+[duel_entrance_2]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3112
@@ -23,10 +23,10 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
-[loc_3113]
+[duel_entrance_3]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3111
@@ -38,10 +38,10 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
-[loc_3114]
+[duel_entrance_4]
 name=Entrance
 desc=Flags marking the entrance to the arena.
 model=model_loc_3112
@@ -53,8 +53,8 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [loc_3192]
 name=Scoreboard
@@ -72,7 +72,7 @@ name=Closed chest
 desc=Used to store players items whilst they duel.
 model=wooden_chest
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [loc_3194]
 name=Open chest
@@ -80,7 +80,7 @@ desc=Use for quick access to your bank.
 model=model_loc_76
 op2=Bank
 op3=Shut
-forceapproach=top
+forceapproach=north
 
 [loc_3195]
 name=Crate
@@ -88,10 +88,82 @@ desc=Smells pretty bad!
 model=model_loc_3195
 op1=Buy
 
-[loc_3203]
+[duel_trapdoor]
 name=Trapdoor
 desc=Access to the duel arena.
 model=model_loc_3203
 op1=Forfeit
 forcedecor=yes
 sharelight=yes
+
+[loc_3077]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3077
+forcedecor=yes
+ambient=30
+contrast=30
+op5=Lean against
+blockrange=no
+
+[loc_3078]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3078
+forcedecor=yes
+ambient=30
+contrast=30
+op5=Lean against
+blockrange=no
+recol1s=9409
+recol1d=12580
+
+[loc_3079]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3079
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+op5=Lean against
+blockrange=no
+
+[loc_3080]
+model=model_loc_3080
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+active=no
+
+[loc_3081]
+model=model_loc_3080
+forcedecor=yes
+ambient=30
+contrast=30
+mirror=yes
+active=no
+blockrange=no
+
+[loc_3082]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3082
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+op5=Lean against
+blockrange=no
+
+[loc_3083]
+name=Wall
+desc=Lean against the wall to get a better view!
+model=model_loc_3083
+forcedecor=yes
+ambient=30
+contrast=30
+sharelight=yes
+op5=Lean against
+blockrange=no

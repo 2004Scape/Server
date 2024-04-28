@@ -1,0 +1,69 @@
+[oploc1,loc_2417]
+~open_chest(loc_2418);
+
+[oploc2,loc_2418]
+inv_transmit(partyroominv, party_drop_chest:inv);
+inv_transmit(partyroomoffer, party_drop_chest:playerinv);
+inv_transmit(inv, party_drop_chest_side:inv);
+if_openmainmodalsideoverlay(party_drop_chest, party_drop_chest_side);
+
+[if_close,party_drop_chest]
+inv_stoptransmit(party_drop_chest_side:inv);
+inv_stoptransmit(party_drop_chest:inv);
+inv_stoptransmit(party_drop_chest:playerinv);
+~moveallinv(partyroomoffer, inv);
+
+[oploc3,loc_2418]
+~close_chest(loc_2417);
+
+[inv_button1,party_drop_chest:playerinv] @withdraw_partychest(last_slot, 1);
+[inv_button2,party_drop_chest:playerinv] @withdraw_partychest(last_slot, 5);
+[inv_button3,party_drop_chest:playerinv] @withdraw_partychest(last_slot, 10);
+[inv_button4,party_drop_chest:playerinv] @withdraw_partychest(last_slot, ^max_32bit_int);
+[inv_button5,party_drop_chest:playerinv] @withdraw_partychest(last_slot, null);
+
+[label,withdraw_partychest](int $slot, int $amount)
+if ($amount <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $amount = last_int;
+}
+def_obj $obj = inv_getobj(partyroomoffer, $slot);
+def_int $total = inv_total(partyroomoffer, $obj);
+if ($amount < $total) $total = $amount;
+inv_moveitem(partyroomoffer, inv, $obj, $total);
+
+[inv_button1,party_drop_chest_side:inv] @deposit_partychest(last_slot, 1);
+[inv_button2,party_drop_chest_side:inv] @deposit_partychest(last_slot, 5);
+[inv_button3,party_drop_chest_side:inv] @deposit_partychest(last_slot, 10);
+[inv_button4,party_drop_chest_side:inv] @deposit_partychest(last_slot, ^max_32bit_int);
+[inv_button5,party_drop_chest_side:inv] @deposit_partychest(last_slot, null);
+[inv_buttond,party_drop_chest_side:inv] inv_movetoslot(inv, inv, last_slot, last_targetslot);
+
+[label,deposit_partychest](int $slot, int $amount)
+if ($amount <= 0) {
+    p_countdialog;
+    if (last_int <= 0) return;
+    $amount = last_int;
+}
+
+def_obj $obj = inv_getobj(inv, $slot);
+if (oc_tradeable($obj) = false) { // also map_members check (after room is moved to f2p probably)
+    mes("You can't offer this item.");
+    return;
+}
+def_int $total = inv_total(inv, $obj);
+if ($amount < $total) $total = $amount;
+if(oc_stackable($obj) = false & $total > inv_freespace(partyroomoffer)) $total = inv_freespace(partyroomoffer);
+if($total = 0 | inv_itemspace(partyroomoffer, $obj, $total, inv_size(partyroomoffer)) = false) {
+    mes("You cannot offer any more items until you've confirmed the current ones.");
+    return;
+}
+inv_moveitem(inv, partyroomoffer, $obj, $total);
+
+[if_button,party_drop_chest:com_94]
+if(inv_freespace(partyroominv) < calc(inv_size(partyroomoffer) - inv_freespace(partyroomoffer))) {
+    mes("The chest cannot hold your offer at the moment.");
+    return;
+}
+~moveallinv(partyroomoffer, partyroominv);

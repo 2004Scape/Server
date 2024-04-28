@@ -75,7 +75,6 @@ if (~pvp_hit_roll(^magic_style) = true) {
     ~pvp_spell_fail($spell_data, $duration);
 }
 // todo: heropoints
-~set_pk_vars; // skulls
 
 
 [proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)
@@ -92,11 +91,20 @@ if (~check_spell_requirements($spell_data) = false) {
     return(false);
 }
 // these go after rune check
-if (~pvp_level_check = false) {
-    return(false);
-}
-if (~pvp_in_combat_check = false) {
-    return(false);
+if (~in_duel_arena = true) {
+    if (~duel_arena_checks = false) {
+        return(false);
+    }
+    if (~duel_arena_magic_check = false) {
+        return(false);
+    }
+} else {
+    if (~pvp_level_check = false) {
+        return(false);
+    }
+    if (~pvp_in_combat_check = false) {
+        return(false);
+    }
 }
 return(true);
 
@@ -176,7 +184,7 @@ if ($freeze_time > 0) {
     //.queue(.freeze_player, 0, $freeze_time);
     if (.p_finduid(.uid) = true) { // todo: queue this
         .%stunned = calc(map_clock + $freeze_time + 1);
-        //.setmovecheck(.frozen);
+        //.walktrigger(.frozen);
     }
 }
 
@@ -224,6 +232,7 @@ if (.p_finduid(.uid) = true) { // todo: queue this
 }
 
 [proc,pvp_spell_cast](dbrow $spell_data)(int)
+~set_pk_vars;
 .if_close;
 ~player_combat_stat;
 ~.player_combat_stat;
@@ -257,10 +266,11 @@ return($duration);
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 return($maxhit);
 
-// todo: .movecheck
-// [movecheck,.frozen]()(boolean)
+// todo: .walktrigger
+// [walktrigger,.frozen]()(boolean)
 // if (map_clock < .%stunned) {
 //     .mes("A magical force stops you from moving.");
+//      p_stopaction;
 //     return(false);
 // }
 

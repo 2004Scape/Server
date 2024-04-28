@@ -741,7 +741,7 @@ width=433
 height=170
 scroll=940
 
-[com_92]
+[inv]
 layer=com_91
 type=inv
 x=13
@@ -792,7 +792,7 @@ shadowed=yes
 text=Text
 colour=0xFFFF00
 
-[com_97]
+[playerinv]
 layer=com_93
 type=inv
 x=6

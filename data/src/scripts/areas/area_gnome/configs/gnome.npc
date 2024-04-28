@@ -5,13 +5,15 @@ vislevel=hide
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=22426
-recol1d=5543
+recol1s=416
+recol1d=14661
 model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2922_npc
 head1=model_21_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [blurberry]
 vislevel=hide
@@ -20,17 +22,19 @@ desc=He seems to run the cocktail bar.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=22426
-recol1d=37780
-recol2s=6038
-recol2d=37793
-recol3s=11162
-recol3d=12
+recol1s=416
+recol1d=202
+recol2s=11456
+recol2d=304
+recol3s=13728
+recol3d=3171
 model1=model_2909_npc
 model2=model_2900_npc
 model3=model_2917_npc
 head1=model_23_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_barman]
 vislevel=hide
@@ -51,6 +55,8 @@ param=shop_title,Blurberry Bar
 param=shop_buy_multiplier,250
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [aluft_gianne]
 name=Aluft Gianne
@@ -64,6 +70,8 @@ model2=model_2889_npc
 model3=model_2917_npc
 head1=model_15_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_851]
 name=Gnome Waiter
@@ -73,12 +81,12 @@ readyanim=midget_ready
 op1=Talk-to
 op3=Trade
 vislevel=1
-recol1s=22426
-recol1d=24
-recol2s=6038
-recol2d=37
-recol3s=11162
-recol3d=12
+recol1s=416
+recol1d=6342
+recol2s=11456
+recol2d=9513
+recol3s=13728
+recol3d=3171
 model1=model_2909_npc
 model2=model_2900_npc
 model3=model_2915_npc
@@ -90,6 +98,8 @@ param=shop_title,Gianne's Restaurant
 param=shop_buy_multiplier,250
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_child_yellow]
 name=Gnome child
@@ -102,8 +112,8 @@ op1=Talk-to
 op2=Attack
 op3=Pickpocket
 vislevel=1
-recol1s=22426
-recol1d=11592
+recol1s=416
+recol1d=22221
 model1=model_2909_npc
 model2=model_2899_npc
 model3=model_2918_npc
@@ -118,7 +128,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackunarmed
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_child_blue]
 name=Gnome child
@@ -131,8 +146,8 @@ op1=Talk-to
 op2=Attack
 op3=Pickpocket
 vislevel=1
-recol1s=22426
-recol1d=32970
+recol1s=416
+recol1d=16053
 model1=model_2909_npc
 model2=model_2899_npc
 model3=model_2918_npc
@@ -147,7 +162,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackunarmed
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_child_green]
 name=Gnome child
@@ -174,17 +194,22 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackunarmed
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,gnome_attack
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
-[npc_163]
+[gnome_guard_halberd]
 name=Gnome guard
 desc=A tree gnome guard.
 walkanim=midget_walk
 readyanim=midget_ready
 op2=Attack
 vislevel=19
-recol1s=22422
-recol1d=64427
+recol1s=352
+recol1d=20516
 model1=model_2909_npc
 model2=model_2893_npc
 model3=model_2915_npc
@@ -197,17 +222,23 @@ defence=17
 param=attackbonus,8
 param=strengthbonus,13
 param=damagetype,^slash_style
+param=attack_anim,midget_attacksword
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,scythe_slash
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
+// osrs attack_sound,gnome_attack & defend_sound,scythe_slash
 
-[npc_164]
+[gnome_guard_sword]
 name=Gnome guard
 desc=A tree gnome guard.
 walkanim=midget_walk
 readyanim=midget_ready
 op2=Attack
 vislevel=19
-recol1s=22422
-recol1d=64427
+recol1s=352
+recol1d=20516
 model1=model_2909_npc
 model2=model_2892_npc
 model3=model_2922_npc
@@ -224,7 +255,12 @@ param=slashdefence,9
 param=crushdefence,7
 param=rangedefence,8
 param=damagetype,^slash_style
+param=attack_anim,midget_attacksword
+param=defend_anim,midget_blockshield
 param=death_anim,midget_death
+param=attack_sound,hacksword_slash
+// param=attack_sound,brassclash
+param=death_sound,gnome_death
 
 [npc_165]
 name=Gnome shop keeper
@@ -232,12 +268,14 @@ desc=Sells gnomish things.
 vislevel=hide
 walkanim=midget_walk
 readyanim=midget_ready
-recol1s=10365
-recol1d=5561
+recol1s=32766
+recol1d=20936
 model1=model_2909_npc
 model2=model_2901_npc
 model3=model_2917_npc
 head1=model_17_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_166]
 name=Gnome banker
@@ -246,8 +284,8 @@ vislevel=hide
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=22426
-recol1d=8
+recol1s=416
+recol1d=2114
 model1=model_2909_npc
 model2=model_2900_npc
 model3=model_2915_npc
@@ -255,6 +293,8 @@ head1=model_23_npc_head
 wanderrange=0
 moverestrict=nomove
 category=bank_teller
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_167]
 name=Gnome baller
@@ -266,6 +306,8 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2924_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_woman_white]
 name=Gnome woman
@@ -276,10 +318,10 @@ op1=Talk-to
 op2=Attack
 op3=Pickpocket
 vislevel=1
-recol1s=22422
-recol1d=51396
-recol2s=22418
-recol2d=51396
+recol1s=352
+recol1d=18868
+recol2s=288
+recol2d=18868
 model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
@@ -294,7 +336,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,shortbow
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [gnome_woman_black]
 name=Gnome woman
@@ -305,16 +352,16 @@ op1=Talk-to
 op2=Attack
 op3=Pickpocket
 vislevel=1
-recol1s=22422
-recol1d=51396
-recol2s=22418
-recol2d=51396
-recol3s=4550
-recol3d=5916
-recol4s=4541
-recol4d=5916
-recol5s=4537
-recol5d=5916
+recol1s=352
+recol1d=18868
+recol2s=288
+recol2d=18868
+recol3s=24075
+recol3d=13537
+recol4s=21961
+recol4d=13537
+recol5s=20904
+recol5d=13537
 model1=model_2911_npc
 model2=model_2907_npc
 model3=model_2917_npc
@@ -329,7 +376,12 @@ param=crushdefence,-42
 param=magicdefence,-42
 param=rangedefence,-42
 param=damagetype,^crush_style
+param=attack_anim,midget_attackbow
+param=defend_anim,midget_block
 param=death_anim,midget_death
+param=attack_sound,shortbow
+param=defend_sound,gnome_hit
+param=death_sound,gnome_death
 
 [npc_170]
 name=Gnome pilot
@@ -343,6 +395,8 @@ model2=model_2908_npc
 model3=model_2922_npc
 head1=model_19_npc_head
 wanderrange=1
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_171]
 name=Brimstail
@@ -351,18 +405,20 @@ walkanim=midget_walk
 readyanim=midget_ready
 vislevel=hide
 op1=Talk-to
-recol1s=22426
-recol1d=70
-recol2s=926
-recol2d=36762
-recol3s=11162
-recol3d=8472
-recol4s=22424
-recol4d=70
+recol1s=416
+recol1d=17969
+recol2s=15360
+recol2d=301
+recol3s=13728
+recol3d=8420
+recol4s=384
+recol4d=17969
 model1=model_2909_npc
 model2=model_2898_npc
 model3=model_2915_npc
 head1=model_18_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_600]
 name=Hudo
@@ -372,14 +428,14 @@ walkanim=midget_walk
 op1=Talk-to
 op3=Trade
 vislevel=hide
-recol1s=22426
-recol1d=8472
-recol2s=22424
-recol2d=25238
-recol3s=10365
-recol3d=8621
-recol4s=127
-recol4d=8621
+recol1s=416
+recol1d=8420
+recol2s=384
+recol2d=2340
+recol3s=32766
+recol3d=16838
+recol4s=32767
+recol4d=16838
 model1=model_2901_npc
 model2=model_2909_npc
 model3=model_2915_npc
@@ -391,6 +447,8 @@ param=shop_title,Grand Tree Groceries
 param=shop_buy_multiplier,550
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_601]
 name=Rometti
@@ -400,16 +458,16 @@ walkanim=midget_walk
 op1=Talk-to
 op3=Trade
 vislevel=hide
-recol1s=22426
-recol1d=51121
-recol2s=22424
-recol2d=16
-recol3s=6038
-recol3d=53148
-recol4s=926
-recol4d=51121
-recol5s=11193
-recol5d=103
+recol1s=416
+recol1d=15384
+recol2s=384
+recol2d=4228
+recol3s=11456
+recol3d=11278
+recol4s=15360
+recol4d=15384
+recol5s=28481
+recol5d=26425
 model1=model_2900_npc
 model2=model_2909_npc
 model3=model_2916_npc
@@ -420,6 +478,8 @@ param=shop_title,Fine Fashions
 param=shop_buy_multiplier,550
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_602]
 name=Gulluck
@@ -429,14 +489,16 @@ walkanim=midget_walk
 op1=Talk-to
 op3=Trade
 vislevel=hide
-recol1s=22426
-recol1d=8472
-recol2s=22424
-recol2d=10378
+recol1s=416
+recol1d=8420
+recol2s=384
+recol2d=3170
 model1=model_2892_npc
 model2=model_2909_npc
 model3=model_2915_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_603]
 name=Heckel Funch
@@ -446,14 +508,14 @@ walkanim=midget_walk
 op1=Talk-to
 op3=Trade
 vislevel=hide
-recol1s=22426
-recol1d=8472
-recol2s=22424
-recol2d=43914
-recol3s=10365
-recol3d=8621
-recol4s=127
-recol4d=8621
+recol1s=416
+recol1d=8420
+recol2s=384
+recol2d=5
+recol3s=32766
+recol3d=16838
+recol4s=32767
+recol4d=16838
 model1=model_2901_npc
 model2=model_2909_npc
 model3=model_2915_npc
@@ -464,6 +526,8 @@ param=shop_title,Funch's Fine Groceries
 param=shop_buy_multiplier,550
 param=shop_sell_multiplier,1000
 param=shop_delta,10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [king_bolren]
 vislevel=hide
@@ -472,13 +536,15 @@ desc=It's a gnome.  He looks important.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=22426
-recol1d=6845
+recol1s=416
+recol1d=26149
 model1=model_2909_npc
 model2=model_2891_npc
 model3=model_2916_npc
 head1=model_20_npc_head
 wanderrange=2
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [commander_montai]
 vislevel=hide
@@ -489,13 +555,15 @@ readyanim=midget_ready
 op1=Talk-to
 resizeh=150
 resizev=150
-recol1s=41
-recol1d=933
+recol1s=10570
+recol1d=17441
 model1=model_2909_npc
 model2=model_2903_npc
 model3=model_2919_npc
 head1=model_22_npc_head
 timer=10
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [bolkoy]
 vislevel=hide
@@ -515,6 +583,8 @@ param=shop_sell_multiplier,1300
 param=shop_buy_multiplier,400
 param=shop_delta,30
 param=shop_title,Bolkoy's Village Shop
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [remsai]
 vislevel=hide
@@ -523,14 +593,16 @@ desc=It's a tree gnome.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=11162
-recol1d=38715
-recol2s=22422
-recol2d=38715
+recol1s=13728
+recol1d=2491
+recol2s=352
+recol2d=2491
 model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [elkoy_outmaze]
 vislevel=hide
@@ -539,15 +611,17 @@ desc=It's a tree gnome.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=11162
-recol1d=39477
-recol2s=22422
-recol2d=39477
+recol1s=13728
+recol1d=5493
+recol2s=352
+recol2d=5493
 model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [elkoy_maze]
 vislevel=hide
@@ -556,15 +630,17 @@ desc=It's a tree gnome.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
-recol1s=11162
-recol1d=39477
-recol2s=22422
-recol2d=39477
+recol1s=13728
+recol1d=5493
+recol2s=352
+recol2d=5493
 model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [npc_484]
 vislevel=hide
@@ -579,6 +655,8 @@ model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [local_gnome]
 vislevel=hide
@@ -593,6 +671,8 @@ model3=model_2917_npc
 head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [kalron]
 vislevel=hide
@@ -605,6 +685,8 @@ model1=model_2909_npc
 model2=model_2890_npc
 model3=model_2917_npc
 head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
 
 [gnome_troop_white]
 name=Gnome troop
@@ -627,12 +709,14 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
+param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,gnome_attack
+param=attack_sound,shortbow
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 category=gnome_troop
+// attack style is missing
 
 [gnome_troop_black]
 name=Gnome troop
@@ -642,14 +726,14 @@ readyanim=midget_ready
 op1=Talk-to
 op2=Attack
 vislevel=1
-recol1s=4550
-recol1d=5916
-recol2s=4541
-recol2d=5916
-recol3s=4541
-recol3d=5916
-recol4s=4537
-recol4d=5916
+recol1s=24075
+recol1d=13537
+recol2s=21961
+recol2d=13537
+recol3s=21961
+recol3d=13537
+recol4s=20904
+recol4d=13537
 model1=model_2914_npc
 model2=model_2903_npc
 model3=model_2919_npc
@@ -663,9 +747,11 @@ param=slashdefence,4
 param=crushdefence,5
 param=magicdefence,2
 param=rangedefence,4
+param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,gnome_attack
+param=attack_sound,shortbow
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 category=gnome_troop
+// attack style is missing

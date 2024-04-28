@@ -1,0 +1,259 @@
+[if_button,duel_select_type:no_forfeit]
+if (testbit(%duel_settings, ^no_melee) = true) {
+    mes("You can't have No Forfeit and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
+}
+~toggle_duel_setting(^no_forfeit);
+
+[if_button,duel_select_type:no_movement]
+if (testbit(%duel_settings, ^no_melee) = true) {
+    mes("You can't have No Movement and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
+}
+~toggle_duel_setting(^no_movement);
+
+[if_button,duel_select_type:no_weapons]
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can't have No Weapons and Flower Power."); // guess based on osrs pvp arena
+    return;
+}
+~toggle_duel_setting(^no_weapons);
+
+[if_button,duel_select_type:no_armour]
+~toggle_duel_setting(^no_armour);
+
+[if_button,duel_select_type:no_potions]
+~toggle_duel_setting(^no_potions);
+
+[if_button,duel_select_type:no_jewelry]
+~toggle_duel_setting(^no_jewelry);
+
+[if_button,duel_select_type:no_ranged]
+if (testbit(%duel_settings, ^no_melee) = true & testbit(%duel_settings, ^no_magic) = true) {
+    mes("You can't disable all combat styles."); // completely made up
+    return;
+}
+~toggle_duel_setting(^no_ranged);
+
+[if_button,duel_select_type:no_melee]
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can't have No Melee and Flower Power."); // guess based on osrs pvp arena
+    return;
+}
+if (testbit(%duel_settings, ^no_forfeit) = true) {
+    mes("You can't have No Forfeit and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
+}
+if (testbit(%duel_settings, ^no_movement) = true) {
+    mes("You can't have No Movement and No Melee, you could run out of ammo."); // guess based on osrs pvp arena
+    return;
+}
+if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_magic) = true) {
+    mes("You can't disable all combat styles."); // completely made up
+    return;
+}
+~toggle_duel_setting(^no_melee);
+
+[if_button,duel_select_type:no_magic]
+if (testbit(%duel_settings, ^no_ranged) = true & testbit(%duel_settings, ^no_melee) = true) {
+    mes("You can't disable all combat styles."); // completely made up
+    return;
+}
+~toggle_duel_setting(^no_magic);
+
+[if_button,duel_select_type:no_prayer]
+~toggle_duel_setting(^no_prayer);
+
+[if_button,duel_select_type:no_food]
+~toggle_duel_setting(^no_food);
+
+[if_button,duel_select_type:flower_power]
+if (~duel_arena_flower_power_check = true) {
+    if (testbit(%duel_settings, ^no_melee) = true) {
+        mes("You can't have No Melee and Flower Power."); // guess based on osrs pvp arena
+        return;
+    }
+    ~toggle_duel_setting(^flower_power);
+}
+
+
+[if_button,duel_select_type:obstacles]
+~toggle_duel_setting(^obstacles);
+
+
+[proc,toggle_duel_setting](int $setting)
+%duel_settings = togglebit(%duel_settings, $setting);
+if (.finduid(%duelpartner) = true) {
+    .%duel_settings = %duel_settings;
+    .%duelstatus = 0;
+    .if_settext(duel_select_type:status, "");
+}
+%duelstatus = 0;
+if_settext(duel_select_type:status, "");
+
+[proc,unequip_duel](enum $enum)
+def_int $i = 0;
+while ($i < enum_getoutputcount($enum)) {
+    ~try_unequip(enum(int, int, $enum, $i));
+    $i = calc($i + 1);
+}
+
+[proc,.unequip_duel](enum $enum)
+def_int $i = 0;
+while ($i < enum_getoutputcount($enum)) {
+    ~.try_unequip(enum(int, int, $enum, $i));
+    $i = calc($i + 1);
+}
+
+[proc,duel_arena_equip_check](obj $obj)(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_weapons) = true & oc_wearpos($obj) = ^wearpos_rhand) {
+    mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
+    return(false);
+}
+if (testbit(%duel_settings, ^no_armour) = true & (
+    oc_wearpos($obj) = ^wearpos_hat | 
+    oc_wearpos($obj) = ^wearpos_head |
+    oc_wearpos($obj) = ^wearpos_back | 
+    oc_wearpos($obj) = ^wearpos_lhand | 
+    oc_wearpos($obj) = ^wearpos_torso |
+    oc_wearpos($obj) = ^wearpos_arms |
+    oc_wearpos($obj) = ^wearpos_legs |
+    oc_wearpos($obj) = ^wearpos_hands |
+    oc_wearpos($obj) = ^wearpos_feet |
+    oc_wearpos($obj) = ^wearpos_jaw)) {
+    mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
+    return(false);
+}
+if (testbit(%duel_settings, ^no_jewelry) = true & (
+    oc_wearpos($obj) = ^wearpos_ring |
+    oc_wearpos($obj) = ^wearpos_front)) {
+    mes("You can't equip that during this duel."); // https://storage.googleapis.com/tannerdino/images/Duel59.png
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_prayer_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_prayer) = true) {
+    mes("Use of prayer has been turned off for this duel."); // https://imgur.com/JDlyaUB
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_consume_check](obj $obj)(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (oc_category($obj) = category_69 & testbit(%duel_settings, ^no_potions) = true) {
+    mes("Use of potions has been turned off for this duel."); // guess based on no food
+    return(false);
+}
+if (testbit(%duel_settings, ^no_food) = true) {
+    mes("Use of food has been turned off for this duel."); // https://imgur.com/E0l52P2
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_obstacles_check]()(boolean)
+return(testbit(%duel_settings, ^obstacles));
+
+
+[proc,duel_arena_movement_check]()(boolean)
+return(testbit(%duel_settings, ^no_movement));
+
+
+[proc,duel_arena_forfeit_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_forfeit) = true) {
+    mes("You can't forfeit this duel."); // guess
+    return(false);
+}
+return(true);
+
+[proc,duel_arena_flower_power_check]()(boolean)
+if (inv_totalcat(worn, flowers) < 1) {
+    mes("You need to be wielding flowers for this setting."); // guess
+    return(false);
+} else if (.finduid(%duelpartner) = true) {
+    if (.inv_totalcat(worn, flowers) < 1) {
+        mes("Other player needs to be wielding flowers for this setting."); // guess
+        return(false);
+    }
+}
+return(true);
+
+[proc,duel_arena_flower_power_equip_check](obj $obj)(boolean)
+if (oc_wearpos($obj) ! ^wearpos_rhand) {
+    return(true);
+}
+if (oc_category($obj) = flowers) {
+    return(true);
+}
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can only use flowers for this duel."); // guess
+    return(false);
+}
+return(true);
+
+[proc,duel_arena_flower_power_unequip_check](int $slot)(boolean)
+if ($slot ! ^wearpos_rhand) {
+    return(true);
+}
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can only use flowers for this duel."); // guess
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_ranged_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_ranged) = true) {
+    mes("Ranging has been turned off for this duel."); // https://imgur.com/dm6F5xi
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_melee_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_melee) = true) {
+    mes("Melee has been turned off for this duel."); // https://imgur.com/e55BeqU
+    return(false);
+}
+return(true);
+
+
+[proc,duel_arena_magic_check]()(boolean)
+if (~in_duel_arena = false) {
+    return(true);
+}
+if (testbit(%duel_settings, ^no_magic) = true) {
+    mes("Magic has been turned off for this duel."); // guess
+    return(false);
+}
+if (testbit(%duel_settings, ^flower_power) = true) {
+    mes("You can only attack with flowers in this duel."); // guess
+    return(false);
+}
+return(true);

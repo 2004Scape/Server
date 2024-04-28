@@ -3,15 +3,15 @@ name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
-recol1s=41905
-recol1d=960
+recol1s=152
+recol1d=30753
 
 [black_clock_spindle]
 name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
-recol1s=41905
+recol1s=152
 recol1d=0
 
 [white_clock_spindle]
@@ -19,8 +19,8 @@ name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
-recol1s=41905
-recol1d=127
+recol1s=152
+recol1d=32767
 
 [blue_clock_spindle]
 name=Clock spindle
@@ -33,8 +33,8 @@ name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
-recol1s=41905
-recol1d=960
+recol1s=152
+recol1d=30753
 category=incorrect_clock_spindle
 
 [black_clock_spindle_incorrect]
@@ -42,7 +42,7 @@ name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
-recol1s=41905
+recol1s=152
 recol1d=0
 category=incorrect_clock_spindle
 
@@ -51,8 +51,8 @@ name=Clock spindle
 desc=Seems to be some kind of clock part.
 model=model_loc_25
 active=yes
-recol1s=41905
-recol1d=127
+recol1s=152
+recol1d=32767
 category=incorrect_clock_spindle
 
 [blue_clock_spindle_incorrect]

@@ -7,4 +7,4 @@ model=model_loc_2672
 name=Anvil
 desc=It says "Property of Doric the dwarf." on the side.
 model=model_loc_2672
-forceapproach=top
+forceapproach=north

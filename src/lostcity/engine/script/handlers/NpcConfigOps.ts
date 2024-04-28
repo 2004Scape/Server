@@ -5,29 +5,21 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
+import {check, NpcTypeValid, NumberNotNull, ParamTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+
 const NpcConfigOps: CommandHandlers = {
     [ScriptOpcode.NC_NAME]: state => {
-        const npcId = state.popInt();
-
-        if (npcId == -1) {
-            throw new Error(`attempted to use npc with id: ${npcId}`);
-        }
+        const npcId = check(state.popInt(), NpcTypeValid);
 
         const npcType = NpcType.get(npcId);
-
         state.pushString(npcType.name ?? npcType.debugname ?? 'null');
     },
 
     [ScriptOpcode.NC_PARAM]: state => {
         const [npcId, paramId] = state.popInts(2);
 
-        if (npcId == -1) {
-            throw new Error(`attempted to use npc with id: ${npcId}`);
-        }
-
-        if (paramId == -1) {
-            throw new Error(`attempted to use param with id: ${paramId}`);
-        }
+        check(npcId, NpcTypeValid);
+        check(paramId, ParamTypeValid);
 
         const npcType = NpcType.get(npcId);
         const paramType = ParamType.get(paramId);
@@ -39,46 +31,31 @@ const NpcConfigOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NC_CATEGORY]: state => {
-        const npcId = state.popInt();
-
-        if (npcId == -1) {
-            throw new Error(`attempted to use npc with id: ${npcId}`);
-        }
+        const npcId = check(state.popInt(), NpcTypeValid);
 
         const npcType = NpcType.get(npcId);
-
         state.pushInt(npcType.category);
     },
 
     [ScriptOpcode.NC_DESC]: state => {
-        const npcId = state.popInt();
-
-        if (npcId == -1) {
-            throw new Error(`attempted to use npc with id: ${npcId}`);
-        }
+        const npcId = check(state.popInt(), NpcTypeValid);
 
         const npcType = NpcType.get(npcId);
-
         state.pushString(npcType.desc ?? 'null');
     },
 
     [ScriptOpcode.NC_DEBUGNAME]: state => {
-        const npcId = state.popInt();
-
-        if (npcId == -1) {
-            throw new Error(`attempted to use npc with id: ${npcId}`);
-        }
+        const npcId = check(state.popInt(), NpcTypeValid);
 
         const npcType = NpcType.get(npcId);
-
         state.pushString(npcType.debugname ?? 'null');
     },
 
     [ScriptOpcode.NC_OP]: state => {
         const [npcId, op] = state.popInts(2);
-        if (npcId == -1) {
-            throw new Error(`attempted to use npc with id: ${npcId}`);
-        }
+
+        check(npcId, NpcTypeValid);
+        check(op, NumberNotNull);
 
         const npcType = NpcType.get(npcId);
         state.pushString(npcType.ops[op - 1] ?? '');

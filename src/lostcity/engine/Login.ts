@@ -8,6 +8,7 @@ import World from '#lostcity/engine/World.js';
 import Player from '#lostcity/entity/Player.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
+import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 
 class Login {
     loginThread: Worker = new Worker('./src/lostcity/server/LoginThread.ts');
@@ -74,7 +75,7 @@ class Login {
 
                 if (status !== 2) {
                     client.writeImmediate(Uint8Array.from([status]));
-                    client.terminate();
+                    client.close();
                     return;
                 }
 
@@ -82,13 +83,13 @@ class Login {
 
                 if (World.getTotalPlayers() >= 2000) {
                     client.writeImmediate(Uint8Array.from([7]));
-                    client.terminate();
+                    client.close();
                     return;
                 }
 
                 if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
                     client.writeImmediate(Uint8Array.from([14]));
-                    client.terminate();
+                    client.close();
                     return;
                 }
 
@@ -98,12 +99,11 @@ class Login {
                 }
                 client.encryptor = new Isaac(seed);
 
-                const player = Player.load(username, new Packet(save));
-                player.client = client;
+                const player = PlayerLoading.load(username, new Packet(save), client);
                 player.lowMemory = (info & 0x1) !== 0;
                 player.webClient = client.isWebSocket();
 
-                World.addPlayer(player, client);
+                World.addPlayer(player);
                 break;
             }
             case 'logoutreply': {
@@ -117,7 +117,7 @@ class Login {
                     World.players[index] = null;
                     World.playerIds[player.pid] = -1;
                     player.pid = -1;
-                    player.client = null;
+                    player.terminate();
 
                     this.logoutRequests.delete(player.username37);
                 }

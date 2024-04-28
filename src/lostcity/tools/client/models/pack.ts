@@ -25,9 +25,9 @@ export function packClientModel() {
     console.log('Packing models.jag');
     //console.time('models.jag');
 
-    const modelOrder = loadOrder('data/pack/model.order');
-    const animOrder = loadOrder('data/pack/anim.order');
-    const baseOrder = loadOrder('data/pack/base.order');
+    const modelOrder = loadOrder('data/src/pack/model.order');
+    const animOrder = loadOrder('data/src/pack/anim.order');
+    const baseOrder = loadOrder('data/src/pack/base.order');
 
     const files = listFiles('data/src/models');
 

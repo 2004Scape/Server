@@ -14,12 +14,12 @@ export default class DbRowType extends ConfigType {
         DbRowType.configNames = new Map();
         DbRowType.configs = [];
 
-        if (!fs.existsSync(`${dir}/dbrow.dat`)) {
+        if (!fs.existsSync(`${dir}/server/dbrow.dat`)) {
             console.log('Warning: No dbrow.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/dbrow.dat`);
+        const dat = Packet.load(`${dir}/server/dbrow.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

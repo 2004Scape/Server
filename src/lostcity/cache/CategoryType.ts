@@ -13,12 +13,12 @@ export default class CategoryType extends ConfigType {
         CategoryType.configNames = new Map();
         CategoryType.configs = [];
 
-        if (!fs.existsSync(`${dir}/category.dat`)) {
+        if (!fs.existsSync(`${dir}/server/category.dat`)) {
             console.log('Warning: No category.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/category.dat`);
+        const dat = Packet.load(`${dir}/server/category.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
@@ -48,6 +48,10 @@ export default class CategoryType extends ConfigType {
         }
 
         return this.get(id);
+    }
+
+    static get count() {
+        return this.configs.length;
     }
 
     // ----

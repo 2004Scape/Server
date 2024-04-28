@@ -1,6 +1,6 @@
 [prayers]
-column=prayer,component
-column=prayer_deactivate,component
+column=prayer,int
+column=prayer_deactivate,int
 column=members,int
 column=name,string
 column=level,int

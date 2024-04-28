@@ -105,6 +105,8 @@ scope=perm
 [xplamp]
 transmit=yes
 
+[varp_81]
+
 [questpoints]
 transmit=yes
 
@@ -254,13 +256,8 @@ scope=perm
 
 [varp_202]
 
-[varp_203]
-
-[varp_204]
-
-[varp_205]
-
-[varp_206]
+[mill_flour]
+scope=perm
 
 [varp_207]
 
@@ -433,16 +430,7 @@ scope=perm
 
 [varp_280]
 
-[varp_282]
-
 [varp_283]
-
-[varp_284]
-
-[varp_285]
-
-[duel_settings]
-transmit=yes
 
 [varp_288]
 

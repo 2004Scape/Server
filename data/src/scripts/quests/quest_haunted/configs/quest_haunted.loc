@@ -34,10 +34,10 @@ name=Bookcase
 desc=Lots of books.
 model=model_loc_155
 op1=Search
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 category=manor_bookcase
 param=end_coord,0_48_52_24_30
 
@@ -46,10 +46,10 @@ name=Bookcase
 desc=Lots of books.
 model=model_loc_155
 op1=Search
-recol1s=2
-recol1d=23
-recol2s=24
-recol2d=9098
+retex1s=wall
+retex1d=mossybricks
+recol2s=6342
+recol2d=5248
 category=manor_bookcase
 param=end_coord,0_48_52_24_31
 
@@ -59,10 +59,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_138]
@@ -71,10 +71,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_139]
@@ -83,10 +83,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_140]
@@ -95,10 +95,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_141]
@@ -107,10 +107,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_142]
@@ -119,10 +119,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_143]
@@ -131,10 +131,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_144]
@@ -143,10 +143,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_145]
@@ -155,10 +155,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 category=haunted_door
 
 [loc_146]

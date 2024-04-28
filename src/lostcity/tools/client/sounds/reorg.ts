@@ -439,7 +439,7 @@ const sounds = [
     'neptune_blast'
 ];
 
-const pack = loadPack('data/pack/sound.pack');
+const pack = loadPack('data/src/pack/sound.pack');
 
 fs.readdirSync('data/src/sounds').forEach(f => {
     const id = f.split('.')[0].split('_')[1];
@@ -451,4 +451,4 @@ fs.readdirSync('data/src/sounds').forEach(f => {
     }
 });
 
-fs.writeFileSync('data/pack/sound.pack', pack.map((value, index) => `${index}=${value}`).join('\n'));
+fs.writeFileSync('data/src/pack/sound.pack', pack.map((value, index) => `${index}=${value}`).join('\n'));

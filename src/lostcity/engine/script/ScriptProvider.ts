@@ -10,7 +10,7 @@ export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 14;
+    private static readonly COMPILER_VERSION = 15;
 
     /**
      * Array of loaded scripts.
@@ -34,21 +34,25 @@ export default class ScriptProvider {
      * @returns The number of scripts loaded.
      */
     static load(dir: string): number {
-        const dat = Packet.load(`${dir}/script.dat`);
-        const idx = Packet.load(`${dir}/script.idx`);
+        const dat = Packet.load(`${dir}/server/script.dat`);
+        const idx = Packet.load(`${dir}/server/script.idx`);
+        if (!dat.length || !idx.length) {
+            console.log('\nFatal: No script.dat or script.idx found. Please run the server:build script.');
+            process.exit(1);
+        }
 
         const entries = dat.g2();
         idx.pos += 2;
 
         const version = dat.g4();
         if (version !== ScriptProvider.COMPILER_VERSION) {
-            console.error(`\nCompiler is out of date - have version ${version} but we're expecting ${ScriptProvider.COMPILER_VERSION}. Check the #dev-resources channel in Discord for the latest RuneScriptCompiler.jar.`);
+            console.error('\nFatal: Compiler is out of date. Check the #dev-resources channel in Discord for the latest RuneScriptCompiler.jar and re-run server:build.');
             process.exit(1);
         }
 
-        ScriptProvider.scripts = [];
-        ScriptProvider.scriptNames.clear();
-        ScriptProvider.scriptLookup.clear();
+        const scripts = new Array<Script>(entries);
+        const scriptNames = new Map<string, number>();
+        const scriptLookup = new Map<number, Script>();
 
         let loaded = 0;
         for (let id = 0; id < entries; id++) {
@@ -59,19 +63,25 @@ export default class ScriptProvider {
 
             try {
                 const script = Script.decode(id, dat.gPacket(size));
-                ScriptProvider.scripts[id] = script;
-                ScriptProvider.scriptNames.set(script.name, id);
+                scripts[id] = script;
+                scriptNames.set(script.name, id);
 
                 // add the script to lookup table if the value isn't -1
                 if (script.info.lookupKey !== 0xffffffff) {
-                    ScriptProvider.scriptLookup.set(script.info.lookupKey, script);
+                    scriptLookup.set(script.info.lookupKey, script);
                 }
 
                 loaded++;
             } catch (err) {
-                console.error(`Failed to load script ${id}`, err);
+                console.error(err);
+                console.error(`Warning: Failed to load script ${id}, something may have been partially written`);
+                return -1;
             }
         }
+
+        ScriptProvider.scripts = scripts;
+        ScriptProvider.scriptNames = scriptNames;
+        ScriptProvider.scriptLookup = scriptLookup;
         return loaded;
     }
 

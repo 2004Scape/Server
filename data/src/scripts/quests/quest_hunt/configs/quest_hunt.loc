@@ -3,10 +3,10 @@ name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [food_store_crate]
 name=Crate
@@ -20,9 +20,9 @@ desc=I wonder what's inside?
 model=wooden_chest
 active=yes
 op1=Open
-forceapproach=top
+forceapproach=north
 
 [hunt_chest_open]
 model=model_loc_76
 active=no
-forceapproach=top
+forceapproach=north

@@ -110,3 +110,140 @@ while($i < db_getfieldcount($data, coord_pair_table:coord_pair)) {
     }
 }
 return (false);
+
+// returns ^exact_north, ^exact_east, ^exact_south, ^exact_west
+[proc,coord_direction](coord $coord1, coord $coord2)(int)
+def_int $x1 = coordx($coord1);
+def_int $z1 = coordz($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z2 = coordz($coord2);
+
+def_int $dx = sub($x2, $x1);
+def_int $dz = sub($z2, $z1);
+//mes("dx: <tostring($dx)>, dz: <tostring($dz)>, x1: <tostring($x1)>, z1: <tostring($z1)>, x2: <tostring($x2)>, z2: <tostring($z2)>");
+// east
+if ($dx > 0) {
+    // check if north or south is actually better than east
+    if (abs($dz) > abs($dx)) {
+        if ($dz > 0) {
+            return(^exact_north);
+        } else {
+            return(^exact_south);
+        }
+    }
+    return(^exact_east);
+} else {
+    // check if north or south is actually better than west
+    if (abs($dz) > abs($dx)) {
+        if ($dz > 0) {
+            return(^exact_north);
+        } else {
+            return(^exact_south);
+        }
+    }
+    return(^exact_west);
+}
+return(null);
+
+// returns ^exact_north, ^exact_east, ^exact_south, ^exact_west, ^exact_northeast, ^exact_southeast, ^exact_southwest, ^exact_northwest
+[proc,coord_direction2](coord $coord1, coord $coord2)(int)
+def_int $x1 = coordx($coord1);
+def_int $z1 = coordz($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z2 = coordz($coord2);
+
+def_int $dx = sub($x2, $x1);
+def_int $dz = sub($z2, $z1);
+//mes("dx: <tostring($dx)>, dz: <tostring($dz)>, x1: <tostring($x1)>, z1: <tostring($z1)>, x2: <tostring($x2)>, z2: <tostring($z2)>");
+// east
+if ($dx > 0) {
+    // if north/south are at least half of east, then return northeast/southeast
+    if (abs($dx) >= divide(abs($dz), 2)) {
+        if ($dz > 0) {
+            return(^exact_northeast);
+        } else {
+            return(^exact_southeast);
+        }
+    }
+    return(^exact_east);
+} else {
+    // if north/south are at least half of west, then return northwest/southwest
+    if (abs($dx) >= divide(abs($dz), 2)) {
+        if ($dz > 0) {
+            return(^exact_northwest);
+        } else {
+            return(^exact_southwest);
+        }
+    }
+    return(^exact_west);
+}
+// west
+
+return(null);
+
+[proc,movecoord_indirection](coord $coord, int $direction, int $distance)(coord)
+if ($direction = ^exact_north) {
+    return(movecoord($coord, 0, 0, $distance));
+}
+if ($direction = ^exact_east) {
+    return(movecoord($coord, $distance, 0, 0));
+}
+if ($direction = ^exact_south) {
+    return(movecoord($coord, 0, 0, calc(0 - $distance)));
+}
+if ($direction = ^exact_west) {
+    return(movecoord($coord, calc(0 - $distance), 0, 0));
+}
+if ($direction = ^exact_northeast) {
+    return(movecoord($coord, $distance, 0, $distance));
+}
+if ($direction = ^exact_southeast) {
+    return(movecoord($coord, $distance, 0, calc(0 - $distance)));
+}
+if ($direction = ^exact_southwest) {
+    return(movecoord($coord, calc(0 - $distance), 0, calc(0 - $distance)));
+}
+if ($direction = ^exact_northwest) {
+    return(movecoord($coord, calc(0 - $distance), 0, $distance));
+}
+return($coord);
+
+[proc,closest_enum_coord](coord $coord, enum $enum)(coord)
+def_int $i = 0;
+def_coord $closest_coord;
+def_int $closest_distance = ^max_32bit_int;
+while ($i < enum_getoutputcount($enum)) {
+    if (~total_distance(coord, enum(int, coord, $enum, $i)) < $closest_distance) {
+        $closest_coord = enum(int, coord, $enum, $i);
+        $closest_distance = ~total_distance(coord, $closest_coord);
+    }
+    $i = calc($i + 1);
+}
+mes("Closest distance: <tostring($closest_distance)>");
+return($closest_coord);
+
+[proc,closest_enum_coord_and_index](coord $coord, enum $enum)(coord, int)
+def_int $i = 0;
+def_coord $closest_coord;
+def_int $closest_distance = ^max_32bit_int;
+def_int $closest_index;
+while ($i < enum_getoutputcount($enum)) {
+    if (~total_distance(coord, enum(int, coord, $enum, $i)) < $closest_distance) {
+        $closest_coord = enum(int, coord, $enum, $i);
+        $closest_index = $i;
+        $closest_distance = ~total_distance(coord, $closest_coord);
+    }
+    $i = calc($i + 1);
+}
+return($closest_coord, $closest_index);
+
+[proc,total_distance](coord $coord1, coord $coord2)(int)
+def_int $x1 = coordx($coord1);
+def_int $z1 = coordz($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z2 = coordz($coord2);
+
+def_int $dx = abs(sub($x2, $x1));
+def_int $dz = abs(sub($z2, $z1));
+
+return(add($dx, $dz));

@@ -13,7 +13,7 @@ export function packClientSound() {
     console.log('Packing sounds.jag');
     //console.time('sounds.jag');
 
-    const order = loadOrder('data/pack/sound.order');
+    const order = loadOrder('data/src/pack/sound.order');
 
     const jag = new Jagfile();
 

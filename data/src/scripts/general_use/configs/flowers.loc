@@ -11,12 +11,12 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
-recol1d=947
-recol2s=37196
-recol2d=947
-recol3s=53167
-recol3d=947
+recol1s=21017
+recol1d=24609
+recol2s=14967
+recol2d=24609
+recol3s=18455
+recol3d=24609
 
 [loc_2982]
 name=Flowers
@@ -24,12 +24,12 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
-recol1d=43955
-recol2s=37196
-recol2d=43955
-recol3s=53167
-recol3d=43955
+recol1s=21017
+recol1d=25
+recol2s=14967
+recol2d=25
+recol3s=18455
+recol3d=25
 
 [loc_2983]
 name=Flowers
@@ -37,12 +37,12 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
-recol1d=11200
-recol2s=37196
-recol2d=11200
-recol3s=53167
-recol3d=11200
+recol1s=21017
+recol1d=31649
+recol2s=14967
+recol2d=31649
+recol3s=18455
+recol3d=31649
 
 [loc_2984]
 name=Flowers
@@ -50,12 +50,12 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
-recol1d=51136
-recol2s=37196
-recol2d=51136
-recol3s=53167
-recol3d=51136
+recol1s=21017
+recol1d=19487
+recol2s=14967
+recol2d=19487
+recol3s=18455
+recol3d=19487
 
 [loc_2985]
 name=Flowers
@@ -63,12 +63,12 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
-recol1d=7097
-recol2s=37196
-recol2d=7097
-recol3s=53167
-recol3d=7097
+recol1s=21017
+recol1d=28161
+recol2s=14967
+recol2d=28161
+recol3s=18455
+recol3d=28161
 
 [loc_2986]
 name=Flowers
@@ -76,12 +76,12 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
-recol1d=947
-recol2s=37196
-recol2d=43955
-recol3s=53167
-recol3d=11200
+recol1s=21017
+recol1d=24609
+recol2s=14967
+recol2d=25
+recol3s=18455
+recol3d=31649
 
 [loc_2987]
 name=Flowers
@@ -89,12 +89,12 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
-recol1d=127
-recol2s=37196
-recol2d=127
-recol3s=53167
-recol3d=127
+recol1s=21017
+recol1d=32767
+recol2s=14967
+recol2d=32767
+recol3s=18455
+recol3d=32767
 
 [loc_2988]
 name=Flowers
@@ -102,9 +102,9 @@ desc=Some beautiful flowers.
 model=model_loc_2980
 blockwalk=no
 anim=seq_912
-recol1s=48596
+recol1s=21017
 recol1d=0
-recol2s=37196
+recol2s=14967
 recol2d=0
-recol3s=53167
+recol3s=18455
 recol3d=0

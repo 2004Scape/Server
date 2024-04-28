@@ -1,4 +1,4 @@
-[ai_queue3,npc_122](int $arg) // LVL 28 Hobgoblins
+[ai_queue3,hobgoblin](int $arg) // LVL 28 Hobgoblins
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
@@ -68,7 +68,7 @@ if ($random < 3) {
     ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
 
-[ai_queue3,npc_123](int $arg) // LVL 42 Hobgoblins
+[ai_queue3,hobgoblin_armed](int $arg) // LVL 42 Hobgoblins
 gosub(npc_death);
 if (npc_findhero = false) {
     return;

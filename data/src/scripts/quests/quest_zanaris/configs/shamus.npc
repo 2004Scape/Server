@@ -10,3 +10,5 @@ model2=model_2896_npc
 model3=model_2915_npc
 head1=model_24_npc_head
 wanderrange=15
+param=death_anim,midget_death
+param=death_sound,gnome_death

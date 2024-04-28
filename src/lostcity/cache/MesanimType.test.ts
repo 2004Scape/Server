@@ -1,3 +1,5 @@
+import { vi, describe, it, expect } from 'vitest';
+
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
@@ -9,17 +11,17 @@ describe('MesanimType', () => {
         it('should load data from mesanim.dat', () => {
             const dat = new Packet();
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(dat);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(dat);
 
             MesanimType.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/mesanim.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/mesanim.dat');
         });
 
         it('should return early if mesanim.dat does not exist', () => {
-            fs.existsSync = jest.fn().mockReturnValue(false);
-            Packet.load = jest.fn().mockReturnValue(undefined);
+            fs.existsSync = vi.fn().mockReturnValue(false);
+            Packet.load = vi.fn().mockReturnValue(undefined);
 
             expect(MesanimType.load('/path/to/data')).toBeUndefined();
             expect(Packet.load).not.toHaveBeenCalled();

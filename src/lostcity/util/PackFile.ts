@@ -23,7 +23,7 @@ export class PackFile {
         if (validator !== null) {
             validator(this, ...validatorArgs);
         } else {
-            this.load(`data/pack/${type}.pack`);
+            this.load(`data/src/pack/${type}.pack`);
         }
     }
 
@@ -62,7 +62,7 @@ export class PackFile {
     }
 
     save() {
-        fs.writeFileSync(`data/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
+        fs.writeFileSync(`data/src/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
     }
 
     getById(id: number): string {
@@ -85,7 +85,7 @@ export class PackFile {
 }
 
 function validateFilesPack(pack: PackFile, path: string, ext: string): void {
-    pack.load(`data/pack/${pack.type}.pack`);
+    pack.load(`data/src/pack/${pack.type}.pack`);
 
     const files = listFilesExt(path, ext);
 
@@ -100,14 +100,14 @@ function validateFilesPack(pack: PackFile, path: string, ext: string): void {
         const name = files[i];
 
         if (!pack.names.has(name)) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit data/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit data/src/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
 
     for (const name of pack.names) {
         if (!fileNames.has(name)) {
-            console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit data/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit data/src/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
@@ -129,7 +129,7 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
             // completely scorched earth (resets ids)
         } else {
             // just add new ids to the end
-            pack.load(`data/pack/${pack.type}.pack`);
+            pack.load(`data/src/pack/${pack.type}.pack`);
         }
 
         for (let i = 0; i < names.length; i++) {
@@ -139,21 +139,21 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
         }
         pack.refreshNames();
     } else {
-        pack.load(`data/pack/${pack.type}.pack`);
+        pack.load(`data/src/pack/${pack.type}.pack`);
     }
 
     for (let i = 0; i < names.length; i++) {
         const name = names[i];
 
         if (!pack.names.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit data/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit data/src/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
 
     for (const name of pack.names) {
         if (!configNames.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit data/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit data/src/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
@@ -164,9 +164,9 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
 }
 
 function validateCategoryPack(pack: PackFile) {
-    if (shouldBuild('data/src/scripts', '.loc', 'data/pack/category.pack') ||
-        shouldBuild('data/src/scripts', '.npc', 'data/pack/category.pack') ||
-        shouldBuild('data/src/scripts', '.obj', 'data/pack/category.pack')) {
+    if (shouldBuild('data/src/scripts', '.loc', 'data/src/pack/category.pack') ||
+        shouldBuild('data/src/scripts', '.npc', 'data/src/pack/category.pack') ||
+        shouldBuild('data/src/scripts', '.obj', 'data/src/pack/category.pack')) {
         const categories = crawlConfigCategories();
         for (let i = 0; i < categories.length; i++) {
             pack.register(i, categories[i]);
@@ -174,12 +174,12 @@ function validateCategoryPack(pack: PackFile) {
         pack.refreshNames();
         pack.save();
     } else {
-        pack.load('data/pack/category.pack');
+        pack.load('data/src/pack/category.pack');
     }
 }
 
 function validateInterfacePack(pack: PackFile) {
-    pack.load('data/pack/interface.pack');
+    pack.load('data/src/pack/interface.pack');
 
     loadDirExtFull('data/src/scripts', '.if', (lines: string[], file: string) => {
         const parent = basename(dirname(dirname(file)));
@@ -191,7 +191,7 @@ function validateInterfacePack(pack: PackFile) {
 
         const inter = basename(file, '.if');
         if (!pack.names.has(inter)) {
-            console.error(`data/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
+            console.error(`data/src/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
             process.exit(1);
         }
 
@@ -203,7 +203,7 @@ function validateInterfacePack(pack: PackFile) {
                 const name = `${inter}:${com}`;
 
                 if (!pack.names.has(name)) {
-                    console.error(`data/pack/interface.pack is missing ID for component ${name} from ${file}`);
+                    console.error(`data/src/pack/interface.pack is missing ID for component ${name} from ${file}`);
                     process.exit(1);
                 }
             }
@@ -213,7 +213,7 @@ function validateInterfacePack(pack: PackFile) {
 
 // todo: validate triggers, names, and/or reuse IDs?
 function regenScriptPack(pack: PackFile) {
-    pack.load('data/pack/script.pack');
+    pack.load('data/src/pack/script.pack');
 
     const names = crawlConfigNames('.rs2', true);
     for (let i = 0; i < names.length; i++) {
@@ -339,6 +339,10 @@ function crawlConfigCategories() {
 }
 
 export function getModified(path: string) {
+    if (!fs.existsSync(path)) {
+        return 0;
+    }
+
     const stats = fs.statSync(path);
     return stats.mtimeMs;
 }

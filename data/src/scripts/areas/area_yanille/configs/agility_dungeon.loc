@@ -18,8 +18,8 @@ desc=I can climb up these rocks to another cave.
 model=model_loc_13
 length=2
 op1=Climb-up
-recol1s=7064
-recol1d=7721
+recol1s=12512
+recol1d=15749
 
 [loc_2318]
 name=Pile of rubble
@@ -28,8 +28,8 @@ model=model_loc_492
 width=2
 length=2
 op1=Climb-down
-recol1s=5425
-recol1d=9106
+recol1s=15753
+recol1d=9440
 
 [loc_2321]
 name=Monkeybars

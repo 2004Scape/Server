@@ -1,9 +1,7 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { PackedData, ConfigValue, ConfigLine, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { VarpPack } from '#lostcity/util/PackFile.js';
 
 export function parseVarpConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -52,11 +50,11 @@ export function parseVarpConfig(key: string, value: string): ConfigValue | null 
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'scope') {
         if (value === 'perm') {
             return VarPlayerType.SCOPE_PERM;
@@ -72,65 +70,43 @@ export function parseVarpConfig(key: string, value: string): ConfigValue | null 
     }
 }
 
-function packVarpConfigs(configs: Map<string, ConfigLine[]>, transmitAll: boolean) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(VarpPack.size);
-    idx.p2(VarpPack.size);
+export function packVarpConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData; server: PackedData } {
+    const client: PackedData = new PackedData(VarpPack.size);
+    const server: PackedData = new PackedData(VarpPack.size);
 
     for (let i = 0; i < VarpPack.size; i++) {
         const debugname = VarpPack.getById(i);
         const config = configs.get(debugname)!;
 
-        const start = dat.pos;
-
         for (let j = 0; j < config.length; j++) {
             const { key, value } = config[j];
 
             if (key === 'scope') {
-                if (transmitAll === true) {
-                    dat.p1(1);
-                    dat.p1(value as number);
-                }
+                server.p1(1);
+                server.p1(value as number);
             } else if (key === 'type') {
-                if (transmitAll === true) {
-                    dat.p1(2);
-                    dat.p1(value as number);
-                }
+                server.p1(2);
+                server.p1(value as number);
             } else if (key === 'protect') {
-                if (transmitAll === true) {
-                    if (value === false) {
-                        dat.p1(4);
-                    }
+                if (value === false) {
+                    server.p1(4);
                 }
             } else if (key === 'clientcode') {
-                dat.p1(5);
-                dat.p2(value as number);
+                client.p1(5);
+                client.p2(value as number);
             } else if (key === 'transmit') {
-                if (transmitAll === true) {
-                    if (value === true) {
-                        dat.p1(6);
-                    }
+                if (value === true) {
+                    server.p1(6);
                 }
             }
         }
 
-        if (transmitAll === true) {
-            dat.p1(250);
-            dat.pjstr(debugname);
-        }
+        server.p1(250); // todo: maybe this was opcode 10?
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
-}
-
-export function packVarpClient(configs: Map<string, ConfigLine[]>) {
-    return packVarpConfigs(configs, false);
-}
-
-export function packVarpServer(configs: Map<string, ConfigLine[]>) {
-    return packVarpConfigs(configs, true);
+    return { client, server };
 }

@@ -3,15 +3,12 @@ import World from '#lostcity/engine/World.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Loc from '#lostcity/entity/Loc.js';
-import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import Obj from '#lostcity/entity/Obj.js';
-import Player from '#lostcity/entity/Player.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 
 import LocType from '#lostcity/cache/LocType.js';
 
-import { CollisionFlag, CollisionStrategies, CollisionStrategy, ReachStrategy, RouteCoordinates } from '@2004scape/rsmod-pathfinder';
+import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -28,7 +25,9 @@ export default abstract class PathingEntity extends Entity {
     forceMove: boolean = false;
     tele: boolean = false;
     jump: boolean = false;
-    moveCheck: number | null = null;
+
+    walktrigger: number = -1;
+    walktriggerArg: number = 0; // used for npcs
 
     orientation: number = Direction.SOUTH;
 
@@ -187,10 +186,11 @@ export default abstract class PathingEntity extends Entity {
      * Queue waypoints to this PathingEntity.
      * @param waypoints The waypoints to queue.
      */
-    queueWaypoints(waypoints: RouteCoordinates[]): void {
+    queueWaypoints(waypoints: ArrayLike<number>): void {
+        const points: Int32Array = Int32Array.from(waypoints);
         this.waypoints = [];
-        for (const step of waypoints) {
-            this.waypoints.push({ x: step.x, z: step.z });
+        for (const step of points) {
+            this.waypoints.push({ x: step >> 14 & 0x3fff, z: step & 0x3fff });
         }
         this.waypoints.reverse();
         this.waypointIndex = this.waypoints.length - 1;
@@ -287,75 +287,48 @@ export default abstract class PathingEntity extends Entity {
         return this.waypointIndex === 0;
     }
 
-    inOperableDistance(
-        target:
-            | Player
-            | Npc
-            | Loc
-            | Obj
-            | {
-                  x: number;
-                  z: number;
-                  level: number;
-                  width: number;
-                  length: number;
-              }
-    ): boolean {
-        if (!target || target.level !== this.level) {
+    inOperableDistance(target: Entity): boolean {
+        if (target.level !== this.level) {
             return false;
         }
         if (target instanceof PathingEntity) {
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
+            return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         } else if (target instanceof Loc) {
             const forceapproach = LocType.get(target.type).forceapproach;
-            return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
+            return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
         }
-        const shape = World.collisionFlags.isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED) ? -2 : -1;
-        return ReachStrategy.reached(World.collisionFlags, this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
+        const shape = isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED) ? -2 : -1;
+        return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
     }
 
-    inApproachDistance(
-        range: number,
-        target:
-            | Player
-            | Npc
-            | Loc
-            | Obj
-            | {
-                  x: number;
-                  z: number;
-                  level: number;
-                  width: number;
-                  length: number;
-              }
-    ): boolean {
-        if (!target || target.level !== this.level) {
+    inApproachDistance(range: number, target: Entity): boolean {
+        if (target.level !== this.level) {
             return false;
         }
-        if (target instanceof PathingEntity && World.naivePathFinder.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
+        if (target instanceof PathingEntity && Position.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
             // pathing entity has a -2 shape basically (not allow on same tile) for ap.
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        return World.lineValidator.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER) && Position.distanceTo(this, target) <= range;
+        return Position.distanceTo(this, target) <= range && hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER);
     }
 
-    getCollisionStrategy(): CollisionStrategy | null {
+    getCollisionStrategy(): CollisionType | null {
         switch (this.moveRestrict) {
             case MoveRestrict.NORMAL:
-                return CollisionStrategies.NORMAL;
+                return CollisionType.NORMAL;
             case MoveRestrict.BLOCKED:
-                return CollisionStrategies.BLOCKED;
+                return CollisionType.BLOCKED;
             case MoveRestrict.BLOCKED_NORMAL:
-                return CollisionStrategies.LINE_OF_SIGHT;
+                return CollisionType.LINE_OF_SIGHT;
             case MoveRestrict.INDOORS:
-                return CollisionStrategies.INDOORS;
+                return CollisionType.INDOORS;
             case MoveRestrict.OUTDOORS:
-                return CollisionStrategies.OUTDOORS;
+                return CollisionType.OUTDOORS;
             case MoveRestrict.NOMOVE:
                 return null;
             case MoveRestrict.PASSTHRU:
-                return CollisionStrategies.NORMAL;
+                return CollisionType.NORMAL;
         }
     }
 
@@ -396,7 +369,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         const collisionStrategy = this.getCollisionStrategy();
-        if (!collisionStrategy) {
+        if (collisionStrategy === null) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
         }
@@ -413,17 +386,17 @@ export default abstract class PathingEntity extends Entity {
         }
 
         // check current direction if can travel to chosen dest.
-        if (World.stepValidator.canTravel(this.level, this.x, this.z, dx, dz, this.width, extraFlag, collisionStrategy)) {
+        if (canTravel(this.level, this.x, this.z, dx, dz, this.width, extraFlag, collisionStrategy)) {
             return dir;
         }
 
         // check another direction if can travel to chosen dest on current z-axis.
-        if (dx != 0 && World.stepValidator.canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
+        if (dx != 0 && canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, destX, srcZ);
         }
 
         // check another direction if can travel to chosen dest on current x-axis.
-        if (dz != 0 && World.stepValidator.canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
+        if (dz != 0 && canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, srcX, destZ);
         }
         return null;

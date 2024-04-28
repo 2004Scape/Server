@@ -1,462 +1,23 @@
-[if_button,prayer:prayer_thickskin]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_thickskin = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_thickskin = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_thickskin = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_thickskin = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_thickskin = ^true;
-            ~prayer_activate($data);
-        }
-    }
+[queue,prayer_activate](int $prayer)
+switch_int($prayer) {
+    case ^prayer_thickskin: @activate_prayer_thickskin;
+    case ^prayer_strengthburst: @activate_prayer_strengthburst;
+    case ^prayer_clarity: @activate_prayer_clarity;
+    case ^prayer_rockskin: @activate_prayer_rockskin;
+    case ^prayer_superhumanstrength: @activate_prayer_superhumanstrength;
+    case ^prayer_improvedreflexes: @activate_prayer_improvedreflexes;
+    case ^prayer_rapidrestore: @activate_prayer_rapidrestore;
+    case ^prayer_rapidheal: @activate_prayer_rapidheal;
+    case ^prayer_protectitems: @activate_prayer_protectitems;
+    case ^prayer_steelskin: @activate_prayer_steelskin;
+    case ^prayer_ultimatestrength: @activate_prayer_ultimatestrength;
+    case ^prayer_incrediblereflexes: @activate_prayer_incrediblereflexes;
+    case ^prayer_protectfrommagic: @activate_prayer_protectfrommagic;
+    case ^prayer_protectfrommissiles: @activate_prayer_protectfrommissiles;
+    case ^prayer_protectfrommelee: @activate_prayer_protectfrommelee;
 }
 
-[if_button,prayer:prayer_strengthburst]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_strengthburst = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_strengthburst = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_strengthburst = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_strengthburst = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_strengthburst = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_clarity]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_clarity = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_clarity = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_clarity = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_clarity = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_clarity = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_rockskin]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_rockskin = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_rockskin = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_rockskin = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_rockskin = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_rockskin = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_superhumanstrength]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_superhumanstrength = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_superhumanstrength = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_superhumanstrength = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_superhumanstrength = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_superhumanstrength = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_improvedreflexes]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_improvedreflexes = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_improvedreflexes = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_improvedreflexes = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_improvedreflexes = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_improvedreflexes = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_rapidrestore]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_rapidrestore = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_rapidrestore = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-        clearsofttimer(stat_replenish);
-        softtimer(stat_replenish, 100);
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_rapidrestore = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_rapidrestore = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_rapidrestore = ^true;
-            clearsofttimer(stat_replenish);
-            softtimer(stat_replenish, 50);
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_rapidheal]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_rapidheal = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_rapidheal = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-        clearsofttimer(health_replenish);
-        softtimer(health_replenish, 100);
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_rapidheal = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_rapidheal = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_rapidheal = ^true;
-            clearsofttimer(health_replenish);
-            softtimer(health_replenish, 50);
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_protectitems]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_protectitems = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_protectitems = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_protectitems = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_protectitems = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_protectitems = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_steelskin]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_steelskin = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_steelskin = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_steelskin = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_steelskin = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@.");
-        } else {
-            %prayer_steelskin = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_ultimatestrength]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_ultimatestrength = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_ultimatestrength = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_ultimatestrength = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_ultimatestrength = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
-        } else {
-            %prayer_ultimatestrength = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_incrediblereflexes]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_incrediblereflexes = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_incrediblereflexes = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_incrediblereflexes = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_incrediblereflexes = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
-        } else {
-            %prayer_incrediblereflexes = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_protectfrommagic]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_protectfrommagic = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_protectfrommagic = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_protectfrommagic = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_protectfrommagic = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
-        } else {
-            %prayer_protectfrommagic = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_protectfrommissiles]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_protectfrommissiles = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_protectfrommissiles = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_protectfrommissiles = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_protectfrommissiles = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
-        } else {
-            %prayer_protectfrommissiles = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[if_button,prayer:prayer_protectfrommelee]
-if_close;
-if (p_finduid(uid) = true) {
-    def_dbrow $data = ~get_prayer_data(last_com);
-    if (%prayer_protectfrommelee = ^true) {
-        %prayer_drain_effect = sub(%prayer_drain_effect, enum(component, int, prayer_drain_effects, last_com));
-        %prayer_protectfrommelee = ^false;
-        sound_synth(cancel_prayer, 0, 0);
-        def_int $headicon = enum(component, int, prayer_headicons, last_com);
-        if ($headicon > 0) {
-            ~headicon_del($headicon);
-        }
-        if (~prayers_are_active = false) {
-            clearsofttimer(drain_prayer);
-            //clearqueue(start_draining);
-        }
-    } else {
-        if (~prayer_checks($data) = false) {
-            %prayer_protectfrommelee = ^false;
-        } else if (stat_base(prayer) < db_getfield($data, prayers:level, 0)){
-            %prayer_protectfrommelee = ^false;
-            sound_synth(prayer_off, 0, 0);
-            ~mesbox("You need a @dbl@Prayer@bla@ level of <tostring(db_getfield($data, prayers:level, 0))> to use @dbl@<db_getfield($data, prayers:name, 0)>@bla@."); 
-        } else {
-            %prayer_protectfrommelee = ^true;
-            ~prayer_activate($data);
-        }
-    }
-}
-
-[proc,get_prayer_data](component $prayer)(dbrow)
+[proc,get_prayer_data](int $prayer)(dbrow)
 db_find(prayers:prayer, $prayer);
 def_dbrow $data = db_findnext;
 if ($data = null) {
@@ -479,21 +40,24 @@ if (db_getfield($data, prayers:members, 0) = ^true & map_members = false) {
     mes("You need to be on a members' server to use this Prayer.");
     return(false);
 }
+if (~duel_arena_prayer_check = false) {
+    return(false);
+}
 return(true);
 
 [proc,prayer_activate](dbrow $data)
 sound_synth(db_getfield($data, prayers:sound, 0), 0, 0);
-%prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(component, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
+%prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(int, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
 // mes("<tostring(map_clock)>: prayer_activate();");
 // deactivate conflicting prayers
 def_int $i = 0;
 while ($i <= db_getfieldcount($data, prayers:prayer_deactivate)) {
-    def_component $prayer = db_getfield($data, prayers:prayer_deactivate, $i);
+    def_int $prayer = db_getfield($data, prayers:prayer_deactivate, $i);
     ~prayer_deactivate($prayer);
     $i = add($i, 1);
 }
 // activate headicon
-def_int $headicon = enum(component, int, prayer_headicons, db_getfield($data, prayers:prayer, 0));
+def_int $headicon = enum(int, int, prayer_headicons, db_getfield($data, prayers:prayer, 0));
 if ($headicon > 0) {
     ~headicon_add($headicon);
 }
@@ -506,14 +70,15 @@ if (getqueue(start_draining) < 1) { // it might be queue(start_draining, getqueu
 
 
 [queue,start_draining]
-// https://youtu.be/UAWSeOYLVHU 5t softtimer
-softtimer(drain_prayer, 5);
+// https://youtu.be/UAWSeOYLVHU 5t
+// https://youtu.be/cQZhL4VP84A?t=179 normal timer instead of softtimer
+settimer(drain_prayer, 5);
 
-[softtimer,drain_prayer]
+[timer,drain_prayer]
 %prayer_drain_counter = calc(%prayer_drain_effect * 5 + max(%prayer_drain_counter, 0));
 // 60 + equipment bonus * 2
 if (~prayers_are_active = false) {
-    clearsofttimer(drain_prayer);
+    cleartimer(drain_prayer);
     //clearqueue(start_draining);
     return;
 }
@@ -523,7 +88,7 @@ if (%prayer_drain_counter >= max(%prayer_drain_resistance, 60)) {
     %prayer_drain_counter = sub(%prayer_drain_counter, multiply(%prayer_drain_resistance, $reduce_points));
     stat_sub(prayer, $reduce_points, 0);
     if (stat(prayer) = 0) {
-        clearsofttimer(drain_prayer);
+        cleartimer(drain_prayer);
         //clearqueue(start_draining);
         mes("You have run out of prayer points, you must recharge at an altar.");
         ~deactivate_prayers;
@@ -569,60 +134,80 @@ return (false);
 %prayer_drain_effect = 0;
 %prayer_drain_counter = 0;
 
-[proc,prayer_deactivate](component $prayer)
-def_int $drain = enum(component, int, prayer_drain_effects, $prayer);
-switch_component($prayer) {
-    case prayer:prayer_thickskin : 
+[proc,.deactivate_prayers]
+.%prayer_thickskin = ^false;
+.%prayer_strengthburst = ^false;
+.%prayer_clarity = ^false;
+.%prayer_rockskin = ^false;
+.%prayer_superhumanstrength = ^false;
+.%prayer_improvedreflexes = ^false;
+.%prayer_rapidrestore = ^false;
+.%prayer_rapidheal = ^false;
+.%prayer_protectitems = ^false;
+.%prayer_steelskin = ^false;
+.%prayer_ultimatestrength = ^false;
+.%prayer_incrediblereflexes = ^false;
+.%prayer_protectfrommagic = ^false;
+.%prayer_protectfrommissiles = ^false;
+.%prayer_protectfrommelee = ^false;
+~.headicons_clear;
+.%prayer_drain_effect = 0;
+.%prayer_drain_counter = 0;
+
+[proc,prayer_deactivate](int $prayer)
+def_int $drain = enum(int, int, prayer_drain_effects, $prayer);
+switch_int($prayer) {
+    case ^prayer_thickskin : 
         if (%prayer_thickskin = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_thickskin = ^false;
-    case prayer:prayer_strengthburst :
+    case ^prayer_strengthburst :
         if (%prayer_strengthburst = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_strengthburst = ^false;
-    case prayer:prayer_clarity :
+    case ^prayer_clarity :
         if (%prayer_clarity = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_clarity = ^false;
-    case prayer:prayer_rockskin :
+    case ^prayer_rockskin :
         if (%prayer_rockskin = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_rockskin = ^false;
-    case prayer:prayer_superhumanstrength :
+    case ^prayer_superhumanstrength :
         if (%prayer_superhumanstrength = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_superhumanstrength = ^false;
-    case prayer:prayer_improvedreflexes :
+    case ^prayer_improvedreflexes :
         if (%prayer_improvedreflexes = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_improvedreflexes = ^false;
-    case prayer:prayer_rapidrestore :
+    case ^prayer_rapidrestore :
         if (%prayer_rapidrestore = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_rapidrestore = ^false;
-    case prayer:prayer_rapidheal :
+    case ^prayer_rapidheal :
         if (%prayer_rapidheal = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_rapidheal = ^false;
-    case prayer:prayer_protectitems :
+    case ^prayer_protectitems :
         if (%prayer_protectitems = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_protectitems = ^false;
-    case prayer:prayer_steelskin :
+    case ^prayer_steelskin :
         if (%prayer_steelskin = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_steelskin = ^false;
-    case prayer:prayer_ultimatestrength :
+    case ^prayer_ultimatestrength :
         if (%prayer_ultimatestrength = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_ultimatestrength = ^false;
-    case prayer:prayer_incrediblereflexes :
+    case ^prayer_incrediblereflexes :
         if (%prayer_incrediblereflexes = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_incrediblereflexes = ^false;
-    case prayer:prayer_protectfrommagic :
+    case ^prayer_protectfrommagic :
         if (%prayer_protectfrommagic = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_protectfrommagic = ^false;
-    case prayer:prayer_protectfrommissiles :
+    case ^prayer_protectfrommissiles :
         if (%prayer_protectfrommissiles = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_protectfrommissiles = ^false;
-    case prayer:prayer_protectfrommelee :
+    case ^prayer_protectfrommelee :
         if (%prayer_protectfrommelee = ^true) %prayer_drain_effect = sub(%prayer_drain_effect, $drain);
         %prayer_protectfrommelee = ^false;
 }
-def_int $headicon = enum(component, int, prayer_headicons, $prayer);
+def_int $headicon = enum(int, int, prayer_headicons, $prayer);
 if ($headicon > 0) {
     ~headicon_del($headicon);
 }
 if (~prayers_are_active = false) {
-    clearsofttimer(drain_prayer);
+    cleartimer(drain_prayer);
     //clearqueue(start_draining);
 }

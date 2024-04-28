@@ -714,7 +714,7 @@ shadowed=yes
 text=You are about to stake:
 colour=0xAA8822
 
-[com_89]
+[inv]
 layer=com_87
 type=invtext
 x=50
@@ -727,7 +727,7 @@ shadowed=yes
 colour=0xAAAAAA
 margin=0,2
 
-[com_90]
+[inv_nothing]
 layer=com_87
 type=invtext
 x=109
@@ -761,7 +761,7 @@ width=218
 height=142
 scroll=188
 
-[com_93]
+[otherinv_nothing]
 layer=com_92
 type=invtext
 x=109
@@ -787,7 +787,7 @@ shadowed=yes
 text=Your opponent will stake:
 colour=0xAA8822
 
-[com_95]
+[otherinv]
 layer=com_92
 type=invtext
 x=49
@@ -825,7 +825,7 @@ shadowed=yes
 text=Are you sure you want to fight this duel?
 colour=0xFFAA44
 
-[com_98]
+[obstacles]
 type=text
 x=298
 y=270
@@ -896,7 +896,7 @@ y=212
 width=78
 height=42
 
-[com_106]
+[accept]
 layer=com_105
 type=rect
 x=6
@@ -906,7 +906,7 @@ width=66
 height=31
 fill=yes
 
-[com_107]
+[accept_text]
 layer=com_105
 type=text
 x=21
@@ -980,7 +980,7 @@ y=262
 width=78
 height=43
 
-[com_115]
+[decline]
 layer=com_114
 type=rect
 x=6
@@ -990,7 +990,7 @@ width=66
 height=31
 fill=yes
 
-[com_116]
+[decline_text]
 layer=com_114
 type=text
 x=20
@@ -1057,7 +1057,7 @@ width=36
 height=36
 graphic=miscgraphics,3
 
-[com_123]
+[no_forfeit_text]
 type=text
 x=61
 y=210
@@ -1069,7 +1069,7 @@ shadowed=yes
 text=No Forfeit
 colour=0xAA8822
 
-[com_124]
+[no_magic_text]
 type=text
 x=188
 y=250
@@ -1080,7 +1080,7 @@ shadowed=yes
 text=No Magic
 colour=0xAA8822
 
-[com_125]
+[no_ranged_text]
 type=text
 x=188
 y=210
@@ -1091,7 +1091,7 @@ shadowed=yes
 text=No Ranged
 colour=0xAA8822
 
-[com_126]
+[no_melee_text]
 type=text
 x=188
 y=230
@@ -1103,7 +1103,7 @@ text=No Melee
 activetext=No Melee
 colour=0xAA8822
 
-[com_127]
+[no_weapons_text]
 type=text
 x=61
 y=250
@@ -1114,7 +1114,7 @@ shadowed=yes
 text=No Weapons
 colour=0xAA8822
 
-[com_128]
+[no_potions_text]
 type=text
 x=298
 y=210
@@ -1125,7 +1125,7 @@ shadowed=yes
 text=No Potions
 colour=0xAA8822
 
-[com_129]
+[no_food_text]
 type=text
 x=298
 y=230
@@ -1136,7 +1136,7 @@ shadowed=yes
 text=No Food
 colour=0xAA8822
 
-[com_130]
+[no_prayer_text]
 type=text
 x=298
 y=250
@@ -1147,7 +1147,7 @@ shadowed=yes
 text=No Prayer
 colour=0xAA8822
 
-[com_131]
+[no_movement_text]
 type=text
 x=61
 y=230
@@ -1158,7 +1158,7 @@ shadowed=yes
 text=No Movement
 colour=0xAA8822
 
-[com_132]
+[no_armour_text]
 type=text
 x=61
 y=270
@@ -1402,7 +1402,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_158]
+[status]
 type=text
 x=194
 y=293
@@ -1421,7 +1421,7 @@ width=36
 height=36
 graphic=miscgraphics,2
 
-[com_160]
+[flower_power_text]
 type=text
 x=188
 y=270
@@ -1443,7 +1443,7 @@ script1=eq,1
 graphic=miscgraphics,10
 activegraphic=miscgraphics,11
 
-[com_162]
+[no_jewelry_text]
 type=text
 x=61
 y=290

@@ -62,7 +62,7 @@ export default class ScriptRunner {
      * @param on
      * @param args
      */
-    static init(script: Script, self: Entity | null = null, target: Entity | null = null, on = null, args: ScriptArgument[] | null = []) {
+    static init(script: Script, self: Entity | null = null, target: Entity | null = null, args: ScriptArgument[] | null = []) {
         const state = new ScriptState(script, args);
         state.self = self;
 

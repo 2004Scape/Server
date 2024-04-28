@@ -2,8 +2,8 @@
 name=Red vine worm
 desc=Wormy.
 model=model_2519_obj
-recol1s=5698
-recol1d=960
+recol1s=25096
+recol1d=30753
 members=yes
 stackable=yes
 2dxof=8

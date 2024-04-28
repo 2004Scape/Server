@@ -1,4 +1,4 @@
-// disabled due to Jagfile's bzip-wasm dependency
+import { vi, describe, it, expect } from 'vitest';
 
 import Packet from '#jagex2/io/Packet.js';
 
@@ -7,24 +7,25 @@ import fs from 'fs';
 import WordEnc from '#lostcity/cache/WordEnc.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
 
-const RUN_TEST = false;
+// todo: test needs to run and actually filter
+const RUN_TEST = true;
 
 describe('WordEnc', () => {
     describe('static load', () => {
         it('should load data from wordenc', () => {
             const dat = new Packet();
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(dat);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(dat);
 
             WordEnc.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/wordenc');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/client/wordenc');
         });
 
         it('should return early if wordenc does not exist', () => {
-            fs.existsSync = jest.fn().mockReturnValue(false);
-            Packet.load = jest.fn().mockReturnValue(undefined);
+            fs.existsSync = vi.fn().mockReturnValue(false);
+            Packet.load = vi.fn().mockReturnValue(undefined);
 
             expect(Packet.load).not.toHaveBeenCalled();
         });

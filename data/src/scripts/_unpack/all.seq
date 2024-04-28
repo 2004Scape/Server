@@ -1404,7 +1404,7 @@ frame8=anim_7314
 frame9=anim_7324
 delay9=20000
 
-[giant_seq_132]
+[giant_casting]
 frame1=anim_7292
 frame2=anim_7302
 frame3=anim_7311
@@ -1424,7 +1424,7 @@ frame16=anim_7348
 frame17=anim_7291
 frame18=anim_7301
 
-[giant_seq_133]
+[giant_despawn]
 priority=6
 frame1=anim_7345
 frame2=anim_7288
@@ -1958,7 +1958,7 @@ frame6=anim_7573
 frame7=anim_7603
 frame8=anim_7636
 
-[midget_seq_190]
+[midget_attackbow]
 priority=6
 frame1=anim_7597
 frame2=anim_7627
@@ -1967,7 +1967,7 @@ frame4=anim_7691
 frame5=anim_7514
 frame6=anim_7539
 
-[midget_seq_191]
+[midget_attackunarmed]
 priority=6
 frame1=anim_7673
 frame2=anim_7500
@@ -1978,7 +1978,7 @@ frame6=anim_7616
 frame7=anim_7648
 frame8=anim_7681
 
-[midget_seq_192]
+[midget_attacksword]
 priority=6
 frame1=anim_7540
 frame2=anim_7570
@@ -1995,7 +1995,7 @@ frame2=anim_7505
 frame3=anim_7530
 frame4=anim_7505
 
-[midget_seq_194]
+[midget_blockshield]
 frame1=anim_7565
 frame2=anim_7593
 frame3=anim_7624
@@ -2632,7 +2632,7 @@ frame8=anim_7413
 frame9=anim_7423
 delay9=20000
 
-[skeleton_seq_264]
+[skeleton_trans_ready]
 frame1=anim_7401
 frame2=anim_7410
 frame3=anim_7420
@@ -2642,7 +2642,7 @@ frame6=anim_7385
 frame7=anim_7393
 frame8=anim_7403
 
-[skeleton_seq_265]
+[skeleton_trans_attack]
 priority=6
 frame1=anim_7444
 frame2=anim_7390
@@ -2653,7 +2653,7 @@ frame6=anim_7425
 frame7=anim_7435
 frame8=anim_7446
 
-[skeleton_seq_266]
+[skeleton_trans_block]
 frame1=anim_7400
 frame2=anim_7409
 frame3=anim_7418
@@ -2663,11 +2663,11 @@ frame6=anim_7427
 frame7=anim_7418
 frame8=anim_7409
 
-[skeleton_seq_267]
+[skeleton_trans_walk]
 frame1=anim_7441
 frame2=anim_7387
 
-[skeleton_seq_268]
+[skeleton_trans_death]
 priority=10
 frame1=anim_7434
 frame2=anim_7445
@@ -3031,7 +3031,7 @@ frame6=anim_7463
 frame7=anim_7470
 frame8=anim_7478
 
-[goblin_attack_armed]
+[goblin_attack_unarmed]
 priority=6
 frame1=anim_7473
 frame2=anim_7480
@@ -3042,7 +3042,7 @@ frame6=anim_7461
 frame7=anim_7467
 frame8=anim_7474
 
-[goblin_attack_unarmed]
+[goblin_attack_armed]
 priority=6
 frame1=anim_7481
 frame2=anim_7487
@@ -3397,7 +3397,7 @@ frame6=anim_3408
 frame7=anim_3414
 frame8=anim_3423
 
-[bird_seq_343]
+[bird_death]
 priority=10
 frame1=anim_3416
 frame2=anim_3425
@@ -3413,7 +3413,7 @@ frame11=anim_3429
 frame12=anim_3438
 frame13=anim_3447
 
-[bird_seq_344]
+[bird_attack]
 frame1=anim_3405
 frame2=anim_3411
 frame3=anim_3418
@@ -3427,7 +3427,7 @@ frame10=anim_3430
 frame11=anim_3439
 frame12=anim_3448
 
-[bird_seq_345]
+[bird_hit]
 frame1=anim_3444
 frame2=anim_3398
 frame3=anim_3406
@@ -3443,7 +3443,7 @@ frame12=anim_3440
 frame13=anim_3449
 frame14=anim_3401
 
-[human_seq_346]
+[lord_iban_ready]
 frame1=anim_2046
 frame2=anim_2348
 frame3=anim_629
@@ -3451,7 +3451,7 @@ frame4=anim_923
 frame5=anim_1204
 frame6=anim_1488
 
-[human_seq_347]
+[lord_iban_cast_spell]
 frame1=anim_979
 frame2=anim_1264
 frame3=anim_1545
@@ -3846,7 +3846,7 @@ frame6=anim_6880
 frame7=anim_6881
 frame8=anim_6883
 
-[human_seq_376]
+[human_ddagger_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 stretches=yes
@@ -3859,7 +3859,7 @@ frame6=anim_2433
 frame7=anim_721
 frame8=anim_1009
 
-[human_seq_377]
+[human_ddagger_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2241
@@ -3872,7 +3872,7 @@ frame7=anim_1977
 frame8=anim_2278
 frame9=anim_561
 
-[human_seq_378]
+[human_dagger_defend1]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 stretches=yes
 frame1=anim_837
@@ -3886,7 +3886,7 @@ frame8=anim_1694
 frame9=anim_1402
 frame10=anim_1120
 
-[human_seq_379]
+[human_dagger_defend2]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 stretches=yes
 frame1=anim_1020
@@ -3900,7 +3900,7 @@ frame8=anim_1884
 frame9=anim_1590
 frame10=anim_1305
 
-[human_seq_380]
+[human_dspear_swipe]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_627
@@ -3913,7 +3913,7 @@ frame7=anim_2383
 frame8=anim_662
 frame9=anim_951
 
-[human_seq_381]
+[human_dspear_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_885
@@ -3923,7 +3923,7 @@ frame4=anim_1753
 frame5=anim_2053
 frame6=anim_2356
 
-[human_seq_382]
+[human_dspear_pound]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1912
@@ -3936,7 +3936,7 @@ frame7=anim_1657
 frame8=anim_1956
 frame9=anim_2259
 
-[human_seq_383]
+[human_dspear_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1780
 frame2=anim_2079
@@ -3949,7 +3949,7 @@ frame8=anim_657
 frame9=anim_2378
 frame10=anim_2079
 
-[human_seq_384]
+[human_ibanstaff_2h_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_854
 frame2=anim_1134
@@ -3962,7 +3962,7 @@ frame8=anim_1712
 frame9=anim_1420
 frame10=anim_1134
 
-[human_seq_385]
+[human_holy_water_throw]
 lefthand=hide
 priority=6
 frame1=anim_1169
@@ -3988,7 +3988,7 @@ frame4=anim_2034
 frame5=anim_2338
 frame6=anim_619
 
-[human_seq_387]
+[human_sword_defend1]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 stretches=yes
 frame1=anim_1076
@@ -4002,7 +4002,7 @@ frame8=anim_1951
 frame9=anim_1652
 frame10=anim_1361
 
-[human_sword_defend]
+[human_sword_defend2]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 stretches=yes
 frame1=anim_694
@@ -4016,7 +4016,7 @@ frame8=anim_1550
 frame9=anim_1270
 frame10=anim_984
 
-[seq_389]
+[earthwarrior_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1057
 frame2=anim_1345
@@ -4044,7 +4044,7 @@ frame8=anim_1683
 frame9=anim_1982
 frame10=anim_565
 
-[seq_391]
+[icewarrior_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1980
@@ -4071,7 +4071,7 @@ frame6=anim_685
 frame7=anim_974
 frame8=anim_1259
 
-[seq_393]
+[earthwarrior_crush]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2027
@@ -4083,7 +4083,7 @@ frame6=anim_1474
 frame7=anim_1774
 frame8=anim_2072
 
-[seq_394]
+[shadowwarrior_crush]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1376
@@ -4120,7 +4120,7 @@ frame6=anim_685
 frame7=anim_974
 frame8=anim_1259
 
-[human_blunt_defend]
+[human_baxe_defend1]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1481
 frame2=anim_1781
@@ -4133,7 +4133,7 @@ frame8=anim_2379
 frame9=anim_2080
 frame10=anim_1781
 
-[human_baxe_defend]
+[human_baxe_defend2]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1730
 frame2=anim_2029
@@ -4169,7 +4169,7 @@ frame4=anim_2034
 frame5=anim_2338
 frame6=anim_619
 
-[human_blunt_swing]
+[human_blunt_crush]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2027
@@ -4193,7 +4193,7 @@ frame6=anim_685
 frame7=anim_974
 frame8=anim_1259
 
-[human_blunt_defend2]
+[human_blunt_defend1]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1481
 frame2=anim_1781
@@ -4206,7 +4206,7 @@ frame8=anim_2379
 frame9=anim_2080
 frame10=anim_1781
 
-[seq_404]
+[human_blunt_defend2]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_694
 frame2=anim_984
@@ -4219,7 +4219,7 @@ frame8=anim_1550
 frame9=anim_1270
 frame10=anim_984
 
-[seq_405]
+[human_spear_block]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_659
@@ -4255,7 +4255,7 @@ frame6=anim_1465
 frame7=anim_1763
 frame8=anim_2062
 
-[seq_408]
+[human_dspear_block]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1580
@@ -4266,7 +4266,7 @@ frame5=anim_754
 frame6=anim_1041
 frame7=anim_1326
 
-[seq_409]
+[human_spear_spin]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2091
@@ -4275,7 +4275,7 @@ frame3=anim_668
 frame4=anim_957
 frame5=anim_1241
 
-[human_2h_defend]
+[seq_410]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1433
 frame2=anim_1731
@@ -4288,7 +4288,7 @@ frame8=anim_2334
 frame9=anim_2030
 frame10=anim_1731
 
-[seq_411]
+[human_2h_sword_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_2109
 frame2=anim_2407
@@ -4301,7 +4301,7 @@ frame8=anim_975
 frame9=anim_686
 frame10=anim_2407
 
-[seq_412]
+[human_2h_sword_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_996
@@ -4311,7 +4311,7 @@ frame4=anim_1856
 frame5=anim_2154
 frame6=anim_2449
 
-[seq_413]
+[human_2h_sword_swipe]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1455
@@ -4324,7 +4324,7 @@ frame7=anim_1213
 frame8=anim_1494
 frame9=anim_1794
 
-[seq_414]
+[human_staff_pound]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1177
@@ -4339,7 +4339,7 @@ frame9=anim_1500
 frame10=anim_1337
 frame11=anim_1624
 
-[seq_415]
+[human_staff_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1685
 frame2=anim_1983
@@ -4352,7 +4352,7 @@ frame8=anim_563
 frame9=anim_2282
 frame10=anim_1983
 
-[seq_416]
+[human_staff_2h_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1649
 frame2=anim_1946
@@ -4365,7 +4365,7 @@ frame8=anim_529
 frame9=anim_2248
 frame10=anim_1946
 
-[seq_417]
+[human_staff_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_919
@@ -4375,7 +4375,7 @@ frame4=anim_1782
 frame5=anim_2081
 frame6=anim_2380
 
-[seq_418]
+[human_staff_focus]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1371
@@ -4388,7 +4388,7 @@ frame7=anim_1123
 frame8=anim_1407
 frame9=anim_1699
 
-[seq_419]
+[human_stafforb_pound]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_2201
@@ -4403,7 +4403,7 @@ frame9=anim_530
 frame10=anim_609
 frame11=anim_904
 
-[seq_420]
+[human_stafforb_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1587
 frame2=anim_1881
@@ -4416,7 +4416,7 @@ frame8=anim_2476
 frame9=anim_2179
 frame10=anim_1881
 
-[seq_421]
+[human_stafforb_2h_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_2353
 frame2=anim_634
@@ -4504,7 +4504,7 @@ frame4=anim_1238
 frame5=anim_1518
 frame6=anim_1813
 
-[human_spear_crush]
+[human_spear_pound]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1206
@@ -4530,7 +4530,7 @@ frame8=anim_1918
 frame9=anim_1627
 frame10=anim_1340
 
-[human_khazardspear_defend]
+[human_khazard_spear_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_1426
 frame2=anim_1719
@@ -4543,7 +4543,7 @@ frame8=anim_2317
 frame9=anim_2017
 frame10=anim_1719
 
-[seq_432]
+[human_spear_throw]
 priority=6
 frame1=anim_1943
 frame2=anim_2245
@@ -4554,7 +4554,7 @@ frame6=anim_1391
 frame7=anim_526
 frame8=anim_2245
 
-[farmer_attack]
+[human_farmersfork_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_889
@@ -4564,7 +4564,7 @@ frame4=anim_1759
 frame5=anim_2058
 frame6=anim_2362
 
-[farmer_hit]
+[human_farmersfork_defend]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_477
 frame2=anim_778
@@ -4641,7 +4641,7 @@ frame3=anim_2314
 frame4=anim_591
 frame5=anim_887
 
-[human_spear_slash]
+[human_scythe_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 frame1=anim_1766
@@ -4732,7 +4732,7 @@ frame9=anim_2519
 frame10=anim_2523
 frame11=anim_2514
 
-[seq_450]
+[partyroom_lever]
 frame1=anim_2548
 frame2=anim_2550
 frame3=anim_2553
@@ -9782,7 +9782,7 @@ frame15=anim_1900
 frame16=anim_2198
 frame17=anim_484
 
-[monk_heal]
+[human_castheal]
 lefthand=hide
 righthand=hide
 priority=6
@@ -9808,7 +9808,7 @@ frame19=anim_1355
 frame20=anim_1070
 frame21=anim_785
 
-[seq_710]
+[human_chaos_druid_cast_bind]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9821,7 +9821,7 @@ frame6=anim_617
 frame7=anim_912
 frame8=anim_1193
 
-[human_casting]
+[human_caststrike]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9929,7 +9929,7 @@ frame10=anim_1596
 frame11=anim_1309
 frame12=anim_1024
 
-[seq_716]
+[human_castconfuse]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9946,7 +9946,7 @@ frame10=anim_1584
 frame11=anim_1877
 frame12=anim_2175
 
-[seq_717]
+[human_castweaken]
 righthand=hide
 lefthand=hide
 priority=6
@@ -9963,7 +9963,7 @@ frame10=anim_2398
 frame11=anim_678
 frame12=anim_967
 
-[vulnerability_casting]
+[human_castcurse]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10058,7 +10058,7 @@ frame25=anim_1595
 frame26=anim_1308
 frame27=anim_1023
 
-[seq_722]
+[human_castbonestobananas]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10092,7 +10092,7 @@ frame10=anim_1582
 frame11=anim_1875
 frame12=anim_2172
 
-[seq_724]
+[human_castcrumbleundead]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10191,7 +10191,7 @@ frame12=anim_1205
 frame13=anim_924
 frame14=anim_630
 
-[seq_728]
+[human_castenfeeble]
 righthand=hide
 lefthand=hide
 priority=6
@@ -10208,7 +10208,7 @@ frame10=anim_1290
 frame11=anim_1570
 frame12=anim_1864
 
-[seq_729]
+[human_caststun]
 righthand=hide
 lefthand=hide
 priority=6
@@ -11310,7 +11310,7 @@ frame4=anim_1461
 frame5=anim_1761
 frame6=anim_2060
 
-[seq_800]
+[half-souless_ready]
 frame1=anim_2218
 frame2=anim_503
 frame3=anim_803
@@ -11917,7 +11917,7 @@ frame13=anim_2204
 frame14=anim_489
 frame15=anim_790
 
-[seq_841]
+[earthwarrior_walk]
 stretches=yes
 frame1=anim_509
 frame2=anim_808
@@ -11928,7 +11928,7 @@ frame6=anim_1965
 frame7=anim_2267
 frame8=anim_547
 
-[seq_842]
+[earthwarrior_ready]
 stretches=yes
 frame1=anim_700
 frame2=anim_988
@@ -11943,7 +11943,7 @@ frame10=anim_2013
 frame11=anim_2313
 frame12=anim_590
 
-[seq_843]
+[earthwarrior_death]
 stretches=yes
 priority=10
 lefthand=hide
@@ -12651,7 +12651,7 @@ frame2=anim_6952
 frame3=anim_6953
 frame4=anim_6954
 
-[seq_908]
+[human_bullroarer]
 righthand=obj_716
 lefthand=hide
 frame1=anim_2137
@@ -12689,7 +12689,7 @@ frame32=anim_723
 frame33=anim_2435
 frame34=anim_2137
 
-[seq_909]
+[human_mapping]
 righthand=charcoal
 lefthand=papyrus
 frame1=anim_1014
@@ -12714,7 +12714,7 @@ frame19=anim_1579
 frame20=anim_1299
 frame21=anim_1014
 
-[seq_910]
+[human_machette_chop]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
 lefthand=machete
@@ -13129,7 +13129,7 @@ frame12=anim_3690
 frame13=anim_3678
 frame14=anim_3681
 
-[seq_931]
+[human_cast_enchantring]
 righthand=hide
 lefthand=hide
 frame1=anim_2481
@@ -13660,7 +13660,7 @@ frame8=anim_3980
 frame9=anim_3982
 frame10=anim_3978
 
-[human_seq_1026]
+[human_ogre_bellows_use]
 lefthand=hide
 righthand=hide
 stretches=yes

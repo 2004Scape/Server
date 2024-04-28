@@ -66,7 +66,7 @@ queue(playerhit_n_retaliate, calc($delay/60), npc_uid); // this should be a queu
 ~npc_set_attack_vars;
 
 [ai_timer,_macro_event_rock_golem]
-if (finduid(%npc_attacking_uid) = false) {
+if (~macro_event_lost = true) {
     npc_del;
     return;
 }

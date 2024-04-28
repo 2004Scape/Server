@@ -3,7 +3,7 @@ if_close;
 %exit_essence_mine_coord = $tele_back_coord;
 // this is lowercase
 npc_say("Seventior disthine molenko!");
-npc_anim(vulnerability_casting, 0); // No anim in osrs
+npc_anim(human_castcurse, 0); // No anim in osrs
 spotanim_npc(curse_cast, 92, 0);
 sound_synth(curse_all, 0, 0);
 def_int $duration = ~player_projectile(npc_coord, coord, uid, curse_travel, 31, 31, 61, 16, 0, 128, 5);

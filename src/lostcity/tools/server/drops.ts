@@ -7,7 +7,7 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import Npc from '#lostcity/entity/Npc.js';
-import Player from '#lostcity/entity/Player.js';
+import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 
 import Environment from '#lostcity/util/Environment.js';
@@ -26,11 +26,11 @@ const iterations = parseInt(args[1] ?? '1000');
 
 await World.start(true);
 
-const player = Player.loadFromFile('clirunner');
+const player = PlayerLoading.loadFromFile('clirunner');
 player.x = 3222;
 player.z = 3222;
 player.level = 0;
-World.addPlayer(player, null);
+World.addPlayer(player);
 await World.cycle(false);
 
 const npcType = NpcType.getByName(npcName);

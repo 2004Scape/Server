@@ -4,6 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import SeqFrame from '#lostcity/cache/SeqFrame.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class SeqType extends ConfigType {
     private static configNames = new Map<string, number>();
@@ -13,17 +14,22 @@ export default class SeqType extends ConfigType {
         SeqType.configNames = new Map();
         SeqType.configs = [];
 
-        if (!fs.existsSync(`${dir}/seq.dat`)) {
+        if (!fs.existsSync(`${dir}/server/seq.dat`)) {
             console.log('Warning: No seq.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/seq.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/seq.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('seq.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new SeqType(id);
-            config.decodeType(dat);
+            config.decodeType(server);
+            config.decodeType(client);
 
             SeqType.configs[id] = config;
 

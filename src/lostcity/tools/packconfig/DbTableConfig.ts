@@ -1,8 +1,6 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { DbTablePack } from '#lostcity/util/PackFile.js';
 
@@ -64,11 +62,11 @@ export function parseDbTableConfig(key: string, value: string): ConfigValue | nu
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'column') {
         return value;
     } else if (key === 'default') {
@@ -79,16 +77,12 @@ export function parseDbTableConfig(key: string, value: string): ConfigValue | nu
 }
 
 export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(DbTablePack.size);
-    idx.p2(DbTablePack.size);
+    const client: PackedData = new PackedData(DbTablePack.size);
+    const server: PackedData = new PackedData(DbTablePack.size);
 
     for (let i = 0; i < DbTablePack.size; i++) {
         const debugname = DbTablePack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         const columns = [];
         const defaults = [];
@@ -135,9 +129,9 @@ export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
         }
 
         if (columns.length) {
-            dat.p1(1);
+            server.p1(1);
 
-            dat.p1(columns.length); // total columns (not every one has to be encoded)
+            server.p1(columns.length); // total columns (not every one has to be encoded)
             for (let i = 0; i < columns.length; i++) {
                 const column = columns[i];
 
@@ -145,47 +139,47 @@ export function packDbTableConfigs(configs: Map<string, ConfigLine[]>) {
                 if (defaults[i]) {
                     flags |= 0x80;
                 }
-                dat.p1(flags);
+                server.p1(flags);
 
-                dat.p1(column.types.length);
+                server.p1(column.types.length);
                 for (let j = 0; j < column.types.length; j++) {
-                    dat.p1(column.types[j] as number);
+                    server.p1(column.types[j] as number);
                 }
 
                 if (flags & 0x80) {
-                    dat.p1(1); // # of fields
+                    server.p1(1); // # of fields
 
                     for (let j = 0; j < column.types.length; j++) {
                         const type = column.types[j];
                         const value = lookupParamValue(type as number, defaults[i][j]);
 
                         if (type === ScriptVarType.STRING) {
-                            dat.pjstr(value as string);
+                            server.pjstr(value as string);
                         } else {
-                            dat.p4(value as number);
+                            server.p4(value as number);
                         }
                     }
                 }
             }
 
-            dat.p1(255); // end of column list
+            server.p1(255); // end of column list
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
         if (columns.length) {
-            dat.p1(251);
+            server.p1(251);
 
-            dat.p1(columns.length);
+            server.p1(columns.length);
             for (let i = 0; i < columns.length; i++) {
-                dat.pjstr(columns[i].name as string);
+                server.pjstr(columns[i].name as string);
             }
         }
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

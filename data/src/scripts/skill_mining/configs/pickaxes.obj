@@ -3,8 +3,8 @@ cost=1
 name=Bronze pickaxe
 desc=Used for mining.
 model=model_2529_obj
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 manwear=model_509_obj_wear,0
 womanwear=model_509_obj_wear,6
 2dxof=-2
@@ -26,11 +26,12 @@ param=levelrequire,0
 param=mining_rate,7
 param=mining_animation,human_mining_bronze_pickaxe
 param=attackrate,5
-param=stabattack_anim,human_blunt_swing
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
-param=stab_sound,baxe_slash
-param=crush_sound,baxe_crush
+param=stabattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_crush
+// osrs defend anim seq_397
+param=stab_sound,baxe_crush
+param=crush_sound,baxe_slash
+// swapped stab and crush attack animations + sounds
 param=broken,bronze_pickaxe_broken
 param=pickaxe_head,bronze_pickaxe_head
 
@@ -39,8 +40,8 @@ cost=140
 name=Iron pickaxe
 desc=Used for mining.
 model=model_2529_obj
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 manwear=model_509_obj_wear,0
 womanwear=model_509_obj_wear,6
 2dxof=-2
@@ -62,11 +63,12 @@ param=levelrequire,0
 param=mining_rate,6
 param=mining_animation,human_mining_iron_pickaxe
 param=attackrate,5
-param=stabattack_anim,human_blunt_swing
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
-param=stab_sound,baxe_slash
-param=crush_sound,baxe_crush
+param=stabattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_crush
+// osrs defend anim seq_397
+param=stab_sound,baxe_crush
+param=crush_sound,baxe_slash
+// swapped stab and crush attack animations + sounds
 param=broken,iron_pickaxe_broken
 param=pickaxe_head,iron_pickaxe_head
 
@@ -96,11 +98,12 @@ param=levelrequire,6
 param=mining_rate,5
 param=mining_animation,human_mining_steel_pickaxe
 param=attackrate,5
-param=stabattack_anim,human_blunt_swing
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
-param=stab_sound,baxe_slash
-param=crush_sound,baxe_crush
+param=stabattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_crush
+// osrs defend anim seq_397
+param=stab_sound,baxe_crush
+param=crush_sound,baxe_slash
+// swapped stab and crush attack animations + sounds
 param=broken,steel_pickaxe_broken
 param=pickaxe_head,steel_pickaxe_head
 
@@ -109,8 +112,8 @@ cost=3200
 name=Adamant pickaxe
 desc=Used for mining.
 model=model_2529_obj
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 manwear=model_509_obj_wear,0
 womanwear=model_509_obj_wear,6
 2dxof=-2
@@ -132,11 +135,12 @@ param=levelrequire,31
 param=mining_rate,3
 param=mining_animation,human_mining_adamant_pickaxe
 param=attackrate,5
-param=stabattack_anim,human_blunt_swing
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
-param=stab_sound,baxe_slash
-param=crush_sound,baxe_crush
+param=stabattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_crush
+// osrs defend anim seq_397
+param=stab_sound,baxe_crush
+param=crush_sound,baxe_slash
+// swapped stab and crush attack animations + sounds
 param=broken,adamant_pickaxe_broken
 param=pickaxe_head,adamant_pickaxe_head
 
@@ -145,8 +149,8 @@ cost=1300
 name=Mithril pickaxe
 desc=Used for mining.
 model=model_2529_obj
-recol1s=61
-recol1d=43297
+recol1s=15855
+recol1d=6346
 manwear=model_509_obj_wear,0
 womanwear=model_509_obj_wear,6
 2dxof=-2
@@ -168,11 +172,12 @@ param=levelrequire,21
 param=mining_rate,4
 param=mining_animation,human_mining_mithril_pickaxe
 param=attackrate,5
-param=stabattack_anim,human_blunt_swing
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
-param=stab_sound,baxe_slash
-param=crush_sound,baxe_crush
+param=stabattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_crush
+// osrs defend anim seq_397
+param=stab_sound,baxe_crush
+param=crush_sound,baxe_slash
+// swapped stab and crush attack animations + sounds
 param=broken,mithril_pickaxe_broken
 param=pickaxe_head,mithril_pickaxe_head
 
@@ -181,8 +186,8 @@ cost=32000
 name=Rune pickaxe
 desc=Used for mining.
 model=model_2529_obj
-recol1s=61
-recol1d=36133
+recol1s=15855
+recol1d=6476
 manwear=model_509_obj_wear,0
 womanwear=model_509_obj_wear,6
 2dxof=-2
@@ -204,10 +209,11 @@ param=levelrequire,41
 param=mining_rate,2
 param=mining_animation,human_mining_rune_pickaxe
 param=attackrate,5
-param=stabattack_anim,human_blunt_swing
-param=crushattack_anim,human_blunt_stab
-param=defend_anim,human_blunt_defend
-param=stab_sound,baxe_slash
-param=crush_sound,baxe_crush
+param=stabattack_anim,human_blunt_stab
+param=crushattack_anim,human_blunt_crush
+// osrs defend anim seq_397
+param=stab_sound,baxe_crush
+param=crush_sound,baxe_slash
+// swapped stab and crush attack animations + sounds
 param=broken,rune_pickaxe_broken
 param=pickaxe_head,rune_pickaxe_head

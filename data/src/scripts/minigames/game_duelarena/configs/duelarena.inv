@@ -5,3 +5,7 @@ restock=yes
 stackall=yes
 allstock=no
 stock1=rotten_tomato,2000,10
+
+
+[duel_arena_arrows]
+size=29

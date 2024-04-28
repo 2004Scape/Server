@@ -4,18 +4,18 @@ desc=It's a door.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 category=door_open_and_close
 param=next_loc_stage,loc_2055
 
 [loc_2055]
 model=model_loc_3
-recol1s=2
-recol1d=0
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
 category=door_open_and_close
 param=next_loc_stage,loc_2054

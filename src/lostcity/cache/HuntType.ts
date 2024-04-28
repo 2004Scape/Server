@@ -19,12 +19,12 @@ export default class HuntType extends ConfigType {
         HuntType.configNames = new Map();
         HuntType.configs = [];
 
-        if (!fs.existsSync(`${dir}/hunt.dat`)) {
+        if (!fs.existsSync(`${dir}/server/hunt.dat`)) {
             console.log('Warning: No hunt.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/hunt.dat`);
+        const dat = Packet.load(`${dir}/server/hunt.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
@@ -54,6 +54,10 @@ export default class HuntType extends ConfigType {
         }
 
         return this.get(id);
+    }
+
+    static get count() {
+        return this.configs.length;
     }
 
     // ----

@@ -3,6 +3,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
+import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class SpotanimType extends ConfigType {
     private static configNames = new Map();
@@ -12,17 +13,22 @@ export default class SpotanimType extends ConfigType {
         SpotanimType.configNames = new Map();
         SpotanimType.configs = [];
 
-        if (!fs.existsSync(`${dir}/spotanim.dat`)) {
-            console.log('Warning: No seq.dat found.');
+        if (!fs.existsSync(`${dir}/server/spotanim.dat`)) {
+            console.log('Warning: No spotanim.dat found.');
             return;
         }
 
-        const dat = Packet.load(`${dir}/spotanim.dat`);
-        const count = dat.g2();
+        const server = Packet.load(`${dir}/server/spotanim.dat`);
+        const count = server.g2();
+
+        const jag = Jagfile.load(`${dir}/client/config`);
+        const client = jag.read('spotanim.dat')!;
+        client.pos = 2;
 
         for (let id = 0; id < count; id++) {
             const config = new SpotanimType(id);
-            config.decodeType(dat);
+            config.decodeType(server);
+            config.decodeType(client);
 
             SpotanimType.configs[id] = config;
 
@@ -47,6 +53,10 @@ export default class SpotanimType extends ConfigType {
         }
 
         return this.get(id);
+    }
+
+    static get count() {
+        return this.configs.length;
     }
 
     // ----

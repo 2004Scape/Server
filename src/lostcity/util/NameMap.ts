@@ -94,6 +94,22 @@ export function loadDir(path: string, extension: string, callback: (src: string[
     }
 }
 
+export function loadDirExact(path: string, extension: string, callback: (src: string[], file: string, path: string) => void) {
+    const files = listDir(path);
+
+    for (const file of files) {
+        if (file.endsWith(extension)) {
+            callback(
+                fs.readFileSync(file, 'ascii')
+                    .replace(/\r/g, '')
+                    .split('\n'),
+                file.substring(file.lastIndexOf('/') + 1),
+                file.substring(0, file.lastIndexOf('/'))
+            );
+        }
+    }
+}
+
 export function listFiles(path: string, out: string[] = []) {
     const files = listDir(path);
 

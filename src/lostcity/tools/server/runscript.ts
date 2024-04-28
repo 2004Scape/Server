@@ -1,7 +1,7 @@
 import World from '#lostcity/engine/World.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
-import Player from '#lostcity/entity/Player.js';
+import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -17,8 +17,8 @@ if (!script) {
     process.exit(1);
 }
 
-const self = Player.loadFromFile('clirunner');
-World.addPlayer(self, null);
+const self = PlayerLoading.loadFromFile('clirunner');
+World.addPlayer(self);
 await World.cycle(false);
 
 const state = ScriptRunner.init(script, self);

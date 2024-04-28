@@ -3,4 +3,3 @@ if (p_finduid(uid) = false) {
     return;
 }
 ~macro_event_general_spawn($event);
-%macro_event = ^no_macro_event;

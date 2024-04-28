@@ -3,7 +3,7 @@ name=Range
 desc=Ideal for cooking on.
 model=model_loc_114
 length=2
-forceapproach=right
+forceapproach=east
 category=cooking_oven
 
 [loc_2729]
@@ -48,8 +48,8 @@ model=model_loc_2725
 length=3
 anim=seq_478
 hasalpha=yes
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 category=cooking_fire
 
 [loc_2727]

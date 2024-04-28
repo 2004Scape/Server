@@ -1,3 +1,5 @@
+import { vi, describe, it, expect } from 'vitest';
+
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
@@ -9,17 +11,17 @@ describe('Component', () => {
         it('should load data from interface.dat', () => {
             const dat = new Packet();
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(dat);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(dat);
 
             Component.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/interface.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
         });
 
         it('should return early if interface.dat does not exist', () => {
-            fs.existsSync = jest.fn().mockReturnValue(false);
-            Packet.load = jest.fn().mockReturnValue(undefined);
+            fs.existsSync = vi.fn().mockReturnValue(false);
+            Packet.load = vi.fn().mockReturnValue(undefined);
 
             expect(Packet.load).not.toHaveBeenCalled();
         });
@@ -31,12 +33,12 @@ describe('Component', () => {
             packet.pjstr('jordan'); //comName
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/interface.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.get(0).comName).toBe('jordan');
         });
 
@@ -47,12 +49,12 @@ describe('Component', () => {
             packet.pjstr('jordan'); //comName
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/interface.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.getId('jordan')).toBe(0);
         });
 
@@ -63,24 +65,24 @@ describe('Component', () => {
             packet.pjstr('jordan'); //comName
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/interface.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.getByName('jordan')?.comName).toBe('jordan');
         });
 
         it('test get by name -1', () => {
             const packet = new Packet();
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/interface.dat');
+            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.getByName('jordan')).toBeNull();
         });
     });
@@ -117,8 +119,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -229,8 +231,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -332,8 +334,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -425,8 +427,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -512,8 +514,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -604,8 +606,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -699,8 +701,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -789,8 +791,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 
@@ -879,8 +881,8 @@ describe('Component', () => {
 
             packet.pos = 0;
 
-            fs.existsSync = jest.fn().mockReturnValue(true);
-            Packet.load = jest.fn().mockReturnValue(packet);
+            fs.existsSync = vi.fn().mockReturnValue(true);
+            Packet.load = vi.fn().mockReturnValue(packet);
 
             Component.load('/path/to/data');
 

@@ -23,8 +23,8 @@ name=Spiders' nest
 desc=It looks like a spiders nest to me.
 model=model_loc_706_q
 op2=Investigate
-recol1s=9152
-recol1d=82
+recol1s=31457
+recol1d=21140
 
 [loc_2654]
 name=Sinclair family fountain
@@ -108,7 +108,7 @@ desc=looks like the killer smashed this to leave the mansion.
 model=model_loc_1843_q
 active=yes
 op2=Investigate
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458

@@ -1,0 +1,69 @@
+[queue,duel_arena_finished](string $displayname, int $combat_level)
+mes("Well done! You have defeated <$displayname>!");
+if_openmainmodal(duel_win);
+if_settext(duel_win:displayname, $displayname);
+if_settext(duel_win:combat_level, tostring($combat_level));
+
+// get stuff back in ur tempinv
+def_int $i = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+        inv_movefromslot(tempinv, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+
+$i = 0;
+while ($i < inv_size(duel_arena_arrows)) {
+    if (inv_getobj(duel_arena_arrows, $i) ! null) {
+        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+        inv_movefromslot(duel_arena_arrows, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+
+inv_clear(tempinv);
+
+// take stuff from other player's tempinv
+if (.finduid(%duelpartner) = true) {
+    .both_moveinv(tempinv, tempinv);
+    .%duelpartner = null;
+    // display spoils
+    inv_transmit(tempinv, duel_win:spoils);
+}
+
+%duelstatus = 0;
+%duelpartner = null;
+
+[if_close,duel_win]
+// take spoils
+def_int $i = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        inv_movefromslot(tempinv, inv, $i);
+    }
+    $i = calc($i + 1);
+}
+inv_stoptransmit(duel_win:spoils);
+
+// https://youtu.be/QggKGBAl_X8?t=111
+[proc,duel_arena_finish_coord](coord $coord)(coord)
+def_coord $coord1 = 0_52_51_27_3;
+def_coord $coord2 = 0_52_51_51_15;
+
+def_int $x1 = coordx($coord1);
+def_int $x2 = coordx($coord2);
+def_int $z1 = coordz($coord1);
+def_int $z2 = coordz($coord2);
+def_int $i = 0;
+def_coord $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+
+while (map_blocked($random_coord) = true) {
+    $random_coord = movecoord($coord1, random(sub($x2, $x1)), 0, random(sub($z2, $z1)));
+    $i = calc($i + 1);
+    if ($i = 50) {
+        return($coord); // no way this is reached
+    }
+}
+return($random_coord);

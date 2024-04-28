@@ -45,49 +45,49 @@ hasalpha=yes
 
 [iron_arrow_travel]
 model=model_3136_spotanim
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 
 [bronze_arrow_travel]
 model=model_3136_spotanim
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 
 [steel_arrow_travel]
 model=model_3136_spotanim
 
 [mithril_arrow_travel]
 model=model_3136_spotanim
-recol1s=61
-recol1d=43282
+recol1s=15855
+recol1d=3174
 
 [adamant_arrow_travel]
 model=model_3136_spotanim
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 
 [unlit_arrow_travel]
 model=model_3136_spotanim
-recol1s=61
-recol1d=12
+recol1s=15855
+recol1d=3171
 
 [rune_arrow_travel]
 model=model_3136_spotanim
-recol1s=61
-recol1d=37270
+recol1s=15855
+recol1d=3272
 
 [ice_arrow_travel]
 model=model_3136_spotanim
-recol1s=57
-recol1d=37340
-recol2s=61
-recol2d=37340
-recol3s=5012
-recol3d=37444
-recol4s=926
-recol4d=37340
-recol5s=5012
-recol5d=37340
+recol1s=14798
+recol1d=15135
+recol2s=15855
+recol2d=15135
+recol3s=10368
+recol3d=8793
+recol4s=15360
+recol4d=15135
+recol5s=10368
+recol5d=15135
 
 [fire_arrow_travel]
 model=model_3132_spotanim
@@ -96,15 +96,15 @@ model=model_3132_spotanim
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 
 [bronze_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 
 [steel_arrow_launch]
 model=model_3142_spotanim
@@ -115,44 +115,44 @@ hasalpha=yes
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
-recol1s=61
-recol1d=43297
+recol1s=15855
+recol1d=6346
 
 [adamant_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 
 [unlit_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
-recol1s=61
-recol1d=12
+recol1s=15855
+recol1d=3171
 
 [rune_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
-recol1s=61
-recol1d=36133
+recol1s=15855
+recol1d=6476
 
 [ice_arrow_launch]
 model=model_3142_spotanim
 anim=seq_366
 hasalpha=yes
-recol1s=57
-recol1d=37340
-recol2s=61
-recol2d=37340
-recol3s=5012
-recol3d=37444
-recol4s=926
-recol4d=37340
-recol5s=5012
-recol5d=37340
+recol1s=14798
+recol1d=15135
+recol2s=15855
+recol2d=15135
+recol3s=10368
+recol3d=8793
+recol4s=15360
+recol4d=15135
+recol5s=10368
+recol5d=15135
 
 [fire_arrow_launch]
 model=model_3141_spotanim
@@ -181,8 +181,8 @@ hasalpha=yes
 model=model_2223_spotanim
 anim=seq_914
 hasalpha=yes
-recol1s=43237
-recol1d=3742
+recol1s=19039
+recol1d=13506
 
 [dwarf_rock_launch]
 model=model_3349_spotanim
@@ -199,14 +199,14 @@ anim=seq_925
 [iron_taxe_travel]
 model=model_3148_spotanim
 anim=seq_372
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 
 [bronze_taxe_travel]
 model=model_3148_spotanim
 anim=seq_372
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 
 [steel_taxe_travel]
 model=model_3148_spotanim
@@ -215,40 +215,40 @@ anim=seq_372
 [mithril_taxe_travel]
 model=model_3148_spotanim
 anim=seq_372
-recol1s=61
-recol1d=43297
+recol1s=15855
+recol1d=6346
 
 [adamant_taxe_travel]
 model=model_3148_spotanim
 anim=seq_372
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 
 [spotanim_40]
 model=model_3148_spotanim
 anim=seq_372
-recol1s=61
-recol1d=10508
+recol1s=15855
+recol1d=4226
 
 [rune_taxe_travel]
 model=model_3148_spotanim
 anim=seq_372
-recol1s=61
-recol1d=36133
+recol1s=15855
+recol1d=6476
 
 [iron_taxe_launch]
 model=model_3147_spotanim
 anim=seq_371
 hasalpha=yes
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 
 [bronze_taxe_launch]
 model=model_3147_spotanim
 anim=seq_371
 hasalpha=yes
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 
 [steel_taxe_launch]
 model=model_3147_spotanim
@@ -259,29 +259,29 @@ hasalpha=yes
 model=model_3147_spotanim
 anim=seq_371
 hasalpha=yes
-recol1s=61
-recol1d=43297
+recol1s=15855
+recol1d=6346
 
 [adamant_taxe_launch]
 model=model_3147_spotanim
 anim=seq_371
 hasalpha=yes
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 
 [spotanim_47]
 model=model_3147_spotanim
 anim=seq_371
 hasalpha=yes
-recol1s=61
-recol1d=10508
+recol1s=15855
+recol1d=4226
 
 [rune_taxe_launch]
 model=model_3147_spotanim
 anim=seq_371
 hasalpha=yes
-recol1s=61
-recol1d=36133
+recol1s=15855
+recol1d=6476
 
 [spotanim_49]
 model=model_3152_spotanim
@@ -374,8 +374,8 @@ hasalpha=yes
 model=model_2223_spotanim
 anim=seq_465
 hasalpha=yes
-recol1s=43237
-recol1d=5058
+recol1s=19039
+recol1d=31138
 
 [spotanim_70]
 model=model_3140_spotanim
@@ -384,23 +384,23 @@ model=model_3140_spotanim
 model=model_3116_spotanim
 anim=seq_693
 hasalpha=yes
-recol1s=7104
-recol1d=22416
-recol2s=6080
-recol2d=21539
-recol3s=960
-recol3d=21652
+recol1s=31297
+recol1d=256
+recol2s=31201
+recol2d=8488
+recol3s=30753
+recol3d=4292
 
 [spotanim_72]
 model=model_2850_npc
 anim=bird_walk
 hasalpha=yes
-recol1s=11200
-recol1d=5056
-recol2s=9123
-recol2d=127
-recol3s=7070
-recol3d=127
+recol1s=31649
+recol1d=31105
+recol2s=16801
+recol2d=32767
+recol3s=15648
+recol3d=32767
 
 [pickaxe_head_launch]
 model=model_3137_spotanim
@@ -460,18 +460,18 @@ hasalpha=yes
 model=model_3072_spotanim
 anim=seq_649
 hasalpha=yes
-recol1s=43187
-recol1d=906
-recol2s=43189
-recol2d=910
-recol3s=43063
-recol3d=914
-recol4s=43065
-recol4d=918
-recol5s=43067
-recol5d=922
-recol6s=61
-recol6d=926
+recol1s=10575
+recol1d=5120
+recol2s=10576
+recol2d=7168
+recol3s=12687
+recol3d=9216
+recol4s=13743
+recol4d=11264
+recol5s=13744
+recol5d=13312
+recol6s=15855
+recol6d=15360
 
 [spotanim_84]
 model=model_3074_spotanim
@@ -517,8 +517,8 @@ anim=seq_658
 hasalpha=yes
 ambient=30
 contrast=30
-recol1s=51136
-recol1d=43119
+recol1s=19487
+recol1d=24319
 
 [wind_strike_travel]
 model=model_3081_spotanim
@@ -526,12 +526,12 @@ anim=seq_659
 hasalpha=yes
 ambient=30
 contrast=30
-recol1s=926
-recol1d=43119
-recol2s=947
-recol2d=127
-recol3s=11200
-recol3d=43968
+recol1s=15360
+recol1d=24319
+recol2s=24609
+recol2d=32767
+recol3s=31649
+recol3d=31
 
 [wind_strike_hit]
 model=model_3082_spotanim
@@ -539,12 +539,12 @@ anim=seq_660
 hasalpha=yes
 ambient=30
 contrast=30
-recol1s=926
-recol1d=43119
-recol2s=947
-recol2d=127
-recol3s=11200
-recol3d=43968
+recol1s=15360
+recol1d=24319
+recol2s=24609
+recol2d=32767
+recol3s=31649
+recol3d=31
 
 [water_strike_cast]
 model=model_3083_spotanim
@@ -552,8 +552,8 @@ anim=seq_658
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=51136
-recol1d=45010
+recol1s=19487
+recol1d=10559
 
 [water_strike_travel]
 model=model_3081_spotanim
@@ -561,12 +561,12 @@ anim=seq_659
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=926
-recol1d=45010
-recol2s=947
-recol2d=41187
-recol3s=11200
-recol3d=42093
+recol1s=15360
+recol1d=10559
+recol2s=24609
+recol2d=18079
+recol3s=31649
+recol3d=23295
 
 [water_strike_hit]
 model=model_3082_spotanim
@@ -574,12 +574,12 @@ anim=seq_660
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=926
-recol1d=45010
-recol2s=947
-recol2d=41187
-recol3s=11200
-recol3d=42093
+recol1s=15360
+recol1d=10559
+recol2s=24609
+recol2d=18079
+recol3s=31649
+recol3d=23295
 
 [earth_strike_cast]
 model=model_3083_spotanim
@@ -587,8 +587,8 @@ anim=seq_658
 hasalpha=yes
 ambient=30
 contrast=30
-recol1s=51136
-recol1d=10138
+recol1s=19487
+recol1d=13664
 
 [earth_strike_travel]
 model=model_3081_spotanim
@@ -596,12 +596,12 @@ anim=seq_659
 hasalpha=yes
 ambient=30
 contrast=30
-recol1s=926
-recol1d=10138
-recol2s=947
-recol2d=10155
-recol3s=11200
-recol3d=22464
+recol1s=15360
+recol1d=13664
+recol2s=24609
+recol2d=21057
+recol3s=31649
+recol3d=992
 
 [earth_strike_hit]
 model=model_3082_spotanim
@@ -609,12 +609,12 @@ anim=seq_660
 hasalpha=yes
 ambient=30
 contrast=30
-recol1s=926
-recol1d=10138
-recol2s=947
-recol2d=10155
-recol3s=11200
-recol3d=22464
+recol1s=15360
+recol1d=13664
+recol2s=24609
+recol2d=21057
+recol3s=31649
+recol3d=992
 
 [fire_strike_cast]
 model=model_3083_spotanim
@@ -622,8 +622,8 @@ anim=seq_658
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=51136
-recol1d=960
+recol1s=19487
+recol1d=30753
 
 [fire_strike_travel]
 model=model_3081_spotanim
@@ -631,10 +631,10 @@ anim=seq_659
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=926
-recol1d=960
-recol2s=947
-recol2d=6080
+recol1s=15360
+recol1d=30753
+recol2s=24609
+recol2d=31201
 
 [fire_strike_hit]
 model=model_3082_spotanim
@@ -642,10 +642,10 @@ anim=seq_660
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=926
-recol1d=960
-recol2s=947
-recol2d=6080
+recol1s=15360
+recol1d=30753
+recol2s=24609
+recol2d=31201
 
 [confuse_cast]
 model=model_3092_spotanim
@@ -758,8 +758,8 @@ anim=seq_658
 hasalpha=yes
 ambient=30
 contrast=30
-recol1s=51136
-recol1d=43119
+recol1s=19487
+recol1d=24319
 
 [wind_bolt_travel]
 model=model_3084_spotanim
@@ -767,12 +767,12 @@ anim=seq_661
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=11200
-recol1d=61
-recol2s=6080
-recol2d=127
-recol3s=960
-recol3d=82
+recol1s=31649
+recol1d=15855
+recol2s=31201
+recol2d=32767
+recol3s=30753
+recol3d=21140
 
 [wind_bolt_hit]
 model=model_3085_spotanim
@@ -780,10 +780,10 @@ anim=seq_662
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=960
-recol1d=82
-recol2s=6080
-recol2d=127
+recol1s=30753
+recol1d=21140
+recol2s=31201
+recol2d=32767
 
 [water_bolt_cast]
 model=model_3083_spotanim
@@ -791,8 +791,8 @@ anim=seq_658
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=51136
-recol1d=43968
+recol1s=19487
+recol1d=31
 
 [water_bolt_travel]
 model=model_3084_spotanim
@@ -800,12 +800,12 @@ anim=seq_661
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=11200
-recol1d=43968
-recol2s=6080
-recol2d=38848
-recol3s=960
-recol3d=43486
+recol1s=31649
+recol1d=31
+recol2s=31201
+recol2d=479
+recol3s=30753
+recol3d=15871
 
 [water_bolt_hit]
 model=model_3085_spotanim
@@ -813,10 +813,10 @@ anim=seq_662
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=960
-recol1d=43486
-recol2s=6080
-recol2d=38848
+recol1s=30753
+recol1d=15871
+recol2s=31201
+recol2d=479
 
 [earth_bolt_cast]
 model=model_3083_spotanim
@@ -824,8 +824,8 @@ anim=seq_658
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=51136
-recol1d=10138
+recol1s=19487
+recol1d=13664
 
 [earth_bolt_travel]
 model=model_3084_spotanim
@@ -833,12 +833,12 @@ anim=seq_661
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=11200
-recol1d=22430
-recol2s=6080
-recol2d=22464
-recol3s=960
-recol3d=8092
+recol1s=31649
+recol1d=480
+recol2s=31201
+recol2d=992
+recol3s=30753
+recol3d=14656
 
 [earth_bolt_hit]
 model=model_3085_spotanim
@@ -846,10 +846,10 @@ anim=seq_662
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=960
-recol1d=8092
-recol2s=6080
-recol2d=22464
+recol1s=30753
+recol1d=14656
+recol2s=31201
+recol2d=992
 
 [fire_bolt_cast]
 model=model_3083_spotanim
@@ -857,8 +857,8 @@ anim=seq_658
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=51136
-recol1d=960
+recol1s=19487
+recol1d=30753
 
 [fire_bolt_travel]
 model=model_3084_spotanim
@@ -880,8 +880,8 @@ anim=seq_658
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=51136
-recol1d=960
+recol1s=19487
+recol1d=30753
 
 [fire_blast_travel]
 model=model_3087_spotanim
@@ -903,8 +903,8 @@ anim=seq_658
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=51136
-recol1d=43119
+recol1s=19487
+recol1d=24319
 
 [wind_blast_travel]
 model=model_3087_spotanim
@@ -912,12 +912,12 @@ anim=seq_663
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=7104
-recol1d=61
-recol2s=6080
-recol2d=127
-recol3s=960
-recol3d=82
+recol1s=31297
+recol1d=15855
+recol2s=31201
+recol2d=32767
+recol3s=30753
+recol3d=21140
 
 [wind_blast_hit]
 model=model_3088_spotanim
@@ -925,12 +925,12 @@ anim=seq_664
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=960
-recol1d=82
-recol2s=6080
-recol2d=127
-recol3s=24256
-recol3d=61
+recol1s=30753
+recol1d=21140
+recol2s=31201
+recol2d=32767
+recol3s=4968
+recol3d=15855
 
 [water_blast_cast]
 model=model_3083_spotanim
@@ -938,8 +938,8 @@ anim=seq_658
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=51136
-recol1d=43968
+recol1s=19487
+recol1d=31
 
 [water_blast_travel]
 model=model_3087_spotanim
@@ -947,12 +947,12 @@ anim=seq_663
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=7104
-recol1d=43486
-recol2s=6080
-recol2d=38848
-recol3s=960
-recol3d=43968
+recol1s=31297
+recol1d=15871
+recol2s=31201
+recol2d=479
+recol3s=30753
+recol3d=31
 
 [water_blast_hit]
 model=model_3088_spotanim
@@ -960,12 +960,12 @@ anim=seq_664
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=960
-recol1d=43968
-recol2s=6080
-recol2d=38848
-recol3s=24256
-recol3d=43486
+recol1s=30753
+recol1d=31
+recol2s=31201
+recol2d=479
+recol3s=4968
+recol3d=15871
 
 [earth_blast_cast]
 model=model_3083_spotanim
@@ -973,8 +973,8 @@ anim=seq_658
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=51136
-recol1d=10138
+recol1s=19487
+recol1d=13664
 
 [earth_blast_travel]
 model=model_3087_spotanim
@@ -982,12 +982,12 @@ anim=seq_663
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=7104
-recol1d=22430
-recol2s=6080
-recol2d=22464
-recol3s=960
-recol3d=8092
+recol1s=31297
+recol1d=480
+recol2s=31201
+recol2d=992
+recol3s=30753
+recol3d=14656
 
 [earth_blast_hit]
 model=model_3088_spotanim
@@ -995,12 +995,12 @@ anim=seq_664
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=960
-recol1d=8092
-recol2s=6080
-recol2d=22464
-recol3s=24256
-recol3d=22430
+recol1s=30753
+recol1d=14656
+recol2s=31201
+recol2d=992
+recol3s=4968
+recol3d=480
 
 [bones_to_bananas]
 model=model_3104_spotanim
@@ -1062,29 +1062,29 @@ contrast=75
 model=model_3112_spotanim
 anim=seq_688
 hasalpha=yes
-recol1s=49088
-recol1d=43968
+recol1s=13343
+recol1d=31
 
 [castchargeorb_air]
 model=model_3112_spotanim
 anim=seq_688
 hasalpha=yes
-recol1s=49088
-recol1d=115
+recol1s=13343
+recol1d=29596
 
 [castchargeorb_earth]
 model=model_3112_spotanim
 anim=seq_688
 hasalpha=yes
-recol1s=49088
-recol1d=22430
+recol1s=13343
+recol1d=480
 
 [castchargeorb_fire]
 model=model_3112_spotanim
 anim=seq_688
 hasalpha=yes
-recol1s=49088
-recol1d=960
+recol1s=13343
+recol1d=30753
 
 [enchantamuletlvl4]
 model=model_3113_spotanim
@@ -1123,12 +1123,12 @@ anim=seq_691
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=7104
-recol1d=82
-recol2s=6080
-recol2d=127
-recol3s=960
-recol3d=61
+recol1s=31297
+recol1d=21140
+recol2s=31201
+recol2d=32767
+recol3s=30753
+recol3d=15855
 
 [wind_wave_travel]
 model=model_3115_spotanim
@@ -1136,12 +1136,12 @@ anim=seq_692
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=7104
-recol1d=82
-recol2s=6080
-recol2d=127
-recol3s=960
-recol3d=61
+recol1s=31297
+recol1d=21140
+recol2s=31201
+recol2d=32767
+recol3s=30753
+recol3d=15855
 
 [wind_wave_hit]
 model=model_3116_spotanim
@@ -1149,12 +1149,12 @@ anim=seq_693
 hasalpha=yes
 ambient=50
 contrast=50
-recol1s=7104
-recol1d=82
-recol2s=6080
-recol2d=127
-recol3s=960
-recol3d=61
+recol1s=31297
+recol1d=21140
+recol2s=31201
+recol2d=32767
+recol3s=30753
+recol3d=15855
 
 [water_wave_cast]
 model=model_3114_spotanim
@@ -1162,12 +1162,12 @@ anim=seq_691
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=7104
-recol1d=43486
-recol2s=6080
-recol2d=38848
-recol3s=960
-recol3d=43968
+recol1s=31297
+recol1d=15871
+recol2s=31201
+recol2d=479
+recol3s=30753
+recol3d=31
 
 [water_wave_travel]
 model=model_3115_spotanim
@@ -1175,12 +1175,12 @@ anim=seq_692
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=7104
-recol1d=43486
-recol2s=6080
-recol2d=38848
-recol3s=960
-recol3d=43968
+recol1s=31297
+recol1d=15871
+recol2s=31201
+recol2d=479
+recol3s=30753
+recol3d=31
 
 [water_wave_hit]
 model=model_3116_spotanim
@@ -1188,12 +1188,12 @@ anim=seq_693
 hasalpha=yes
 ambient=60
 contrast=60
-recol1s=7104
-recol1d=43486
-recol2s=6080
-recol2d=38848
-recol3s=960
-recol3d=43968
+recol1s=31297
+recol1d=15871
+recol2s=31201
+recol2d=479
+recol3s=30753
+recol3d=31
 
 [earth_wave_cast]
 model=model_3114_spotanim
@@ -1201,12 +1201,12 @@ anim=seq_691
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=7104
-recol1d=8092
-recol2s=6080
-recol2d=22464
-recol3s=960
-recol3d=22430
+recol1s=31297
+recol1d=14656
+recol2s=31201
+recol2d=992
+recol3s=30753
+recol3d=480
 
 [earth_wave_travel]
 model=model_3115_spotanim
@@ -1214,12 +1214,12 @@ anim=seq_692
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=7104
-recol1d=8092
-recol2s=6080
-recol2d=22464
-recol3s=960
-recol3d=22430
+recol1s=31297
+recol1d=14656
+recol2s=31201
+recol2d=992
+recol3s=30753
+recol3d=480
 
 [earth_wave_hit]
 model=model_3116_spotanim
@@ -1227,12 +1227,12 @@ anim=seq_693
 hasalpha=yes
 ambient=40
 contrast=40
-recol1s=7104
-recol1d=8092
-recol2s=6080
-recol2d=22464
-recol3s=960
-recol3d=22430
+recol1s=31297
+recol1d=14656
+recol2s=31201
+recol2d=992
+recol3s=30753
+recol3d=480
 
 [vulnerability_cast]
 model=model_3117_spotanim
@@ -1349,27 +1349,27 @@ anim=seq_732
 model=model_3076_spotanim
 anim=seq_654
 hasalpha=yes
-recol1s=61
-recol1d=19344
+recol1s=15855
+recol1d=2304
 
 [spotanim_185]
 model=model_3087_spotanim
 anim=seq_663
 hasalpha=yes
-recol1s=960
-recol1d=119
-recol2s=6080
-recol2d=123
-recol3s=7104
-recol3d=115
+recol1s=30753
+recol1d=30653
+recol2s=31201
+recol2d=31710
+recol3s=31297
+recol3d=29596
 
 [spotanim_187]
 model=model_3068_spotanim
 anim=seq_648
 hasalpha=yes
 resizeh=56
-recol1s=53167
-recol1d=10062
+recol1s=18455
+recol1d=30537
 
 [spotanim_188]
 model=model_3076_spotanim
@@ -1402,48 +1402,48 @@ resizev=224
 model=model_3151_spotanim
 anim=seq_375
 hasalpha=yes
-recol1s=61
-recol1d=43959
-recol2s=127
-recol2d=41438
+recol1s=15855
+recol1d=27
+recol2s=32767
+recol2d=15967
 
 [spotanim_193]
 model=model_3149_spotanim
 anim=seq_374
 hasalpha=yes
-recol1s=61
-recol1d=43959
-recol2s=127
-recol2d=41438
+recol1s=15855
+recol1d=27
+recol2s=32767
+recol2d=15967
 
 [spotanim_194]
 model=model_3083_spotanim
 anim=seq_658
 hasalpha=yes
-recol1s=51136
-recol1d=43146
+recol1s=19487
+recol1d=2115
 
 [spotanim_195]
 model=model_3081_spotanim
 anim=seq_659
 hasalpha=yes
-recol1s=926
-recol1d=43146
-recol2s=947
-recol2d=45993
-recol3s=11200
-recol3d=127
+recol1s=15360
+recol1d=2115
+recol2s=24609
+recol2d=3092
+recol3s=31649
+recol3d=32767
 
 [spotanim_196]
 model=model_3082_spotanim
 anim=seq_660
 hasalpha=yes
-recol1s=926
-recol1d=43146
-recol2s=947
-recol2d=45993
-recol3s=11200
-recol3d=127
+recol1s=15360
+recol1d=2115
+recol2s=24609
+recol2d=3092
+recol3s=31649
+recol3d=32767
 
 [spotanim_197]
 model=model_2267_spotanim
@@ -1451,23 +1451,23 @@ anim=seq_901
 hasalpha=yes
 resizeh=128
 resizev=384
-recol1s=8128
-recol1d=43146
-recol2s=7104
-recol2d=45993
-recol3s=5056
-recol3d=127
+recol1s=31393
+recol1d=2115
+recol2s=31297
+recol2d=3092
+recol3s=31105
+recol3d=32767
 
 [spotanim_198]
 model=model_3116_spotanim
 anim=seq_693
 hasalpha=yes
-recol1s=7104
-recol1d=127
-recol2s=6080
-recol2d=43117
-recol3s=960
-recol3d=43233
+recol1s=31297
+recol1d=32767
+recol2s=31201
+recol2d=23263
+recol3s=30753
+recol3d=16927
 
 [levelup_anim]
 model=model_411_spotanim
@@ -1476,45 +1476,45 @@ hasalpha=yes
 
 [bronze_javelin_travel]
 model=model_3138_spotanim
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 
 [iron_javelin_travel]
 model=model_3138_spotanim
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 
 [steel_javelin_travel]
 model=model_3138_spotanim
 
 [mithril_javelin_travel]
 model=model_3138_spotanim
-recol1s=61
-recol1d=43282
+recol1s=15855
+recol1d=3174
 
 [adamant_javelin_travel]
 model=model_3138_spotanim
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 
 [rune_javelin_travel]
 model=model_3138_spotanim
-recol1s=61
-recol1d=36133
+recol1s=15855
+recol1d=6476
 
 [bronze_javelin_launch]
 model=model_3144_spotanim
 anim=seq_368
 hasalpha=yes
-recol1s=61
-recol1d=5652
+recol1s=15855
+recol1d=8354
 
 [iron_javelin_launch]
 model=model_3144_spotanim
 anim=seq_368
 hasalpha=yes
-recol1s=61
-recol1d=33
+recol1s=15855
+recol1d=8456
 
 [steel_javelin_launch]
 model=model_3144_spotanim
@@ -1525,202 +1525,202 @@ hasalpha=yes
 model=model_3144_spotanim
 anim=seq_368
 hasalpha=yes
-recol1s=61
-recol1d=43282
+recol1s=15855
+recol1d=3174
 
 [adamant_javelin_launch]
 model=model_3144_spotanim
 anim=seq_368
 hasalpha=yes
-recol1s=61
-recol1d=21662
+recol1s=15855
+recol1d=6438
 
 [rune_javelin_launch]
 model=model_3144_spotanim
 anim=seq_368
 hasalpha=yes
-recol1s=61
-recol1d=36133
+recol1s=15855
+recol1d=6476
 
 [bronze_tknife_travel]
 model=model_3139_spotanim
-recol1s=61
-recol1d=5652
-recol2s=57
-recol2d=5652
+recol1s=15855
+recol1d=8354
+recol2s=14798
+recol2d=8354
 
 [iron_tknife_travel]
 model=model_3139_spotanim
-recol1s=61
-recol1d=33
-recol2s=57
-recol2d=33
+recol1s=15855
+recol1d=8456
+recol2s=14798
+recol2d=8456
 
 [steel_tknife_travel]
 model=model_3139_spotanim
-recol1s=57
-recol1d=61
+recol1s=14798
+recol1d=15855
 
 [black_tknife_travel]
 model=model_3139_spotanim
-recol1s=61
-recol1d=8
-recol2s=57
-recol2d=8
+recol1s=15855
+recol1d=2114
+recol2s=14798
+recol2d=2114
 
 [mithril_tknife_travel]
 model=model_3139_spotanim
-recol1s=61
-recol1d=43282
-recol2s=57
-recol2d=43282
+recol1s=15855
+recol1d=3174
+recol2s=14798
+recol2d=3174
 
 [adamant_tknife_travel]
 model=model_3139_spotanim
-recol1s=61
-recol1d=21662
-recol2s=57
-recol2d=21662
+recol1s=15855
+recol1d=6438
+recol2s=14798
+recol2d=6438
 
 [rune_tknife_travel]
 model=model_3139_spotanim
-recol1s=61
-recol1d=36133
-recol2s=57
-recol2d=36133
+recol1s=15855
+recol1d=6476
+recol2s=14798
+recol2d=6476
 
 [bronze_tknife_launch]
 model=model_3145_spotanim
 anim=seq_369
 hasalpha=yes
-recol1s=61
-recol1d=5652
-recol2s=57
-recol2d=5652
+recol1s=15855
+recol1d=8354
+recol2s=14798
+recol2d=8354
 
 [iron_tknife_launch]
 model=model_3145_spotanim
 anim=seq_369
 hasalpha=yes
-recol1s=61
-recol1d=33
-recol2s=57
-recol2d=33
+recol1s=15855
+recol1d=8456
+recol2s=14798
+recol2d=8456
 
 [steel_tknife_launch]
 model=model_3145_spotanim
 anim=seq_369
 hasalpha=yes
-recol1s=57
-recol1d=61
+recol1s=14798
+recol1d=15855
 
 [black_tknife_launch]
 model=model_3145_spotanim
 anim=seq_369
 hasalpha=yes
-recol1s=61
-recol1d=8
-recol2s=57
-recol2d=8
+recol1s=15855
+recol1d=2114
+recol2s=14798
+recol2d=2114
 
 [mithril_tknife_launch]
 model=model_3145_spotanim
 anim=seq_369
 hasalpha=yes
-recol1s=61
-recol1d=43282
-recol2s=57
-recol2d=43282
+recol1s=15855
+recol1d=3174
+recol2s=14798
+recol2d=3174
 
 [adamant_tknife_launch]
 model=model_3145_spotanim
 anim=seq_369
 hasalpha=yes
-recol1s=61
-recol1d=21662
-recol2s=57
-recol2d=21662
+recol1s=15855
+recol1d=6438
+recol2s=14798
+recol2d=6438
 
 [rune_tknife_launch]
 model=model_3145_spotanim
 anim=seq_369
 hasalpha=yes
-recol1s=61
-recol1d=36133
-recol2s=57
-recol2d=36133
+recol1s=15855
+recol1d=6476
+recol2s=14798
+recol2d=6476
 
 [bronze_dart_travel]
 model=model_3131_spotanim
-recol1s=82
-recol1d=5652
+recol1s=21140
+recol1d=8354
 
 [iron_dart_travel]
 model=model_3131_spotanim
-recol1s=82
-recol1d=33
+recol1s=21140
+recol1d=8456
 
 [steel_dart_travel]
 model=model_3131_spotanim
-recol1s=82
-recol1d=61
+recol1s=21140
+recol1d=15855
 
 [mithril_dart_travel]
 model=model_3131_spotanim
-recol1s=82
-recol1d=43282
+recol1s=21140
+recol1d=3174
 
 [adamant_dart_travel]
 model=model_3131_spotanim
-recol1s=82
-recol1d=21662
+recol1s=21140
+recol1d=6438
 
 [rune_dart_travel]
 model=model_3131_spotanim
-recol1s=82
-recol1d=36133
+recol1s=21140
+recol1d=6476
 
 [bronze_dart_launch]
 model=model_3146_spotanim
 anim=seq_370
 hasalpha=yes
-recol1s=82
-recol1d=5652
+recol1s=21140
+recol1d=8354
 
 [iron_dart_launch]
 model=model_3146_spotanim
 anim=seq_370
 hasalpha=yes
-recol1s=82
-recol1d=33
+recol1s=21140
+recol1d=8456
 
 [steel_dart_launch]
 model=model_3146_spotanim
 anim=seq_370
 hasalpha=yes
-recol1s=82
-recol1d=61
+recol1s=21140
+recol1d=15855
 
 [mithril_dart_launch]
 model=model_3146_spotanim
 anim=seq_370
 hasalpha=yes
-recol1s=82
-recol1d=43282
+recol1s=21140
+recol1d=3174
 
 [adamant_dart_launch]
 model=model_3146_spotanim
 anim=seq_370
 hasalpha=yes
-recol1s=82
-recol1d=21662
+recol1s=21140
+recol1d=6438
 
 [rune_dart_launch]
 model=model_3146_spotanim
 anim=seq_370
 hasalpha=yes
-recol1s=82
-recol1d=36133
+recol1s=21140
+recol1d=6476
 
 [enchant_ring]
 model=model_3370_spotanim
@@ -1746,16 +1746,16 @@ anim=seq_1024
 model=model_3136_spotanim
 resizeh=192
 resizev=192
-recol1s=5012
-recol1d=7582
-recol2s=926
-recol2d=127
-recol3s=61
-recol3d=10326
-recol4s=57
-recol4d=13790
-recol5s=74
-recol5d=9329
+recol1s=10368
+recol1d=11556
+recol2s=15360
+recol2d=32767
+recol3s=15855
+recol3d=23252
+recol4s=14798
+recol4d=27569
+recol5s=19026
+recol5d=32728
 
 [ogre_arrow_launch]
 model=model_3142_spotanim
@@ -1763,13 +1763,13 @@ anim=seq_366
 hasalpha=yes
 resizeh=192
 resizev=192
-recol1s=5012
-recol1d=7582
-recol2s=926
-recol2d=127
-recol3s=61
-recol3d=10326
-recol4s=57
-recol4d=13790
-recol5s=74
-recol5d=9329
+recol1s=10368
+recol1d=11556
+recol2s=15360
+recol2d=32767
+recol3s=15855
+recol3d=23252
+recol4s=14798
+recol4d=27569
+recol5s=19026
+recol5d=32728

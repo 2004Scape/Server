@@ -68,7 +68,7 @@ function nameToScript(name: string) {
             return 3;
         case 'inv_count':
             return 4;
-        case 'testvar':
+        case 'pushvar':
             return 5;
         case 'stat_xp_remaining':
             return 6;
@@ -162,7 +162,7 @@ export function packInterface(server: boolean) {
 
     const component: Record<number, Component> = {};
 
-    const interfaceOrder = loadOrder('data/pack/interface.order');
+    const interfaceOrder = loadOrder('data/src/pack/interface.order');
     for (let i = 0; i < interfaceOrder.length; i++) {
         const id = interfaceOrder[i];
 
@@ -194,7 +194,7 @@ export function packInterface(server: boolean) {
                 comName = line.substring(1, line.length - 1);
                 comId = InterfacePack.getByName(`${ifName}:${comName}`);
                 if (comId === -1 || typeof component[comId] === 'undefined') {
-                    console.error(`Missing component ID ${ifName}:${comName} in data/pack/interface.pack`);
+                    console.error(`Missing component ID ${ifName}:${comName} in data/src/pack/interface.pack`);
                     process.exit(1);
                 }
 
@@ -317,7 +317,7 @@ export function packInterface(server: boolean) {
                         case 'inv_count':
                             opCount += 2;
                             break;
-                        case 'testvar':
+                        case 'pushvar':
                             opCount += 1;
                             break;
                         case 'stat_xp_remaining':
@@ -371,7 +371,7 @@ export function packInterface(server: boolean) {
                             data.p2(objLink);
                             break;
                         }
-                        case 'testvar': {
+                        case 'pushvar': {
                             const varpLink = VarpPack.getByName(parts[1]);
                             if (varpLink === -1) {
                                 console.log(`ERROR: ${com.root} invalid lookup ${parts[1]}`);

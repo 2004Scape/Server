@@ -1,13 +1,13 @@
 [iron_dagger]
 model=model_2672_obj
-recol1s=61
-recol1d=33
-recol2s=37
-recol2d=20
-recol3s=74
-recol3d=33
-recol4s=103
-recol4d=45
+recol1s=15855
+recol1d=8456
+recol2s=9513
+recol2d=5285
+recol3s=19026
+recol3d=8456
+recol4s=26425
+recol4d=11627
 name=Iron dagger
 desc=Short but pointy.
 cost=35
@@ -30,20 +30,21 @@ param=magicdefence,1
 param=strengthbonus,4
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [bronze_dagger]
 model=model_2672_obj
-recol1s=61
-recol1d=5652
-recol2s=37
-recol2d=5002
-recol3s=74
-recol3d=5652
-recol4s=103
-recol4d=3489
+recol1s=15855
+recol1d=8354
+recol2s=9513
+recol2d=5184
+recol3s=19026
+recol3d=8354
+recol4s=26425
+recol4d=11493
 name=Bronze dagger
 desc=Short but pointy.
 cost=10
@@ -66,9 +67,10 @@ param=magicdefence,1
 param=strengthbonus,3
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [steel_dagger]
 model=model_2672_obj
@@ -94,20 +96,21 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [mithril_dagger]
 model=model_2672_obj
-recol1s=61
-recol1d=43297
-recol2s=37
-recol2d=43412
-recol3s=74
-recol3d=43297
-recol4s=103
-recol4d=43181
+recol1s=15855
+recol1d=6346
+recol2s=9513
+recol2d=3175
+recol3s=19026
+recol3d=6346
+recol4s=26425
+recol4d=9517
 name=Mithril dagger
 desc=A dangerous dagger.
 cost=325
@@ -130,20 +133,21 @@ param=magicdefence,1
 param=strengthbonus,10
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [adamant_dagger]
 model=model_2672_obj
-recol1s=61
-recol1d=21662
-recol2s=37
-recol2d=21778
-recol3s=74
-recol3d=21662
-recol4s=103
-recol4d=21675
+recol1s=15855
+recol1d=6438
+recol2s=9513
+recol2d=3267
+recol3s=19026
+recol3d=6438
+recol4s=26425
+recol4d=8616
 name=Adamant dagger
 desc=Short and deadly.
 cost=800
@@ -166,20 +170,21 @@ param=magicdefence,1
 param=strengthbonus,14
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [rune_dagger]
 model=model_2672_obj
-recol1s=61
-recol1d=36133
-recol2s=37
-recol2d=36376
-recol3s=74
-recol3d=36133
-recol4s=103
-recol4d=36145
+recol1s=15855
+recol1d=6476
+recol2s=9513
+recol2d=3305
+recol3s=19026
+recol3d=6476
+recol4s=26425
+recol4d=9647
 name=Rune dagger
 desc=A powerful dagger.
 cost=8000
@@ -202,15 +207,16 @@ param=magicdefence,1
 param=strengthbonus,24
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [dragon_dagger]
 members=yes
 model=model_2718_obj
-recol1s=22459
-recol1d=924
+recol1s=928
+recol1d=14336
 name=Dragon dagger
 desc=A powerful dagger.
 cost=30000
@@ -231,22 +237,24 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
-param=stabattack_anim,human_sword_stab
-param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=stabattack_anim,human_ddagger_stab
+param=slashattack_anim,human_ddagger_slash
+param=defend_anim,human_dagger_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// TODO check sounds 
+// osrs defend anim seq_378
 
 [black_dagger]
 model=model_2672_obj
-recol1s=61
-recol1d=8
-recol2s=37
-recol2d=11140
-recol3s=74
+recol1s=15855
+recol1d=2114
+recol2s=9513
+recol2d=2112
+recol3s=19026
 recol3d=0
-recol4s=103
-recol4d=10388
+recol4s=26425
+recol4d=6340
 name=Black dagger
 desc=A vicious black dagger.
 cost=240
@@ -269,23 +277,24 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [iron_dagger_p]
 members=yes
 model=model_2478_obj
-recol1s=61
-recol1d=33
-recol2s=37
-recol2d=20
-recol3s=74
-recol3d=33
-recol4s=103
-recol4d=45
-recol5s=22459
-recol5d=13221
+recol1s=15855
+recol1d=8456
+recol2s=9513
+recol2d=5285
+recol3s=19026
+recol3d=8456
+recol4s=26425
+recol4d=11627
+recol5s=928
+recol5d=14881
 name=Iron dagger(p)
 desc=The blade is covered with poison.
 cost=35
@@ -308,23 +317,24 @@ param=magicdefence,1
 param=strengthbonus,4
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [bronze_dagger_p]
 members=yes
 model=model_2478_obj
-recol1s=61
-recol1d=5652
-recol2s=37
-recol2d=5002
-recol3s=74
-recol3d=5652
-recol4s=103
-recol4d=3489
-recol5s=22459
-recol5d=13221
+recol1s=15855
+recol1d=8354
+recol2s=9513
+recol2d=5184
+recol3s=19026
+recol3d=8354
+recol4s=26425
+recol4d=11493
+recol5s=928
+recol5d=14881
 name=Bronze dagger(p)
 desc=This dagger is poisoned.
 cost=10
@@ -347,15 +357,16 @@ param=magicdefence,1
 param=strengthbonus,3
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [steel_dagger_p]
 members=yes
 model=model_2478_obj
-recol1s=22459
-recol1d=13221
+recol1s=928
+recol1d=14881
 name=Steel dagger(p)
 desc=The blade has been poisoned.
 cost=125
@@ -378,23 +389,24 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [mithril_dagger_p]
 members=yes
 model=model_2478_obj
-recol1s=61
-recol1d=43297
-recol2s=37
-recol2d=43412
-recol3s=74
-recol3d=43297
-recol4s=103
-recol4d=43181
-recol5s=22459
-recol5d=13221
+recol1s=15855
+recol1d=6346
+recol2s=9513
+recol2d=3175
+recol3s=19026
+recol3d=6346
+recol4s=26425
+recol4d=9517
+recol5s=928
+recol5d=14881
 name=Mithril dagger(p)
 desc=A poisoned Mithril dagger.
 cost=325
@@ -417,23 +429,24 @@ param=magicdefence,1
 param=strengthbonus,10
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [adamant_dagger_p]
 members=yes
 model=model_2478_obj
-recol1s=61
-recol1d=21662
-recol2s=37
-recol2d=21778
-recol3s=74
-recol3d=21662
-recol4s=103
-recol4d=21675
-recol5s=22459
-recol5d=13221
+recol1s=15855
+recol1d=6438
+recol2s=9513
+recol2d=3267
+recol3s=19026
+recol3d=6438
+recol4s=26425
+recol4d=8616
+recol5s=928
+recol5d=14881
 name=Adamant dagger(p)
 desc=A very dangerous poisoned dagger.
 cost=800
@@ -456,23 +469,24 @@ param=magicdefence,1
 param=strengthbonus,14
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [rune_dagger_p]
 members=yes
 model=model_2478_obj
-recol1s=61
-recol1d=36133
-recol2s=37
-recol2d=36376
-recol3s=74
-recol3d=36133
-recol4s=103
-recol4d=36145
-recol5s=22459
-recol5d=13221
+recol1s=15855
+recol1d=6476
+recol2s=9513
+recol2d=3305
+recol3s=19026
+recol3d=6476
+recol4s=26425
+recol4d=9647
+recol5s=928
+recol5d=14881
 name=Rune dagger(p)
 desc=The blade is covered with a nasty poison.
 cost=8000
@@ -495,9 +509,10 @@ param=magicdefence,1
 param=strengthbonus,24
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [dragon_dagger_p]
 members=yes
@@ -522,25 +537,26 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
-param=stabattack_anim,human_sword_stab
-param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=stabattack_anim,human_ddagger_stab
+param=slashattack_anim,human_ddagger_slash
+param=defend_anim,human_dagger_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_378
 
 [black_dagger_p]
 members=yes
 model=model_2478_obj
-recol1s=61
-recol1d=8
-recol2s=37
-recol2d=11140
-recol3s=74
+recol1s=15855
+recol1d=2114
+recol2s=9513
+recol2d=2112
+recol3s=19026
 recol3d=0
-recol4s=103
-recol4d=10388
-recol5s=22459
-recol5d=13221
+recol4s=26425
+recol4d=6340
+recol5s=928
+recol5d=14881
 name=Black dagger(p)
 desc=This dagger is poisoned.
 cost=240
@@ -563,9 +579,10 @@ param=magicdefence,1
 param=strengthbonus,7
 param=stabattack_anim,human_sword_stab
 param=slashattack_anim,human_sword_slash
-param=defend_anim,human_sword_defend
+param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+// osrs defend anim seq_388
 
 [poisoned_dagger]
 members=yes

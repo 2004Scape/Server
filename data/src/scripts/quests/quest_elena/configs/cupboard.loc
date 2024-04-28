@@ -4,7 +4,7 @@ desc=I wonder what's inside?
 model=model_loc_367
 length=2
 op1=Open
-forceapproach=right
+forceapproach=east
 category=cupboard_closed
 param=cupboard_other,loc_2525
 
@@ -15,6 +15,6 @@ model=model_loc_370
 length=2
 op1=Search
 op2=Close
-forceapproach=right
+forceapproach=east
 category=cupboard_opened
 param=cupboard_other,loc_2524

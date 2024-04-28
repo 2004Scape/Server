@@ -5,26 +5,31 @@
 clearqueue(playerhit_n_retaliate);
 clearqueue(damage_player);
 
+[proc,.combat_clearqueue]
+clearqueue(playerhit_n_retaliate);
+clearqueue(damage_player);
+
 [queue,player_death]
+p_delay(1);
 p_stopaction;
 if_close;
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
-p_delay(6);
+p_delay(3);
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
 def_boolean $protecting_item = false;
 if (%prayer_protectitems = ^true) { $protecting_item = true; }
-inv_clear(tempinv);
+inv_clear(death);
 
 if($skulled = false) {
-    ~move_priciest_item_on_hero_to_tempinv;
-    ~move_priciest_item_on_hero_to_tempinv;
-    ~move_priciest_item_on_hero_to_tempinv;
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
 }
 if($protecting_item = true) {
-    ~move_priciest_item_on_hero_to_tempinv;
+    ~move_priciest_item_on_hero_to_death;
 }
 
 
@@ -57,28 +62,28 @@ while ($i < $size) {
     $i = calc($i + 1);
 }
 buildappearance(worn);
-~moveallinv(tempinv,inv);
-~deactivate_prayers;
-p_telejump(0_50_50_22_22); // todo: randomize
-anim(null, 0);
-mes("Oh dear, you are dead!");
 
-stat_heal(hitpoints, 99, 0);
-stat_heal(prayer, 99, 0);
+~moveallinv(death, inv);
+~deactivate_prayers;
+p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
+anim(null, 0);
+mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
+
+~stat_reset_all;
 healenergy(10000);
 ~combat_clearqueue;
 ~clear_pk_skull;
 ~clear_poison;
 // todo: end poison timer ~player_end_poison
 ~update_all($prev_wep);
-inv_clear(tempinv);
+inv_clear(death);
 
-[proc,move_priciest_item_on_hero_to_tempinv]
+[proc,move_priciest_item_on_hero_to_death]
 def_obj $priciest_item;
 def_obj $currentitem;
 def_int $biggest_price = 0;
 def_int $size_inv = inv_size(inv);
-def_int $size_worn = inv_size(inv);
+def_int $size_worn = inv_size(worn);
 def_boolean $is_worn = false;
 def_int $i = 0;
 while ($i < $size_inv) {
@@ -112,9 +117,9 @@ if($priciest_item = null ) {
     return;
 }
 if($is_worn = true) {
-    inv_moveitem(worn,tempinv,$priciest_item,1);
+    inv_moveitem(worn,death,$priciest_item,1);
 } else {
-    inv_moveitem(inv,tempinv,$priciest_item,1);
+    inv_moveitem(inv,death,$priciest_item,1);
 }
 
 [debugproc,death]
@@ -138,7 +143,7 @@ if (stat(hitpoints) = 0 & getqueue(player_death) < 1){
 def_int $rand;
 def_synth $sound;
 if (gender() = 0) {
-        $rand = random(2);
+        $rand = random(3);
         switch_int($rand) {
             case 0 : $sound = human_hit2;
             case 1 : $sound = human_hit3;
@@ -146,7 +151,7 @@ if (gender() = 0) {
             case default : $sound = human_hit2;
         }
     } else {
-        $rand = random(1);
+        $rand = random(2);
         switch_int($rand) {
             case 0 : $sound = female_hit;
             case 1 : $sound = female_hit2;
@@ -177,7 +182,7 @@ if (.stat(hitpoints) = 0){
 def_int $rand;
 def_synth $sound;
 if (.gender() = 0) {
-        $rand = random(2);
+        $rand = random(3);
         switch_int($rand) {
             case 0 : $sound = human_hit2;
             case 1 : $sound = human_hit3;
@@ -185,7 +190,7 @@ if (.gender() = 0) {
             case default : $sound = human_hit2;
         }
     } else {
-        $rand = random(1);
+        $rand = random(2);
         switch_int($rand) {
             case 0 : $sound = female_hit;
             case 1 : $sound = female_hit2;

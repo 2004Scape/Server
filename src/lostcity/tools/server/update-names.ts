@@ -2,7 +2,7 @@ import { loadDir } from '#lostcity/util/NameMap.js';
 import fs from 'fs';
 
 const older: string[] = [];
-fs.readFileSync('data/pack/obj.pack', 'ascii')
+fs.readFileSync('data/src/pack/obj.pack', 'ascii')
     .replace(/\r/g, '')
     .split('\n')
     .filter(x => x)
@@ -10,7 +10,7 @@ fs.readFileSync('data/pack/obj.pack', 'ascii')
     .forEach(([id, name]) => (older[id as unknown as number] = name));
 
 const newer: string[] = [];
-fs.readFileSync('D:/Downloads/item-debugnames-guesses.txt', 'ascii')
+fs.readFileSync('item-debugnames-guesses.txt', 'ascii')
     .replace(/\r/g, '')
     .split('\n')
     .filter(x => x)
@@ -57,4 +57,4 @@ for (let i = 0; i < newer.length; i++) {
     }
     older[i] = newer[i];
 }
-fs.writeFileSync('data/pack/obj.pack', older.map((name, id) => `${id}=${name}`).join('\n') + '\n');
+fs.writeFileSync('data/src/pack/obj.pack', older.map((name, id) => `${id}=${name}`).join('\n') + '\n');

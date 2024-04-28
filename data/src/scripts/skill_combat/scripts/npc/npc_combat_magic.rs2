@@ -11,13 +11,12 @@ def_int $magicattack = npc_param(magicattack);
 def_int $effective_magic = ~combat_effective_stat(1, npc_stat(magic), 100); // no prayerbonus
 return(~combat_stat($effective_magic, $magicattack));
 
-[movecheck,frozen]()(boolean)
+[walktrigger,frozen]
 if (map_clock < %stunned) {
     mes("A magical force stops you from moving.");
-    return(false);
+    p_stopaction;
+    walktrigger(frozen);
 }
-
-return(true);
 
 [proc,npc_cast_spell](int $spell, int $attackspeed)
 ~npc_cast_spell_with_forced_max_hit($spell,$attackspeed,null);
@@ -129,4 +128,4 @@ if (~npc_player_hit_roll(^magic_style) = true) {
 [queue,freeze_player](int $duration)
 mes("You've been frozen!");
 %stunned = calc(map_clock + $duration + 1);
-setmovecheck(frozen);
+walktrigger(frozen);

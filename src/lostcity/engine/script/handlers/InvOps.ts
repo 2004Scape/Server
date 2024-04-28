@@ -1,7 +1,6 @@
 import InvType from '#lostcity/cache/InvType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
 
-import { Inventory } from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
@@ -11,17 +10,25 @@ import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPoi
 import Obj from '#lostcity/entity/Obj.js';
 import { Position } from '#lostcity/entity/Position.js';
 
+import {
+    CategoryTypeValid,
+    check,
+    CoordValid,
+    DurationValid,
+    InvTypeValid,
+    NumberNotNull,
+    ObjNotDummyValid,
+    ObjStackValid,
+    ObjTypeValid
+} from '#lostcity/engine/script/ScriptInputValidator.js';
+
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
 
 const InvOps: CommandHandlers = {
     // inv config
     [ScriptOpcode.INV_ALLSTOCK]: state => {
-        const inv = state.popInt();
-
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        const inv = check(state.popInt(), InvTypeValid);
 
         const type = InvType.get(inv);
         state.pushInt(type.allstock ? 1 : 0);
@@ -29,11 +36,7 @@ const InvOps: CommandHandlers = {
 
     // inv config
     [ScriptOpcode.INV_SIZE]: state => {
-        const inv = state.popInt();
-
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        const inv = check(state.popInt(), InvTypeValid);
 
         const type = InvType.get(inv);
         state.pushInt(type.size);
@@ -43,16 +46,9 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_STOCKBASE]: state => {
         const [inv, obj] = state.popInts(2);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        const type = InvType.get(check(inv, InvTypeValid));
+        const index = type.stockobj.indexOf(check(obj, ObjTypeValid));
 
-        if (obj === -1) {
-            throw new Error('$obj is null');
-        }
-
-        const type = InvType.get(inv);
-        const index = type.stockobj.indexOf(obj);
         state.pushInt(index >= 0 ? type.stockcount[index] : -1);
     },
 
@@ -60,22 +56,11 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ADD]: checkedHandler(ActivePlayer, state => {
         const [inv, objId, count] = state.popInts(3);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (objId === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
+        check(inv, InvTypeValid);
+        check(objId, ObjTypeValid, ObjNotDummyValid);
+        check(count, ObjStackValid);
 
         const obj = ObjType.get(objId);
-        if (obj.dummyitem === 1) {
-            throw new Error(`attempted to add graphic_only dummyitem: ${obj.debugname}`);
-        }
 
         const type = InvType.get(inv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -103,11 +88,7 @@ const InvOps: CommandHandlers = {
 
     // inv write
     [ScriptOpcode.INV_CLEAR]: checkedHandler(ActivePlayer, state => {
-        const inv = state.popInt();
-
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        const inv = check(state.popInt(), InvTypeValid);
 
         const type = InvType.get(inv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -121,17 +102,9 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_DEL]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count] = state.popInts(3);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (obj === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
+        check(inv, InvTypeValid);
+        check(obj, ObjTypeValid);
+        check(count, ObjStackValid);
 
         const type = InvType.get(inv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -145,9 +118,7 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_DELSLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, slot] = state.popInts(2);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        check(inv, InvTypeValid);
 
         const type = InvType.get(inv);
         if (slot < 0 || slot >= type.size) {
@@ -170,25 +141,11 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_DROPITEM]: checkedHandler(ActivePlayer, state => {
         const [inv, coord, obj, count, duration] = state.popInts(5);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error('$coord is out of range');
-        }
-
-        if (obj === -1) {
-            throw new Error('$slot is empty');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
-
-        if (duration < 1) {
-            throw new Error('$duration should be greater than 0');
-        }
+        check(inv, InvTypeValid);
+        check(coord, CoordValid);
+        check(obj, ObjTypeValid);
+        check(count, ObjStackValid);
+        check(duration, DurationValid);
 
         const type = InvType.get(inv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -214,9 +171,9 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_DROPSLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, coord, slot, duration] = state.popInts(4);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        check(inv, InvTypeValid);
+        check(duration, DurationValid);
+        check(coord, CoordValid);
 
         const type = InvType.get(inv);
         if (slot < 0 || slot >= type.size) {
@@ -226,14 +183,6 @@ const InvOps: CommandHandlers = {
         const obj = state.activePlayer.invGetSlot(inv, slot);
         if (!obj) {
             throw new Error('$slot is empty');
-        }
-
-        if (duration < 1) {
-            throw new Error('$duration should be greater than 0');
-        }
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error('$coord is out of range');
         }
 
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -257,11 +206,7 @@ const InvOps: CommandHandlers = {
 
     // inv read
     [ScriptOpcode.INV_FREESPACE]: checkedHandler(ActivePlayer, state => {
-        const inv = state.popInt();
-
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        const inv = check(state.popInt(), InvTypeValid);
 
         state.pushInt(state.activePlayer.invFreeSpace(inv) as number);
     }),
@@ -270,9 +215,7 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_GETNUM]: checkedHandler(ActivePlayer, state => {
         const [inv, slot] = state.popInts(2);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        check(inv, InvTypeValid);
 
         const type = InvType.get(inv);
         if (slot < 0 || slot >= type.size) {
@@ -287,6 +230,8 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_GETOBJ]: checkedHandler(ActivePlayer, state => {
         const [inv, slot] = state.popInts(2);
 
+        check(inv, InvTypeValid);
+
         const obj = state.activePlayer.invGetSlot(inv, slot);
         state.pushInt(obj?.id ?? -1);
     }),
@@ -295,17 +240,9 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (obj === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
+        check(inv, InvTypeValid);
+        check(obj, ObjTypeValid);
+        check(count, ObjStackValid);
 
         const type = InvType.get(inv);
         if (size < 0 || size > type.size) {
@@ -319,17 +256,9 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_ITEMSPACE2]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count, size] = state.popInts(4);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (obj === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
+        check(inv, InvTypeValid);
+        check(obj, ObjTypeValid);
+        check(count, ObjStackValid);
 
         state.pushInt(state.activePlayer.invItemSpace(inv, obj, count, size));
     }),
@@ -338,13 +267,8 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_MOVEFROMSLOT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, fromSlot] = state.popInts(3);
 
-        if (fromInv === -1) {
-            throw new Error('$from_inv is null');
-        }
-
-        if (toInv === -1) {
-            throw new Error('$to_inv is null');
-        }
+        check(fromInv, InvTypeValid);
+        check(toInv, InvTypeValid);
 
         const type = InvType.get(fromInv);
         if (fromSlot < 0 || fromSlot >= type.size) {
@@ -373,13 +297,8 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_MOVETOSLOT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, fromSlot, toSlot] = state.popInts(4);
 
-        if (fromInv === -1) {
-            throw new Error('$from_inv is null');
-        }
-
-        if (toInv === -1) {
-            throw new Error('$to_inv is null');
-        }
+        check(fromInv, InvTypeValid);
+        check(toInv, InvTypeValid);
 
         const type = InvType.get(fromInv);
         if (fromSlot < 0 || fromSlot >= type.size) {
@@ -406,13 +325,8 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.BOTH_MOVEINV]: checkedHandler(ActivePlayer, state => {
         const [from, to] = state.popInts(2);
 
-        if (from === -1) {
-            throw new Error('$from_inv is null');
-        }
-
-        if (to === -1) {
-            throw new Error('$to_inv is null');
-        }
+        check(from, InvTypeValid);
+        check(to, InvTypeValid);
 
         const secondary = state.intOperand == 1;
 
@@ -463,21 +377,10 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_MOVEITEM]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
-        if (fromInv === -1) {
-            throw new Error('$from_inv is null');
-        }
-
-        if (toInv === -1) {
-            throw new Error('$to_inv is null');
-        }
-
-        if (obj === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
+        check(fromInv, InvTypeValid);
+        check(toInv, InvTypeValid);
+        check(obj, ObjTypeValid);
+        check(count, ObjStackValid);
 
         const type = InvType.get(fromInv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -501,21 +404,10 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_MOVEITEM_CERT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
-        if (fromInv === -1) {
-            throw new Error('$from_inv is null');
-        }
-
-        if (toInv === -1) {
-            throw new Error('$to_inv is null');
-        }
-
-        if (obj === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
+        check(fromInv, InvTypeValid);
+        check(toInv, InvTypeValid);
+        check(obj, ObjTypeValid);
+        check(count, ObjStackValid);
 
         const type = InvType.get(fromInv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -533,32 +425,26 @@ const InvOps: CommandHandlers = {
         }
 
         const objType = ObjType.get(obj);
+        let finalObj = obj;
         if (objType.certtemplate === -1 && objType.certlink >= 0) {
-            state.activePlayer.invAdd(toInv, objType.certlink, completed);
-        } else {
-            state.activePlayer.invAdd(toInv, obj, completed);
+            finalObj = objType.certlink;
         }
+        const overflow = count - state.activePlayer.invAdd(toInv, finalObj, completed);
+        if (overflow > 0) {
+            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, finalObj, overflow);
+            World.addObj(floorObj, state.activePlayer, 200);
+        }
+    
     }),
 
     // inv write
     [ScriptOpcode.INV_MOVEITEM_UNCERT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
 
-        if (fromInv === -1) {
-            throw new Error('$from_inv is null');
-        }
-
-        if (toInv === -1) {
-            throw new Error('$to_inv is null');
-        }
-
-        if (obj === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
+        check(fromInv, InvTypeValid);
+        check(toInv, InvTypeValid);
+        check(obj, ObjTypeValid);
+        check(count, ObjStackValid);
 
         const type = InvType.get(fromInv);
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
@@ -587,27 +473,16 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_SETSLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, slot, objId, count] = state.popInts(4);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        check(inv, InvTypeValid);
+        check(objId, ObjTypeValid, ObjNotDummyValid);
+        check(count, ObjStackValid);
 
         const type = InvType.get(inv);
         if (slot < 0 || slot >= type.size) {
             throw new Error(`$slot is out of range: ${slot}`);
         }
 
-        if (objId === -1) {
-            throw new Error('$obj is null');
-        }
-
-        if (count < 1 || count > Inventory.STACK_LIMIT) {
-            throw new Error(`$count is out of range: ${count}`);
-        }
-
         const obj = ObjType.get(objId);
-        if (obj.dummyitem === 1) {
-            throw new Error(`attempted to set graphic_only dummyitem: ${obj.debugname}`);
-        }
 
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && type.protect && type.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${type.debugname}`);
@@ -624,9 +499,7 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_TOTAL]: checkedHandler(ActivePlayer, state => {
         const [inv, obj] = state.popInts(2);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
+        check(inv, InvTypeValid);
 
         // todo: error instead?
         if (obj === -1) {
@@ -641,13 +514,8 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_TOTALCAT]: checkedHandler(ActivePlayer, state => {
         const [inv, category] = state.popInts(2);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (category === -1) {
-            throw new Error('$category is null');
-        }
+        check(inv, InvTypeValid);
+        check(category, CategoryTypeValid);
 
         state.pushInt(state.activePlayer.invTotalCat(inv, category));
     }),
@@ -656,13 +524,8 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INV_TRANSMIT]: checkedHandler(ActivePlayer, state => {
         const [inv, com] = state.popInts(2);
 
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (com === -1) {
-            throw new Error('$com is null');
-        }
+        check(inv, InvTypeValid);
+        check(com, NumberNotNull);
 
         state.activePlayer.invListenOnCom(inv, com, state.activePlayer.uid);
     }),
@@ -671,28 +534,16 @@ const InvOps: CommandHandlers = {
     [ScriptOpcode.INVOTHER_TRANSMIT]: checkedHandler(ActivePlayer, state => {
         const [uid, inv, com] = state.popInts(3);
 
-        if (uid === -1) {
-            throw new Error('$uid is null');
-        }
-
-        if (inv === -1) {
-            throw new Error('$inv is null');
-        }
-
-        if (com === -1) {
-            throw new Error('$com is null');
-        }
+        check(uid, NumberNotNull);
+        check(inv, InvTypeValid);
+        check(com, NumberNotNull);
 
         state.activePlayer.invListenOnCom(inv, com, uid);
     }),
 
     // inv protocol
     [ScriptOpcode.INV_STOPTRANSMIT]: checkedHandler(ActivePlayer, state => {
-        const com = state.popInt();
-
-        if (com === -1) {
-            throw new Error('$com is null');
-        }
+        const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.invStopListenOnCom(com);
     })

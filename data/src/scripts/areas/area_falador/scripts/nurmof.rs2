@@ -65,7 +65,7 @@ if (oc_param($item, to_be_fixed_by_nurmof) = ^true) { // dialogue is guessed and
 [proc,has_broken_pickaxe]()(boolean)
 def_int $i = 0;
 while ($i < inv_size(inv)) {
-    if (inv_getobj(inv, $i) ! null & oc_param(inv_getobj(inv, $i), to_be_fixed_by_bob) = ^true) {
+    if (inv_getobj(inv, $i) ! null & oc_param(inv_getobj(inv, $i), to_be_fixed_by_nurmof) = ^true) {
         return (true);
     }
     $i = calc($i + 1);
@@ -73,7 +73,7 @@ while ($i < inv_size(inv)) {
 
 $i = 0;
 while ($i < inv_size(worn)) {
-    if (inv_getobj(inv, $i) ! null & oc_param(inv_getobj(worn, $i), to_be_fixed_by_bob) = ^true) {
+    if (inv_getobj(worn, $i) ! null & oc_param(inv_getobj(worn, $i), to_be_fixed_by_nurmof) = ^true) {
         return (true);
     }
     $i = calc($i + 1);

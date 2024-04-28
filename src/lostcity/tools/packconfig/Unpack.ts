@@ -3,8 +3,8 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { loadPack } from '#lostcity/util/NameMap.js';
 
-if (!fs.existsSync('dump/client/config')) {
-    console.error('dump/client/config does not exist');
+if (!fs.existsSync('data/client/config')) {
+    console.error('data/client/config does not exist');
     process.exit(1);
 }
 
@@ -13,14 +13,14 @@ if (process.argv.includes('--194')) {
     decode194 = true;
 }
 
-fs.mkdirSync('dump/src/scripts', { recursive: true });
-fs.mkdirSync('dump/pack', { recursive: true });
+fs.mkdirSync('data/src/scripts', { recursive: true });
+fs.mkdirSync('data/pack', { recursive: true });
 
-const config = Jagfile.load('dump/client/config');
+const config = Jagfile.load('data/client/config');
 
 // ----
 
-const texturePack = loadPack('dump/pack/texture.pack');
+const texturePack = loadPack('data/src/pack/texture.pack');
 const floPack = [];
 const floConfig = [];
 
@@ -64,13 +64,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/flo.pack',
+    'data/src/pack/flo.pack',
     floPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.flo', floConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.flo', floConfig.join('\n') + '\n');
 
 // ----
 
@@ -169,13 +169,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/idk.pack',
+    'data/src/pack/idk.pack',
     idkPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.idk', idkConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.idk', idkConfig.join('\n') + '\n');
 
 // ----
 
@@ -339,19 +339,19 @@ for (let id = 0; id < count; id++) {
         } else if (code === 68) {
             locConfig.push(`mapscene=${loc.g2()}`);
         } else if (code === 69) {
-            // top = 1
-            // right = 2
-            // bottom = 4
-            // left = 8
+            // north = 1
+            // east = 2
+            // south = 4
+            // west = 8
             const flags = loc.g1();
             if ((flags & 0x1) === 0) {
-                locConfig.push('forceapproach=top');
+                locConfig.push('forceapproach=north');
             } else if ((flags & 0x2) === 0) {
-                locConfig.push('forceapproach=right');
+                locConfig.push('forceapproach=east');
             } else if ((flags & 0x4) === 0) {
-                locConfig.push('forceapproach=bottom');
+                locConfig.push('forceapproach=south');
             } else if ((flags & 0x8) === 0) {
-                locConfig.push('forceapproach=left');
+                locConfig.push('forceapproach=west');
             }
         } else if (code === 70) {
             locConfig.push(`xoff=${loc.g2s()}`);
@@ -369,13 +369,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/loc.pack',
+    'data/src/pack/loc.pack',
     locPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.loc', locConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.loc', locConfig.join('\n') + '\n');
 
 // ----
 
@@ -445,7 +445,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 92) {
             npcConfig.push(`code92=${npc.g2()}`);
         } else if (code === 93) {
-            npcConfig.push('visonmap=false');
+            npcConfig.push('minimap=no');
         } else if (code === 95) {
             let level: number | string = npc.g2();
             if (level === 0) {
@@ -465,13 +465,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/npc.pack',
+    'data/src/pack/npc.pack',
     npcPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.npc', npcConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.npc', npcConfig.join('\n') + '\n');
 
 // ----
 
@@ -572,13 +572,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/obj.pack',
+    'data/src/pack/obj.pack',
     objPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.obj', objConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.obj', objConfig.join('\n') + '\n');
 
 // ----
 
@@ -684,13 +684,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/seq.pack',
+    'data/src/pack/seq.pack',
     seqPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.seq', seqConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.seq', seqConfig.join('\n') + '\n');
 
 // ----
 
@@ -746,13 +746,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/spotanim.pack',
+    'data/src/pack/spotanim.pack',
     spotanimPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.spotanim', spotanimConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.spotanim', spotanimConfig.join('\n') + '\n');
 
 // ----
 
@@ -806,10 +806,10 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'dump/pack/varp.pack',
+    'data/src/pack/varp.pack',
     varpPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('dump/src/scripts/all.varp', varpConfig.join('\n') + '\n');
+fs.writeFileSync('data/src/scripts/all.varp', varpConfig.join('\n') + '\n');

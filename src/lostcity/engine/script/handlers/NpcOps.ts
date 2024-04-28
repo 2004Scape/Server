@@ -21,6 +21,21 @@ import Player from '#lostcity/entity/Player.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
+import {
+    check,
+    CoordValid,
+    DurationValid,
+    HitTypeValid,
+    HuntTypeValid,
+    NpcModeValid,
+    NpcStatValid,
+    NpcTypeValid,
+    NumberNotNull,
+    ParamTypeValid,
+    QueueValid,
+    SpotAnimTypeValid
+} from '#lostcity/engine/script/ScriptInputValidator.js';
+
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
 let npcFindResults: IterableIterator<[number, number]>;
@@ -45,17 +60,9 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_ADD]: state => {
         const [coord, id, duration] = state.popInts(3);
 
-        if (id == -1) {
-            throw new Error('attempted to use obj was null.');
-        }
-
-        if (duration < 1) {
-            throw new Error(`attempted to use duration that was out of range: ${duration}. duration should be greater than zero.`);
-        }
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        check(coord, CoordValid);
+        check(id, NpcTypeValid);
+        check(duration, DurationValid);
 
         const pos = Position.unpackCoord(coord);
         const npcType = NpcType.get(id);
@@ -77,7 +84,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_BASESTAT]: checkedHandler(ActiveNpc, state => {
-        const stat = state.popInt();
+        const stat = check(state.popInt(), NpcStatValid);
+
         state.pushInt(state.activeNpc.baseLevels[stat]);
     }),
 
@@ -109,19 +117,32 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-
         state.activeNpc.faceSquare(pos.x, pos.z);
     }),
 
     [ScriptOpcode.NPC_FINDEXACT]: state => {
-        throw new Error('unimplemented');
+        const [coord, id] = state.popInts(2);
+
+        check(coord, CoordValid);
+        check(id, NpcTypeValid);
+
+        const pos = Position.unpackCoord(coord);
+        npcFindResults = World.getZoneNpcs(pos.x, pos.z, pos.level).entries();
+
+        for (const result of npcFindResults) {
+            const npc = World.getNpc(result[1]);
+            if(npc && npc.type === id && npc.x === pos.x && npc.level === pos.level && npc.z === pos.z) {
+                state.activeNpc = npc;
+                state.pointerAdd(ActiveNpc[state.intOperand]);
+                state.pushInt(1);
+                return;
+            }
+        }
+        state.pushInt(0);
+        return;
     },
 
     [ScriptOpcode.NPC_FINDHERO]: checkedHandler(ActiveNpc, state => {
@@ -144,6 +165,9 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, state => {
         const paramId = state.popInt();
+
+        check(paramId, ParamTypeValid);
+
         const param = ParamType.get(paramId);
         const npc = NpcType.get(state.activeNpc.type);
         if (param.isString()) {
@@ -157,9 +181,8 @@ const NpcOps: CommandHandlers = {
         const delay = state.popInt();
         const arg = state.popInt();
         const queueId = state.popInt() - 1;
-        if (queueId < 0 || queueId >= 20) {
-            throw new Error(`Invalid ai_queue: ${queueId + 1}`);
-        }
+
+        check(queueId, QueueValid);
 
         const type = NpcType.get(state.activeNpc.type);
         const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId, type.id, type.category);
@@ -169,11 +192,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_RANGE]: checkedHandler(ActiveNpc, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
         const npc = state.activeNpc;
@@ -201,22 +220,14 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, state => {
-        const mode = state.popInt();
-
-        if (mode === -1) {
-            throw new Error('attempted to use a hunt mode type that was null.');
-        }
+        const mode = check(state.popInt(), HuntTypeValid);
 
         const huntType = HuntType.get(mode);
         state.activeNpc.huntMode = huntType.id;
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, state => {
-        const mode = state.popInt();
-
-        if (mode > NpcMode.APNPC5) {
-            throw new Error('attempted to use an npc mode that was null.');
-        }
+        const mode = check(state.popInt(), NpcModeValid);
 
         state.activeNpc.mode = mode;
         state.activeNpc.clearWalkSteps();
@@ -245,12 +256,17 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_STAT]: checkedHandler(ActiveNpc, state => {
-        const stat = state.popInt();
+        const stat = check(state.popInt(), NpcStatValid);
+
         state.pushInt(state.activeNpc.levels[stat]);
     }),
 
     [ScriptOpcode.NPC_STATHEAL]: checkedHandler(ActiveNpc, state => {
         const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, NpcStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
 
         const npc = state.activeNpc;
         const base = npc.baseLevels[stat];
@@ -269,8 +285,8 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DAMAGE]: checkedHandler(ActiveNpc, state => {
-        const amount = state.popInt();
-        const type = state.popInt();
+        const amount = check(state.popInt(), NumberNotNull);
+        const type = check(state.popInt(), HitTypeValid);
 
         state.activeNpc.applyDamage(amount, type);
     }),
@@ -282,12 +298,11 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_UID]: checkedHandler(ActiveNpc, state => {
-        const npc = state.activeNpc;
-        state.pushInt(npc.uid);
+        state.pushInt(state.activeNpc.uid);
     }),
 
     [ScriptOpcode.NPC_SETTIMER]: checkedHandler(ActiveNpc, state => {
-        const interval = state.popInt();
+        const interval = check(state.popInt(), NumberNotNull);
 
         state.activeNpc.setTimer(interval);
     }),
@@ -297,15 +312,13 @@ const NpcOps: CommandHandlers = {
         const height = state.popInt();
         const spotanim = state.popInt();
 
+        check(spotanim, SpotAnimTypeValid);
+
         state.activeNpc.spotanim(spotanim, height, delay);
     }),
 
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
 
@@ -339,32 +352,22 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-
         state.activeNpc.teleport(pos.x, pos.z, pos.level);
     }),
 
     [ScriptOpcode.NPC_WALK]: checkedHandler(ActiveNpc, state => {
-        const coord = state.popInt();
-
-        if (coord < 0 || coord > Position.max) {
-            throw new Error(`attempted to use coord that was out of range: ${coord}. Range should be: 0 to ${Position.max}`);
-        }
+        const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-        const npc = state.activeNpc;
-
-        npc.queueWaypoint(pos.x, pos.z);
+        state.activeNpc.queueWaypoint(pos.x, pos.z);
     }),
 
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, state => {
-        const id = state.popInt();
+        const id = check(state.popInt(), NpcTypeValid);
+
         state.activeNpc.changeType(id);
     }),
 
@@ -373,17 +376,26 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], state => {
-        const damage = state.popInt();
+        const damage = check(state.popInt(), NumberNotNull);
 
         state.activeNpc.addHero(state.activePlayer.uid, damage);
     }),
 
-    [ScriptOpcode.NPC_SETMOVECHECK]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.moveCheck = state.popInt();
+    [ScriptOpcode.NPC_WALKTRIGGER]: checkedHandler(ActiveNpc, state => {
+        const [queueId, arg] = state.popInts(2);
+
+        check(queueId, QueueValid);
+
+        state.activeNpc.walktrigger = queueId - 1;
+        state.activeNpc.walktriggerArg = arg;
     }),
 
     [ScriptOpcode.NPC_STATADD]: checkedHandler(ActiveNpc, state => {
         const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, NpcStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
 
         const npc = state.activeNpc;
         const current = npc.levels[stat];
@@ -397,6 +409,10 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_STATSUB]: checkedHandler(ActiveNpc, state => {
         const [stat, constant, percent] = state.popInts(3);
+
+        check(stat, NpcStatValid);
+        check(constant, NumberNotNull);
+        check(percent, NumberNotNull);
 
         const npc = state.activeNpc;
         const current = npc.levels[stat];

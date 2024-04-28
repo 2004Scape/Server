@@ -1,9 +1,7 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, ParamValue } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { StructPack } from '#lostcity/util/PackFile.js';
 
@@ -43,11 +41,11 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'param') {
         const paramKey = value.substring(0, value.indexOf(','));
         const param = ParamType.getByName(paramKey);
@@ -70,17 +68,13 @@ export function parseStructConfig(key: string, value: string): ConfigValue | nul
     }
 }
 
-export function packStructConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(StructPack.size);
-    idx.p2(StructPack.size);
+export function packStructConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(StructPack.size);
+    const server: PackedData = new PackedData(StructPack.size);
 
     for (let i = 0; i < StructPack.size; i++) {
         const debugname = StructPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         const params: ParamValue[] = [];
 
@@ -93,28 +87,28 @@ export function packStructConfigs(configs: Map<string, ConfigLine[]>) {
         }
 
         if (params.length > 0) {
-            dat.p1(249);
+            server.p1(249);
 
-            dat.p1(params.length);
+            server.p1(params.length);
             for (let k = 0; k < params.length; k++) {
                 const paramData = params[k] as ParamValue;
-                dat.p3(paramData.id);
-                dat.pbool(paramData.type === ScriptVarType.STRING);
+                server.p3(paramData.id);
+                server.pbool(paramData.type === ScriptVarType.STRING);
 
                 if (paramData.type === ScriptVarType.STRING) {
-                    dat.pjstr(paramData.value as string);
+                    server.pjstr(paramData.value as string);
                 } else {
-                    dat.p4(paramData.value as number);
+                    server.p4(paramData.value as number);
                 }
             }
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }

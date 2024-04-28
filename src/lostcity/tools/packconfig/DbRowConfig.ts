@@ -1,9 +1,7 @@
-import Packet from '#jagex2/io/Packet.js';
-
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, packStepError } from '#lostcity/tools/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, packStepError, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
 import { DbRowPack, DbTablePack } from '#lostcity/util/PackFile.js';
 
@@ -65,11 +63,11 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
 
         return number;
     } else if (booleanKeys.includes(key)) {
-        if (value !== 'yes' && value !== 'no') {
+        if (!isConfigBoolean(value)) {
             return null;
         }
 
-        return value === 'yes';
+        return getConfigBoolean(value);
     } else if (key === 'table') {
         const index = DbTablePack.getByName(value);
         if (index === -1) {
@@ -84,17 +82,13 @@ export function parseDbRowConfig(key: string, value: string): ConfigValue | null
     }
 }
 
-export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
-    const dat = new Packet();
-    const idx = new Packet();
-    dat.p2(DbRowPack.size);
-    idx.p2(DbRowPack.size);
+export function packDbRowConfigs(configs: Map<string, ConfigLine[]>): { client: PackedData, server: PackedData } {
+    const client: PackedData = new PackedData(DbRowPack.size);
+    const server: PackedData = new PackedData(DbRowPack.size);
 
     for (let i = 0; i < DbRowPack.size; i++) {
         const debugname = DbRowPack.getById(i);
         const config = configs.get(debugname)!;
-
-        const start = dat.pos;
 
         let table = null;
         const data = [];
@@ -124,22 +118,22 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
         }
 
         if (data.length) {
-            dat.p1(3);
+            server.p1(3);
 
-            dat.p1(table!.types.length);
+            server.p1(table!.types.length);
             for (let i = 0; i < table!.types.length; i++) {
-                dat.p1(i);
+                server.p1(i);
 
                 const types = table!.types[i];
-                dat.p1(types.length);
+                server.p1(types.length);
                 for (let j = 0; j < types.length; j++) {
-                    dat.p1(types[j]);
+                    server.p1(types[j]);
                 }
 
                 const columnName = table!.columnNames[i];
                 const fields = data.filter(d => d.column === columnName);
 
-                dat.p1(fields.length);
+                server.p1(fields.length);
                 for (let j = 0; j < fields.length; j++) {
                     const values = fields[j].values;
 
@@ -152,27 +146,27 @@ export function packDbRowConfigs(configs: Map<string, ConfigLine[]>) {
                         }
 
                         if (type === ScriptVarType.STRING) {
-                            dat.pjstr(value as string);
+                            server.pjstr(value as string);
                         } else {
-                            dat.p4(value as number);
+                            server.p4(value as number);
                         }
                     }
                 }
             }
-            dat.p1(255);
+            server.p1(255);
         }
 
         if (table) {
-            dat.p1(4);
-            dat.p2(table.id);
+            server.p1(4);
+            server.p2(table.id);
         }
 
-        dat.p1(250);
-        dat.pjstr(debugname);
+        server.p1(250);
+        server.pjstr(debugname);
 
-        dat.p1(0);
-        idx.p2(dat.pos - start);
+        client.next();
+        server.next();
     }
 
-    return { dat, idx };
+    return { client, server };
 }
