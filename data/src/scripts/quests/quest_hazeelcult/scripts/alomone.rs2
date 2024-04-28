@@ -69,7 +69,7 @@ switch_int(%hazeelcult_progress) {
             ~chatnpc(neutral, "Although your true reward will be later, when Zamorak and I, together, lay waste to this miserable planet, and you are spared as an ally to us.");
             ~mesbox("Hazeel gives you some coins. They seem to be extremely ancient.");
             ~chatnpc(neutral, "And now I must leave you loyal subjects for time is short, and I have many pressing matters to address before I may make my return. I must leave now, and head Northwards");
-            ~chatnpc(neutral, "Hazeel: to join my fellow mahjarrat and regain my strength and powers. I shall return when I am ready to fight my enemies and much blood shall flow across these lands!");
+            ~chatnpc(neutral, "to join my fellow mahjarrat and regain my strength and powers. I shall return when I am ready to fight my enemies and much blood shall flow across these lands!");
             ~mesbox("The cultists let out a mighty cheer"); // intentional missing period
         }
     case ^hazeelcult_complete:
