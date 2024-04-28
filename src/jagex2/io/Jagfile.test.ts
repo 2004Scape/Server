@@ -1,5 +1,3 @@
-import { describe, it, expect } from 'vitest';
-
 import Jagfile, {genHash} from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 

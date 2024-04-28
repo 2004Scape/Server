@@ -1,5 +1,3 @@
-import { vi, describe, it, expect } from 'vitest';
-
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';

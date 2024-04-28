@@ -1,5 +1,3 @@
-import { describe, it, expect } from 'vitest';
-
 import Isaac from '#jagex2/io/Isaac.js';
 
 describe('Isaac', () => {
