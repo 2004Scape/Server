@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { tryParseBoolean, tryParseInt, tryParseString } from './TryParse.js';
+import * as process from 'process';
 
 export default {
     PUBLIC_IP: tryParseString(process.env.PUBLIC_IP, ''),
@@ -31,5 +32,7 @@ export default {
     DB_PASS: tryParseString(process.env.DB_PASS, ''),
     DB_NAME: tryParseString(process.env.DB_NAME, ''),
 
-    ADMIN_IP: tryParseString(process.env.ADMIN_IP, '')
+    ADMIN_IP: tryParseString(process.env.ADMIN_IP, ''),
+
+    SKIP_CRC: tryParseBoolean(process.env.SKIP_CRC, false)
 };
