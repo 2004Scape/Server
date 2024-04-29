@@ -3,6 +3,8 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 import { bitcount, clearBitRange, MASK, setBitRange } from '#lostcity/util/Numbers.js';
 
+import Trig from '#jagex2/Trig.js';
+
 const NumberOps: CommandHandlers = {
     [ScriptOpcode.ADD]: state => {
         const b = state.popInt();
@@ -46,7 +48,8 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.ADDPERCENT]: state => {
-        throw new Error('unimplemented');
+        const [num, percent] = state.popInts(2);
+        state.pushInt((num * percent / 100 + num) | 0);
     },
 
     [ScriptOpcode.SETBIT]: state => {
@@ -161,15 +164,15 @@ const NumberOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SIN_DEG]: state => {
-        throw new Error('unimplemented');
+        state.pushInt(Trig.sin(state.popInt()));
     },
 
     [ScriptOpcode.COS_DEG]: state => {
-        throw new Error('unimplemented');
+        state.pushInt(Trig.cos(state.popInt()));
     },
 
     [ScriptOpcode.ATAN2_DEG]: state => {
-        throw new Error('unimplemented');
+        state.pushInt(Trig.atan2(state.popInt(), state.popInt()));
     },
 
     [ScriptOpcode.ABS]: state => {
