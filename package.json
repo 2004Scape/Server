@@ -32,7 +32,7 @@
     "server:pack": "npm run ts-loader src/lostcity/tools/pack/server.ts",
     "server:watch": "watch \"npm run server:build\" ./data/src/scripts ./src/lostcity/tools",
     "start": "npm run ts-loader src/lostcity/app.ts",
-    "test": "vitest run",
+    "test": "vitest run ./src",
     "todo": "leasot src/ --skip-unsupported --exit-nicely",
     "ts-loader": "node --enable-source-maps --no-warnings --loader ts-node/esm",
     "web": "npm run ts-loader src/lostcity/web.ts"
