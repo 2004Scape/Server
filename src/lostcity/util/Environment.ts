@@ -33,5 +33,7 @@ export default {
 
     ADMIN_IP: tryParseString(process.env.ADMIN_IP, ''),
 
+    SKIP_CRC: tryParseBoolean(process.env.SKIP_CRC, false),
+
     JMODS: tryParseArray(process.env.JMODS?.split(','), ['pazaz'])
 };

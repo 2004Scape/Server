@@ -31,6 +31,7 @@ param=slashdefence,3
 param=crushdefence,2
 param=strengthbonus,10
 param=attackrate,5
+param=ready_baseanim,human_ready_sword_up
 param=slashattack_anim,human_sword_slash
 param=stabattack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2

@@ -552,7 +552,6 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.IF_SETTAB]: checkedHandler(ActivePlayer, state => {
         const [com, tab] = state.popInts(2);
 
-        check(com, NumberNotNull);
         check(tab, NumberNotNull);
 
         state.activePlayer.setTab(com, tab);

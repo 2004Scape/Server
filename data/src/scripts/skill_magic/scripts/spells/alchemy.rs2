@@ -15,7 +15,7 @@ if (~is_alchable($item) = false) {
 // play sound and anim
 sound_synth(high_alchemy, 0, 0);
 anim(human_casthighlvlalchemy, 0);
-spotanim_pl(casthighlvlalchemy, 92, 0);
+spotanim_pl(highlvlalchemy_casting, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
@@ -48,7 +48,7 @@ if (~is_alchable($item) = false) {
 // play sound and anim
 sound_synth(low_alchemy, 0, 0);
 anim(human_castlowlvlalchemy, 0);
-spotanim_pl(castlowlvlalchemy, 92, 0);
+spotanim_pl(lowlvlalchemy_casting, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);

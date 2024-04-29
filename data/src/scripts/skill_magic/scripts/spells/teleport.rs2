@@ -43,7 +43,7 @@ if_close;
 p_stopaction;
 sound_synth(teleport_all, 0, 0);
 anim(human_castteleport, 0);
-spotanim_pl(castteleport, 92, 0);
+spotanim_pl(teleport_casting, 92, 0);
 p_delay(3);
 p_telejump($coord);
 anim(null, 0);

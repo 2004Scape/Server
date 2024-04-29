@@ -51,6 +51,7 @@ head1=model_103_idk_head
 wanderrange=0
 moverestrict=nomove
 category=bank_teller
+param=death_sound,female_death
 
 [npc_496]
 vislevel=hide
@@ -109,6 +110,7 @@ head1=model_103_idk_head
 wanderrange=0
 moverestrict=nomove
 category=bank_teller
+param=death_sound,female_death
 
 [npc_498]
 vislevel=hide
@@ -121,6 +123,7 @@ model1=model_2860_npc
 head1=model_14_npc_head
 wanderrange=0
 moverestrict=nomove
+param=death_anim,fairy_death
 
 [npc_499]
 vislevel=hide

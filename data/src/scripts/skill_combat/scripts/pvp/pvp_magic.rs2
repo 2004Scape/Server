@@ -225,7 +225,7 @@ if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
     .sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
 }
 // no splash sound?
-.spotanim_pl(spotanim_85, 92, $duration);
+.spotanim_pl(failedspell_impact, 92, $duration);
 
 if (.p_finduid(.uid) = true) { // todo: queue this
     ~.pvp_retaliate(uid);

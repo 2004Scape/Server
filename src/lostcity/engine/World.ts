@@ -56,6 +56,7 @@ import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import ClientProt from '#lostcity/server/ClientProt.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 
 class World {
@@ -89,7 +90,7 @@ class World {
     futureUpdates: Map<number, number[]> = new Map();
     queue: LinkList<EntityQueueState> = new LinkList();
 
-    friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
+    friendThread: Worker = createWorker('./src/lostcity/server/FriendThread.ts');
 
     constructor() {
         this.players.fill(null);
@@ -1077,6 +1078,7 @@ class World {
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
+        console.log('Removing npc', npc.nid, 'from zone', zone.index);
         zone.leave(npc);
 
         switch (npc.blockWalk) {

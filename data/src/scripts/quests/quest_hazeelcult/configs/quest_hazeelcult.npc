@@ -125,7 +125,6 @@ model8=model_447_obj_wear
 model9=model_412_npc
 head1=model_103_idk_head
 head2=model_128_npc_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [butler_jones]
@@ -269,10 +268,10 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
-param=attack_anim,human_stafforb_pound
+param=attack_anim,human_stafforb_crush
 param=defend_anim,human_stafforb_defend
 // TODO param=attack_sound,
-// TODO get real animation ids and soun osrs
+// TODO get real animation ids and sound osrs
 // https://www.youtube.com/watch?v=R5MdMtqvxaM&t=418s
 
 [hazeel_cultist]
@@ -309,8 +308,8 @@ defence=4
 param=stabdefence,5
 param=slashdefence,6
 param=crushdefence,8
-param=attack_anim,human_staff_pound
+param=attack_anim,human_staff_crush
 param=defend_anim,human_staff_defend
-// param=defend_sound,
+// param=attack_sound,
 // try get real sound datas and wander/attack distances.
 // https://www.youtube.com/watch?v=tYXi3dBooB4

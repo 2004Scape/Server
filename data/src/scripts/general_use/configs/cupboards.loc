@@ -104,24 +104,3 @@ op2=Close
 forceapproach=east
 category=cupboard_opened
 param=cupboard_other,loc_2612
-
-[loc_2850]
-name=Cupboard
-desc=It's closed.
-model=model_loc_368
-length=2
-op1=Open
-forceapproach=east
-category=cupboard_closed
-param=cupboard_other,loc_2851
-
-[loc_2851]
-name=Cupboard
-desc=It's open.
-model=model_loc_371
-length=2
-op1=Search
-op2=Shut
-forceapproach=east
-category=cupboard_opened
-param=cupboard_other,loc_2850

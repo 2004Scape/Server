@@ -1,0 +1,84 @@
+[loc_2397]
+name=Door
+desc=A solid looking door.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+[loc_2398]
+name=Door
+desc=A solid looking door.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+[loc_2399]
+name=Door
+desc=A solid looking door.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
+
+[loc_2400]
+name=Cupboard
+desc=Might be worth searching.
+model=model_loc_367
+width=2
+length=3
+active=yes
+op1=Open
+forceapproach=east
+param=cupboard_other,loc_2401
+
+[loc_2401]
+name=Cupboard
+desc=Might be worth searching.
+model=model_loc_370
+width=2
+length=3
+active=yes
+op1=Shut
+op2=Search
+forceapproach=east
+param=cupboard_other,loc_2400
+
+[loc_2402]
+name=Bookcase
+desc=A good source of books!
+model=model_loc_380
+length=2
+active=yes
+op2=Check
+
+[loc_2403]
+name=Chest
+desc=Might be worth searching.
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+recol1s=10570
+recol1d=17921
+
+[loc_2404]
+name=Chest
+desc=Might be worth searching.
+model=model_loc_76
+active=yes
+op1=Search
+op2=Close
+forceapproach=north
+recol1s=10570
+recol1d=17921
