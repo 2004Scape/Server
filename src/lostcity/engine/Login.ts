@@ -9,9 +9,10 @@ import Player from '#lostcity/entity/Player.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
 
 class Login {
-    loginThread: Worker = new Worker('./src/lostcity/server/LoginThread.ts');
+    loginThread: Worker = createWorker('./src/lostcity/server/LoginThread.ts');
     loginRequests: Map<string, ClientSocket> = new Map();
     logoutRequests: Set<bigint> = new Set();
 
