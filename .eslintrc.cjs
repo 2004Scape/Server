@@ -56,13 +56,6 @@ module.exports = {
         'no-case-declarations': 'warn',
 
         /**
-         * (jkm) we should not use ts-ignore because it can hide errors
-         * recommend to fix these urgently
-         * (I didn't want to fix and risk breaking the code)
-         */
-        '@typescript-eslint/ban-ts-comment': 'warn',
-
-        /**
          * (jkm)
          * The following rules are included in @typescript-eslint/recommended
          * I have set them to warn instead of error, to avoid having to fix them
