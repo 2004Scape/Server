@@ -11,7 +11,7 @@ if ($shade_coord = null) {
 npc_add($shade_coord, $shade, 1000); // guess
 npc_say("Leave this place mortal!");
 %npc_attacking_uid = uid;
-spotanim_map(spotanim_78, $shade_coord, 0, 0);
+spotanim_map(zamorak_flame, $shade_coord, 0, 0);
 if (finduid(uid) = false) {
     return;
 }

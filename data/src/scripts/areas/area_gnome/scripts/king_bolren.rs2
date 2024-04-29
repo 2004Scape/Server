@@ -135,7 +135,7 @@ while(npc_findnext = true) {
         npc_facesquare(movecoord(coord, 2, 0, 0));
         if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
             npc_say($message);
-            npc_anim(midget_seq_197, 0);
+            npc_anim(gnome_mage_attack, 0);
         }
     }
 }
@@ -145,7 +145,7 @@ while(npc_findnext = true) {
         npc_facesquare(movecoord(coord, 2, 0, 0));
         if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
             npc_say($message);
-            npc_anim(midget_seq_197, 0);
+            npc_anim(gnome_mage_attack, 0);
         }
     }
 }

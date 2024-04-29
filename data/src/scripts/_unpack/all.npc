@@ -5959,7 +5959,7 @@ attack=75
 strength=78
 defence=80
 param=damagetype,^slash_style
-param=attack_anim,human_2h_sword_swipe
+param=attack_anim,human_2h_sword_slash2
 param=defend_anim,human_2h_sword_defend
 // param=attack_sound,
 // param=defend_sound,
@@ -8319,6 +8319,7 @@ model5=model_356_obj_wear
 model6=model_429_idk
 model7=model_185_obj_wear
 head1=model_113_idk_head
+param=death_sound,female_death
 
 [npc_618]
 vislevel=hide
@@ -8342,6 +8343,7 @@ model6=model_348_idk
 model7=model_353_idk
 head1=model_103_idk_head
 head2=model_137_npc_head
+param=death_sound,female_death
 
 [npc_619]
 vislevel=hide
@@ -9946,7 +9948,6 @@ model5=model_419_idk
 model6=model_358_idk
 model7=model_483_npc
 head1=model_103_idk_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [mary]
@@ -9973,7 +9974,6 @@ model6=model_358_idk
 model7=model_483_npc
 model8=model_414_npc
 head1=model_114_idk_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [stanford]
@@ -10079,7 +10079,6 @@ model5=model_419_idk
 model6=model_358_idk
 model7=model_417_npc
 head1=model_113_idk_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [murder_bob]
@@ -10132,7 +10131,6 @@ model5=model_419_idk
 model6=model_358_idk
 model7=model_414_npc
 head1=model_114_idk_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [david]
@@ -10183,7 +10181,6 @@ model4=model_353_idk
 model5=model_419_idk
 model6=model_358_idk
 head1=model_113_idk_head
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [frank]
@@ -10244,7 +10241,6 @@ model6=model_361_obj_wear
 model7=model_509_obj_wear
 head1=model_118_idk_head
 wanderrange=3
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [anabarrel]
@@ -10282,7 +10278,6 @@ model6=model_361_obj_wear
 model7=model_509_obj_wear
 head1=model_115_idk_head
 wanderrange=1
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [npc_825]
@@ -11204,7 +11199,7 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=rangebonus,7
-param=attack_anim,human_staff_pound
+param=attack_anim,human_staff_crush
 param=defend_anim,human_staff_defend
 // param=attack_sound,staff_double
 
@@ -11249,9 +11244,9 @@ magic=0
 ranged=0
 param=strengthbonus,3
 param=rangebonus,7
-param=attack_anim,human_staff_pound
+param=attack_anim,human_staff_crush
 param=defend_anim,human_staff_defend
-// param=attack_sound,staff_double
+// osrs param=attack_sound,staff_double
 // sound and animation data taken normal version ungadulu
 // wander distance attack distance missing.
 
@@ -11331,7 +11326,6 @@ model8=model_376_obj_wear
 head1=model_113_idk_head
 head2=model_101_obj_wear
 wanderrange=3
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [npc_933]
@@ -12168,7 +12162,6 @@ model7=model_479_npc
 model8=model_447_obj_wear
 model9=model_534_obj_wear
 model10=model_377_obj_wear
-param=defend_sound,female_hit
 param=death_sound,female_death
 
 [npc_993]
