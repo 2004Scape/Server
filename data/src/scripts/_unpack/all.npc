@@ -2578,6 +2578,7 @@ param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
 param=attack_sound,horse_hit
 param=defend_sound,horse_hit
+category=unicorn
 
 [npc_90]
 name=Skeleton
@@ -3887,6 +3888,7 @@ param=death_anim,unicorn_death
 param=attack_sound,horse_hit
 param=defend_sound,horse_hit
 huntmode=cowardly
+category=unicorn
 
 [npc_134]
 walkanim=giantspider_walk
