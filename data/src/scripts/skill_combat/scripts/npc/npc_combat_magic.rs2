@@ -117,7 +117,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
     }
     // splash sound would play here, doesnt exist in this rev?
     // sound_synth(, 0, $duration);
-    spotanim_pl(spotanim_85, 92, $duration);
+    spotanim_pl(failedspell_impact, 92, $duration);
     // splashing in osrs causes insta auto retal
     queue(playerhit_n_retaliate, 0, npc_uid);
 }

@@ -14,7 +14,7 @@ if (finduid(uid) = false) {
     return;
 }
 sound_synth(dryad_appear, 0, 0);
-spotanim_map(snare_hit, npc_coord, 100, 0); // osrs
+spotanim_map(snare_impact, npc_coord, 100, 0); // osrs
 npc_delay(1);
 npc_setmode(opplayer2);
 
