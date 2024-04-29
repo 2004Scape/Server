@@ -27,8 +27,7 @@ import {
     NpcTypeValid,
     NumberNotNull,
     ObjTypeValid,
-    SpotAnimTypeValid,
-    StringNotNull
+    SpotAnimTypeValid
 } from '#lostcity/engine/script/ScriptInputValidator.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
@@ -399,7 +398,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.STAFFMODLEVEL]: checkedHandler(ActivePlayer, state => {
-        throw new Error('unimplemented');
+        state.pushInt(state.activePlayer.staffModLevel);
     }),
 
     [ScriptOpcode.STAT]: checkedHandler(ActivePlayer, state => {

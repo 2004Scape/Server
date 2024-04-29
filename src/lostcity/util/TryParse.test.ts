@@ -1,4 +1,4 @@
-import { tryParseBoolean, tryParseInt, tryParseString } from './TryParse.js';
+import {tryParseBoolean, tryParseInt, tryParseString, tryParseArray} from './TryParse.js';
 
 describe('TryParse', (): void => {
     describe('tryParseBoolean', (): void => {
@@ -25,6 +25,20 @@ describe('TryParse', (): void => {
         it('should parse strings', (): void => {
             expect(tryParseString('string', 'defaultValue')).toEqual('string');
             expect(tryParseString(undefined, 'defaultValue')).toEqual('defaultValue');
+        });
+    });
+
+    describe('tryParseStringArray', (): void => {
+        it('should parse string arrays', (): void => {
+            expect(tryParseArray(['string'], [])).toEqual(['string']);
+            expect(tryParseArray(undefined, [])).toEqual([]);
+        });
+    });
+
+    describe('tryParseNumberArray', (): void => {
+        it('should parse number arrays', (): void => {
+            expect(tryParseArray([69], [])).toEqual([69]);
+            expect(tryParseArray(undefined, [])).toEqual([]);
         });
     });
 });
