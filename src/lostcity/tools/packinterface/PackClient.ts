@@ -1,6 +1,4 @@
 import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet from '#jagex2/io/Packet.js';
-import Environment from '#lostcity/util/Environment.js';
 import { shouldBuild } from '#lostcity/util/PackFile.js';
 import { packInterface } from './PackShared.js';
 

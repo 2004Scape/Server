@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { loadDir, loadPack } from '#lostcity/util/NameMap.js';
-import { crawlConfigNames, regenPack } from '#lostcity/util/PackIds.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import DbTableType from '#lostcity/cache/DbTableType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';

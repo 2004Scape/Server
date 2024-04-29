@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import BZip2 from '#jagex2/io/BZip2.js';
 import Packet from '#jagex2/io/Packet.js';
 

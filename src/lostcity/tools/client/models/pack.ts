@@ -1,5 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
-import { loadOrder, loadPack, listFiles } from '#lostcity/util/NameMap.js';
+import { loadOrder, listFiles } from '#lostcity/util/NameMap.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { AnimPack, BasePack, ModelPack, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 

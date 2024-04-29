@@ -35,7 +35,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module'
     },
-    plugins: ['@typescript-eslint'],
+    plugins: ['@typescript-eslint', 'unused-imports'],
     rules: {
         indent: ['error', 4, { SwitchCase: 1 }],
         quotes: ['error', 'single', { avoidEscape: true }],
@@ -63,6 +63,15 @@ module.exports = {
          */
         '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/no-explicit-any': 'warn',
-        '@typescript-eslint/no-unused-vars': 'warn'
+
+        /**
+         * https://eslint.org/docs/latest/rules/no-unused-vars
+         */
+        '@typescript-eslint/no-unused-vars': 'warn',
+
+        /**
+         * https://github.com/sweepline/eslint-plugin-unused-imports
+         */
+        'unused-imports/no-unused-imports': 'error',
     }
 };

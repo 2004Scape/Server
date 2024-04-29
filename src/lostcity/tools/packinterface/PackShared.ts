@@ -1,5 +1,5 @@
 import Packet from '#jagex2/io/Packet.js';
-import { loadDir, loadOrder, loadPack } from '#lostcity/util/NameMap.js';
+import { loadDir, loadOrder } from '#lostcity/util/NameMap.js';
 import { InterfacePack, ModelPack, ObjPack, SeqPack, VarpPack } from '#lostcity/util/PackFile.js';
 
 function nameToType(name: string) {
