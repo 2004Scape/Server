@@ -494,30 +494,28 @@ export default class Player extends PathingEntity {
 
         this.playerLog('Cheat ran', cheat);
 
-        if (cmd === 'reload') {
-            if (Environment.LOCAL_DEV) {
-                // TODO: only reload config types that have changed to save time
-                CategoryType.load('data/pack');
-                ParamType.load('data/pack');
-                EnumType.load('data/pack');
-                StructType.load('data/pack');
-                InvType.load('data/pack');
-                IdkType.load('data/pack');
-                VarPlayerType.load('data/pack');
-                ObjType.load('data/pack', World.members);
-                LocType.load('data/pack');
-                NpcType.load('data/pack');
-                Component.load('data/pack');
-                SeqType.load('data/pack');
-                SpotanimType.load('data/pack');
-                MesanimType.load('data/pack');
-                DbTableType.load('data/pack');
-                DbRowType.load('data/pack');
-                HuntType.load('data/pack');
+        if (cmd === 'reload' && Environment.LOCAL_DEV) {
+            // TODO: only reload config types that have changed to save time
+            CategoryType.load('data/pack');
+            ParamType.load('data/pack');
+            EnumType.load('data/pack');
+            StructType.load('data/pack');
+            InvType.load('data/pack');
+            IdkType.load('data/pack');
+            VarPlayerType.load('data/pack');
+            ObjType.load('data/pack', World.members);
+            LocType.load('data/pack');
+            NpcType.load('data/pack');
+            Component.load('data/pack');
+            SeqType.load('data/pack');
+            SpotanimType.load('data/pack');
+            MesanimType.load('data/pack');
+            DbTableType.load('data/pack');
+            DbRowType.load('data/pack');
+            HuntType.load('data/pack');
 
-                const count = ScriptProvider.load('data/pack');
-                this.messageGame(`Reloaded ${count} scripts.`);
-            }
+            const count = ScriptProvider.load('data/pack');
+            this.messageGame(`Reloaded ${count} scripts.`);
         } else if (cmd === 'setvar') {
             const varp = args.shift();
             if (!varp) {
