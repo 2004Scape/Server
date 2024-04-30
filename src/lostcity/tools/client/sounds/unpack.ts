@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 if (!fs.existsSync('data/src/sounds')) {
     fs.mkdirSync('data/src/sounds', { recursive: true });
@@ -13,8 +13,8 @@ let order = '';
 class Wave {
     static tracks: Wave[] = [];
 
-    static unpack(dat: Packet) {
-        while (true && dat.available > 0) {
+    static unpack(dat: Packet2) {
+        while (dat.available > 0) {
             const id = dat.g2();
             if (id === 65535) {
                 break;
@@ -26,7 +26,13 @@ class Wave {
             const end = dat.pos;
 
             order += `${id}\n`;
-            fs.writeFileSync(`data/src/sounds/sound_${id}.synth`, dat.gdata(end - start, start, false));
+
+            const data = new Uint8Array((end - start) - start);
+            dat.pos = start;
+            dat.gdata(data, 0, data.length);
+            dat.pos = start;
+
+            fs.writeFileSync(`data/src/sounds/sound_${id}.synth`, data);
         }
 
         for (let i = 0; i < Wave.tracks.length; i++) {
@@ -38,7 +44,7 @@ class Wave {
     loopBegin = 0;
     loopEnd = 0;
 
-    decode(dat: Packet) {
+    decode(dat: Packet2) {
         for (let i = 0; i < 10; i++) {
             if (dat.g1() != 0) {
                 dat.pos--;
@@ -70,7 +76,7 @@ class Tone {
     length = 0;
     start = 0;
 
-    decode(dat: Packet) {
+    decode(dat: Packet2) {
         this.frequencyBase = new Envelope();
         this.frequencyBase.decode(dat);
 
@@ -133,7 +139,7 @@ class Envelope {
     shapeDelta: number[] = [];
     shapePeak: number[] = [];
 
-    decode(dat: Packet) {
+    decode(dat: Packet2) {
         this.form = dat.g1();
         this.start = dat.g4();
         this.end = dat.g4();

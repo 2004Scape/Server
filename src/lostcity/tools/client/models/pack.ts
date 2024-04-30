@@ -1,4 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 import { loadOrder, listFiles } from '#lostcity/util/NameMap.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { AnimPack, BasePack, ModelPack, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
@@ -33,9 +33,9 @@ export function packClientModel() {
 
     // ----
 
-    const base_head = new Packet();
-    const base_type = new Packet();
-    const base_label = new Packet();
+    const base_head = Packet2.alloc(1);
+    const base_type = Packet2.alloc(1);
+    const base_label = Packet2.alloc(2);
 
     {
         base_head.p2(baseOrder.length);
@@ -58,9 +58,9 @@ export function packClientModel() {
                 continue;
             }
 
-            const data = Packet.load(file);
+            const data = Packet2.load(file);
 
-            data.pos = data.length - 4;
+            data.pos = data.data.length - 4;
             const typeLength = data.g2();
             const labelLength = data.g2();
 
@@ -68,8 +68,14 @@ export function packClientModel() {
             base_head.p1(typeLength);
 
             data.pos = 0;
-            base_type.pdata(data.gdata(typeLength));
-            base_label.pdata(data.gdata(labelLength));
+
+            const p_typeLength = new Uint8Array(typeLength);
+            data.gdata(p_typeLength, 0, p_typeLength.length);
+            base_type.pdata(p_typeLength, 0, p_typeLength.length);
+
+            const p_labelLength = new Uint8Array(labelLength);
+            data.gdata(p_labelLength, 0, p_labelLength.length);
+            base_label.pdata(p_labelLength, 0, p_labelLength.length);
         }
 
         // base_head.save('dump/base_head.dat');
@@ -79,10 +85,10 @@ export function packClientModel() {
 
     // ----
 
-    const frame_head = new Packet();
-    const frame_tran1 = new Packet();
-    const frame_tran2 = new Packet();
-    const frame_del = new Packet();
+    const frame_head = Packet2.alloc(3);
+    const frame_tran1 = Packet2.alloc(4);
+    const frame_tran2 = Packet2.alloc(4);
+    const frame_del = Packet2.alloc(2);
 
     {
         frame_head.p2(animOrder.length);
@@ -105,19 +111,33 @@ export function packClientModel() {
                 continue;
             }
 
-            const data = Packet.load(file);
+            const data = Packet2.load(file);
 
-            data.pos = data.length - 8;
+            data.pos = data.data.length - 8;
             const headLength = data.g2();
             const tran1Length = data.g2();
             const tran2Length = data.g2();
             const delLength = data.g2();
 
             data.pos = 0;
-            frame_head.pdata(data.gdata(headLength));
-            frame_tran1.pdata(data.gdata(tran1Length));
-            frame_tran2.pdata(data.gdata(tran2Length));
-            frame_del.pdata(data.gdata(delLength));
+
+            const p_headLength = new Uint8Array(headLength);
+            data.gdata(p_headLength, 0, p_headLength.length);
+
+            const p_tran1Length = new Uint8Array(tran1Length);
+            data.gdata(p_tran1Length, 0, p_tran1Length.length);
+
+            const p_tran2Length = new Uint8Array(tran2Length);
+            data.gdata(p_tran2Length, 0, p_tran2Length.length);
+
+            const p_delLength = new Uint8Array(delLength);
+            data.gdata(p_delLength, 0, p_delLength.length);
+
+
+            frame_head.pdata(p_headLength, 0, p_headLength.length);
+            frame_tran1.pdata(p_tran1Length, 0, p_tran1Length.length);
+            frame_tran2.pdata(p_tran2Length, 0, p_tran2Length.length);
+            frame_del.pdata(p_delLength, 0, p_delLength.length);
         }
 
         // frame_head.save('dump/frame_head.dat');
@@ -128,20 +148,20 @@ export function packClientModel() {
 
     // ----
 
-    const ob_head = new Packet();
-    const ob_face1 = new Packet();
-    const ob_face2 = new Packet();
-    const ob_face3 = new Packet();
-    const ob_face4 = new Packet();
-    const ob_face5 = new Packet();
-    const ob_point1 = new Packet();
-    const ob_point2 = new Packet();
-    const ob_point3 = new Packet();
-    const ob_point4 = new Packet();
-    const ob_point5 = new Packet();
-    const ob_vertex1 = new Packet();
-    const ob_vertex2 = new Packet();
-    const ob_axis = new Packet();
+    const ob_head = Packet2.alloc(3);
+    const ob_face1 = Packet2.alloc(5);
+    const ob_face2 = Packet2.alloc(4);
+    const ob_face3 = Packet2.alloc(4);
+    const ob_face4 = Packet2.alloc(3);
+    const ob_face5 = Packet2.alloc(3);
+    const ob_point1 = Packet2.alloc(4);
+    const ob_point2 = Packet2.alloc(4);
+    const ob_point3 = Packet2.alloc(4);
+    const ob_point4 = Packet2.alloc(4);
+    const ob_point5 = Packet2.alloc(4);
+    const ob_vertex1 = Packet2.alloc(5);
+    const ob_vertex2 = Packet2.alloc(4);
+    const ob_axis = Packet2.alloc(3);
 
     {
         ob_head.p2(modelOrder.length);
@@ -156,9 +176,9 @@ export function packClientModel() {
                 continue;
             }
 
-            const data = Packet.load(file);
+            const data = Packet2.load(file);
 
-            data.pos = data.length - 18;
+            data.pos = data.data.length - 18;
             const vertexCount = data.g2();
             const faceCount = data.g2();
             const texturedFaceCount = data.g1();
@@ -185,35 +205,68 @@ export function packClientModel() {
             ob_head.p1(hasVertexLabels);
 
             data.pos = 0;
-            ob_point1.pdata(data.gdata(vertexCount));
-            ob_vertex2.pdata(data.gdata(faceCount));
+
+            const p_vertexCount = new Uint8Array(vertexCount);
+            data.gdata(p_vertexCount, 0, p_vertexCount.length);
+            ob_point1.pdata(p_vertexCount, 0, p_vertexCount.length);
+
+            const p_faceCount = new Uint8Array(faceCount);
+            data.gdata(p_faceCount, 0, p_faceCount.length);
+            ob_vertex2.pdata(p_faceCount, 0, p_faceCount.length);
 
             if (hasPriorities == 255) {
-                ob_face3.pdata(data.gdata(faceCount));
+                const p_faceCount = new Uint8Array(faceCount);
+                data.gdata(p_faceCount, 0, p_faceCount.length);
+                ob_face3.pdata(p_faceCount, 0, p_faceCount.length);
             }
 
             if (hasFaceLabels == 1) {
-                ob_face5.pdata(data.gdata(faceCount));
+                const p_faceCount = new Uint8Array(faceCount);
+                data.gdata(p_faceCount, 0, p_faceCount.length);
+                ob_face5.pdata(p_faceCount, 0, p_faceCount.length);
             }
 
             if (hasInfo == 1) {
-                ob_face2.pdata(data.gdata(faceCount));
+                const p_faceCount = new Uint8Array(faceCount);
+                data.gdata(p_faceCount, 0, p_faceCount.length);
+                ob_face2.pdata(p_faceCount, 0, p_faceCount.length);
             }
 
             if (hasVertexLabels == 1) {
-                ob_point5.pdata(data.gdata(vertexCount));
+                const p_vertexCount = new Uint8Array(vertexCount);
+                data.gdata(p_vertexCount, 0, p_vertexCount.length);
+                ob_point5.pdata(p_vertexCount, 0, p_vertexCount.length);
             }
 
             if (hasAlpha == 1) {
-                ob_face4.pdata(data.gdata(faceCount));
+                const p_faceCount = new Uint8Array(faceCount);
+                data.gdata(p_faceCount, 0, p_faceCount.length);
+                ob_face4.pdata(p_faceCount, 0, p_faceCount.length);
             }
 
-            ob_vertex1.pdata(data.gdata(faceVertexLength));
-            ob_face1.pdata(data.gdata(faceCount * 2));
-            ob_axis.pdata(data.gdata(texturedFaceCount * 6));
-            ob_point2.pdata(data.gdata(vertexXLength));
-            ob_point3.pdata(data.gdata(vertexYLength));
-            ob_point4.pdata(data.gdata(vertexZLength));
+            const p_faceVertexLength = new Uint8Array(faceVertexLength);
+            data.gdata(p_faceVertexLength, 0, p_faceVertexLength.length);
+            ob_vertex1.pdata(p_faceVertexLength, 0, p_faceVertexLength.length);
+
+            const p_faceCount2 = new Uint8Array(faceCount * 2);
+            data.gdata(p_faceCount2, 0, p_faceCount2.length);
+            ob_face1.pdata(p_faceCount2, 0, p_faceCount2.length);
+
+            const p_texturedFaceCount = new Uint8Array(texturedFaceCount * 6);
+            data.gdata(p_texturedFaceCount, 0, p_texturedFaceCount.length);
+            ob_axis.pdata(p_texturedFaceCount, 0, p_texturedFaceCount.length);
+
+            const p_vertexXLength = new Uint8Array(vertexXLength);
+            data.gdata(p_vertexXLength, 0, p_vertexXLength.length);
+            ob_point2.pdata(p_vertexXLength, 0, p_vertexXLength.length);
+
+            const p_vertexYLength = new Uint8Array(vertexYLength);
+            data.gdata(p_vertexYLength, 0, p_vertexYLength.length);
+            ob_point3.pdata(p_vertexYLength, 0, p_vertexYLength.length);
+
+            const p_vertexZLength = new Uint8Array(vertexZLength);
+            data.gdata(p_vertexZLength, 0, p_vertexZLength.length);
+            ob_point4.pdata(p_vertexZLength, 0, p_vertexZLength.length);
         }
 
         // ob_head.save('dump/ob_head.dat');
@@ -259,5 +312,27 @@ export function packClientModel() {
     jag.write('ob_axis.dat', ob_axis);
 
     jag.save('data/pack/client/models');
+
+    base_label.release();
+    ob_point1.release();
+    ob_point2.release();
+    ob_point3.release();
+    ob_point4.release();
+    ob_point5.release();
+    ob_head.release();
+    base_head.release();
+    frame_head.release();
+    frame_tran1.release();
+    frame_tran2.release();
+    ob_vertex1.release();
+    ob_vertex2.release();
+    frame_del.release();
+    base_type.release();
+    ob_face1.release();
+    ob_face2.release();
+    ob_face3.release();
+    ob_face4.release();
+    ob_face5.release();
+    ob_axis.release();
     //console.timeEnd('models.jag');
 }

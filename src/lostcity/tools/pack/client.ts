@@ -9,6 +9,7 @@ import { packClientTexture } from '#lostcity/tools/client/textures/pack.js';
 import { packClientMedia } from '#lostcity/tools/client/media/pack.js';
 import { packConfigs } from '#lostcity/tools/packconfig/PackShared.js';
 
+console.time('packing client...');
 await packClientTitle();
 packConfigs();
 packClientInterface();
@@ -20,3 +21,4 @@ packClientSound();
 
 packClientMap();
 packClientMusic();
+console.timeEnd('packing client...');

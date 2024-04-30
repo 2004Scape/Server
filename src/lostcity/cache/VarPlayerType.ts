@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
@@ -22,7 +22,7 @@ export default class VarPlayerType extends ConfigType {
             return;
         }
 
-        const server = Packet.load(`${dir}/server/varp.dat`);
+        const server = Packet2.load(`${dir}/server/varp.dat`);
         const count = server.g2();
 
         const jag = Jagfile.load(`${dir}/client/config`);
@@ -73,29 +73,21 @@ export default class VarPlayerType extends ConfigType {
     protect = true;
     transmit = false;
 
-    decode(opcode: number, packet: Packet) {
-        switch (opcode) {
-            case 1:
-                this.scope = packet.g1();
-                break;
-            case 2:
-                this.type = packet.g1();
-                break;
-            case 4:
-                this.protect = false;
-                break;
-            case 5:
-                this.clientcode = packet.g2();
-                break;
-            case 6:
-                this.transmit = true;
-                break;
-            case 250:
-                this.debugname = packet.gjstr();
-                break;
-            default:
-                console.error(`Unrecognized varp config code: ${opcode}`);
-                break;
+    decode(code: number, dat: Packet2) {
+        if (code === 1) {
+            this.scope = dat.g1();
+        } else if (code === 2) {
+            this.type = dat.g1();
+        } else if (code === 4) {
+            this.protect = false;
+        } else if (code === 5) {
+            this.clientcode = dat.g2();
+        } else if (code === 6) {
+            this.transmit = true;
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
+        } else {
+            console.error(`Unrecognized varp config code: ${code}`);
         }
     }
 }

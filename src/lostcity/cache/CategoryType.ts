@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 
@@ -18,7 +18,7 @@ export default class CategoryType extends ConfigType {
             return;
         }
 
-        const dat = Packet.load(`${dir}/server/category.dat`);
+        const dat = Packet2.load(`${dir}/server/category.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
@@ -56,8 +56,8 @@ export default class CategoryType extends ConfigType {
 
     // ----
 
-    decode(opcode: number, packet: Packet) {
-        this.debugname = packet.gjstr();
+    decode(code: number, dat: Packet2) {
+        this.debugname = dat.gjstr();
     }
 
     toString() {

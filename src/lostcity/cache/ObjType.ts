@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/ParamHelper.js';
@@ -20,7 +20,7 @@ export default class ObjType extends ConfigType {
             return;
         }
 
-        const server = Packet.load(`${dir}/server/obj.dat`);
+        const server = Packet2.load(`${dir}/server/obj.dat`);
         const count = server.g2();
 
         const jag = Jagfile.load(`${dir}/client/config`);
@@ -163,7 +163,7 @@ export default class ObjType extends ConfigType {
     respawnrate = 100; // default to 1-minute
     params: ParamMap = new Map();
 
-    decode(code: number, dat: Packet): void {
+    decode(code: number, dat: Packet2): void {
         if (code === 1) {
             this.model = dat.g2();
         } else if (code === 2) {
@@ -187,7 +187,7 @@ export default class ObjType extends ConfigType {
         } else if (code === 11) {
             this.stackable = true;
         } else if (code === 12) {
-            this.cost = dat.g4s();
+            this.cost = dat.g4();
         } else if (code === 13) {
             this.wearpos = dat.g1();
         } else if (code === 14) {
@@ -196,12 +196,12 @@ export default class ObjType extends ConfigType {
             this.members = true;
         } else if (code === 23) {
             this.manwear = dat.g2();
-            this.manwearOffsetY = dat.g1s();
+            this.manwearOffsetY = dat.g1b();
         } else if (code === 24) {
             this.manwear2 = dat.g2();
         } else if (code === 25) {
             this.womanwear = dat.g2();
-            this.womanwearOffsetY = dat.g1s();
+            this.womanwearOffsetY = dat.g1b();
         } else if (code === 26) {
             this.womanwear2 = dat.g2();
         } else if (code === 27) {

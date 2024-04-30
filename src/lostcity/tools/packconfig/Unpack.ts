@@ -312,9 +312,9 @@ for (let id = 0; id < count; id++) {
         } else if (code === 28) {
             locConfig.push(`wallwidth=${loc.g1()}`);
         } else if (code === 29) {
-            locConfig.push(`ambient=${loc.g1s()}`);
+            locConfig.push(`ambient=${loc.g1b()}`);
         } else if (code === 39) {
-            locConfig.push(`contrast=${loc.g1s()}`);
+            locConfig.push(`contrast=${loc.g1b()}`);
         } else if (code >= 30 && code < 39) {
             locConfig.push(`op${code - 30 + 1}=${loc.gjstr()}`);
         } else if (code === 40) {

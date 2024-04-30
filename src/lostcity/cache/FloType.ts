@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
@@ -18,7 +18,7 @@ export default class FloType extends ConfigType {
             return;
         }
 
-        const server = Packet.load(`${dir}/server/flo.dat`);
+        const server = Packet2.load(`${dir}/server/flo.dat`);
         const count = server.g2();
 
         const jag = Jagfile.load(`${dir}/client/config`);
@@ -55,7 +55,7 @@ export default class FloType extends ConfigType {
         return this.get(id);
     }
 
-    decode(code: number, dat: Packet): void {
+    decode(code: number, dat: Packet2): void {
         if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
