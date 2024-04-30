@@ -50,8 +50,8 @@ export class PackedData {
     marker: number;
 
     constructor(size: number) {
-        this.dat = new Packet2(new Uint8Array(200_000));
-        this.idx = new Packet2(new Uint8Array(200_000));
+        this.dat = Packet2.alloc(4);
+        this.idx = Packet2.alloc(2);
         this.size = size;
 
         this.dat.p2(size);
@@ -308,6 +308,8 @@ if (shouldBuild('data/src/scripts', '.param', 'data/pack/server/param.dat')) {
     readConfigs('.param', ['type'], parseParamConfig, packParamConfigs, () => {}, (dat: Packet2, idx: Packet2) => {
         dat.save('data/pack/server/param.dat');
         idx.save('data/pack/server/param.idx');
+        dat.release();
+        idx.release();
     });
 }
 
@@ -411,6 +413,8 @@ export function packConfigs() {
         readConfigs('.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/dbtable.dat');
             idx.save('data/pack/server/dbtable.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .dbtable');
     }
@@ -429,6 +433,8 @@ export function packConfigs() {
         readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/dbrow.dat');
             idx.save('data/pack/server/dbrow.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .dbrow');
     }
@@ -442,6 +448,8 @@ export function packConfigs() {
         readConfigs('.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/enum.dat');
             idx.save('data/pack/server/enum.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .enum');
     }
@@ -455,6 +463,8 @@ export function packConfigs() {
         readConfigs('.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/inv.dat');
             idx.save('data/pack/server/inv.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .inv');
     }
@@ -468,6 +478,8 @@ export function packConfigs() {
         readConfigs('.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/mesanim.dat');
             idx.save('data/pack/server/mesanim.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .mesanim');
     }
@@ -481,6 +493,8 @@ export function packConfigs() {
         readConfigs('.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/struct.dat');
             idx.save('data/pack/server/struct.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .struct');
     }
@@ -504,6 +518,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/seq.dat');
             idx.save('data/pack/server/seq.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .seq');
     }
@@ -525,6 +541,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/loc.dat');
             idx.save('data/pack/server/loc.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .loc');
     }
@@ -546,6 +564,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/flo.dat');
             idx.save('data/pack/server/flo.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .flo');
     }
@@ -567,6 +587,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/spotanim.dat');
             idx.save('data/pack/server/spotanim.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .spotanim');
     }
@@ -588,6 +610,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/npc.dat');
             idx.save('data/pack/server/npc.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .npc');
     }
@@ -609,6 +633,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/obj.dat');
             idx.save('data/pack/server/obj.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .obj');
     }
@@ -630,6 +656,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/idk.dat');
             idx.save('data/pack/server/idk.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .idk');
     }
@@ -651,6 +679,8 @@ export function packConfigs() {
         }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/varp.dat');
             idx.save('data/pack/server/varp.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .varp');
     }
@@ -664,6 +694,8 @@ export function packConfigs() {
         readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/hunt.dat');
             idx.save('data/pack/server/hunt.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .hunt');
     }
@@ -677,6 +709,8 @@ export function packConfigs() {
         readConfigs('.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/varn.dat');
             idx.save('data/pack/server/varn.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .varn');
     }
@@ -690,6 +724,8 @@ export function packConfigs() {
         readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/vars.dat');
             idx.save('data/pack/server/vars.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .vars');
     }
