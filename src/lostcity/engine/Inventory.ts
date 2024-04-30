@@ -330,9 +330,17 @@ export class Inventory {
         this.set(to, temp);
     }
 
+    // REVIEW: This method isn't used anywhere
     shift() {
-        // @ts-expect-error not valid typescript
-        this.items = this.items.sort((a, b) => (a === null) - (b === null) || +(a > b) || -(a < b));
+        this.items = this.items.sort((a: Item | null, b: Item | null) => {
+            if (a === null || b === null) {
+                // null values go to the end of the array
+                return +(a === null) - +(b === null);
+            } else {
+                return +(a > b) || -(a < b);
+            }
+        });
+
         this.update = true;
     }
 

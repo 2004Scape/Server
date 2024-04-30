@@ -7,7 +7,7 @@ import { db } from '#lostcity/db/query.js';
 import NetworkStream from '#lostcity/server/NetworkStream.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { fromBase37, toDisplayName } from '#jagex2/jstring/JString.js';
+import { fromBase37 } from '#jagex2/jstring/JString.js';
 
 export class FriendServer {
     private server: net.Server;

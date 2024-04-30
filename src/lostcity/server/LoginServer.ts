@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+import { fromBase37 } from '#jagex2/jstring/JString.js';
 
 import { db } from '#lostcity/db/query.js';
 
