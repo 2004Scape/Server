@@ -126,7 +126,7 @@ export default class Jagfile {
         });
     }
 
-    save(path: string, doNotCompressWhole: boolean = false): Packet2 {
+    save(path: string, doNotCompressWhole: boolean = false): void {
         let buf: Packet2 = Packet2.alloc(5);
 
         for (let i: number = 0; i < this.fileQueue.length; i++) {
@@ -216,7 +216,7 @@ export default class Jagfile {
 
         jag.save(path);
         buf.release();
-        return jag;
+        jag.release();
     }
 
     deconstruct(name: string) {

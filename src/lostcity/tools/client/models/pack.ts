@@ -311,7 +311,7 @@ export function packClientModel() {
     jag.write('ob_face5.dat', ob_face5);
     jag.write('ob_axis.dat', ob_axis);
 
-    jag.save('data/pack/client/models').release();
+    jag.save('data/pack/client/models');
 
     base_label.release();
     ob_point1.release();

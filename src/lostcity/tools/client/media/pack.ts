@@ -151,7 +151,7 @@ export async function packClientMedia() {
         jag.write(`${name}`, data);
     }
 
-    jag.save('data/pack/client/media').release();
+    jag.save('data/pack/client/media');
     for (const packet of Object.values(files)) {
         packet.release();
     }

@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet2 from '#jagex2/io/Packet2.js';
-import { loadOrder, loadPack } from '#lostcity/util/NameMap.js';
+import { loadOrder } from '#lostcity/util/NameMap.js';
 import { SoundPack, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 
 export function packClientSound() {
@@ -29,7 +29,7 @@ export function packClientSound() {
     out.p2(-1);
 
     jag.write('sounds.dat', out);
-    jag.save('data/pack/client/sounds', true).release();
+    jag.save('data/pack/client/sounds', true);
     out.release();
     //console.timeEnd('sounds.jag');
 }

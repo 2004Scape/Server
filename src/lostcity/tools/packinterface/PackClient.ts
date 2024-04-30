@@ -21,5 +21,6 @@ export function packClientInterface() {
 
     // data.save('dump/interface/data');
     jag.write('data', data);
-    jag.save('data/pack/client/interface').release();
+    jag.save('data/pack/client/interface');
+    data.release();
 }
