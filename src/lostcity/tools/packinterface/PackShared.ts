@@ -1,3 +1,4 @@
+import Packet2 from '#jagex2/io/Packet2.js';
 import { loadDir, loadOrder } from '#lostcity/util/NameMap.js';
 import { InterfacePack, ModelPack, ObjPack, SeqPack, VarpPack } from '#lostcity/util/PackFile.js';
 
