@@ -190,7 +190,6 @@ const models = Jagfile.load('data/client/models');
 
         const frame = Packet2.alloc(2);
 
-
         const p_hend = new Uint8Array((hend - hstart));
         head.pos = hstart;
         head.gdata(p_hend, 0, p_hend.length);
@@ -216,6 +215,7 @@ const models = Jagfile.load('data/client/models');
         frame.p2(t2end - t2start);
         frame.p2(dend - dstart);
         frame.save(`data/src/models/frame/anim_${id}.frame`);
+        frame.release();
     }
 
     fs.writeFileSync('data/src/pack/anim.pack', pack);
