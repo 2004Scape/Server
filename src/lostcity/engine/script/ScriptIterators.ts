@@ -9,7 +9,7 @@ abstract class ScriptIterator<T> implements IterableIterator<T> {
         this.it = this.generator();
     }
 
-    abstract generator(): IterableIterator<T>;
+    protected abstract generator(): IterableIterator<T>;
 
     [Symbol.iterator](): IterableIterator<T> {
         return this.it;
@@ -24,33 +24,35 @@ export class HuntAllIterator extends ScriptIterator<number> {
     // a radius of 1 will loop 9 zones
     // a radius of 2 will loop 25 zones
     // a radius of 3 will loop 49 zones
-    private readonly centerX: number;
-    private readonly centerZ: number;
-    private readonly radius: number;
     private readonly x: number;
     private readonly z: number;
     private readonly level: number;
+    private readonly minX: number;
+    private readonly maxX: number;
+    private readonly minZ: number;
+    private readonly maxZ: number;
 
     constructor(distance: number, coord: number) {
         super();
         const {level, x, z} = Position.unpackCoord(coord);
-        this.centerX = Position.zone(x);
-        this.centerZ = Position.zone(z);
-        this.radius = (1 + (distance / 8)) | 0;
+        const centerX: number = Position.zone(x);
+        const centerZ: number = Position.zone(z);
+        const radius: number = (1 + (distance / 8)) | 0;
         this.x = x;
         this.z = z;
         this.level = level;
+        this.maxX = centerX + radius;
+        this.minX = centerX - radius;
+        this.maxZ = centerZ + radius;
+        this.minZ = centerZ - radius;
+
     }
 
-    *generator(): IterableIterator<number> {
-        const maxX: number = this.centerX + this.radius;
-        const minX: number = this.centerX - this.radius;
-        for (let zx: number = maxX; zx >= minX; zx--) {
-            const zoneX: number = zx << 3;
-            const maxZ: number = this.centerZ + this.radius;
-            const minZ: number = this.centerZ - this.radius;
-            for (let zz: number = maxZ; zz >= minZ; zz--) {
-                const zoneZ: number = zz << 3;
+    protected *generator(): IterableIterator<number> {
+        for (let x: number = this.maxX; x >= this.minX; x--) {
+            const zoneX: number = x << 3;
+            for (let z: number = this.maxZ; z >= this.minZ; z--) {
+                const zoneZ: number = z << 3;
                 yield* World.getZonePlayers(this.x + (zoneX - this.x), this.z + (zoneZ - this.z), this.level).values();
             }
         }
@@ -65,7 +67,7 @@ export class NpcFindAllIterator extends ScriptIterator<number> {
         this.coord = coord;
     }
 
-    *generator(): IterableIterator<number> {
+    protected *generator(): IterableIterator<number> {
         const {level, x, z} = Position.unpackCoord(this.coord);
         yield* World.getZoneNpcs(x, z, level).values();
     }
@@ -79,7 +81,7 @@ export class LocFindAllIterator extends ScriptIterator<Loc> {
         this.coord = coord;
     }
 
-    *generator(): IterableIterator<Loc> {
+    protected *generator(): IterableIterator<Loc> {
         const {level, x, z} = Position.unpackCoord(this.coord);
         yield* World.getZoneLocs(x, z, level).values();
     }
