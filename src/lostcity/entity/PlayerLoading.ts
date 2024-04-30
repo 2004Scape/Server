@@ -128,7 +128,9 @@ export class PlayerLoading {
         player.combatLevel = player.getCombatLevel();
         player.lastResponse = World.currentTick;
 
-        if (Environment.LOCAL_DEV || Environment.JMODS.find(name => name === safeName) !== undefined) {
+        if (Environment.LOCAL_DEV) {
+            player.staffModLevel = 3;
+        } else if (Environment.JMODS.find(name => name === safeName) !== undefined) {
             player.staffModLevel = 2;
         }
         return player;
