@@ -11,12 +11,16 @@ import World from '#lostcity/engine/World.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
+import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import {HuntAllIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import { Position } from '#lostcity/entity/Position.js';
 
 import {CollisionFlag, hasLineOfSight, hasLineOfWalk, isFlagged, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
 
-import {check, CoordValid, SpotAnimTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+import {check, CoordValid, NumberNotNull, SpotAnimTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+
+const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: state => {
@@ -53,11 +57,30 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.HUNTALL]: state => {
-        throw new Error('unimplemented');
+        const [coord, distance, unknown] = state.popInts(3);
+
+        check(coord, CoordValid);
+        check(distance, NumberNotNull);
+
+        state.huntAllIterator = new HuntAllIterator(distance, coord);
     },
 
     [ScriptOpcode.HUNTNEXT]: state => {
-        throw new Error('unimplemented');
+        const result = state.huntAllIterator?.next();
+        if (!result || result.done) {
+            state.pushInt(0);
+            return;
+        }
+
+        const player = World.getPlayerByUid(result.value[1]);
+        if (!player) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activePlayer = player;
+        state.pointerAdd(ActivePlayer[state.intOperand]);
+        state.pushInt(1);
     },
 
     [ScriptOpcode.INZONE]: state => {
