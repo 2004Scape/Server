@@ -589,21 +589,21 @@ export default class Player extends PathingEntity {
             this.terminate();
         } else if (cmd === 'random') {
             this.afkEventReady = true;
-        } else if (cmd === 'bench' && this.staffModLevel === 2) {
+        } else if (cmd === 'bench' && this.staffModLevel >= 2) {
             const start = Date.now();
             for (let index = 0; index < 100_000; index++) {
                 findPath(this.level, this.x, this.z, this.x, this.z + 10);
             }
             const end = Date.now();
             console.log(`took = ${end - start} ms`);
-        } else if (cmd === 'bots' && this.staffModLevel === 2) {
+        } else if (cmd === 'bots' && this.staffModLevel >= 2) {
             this.messageGame('Adding bots');
             for (let i = 0; i < 2000; i++) {
                 const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
                 bot.onLogin();
                 World.addPlayer(bot);
             }
-        } else if (cmd === 'teleall' && this.staffModLevel === 2) {
+        } else if (cmd === 'teleall' && this.staffModLevel >= 2) {
             this.messageGame('Teleporting all players');
             for (let i = 0; i < World.players.length; i++) {
                 const player = World.players[i];
@@ -620,7 +620,7 @@ export default class Player extends PathingEntity {
                     player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
                 } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
             }
-        } else if (cmd === 'moveall' && this.staffModLevel === 2) {
+        } else if (cmd === 'moveall' && this.staffModLevel >= 2) {
             this.messageGame('Moving all players');
             console.time('moveall');
             for (let i = 0; i < World.players.length; i++) {

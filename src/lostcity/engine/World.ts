@@ -673,7 +673,7 @@ class World {
 
             if (player instanceof NetworkPlayer && player.client) {
                 player.client.state = 1;
-                if (player.staffModLevel === 2) {
+                if (player.staffModLevel >= 2) {
                     player.client.send(LoginResponse.STAFF_MOD_LEVEL);
                 } else {
                     player.client.send(LoginResponse.SUCCESSFUL);
