@@ -215,7 +215,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNT]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.huntrange = state.popInt();
+        state.activeNpc.huntrange = check(state.popInt(), NumberNotNull);
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, state => {
