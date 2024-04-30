@@ -215,6 +215,7 @@ export default class Jagfile {
         }
 
         jag.save(path);
+        buf.release();
         return jag;
     }
 
