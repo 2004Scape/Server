@@ -6,7 +6,7 @@ import forge from 'node-forge';
 
 export default class Packet2 extends Hashable {
     private static readonly crctable: Int32Array = new Int32Array(256);
-    private static bitmask: Uint32Array = new Uint32Array(33);
+    private static readonly bitmask: Uint32Array = new Uint32Array(33);
 
     static {
         for (let i: number = 0; i < 32; i++) {
