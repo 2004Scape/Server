@@ -21,12 +21,17 @@ module.exports = {
         },
         {
             files: ['src/**/*.test.ts'],
-            extends: ['plugin:vitest/legacy-all'],
+            extends: ['plugin:vitest/legacy-recommended'],
             plugins: ['vitest'],
             rules: {
-                'vitest/prefer-expect-assertions': 'off',
-                'vitest/prefer-lowercase-title': 'off',
                 'vitest/no-focused-tests': 'error',
+                'vitest/consistent-test-it': 'warn',
+                'vitest/require-top-level-describe': [
+                    'error',
+                    {
+                        'maxNumberOfTopLevelDescribes': 1
+                    }
+                ]
             }
         }
     ],
