@@ -190,6 +190,9 @@ export default class Npc extends PathingEntity {
             }
             this.resetHeroPoints();
             this.defaultMode();
+
+            const npcType: NpcType = NpcType.get(this.type);
+            this.huntrange = npcType.huntrange;
         }
 
         if (this.mask === 0) {
