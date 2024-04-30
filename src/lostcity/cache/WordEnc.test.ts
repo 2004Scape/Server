@@ -14,7 +14,7 @@ packClientWordenc();
 describe('WordEnc', () => {
     describe('static load', () => {
         it('should load data from wordenc', () => {
-            const dat = new Packet();
+            const dat = new Packet2();
 
             fs.existsSync = vi.fn().mockReturnValue(true);
             Packet2.load = vi.fn().mockReturnValue(dat);
