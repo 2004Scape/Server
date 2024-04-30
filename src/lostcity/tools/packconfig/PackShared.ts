@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { VarnPack, VarpPack, VarsPack, shouldBuild } from '#lostcity/util/PackFile.js';
 
@@ -44,14 +44,14 @@ export function getConfigBoolean(input: string): boolean {
 }
 
 export class PackedData {
-    dat: Packet;
-    idx: Packet;
+    dat: Packet2;
+    idx: Packet2;
     size: number = 0;
     marker: number;
 
     constructor(size: number) {
-        this.dat = new Packet();
-        this.idx = new Packet();
+        this.dat = new Packet2(new Uint8Array(200_000));
+        this.idx = new Packet2(new Uint8Array(200_000));
         this.size = size;
 
         this.dat.p2(size);
@@ -192,7 +192,7 @@ export type ConfigLine = { key: string; value: ConfigValue };
 export type ConfigParseCallback = (key: string, value: string) => ConfigValue | null | undefined;
 export type ConfigDatIdx = { client: PackedData, server: PackedData };
 export type ConfigPackCallback = (configs: Map<string, ConfigLine[]>) => ConfigDatIdx;
-export type ConfigSaveCallback = (dat: Packet, idx: Packet) => void;
+export type ConfigSaveCallback = (dat: Packet2, idx: Packet2) => void;
 
 export function readConfigs(extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback) {
     const files = readFiles(findFiles('data/src/scripts', extension));
@@ -305,7 +305,7 @@ export function readConfigs(extension: string, requiredProperties: string[], par
 
 // We have to pack params for other configs to parse correctly
 if (shouldBuild('data/src/scripts', '.param', 'data/pack/server/param.dat')) {
-    readConfigs('.param', ['type'], parseParamConfig, packParamConfigs, () => {}, (dat: Packet, idx: Packet) => {
+    readConfigs('.param', ['type'], parseParamConfig, packParamConfigs, () => {}, (dat: Packet2, idx: Packet2) => {
         dat.save('data/pack/server/param.dat');
         idx.save('data/pack/server/param.idx');
     });
@@ -348,12 +348,13 @@ export function packConfigs() {
     ) {
         console.log('Packing categories');
         //console.time('Packed categories');
-        const dat = new Packet();
+        const dat = Packet2.alloc(1);
         dat.p2(CategoryPack.size);
         for (let i = 0; i < CategoryPack.size; i++) {
             dat.pjstr(CategoryPack.getById(i));
         }
         dat.save('data/pack/server/category.dat');
+        dat.release();
         //console.timeEnd('Packed categories');
     }
 
@@ -365,7 +366,7 @@ export function packConfigs() {
         console.log('Packing frame_del');
         //console.time('Packed frame_del');
         const files = listFilesExt('data/src/models', '.frame');
-        const frame_del = new Packet();
+        const frame_del = Packet2.alloc(2);
         for (let i = 0; i < AnimPack.max; i++) {
             const name = AnimPack.getById(i);
             if (!name.length) {
@@ -379,9 +380,9 @@ export function packConfigs() {
                 continue;
             }
 
-            const data = Packet.load(file);
+            const data = Packet2.load(file);
 
-            data.pos = data.length - 8;
+            data.pos = data.data.length - 8;
             const headLength = data.g2();
             const tran1Length = data.g2();
             const tran2Length = data.g2();
@@ -395,6 +396,7 @@ export function packConfigs() {
         }
 
         frame_del.save('data/pack/server/frame_del.dat');
+        frame_del.release();
         //console.timeEnd('Packed frame_del');
     }
 
@@ -406,7 +408,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .dbtable');
         //console.time('Packed .dbtable');
-        readConfigs('.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/dbtable.dat');
             idx.save('data/pack/server/dbtable.idx');
         });
@@ -424,7 +426,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .dbrow');
         //console.time('Packed .dbrow');
-        readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/dbrow.dat');
             idx.save('data/pack/server/dbrow.idx');
         });
@@ -437,7 +439,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .enum');
         //console.time('Packed .enum');
-        readConfigs('.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/enum.dat');
             idx.save('data/pack/server/enum.idx');
         });
@@ -450,7 +452,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .inv');
         //console.time('Packed .inv');
-        readConfigs('.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/inv.dat');
             idx.save('data/pack/server/inv.idx');
         });
@@ -463,7 +465,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .mesanim');
         //console.time('Packed .mesanim');
-        readConfigs('.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/mesanim.dat');
             idx.save('data/pack/server/mesanim.idx');
         });
@@ -476,7 +478,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .struct');
         //console.time('Packed .struct');
-        readConfigs('.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/struct.dat');
             idx.save('data/pack/server/struct.idx');
         });
@@ -491,15 +493,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .seq');
         //console.time('Packed .seq');
-        readConfigs('.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, 1638136604) || !Packet.checkcrc(idx, 969051566))) {
+        readConfigs('.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet2.checkcrc(idx.data, 0, idx.pos, 969051566))) {
                 console.error('.seq CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('seq.dat', dat);
             jag.write('seq.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/seq.dat');
             idx.save('data/pack/server/seq.idx');
         });
@@ -512,15 +514,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .loc');
         //console.time('Packed .loc');
-        readConfigs('.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, 891497087) || !Packet.checkcrc(idx, -941401128))) {
+        readConfigs('.loc', [], parseLocConfig, packLocConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet2.checkcrc(idx.data, 0, idx.pos, -941401128))) {
                 console.error('.loc CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('loc.dat', dat);
             jag.write('loc.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/loc.dat');
             idx.save('data/pack/server/loc.idx');
         });
@@ -533,15 +535,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .flo');
         //console.time('Packed .flo');
-        readConfigs('.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, 1976597026) || !Packet.checkcrc(idx, 561308705))) {
+        readConfigs('.flo', [], parseFloConfig, packFloConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet2.checkcrc(idx.data, 0, idx.pos, 561308705))) {
                 console.error('.flo CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('flo.dat', dat);
             jag.write('flo.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/flo.dat');
             idx.save('data/pack/server/flo.idx');
         });
@@ -554,15 +556,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .spotanim');
         //console.time('Packed .spotanim');
-        readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, -1279835623) || !Packet.checkcrc(idx, -1696140322))) {
+        readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet2.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
                 console.error('.spotanim CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('spotanim.dat', dat);
             jag.write('spotanim.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/spotanim.dat');
             idx.save('data/pack/server/spotanim.idx');
         });
@@ -575,15 +577,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .npc');
         //console.time('Packed .npc');
-        readConfigs('.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, -2140681882) || !Packet.checkcrc(idx, -1986014643))) {
+        readConfigs('.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet2.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
                 console.error('.npc CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('npc.dat', dat);
             jag.write('npc.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/npc.dat');
             idx.save('data/pack/server/npc.idx');
         });
@@ -596,15 +598,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .obj');
         //console.time('Packed .obj');
-        readConfigs('.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, -840233510) || !Packet.checkcrc(idx, 669212954))) {
+        readConfigs('.obj', [], parseObjConfig, packObjConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet2.checkcrc(idx.data, 0, idx.pos, 669212954))) {
                 console.error('.obj CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('obj.dat', dat);
             jag.write('obj.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/obj.dat');
             idx.save('data/pack/server/obj.idx');
         });
@@ -617,15 +619,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .idk');
         //console.time('Packed .idk');
-        readConfigs('.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, -359342366) || !Packet.checkcrc(idx, 667216411))) {
+        readConfigs('.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet2.checkcrc(idx.data, 0, idx.pos, 667216411))) {
                 console.error('.idk CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('idk.dat', dat);
             jag.write('idk.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/idk.dat');
             idx.save('data/pack/server/idk.idx');
         });
@@ -638,15 +640,15 @@ export function packConfigs() {
     ) {
         console.log('Packing .varp');
         //console.time('Packed .varp');
-        readConfigs('.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat, 705633567) || !Packet.checkcrc(idx, -1843167599))) {
+        readConfigs('.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet2, idx: Packet2) => {
+            if (!Environment.SKIP_CRC && (!Packet2.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet2.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
                 console.error('.varp CRC check failed! Custom data detected.');
                 process.exit(1);
             }
 
             jag.write('varp.dat', dat);
             jag.write('varp.idx', idx);
-        }, (dat: Packet, idx: Packet) => {
+        }, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/varp.dat');
             idx.save('data/pack/server/varp.idx');
         });
@@ -659,7 +661,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .hunt');
         //console.time('Packed .hunt');
-        readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/hunt.dat');
             idx.save('data/pack/server/hunt.idx');
         });
@@ -672,7 +674,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .varn');
         //console.time('Packed .varn');
-        readConfigs('.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/varn.dat');
             idx.save('data/pack/server/varn.idx');
         });
@@ -685,7 +687,7 @@ export function packConfigs() {
     ) {
         console.log('Packing .vars');
         //console.time('Packed .vars');
-        readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet, idx: Packet) => {
+        readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet2, idx: Packet2) => {
             dat.save('data/pack/server/vars.dat');
             idx.save('data/pack/server/vars.idx');
         });

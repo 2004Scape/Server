@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
@@ -18,7 +18,7 @@ export default class SpotanimType extends ConfigType {
             return;
         }
 
-        const server = Packet.load(`${dir}/server/spotanim.dat`);
+        const server = Packet2.load(`${dir}/server/spotanim.dat`);
         const count = server.g2();
 
         const jag = Jagfile.load(`${dir}/client/config`);
@@ -72,31 +72,31 @@ export default class SpotanimType extends ConfigType {
     ambient: number = 0;
     contrast: number = 0;
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode === 1) {
-            this.model = packet.g2();
-        } else if (opcode === 2) {
-            this.anim = packet.g2();
-        } else if (opcode === 3) {
+    decode(code: number, dat: Packet2) {
+        if (code === 1) {
+            this.model = dat.g2();
+        } else if (code === 2) {
+            this.anim = dat.g2();
+        } else if (code === 3) {
             this.hasalpha = true;
-        } else if (opcode === 4) {
-            this.resizeh = packet.g2();
-        } else if (opcode === 5) {
-            this.resizev = packet.g2();
-        } else if (opcode === 6) {
-            this.orientation = packet.g2();
-        } else if (opcode === 7) {
-            this.ambient = packet.g1();
-        } else if (opcode === 8) {
-            this.contrast = packet.g1();
-        } else if (opcode >= 40 && opcode < 50) {
-            this.recol_s[opcode - 40] = packet.g2();
-        } else if (opcode >= 50 && opcode < 60) {
-            this.recol_d[opcode - 50] = packet.g2();
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 4) {
+            this.resizeh = dat.g2();
+        } else if (code === 5) {
+            this.resizev = dat.g2();
+        } else if (code === 6) {
+            this.orientation = dat.g2();
+        } else if (code === 7) {
+            this.ambient = dat.g1();
+        } else if (code === 8) {
+            this.contrast = dat.g1();
+        } else if (code >= 40 && code < 50) {
+            this.recol_s[code - 40] = dat.g2();
+        } else if (code >= 50 && code < 60) {
+            this.recol_d[code - 50] = dat.g2();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized spotanim config code: ${opcode}`);
+            throw new Error(`Unrecognized spotanim config code: ${code}`);
         }
     }
 }

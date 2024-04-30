@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import SeqFrame from '#lostcity/cache/SeqFrame.js';
@@ -19,7 +19,7 @@ export default class SeqType extends ConfigType {
             return;
         }
 
-        const server = Packet.load(`${dir}/server/seq.dat`);
+        const server = Packet2.load(`${dir}/server/seq.dat`);
         const count = server.g2();
 
         const jag = Jagfile.load(`${dir}/client/config`);
@@ -75,19 +75,19 @@ export default class SeqType extends ConfigType {
 
     duration: number = 0;
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode === 1) {
-            const count = packet.g1();
+    decode(code: number, dat: Packet2) {
+        if (code === 1) {
+            const count = dat.g1();
 
             for (let i = 0; i < count; i++) {
-                this.frames[i] = packet.g2();
+                this.frames[i] = dat.g2();
 
-                this.iframes[i] = packet.g2();
+                this.iframes[i] = dat.g2();
                 if (this.iframes[i] === 65535) {
                     this.iframes[i] = -1;
                 }
 
-                this.delay[i] = packet.g2();
+                this.delay[i] = dat.g2();
                 if (this.delay[i] === 0) {
                     this.delay[i] = SeqFrame.instances[this.frames[i]].delay;
                 }
@@ -98,30 +98,30 @@ export default class SeqType extends ConfigType {
 
                 this.duration += this.delay[i];
             }
-        } else if (opcode === 2) {
-            this.replayoff = packet.g2();
-        } else if (opcode === 3) {
-            const count = packet.g1();
+        } else if (code === 2) {
+            this.replayoff = dat.g2();
+        } else if (code === 3) {
+            const count = dat.g1();
 
             for (let i = 0; i < count; i++) {
-                this.walkmerge[i] = packet.g1();
+                this.walkmerge[i] = dat.g1();
             }
 
             this.walkmerge[count] = 9999999;
-        } else if (opcode === 4) {
+        } else if (code === 4) {
             this.stretches = true;
-        } else if (opcode === 5) {
-            this.priority = packet.g1();
-        } else if (opcode === 6) {
-            this.mainhand = packet.g2();
-        } else if (opcode === 7) {
-            this.offhand = packet.g2();
-        } else if (opcode === 8) {
-            this.replaycount = packet.g1();
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 5) {
+            this.priority = dat.g1();
+        } else if (code === 6) {
+            this.mainhand = dat.g2();
+        } else if (code === 7) {
+            this.offhand = dat.g2();
+        } else if (code === 8) {
+            this.replaycount = dat.g1();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized seq config code: ${opcode}`);
+            throw new Error(`Unrecognized seq config code: ${code}`);
         }
     }
 }

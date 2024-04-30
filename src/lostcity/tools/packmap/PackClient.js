@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import BZip2 from '#jagex2/io/BZip2.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 import { shouldBuildFile } from '#lostcity/util/PackFile.js';
 
 function readMap(map) {
@@ -192,7 +192,7 @@ export function packClientMap() {
             }
 
             // encode into client format
-            let out = Packet.alloc(size);
+            let out = Packet2.alloc(3);
             for (let level = 0; level < 4; level++) {
                 for (let x = 0; x < 64; x++) {
                     for (let z = 0; z < 64; z++) {
@@ -243,6 +243,7 @@ export function packClientMap() {
 
             // out.save(`data/pack/server/maps/m${x}_${z}`);
             fs.writeFileSync(`data/pack/client/maps/m${x}_${z}`, BZip2.compress(out.data, true));
+            out.release();
         }
 
         // encode loc data
@@ -295,7 +296,7 @@ export function packClientMap() {
             let locIds = Object.keys(locs)
                 .map(id => parseInt(id))
                 .sort((a, b) => a - b);
-            let out = new Packet();
+            let out = Packet2.alloc(2);
             let lastLocId = -1;
             for (let i = 0; i < locIds.length; i++) {
                 let locId = locIds[i];
@@ -322,6 +323,7 @@ export function packClientMap() {
             out.psmart(0); // end of map
             // out.save(`data/pack/server/maps/l${x}_${z}`);
             fs.writeFileSync(`data/pack/client/maps/l${x}_${z}`, BZip2.compress(out.data, true));
+            out.release();
         }
     });
     //console.timeEnd('maps');

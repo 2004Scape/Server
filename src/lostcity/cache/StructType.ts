@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import { ParamHelper, ParamHolder, ParamMap } from '#lostcity/cache/ParamHelper.js';
@@ -18,7 +18,7 @@ export default class StructType extends ConfigType implements ParamHolder {
             return;
         }
 
-        const dat = Packet.load(`${dir}/server/struct.dat`);
+        const dat = Packet2.load(`${dir}/server/struct.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
@@ -54,16 +54,13 @@ export default class StructType extends ConfigType implements ParamHolder {
 
     params: ParamMap | null = null;
 
-    decode(opcode: number, packet: Packet) {
-        switch (opcode) {
-            case 249:
-                this.params = ParamHelper.decodeParams(packet);
-                break;
-            case 250:
-                this.debugname = packet.gjstr();
-                break;
-            default:
-                throw new Error(`Unrecognized struct config code: ${opcode}`);
+    decode(code: number, dat: Packet2) {
+        if (code === 249) {
+            this.params = ParamHelper.decodeParams(dat);
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
+        } else {
+            throw new Error(`Unrecognized struct config code: ${code}`);
         }
     }
 }

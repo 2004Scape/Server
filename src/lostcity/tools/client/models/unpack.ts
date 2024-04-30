@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 import Model from '#lostcity/tools/client/models/Model.js';
 
 const models = Jagfile.load('data/client/models');
@@ -28,6 +28,7 @@ const models = Jagfile.load('data/client/models');
 
         const raw = model.convert();
         raw.save(`data/src/models/model_${i}.ob2`);
+        raw.release();
     }
 
     let order = '';
@@ -91,14 +92,24 @@ const models = Jagfile.load('data/client/models');
         const tend = type.pos;
         const labelend = label.pos;
 
-        const base = new Packet();
+        const base = Packet2.alloc(0);
         // base.pdata(head.gdata(hend - hstart, hstart, false));
-        base.pdata(type.gdata(tend - tstart, tstart, false));
-        base.pdata(label.gdata(labelend - labelstart, labelstart, false));
+
+        const pp = new Uint8Array((tend - tstart));
+        type.pos = tstart;
+        type.gdata(pp, 0, pp.length);
+        base.pdata(pp, 0, pp.length);
+
+        const pl = new Uint8Array((labelend - labelstart));
+        label.pos = labelstart;
+        label.gdata(pl, 0, pl.length);
+        base.pdata(pl, 0, pl.length);
+
         // base.p2(hend - hstart);
         base.p2(tend - tstart);
         base.p2(labelend - labelstart);
         base.save(`data/src/models/base/base_${id}.base`);
+        base.release();
     }
 
     fs.writeFileSync('data/src/pack/base.pack', pack);
@@ -177,11 +188,29 @@ const models = Jagfile.load('data/client/models');
         const t2end = tran2.pos;
         const dend = del.pos;
 
-        const frame = new Packet();
-        frame.pdata(head.gdata(hend - hstart, hstart, false));
-        frame.pdata(tran1.gdata(t1end - t1start, t1start, false));
-        frame.pdata(tran2.gdata(t2end - t2start, t2start, false));
-        frame.pdata(del.gdata(dend - dstart, dstart, false));
+        const frame = Packet2.alloc(2);
+
+
+        const p_hend = new Uint8Array((hend - hstart));
+        head.pos = hstart;
+        head.gdata(p_hend, 0, p_hend.length);
+        frame.pdata(p_hend, 0, p_hend.length);
+
+        const p_t1end = new Uint8Array((t1end - t1start));
+        tran1.pos = t1start;
+        tran1.gdata(p_t1end, 0, p_t1end.length);
+        frame.pdata(p_t1end, 0, p_t1end.length);
+
+        const p_t2end = new Uint8Array((t2end - t2start));
+        tran2.pos = t2start;
+        tran2.gdata(p_t2end, 0, p_t2end.length);
+        frame.pdata(p_t2end, 0, p_t2end.length);
+
+        const p_dend = new Uint8Array((dend - dstart));
+        del.pos = dstart;
+        del.gdata(p_dend, 0, p_dend.length);
+        frame.pdata(p_dend, 0, p_dend.length);
+
         frame.p2(hend - hstart);
         frame.p2(t1end - t1start);
         frame.p2(t2end - t2start);
