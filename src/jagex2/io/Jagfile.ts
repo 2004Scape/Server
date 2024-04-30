@@ -104,7 +104,7 @@ export default class Jagfile {
     write(name: string, data: Packet2): void {
         const hash: number = genHash(name);
 
-        this.fileQueue.push({ hash, name, write: true, data: data.data });
+        this.fileQueue.push({ hash, name, write: true, data: data.data.subarray(0, data.pos) });
     }
 
     delete(name: string): void {
