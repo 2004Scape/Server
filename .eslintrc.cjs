@@ -67,7 +67,25 @@ module.exports = {
         /**
          * https://eslint.org/docs/latest/rules/no-unused-vars
          */
-        '@typescript-eslint/no-unused-vars': 'warn',
+        '@typescript-eslint/no-unused-vars': [
+            // TODO: Set to error
+            'warn',
+            {
+                /**
+                 * Allow variables prefixed with underscores to skip this rule.
+                 * There aren't many good reasons to have unused variables,
+                 * but the codebase has 100s of them.
+                 */
+                'vars': 'all',
+                'varsIgnorePattern': '^_',
+                /**
+                * Allow parameters prefixed with underscores to skip this rule.
+                * This is a common practice for router methods with req and res parameters.
+                */
+                'args': 'all',
+                'argsIgnorePattern': '^_',
+            }
+        ],
 
         /**
          * https://github.com/sweepline/eslint-plugin-unused-imports
