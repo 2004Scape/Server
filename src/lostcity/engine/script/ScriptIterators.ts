@@ -20,7 +20,7 @@ abstract class ScriptIterator<T> implements IterableIterator<T> {
     }
 }
 
-export class HuntAllIterator extends ScriptIterator<[number, number]> {
+export class HuntAllIterator extends ScriptIterator<number> {
     // a radius of 1 will loop 9 zones
     // a radius of 2 will loop 25 zones
     // a radius of 3 will loop 49 zones
@@ -42,22 +42,22 @@ export class HuntAllIterator extends ScriptIterator<[number, number]> {
         this.level = level;
     }
 
-    *generator(): IterableIterator<[number, number]> {
+    *generator(): IterableIterator<number> {
         const maxX: number = this.centerX + this.radius;
         const minX: number = this.centerX - this.radius;
-        for (let zx = maxX; zx >= minX; zx--) {
+        for (let zx: number = maxX; zx >= minX; zx--) {
             const zoneX: number = zx << 3;
             const maxZ: number = this.centerZ + this.radius;
             const minZ: number = this.centerZ - this.radius;
-            for (let zz = maxZ; zz >= minZ; zz--) {
+            for (let zz: number = maxZ; zz >= minZ; zz--) {
                 const zoneZ: number = zz << 3;
-                yield* World.getZonePlayers(this.x + (zoneX - this.x), this.z + (zoneZ - this.z), this.level).entries();
+                yield* World.getZonePlayers(this.x + (zoneX - this.x), this.z + (zoneZ - this.z), this.level).values();
             }
         }
     }
 }
 
-export class NpcFindAllIterator extends ScriptIterator<[number, number]> {
+export class NpcFindAllIterator extends ScriptIterator<number> {
     private readonly coord: number;
 
     constructor(coord: number) {
@@ -65,13 +65,13 @@ export class NpcFindAllIterator extends ScriptIterator<[number, number]> {
         this.coord = coord;
     }
 
-    *generator(): IterableIterator<[number, number]> {
+    *generator(): IterableIterator<number> {
         const {level, x, z} = Position.unpackCoord(this.coord);
-        yield* World.getZoneNpcs(x, z, level).entries();
+        yield* World.getZoneNpcs(x, z, level).values();
     }
 }
 
-export class LocFindAllIterator extends ScriptIterator<[number, Loc]> {
+export class LocFindAllIterator extends ScriptIterator<Loc> {
     private readonly coord: number;
 
     constructor(coord: number) {
@@ -79,8 +79,8 @@ export class LocFindAllIterator extends ScriptIterator<[number, Loc]> {
         this.coord = coord;
     }
 
-    *generator(): IterableIterator<[number, Loc]> {
+    *generator(): IterableIterator<Loc> {
         const {level, x, z} = Position.unpackCoord(this.coord);
-        yield* World.getZoneLocs(x, z, level).entries();
+        yield* World.getZoneLocs(x, z, level).values();
     }
 }

@@ -72,7 +72,7 @@ const ServerOps: CommandHandlers = {
             return;
         }
 
-        const player = World.getPlayerByUid(result.value[1]);
+        const player = World.getPlayerByUid(result.value);
         if (!player) {
             state.pushInt(0);
             return;

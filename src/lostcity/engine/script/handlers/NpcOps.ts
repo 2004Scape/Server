@@ -132,7 +132,7 @@ const NpcOps: CommandHandlers = {
         state.npcFindAllIterator = new NpcFindAllIterator(coord);
 
         for (const result of state.npcFindAllIterator) {
-            const npc = World.getNpc(result[1]);
+            const npc = World.getNpc(result);
             if(npc && npc.type === id && npc.x === pos.x && npc.level === pos.level && npc.z === pos.z) {
                 state.activeNpc = npc;
                 state.pointerAdd(ActiveNpc[state.intOperand]);
@@ -335,7 +335,7 @@ const NpcOps: CommandHandlers = {
             return;
         }
 
-        const npc = World.getNpc(result.value[1]);
+        const npc = World.getNpc(result.value);
         if (!npc) {
             // npc was removed but not unregistered from results (failsafe, unlikely to reach)
             state.pushInt(0);
