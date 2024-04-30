@@ -1,5 +1,5 @@
 import fs from 'fs';
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
@@ -16,7 +16,7 @@ export default class VarSharedType extends ConfigType {
             return;
         }
 
-        const dat = Packet.load(`${dir}/server/vars.dat`);
+        const dat = Packet2.load(`${dir}/server/vars.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
@@ -56,16 +56,16 @@ export default class VarSharedType extends ConfigType {
 
     type = ScriptVarType.INT;
 
-    decode(opcode: number, packet: Packet) {
-        switch (opcode) {
+    decode(code: number, dat: Packet2) {
+        switch (code) {
             case 1:
-                this.type = packet.g1();
+                this.type = dat.g1();
                 break;
             case 250:
-                this.debugname = packet.gjstr();
+                this.debugname = dat.gjstr();
                 break;
             default:
-                console.error(`Unrecognized vars config code: ${opcode}`);
+                console.error(`Unrecognized vars config code: ${code}`);
                 break;
         }
     }

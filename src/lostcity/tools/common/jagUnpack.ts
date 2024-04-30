@@ -21,5 +21,5 @@ for (let i = 0; i < jag.fileCount; i++) {
         continue;
     }
 
-    entry.save(`dump/unpack/${jagName}.raw/${name}`, entry.length);
+    entry.save(`dump/unpack/${jagName}.raw/${name}`, entry.data.length);
 }

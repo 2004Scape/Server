@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { ConfigType } from '#lostcity/cache/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
@@ -18,7 +18,7 @@ export default class VarNpcType extends ConfigType {
             return;
         }
 
-        const dat = Packet.load(`${dir}/server/varn.dat`);
+        const dat = Packet2.load(`${dir}/server/varn.dat`);
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {
@@ -58,17 +58,13 @@ export default class VarNpcType extends ConfigType {
 
     type = ScriptVarType.INT;
 
-    decode(opcode: number, packet: Packet) {
-        switch (opcode) {
-            case 1:
-                this.type = packet.g1();
-                break;
-            case 250:
-                this.debugname = packet.gjstr();
-                break;
-            default:
-                console.error(`Unrecognized varn config code: ${opcode}`);
-                break;
+    decode(code: number, dat: Packet2) {
+        if (code === 1) {
+            this.type = dat.g1();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
+        } else {
+            console.error(`Unrecognized varn config code: ${code}`);
         }
     }
 }

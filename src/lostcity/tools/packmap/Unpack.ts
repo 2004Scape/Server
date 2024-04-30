@@ -1,11 +1,11 @@
 import fs from 'fs';
 
 import BZip2 from '#jagex2/io/BZip2.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 const maps = fs.readdirSync('data/pack/client/maps');
 
-function readLand(data: Packet) {
+function readLand(data: Packet2) {
     // console.time('land');
     const heightmap: number[][][] = [];
     const overlayIds: number[][][] = [];
@@ -50,7 +50,7 @@ function readLand(data: Packet) {
                     }
 
                     if (code <= 49) {
-                        overlayIds[level][x][z] = data.g1s();
+                        overlayIds[level][x][z] = data.g1b();
                         overlayShape[level][x][z] = Math.trunc((code - 2) / 4);
                         overlayRotation[level][x][z] = (code - 2) & 3;
                     } else if (code <= 81) {
@@ -80,7 +80,7 @@ type Loc = {
     angle: number;
 };
 
-function readLocs(data: Packet) {
+function readLocs(data: Packet2) {
     const locs: Loc[][][][] = [];
 
     for (let level = 0; level < 4; level++) {
@@ -148,7 +148,7 @@ maps.forEach(file => {
     // console.time('decompress');
     data = BZip2.decompress(data, 0, false, true);
     // console.timeEnd('decompress');
-    const land = readLand(new Packet(data));
+    const land = readLand(new Packet2(data));
 
     // console.time('write');
     let section = '';
@@ -205,7 +205,7 @@ maps.forEach(file => {
     // console.time('decompress');
     data = BZip2.decompress(data, 0, false, true);
     // console.timeEnd('decompress');
-    const locs = readLocs(new Packet(data));
+    const locs = readLocs(new Packet2(data));
 
     let section = '';
     for (let level = 0; level < 4; level++) {

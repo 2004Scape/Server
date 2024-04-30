@@ -1,5 +1,5 @@
 import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 class Metadata {
     vertexCount = 0;
@@ -29,20 +29,20 @@ export default class Model {
     static order: number[] = [];
     static metadata: Metadata[] = [];
 
-    static head: Packet;
-    static face1: Packet;
-    static face2: Packet;
-    static face3: Packet;
-    static face4: Packet;
-    static face5: Packet;
-    static point1: Packet;
-    static point2: Packet;
-    static point3: Packet;
-    static point4: Packet;
-    static point5: Packet;
-    static vertex1: Packet;
-    static vertex2: Packet;
-    static axis: Packet;
+    static head: Packet2;
+    static face1: Packet2;
+    static face2: Packet2;
+    static face3: Packet2;
+    static face4: Packet2;
+    static face5: Packet2;
+    static point1: Packet2;
+    static point2: Packet2;
+    static point3: Packet2;
+    static point4: Packet2;
+    static point5: Packet2;
+    static vertex1: Packet2;
+    static vertex2: Packet2;
+    static axis: Packet2;
 
     id!: number;
     meta!: Metadata;
@@ -358,12 +358,32 @@ export default class Model {
         const endX = Model.point2.pos;
         const endY = Model.point3.pos;
         const endZ = Model.point4.pos;
-        model.rawVertexFlags = Model.point1.gdata(meta.vertexCount, meta.vertexFlagsOffset, false);
-        model.rawVertexX = Model.point2.gdata(endX - startX, startX, false);
-        model.rawVertexY = Model.point3.gdata(endY - startY, startY, false);
-        model.rawVertexZ = Model.point4.gdata(endZ - startZ, startZ, false);
+
+        const p_vertexCount = new Uint8Array(meta.vertexCount);
+        Model.point1.pos = meta.vertexFlagsOffset;
+        Model.point1.gdata(p_vertexCount, 0, p_vertexCount.length);
+        model.rawVertexFlags = p_vertexCount;
+
+        const p_rawVertexX = new Uint8Array(endX - startX);
+        Model.point2.pos = startX;
+        Model.point2.gdata(p_rawVertexX, 0, p_rawVertexX.length);
+        model.rawVertexX = p_rawVertexX;
+
+        const p_rawVertexY = new Uint8Array(endY - startY);
+        Model.point3.pos = startY;
+        Model.point3.gdata(p_rawVertexY, 0, p_rawVertexY.length);
+        model.rawVertexY = p_rawVertexY;
+
+        const p_rawVertexZ = new Uint8Array(endZ - startZ);
+        Model.point4.pos = startZ;
+        Model.point4.gdata(p_rawVertexZ, 0, p_rawVertexZ.length);
+        model.rawVertexZ = p_rawVertexZ;
+
         if (model.vertexLabel) {
-            model.rawVertexLabel = Model.point5.gdata(meta.vertexCount, meta.vertexLabelsOffset, false);
+            const p_rawVertexLabel = new Uint8Array(meta.vertexCount);
+            Model.point5.pos = meta.vertexLabelsOffset;
+            Model.point5.gdata(p_rawVertexLabel, 0, p_rawVertexLabel.length);
+            model.rawVertexLabel = p_rawVertexLabel;
         }
 
         Model.face1.pos = meta.faceColorsOffset;
@@ -391,22 +411,37 @@ export default class Model {
                 model.faceLabel[f] = Model.face5.g1();
             }
         }
-        model.rawFaceColor = Model.face1.gdata(meta.faceCount * 2, meta.faceColorsOffset, false);
+        const p_rawFaceColor = new Uint8Array(meta.faceCount * 2);
+        Model.face1.pos = meta.faceColorsOffset;
+        Model.face1.gdata(p_rawFaceColor, 0, p_rawFaceColor.length);
+        model.rawFaceColor = p_rawFaceColor;
 
         if (meta.hasInfo == 1) {
-            model.rawFaceInfo = Model.face2.gdata(meta.faceCount, meta.faceInfosOffset, false);
+            const p_rawFaceInfo = new Uint8Array(meta.faceCount);
+            Model.face2.pos = meta.faceInfosOffset;
+            Model.face2.gdata(p_rawFaceInfo, 0, p_rawFaceInfo.length);
+            model.rawFaceInfo = p_rawFaceInfo;
         }
 
         if (meta.hasPriorities == 255) {
-            model.rawFacePriority = Model.face3.gdata(meta.faceCount, meta.facePrioritiesOffset, false);
+            const p_rawFacePriority = new Uint8Array(meta.faceCount);
+            Model.face3.pos = meta.facePrioritiesOffset;
+            Model.face3.gdata(p_rawFacePriority, 0, p_rawFacePriority.length);
+            model.rawFacePriority = p_rawFacePriority;
         }
 
         if (meta.hasAlpha == 1) {
-            model.rawFaceAlpha = Model.face4.gdata(meta.faceCount, meta.faceAlphasOffset, false);
+            const p_rawFaceAlpha = new Uint8Array(meta.faceCount);
+            Model.face4.pos = meta.faceAlphasOffset;
+            Model.face4.gdata(p_rawFaceAlpha, 0, p_rawFaceAlpha.length);
+            model.rawFaceAlpha = p_rawFaceAlpha;
         }
 
         if (meta.hasFaceLabels == 1) {
-            model.rawFaceLabel = Model.face5.gdata(meta.faceCount, meta.faceLabelsOffset, false);
+            const p_rawFaceLabel = new Uint8Array(meta.faceCount);
+            Model.face5.pos = meta.faceLabelsOffset;
+            Model.face5.gdata(p_rawFaceLabel, 0, p_rawFaceLabel.length);
+            model.rawFaceLabel = p_rawFaceLabel;
         }
 
         Model.vertex1.pos = meta.faceVerticesOffset;
@@ -447,8 +482,16 @@ export default class Model {
         }
         const endFaceVertices = Model.vertex1.pos;
         const endFaceOrientations = Model.vertex2.pos;
-        model.rawFaceVertex = Model.vertex1.gdata(endFaceVertices - startFaceVertices, startFaceVertices, false);
-        model.rawFaceOrientation = Model.vertex2.gdata(endFaceOrientations - startFaceOrientations, startFaceOrientations, false);
+
+        const p_rawFaceVertex = new Uint8Array(endFaceVertices - startFaceVertices);
+        Model.vertex1.pos = startFaceVertices;
+        Model.vertex1.gdata(p_rawFaceVertex, 0, p_rawFaceVertex.length);
+        model.rawFaceVertex = p_rawFaceVertex;
+
+        const p_rawFaceOrientation = new Uint8Array(endFaceOrientations - startFaceOrientations);
+        Model.vertex2.pos = startFaceOrientations;
+        Model.vertex2.gdata(p_rawFaceOrientation, 0, p_rawFaceOrientation.length);
+        model.rawFaceOrientation = p_rawFaceOrientation;
 
         Model.axis.pos = meta.faceTextureAxisOffset * 6;
         for (let t = 0; t < meta.texturedFaceCount; t++) {
@@ -456,44 +499,48 @@ export default class Model {
             model.texturedVertexB[t] = Model.axis.g2();
             model.texturedVertexC[t] = Model.axis.g2();
         }
-        model.rawTexturedVertex = Model.axis.gdata(meta.texturedFaceCount * 6, meta.faceTextureAxisOffset * 6, false);
+
+        const p_rawTexturedVertex = new Uint8Array(meta.texturedFaceCount * 6);
+        Model.axis.pos = meta.faceTextureAxisOffset * 6;
+        Model.axis.gdata(p_rawTexturedVertex, 0, p_rawTexturedVertex.length);
+        model.rawTexturedVertex = p_rawTexturedVertex;
 
         return model;
     }
 
     // using 234+ format because it's suitable to be separate files and has tooling
     convert() {
-        const data = new Packet();
+        const data = Packet2.alloc(0);
 
-        data.pdata(this.rawVertexFlags);
-        data.pdata(this.rawFaceOrientation);
+        data.pdata(this.rawVertexFlags, 0, this.rawVertexFlags.length);
+        data.pdata(this.rawFaceOrientation, 0, this.rawFaceOrientation.length);
 
         if (this.meta.hasPriorities == 255) {
-            data.pdata(this.rawFacePriority);
+            data.pdata(this.rawFacePriority, 0, this.rawFacePriority.length);
         }
 
         if (this.meta.hasFaceLabels == 1) {
-            data.pdata(this.rawFaceLabel);
+            data.pdata(this.rawFaceLabel, 0, this.rawFaceLabel.length);
         }
 
         if (this.meta.hasInfo == 1) {
-            data.pdata(this.rawFaceInfo);
+            data.pdata(this.rawFaceInfo, 0, this.rawFaceInfo.length);
         }
 
         if (this.meta.hasVertexLabels == 1) {
-            data.pdata(this.rawVertexLabel);
+            data.pdata(this.rawVertexLabel, 0, this.rawVertexLabel.length);
         }
 
         if (this.meta.hasAlpha == 1) {
-            data.pdata(this.rawFaceAlpha);
+            data.pdata(this.rawFaceAlpha, 0, this.rawFaceAlpha.length);
         }
 
-        data.pdata(this.rawFaceVertex);
-        data.pdata(this.rawFaceColor);
-        data.pdata(this.rawTexturedVertex);
-        data.pdata(this.rawVertexX);
-        data.pdata(this.rawVertexY);
-        data.pdata(this.rawVertexZ);
+        data.pdata(this.rawFaceVertex, 0, this.rawFaceVertex.length);
+        data.pdata(this.rawFaceColor, 0, this.rawFaceColor.length);
+        data.pdata(this.rawTexturedVertex, 0, this.rawTexturedVertex.length);
+        data.pdata(this.rawVertexX, 0, this.rawVertexX.length);
+        data.pdata(this.rawVertexY, 0, this.rawVertexY.length);
+        data.pdata(this.rawVertexZ, 0, this.rawVertexZ.length);
 
         // header:
         data.p2(this.meta.vertexCount);

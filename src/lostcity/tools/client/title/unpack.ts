@@ -16,7 +16,7 @@ if (!jpg) {
 }
 
 jpg.p1(0xff); // restore JPEG header
-jpg.save('dump/src/binary/title.jpg', jpg.length);
+jpg.save('dump/src/binary/title.jpg', jpg.data.length);
 
 const index = title.read('index.dat');
 

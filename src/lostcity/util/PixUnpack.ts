@@ -1,8 +1,8 @@
 import Jimp from 'jimp';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
-export function pixSize(dat: Packet, idx: Packet) {
+export function pixSize(dat: Packet2, idx: Packet2) {
     dat.pos = 0;
     idx.pos = dat.g2();
 
@@ -12,11 +12,11 @@ export function pixSize(dat: Packet, idx: Packet) {
     return { width, height };
 }
 
-export function countPix(dat: Packet, idx: Packet) {
+export function countPix(dat: Packet2, idx: Packet2) {
     dat.pos = 0;
     idx.pos = dat.g2();
 
-    if (idx.pos > idx.length) {
+    if (idx.pos > idx.data.length) {
         // console.error('not pix encoding');
         return 0;
     }
@@ -50,7 +50,7 @@ export function countPix(dat: Packet, idx: Packet) {
         }
 
         dat.pos += width * height;
-        if (dat.pos > dat.length) {
+        if (dat.pos > dat.data.length) {
             // console.error('out of bounds');
             break;
         }
@@ -67,7 +67,7 @@ export function countPix(dat: Packet, idx: Packet) {
     return count;
 }
 
-export function unpackPix(dat: Packet, idx: Packet, id = 0) {
+export function unpackPix(dat: Packet2, idx: Packet2, id = 0) {
     dat.pos = 0;
     idx.pos = dat.g2();
 

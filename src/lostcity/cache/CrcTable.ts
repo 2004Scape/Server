@@ -1,12 +1,13 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
-export const CrcBuffer = new Packet();
+export const CrcBuffer = new Packet2(new Uint8Array(4 * 9));
 export const CrcTable: number[] = [];
 
 function makeCrc(path: string) {
-    const crc = Packet.crc32(Packet.load(path));
+    const packet = Packet2.load(path);
+    const crc = Packet2.getcrc(packet.data, 0, packet.data.length);
     CrcTable.push(crc);
     CrcBuffer.p4(crc);
 }
@@ -23,4 +24,4 @@ if (fs.existsSync('data/pack/client/')) {
     makeCrc('data/pack/client/sounds');
 }
 
-export const CrcBuffer32 = Packet.crc32(CrcBuffer.data);
+export const CrcBuffer32 = Packet2.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
