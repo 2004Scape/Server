@@ -170,9 +170,9 @@ export default class Packet2 extends Hashable {
     }
 
     p3(value: number): void {
-        this.data[this.pos++] = value >>> 16;
-        this.data[this.pos++] = value >>> 8;
-        this.data[this.pos++] = value;
+        this.view.setUint8(this.pos++, value >> 16);
+        this.view.setUint16(this.pos, value);
+        this.pos += 2;
     }
 
     p4(value: number): void {
@@ -273,7 +273,9 @@ export default class Packet2 extends Hashable {
     }
 
     g3(): number {
-        return ((this.data[this.pos++] << 16) | (this.data[this.pos++] << 8) | this.data[this.pos++]) >>> 0;
+        const result: number = (this.view.getUint8(this.pos++) << 16) | this.view.getUint16(this.pos);
+        this.pos += 2;
+        return result;
     }
 
     g4(): number {
