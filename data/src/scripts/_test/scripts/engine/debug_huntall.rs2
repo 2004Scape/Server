@@ -9,6 +9,3 @@ huntall(coord, 10, 0);
 while (.huntnext = true) {
     .mes("Hello noob.");
 }
-
-[debugproc,huntall]
-huntall(coord, 500, 0);
