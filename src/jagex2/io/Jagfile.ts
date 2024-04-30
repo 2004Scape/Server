@@ -127,7 +127,7 @@ export default class Jagfile {
     }
 
     save(path: string, doNotCompressWhole: boolean = false): Packet2 {
-        let buf: Packet2 = new Packet2(new Uint8Array(2_000_000)); // do not alloc here.
+        let buf: Packet2 = Packet2.alloc(5);
 
         for (let i: number = 0; i < this.fileQueue.length; i++) {
             const queued: JagQueueFile = this.fileQueue[i];
@@ -201,7 +201,7 @@ export default class Jagfile {
             buf.pdata(data, 0, data.length);
         }
 
-        const jag: Packet2 = new Packet2(new Uint8Array(2_000_000)); // do not alloc here.
+        const jag: Packet2 = Packet2.alloc(5);
         jag.p3(buf.pos);
         if (compressWhole) {
             buf = new Packet2(BZip2.compress(buf.data, false, true));

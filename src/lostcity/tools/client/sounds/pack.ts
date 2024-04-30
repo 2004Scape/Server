@@ -29,7 +29,7 @@ export function packClientSound() {
     out.p2(-1);
 
     jag.write('sounds.dat', out);
-    jag.save('data/pack/client/sounds', true);
+    jag.save('data/pack/client/sounds', true).release();
     out.release();
     //console.timeEnd('sounds.jag');
 }

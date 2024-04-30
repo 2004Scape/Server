@@ -108,6 +108,6 @@ export function packClientWordenc() {
         jag.write('domainenc.txt', out);
     }
 
-    jag.save('data/pack/client/wordenc');
+    jag.save('data/pack/client/wordenc').release();
     //console.timeEnd('wordenc.jag');
 }

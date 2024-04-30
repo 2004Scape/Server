@@ -105,7 +105,7 @@ export async function packClientTexture() {
         jag.write(name, data);
     }
 
-    jag.save('data/pack/client/textures');
+    jag.save('data/pack/client/textures').release();
 
     for (const packet of Object.values(files)) {
         packet.release();

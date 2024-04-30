@@ -66,7 +66,7 @@ export async function packClientTitle() {
         jag.write(name, data);
     }
 
-    jag.save('data/pack/client/title');
+    jag.save('data/pack/client/title').release();
     for (const packet of Object.values(files)) {
         packet.release();
     }

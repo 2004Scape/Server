@@ -697,6 +697,6 @@ export function packConfigs() {
     if (rebuildClient) {
         console.log('Writing config.jag');
         // we would check the CRC of the config.jag file too, but bz2 can differ on Windows...
-        jag.save('data/pack/client/config');
+        jag.save('data/pack/client/config').release();
     }
 }

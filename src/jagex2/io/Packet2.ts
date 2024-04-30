@@ -82,7 +82,7 @@ export default class Packet2 extends Hashable {
         } else if (type === 4) {
             return new Packet2(new Uint8Array(500000));
         } else {
-            return new Packet2(new Uint8Array(1000000));
+            return new Packet2(new Uint8Array(2000000));
         }
     }
 
@@ -137,10 +137,10 @@ export default class Packet2 extends Hashable {
         } else if (this.data.length === 100000 && Packet2.cacheBigCount < 10) {
             Packet2.cacheBig.addTail(this);
             Packet2.cacheBigCount++;
-        } else if (this.data.length === 250000 && Packet2.cacheHugeCount < 5) {
+        } else if (this.data.length === 500000 && Packet2.cacheHugeCount < 5) {
             Packet2.cacheHuge.addTail(this);
             Packet2.cacheHugeCount++;
-        } else if (this.data.length === 1000000 && Packet2.cacheUnimaginableCount < 2) {
+        } else if (this.data.length === 2000000 && Packet2.cacheUnimaginableCount < 2) {
             Packet2.cacheUnimaginable.addTail(this);
             Packet2.cacheUnimaginableCount++;
         }
