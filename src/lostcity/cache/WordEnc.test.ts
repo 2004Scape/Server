@@ -1,4 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import fs from 'fs';
 
@@ -17,18 +17,18 @@ describe('WordEnc', () => {
             const dat = new Packet();
 
             fs.existsSync = vi.fn().mockReturnValue(true);
-            Packet.load = vi.fn().mockReturnValue(dat);
+            Packet2.load = vi.fn().mockReturnValue(dat);
 
             WordEnc.load('/path/to/data');
 
-            expect(Packet.load).toHaveBeenCalledWith('/path/to/data/client/wordenc');
+            expect(Packet2.load).toHaveBeenCalledWith('/path/to/data/client/wordenc');
         });
 
         it('should return early if wordenc does not exist', () => {
             fs.existsSync = vi.fn().mockReturnValue(false);
-            Packet.load = vi.fn().mockReturnValue(undefined);
+            Packet2.load = vi.fn().mockReturnValue(undefined);
 
-            expect(Packet.load).not.toHaveBeenCalled();
+            expect(Packet2.load).not.toHaveBeenCalled();
         });
     });
 
