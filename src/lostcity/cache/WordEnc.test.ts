@@ -1,15 +1,16 @@
-import { vi, describe, it, expect } from 'vitest';
-
 import Packet from '#jagex2/io/Packet.js';
 
 import fs from 'fs';
 
 import WordEnc from '#lostcity/cache/WordEnc.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
+import { packClientWordenc } from '#lostcity/tools/client/wordenc/pack.js';
 
-// todo: test needs to run and actually filter
-const RUN_TEST = true;
-
+/**
+ * TODO: Remove race condition in how files are written to data/pack/client/wordenc
+ * that requires this to be called at the top level of this test
+ */
+packClientWordenc();
 describe('WordEnc', () => {
     describe('static load', () => {
         it('should load data from wordenc', () => {
@@ -32,10 +33,7 @@ describe('WordEnc', () => {
     });
 
     describe('filtering', () => {
-        if (!RUN_TEST) {
-            return;
-        }
-        WordEnc.load('data/pack/client');
+        WordEnc.load('data/pack');
         // decoding from the client automatically parses toSentenceCase.
         // the test has to do it manually here for it to emulate from the client.
 
@@ -83,9 +81,6 @@ describe('WordEnc', () => {
         });
 
         it('should not filter words', () => {
-            if (!RUN_TEST) {
-                return;
-            }
             expect(WordEnc.filter(WordPack.toSentenceCase('runescape'))).toBe('Runescape');
             expect(WordEnc.filter(WordPack.toSentenceCase('hello@man'))).toBe('Hello@man');
             expect(WordEnc.filter(WordPack.toSentenceCase('(dot)'))).toBe('(Dot)');
