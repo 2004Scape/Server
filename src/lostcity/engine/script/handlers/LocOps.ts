@@ -7,6 +7,7 @@ import World from '#lostcity/engine/World.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import {LocFindAllIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
@@ -22,9 +23,6 @@ import {
 } from '#lostcity/engine/script/ScriptInputValidator.js';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
-
-let locFindAllZone: Loc[] = [];
-let locFindAllZoneIndex = 0;
 
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: state => {
@@ -110,11 +108,7 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_FINDALLZONE]: state => {
         const coord = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
-
-        locFindAllZone = World.getZoneLocs(pos.x, pos.z, pos.level);
-        locFindAllZoneIndex = 0;
-
+        state.locFindAllIterator = new LocFindAllIterator(coord);
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
             state._activeLoc2 = state._activeLoc;
@@ -123,13 +117,13 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_FINDNEXT]: state => {
-        const loc = locFindAllZone[locFindAllZoneIndex++];
-        if (!loc) {
+        const result = state.locFindAllIterator?.next();
+        if (!result || result.done) {
             state.pushInt(0);
             return;
         }
 
-        state.activeLoc = loc;
+        state.activeLoc = result.value;
         state.pointerAdd(ActiveLoc[state.intOperand]);
         state.pushInt(1);
     },

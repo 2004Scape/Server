@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { dirname } from 'path';
 
 // cached directory listings
 export const dirCache: Map<string, string[]> = new Map();

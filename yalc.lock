@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@2004scape/rsmod-pathfinder": {
+      "signature": "300ff889ff9708e0a0181f90fb8ca8c2",
+      "file": true,
+      "replaced": "^4.2.9"
+    }
+  }
+}

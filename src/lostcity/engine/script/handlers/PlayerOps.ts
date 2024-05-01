@@ -27,7 +27,7 @@ import {
     NpcTypeValid,
     NumberNotNull,
     ObjTypeValid,
-    SpotAnimTypeValid
+    SpotAnimTypeValid,
 } from '#lostcity/engine/script/ScriptInputValidator.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 

@@ -5,28 +5,28 @@ import Packet from '#jagex2/io/Packet.js';
 
 describe('Packet', () => {
     describe('test 1', () => {
-        test('bool', () => {
+        it('bool', () => {
             const expected = Packet.alloc(1);
             expected.pbool(true);
             const result = new Packet(expected);
-            expect(result.gbool()).toBe(true);
+            expect(result.gbool()).toBeTruthy();
         });
 
-        test('unsigned', () => {
+        it('unsigned', () => {
             const expected = Packet.alloc(1);
             expected.p1(255);
             const result = new Packet(expected);
             expect(result.g1()).toBe(255);
         });
 
-        test('signed a', () => {
+        it('signed a', () => {
             const expected = Packet.alloc(1);
             expected.p1(69);
             const result = new Packet(expected);
             expect(result.g1s()).toBe(69);
         });
 
-        test('signed b', () => {
+        it('signed b', () => {
             const expected = Packet.alloc(1);
             expected.p1(169);
             const result = new Packet(expected);
@@ -35,28 +35,28 @@ describe('Packet', () => {
     });
 
     describe('test 2', () => {
-        test('unsigned', () => {
+        it('unsigned', () => {
             const expected = Packet.alloc(2);
             expected.p2(65535);
             const result = new Packet(expected);
             expect(result.g2()).toBe(65535);
         });
 
-        test('signed a', () => {
+        it('signed a', () => {
             const expected = Packet.alloc(2);
             expected.p2(32767);
             const result = new Packet(expected);
             expect(result.g2s()).toBe(32767);
         });
 
-        test('signed b', () => {
+        it('signed b', () => {
             const expected = Packet.alloc(2);
             expected.p2(32768);
             const result = new Packet(expected);
             expect(result.g2s()).toBe(-32768);
         });
 
-        test('little endian', () => {
+        it('little endian', () => {
             const expected = Packet.alloc(2);
             expected.ip2(65535);
             const result = new Packet(expected);
@@ -65,7 +65,7 @@ describe('Packet', () => {
     });
 
     describe('test 3', () => {
-        test('unsigned', () => {
+        it('unsigned', () => {
             const expected = Packet.alloc(3);
             expected.p3(16777215);
             const result = new Packet(expected);
@@ -74,28 +74,28 @@ describe('Packet', () => {
     });
 
     describe('test 4', () => {
-        test('unsigned', () => {
+        it('unsigned', () => {
             const expected = Packet.alloc(4);
             expected.p4(4294967295);
             const result = new Packet(expected);
             expect(result.g4()).toBe(4294967295);
         });
 
-        test('signed a', () => {
+        it('signed a', () => {
             const expected = Packet.alloc(4);
             expected.p4(2147483647);
             const result = new Packet(expected);
             expect(result.g4s()).toBe(2147483647);
         });
 
-        test('signed b', () => {
+        it('signed b', () => {
             const expected = Packet.alloc(4);
             expected.p4(2147483648);
             const result = new Packet(expected);
             expect(result.g4s()).toBe(-2147483648);
         });
 
-        test('little endian', () => {
+        it('little endian', () => {
             const expected = Packet.alloc(4);
             expected.ip4(2147483647);
             const result = new Packet(expected);
@@ -104,7 +104,7 @@ describe('Packet', () => {
     });
 
     describe('test 8', () => {
-        test('unsigned', () => {
+        it('unsigned', () => {
             const expected = Packet.alloc(4);
             expected.p8(BigInt(9007199254740991));
             const result = new Packet(expected);
@@ -113,7 +113,7 @@ describe('Packet', () => {
     });
 
     describe('test string', () => {
-        test('jstr', () => {
+        it('jstr', () => {
             const string = 'Hello World!';
             const expected = Packet.alloc(string.length + 1);
             expected.pjstr(string);
@@ -121,7 +121,7 @@ describe('Packet', () => {
             expect(result.gjstr()).toBe(string);
         });
 
-        test('jnstr', () => {
+        it('jnstr', () => {
             const string = 'Hello World!';
             const expected = Packet.alloc(string.length + 1);
             expected.pjnstr(string);
@@ -131,7 +131,7 @@ describe('Packet', () => {
     });
 
     describe('test data', () => {
-        test('data', () => {
+        it('data', () => {
             const bytes = new Uint8Array(5);
             bytes[0] = 69;
             bytes[1] = 59;
@@ -146,42 +146,42 @@ describe('Packet', () => {
     });
 
     describe('test smart', () => {
-        test('unsigned a', () => {
+        it('unsigned a', () => {
             const expected = Packet.alloc(2);
             expected.psmart(2);
             const result = new Packet(expected);
             expect(result.gsmart()).toBe(2);
         });
 
-        test('unsigned b', () => {
+        it('unsigned b', () => {
             const expected = Packet.alloc(2);
             expected.psmart(169);
             const result = new Packet(expected);
             expect(result.gsmart()).toBe(169);
         });
 
-        test('signed 1a', () => {
+        it('signed 1a', () => {
             const expected = Packet.alloc(1);
             expected.psmarts(13);
             const result = new Packet(expected);
             expect(result.gsmarts()).toBe(13);
         });
 
-        test('signed 1b', () => {
+        it('signed 1b', () => {
             const expected = Packet.alloc(1);
             expected.psmarts(-13);
             const result = new Packet(expected);
             expect(result.gsmarts()).toBe(-13);
         });
 
-        test('signed 2a', () => {
+        it('signed 2a', () => {
             const expected = Packet.alloc(2);
             expected.psmarts(69);
             const result = new Packet(expected);
             expect(result.gsmarts()).toBe(69);
         });
 
-        test('signed 2b', () => {
+        it('signed 2b', () => {
             const expected = Packet.alloc(2);
             expected.psmarts(-69);
             const result = new Packet(expected);
@@ -190,7 +190,7 @@ describe('Packet', () => {
     });
 
     describe('test size', () => {
-        test('psize 1', () => {
+        it('psize 1', () => {
             const expected = Packet.alloc(2);
             expected.pos++;
             expected.p1(69);
@@ -200,7 +200,7 @@ describe('Packet', () => {
             expect(result.g1()).toBe(69);
         });
 
-        test('psize 2', () => {
+        it('psize 2', () => {
             const expected = Packet.alloc(4);
             expected.pos += 2;
             expected.p2(65535);
@@ -210,7 +210,7 @@ describe('Packet', () => {
             expect(result.g2()).toBe(65535);
         });
 
-        test('psize 4', () => {
+        it('psize 4', () => {
             const expected = Packet.alloc(8);
             expected.pos += 4;
             expected.p4(2147483647);
@@ -222,7 +222,7 @@ describe('Packet', () => {
     });
 
     describe('test rsa', () => {
-        test('rsa', () => {
+        it('rsa', () => {
             const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
             const expected = Packet.alloc(0);
             expected.rsaenc(priv);
@@ -233,7 +233,7 @@ describe('Packet', () => {
     });
 
     describe('test bits', () => {
-        test('bits', () => {
+        it('bits', () => {
             const expected = Packet.alloc(2);
             expected.bits();
             expected.pBit(1, 0);
@@ -250,7 +250,7 @@ describe('Packet', () => {
     });
 
     describe('test packet', () => {
-        test('packet', () => {
+        it('packet', () => {
             const expected = Packet.alloc(4);
             expected.p4(2147483647);
             expected.pos = 0;

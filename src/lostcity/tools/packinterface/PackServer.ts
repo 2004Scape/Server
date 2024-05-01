@@ -7,5 +7,6 @@ export function packServerInterface() {
 
         const data = packInterface(true);
         data.save('data/pack/server/interface.dat');
+        data.release();
     }
 }
