@@ -1,0 +1,11 @@
+[debugproc,huntall_primary]
+huntall(coord, 10, 0);
+while (huntnext = true) {
+    mes("Hello noob.");
+}
+
+[debugproc,huntall_secondary]
+huntall(coord, 10, 0);
+while (.huntnext = true) {
+    .mes("Hello noob.");
+}

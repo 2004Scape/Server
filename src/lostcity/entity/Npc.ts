@@ -84,6 +84,7 @@ export default class Npc extends PathingEntity {
     mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
     nextHuntTick: number = -1;
+    huntrange: number = 5;
 
     interacted: boolean = false;
     target: Player | Npc | Loc | Obj | null = null;
@@ -129,6 +130,7 @@ export default class Npc extends PathingEntity {
         this.varsString = new Array(VarNpcType.count);
         this.mode = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
+        this.huntrange = npcType.huntrange;
     }
 
     resetHeroPoints() {
@@ -188,6 +190,9 @@ export default class Npc extends PathingEntity {
             }
             this.resetHeroPoints();
             this.defaultMode();
+
+            const npcType: NpcType = NpcType.get(this.type);
+            this.huntrange = npcType.huntrange;
         }
 
         if (this.mask === 0) {
@@ -764,7 +769,7 @@ export default class Npc extends PathingEntity {
                             continue;
                         }
 
-                        if (Position.distanceToSW(this, player) <= type.huntrange) {
+                        if (Position.distanceToSW(this, player) <= this.huntrange) {
                             nearby.push(player);
                         }
                     }

@@ -8,6 +8,7 @@
 [command,map_playercount](coord $coord1, coord $coord2)(int)
 [command,huntall](coord $source, int $distance, int $unknown0)
 [command,huntnext]()(boolean)
+[command,.huntnext]()(boolean)
 [command,inzone](coord $from, coord $to, coord $pos)(boolean)
 [command,lineofwalk](coord $from, coord $to)(boolean)
 [command,stat_random](int $level, int $low, int $high)(boolean)

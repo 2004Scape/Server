@@ -11,6 +11,7 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import {NpcFindAllIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -37,8 +38,6 @@ import {
 } from '#lostcity/engine/script/ScriptInputValidator.js';
 
 const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
-
-let npcFindResults: IterableIterator<[number, number]>;
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: state => {
@@ -130,10 +129,10 @@ const NpcOps: CommandHandlers = {
         check(id, NpcTypeValid);
 
         const pos = Position.unpackCoord(coord);
-        npcFindResults = World.getZoneNpcs(pos.x, pos.z, pos.level).entries();
+        state.npcFindAllIterator = new NpcFindAllIterator(coord);
 
-        for (const result of npcFindResults) {
-            const npc = World.getNpc(result[1]);
+        for (const result of state.npcFindAllIterator) {
+            const npc = World.getNpc(result);
             if(npc && npc.type === id && npc.x === pos.x && npc.level === pos.level && npc.z === pos.z) {
                 state.activeNpc = npc;
                 state.pointerAdd(ActiveNpc[state.intOperand]);
@@ -216,7 +215,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNT]: checkedHandler(ActiveNpc, state => {
-        throw new Error('unimplemented');
+        state.activeNpc.huntrange = check(state.popInt(), NumberNotNull);
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, state => {
@@ -318,12 +317,9 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
-        const coord = check(state.popInt(), CoordValid);
+        const coord: number = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
-
-        npcFindResults = World.getZoneNpcs(pos.x, pos.z, pos.level).entries();
-
+        state.npcFindAllIterator = new NpcFindAllIterator(coord);
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
             state._activeNpc2 = state._activeNpc;
@@ -332,14 +328,14 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: state => {
-        const result = npcFindResults.next();
-        if (result.done) {
+        const result = state.npcFindAllIterator?.next();
+        if (!result || result.done) {
             // no more npcs in zone
             state.pushInt(0);
             return;
         }
 
-        const npc = World.getNpc(result.value[1]);
+        const npc = World.getNpc(result.value);
         if (!npc) {
             // npc was removed but not unregistered from results (failsafe, unlikely to reach)
             state.pushInt(0);
