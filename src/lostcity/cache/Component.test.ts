@@ -86,7 +86,7 @@ describe('Component', () => {
             packet.release();
         });
 
-        /*it('test get by name -1', () => {
+        it.skip('test get by name -1', () => {
             const packet = Packet2.alloc(0);
 
             fs.existsSync = vi.fn().mockReturnValue(true);
@@ -100,7 +100,7 @@ describe('Component', () => {
             expect(Component.getByName('jordan')).toBeNull();
 
             packet.release();
-        });*/
+        });
     });
 
     describe('decode', () => {
