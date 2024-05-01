@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import Packet from '#jagex2/io/Packet.js';
-import { fromBase37, toDisplayName } from '#jagex2/jstring/JString.js';
+import {fromBase37, toBase37, toDisplayName} from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
@@ -50,8 +50,10 @@ import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import { CollisionFlag, findPath } from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
+import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 
 const levelExperience = new Int32Array(99);
 
