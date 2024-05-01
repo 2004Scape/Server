@@ -505,6 +505,11 @@ class World {
                     npc.executeScript(npc.activeScript);
                 }
 
+                if (npc.despawn !== -1) {
+                    // if the npc just despawned then don't do anything else.
+                    continue;
+                }
+
                 npc.processTimers();
                 npc.processQueue();
                 npc.processNpcModes();
