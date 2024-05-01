@@ -1,7 +1,0 @@
-0=npc_action_delay
-1=npc_attacking_uid
-2=npc_aggressive_player
-3=npc_lastcombat
-4=npc_stunned
-5=npc_macro_event_status
-6=npc_lastattack
