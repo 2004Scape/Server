@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { tryParseBoolean, tryParseInt, tryParseString } from './TryParse.js';
+import {tryParseArray, tryParseBoolean, tryParseInt, tryParseString} from './TryParse.js';
 
 export default {
     PUBLIC_IP: tryParseString(process.env.PUBLIC_IP, ''),
@@ -33,5 +33,7 @@ export default {
 
     ADMIN_IP: tryParseString(process.env.ADMIN_IP, ''),
 
-    SKIP_CRC: tryParseBoolean(process.env.SKIP_CRC, false)
+    SKIP_CRC: tryParseBoolean(process.env.SKIP_CRC, false),
+
+    JMODS: tryParseArray(process.env.JMODS?.split(','), ['pazaz'])
 };

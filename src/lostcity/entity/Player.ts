@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import Packet from '#jagex2/io/Packet.js';
-import { fromBase37, toDisplayName } from '#jagex2/jstring/JString.js';
+import {fromBase37, toBase37, toDisplayName} from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
@@ -50,8 +50,10 @@ import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import { CollisionFlag, findPath } from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
+import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -325,6 +327,8 @@ export default class Player extends PathingEntity {
     lastInt: number = -1; // resume_p_countdialog
     lastCom: number = -1; // if_button
 
+    staffModLevel: number = 0;
+
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC); // tutorial island.
         this.username = username;
@@ -481,184 +485,153 @@ export default class Player extends PathingEntity {
     }
 
     onCheat(cheat: string) {
-        const args = cheat.toLowerCase().split(' ');
-        const cmd = args.shift();
-        if (!cmd) {
+        const args: string[] = cheat.toLowerCase().split(' ');
+        const cmd: string | undefined = args.shift();
+        if (cmd === undefined || cmd.length <= 0) {
             return;
         }
 
         this.playerLog('Cheat ran', cheat);
 
-        switch (cmd) {
-            case 'reload': {
-                if (Environment.LOCAL_DEV) {
-                    // TODO: only reload config types that have changed to save time
-                    CategoryType.load('data/pack');
-                    ParamType.load('data/pack');
-                    EnumType.load('data/pack');
-                    StructType.load('data/pack');
-                    InvType.load('data/pack');
-                    IdkType.load('data/pack');
-                    VarPlayerType.load('data/pack');
-                    ObjType.load('data/pack', World.members);
-                    LocType.load('data/pack');
-                    NpcType.load('data/pack');
-                    Component.load('data/pack');
-                    SeqType.load('data/pack');
-                    SpotanimType.load('data/pack');
-                    MesanimType.load('data/pack');
-                    DbTableType.load('data/pack');
-                    DbRowType.load('data/pack');
-                    HuntType.load('data/pack');
+        if (cmd === 'reload' && Environment.LOCAL_DEV) {
+            // TODO: only reload config types that have changed to save time
+            CategoryType.load('data/pack');
+            ParamType.load('data/pack');
+            EnumType.load('data/pack');
+            StructType.load('data/pack');
+            InvType.load('data/pack');
+            IdkType.load('data/pack');
+            VarPlayerType.load('data/pack');
+            ObjType.load('data/pack', World.members);
+            LocType.load('data/pack');
+            NpcType.load('data/pack');
+            Component.load('data/pack');
+            SeqType.load('data/pack');
+            SpotanimType.load('data/pack');
+            MesanimType.load('data/pack');
+            DbTableType.load('data/pack');
+            DbRowType.load('data/pack');
+            HuntType.load('data/pack');
 
-                    const count = ScriptProvider.load('data/pack');
-                    this.messageGame(`Reloaded ${count} scripts.`);
-                }
-                break;
+            const count = ScriptProvider.load('data/pack');
+            this.messageGame(`Reloaded ${count} scripts.`);
+        } else if (cmd === 'setvar') {
+            const varp = args.shift();
+            if (!varp) {
+                this.messageGame('Usage: ::setvar <var> <value>');
+                return;
             }
-            case 'setvar': {
-                const varp = args.shift();
-                if (!varp) {
-                    this.messageGame('Usage: ::setvar <var> <value>');
-                    return;
-                }
 
-                const value = args.shift();
-                if (!value) {
-                    this.messageGame('Usage: ::setvar <var> <value>');
-                    return;
-                }
+            const value = args.shift();
+            if (!value) {
+                this.messageGame('Usage: ::setvar <var> <value>');
+                return;
+            }
 
-                const varpType = VarPlayerType.getByName(varp);
-                if (varpType) {
-                    this.setVar(varpType.id, parseInt(value, 10));
-                    this.messageGame(`Setting var ${varp} to ${value}`);
+            const varpType = VarPlayerType.getByName(varp);
+            if (varpType) {
+                this.setVar(varpType.id, parseInt(value, 10));
+                this.messageGame(`Setting var ${varp} to ${value}`);
+            } else {
+                this.messageGame(`Unknown var ${varp}`);
+            }
+        } else if (cmd === 'getvar') {
+            const varp = args.shift();
+            if (!varp) {
+                this.messageGame('Usage: ::getvar <var>');
+                return;
+            }
+
+            const varpType = VarPlayerType.getByName(varp);
+            if (varpType) {
+                this.messageGame(`Var ${varp}: ${this.vars[varpType.id]}`);
+            } else {
+                this.messageGame(`Unknown var ${varp}`);
+            }
+        } else if (cmd === 'setlevel') {
+            if (args.length < 2) {
+                this.messageGame('Usage: ::setlevel <stat> <level>');
+                return;
+            }
+
+            const stat = Player.SKILLS.indexOf(args[0]);
+            if (stat === -1) {
+                this.messageGame(`Unknown stat ${args[0]}`);
+                return;
+            }
+
+            this.setLevel(stat, parseInt(args[1]));
+        } else if (cmd === 'setxp') {
+            if (args.length < 2) {
+                this.messageGame('Usage: ::setxp <stat> <xp>');
+                return;
+            }
+
+            const stat = Player.SKILLS.indexOf(args[0]);
+            if (stat === -1) {
+                this.messageGame(`Unknown stat ${args[0]}`);
+                return;
+            }
+
+            const exp = parseInt(args[1]) * 10;
+            this.setLevel(stat, getLevelByExp(exp));
+            this.stats[stat] = exp;
+        } else if (cmd === 'minlevel') {
+            for (let i = 0; i < Player.SKILLS.length; i++) {
+                if (i === Player.HITPOINTS) {
+                    this.setLevel(i, 10);
                 } else {
-                    this.messageGame(`Unknown var ${varp}`);
+                    this.setLevel(i, 1);
                 }
-                break;
             }
-            case 'getvar': {
-                const varp = args.shift();
-                if (!varp) {
-                    this.messageGame('Usage: ::getvar <var>');
-                    return;
-                }
-
-                const varpType = VarPlayerType.getByName(varp);
-                if (varpType) {
-                    this.messageGame(`Var ${varp}: ${this.vars[varpType.id]}`);
-                } else {
-                    this.messageGame(`Unknown var ${varp}`);
-                }
-                break;
+        } else if (cmd === 'serverdrop') {
+            this.terminate();
+        } else if (cmd === 'random') {
+            this.afkEventReady = true;
+        } else if (cmd === 'bench' && this.staffModLevel >= 3) {
+            const start = Date.now();
+            for (let index = 0; index < 100_000; index++) {
+                findPath(this.level, this.x, this.z, this.x, this.z + 10);
             }
-            case 'setlevel': {
-                if (args.length < 2) {
-                    this.messageGame('Usage: ::setlevel <stat> <level>');
-                    return;
-                }
-
-                const stat = Player.SKILLS.indexOf(args[0]);
-                if (stat === -1) {
-                    this.messageGame(`Unknown stat ${args[0]}`);
-                    return;
-                }
-
-                this.setLevel(stat, parseInt(args[1]));
-                break;
+            const end = Date.now();
+            console.log(`took = ${end - start} ms`);
+        } else if (cmd === 'bots' && this.staffModLevel >= 3) {
+            this.messageGame('Adding bots');
+            for (let i = 0; i < 2000; i++) {
+                const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
+                bot.onLogin();
+                World.addPlayer(bot);
             }
-            case 'setxp': {
-                if (args.length < 2) {
-                    this.messageGame('Usage: ::setxp <stat> <xp>');
-                    return;
+        } else if (cmd === 'teleall' && this.staffModLevel >= 3) {
+            this.messageGame('Teleporting all players');
+            for (let i = 0; i < World.players.length; i++) {
+                const player = World.players[i];
+                if (!player) {
+                    continue;
                 }
 
-                const stat = Player.SKILLS.indexOf(args[0]);
-                if (stat === -1) {
-                    this.messageGame(`Unknown stat ${args[0]}`);
-                    return;
-                }
+                player.closeModal();
 
-                const exp = parseInt(args[1]) * 10;
-                this.setLevel(stat, getLevelByExp(exp));
-                this.stats[stat] = exp;
-                break;
+                do {
+                    const x = Math.floor(Math.random() * 640) + 3200;
+                    const z = Math.floor(Math.random() * 640) + 3200;
+
+                    player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
+                } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
             }
-            case 'minlevel': {
-                for (let i = 0; i < Player.SKILLS.length; i++) {
-                    if (i === Player.HITPOINTS) {
-                        this.setLevel(i, 10);
-                    } else {
-                        this.setLevel(i, 1);
-                    }
+        } else if (cmd === 'moveall' && this.staffModLevel >= 3) {
+            this.messageGame('Moving all players');
+            console.time('moveall');
+            for (let i = 0; i < World.players.length; i++) {
+                const player = World.players[i];
+                if (!player) {
+                    continue;
                 }
-                break;
-            }
-            case 'serverdrop': {
-                this.terminate();
-                break;
-            }
-            case 'random': {
-                this.afkEventReady = true;
-                break;
-            }
-            /*case 'bench': {
-                const start = Date.now();
-                for (let index = 0; index < 100_000; index++) {
-                    findPath(this.level, this.x, this.z, this.x, this.z + 10);
-                }
-                const end = Date.now();
-                console.log(`took = ${end - start} ms`);
-                break;
-            }*/
-            /*case 'bots': {
-                this.messageGame('Adding bots');
-                for (let i = 0; i < 2000; i++) {
-                    const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
-                    bot.onLogin();
-                    World.addPlayer(bot);
-                }
-                break;
-            }
-            case 'teleall': {
-                this.messageGame('Teleporting all players');
-                for (let i = 0; i < World.players.length; i++) {
-                    const player = World.players[i];
-                    if (!player) {
-                        continue;
-                    }
 
-                    player.closeModal();
-
-                    do {
-                        const x = Math.floor(Math.random() * 640) + 3200;
-                        const z = Math.floor(Math.random() * 640) + 3200;
-
-                        player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
-                    } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
-                }
-                break;
+                player.closeModal();
+                player.queueWaypoints(findPath(player.level, player.x, player.z, (player.x >>> 6 << 6) + 32, (player.z >>> 6 << 6) + 32));
             }
-            case 'moveall': {
-                this.messageGame('Moving all players');
-                console.time('moveall');
-                for (let i = 0; i < World.players.length; i++) {
-                    const player = World.players[i];
-                    if (!player) {
-                        continue;
-                    }
-
-                    player.closeModal();
-                    player.queueWaypoints(findPath(player.level, player.x, player.z, (player.x >>> 6 << 6) + 32, (player.z >>> 6 << 6) + 32));
-                }
-                console.timeEnd('moveall');
-                break;
-            }*/
-        }
-
-        if (cmd.length <= 0) {
-            return;
+            console.timeEnd('moveall');
         }
 
         // lookup debugproc with the name and execute it

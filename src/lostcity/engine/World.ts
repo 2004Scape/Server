@@ -57,6 +57,7 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 import ClientProt from '#lostcity/server/ClientProt.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import {LoginResponse} from '#lostcity/server/LoginServer.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -636,7 +637,7 @@ class World {
             if (pid === -1) {
                 if (player instanceof NetworkPlayer && player.client) {
                     // world full
-                    player.client.send(Uint8Array.from([7]));
+                    player.client.send(LoginResponse.WORLD_FULL);
                     player.client.close();
                 }
 
@@ -672,7 +673,11 @@ class World {
 
             if (player instanceof NetworkPlayer && player.client) {
                 player.client.state = 1;
-                player.client.send(Uint8Array.from([2]));
+                if (player.staffModLevel >= 2) {
+                    player.client.send(LoginResponse.STAFF_MOD_LEVEL);
+                } else {
+                    player.client.send(LoginResponse.SUCCESSFUL);
+                }
             }
 
             this.socialLogin(player.username37);

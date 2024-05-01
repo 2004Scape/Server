@@ -92,6 +92,7 @@
 [command,sound_synth](synth $sound, int $loops, int $delay)
 [command,.sound_synth](synth $sound, int $loops, int $delay)
 [command,staffmodlevel]()(int)
+[command,.staffmodlevel]()(int)
 [command,stat](stat $stat)(int)
 [command,.stat](stat $stat)(int)
 [command,stat_base](stat $stat)(int)

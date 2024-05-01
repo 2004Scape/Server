@@ -94,7 +94,7 @@ describe('Component', () => {
 
             try {
                 Component.load('/path/to/data');
-            } catch (e) { /!* empty *!/ }
+            } catch (e) { /* empty */ }
 
             expect(Packet2.load).toHaveBeenCalledWith('/path/to/data/server/interface.dat');
             expect(Component.getByName('jordan')).toBeNull();
