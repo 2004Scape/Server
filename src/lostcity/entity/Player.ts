@@ -818,7 +818,7 @@ export default class Player extends PathingEntity {
         return moved;
     }
 
-    blockWalkFlag(): number {
+    blockWalkFlag(): CollisionFlag {
         return CollisionFlag.PLAYER;
     }
 

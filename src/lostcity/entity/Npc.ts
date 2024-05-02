@@ -13,14 +13,14 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import { EntityQueueRequest, NpcQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, NpcQueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
-import { Direction, Position } from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
@@ -239,7 +239,7 @@ export default class Npc extends PathingEntity {
         super.processMovement();
     }
 
-    blockWalkFlag(): number | null {
+    blockWalkFlag(): CollisionFlag {
         switch (this.moveRestrict) {
             case MoveRestrict.NORMAL:
                 return CollisionFlag.NPC;
@@ -252,7 +252,7 @@ export default class Npc extends PathingEntity {
             case MoveRestrict.OUTDOORS:
                 return CollisionFlag.NPC;
             case MoveRestrict.NOMOVE:
-                return null;
+                return CollisionFlag.NULL;
             case MoveRestrict.PASSTHRU:
                 return CollisionFlag.OPEN;
         }

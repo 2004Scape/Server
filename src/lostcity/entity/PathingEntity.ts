@@ -4,12 +4,12 @@ import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 
 import LocType from '#lostcity/cache/LocType.js';
 
 import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
-import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
@@ -49,7 +49,7 @@ export default abstract class PathingEntity extends Entity {
      * Attempts to update movement for a PathingEntity.
      */
     abstract updateMovement(): void;
-    abstract blockWalkFlag(): number | null;
+    abstract blockWalkFlag(): CollisionFlag;
     abstract defaultMoveSpeed(): MoveSpeed;
 
     /**
@@ -359,7 +359,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         const extraFlag = this.blockWalkFlag();
-        if (extraFlag === null) {
+        if (extraFlag === CollisionFlag.NULL) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
         }
