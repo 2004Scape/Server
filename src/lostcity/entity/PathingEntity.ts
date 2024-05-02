@@ -328,9 +328,7 @@ export default abstract class PathingEntity extends Entity {
         this.exactEndX = -1;
         this.exactEndZ = -1;
         this.exactMoveStart = -1;
-        if (World.currentTick >= World.currentTick - this.exactMoveEnd) {
-            this.exactMoveEnd = -1;
-        }
+        this.exactMoveEnd = -1;
         this.exactMoveDirection = -1;
     }
 
@@ -364,11 +362,6 @@ export default abstract class PathingEntity extends Entity {
         if (extraFlag === null) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
-        }
-
-        // check if force moving.
-        if (this.exactMoveEnd !== -1) {
-            return dir;
         }
 
         // check current direction if can travel to chosen dest.
