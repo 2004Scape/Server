@@ -25,7 +25,7 @@ if (p_finduid(uid) = true) {
     inv_add(bank, red_halloween_mask, 255);
     inv_add(bank, obj_1961, 255);
     inv_add(bank, pumpkin, 255);
-    inv_add(bank, obj_981, 255);
+    inv_add(bank, disk_of_returning, 255);
     inv_add(bank, obj_1989, 255);
 
     inv_add(bank, firerune, ^max_32bit_int);
