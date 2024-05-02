@@ -12,7 +12,7 @@ import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
-import {HuntAllIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import { Position } from '#lostcity/entity/Position.js';
 
@@ -71,11 +71,11 @@ const ServerOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.huntAllIterator = new HuntAllIterator(World.currentTick, level, x, z, distance, checkVis);
+        state.huntIterator = new HuntIterator(World.currentTick, level, x, z, distance, checkVis);
     },
 
     [ScriptOpcode.HUNTNEXT]: state => {
-        const result = state.huntAllIterator?.next();
+        const result = state.huntIterator?.next();
         if (!result || result.done) {
             state.pushInt(0);
             return;

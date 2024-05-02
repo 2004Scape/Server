@@ -7,7 +7,7 @@ import World from '#lostcity/engine/World.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
-import {LocFindAllIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import {LocIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
@@ -110,7 +110,7 @@ const LocOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.locFindAllIterator = new LocFindAllIterator(World.currentTick, level, x, z);
+        state.locIterator = new LocIterator(World.currentTick, level, x, z);
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
             state._activeLoc2 = state._activeLoc;
@@ -119,7 +119,7 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_FINDNEXT]: state => {
-        const result = state.locFindAllIterator?.next();
+        const result = state.locIterator?.next();
         if (!result || result.done) {
             state.pushInt(0);
             return;

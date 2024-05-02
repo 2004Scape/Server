@@ -120,9 +120,9 @@ export default class ScriptState {
     dbRow: number = -1;
     dbRowQuery: number[] = [];
 
-    huntAllIterator: IterableIterator<Player> | null = null;
-    npcFindAllIterator: IterableIterator<Npc> | null = null;
-    locFindAllIterator: IterableIterator<Loc> | null = null;
+    huntIterator: IterableIterator<Player> | null = null;
+    npcIterator: IterableIterator<Npc> | null = null;
+    locIterator: IterableIterator<Loc> | null = null;
 
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;

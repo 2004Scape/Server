@@ -7,26 +7,26 @@ import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 
 abstract class ScriptIterator<T> implements IterableIterator<T> {
-    private readonly it: IterableIterator<T>;
-    readonly tick: number;
+    private readonly iterator: IterableIterator<T>;
+    protected readonly tick: number;
 
     protected constructor(tick: number) {
-        this.it = this.generator();
+        this.iterator = this.generator();
         this.tick = tick;
     }
 
     protected abstract generator(): IterableIterator<T>;
 
     [Symbol.iterator](): IterableIterator<T> {
-        return this.it;
+        return this.iterator;
     }
 
     next(): IteratorResult<T> {
-        return this.it.next();
+        return this.iterator.next();
     }
 }
 
-export class HuntAllIterator extends ScriptIterator<Player> {
+export class HuntIterator extends ScriptIterator<Player> {
     // a radius of 1 will loop 9 zones
     // a radius of 2 will loop 25 zones
     // a radius of 3 will loop 49 zones
@@ -87,7 +87,7 @@ export class HuntAllIterator extends ScriptIterator<Player> {
     }
 }
 
-export class NpcFindAllIterator extends ScriptIterator<Npc> {
+export class NpcIterator extends ScriptIterator<Npc> {
     private readonly level: number;
     private readonly x: number;
     private readonly z: number;
@@ -115,7 +115,7 @@ export class NpcFindAllIterator extends ScriptIterator<Npc> {
     }
 }
 
-export class LocFindAllIterator extends ScriptIterator<Loc> {
+export class LocIterator extends ScriptIterator<Loc> {
     private readonly level: number;
     private readonly x: number;
     private readonly z: number;

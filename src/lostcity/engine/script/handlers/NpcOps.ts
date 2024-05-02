@@ -11,7 +11,7 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import {NpcFindAllIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import {NpcIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -129,9 +129,9 @@ const NpcOps: CommandHandlers = {
         check(id, NpcTypeValid);
 
         const {level, x, z} = Position.unpackCoord(coord);
-        state.npcFindAllIterator = new NpcFindAllIterator(World.currentTick, level, x, z);
+        state.npcIterator = new NpcIterator(World.currentTick, level, x, z);
 
-        for (const npc of state.npcFindAllIterator) {
+        for (const npc of state.npcIterator) {
             if(npc && npc.type === id && npc.x === x && npc.level === level && npc.z === z) {
                 state.activeNpc = npc;
                 state.pointerAdd(ActiveNpc[state.intOperand]);
@@ -320,7 +320,7 @@ const NpcOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.npcFindAllIterator = new NpcFindAllIterator(World.currentTick, level, x, z);
+        state.npcIterator = new NpcIterator(World.currentTick, level, x, z);
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
             state._activeNpc2 = state._activeNpc;
@@ -329,7 +329,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDNEXT]: state => {
-        const result = state.npcFindAllIterator?.next();
+        const result = state.npcIterator?.next();
         if (!result || result.done) {
             // no more npcs in zone
             state.pushInt(0);
