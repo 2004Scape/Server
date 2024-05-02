@@ -30,6 +30,7 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 
 import {CollisionFlag, findNaivePath, hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -214,7 +215,7 @@ export default class Npc extends PathingEntity {
         this.graphicDelay = -1;
     }
 
-    updateMovement(running: number = -1): void {
+    updateMovement(): void {
         const type = NpcType.get(this.type);
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return;
@@ -231,11 +232,11 @@ export default class Npc extends PathingEntity {
             }
         }
 
-        if (running === -1 && !this.forceMove) {
-            running = 0;
+        if (this.moveSpeed !== MoveSpeed.INSTANT) {
+            this.moveSpeed = this.defaultMoveSpeed();
         }
 
-        super.processMovement(running);
+        super.processMovement();
     }
 
     blockWalkFlag(): number | null {
@@ -256,6 +257,12 @@ export default class Npc extends PathingEntity {
                 return CollisionFlag.OPEN;
         }
     }
+
+    defaultMoveSpeed(): MoveSpeed {
+        return MoveSpeed.WALK;
+    }
+
+    // ----
 
     delayed() {
         return this.delay > 0;
