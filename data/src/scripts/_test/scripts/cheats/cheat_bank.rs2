@@ -26,7 +26,7 @@ if (p_finduid(uid) = true) {
     inv_add(bank, easter_egg, 255);
     inv_add(bank, pumpkin, 255);
     inv_add(bank, disk_of_returning, 255);
-    inv_add(bank, obj_1989, 255);
+    inv_add(bank, half_full_wine_jug, 255);
 
     inv_add(bank, firerune, ^max_32bit_int);
     inv_add(bank, waterrune, ^max_32bit_int);

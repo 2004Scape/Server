@@ -542,7 +542,7 @@ data=restore_message2,0
 
 [wine_consume_messages]
 table=consume_messages_table
-data=consumable,obj_1989
+data=consumable,half_full_wine_jug
 data=consumable,jug_of_bad_wine
 data=consumable,jug_wine
 data=consume_message1,You drink the wine.
