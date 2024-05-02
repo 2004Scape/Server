@@ -32,7 +32,7 @@ jobs:
       run: npm ci
 
     - name: Validate Client Cache
-      run: npm run client:pack
+      run: npm run client:build
 
     - name: Validate Server Cache
       run: npm run server:pack
