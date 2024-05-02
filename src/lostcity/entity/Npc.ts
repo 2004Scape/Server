@@ -180,6 +180,7 @@ export default class Npc extends PathingEntity {
 
     resetEntity(respawn: boolean) {
         this.resetPathingEntity();
+        this.moveSpeed = MoveSpeed.WALK;
 
         if (respawn) {
             this.type = this.origType;
@@ -230,10 +231,6 @@ export default class Npc extends PathingEntity {
                 const state = ScriptRunner.init(script, this, null, [this.walktriggerArg]);
                 ScriptRunner.execute(state);
             }
-        }
-
-        if (this.moveSpeed !== MoveSpeed.INSTANT) {
-            this.moveSpeed = MoveSpeed.WALK;
         }
 
         super.processMovement();
