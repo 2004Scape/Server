@@ -110,7 +110,7 @@ const LocOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.locFindAllIterator = new LocFindAllIterator(level, x, z);
+        state.locFindAllIterator = new LocFindAllIterator(World.currentTick, level, x, z);
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
             state._activeLoc2 = state._activeLoc;

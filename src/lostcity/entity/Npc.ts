@@ -752,7 +752,7 @@ export default class Npc extends PathingEntity {
         let foundCount: number = 0;
 
         if (hunt.type === HuntModeType.PLAYER) {
-            const huntAll: HuntAllIterator = new HuntAllIterator(this.level, this.x, this.z, this.huntrange, hunt.checkVis);
+            const huntAll: HuntAllIterator = new HuntAllIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis);
 
             for (const player of huntAll) {
                 // TODO: probably zone check to see if they're in the wilderness as well?

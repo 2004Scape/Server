@@ -8,9 +8,11 @@ import Npc from '#lostcity/entity/Npc.js';
 
 abstract class ScriptIterator<T> implements IterableIterator<T> {
     private readonly it: IterableIterator<T>;
+    readonly tick: number;
 
-    protected constructor() {
+    protected constructor(tick: number) {
         this.it = this.generator();
+        this.tick = tick;
     }
 
     protected abstract generator(): IterableIterator<T>;
@@ -38,8 +40,8 @@ export class HuntAllIterator extends ScriptIterator<Player> {
     private readonly distance: number;
     private readonly checkVis: HuntVis;
 
-    constructor(level: number, x: number, z: number, distance: number, checkVis: HuntVis) {
-        super();
+    constructor(tick: number, level: number, x: number, z: number, distance: number, checkVis: HuntVis) {
+        super(tick);
         const centerX: number = Position.zone(x);
         const centerZ: number = Position.zone(z);
         const radius: number = (1 + (distance / 8)) | 0;
@@ -62,6 +64,9 @@ export class HuntAllIterator extends ScriptIterator<Player> {
                 const players: Set<number> = World.getZonePlayers(zoneX, zoneZ, this.level);
 
                 for (const uid of players) {
+                    if (World.currentTick > this.tick) {
+                        throw new Error('[HuntAllIterator] tried to use an old iterator. Create a new iterator instead.');
+                    }
                     const player: Player | null = World.getPlayerByUid(uid);
                     if (!player) {
                         continue;
@@ -87,8 +92,8 @@ export class NpcFindAllIterator extends ScriptIterator<Npc> {
     private readonly x: number;
     private readonly z: number;
 
-    constructor(level: number, x: number, z: number) {
-        super();
+    constructor(tick: number, level: number, x: number, z: number) {
+        super(tick);
         this.level = level;
         this.x = x;
         this.z = z;
@@ -98,6 +103,9 @@ export class NpcFindAllIterator extends ScriptIterator<Npc> {
         const npcs: Set<number> = World.getZoneNpcs(this.x, this.z, this.level);
 
         for (const nid of npcs) {
+            if (World.currentTick > this.tick) {
+                throw new Error('[NpcFindAllIterator] tried to use an old iterator. Create a new iterator instead.');
+            }
             const npc: Npc | null = World.getNpc(nid);
             if (!npc) {
                 continue;
@@ -112,8 +120,8 @@ export class LocFindAllIterator extends ScriptIterator<Loc> {
     private readonly x: number;
     private readonly z: number;
 
-    constructor(level: number, x: number, z: number) {
-        super();
+    constructor(tick: number, level: number, x: number, z: number) {
+        super(tick);
         this.level = level;
         this.x = x;
         this.z = z;
@@ -122,6 +130,9 @@ export class LocFindAllIterator extends ScriptIterator<Loc> {
     protected *generator(): IterableIterator<Loc> {
         const locs: Loc[] = World.getZoneLocs(this.x, this.z, this.level);
         for (const loc of locs) {
+            if (World.currentTick > this.tick) {
+                throw new Error('[LocFindAllIterator] tried to use an old iterator. Create a new iterator instead.');
+            }
             yield loc;
         }
     }

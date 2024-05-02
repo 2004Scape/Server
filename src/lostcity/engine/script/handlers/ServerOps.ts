@@ -71,7 +71,7 @@ const ServerOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.huntAllIterator = new HuntAllIterator(level, x, z, distance, checkVis);
+        state.huntAllIterator = new HuntAllIterator(World.currentTick, level, x, z, distance, checkVis);
     },
 
     [ScriptOpcode.HUNTNEXT]: state => {

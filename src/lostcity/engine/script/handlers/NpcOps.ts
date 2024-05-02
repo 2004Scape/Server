@@ -129,7 +129,7 @@ const NpcOps: CommandHandlers = {
         check(id, NpcTypeValid);
 
         const {level, x, z} = Position.unpackCoord(coord);
-        state.npcFindAllIterator = new NpcFindAllIterator(level, x, z);
+        state.npcFindAllIterator = new NpcFindAllIterator(World.currentTick, level, x, z);
 
         for (const npc of state.npcFindAllIterator) {
             if(npc && npc.type === id && npc.x === x && npc.level === level && npc.z === z) {
@@ -320,7 +320,7 @@ const NpcOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.npcFindAllIterator = new NpcFindAllIterator(level, x, z);
+        state.npcFindAllIterator = new NpcFindAllIterator(World.currentTick, level, x, z);
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
             state._activeNpc2 = state._activeNpc;
