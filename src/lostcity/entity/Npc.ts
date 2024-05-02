@@ -233,6 +233,10 @@ export default class Npc extends PathingEntity {
             }
         }
 
+        if (this.moveSpeed !== MoveSpeed.INSTANT) {
+            this.moveSpeed = MoveSpeed.WALK;
+        }
+
         super.processMovement();
     }
 

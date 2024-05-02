@@ -770,12 +770,14 @@ export default class Player extends PathingEntity {
             }
         }
 
+        if (this.runenergy < 100) {
+            this.setVar(VarPlayerType.getId('player_run'), 0);
+            this.setVar(VarPlayerType.getId('temp_run'), 0);
+        }
+
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = MoveSpeed.WALK;
-            if (this.runenergy < 100) {
-                this.setVar(VarPlayerType.getId('player_run'), 0);
-                this.setVar(VarPlayerType.getId('temp_run'), 0);
-            } else if (this.getVar(VarPlayerType.getId('player_run')) || this.getVar(VarPlayerType.getId('temp_run'))) {
+            if (this.getVar(VarPlayerType.getId('player_run')) || this.getVar(VarPlayerType.getId('temp_run'))) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
