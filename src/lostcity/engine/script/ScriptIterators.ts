@@ -65,7 +65,7 @@ export class HuntIterator extends ScriptIterator<Player> {
 
                 for (const uid of players) {
                     if (World.currentTick > this.tick) {
-                        throw new Error('[HuntAllIterator] tried to use an old iterator. Create a new iterator instead.');
+                        throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                     }
                     const player: Player | null = World.getPlayerByUid(uid);
                     if (!player) {
@@ -104,7 +104,7 @@ export class NpcIterator extends ScriptIterator<Npc> {
 
         for (const nid of npcs) {
             if (World.currentTick > this.tick) {
-                throw new Error('[NpcFindAllIterator] tried to use an old iterator. Create a new iterator instead.');
+                throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
             }
             const npc: Npc | null = World.getNpc(nid);
             if (!npc) {
@@ -131,7 +131,7 @@ export class LocIterator extends ScriptIterator<Loc> {
         const locs: Loc[] = World.getZoneLocs(this.x, this.z, this.level);
         for (const loc of locs) {
             if (World.currentTick > this.tick) {
-                throw new Error('[LocFindAllIterator] tried to use an old iterator. Create a new iterator instead.');
+                throw new Error('[LocIterator] tried to use an old iterator. Create a new iterator instead.');
             }
             yield loc;
         }
