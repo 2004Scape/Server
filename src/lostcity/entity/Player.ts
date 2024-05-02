@@ -357,7 +357,6 @@ export default class Player extends PathingEntity {
 
     resetEntity(respawn: boolean) {
         this.resetPathingEntity();
-        this.moveSpeed = this.getVar(VarPlayerType.getId('player_run')) ? MoveSpeed.RUN : MoveSpeed.WALK;
         this.repathed = false;
         this.protect = false;
 
@@ -776,8 +775,8 @@ export default class Player extends PathingEntity {
         }
 
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
-            this.moveSpeed = MoveSpeed.WALK;
-            if (this.getVar(VarPlayerType.getId('player_run')) || this.getVar(VarPlayerType.getId('temp_run'))) {
+            this.moveSpeed = this.defaultMoveSpeed();
+            if (this.getVar(VarPlayerType.getId('temp_run'))) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
@@ -821,6 +820,10 @@ export default class Player extends PathingEntity {
 
     blockWalkFlag(): number {
         return CollisionFlag.PLAYER;
+    }
+
+    defaultMoveSpeed(): MoveSpeed {
+        return this.getVar(VarPlayerType.getId('player_run')) ? MoveSpeed.RUN : MoveSpeed.WALK;
     }
 
     // ----

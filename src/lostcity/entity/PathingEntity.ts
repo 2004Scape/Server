@@ -51,6 +51,7 @@ export default abstract class PathingEntity extends Entity {
      */
     abstract updateMovement(): void;
     abstract blockWalkFlag(): number | null;
+    abstract defaultMoveSpeed(): MoveSpeed;
 
     /**
      * Process movement function for a PathingEntity to use.
@@ -320,6 +321,7 @@ export default abstract class PathingEntity extends Entity {
     }
 
     resetPathingEntity(): void {
+        this.moveSpeed = this.defaultMoveSpeed();
         this.walkDir = -1;
         this.runDir = -1;
         this.jump = false;
