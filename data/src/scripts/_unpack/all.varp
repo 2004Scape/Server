@@ -109,6 +109,7 @@ transmit=yes
 
 [questpoints]
 transmit=yes
+protect=no
 
 [poison]
 scope=perm
