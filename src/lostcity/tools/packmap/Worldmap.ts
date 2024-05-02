@@ -7,14 +7,17 @@ import FloType from '#lostcity/cache/FloType.js';
 import LocType from '#lostcity/cache/LocType.js';
 import { convertImage } from '#lostcity/util/PixPack.js';
 import { LocShape } from '@2004scape/rsmod-pathfinder';
-import { shouldBuildFileAny } from '#lostcity/util/PackFile.js';
+import { shouldBuildFile, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 
 export async function packWorldmap() {
     if (!fs.existsSync('data/pack/server/maps')) {
         return;
     }
 
-    if (!shouldBuildFileAny('data/pack/server/maps', 'data/pack/mapview/worldmap.jag')) {
+    if (
+        !shouldBuildFileAny('data/pack/server/maps', 'data/pack/mapview/worldmap.jag') &&
+        !shouldBuildFile('src/lostcity/tools/packmap/Worldmap.ts', 'data/pack/mapview/worldmap.jag')
+    ) {
         return;
     }
 
@@ -132,7 +135,7 @@ export async function packWorldmap() {
                 if (underlayIds[actualLevel][x][z] !== -1) {
                     underlay.p1(underlayIds[actualLevel][x][z]);
                 } else {
-                    underlay.p1(1);
+                    underlay.p1(0);
                 }
             }
         }
