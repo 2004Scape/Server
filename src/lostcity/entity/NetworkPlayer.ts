@@ -1110,7 +1110,7 @@ export class NetworkPlayer extends Player {
             }
         }
 
-        if (this.forceMove && pathfindX !== -1 && pathfindZ !== -1) {
+        if (this.exactMoveEnd !== -1 && pathfindX !== -1 && pathfindZ !== -1) {
             this.unsetMapFlag();
             pathfindRequest = false;
             pathfindX = -1;

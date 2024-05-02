@@ -24,7 +24,6 @@ export default abstract class PathingEntity extends Entity {
     waypoints: { x: number; z: number }[] = [];
     lastX: number = -1;
     lastZ: number = -1;
-    forceMove: boolean = false;
     jump: boolean = false;
 
     walktrigger: number = -1;
@@ -67,7 +66,6 @@ export default abstract class PathingEntity extends Entity {
     processMovement(): boolean {
         if (!this.hasWaypoints()) {
             this.clearWalkSteps();
-            this.forceMove = false;
             return false;
         }
 
@@ -162,13 +160,11 @@ export default abstract class PathingEntity extends Entity {
      * Queue this PathingEntity to a single waypoint.
      * @param x The x position of the step.
      * @param z The z position of the step.
-     * @param forceMove If to apply forcemove to this PathingEntity.
      */
-    queueWaypoint(x: number, z: number, forceMove: boolean = false): void {
+    queueWaypoint(x: number, z: number): void {
         this.waypoints = [];
         this.waypoints.push({ x, z });
         this.waypointIndex = 0;
-        this.forceMove = forceMove;
     }
 
     /**
@@ -332,7 +328,9 @@ export default abstract class PathingEntity extends Entity {
         this.exactEndX = -1;
         this.exactEndZ = -1;
         this.exactMoveStart = -1;
-        this.exactMoveEnd = -1;
+        if (World.currentTick >= World.currentTick - this.exactMoveEnd) {
+            this.exactMoveEnd = -1;
+        }
         this.exactMoveDirection = -1;
     }
 
@@ -369,7 +367,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         // check if force moving.
-        if (this.forceMove) {
+        if (this.exactMoveEnd !== -1) {
             return dir;
         }
 
