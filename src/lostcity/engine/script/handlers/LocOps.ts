@@ -20,7 +20,7 @@ import {
     LocShapeValid,
     LocTypeValid,
     ParamTypeValid
-} from '#lostcity/engine/script/ScriptInputValidator.js';
+} from '#lostcity/engine/script/ScriptValidators.js';
 
 const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
@@ -108,7 +108,9 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_FINDALLZONE]: state => {
         const coord = check(state.popInt(), CoordValid);
 
-        state.locFindAllIterator = new LocFindAllIterator(coord);
+        const {level, x, z} = Position.unpackCoord(coord);
+
+        state.locFindAllIterator = new LocFindAllIterator(level, x, z);
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
             state._activeLoc2 = state._activeLoc;

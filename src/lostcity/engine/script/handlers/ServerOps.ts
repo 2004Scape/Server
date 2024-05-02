@@ -18,7 +18,13 @@ import { Position } from '#lostcity/entity/Position.js';
 
 import {CollisionFlag, hasLineOfSight, hasLineOfWalk, isFlagged, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
 
-import {check, CoordValid, NumberNotNull, SpotAnimTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+import {
+    check,
+    CoordValid,
+    HuntVisValid,
+    NumberNotNull,
+    SpotAnimTypeValid
+} from '#lostcity/engine/script/ScriptValidators.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 
@@ -57,12 +63,15 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.HUNTALL]: state => {
-        const [coord, distance, unknown] = state.popInts(3);
+        const [coord, distance, checkVis] = state.popInts(3);
 
         check(coord, CoordValid);
         check(distance, NumberNotNull);
+        check(checkVis, HuntVisValid);
 
-        state.huntAllIterator = new HuntAllIterator(distance, coord);
+        const {level, x, z} = Position.unpackCoord(coord);
+
+        state.huntAllIterator = new HuntAllIterator(level, x, z, distance, checkVis);
     },
 
     [ScriptOpcode.HUNTNEXT]: state => {
@@ -72,13 +81,7 @@ const ServerOps: CommandHandlers = {
             return;
         }
 
-        const player = World.getPlayerByUid(result.value);
-        if (!player) {
-            state.pushInt(0);
-            return;
-        }
-
-        state.activePlayer = player;
+        state.activePlayer = result.value;
         state.pointerAdd(ActivePlayer[state.intOperand]);
         state.pushInt(1);
     },

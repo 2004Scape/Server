@@ -3,7 +3,7 @@ import EnumType from '#lostcity/cache/EnumType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
-import {check, EnumTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+import {check, EnumTypeValid} from '#lostcity/engine/script/ScriptValidators.js';
 
 const EnumOps: CommandHandlers = {
     [ScriptOpcode.ENUM]: state => {
