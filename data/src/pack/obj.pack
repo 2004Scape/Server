@@ -793,7 +793,7 @@
 792=obj_792
 793=obj_793
 794=obj_794
-795=obj_795
+795=war_ship
 796=explodingvial
 797=herbbowl
 798=grinder
@@ -1035,7 +1035,7 @@
 1034=cert_zamorak_monk_bottom
 1035=zamorak_monk_top
 1036=cert_zamorak_monk_top
-1037=obj_1037
+1037=bunny_ears
 1038=red_partyhat
 1039=cert_red_partyhat
 1040=yellow_partyhat
@@ -1051,12 +1051,12 @@
 1050=santa_hat
 1051=cert_santa_hat
 1052=cape_of_legends
-1053=obj_1053
-1054=cert_obj_1053
-1055=obj_1055
-1056=cert_obj_1055
-1057=obj_1057
-1058=cert_obj_1057
+1053=green_halloween_mask
+1054=cert_green_halloween_mask
+1055=blue_halloween_mask
+1056=cert_blue_halloween_mask
+1057=red_halloween_mask
+1058=cert_red_halloween_mask
 1059=leather_gloves
 1060=cert_leather_gloves
 1061=leather_boots
