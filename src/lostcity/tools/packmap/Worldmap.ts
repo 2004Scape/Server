@@ -367,7 +367,7 @@ const refColors = [
     [0x0080782f, 0x00886b4d], // debugname=duel_arena overlay=true occlude=true rgb=0xb79767
     [0x0080283c, 0x00b47a4e], // debugname=duelarena overlay=false occlude=true rgb=0xd9bb93
     [0x00b06826, 0x0071673f], // debugname=hive overlay=true occlude=true rgb=0x97874f
-]
+];
 
 for (let i = 0; i < FloType.configs.length; i++) {
     const type = FloType.get(i);
@@ -415,7 +415,6 @@ for (let i = 0; i < labelsSrc.length; i++) {
     labels.p1(parseInt(type));
 }
 
-labels.pos = labels.data.length;
 jag.write('labels.dat', labels);
 
 // ----
