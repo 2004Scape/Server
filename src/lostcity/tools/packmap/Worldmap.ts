@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 
 import FloType from '#lostcity/cache/FloType.js';
 import LocType from '#lostcity/cache/LocType.js';
@@ -21,9 +21,9 @@ const jag = new Jagfile();
 
 // ----
 
-const underlay = Packet2.alloc(5);
-const overlay = Packet2.alloc(20_000_000);
-const loc = Packet2.alloc(5);
+const underlay = Packet.alloc(5);
+const overlay = Packet.alloc(20_000_000);
+const loc = Packet.alloc(5);
 
 function unpackCoord(packed: number): { level: number; x: number; z: number } {
     const z: number = packed & 0x3f;
@@ -71,7 +71,7 @@ for (let index: number = 0; index < maps.length; index++) {
         }
     }
 
-    const landBuf = Packet2.load(`data/pack/server/maps/m${mx}_${mz}`);
+    const landBuf = Packet.load(`data/pack/server/maps/m${mx}_${mz}`);
     for (let level: number = 0; level < 4; level++) {
         for (let x: number = 0; x < 64; x++) {
             for (let z: number = 0; z < 64; z++) {
@@ -154,7 +154,7 @@ for (let index: number = 0; index < maps.length; index++) {
         }
     }
 
-    const locBuf = Packet2.load(`data/pack/server/maps/l${mx}_${mz}`);
+    const locBuf = Packet.load(`data/pack/server/maps/l${mx}_${mz}`);
     let locId: number = -1;
     let locIdOffset: number = locBuf.gsmart();
     while (locIdOffset !== 0) {
@@ -284,7 +284,7 @@ jag.write('underlay.dat', underlay);
 
 jag.write('overlay.dat', overlay);
 
-const floorcol = Packet2.alloc(1);
+const floorcol = Packet.alloc(1);
 floorcol.p2(FloType.configs.length);
 
 const refColors = [
@@ -385,7 +385,7 @@ jag.write('floorcol.dat', floorcol);
 
 // ----
 
-const index = Packet2.alloc(1);
+const index = Packet.alloc(1);
 
 const mapscene = await convertImage(index, 'data/src/sprites', 'mapscene');
 jag.write('mapscene.dat', mapscene!);
@@ -400,7 +400,7 @@ jag.write('index.dat', index);
 
 // ----
 
-const labels = Packet2.alloc(1);
+const labels = Packet.alloc(1);
 const labelsSrc = fs.readFileSync('data/src/maps/labels.txt', 'ascii')
     .replace(/\r/g, '').split('\n')
     .filter((x: string) => x.startsWith('='))

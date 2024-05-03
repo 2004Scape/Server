@@ -1,6 +1,6 @@
 import path from 'path';
 
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 
@@ -54,7 +54,7 @@ export default class Script {
     }
 
     // decodes the same binary format as clientscript2
-    static decode(id: number, stream: Packet2): Script {
+    static decode(id: number, stream: Packet): Script {
         const length: number = stream.data.length;
         if (length < 16) {
             throw new Error('Invalid script file (minimum length)');

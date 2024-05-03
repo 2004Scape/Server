@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import fs from 'fs';
 
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -21,7 +21,7 @@ if (!Environment.CI_MODE) {
         const name = allMaps[i];
 
         const map = new Uint8Array(fs.readFileSync(`data/pack/client/maps/${name}`));
-        const crc = Packet2.getcrc(map, 0, map.length);
+        const crc = Packet.getcrc(map, 0, map.length);
 
         PRELOADED.set(name, map);
         PRELOADED_CRC.set(name, crc);
@@ -32,7 +32,7 @@ if (!Environment.CI_MODE) {
         const name = allSongs[i];
 
         const song = new Uint8Array(fs.readFileSync(`data/pack/client/songs/${name}`));
-        const crc = Packet2.getcrc(song, 0, song.length);
+        const crc = Packet.getcrc(song, 0, song.length);
 
         PRELOADED.set(name, song);
         PRELOADED_CRC.set(name, crc);
@@ -44,7 +44,7 @@ if (!Environment.CI_MODE) {
 
         // Strip off bzip header.
         const jingle = new Uint8Array(fs.readFileSync(`data/pack/client/jingles/${name}`).subarray(4));
-        const crc = Packet2.getcrc(jingle, 0, jingle.length);
+        const crc = Packet.getcrc(jingle, 0, jingle.length);
 
         PRELOADED.set(name, jingle);
         PRELOADED_CRC.set(name, crc);

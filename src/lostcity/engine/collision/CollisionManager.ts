@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import LocType from '#lostcity/cache/LocType.js';
@@ -20,8 +20,8 @@ export default class CollisionManager {
             const mapsquareZ: number = mz << 6;
 
             const lands: Int8Array = new Int8Array(4 * 64 * 64); // 4 * 64 * 64 size is guaranteed for lands
-            this.decodeLands(lands, Packet2.load(`data/pack/server/maps/m${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeLocs(zoneManager, lands, Packet2.load(`data/pack/server/maps/l${mx}_${mz}`), mapsquareX, mapsquareZ);
+            this.decodeLands(lands, Packet.load(`data/pack/server/maps/m${mx}_${mz}`), mapsquareX, mapsquareZ);
+            this.decodeLocs(zoneManager, lands, Packet.load(`data/pack/server/maps/l${mx}_${mz}`), mapsquareX, mapsquareZ);
         }
         console.timeEnd('Loading collision');
     }
@@ -102,7 +102,7 @@ export default class CollisionManager {
         changeRoof(x, z, level, add);
     }
 
-    private decodeLands(lands: Int8Array, packet: Packet2, mapsquareX: number, mapsquareZ: number): void {
+    private decodeLands(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         for (let level: number = 0; level < 4; level++) {
             for (let x: number = 0; x < 64; x++) {
                 for (let z: number = 0; z < 64; z++) {
@@ -145,7 +145,7 @@ export default class CollisionManager {
         }
     }
 
-    private decodeLand(packet: Packet2, collision: number = 0): number {
+    private decodeLand(packet: Packet, collision: number = 0): number {
         const opcode: number = packet.g1();
         if (opcode === 0 || opcode === 1) {
             if (opcode === 1) {
@@ -159,7 +159,7 @@ export default class CollisionManager {
         return this.decodeLand(packet, opcode >= 50 && opcode <= 81 ? opcode - 49 : collision);
     }
 
-    private decodeLocs(zoneManager: ZoneManager, lands: Int8Array, packet: Packet2, mapsquareX: number, mapsquareZ: number): void {
+    private decodeLocs(zoneManager: ZoneManager, lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         let locId: number = -1;
         let locIdOffset: number = packet.gsmart();
         while (locIdOffset !== 0) {

@@ -1,7 +1,6 @@
 import net, { Server } from 'net';
 
 import Packet from '#jagex2/io/Packet.js';
-import Packet2 from '#jagex2/io/Packet2.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
@@ -27,18 +26,18 @@ export default class TcpServer {
 
             const socket = new ClientSocket(s, ip, ClientSocket.TCP);
 
-            const seed = new Packet2(new Uint8Array(4 + 4));
+            const seed = new Packet(new Uint8Array(4 + 4));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             socket.send(seed.data);
 
             s.on('data', async (data: Buffer) => {
-                // const packet = new Packet2(data);
+                const packet = new Packet(new Uint8Array(data));
 
                 if (socket.state === 1) {
-                    await World.readIn(socket, new Packet(data));
+                    await World.readIn(socket, packet);
                 } else {
-                    await Login.readIn(socket, new Packet2(new Uint8Array(data)));
+                    await Login.readIn(socket, packet);
                 }
             });
 

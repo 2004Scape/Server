@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import fs from 'fs';
 
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
@@ -22,17 +22,17 @@ export class PlayerLoading {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
 
-        let save: Packet2;
+        let save: Packet;
         if (fs.existsSync(`data/players/${safeName}.sav`)) {
-            save = Packet2.load(`data/players/${safeName}.sav`);
+            save = Packet.load(`data/players/${safeName}.sav`);
         } else {
-            save = new Packet2(new Uint8Array(0));
+            save = new Packet(new Uint8Array());
         }
 
         return PlayerLoading.load(name, save, null);
     }
 
-    static load(name: string, sav: Packet2, client: ClientSocket | null) {
+    static load(name: string, sav: Packet, client: ClientSocket | null) {
         const name37 = toBase37(name);
         const safeName = fromBase37(name37);
 
@@ -65,7 +65,7 @@ export class PlayerLoading {
 
         sav.pos = sav.data.length - 4;
         const crc = sav.g4();
-        if (crc != Packet2.getcrc(sav.data, 0, sav.data.length - 4)) {
+        if (crc != Packet.getcrc(sav.data, 0, sav.data.length - 4)) {
             throw new Error('Player save corrupted');
         }
 

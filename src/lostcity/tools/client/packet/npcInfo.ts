@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 
 const npcIds: number[] = [];
 let npcCount = 0;
@@ -15,7 +15,7 @@ fs.readdirSync('dump')
     .sort((a, b) => parseInt(a.slice(0, a.length - '.npc.bin'.length)) - parseInt(b.slice(0, b.length - '.npc.bin'.length)))
     .filter(f => f.endsWith('.npc.bin'))
     .forEach(f => {
-        const buf = Packet2.load(`dump/${f}`);
+        const buf = Packet.load(`dump/${f}`);
         console.log('----');
         console.log(f);
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 import { fromBase37 } from '#jagex2/jstring/JString.js';
 
 const playerIds: number[] = [];
@@ -40,7 +40,7 @@ for (const [username, ticks] of players) {
     for (let i = 0; i < ticks.length; i++) {
         console.log('----');
         console.log(username, 'tick', ticks[i]);
-        const buf = Packet2.load(`dump/${ticks[i]}.${username}.player.bin`);
+        const buf = Packet.load(`dump/${ticks[i]}.${username}.player.bin`);
 
         entityRemovalCount = 0;
         entityUpdateCount = 0;

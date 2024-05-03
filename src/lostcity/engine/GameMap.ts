@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet2 from '#jagex2/io/Packet2.js';
+import Packet from '#jagex2/io/Packet.js';
 
 import NpcType from '#lostcity/cache/NpcType.js';
 
@@ -30,7 +30,7 @@ export default class GameMap {
             const mapsquareX = fileX << 6;
             const mapsquareZ = fileZ << 6;
 
-            const npcMap = Packet2.load(`data/pack/server/maps/n${fileX}_${fileZ}`);
+            const npcMap = Packet.load(`data/pack/server/maps/n${fileX}_${fileZ}`);
             while (npcMap.available > 0) {
                 const pos = npcMap.g2();
                 const level = (pos >> 12) & 0x3;
@@ -54,7 +54,7 @@ export default class GameMap {
                 }
             }
 
-            const objMap = Packet2.load(`data/pack/server/maps/o${fileX}_${fileZ}`);
+            const objMap = Packet.load(`data/pack/server/maps/o${fileX}_${fileZ}`);
             while (objMap.available > 0) {
                 const pos = objMap.g2();
                 const level = (pos >> 12) & 0x3;
