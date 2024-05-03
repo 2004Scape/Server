@@ -18,7 +18,7 @@ function packWater(underlay: Packet, overlay: Packet, mx: number, mz: number) {
     overlay.p1(mz);
 
     for (let i = 0; i < 4096; i++) {
-        underlay.p1(0);
+        underlay.p1(1 + FloType.getId('muddygrass'));
 
         overlay.p1(1 + FloType.getId('water'));
         overlay.p1(0);
