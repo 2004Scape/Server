@@ -746,7 +746,7 @@ param=defend_anim,human_scythe_block
 param=slash_sound,scythe_slash
 param=crush_sound,scythe_slash
 
-[obj_1464]
+[archery_ticket]
 name=Archery ticket
 desc=I can exchange this for equipment.
 model=model_2560_obj
