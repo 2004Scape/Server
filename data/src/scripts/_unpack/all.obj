@@ -469,7 +469,7 @@ womanwear=model_467_obj_wear,0
 weight=1lb
 tradeable=yes
 
-[obj_1009]
+[brass_necklace]
 cost=30
 name=Brass necklace
 desc=I'd prefer a gold one.
