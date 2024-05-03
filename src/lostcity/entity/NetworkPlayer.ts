@@ -1166,19 +1166,26 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let j = 0; j < this.netOut.length; j++) {
-            const out = this.netOut[j];
+        const out: Packet[] = this.netOut;
+        const length: number = out.length;
+        for (let index: number = 0; index < length; index++) {
+            const packet: Packet = this.netOut[index];
 
             if (this.client.encryptor) {
-                out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xff;
+                packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
             }
 
-            World.lastCycleBandwidth[1] += out.pos;
-            this.client.write(out);
+            World.lastCycleBandwidth[1] += packet.pos;
+            this.client.write(packet);
         }
 
         this.client.flush();
-        this.netOut = [];
+
+        // release the packets after flushing.
+        for (let index: number = 0; index < length; index++) {
+            const packet: Packet = this.netOut[index];
+            packet.release();
+        }
     }
 
     writeImmediately(packet: Packet) {

@@ -123,7 +123,6 @@ export default class ClientSocket {
                 remaining = 0;
             }
         }
-        data.release();
     }
 
     writeNaive(data: Uint8Array) {
@@ -140,10 +139,10 @@ export default class ClientSocket {
     }
 
     flush() {
-        if (this.outOffset) {
-            // console.log('Flushing', this.out.slice(0, this.outOffset), this.outOffset);
-            this.send(this.out.subarray(0, this.outOffset));
-            this.outOffset = 0;
+        if (!this.outOffset) {
+            return;
         }
+        this.send(this.out.subarray(0, this.outOffset));
+        this.outOffset = 0;
     }
 }

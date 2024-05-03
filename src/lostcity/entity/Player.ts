@@ -1319,6 +1319,8 @@ export default class Player extends PathingEntity {
                         data.gdata(out.data, 0, out.data.length);
                         data.pos = pos;
                         out.pos = pos;
+
+                        // the packet is released elsewhere.
                         this.netOut.push(out);
                     }
                 }
@@ -2559,9 +2561,9 @@ export default class Player extends PathingEntity {
 
         let buf: Packet;
         if (packetType.length === -1) {
-            buf = Packet.alloc(1);
+            buf = Packet.alloc(0);
         } else if (packetType.length === -2) {
-            buf = Packet.alloc(2);
+            buf = Packet.alloc(2); // maybe this can be a type 1.
         } else {
             buf = new Packet(new Uint8Array(1 + packetType.length));
         }
@@ -2583,6 +2585,7 @@ export default class Player extends PathingEntity {
             buf.psize2(buf.pos - start);
         }
 
+        // the packet is released elsewhere.
         this.netOut.push(buf);
     }
 
@@ -2655,6 +2658,8 @@ export default class Player extends PathingEntity {
         }
 
         out.psize2(out.pos - start);
+
+        // the packet is released elsewhere.
         this.netOut.push(out);
     }
 }
