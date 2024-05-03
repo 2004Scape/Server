@@ -5,7 +5,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
-import {check, NpcTypeValid, NumberNotNull, ParamTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+import {check, NpcTypeValid, NumberNotNull, ParamTypeValid} from '#lostcity/engine/script/ScriptValidators.js';
 
 const NpcConfigOps: CommandHandlers = {
     [ScriptOpcode.NC_NAME]: state => {
