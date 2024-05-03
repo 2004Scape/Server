@@ -2,6 +2,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { IncomingMessage } from 'http';
 
 import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
@@ -50,9 +51,9 @@ export default class WSServer {
                 const packet = new Packet(data);
 
                 if (socket.state === 1) {
-                    await World.readIn(socket, packet);
+                    await World.readIn(socket, new Packet(data));
                 } else {
-                    await Login.readIn(socket, packet);
+                    await Login.readIn(socket, new Packet2(new Uint8Array(data)));
                 }
             });
 

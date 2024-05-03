@@ -1,6 +1,6 @@
 import net from 'net';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 export default class NetworkStream {
     private queue: Uint8Array[] = []; // queue of data events
@@ -47,14 +47,14 @@ export default class NetworkStream {
         return value;
     }
 
-    async readBytes(socket: net.Socket, destination: Packet, offset: number, length: number, full = true): Promise<number> {
+    async readBytes(socket: net.Socket, destination: Packet2, offset: number, length: number, full = true): Promise<number> {
         if (socket === null || socket.closed) {
             return 0;
         }
 
-        if (destination.length - offset < length) {
+        /*if (destination.length - offset < length) {
             destination.resize(offset + length);
-        }
+        }*/
 
         if (this.available < length) {
             if (full) {

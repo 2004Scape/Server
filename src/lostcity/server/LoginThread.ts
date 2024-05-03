@@ -3,7 +3,7 @@ import fsp from 'fs/promises';
 import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import { toBase37, toSafeName } from '#jagex2/jstring/JString.js';
 
@@ -43,7 +43,7 @@ parentPort.on('message', async msg => {
             case 'loginreq': {
                 const { opcode, data, socket } = msg;
 
-                const stream = new Packet(data);
+                const stream = new Packet2(data);
 
                 const revision = stream.g1();
                 if (revision !== 225) {
@@ -57,8 +57,9 @@ parentPort.on('message', async msg => {
 
                 const info = stream.g1();
 
-                const crcs = stream.gdata(9 * 4);
-                if (Packet.crc32(crcs) !== CrcBuffer32) {
+                const crcs = new Uint8Array(9 * 4);
+                stream.gdata(crcs, 0, crcs.length);
+                if (!Packet2.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
                     parentPort.postMessage({
                         type: 'loginreply',
                         status: LoginResponse.SERVER_UPDATED,

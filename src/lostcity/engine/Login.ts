@@ -1,7 +1,7 @@
 import { Worker } from 'worker_threads';
 
 import Isaac from '#jagex2/io/Isaac.js';
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -27,7 +27,7 @@ class Login {
         });
     }
 
-    async readIn(socket: ClientSocket, data: Packet) {
+    async readIn(socket: ClientSocket, data: Packet2) {
         const opcode = data.g1();
 
         // todo: reconnect (opcode 18)
@@ -38,10 +38,13 @@ class Login {
                 return;
             }
 
+            const post = new Uint8Array(length);
+            data.gdata(post, 0, post.length);
+
             this.loginThread.postMessage({
                 type: 'loginreq',
                 opcode,
-                data: data.gdata(length),
+                data: post,
                 socket: socket.uniqueId
             });
 
@@ -101,7 +104,7 @@ class Login {
                 }
                 client.encryptor = new Isaac(seed);
 
-                const player = PlayerLoading.load(username, new Packet(save), client);
+                const player = PlayerLoading.load(username, new Packet2(save), client);
                 player.lowMemory = (info & 0x1) !== 0;
                 player.webClient = client.isWebSocket();
 

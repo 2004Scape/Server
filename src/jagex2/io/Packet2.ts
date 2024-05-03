@@ -436,6 +436,7 @@ export default class Packet2 extends Hashable {
 
         this.pos = 0;
         this.pdata(decrypted, 0, decrypted.length);
+        this.pos = 0;
     }
 
     addcrc(offset: number) {
