@@ -1169,7 +1169,7 @@ export class NetworkPlayer extends Player {
         const out: Packet[] = this.netOut;
         const length: number = out.length;
         for (let index: number = 0; index < length; index++) {
-            const packet: Packet = this.netOut[index];
+            const packet: Packet = out[index];
 
             if (this.client.encryptor) {
                 packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
@@ -1183,9 +1183,11 @@ export class NetworkPlayer extends Player {
 
         // release the packets after flushing.
         for (let index: number = 0; index < length; index++) {
-            const packet: Packet = this.netOut[index];
+            const packet: Packet = out[index];
             packet.release();
         }
+
+        this.netOut = [];
     }
 
     writeImmediately(packet: Packet) {
