@@ -54,6 +54,7 @@ import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
 import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
+import {tryParseInt} from '#lostcity/util/TryParse.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 const levelExperience = new Int32Array(99);
@@ -633,6 +634,18 @@ export default class Player extends PathingEntity {
                 player.queueWaypoints(findPath(player.level, player.x, player.z, (player.x >>> 6 << 6) + 32, (player.z >>> 6 << 6) + 32));
             }
             console.timeEnd('moveall');
+        } else if (cmd === 'speed' && this.staffModLevel >= 3) {
+            if (args.length < 1) {
+                this.messageGame('Usage: ::speed <ms>');
+                return;
+            }
+            const speed: number = tryParseInt(args.shift(), 20);
+            if (speed < 20) {
+                this.messageGame('::speed input was too low.');
+                return;
+            }
+            this.messageGame(`World speed was changed to ${speed}ms`);
+            World.tickRate = speed;
         }
 
         // lookup debugproc with the name and execute it
