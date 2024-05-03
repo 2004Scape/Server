@@ -29,7 +29,7 @@ data=consume_message2,Yum!
 [blank_restore_message]
 table=consume_messages_table
 data=consumable,pumpkin
-data=consumable,obj_1961
+data=consumable,easter_egg
 data=restore_message2,0
 
 [spinach_roll_consume_messages]
@@ -542,7 +542,7 @@ data=restore_message2,0
 
 [wine_consume_messages]
 table=consume_messages_table
-data=consumable,obj_1989
+data=consumable,half_full_wine_jug
 data=consumable,jug_of_bad_wine
 data=consumable,jug_wine
 data=consume_message1,You drink the wine.

@@ -234,7 +234,7 @@ weight=500g
 category=category_131
 tradeable=yes
 
-[obj_1961]
+[easter_egg]
 name=Easter egg
 desc=Happy Easter.
 cost=10
