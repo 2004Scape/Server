@@ -1,4 +1,4 @@
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
@@ -34,9 +34,9 @@ export default class ScriptProvider {
      * @returns The number of scripts loaded.
      */
     static load(dir: string): number {
-        const dat = Packet.load(`${dir}/server/script.dat`);
-        const idx = Packet.load(`${dir}/server/script.idx`);
-        if (!dat.length || !idx.length) {
+        const dat = Packet2.load(`${dir}/server/script.dat`);
+        const idx = Packet2.load(`${dir}/server/script.idx`);
+        if (!dat.data.length || !idx.data.length) {
             console.log('\nFatal: No script.dat or script.idx found. Please run the server:build script.');
             process.exit(1);
         }
@@ -62,7 +62,9 @@ export default class ScriptProvider {
             }
 
             try {
-                const script = Script.decode(id, dat.gPacket(size));
+                const data: Uint8Array = new Uint8Array(size);
+                dat.gdata(data, 0, data.length);
+                const script = Script.decode(id, new Packet2(data));
                 scripts[id] = script;
                 scriptNames.set(script.name, id);
 

@@ -55,6 +55,7 @@ import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
 import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -144,7 +145,7 @@ export default class Player extends PathingEntity {
     ];
 
     save() {
-        const sav = new Packet();
+        const sav = Packet2.alloc(1);
         sav.p2(0x2004); // magic
         sav.p2(2); // version
 
@@ -207,9 +208,10 @@ export default class Player extends PathingEntity {
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
 
-        sav.p4(Packet.crc32(sav));
+        sav.p4(Packet2.getcrc(sav.data, 0, sav.data.length));
         const safeName = fromBase37(this.username37);
         sav.save(`data/players/${safeName}.sav`);
+        // the sav is released by login server.
         return sav;
     }
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 const npcIds: number[] = [];
 let npcCount = 0;
@@ -15,7 +15,7 @@ fs.readdirSync('dump')
     .sort((a, b) => parseInt(a.slice(0, a.length - '.npc.bin'.length)) - parseInt(b.slice(0, b.length - '.npc.bin'.length)))
     .filter(f => f.endsWith('.npc.bin'))
     .forEach(f => {
-        const buf = Packet.load(`dump/${f}`);
+        const buf = Packet2.load(`dump/${f}`);
         console.log('----');
         console.log(f);
 
@@ -79,7 +79,7 @@ fs.readdirSync('dump')
         }
 
         // readNewNpcs
-        while (buf.bitPos + 21 < buf.length * 8) {
+        while (buf.bitPos + 21 < buf.data.length * 8) {
             const id = buf.gBit(13);
             if (id === 8191) {
                 break;
@@ -145,8 +145,8 @@ fs.readdirSync('dump')
             const id = entityRemovalIds[i];
         }
 
-        if (buf.pos !== buf.length) {
-            console.error('size mismatch in getnpc', buf.pos, buf.length);
+        if (buf.pos !== buf.data.length) {
+            console.error('size mismatch in getnpc', buf.pos, buf.data.length);
             process.exit(1);
         }
 

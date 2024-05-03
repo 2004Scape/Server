@@ -342,6 +342,7 @@ export class LoginClient {
         request.p8(username37);
         request.p2(save.data.length);
         request.pdata(save.data, 0, save.data.length);
+        save.release();
         await this.write(this.socket, 2, request.data);
 
         const reply = await this.stream.readByte(this.socket);

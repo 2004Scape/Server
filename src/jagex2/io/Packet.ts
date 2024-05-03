@@ -1,6 +1,4 @@
-import fs from 'fs';
 import forge from 'node-forge';
-import { dirname } from 'path';
 
 export default class Packet {
     static crctable: Int32Array = new Int32Array(256);
@@ -70,51 +68,6 @@ export default class Packet {
         if (this.available < size) {
             this.resize(this.pos + size);
         }
-    }
-
-    copy() {
-        const temp = new Uint8Array(this.length);
-        temp.set(this.data);
-        return new Packet(temp);
-    }
-
-    // ----
-
-    static crc32(src: Packet | Uint8Array | Buffer, length: number = src.length, offset: number = 0): number {
-        if (src instanceof Packet) {
-            src = src.data;
-        }
-
-        let crc: number = 0xffffffff;
-
-        for (let i: number = offset; i < offset + length; i++) {
-            crc = (crc >>> 8) ^ Packet.crctable[(crc ^ src[i]) & 0xff];
-        }
-
-        return ~crc;
-    }
-
-    static checkcrc(src: Packet | Uint8Array | Buffer, expected: number = 0) {
-        const checksum: number = Packet.crc32(src);
-        // console.log(checksum, expected);
-        return checksum == expected;
-    }
-
-    static load(path: string): Packet {
-        if (!fs.existsSync(path)) {
-            return new Packet();
-        }
-
-        return new Packet(fs.readFileSync(path));
-    }
-
-    save(path: string, length: number = this.pos, start: number = 0): void {
-        const dir: string = dirname(path);
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
-
-        fs.writeFileSync(path, this.data.subarray(start, start + length));
     }
 
     // ----

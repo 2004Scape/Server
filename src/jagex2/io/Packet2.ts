@@ -302,7 +302,7 @@ export default class Packet2 extends Hashable {
     }
 
     gjstr(terminator = 10): string {
-        const length: number = this.#view.byteLength;
+        const length: number = this.data.length;
         let str: string = '';
         let b: number;
         while ((b = this.#view.getUint8(this.pos++)) !== terminator && this.pos < length) {

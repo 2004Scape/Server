@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 import { fromBase37 } from '#jagex2/jstring/JString.js';
 
 const playerIds: number[] = [];
@@ -40,7 +40,7 @@ for (const [username, ticks] of players) {
     for (let i = 0; i < ticks.length; i++) {
         console.log('----');
         console.log(username, 'tick', ticks[i]);
-        const buf = Packet.load(`dump/${ticks[i]}.${username}.player.bin`);
+        const buf = Packet2.load(`dump/${ticks[i]}.${username}.player.bin`);
 
         entityRemovalCount = 0;
         entityUpdateCount = 0;
@@ -142,7 +142,7 @@ for (const [username, ticks] of players) {
         }
 
         // readNewPlayers
-        while (buf.bitPos + 10 < buf.length * 8) {
+        while (buf.bitPos + 10 < buf.data.length * 8) {
             const id = buf.gBit(11);
             if (id === 2047) {
                 break;
@@ -273,7 +273,8 @@ for (const [username, ticks] of players) {
                 const messageType = buf.g1();
 
                 const length = buf.g1();
-                const message = buf.gdata(length);
+                const message = new Uint8Array(length);
+                buf.gdata(message, 0, message.length);
             }
 
             if ((mask & 0x100) === 0x100) {
@@ -297,8 +298,8 @@ for (const [username, ticks] of players) {
             const id = entityRemovalIds[i];
         }
 
-        if (buf.pos !== buf.length) {
-            console.error('size mismatch in getplayer', buf.pos, buf.length);
+        if (buf.pos !== buf.data.length) {
+            console.error('size mismatch in getplayer', buf.pos, buf.data.length);
             process.exit(1);
         }
 

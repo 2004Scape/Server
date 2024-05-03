@@ -42,7 +42,7 @@ export default class WSServer {
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
 
-            const seed = Packet.alloc(8);
+            const seed = new Packet2(new Uint8Array(4 + 4));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             seed.p4(Math.floor(Math.random() * 0xffffffff));
             socket.send(seed.data);

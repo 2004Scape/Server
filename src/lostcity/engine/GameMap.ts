@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet2.js';
 
 import NpcType from '#lostcity/cache/NpcType.js';
 
@@ -30,7 +30,7 @@ export default class GameMap {
             const mapsquareX = fileX << 6;
             const mapsquareZ = fileZ << 6;
 
-            const npcMap = Packet.load(`data/pack/server/maps/n${fileX}_${fileZ}`);
+            const npcMap = Packet2.load(`data/pack/server/maps/n${fileX}_${fileZ}`);
             while (npcMap.available > 0) {
                 const pos = npcMap.g2();
                 const level = (pos >> 12) & 0x3;
@@ -46,15 +46,15 @@ export default class GameMap {
 
                     const npc = new Npc(level, mapsquareX + localX, mapsquareZ + localZ, size, size, World.getNextNid(), id, npcType.moverestrict, npcType.blockwalk);
 
-                    if (npcType.members === true && World.members === true) {
+                    if (npcType.members && World.members) {
                         World.addNpc(npc);
-                    } else if (npcType.members === false) {
+                    } else if (!npcType.members) {
                         World.addNpc(npc);
                     }
                 }
             }
 
-            const objMap = Packet.load(`data/pack/server/maps/o${fileX}_${fileZ}`);
+            const objMap = Packet2.load(`data/pack/server/maps/o${fileX}_${fileZ}`);
             while (objMap.available > 0) {
                 const pos = objMap.g2();
                 const level = (pos >> 12) & 0x3;
@@ -69,9 +69,9 @@ export default class GameMap {
                     const obj = new Obj(level, mapsquareX + localX, mapsquareZ + localZ, objId, objCount);
 
                     const objType = ObjType.get(objId);
-                    if (objType.members === true && World.members === true) {
+                    if (objType.members && World.members) {
                         this.zoneManager.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
-                    } else if (objType.members === false) {
+                    } else if (!objType.members) {
                         this.zoneManager.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
                     }
                 }
