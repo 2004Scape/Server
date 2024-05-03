@@ -5,7 +5,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
-import {check, ObjTypeValid, ParamTypeValid} from '#lostcity/engine/script/ScriptInputValidator.js';
+import {check, ObjTypeValid, ParamTypeValid} from '#lostcity/engine/script/ScriptValidators.js';
 
 const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_NAME]: state => {

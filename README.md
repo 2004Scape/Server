@@ -34,9 +34,8 @@ RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
 2. Install [environment dependencies](#environment-dependencies)
 3. Run `npm ci` to install code dependencies
 4. Copy the file `.env.example` to `.env`
-5. Run `npm run client:pack` to create the client cache. This may take a few minutes the first time
-6. Run `npm run server:build` to build all of the server files (packs cache, generates symbols, compiles scripts)
-7. Run `npm start` to start the server
+5. Run `npm run build` to create the client and server cache. This may take a few minutes the first time
+6. Run `npm start` to start the server
 
 ### Using the setup script
 

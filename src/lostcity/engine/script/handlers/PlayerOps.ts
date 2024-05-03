@@ -28,7 +28,7 @@ import {
     NumberNotNull,
     ObjTypeValid,
     SpotAnimTypeValid,
-} from '#lostcity/engine/script/ScriptInputValidator.js';
+} from '#lostcity/engine/script/ScriptValidators.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];

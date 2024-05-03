@@ -126,7 +126,7 @@ data=stat_restore,hitpoints,11,0
 
 [half_wine_effect]
 table=consume_table
-data=consumable,obj_1989
+data=consumable,half_full_wine_jug
 data=stat_change,attack,-2,0
 data=stat_restore,hitpoints,7,0
 

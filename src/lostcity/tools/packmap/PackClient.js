@@ -58,7 +58,7 @@ function readMap(map) {
 export function packClientMap() {
     let queue = [];
 
-    fs.readdirSync('data/src/maps').forEach(file => {
+    fs.readdirSync('data/src/maps').filter(f => f.endsWith('.jm2')).forEach(file => {
         let [x, z] = file.slice(1).split('.').shift().split('_');
         if (
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/client/maps/m${x}_${z}`) &&

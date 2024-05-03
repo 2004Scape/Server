@@ -20,7 +20,7 @@ import {
     ObjNotDummyValid,
     ObjStackValid,
     ObjTypeValid
-} from '#lostcity/engine/script/ScriptInputValidator.js';
+} from '#lostcity/engine/script/ScriptValidators.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];

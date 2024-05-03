@@ -55,6 +55,7 @@ import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
 import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import {tryParseInt} from '#lostcity/util/TryParse.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -751,7 +752,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(running: number = -1): boolean {
+    updateMovement(): boolean {
         if (this.containsModalInterface()) {
             return false;
         }
@@ -781,17 +782,19 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (running === -1 && !this.forceMove) {
-            if (this.runenergy < 100) {
-                this.setVar(VarPlayerType.getId('player_run'), 0);
-                this.setVar(VarPlayerType.getId('temp_run'), 0);
-            }
-
-            running = 0;
-            running |= this.getVar(VarPlayerType.getId('player_run')) ? 1 : 0;
-            running |= this.getVar(VarPlayerType.getId('temp_run')) ? 1 : 0;
+        if (this.runenergy < 100) {
+            this.setVar(VarPlayerType.getId('player_run'), 0);
+            this.setVar(VarPlayerType.getId('temp_run'), 0);
         }
-        if (!super.processMovement(running)) {
+
+        if (this.moveSpeed !== MoveSpeed.INSTANT) {
+            this.moveSpeed = this.defaultMoveSpeed();
+            if (this.getVar(VarPlayerType.getId('temp_run'))) {
+                this.moveSpeed = MoveSpeed.RUN;
+            }
+        }
+
+        if (!super.processMovement()) {
             // todo: this is running every idle tick
             this.setVar(VarPlayerType.getId('temp_run'), 0);
         }
@@ -805,10 +808,8 @@ export default class Player extends PathingEntity {
                 this.runScript(script, true);
             }
 
-            this.refreshZonePresence(this.lastX, this.lastZ, this.level);
-
             // run energy drain
-            if (running && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
+            if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
                 const weightKg = Math.floor(this.runweight / 1000);
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + (67 * clampWeight) / 64;
@@ -821,7 +822,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (!this.delayed() && (!moved || !running) && this.runenergy < 10000) {
+        if (!this.delayed() && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
             const recovered = this.baseLevels[Player.AGILITY] / 9 + 8;
 
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
@@ -830,8 +831,12 @@ export default class Player extends PathingEntity {
         return moved;
     }
 
-    blockWalkFlag(): number {
+    blockWalkFlag(): CollisionFlag {
         return CollisionFlag.PLAYER;
+    }
+
+    defaultMoveSpeed(): MoveSpeed {
+        return this.getVar(VarPlayerType.getId('player_run')) ? MoveSpeed.RUN : MoveSpeed.WALK;
     }
 
     // ----
@@ -1015,7 +1020,7 @@ export default class Player extends PathingEntity {
     }
 
     setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: number) {
-        if (this.forceMove || this.delayed()) {
+        if (this.delayed()) {
             // console.log('not setting interaction');
             this.unsetMapFlag();
             return;
@@ -1278,7 +1283,7 @@ export default class Player extends PathingEntity {
             this.loadedZones = {};
         }
 
-        if (this.tele && this.jump) {
+        if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
             this.loadedZones = {};
         }
     }
