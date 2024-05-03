@@ -1183,8 +1183,7 @@ export class NetworkPlayer extends Player {
 
         // release the packets after flushing.
         for (let index: number = 0; index < length; index++) {
-            const packet: Packet = out[index];
-            packet.release();
+            out[index].release();
         }
 
         this.netOut = [];
