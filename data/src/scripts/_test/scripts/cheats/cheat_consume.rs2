@@ -23,7 +23,7 @@ if (p_finduid(uid) = true) {
     inv_add(bank, cooked_meat, 100);
     inv_add(bank, strange_fruit, 100);
     inv_add(bank, pumpkin, 100);
-    inv_add(bank, obj_1961, 100);
+    inv_add(bank, easter_egg, 100);
     inv_add(bank, banana, 100);
     inv_add(bank, cabbage, 100);
     inv_add(bank, cabbage_draynor, 100);
@@ -204,7 +204,7 @@ if (p_finduid(uid) = true) {
     inv_add(bank, odd_cocktail4, 100);
     inv_add(bank, jug_of_bad_wine, 100);
     inv_add(bank, jug_wine, 100);
-    inv_add(bank, obj_1989, 100);
+    inv_add(bank, half_full_wine_jug, 100);
     inv_add(bank, 4dose1strength, 100);
     inv_add(bank, 3dose1strength, 100);
     inv_add(bank, 2dose1strength, 100);

@@ -52,5 +52,11 @@ export default function (f, opts, next) {
         });
     }
 
+    if (fs.existsSync('data/pack/mapview/worldmap.jag')) {
+        f.get('/worldmap.jag:sha', async (req, res) => {
+            return res.sendFile('data/pack/mapview/worldmap.jag', process.cwd());
+        });
+    }
+
     next();
 }

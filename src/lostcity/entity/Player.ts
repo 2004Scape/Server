@@ -797,7 +797,7 @@ export default class Player extends PathingEntity {
             }
 
             // run energy drain
-            if (this.moveSpeed === MoveSpeed.RUN && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
+            if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
                 const weightKg = Math.floor(this.runweight / 1000);
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + (67 * clampWeight) / 64;
@@ -819,7 +819,7 @@ export default class Player extends PathingEntity {
         return moved;
     }
 
-    blockWalkFlag(): number {
+    blockWalkFlag(): CollisionFlag {
         return CollisionFlag.PLAYER;
     }
 
@@ -1008,7 +1008,7 @@ export default class Player extends PathingEntity {
     }
 
     setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: number) {
-        if (this.forceMove || this.delayed()) {
+        if (this.delayed()) {
             // console.log('not setting interaction');
             this.unsetMapFlag();
             return;

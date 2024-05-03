@@ -50,7 +50,7 @@ category=alcoholic_drinks
 param=next_obj_stage,jug_empty
 
 
-[obj_1989]
+[half_full_wine_jug]
 name=Half full wine jug
 desc=An optimist would say it's half full.
 cost=1

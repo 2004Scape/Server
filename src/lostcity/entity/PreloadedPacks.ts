@@ -12,7 +12,7 @@ if (!Environment.CI_MODE) {
     console.log('Preloading client data');
     console.time('Preloaded client data');
     if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
-        console.log('Please build the client cache with client:pack!');
+        console.log('Please build the client cache with client:build!');
         process.exit(1);
     }
 
