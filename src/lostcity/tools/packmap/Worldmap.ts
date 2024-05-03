@@ -128,6 +128,8 @@ export async function packWorldmap() {
 
         overlay.p1(mx);
         overlay.p1(mz);
+        underlay.p1(mx);
+        underlay.p1(mz);
 
         for (let x: number = 0; x < 64; x++) {
             for (let z: number = 0; z < 64; z++) {
@@ -140,16 +142,6 @@ export async function packWorldmap() {
                 } else {
                     overlay.p1(0);
                 }
-            }
-        }
-
-        underlay.p1(mx);
-        underlay.p1(mz);
-
-        for (let x: number = 0; x < 64; x++) {
-            for (let z: number = 0; z < 64; z++) {
-                const bridged: boolean = (flags[1][x][z] & 0x2) === 2;
-                const actualLevel = bridged ? 1 : 0;
 
                 if (underlayIds[actualLevel][x][z] !== -1) {
                     underlay.p1(underlayIds[actualLevel][x][z]);
@@ -391,6 +383,8 @@ export async function packWorldmap() {
         }
     }
 
+    packWater(underlay, overlay, 39, 56);
+    packWater(underlay, overlay, 40, 56);
     packWater(underlay, overlay, 42, 44);
     packWater(underlay, overlay, 42, 45);
     packWater(underlay, overlay, 42, 46);
@@ -403,7 +397,6 @@ export async function packWorldmap() {
     packWater(underlay, overlay, 47, 44);
     packWater(underlay, overlay, 47, 45);
     packWater(underlay, overlay, 47, 46);
-    packWater(underlay, overlay, 48, 44);
     packWater(underlay, overlay, 48, 45);
     packWater(underlay, overlay, 48, 46);
 
