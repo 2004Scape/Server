@@ -2424,7 +2424,7 @@ desc=A mixture of jangerberries and guam leaves in a vial.
 weight=25g
 members=yes
 
-[obj_2391]
+[ground_bat_bones]
 name=Ground bat bones
 desc=Let's see it fly now!
 cost=20
