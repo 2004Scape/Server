@@ -1110,7 +1110,7 @@ export class NetworkPlayer extends Player {
             }
         }
 
-        if (this.forceMove && pathfindX !== -1 && pathfindZ !== -1) {
+        if (this.delayed()) {
             this.unsetMapFlag();
             pathfindRequest = false;
             pathfindX = -1;
@@ -1121,11 +1121,6 @@ export class NetworkPlayer extends Player {
 
         // process any pathfinder requests now
         if (pathfindRequest && pathfindX !== -1 && pathfindZ !== -1) {
-            if (this.delayed()) {
-                this.unsetMapFlag();
-                return;
-            }
-
             if (!this.target || this.target instanceof Loc || this.target instanceof Obj) {
                 this.faceEntity = -1;
                 this.mask |= Player.FACE_ENTITY;
@@ -1136,9 +1131,6 @@ export class NetworkPlayer extends Player {
             } else {
                 this.queueWaypoints(findPath(this.level, this.x, this.z, pathfindX, pathfindZ));
             }
-
-            pathfindX = -1;
-            pathfindZ = -1;
         }
     }
 

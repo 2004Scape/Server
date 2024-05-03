@@ -13,14 +13,14 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import { EntityQueueRequest, NpcQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, NpcQueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
-import { Direction, Position } from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
@@ -30,6 +30,7 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 import {CollisionFlag, findNaivePath} from '@2004scape/rsmod-pathfinder';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -211,7 +212,7 @@ export default class Npc extends PathingEntity {
         this.graphicDelay = -1;
     }
 
-    updateMovement(running: number = -1): void {
+    updateMovement(): void {
         const type = NpcType.get(this.type);
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return;
@@ -228,14 +229,14 @@ export default class Npc extends PathingEntity {
             }
         }
 
-        if (running === -1 && !this.forceMove) {
-            running = 0;
+        if (this.moveSpeed !== MoveSpeed.INSTANT) {
+            this.moveSpeed = this.defaultMoveSpeed();
         }
 
-        super.processMovement(running);
+        super.processMovement();
     }
 
-    blockWalkFlag(): number | null {
+    blockWalkFlag(): CollisionFlag {
         switch (this.moveRestrict) {
             case MoveRestrict.NORMAL:
                 return CollisionFlag.NPC;
@@ -248,11 +249,17 @@ export default class Npc extends PathingEntity {
             case MoveRestrict.OUTDOORS:
                 return CollisionFlag.NPC;
             case MoveRestrict.NOMOVE:
-                return null;
+                return CollisionFlag.NULL;
             case MoveRestrict.PASSTHRU:
                 return CollisionFlag.OPEN;
         }
     }
+
+    defaultMoveSpeed(): MoveSpeed {
+        return MoveSpeed.WALK;
+    }
+
+    // ----
 
     delayed() {
         return this.delay > 0;

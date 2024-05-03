@@ -251,7 +251,7 @@ model=model_2500_obj
 2dxan=488
 tradeable=yes
 
-[obj_981]
+[disk_of_returning]
 name=Disk of returning
 desc=Used to get out of Thordur's blackhole
 cost=12

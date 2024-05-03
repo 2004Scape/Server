@@ -185,7 +185,7 @@ data=consume_sound,eat
 [heal_14]
 table=consume_table
 data=consumable,pumpkin
-data=consumable,obj_1961
+data=consumable,easter_egg
 data=consumable,lava_eel
 data=consumable,cooked_wrapped_oomlie
 data=consumable,swordfish
