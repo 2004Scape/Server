@@ -178,7 +178,7 @@ export default class Zone {
     // zone events
     updates: ZoneEvent[] = [];
     lastEvent = -1;
-    // buffer: Packet2 = new Packet2(new Uint8Array(0));
+    // buffer: Packet2 = new Packet2(new Uint8Array());
 
     constructor(index: number) {
         this.index = index;
