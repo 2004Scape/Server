@@ -1647,7 +1647,7 @@ model=model_2820_obj
 weight=25g
 members=yes
 
-[obj_1580]
+[ice_gloves]
 name=Ice gloves
 desc=These will keep my hands cold!
 cost=6
