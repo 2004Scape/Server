@@ -352,13 +352,13 @@ export default abstract class PathingEntity extends Entity {
             return -1;
         }
 
-        const collisionStrategy = this.getCollisionStrategy();
+        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
         if (collisionStrategy === null) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
         }
 
-        const extraFlag = this.blockWalkFlag();
+        const extraFlag: CollisionFlag = this.blockWalkFlag();
         if (extraFlag === CollisionFlag.NULL) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;

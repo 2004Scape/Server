@@ -27,7 +27,7 @@ import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.j
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import {CollisionFlag, findNaivePath} from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, CollisionType, findNaivePath} from '@2004scape/rsmod-pathfinder';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
@@ -450,15 +450,15 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const collisionStrategy = this.getCollisionStrategy();
+        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
         if (collisionStrategy === null) {
             // nomove moverestrict returns as null = no walking allowed.
             this.defaultMode();
             return;
         }
 
-        const extraFlag = this.blockWalkFlag();
-        if (extraFlag === null) {
+        const extraFlag: CollisionFlag = this.blockWalkFlag();
+        if (extraFlag === CollisionFlag.NULL) {
             // nomove moverestrict returns as null = no walking allowed.
             this.defaultMode();
             return;
