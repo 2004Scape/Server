@@ -408,10 +408,10 @@ export default class Packet extends Hashable {
         this.gdata(enc, 0, enc.length);
 
         const bigRaw: BigInteger = new BigInteger(Array.from(enc));
-        const m1: BigInteger = bigRaw.mod(p).modPow(dP, p);
-        const m2: BigInteger = bigRaw.mod(q).modPow(dQ, q);
-        const h: BigInteger = qInv.multiply(m1.subtract(m2)).mod(p);
-        const rawDec: Uint8Array = Uint8Array.from(m2.add(h.multiply(q)).toByteArray());
+        const m1: BigInteger = bigRaw.modPow(dP, p);
+        const m2: BigInteger = bigRaw.modPow(dQ, q);
+        const h: BigInteger = m1.subtract(m2).multiply(qInv).mod(p);
+        const rawDec: Uint8Array = new Uint8Array(m2.add(h.multiply(q)).toByteArray());
 
         this.pos = 0;
         this.pdata(rawDec, 0, rawDec.length);
