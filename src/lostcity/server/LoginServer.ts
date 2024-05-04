@@ -55,7 +55,7 @@ export class LoginServer {
                 }
 
                 stream.waiting = 0;
-                const data = new Packet(new Uint8Array(3));
+                const data = Packet.alloc(1);
                 await stream.readBytes(socket, data, 0, 3);
 
                 const opcode = data.g1();
@@ -85,6 +85,7 @@ export class LoginServer {
                         const reply = new Packet(new Uint8Array(1));
                         reply.p1(5);
                         await this.write(socket, reply.data);
+                        data.release();
                         return;
                     }
 
@@ -93,6 +94,7 @@ export class LoginServer {
                         const reply = new Packet(new Uint8Array(1));
                         reply.p1(2);
                         await this.write(socket, reply.data);
+                        data.release();
                         return;
                     }
 
@@ -106,6 +108,7 @@ export class LoginServer {
                             const reply = new Packet(new Uint8Array(1));
                             reply.p1(3);
                             await this.write(socket, reply.data);
+                            data.release();
                             return;
                         }
                     }
@@ -117,6 +120,7 @@ export class LoginServer {
                         const reply = new Packet(new Uint8Array(1));
                         reply.p1(4);
                         await this.write(socket, reply.data);
+                        data.release();
                         return;
                     }
 
@@ -180,6 +184,8 @@ export class LoginServer {
                         this.players[world].push(username37);
                     }
                 }
+
+                data.release();
             });
 
             socket.on('close', () => {});
