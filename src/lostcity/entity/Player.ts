@@ -761,7 +761,8 @@ export default class Player extends PathingEntity {
         if (this.target) {
             const apTrigger = this.getApTrigger();
             const outOfRange = !this.inApproachDistance(this.apRange, this.target) && apTrigger && !this.inOperableDistance(this.target);
-            const targetMoved = this.hasWaypoints() && (this.waypoints[0].x !== this.target.x || this.waypoints[0].z !== this.target.z);
+            const {x, z} = Position.unpackCoord(this.waypoints[0]);
+            const targetMoved = this.hasWaypoints() && (x !== this.target.x || z !== this.target.z);
 
             // broken out to understand better
             if (!this.hasWaypoints() && !this.interacted) {
