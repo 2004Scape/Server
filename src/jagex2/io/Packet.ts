@@ -404,15 +404,8 @@ export default class Packet extends Hashable {
         const dQ: BigInteger = pem.dQ;
         const qInv: BigInteger = pem.qInv;
 
-        let enc: Uint8Array = new Uint8Array(this.g1());
+        const enc: Uint8Array = new Uint8Array(this.g1());
         this.gdata(enc, 0, enc.length);
-
-        if (enc[0] >> 7 === 1) {
-            // magic fix for the signum
-            const n: Uint8Array = new Uint8Array(enc.length + 1);
-            n.set(enc, 1);
-            enc = n;
-        }
 
         const bigRaw: BigInteger = new BigInteger(Array.from(enc));
         const m1: BigInteger = bigRaw.mod(p).modPow(dP, p);
