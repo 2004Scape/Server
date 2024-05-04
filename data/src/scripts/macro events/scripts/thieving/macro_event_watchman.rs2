@@ -19,7 +19,7 @@ if (finduid(uid) = false) {
 }
 // no idea what sound he makes
 sound_synth(smokepuff, 0, 0);
-spotanim_map(spotanim_86, npc_coord, 124, 0);
+spotanim_map(small_smokepuff, npc_coord, 124, 0);
 npc_delay(2);
 npc_setmode(opplayer2);
 
