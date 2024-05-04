@@ -118,14 +118,14 @@ export default function (f: any, opts: any, next: any) {
             return res.redirect(302, '/detail');
         }
 
-        if (req.query.method == 0) {
-            return res.view('webclient', {
+        if (req.query.method == 0 || req.query.method == 4) {
+            return res.view('client/webclient', {
                 world,
                 detail: req.query.detail,
                 method: req.query.method
             });
         } else if (req.query.method == 1 || req.query.method == 2) {
-            return res.view('javaclient', {
+            return res.view('client/javaclient', {
                 world,
                 detail: req.query.detail,
                 method: req.query.method
@@ -153,14 +153,14 @@ export default function (f: any, opts: any, next: any) {
             return;
         }
 
-        if (req.query.method == 0) {
-            return res.view('webclient-inner', {
+        if (req.query.method == 0 || req.query.method == 4) {
+            return res.view('client/webclient-inner', {
                 world,
                 detail: req.query.detail,
                 method: req.query.method
             });
         } else if (req.query.method == 1 || req.query.method == 2) {
-            return res.view('javaclient-inner', {
+            return res.view('client/javaclient-inner', {
                 world,
                 detail: req.query.detail,
                 method: req.query.method
