@@ -228,7 +228,7 @@ const NpcOps: CommandHandlers = {
         const mode = check(state.popInt(), NpcModeValid);
 
         state.activeNpc.mode = mode;
-        state.activeNpc.clearWalkSteps();
+        state.activeNpc.clearWaypoints();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
             state.activeNpc.clearInteraction();
