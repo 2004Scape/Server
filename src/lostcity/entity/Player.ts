@@ -267,7 +267,7 @@ export default class Player extends PathingEntity {
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
 
-    netOut: Packet[] = [];
+    netOut: LinkList<Packet> = new LinkList();
     lastResponse = -1;
 
     mask: number = 0;
@@ -1334,7 +1334,7 @@ export default class Player extends PathingEntity {
                         out.pos = pos;
 
                         // the packet is released elsewhere.
-                        this.netOut.push(out);
+                        this.netOut.addTail(out);
                     }
                 }
 
@@ -2599,7 +2599,7 @@ export default class Player extends PathingEntity {
         }
 
         // the packet is released elsewhere.
-        this.netOut.push(buf);
+        this.netOut.addTail(buf);
     }
 
     unsetMapFlag() {
@@ -2673,6 +2673,6 @@ export default class Player extends PathingEntity {
         out.psize2(out.pos - start);
 
         // the packet is released elsewhere.
-        this.netOut.push(out);
+        this.netOut.addTail(out);
     }
 }

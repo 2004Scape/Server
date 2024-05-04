@@ -1,10 +1,11 @@
-import Hashable from '#jagex2/datastruct/Hashable.js';
-import LinkList from '#jagex2/datastruct/LinkList.js';
 import fs from 'fs';
 import {dirname} from 'path';
 import forge from 'node-forge';
 
-export default class Packet extends Hashable {
+import LinkList from '#jagex2/datastruct/LinkList.js';
+import Linkable from '#jagex2/datastruct/Linkable.js';
+
+export default class Packet extends Linkable {
     private static readonly crctable: Int32Array = new Int32Array(256);
     private static readonly bitmask: Uint32Array = new Uint32Array(33);
 
