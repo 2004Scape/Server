@@ -328,27 +328,23 @@ export class LoginClient {
         const length = data.g2();
         const data2 = new Packet(new Uint8Array(length));
         await this.stream.readBytes(this.socket, data2, 0, length);
-        const out = new Packet(new Uint8Array(2 + length));
-        out.pdata(data.data, 0, data.data.length);
-        out.pdata(data2.data, 0, data2.data.length);
 
         this.disconnect();
-        return { reply, data: out };
+        return { reply, data: data2 };
     }
 
-    async save(username37: bigint, save: Packet) {
+    async save(username37: bigint, save: Uint8Array) {
         await this.connect();
 
         if (this.socket === null) {
             return -1;
         }
 
-        const request = new Packet(new Uint8Array(2 + 8 + 2 + save.data.length));
+        const request = new Packet(new Uint8Array(2 + 8 + 2 + save.length));
         request.p2(Environment.WORLD_ID as number);
         request.p8(username37);
-        request.p2(save.data.length);
-        request.pdata(save.data, 0, save.data.length);
-        save.release();
+        request.p2(save.length);
+        request.pdata(save, 0, save.length);
         await this.write(this.socket, 2, request.data);
 
         const reply = await this.stream.readByte(this.socket);
