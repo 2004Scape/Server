@@ -251,11 +251,13 @@ describe('Packet', () => {
     describe('test rsa', () => {
         it('rsa', () => {
             const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
-            const expected = Packet.alloc(0);
+            const expected = new Packet(new Uint8Array(65 + 1));
+            expected.p1(69);
             expected.rsaenc(priv);
             const result = new Packet(expected.data);
             result.rsadec(priv);
             expect(result.data).toStrictEqual(expected.data);
+            expect(result.g1()).toBe(69);
             expected.release();
         });
     });

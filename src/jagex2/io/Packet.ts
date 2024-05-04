@@ -1,8 +1,11 @@
-import Hashable from '#jagex2/datastruct/Hashable.js';
-import LinkList from '#jagex2/datastruct/LinkList.js';
 import fs from 'fs';
 import {dirname} from 'path';
 import forge from 'node-forge';
+import PrivateKey = forge.pki.rsa.PrivateKey;
+import BigInteger = forge.jsbn.BigInteger;
+
+import Hashable from '#jagex2/datastruct/Hashable.js';
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 export default class Packet extends Hashable {
     private static readonly crctable: Int32Array = new Int32Array(256);
@@ -379,66 +382,39 @@ export default class Packet extends Hashable {
         }
     }
 
-    rsaenc(pem: forge.pki.rsa.PrivateKey): void {
+    rsaenc(pem: PrivateKey): void {
         const length: number = this.pos;
-        let decrypted = new Uint8Array(length);
-        this.gdata(decrypted, 0, decrypted.length);
+        this.pos = 0;
 
-        if (decrypted.length > 64) {
-            // Java BigInteger prepended a 0 to indicate it fits in 64-bytes
-            decrypted = decrypted.slice(0, 64);
-        } else if (decrypted.length < 64) {
-            // Java BigInteger didn't prepend 0 because it fits in less than 64-bytes
-            const temp: Uint8Array = decrypted;
-            decrypted = new Uint8Array(64);
-            decrypted.set(temp, 64 - temp.length);
-        }
+        const dec: Uint8Array = new Uint8Array(length);
+        this.gdata(dec, 0, dec.length);
 
-        let encrypted: Uint8Array = new Uint8Array(Buffer.from(pem.decrypt(forge.util.binary.raw.encode(decrypted), 'RAW', 'NONE'), 'ascii'));
-        let pos: number = 0;
-
-        while (encrypted[pos] == 0) {
-            pos++;
-        }
-        encrypted = encrypted.subarray(pos);
+        const bigRaw: BigInteger = new BigInteger(Array.from(dec));
+        const rawEnc: Uint8Array = Uint8Array.from(bigRaw.modPow(pem.e, pem.n).toByteArray());
 
         this.pos = 0;
-        this.p1(encrypted.length);
-        this.pdata(encrypted, 0, encrypted.length);
+        this.p1(rawEnc.length);
+        this.pdata(rawEnc, 0, rawEnc.length);
     }
 
-    rsadec(pem: forge.pki.rsa.PrivateKey): void {
-        const length: number = this.g1();
-        let encrypted: Uint8Array = new Uint8Array(length);
-        this.gdata(encrypted, 0, encrypted.length);
+    rsadec(pem: PrivateKey): void {
+        const p: BigInteger = pem.p;
+        const q: BigInteger = pem.q;
+        const dP: BigInteger = pem.dP;
+        const dQ: BigInteger = pem.dQ;
+        const qInv: BigInteger = pem.qInv;
 
-        // .modpow(...)
-        if (encrypted.length > 64) {
-            // Java BigInteger prepended a 0 to indicate it fits in 64-bytes
-            let offset: number = 0;
-            while (encrypted[offset] == 0 && encrypted.length - offset > 64) {
-                offset++;
-            }
-            encrypted = encrypted.slice(offset, offset + 64);
-        } else if (encrypted.length < 64) {
-            // Java BigInteger didn't prepend 0 because it fits in less than 64-bytes
-            const temp: Uint8Array = encrypted;
-            encrypted = new Uint8Array(64);
-            encrypted.set(temp, 64 - temp.length);
-        }
+        const enc: Uint8Array = new Uint8Array(this.g1());
+        this.gdata(enc, 0, enc.length);
 
-        let decrypted: Uint8Array = new Uint8Array(Buffer.from(pem.decrypt(forge.util.binary.raw.encode(encrypted), 'RAW', 'NONE'), 'ascii'));
-        let pos: number = 0;
-
-        // .toByteArray()
-        // skipping RSA padding
-        while (decrypted[pos] == 0) {
-            pos++;
-        }
-        decrypted = decrypted.subarray(pos);
+        const bigRaw: BigInteger = new BigInteger(Array.from(enc));
+        const m1: BigInteger = bigRaw.mod(p).modPow(dP, p);
+        const m2: BigInteger = bigRaw.mod(q).modPow(dQ, q);
+        const h: BigInteger = qInv.multiply(m1.subtract(m2)).mod(p);
+        const rawDec: Uint8Array = Uint8Array.from(m2.add(h.multiply(q)).toByteArray());
 
         this.pos = 0;
-        this.pdata(decrypted, 0, decrypted.length);
+        this.pdata(rawDec, 0, rawDec.length);
         this.pos = 0;
     }
 
