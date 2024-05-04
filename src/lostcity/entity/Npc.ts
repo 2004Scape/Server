@@ -582,7 +582,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        this.clearWalkSteps();
+        this.clearWaypoints();
 
         const trigger = this.getTriggerForMode(this.mode);
         if (trigger) {

@@ -65,7 +65,6 @@ export default abstract class PathingEntity extends Entity {
      */
     processMovement(): boolean {
         if (!this.hasWaypoints()) {
-            this.clearWalkSteps();
             return false;
         }
 
@@ -177,7 +176,7 @@ export default abstract class PathingEntity extends Entity {
         this.waypointIndex = waypoints.length - 1;
     }
 
-    clearWalkSteps(): void {
+    clearWaypoints(): void {
         this.waypointIndex = -1;
     }
 

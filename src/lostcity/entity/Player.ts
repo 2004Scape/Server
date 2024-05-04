@@ -2603,7 +2603,7 @@ export default class Player extends PathingEntity {
     }
 
     unsetMapFlag() {
-        this.clearWalkSteps();
+        this.clearWaypoints();
         this.write(ServerProt.UNSET_MAP_FLAG);
     }
 
