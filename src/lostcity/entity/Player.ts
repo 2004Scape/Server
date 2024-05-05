@@ -1398,7 +1398,7 @@ export default class Player extends PathingEntity {
     updatePlayers() {
         const nearby = this.getNearbyPlayers();
 
-        const bitBlock = Packet.alloc(0);
+        const bitBlock = Packet.alloc(1);
         const byteBlock = Packet.alloc(1);
 
         // temp variables to convert movement operations
@@ -1855,7 +1855,7 @@ export default class Player extends PathingEntity {
     updateNpcs() {
         const nearby = this.getNearbyNpcs();
 
-        const bitBlock = Packet.alloc(0);
+        const bitBlock = Packet.alloc(1);
         const byteBlock = Packet.alloc(1);
 
         // update existing npcs (255 max - 8 bits)
