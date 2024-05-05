@@ -3,7 +3,8 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 
 import { LocModelShape, ConfigValue, ConfigLine, ParamValue, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/tools/packconfig/ParamConfig.js';
-import { CategoryPack, LocPack, ModelPack, SeqPack } from '#lostcity/util/PackFile.js';
+import ColorConversion from '#lostcity/util/ColorConversion.js';
+import { CategoryPack, LocPack, ModelPack, SeqPack, TexturePack } from '#lostcity/util/PackFile.js';
 
 // these suffixes are simply the map editor keybinds
 enum LocShapeSuffix {
@@ -41,7 +42,6 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
     // prettier-ignore
     const numberKeys = [
         'width', 'length',
-        'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d',
         'wallwidth',
         'ambient', 'contrast',
         'mapfunction',
@@ -88,10 +88,6 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
         }
 
         if ((key === 'width' || key === 'length') && (number < 1 || number > 255)) {
-            return null;
-        }
-
-        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
             return null;
         }
 
@@ -155,6 +151,25 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
         }
 
         return null;
+    } else if (key.startsWith('recol')) {
+        const index = parseInt(key[5]);
+        if (index > 9) {
+            return null;
+        }
+
+        return ColorConversion.rgb15toHsl16(parseInt(value));
+    } else if (key.startsWith('retex')) {
+        const index = parseInt(key[5]);
+        if (index > 9) {
+            return null;
+        }
+
+        const texture = TexturePack.getByName(value);
+        if (texture === -1) {
+            return null;
+        }
+
+        return texture;
     } else if (key === 'category') {
         const index = CategoryPack.getByName(value);
         if (index === -1) {
@@ -235,7 +250,15 @@ export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
             } else if (key === 'model') {
                 models = value as LocModelShape[];
             } else if (key.startsWith('recol')) {
-                const index = parseInt(key.substring('recol'.length, key.length - 1)) - 1;
+                const index = parseInt(key[5]) - 1;
+                if (key.endsWith('s')) {
+                    recol_s[index] = value as number;
+                } else {
+                    recol_d[index] = value as number;
+                }
+            } else if (key.startsWith('retex')) {
+                // retextures stored in recol until rev 465
+                const index = parseInt(key[5]) - 1;
                 if (key.endsWith('s')) {
                     recol_s[index] = value as number;
                 } else {

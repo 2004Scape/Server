@@ -55,8 +55,8 @@ desc=I wonder what's inside.
 model=wooden_chest
 op1=Open
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_1995]
 name=Open chest
@@ -65,8 +65,8 @@ model=model_loc_76
 op1=Search
 op2=Shut
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_1996]
 name=Rock
@@ -102,34 +102,34 @@ name=Door
 desc=An elf-fashioned door.
 model=model_loc_3
 op1=Open
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
 
 [loc_2001]
 model=model_loc_3
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
 
 [loc_2002]
 name=Door
 desc=An elf-fashioned door.
 model=model_loc_3
 op1=Open
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
 
 [loc_2003]
 model=model_loc_3
-recol1s=2
-recol1d=4
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
 
 [loc_2004]
 name=Pillar
@@ -142,16 +142,16 @@ resizez=50
 name=Statue of Baxtorian
 desc=A statue of Baxtorian chiselled in stone.
 model=model_loc_563
-recol1s=61
-recol1d=43053
-recol2s=10363
-recol2d=6587
+recol1s=15855
+recol1d=10572
+recol2s=32765
+recol2d=21001
 
 [loc_2006]
 name=Statue of Glarial
 desc=A statue of Glarial chiselled in stone.
 model=model_loc_564
-recol1s=61
-recol1d=43053
-recol2s=10363
-recol2d=6587
+recol1s=15855
+recol1d=10572
+recol2s=32765
+recol2d=21001

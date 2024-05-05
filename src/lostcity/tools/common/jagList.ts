@@ -19,6 +19,6 @@ for (let i = 0; i < jag.fileCount; i++) {
         continue;
     }
 
-    const checksum = Packet.crc32(data);
+    const checksum = Packet.getcrc(data.data, 0, data.data.length);
     console.log(name, checksum);
 }

@@ -1,0 +1,185 @@
+// This quest was changed quite a bit with Secrets of the North on OSRS, so referencing 2013 OSRS videos
+// and OSRS wiki a lot here
+[oploc1,loc_2852]
+mes("You enter the cave.");
+p_teleport(0_40_151_10_18);
+
+[oploc1,loc_2853]
+mes("You climb up the stairs.");
+p_teleport(0_40_50_27_37);
+
+[oploc1,loc_2849]
+if(loc_coord ! 0_40_151_7_15) {
+    p_teleport(0_40_151_7_16);
+    ~mesbox("The raft flows with the current back to the cave entrance.");
+    return;
+}
+//if(%hazeelcult_progress = ^hazeelcult_not_started) {
+//    ~chatnpc_specific(nc_name(clivet), clivet, angry, "Hey! I don't remember saying you could use that raft!");
+//    return;
+//}
+def_int $valves_value = ~count_correct_valves;
+if($valves_value = 0) {
+    mes("The current is flowing against the raft. It will not move."); // mes on osrs wiki
+} else if($valves_value = 1) {
+    p_teleport(0_40_151_18_23);
+    ~mesbox("The raft washes up the sewer, and stops at the first island. You need to find the right combination of the five sewer valves above to get further.");
+} else if($valves_value = 2) {
+    p_teleport(0_40_151_33_30);
+    ~mesbox("The raft washes up the sewer, and stops at the second island. You need to find the right combination of the five sewer valves above to get further.");
+} else if($valves_value = 3) {
+    p_teleport(0_40_151_39_48);
+    ~mesbox("The raft washes up the sewer, and stops at the third island. You need to find the right combination of the five sewer valves above to get further.");
+} else if($valves_value = 4) {
+    p_teleport(0_40_151_56_61);
+    ~mesbox("The raft washes up the sewer, and stops at the fourth island. You need to find the right combination of the five sewer valves above to get further.");
+    return;
+} else if($valves_value = 5) {
+    p_teleport(0_40_151_46_28);
+    ~mesbox("The raft washes up the sewer, past the islands until it reaches the end of the sewer passage.");
+}
+
+[proc,count_correct_valves](int)
+def_int $i = 0;
+def_int $counter = 0;
+while($i < 5) {
+    if(testbit(%hazeelcult_valves, $i) = true) {
+        $counter = calc($counter + 1);
+        $i = calc($i + 1);
+    } else {
+        return($counter);
+    }
+}
+return($counter);
+
+// loc_2846 defaults right and you turn left for quest, the others default left -> turn right
+[oploc1,_hazeelcult_valve]
+if(loc_type = loc_2846) {
+    %hazeelcult_valves = setbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+} else {
+    %hazeelcult_valves = clearbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+}
+~mesbox("You turn the large metal valve to the left. Beneath your feet you can hear the sudden sound of rushing water from the sewer.");
+
+[oploc2,_hazeelcult_valve]
+if(loc_type = loc_2846) {
+    %hazeelcult_valves = clearbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+} else {
+    %hazeelcult_valves = setbit(%hazeelcult_valves, loc_param(hazeelcult_valve_idx));
+}
+~mesbox("You turn the large metal valve to the right. Beneath your feet you can hear the sudden sound of rushing water from the sewer.");
+
+[oploc1,loc_2854]
+if(%hazeelcult_progress >= ^hazeelcult_finished_side_task & %hazeelcult_progress < ^hazeelcult_complete & %hazeelcult_side = ^hazeelcult_evilside) {
+    mes("There is something odd about the wall here.");
+    mes("You find a secret passageway.");
+    ~open_and_close_door2(loc_2855, ~check_axis(coord, loc_coord, loc_angle), false);
+    return;
+}
+mes("You can hear there is a hollow behind this wall."); // from rs3
+
+[oploc1,loc_2850] @open_cupboard(~cupboards_use_message);
+[oploc2,loc_2851] @close_cupboard(~cupboards_use_message);
+
+[oploc1,loc_2851]
+if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side = ^hazeelcult_goodside) {
+    ~mesbox("You search the cupbaord thoroughly. You find a bottle of poison and a mysterious amulet. You pass your discovery on to Ceril.");
+    ~chatplayer(angry, "Ceril!");
+    if (npc_finduid(~npc_within_distance(coord, ceril_carnillean, 6)) = false) { 
+        return;
+    }
+    if (.npc_finduid(~.npc_within_distance(coord, butler_jones, 6)) = false) {
+        return;
+    }
+    ~chatnpc(angry, "What do you want now you scoundrel?");
+    ~chatplayer(angry, "Look what I've found in the cupboard!");
+    ~mesbox("You hand Ceril the bottle of poison.");
+    ~chatnpc(shock, "I... I don't believe it! Poison! JONES!");
+    ~.chatnpc(neutral, "You called m'lud?");
+    ~chatnpc(angry, "JONES! Just WHAT is this POISON doing here???");
+    ~.chatnpc(worried, "P-p-poison??? yeah... uh... well, hmm... Oh, it's for Killing rats.");
+    ~.chatnpc(neutral, "Yes, that's right. Killing rats. I am but a loyal butler sir.");
+    ~chatnpc(angry, "Rats eh? Yes, fair enough. Sorry to have doubted you old boy.");
+    ~chatplayer(angry, "Then how about this?");
+    ~mesbox("You show Ceril the amulet from the cupboard.");
+    ~chatnpc(shock, "Wh-what??? I've seen this amulet before... The thieves that broke in... One of them was wearing an identical amulet! Jones! I don't believe it!");
+    ~chatnpc(angry, "Jones! We trusted you! We took you into our home!");
+    ~.chatnpc(angry, "You senile old fool... It was all too easy! I should have killed you and your pathetic family weeks ago!");   
+    ~chatnpc(sad, "To think we took you in and trusted you... and this is how you repay us...");
+    ~chatnpc(angry, "GUARD!");
+    ~mesbox("A Guard rushes into the house.");
+    ~chatnpc(angry, "Take him away. Attempted murder and burglary.");
+    ~.chatnpc(angry, "Don't think this is the last you have heard of me Ceril. You and your family will pay dearly for this. GLORY TO HAZEEL! ALL PRAISE ZAMORAK!");
+    ~chatnpc_specific(nc_name(carnillean_guard), carnillean_guard, neutral, "Now now. Come along quietly. There'll be no revenge where YOU'RE going - Port Sarim Jail.");
+    .npc_del;
+    ~chatnpc(sad, "It looks like I am indebted to you sirrah!");
+    ~chatplayer(neutral, "No problem. We all make mistakes.");
+    ~chatnpc(sad, "But if it weren't for you... My whole family... we could have been... I apologise for my harshness before.");
+    ~chatnpc(neutral, "the very least I can do is to reward you for your noble efforts, and to offer my sincerest apologies as a Lord and gentleman.");
+    ~chatplayer(happy, "Thank you Lord Ceril.");
+    ~chatnpc(happy, "No, no, thank YOU! Feel free to stop by anytime adventurer!");
+    queue(hazeelcult_quest_complete, 0);
+    return;
+}
+~mesbox("You search the cupboard thoroughly but find nothing of interest.");
+
+[oploc1,loc_2856]
+mes("This chest is locked shut.");
+
+[oplocu,loc_2856]
+if(last_useitem = hazeelcult_key) {
+    mes("You unlock the chest.");
+    ~open_chest(loc_2857);
+    return;
+}
+@nothing_interesting_happens;
+
+[oploc1,loc_2857]
+if(inv_total(inv, scroll_of_hazeel) > 0) {
+    mes("The chest is empty.");
+    return;
+}
+~mesbox("Inside the chest you find the Scroll of Hazeel."); 
+inv_add(inv, scroll_of_hazeel, 1);
+if(%hazeelcult_progress = ^hazeelcult_finished_side_task & %hazeelcult_side = ^hazeelcult_evilside) {
+    %hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
+}
+
+[oploc2,loc_2857] ~close_chest(loc_2856);
+
+[oploc1,loc_2858]
+if(inv_total(inv, hazeelcult_key) > 0) {
+    mes("You search the crate, but find nothing of interest.");
+    return;
+}
+~mesbox("You search the crate. Under various food package you find an old rusty key.");
+inv_add(inv, hazeelcult_key, 1);
+
+// TODO: confirm this interface, earliest image we have is of the early 2005 quest interface
+[queue,hazeelcult_fake_complete]
+inv_add(inv, coins, 5);
+%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll;
+// not sure if it uses random jingle here or just a single one
+def_int $random = random(128);
+if ($random < 32) {
+    // The least common music that plays when completing a quest.
+    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+} else if ($random < 64) {
+    // A less common music that plays when completing a quest.
+    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+} else {
+    // The most common music that plays when completing a quest.
+    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+}
+if_settext(questscroll:com_3, "You have... kind of...\\ncompleted the Hazeel Cult Quest!");
+if_settext(questscroll:com_9, "5");
+if_settext(questscroll:com_10, "coins.");
+if_setobject(questscroll:com_4, coins, 250);
+if_openmainmodal(questscroll);
+
+[queue,hazeelcult_quest_complete]
+%hazeelcult_progress = ^hazeelcult_complete;
+inv_del(inv, scroll_of_hazeel, 1);
+givexp(thieving, 15000);
+inv_add(inv, coins, 2000);
+~send_quest_complete(questlist:hazeelcult, coins, 250, ^hazeelcult_questpoints, "You have completed the\\nHazeel Cult Quest!");

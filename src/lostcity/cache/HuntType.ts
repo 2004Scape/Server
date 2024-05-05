@@ -56,6 +56,10 @@ export default class HuntType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     type: HuntModeType = HuntModeType.OFF;
     checkVis: HuntVis = HuntVis.OFF;
@@ -69,33 +73,33 @@ export default class HuntType extends ConfigType {
     checkAfk: boolean = false;
     rate: number = 1;
 
-    decode(opcode: number, packet: Packet): void {
-        if (opcode === 1) {
-            this.type = packet.g1();
-        } else if (opcode == 2) {
-            this.checkVis = packet.g1();
-        } else if (opcode == 3) {
-            this.checkNotTooStrong = packet.g1();
-        } else if (opcode == 4) {
+    decode(code: number, dat: Packet): void {
+        if (code === 1) {
+            this.type = dat.g1();
+        } else if (code == 2) {
+            this.checkVis = dat.g1();
+        } else if (code == 3) {
+            this.checkNotTooStrong = dat.g1();
+        } else if (code == 4) {
             this.checkNotBusy = true;
-        } else if (opcode == 5) {
+        } else if (code == 5) {
             this.findKeepHunting = true;
-        } else if (opcode == 6) {
-            this.findNewMode = packet.g1();
-        } else if (opcode == 7) {
-            this.nobodyNear = packet.g1();
-        } else if (opcode === 8) {
-            this.checkNotCombat = packet.g2();
-        } else if (opcode === 9) {
-            this.checkNotCombatSelf = packet.g2();
-        } else if (opcode === 10) {
+        } else if (code == 6) {
+            this.findNewMode = dat.g1();
+        } else if (code == 7) {
+            this.nobodyNear = dat.g1();
+        } else if (code === 8) {
+            this.checkNotCombat = dat.g2();
+        } else if (code === 9) {
+            this.checkNotCombatSelf = dat.g2();
+        } else if (code === 10) {
             this.checkAfk = true;
-        } else if (opcode === 11) {
-            this.rate = packet.g2();
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 11) {
+            this.rate = dat.g2();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized hunt config code: ${opcode}`);
+            throw new Error(`Unrecognized hunt config code: ${code}`);
         }
     }
 }

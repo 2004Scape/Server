@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { dirname } from 'path';
 
 // cached directory listings
 export const dirCache: Map<string, string[]> = new Map();
@@ -87,6 +86,22 @@ export function loadDir(path: string, extension: string, callback: (src: string[
                     .replace(/\r/g, '')
                     .split('\n')
                     .filter(x => x),
+                file.substring(file.lastIndexOf('/') + 1),
+                file.substring(0, file.lastIndexOf('/'))
+            );
+        }
+    }
+}
+
+export function loadDirExact(path: string, extension: string, callback: (src: string[], file: string, path: string) => void) {
+    const files = listDir(path);
+
+    for (const file of files) {
+        if (file.endsWith(extension)) {
+            callback(
+                fs.readFileSync(file, 'ascii')
+                    .replace(/\r/g, '')
+                    .split('\n'),
                 file.substring(file.lastIndexOf('/') + 1),
                 file.substring(0, file.lastIndexOf('/'))
             );

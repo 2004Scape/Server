@@ -28,6 +28,7 @@ export default class IdkType extends ConfigType {
         for (let id = 0; id < count; id++) {
             const config = new IdkType(id);
             config.decodeType(server);
+            config.decodeType(client);
 
             IdkType.configs[id] = config;
 
@@ -54,6 +55,10 @@ export default class IdkType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
     type: number = -1;
     models: number[] = [];
@@ -62,26 +67,26 @@ export default class IdkType extends ConfigType {
     recol_d: Uint16Array = new Uint16Array(10).fill(0);
     disable: boolean = false;
 
-    decode(opcode: number, packet: Packet): void {
-        if (opcode === 1) {
-            this.type = packet.g1();
-        } else if (opcode === 2) {
-            const count = packet.g1();
+    decode(code: number, dat: Packet): void {
+        if (code === 1) {
+            this.type = dat.g1();
+        } else if (code === 2) {
+            const count = dat.g1();
             for (let i = 0; i < count; i++) {
-                this.models[i] = packet.g2();
+                this.models[i] = dat.g2();
             }
-        } else if (opcode === 3) {
+        } else if (code === 3) {
             this.disable = true;
-        } else if (opcode >= 40 && opcode < 50) {
-            this.recol_s[opcode - 40] = packet.g2();
-        } else if (opcode >= 50 && opcode < 60) {
-            this.recol_d[opcode - 50] = packet.g2();
-        } else if (opcode >= 60 && opcode < 70) {
-            this.heads[opcode - 60] = packet.g2();
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code >= 40 && code < 50) {
+            this.recol_s[code - 40] = dat.g2();
+        } else if (code >= 50 && code < 60) {
+            this.recol_d[code - 50] = dat.g2();
+        } else if (code >= 60 && code < 70) {
+            this.heads[code - 60] = dat.g2();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized idk config code: ${opcode}`);
+            throw new Error(`Unrecognized idk config code: ${code}`);
         }
     }
 }

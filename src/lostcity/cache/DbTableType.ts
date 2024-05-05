@@ -56,17 +56,17 @@ export default class DbTableType extends ConfigType {
     defaultValues: (string | number)[][] = [];
     columnNames: string[] = [];
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode === 1) {
-            this.types = new Array(packet.g1());
+    decode(code: number, dat: Packet) {
+        if (code === 1) {
+            this.types = new Array(dat.g1());
 
-            for (let setting = packet.g1(); setting != 255; setting = packet.g1()) {
+            for (let setting = dat.g1(); setting != 255; setting = dat.g1()) {
                 const column = setting & 0x7f;
                 const hasDefault = (setting & 0x80) !== 0;
 
-                const columnTypes: number[] = new Array(packet.g1());
+                const columnTypes: number[] = new Array(dat.g1());
                 for (let i = 0; i < columnTypes.length; i++) {
-                    columnTypes[i] = packet.g1();
+                    columnTypes[i] = dat.g1();
                 }
                 this.types[column] = columnTypes;
 
@@ -75,19 +75,19 @@ export default class DbTableType extends ConfigType {
                         this.defaultValues = new Array(this.types.length);
                     }
 
-                    this.defaultValues[column] = this.decodeValues(packet, column);
+                    this.defaultValues[column] = this.decodeValues(dat, column);
                 }
             }
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
-        } else if (opcode === 251) {
-            this.columnNames = new Array(packet.g1());
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
+        } else if (code === 251) {
+            this.columnNames = new Array(dat.g1());
 
             for (let i = 0; i < this.columnNames.length; i++) {
-                this.columnNames[i] = packet.gjstr();
+                this.columnNames[i] = dat.gjstr();
             }
         } else {
-            throw new Error(`Unrecognized dbtable config code: ${opcode}`);
+            throw new Error(`Unrecognized dbtable config code: ${code}`);
         }
     }
 
@@ -103,9 +103,9 @@ export default class DbTableType extends ConfigType {
         return this.defaultValues[column];
     }
 
-    decodeValues(packet: Packet, column: number) {
+    decodeValues(dat: Packet, column: number) {
         const types = this.types[column];
-        const fieldCount = packet.g1();
+        const fieldCount = dat.g1();
         const values: (string | number)[] = new Array(fieldCount * types.length);
 
         for (let fieldId = 0; fieldId < fieldCount; fieldId++) {
@@ -114,9 +114,9 @@ export default class DbTableType extends ConfigType {
                 const index = typeId + fieldId * types.length;
 
                 if (type === ScriptVarType.STRING) {
-                    values[index] = packet.gjstr();
+                    values[index] = dat.gjstr();
                 } else {
-                    values[index] = packet.g4s();
+                    values[index] = dat.g4();
                 }
             }
         }

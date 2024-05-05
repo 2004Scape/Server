@@ -56,16 +56,16 @@ export default class VarSharedType extends ConfigType {
 
     type = ScriptVarType.INT;
 
-    decode(opcode: number, packet: Packet) {
-        switch (opcode) {
+    decode(code: number, dat: Packet) {
+        switch (code) {
             case 1:
-                this.type = packet.g1();
+                this.type = dat.g1();
                 break;
             case 250:
-                this.debugname = packet.gjstr();
+                this.debugname = dat.gjstr();
                 break;
             default:
-                console.error(`Unrecognized vars config code: ${opcode}`);
+                console.error(`Unrecognized vars config code: ${code}`);
                 break;
         }
     }

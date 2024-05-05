@@ -77,6 +77,10 @@ export default class ObjType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     static getWearPosId(name: string): number {
         switch (name) {
             case 'hat':
@@ -183,7 +187,7 @@ export default class ObjType extends ConfigType {
         } else if (code === 11) {
             this.stackable = true;
         } else if (code === 12) {
-            this.cost = dat.g4s();
+            this.cost = dat.g4();
         } else if (code === 13) {
             this.wearpos = dat.g1();
         } else if (code === 14) {
@@ -192,12 +196,12 @@ export default class ObjType extends ConfigType {
             this.members = true;
         } else if (code === 23) {
             this.manwear = dat.g2();
-            this.manwearOffsetY = dat.g1s();
+            this.manwearOffsetY = dat.g1b();
         } else if (code === 24) {
             this.manwear2 = dat.g2();
         } else if (code === 25) {
             this.womanwear = dat.g2();
-            this.womanwearOffsetY = dat.g1s();
+            this.womanwearOffsetY = dat.g1b();
         } else if (code === 26) {
             this.womanwear2 = dat.g2();
         } else if (code === 27) {

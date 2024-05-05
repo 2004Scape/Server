@@ -1,20 +1,38 @@
+/**
+ * TODO: Use flat config file as eslintrc is deprecated.
+ * https://eslint.org/docs/latest/use/configure/configuration-files
+ */
 module.exports = {
     env: {
         browser: true,
         es2021: true,
         node: true,
-        jest: true
     },
     extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
     overrides: [
         {
             env: {
                 node: true,
-                jest: true
             },
             files: ['.eslintrc.{js,cjs}'],
             parserOptions: {
                 sourceType: 'script'
+            }
+        },
+        {
+            files: ['src/**/*.test.ts'],
+            extends: ['plugin:vitest/legacy-recommended'],
+            plugins: ['vitest'],
+            rules: {
+                'vitest/no-focused-tests': 'error',
+                'vitest/no-disabled-tests': 'warn',
+                'vitest/consistent-test-it': 'warn',
+                'vitest/require-top-level-describe': [
+                    'error',
+                    {
+                        'maxNumberOfTopLevelDescribes': 1
+                    }
+                ]
             }
         }
     ],
@@ -23,7 +41,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module'
     },
-    plugins: ['@typescript-eslint'],
+    plugins: ['@typescript-eslint', 'unused-imports'],
     rules: {
         indent: ['error', 4, { SwitchCase: 1 }],
         quotes: ['error', 'single', { avoidEscape: true }],
@@ -44,13 +62,6 @@ module.exports = {
         'no-case-declarations': 'warn',
 
         /**
-         * (jkm) we should not use ts-ignore because it can hide errors
-         * recommend to fix these urgently
-         * (I didn't want to fix and risk breaking the code)
-         */
-        '@typescript-eslint/ban-ts-comment': 'warn',
-
-        /**
          * (jkm)
          * The following rules are included in @typescript-eslint/recommended
          * I have set them to warn instead of error, to avoid having to fix them
@@ -58,6 +69,33 @@ module.exports = {
          */
         '@typescript-eslint/no-namespace': 'warn',
         '@typescript-eslint/no-explicit-any': 'warn',
-        '@typescript-eslint/no-unused-vars': 'warn'
+
+        /**
+         * https://eslint.org/docs/latest/rules/no-unused-vars
+         */
+        '@typescript-eslint/no-unused-vars': [
+            // TODO: Set to error
+            'warn',
+            {
+                /**
+                 * Allow variables prefixed with underscores to skip this rule.
+                 * There aren't many good reasons to have unused variables,
+                 * but the codebase has 100s of them.
+                 */
+                'vars': 'all',
+                'varsIgnorePattern': '^_',
+                /**
+                * Allow parameters prefixed with underscores to skip this rule.
+                * This is a common practice for router methods with req and res parameters.
+                */
+                'args': 'all',
+                'argsIgnorePattern': '^_',
+            }
+        ],
+
+        /**
+         * https://github.com/sweepline/eslint-plugin-unused-imports
+         */
+        'unused-imports/no-unused-imports': 'error',
     }
 };

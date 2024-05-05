@@ -13,7 +13,6 @@ type Direction = (typeof Direction)[keyof typeof Direction];
 
 // TODO (jkm) consider making this a class
 export const Position = {
-    max: 0x3ffffffffff,
     zone: (pos: number) => pos >> 3,
     zoneCenter: (pos: number) => Position.zone(pos) - 6,
     zoneOrigin: (pos: number) => Position.zoneCenter(pos) << 3,
@@ -73,6 +72,13 @@ export const Position = {
         };
     },
 
+    distanceToSW(pos: { x: number, z: number }, other: { x: number, z: number }) {
+        const deltaX = Math.abs(pos.x - other.x);
+        const deltaZ = Math.abs(pos.z - other.z);
+
+        return Math.max(deltaX, deltaZ);
+    },
+
     deltaX(dir: Direction): number {
         switch (dir) {
             case Direction.SOUTH_EAST:
@@ -110,5 +116,13 @@ export const Position = {
 
     packCoord(level: number, x: number, z: number): number {
         return (z & 0x3fff) | ((x & 0x3fff) << 14) | ((level & 0x3) << 28);
+    },
+
+    intersects(srcX: number, srcZ: number, srcWidth: number, srcHeight: number, destX: number, destZ: number, destWidth: number, destHeight: number): boolean {
+        const srcHorizontal: number = srcX + srcWidth;
+        const srcVertical: number = srcZ + srcHeight;
+        const destHorizontal: number = destX + destWidth;
+        const destVertical: number = destZ + destHeight;
+        return !(destX >= srcHorizontal || destHorizontal <= srcX || destZ >= srcVertical || destVertical <= srcZ);
     }
 } as const;

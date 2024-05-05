@@ -1,4 +1,4 @@
-[obj_795]
+[war_ship]
 name=War ship
 desc=A model of a Karamja warship.
 cost=2
@@ -11,7 +11,7 @@ model=model_3065_obj
 2dyan=1832
 2dxan=60
 
-[obj_1037]
+[bunny_ears]
 name=Bunny ears
 desc=A rabbit-like adornment.
 model=model_2553_obj
@@ -48,8 +48,8 @@ tradeable=yes
 name=Yellow partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
-recol1s=926
-recol1d=11200
+recol1s=15360
+recol1d=31649
 2dxof=1
 2dyof=1
 2dzoom=440
@@ -68,8 +68,8 @@ tradeable=yes
 name=Blue partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
-recol1s=926
-recol1d=43968
+recol1s=15360
+recol1d=31
 2dxof=1
 2dyof=1
 2dzoom=440
@@ -88,8 +88,8 @@ tradeable=yes
 name=Green partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
-recol1s=926
-recol1d=22464
+recol1s=15360
+recol1d=992
 2dxof=1
 2dyof=1
 2dzoom=440
@@ -108,8 +108,8 @@ tradeable=yes
 name=Purple partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
-recol1s=926
-recol1d=51136
+recol1s=15360
+recol1d=19487
 2dxof=1
 2dyof=1
 2dzoom=440
@@ -128,8 +128,8 @@ tradeable=yes
 name=White partyhat
 desc=A nice hat from a cracker.
 model=model_2635_obj
-recol1s=926
-recol1d=127
+recol1s=15360
+recol1d=32767
 2dxof=1
 2dyof=1
 2dzoom=440
@@ -162,14 +162,14 @@ iop2=Wear
 weight=4oz
 tradeable=yes
 
-[obj_1053]
+[green_halloween_mask]
 name=Halloween mask
 desc=Aaaarrrghhh ... i'm a monster.
 cost=15
 weight=12oz
 model=model_2438_obj
-recol1s=926
-recol1d=22420
+recol1s=15360
+recol1d=320
 wearpos=hat
 wearpos2=head
 wearpos3=jaw
@@ -183,14 +183,14 @@ womanhead=model_3187_obj_wear
 iop2=Wear
 tradeable=yes
 
-[obj_1055]
+[blue_halloween_mask]
 name=Halloween mask
 desc=Aaaarrrghhh ... i'm a monster.
 cost=15
 weight=12oz
 model=model_2438_obj
-recol1s=926
-recol1d=43934
+recol1s=15360
+recol1d=15
 wearpos=hat
 wearpos2=head
 wearpos3=jaw
@@ -204,7 +204,7 @@ womanhead=model_3187_obj_wear
 iop2=Wear
 tradeable=yes
 
-[obj_1057]
+[red_halloween_mask]
 name=Halloween mask
 desc=Aaaarrrghhh ... i'm a monster.
 cost=15

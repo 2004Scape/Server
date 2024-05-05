@@ -109,6 +109,7 @@ transmit=yes
 
 [questpoints]
 transmit=yes
+protect=no
 
 [poison]
 scope=perm
@@ -288,10 +289,6 @@ transmit=yes
 [varp_220]
 
 [varp_221]
-
-[varp_224]
-
-[varp_225]
 
 [gnome_drink_ingredient1]
 type=obj

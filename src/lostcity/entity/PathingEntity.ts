@@ -3,30 +3,27 @@ import World from '#lostcity/engine/World.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Loc from '#lostcity/entity/Loc.js';
-import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
-import Obj from '#lostcity/entity/Obj.js';
-import Player from '#lostcity/entity/Player.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 
 import LocType from '#lostcity/cache/LocType.js';
 
-import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, intersects, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
+import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
-    moveRestrict: MoveRestrict;
-    blockWalk: BlockWalk;
+    readonly moveRestrict: MoveRestrict;
+    readonly blockWalk: BlockWalk;
 
     // runtime properties
+    moveSpeed: MoveSpeed = MoveSpeed.INSTANT;
     walkDir: number = -1;
     runDir: number = -1;
     waypointIndex: number = -1;
-    waypoints: { x: number; z: number }[] = [];
+    waypoints: Int32Array = new Int32Array(25);
     lastX: number = -1;
     lastZ: number = -1;
-    forceMove: boolean = false;
-    tele: boolean = false;
     jump: boolean = false;
 
     walktrigger: number = -1;
@@ -46,14 +43,14 @@ export default abstract class PathingEntity extends Entity {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
         this.blockWalk = blockWalk;
-        this.tele = true;
     }
 
     /**
      * Attempts to update movement for a PathingEntity.
      */
-    abstract updateMovement(running: number): void;
-    abstract blockWalkFlag(): number | null;
+    abstract updateMovement(): void;
+    abstract blockWalkFlag(): CollisionFlag;
+    abstract defaultMoveSpeed(): MoveSpeed;
 
     /**
      * Process movement function for a PathingEntity to use.
@@ -63,14 +60,11 @@ export default abstract class PathingEntity extends Entity {
      * Applies an orientation update to this PathingEntity if a step
      * direction was taken.
      * Updates this PathingEntity zone presence if moved.
-     * @param running
      * Returns false is this PathingEntity has no waypoints.
      * Returns true if a step was taken and movement processed.
      */
-    processMovement(running: number): boolean {
+    processMovement(): boolean {
         if (!this.hasWaypoints()) {
-            this.clearWalkSteps();
-            this.forceMove = false;
             return false;
         }
 
@@ -78,20 +72,9 @@ export default abstract class PathingEntity extends Entity {
         const previousZ = this.z;
         const previousLevel = this.level;
 
-        if (this.forceMove) {
-            if (this.walkDir !== -1 && this.runDir === -1) {
-                this.runDir = this.validateAndAdvanceStep();
-            } else if (this.walkDir === -1) {
-                this.walkDir = this.validateAndAdvanceStep();
-            } else {
-                this.validateAndAdvanceStep();
-            }
-        } else {
-            if (this.walkDir === -1) {
-                this.walkDir = this.validateAndAdvanceStep();
-            }
-
-            if (this.walkDir !== -1 && this.runDir === -1 && running === 1) {
+        if (this.moveSpeed !== MoveSpeed.STATIONARY && this.walkDir === -1) {
+            this.walkDir = this.validateAndAdvanceStep();
+            if (this.moveSpeed !== MoveSpeed.WALK && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
             }
         }
@@ -156,13 +139,13 @@ export default abstract class PathingEntity extends Entity {
      * Returns the final validated step direction.
      */
     validateAndAdvanceStep(): number {
-        const dir = this.takeStep();
+        const dir: number | null = this.takeStep();
         if (dir === null) {
             return -1;
         }
         if (dir === -1) {
             this.waypointIndex--;
-            if (this.waypointIndex < this.waypoints.length - 1 && this.waypointIndex != -1) {
+            if (this.waypointIndex != -1) {
                 return this.validateAndAdvanceStep();
             }
             return -1;
@@ -176,13 +159,10 @@ export default abstract class PathingEntity extends Entity {
      * Queue this PathingEntity to a single waypoint.
      * @param x The x position of the step.
      * @param z The z position of the step.
-     * @param forceMove If to apply forcemove to this PathingEntity.
      */
-    queueWaypoint(x: number, z: number, forceMove: boolean = false): void {
-        this.waypoints = [];
-        this.waypoints.push({ x, z });
+    queueWaypoint(x: number, z: number): void {
+        this.waypoints[0] = Position.packCoord(0, x, z); // level doesn't matter here
         this.waypointIndex = 0;
-        this.forceMove = forceMove;
     }
 
     /**
@@ -190,17 +170,13 @@ export default abstract class PathingEntity extends Entity {
      * @param waypoints The waypoints to queue.
      */
     queueWaypoints(waypoints: ArrayLike<number>): void {
-        const points: Int32Array = Int32Array.from(waypoints);
-        this.waypoints = [];
-        for (const step of points) {
-            this.waypoints.push({ x: step >> 14 & 0x3fff, z: step & 0x3fff });
+        for (let input: number = waypoints.length - 1, output: number = 0; input >= 0, output < this.waypoints.length; input--, output++) {
+            this.waypoints[output] = waypoints[input];
         }
-        this.waypoints.reverse();
-        this.waypointIndex = this.waypoints.length - 1;
+        this.waypointIndex = waypoints.length - 1;
     }
 
-    clearWalkSteps() {
-        this.waypoints = [];
+    clearWaypoints(): void {
         this.waypointIndex = -1;
     }
 
@@ -224,7 +200,7 @@ export default abstract class PathingEntity extends Entity {
         this.level = level;
         this.refreshZonePresence(previousX, previousZ, previousLevel);
 
-        this.tele = true;
+        this.moveSpeed = MoveSpeed.INSTANT;
         if (previousLevel != level) {
             this.jump = true;
         }
@@ -242,7 +218,6 @@ export default abstract class PathingEntity extends Entity {
                 length: this.length
             }) > 2;
         if (distanceCheck) {
-            this.tele = true;
             this.jump = true;
         }
     }
@@ -251,7 +226,7 @@ export default abstract class PathingEntity extends Entity {
         // temp variables to convert movement operations
         let walkDir = this.walkDir;
         let runDir = this.runDir;
-        let tele = this.tele;
+        let tele = this.moveSpeed === MoveSpeed.INSTANT;
 
         // convert p_teleport() into walk or run
         const distanceMoved = Position.distanceTo(this, {
@@ -283,28 +258,15 @@ export default abstract class PathingEntity extends Entity {
      * Returns if this PathingEntity has any queued waypoints.
      */
     hasWaypoints(): boolean {
-        return this.waypointIndex !== -1 && this.waypointIndex < this.waypoints.length;
+        return this.waypointIndex !== -1;
     }
 
     isLastWaypoint(): boolean {
         return this.waypointIndex === 0;
     }
 
-    inOperableDistance(
-        target:
-            | Player
-            | Npc
-            | Loc
-            | Obj
-            | {
-                  x: number;
-                  z: number;
-                  level: number;
-                  width: number;
-                  length: number;
-              }
-    ): boolean {
-        if (!target || target.level !== this.level) {
+    inOperableDistance(target: Entity): boolean {
+        if (target.level !== this.level) {
             return false;
         }
         if (target instanceof PathingEntity) {
@@ -317,30 +279,16 @@ export default abstract class PathingEntity extends Entity {
         return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
     }
 
-    inApproachDistance(
-        range: number,
-        target:
-            | Player
-            | Npc
-            | Loc
-            | Obj
-            | {
-                  x: number;
-                  z: number;
-                  level: number;
-                  width: number;
-                  length: number;
-              }
-    ): boolean {
-        if (!target || target.level !== this.level) {
+    inApproachDistance(range: number, target: Entity): boolean {
+        if (target.level !== this.level) {
             return false;
         }
-        if (target instanceof PathingEntity && intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
+        if (target instanceof PathingEntity && Position.intersects(this.x, this.z, this.width, this.length, target.x, target.z, target.width, target.length)) {
             // pathing entity has a -2 shape basically (not allow on same tile) for ap.
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        return hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER) && Position.distanceTo(this, target) <= range;
+        return Position.distanceTo(this, target) <= range && hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER);
     }
 
     getCollisionStrategy(): CollisionType | null {
@@ -363,9 +311,9 @@ export default abstract class PathingEntity extends Entity {
     }
 
     resetPathingEntity(): void {
+        this.moveSpeed = this.defaultMoveSpeed();
         this.walkDir = -1;
         this.runDir = -1;
-        this.tele = false;
         this.jump = false;
         this.lastX = this.x;
         this.lastZ = this.z;
@@ -381,38 +329,34 @@ export default abstract class PathingEntity extends Entity {
     private takeStep(): number | null {
         // dir -1 means we reached the destination.
         // dir null means nothing happened
-        const srcX = this.x;
-        const srcZ = this.z;
+        if (this.waypointIndex === -1) {
+            // failsafe check
+            return null;
+        }
 
-        const dest = this.waypoints[this.waypointIndex];
-        const destX = dest.x;
-        const destZ = dest.z;
+        const srcX: number = this.x;
+        const srcZ: number = this.z;
 
-        const dir = Position.face(srcX, srcZ, destX, destZ);
-
-        const dx = Position.deltaX(dir);
-        const dz = Position.deltaZ(dir);
+        const {x, z} = Position.unpackCoord(this.waypoints[this.waypointIndex]);
+        const dir: number = Position.face(srcX, srcZ, x, z);
+        const dx: number = Position.deltaX(dir);
+        const dz: number = Position.deltaZ(dir);
 
         // check if moved off current pos.
         if (dx == 0 && dz == 0) {
             return -1;
         }
 
-        const collisionStrategy = this.getCollisionStrategy();
+        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
         if (collisionStrategy === null) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
         }
 
-        const extraFlag = this.blockWalkFlag();
-        if (extraFlag === null) {
+        const extraFlag: CollisionFlag = this.blockWalkFlag();
+        if (extraFlag === CollisionFlag.NULL) {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
-        }
-
-        // check if force moving.
-        if (this.forceMove) {
-            return dir;
         }
 
         // check current direction if can travel to chosen dest.
@@ -422,12 +366,12 @@ export default abstract class PathingEntity extends Entity {
 
         // check another direction if can travel to chosen dest on current z-axis.
         if (dx != 0 && canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
-            return Position.face(srcX, srcZ, destX, srcZ);
+            return Position.face(srcX, srcZ, x, srcZ);
         }
 
         // check another direction if can travel to chosen dest on current x-axis.
         if (dz != 0 && canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
-            return Position.face(srcX, srcZ, srcX, destZ);
+            return Position.face(srcX, srcZ, srcX, z);
         }
         return null;
     }

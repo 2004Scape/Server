@@ -1,17 +1,17 @@
 import fs from 'fs';
 import { loadPack } from '#lostcity/util/NameMap.js';
 
-const models = loadPack('dump/pack/model.pack');
+const models = loadPack('data/src/pack/model.pack');
 
-fs.mkdirSync('dump/src/models/idk', { recursive: true });
-fs.mkdirSync('dump/src/models/obj', { recursive: true });
-fs.mkdirSync('dump/src/models/npc', { recursive: true });
-fs.mkdirSync('dump/src/models/spotanim', { recursive: true });
-fs.mkdirSync('dump/src/models/loc', { recursive: true });
+fs.mkdirSync('data/src/models/idk', { recursive: true });
+fs.mkdirSync('data/src/models/obj', { recursive: true });
+fs.mkdirSync('data/src/models/npc', { recursive: true });
+fs.mkdirSync('data/src/models/spotanim', { recursive: true });
+fs.mkdirSync('data/src/models/loc', { recursive: true });
 
 function renameModel(category: string, id: string, name: string) {
-    if (fs.existsSync(`dump/src/models/model_${id}.ob2`)) {
-        fs.renameSync(`dump/src/models/model_${id}.ob2`, `dump/src/models/${category}/${name}.ob2`);
+    if (fs.existsSync(`data/src/models/model_${id}.ob2`)) {
+        fs.renameSync(`data/src/models/model_${id}.ob2`, `data/src/models/${category}/${name}.ob2`);
         models[id as unknown as number] = name;
     }
 
@@ -20,7 +20,7 @@ function renameModel(category: string, id: string, name: string) {
 
 const newModelName: Record<string, string> = {};
 
-const locs = fs.readFileSync('dump/src/scripts/all.loc', 'ascii').replace(/\r/g, '').split('\n');
+const locs = fs.readFileSync('data/src/scripts/all.loc', 'ascii').replace(/\r/g, '').split('\n');
 let lastLoc = null;
 for (let i = 0; i < locs.length; i++) {
     const line = locs[i];
@@ -135,9 +135,9 @@ for (let i = 0; i < locs.length; i++) {
         }
     }
 }
-fs.writeFileSync('dump/src/scripts/all.loc', locs.join('\n'));
+fs.writeFileSync('data/src/scripts/all.loc', locs.join('\n'));
 
-const idk = fs.readFileSync('dump/src/scripts/all.idk', 'ascii').replace(/\r/g, '').split('\n');
+const idk = fs.readFileSync('data/src/scripts/all.idk', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < idk.length; i++) {
     const line = idk[i];
     if (!line.startsWith('model') && !line.startsWith('head')) {
@@ -157,9 +157,9 @@ for (let i = 0; i < idk.length; i++) {
         idk[i] = `${key}=${modelName}`;
     }
 }
-fs.writeFileSync('dump/src/scripts/all.idk', idk.join('\n'));
+fs.writeFileSync('data/src/scripts/all.idk', idk.join('\n'));
 
-const objs = fs.readFileSync('dump/src/scripts/all.obj', 'ascii').replace(/\r/g, '').split('\n');
+const objs = fs.readFileSync('data/src/scripts/all.obj', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < objs.length; i++) {
     const line = objs[i];
     if (!line.startsWith('model') && !line.startsWith('man') && !line.startsWith('woman')) {
@@ -205,9 +205,9 @@ for (let i = 0; i < objs.length; i++) {
         objs[i] = `${key}=${modelName}`;
     }
 }
-fs.writeFileSync('dump/src/scripts/all.obj', objs.join('\n'));
+fs.writeFileSync('data/src/scripts/all.obj', objs.join('\n'));
 
-const npcs = fs.readFileSync('dump/src/scripts/all.npc', 'ascii').replace(/\r/g, '').split('\n');
+const npcs = fs.readFileSync('data/src/scripts/all.npc', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < npcs.length; i++) {
     const line = npcs[i];
     if (!line.startsWith('model') && !line.startsWith('head')) {
@@ -227,9 +227,9 @@ for (let i = 0; i < npcs.length; i++) {
         npcs[i] = `${key}=${modelName}`;
     }
 }
-fs.writeFileSync('dump/src/scripts/all.npc', npcs.join('\n'));
+fs.writeFileSync('data/src/scripts/all.npc', npcs.join('\n'));
 
-const spotanims = fs.readFileSync('dump/src/scripts/all.spotanim', 'ascii').replace(/\r/g, '').split('\n');
+const spotanims = fs.readFileSync('data/src/scripts/all.spotanim', 'ascii').replace(/\r/g, '').split('\n');
 for (let i = 0; i < spotanims.length; i++) {
     const line = spotanims[i];
     if (!line.startsWith('model')) {
@@ -245,10 +245,10 @@ for (let i = 0; i < spotanims.length; i++) {
         spotanims[i] = `${key}=${modelName}`;
     }
 }
-fs.writeFileSync('dump/src/scripts/all.spotanim', spotanims.join('\n'));
+fs.writeFileSync('data/src/scripts/all.spotanim', spotanims.join('\n'));
 
 fs.writeFileSync(
-    'dump/pack/model.pack',
+    'data/src/pack/model.pack',
     models
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)

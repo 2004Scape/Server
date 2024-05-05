@@ -19,8 +19,8 @@ blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
-recol1s=11200
-recol1d=960
+recol1s=31649
+recol1d=30753
 category=party_balloon
 param=next_loc_stage,loc_124
 
@@ -33,8 +33,8 @@ blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
-recol1s=11200
-recol1d=43968
+recol1s=31649
+recol1d=31
 category=party_balloon
 param=next_loc_stage,loc_125
 
@@ -47,8 +47,8 @@ blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
-recol1s=11200
-recol1d=22464
+recol1s=31649
+recol1d=992
 category=party_balloon
 param=next_loc_stage,loc_126
 
@@ -61,8 +61,8 @@ blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
-recol1s=11200
-recol1d=53184
+recol1s=31649
+recol1d=24638
 category=party_balloon
 param=next_loc_stage,loc_127
 
@@ -75,8 +75,8 @@ blockwalk=no
 blockrange=no
 ambient=60
 op1=Burst
-recol1s=11200
-recol1d=127
+recol1s=31649
+recol1d=32767
 category=party_balloon
 param=next_loc_stage,loc_128
 
@@ -123,8 +123,8 @@ blockwalk=no
 blockrange=no
 hasalpha=yes
 ambient=60
-recol1s=11200
-recol1d=960
+recol1s=31649
+recol1d=30753
 
 [loc_125]
 name=Party Balloon
@@ -135,8 +135,8 @@ blockwalk=no
 blockrange=no
 hasalpha=yes
 ambient=60
-recol1s=11200
-recol1d=43968
+recol1s=31649
+recol1d=31
 
 [loc_126]
 name=Party Balloon
@@ -147,8 +147,8 @@ blockwalk=no
 blockrange=no
 hasalpha=yes
 ambient=60
-recol1s=11200
-recol1d=22464
+recol1s=31649
+recol1d=992
 
 [loc_127]
 name=Party Balloon
@@ -159,8 +159,8 @@ blockwalk=no
 blockrange=no
 hasalpha=yes
 ambient=60
-recol1s=11200
-recol1d=53184
+recol1s=31649
+recol1d=24638
 
 [loc_128]
 name=Party Balloon
@@ -171,8 +171,8 @@ blockwalk=no
 blockrange=no
 hasalpha=yes
 ambient=60
-recol1s=11200
-recol1d=127
+recol1s=31649
+recol1d=32767
 
 [loc_129]
 name=Party Balloon
@@ -208,8 +208,8 @@ desc=Place party drop items here.
 model=wooden_chest
 op1=Open
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921
 
 [loc_2418]
 name=Open chest
@@ -218,5 +218,5 @@ model=model_loc_76
 op2=Deposit
 op3=Shut
 forceapproach=north
-recol1s=41
-recol1d=11173
+recol1s=10570
+recol1d=17921

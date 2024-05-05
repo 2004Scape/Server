@@ -106,7 +106,21 @@ export default class CollisionManager {
         for (let level: number = 0; level < 4; level++) {
             for (let x: number = 0; x < 64; x++) {
                 for (let z: number = 0; z < 64; z++) {
-                    lands[this.packCoord(x, z, level)] = this.decodeLand(packet);
+                    while (true) {
+                        const opcode: number = packet.g1();
+                        if (opcode === 0) {
+                            break;
+                        } else if (opcode === 1) {
+                            packet.g1();
+                            break;
+                        }
+
+                        if (opcode <= 49) {
+                            packet.g1b();
+                        } else if (opcode <= 81) {
+                            lands[this.packCoord(x, z, level)] = opcode - 49;
+                        }
+                    }
                 }
             }
         }
@@ -143,20 +157,6 @@ export default class CollisionManager {
                 }
             }
         }
-    }
-
-    private decodeLand(packet: Packet, collision: number = 0): number {
-        const opcode: number = packet.g1();
-        if (opcode === 0 || opcode === 1) {
-            if (opcode === 1) {
-                packet.g1();
-            }
-            return collision;
-        }
-        if (opcode >= 2 && opcode <= 49) {
-            packet.g1s();
-        }
-        return this.decodeLand(packet, opcode >= 50 && opcode <= 81 ? opcode - 49 : collision);
     }
 
     private decodeLocs(zoneManager: ZoneManager, lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {

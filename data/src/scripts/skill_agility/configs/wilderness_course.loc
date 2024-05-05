@@ -31,8 +31,8 @@ desc=A pipe I can squeeze through.
 model=model_loc_2288
 op1=Squeeze-through
 width=2
-recol1s=6689
-recol1d=41
+recol1s=12580
+recol1d=10570
 
 [wilderness_rope_swing]
 name=Ropeswing
@@ -65,5 +65,5 @@ hillskew=yes
 op1=Climb
 ambient=25
 contrast=25
-recol1s=6689
-recol1d=20
+recol1s=12580
+recol1d=5285

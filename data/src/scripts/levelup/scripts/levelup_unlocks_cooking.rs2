@@ -10,22 +10,18 @@ switch_int(stat_base(cooking)) {
     case 15: ~objboxt(trout,"You can now cook @dbl@trout@bla@.");
     case 16: ~objboxt(choc_chip_crunchies,"Members can now make @dbl@chocolate chip crunchies@bla@.");
     case 18: ~doubleobjbox(cod,wizard_blizzard,"Members can now cook @dbl@cod@bla@ and make @dbl@Wizard|@dbl@Blizzards@bla@.");
-    case 19: ~objboxb(dwarven_stout,"Members can now brew @dbl@Dwarven Stout@bla@.");
-    case 20: ~doubleobjbox(pike,meat_pie,"You can now cook @dbl@meat pies@bla@ and @dbl@pike@bla@.Members can|also make@dbl@Short Green Guys@bla@.");
+    case 20: ~doubleobjbox(pike,meat_pie,"You can now cook @dbl@meat pies@bla@ and @dbl@pike@bla@. Members can|also make @dbl@Short Green Guys@bla@.");
     case 21: ~objbox(pot_of_cream,"Members can now churn @dbl@cream@bla@.");
-    case 24: ~objboxb(asgarnian_ale,"Members can now brew @dbl@Asgarnian Ale@bla@.");
     case 25: ~doubleobjbox(salmon,stew,"You can now cook @dbl@stews@bla@ and @dbl@salmon@bla@. Members may| also create @dbl@fruit battas@bla@.");
     case 26: ~objbox(toad_batta,"Members can now cook @dbl@toad battas@bla@.");
     case 27: ~objbox(worm_batta,"Members can now cook @dbl@worm battas@bla@.");
     case 28: ~objbox(vegetable_batta,"Members can now cook @dbl@vegetable battas@bla@.");
-    case 29: ~doubleobjbox(greenmans_ale,cheese_tom_batta,"Members can now brew @dbl@Greenman's Ale@bla@ and make|@dbl@cheese and tomato battas@bla@.");
+    case 29: ~objbox(cheese_tom_batta,"Members can now make @dbl@cheese and tomato battas@bla@."); // guessed
     case 30: ~doubleobjbox(tuna,apple_pie,"You can now cook @dbl@apple pies@bla@ and @dbl@tuna@bla@. Members can now cook @dbl@worm holes@bla@.");
     case 32: ~objboxt(chefshat,"You are now qualified to enter the prestigious @dbl@Chefs'|@dbl@Guild@bla@. Members may also create @dbl@Drunk Dragons@bla@.");
     case 33: ~objboxb(chocolate_saturday,"Members can now make @dbl@Chocolate Saturdays@bla@.");
-    case 34: ~objboxb(wizards_mind_bomb,"Members can now brew @dbl@Wizard's Mind Bomb@bla@.");
     case 35: ~doubleobjbox(plain_pizza,jug_wine,"You can now cook @dbl@pizzas@bla@ and @dbl@wine@bla@. Members can|now cook @dbl@Vegetable balls@bla@.");
     case 37: ~objboxb(blurberry_special,"Members can now create @dbl@Blurberry Specials@bla@.");
-    case 39: ~objboxb(dragon_bitter,"Members can now brew @dbl@Dragon Bitter@bla@.");
     case 40: ~doubleobjbox(lobster,cake,"You can now cook @dbl@cakes@bla@ and @dbl@lobsters@bla@. Members may|create@dbl@tangled toad legs@bla@.");
     case 42: ~objbox(chocolate_bomb,"Members can now cook @dbl@chocolate bombs@bla@.");
     case 43: ~objboxt(bass,"Members can now cook @dbl@bass@bla@.");

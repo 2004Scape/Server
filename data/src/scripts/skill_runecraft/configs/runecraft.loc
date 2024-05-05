@@ -94,8 +94,8 @@ op1=Use
 ambient=100
 contrast=100
 hasalpha=yes
-recol1s=11218
-recol1d=43486
+recol1s=31658
+recol1d=15871
 category=rc_exit_portal
 param=rune_type,3
 
@@ -162,8 +162,8 @@ op1=Use
 ambient=100
 contrast=100
 hasalpha=yes
-recol1s=11218
-recol1d=935
+recol1s=31658
+recol1d=18465
 category=rc_exit_portal
 param=rune_type,5
 
@@ -197,8 +197,8 @@ op1=Use
 ambient=100
 contrast=100
 hasalpha=yes
-recol1s=11218
-recol1d=61733
+recol1s=31658
+recol1d=12488
 category=rc_exit_portal
 param=rune_type,6
 

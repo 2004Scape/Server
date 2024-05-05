@@ -1,0 +1,143 @@
+[loc_2844]
+name=Sewer valve
+desc=This looks like it can be turned.
+model=model_loc_2844
+active=yes
+op1=Turn-left
+op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,0
+
+[loc_2845]
+name=Sewer valve
+desc=This looks like it can be turned.
+model=model_loc_2844
+active=yes
+op1=Turn-left
+op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,1
+
+[loc_2846]
+name=Sewer valve
+desc=This looks like it can be turned.
+model=model_loc_2844
+active=yes
+op1=Turn-left
+op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,2
+
+[loc_2847]
+name=Sewer valve
+desc=This looks like it can be turned.
+model=model_loc_2844
+active=yes
+op1=Turn-left
+op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,3
+
+[loc_2848]
+name=Sewer valve
+desc=This looks like it can be turned.
+model=model_loc_2844
+active=yes
+op1=Turn-left
+op2=Turn-right
+category=hazeelcult_valve
+param=hazeelcult_valve_idx,4
+
+[loc_2849]
+name=Raft
+desc=A rudimentary type of boat.
+model=model_loc_1987
+length=2
+active=yes
+op1=Board
+
+[loc_2850]
+name=Cupboard
+desc=It's closed.
+model=model_loc_368
+length=2
+op1=Open
+forceapproach=east
+param=cupboard_other,loc_2851
+
+[loc_2851]
+name=Cupboard
+desc=It's open.
+model=model_loc_371
+length=2
+op1=Search
+op2=Shut
+forceapproach=east
+param=cupboard_other,loc_2850
+
+[loc_2852]
+name=Cave entrance
+desc=I can probably squeeze my way inside there.
+model=model_loc_194
+width=4
+length=4
+active=yes
+op1=Enter
+
+[loc_2853]
+name=Stairs
+desc=It's a flight of stairs.
+model=model_loc_54
+width=2
+length=3
+op1=Climb-up
+
+[loc_2854]
+name=Wall
+desc=Made of wood.
+model=model_loc_1602
+wallwidth=8
+occlude=yes
+active=yes
+op1=Knock-at
+
+[loc_2855]
+model=model_loc_1602
+wallwidth=8
+occlude=yes
+
+[loc_2856]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+op1=Open
+forceapproach=north
+
+[loc_2857]
+name=Chest
+desc=It's open.
+model=model_loc_76
+op1=Search
+op2=Close
+forceapproach=north
+
+[loc_2858]
+name=Crate
+desc=Used for storage.
+model=model_loc_63
+active=yes
+op1=Search
+
+[loc_2859]
+name=Range
+desc=Used for cooking.
+model=model_loc_114
+active=yes
+length=2
+
+[loc_2860]
+name=Hazeels' coffin
+desc=Very ominous.
+model=model_loc_2860
+width=3
+active=yes

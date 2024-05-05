@@ -1,8 +1,7 @@
 import 'dotenv/config';
-import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-import { fromBase37, toBase37, toDisplayName } from '#jagex2/jstring/JString.js';
+import {fromBase37, toBase37, toDisplayName} from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
@@ -51,8 +50,12 @@ import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import {CollisionFlag, findPath} from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
+import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
+import NullClientSocket from '#lostcity/server/NullClientSocket.js';
+import {tryParseInt} from '#lostcity/util/TryParse.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -142,7 +145,7 @@ export default class Player extends PathingEntity {
     ];
 
     save() {
-        const sav = new Packet();
+        const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
         sav.p2(2); // version
 
@@ -205,9 +208,10 @@ export default class Player extends PathingEntity {
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
 
-        sav.p4(Packet.crc32(sav));
+        sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const safeName = fromBase37(this.username37);
         sav.save(`data/players/${safeName}.sav`);
+        // the sav is released by login server.
         return sav;
     }
 
@@ -235,7 +239,7 @@ export default class Player extends PathingEntity {
     webClient: boolean = false;
     combatLevel: number = 3;
     headicons: number = 0;
-    appearance: Packet | null = null; // cached appearance
+    appearance: Uint8Array | null = null; // cached appearance
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -325,6 +329,8 @@ export default class Player extends PathingEntity {
     lastTargetSlot: number = -1; // inv_buttond
     lastInt: number = -1; // resume_p_countdialog
     lastCom: number = -1; // if_button
+
+    staffModLevel: number = 0;
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC); // tutorial island.
@@ -482,141 +488,165 @@ export default class Player extends PathingEntity {
     }
 
     onCheat(cheat: string) {
-        const args = cheat.toLowerCase().split(' ');
-        const cmd = args.shift();
-        if (!cmd) {
+        const args: string[] = cheat.toLowerCase().split(' ');
+        const cmd: string | undefined = args.shift();
+        if (cmd === undefined || cmd.length <= 0) {
             return;
         }
 
         this.playerLog('Cheat ran', cheat);
 
-        switch (cmd) {
-            case 'reload': {
-                if (Environment.LOCAL_DEV) {
-                    // TODO: only reload config types that have changed to save time
-                    CategoryType.load('data/pack');
-                    ParamType.load('data/pack');
-                    EnumType.load('data/pack');
-                    StructType.load('data/pack');
-                    InvType.load('data/pack');
-                    IdkType.load('data/pack');
-                    VarPlayerType.load('data/pack');
-                    ObjType.load('data/pack', World.members);
-                    LocType.load('data/pack');
-                    NpcType.load('data/pack');
-                    Component.load('data/pack');
-                    SeqType.load('data/pack');
-                    SpotanimType.load('data/pack');
-                    MesanimType.load('data/pack');
-                    DbTableType.load('data/pack');
-                    DbRowType.load('data/pack');
-                    HuntType.load('data/pack');
+        if (cmd === 'reload' && Environment.LOCAL_DEV) {
+            // TODO: only reload config types that have changed to save time
+            CategoryType.load('data/pack');
+            ParamType.load('data/pack');
+            EnumType.load('data/pack');
+            StructType.load('data/pack');
+            InvType.load('data/pack');
+            IdkType.load('data/pack');
+            VarPlayerType.load('data/pack');
+            ObjType.load('data/pack', World.members);
+            LocType.load('data/pack');
+            NpcType.load('data/pack');
+            Component.load('data/pack');
+            SeqType.load('data/pack');
+            SpotanimType.load('data/pack');
+            MesanimType.load('data/pack');
+            DbTableType.load('data/pack');
+            DbRowType.load('data/pack');
+            HuntType.load('data/pack');
 
-                    const count = ScriptProvider.load('data/pack');
-                    this.messageGame(`Reloaded ${count} scripts.`);
-                }
-                break;
+            const count = ScriptProvider.load('data/pack');
+            this.messageGame(`Reloaded ${count} scripts.`);
+        } else if (cmd === 'setvar') {
+            const varp = args.shift();
+            if (!varp) {
+                this.messageGame('Usage: ::setvar <var> <value>');
+                return;
             }
-            case 'setvar': {
-                const varp = args.shift();
-                if (!varp) {
-                    this.messageGame('Usage: ::setvar <var> <value>');
-                    return;
-                }
 
-                const value = args.shift();
-                if (!value) {
-                    this.messageGame('Usage: ::setvar <var> <value>');
-                    return;
-                }
+            const value = args.shift();
+            if (!value) {
+                this.messageGame('Usage: ::setvar <var> <value>');
+                return;
+            }
 
-                const varpType = VarPlayerType.getByName(varp);
-                if (varpType) {
-                    this.setVar(varpType.id, parseInt(value, 10));
-                    this.messageGame(`Setting var ${varp} to ${value}`);
+            const varpType = VarPlayerType.getByName(varp);
+            if (varpType) {
+                this.setVar(varpType.id, parseInt(value, 10));
+                this.messageGame(`Setting var ${varp} to ${value}`);
+            } else {
+                this.messageGame(`Unknown var ${varp}`);
+            }
+        } else if (cmd === 'getvar') {
+            const varp = args.shift();
+            if (!varp) {
+                this.messageGame('Usage: ::getvar <var>');
+                return;
+            }
+
+            const varpType = VarPlayerType.getByName(varp);
+            if (varpType) {
+                this.messageGame(`Var ${varp}: ${this.vars[varpType.id]}`);
+            } else {
+                this.messageGame(`Unknown var ${varp}`);
+            }
+        } else if (cmd === 'setlevel') {
+            if (args.length < 2) {
+                this.messageGame('Usage: ::setlevel <stat> <level>');
+                return;
+            }
+
+            const stat = Player.SKILLS.indexOf(args[0]);
+            if (stat === -1) {
+                this.messageGame(`Unknown stat ${args[0]}`);
+                return;
+            }
+
+            this.setLevel(stat, parseInt(args[1]));
+        } else if (cmd === 'setxp') {
+            if (args.length < 2) {
+                this.messageGame('Usage: ::setxp <stat> <xp>');
+                return;
+            }
+
+            const stat = Player.SKILLS.indexOf(args[0]);
+            if (stat === -1) {
+                this.messageGame(`Unknown stat ${args[0]}`);
+                return;
+            }
+
+            const exp = parseInt(args[1]) * 10;
+            this.setLevel(stat, getLevelByExp(exp));
+            this.stats[stat] = exp;
+        } else if (cmd === 'minlevel') {
+            for (let i = 0; i < Player.SKILLS.length; i++) {
+                if (i === Player.HITPOINTS) {
+                    this.setLevel(i, 10);
                 } else {
-                    this.messageGame(`Unknown var ${varp}`);
+                    this.setLevel(i, 1);
                 }
-                break;
             }
-            case 'getvar': {
-                const varp = args.shift();
-                if (!varp) {
-                    this.messageGame('Usage: ::getvar <var>');
-                    return;
+        } else if (cmd === 'serverdrop') {
+            this.terminate();
+        } else if (cmd === 'random') {
+            this.afkEventReady = true;
+        } else if (cmd === 'bench' && this.staffModLevel >= 3) {
+            const start = Date.now();
+            for (let index = 0; index < 100_000; index++) {
+                findPath(this.level, this.x, this.z, this.x, this.z + 10);
+            }
+            const end = Date.now();
+            console.log(`took = ${end - start} ms`);
+        } else if (cmd === 'bots' && this.staffModLevel >= 3) {
+            this.messageGame('Adding bots');
+            for (let i = 0; i < 2000; i++) {
+                const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
+                bot.onLogin();
+                World.addPlayer(bot);
+            }
+        } else if (cmd === 'teleall' && this.staffModLevel >= 3) {
+            this.messageGame('Teleporting all players');
+            for (let i = 0; i < World.players.length; i++) {
+                const player = World.players[i];
+                if (!player) {
+                    continue;
                 }
 
-                const varpType = VarPlayerType.getByName(varp);
-                if (varpType) {
-                    this.messageGame(`Var ${varp}: ${this.vars[varpType.id]}`);
-                } else {
-                    this.messageGame(`Unknown var ${varp}`);
-                }
-                break;
+                player.closeModal();
+
+                do {
+                    const x = Math.floor(Math.random() * 640) + 3200;
+                    const z = Math.floor(Math.random() * 640) + 3200;
+
+                    player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
+                } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
             }
-            case 'setlevel': {
-                if (args.length < 2) {
-                    this.messageGame('Usage: ::setlevel <stat> <level>');
-                    return;
+        } else if (cmd === 'moveall' && this.staffModLevel >= 3) {
+            this.messageGame('Moving all players');
+            console.time('moveall');
+            for (let i = 0; i < World.players.length; i++) {
+                const player = World.players[i];
+                if (!player) {
+                    continue;
                 }
 
-                const stat = Player.SKILLS.indexOf(args[0]);
-                if (stat === -1) {
-                    this.messageGame(`Unknown stat ${args[0]}`);
-                    return;
-                }
-
-                this.setLevel(stat, parseInt(args[1]));
-                break;
+                player.closeModal();
+                player.queueWaypoints(findPath(player.level, player.x, player.z, (player.x >>> 6 << 6) + 32, (player.z >>> 6 << 6) + 32));
             }
-            case 'setxp': {
-                if (args.length < 2) {
-                    this.messageGame('Usage: ::setxp <stat> <xp>');
-                    return;
-                }
-
-                const stat = Player.SKILLS.indexOf(args[0]);
-                if (stat === -1) {
-                    this.messageGame(`Unknown stat ${args[0]}`);
-                    return;
-                }
-
-                const exp = parseInt(args[1]) * 10;
-                this.setLevel(stat, getLevelByExp(exp));
-                this.stats[stat] = exp;
-                break;
+            console.timeEnd('moveall');
+        } else if (cmd === 'speed' && this.staffModLevel >= 3) {
+            if (args.length < 1) {
+                this.messageGame('Usage: ::speed <ms>');
+                return;
             }
-            case 'minlevel': {
-                for (let i = 0; i < Player.SKILLS.length; i++) {
-                    if (i === Player.HITPOINTS) {
-                        this.setLevel(i, 10);
-                    } else {
-                        this.setLevel(i, 1);
-                    }
-                }
-                break;
+            const speed: number = tryParseInt(args.shift(), 20);
+            if (speed < 20) {
+                this.messageGame('::speed input was too low.');
+                return;
             }
-            case 'serverdrop': {
-                this.terminate();
-                break;
-            }
-            case 'random': {
-                this.afkEventReady = true;
-                break;
-            }
-            /*case 'bench': {
-                const start = Date.now();
-                for (let index = 0; index < 100_000; index++) {
-                    findPath(this.level, this.x, this.z, this.x, this.z + 10);
-                }
-                const end = Date.now();
-                console.log(`took = ${end - start} ms`);
-                break;
-            }*/
-        }
-
-        if (cmd.length <= 0) {
-            return;
+            this.messageGame(`World speed was changed to ${speed}ms`);
+            World.tickRate = speed;
         }
 
         // lookup debugproc with the name and execute it
@@ -723,7 +753,7 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(running: number = -1): boolean {
+    updateMovement(): boolean {
         if (this.containsModalInterface()) {
             return false;
         }
@@ -731,7 +761,8 @@ export default class Player extends PathingEntity {
         if (this.target) {
             const apTrigger = this.getApTrigger();
             const outOfRange = !this.inApproachDistance(this.apRange, this.target) && apTrigger && !this.inOperableDistance(this.target);
-            const targetMoved = this.hasWaypoints() && (this.waypoints[0].x !== this.target.x || this.waypoints[0].z !== this.target.z);
+            const {x, z} = Position.unpackCoord(this.waypoints[0]);
+            const targetMoved = this.hasWaypoints() && (x !== this.target.x || z !== this.target.z);
 
             // broken out to understand better
             if (!this.hasWaypoints() && !this.interacted) {
@@ -753,17 +784,19 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (running === -1 && !this.forceMove) {
-            if (this.runenergy < 100) {
-                this.setVar(VarPlayerType.getId('player_run'), 0);
-                this.setVar(VarPlayerType.getId('temp_run'), 0);
-            }
-
-            running = 0;
-            running |= this.getVar(VarPlayerType.getId('player_run')) ? 1 : 0;
-            running |= this.getVar(VarPlayerType.getId('temp_run')) ? 1 : 0;
+        if (this.runenergy < 100) {
+            this.setVar(VarPlayerType.getId('player_run'), 0);
+            this.setVar(VarPlayerType.getId('temp_run'), 0);
         }
-        if (!super.processMovement(running)) {
+
+        if (this.moveSpeed !== MoveSpeed.INSTANT) {
+            this.moveSpeed = this.defaultMoveSpeed();
+            if (this.getVar(VarPlayerType.getId('temp_run'))) {
+                this.moveSpeed = MoveSpeed.RUN;
+            }
+        }
+
+        if (!super.processMovement()) {
             // todo: this is running every idle tick
             this.setVar(VarPlayerType.getId('temp_run'), 0);
         }
@@ -777,10 +810,8 @@ export default class Player extends PathingEntity {
                 this.runScript(script, true);
             }
 
-            this.refreshZonePresence(this.lastX, this.lastZ, this.level);
-
             // run energy drain
-            if (running && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
+            if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
                 const weightKg = Math.floor(this.runweight / 1000);
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + (67 * clampWeight) / 64;
@@ -793,7 +824,7 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (!this.delayed() && (!moved || !running) && this.runenergy < 10000) {
+        if (!this.delayed() && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
             const recovered = this.baseLevels[Player.AGILITY] / 9 + 8;
 
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
@@ -802,8 +833,12 @@ export default class Player extends PathingEntity {
         return moved;
     }
 
-    blockWalkFlag(): number {
+    blockWalkFlag(): CollisionFlag {
         return CollisionFlag.PLAYER;
+    }
+
+    defaultMoveSpeed(): MoveSpeed {
+        return this.getVar(VarPlayerType.getId('player_run')) ? MoveSpeed.RUN : MoveSpeed.WALK;
     }
 
     // ----
@@ -987,7 +1022,7 @@ export default class Player extends PathingEntity {
     }
 
     setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: number) {
-        if (this.forceMove || this.delayed()) {
+        if (this.delayed()) {
             // console.log('not setting interaction');
             this.unsetMapFlag();
             return;
@@ -1250,7 +1285,7 @@ export default class Player extends PathingEntity {
             this.loadedZones = {};
         }
 
-        if (this.tele && this.jump) {
+        if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
             this.loadedZones = {};
         }
     }
@@ -1291,7 +1326,16 @@ export default class Player extends PathingEntity {
 
                     for (let i = 0; i < updates.length; i++) {
                         // have to copy because encryption will be applied to buffer
-                        this.netOut.push(new Packet(updates[i].buffer));
+                        const data = updates[i].buffer;
+                        const out = new Packet(new Uint8Array(data.data.length));
+                        const pos = data.pos;
+                        data.pos = 0;
+                        data.gdata(out.data, 0, out.data.length);
+                        data.pos = pos;
+                        out.pos = pos;
+
+                        // the packet is released elsewhere.
+                        this.netOut.push(out);
                     }
                 }
 
@@ -1354,8 +1398,8 @@ export default class Player extends PathingEntity {
     updatePlayers() {
         const nearby = this.getNearbyPlayers();
 
-        const bitBlock = new Packet();
-        const byteBlock = new Packet();
+        const bitBlock = Packet.alloc(0);
+        const byteBlock = Packet.alloc(1);
 
         // temp variables to convert movement operations
         const { walkDir, runDir, tele } = this.getMovementDir();
@@ -1415,7 +1459,7 @@ export default class Player extends PathingEntity {
             let hasMaskUpdate = player.mask > 0;
 
             const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + player.calculateUpdateSize(false, false) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + player.calculateUpdateSize(false, false) > 5000) {
                 hasMaskUpdate = false;
             }
 
@@ -1456,7 +1500,7 @@ export default class Player extends PathingEntity {
 
             const bitBlockSize = bitBlock.bitPos + 11 + 5 + 5 + 1 + 1;
             const bitBlockBytes = ((bitBlockSize + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + player.calculateUpdateSize(false, true) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + player.calculateUpdateSize(false, true) > 5000) {
                 // more players get added next tick
                 break;
             }
@@ -1474,9 +1518,11 @@ export default class Player extends PathingEntity {
             this.players.add(player.uid);
         }
 
-        if (byteBlock.length > 0) {
+        if (byteBlock.pos > 0) {
             bitBlock.pBit(11, 2047);
         }
+
+        bitBlock.bytes();
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
@@ -1519,7 +1565,7 @@ export default class Player extends PathingEntity {
     }
 
     generateAppearance(inv: number) {
-        const stream = new Packet();
+        const stream = Packet.alloc(0);
 
         stream.p1(this.gender);
         stream.p1(this.headicons);
@@ -1587,7 +1633,11 @@ export default class Player extends PathingEntity {
         stream.p1(this.combatLevel);
 
         this.mask |= Player.APPEARANCE;
-        this.appearance = stream;
+
+        this.appearance = new Uint8Array(stream.pos);
+        stream.pos = 0;
+        stream.gdata(this.appearance, 0, this.appearance.length);
+        stream.release();
     }
 
     calculateUpdateSize(self = false, newlyObserved = false) {
@@ -1686,7 +1736,7 @@ export default class Player extends PathingEntity {
 
         if (mask & Player.APPEARANCE) {
             out.p1(this.appearance!.length);
-            out.pdata(this.appearance!);
+            out.pdata(this.appearance!, 0, this.appearance!.length);
         }
 
         if (mask & Player.ANIM) {
@@ -1738,7 +1788,7 @@ export default class Player extends PathingEntity {
             out.p1(this.messageType!);
 
             out.p1(this.message!.length);
-            out.pdata(this.message!);
+            out.pdata(this.message!, 0, this.message!.length);
         }
 
         if (mask & Player.SPOTANIM) {
@@ -1805,8 +1855,8 @@ export default class Player extends PathingEntity {
     updateNpcs() {
         const nearby = this.getNearbyNpcs();
 
-        const bitBlock = new Packet();
-        const byteBlock = new Packet();
+        const bitBlock = Packet.alloc(0);
+        const byteBlock = Packet.alloc(1);
 
         // update existing npcs (255 max - 8 bits)
         bitBlock.bits();
@@ -1837,7 +1887,7 @@ export default class Player extends PathingEntity {
             let hasMaskUpdate = npc.mask > 0;
 
             const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + npc.calculateUpdateSize(false) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + npc.calculateUpdateSize(false) > 5000) {
                 hasMaskUpdate = false;
             }
 
@@ -1876,7 +1926,7 @@ export default class Player extends PathingEntity {
 
             const bitBlockSize = bitBlock.bitPos + 13 + 11 + 5 + 5 + 1;
             const bitBlockBytes = ((bitBlockSize + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + npc.calculateUpdateSize(true) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + npc.calculateUpdateSize(true) > 5000) {
                 // more npcs get added next tick
                 break;
             }
@@ -1894,9 +1944,11 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (byteBlock.length > 0) {
+        if (byteBlock.pos > 0) {
             bitBlock.pBit(13, 8191);
         }
+
+        bitBlock.bytes();
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
@@ -2254,9 +2306,9 @@ export default class Player extends PathingEntity {
 
             if (varp.transmit) {
                 if (value >= 0x80) {
-                    this.write(ServerProt.VARP_LARGE, varp, value);
+                    this.write(ServerProt.VARP_LARGE, id, value);
                 } else {
-                    this.write(ServerProt.VARP_SMALL, varp, value);
+                    this.write(ServerProt.VARP_SMALL, id, value);
                 }
             }
         }
@@ -2314,7 +2366,7 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(seq: number, delay: number) {
-        if (seq > SeqType.count) {
+        if (seq >= SeqType.count) {
             return;
         }
 
@@ -2521,7 +2573,15 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const buf = new Packet();
+        let buf: Packet;
+        if (packetType.length === -1) {
+            buf = Packet.alloc(0);
+        } else if (packetType.length === -2) {
+            buf = Packet.alloc(2); // maybe this can be a type 1.
+        } else {
+            buf = new Packet(new Uint8Array(1 + packetType.length));
+        }
+
         buf.p1(packetType.id);
 
         if (packetType.length === -1) {
@@ -2539,11 +2599,12 @@ export default class Player extends PathingEntity {
             buf.psize2(buf.pos - start);
         }
 
+        // the packet is released elsewhere.
         this.netOut.push(buf);
     }
 
     unsetMapFlag() {
-        this.clearWalkSteps();
+        this.clearWaypoints();
         this.write(ServerProt.UNSET_MAP_FLAG);
     }
 
@@ -2581,7 +2642,7 @@ export default class Player extends PathingEntity {
     }
 
     rebuildNormal(zoneX: number, zoneZ: number) {
-        const out = new Packet();
+        const out = Packet.alloc(2);
         out.p1(ServerProt.REBUILD_NORMAL.id);
         out.p2(0);
         const start = out.pos;
@@ -2611,6 +2672,8 @@ export default class Player extends PathingEntity {
         }
 
         out.psize2(out.pos - start);
+
+        // the packet is released elsewhere.
         this.netOut.push(out);
     }
 }

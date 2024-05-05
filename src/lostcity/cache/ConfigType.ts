@@ -9,16 +9,16 @@ export abstract class ConfigType {
         this.id = id;
     }
 
-    abstract decode(opcode: number, packet: Packet): void;
+    abstract decode(code: number, dat: Packet): void;
 
-    decodeType(packet: Packet): void {
-        while (packet.available > 0) {
-            const opcode = packet.g1();
-            if (opcode === 0) {
+    decodeType(dat: Packet): void {
+        while (dat.available > 0) {
+            const code: number = dat.g1();
+            if (code === 0) {
                 break;
             }
 
-            this.decode(opcode, packet);
+            this.decode(code, dat);
         }
     }
 }

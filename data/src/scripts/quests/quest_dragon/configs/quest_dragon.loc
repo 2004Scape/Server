@@ -64,10 +64,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [melzar_maze_red_door]
 name=Door
@@ -75,10 +75,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=960
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=30753
 
 [melzar_maze_orange_door]
 name=Door
@@ -86,10 +86,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=6080
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=31201
 
 [melzar_maze_yellow_door]
 name=Door
@@ -97,10 +97,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=11200
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=31649
 
 [melzar_maze_blue_door]
 name=Door
@@ -108,10 +108,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=43968
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=31
 
 [melzar_maze_magenta_door]
 name=Door
@@ -119,10 +119,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=55232
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=30781
 
 [melzar_maze_green_door]
 name=Door
@@ -130,10 +130,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=22313
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=2626
 
 [melzar_maze_exit_door]
 name=Door
@@ -141,10 +141,10 @@ desc=It's closed.
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [melzar_maze_chest_closed]
 name=Chest
@@ -182,10 +182,10 @@ desc=It's closed.
 model=model_loc_52
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1563
 
 [elvarg_gate_left]
@@ -195,10 +195,10 @@ model=model_loc_52
 active=yes
 op1=Open
 mirror=yes
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 param=next_loc_stage,loc_1562
 
 [crandor_rock_opening]
@@ -223,6 +223,6 @@ desc=There is something strange about this wall...
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=23
+retex1s=wall
+retex1d=mossybricks
 param=next_loc_stage,loc_1588

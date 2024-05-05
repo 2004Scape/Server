@@ -2,22 +2,20 @@ out/
 .env
 tsconfig.tsbuildinfo
 
-data/pack/client/
-data/pack/server/
+data/pack/
 
 # since these are generated for the server only, we don't have to share them
-data/pack/script.pack
-data/pack/param.pack
-#data/pack/inv.pack
-data/pack/category.pack
-data/pack/enum.pack
-data/pack/struct.pack
-data/pack/mesanim.pack
-data/pack/dbtable.pack
-data/pack/dbrow.pack
-data/pack/hunt.pack
-data/pack/varn.pack
-data/pack/vars.pack
+data/src/pack/script.pack
+data/src/pack/param.pack
+data/src/pack/category.pack
+data/src/pack/enum.pack
+data/src/pack/struct.pack
+data/src/pack/mesanim.pack
+data/src/pack/dbtable.pack
+data/src/pack/dbrow.pack
+data/src/pack/hunt.pack
+data/src/pack/varn.pack
+data/src/pack/vars.pack
 
 data/players/
 data/symbols/
@@ -37,7 +35,7 @@ RuneScriptCompiler.jar
 
 *.bz2
 
-# jest coverage reports
+# coverage reports
 coverage/
 
 # intellij

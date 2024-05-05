@@ -13,23 +13,24 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import { EntityQueueRequest, NpcQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, NpcQueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
-import { Direction, Position } from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import HuntType from '#lostcity/cache/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
-import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import {CollisionFlag, findNaivePath, hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, CollisionType, findNaivePath} from '@2004scape/rsmod-pathfinder';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -84,6 +85,7 @@ export default class Npc extends PathingEntity {
     mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
     nextHuntTick: number = -1;
+    huntrange: number = 5;
 
     interacted: boolean = false;
     target: Player | Npc | Loc | Obj | null = null;
@@ -97,9 +99,6 @@ export default class Npc extends PathingEntity {
         uid: number;
         points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
-
-    found: (Player | Npc | Loc | Obj)[] = [];
-    foundCount = 0;
 
     constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length, moveRestrict, blockWalk);
@@ -129,6 +128,7 @@ export default class Npc extends PathingEntity {
         this.varsString = new Array(VarNpcType.count);
         this.mode = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
+        this.huntrange = npcType.huntrange;
     }
 
     resetHeroPoints() {
@@ -188,6 +188,9 @@ export default class Npc extends PathingEntity {
             }
             this.resetHeroPoints();
             this.defaultMode();
+
+            const npcType: NpcType = NpcType.get(this.type);
+            this.huntrange = npcType.huntrange;
         }
 
         if (this.mask === 0) {
@@ -209,7 +212,7 @@ export default class Npc extends PathingEntity {
         this.graphicDelay = -1;
     }
 
-    updateMovement(running: number = -1): void {
+    updateMovement(): void {
         const type = NpcType.get(this.type);
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return;
@@ -226,14 +229,14 @@ export default class Npc extends PathingEntity {
             }
         }
 
-        if (running === -1 && !this.forceMove) {
-            running = 0;
+        if (this.moveSpeed !== MoveSpeed.INSTANT) {
+            this.moveSpeed = this.defaultMoveSpeed();
         }
 
-        super.processMovement(running);
+        super.processMovement();
     }
 
-    blockWalkFlag(): number | null {
+    blockWalkFlag(): CollisionFlag {
         switch (this.moveRestrict) {
             case MoveRestrict.NORMAL:
                 return CollisionFlag.NPC;
@@ -246,11 +249,17 @@ export default class Npc extends PathingEntity {
             case MoveRestrict.OUTDOORS:
                 return CollisionFlag.NPC;
             case MoveRestrict.NOMOVE:
-                return null;
+                return CollisionFlag.NULL;
             case MoveRestrict.PASSTHRU:
                 return CollisionFlag.OPEN;
         }
     }
+
+    defaultMoveSpeed(): MoveSpeed {
+        return MoveSpeed.WALK;
+    }
+
+    // ----
 
     delayed() {
         return this.delay > 0;
@@ -441,15 +450,15 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const collisionStrategy = this.getCollisionStrategy();
+        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
         if (collisionStrategy === null) {
             // nomove moverestrict returns as null = no walking allowed.
             this.defaultMode();
             return;
         }
 
-        const extraFlag = this.blockWalkFlag();
-        if (extraFlag === null) {
+        const extraFlag: CollisionFlag = this.blockWalkFlag();
+        if (extraFlag === CollisionFlag.NULL) {
             // nomove moverestrict returns as null = no walking allowed.
             this.defaultMode();
             return;
@@ -573,7 +582,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        this.clearWalkSteps();
+        this.clearWaypoints();
 
         const trigger = this.getTriggerForMode(this.mode);
         if (trigger) {
@@ -746,40 +755,13 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const centerX = Position.zone(this.x);
-        const centerZ = Position.zone(this.z);
-
-        this.found = [];
-        this.foundCount = 0;
+        const found: (Player | Npc | Loc | Obj)[] = [];
+        let foundCount: number = 0;
 
         if (hunt.type === HuntModeType.PLAYER) {
-            const nearby: Player[] = [];
-            for (let x = centerX - 2; x <= centerX + 2; x++) {
-                for (let z = centerZ - 2; z <= centerZ + 2; z++) {
-                    const { players } = World.getZone(x << 3, z << 3, this.level);
+            const huntAll: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis);
 
-                    for (const uid of players) {
-                        const player = World.getPlayerByUid(uid);
-                        if (!player) {
-                            continue;
-                        }
-
-                        if (Position.distanceTo(this, player) <= type.huntrange) {
-                            nearby.push(player);
-                        }
-                    }
-                }
-            }
-
-            for (let i = 0; i < nearby.length; i++) {
-                const player = nearby[i];
-
-                if (hunt.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, this.width, player.width, player.length)) {
-                    continue;
-                } else if (hunt.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
-                    continue;
-                }
-
+            for (const player of huntAll) {
                 // TODO: probably zone check to see if they're in the wilderness as well?
                 if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
                     continue;
@@ -795,12 +777,12 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
 
-                this.found[this.foundCount++] = player;
+                found[foundCount++] = player;
             }
 
             // pick randomly from the found players
-            if (this.foundCount > 0) {
-                const player = this.found[Math.floor(Math.random() * this.foundCount)];
+            if (foundCount > 0) {
+                const player = found[Math.floor(Math.random() * foundCount)];
                 this.setInteraction(player, hunt.findNewMode);
             }
         }

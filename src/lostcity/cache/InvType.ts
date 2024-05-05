@@ -71,39 +71,39 @@ export default class InvType extends ConfigType {
     runweight = false; // inv contributes to weight
     dummyinv = false; // inv only accepts objs with dummyitem=inv_only
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode === 1) {
-            this.scope = packet.g1();
-        } else if (opcode === 2) {
-            this.size = packet.g2();
-        } else if (opcode === 3) {
+    decode(code: number, dat: Packet) {
+        if (code === 1) {
+            this.scope = dat.g1();
+        } else if (code === 2) {
+            this.size = dat.g2();
+        } else if (code === 3) {
             this.stackall = true;
-        } else if (opcode === 4) {
-            const count = packet.g1();
+        } else if (code === 4) {
+            const count = dat.g1();
 
             this.stockobj = new Array(count);
             this.stockcount = new Array(count);
             this.stockrate = new Array(count);
 
             for (let j = 0; j < count; j++) {
-                this.stockobj[j] = packet.g2();
-                this.stockcount[j] = packet.g2();
-                this.stockrate[j] = packet.g4();
+                this.stockobj[j] = dat.g2();
+                this.stockcount[j] = dat.g2();
+                this.stockrate[j] = dat.g4();
             }
-        } else if (opcode === 5) {
+        } else if (code === 5) {
             this.restock = true;
-        } else if (opcode === 6) {
+        } else if (code === 6) {
             this.allstock = true;
-        } else if (opcode === 7) {
+        } else if (code === 7) {
             this.protect = false;
-        } else if (opcode === 8) {
+        } else if (code === 8) {
             this.runweight = true;
-        } else if (opcode === 9) {
+        } else if (code === 9) {
             this.dummyinv = true;
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized inv config code: ${opcode}`);
+            throw new Error(`Unrecognized inv config code: ${code}`);
         }
     }
 }

@@ -3,10 +3,10 @@ name=Door
 model=model_loc_3
 active=yes
 op1=Open
-recol1s=2
-recol1d=45
-recol2s=24
-recol2d=4762
+retex1s=wall
+retex1d=door2
+recol2s=6342
+recol2d=11458
 
 [loc_60]
 name=Ladder
@@ -44,10 +44,10 @@ model=model_loc_3
 sharelight=yes
 occlude=yes
 op1=Climb-out
-recol1s=2
-recol1d=22
-recol2s=24
-recol2d=3398
+retex1s=wall
+retex1d=elfwood
+recol2s=6342
+recol2d=23020
 
 [loc_69]
 name=Gangplank

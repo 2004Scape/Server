@@ -34,8 +34,8 @@ length=3
 forceapproach=east
 op1=Look
 op2=Search
-recol1s=7952
-recol1d=3980
+recol1s=7329
+recol1d=6208
 category=smithing_furnace
 
 [furnace_tutorial]

@@ -55,7 +55,9 @@ import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import ClientProt from '#lostcity/server/ClientProt.js';
-import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import {LoginResponse} from '#lostcity/server/LoginServer.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -88,7 +90,7 @@ class World {
     futureUpdates: Map<number, number[]> = new Map();
     queue: LinkList<EntityQueueState> = new LinkList();
 
-    friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
+    friendThread: Worker = createWorker('./src/lostcity/server/FriendThread.ts');
 
     constructor() {
         this.players.fill(null);
@@ -504,6 +506,11 @@ class World {
                     npc.executeScript(npc.activeScript);
                 }
 
+                if (npc.despawn !== -1) {
+                    // if the npc just despawned then don't do anything else.
+                    continue;
+                }
+
                 npc.processTimers();
                 npc.processQueue();
                 npc.processNpcModes();
@@ -631,15 +638,11 @@ class World {
         for (let i = 0; i < this.newPlayers.length; i++) {
             const player = this.newPlayers[i];
 
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
-
-            const pid = this.getNextPid(player.client);
+            const pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
             if (pid === -1) {
-                if (player.client) {
+                if (player instanceof NetworkPlayer && player.client) {
                     // world full
-                    player.client.send(Uint8Array.from([7]));
+                    player.client.send(LoginResponse.WORLD_FULL);
                     player.client.close();
                 }
 
@@ -673,9 +676,13 @@ class World {
                 player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
             }
 
-            if (player.client) {
+            if (player instanceof NetworkPlayer && player.client) {
                 player.client.state = 1;
-                player.client.send(Uint8Array.from([2]));
+                if (player.staffModLevel >= 2) {
+                    player.client.send(LoginResponse.STAFF_MOD_LEVEL);
+                } else {
+                    player.client.send(LoginResponse.SUCCESSFUL);
+                }
             }
 
             this.socialLogin(player.username37);
@@ -1076,6 +1083,7 @@ class World {
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
+        console.log('Removing npc', npc.nid, 'from zone', zone.index);
         zone.leave(npc);
 
         switch (npc.blockWalk) {
@@ -1193,12 +1201,9 @@ class World {
     }
 
     removeObj(obj: Obj, receiver: Player | null) {
-        // TODO
         // stackable objs when they overflow are created into another slot on the floor
-        // currently when you pickup from a tile with multiple stackable objs
-        // you will pickup one of them and the other one disappears
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        zone.removeObj(obj, receiver, -1);
+        zone.removeObj(obj, receiver);
         obj.despawn = this.currentTick;
         obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
         if (zone.staticObjs.includes(obj)) {
@@ -1216,7 +1221,7 @@ class World {
     // ----
 
     async readIn(socket: ClientSocket, stream: Packet) {
-        this.lastCycleBandwidth[0] += stream.length;
+        this.lastCycleBandwidth[0] += stream.data.length;
 
         while (stream.available > 0) {
             const start = stream.pos;
@@ -1251,7 +1256,13 @@ class World {
                 continue;
             }
 
-            socket.in.set(stream.gdata(stream.pos - start, start, false), socket.inOffset);
+            const data = new Uint8Array(stream.pos - start);
+            const pos = stream.pos;
+            stream.pos = start;
+            stream.gdata(data, 0, data.length);
+            stream.pos = pos;
+
+            socket.in.set(data, socket.inOffset);
             socket.inOffset += stream.pos - start;
         }
     }

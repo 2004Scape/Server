@@ -12,7 +12,7 @@ if (!Environment.CI_MODE) {
     console.log('Preloading client data');
     console.time('Preloaded client data');
     if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
-        console.log('Please build the client cache with client:pack!');
+        console.log('Please build the client cache with client:build!');
         process.exit(1);
     }
 
@@ -20,8 +20,8 @@ if (!Environment.CI_MODE) {
     for (let i = 0; i < allMaps.length; i++) {
         const name = allMaps[i];
 
-        const map = fs.readFileSync(`data/pack/client/maps/${name}`);
-        const crc = Packet.crc32(map);
+        const map = new Uint8Array(fs.readFileSync(`data/pack/client/maps/${name}`));
+        const crc = Packet.getcrc(map, 0, map.length);
 
         PRELOADED.set(name, map);
         PRELOADED_CRC.set(name, crc);
@@ -31,8 +31,8 @@ if (!Environment.CI_MODE) {
     for (let i = 0; i < allSongs.length; i++) {
         const name = allSongs[i];
 
-        const song = fs.readFileSync(`data/pack/client/songs/${name}`);
-        const crc = Packet.crc32(song);
+        const song = new Uint8Array(fs.readFileSync(`data/pack/client/songs/${name}`));
+        const crc = Packet.getcrc(song, 0, song.length);
 
         PRELOADED.set(name, song);
         PRELOADED_CRC.set(name, crc);
@@ -43,8 +43,8 @@ if (!Environment.CI_MODE) {
         const name = allJingles[i];
 
         // Strip off bzip header.
-        const jingle = fs.readFileSync(`data/pack/client/jingles/${name}`).subarray(4);
-        const crc = Packet.crc32(jingle);
+        const jingle = new Uint8Array(fs.readFileSync(`data/pack/client/jingles/${name}`).subarray(4));
+        const crc = Packet.getcrc(jingle, 0, jingle.length);
 
         PRELOADED.set(name, jingle);
         PRELOADED_CRC.set(name, crc);

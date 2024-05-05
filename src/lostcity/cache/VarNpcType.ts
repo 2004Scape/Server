@@ -58,17 +58,13 @@ export default class VarNpcType extends ConfigType {
 
     type = ScriptVarType.INT;
 
-    decode(opcode: number, packet: Packet) {
-        switch (opcode) {
-            case 1:
-                this.type = packet.g1();
-                break;
-            case 250:
-                this.debugname = packet.gjstr();
-                break;
-            default:
-                console.error(`Unrecognized varn config code: ${opcode}`);
-                break;
+    decode(code: number, dat: Packet) {
+        if (code === 1) {
+            this.type = dat.g1();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
+        } else {
+            console.error(`Unrecognized varn config code: ${code}`);
         }
     }
 }

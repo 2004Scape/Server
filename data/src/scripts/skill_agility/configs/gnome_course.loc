@@ -56,5 +56,5 @@ desc=A pipe I can squeeze through.
 model=model_loc_2287
 op1=Squeeze-through
 width=2
-recol1s=2
-recol1d=3
+retex1s=wall
+retex1d=planks

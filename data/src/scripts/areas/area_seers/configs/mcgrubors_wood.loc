@@ -30,10 +30,10 @@ hillskew=yes
 sharelight=yes
 blockwalk=no
 blockrange=no
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine
 
 [loc_2989]
@@ -43,10 +43,10 @@ model=model_loc_1220
 op1=Check
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine
 
 [loc_2990]
@@ -56,10 +56,10 @@ model=model_loc_1215
 op1=Check
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine
 
 [loc_2991]
@@ -69,10 +69,10 @@ model=model_loc_1216
 op1=Check
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine
 
 [loc_2992]
@@ -82,10 +82,10 @@ model=model_loc_1218
 op1=Check
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine
 
 [loc_2993]
@@ -95,10 +95,10 @@ model=model_loc_1219
 op1=Check
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine
 
 [loc_2994]
@@ -108,8 +108,8 @@ model=model_loc_1221
 op1=Check
 hillskew=yes
 sharelight=yes
-recol1s=929
-recol1d=1688
-recol2s=931
-recol2d=1812
+recol1s=15393
+recol1d=10338
+recol2s=16417
+recol2d=9281
 category=red_vine

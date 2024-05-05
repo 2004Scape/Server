@@ -119,7 +119,7 @@ type Sprite = {
 };
 
 export async function convertImage(index: Packet, srcPath: string, safeName: string) {
-    const data = new Packet();
+    const data = Packet.alloc(3);
     data.p2(index.pos);
 
     const img = await Jimp.read(`${srcPath}/${safeName}.png`);

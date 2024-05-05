@@ -9,8 +9,8 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [duel_entrance_2]
 name=Entrance
@@ -23,8 +23,8 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [duel_entrance_3]
 name=Entrance
@@ -38,8 +38,8 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [duel_entrance_4]
 name=Entrance
@@ -53,8 +53,8 @@ op1=Forfeit
 active=yes
 anim=seq_917
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [loc_3192]
 name=Scoreboard
@@ -115,8 +115,8 @@ ambient=30
 contrast=30
 op5=Lean against
 blockrange=no
-recol1s=6932
-recol1d=6689
+recol1s=9409
+recol1d=12580
 
 [loc_3079]
 name=Wall

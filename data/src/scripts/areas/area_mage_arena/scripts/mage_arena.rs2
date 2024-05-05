@@ -1,6 +1,10 @@
 [oploc1,loc_2871]
 p_arrivedelay;
-@climb_ladder(movecoord(coord, -549, 0, 756), false);
+// https://youtu.be/uSO-ilQk5XY?si=mj3w1GIB5ZM0BnAZ&t=1089
+anim(human_reachforladdertop, 0);
+p_delay(1);
+p_telejump(movecoord(coord, -549, 0, 756));
+mes("You climb down the ladder.");
 
 [oploc1,loc_2872]
 p_arrivedelay;
@@ -137,7 +141,7 @@ return (false);
 [queue,finish_mage_arena]
 p_delay(3);
 anim(human_castteleport, 60);
-spotanim_pl(castteleport, 92, 60);
+spotanim_pl(teleport_casting, 92, 60);
 sound_synth(teleport_all, 0, 0);
 p_delay(2);
 p_teleport(~coord_lineofwalk_radius(^mage_arena_finish_coord, 2));

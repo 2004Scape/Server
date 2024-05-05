@@ -1,4 +1,5 @@
 import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/tools/packconfig/PackShared.js';
+import ColorConversion from '#lostcity/util/ColorConversion.js';
 import { ModelPack, SeqPack, SpotAnimPack } from '#lostcity/util/PackFile.js';
 
 export function parseSpotAnimConfig(key: string, value: string): ConfigValue | null | undefined {
@@ -8,7 +9,6 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
         'resizeh', 'resizev',
         'orientation',
         'ambient', 'contrast',
-        'recol1s', 'recol1d', 'recol2s', 'recol2d', 'recol3s', 'recol3d', 'recol4s', 'recol4d', 'recol5s', 'recol5d', 'recol6s', 'recol6d'
     ];
     // prettier-ignore
     const booleanKeys = [
@@ -56,10 +56,6 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
             return null;
         }
 
-        if (key.startsWith('recol') && (number < 0 || number > 65535)) {
-            return null;
-        }
-
         return number;
     } else if (booleanKeys.includes(key)) {
         if (!isConfigBoolean(value)) {
@@ -81,6 +77,13 @@ export function parseSpotAnimConfig(key: string, value: string): ConfigValue | n
         }
 
         return index;
+    } else if (key.startsWith('recol')) {
+        const index = parseInt(key[5]);
+        if (index > 9) {
+            return null;
+        }
+
+        return ColorConversion.rgb15toHsl16(parseInt(value));
     } else {
         return undefined;
     }

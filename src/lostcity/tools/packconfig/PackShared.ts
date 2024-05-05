@@ -33,6 +33,7 @@ import { packHuntConfigs, parseHuntConfig } from '#lostcity/tools/packconfig/Hun
 import { packVarnConfigs, parseVarnConfig } from '#lostcity/tools/packconfig/VarnConfig.js';
 import { packVarsConfigs, parseVarsConfig } from '#lostcity/tools/packconfig/VarsConfig.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
+import Environment from '#lostcity/util/Environment.js';
 
 export function isConfigBoolean(input: string): boolean {
     return input === 'yes' || input === 'no' || input === 'true' || input === 'false' || input === '1' || input === '0';
@@ -49,8 +50,8 @@ export class PackedData {
     marker: number;
 
     constructor(size: number) {
-        this.dat = new Packet();
-        this.idx = new Packet();
+        this.dat = Packet.alloc(4);
+        this.idx = Packet.alloc(2);
         this.size = size;
 
         this.dat.p2(size);
@@ -307,6 +308,8 @@ if (shouldBuild('data/src/scripts', '.param', 'data/pack/server/param.dat')) {
     readConfigs('.param', ['type'], parseParamConfig, packParamConfigs, () => {}, (dat: Packet, idx: Packet) => {
         dat.save('data/pack/server/param.dat');
         idx.save('data/pack/server/param.idx');
+        dat.release();
+        idx.release();
     });
 }
 
@@ -342,17 +345,18 @@ export function packConfigs() {
 
     // not a config but we want the server to know all the possible categories
     if (
-        shouldBuildFile('data/pack/category.pack', 'data/pack/server/category.dat') ||
+        shouldBuildFile('data/src/pack/category.pack', 'data/pack/server/category.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/category.dat')
     ) {
         console.log('Packing categories');
         //console.time('Packed categories');
-        const dat = new Packet();
+        const dat = Packet.alloc(1);
         dat.p2(CategoryPack.size);
         for (let i = 0; i < CategoryPack.size; i++) {
             dat.pjstr(CategoryPack.getById(i));
         }
         dat.save('data/pack/server/category.dat');
+        dat.release();
         //console.timeEnd('Packed categories');
     }
 
@@ -364,7 +368,7 @@ export function packConfigs() {
         console.log('Packing frame_del');
         //console.time('Packed frame_del');
         const files = listFilesExt('data/src/models', '.frame');
-        const frame_del = new Packet();
+        const frame_del = Packet.alloc(2);
         for (let i = 0; i < AnimPack.max; i++) {
             const name = AnimPack.getById(i);
             if (!name.length) {
@@ -380,7 +384,7 @@ export function packConfigs() {
 
             const data = Packet.load(file);
 
-            data.pos = data.length - 8;
+            data.pos = data.data.length - 8;
             const headLength = data.g2();
             const tran1Length = data.g2();
             const tran2Length = data.g2();
@@ -394,6 +398,7 @@ export function packConfigs() {
         }
 
         frame_del.save('data/pack/server/frame_del.dat');
+        frame_del.release();
         //console.timeEnd('Packed frame_del');
     }
 
@@ -408,6 +413,8 @@ export function packConfigs() {
         readConfigs('.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/dbtable.dat');
             idx.save('data/pack/server/dbtable.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .dbtable');
     }
@@ -426,6 +433,8 @@ export function packConfigs() {
         readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/dbrow.dat');
             idx.save('data/pack/server/dbrow.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .dbrow');
     }
@@ -439,6 +448,8 @@ export function packConfigs() {
         readConfigs('.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/enum.dat');
             idx.save('data/pack/server/enum.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .enum');
     }
@@ -452,6 +463,8 @@ export function packConfigs() {
         readConfigs('.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/inv.dat');
             idx.save('data/pack/server/inv.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .inv');
     }
@@ -465,6 +478,8 @@ export function packConfigs() {
         readConfigs('.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/mesanim.dat');
             idx.save('data/pack/server/mesanim.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .mesanim');
     }
@@ -478,6 +493,8 @@ export function packConfigs() {
         readConfigs('.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/struct.dat');
             idx.save('data/pack/server/struct.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .struct');
     }
@@ -491,7 +508,7 @@ export function packConfigs() {
         console.log('Packing .seq');
         //console.time('Packed .seq');
         readConfigs('.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, 1638136604) || !Packet.checkcrc(idx, 969051566)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
                 console.error('.seq CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -501,6 +518,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/seq.dat');
             idx.save('data/pack/server/seq.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .seq');
     }
@@ -512,7 +531,7 @@ export function packConfigs() {
         console.log('Packing .loc');
         //console.time('Packed .loc');
         readConfigs('.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, 891497087) || !Packet.checkcrc(idx, -941401128)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
                 console.error('.loc CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -522,6 +541,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/loc.dat');
             idx.save('data/pack/server/loc.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .loc');
     }
@@ -533,7 +554,7 @@ export function packConfigs() {
         console.log('Packing .flo');
         //console.time('Packed .flo');
         readConfigs('.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, 1976597026) || !Packet.checkcrc(idx, 561308705)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
                 console.error('.flo CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -543,6 +564,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/flo.dat');
             idx.save('data/pack/server/flo.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .flo');
     }
@@ -554,7 +577,7 @@ export function packConfigs() {
         console.log('Packing .spotanim');
         //console.time('Packed .spotanim');
         readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, -1279835623) || !Packet.checkcrc(idx, -1696140322)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
                 console.error('.spotanim CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -564,6 +587,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/spotanim.dat');
             idx.save('data/pack/server/spotanim.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .spotanim');
     }
@@ -575,7 +600,7 @@ export function packConfigs() {
         console.log('Packing .npc');
         //console.time('Packed .npc');
         readConfigs('.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, -2140681882) || !Packet.checkcrc(idx, -1986014643)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
                 console.error('.npc CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -585,6 +610,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/npc.dat');
             idx.save('data/pack/server/npc.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .npc');
     }
@@ -596,7 +623,7 @@ export function packConfigs() {
         console.log('Packing .obj');
         //console.time('Packed .obj');
         readConfigs('.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, -840233510) || !Packet.checkcrc(idx, 669212954)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
                 console.error('.obj CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -606,6 +633,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/obj.dat');
             idx.save('data/pack/server/obj.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .obj');
     }
@@ -617,7 +646,7 @@ export function packConfigs() {
         console.log('Packing .idk');
         //console.time('Packed .idk');
         readConfigs('.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, -359342366) || !Packet.checkcrc(idx, 667216411)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
                 console.error('.idk CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -627,6 +656,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/idk.dat');
             idx.save('data/pack/server/idk.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .idk');
     }
@@ -638,7 +669,7 @@ export function packConfigs() {
         console.log('Packing .varp');
         //console.time('Packed .varp');
         readConfigs('.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
-            if (!Packet.checkcrc(dat, 705633567) || !Packet.checkcrc(idx, -1843167599)) {
+            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
                 console.error('.varp CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -648,6 +679,8 @@ export function packConfigs() {
         }, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/varp.dat');
             idx.save('data/pack/server/varp.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .varp');
     }
@@ -661,6 +694,8 @@ export function packConfigs() {
         readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/hunt.dat');
             idx.save('data/pack/server/hunt.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .hunt');
     }
@@ -674,6 +709,8 @@ export function packConfigs() {
         readConfigs('.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/varn.dat');
             idx.save('data/pack/server/varn.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .varn');
     }
@@ -687,6 +724,8 @@ export function packConfigs() {
         readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/vars.dat');
             idx.save('data/pack/server/vars.idx');
+            dat.release();
+            idx.release();
         });
         //console.timeEnd('Packed .vars');
     }

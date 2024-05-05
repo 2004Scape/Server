@@ -29,14 +29,14 @@ if(oc_param(obj_type, telegrab_disabled) = true) {
 // start anim, sound, and spotanim
 anim(human_casttelegrab, 0);
 sound_synth(telegrab_all, 0, 0);
-spotanim_pl(casttelegrab, 92, 0);
+spotanim_pl(telegrab_casting, 92, 0);
 
 // delete runes
 ~delete_spell_runes($spell_data);
 // delay character for 4 ticks, give item, delay character for 3 ticks
 // play mapanim
 def_int $duration = ~coord_projectile(coord, obj_coord, telegrab_travel, 35, 0, 48, 16, -2, 64, 10);
-spotanim_map(telegrab_hit, obj_coord, 0, $duration);
+spotanim_map(telegrab_impact, obj_coord, 0, $duration);
 p_stopaction;
 // mes("<tostring(map_clock)>: You start telegrabbing.");
 p_delay(2);

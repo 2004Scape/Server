@@ -2,8 +2,8 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import Packet from '#jagex2/io/Packet.js';
 
-if (!fs.existsSync('dump/src/sounds')) {
-    fs.mkdirSync('dump/src/sounds', { recursive: true });
+if (!fs.existsSync('data/src/sounds')) {
+    fs.mkdirSync('data/src/sounds', { recursive: true });
 }
 
 // TODO: doesn't -need- to be global from Wave's perspective
@@ -14,7 +14,7 @@ class Wave {
     static tracks: Wave[] = [];
 
     static unpack(dat: Packet) {
-        while (true && dat.available > 0) {
+        while (dat.available > 0) {
             const id = dat.g2();
             if (id === 65535) {
                 break;
@@ -26,7 +26,13 @@ class Wave {
             const end = dat.pos;
 
             order += `${id}\n`;
-            fs.writeFileSync(`dump/src/sounds/sound_${id}.synth`, dat.gdata(end - start, start, false));
+
+            const data = new Uint8Array((end - start) - start);
+            dat.pos = start;
+            dat.gdata(data, 0, data.length);
+            dat.pos = start;
+
+            fs.writeFileSync(`data/src/sounds/sound_${id}.synth`, data);
         }
 
         for (let i = 0; i < Wave.tracks.length; i++) {
@@ -146,7 +152,7 @@ class Envelope {
     }
 }
 
-const sounds = Jagfile.load('dump/client/sounds');
+const sounds = Jagfile.load('data/client/sounds');
 
 const soundsData = sounds.read('sounds.dat');
 
@@ -156,5 +162,5 @@ if (!soundsData) {
 
 Wave.unpack(soundsData);
 
-fs.writeFileSync('dump/pack/sound.pack', pack);
-fs.writeFileSync('dump/pack/sound.order', order);
+fs.writeFileSync('data/src/pack/sound.pack', pack);
+fs.writeFileSync('data/src/pack/sound.order', order);

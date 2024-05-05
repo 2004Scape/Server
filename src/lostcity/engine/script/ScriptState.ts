@@ -120,6 +120,10 @@ export default class ScriptState {
     dbRow: number = -1;
     dbRowQuery: number[] = [];
 
+    huntIterator: IterableIterator<Player> | null = null;
+    npcIterator: IterableIterator<Npc> | null = null;
+    locIterator: IterableIterator<Loc> | null = null;
+
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
         this.trigger = script.info.lookupKey & 0xff;
