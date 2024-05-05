@@ -1891,7 +1891,12 @@ export default class Player extends PathingEntity {
 
                 for (const nid of npcs) {
                     const npc = World.getNpc(nid);
-                    if (npc === null || npc.despawn !== -1 || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
+                    if (npc === null || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
+                        continue;
+                    }
+
+                    // TODO (jkm) check logic here, should maybe be `npc.despawn !== -1` ?
+                    if (npc.despawn === World.currentTick) {
                         continue;
                     }
 

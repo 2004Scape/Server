@@ -435,6 +435,7 @@ class World {
         for (let i = 0; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
+            // TODO (jkm) should this skip if awaiting despawn?
             if (!npc || npc.despawn !== -1 || npc.delayed()) {
                 continue;
             }
@@ -484,7 +485,13 @@ class World {
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
+            // TODO (jkm) should this really skip if awaiting despawn?
             if (!npc || npc.despawn !== -1) {
+                continue;
+            }
+
+            // awaiting respawn
+            if (npc.respawn !== -1) {
                 continue;
             }
 
@@ -777,6 +784,7 @@ class World {
         for (let i = 1; i < this.npcs.length; i++) {
             const npc = this.npcs[i];
 
+            // TODO (jkm) should this skip if awaiting despawn?
             if (!npc || npc.despawn !== -1) {
                 continue;
             }
@@ -984,6 +992,8 @@ class World {
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.leave(npc);
+
+        npc.respawn = this.currentTick + NpcType.get(npc.type).respawnrate;
     }
 
     getLoc(x: number, z: number, level: number, locId: number): Loc | null {
