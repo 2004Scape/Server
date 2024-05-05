@@ -177,7 +177,7 @@ if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpo
 // spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
 // player spell visual effect
-if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
+if (db_getfieldcount($spell_data, magic_spell_table:spotanim_origin) > 0) {
     spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
 }
 // shoot spell projectile
