@@ -22,7 +22,7 @@ sound_synth(pick, 0, 0);
 // https://youtu.be/ghfKpXe7N5s?t=24
 mes("You pick the fruit from the plant."); // osrs
 npc_anim(seq_350, 0); // take thing away
-npc_delay(24); // delayed when despawning in osrs
+npc_delay(22); // delayed when despawning in osrs
 npc_del;
 
 // this timer runs twice, first is for plant growing, second is for becoming hostile
