@@ -1,12 +1,23 @@
-[proc,macro_event_mysterious_old_man_general_spawn]
+[ai_queue4,macro_event_mysterious_old_man_general](int $arg)
 spotanim_map(spotanim_86, npc_coord, 124, 0);
-sound_synth(smokepuff, 0, 0);
+if (finduid(%npc_attacking_uid) = true) {
+    sound_synth(smokepuff, 0, 0);
+    npc_anim(emote_bow, 20);
+    npc_say("Greetings <displayname>!");
+    npc_delay(1);
+    npc_setmode(playerfollow);
+}
 
-npc_anim(emote_bow, 20);
-npc_say("Greetings <displayname>!");
-npc_delay(1);
-npc_setmode(playerfollow);
-%npc_attacking_uid = uid;
+[ai_queue5,macro_event_mysterious_old_man_general](int $arg) // despawn
+npc_anim(emote_cry, 20);
+npc_say("I lose more friends that way.");
+npc_delay(2);
+~macro_event_disappear;
+
+[ai_queue6,macro_event_mysterious_old_man_general](int $arg) // say goodbye to player
+npc_anim(emote_wave, 20);
+npc_delay(2);
+~macro_event_disappear;
 
 [opnpc1,macro_event_mysterious_old_man_general]
 if (uid ! %npc_attacking_uid) {
@@ -21,7 +32,7 @@ if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
 %macro_event = ^no_macro_event;
 ~macro_event_give_reward(~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
-npc_queue(5, 0, 2); // say goodbye to player
+npc_queue(6, 0, 2); // say goodbye to player
 ~chatnpc(neutral, "Ah, so you are there. I hoped you would talk to me, I get so lonely. Here, have a present! I must be going now though.");
 // delays are taken from this video: https://youtu.be/JeQUY1m1wRo?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=137
 
@@ -56,22 +67,10 @@ if ($random < 16) { // 16/150 kebab?
     return(casket, 1);
 }
 
-
-[ai_queue4,macro_event_mysterious_old_man_general](int $arg) // despawn
-npc_anim(emote_cry, 20);
-npc_say("I lose more friends that way.");
-npc_delay(2);
-~macro_event_disappear;
-
-[ai_queue5,macro_event_mysterious_old_man_general](int $arg) // say goodbye to player
-npc_anim(emote_wave, 20);
-npc_delay(2);
-~macro_event_disappear;
-
 [ai_timer,macro_event_mysterious_old_man_general]
 if (~macro_event_lost_and_follow = true) {
     // only confirmed for mysterious old man https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
-    npc_queue(4, 0, 0);
+    npc_queue(5, 0, 0);
     return;
 }
 // other videos:
