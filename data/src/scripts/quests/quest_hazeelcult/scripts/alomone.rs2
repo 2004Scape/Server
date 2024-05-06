@@ -91,7 +91,7 @@ switch_int(%hazeelcult_progress) {
 if_close;
 if(npc_finduid($npc) = true) {
     p_delay(2);
-    spotanim_map(spotanim_86, npc_coord, 124, 0);
+    spotanim_map(small_smokepuff, npc_coord, 124, 0);
     p_delay(1);
     npc_del;
 }

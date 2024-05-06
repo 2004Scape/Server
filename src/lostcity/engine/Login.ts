@@ -59,11 +59,13 @@ class Login {
             return;
         }
 
+        const save = player.save();
         this.loginThread.postMessage({
             type: 'logout',
             username: player.username,
-            save: player.save().data
+            save: save.data.subarray(0, save.pos)
         });
+        save.release();
     }
 
     private onMessage(msg: any) {

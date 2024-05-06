@@ -55,7 +55,7 @@ export class LoginServer {
                 }
 
                 stream.waiting = 0;
-                const data = new Packet(new Uint8Array(3));
+                const data = Packet.alloc(1);
                 await stream.readBytes(socket, data, 0, 3);
 
                 const opcode = data.g1();
@@ -85,6 +85,7 @@ export class LoginServer {
                         const reply = new Packet(new Uint8Array(1));
                         reply.p1(5);
                         await this.write(socket, reply.data);
+                        data.release();
                         return;
                     }
 
@@ -93,6 +94,7 @@ export class LoginServer {
                         const reply = new Packet(new Uint8Array(1));
                         reply.p1(2);
                         await this.write(socket, reply.data);
+                        data.release();
                         return;
                     }
 
@@ -106,6 +108,7 @@ export class LoginServer {
                             const reply = new Packet(new Uint8Array(1));
                             reply.p1(3);
                             await this.write(socket, reply.data);
+                            data.release();
                             return;
                         }
                     }
@@ -117,6 +120,7 @@ export class LoginServer {
                         const reply = new Packet(new Uint8Array(1));
                         reply.p1(4);
                         await this.write(socket, reply.data);
+                        data.release();
                         return;
                     }
 
@@ -180,6 +184,8 @@ export class LoginServer {
                         this.players[world].push(username37);
                     }
                 }
+
+                data.release();
             });
 
             socket.on('close', () => {});
@@ -322,27 +328,23 @@ export class LoginClient {
         const length = data.g2();
         const data2 = new Packet(new Uint8Array(length));
         await this.stream.readBytes(this.socket, data2, 0, length);
-        const out = new Packet(new Uint8Array(2 + length));
-        out.pdata(data.data, 0, data.data.length);
-        out.pdata(data2.data, 0, data2.data.length);
 
         this.disconnect();
-        return { reply, data: out };
+        return { reply, data: data2 };
     }
 
-    async save(username37: bigint, save: Packet) {
+    async save(username37: bigint, save: Uint8Array) {
         await this.connect();
 
         if (this.socket === null) {
             return -1;
         }
 
-        const request = new Packet(new Uint8Array(2 + 8 + 2 + save.data.length));
+        const request = new Packet(new Uint8Array(2 + 8 + 2 + save.length));
         request.p2(Environment.WORLD_ID as number);
         request.p8(username37);
-        request.p2(save.data.length);
-        request.pdata(save.data, 0, save.data.length);
-        save.release();
+        request.p2(save.length);
+        request.pdata(save, 0, save.length);
         await this.write(this.socket, 2, request.data);
 
         const reply = await this.stream.readByte(this.socket);

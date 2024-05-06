@@ -157,7 +157,7 @@ if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_
         // 3t delay
         sound_synth(smokepuff, 0, 0);
         npc_add(^camelot_magic_symbol, thrantax_the_mighty, 100);
-        spotanim_map(spotanim_86, npc_coord, 124, 0);
+        spotanim_map(small_smokepuff, npc_coord, 124, 0);
         ~mesbox("Suddenly a mighty spirit appears!");
         ~chatplayer(shock, "Now what were those magic words again?");
         def_int $rand = random(3);

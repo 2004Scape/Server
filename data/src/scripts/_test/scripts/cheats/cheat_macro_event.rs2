@@ -1,5 +1,12 @@
 [debugproc,macro_event](int $event)
+if_close;
 if (p_finduid(uid) = false) {
+    @please_finish;
+    return;
+}
+if ($event < 1 | $event > ~macro_event_general_count) {
+    mes("event_id must be between 1 and <tostring(~macro_event_general_count)>.");
+    @debugusage("::macro_event (event_id)", "::macro_event 2", "");
     return;
 }
 ~macro_event_general_spawn($event);

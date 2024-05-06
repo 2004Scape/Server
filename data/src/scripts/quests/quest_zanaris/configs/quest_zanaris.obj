@@ -38,7 +38,7 @@ param=magicdefence,10
 param=strengthbonus,10
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_staff_slash
-param=defend_anim,human_staff_2h_defend
+param=crushattack_anim,human_staff_pummel
+param=defend_anim,human_staff_block
 param=crush_sound,staff_hit
 // A few older players have said that thisstaff has been a 2-handed rs2 in the early days. but not anymore at the end of 2004

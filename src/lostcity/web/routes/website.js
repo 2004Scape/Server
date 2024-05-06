@@ -54,8 +54,6 @@ export default function (f, opts, next) {
 
         if (req.query.method == 3) {
             return res.redirect('/downloads');
-        } else if (req.query.method == 4) {
-            return res.redirect('https://2004scape.github.io/Client2/');
         }
 
         return res.view('serverlist', {
@@ -106,7 +104,7 @@ export default function (f, opts, next) {
     });
 
     f.get('/worldmap', async (req, res) => {
-        return res.view('worldmap');
+        return res.view('worldmap/applet');
     });
 
     f.get('/downloads', async (req, res) => {

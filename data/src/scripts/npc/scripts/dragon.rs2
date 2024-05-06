@@ -82,7 +82,7 @@ if (npc_param(attack_sound) ! null) {
 
 [proc,dragon_fire]
 if_close;
-spotanim_npc(spotanim_1, 92, 0);
+spotanim_npc(firebreath_attack, 92, 0);
 npc_anim(dragon_firebreath_middle_attack, 0);
 sound_synth(firebreath, 0, 30);
 %npc_action_delay = add(map_clock, 4);

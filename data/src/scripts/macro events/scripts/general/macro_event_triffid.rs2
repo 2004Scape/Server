@@ -1,12 +1,11 @@
-[proc,macro_event_triffid_spawn]
-if (finduid(uid) = true) {
-    sound_synth(triffid_appear, 0, 0);
-}
+[ai_queue4,macro_event_triffid_friendly](int $arg)
 npc_setmode(none);
 npc_anim(seq_348, 0);
-%npc_attacking_uid = uid;
-%macro_event = ^no_macro_event;
 %npc_macro_event_status = ^triffid_growing;
+if (finduid(%npc_attacking_uid) = true) {
+    sound_synth(triffid_appear, 0, 0);
+    %macro_event = ^no_macro_event;
+}
 
 [opnpc1,macro_event_triffid_friendly]
 if (%npc_attacking_uid ! uid) {
@@ -23,7 +22,7 @@ sound_synth(pick, 0, 0);
 // https://youtu.be/ghfKpXe7N5s?t=24
 mes("You pick the fruit from the plant."); // osrs
 npc_anim(seq_350, 0); // take thing away
-npc_delay(24); // delayed when despawning in osrs
+npc_delay(22); // delayed when despawning in osrs
 npc_del;
 
 // this timer runs twice, first is for plant growing, second is for becoming hostile

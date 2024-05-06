@@ -761,7 +761,8 @@ export default class Player extends PathingEntity {
         if (this.target) {
             const apTrigger = this.getApTrigger();
             const outOfRange = !this.inApproachDistance(this.apRange, this.target) && apTrigger && !this.inOperableDistance(this.target);
-            const targetMoved = this.hasWaypoints() && (this.waypoints[0].x !== this.target.x || this.waypoints[0].z !== this.target.z);
+            const {x, z} = Position.unpackCoord(this.waypoints[0]);
+            const targetMoved = this.hasWaypoints() && (x !== this.target.x || z !== this.target.z);
 
             // broken out to understand better
             if (!this.hasWaypoints() && !this.interacted) {
@@ -1397,7 +1398,7 @@ export default class Player extends PathingEntity {
     updatePlayers() {
         const nearby = this.getNearbyPlayers();
 
-        const bitBlock = Packet.alloc(0);
+        const bitBlock = Packet.alloc(1);
         const byteBlock = Packet.alloc(1);
 
         // temp variables to convert movement operations
@@ -1854,7 +1855,7 @@ export default class Player extends PathingEntity {
     updateNpcs() {
         const nearby = this.getNearbyNpcs();
 
-        const bitBlock = Packet.alloc(0);
+        const bitBlock = Packet.alloc(1);
         const byteBlock = Packet.alloc(1);
 
         // update existing npcs (255 max - 8 bits)
@@ -2603,7 +2604,7 @@ export default class Player extends PathingEntity {
     }
 
     unsetMapFlag() {
-        this.clearWalkSteps();
+        this.clearWaypoints();
         this.write(ServerProt.UNSET_MAP_FLAG);
     }
 

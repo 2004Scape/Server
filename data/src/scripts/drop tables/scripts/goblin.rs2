@@ -21,7 +21,7 @@ def_int $dropint = random(128);
 if ($dropint < 1) {
     obj_add(npc_coord, coins, 1, ^lootdrop_duration);
 } else if ($dropint < 2) {
-    obj_add(npc_coord, obj_1009, 1, ^lootdrop_duration);
+    obj_add(npc_coord, brass_necklace, 1, ^lootdrop_duration);
 } else if ($dropint < 3) {
     obj_add(npc_coord, air_talisman, 1, ^lootdrop_duration);
 } else if ($dropint < 5) {

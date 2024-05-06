@@ -12,7 +12,7 @@ if (%magearena_progress <= ^mage_arena_prayed_at_statue) { // first time
     anim(human_pray, 10);
     p_delay(2);
     obj_add(movecoord(loc_coord, 0, 0, -1), $cape, 1, 50); // 50 ticks in osrs
-    spotanim_map(spotanim_188, movecoord(loc_coord, 0, 0, -1), 60, 0);
+    spotanim_map(smokepuff_large, movecoord(loc_coord, 0, 0, -1), 60, 0);
     sound_synth(smokepuff, 0, 0);
     ~mesbox("You feel a rush of energy charge through your veins. Suddenly a|cape appears before you.");
     return;
@@ -33,6 +33,6 @@ if_close;
 anim(human_pray, 10);
 p_delay(2);
 inv_add(inv, $cape, 1);
-spotanim_map(spotanim_188, coord, 60, 0);
+spotanim_map(smokepuff_large, coord, 60, 0);
 sound_synth(smokepuff, 0, 0);
 ~mesbox("You kneel and chant to <$name>...|You feel a rush of energy charge through your veins.|Suddenly a cape appears in your pack.");

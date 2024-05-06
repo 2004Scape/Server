@@ -178,7 +178,7 @@ queue(playerhit_n_retaliate, calc($duration / 30), npc_uid); // this should be a
 // close range fire breath
 [proc,kbd_dragonfire_close]
 if_close;
-spotanim_npc(spotanim_0, 92, 0);
+spotanim_npc(triple_firebreath_attack, 92, 0);
 npc_anim(dragon_firebreath_all_attack, 0);
 sound_synth(firebreath, 0, 30);
 %npc_action_delay = add(map_clock, 5);
@@ -202,7 +202,7 @@ queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 // toxic breath
 [proc,kbd_toxic_breath]
 if_close;
-spotanim_npc(spotanim_3, 92, 0);
+spotanim_npc(acidbreath_attack, 92, 0);
 npc_anim(dragon_firebreath_left_attack, 0);
 
 sound_synth(toxicbreath, 0, 30);
@@ -278,7 +278,7 @@ queue(playerhit_n_retaliate, 0, npc_uid); // this should be a queue* command
 // find spot anims and dragon anims for this
 if_close;
 
-spotanim_npc(spotanim_2, 92, 0);
+spotanim_npc(icebreath_attack, 92, 0);
 npc_anim(dragon_firebreath_right_attack, 0);
 
 sound_synth(kingicebreath, 0, 30);
