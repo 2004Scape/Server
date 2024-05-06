@@ -11,6 +11,12 @@ export default class Packet extends Hashable {
     private static readonly crctable: Int32Array = new Int32Array(256);
     private static readonly bitmask: Uint32Array = new Uint32Array(33);
 
+    /**
+     * Reversed CRC-32 polynomial for Cyclic Redundancy Check (CRC).
+     * This is sometimes referred to as CRC32B.
+     */
+    private static readonly crc32b = 0xEDB88320;
+
     static {
         for (let i: number = 0; i < 32; i++) {
             this.bitmask[i] = (1 << i) - 1;
@@ -22,7 +28,7 @@ export default class Packet extends Hashable {
 
             for (let bit = 0; bit < 8; bit++) {
                 if ((remainder & 0x1) == 1) {
-                    remainder = (remainder >>> 1) ^ 0xEDB88320;
+                    remainder = (remainder >>> 1) ^ this.crc32b;
                 } else {
                     remainder >>>= 0x1;
                 }
