@@ -54,6 +54,7 @@ import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
 import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
+import {tryParseInt} from '#lostcity/util/TryParse.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 const levelExperience = new Int32Array(99);
@@ -144,7 +145,7 @@ export default class Player extends PathingEntity {
     ];
 
     save() {
-        const sav = new Packet();
+        const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
         sav.p2(2); // version
 
@@ -207,9 +208,10 @@ export default class Player extends PathingEntity {
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
 
-        sav.p4(Packet.crc32(sav));
+        sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const safeName = fromBase37(this.username37);
         sav.save(`data/players/${safeName}.sav`);
+        // the sav is released by login server.
         return sav;
     }
 
@@ -237,7 +239,7 @@ export default class Player extends PathingEntity {
     webClient: boolean = false;
     combatLevel: number = 3;
     headicons: number = 0;
-    appearance: Packet | null = null; // cached appearance
+    appearance: Uint8Array | null = null; // cached appearance
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -633,6 +635,18 @@ export default class Player extends PathingEntity {
                 player.queueWaypoints(findPath(player.level, player.x, player.z, (player.x >>> 6 << 6) + 32, (player.z >>> 6 << 6) + 32));
             }
             console.timeEnd('moveall');
+        } else if (cmd === 'speed' && this.staffModLevel >= 3) {
+            if (args.length < 1) {
+                this.messageGame('Usage: ::speed <ms>');
+                return;
+            }
+            const speed: number = tryParseInt(args.shift(), 20);
+            if (speed < 20) {
+                this.messageGame('::speed input was too low.');
+                return;
+            }
+            this.messageGame(`World speed was changed to ${speed}ms`);
+            World.tickRate = speed;
         }
 
         // lookup debugproc with the name and execute it
@@ -747,7 +761,8 @@ export default class Player extends PathingEntity {
         if (this.target) {
             const apTrigger = this.getApTrigger();
             const outOfRange = !this.inApproachDistance(this.apRange, this.target) && apTrigger && !this.inOperableDistance(this.target);
-            const targetMoved = this.hasWaypoints() && (this.waypoints[0].x !== this.target.x || this.waypoints[0].z !== this.target.z);
+            const {x, z} = Position.unpackCoord(this.waypoints[0]);
+            const targetMoved = this.hasWaypoints() && (x !== this.target.x || z !== this.target.z);
 
             // broken out to understand better
             if (!this.hasWaypoints() && !this.interacted) {
@@ -1311,7 +1326,16 @@ export default class Player extends PathingEntity {
 
                     for (let i = 0; i < updates.length; i++) {
                         // have to copy because encryption will be applied to buffer
-                        this.netOut.push(new Packet(updates[i].buffer));
+                        const data = updates[i].buffer;
+                        const out = new Packet(new Uint8Array(data.data.length));
+                        const pos = data.pos;
+                        data.pos = 0;
+                        data.gdata(out.data, 0, out.data.length);
+                        data.pos = pos;
+                        out.pos = pos;
+
+                        // the packet is released elsewhere.
+                        this.netOut.push(out);
                     }
                 }
 
@@ -1374,8 +1398,8 @@ export default class Player extends PathingEntity {
     updatePlayers() {
         const nearby = this.getNearbyPlayers();
 
-        const bitBlock = new Packet();
-        const byteBlock = new Packet();
+        const bitBlock = Packet.alloc(1);
+        const byteBlock = Packet.alloc(1);
 
         // temp variables to convert movement operations
         const { walkDir, runDir, tele } = this.getMovementDir();
@@ -1435,7 +1459,7 @@ export default class Player extends PathingEntity {
             let hasMaskUpdate = player.mask > 0;
 
             const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + player.calculateUpdateSize(false, false) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + player.calculateUpdateSize(false, false) > 5000) {
                 hasMaskUpdate = false;
             }
 
@@ -1476,7 +1500,7 @@ export default class Player extends PathingEntity {
 
             const bitBlockSize = bitBlock.bitPos + 11 + 5 + 5 + 1 + 1;
             const bitBlockBytes = ((bitBlockSize + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + player.calculateUpdateSize(false, true) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + player.calculateUpdateSize(false, true) > 5000) {
                 // more players get added next tick
                 break;
             }
@@ -1494,9 +1518,11 @@ export default class Player extends PathingEntity {
             this.players.add(player.uid);
         }
 
-        if (byteBlock.length > 0) {
+        if (byteBlock.pos > 0) {
             bitBlock.pBit(11, 2047);
         }
+
+        bitBlock.bytes();
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
@@ -1539,7 +1565,7 @@ export default class Player extends PathingEntity {
     }
 
     generateAppearance(inv: number) {
-        const stream = new Packet();
+        const stream = Packet.alloc(0);
 
         stream.p1(this.gender);
         stream.p1(this.headicons);
@@ -1607,7 +1633,11 @@ export default class Player extends PathingEntity {
         stream.p1(this.combatLevel);
 
         this.mask |= Player.APPEARANCE;
-        this.appearance = stream;
+
+        this.appearance = new Uint8Array(stream.pos);
+        stream.pos = 0;
+        stream.gdata(this.appearance, 0, this.appearance.length);
+        stream.release();
     }
 
     calculateUpdateSize(self = false, newlyObserved = false) {
@@ -1706,7 +1736,7 @@ export default class Player extends PathingEntity {
 
         if (mask & Player.APPEARANCE) {
             out.p1(this.appearance!.length);
-            out.pdata(this.appearance!);
+            out.pdata(this.appearance!, 0, this.appearance!.length);
         }
 
         if (mask & Player.ANIM) {
@@ -1758,7 +1788,7 @@ export default class Player extends PathingEntity {
             out.p1(this.messageType!);
 
             out.p1(this.message!.length);
-            out.pdata(this.message!);
+            out.pdata(this.message!, 0, this.message!.length);
         }
 
         if (mask & Player.SPOTANIM) {
@@ -1825,8 +1855,8 @@ export default class Player extends PathingEntity {
     updateNpcs() {
         const nearby = this.getNearbyNpcs();
 
-        const bitBlock = new Packet();
-        const byteBlock = new Packet();
+        const bitBlock = Packet.alloc(1);
+        const byteBlock = Packet.alloc(1);
 
         // update existing npcs (255 max - 8 bits)
         bitBlock.bits();
@@ -1857,7 +1887,7 @@ export default class Player extends PathingEntity {
             let hasMaskUpdate = npc.mask > 0;
 
             const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + npc.calculateUpdateSize(false) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + npc.calculateUpdateSize(false) > 5000) {
                 hasMaskUpdate = false;
             }
 
@@ -1896,7 +1926,7 @@ export default class Player extends PathingEntity {
 
             const bitBlockSize = bitBlock.bitPos + 13 + 11 + 5 + 5 + 1;
             const bitBlockBytes = ((bitBlockSize + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.length + npc.calculateUpdateSize(true) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + npc.calculateUpdateSize(true) > 5000) {
                 // more npcs get added next tick
                 break;
             }
@@ -1914,9 +1944,11 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (byteBlock.length > 0) {
+        if (byteBlock.pos > 0) {
             bitBlock.pBit(13, 8191);
         }
+
+        bitBlock.bytes();
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
@@ -2541,7 +2573,15 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const buf = new Packet();
+        let buf: Packet;
+        if (packetType.length === -1) {
+            buf = Packet.alloc(0);
+        } else if (packetType.length === -2) {
+            buf = Packet.alloc(2); // maybe this can be a type 1.
+        } else {
+            buf = new Packet(new Uint8Array(1 + packetType.length));
+        }
+
         buf.p1(packetType.id);
 
         if (packetType.length === -1) {
@@ -2559,11 +2599,12 @@ export default class Player extends PathingEntity {
             buf.psize2(buf.pos - start);
         }
 
+        // the packet is released elsewhere.
         this.netOut.push(buf);
     }
 
     unsetMapFlag() {
-        this.clearWalkSteps();
+        this.clearWaypoints();
         this.write(ServerProt.UNSET_MAP_FLAG);
     }
 
@@ -2601,7 +2642,7 @@ export default class Player extends PathingEntity {
     }
 
     rebuildNormal(zoneX: number, zoneZ: number) {
-        const out = new Packet();
+        const out = Packet.alloc(2);
         out.p1(ServerProt.REBUILD_NORMAL.id);
         out.p2(0);
         const start = out.pos;
@@ -2631,6 +2672,8 @@ export default class Player extends PathingEntity {
         }
 
         out.psize2(out.pos - start);
+
+        // the packet is released elsewhere.
         this.netOut.push(out);
     }
 }

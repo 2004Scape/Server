@@ -38,10 +38,13 @@ class Login {
                 return;
             }
 
+            const post = new Uint8Array(length);
+            data.gdata(post, 0, post.length);
+
             this.loginThread.postMessage({
                 type: 'loginreq',
                 opcode,
-                data: data.gdata(length),
+                data: post,
                 socket: socket.uniqueId
             });
 
@@ -56,11 +59,13 @@ class Login {
             return;
         }
 
+        const save = player.save();
         this.loginThread.postMessage({
             type: 'logout',
             username: player.username,
-            save: player.save().data
+            save: save.data.subarray(0, save.pos)
         });
+        save.release();
     }
 
     private onMessage(msg: any) {

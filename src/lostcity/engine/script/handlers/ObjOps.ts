@@ -19,7 +19,7 @@ import {
     DurationValid, InvTypeValid, ObjNotDummyValid,
     ObjStackValid,
     ObjTypeValid, ParamTypeValid
-} from '#lostcity/engine/script/ScriptInputValidator.js';
+} from '#lostcity/engine/script/ScriptValidators.js';
 
 const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
 
