@@ -4,9 +4,6 @@ import forge from 'node-forge';
 import PrivateKey = forge.pki.rsa.PrivateKey;
 import BigInteger = forge.jsbn.BigInteger;
 
-import Hashable from '#jagex2/datastruct/Hashable.js';
-import LinkList from '#jagex2/datastruct/LinkList.js';
-
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import Hashable from '#jagex2/datastruct/Hashable.js';
 
