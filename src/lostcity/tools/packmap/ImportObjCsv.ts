@@ -62,23 +62,21 @@ loadDir('data/src/maps', (lines: string[], file: string) => {
     const [mapsquareX, mapsquareZ] = safeName.split('_').map(x => parseInt(x));
 
     const objs = allObjs.filter(obj => obj.mapsquareX === mapsquareX && obj.mapsquareZ === mapsquareZ);
-    if (objs.length === 0) {
-        return;
-    }
-
     allObjs = allObjs.filter(obj => obj.mapsquareX !== mapsquareX || obj.mapsquareZ !== mapsquareZ); // remove processed objs
 
     const objStartIndex = lines.indexOf('==== OBJ ====');
     if (objStartIndex !== -1) {
-        // remove everything after this section
+        // remove old obj section
         lines = lines.slice(0, objStartIndex);
     }
 
     // place obj section at the end
-    lines.push('==== OBJ ====');
-    // format - level x z: id
-    lines.push(...objs.map(obj => `${obj.level} ${obj.localX} ${obj.localZ}: ${obj.id} ${obj.quantity}`));
-    lines.push('');
+    if (objs.length) {
+        lines.push('==== OBJ ====');
+        // format - level x z: id quantity
+        lines.push(...objs.map(obj => `${obj.level} ${obj.localX} ${obj.localZ}: ${obj.id} ${obj.quantity}`));
+        lines.push('');
+    }
 
     fs.writeFileSync('data/src/maps/' + file, lines.join('\n'));
 });
