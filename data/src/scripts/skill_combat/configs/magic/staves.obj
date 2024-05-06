@@ -24,8 +24,8 @@ param=magicdefence,4
 param=strengthbonus,3
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_staff_crush
-param=defend_anim,human_staff_defend
+param=crushattack_anim,human_staff_pound
+param=defend_anim,human_staff_def
 param=crush_sound,staff_hit
 
 [staff_of_air]
@@ -57,8 +57,8 @@ param=magicdefence,10
 param=strengthbonus,3
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_crush
-param=defend_anim,human_stafforb_defend
+param=crushattack_anim,human_stafforb_pound
+param=defend_anim,human_stafforb_def
 param=crush_sound,staff_hit
 
 [staff_of_water]
@@ -92,8 +92,8 @@ param=magicdefence,10
 param=strengthbonus,3
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_crush
-param=defend_anim,human_stafforb_defend
+param=crushattack_anim,human_stafforb_pound
+param=defend_anim,human_stafforb_def
 param=crush_sound,staff_hit
 
 [staff_of_earth]
@@ -128,8 +128,8 @@ param=magicdefence,10
 param=strengthbonus,5
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_crush
-param=defend_anim,human_stafforb_defend
+param=crushattack_anim,human_stafforb_pound
+param=defend_anim,human_stafforb_def
 param=crush_sound,staff_hit
 
 [staff_of_fire]
@@ -164,8 +164,8 @@ param=magicdefence,10
 param=strengthbonus,6
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_crush
-param=defend_anim,human_stafforb_defend
+param=crushattack_anim,human_stafforb_pound
+param=defend_anim,human_stafforb_def
 param=crush_sound,staff_hit
 
 [magicstaff]
@@ -199,6 +199,6 @@ param=magicdefence,10
 param=strengthbonus,7
 param=attackrate,5
 param=ready_baseanim,human_staffready
-param=crushattack_anim,human_stafforb_crush
-param=defend_anim,human_stafforb_defend
+param=crushattack_anim,human_stafforb_pound
+param=defend_anim,human_stafforb_def
 param=crush_sound,staff_hit

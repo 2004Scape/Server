@@ -108,7 +108,7 @@ switch_int(%tree_progress) {
             return; // should never happen, just switching active npc
         }
         npc_anim(midget_seq_199, 20);
-        spotanim_npc(spotanim_79, 20, 124);
+        spotanim_npc(gnome_globes, 20, 124);
         p_delay(6); 
         ~mesbox("The orbs of protection come to rest gently in the branches of the ancient spirit tree.");
         ~chatnpc(happy, "Now at last my people are safe once more.|We can live in peace again.");
@@ -135,7 +135,7 @@ while(npc_findnext = true) {
         npc_facesquare(movecoord(coord, 2, 0, 0));
         if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
             npc_say($message);
-            npc_anim(gnome_mage_attack, 0);
+            npc_anim(midget_chanting, 0);
         }
     }
 }
@@ -145,7 +145,7 @@ while(npc_findnext = true) {
         npc_facesquare(movecoord(coord, 2, 0, 0));
         if((compare($message, "Su tana.") = 0 & coordz(coord) > coordz(npc_coord)) | (compare($message, "En tania.") = 0 & coordz(coord) < coordz(npc_coord))) {
             npc_say($message);
-            npc_anim(gnome_mage_attack, 0);
+            npc_anim(midget_chanting, 0);
         }
     }
 }

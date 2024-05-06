@@ -587,12 +587,11 @@ strength=9
 defence=9
 category=macro_event_shade
 param=damagetype,^crush_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
-param=death_anim,ghost_death
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
+param=death_anim,earthwarrior_death
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
-param=death_anim,earthwarrior_death
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
@@ -631,12 +630,11 @@ strength=22
 defence=22
 category=macro_event_shade
 param=damagetype,^crush_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
-param=death_anim,ghost_death
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
+param=death_anim,earthwarrior_death
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
-param=death_anim,earthwarrior_death
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
@@ -675,12 +673,11 @@ strength=38
 defence=38
 category=macro_event_shade
 param=damagetype,^crush_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
-param=death_anim,ghost_death
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
+param=death_anim,earthwarrior_death
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
-param=death_anim,earthwarrior_death
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
@@ -719,12 +716,11 @@ strength=65
 defence=65
 category=macro_event_shade
 param=damagetype,^crush_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
-param=death_anim,ghost_death
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
+param=death_anim,earthwarrior_death
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
-param=death_anim,earthwarrior_death
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
@@ -763,12 +759,11 @@ strength=100
 defence=100
 category=macro_event_shade
 param=damagetype,^crush_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
-param=death_anim,ghost_death
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
+param=death_anim,earthwarrior_death
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
-param=death_anim,earthwarrior_death
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
@@ -807,12 +802,11 @@ attack=130
 strength=130
 defence=130
 param=damagetype,^crush_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
-param=death_anim,ghost_death
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
+param=death_anim,earthwarrior_death
 param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
-param=death_anim,earthwarrior_death
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
@@ -848,11 +842,12 @@ defence=9
 // i assume the stats are identical to other random events
 category=macro_event_watchman
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
+// param=defend_sound,blade3_mail
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
-
+// possible old defend anim is seq_403
 
 [macro_event_watchman2]
 name=Watchman
@@ -882,10 +877,12 @@ strength=22
 defence=22
 category=macro_event_watchman
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
+// param=defend_sound,blade3_mail
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// possible old defend anim is seq_403
 
 [macro_event_watchman3]
 name=Watchman
@@ -915,10 +912,12 @@ strength=38
 defence=38
 category=macro_event_watchman
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
+// param=defend_sound,blade3_mail
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// possible old defend anim is seq_403
 
 [macro_event_watchman4]
 name=Watchman
@@ -948,10 +947,12 @@ strength=65
 defence=65
 category=macro_event_watchman
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
+// param=defend_sound,blade3_mail
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// possible old defend anim is seq_403
 
 [macro_event_watchman5]
 name=Watchman
@@ -981,10 +982,12 @@ strength=100
 defence=100
 category=macro_event_watchman
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
+// param=defend_sound,blade3_mail
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// possible old defend anim is seq_403
 
 [macro_event_watchman6]
 name=Watchman
@@ -1014,10 +1017,12 @@ strength=130
 defence=130
 category=macro_event_watchman
 param=attack_anim,human_blunt_crush
-param=defend_anim,human_baxe_defend1
+param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
+// param=defend_sound,blade3_mail
 param=damagetype,^crush_style
 param=combat_xp_multiplier,25
+// possible old defend anim is seq_403
 
 [npc_437]
 name=Brownie
@@ -1068,6 +1073,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+// TODO sounds
 param=combat_xp_multiplier,25
 
 [macro_event_dryad2]
@@ -1100,6 +1106,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+// TODO sounds
 param=combat_xp_multiplier,25
 
 [macro_event_dryad3]
@@ -1132,6 +1139,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+// TODO sounds
 param=combat_xp_multiplier,25
 
 [macro_event_dryad4]
@@ -1164,6 +1172,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+// TODO sounds
 param=combat_xp_multiplier,25
 
 [macro_event_dryad5]
@@ -1196,6 +1205,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+// TODO sounds
 param=combat_xp_multiplier,25
 
 [macro_event_dryad6]
@@ -1228,6 +1238,7 @@ param=damagetype,^crush_style
 param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
+// TODO sounds
 param=combat_xp_multiplier,25
 
 [macro_event_ent_tree1]

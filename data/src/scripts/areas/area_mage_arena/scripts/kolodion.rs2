@@ -145,7 +145,7 @@ switch_int (%magearena_progress) {
         // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)
         // https://youtu.be/Tte53ezNIP4?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=23
         p_delay(3);
-        spotanim_map(spotanim_188, $spawn_coord, 124, 0);
+        spotanim_map(smokepuff_large, $spawn_coord, 124, 0);
         sound_synth(smokepuff, 0, 0);
         p_delay(0);
         ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
@@ -156,7 +156,7 @@ switch_int (%magearena_progress) {
         p_delay(1);
         sound_synth(smokepuff, 0, 0);
         ~spawn_mage_arena_boss($spawn_coord, $boss, 5);
-        spotanim_npc(spotanim_188, 124, 34);
+        spotanim_npc(smokepuff_large, 124, 34);
         p_delay(1); // not a mistake
         npc_setmode(applayer2);
         p_delay(0);
@@ -174,7 +174,7 @@ switch_int (%magearena_progress) {
         npc_say("Let us continue with our battle");
     case ^mage_arena_ethereal:
         p_delay(2);
-        spotanim_npc(spotanim_188, 124, 10);
+        spotanim_npc(smokepuff_large, 124, 10);
         p_delay(0);
         sound_synth(teleport_reverse, 0, 0);
         ~spawn_mage_arena_boss($spawn_coord, $boss, 6);

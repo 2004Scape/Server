@@ -369,11 +369,11 @@ inv_delslot(inv, last_useslot);
 
 anim(human_holy_water_throw, 0);
 sound_synth(thrown, 0, 0);
-spotanim_pl(spotanim_30, 96, 0);
+spotanim_pl(rotten_tomato_launch, 96, 0);
 %rotten_tomato_delay = calc(map_clock + 5);
 
 def_coord $random_coord = ~coord_lineofwalk_radius2(.coord, 2);
 // [proc,coord_projectile](coord $coord, coord $coord2, spotanim $spotanim, int $startheight, int $endheight, int $delay, int $angle, int $length, int $offset, int $step)(int)
-def_int $duration = ~coord_projectile(coord, $random_coord, spotanim_29, 40, 0, 28, 15, 18, 32, 5);
+def_int $duration = ~coord_projectile(coord, $random_coord, rotten_tomato_travel, 40, 0, 28, 15, 18, 32, 5);
 //sound_synth todo: find sound, and hit spot anim
 // spotanim_map(?, $random_coord, 96, calc($duration/30));

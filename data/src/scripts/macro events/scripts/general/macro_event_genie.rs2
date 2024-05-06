@@ -1,5 +1,5 @@
 [ai_queue4,macro_event_genie](int $arg)
-spotanim_map(spotanim_86, npc_coord, 124, 0);
+spotanim_map(small_smokepuff, npc_coord, 124, 0);
 if (finduid(%npc_attacking_uid) = true) {
     sound_synth(genie_appear, 0, 0);
     npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
