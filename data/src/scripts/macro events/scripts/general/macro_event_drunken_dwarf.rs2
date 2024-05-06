@@ -1,12 +1,11 @@
-[proc,macro_event_drunken_dwarf_spawn]
-// https://youtu.be/R9eKmC7oLy0?t=122
-// no smoke puff
-
-sound_synth(dwarf_whistle, 0, 0);
-npc_anim(dwarf_seq_105, 20);
-npc_say("'Ello der <displayname>! *hic*");
-npc_setmode(playerfollow);
-%npc_attacking_uid = uid;
+[ai_queue6,macro_event_drunken_dwarf](int $arg)
+// no smoke puff: https://youtu.be/R9eKmC7oLy0?t=122
+if (finduid(%npc_attacking_uid) = true) {
+    sound_synth(dwarf_whistle, 0, 0);
+    npc_anim(dwarf_seq_105, 20);
+    npc_say("'Ello der <displayname>! *hic*");
+    npc_setmode(playerfollow);
+}
 
 [opnpc1,macro_event_drunken_dwarf]
 if (uid ! %npc_attacking_uid) {
