@@ -186,7 +186,7 @@ womanwear=model_516_obj_wear,6
 weight=2g
 tradeable=yes
 
-[obj_1633]
+[crushed_gemstone]
 name=Crushed gemstone
 desc=A gemstone that has been smashed.
 cost=2
