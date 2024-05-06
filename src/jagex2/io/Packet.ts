@@ -3,9 +3,9 @@ import {dirname} from 'path';
 import forge from 'node-forge';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import Linkable from '#jagex2/datastruct/Linkable.js';
+import Hashable from '#jagex2/datastruct/Hashable.js';
 
-export default class Packet extends Linkable {
+export default class Packet extends Hashable {
     private static readonly crctable: Int32Array = new Int32Array(256);
     private static readonly bitmask: Uint32Array = new Uint32Array(33);
 
