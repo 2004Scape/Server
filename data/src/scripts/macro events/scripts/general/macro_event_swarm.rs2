@@ -1,4 +1,4 @@
-[ai_queue6,macro_event_swarm](int $arg)
+[ai_queue4,macro_event_swarm](int $arg)
 // spotanim_map(spotanim_86, npc_coord, 124, 0);
 if (finduid(%npc_attacking_uid) = true) {
     sound_synth(swarm_appear, 0, 0);

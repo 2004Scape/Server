@@ -1,4 +1,4 @@
-[ai_queue6,macro_event_triffid_friendly](int $arg)
+[ai_queue4,macro_event_triffid_friendly](int $arg)
 npc_setmode(none);
 npc_anim(seq_348, 0);
 %npc_macro_event_status = ^triffid_growing;

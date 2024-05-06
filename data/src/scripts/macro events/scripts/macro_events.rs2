@@ -44,7 +44,7 @@ def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
 %macro_event_uid = npc_uid;
 %npc_attacking_uid = uid;
-npc_queue(6, 0, 0); // greets the player
+npc_queue(4, 0, 0); // greets the player
 
 // called when the player logs in
 [proc,macro_event_general_check]

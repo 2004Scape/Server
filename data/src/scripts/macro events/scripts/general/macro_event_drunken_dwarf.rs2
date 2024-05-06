@@ -1,4 +1,4 @@
-[ai_queue6,macro_event_drunken_dwarf](int $arg)
+[ai_queue4,macro_event_drunken_dwarf](int $arg) // greet player
 // no smoke puff: https://youtu.be/R9eKmC7oLy0?t=122
 if (finduid(%npc_attacking_uid) = true) {
     sound_synth(dwarf_whistle, 0, 0);
@@ -6,6 +6,18 @@ if (finduid(%npc_attacking_uid) = true) {
     npc_say("'Ello der <displayname>! *hic*");
     npc_setmode(playerfollow);
 }
+
+[ai_queue5,macro_event_drunken_dwarf](int $arg) // despawn
+npc_say("Aww, me is all alone.");
+npc_delay(2); // osrs
+if (finduid(%npc_attacking_uid) = true) {
+    %macro_event = ^no_macro_event;
+}
+npc_del;
+
+[ai_queue6,macro_event_drunken_dwarf](int $arg) // say good bye
+// Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
+npc_del;
 
 [opnpc1,macro_event_drunken_dwarf]
 if (uid ! %npc_attacking_uid) {
@@ -20,20 +32,8 @@ if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
 ~macro_event_give_reward(beer, 1);
 %macro_event = ^no_macro_event;
 
-npc_queue(5, 0, 0); // say good bye
+npc_queue(6, 0, 0); // say good bye
 ~chatnpc(drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
-
-[ai_queue4,macro_event_drunken_dwarf](int $arg) // despawn
-npc_say("Aww, me is all alone.");
-npc_delay(2); // osrs
-if (finduid(%npc_attacking_uid) = true) {
-    %macro_event = ^no_macro_event;
-}
-npc_del;
-
-[ai_queue5,macro_event_drunken_dwarf](int $arg) // say good bye
-// Doesnt say goodbye :( https://youtu.be/R9eKmC7oLy0?t=122
-npc_del;
 
 [ai_timer,macro_event_drunken_dwarf]
 if (~npc_out_of_combat = false) {
@@ -41,7 +41,7 @@ if (~npc_out_of_combat = false) {
 }
 if (~macro_event_lost_and_follow = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
    // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
-    npc_queue(4, 0, 0); // despawn
+    npc_queue(5, 0, 0); // despawn
     return;
 }
 
