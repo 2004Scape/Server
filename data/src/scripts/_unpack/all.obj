@@ -1153,8 +1153,6 @@ weight=25g
 members=yes
 
 [dwarf_brew]
-name=Dwarf brew
-desc=Smells stronger than most spirits.
 cost=2
 members=yes
 model=model_2504_obj
@@ -1165,6 +1163,8 @@ recol1d=23073
 2dyan=1688
 2dxan=204
 weight=150g
+name=Dwarf brew
+desc=Smells stronger than most spirits.
 
 [obj_1502]
 name=Iban's ashes
