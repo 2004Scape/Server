@@ -58,7 +58,12 @@ const NpcConfigOps: CommandHandlers = {
         check(op, NumberNotNull);
 
         const npcType = NpcType.get(npcId);
-        state.pushString(npcType.ops[op - 1] ?? '');
+
+        if (!npcType.op) {
+            state.pushString('');
+            return;
+        }
+        state.pushString(npcType.op[op - 1] ?? '');
     }
 };
 

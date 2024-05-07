@@ -68,8 +68,8 @@ export default class NpcType extends ConfigType {
     name: string | null = null;
     desc: string | null = null;
     size = 1;
-    models: number[] = [];
-    heads: number[] = [];
+    models: Uint16Array | null = null;
+    heads: Uint16Array | null = null;
     hasanim = false;
     readyanim = -1;
     walkanim = -1;
@@ -77,12 +77,12 @@ export default class NpcType extends ConfigType {
     walkanim_r = -1;
     walkanim_l = -1;
     hasalpha = false;
-    recol_s: number[] = [];
-    recol_d: number[] = [];
-    ops: (string | null)[] = [];
-    code90 = -1;
-    code91 = -1;
-    code92 = -1;
+    recol_s: Uint16Array | null = null;
+    recol_d: Uint16Array | null = null;
+    op: (string | null)[] | null = null;
+    resizex = -1;
+    resizey = -1;
+    resizez = -1;
     minimap = true;
     vislevel = -1;
     resizeh = 128;
@@ -110,6 +110,7 @@ export default class NpcType extends ConfigType {
     decode(code: number, dat: Packet): void {
         if (code === 1) {
             const count = dat.g1();
+            this.models = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
                 this.models[i] = dat.g2();
@@ -134,13 +135,18 @@ export default class NpcType extends ConfigType {
         } else if (code === 18) {
             this.category = dat.g2();
         } else if (code >= 30 && code < 40) {
-            this.ops[code - 30] = dat.gjstr();
+            if (!this.op) {
+                this.op = new Array(5).fill(null);
+            }
 
-            if (this.ops[code - 30] === 'hidden') {
-                this.ops[code - 30] = null;
+            this.op[code - 30] = dat.gjstr();
+            if (this.op[code - 30] === 'hidden') {
+                this.op[code - 30] = null;
             }
         } else if (code === 40) {
             const count = dat.g1();
+            this.recol_s = new Uint16Array(count);
+            this.recol_d = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
                 this.recol_s[i] = dat.g2();
@@ -148,16 +154,17 @@ export default class NpcType extends ConfigType {
             }
         } else if (code === 60) {
             const count = dat.g1();
+            this.heads = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
                 this.heads[i] = dat.g2();
             }
         } else if (code === 90) {
-            this.code90 = dat.g2();
+            this.resizex = dat.g2();
         } else if (code === 91) {
-            this.code91 = dat.g2();
+            this.resizey = dat.g2();
         } else if (code === 92) {
-            this.code92 = dat.g2();
+            this.resizez = dat.g2();
         } else if (code === 93) {
             this.minimap = false;
         } else if (code === 95) {
