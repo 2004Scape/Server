@@ -9,7 +9,6 @@ OBJ = $(SRC:.c=.o)
 
 bzip2.mjs: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
-	patch bzip2.mjs < node.diff
 
 clean:
 	rm -f *.wasm *.o bzip2.mjs
