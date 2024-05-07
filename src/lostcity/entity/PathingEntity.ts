@@ -170,10 +170,12 @@ export default abstract class PathingEntity extends Entity {
      * @param waypoints The waypoints to queue.
      */
     queueWaypoints(waypoints: ArrayLike<number>): void {
-        for (let input: number = waypoints.length - 1, output: number = 0; input >= 0, output < this.waypoints.length; input--, output++) {
+        let index: number = -1;
+        for (let input: number = waypoints.length - 1, output: number = 0; input >= 0 && output < this.waypoints.length; input--, output++) {
             this.waypoints[output] = waypoints[input];
+            index++;
         }
-        this.waypointIndex = waypoints.length - 1;
+        this.waypointIndex = index;
     }
 
     clearWaypoints(): void {
