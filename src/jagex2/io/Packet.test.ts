@@ -280,4 +280,19 @@ describe('Packet', () => {
             expected.release();
         });
     });
+
+    describe('CRC', () => {
+        it('should create and validate the CRC', () => {
+            const data = '123456789';
+            const value = new Uint8Array(Buffer.from(data));
+            const crc = Packet.getcrc(value, 0, value.length);
+            expect(crc).toEqual(-873187034);
+
+            const isValid = Packet.checkcrc(value, 0, value.length, crc);
+            expect(isValid).toEqual(true);
+
+            const hex = ((crc) >>> 0).toString(16);
+            expect(hex).toEqual('cbf43926');
+        });
+    });
 });
