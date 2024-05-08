@@ -1064,6 +1064,8 @@ export default class Player extends PathingEntity {
         this.targetSubject = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
+        this.alreadyFacedCoord = true;
+        this.alreadyFacedEntity = true;
     }
 
     getOpTrigger() {
