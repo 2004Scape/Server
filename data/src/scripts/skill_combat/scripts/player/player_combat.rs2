@@ -68,6 +68,7 @@ if (%damagetype = ^ranged_style) {
 if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_spell > 0) {
     def_dbrow $spell_data = ~get_spell_data(%autocast_spell);
     if (~check_spell_requirements($spell_data) = true) {
+        p_stopaction;
         p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     }  
     return;
