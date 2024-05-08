@@ -1,1 +1,17 @@
-npx lint-staged --verbose
+# Handle Github Desktop bug on Windows
+# https://github.com/typicode/husky/issues/1072
+if [ "$OS" = "Windows_NT" ]; then
+  npx.cmd lint-staged --verbose
+  exit 0
+fi
+
+case "$(uname)" in
+  # Handle Github Desktop bug on Windows systems with WSL installed
+  # https://github.com/desktop/desktop/issues/12562
+  *CYGWIN* | *MINGW* | *MSYS*)
+    npx.cmd lint-staged --verbose
+    ;;
+  *)
+    npx lint-staged --verbose
+    ;;
+esac
