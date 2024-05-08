@@ -16,7 +16,8 @@ if($option = 1) {
 ~chatplayer(quiz, "So... do you garden round the back too?");
 ~chatnpc(happy, "That I do!");
 ~chatplayer(quiz, "Doesn't all of the security around the house get in your way then?");
-~chatnpc(neutral, "Ah, I'm used to all that. I have my keys, the guard dogs know me, and I know the combination to the door lock. It's rather easy, it's his middle name.");
+// https://storage.googleapis.com/tannerdino/images/1_18.png
+~chatnpc(neutral, "Ah, I'm used to all that. I have|my keys, the guard dogs know me, and|I know the combination to the door lock.|It's rather easy, it's his middle name.");
 ~chatplayer(quiz, "Whose middle name?");
 ~chatnpc(confused, "Hum. I probably shouldn't have said that. Forget I mentioned it.");
 

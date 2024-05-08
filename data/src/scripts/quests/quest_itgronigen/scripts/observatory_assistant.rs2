@@ -1,0 +1,34 @@
+[opnpc1,observatory_assistant]
+switch_int(%itgronigen_progress) {
+    case ^itgronigen_started:
+        ~chatnpc(quiz, "How can I help you?");
+        switch_int(~p_choice2("I can't find any planks!", 1, "I dont need any help, thanks.", 2)) {
+            case 1:
+                ~chatplayer(quiz, "I can't find any planks!");
+                ~chatnpc(neutral, "I understand planks can be found at the barbarian outpost, to the north east of Ardougne. You will probably have to trek over there to find some...");
+            case 2:
+                ~chatplayer(happy, "I dont need any help, thanks.");
+                ~chatnpc(happy, "Oh, okay then if you are sure.");
+                ~mesbox("The assistant continues with his work.");
+        }
+    case ^itgronigen_not_started:
+        ~chatnpc(neutral, "Hello wanderer.|Do you require any assistance?");
+        @multi3("Yes, what do you two do here?", assistant_whatdo, "No, just looking around thanks.", assistant_looking, "Can I have a look through that telescope?", assistant_telescope);
+}
+
+[label,assistant_whatdo]
+~chatplayer(quiz, "Yes, what do you two do here?");
+~chatnpc(happy, "Glad you ask. This is the Observatory reception.");
+~chatnpc(happy, "Up on the cliff is the Observatory dome,|from which you can view the heavens.");
+~chatnpc(sad, "That is, before the telescope was damaged by those monsters outside...");
+
+[label,assistant_looking]
+~chatplayer(happy, "No, just looking around thanks.");
+~chatnpc(happy, "Okay, just don't break anything.|If you need any help, let me know.");
+~mesbox("The assistant continues with his work.");
+
+[label,assistant_telescope]
+~chatplayer(quiz, "Can I have a look through that telescope?");
+~chatnpc(neutral, "You can. You won't see much though.");
+~chatplayer(quiz, "And that's because?");
+~chatnpc(neutral, "Just talk to the professor. He'll fill you in.");

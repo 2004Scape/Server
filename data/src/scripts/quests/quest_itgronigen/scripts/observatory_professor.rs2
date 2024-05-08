@@ -1,0 +1,77 @@
+[opnpc1,observatory_professor]
+// TODO: treasure trails dialogue
+switch_int(%itgronigen_progress) {
+    case ^itgronigen_started:
+        ~chatnpc(happy, "It's my helping hand, back again.");
+        ~chatnpc(happy, "Do you have the planks yet?");
+    case ^itgronigen_not_started:
+        // this whole dialogue is quite different compared to OSRS, and unfortunately we have no RS2 reference so this
+        // is mostly RSC + grammar corrected
+        ~chatnpc(neutral, "Hello adventurer.|What brings you to these parts?");
+        switch_int (~p_choice4("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "It is of no concern of yours...", 4)) {
+            case 1:
+                ~chatplayer(sad, "I am lost!!!");
+                ~chatnpc(neutral, "Lost? It must have been those pesky goblins that led you astray.");
+                ~chatnpc(neutral, "Head north-east to find the city of Ardougne.");
+                ~chatplayer(neutral, "I'm sure I'll find the way.");
+                ~chatplayer(happy, "Thanks for all your help.");
+                ~chatnpc(neutral, "No problem at all. Come and visit again!");
+                ~mesbox("The professor carries on with his studies.");
+            case 2:
+                ~chatplayer(neutral, "I'd like to have a look through that telescope.");
+                ~chatnpc(neutral, "So would I!");
+                ~chatnpc(sad, "The trouble is, its not working.");
+                ~chatplayer(quiz, "What do you mean?");
+                ~chatnpc(neutral, "Did you see those houses outside?");
+                ~chatplayer(neutral, "Up on the hill? Yes, I've seen them.");
+                ~chatnpc(neutral, "It's a horde of goblins.");
+                ~chatnpc(sad, "Since they moved here they have caused nothing but trouble.");
+                ~chatnpc(neutral, "Last week, my telescope was tampered with.");
+                ~chatnpc(angry, "Now, parts need replacing before it can be used again.");
+                ~chatnpc(quiz, "Err, I don't suppose you would be willing to help?");
+                switch_int (~p_choice2("Sounds interesting, what can I do for you?", 1, "Oh, sorry, I don't have time for that.", 2)) {
+                    case 1:
+                        ~chatplayer(happy, "Sounds interesting, what can I do for you?");
+                        ~chatnpc(happy, "Oh, thanks so much.");
+                        ~chatnpc(happy, "I need three new parts for the telescope so it can be used again.");
+                        ~chatnpc(neutral, "I need wood to make a new tripod,|bronze to make a new tube|and glass for a replacement lens.");
+                        ~chatnpc(happy, "My assistant will help you obtaining these.");
+                        ~chatnpc(happy, "Go talk to him if you need some advice.");
+                        ~chatplayer(quiz, "Okay what do I need to do?");
+                        ~chatnpc(neutral, "First I need three planks of wood for the tripod.");
+                        %itgronigen_progress = ^itgronigen_started;
+                        ~send_quest_progress(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
+                    case 2:
+                        ~chatplayer(neutral, "Oh, sorry, I don't have time for that.");
+                        ~chatnpc(sad, "Oh dear. I really do need some help.");
+                        ~chatnpc(neutral, "If you see anyone who can help then please send them my way.");
+                        ~mesbox("The professor carries on with his duties.");
+                }
+            case 3:
+                ~chatplayer(quiz, "What's the ladder over there for?");
+                ~chatnpc(neutral, "The ladder leads to the entrance of the cavern|that leads from here to the observatory.");
+            case 4:
+                ~chatplayer(neutral, "It is of no concern of yours...");
+                ~chatnpc(angry, "Okay okay, there's no need to be insulting!");
+        }
+}
+
+[opnpcu,observatory_assistant]
+// wiki mentions seperate dialogue for cert items but this doesn't seem to be the case when testing ingame?
+def_obj $used_item = last_useitem;
+~chatplayer(happy, "What do you think of this!");
+if(oc_cert($used_item) = $used_item) {
+    ~chatnpc(neutral, "I'd rather you show me the actual item, as opposed to the note form.");
+    return;
+}
+~chatnpc(neutral, "Wonderful. You must be very proud to have it.");
+
+[opnpc1,observatory_professor_tower]
+// mostly 1-1 with RSC (with fixes) because this dialogue doesn't exist post-rework
+switch_int(%itgronigen_progress) {
+    case ^itgronigen_not_started:
+        ~chatnpc(sad, "Hello friend. This is my poor telescope.|It's been tampered with and is not working.");
+        ~chatnpc(neutral, "If you're good at crafting,|I would appreciate your help!|Come to the reception if you can.");
+    case default:
+        ~chatnpc(neutral, "Hello friend.|I hope you get all the parts soon.|Return to the reception|when you have the things I need.");
+}

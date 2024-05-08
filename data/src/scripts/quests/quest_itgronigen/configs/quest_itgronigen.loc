@@ -1,0 +1,155 @@
+[loc_2187]
+name=Ladder
+desc=I can climb down this ladder.
+model=model_loc_1759
+active=yes
+op1=Climb-down
+
+[loc_2188]
+name=Ladder
+desc=I can climb up this ladder.
+model=model_loc_11
+active=yes
+op1=Climb-up
+
+[loc_2189]
+name=Ladder
+desc=I can climb up this ladder.
+model=model_loc_11
+active=yes
+op1=Climb-up
+
+[loc_2190]
+name=Ladder
+desc=I can climb down this ladder.
+model=model_loc_1759
+active=yes
+op1=Climb-down
+
+[loc_2191]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+
+[loc_2192]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+
+[loc_2193]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+
+[loc_2194]
+name=Chest
+desc=Perhaps I should search it.
+model=model_loc_76
+active=yes
+op1=Close
+op2=Search
+forceapproach=north
+
+[loc_2195]
+name=Chest
+desc=Perhaps I should search it.
+model=model_loc_76
+active=yes
+op1=Close
+op2=Search
+forceapproach=north
+
+[loc_2196]
+name=Chest
+desc=Perhaps I should search it.
+model=model_loc_76
+active=yes
+op1=Close
+op2=Search
+forceapproach=north
+
+[loc_2197]
+name=Chest
+desc=I wonder what's inside?
+model=wooden_chest
+active=yes
+op1=Open
+forceapproach=north
+
+[loc_2198]
+name=Chest
+desc=Perhaps I should search it.
+model=model_loc_76
+active=yes
+op1=Close
+op2=Search
+forceapproach=north
+
+[loc_2199]
+name=Keep gate
+desc=An old gate for locking up undesirables.
+model=model_loc_52
+active=yes
+op1=Open
+mirror=yes
+category=observatory_dungeon_gate
+
+[loc_2200]
+name=Keep gate
+desc=An old gate for locking up undesirables.
+model=model_loc_52
+active=yes
+op1=Open
+category=observatory_dungeon_gate
+
+[loc_2201]
+model=model_loc_2201
+hillskew=yes
+
+[loc_2202]
+model=model_loc_2202
+hillskew=yes
+
+[loc_2203]
+model=model_loc_2203
+hillskew=yes
+
+[loc_2204]
+model=model_loc_2204
+hillskew=yes
+
+[loc_2205]
+model=model_loc_2205
+hillskew=yes
+
+[loc_2206]
+model=model_loc_2206
+hillskew=yes
+
+[loc_2207]
+model=model_loc_2207
+hillskew=yes
+
+[loc_2208]
+model=model_loc_2208
+hillskew=yes
+
+[loc_2209]
+model=model_loc_2209
+hillskew=yes
+
+[loc_2210]
+name=Telescope
+desc=Looking through it makes far off things look closer!
+model=model_loc_2210
+length=3
+op1=Use

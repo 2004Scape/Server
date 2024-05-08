@@ -1,0 +1,9 @@
+[opnpc1,spirit_of_scorpius]
+~chatnpc(angry, "Who treads upon my grave?");
+if(%itgronigen_progress ! ^itgronigen_complete) {
+    ~chatnpc(angry, "How dare you disturb me!");
+    return;
+}
+switch_int(~p_choice2("Why can't you sleep, what's wrong?", 1, "Sorry! I'm too busy to hear your problems!", 2)) {
+
+}

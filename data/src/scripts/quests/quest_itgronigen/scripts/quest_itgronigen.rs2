@@ -1,0 +1,94 @@
+[oploc1,loc_2187]
+p_arrivedelay;
+if(%itgronigen_progress = ^itgronigen_not_started) {
+    mes("You climb down the ladder.");
+} else if(%itgronigen_progress < ^itgronigen_complete) {
+    // dialogue doesn't exist on OSRS
+    ~chatnpc_specific(nc_name(observatory_assistant), observatory_assistant, neutral, "Take great care down there.|Remember the goblins have taken over the cavern.");
+    ~chatplayer(neutral, "Oh, okay thanks for the warning.");
+    if_close;
+}
+@climb_ladder(0_37_147_52_51, false);
+
+[oploc1,loc_2188]
+p_arrivedelay;
+@climb_ladder(0_38_49_12_56, true);
+
+[oploc1,loc_2189]
+p_arrivedelay;
+@climb_ladder(0_38_49_8_29, true);
+
+[oploc1,loc_2190]
+p_arrivedelay;
+@climb_ladder(0_37_147_55_30, false);
+
+[oploc1,loc_2191] 
+mes("You open the chest.");
+~open_chest(loc_2194);
+
+[oploc1,loc_2192] 
+mes("You open the chest.");
+~open_chest(loc_2195);
+
+[oploc1,loc_2193] 
+mes("You open the chest.");
+~open_chest(loc_2196);
+
+[oploc1,loc_2197] 
+mes("You open the chest.");
+~open_chest(loc_2198);
+
+[oploc1,loc_2194] 
+mes("You close the chest.");
+~close_chest(loc_2191);
+
+[oploc1,loc_2195] 
+mes("You close the chest.");
+~close_chest(loc_2192);
+
+[oploc1,loc_2196] 
+mes("You close the chest.");
+~close_chest(loc_2193);
+
+[oploc1,loc_2198]
+mes("You close the chest.");
+~close_chest(loc_2197);
+
+[oploc2,loc_2194]
+mes("You search the chest.");
+mes("The chest contains a poisonous spider.");
+npc_add(coord, poison_spider_observatory, 500);
+~npc_retaliate(0);
+queue(poison_player, 0, 12);
+loc_change(loc_2191, 300);
+
+[oploc2,loc_2195]
+mes("You search the chest.");
+mes("The chest contains some antipoison.");
+loc_change(loc_2192, 300);
+if(inv_freespace(inv) = 0) {
+    mes("But you don't have space to carry it.");
+    return;
+}
+inv_add(inv, 1doseantipoison, 1);
+
+[oploc2,loc_2196]
+mes("You search the chest.");
+mes("The chest contains nothing.");
+
+[oploc2,loc_2198]
+mes("You search the chest.");
+mes("You find a small key inside.");
+loc_change(loc_2197, 300);
+if(~obj_gettotal(obj_601) > 0) {
+    mes("You already have a keep key.");
+    mes("Another one will be of no use.");
+    return;
+}
+inv_add(inv, obj_601, 1);
+
+[oploc1,loc_2210]
+p_delay(2);
+switch_int(%itgronigen_progress) {
+    case default: mes("It seems the telescope is not operational at the moment.");
+}
