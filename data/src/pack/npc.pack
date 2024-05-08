@@ -79,7 +79,7 @@
 78=npc_78
 79=death_wing
 80=npc_80
-81=npc_81
+81=cow_1
 82=lesser_demon
 83=greater_demon
 84=npc_84
@@ -395,7 +395,7 @@
 394=macro_event_river_troll4
 395=macro_event_river_troll5
 396=macro_event_river_troll6
-397=npc_397
+397=cow_2
 398=npc_398
 399=npc_399
 400=npc_400
@@ -953,7 +953,7 @@
 952=tut_fishing_spot
 953=tut_banker
 954=brother_brace
-955=npc_955
+955=cow_3
 956=macro_event_drunken_dwarf
 957=mubariz
 958=fadli

@@ -2338,7 +2338,7 @@ param=defend_sound,bat_hit
 param=death_sound,bat_death
 huntmode=aggressive_melee
 
-[npc_81]
+[cow_1]
 size=2
 walkanim=cow_walk
 readyanim=cow_ready
@@ -7457,7 +7457,7 @@ head1=model_44_obj_wear
 head2=model_52_idk_head
 head3=model_82_idk_head
 
-[npc_397]
+[cow_2]
 size=2
 walkanim=cow_walk
 readyanim=cow_ready
@@ -11615,7 +11615,7 @@ param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
 
-[npc_955]
+[cow_3]
 size=2
 walkanim=cow_walk
 readyanim=cow_ready
