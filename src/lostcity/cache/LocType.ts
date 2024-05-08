@@ -32,10 +32,10 @@ export default class LocType extends ConfigType {
             config.decodeType(server);
             config.decodeType(client);
 
-            if (config.active === -1) {
+            if (config.active === -1 && config.shapes) {
                 config.active = config.shapes.length > 0 && config.shapes[0] === 10 ? 1 : 0;
 
-                if (config.ops.length > 0) {
+                if (config.op && config.op.length > 0) {
                     config.active = 1;
                 }
             }
@@ -70,12 +70,12 @@ export default class LocType extends ConfigType {
     }
 
     // ----
-    models: number[] = [];
-    shapes: number[] = [];
+    models: Uint16Array | null = null;
+    shapes: Uint8Array | null = null;
     name: string | null = null;
     desc: string | null = null;
-    recol_s: number[] = [];
-    recol_d: number[] = [];
+    recol_s: Uint16Array | null = null;
+    recol_d: Uint16Array | null = null;
     width = 1;
     length = 1;
     blockwalk = true;
@@ -89,7 +89,7 @@ export default class LocType extends ConfigType {
     wallwidth = 16;
     ambient = 0;
     contrast = 0;
-    ops: (string | null)[] = [];
+    op: (string | null)[] | null = null;
     mapfunction = -1;
     mapscene = -1;
     mirror = false;
@@ -110,6 +110,8 @@ export default class LocType extends ConfigType {
     decode(code: number, dat: Packet) {
         if (code === 1) {
             const count = dat.g1();
+            this.models = new Uint16Array(count);
+            this.shapes = new Uint8Array(count);
 
             for (let i = 0; i < count; i++) {
                 this.models[i] = dat.g2();
@@ -150,13 +152,18 @@ export default class LocType extends ConfigType {
         } else if (code === 39) {
             this.contrast = dat.g1b();
         } else if (code >= 30 && code < 35) {
-            this.ops[code - 30] = dat.gjstr();
+            if (!this.op) {
+                this.op = new Array(5).fill(null);
+            }
 
-            if (this.ops[code - 30] === 'hidden') {
-                this.ops[code - 30] = null;
+            this.op[code - 30] = dat.gjstr();
+            if (this.op[code - 30] === 'hidden') {
+                this.op[code - 30] = null;
             }
         } else if (code === 40) {
             const count = dat.g1();
+            this.recol_s = new Uint16Array(count);
+            this.recol_d = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
                 this.recol_s[i] = dat.g2();

@@ -1,5 +1,6 @@
 // begins combat
 [label,player_melee_attack]
+p_stopaction;
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 

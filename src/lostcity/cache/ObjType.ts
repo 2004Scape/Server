@@ -48,8 +48,8 @@ export default class ObjType extends ConfigType {
 
             if (!members && config.members) {
                 config.tradeable = false;
-                config.ops = [];
-                config.iops = [];
+                config.op = null;
+                config.iop = null;
 
                 config.params.forEach((_, key): void => {
                     if (ParamType.get(key)?.autodisable) {
@@ -118,10 +118,10 @@ export default class ObjType extends ConfigType {
 
     // ----
     model = 0;
-    name: string | null = 'null';
+    name: string | null = null;
     desc: string | null = null;
-    recol_s: number[] = [];
-    recol_d: number[] = [];
+    recol_s: Uint16Array | null = null;
+    recol_d: Uint16Array | null = null;
     zoom2d = 2000;
     xan2d = 0;
     yan2d = 0;
@@ -133,8 +133,8 @@ export default class ObjType extends ConfigType {
     stackable = false;
     cost = 1;
     members = false;
-    ops: string[] = [];
-    iops: string[] = [];
+    op: (string | null)[] | null = null;
+    iop: (string | null)[] | null = null;
     manwear = -1;
     manwear2 = -1;
     manwearOffsetY = 0;
@@ -147,8 +147,8 @@ export default class ObjType extends ConfigType {
     manhead2 = -1;
     womanhead = -1;
     womanhead2 = -1;
-    countobj: number[] = [];
-    countco: number[] = [];
+    countobj: Uint16Array | null = null;
+    countco: Uint16Array | null = null;
     certlink = -1;
     certtemplate = -1;
 
@@ -207,11 +207,19 @@ export default class ObjType extends ConfigType {
         } else if (code === 27) {
             this.wearpos3 = dat.g1();
         } else if (code >= 30 && code < 35) {
-            this.ops[code - 30] = dat.gjstr();
+            if (!this.op) {
+                this.op = new Array(5).fill(null);
+            }
+            this.op[code - 30] = dat.gjstr();
         } else if (code >= 35 && code < 40) {
-            this.iops[code - 35] = dat.gjstr();
+            if (!this.iop) {
+                this.iop = new Array(5).fill(null);
+            }
+            this.iop[code - 35] = dat.gjstr();
         } else if (code === 40) {
             const count = dat.g1();
+            this.recol_s = new Uint16Array(count);
+            this.recol_d = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
                 this.recol_s[i] = dat.g2();
@@ -242,6 +250,10 @@ export default class ObjType extends ConfigType {
         } else if (code === 98) {
             this.certtemplate = dat.g2();
         } else if (code >= 100 && code < 110) {
+            if (!this.countobj || !this.countco) {
+                this.countobj = new Uint16Array(10);
+                this.countco = new Uint16Array(10);
+            }
             this.countobj[code - 100] = dat.g2();
             this.countco[code - 100] = dat.g2();
         } else if (code === 200) {
