@@ -1192,7 +1192,7 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let packet: Packet | null = this.netOut.head(); packet; packet = this.netOut.next()) {
+        for (let packet: Packet | null = this.netOut.pop() as Packet | null; packet; packet = this.netOut.pop() as Packet | null) {
             if (this.client.encryptor) {
                 packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
             }
@@ -1201,7 +1201,6 @@ export class NetworkPlayer extends Player {
             this.client.write(packet);
 
             packet.release();
-            packet.unlink();
         }
 
         this.client.flush();
