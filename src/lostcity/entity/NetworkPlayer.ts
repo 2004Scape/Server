@@ -420,7 +420,10 @@ export class NetworkPlayer extends Player {
                 }
 
                 const type = ObjType.get(item);
-                if ((packetType === ClientProt.OPHELD1 && !type.iops[0]) || (packetType === ClientProt.OPHELD2 && !type.iops[1]) || (packetType === ClientProt.OPHELD3 && !type.iops[2]) || (packetType === ClientProt.OPHELD4 && !type.iops[3])) {
+                if (!type.iop) {
+                    continue;
+                }
+                if ((packetType === ClientProt.OPHELD1 && !type.iop[0]) || (packetType === ClientProt.OPHELD2 && !type.iop[1]) || (packetType === ClientProt.OPHELD3 && !type.iop[2]) || (packetType === ClientProt.OPHELD4 && !type.iop[3])) {
                     continue;
                 }
 
@@ -623,12 +626,15 @@ export class NetworkPlayer extends Player {
                 }
 
                 const locType = LocType.get(loc.type);
+                if (!locType.op) {
+                    continue;
+                }
                 if (
-                    (packetType === ClientProt.OPLOC1 && !locType.ops[0]) ||
-                    (packetType === ClientProt.OPLOC2 && !locType.ops[1]) ||
-                    (packetType === ClientProt.OPLOC3 && !locType.ops[2]) ||
-                    (packetType === ClientProt.OPLOC4 && !locType.ops[3]) ||
-                    (packetType === ClientProt.OPLOC5 && !locType.ops[4])
+                    (packetType === ClientProt.OPLOC1 && !locType.op[0]) ||
+                    (packetType === ClientProt.OPLOC2 && !locType.op[1]) ||
+                    (packetType === ClientProt.OPLOC3 && !locType.op[2]) ||
+                    (packetType === ClientProt.OPLOC4 && !locType.op[3]) ||
+                    (packetType === ClientProt.OPLOC5 && !locType.op[4])
                 ) {
                     continue;
                 }
@@ -753,12 +759,15 @@ export class NetworkPlayer extends Player {
                 }
 
                 const npcType = NpcType.get(npc.type);
+                if (!npcType.op) {
+                    continue;
+                }
                 if (
-                    (packetType === ClientProt.OPNPC1 && !npcType.ops[0]) ||
-                    (packetType === ClientProt.OPNPC2 && !npcType.ops[1]) ||
-                    (packetType === ClientProt.OPNPC3 && !npcType.ops[2]) ||
-                    (packetType === ClientProt.OPNPC4 && !npcType.ops[3]) ||
-                    (packetType === ClientProt.OPNPC5 && !npcType.ops[4])
+                    (packetType === ClientProt.OPNPC1 && !npcType.op[0]) ||
+                    (packetType === ClientProt.OPNPC2 && !npcType.op[1]) ||
+                    (packetType === ClientProt.OPNPC3 && !npcType.op[2]) ||
+                    (packetType === ClientProt.OPNPC4 && !npcType.op[3]) ||
+                    (packetType === ClientProt.OPNPC5 && !npcType.op[4])
                 ) {
                     continue;
                 }
@@ -877,7 +886,10 @@ export class NetworkPlayer extends Player {
 
                 const objType = ObjType.get(obj.type);
                 // todo: validate all options
-                if ((packetType === ClientProt.OPOBJ1 && !objType.ops[0]) || (packetType === ClientProt.OPOBJ4 && !objType.ops[3])) {
+                if (!objType.op) {
+                    continue;
+                }
+                if ((packetType === ClientProt.OPOBJ1 && !objType.op[0]) || (packetType === ClientProt.OPOBJ4 && !objType.op[3])) {
                     continue;
                 }
 

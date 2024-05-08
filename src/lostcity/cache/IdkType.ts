@@ -61,10 +61,10 @@ export default class IdkType extends ConfigType {
 
     // ----
     type: number = -1;
-    models: number[] = [];
-    heads: Uint16Array = new Uint16Array(10).fill(-1);
-    recol_s: Uint16Array = new Uint16Array(10).fill(0);
-    recol_d: Uint16Array = new Uint16Array(10).fill(0);
+    models: Uint16Array | null = null;
+    heads: Uint16Array = new Uint16Array(5).fill(-1);
+    recol_s: Uint16Array = new Uint16Array(6).fill(0);
+    recol_d: Uint16Array = new Uint16Array(6).fill(0);
     disable: boolean = false;
 
     decode(code: number, dat: Packet): void {
@@ -72,6 +72,8 @@ export default class IdkType extends ConfigType {
             this.type = dat.g1();
         } else if (code === 2) {
             const count = dat.g1();
+            this.models = new Uint16Array(count);
+
             for (let i = 0; i < count; i++) {
                 this.models[i] = dat.g2();
             }

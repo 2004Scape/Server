@@ -57,7 +57,7 @@ export class Inventory {
         const container = new Inventory(type.size, stackType);
         container.type = inv;
 
-        if (type.stockobj.length) {
+        if (type.stockobj && type.stockcount && type.stockobj.length) {
             for (let i = 0; i < type.stockobj.length; i++) {
                 container.set(i, {
                     id: type.stockobj[i],
@@ -154,7 +154,7 @@ export class Inventory {
 
     add(id: number, count = 1, beginSlot = -1, assureFullInsertion = true, forceNoStack = false, dryRun = false) {
         const type = ObjType.get(id);
-        const stockObj = InvType.get(this.type).stockobj.includes(id);
+        const stockObj = InvType.get(this.type).stockobj?.includes(id) === true;
         const stack = !forceNoStack && this.stackType != Inventory.NEVER_STACK && (type.stackable || this.stackType == Inventory.ALWAYS_STACK);
 
         let previousCount = 0;
@@ -239,7 +239,7 @@ export class Inventory {
 
     remove(id: number, count = 1, beginSlot = -1, assureFullRemoval = false) {
         const hasCount = this.getItemCount(id);
-        const stockObj = InvType.get(this.type).stockobj.includes(id);
+        const stockObj = InvType.get(this.type).stockobj?.includes(id) === true;
 
         if (assureFullRemoval && hasCount < count) {
             return new InventoryTransaction(count, 0, []);
