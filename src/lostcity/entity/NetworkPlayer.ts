@@ -420,10 +420,12 @@ export class NetworkPlayer extends Player {
                 }
 
                 const type = ObjType.get(item);
-                if (!type.iop) {
-                    continue;
-                }
-                if ((packetType === ClientProt.OPHELD1 && !type.iop[0]) || (packetType === ClientProt.OPHELD2 && !type.iop[1]) || (packetType === ClientProt.OPHELD3 && !type.iop[2]) || (packetType === ClientProt.OPHELD4 && !type.iop[3])) {
+                if (
+                    (packetType === ClientProt.OPHELD1 && ((type.iop && !type.iop[0]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD2 && ((type.iop && !type.iop[1]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD3 && ((type.iop && !type.iop[2]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD4 && ((type.iop && !type.iop[3]) || !type.iop))
+                ) {
                     continue;
                 }
 
@@ -886,10 +888,10 @@ export class NetworkPlayer extends Player {
 
                 const objType = ObjType.get(obj.type);
                 // todo: validate all options
-                if (!objType.op) {
-                    continue;
-                }
-                if ((packetType === ClientProt.OPOBJ1 && !objType.op[0]) || (packetType === ClientProt.OPOBJ4 && !objType.op[3])) {
+                if (
+                    (packetType === ClientProt.OPOBJ1 && ((objType.op && !objType.op[0]) || !objType.op)) ||
+                    (packetType === ClientProt.OPOBJ4 && ((objType.op && !objType.op[3]) || !objType.op))
+                ) {
                     continue;
                 }
 
