@@ -64,8 +64,8 @@ export default class SpotanimType extends ConfigType {
     model: number = 0;
     anim: number = -1;
     hasalpha: boolean = false;
-    recol_s: Int32Array = new Int32Array(10);
-    recol_d: Int32Array = new Int32Array(10);
+    recol_s: Uint16Array = new Uint16Array(6);
+    recol_d: Uint16Array = new Uint16Array(6);
     resizeh: number = 128;
     resizev: number = 128;
     orientation: number = 0;

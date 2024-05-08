@@ -39,6 +39,8 @@ export default abstract class PathingEntity extends Entity {
     exactMoveEnd: number = -1;
     exactMoveDirection: number = -1;
 
+    pathfinding: boolean = false;
+
     protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
@@ -163,6 +165,7 @@ export default abstract class PathingEntity extends Entity {
     queueWaypoint(x: number, z: number): void {
         this.waypoints[0] = Position.packCoord(0, x, z); // level doesn't matter here
         this.waypointIndex = 0;
+        this.pathfinding = true;
     }
 
     /**
@@ -170,10 +173,13 @@ export default abstract class PathingEntity extends Entity {
      * @param waypoints The waypoints to queue.
      */
     queueWaypoints(waypoints: ArrayLike<number>): void {
-        for (let input: number = waypoints.length - 1, output: number = 0; input >= 0, output < this.waypoints.length; input--, output++) {
+        let index: number = -1;
+        for (let input: number = waypoints.length - 1, output: number = 0; input >= 0 && output < this.waypoints.length; input--, output++) {
             this.waypoints[output] = waypoints[input];
+            index++;
         }
-        this.waypointIndex = waypoints.length - 1;
+        this.waypointIndex = index;
+        this.pathfinding = true;
     }
 
     clearWaypoints(): void {
@@ -324,6 +330,9 @@ export default abstract class PathingEntity extends Entity {
         this.exactMoveStart = -1;
         this.exactMoveEnd = -1;
         this.exactMoveDirection = -1;
+        if (!this.hasWaypoints()) {
+            this.pathfinding = false;
+        }
     }
 
     private takeStep(): number | null {

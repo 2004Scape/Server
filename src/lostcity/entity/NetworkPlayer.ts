@@ -420,7 +420,12 @@ export class NetworkPlayer extends Player {
                 }
 
                 const type = ObjType.get(item);
-                if ((packetType === ClientProt.OPHELD1 && !type.iops[0]) || (packetType === ClientProt.OPHELD2 && !type.iops[1]) || (packetType === ClientProt.OPHELD3 && !type.iops[2]) || (packetType === ClientProt.OPHELD4 && !type.iops[3])) {
+                if (
+                    (packetType === ClientProt.OPHELD1 && ((type.iop && !type.iop[0]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD2 && ((type.iop && !type.iop[1]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD3 && ((type.iop && !type.iop[2]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD4 && ((type.iop && !type.iop[3]) || !type.iop))
+                ) {
                     continue;
                 }
 
@@ -623,12 +628,15 @@ export class NetworkPlayer extends Player {
                 }
 
                 const locType = LocType.get(loc.type);
+                if (!locType.op) {
+                    continue;
+                }
                 if (
-                    (packetType === ClientProt.OPLOC1 && !locType.ops[0]) ||
-                    (packetType === ClientProt.OPLOC2 && !locType.ops[1]) ||
-                    (packetType === ClientProt.OPLOC3 && !locType.ops[2]) ||
-                    (packetType === ClientProt.OPLOC4 && !locType.ops[3]) ||
-                    (packetType === ClientProt.OPLOC5 && !locType.ops[4])
+                    (packetType === ClientProt.OPLOC1 && !locType.op[0]) ||
+                    (packetType === ClientProt.OPLOC2 && !locType.op[1]) ||
+                    (packetType === ClientProt.OPLOC3 && !locType.op[2]) ||
+                    (packetType === ClientProt.OPLOC4 && !locType.op[3]) ||
+                    (packetType === ClientProt.OPLOC5 && !locType.op[4])
                 ) {
                     continue;
                 }
@@ -646,6 +654,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APLOC5;
                 }
 
+                this.pathfinding = false;
                 this.setInteraction(loc, mode);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -697,6 +706,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(loc, ServerTriggerType.APLOCU);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -732,6 +742,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(loc, ServerTriggerType.APLOCT, spellComId);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -750,12 +761,15 @@ export class NetworkPlayer extends Player {
                 }
 
                 const npcType = NpcType.get(npc.type);
+                if (!npcType.op) {
+                    continue;
+                }
                 if (
-                    (packetType === ClientProt.OPNPC1 && !npcType.ops[0]) ||
-                    (packetType === ClientProt.OPNPC2 && !npcType.ops[1]) ||
-                    (packetType === ClientProt.OPNPC3 && !npcType.ops[2]) ||
-                    (packetType === ClientProt.OPNPC4 && !npcType.ops[3]) ||
-                    (packetType === ClientProt.OPNPC5 && !npcType.ops[4])
+                    (packetType === ClientProt.OPNPC1 && !npcType.op[0]) ||
+                    (packetType === ClientProt.OPNPC2 && !npcType.op[1]) ||
+                    (packetType === ClientProt.OPNPC3 && !npcType.op[2]) ||
+                    (packetType === ClientProt.OPNPC4 && !npcType.op[3]) ||
+                    (packetType === ClientProt.OPNPC5 && !npcType.op[4])
                 ) {
                     continue;
                 }
@@ -773,6 +787,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APNPC5;
                 }
 
+                this.pathfinding = false;
                 this.setInteraction(npc, mode);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -817,6 +832,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(npc, ServerTriggerType.APNPCU);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -846,6 +862,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(npc, ServerTriggerType.APNPCT, spellComId);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -871,7 +888,10 @@ export class NetworkPlayer extends Player {
 
                 const objType = ObjType.get(obj.type);
                 // todo: validate all options
-                if ((packetType === ClientProt.OPOBJ1 && !objType.ops[0]) || (packetType === ClientProt.OPOBJ4 && !objType.ops[3])) {
+                if (
+                    (packetType === ClientProt.OPOBJ1 && ((objType.op && !objType.op[0]) || !objType.op)) ||
+                    (packetType === ClientProt.OPOBJ4 && ((objType.op && !objType.op[3]) || !objType.op))
+                ) {
                     continue;
                 }
 
@@ -888,6 +908,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APOBJ5;
                 }
 
+                this.pathfinding = false;
                 this.setInteraction(obj, mode);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -939,6 +960,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(obj, ServerTriggerType.APOBJU);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -974,6 +996,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(obj, ServerTriggerType.APOBJT, spellComId);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -1003,6 +1026,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APPLAYER4;
                 }
 
+                this.pathfinding = false;
                 this.setInteraction(player, mode);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1048,6 +1072,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(player, ServerTriggerType.APPLAYERU, item);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1079,6 +1104,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
 
+                this.pathfinding = false;
                 this.setInteraction(player, ServerTriggerType.APPLAYERT, spellComId);
                 pathfindX = player.x;
                 pathfindZ = player.z;

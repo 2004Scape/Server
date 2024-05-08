@@ -13,6 +13,7 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
+param=death_anim,midget_death
 
 [child_brown]
 vislevel=hide
@@ -31,3 +32,4 @@ model1=model_2897_npc
 model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
+param=death_anim,midget_death

@@ -283,9 +283,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_APRANGE]: checkedHandler(ProtectedActivePlayer, state => {
-        const apRange = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.apRange = apRange;
+        state.activePlayer.apRange = check(state.popInt(), NumberNotNull);
         state.activePlayer.apRangeCalled = true;
     }),
 
@@ -329,9 +327,6 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
-        if (state.activePlayer.hasWaypoints()) {
-            return;
-        }
         if (state.activePlayer.target !== null) {
             return;
         }
@@ -339,7 +334,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
-        const spellId = state.popInt();
+        const spellId: number = state.popInt();
         if (state.activePlayer.target !== null) {
             return;
         }
@@ -847,9 +842,6 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opplayer: ${type + 1}`);
         }
-        if (state.activePlayer.hasWaypoints()) {
-            return;
-        }
         if (state.activePlayer.target !== null) {
             return;
         }
@@ -955,9 +947,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_OPPLAYERT]: checkedHandler(ProtectedActivePlayer, state => {
         const spellId = state.popInt();
-        if (state.activePlayer.hasWaypoints()) {
-            return;
-        }
         if (state.activePlayer.target !== null) {
             return;
         }

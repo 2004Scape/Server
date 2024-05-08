@@ -838,34 +838,34 @@ class World {
             // Increase or Decrease shop stock
             const invType = InvType.get(inv.type);
 
-            if (invType.restock) {
-                inv.items.forEach((item, index) => {
-                    if (item) {
-                        // Item stock is under min
-                        if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
-                            inv.add(item?.id, 1, index, true, false, false);
-                            inv.update = true;
-                            return;
-                        }
+            if (!invType.restock || !invType.stockcount || !invType.stockrate) {
+                continue;
+            }
 
-                        // Item stock is over min
-                        if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
-                            inv.remove(item?.id, 1, index, true);
-                            inv.update = true;
-                            return;
-                        }
+            for (let index: number = 0; index < inv.items.length; index++) {
+                const item = inv.items[index];
+                if (!item) {
+                    continue;
+                }
+                // Item stock is under min
+                if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                    inv.add(item?.id, 1, index, true, false, false);
+                    inv.update = true;
+                    continue;
+                }
+                // Item stock is over min
+                if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                    inv.remove(item?.id, 1, index, true);
+                    inv.update = true;
+                    continue;
+                }
 
-                        // Item stock is not listed, such as general stores
-                        // Tested on low and high player count worlds, ever 1 minute stock decreases.
-                        if (invType.allstock) {
-                            if (!invType.stockcount[index] && this.currentTick % 100 === 0) {
-                                inv.remove(item?.id, 1, index, true);
-                                inv.update = true;
-                                return;
-                            }
-                        }
-                    }
-                });
+                // Item stock is not listed, such as general stores
+                // Tested on low and high player count worlds, ever 1 minute stock decreases.
+                if (invType.allstock && !invType.stockcount[index] && this.currentTick % 100 === 0) {
+                    inv.remove(item?.id, 1, index, true);
+                    inv.update = true;
+                }
             }
         }
         cleanup = Date.now() - cleanup;

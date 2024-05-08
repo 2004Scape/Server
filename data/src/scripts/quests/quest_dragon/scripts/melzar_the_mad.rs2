@@ -71,13 +71,13 @@ spotanim_npc(bind_casting, 92, 0);
 world_delay(2); // delay cabbage spawn by 2 ticks
 clearqueue(playerhit_n_retaliate); // todo figure out if this is actually what happens. Could be npc delay? could be p_stopaction?
 obj_add($cabbage_coord, cabbage, 1, 100);
-spotanim_map(spotanim_86, $cabbage_coord, 124, 0);
+spotanim_map(small_smokepuff, $cabbage_coord, 124, 0);
 
 [proc,npc_zap_attack]
 if_close;
 
 npc_anim(zap, 0);
-spotanim_npc(spotanim_82, 92, 0);
+spotanim_npc(zap, 92, 0);
 sound_synth(zap, 0, 0);
 
 def_int $damage = 0;

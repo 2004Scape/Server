@@ -251,11 +251,14 @@ describe('Packet', () => {
     describe('test rsa', () => {
         it('rsa', () => {
             const priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
-            const expected = Packet.alloc(0);
+            const expected = new Packet(new Uint8Array(65 + 1));
+            expected.pjstr('jordan');
+            expected.pjstr('pazaz');
             expected.rsaenc(priv);
-            const result = new Packet(expected.data);
+            const result = new Packet(Uint8Array.from(expected.data));
             result.rsadec(priv);
-            expect(result.data).toStrictEqual(expected.data);
+            expect(result.gjstr()).toBe('jordan');
+            expect(result.gjstr()).toBe('pazaz');
             expected.release();
         });
     });
@@ -275,6 +278,21 @@ describe('Packet', () => {
             expect(result.gBit(7)).toBe(13);
             result.bytes();
             expected.release();
+        });
+    });
+
+    describe('CRC', () => {
+        it('should create and validate the CRC', () => {
+            const data = '123456789';
+            const value = new Uint8Array(Buffer.from(data));
+            const crc = Packet.getcrc(value, 0, value.length);
+            expect(crc).toEqual(-873187034);
+
+            const isValid = Packet.checkcrc(value, 0, value.length, crc);
+            expect(isValid).toEqual(true);
+
+            const hex = ((crc) >>> 0).toString(16);
+            expect(hex).toEqual('cbf43926');
         });
     });
 });

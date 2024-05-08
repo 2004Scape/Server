@@ -64,9 +64,9 @@ export default class InvType extends ConfigType {
     stackall = false;
     restock = false;
     allstock = false;
-    stockobj: number[] = [];
-    stockcount: number[] = [];
-    stockrate: number[] = [];
+    stockobj: Uint16Array | null = null;
+    stockcount: Uint16Array | null = null;
+    stockrate: Int32Array | null = null;
     protect = true;
     runweight = false; // inv contributes to weight
     dummyinv = false; // inv only accepts objs with dummyitem=inv_only
@@ -81,9 +81,9 @@ export default class InvType extends ConfigType {
         } else if (code === 4) {
             const count = dat.g1();
 
-            this.stockobj = new Array(count);
-            this.stockcount = new Array(count);
-            this.stockrate = new Array(count);
+            this.stockobj = new Uint16Array(count);
+            this.stockcount = new Uint16Array(count);
+            this.stockrate = new Int32Array(count);
 
             for (let j = 0; j < count; j++) {
                 this.stockobj[j] = dat.g2();

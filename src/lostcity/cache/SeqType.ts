@@ -62,11 +62,11 @@ export default class SeqType extends ConfigType {
 
     // ----
 
-    frames: number[] = [];
-    iframes: number[] = [];
-    delay: number[] = [];
+    frames: Int32Array | null = null;
+    iframes: Int32Array | null = null;
+    delay: Int32Array | null = null;
     replayoff: number = -1;
-    walkmerge: number[] = [];
+    walkmerge: Int32Array | null = null;
     stretches: boolean = false;
     priority: number = 5;
     mainhand: number = -1;
@@ -78,6 +78,9 @@ export default class SeqType extends ConfigType {
     decode(code: number, dat: Packet) {
         if (code === 1) {
             const count = dat.g1();
+            this.frames = new Int32Array(count);
+            this.iframes = new Int32Array(count);
+            this.delay = new Int32Array(count);
 
             for (let i = 0; i < count; i++) {
                 this.frames[i] = dat.g2();
@@ -102,6 +105,7 @@ export default class SeqType extends ConfigType {
             this.replayoff = dat.g2();
         } else if (code === 3) {
             const count = dat.g1();
+            this.walkmerge = new Int32Array(count + 1);
 
             for (let i = 0; i < count; i++) {
                 this.walkmerge[i] = dat.g1();
