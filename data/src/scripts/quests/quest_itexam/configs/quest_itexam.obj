@@ -1,4 +1,4 @@
-[obj_669]
+[specimen_jar]
 name=Specimen jar
 desc=A receptacle for specimens!
 model=model_2371_obj
@@ -8,7 +8,7 @@ model=model_2371_obj
 weight=2oz
 members=yes
 
-[obj_670]
+[specimen_brush]
 name=Specimen brush
 desc=A small brush used to clean rock samples.
 model=model_2385_obj
@@ -67,7 +67,7 @@ name=Rock sample
 desc=A rough shaped piece of rock.
 members=yes
 
-[obj_675]
+[rock_pick]
 name=Rock pick
 desc=A small pick for cracking rock samples.
 model=model_2792_obj
@@ -79,7 +79,7 @@ model=model_2792_obj
 weight=2oz
 members=yes
 
-[obj_676]
+[trowel]
 name=Trowel
 desc=Used for digging!
 model=model_2630_obj
@@ -139,7 +139,7 @@ weight=4oz
 members=yes
 stackable=yes
 
-[obj_681]
+[talisman_of_zaros]
 name=Talisman of zaros
 desc=An unusual symbol of a lesser-known god.
 model=model_2449_obj
@@ -200,7 +200,7 @@ model=model_2683_obj
 weight=2oz
 members=yes
 
-[obj_686]
+[rusty_sword]
 name=Rusty sword
 desc=A decent enough weapon gone rusty.
 model=model_2608_obj
@@ -211,7 +211,7 @@ model=model_2608_obj
 weight=5lb
 members=yes
 
-[obj_687]
+[broken_arrow]
 name=Broken arrow
 desc=This must have been shot at high speed.
 model=model_2512_obj
@@ -235,7 +235,7 @@ model=model_2549_obj
 weight=1g
 members=yes
 
-[obj_689]
+[broken_staff]
 model=model_2459_obj
 name=Broken staff
 desc=I pity the poor person beaten with this!
@@ -247,7 +247,7 @@ desc=I pity the poor person beaten with this!
 weight=4lb
 members=yes
 
-[obj_690]
+[broken_glass]
 name=Broken glass
 desc=Watch those feet!
 model=model_2676_obj
@@ -310,7 +310,7 @@ recol2d=5248
 weight=2oz
 members=yes
 
-[obj_695]
+[old_tooth]
 name=Old tooth
 desc=Now if I can just find a tooth fairy to sell this to...
 model=model_2522_obj
@@ -479,7 +479,7 @@ recol1d=3171
 weight=35g
 members=yes
 
-[obj_708]
+[arcenia_root]
 name=Arcenia root
 desc=The root of an Arcenia plant.
 model=model_2629_obj
