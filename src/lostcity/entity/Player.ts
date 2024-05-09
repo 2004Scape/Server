@@ -1022,7 +1022,7 @@ export default class Player extends PathingEntity {
     }
 
     setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: number) {
-        if (this.pathfinding) {
+        if (this.hasWaypoints()) {
             return;
         }
         if (this.delayed()) {
@@ -1141,8 +1141,6 @@ export default class Player extends PathingEntity {
         // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
 
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
-            this.pathfinding = false;
-
             const target = this.target;
             this.target = null;
             const state = ScriptRunner.init(opTrigger, this, target);
@@ -1155,8 +1153,6 @@ export default class Player extends PathingEntity {
 
             this.interacted = true;
         } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
-            this.pathfinding = false;
-
             const target = this.target;
             this.target = null;
             const state = ScriptRunner.init(apTrigger, this, target);
@@ -1173,8 +1169,6 @@ export default class Player extends PathingEntity {
 
             this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
-            this.pathfinding = false;
-
             if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
@@ -1215,7 +1209,6 @@ export default class Player extends PathingEntity {
             this.interacted = false;
 
             if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
-                this.pathfinding = false;
 
                 const target = this.target;
                 this.target = null;
@@ -1229,7 +1222,6 @@ export default class Player extends PathingEntity {
 
                 this.interacted = true;
             } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
-                this.pathfinding = false;
                 this.apRangeCalled = false;
 
                 const target = this.target;
@@ -1248,8 +1240,6 @@ export default class Player extends PathingEntity {
 
                 this.interacted = true;
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
-                this.pathfinding = false;
-
                 if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                     let debugname = '_';
                     if (this.target instanceof Npc) {

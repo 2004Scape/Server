@@ -39,8 +39,6 @@ export default abstract class PathingEntity extends Entity {
     exactMoveEnd: number = -1;
     exactMoveDirection: number = -1;
 
-    pathfinding: boolean = false;
-
     protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
@@ -165,7 +163,6 @@ export default abstract class PathingEntity extends Entity {
     queueWaypoint(x: number, z: number): void {
         this.waypoints[0] = Position.packCoord(0, x, z); // level doesn't matter here
         this.waypointIndex = 0;
-        this.pathfinding = true;
     }
 
     /**
@@ -179,7 +176,6 @@ export default abstract class PathingEntity extends Entity {
             index++;
         }
         this.waypointIndex = index;
-        this.pathfinding = true;
     }
 
     clearWaypoints(): void {
@@ -330,9 +326,6 @@ export default abstract class PathingEntity extends Entity {
         this.exactMoveStart = -1;
         this.exactMoveEnd = -1;
         this.exactMoveDirection = -1;
-        if (!this.hasWaypoints()) {
-            this.pathfinding = false;
-        }
     }
 
     private takeStep(): number | null {
