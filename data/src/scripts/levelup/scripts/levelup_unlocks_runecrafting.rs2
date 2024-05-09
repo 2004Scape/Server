@@ -19,12 +19,16 @@ switch_int(stat_base(runecraft)) {
     case 44: ~objboxt(naturerune,"You can now craft @dbl@Nature Runes@bla@."); // confirmed
     // case 46: ~objboxt(bodyrune,"You can now receive 2 @dbl@Body Runes@bla@.");
     // case 52: ~objboxt(earthrune,"You can now receive 3 @dbl@Earth Runes@bla@.");
-    case 54: ~objboxt(lawrune,"You can now craft @dbl@Law Runes@bla@.");
+    // https://oldschool.runescape.wiki/w/Law_Altar
+    // 08/24/2004
+    // case 54: ~objboxt(lawrune,"You can now craft @dbl@Law Runes@bla@.");
     // case 55: ~objboxt(airrune,"You can now receive 4 @dbl@Air Runes@bla@.");
     // case 56: ~objboxt(mindrune,"You can now receive 5 @dbl@Mind Runes@bla@.");
     // case 57: ~objboxt(waterrune,"You can now receive 4 @dbl@Water Runes@bla@.");
     // case 59: ~objboxt(cosmicrune,"You can now receive 2 @dbl@Cosmic Runes@bla@.");
-    case 65: ~objboxt(deathrune,"You can now craft @dbl@Death Runes@bla@.");
+    // https://oldschool.runescape.wiki/w/Death_Altar
+    // 10/17/2005
+    // case 65: ~objboxt(deathrune,"You can now craft @dbl@Death Runes@bla@.");
     // case 66: ~objboxt(airrune,"You can now receive 7 @dbl@Air Runes@bla@.");
     // case 70: ~doubleobjbox(mindrune,firerune,"You can now receive 6 @dbl@Mind Runes@bla@|and you can now receive 3 @dbl@Fire Runes@bla@.");
     // case 74: ~objboxt(chaosrune,"You can now receive 2 @dbl@Chaos Runes@bla@.");
