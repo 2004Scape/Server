@@ -654,7 +654,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APLOC5;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(loc, mode);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -705,8 +705,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(loc, ServerTriggerType.APLOCU);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -741,8 +740,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(loc, ServerTriggerType.APLOCT, spellComId);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -787,7 +785,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APNPC5;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(npc, mode);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -831,8 +829,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(npc, ServerTriggerType.APNPCU);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -861,8 +858,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(npc, ServerTriggerType.APNPCT, spellComId);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -908,7 +904,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APOBJ5;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(obj, mode);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -959,8 +955,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(obj, ServerTriggerType.APOBJU);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -995,8 +990,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(obj, ServerTriggerType.APOBJT, spellComId);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -1026,7 +1020,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APPLAYER4;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(player, mode);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1071,8 +1065,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(player, ServerTriggerType.APPLAYERU, item);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1103,8 +1096,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(player, ServerTriggerType.APPLAYERT, spellComId);
                 pathfindX = player.x;
                 pathfindZ = player.z;
