@@ -4784,7 +4784,7 @@ param=attack_sound,hacksword_slash
 // https://www.youtube.com/watch?v=QqLSZgZLwvA
 // https://www.youtube.com/watch?v=ympIobOpG4M
 // year 2024 attack seq_386 defend seq_387 and same animations used 2007 + original osrs launch
-huntmode=cowardly
+huntmode=queue20_trigger
 
 [chaos_druid]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
