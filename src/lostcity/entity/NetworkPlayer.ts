@@ -1138,17 +1138,15 @@ export class NetworkPlayer extends Player {
             }
         }
 
-        if (this.delayed()) {
-            this.unsetMapFlag();
-            pathfindRequest = false;
-            pathfindX = -1;
-            pathfindZ = -1;
-        }
-
         this.client?.reset();
 
         // process any pathfinder requests now
         if (pathfindRequest && pathfindX !== -1 && pathfindZ !== -1) {
+            if (this.delayed()) {
+                this.unsetMapFlag();
+                return;
+            }
+
             if (!this.target || this.target instanceof Loc || this.target instanceof Obj) {
                 this.faceEntity = -1;
                 this.mask |= Player.FACE_ENTITY;
