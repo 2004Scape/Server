@@ -2211,7 +2211,7 @@ model=model_2698_obj
 2dxan=104
 weight=3kg
 
-[obj_2373]
+[relic_part_1]
 name=Relic part 1
 desc=Part of an ogre relic.
 model=model_2585_obj
@@ -2223,7 +2223,7 @@ members=yes
 weight=1kg
 category=category_1399
 
-[obj_2374]
+[relic_part_2]
 name=Relic part 2
 desc=Part of an ogre relic.
 model=model_2587_obj
@@ -2233,7 +2233,7 @@ members=yes
 weight=1kg
 category=category_1399
 
-[obj_2375]
+[relic_part_3]
 name=Relic part 3
 desc=Part of an ogre relic.
 model=model_2588_obj
@@ -2243,7 +2243,7 @@ members=yes
 weight=1kg
 category=category_1399
 
-[obj_2376]
+[skavid_map]
 name=Skavid map
 desc=It's a map.
 model=model_2383_obj
@@ -2255,7 +2255,7 @@ model=model_2383_obj
 weight=10g
 members=yes
 
-[obj_2377]
+[ogre_tooth]
 name=Ogre tooth
 desc=Very tooth like.
 model=model_2522_obj
