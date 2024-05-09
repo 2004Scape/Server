@@ -1182,27 +1182,18 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        const out: Packet[] = this.netOut;
-        const length: number = out.length;
-        for (let index: number = 0; index < length; index++) {
-            const packet: Packet = out[index];
-
+        for (let packet: Packet | null = this.netOut.pop() as Packet | null; packet; packet = this.netOut.pop() as Packet | null) {
             if (this.client.encryptor) {
                 packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
             }
-
             World.lastCycleBandwidth[1] += packet.pos;
+
             this.client.write(packet);
+
+            packet.release();
         }
 
         this.client.flush();
-
-        // release the packets after flushing.
-        for (let index: number = 0; index < length; index++) {
-            out[index].release();
-        }
-
-        this.netOut = [];
     }
 
     writeImmediately(packet: Packet) {

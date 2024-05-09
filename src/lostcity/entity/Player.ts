@@ -48,7 +48,9 @@ import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import Environment from '#lostcity/util/Environment.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
+
 import LinkList from '#jagex2/datastruct/LinkList.js';
+import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
@@ -267,7 +269,7 @@ export default class Player extends PathingEntity {
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
 
-    netOut: Packet[] = [];
+    netOut: Stack = new Stack();
     lastResponse = -1;
 
     mask: number = 0;
