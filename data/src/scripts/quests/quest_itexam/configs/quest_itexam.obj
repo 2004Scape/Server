@@ -247,7 +247,7 @@ desc=I pity the poor person beaten with this!
 weight=4lb
 members=yes
 
-[broken_glass]
+[obj_690]
 name=Broken glass
 desc=Watch those feet!
 model=model_2676_obj
