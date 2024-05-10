@@ -1,3 +1,0 @@
-[ai_queue20,highwayman](int $arg)
-npc_say("Stand and deliver!");
-npc_setmode(opplayer2);
