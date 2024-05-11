@@ -19,6 +19,8 @@ import {
     DurationValid,
     InvTypeValid,
     ObjNotDummyValid,
+    ObjStackValid,
+    ObjTypeValid,
     ParamTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
 
@@ -32,10 +34,10 @@ const ObjOps: CommandHandlers = {
             return;
         }
 
-        check(objId/*, ObjTypeValid*/, ObjNotDummyValid);
+        check(objId, ObjTypeValid, ObjNotDummyValid);
         check(duration, DurationValid);
         check(coord, CoordValid);
-        // check(count, ObjStackValid);
+        check(count, ObjStackValid);
 
         const {level, x, z} = Position.unpackCoord(coord);
         const obj: Obj = new Obj(level, x, z, objId, count);
