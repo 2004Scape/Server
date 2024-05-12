@@ -15,7 +15,6 @@ if(last_useitem = pot_of_flour) {
 @nothing_interesting_happens;
 
 [label,make_swamp_paste]
-~require_members_use_item;
 mes("You mix the flour with the swamp tar.");
 mes("It mixes into a paste.");
 // no invspace check, add empty pot before paste 
@@ -37,7 +36,6 @@ if(last_useitem = damp_sticks) {
 @nothing_interesting_happens;
 
 [label,dry_damp_sticks] // 1-1 RSC, combined messages
-~require_members_use_item;
 mes("You hold the glass to the sun above the damp sticks.");
 p_delay(1);
 mes("The glass acts like a lens and drys the sticks out.");

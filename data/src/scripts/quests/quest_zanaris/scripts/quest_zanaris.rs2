@@ -77,7 +77,6 @@ if(last_useitem = knife) {
 @nothing_interesting_happens;
 
 [label,cut_dramenstaff]
-~require_members_use_item;
 if(stat(crafting) < 31) {
     mes("You need at least level 31 Crafting to make this into a staff.");
     return;
