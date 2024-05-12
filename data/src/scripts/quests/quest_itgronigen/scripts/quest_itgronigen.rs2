@@ -163,6 +163,7 @@ inv_add(inv, lens_mould, 1);
 if (last_useitem = molten_glass) @craft_telescope_disc;
 
 [label,craft_telescope_disc]
+~require_members_use_item;
 if(inv_total(inv, lens) > 0) {
     mes("You already have a lens made.");
     return;
