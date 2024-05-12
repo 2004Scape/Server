@@ -1231,5 +1231,5 @@ export class NetworkPlayer extends Player {
 }
 
 export function isNetworkPlayer(player: Player): player is NetworkPlayer {
-    return (player as NetworkPlayer).client !== null;
+    return (player as NetworkPlayer).client !== undefined;
 }
