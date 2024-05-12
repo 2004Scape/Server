@@ -134,10 +134,6 @@ scope=perm
 
 [varp_110]
 
-[varp_113]
-
-[varp_114]
-
 [bank_noted]
 transmit=yes
 scope=perm

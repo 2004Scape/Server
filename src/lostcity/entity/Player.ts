@@ -48,7 +48,9 @@ import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import Environment from '#lostcity/util/Environment.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
+
 import LinkList from '#jagex2/datastruct/LinkList.js';
+import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
@@ -267,7 +269,7 @@ export default class Player extends PathingEntity {
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
 
-    netOut: Packet[] = [];
+    netOut: Stack = new Stack();
     lastResponse = -1;
 
     mask: number = 0;
@@ -758,20 +760,8 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        if (this.target) {
-            const apTrigger = this.getApTrigger();
-            const outOfRange = !this.inApproachDistance(this.apRange, this.target) && apTrigger && !this.inOperableDistance(this.target);
-            const {x, z} = Position.unpackCoord(this.waypoints[0]);
-            const targetMoved = this.hasWaypoints() && (x !== this.target.x || z !== this.target.z);
-
-            // broken out to understand better
-            if (!this.hasWaypoints() && !this.interacted) {
-                this.pathToTarget();
-            } else if (outOfRange) {
-                this.pathToTarget();
-            } else if (targetMoved) {
-                this.pathToTarget();
-            }
+        if (this.target && !this.interacted) {
+            this.pathToTarget();
         }
 
         if (this.hasWaypoints() && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
@@ -1022,7 +1012,7 @@ export default class Player extends PathingEntity {
     }
 
     setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: number) {
-        if (this.pathfinding) {
+        if (this.hasWaypoints()) {
             return;
         }
         if (this.delayed()) {
@@ -1141,8 +1131,6 @@ export default class Player extends PathingEntity {
         // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
 
         if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
-            this.pathfinding = false;
-
             const target = this.target;
             this.target = null;
             const state = ScriptRunner.init(opTrigger, this, target);
@@ -1154,27 +1142,26 @@ export default class Player extends PathingEntity {
             }
 
             this.interacted = true;
+            this.clearWaypoints();
         } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
-            this.pathfinding = false;
-
             const target = this.target;
             this.target = null;
             const state = ScriptRunner.init(apTrigger, this, target);
 
             this.executeScript(state, true);
 
+            // if aprange was called then we did not interact.
             if (this.apRangeCalled) {
                 this.target = target;
+            } else {
+                this.clearWaypoints();
+                this.interacted = true;
             }
 
             if (this.target === null) {
                 this.unsetMapFlag();
             }
-
-            this.interacted = true;
         } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
-            this.pathfinding = false;
-
             if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
@@ -1201,6 +1188,7 @@ export default class Player extends PathingEntity {
             this.target = null;
             this.messageGame('Nothing interesting happens.');
             this.interacted = true;
+            this.clearWaypoints();
         }
 
         const moved = this.updateMovement();
@@ -1215,7 +1203,6 @@ export default class Player extends PathingEntity {
             this.interacted = false;
 
             if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
-                this.pathfinding = false;
 
                 const target = this.target;
                 this.target = null;
@@ -1228,8 +1215,8 @@ export default class Player extends PathingEntity {
                 }
 
                 this.interacted = true;
+                this.clearWaypoints();
             } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
-                this.pathfinding = false;
                 this.apRangeCalled = false;
 
                 const target = this.target;
@@ -1238,18 +1225,18 @@ export default class Player extends PathingEntity {
 
                 this.executeScript(state, true);
 
+                // if aprange was called then we did not interact.
                 if (this.apRangeCalled) {
                     this.target = target;
+                } else {
+                    this.clearWaypoints();
+                    this.interacted = true;
                 }
 
                 if (this.target === null) {
                     this.unsetMapFlag();
                 }
-
-                this.interacted = true;
             } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
-                this.pathfinding = false;
-
                 if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                     let debugname = '_';
                     if (this.target instanceof Npc) {
@@ -1272,6 +1259,7 @@ export default class Player extends PathingEntity {
                 this.target = null;
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
+                this.clearWaypoints();
             }
         }
 

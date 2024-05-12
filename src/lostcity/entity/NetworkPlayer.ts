@@ -659,7 +659,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APLOC5;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(loc, mode);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -714,8 +714,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(loc, ServerTriggerType.APLOCU);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -750,8 +749,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(loc, ServerTriggerType.APLOCT, spellComId);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -796,7 +794,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APNPC5;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(npc, mode);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -845,8 +843,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(npc, ServerTriggerType.APNPCU);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -875,8 +872,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(npc, ServerTriggerType.APNPCT, spellComId);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -922,7 +918,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APOBJ5;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(obj, mode);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -978,8 +974,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(obj, ServerTriggerType.APOBJU);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -1014,8 +1009,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(obj, ServerTriggerType.APOBJT, spellComId);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -1045,7 +1039,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APPLAYER4;
                 }
 
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(player, mode);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1094,8 +1088,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(player, ServerTriggerType.APPLAYERU, item);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1126,8 +1119,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
-                this.pathfinding = false;
+                this.clearWaypoints();
                 this.setInteraction(player, ServerTriggerType.APPLAYERT, spellComId);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1161,17 +1153,15 @@ export class NetworkPlayer extends Player {
             }
         }
 
-        if (this.delayed()) {
-            this.unsetMapFlag();
-            pathfindRequest = false;
-            pathfindX = -1;
-            pathfindZ = -1;
-        }
-
         this.client?.reset();
 
         // process any pathfinder requests now
         if (pathfindRequest && pathfindX !== -1 && pathfindZ !== -1) {
+            if (this.delayed()) {
+                this.unsetMapFlag();
+                return;
+            }
+
             if (!this.target || this.target instanceof Loc || this.target instanceof Obj) {
                 this.faceEntity = -1;
                 this.mask |= Player.FACE_ENTITY;
@@ -1215,27 +1205,18 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        const out: Packet[] = this.netOut;
-        const length: number = out.length;
-        for (let index: number = 0; index < length; index++) {
-            const packet: Packet = out[index];
-
+        for (let packet: Packet | null = this.netOut.pop() as Packet | null; packet; packet = this.netOut.pop() as Packet | null) {
             if (this.client.encryptor) {
                 packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
             }
-
             World.lastCycleBandwidth[1] += packet.pos;
+
             this.client.write(packet);
+
+            packet.release();
         }
 
         this.client.flush();
-
-        // release the packets after flushing.
-        for (let index: number = 0; index < length; index++) {
-            out[index].release();
-        }
-
-        this.netOut = [];
     }
 
     writeImmediately(packet: Packet) {
@@ -1273,5 +1254,5 @@ export class NetworkPlayer extends Player {
 }
 
 export function isNetworkPlayer(player: Player): player is NetworkPlayer {
-    return (player as NetworkPlayer).client !== null;
+    return (player as NetworkPlayer).client !== undefined;
 }

@@ -79,7 +79,7 @@
 78=npc_78
 79=death_wing
 80=npc_80
-81=npc_81
+81=cow_1
 82=lesser_demon
 83=greater_demon
 84=npc_84
@@ -395,7 +395,7 @@
 394=macro_event_river_troll4
 395=macro_event_river_troll5
 396=macro_event_river_troll6
-397=npc_397
+397=cow_2
 398=npc_398
 399=npc_399
 400=npc_400
@@ -485,12 +485,12 @@
 484=npc_484
 485=local_gnome
 486=kalron
-487=npc_487
-488=npc_488
-489=npc_489
-490=npc_490
-491=npc_491
-492=npc_492
+487=observatory_assistant
+488=observatory_professor
+489=goblin_guard
+490=observatory_professor_tower
+491=ghost_grave_of_scorpius
+492=spirit_of_scorpius
 493=npc_493
 494=npc_494
 495=npc_495
@@ -953,7 +953,7 @@
 952=tut_fishing_spot
 953=tut_banker
 954=brother_brace
-955=npc_955
+955=cow_3
 956=macro_event_drunken_dwarf
 957=mubariz
 958=fadli
@@ -1007,7 +1007,7 @@
 1006=sea_slug
 1007=npc_1007
 1008=hamid
-1009=npc_1009
+1009=poison_spider_observatory
 1010=npc_1010
 1011=npc_1011
 1012=npc_1012

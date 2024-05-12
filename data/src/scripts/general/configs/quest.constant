@@ -36,6 +36,7 @@
 ^ball_complete = 7
 ^murder_complete = 2
 ^hazeelcult_complete = 9
+^itgronigen_complete = 7
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -70,3 +71,4 @@
 ^ball_questpoints = 4
 ^murder_questpoints = 3
 ^hazeelcult_questpoints = 1
+^itgronigen_questpoints = 2
