@@ -1,0 +1,83 @@
+[opnpc1,observatory_assistant]
+switch_int(%itgronigen_progress) {
+    case ^itgronigen_claimed_wine:
+        ~chatnpc(happy, "Thanks again.");
+    case ^itgronigen_complete:
+        ~chatnpc(happy, "Well, hello again.|Thanks for helping out the professor.");
+		~chatnpc(happy, "You've made my life much easier!|Have a drink on me!");
+        inv_add(inv, jug_wine, 1);
+        %itgronigen_progress = ^itgronigen_claimed_wine;
+        ~objboxb(jug_wine, "The assistant gives you some wine.");
+        ~chatplayer(happy, "Thanks very much.");
+    case ^itgronigen_sent_telescope:
+        // guides don't mention you can claim the wine before finishing the quest so 
+        // i'm guessing it's the OSRS dialogue without the instructions on how to get there
+        ~chatplayer(neutral, "Hello again.");
+        ~chatnpc(happy, "Ah, it's the telescope repairman! The professor is waiting for you in the Observatory.");
+    case ^itgronigen_given_mould:
+        ~chatnpc(quiz, "How can I help you?");
+        switch_int(~p_choice2("I can't make the lens!", 1, "I dont need any help, thanks.", 2)) {
+            case 1:
+                ~chatplayer(sad, "I can't make the lens!");
+                ~chatnpc(neutral, "Crafting objects like this requires skill.|You may need to practice more first...");
+            case 2: @assistant_dontneedhelp;
+        }          
+    case ^itgronigen_given_glass:
+        ~chatnpc(quiz, "How can I help you?");
+        switch_int(~p_choice2("I can't find the lens mould.", 1, "I dont need any help, thanks.", 2)) {
+            case 1:
+                ~chatplayer(quiz, "I can't find the lens mould.");
+                ~chatnpc(quiz, "Can't you find the mould?");
+                // https://storage.googleapis.com/tannerdino/images/10_lens.png
+                ~chatnpc(neutral, "I'm sure I heard one of those goblins talking about it...|I bet they have hidden it somewhere.");
+            case 2: @assistant_dontneedhelp;
+        }  
+    case ^itgronigen_given_bronze:
+        ~chatnpc(quiz, "How can I help you?");
+        switch_int(~p_choice2("I'm having problems getting glass.", 1, "I dont need any help, thanks.", 2)) {
+            case 1:
+                ~chatplayer(quiz, "I'm having problems getting glass.");
+                ~chatnpc(quiz, "Don't you know how to make glass?");
+                ~chatnpc(neutral, "Unfortunately we dont have those skills.|I remember reading about that somewhere...");
+            case 2: @assistant_dontneedhelp;
+        }         
+    case ^itgronigen_given_planks:
+        ~chatnpc(quiz, "How can I help you?");
+        switch_int(~p_choice2("I can't see any bronze around.", 1, "I dont need any help, thanks.", 2)) {
+            case 1:
+                ~chatplayer(quiz, "I can't see any bronze around.");
+                ~chatnpc(neutral, "You'll need to use tin and copper ore on a furnace|to produce this metal.");
+            case 2: @assistant_dontneedhelp;
+        }       
+    case ^itgronigen_started:
+        ~chatnpc(quiz, "How can I help you?");
+        switch_int(~p_choice2("I can't find any planks!", 1, "I dont need any help, thanks.", 2)) {
+            case 1:
+                ~chatplayer(quiz, "I can't find any planks!");
+                ~chatnpc(neutral, "I understand planks can be found at the barbarian outpost, to the north east of Ardougne. You will probably have to trek over there to find some...");
+            case 2: @assistant_dontneedhelp;
+        }
+    case ^itgronigen_not_started:
+        ~chatnpc(neutral, "Hello wanderer.|Do you require any assistance?");
+        switch_int(~p_choice3("Yes, what do you two do here?", 1, "No, just looking around thanks.", 2, "Can I have a look through that telescope?", 3)) {
+            case 1:
+                ~chatplayer(quiz, "Yes, what do you two do here?");
+                ~chatnpc(happy, "Glad you ask. This is the Observatory reception.");
+                ~chatnpc(happy, "Up on the cliff is the Observatory dome,|from which you can view the heavens.");
+                ~chatnpc(sad, "That is, before the telescope was damaged by those monsters outside...");
+            case 2:
+                ~chatplayer(happy, "No, just looking around thanks.");
+                ~chatnpc(happy, "Okay, just don't break anything.|If you need any help, let me know.");
+                ~mesbox("The assistant continues with his work.");
+            case 3:
+                ~chatplayer(quiz, "Can I have a look through that telescope?");
+                ~chatnpc(neutral, "You can. You won't see much though.");
+                ~chatplayer(quiz, "And that's because?");
+                ~chatnpc(neutral, "Just talk to the professor. He'll fill you in.");
+        }
+}
+
+[label,assistant_dontneedhelp]
+~chatplayer(happy, "I dont need any help, thanks.");
+~chatnpc(happy, "Oh, okay then if you are sure.");
+~mesbox("The assistant continues with his work.");

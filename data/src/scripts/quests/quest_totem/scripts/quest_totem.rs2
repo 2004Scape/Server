@@ -128,7 +128,8 @@ if(stat(thieving) < 21) {
 }
 // doesn't use the stage varp here either even though it could
 %handelmort_traps_disabled = setbit(%handelmort_traps_disabled, 21);
-~mesbox("Your trained senses as a thief enable you to see that there is a trap in these stairs. You make a note of its location for future reference when using these stairs.");
+// https://storage.googleapis.com/tannerdino/images/7_10.png
+~mesbox("Your trained senses as a thief enable you|to see that there is a trap in these stairs.|You make a note of its location for|future reference when using these stairs.");
 
 [oploc1,loc_2709]
 ~open_chest(loc_2710);

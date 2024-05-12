@@ -599,9 +599,9 @@
 598=obj_598
 599=obj_599
 600=book_of_astrology
-601=obj_601
-602=obj_602
-603=obj_603
+601=keep_key
+602=lens_mould
+603=lens
 604=obj_604
 605=obj_605
 606=obj_606
@@ -1720,8 +1720,8 @@
 1719=cert_blessedstar
 1720=unstrung_emblem
 1721=cert_unstrung_emblem
-1722=obj_1722
-1723=cert_obj_1722
+1722=unpowered_symbol
+1723=cert_unpowered_symbol
 1724=unholy_symbol
 1725=amulet_of_strength
 1726=cert_amulet_of_strength

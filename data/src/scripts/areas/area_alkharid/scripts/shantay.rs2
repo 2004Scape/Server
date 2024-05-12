@@ -69,7 +69,8 @@ p_delay(3);
 
 [label,shantay_no_thanks_youre_not_having_my_money]
 ~chatplayer(neutral, "No thanks, you're not having my money.");
-~chatnpc(neutral, "You have a choice. You can either pay five gold pieces|or... You can be transported to a maximum security|prison in Port Sarim.");
+// https://storage.googleapis.com/tannerdino/images/rstransport13.gif
+~chatnpc(neutral, "You have a choice.|You can either pay five gold pieces or...|You can be transported to a maximum security prison|in Port Sarim.");
 ~chatnpc(neutral, "Will you pay the five gold pieces?");
 def_int $choice = ~p_choice2("Yes, okay.", 1, "No, do your worst!", 2);
 if ($choice = 1) {

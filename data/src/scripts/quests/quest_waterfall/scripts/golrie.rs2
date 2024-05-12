@@ -12,10 +12,10 @@ if (inv_total(inv, glarials_pebble) < 1) { // no bank check again
     p_delay(2);
     ~chatplayer(neutral, "Could I take this old pebble?");
     ~chatnpc(neutral, "Oh that, yes have it, it's just some old elven junk I believe.");
-    if_close;
     inv_add(inv, glarials_pebble, 1);
     %waterfall_golrie_and_puzzle = setbit(%waterfall_golrie_and_puzzle, 0); // gonna have waterfall_addl_values, bit 0 can be golrie's key, bits 1-18 will be pillars and runes
     if(inv_total(inv, golrie_key) > 0) {
+        if_close;
         mes("You give Golrie the key.");
         inv_del(inv, golrie_key, 1);
         p_delay(2);
