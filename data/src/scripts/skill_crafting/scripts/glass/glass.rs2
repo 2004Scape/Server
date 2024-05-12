@@ -7,6 +7,7 @@ if (last_useitem = molten_glass) @craft_glass_interface;
 
 [opheldu,molten_glass]
 if (last_useitem = glassblowing_pipe) @craft_glass_interface;
+if (last_useitem = lens_mould) @craft_telescope_disc;
 
 [label,sand_fill]
 ~require_members_feature;

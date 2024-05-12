@@ -5,12 +5,12 @@
 @open_astrology_book;
 
 [label,open_astrology_book]
-@book_flip_page(0, 0, 4, astrology_book);
+@book_flip_page(0, 0, 3, astrology_book);
 
 [proc,astrology_book]
 switch_int (%book_page) {
     case 0: ~book("The Tale of Scorpius", "A History of Astrology in|RuneScape.||At the start of the Fourth Age, a learned man by the name of Scorpius, known well for his powers of vision and magic, sought communion with the gods of the world.||After many years of study, seeking knowledge from the wise of that time, he developed a machine infused with magical power, infused with the ability to pierce into the very heavens - a huge eye that gave the user incredible sight, like never before.");
     case 1: ~book("The Tale of Scorpius", "As time passed, Scorpius grew adept at using his specialized skills, and followed the movements of the stars in RuneScape, which he mapped and named, and are still used to this very day.||Before long, Scorpius used his knowledge for predicting the future, and, in turn, he called upon the dark knowledge of Zamorakian worshippers to further his cause. Living below ground, the followers of the dark god remained until the civilisation of Ardougne grew in strength and control.");
-    case 2: ~book("The Tale of Scorpius", "The kings of that time worked to banish the Zamorakian followers in the area, hiding all reference to Scorpius's invention, due to its|'evil nature'.||Years after, when the minds of the kings lent more towards the research of the unknown, the plans of Scorpius were uncovered and the heavenly eye constructed|again.||Since then, many have studied the ways of the astrologer, Scorpius, and in his memory a grave was constructed near the Observatory.");
-    case 3: ~book("The Tale of Scorpius", "Some claim his ghost still wanders nearby, in torment as he seeks the secrets of the heavens that can never be solved. Tales tell that he will grant those adept in the arts of the astrologer a blessing of unusual power.||Here ends the tale of how astrology entered the known world.");
+    case 2: ~book("The Tale of Scorpius", "The kings of that time worked to banish the Zamorakian followers in the area, hiding all reference to Scorpius's invention, due to its|'evil nature'.||Years after, when the minds of the kings lent more towards the research of the unknown, the plans of Scorpius were uncovered and the heavenly eye constructed|again.||Since then, many have studied the ways of the astrologer, Scorpius, and in his memory a grave was constructed near");
+    case 3: ~book("The Tale of Scorpius", "the Observatory.||Some claim his ghost still wanders nearby, in torment as he seeks the secrets of the heavens that can never be solved. Tales tell that he will grant those adept in the arts of the astrologer a blessing of unusual power.||Here ends the tale of how astrology entered the known world.");
 }

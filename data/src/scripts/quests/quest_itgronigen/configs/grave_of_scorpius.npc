@@ -1,4 +1,4 @@
-[npc_491]
+[ghost_grave_of_scorpius]
 name=Ghost
 desc=Spooky!
 walkanim=ghost_walk
@@ -11,7 +11,11 @@ model1=model_2961_npc
 model2=model_2964_npc
 model3=model_2965_npc
 head1=model_10_npc_head
-// TODO
+respawnrate=50
+hitpoints=20
+attack=23
+strength=20
+defence=23
 param=attack_anim,ghost_attack
 param=defend_anim,ghost_block
 param=death_anim,ghost_death

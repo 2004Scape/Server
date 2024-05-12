@@ -1,2 +1,5 @@
 [itgronigen_progress]
 scope=perm
+
+[keepdoor_unlocked]
+scope=perm

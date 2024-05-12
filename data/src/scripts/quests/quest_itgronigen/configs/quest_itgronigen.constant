@@ -1,2 +1,21 @@
 ^itgronigen_not_started = 0
 ^itgronigen_started = 1
+^itgronigen_given_planks = 2
+^itgronigen_given_bronze = 3
+^itgronigen_given_glass = 4
+^itgronigen_given_mould = 5
+^itgronigen_sent_telescope = 6
+^itgronigen_claimed_wine = 8
+
+^sign_capricorn = 1
+^sign_virgo = 2
+^sign_libra = 3
+^sign_aquarius = 4
+^sign_scorpio = 5
+^sign_leo = 6
+^sign_aries = 7
+^sign_sagittarius = 8
+^sign_gemini = 9
+^sign_pisces = 10
+^sign_taurus = 11
+^sign_cancer = 12
