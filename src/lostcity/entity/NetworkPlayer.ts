@@ -967,6 +967,11 @@ export class NetworkPlayer extends Player {
                 if (this.delayed()) {
                     continue;
                 }
+                
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
 
                 this.lastUseItem = item;
                 this.lastUseSlot = slot;
