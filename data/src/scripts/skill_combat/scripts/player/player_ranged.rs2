@@ -48,6 +48,12 @@ if (~player_npc_hit_roll(%damagetype) = true) {
     ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
 }
 
+def_int $poison_severity = oc_param($ammo, poison_severity);
+if ($damage > 0 & $poison_severity > 0 & random(8) = 0) { // 1/8 chance to poison
+    // poison npc
+    ~npc_poison_start(max(sub($poison_severity, 14), 0)); // lowered by 14 if ranged attack
+}
+
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 def_int $delay = ~player_ranged_use_weapon($rhand, $ammo);
 anim(%com_attackanim, 0);

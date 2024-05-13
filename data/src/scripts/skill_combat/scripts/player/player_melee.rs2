@@ -31,6 +31,13 @@ if (~player_npc_hit_roll(%damagetype) = true) {
     ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
 }
 
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_int $poison_severity = oc_param($weapon, poison_severity);
+if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
+    // poison npc
+    ~npc_poison_start($poison_severity);
+}
+
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
@@ -42,7 +49,6 @@ if (npc_param(defend_sound) ! null) {
 }
 npc_heropoints($damage);
 // set the skill clock depending on the weapon attack rate
-def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
     %action_delay = add(map_clock, 4);
 } else {

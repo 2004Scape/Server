@@ -1,0 +1,43 @@
+[ai_timer,_] ~npc_poison_timer;
+
+[proc,npc_poison_timer]
+// Todo: Confirm this
+// OSRS Wiki:
+// "If a poisoned monster goes out of combat (no longer trying to attack) the effect of poison is immediately removed from the monster."
+if (npc_getmode ! applayer2 & npc_getmode ! opplayer2) {
+    ~npc_poison_clear;
+    return;
+}
+// if npc is already dead
+if (npc_stat(hitpoints) < 1) {
+    return;
+}
+// damage npc
+npc_damage(^hitmark_poison, divide(add(%npc_poison, 4), 5));
+
+if (npc_stat(hitpoints) > 0) { // if they lived from that damage:
+    %npc_poison = sub(%npc_poison, 1);
+    npc_settimer(30);
+    return;
+}
+// else they died
+npc_setmode(none);
+npc_queue(3, 0, 0);
+
+
+[proc,npc_poison_clear]
+%npc_poison = 0;
+
+
+[proc,npc_poison_start](int $severity)
+if (~npc_is_attackable(npc_type) = false) {
+    return;
+}
+if (map_members = false) {
+    return;
+}
+
+if (%npc_poison < 1) {
+    npc_settimer(30);
+}
+%npc_poison = $severity; // poison severity is reset
