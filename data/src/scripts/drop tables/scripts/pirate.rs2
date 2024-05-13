@@ -54,5 +54,5 @@ if ($random < 6) {
         obj_add(npc_coord, iron_bar, 1, ^lootdrop_duration);
     }
 } else if ($random < 110) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

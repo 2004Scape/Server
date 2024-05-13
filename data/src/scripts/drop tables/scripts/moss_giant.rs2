@@ -66,5 +66,5 @@ if ($random < 5) {
 } else if ($random < 89) {
     obj_add(npc_coord, spinach_roll, 1, ^lootdrop_duration);
 } else if ($random < 93) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

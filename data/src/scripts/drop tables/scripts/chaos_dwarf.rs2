@@ -53,5 +53,5 @@ if ($random < 2) {
 } else if ($random < 123) {
     obj_add(npc_coord, tomato, 1, ^lootdrop_duration);
 } else if ($random < 128) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

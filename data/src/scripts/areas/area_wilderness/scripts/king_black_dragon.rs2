@@ -67,9 +67,9 @@ if ($random < 10) { // osrs
 } else if ($random < 118) { // missing from osrs
     obj_add(npc_coord, mithril_battleaxe, 1, ^lootdrop_duration); // https://youtu.be/KDkdsTPeb_8?t=358
 } else if ($random < 126) { // osrs
-    ~lootdrop(npc_coord, ~ultrarare_getitem, ^lootdrop_duration);
+    obj_add(npc_coord, ~ultrarare_getitem, ^lootdrop_duration);
 } else { // osrs
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
 
 

@@ -3,6 +3,14 @@ if(%priest_progress = ^priest_complete) {
     mes("The ghost doesn't appear interested in talking."); 
     return;
 }
+
+// if (%priest_progress = 0) {
+//     // OSRS:
+//     ~chatnpc(neutral, "Wooooo! Ooooooh!");
+//     ~chatplayer(neutral, "I can't understand a word you are saying. Maybe Father Aereck will be able to help.");
+//     return;
+// }
+
 ~chatplayer(neutral, "Hello ghost, how are you?");
 if (inv_total(worn, amulet_of_ghostspeak) = 0) @priest_ghost_no_amulet;
 switch_int (%priest_progress) {
