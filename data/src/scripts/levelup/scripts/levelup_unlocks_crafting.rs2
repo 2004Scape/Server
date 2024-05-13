@@ -7,7 +7,7 @@ switch_int(stat_base(crafting)) {
     case 8: ~doubleobjbox(bowl_empty,gold_amulet,"You can now craft @dbl@Bowls@bla@ and @dbl@Gold Amulets@bla@.");
     case 9: ~objboxb(leather_cowl,"You can now craft @dbl@Bow Strings@bla@.");
     case 10: ~objboxt(bow_string,"Members can now craft @dbl@Leather Cowls@bla@.");
-    case 11: ~objboxt(leather_vambraces,"You can now craft @dbl@:eather Vambraces@bla@.");
+    case 11: ~objboxt(leather_vambraces,"You can now craft @dbl@Leather Vambraces@bla@.");
     case 13: ~objbox(jade,"Members can now cut @dbl@Jade@bla@ and craft @dbl@Jade Rings@bla@.");
     case 14: ~objboxt(leather_body,"You can now make @dbl@Leather Armour@bla@.");
     case 16: ~doubleobjbox(blessedstar,red_topaz,"You can now craft @dbl@Holy Symbols of Saradomin@bla@ and members can cut @dbl@Red Topaz@bla@.");
