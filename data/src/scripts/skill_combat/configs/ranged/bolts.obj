@@ -41,6 +41,7 @@ param=rangebonus,10
 param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
+param=poison_severity,20
 tradeable=yes
 
 [opal_bolt]

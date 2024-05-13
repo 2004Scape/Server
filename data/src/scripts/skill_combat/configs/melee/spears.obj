@@ -315,6 +315,7 @@ param=defend_anim,human_spear_def
 param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
+param=poison_severity,20
 
 [iron_spear_p]
 members=yes
@@ -353,6 +354,7 @@ param=defend_anim,human_spear_def
 param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
+param=poison_severity,20
 
 [steel_spear_p]
 members=yes
@@ -393,6 +395,7 @@ param=defend_anim,human_spear_def
 param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
+param=poison_severity,20
 
 [mithril_spear_p]
 members=yes
@@ -433,6 +436,7 @@ param=defend_anim,human_spear_def
 param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
+param=poison_severity,20
 
 [adamant_spear_p]
 members=yes
@@ -473,6 +477,7 @@ param=defend_anim,human_spear_def
 param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
+param=poison_severity,20
 
 [rune_spear_p]
 members=yes
@@ -513,6 +518,7 @@ param=defend_anim,human_spear_def
 param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
+param=poison_severity,20
 
 [dragon_spear_p]
 members=yes
@@ -554,3 +560,4 @@ param=defend_anim,human_dspear_def
 param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
+param=poison_severity,20
