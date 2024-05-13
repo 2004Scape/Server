@@ -30,6 +30,7 @@ param=rangeattack_sound,javelin
 param=proj_launch,bronze_javelin_launch
 param=proj_travel,bronze_javelin_travel
 param=weapon_poisoned,bronze_javelin_p
+param=weapon_poisoned_message,You poison the javelins.
 tradeable=yes
 
 [iron_javelin]
@@ -64,6 +65,7 @@ param=rangeattack_sound,javelin
 param=proj_launch,iron_javelin_launch
 param=proj_travel,iron_javelin_travel
 param=weapon_poisoned,iron_javelin_p
+param=weapon_poisoned_message,You poison the javelins.
 tradeable=yes
 
 [steel_javelin]
@@ -96,6 +98,7 @@ param=rangeattack_sound,javelin
 param=proj_launch,steel_javelin_launch
 param=proj_travel,steel_javelin_travel
 param=weapon_poisoned,steel_javelin_p
+param=weapon_poisoned_message,You poison the javelins.
 tradeable=yes
 
 [mithril_javelin]
@@ -130,6 +133,7 @@ param=rangeattack_sound,javelin
 param=proj_launch,mithril_javelin_launch
 param=proj_travel,mithril_javelin_travel
 param=weapon_poisoned,mithril_javelin_p
+param=weapon_poisoned_message,You poison the javelins.
 tradeable=yes
 
 [adamant_javelin]
@@ -164,6 +168,7 @@ param=rangeattack_sound,javelin
 param=proj_launch,adamant_javelin_launch
 param=proj_travel,adamant_javelin_travel
 param=weapon_poisoned,adamant_javelin_p
+param=weapon_poisoned_message,You poison the javelins.
 tradeable=yes
 
 [rune_javelin]
@@ -198,6 +203,7 @@ param=rangeattack_sound,javelin
 param=proj_launch,rune_javelin_launch
 param=proj_travel,rune_javelin_travel
 param=weapon_poisoned,rune_javelin_p
+param=weapon_poisoned_message,You poison the javelins.
 tradeable=yes
 
 [bronze_javelin_p]

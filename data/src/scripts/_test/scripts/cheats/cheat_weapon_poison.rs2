@@ -1,0 +1,59 @@
+[debugproc,wptest]
+if_close;
+if (p_finduid(uid) = true) {
+    ~require_members_feature;
+    def_int $choice = ~p_choice2_header("Yes.", 1, "No.", 2, "This clears your bank. Continue?");
+    if ($choice = 2) {
+        return;
+    }
+
+    inv_clear(bank);
+
+    inv_add(bank, weapon_poison, 10000);
+    inv_add(bank, bronze_dagger, 1000);
+    inv_add(bank, iron_dagger, 1000);
+    inv_add(bank, steel_dagger, 1000);
+    inv_add(bank, mithril_dagger, 1000);
+    inv_add(bank, adamant_dagger, 1000);
+    inv_add(bank, rune_dagger, 1000);
+    inv_add(bank, dragon_dagger, 1000);
+    inv_add(bank, black_dagger, 1000);
+
+    inv_add(bank, bronze_arrow, 1000);
+    inv_add(bank, iron_arrow, 1000);
+    inv_add(bank, steel_arrow, 1000);
+    inv_add(bank, mithril_arrow, 1000);
+    inv_add(bank, adamant_arrow, 1000);
+    inv_add(bank, rune_arrow, 1000);
+
+    inv_add(bank, bolt, 1000);
+
+    inv_add(bank, bronze_spear, 1000);
+    inv_add(bank, iron_spear, 1000);
+    inv_add(bank, steel_spear, 1000);
+    inv_add(bank, mithril_spear, 1000);
+    inv_add(bank, adamant_spear, 1000);
+    inv_add(bank, rune_spear, 1000);
+    inv_add(bank, dragon_spear, 1000);
+
+    inv_add(bank, bronze_knife, 1000);
+    inv_add(bank, iron_knife, 1000);
+    inv_add(bank, steel_knife, 1000);
+    inv_add(bank, mithril_knife, 1000);
+    inv_add(bank, adamant_knife, 1000);
+    inv_add(bank, rune_knife, 1000);
+
+    inv_add(bank, bronze_dart, 1000);
+    inv_add(bank, iron_dart, 1000);
+    inv_add(bank, steel_dart, 1000);
+    inv_add(bank, mithril_dart, 1000);
+    inv_add(bank, adamant_dart, 1000);
+    inv_add(bank, rune_dart, 1000);
+
+    inv_add(bank, bronze_javelin, 1000);
+    inv_add(bank, iron_javelin, 1000);
+    inv_add(bank, steel_javelin, 1000);
+    inv_add(bank, mithril_javelin, 1000);
+    inv_add(bank, adamant_javelin, 1000);
+    inv_add(bank, rune_javelin, 1000);
+}

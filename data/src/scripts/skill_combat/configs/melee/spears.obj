@@ -38,6 +38,7 @@ param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
 param=weapon_poisoned,bronze_spear_p
+param=weapon_poisoned_message,You poison a spear.
 
 [iron_spear]
 members=yes
@@ -77,6 +78,7 @@ param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
 param=weapon_poisoned,iron_spear_p
+param=weapon_poisoned_message,You poison a spear.
 
 [steel_spear]
 members=yes
@@ -118,6 +120,7 @@ param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
 param=weapon_poisoned,steel_spear_p
+param=weapon_poisoned_message,You poison a spear.
 
 [mithril_spear]
 members=yes
@@ -159,6 +162,7 @@ param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
 param=weapon_poisoned,mithril_spear_p
+param=weapon_poisoned_message,You poison a spear.
 
 [adamant_spear]
 members=yes
@@ -200,6 +204,7 @@ param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
 param=weapon_poisoned,adamant_spear_p
+param=weapon_poisoned_message,You poison a spear.
 
 [rune_spear]
 members=yes
@@ -241,6 +246,7 @@ param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
 param=weapon_poisoned,rune_spear_p
+param=weapon_poisoned_message,You poison a spear.
 
 [dragon_spear]
 members=yes
@@ -283,6 +289,7 @@ param=stab_sound,staff_stab
 param=slash_sound,staff_hit
 param=crush_sound,staff_hit
 param=weapon_poisoned,dragon_spear_p
+param=weapon_poisoned_message,You poison a spear.
 
 [bronze_spear_p]
 members=yes

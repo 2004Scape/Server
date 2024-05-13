@@ -19,6 +19,7 @@ param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
 tradeable=yes
 param=weapon_poisoned,bolt_p
+param=weapon_poisoned_message,You poison some bolts.
 
 [bolt_p]
 stackable=yes

@@ -28,6 +28,7 @@ param=rangeattack_sound,dart
 param=proj_launch,bronze_dart_launch
 param=proj_travel,bronze_dart_travel
 param=weapon_poisoned,bronze_dart_p
+param=weapon_poisoned_message,You poison some darts.
 tradeable=yes
 
 [iron_dart]
@@ -60,6 +61,7 @@ param=rangeattack_sound,dart
 param=proj_launch,iron_dart_launch
 param=proj_travel,iron_dart_travel
 param=weapon_poisoned,iron_dart_p
+param=weapon_poisoned_message,You poison some darts.
 tradeable=yes
 
 [steel_dart]
@@ -93,6 +95,7 @@ param=rangeattack_sound,dart
 param=proj_launch,steel_dart_launch
 param=proj_travel,steel_dart_travel
 param=weapon_poisoned,steel_dart_p
+param=weapon_poisoned_message,You poison some darts.
 tradeable=yes
 
 [mithril_dart]
@@ -125,6 +128,7 @@ param=rangeattack_sound,dart
 param=proj_launch,mithril_dart_launch
 param=proj_travel,mithril_dart_travel
 param=weapon_poisoned,mithril_dart_p
+param=weapon_poisoned_message,You poison some darts.
 tradeable=yes
 
 [adamant_dart]
@@ -157,6 +161,7 @@ param=rangeattack_sound,dart
 param=proj_launch,adamant_dart_launch
 param=proj_travel,adamant_dart_travel
 param=weapon_poisoned,adamant_dart_p
+param=weapon_poisoned_message,You poison some darts.
 tradeable=yes
 
 [rune_dart]
@@ -189,6 +194,7 @@ param=rangeattack_sound,dart
 param=proj_launch,rune_dart_launch
 param=proj_travel,rune_dart_travel
 param=weapon_poisoned,rune_dart_p
+param=weapon_poisoned_message,You poison some darts.
 tradeable=yes
 
 [bronze_dart_p]

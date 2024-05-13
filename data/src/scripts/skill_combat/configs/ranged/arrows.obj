@@ -27,6 +27,7 @@ tradeable=yes
 param=proj_launch,bronze_arrow_launch
 param=proj_travel,bronze_arrow_travel
 param=weapon_poisoned,bronze_arrow_p
+param=weapon_poisoned_message,You poison some arrows.
 
 [bronze_arrow_p]
 name=Bronze arrow(p)
@@ -88,6 +89,7 @@ tradeable=yes
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
 param=weapon_poisoned,iron_arrow_p
+param=weapon_poisoned_message,You poison some arrows.
 
 [iron_arrow_p]
 name=Iron arrow(p)
@@ -145,6 +147,7 @@ tradeable=yes
 param=proj_launch,steel_arrow_launch
 param=proj_travel,steel_arrow_travel
 param=weapon_poisoned,steel_arrow_p
+param=weapon_poisoned_message,You poison some arrows.
 
 [steel_arrow_p]
 name=Steel arrow(p)
@@ -205,6 +208,7 @@ tradeable=yes
 param=proj_launch,mithril_arrow_launch
 param=proj_travel,mithril_arrow_travel
 param=weapon_poisoned,mithril_arrow_p
+param=weapon_poisoned_message,You poison some arrows.
 
 [mithril_arrow_p]
 name=Mithril arrow(p)
@@ -267,6 +271,7 @@ tradeable=yes
 param=proj_launch,adamant_arrow_launch
 param=proj_travel,adamant_arrow_travel
 param=weapon_poisoned,adamant_arrow_p
+param=weapon_poisoned_message,You poison some arrows.
 
 [adamant_arrow_p]
 name=Adamant arrow(p)
@@ -329,6 +334,7 @@ tradeable=yes
 param=proj_launch,rune_arrow_launch
 param=proj_travel,rune_arrow_travel
 param=weapon_poisoned,rune_arrow_p
+param=weapon_poisoned_message,You poison some arrows.
 
 [rune_arrow_p]
 name=Rune arrow(p)

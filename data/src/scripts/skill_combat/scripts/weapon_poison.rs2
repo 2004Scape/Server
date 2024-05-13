@@ -1,0 +1,78 @@
+[opheldu,weapon_poison]
+if (oc_param(last_useitem, weapon_poisoned) ! null) {
+    @make_weapon_poisoned(last_useslot, last_slot);
+}
+@nothing_interesting_happens;
+
+[opheldu,_weapon_stab]
+switch_obj(last_useitem) {
+    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
+    case default: @nothing_interesting_happens;
+}
+
+[opheldu,_weapon_spear]
+switch_obj(last_useitem) {
+    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
+    case default: @nothing_interesting_happens;
+}
+
+[opheldu,_weapon_javelin]
+switch_obj(last_useitem) {
+    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
+    case default: @nothing_interesting_happens;
+}
+
+[opheldu,_weapon_thrown]
+switch_obj(last_useitem) {
+    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
+    case default: @nothing_interesting_happens;
+}
+
+[opheldu,_bolts]
+switch_obj(last_useitem) {
+    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
+    case default: @nothing_interesting_happens;
+}
+
+[opheldu,_arrows]
+switch_obj(last_useitem) {
+    case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
+    case default: @nothing_interesting_happens;
+}
+
+[label,make_weapon_poisoned](int $weapon_slot, int $poison_slot)
+def_obj $weapon = inv_getobj(inv, $weapon_slot);
+if (oc_param($weapon, weapon_poisoned) = null) {
+    @nothing_interesting_happens;
+}
+if (oc_category($weapon) = weapon_javelin) { // javelins inv_add poisoned wep, but setslot for the weapon poison
+    def_int $wep_count = min(inv_total(inv, $weapon), 5);
+    inv_del(inv, $weapon, $wep_count);
+    inv_add(inv, oc_param($weapon, weapon_poisoned), $wep_count);
+    inv_setslot(inv, $poison_slot, vial_empty, 1);
+} else if (oc_category($weapon) = weapon_spear) {
+    inv_del(inv, inv_getobj(inv, $poison_slot), 1);
+    inv_add(inv, vial_empty, 1);
+    inv_del(inv, $weapon, 1);
+    inv_add(inv, oc_param($weapon, weapon_poisoned), 1);
+} else if (oc_stackable($weapon) = true) {
+    inv_del(inv, inv_getobj(inv, $poison_slot), 1);
+    inv_add(inv, vial_empty, 1);
+    def_int $wep_count = min(inv_total(inv, $weapon), 5);
+    inv_del(inv, $weapon, $wep_count);
+    inv_add(inv, oc_param($weapon, weapon_poisoned), $wep_count);
+} else {
+    // non stackables uses setslot (except spears)
+    inv_setslot(inv, $weapon_slot, oc_param($weapon, weapon_poisoned), 1);
+    inv_setslot(inv, $poison_slot, vial_empty, 1);
+}
+
+mes(oc_param($weapon, weapon_poisoned_message));
+// From osrs. Messages do not singularlize when item count = 1
+// - You poison some arrows.
+// - You poison some bolts.
+// - You poison the dagger.
+// - You poison a spear.
+// - You poison some darts.
+// - You poison the javelins.
+// - You poison some knives.
