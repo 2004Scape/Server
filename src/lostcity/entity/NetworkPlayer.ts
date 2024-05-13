@@ -524,6 +524,11 @@ export class NetworkPlayer extends Player {
                 const objType = ObjType.get(this.lastItem);
                 const useObjType = ObjType.get(this.lastUseItem);
 
+                if((objType.members || useObjType.members) && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
+
                 // [opheldu,b]
                 let script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.OPHELDU, objType.id, -1);
 
@@ -699,6 +704,10 @@ export class NetworkPlayer extends Player {
                 if (this.delayed()) {
                     continue;
                 }
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
 
                 this.lastUseItem = item;
                 this.lastUseSlot = slot;
@@ -824,6 +833,11 @@ export class NetworkPlayer extends Player {
                     continue;
                 }
 
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
+                
                 this.lastUseItem = item;
                 this.lastUseSlot = slot;
 
@@ -949,6 +963,11 @@ export class NetworkPlayer extends Player {
                 if (this.delayed()) {
                     continue;
                 }
+                
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
 
                 this.lastUseItem = item;
                 this.lastUseSlot = slot;
@@ -1058,6 +1077,10 @@ export class NetworkPlayer extends Player {
                 }
 
                 if (this.delayed()) {
+                    continue;
+                }
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
                     continue;
                 }
 

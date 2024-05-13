@@ -1,5 +1,4 @@
 [label,ignite_light_source](obj $unlit_source)
-~require_members_use_item;
 def_namedobj $product = oc_param($unlit_source, product);
 if($product = lit_torch & ~inzone_coord_pair_table(fishing_platform_zones, coord) = true) {
     mes("Your tinderbox is damp from the sea crossing. It won't light here.");

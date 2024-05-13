@@ -102,9 +102,6 @@ return;
 
 [label,make_chocolate_cake](int $last)
 def_obj $chocolate = inv_getobj(inv, $last);
-if (oc_members($chocolate) = true) {
-    ~require_members_use_item;
-}
 // delete chocolate and cake
 inv_del(inv, $chocolate, 1);
 inv_del(inv, cake, 1);
@@ -118,9 +115,6 @@ mes("You make a chocolate cake.");
 
 [label,make_chocolate_milk](int $last)
 def_obj $chocolate = inv_getobj(inv, $last);
-if (oc_members($chocolate) = true) {
-    ~require_members_use_item;
-}
 inv_del(inv, $chocolate, 1);
 inv_del(inv, bucket_milk, 1);
 inv_add(inv, chocolaty_milk, 1);
@@ -128,9 +122,6 @@ inv_add(inv, chocolaty_milk, 1);
 
 [label,make_hangover_cure](int $last)
 def_obj $snape_grass = inv_getobj(inv, $last);
-if (oc_members($snape_grass) = true) {
-    ~require_members_use_item;
-}
 inv_del(inv, $snape_grass, 1);
 inv_del(inv, chocolaty_milk, 1);
 inv_add(inv, hangover_cure, 1);
