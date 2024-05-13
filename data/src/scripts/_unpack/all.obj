@@ -761,6 +761,20 @@ stackable=yes
 weight=5g
 tradeable=yes
 
+[obj_1465]
+name=Weapon poison
+desc=For use on daggers and projectiles.
+cost=11
+model=model_2789_obj
+recol1s=15855
+recol1d=15871
+2dyof=-1
+2dzoom=550
+2dyan=1996
+2dxan=84
+weight=20g
+members=yes
+
 [sea_slug]
 cost=4
 members=yes
