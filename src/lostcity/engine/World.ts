@@ -1113,6 +1113,10 @@ class World {
         return [...this.getZone(x, z, level).staticLocs.filter(l => l.respawn < this.currentTick), ...this.getZone(x, z, level).locs];
     }
 
+    getDynObj(x: number, z: number, level: number, objId: number) {
+        return this.getZone(x, z, level).getDynObj(x, z, objId);
+    }
+
     getObj(x: number, z: number, level: number, objId: number) {
         return this.getZone(x, z, level).getObj(x, z, objId);
     }
@@ -1171,7 +1175,7 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        const existing = this.getObj(obj.x, obj.z, obj.level, obj.id);
+        const existing = this.getDynObj(obj.x, obj.z, obj.level, obj.id);
         const global: boolean = zone.staticObjs.includes(obj);
         if (!global && existing && existing.id == obj.id) {
             const type = ObjType.get(obj.type);
