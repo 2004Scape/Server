@@ -1,7 +1,7 @@
 import fs from 'fs';
 import zlib from 'zlib';
 
-import JagStore from '#jagex2/io/JagStore.js';
+import FileStream from '#jagex2/io/FileStream.js';
 
 const args = process.argv.slice(2);
 if (args.length < 2) {
@@ -14,7 +14,7 @@ const outputDir = args[1];
 const names = [['', 'title', 'config', 'interface', 'media', 'versionlist', 'textures', 'wordenc', 'sounds'], [], [], [], []];
 const extensions = ['jag', 'dat', 'dat', 'mid', 'dat'];
 
-const store = new JagStore(inputDir);
+const store = new FileStream(inputDir);
 for (let index = 0; index <= 4; index++) {
     fs.mkdirSync(`${outputDir}/${index}`, { recursive: true });
 

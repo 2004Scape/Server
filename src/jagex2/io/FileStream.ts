@@ -4,7 +4,7 @@ import Packet from '#jagex2/io/Packet.js';
 
 import RandomAccessFile from '#lostcity/util/RandomAccessFile.js';
 
-export default class JagStore {
+export default class FileStream {
     dat: RandomAccessFile;
     idx: RandomAccessFile[] = [];
 

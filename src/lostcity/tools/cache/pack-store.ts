@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import JagStore from '#jagex2/io/JagStore.js';
+import FileStream from '#jagex2/io/FileStream.js';
 
 const args = process.argv.slice(2);
 if (args.length < 2) {
@@ -10,7 +10,7 @@ if (args.length < 2) {
 const inputDir = args[0];
 const outputDir = args[1];
 
-const store = new JagStore(outputDir, true);
+const store = new FileStream(outputDir, true);
 
 for (let i = 0; i <= 4; i++) {
     const files = fs.readdirSync(`${inputDir}/` + i);
