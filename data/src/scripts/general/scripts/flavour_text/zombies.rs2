@@ -1,0 +1,19 @@
+// only accessible via poison
+// https://twitter.com/Nin_UIM/status/1617227225316880385
+// - mod lenny said there was 5 instances of this.
+// - osrs wiki found 4/5 ids: 42, 49, 64, 26. im guessing the 5th is melzar's
+// - The id's dont match up but what are the odds that our only
+// zombies add up to 5?
+[ai_timer,zombie_entrana] @zombie_brains;
+[ai_timer,npc_73] @zombie_brains;
+[ai_timer,npc_74] @zombie_brains;
+[ai_timer,npc_75] @zombie_brains;
+[ai_timer,melzar_maze_zombie] @zombie_brains;
+
+[label,zombie_brains]
+if (finduid(%npc_attacking_uid) = true) {
+    if (distance(coord, npc_coord) < 10 & coordy(coord) = coordy(npc_coord)) {
+        sound_synth(zombie_moan, 0, 0);
+    }
+}
+npc_say("Brainssss");
