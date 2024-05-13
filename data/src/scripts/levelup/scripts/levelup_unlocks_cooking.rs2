@@ -33,7 +33,7 @@ switch_int(stat_base(cooking)) {
     case 58: ~objboxt(pitta_bread,"Members can now cook @dbl@pitta bread@bla@.");
     case 60: ~objbox(curry,"Members can now cook @dbl@curry@bla@.");
     case 65: ~doubleobjbox(pineapple_pizza,wine_of_zamorak,"Members can now cook @dbl@pineapple pizzas@bla@ and make @dbl@Wine|@dbl@of Zamorak@bla@");
-    case 80: ~objboxt(shark,"Members can now cook @dbl@shark@bla@.");
+    case 80: ~objboxt(raw_shark,"Members can now cook @dbl@Shark@bla@.");
     case 82: ~objboxt(raw_sea_turtle,"Members can now cook @dbl@sea turtle@bla@.");
     case 91: ~objboxt(raw_manta_ray,"Members can now cook @dbl@manta rays@bla@.");
 }
