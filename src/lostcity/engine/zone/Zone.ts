@@ -383,11 +383,18 @@ export default class Zone {
         this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
-
-    getObj(x: number, z: number, type: number): Obj | null {
+    getDynObj(x: number, z: number, type: number): Obj | null {
         const dynamicObj = this.objs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type);
         if (dynamicObj !== -1) {
             return this.objs[dynamicObj];
+        }
+        return null;
+    }
+
+    getObj(x: number, z: number, type: number): Obj | null {
+        const dynamicObj = this.getDynObj(x, z, type);
+        if (dynamicObj !== null) {
+            return dynamicObj;
         }
 
         const staticObj = this.staticObjs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type && obj.respawn < World.currentTick);
