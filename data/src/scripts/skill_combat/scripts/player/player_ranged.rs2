@@ -49,7 +49,7 @@ if (~player_npc_hit_roll(%damagetype) = true) {
 }
 
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
-def_int $delay = ~player_ranged_use_weapon($rhand, $ammo);
+def_int $delay = add(~player_ranged_use_weapon($rhand, $ammo), 30); // osrs it seems to be delayed an extra tick
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 ~npc_retaliate(calc($delay / 30));
