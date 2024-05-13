@@ -1,7 +1,7 @@
 [label,levelup_herblore]
 //Herblore level up unlock messages
 switch_int(stat_base(herblore)) {
-    case 3: ~objboxb(3dose1attack, "You can now make @dbl@Attack Potions@bla@. You can now identify @dbl@Guam Leaf, Snake Weed @bla@and @dbl@Rogues Purse@bla@.");
+    case 3: ~objboxb(3dose1attack, "You can now make @dbl@Attack Potions@bla@. You can now identify @dbl@Guam Leaf@bla@, @dbl@Snake Weed @bla@and @dbl@Rogues Purse@bla@.");
     case 5: ~objboxb(3doseantipoison,"You can now make @dbl@Antipoison Potions@bla@. You can now identify @dbl@Marrentill@bla@.");
     case 11: ~objboxt(tarromin,"You can now identify @dbl@Tarromin@bla@.");
     case 12: ~objboxb(3dose1strength,"You can now make @dbl@Strength Potions@bla@.");
@@ -21,7 +21,7 @@ switch_int(stat_base(herblore)) {
     case 66: ~objboxb(3dose2defense,"You can now make @dbl@Super Defence Potions@bla@.");
     case 67: ~objboxt(lantadyme,"You can now identify @dbl@Lantadyme@bla@.");
     case 69: ~objboxb(3dose1antidragon,"You can now make @dbl@Anti-FireBreath Potions@bla@.");
-    case 70: ~objboxt(dwarf_weed,"You can now identify @dbl@dwarf weed@bla@.");
+    case 70: ~objboxt(dwarf_weed,"You can now identify @dbl@Dwarf Weed@bla@.");
     case 72: ~objboxb(3doserangerspotion,"You can now make @dbl@Ranging Potions@bla@.");
     case 75: ~objboxt(torstol,"You can now identify @dbl@Torstol@bla@.");
     case 78: ~objboxb(3dosepotionofzamorak,"You can now make @dbl@Zamorak Brews@bla@.");
