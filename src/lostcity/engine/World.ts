@@ -1172,7 +1172,8 @@ class World {
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
         const existing = this.getObj(obj.x, obj.z, obj.level, obj.id);
-        if (existing && existing.id == obj.id) {
+        const global: boolean = zone.staticObjs.includes(obj);
+        if (!global && existing && existing.id == obj.id) {
             const type = ObjType.get(obj.type);
             const nextCount = obj.count + existing.count;
             if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
