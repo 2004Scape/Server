@@ -18,6 +18,7 @@ param=levelrequire,1
 param=proj_launch,crossbowbolt_launch
 param=proj_travel,crossbowbolt_travel
 tradeable=yes
+param=weapon_poisoned,bolt_p
 
 [bolt_p]
 stackable=yes

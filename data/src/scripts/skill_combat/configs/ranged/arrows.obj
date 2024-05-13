@@ -26,6 +26,7 @@ param=levelrequire,1
 tradeable=yes
 param=proj_launch,bronze_arrow_launch
 param=proj_travel,bronze_arrow_travel
+param=weapon_poisoned,bronze_arrow_p
 
 [bronze_arrow_p]
 name=Bronze arrow(p)
@@ -86,6 +87,7 @@ param=levelrequire,1
 tradeable=yes
 param=proj_launch,iron_arrow_launch
 param=proj_travel,iron_arrow_travel
+param=weapon_poisoned,iron_arrow_p
 
 [iron_arrow_p]
 name=Iron arrow(p)
@@ -142,6 +144,7 @@ param=levelrequire,5
 tradeable=yes
 param=proj_launch,steel_arrow_launch
 param=proj_travel,steel_arrow_travel
+param=weapon_poisoned,steel_arrow_p
 
 [steel_arrow_p]
 name=Steel arrow(p)
@@ -201,6 +204,7 @@ param=levelrequire,20
 tradeable=yes
 param=proj_launch,mithril_arrow_launch
 param=proj_travel,mithril_arrow_travel
+param=weapon_poisoned,mithril_arrow_p
 
 [mithril_arrow_p]
 name=Mithril arrow(p)
@@ -262,6 +266,7 @@ param=levelrequire,30
 tradeable=yes
 param=proj_launch,adamant_arrow_launch
 param=proj_travel,adamant_arrow_travel
+param=weapon_poisoned,adamant_arrow_p
 
 [adamant_arrow_p]
 name=Adamant arrow(p)
@@ -323,6 +328,7 @@ param=levelrequire,40
 tradeable=yes
 param=proj_launch,rune_arrow_launch
 param=proj_travel,rune_arrow_travel
+param=weapon_poisoned,rune_arrow_p
 
 [rune_arrow_p]
 name=Rune arrow(p)
