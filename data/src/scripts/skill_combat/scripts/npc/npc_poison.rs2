@@ -27,6 +27,7 @@ npc_queue(3, 0, 0);
 
 [proc,npc_poison_clear]
 %npc_poison = 0;
+npc_settimer(0); // npc_cleartimer?
 
 
 [proc,npc_poison_start](int $severity)
