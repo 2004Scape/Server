@@ -21,6 +21,7 @@ It won't ever profit off your trademarks. Without this project, this version of 
 
 - [NodeJS 20+](https://nodejs.org/) (current LTS) or [18](https://nodejs.org/download/release/v18.18.2/) (last LTS)
 - [Java 17+](https://adoptium.net/)
+- If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
 Java is required for RuneScriptCompiler.jar, our content language compiler.
 
@@ -94,9 +95,8 @@ Thanks to all the current contributors, every PR you submit gets us closer and c
 
 Thanks to these indirect or external contributors
 - Kris: for all your help theorycrafting and testing, and to his sources as well for teaching him
-- Walied: for your work on understanding the client assets (worked on understanding cache formats)
+- Walied: for your work on understanding the client assets (worked on cache formats)
 - Dane: for your work on understanding the client (worked on client refactors)
-- TheSuddenSilent: for your help gathering period-accurate data through hours and hours of your time (does not use git)
 
 If anyone is not listed here, whether that's intentional to remain anonymous or an oversight, thank you for your help.  
 This type of project has been a long time coming and I hope to see the trend continue.
