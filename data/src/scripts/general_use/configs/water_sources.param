@@ -1,3 +1,7 @@
 [changesto]
 type=namedobj
 default=null
+
+[is_water_source]
+type=int
+default=0

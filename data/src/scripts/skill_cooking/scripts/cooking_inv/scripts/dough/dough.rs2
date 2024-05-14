@@ -5,16 +5,14 @@ if(oc_category(last_useitem) = murder_proofobj) {
 switch_obj (last_useitem) {
     case cake_tin : @make_uncooked_cake;
     case swamp_tar: @make_swamp_paste;
-    case bowl_water, jug_of_water, bucket_water :
-        if (%tutorial_progress < ^tutorial_complete) {
-            @tut_make_dough;
-        } else {
-            @dough_interface(last_useslot);
+    case default :
+        if (oc_param(last_useitem, is_water_source) = ^true) {
+            @dough_interface(last_useitem);
         }
-    case default : @nothing_interesting_happens;
+        @nothing_interesting_happens;
 }
 
-[label,dough_interface](int $last_slot)
+[label,dough_interface](obj $water_source)
 if (inv_freespace(inv) < 1) {
     mes("You dont have enough inventory space to make any dough.");
     return;
@@ -26,10 +24,9 @@ switch_int (~p_choice3_header("Bread dough.", 1, "Pastry dough.", 2, "Pizza doug
     case 2 : $choice = pastry_dough;
     case 3 : 
         $choice = pizza_base;
-        $end_string = "a";
+        $end_string = "a"; // only pizza adds an article
     case default : @nothing_interesting_happens;
 }
-def_obj $water_source = inv_getobj(inv, $last_slot);
 
 inv_del(inv, pot_of_flour, 1);
 inv_del(inv, $water_source, 1);
