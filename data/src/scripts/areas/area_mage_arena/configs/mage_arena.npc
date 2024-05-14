@@ -38,6 +38,11 @@ model6=model_274_idk
 model7=model_185_obj_wear
 head1=model_63_idk_head
 head2=model_84_idk_head
+param=owned_shop,lundails_arena_side_rune_shop
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,600
+param=shop_delta,1
+param=shop_title,Lundail's Arena-side Rune Shop.
 
 [chamber_guardian]
 vislevel=hide

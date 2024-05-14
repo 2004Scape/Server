@@ -1,1 +1,10 @@
-^prince_saved = 7
+^prince_not_started = 0
+^prince_started = 10
+^prince_spoken_osman = 20
+^prince_prep_finished = 30
+^prince_guard_drunk = 40
+^prince_tied_keli = 50
+^prince_saved = 100
+
+^prince_keymade = 1
+^prince_keyclaimed = 2

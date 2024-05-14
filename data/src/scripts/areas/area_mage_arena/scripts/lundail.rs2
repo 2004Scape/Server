@@ -1,0 +1,19 @@
+[opnpc1,lundail]
+~chatnpc(happy, "Hello <text_gender("Sir", "Miss")>.");
+~chatnpc(neutral, "How can I help you, brave adventurer?");
+def_int $choice = ~p_choice2("What are you selling?", 1, "What's that big old building above us?", 2);
+if ($choice = 1) {
+    ~chatplayer(quiz, "What are you selling?");
+    ~chatnpc(neutral, "I sell runes. I've got some good stuff, some really powerful little rocks. Take a look.");
+    ~openshop_activenpc;
+    return;
+}
+
+~chatplayer(quiz, "What's that big old building above us?");
+~chatnpc(happy, "That, my friend, is the mage battle arena. Top mages come from all over Gielinor to compete in the arena.");
+~chatplayer(neutral, "Wow.");
+~chatnpc(confused, "Few return, most get fried, hence the smell.");
+~chatplayer(confused, "Hmmm.. I did notice.");
+
+[opnpc3,lundail]
+~openshop_activenpc;

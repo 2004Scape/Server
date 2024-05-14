@@ -68,4 +68,6 @@ data=coord_pair,0_39_50_48_8,0_39_50_55_31
 data=coord_pair,0_49_154_16_0,0_51_154_30_63
 // kbd lair
 data=coord_pair,0_42_153_15_0,0_42_153_45_40
+// mage arena
+data=coord_pair,0_39_73_0_0,0_39_73_63_63
 // todo - more underground?

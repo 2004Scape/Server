@@ -1,27 +1,7 @@
-[opnpc2,_]
-if (~inzone_coord_pair_table(mage_arena, coord) = true) {
-    // Lotta forums posts where people are confused whether 
-    // or not they can use auto cast. Some people say you can,
-    // some people say you cant. I assume you could autocast,
-    // but only if you cast a manual spell first (and have autocast on).
-    // Some guides say you cant click on npc's with autocast.
-    if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
-        mes("You are not ready to fight the battle mages."); // for some reason this message appears before the singles combat messages, if you're not casting spells
-    }
-    return;
-}
-if (~player_in_combat_check = false) {
-    return;
-}
-@player_combat_start;
+[opnpc2,_] @player_combat_start;
+[apnpc2,_] @player_combat_start_ap;
 
-[apnpc2,_]
-if (~inzone_coord_pair_table(mage_arena, coord) = true) {
-    if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
-        mes("You are not ready to fight the battle mages."); // for some reason this message appears before the singles combat messages, if you're not casting spells
-    }
-    return;
-}
+[label,player_combat_start_ap]
 def_int $distance = npc_range(coord);
 def_int $attackrange = 0;
 if (inv_getobj(worn, ^wearpos_rhand) ! null) {
@@ -55,6 +35,9 @@ p_aprange($attackrange);
 @player_combat_start;
 
 [label,player_combat_start]
+if (~player_in_combat_check = false) {
+    return;
+}
 // facesquare(npc_coord);
 // TODO: Range and mage check
 if (%damagetype = ^ranged_style) {

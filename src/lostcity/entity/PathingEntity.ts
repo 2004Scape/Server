@@ -277,8 +277,18 @@ export default abstract class PathingEntity extends Entity {
             const forceapproach = LocType.get(target.type).forceapproach;
             return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
         }
-        const shape = isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED) ? -2 : -1;
-        return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, shape);
+        // instanceof Obj
+        const reachedAdjacent = reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
+        const reachedTile = reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1);
+        if (isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED)) {
+            // picking up off of tables
+            return reachedAdjacent;
+        }
+        if (!this.hasWaypoints() && reachedAdjacent) {
+            // picking up while walktrigger prevents movement
+            return true;
+        }
+        return reachedTile;
     }
 
     inApproachDistance(range: number, target: Entity): boolean {

@@ -1,7 +1,7 @@
 [opnpc1,aggie]
 ~chatnpc(happy, "What can I help you with?");
 def_int $option;
-if(%prince_progress >= 2 & %prince_progress < ^prince_saved) {
+if(%prince_progress >= ^prince_spoken_osman & %prince_progress < ^prince_saved) {
     $option = ~p_choice5("Could you think of a way to make skin paste?", 5, "What could you make for me?", 1, "Cool, do you turn people into frogs?", 2, "You mad old witch, you can't help me.", 3, "Can you make dyes for me please?", 4);
 }else {
     $option = ~p_choice4("What could you make for me?", 1, "Cool, do you turn people into frogs?", 2, "You mad old witch, you can't help me.", 3, "Can you make dyes for me please?", 4);
@@ -32,6 +32,14 @@ if($option = 1) {
         ~chatplayer(quiz, "What do you need to make it?");
         ~chatnpc(neutral, "Well dearie, you need a base for the paste.|That's a mix of ash, flour and water.|Then you need redberries to colour it as you want.|Bring me those four items and I will make you some.");
     }
+}
+
+[opnpcu,aggie]
+switch_obj(last_useitem) {
+    case onion: @aggie_yellow_dye;
+    case redberry: @aggie_red_dye;
+    case woad_leaf: @aggie_blue_dye;
+    case default: @nothing_interesting_happens;
 }
 
 [label,aggie_fine]

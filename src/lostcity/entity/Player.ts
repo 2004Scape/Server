@@ -755,12 +755,12 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    updateMovement(): boolean {
+    updateMovement(repathAllowed: boolean = true): boolean {
         if (this.containsModalInterface()) {
             return false;
         }
 
-        if (this.target && !this.interacted) {
+        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToTarget();
         }
 

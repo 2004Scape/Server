@@ -113,6 +113,7 @@ if(last_useitem = magnet) {
     inv_del(inv, magnet, 1);
     npc_del;
     ~mesbox("You attach the magnet to the mouse's harness. The mouse finishes the cheese and runs back into its hole. You hear some odd noises from inside the walls. There is a strange whirring noise from above the door frame.");
+    return;
 }
 ~displaymessage(^dm_default);
 
