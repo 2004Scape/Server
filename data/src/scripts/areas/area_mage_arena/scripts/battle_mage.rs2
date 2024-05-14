@@ -1,3 +1,26 @@
+[opnpc2,_battle_mage]
+if (~inzone_coord_pair_table(mage_arena, coord) = true) {
+    // Lotta forums posts where people are confused whether 
+    // or not they can use auto cast. Some people say you can,
+    // some people say you cant. I assume you could autocast,
+    // but only if you cast a manual spell first (and have autocast on).
+    // Some guides say you cant click on npc's with autocast.
+    if (%magearena_progress < ^mage_arena_complete) {
+        mes("You are not ready to fight the battle mages."); // for some reason this message appears before the singles combat messages, if you're not casting spells
+    }
+    return;
+}
+@player_combat_start;
+
+[apnpc2,_battle_mage]
+if (~inzone_coord_pair_table(mage_arena, coord) = true) {
+    if (%magearena_progress < ^mage_arena_complete) {
+        mes("You are not ready to fight the battle mages."); // for some reason this message appears before the singles combat messages, if you're not casting spells
+    }
+    return;
+}
+@player_combat_start_ap;
+
 [ai_queue1,battle_mage_zamorak](int $arg) ~npc_default_retaliate_ap;
 [ai_queue1,battle_mage_saradomin](int $arg) ~npc_default_retaliate_ap;
 [ai_queue1,battle_mage_guthix](int $arg) ~npc_default_retaliate_ap;
