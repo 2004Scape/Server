@@ -136,5 +136,6 @@ if(inv_total(inv, rope) >= 1) {
 
 [opnpcu,osman]
 if(%prince_progress = ^prince_spoken_osman & (last_useitem = bronze_bar | last_useitem = key_print)) {
-    p_opnpc(1);
+    @osman_items;
 }
+@nothing_interesting_happens;

@@ -26,5 +26,6 @@ if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total
 
 [opnpcu,prince_ali]
 if(%prince_progress = ^prince_tied_keli & (last_useitem = pink_skirt | last_useitem = wig_blonde | last_useitem = paste)) {
-    p_opnpc(1);
+    @prince_rescue;
 }
+@nothing_interesting_happens;
