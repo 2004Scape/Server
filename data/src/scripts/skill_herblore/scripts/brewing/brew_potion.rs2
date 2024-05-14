@@ -45,7 +45,8 @@ def_struct $struct = oc_param($used_with, brew_potion_struct);
 
 // If the item used on the solvent is not a valid ingredient basically.
 if ($struct = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 def_namedobj $ingredient = struct_param($struct, brew_potion_ingredient);
@@ -56,12 +57,14 @@ if ($used_on ! $solvent) {
     $struct = oc_param($used_with, brew_potion_struct_secondary);
     // Secondary struct is optional here.
     if ($struct = null) {
-        @nothing_interesting_happens;
+        ~displaymessage(^dm_default);
+        return;
     }
     $solvent = struct_param($struct, brew_potion_solvent);
     // If there are no possible matches.
     if ($used_on ! $solvent) {
-        @nothing_interesting_happens;
+        ~displaymessage(^dm_default);
+        return;
     }
     $ingredient = struct_param($struct, brew_potion_ingredient);
 }
@@ -81,7 +84,8 @@ def_string $message = struct_param($struct, brew_potion_message);
 def_namedobj $mixture = struct_param($struct, brew_potion_mixture);
 
 if ($mixture = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 def_int $experience = struct_param($struct, brew_potion_exp);

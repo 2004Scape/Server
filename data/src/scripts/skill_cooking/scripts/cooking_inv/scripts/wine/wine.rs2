@@ -1,7 +1,7 @@
 [opheldu,grapes]
 switch_obj (last_useitem) {
     case jug_of_water : @make_wine;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 //TODO: Finish wines, jug of bad wine, proper queue clearing
 [label,make_wine]

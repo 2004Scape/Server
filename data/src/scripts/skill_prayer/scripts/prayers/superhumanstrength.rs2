@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 6);
 
 [label,activate_prayer_superhumanstrength]
 def_dbrow $data = ~get_prayer_data(^prayer_superhumanstrength);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_superhumanstrength = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_superhumanstrength));
     %prayer_superhumanstrength = ^false;

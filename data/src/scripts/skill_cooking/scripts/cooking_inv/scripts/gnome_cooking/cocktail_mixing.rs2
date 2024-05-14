@@ -49,7 +49,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @pour_cocktail_shaker;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,dwellberry]
@@ -59,7 +59,7 @@ switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_cocktail_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,_alcoholic_drinks]
@@ -67,7 +67,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,equa_leaves]
@@ -84,7 +84,7 @@ switch_obj(last_useitem) {
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_cocktail_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,pour_cocktail_shaker]
@@ -167,7 +167,9 @@ switch_obj($item) {
     case lemon, orange, pineapple, lime, dwellberry : $message = "You squeeze the juice from the <$item_name>";
     case vodka, gin, brandy, whisky, bucket_milk : $message = "You pour the <$item_name>";
     case equa_leaves : $message = "You sprinkle the equa leaves";
-    case default : @nothing_interesting_happens;
+    case default : 
+        ~displaymessage(^dm_default);
+        return;
 }
 def_int $step = ~get_cocktail_ingredient_step;
 switch_int($step) {

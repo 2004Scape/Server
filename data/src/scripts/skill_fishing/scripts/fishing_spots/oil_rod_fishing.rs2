@@ -35,7 +35,7 @@ switch_obj (last_useitem) {
     case harpoon: @burnup_fishing_equipment(harpoon, "harpoon");
     case fishing_rod: @burnup_fishing_equipment(fishing_rod, "rod");
     case fly_fishing_rod: @burnup_fishing_equipment(fly_fishing_rod, "rod");
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [label,burnup_fishing_equipment](namedobj $equipment, string $name)

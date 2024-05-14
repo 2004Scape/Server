@@ -41,7 +41,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case cheese, tomato, onion, cabbage, dwellberry, seasoned_toad_legs, spicy_worm, equa_leaves : @add_batta_ingredient(last_useitem);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,cabbage]
@@ -49,7 +49,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,seasoned_toad_legs]
@@ -57,7 +57,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,spicy_worm]
@@ -65,7 +65,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [proc,get_gnome_batta_product]()(namedobj)

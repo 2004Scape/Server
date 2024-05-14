@@ -4,19 +4,19 @@
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 [opheldu,lime_chunks] 
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 [opheldu,pot_of_cream]
 switch_int(oc_param(last_useitem, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_useitem, last_item);
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 
@@ -28,10 +28,15 @@ if_close;
 db_find(gnome_food_cooking:gnome_food, $gnome_food);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_namedobj $next_gnome_food;
 $next_gnome_food = ~handle_cocktail_data($data, $gnome_food, $ingredient);
+if ($next_gnome_food = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 
 inv_del(inv, $gnome_food, 1);
 inv_del(inv, $ingredient, 1);
@@ -66,10 +71,10 @@ while ($i < calc(db_getfieldcount($data, gnome_food_cooking:step) + 1)) {
             case lemon_slices, lime_slices, orange_slices : $fail_gnome_food = odd_cocktail4;
             case pot_of_cream : $fail_gnome_food = odd_cocktail3;
             case lemon_chunks, lime_chunks, orange_chunks, pineapple_chunks, chocolate_bar, chocolate_dust, equa_leaves : 
-            case default : @nothing_interesting_happens;
+            case default : return(null);
         }
         return($fail_gnome_food);
     }
     $i = calc($i + 1);
 }
-@nothing_interesting_happens;
+return(null);

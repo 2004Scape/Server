@@ -50,7 +50,7 @@ inv_add(inv, arravshield1, 1);
 if(last_useitem = weapon_store_key) {
     @unlock_weaponstore_door(true);
 } 
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,unlock_weaponstore_door](boolean $key_used)
 def_boolean $leaving= ~check_axis(coord, loc_coord, loc_angle);

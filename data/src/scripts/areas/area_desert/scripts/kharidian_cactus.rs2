@@ -2,7 +2,8 @@
 def_obj $item = last_useitem;
 
 if ($item ! knife & oc_param($item, slashattack_anim) = human_unarmedpunch) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 } else {
     @cut_kharidian_cactus($item);
 } 

@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 15);
 
 [label,activate_prayer_protectfrommelee]
 def_dbrow $data = ~get_prayer_data(^prayer_protectfrommelee);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_protectfrommelee = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_protectfrommelee));
     %prayer_protectfrommelee = ^false;

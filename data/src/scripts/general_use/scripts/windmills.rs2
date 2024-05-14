@@ -33,14 +33,14 @@
 if (last_useitem = pot_empty) {
     @millbase_take;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oplocu,millbase_full]
 if (last_useitem = pot_empty) {
     @millbase_take;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,millbase_take]
@@ -77,7 +77,7 @@ if (inv_total(inv, pot_empty) < 1) {
 if (last_useitem = grain) {
     mes("There is already grain in the hopper.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 // ---- Lumbridge ----
@@ -90,7 +90,7 @@ if (last_useitem = grain) {
     inv_delslot(inv, last_useslot);
     loc_change(hopper_full, 500);
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oploc1,hoppercontrol_lumbridge]

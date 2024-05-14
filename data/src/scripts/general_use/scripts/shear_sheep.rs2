@@ -1,6 +1,7 @@
 [opnpcu,sheep_fluffy]
 if(last_useitem ! shears) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 anim(human_shearing, 0);
 npc_setmode(playerfaceclose);

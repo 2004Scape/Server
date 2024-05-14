@@ -26,7 +26,7 @@ mes("You squeeze through the loose railing.");
 if(last_useitem = spade) {
     @dig_red_vine;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,dig_red_vine]

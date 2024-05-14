@@ -1,19 +1,19 @@
 [opheldu,wolf_bones]
 switch_obj(last_useitem) {
     case chisel: @make_wolf_bone_tips;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,obj_2864]
 switch_obj(last_useitem) {
     case feather: @make_ogre_headless_arrows;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,obj_2865]
 switch_obj(last_useitem) {
     case wolfbone_arrowheads: @make_ogre_arrows;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,make_ogre_shafts]

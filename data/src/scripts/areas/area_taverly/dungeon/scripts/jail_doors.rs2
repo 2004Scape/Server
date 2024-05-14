@@ -3,14 +3,14 @@
 if(last_useitem = jail_key) {
     @unlock_taverly_jaildoor(true);
 } 
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [oploc1,loc_2623] @unlock_taverly_jaildoor(false);
 [oplocu,loc_2623]
 if(last_useitem = dusty_key) {
     @unlock_taverly_jaildoor(true);
 } 
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [oploc1,loc_37] // Might be used somewhere else?
 mes("This door doesn't seem to open from here...");

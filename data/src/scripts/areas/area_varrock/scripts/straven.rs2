@@ -19,7 +19,7 @@ if(last_useitem = blackarmgang_scroll) {
         return;
     }
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,straven_cant_enter]
 ~chatnpc(neutral, "Hey! You can't go in there. Only authorised personnel of the VTAM Corporation are allowed beyond this point.");

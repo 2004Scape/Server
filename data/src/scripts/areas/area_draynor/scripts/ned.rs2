@@ -20,7 +20,7 @@ if(inv_total(inv, trail_clue_easy_simple_exp021) = 1) {
 if (last_useitem = crandor_map) {
     @give_map_to_ned;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,trail_ned]
@@ -228,7 +228,8 @@ if ($choice = 3) {
 
 [label,give_map_to_ned]
 if (%dragon_ned_hired = 0 | %dragon_progress ! ^quest_dragon_repaired_ship) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 ~mesbox("You give the map to Ned.");
 inv_del(inv, crandor_map, inv_total(inv, crandor_map));

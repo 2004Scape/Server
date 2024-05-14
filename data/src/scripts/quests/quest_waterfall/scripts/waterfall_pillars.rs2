@@ -5,7 +5,8 @@ def_int $pillar_index = ~get_pillar_index($pillar_coord);
 def_int $rune_index = ~get_rune_index($rune);
 def_int $bit = calc((($pillar_index - 1) * 3) + $rune_index); // bits 1-18 to store these rune flags, 0 is for golries key
 if($pillar_index = 0 | $rune_index = 0) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if(testbit(%waterfall_golrie_and_puzzle, $bit) = true) {
     mes("You remember putting that type of rune there."); // osrs: You've already put that type of rune on this pillar.

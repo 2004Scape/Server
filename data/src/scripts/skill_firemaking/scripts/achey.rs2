@@ -2,7 +2,7 @@
 switch_obj(last_useitem) {
     case knife: @make_ogre_shafts;
     case tinderbox: @light_achey_inv(last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 // achey fm is slightly different so i just made it a whole new label

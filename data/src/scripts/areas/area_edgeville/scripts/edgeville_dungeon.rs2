@@ -4,7 +4,7 @@ mes("The door is locked.");
 [oplocu,loc_1804]
 switch_obj(last_useitem) {
     case brass_key : @open_edgeville_dungeon_door;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 

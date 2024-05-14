@@ -13,21 +13,21 @@
 if (last_useitem = crandor_map_part2 | last_useitem = crandor_map_part3) {
     @combine_crandor_map_parts;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [opheldu,crandor_map_part2]
 if (last_useitem = crandor_map_part1 | last_useitem = crandor_map_part3) {
     @combine_crandor_map_parts;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [opheldu,crandor_map_part3]
 if (last_useitem = crandor_map_part1 | last_useitem = crandor_map_part2) {
     @combine_crandor_map_parts;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 

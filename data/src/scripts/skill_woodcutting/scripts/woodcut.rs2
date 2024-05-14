@@ -10,7 +10,7 @@ switch_obj(last_useitem) {
     case raw_herring, herring : 
         mes("This is not the mightiest tree in the forest.");
         return;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 
@@ -19,7 +19,8 @@ switch_obj(last_useitem) {
 db_find(woodcutting_trees:tree, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 // check if f2p. Not sure if this is a thing. just to be safe i guess
 def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
@@ -72,7 +73,8 @@ if ($axe = null) {
 db_find(woodcutting_trees:tree, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 // i think it checks level here? thats the case with fishing at least
 def_int $level = db_getfield($data, woodcutting_trees:levelrequired, 0);

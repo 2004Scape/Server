@@ -26,7 +26,7 @@ switch_int ($option) {
 if(testbit(%barcrawl_progress, ^rustyanchor_index) = false & last_useitem = barcrawl_card) {
     @rustyanchor_barcrawl;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,bartender_port_sarim_beer]
 ~chatplayer(happy, "Could I buy a beer please?");

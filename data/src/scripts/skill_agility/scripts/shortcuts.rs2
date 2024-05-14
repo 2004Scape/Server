@@ -7,7 +7,8 @@ if(stat(agility) < 5) {
 if(loc_coord ! 0_45_52_55_27) {
     // these walls are reused in the barb course for some reason (not the wall you climb)
     // TODO: figure out what would happen if you interact with those ones
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_int $dir = ^exact_east; 
 def_coord $end = movecoord(loc_coord, 1, 0, 0);

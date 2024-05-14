@@ -1,6 +1,4 @@
 [opheld1,half_baked_crunchies]
-if_close;
-//p_stopaction;
 def_int $total_steps = ~get_crunchies_ingredient_step;
 if ($total_steps  < 1) {
     mes("The half baked crunchies are completely plain.");
@@ -37,11 +35,9 @@ while ($i < enum_getoutputcount(gnome_crunchies_ingredients)) {
 mes("<$message>.");
 
 [opheldu,half_baked_crunchies]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case king_worm, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_crunchies_ingredient(last_useitem);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [proc,get_gnome_crunchies_product]()(namedobj)

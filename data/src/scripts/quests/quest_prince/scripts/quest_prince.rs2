@@ -116,7 +116,7 @@ if(inv_total(inv, rope) >= 1) {
 if(last_useitem = yellow_dye) {
     @make_blonde_wig;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,make_blonde_wig]
 inv_del(inv, yellow_dye, 1);
@@ -331,7 +331,8 @@ if($option = 1) {
 
 [opnpcu,lady_keli]
 if (last_useitem ! rope | %prince_progress <= 3) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if(%prince_progress >= 7) {
     mes("You have rescued the prince already, you cannot use the same plan again!");
@@ -359,7 +360,8 @@ return (false);
 
 [oplocu,loc_2881]
 if (last_useitem ! bronze_key | coordz(coord) <= coordz(loc_coord)) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if(%prince_progress <= 5 | ~keli_active(coord) = true | ~keli_active(movecoord(coord, 8, 0, 0)) = true) { // Check current and adjacent right zone
     mes("You'd better get rid of Lady Keli before trying to go through there.");

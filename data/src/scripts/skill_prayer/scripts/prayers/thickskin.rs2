@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 1);
 
 [label,activate_prayer_thickskin]
 def_dbrow $data = ~get_prayer_data(^prayer_thickskin);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_thickskin = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_thickskin));
     %prayer_thickskin = ^false;

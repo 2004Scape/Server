@@ -7,7 +7,7 @@ switch_obj (last_useitem)
     case leather_body :
         ~require_members_feature;
         @craft_studded(studded_body);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,leather_chaps]
@@ -15,14 +15,14 @@ if (last_useitem = steel_studs) {
     ~require_members_feature;
     @craft_studded(studded_chaps);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,leather_body]
 if (last_useitem = steel_studs) {
     ~require_members_feature;
     @craft_studded(studded_body);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 
 [label,craft_studded](obj $studded_obj)

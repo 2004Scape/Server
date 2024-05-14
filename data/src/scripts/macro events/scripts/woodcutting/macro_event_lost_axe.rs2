@@ -39,7 +39,7 @@ if (inv_total(inv, axe_handle) > 0 & inv_total(inv, $axe_head) > 0) {
 [opheldu,axe_handle]
 switch_obj(last_useitem) {
     case bronze_axe_head, iron_axe_head, steel_axe_head, mithril_axe_head, adamant_axe_head, rune_axe_head : @reattach_axe(last_useitem);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,bronze_axe_head] @check_axe_head;
@@ -53,5 +53,5 @@ switch_obj(last_useitem) {
 if (last_useitem = axe_handle) {
     @reattach_axe(last_item);
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }

@@ -14,41 +14,41 @@ switch_obj (last_useitem)
     case leather : @craft_leather_interface;
     case hardleather : @craft_leather(hardleather_body);
     case dragon_leather, dragon_leather_blue, dragon_leather_red, dragon_leather_black : @craft_dhide_interface(last_useslot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,leather]
 if (last_useitem = needle) {
     @craft_leather_interface;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,hardleather]
 if (last_useitem = needle) @craft_leather(hardleather_body);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,dragon_leather]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,dragon_leather_blue]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,dragon_leather_red]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,dragon_leather_black]
 if (last_useitem = needle) @craft_dhide_interface(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,thread]
 if (last_useitem = needle) {
     ~chatplayer(happy,"Perhaps I should use a needle with a piece of leather instead.");
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [proc,check_craft_leather_reqs](dbrow $product_data)
 // check members
@@ -70,7 +70,8 @@ if_close;
 db_find(craft_leather_table:product, $product);
 def_dbrow $product_data = db_findnext;
 if ($product_data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 ~check_craft_leather_reqs($product_data);
 
@@ -118,7 +119,8 @@ def_obj $leather = inv_getobj(inv, $last);
 db_find(dhide_interface_table:leather, $leather);
 def_dbrow $leather_data = db_findnext;
 if ($leather_data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_namedobj $interface_item1;
 def_namedobj $interface_item2;
@@ -139,6 +141,10 @@ def_namedobj $choice = ~multiobj3_close(
     $interface_item2, 175, "Dragonhide Vambraces.",
     $interface_item3, 175, "Dragonhide Chaps."
 );
+if ($choice = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 
 db_find(craft_leather_table:product, $choice);
 def_dbrow $product_data = db_findnext;
