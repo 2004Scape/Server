@@ -181,8 +181,9 @@ if (inzone(0_48_148_0_0, 0_48_148_63_63,coord) = true & last_item ! bronze_dagge
 }
 
 // check if mems obj is selected
-if (oc_members($last_item) = true) {
-    ~require_members_make_item;
+if (oc_members($last_item) = true & map_members = false) {
+    mes("You can only make that on a members' server.");
+    return;
 }
 // check if player has enough bars
 def_int $bar_amount = db_getfield($data,smithing:bar_amount,0);
