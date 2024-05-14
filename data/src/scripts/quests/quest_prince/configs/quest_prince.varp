@@ -1,2 +1,5 @@
 [prince_progress]
 scope=perm
+
+[prince_keystatus]
+scope=perm

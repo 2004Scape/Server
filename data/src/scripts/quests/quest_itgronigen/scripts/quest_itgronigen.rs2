@@ -60,7 +60,7 @@ mes("You close the chest.");
 [oploc2,loc_2194]
 mes("You search the chest.");
 mes("The chest contains a poisonous spider.");
-npc_add(coord, poison_spider_observatory, 500);
+npc_add(~coord_lineofwalk_radius(coord,1), poison_spider_observatory, 500);
 npc_setmode(opplayer2);
 ~npc_retaliate(0);
 queue(poison_player, 0, 12);
@@ -126,7 +126,7 @@ while(loc_findnext = true) {
             loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
      }
 }
-sound_synth(door_open, 0, 0); //iron_door_open
+sound_synth(grate_open, 0, 0); //iron_door_open
 if(%keepdoor_unlocked = 0) {
     %keepdoor_unlocked = 1;
     mes("The gate unlocks.");

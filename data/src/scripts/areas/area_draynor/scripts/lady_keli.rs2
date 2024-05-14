@@ -1,33 +1,30 @@
 [opnpc1,lady_keli]
-if(%prince_progress >= 6) {
+if(%prince_progress >= ^prince_tied_keli) {
     npc_say("You tricked me, and tied me up, Guards kill this stranger!!");
     p_delay(1);
-    // TODO: find local guard and aggro on player
-    npc_findallzone(coord);
-    while (npc_findnext = true) {
-        if (npc_type = jail_guard) {
-            npc_say("Yes M'lady");
-        }
+    if (npc_finduid(~npc_within_distance(coord, jail_guard, 7)) = true) {
+        npc_say("Yes M'lady");
+        ~npc_retaliate(0);
     }
     return;
 }
 ~chatplayer(happy, "Are you the famous Lady Keli? Leader of the toughest gang of mercenary killers around?");
-~chatnpc(drunk, "I am Keli, you have heard of me then?");
+~chatnpc(bored, "I am Keli, you have heard of me then?");
 @multi4("Heard of you? You are famous in RuneScape!", lady_keli_famous, "I have heard a little, but I think Katrine is tougher.", lady_keli_katrine, "I have heard rumours that you kill people.", lady_keli_kill, "No I have never really heard of you.", lady_keli_never);
 
 [label,lady_keli_famous]
 ~chatplayer(happy, "The great Lady Keli, of course I have heard of you. You are famous in RuneScape!");
-~chatnpc(default, "That's very kind of you to say. Reputations are not easily earned. I have managed to succeed where many fail.");
+~chatnpc(happy, "That's very kind of you to say. Reputations are not easily earned. I have managed to succeed where many fail.");
 @multi4("I think Katrine is still tougher.", lady_keli_still_katrine, "What is your latest plan then?", lady_keli_plan, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 
 [label,lady_keli_kill]
 ~chatplayer(neutral, "I have heard rumours that you kill people.");
-~chatnpc(default, "There's always someone ready to spread rumours. I hear all sort of ridiculous things these days.");
+~chatnpc(neutral, "There's always someone ready to spread rumours.|I hear all sort of ridiculous things these days.");
 @multi4("I think Katrine is still tougher.", lady_keli_still_katrine, "What is your latest plan then?", lady_keli_plan, "You must have trained a lot for this work.", lady_keli_trained, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
 
 [label,lady_keli_trained]
 ~chatplayer(happy, "You must have trained a lot for this work.");
-~chatnpc(angry, "I have used a sword since I was a small girl. I stabbed three people before I was 6 years old.");
+~chatnpc(angry, "I have used a sword since I was a small girl.|I stabbed three people before I was 6 years old.");
 @multi3("What is your latest plan then?", lady_keli_plan, "I should not disturb someone as tough as you.", lady_keli_not_disturb, "I think Katrine is still tougher.", lady_keli_still_katrine);
 
 [label,lady_keli_never]
@@ -55,3 +52,52 @@ if(%prince_progress >= 6) {
 [label,lady_keli_still_katrine]
 ~chatplayer(neutral, "I think Katrine is still tougher.");
 ~chatnpc(angry, "Well you can think that all you like. I know those blackarm cowards dare not leave the city. Out here, I am the toughest. You can tell them that! Now get out of my sight, before I call my guards.");
+
+[label,lady_keli_plan]
+~chatplayer(neutral, "What is your latest plan then?|Of course, you need not go into specific details.");
+~chatnpc(neutral, "Well, I can tell you I have a valuable prisoner here in my cells.");
+~chatnpc(neutral, "I can expect a high reward to be paid very soon for this guy. I can't tell you who he is, but he is a lot colder now.");
+@multi4("Ah I see. You must have been very skillful.", lady_keli_skillful, "Thats great, are you sure they will pay?", lady_keli_pay, "Can you be sure they will not try to get him out?", lady_keli_out, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+
+[label,lady_keli_skillful]
+~chatplayer(neutral, "You must have been very skillful.");
+~chatnpc(neutral, "Yes. I did most of the work. We had to grab the Pr...");
+~chatnpc(neutral, "Er, we had to grab him without his ten bodyguards noticing. It was a stroke of genius.");
+@multi3("Are you sure they will pay?", lady_keli_pay, "Can you be sure they will not try to get him out?", lady_keli_out, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+
+[label,lady_keli_pay]
+~chatplayer(quiz, "Are you sure they will pay?");
+~chatnpc(neutral, "They will pay, or we will cut his hair off and send it to them.");
+~chatplayer(quiz, "How about trying something tougher? Maybe cut his finger off?");
+~chatnpc(neutral, "That's a good idea, I could use talented people like you. I may call on you if I need work doing.");
+@multi3("You must have been very skillful.", lady_keli_skillful, "Can you be sure they will not try to get him out?", lady_keli_out, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+
+[label,lady_keli_out]
+~chatplayer(neutral, "Can you be sure they will not try to get him out?");
+~chatnpc(neutral, "There is no way to release him.|The only key to the door is on a chain around my neck|and the locksmith who made the lock|died suddenly when he had finished.");
+~chatnpc(neutral, "There is not another key like this in the world.");
+@multi3("Could I see the key please?", lady_keli_key_please, "That is a good way to keep secrets.", lady_keli_secrets, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+
+[label,lady_keli_secrets]
+~chatplayer(neutral, "That is a good way to keep secrets.");
+~chatnpc(neutral, "It is the best way I know.|Dead men tell no tales.");
+~chatplayer(neutral, "I am glad I know none of your secrets, Keli.");
+
+[label,lady_keli_key_please]
+~chatplayer(neutral, "Could I see the key please? Just for a moment. It would be something I can tell my grandchildren. When you are even more famous than you are now.");
+~chatnpc(happy, "As you put it that way I am sure you can see it.|You cannot steal the key, it is on a Runite chain.");
+~mesbox("Keli shows you a small key on a strong looking chain.");
+if(%prince_progress = ^prince_spoken_osman & inv_total(inv, soft_clay) >= 1) { 
+    @multi2("Could I touch the key for a moment?", lady_keli_touch_key, "I should not disturb someone as tough as you.", lady_keli_not_disturb);
+} else {
+    ~chatnpc(neutral, "There, run along now, I am very busy.");
+}
+
+[label,lady_keli_touch_key]
+~chatplayer(happy, "Could I touch the key a moment please?");
+~chatnpc(neutral, "Only for a moment then.");
+~mesbox("You put a piece of your soft clay in your hand.|As you touch the key, you take an imprint of it.");
+inv_del(inv, soft_clay, 1);
+inv_add(inv, key_print, 1);
+~chatplayer(happy, "Thank you so much, you are too kind, o great Keli.");
+~chatnpc(neutral, "You are welcome, run along now, I am very busy.");

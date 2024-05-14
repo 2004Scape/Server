@@ -1,11 +1,11 @@
 [opnpc1,osman]
 switch_int (%prince_progress) {
-    case 0: @osman_prequest;
-    case 1: @osman_instructions;
-    case 2: @osman_items;
-    case 3,4,5,6: @osman_still_need;
-    case 7: @osman_postsave;
-    case 8: @osman_postquest;
+    case ^prince_not_started: @osman_prequest;
+    case ^prince_started: @osman_instructions;
+    case ^prince_spoken_osman: @osman_items;
+    case ^prince_prep_finished,^prince_prep_finished,^prince_guard_drunk,^prince_tied_keli: ~chatnpc(shifty, "I hear from Leela that you are well on the way with the rescue. I am always kept informed, you know.");
+    case ^prince_saved: ~chatnpc(shifty, "The prince is safe and on his way home with Leela.|You can pick up your payment from the chancellor.");
+    case ^prince_complete: ~chatnpc(shifty, "Well done, A great rescue.|I will remember you if I have anything dangerous to do.");
 }
 
 [label,osman_prequest]
@@ -14,17 +14,127 @@ def_int $option = ~p_choice3("You don't seem very tough. Who are you?", 1, "I he
 
 if($option = 1) {
     ~chatplayer(neutral, "You don't seem very tough. Who are you?");
-    ~chatnpc(shifty, "I am in the employ of the Emir. That is all you need to know.");
+    ~chatnpc(shifty, "I am in the employ of the Emir.|That is all you need to know.");
 } else if($option = 2) {
     ~chatplayer(neutral, "I hear wild rumours about a prince.");
-    ~chatnpc(shifty, "The prince is not here. He is...away. If you can be trusted, speak to the chancellor, Hassan.");
+    ~chatnpc(shifty, "The prince is not here. He is...away.|If you can be trusted, speak to the chancellor, Hassan.");
 } else if($option = 3) {
     ~chatplayer(shifty, "I am just being nosy.");
-    ~chatnpc(shifty, "That bothers me not. The secrets of Al-Kharid protect themselves.");
+    ~chatnpc(shifty, "That bothers me not.|The secrets of Al-Kharid protect themselves.");
 }
 
-[label,osman_postsave]
-~chatnpc(shifty, "The prince is safe and on his way home with Leela. You can pick up your payment from the chancellor.");
+[label,osman_instructions]
+~chatplayer(neutral, "The chancellor trusts me. I have come for instructions.");
+~chatnpc(shifty, "Our prince is captive by the Lady Keli.|We just need to make the rescue.|There are two things we need you to do.");
+def_int $option = ~p_choice2("What is the first thing I must do?", 1, "What is the second thing you need?", 2);
+if($option = 1) {
+    ~chatplayer(neutral, "What is the first thing I must do?");
+    @osman_first_thing;
+} else if($option = 2) {
+    ~chatplayer(neutral, "What is the second thing you need?");
+    @osman_second_thing;
+}
 
-[label,osman_postquest]
-~chatnpc(shifty, "Well done, A great rescue. I will remember you if I have anything dangerous to do.");
+[label,osman_first_thing]
+~chatnpc(shifty, "The prince is guarded by some stupid guards and a clever woman. The woman is our only way to get the prince out. Only she can walk freely about the area.");
+~chatnpc(shifty, "I think you will need to tie her up.|One coil of rope should do for that.|Then, disguise the prince as her to get him out without suspicion.");
+~chatplayer(neutral, "How good must the disguise be?");
+~chatnpc(shifty, "Only enough to fool the guards at a distance.|Get a skirt like hers. Same colour, same style.|We will only have a short time.");
+~chatnpc(shifty, "Get a blonde wig, too. That is up to you to make or find. Something to colour the skin of the prince.");
+~chatnpc(shifty, "My daughter and top spy, Leela, can help you. She has sent word that she has discovered where they are keeping the prince.");
+~chatnpc(shifty, "It's near Draynor Village. She is lurking somewhere near there now.");
+def_int $option = ~p_choice3("Explain the first thing again.", 1, "What is the second thing you need?", 2, "Okay, I better go find some things.", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "What is the first thing I must do?");
+    @osman_first_thing;
+} else if($option = 2) {
+    ~chatplayer(neutral, "What is the second thing you need?");
+    @osman_second_thing;
+} else {
+    @osman_better_go;
+}
+
+[label,osman_second_thing]
+~chatnpc(shifty, "We need the key, or we need a copy made.|If you can get some soft clay then you can copy the key...");
+~chatnpc(shifty, "...If you can convince Lady Keli to show it to you|for a moment. She is very boastful.|It should not be too hard.");
+~chatnpc(shifty, "Bring the imprint to me, with a bar of bronze.");
+def_int $option = ~p_choice3("What is the first thing I must do?", 1, "What exactly is the second thing you need?", 2, "Okay, I better go find some things.", 3);
+if($option = 1) {
+    ~chatplayer(neutral, "What is the first thing I must do?");
+    @osman_first_thing;
+} else if($option = 2) {
+    ~chatplayer(neutral, "What exactly is the second thing you need?");
+    @osman_second_thing;
+} else {
+    @osman_better_go;
+}
+
+[label,osman_better_go]
+~chatplayer(neutral, "Okay, I had better go find some things.");
+~chatnpc(shifty, "May good luck travel with you. Don't forget to find Leela. It can't be done without her help.");
+%prince_progress = ^prince_spoken_osman;
+
+[label,osman_items]
+if(%prince_keystatus = ^prince_keyclaimed & ~obj_gettotal(bronze_key) = 0) { // guessed mesanims, dialogue from chisel (can't find any video)
+    ~chatplayer(sad, "I'm afraid I lost that key you gave me.");
+    ~chatnpc(angry, "Foolish <text_gender("man", "woman")>! A new key will cost 15gp.");
+    if(inv_total(inv, coins) < 15) {
+        ~chatplayer(sad, "I haven't got 15 coins with me.");
+        ~chatnpc(neutral, "Then come back to me when you do.");
+    }
+    ~chatplayer(neutral, "Here, I have 15gp.");
+    inv_del(inv, coins, 15);
+    %prince_keystatus = ^prince_keymade;
+    ~mesbox("That is good. I will have another key made. You may collect it from Leela.");
+} else if(%prince_keystatus = 0 & inv_total(inv, key_print) >= 1 & inv_total(inv, bronze_bar) >= 1) {
+    ~chatnpc(shifty, "Well done; we can make the key now.");
+    inv_del(inv, key_print, 1);
+    inv_del(inv, bronze_bar, 1);
+    %prince_keystatus = ^prince_keymade;
+    ~mesbox("Osman takes the key imprint and the bronze bar.");
+    ~chatnpc(shifty, "Pick the key up from Leela.");
+    @multi2("Thank you. I will try to find the other items.", osman_other_items, "Can you tell me what I still need to get?", osman_still_need);
+} else {
+    @osman_still_need;
+}
+
+[label,osman_still_need]
+~chatplayer(neutral, "Can you tell me what I still need to get?");
+if(%prince_progress >= ^prince_prep_finished) {
+    if(inv_total(inv, bronze_key) > 0) {
+        ~chatnpc(shifty, "You have the key, good."); // RSC
+    } else {
+        ~chatnpc(shifty, "You can collect the key from Leela.");
+    }
+} else {
+    ~chatnpc(shifty, "A print of the key in soft clay and a bronze bar.|Then, collect the key from Leela.");
+}
+if(inv_total(inv, wig_blonde) >= 1) {
+    ~chatnpc(shifty, "The wig you have got, well done.");
+} else {
+    ~chatnpc(shifty, "You need to make a blonde wig somehow. Leela may help.");
+}
+if(inv_total(inv, pink_skirt) >= 1) {
+    ~chatnpc(shifty, "You have got the skirt, good.");
+} else {
+    ~chatnpc(shifty, "You will need a skirt that looks the same as Keli's");
+}
+if(inv_total(inv, paste) >= 1) {
+    ~chatnpc(shifty, "You have the skin paint, well done.|I thought you would struggle to make that.");
+} else {
+    ~chatnpc(shifty, "Something to make the prince's skin appear lighter.");
+}
+if(inv_total(inv, rope) >= 1) {
+    ~chatnpc(shifty, "Yes, you have the rope.");
+} else {
+    ~chatnpc(shifty, "A rope with which to tie Keli up.");
+}
+~chatnpc(shifty, "Once you have everything, go to Leela.|She must be ready to get the prince away.");
+
+[label,osman_other_items]
+~chatplayer(neutral, "Thank you. I will try to find the other items.");
+
+[opnpcu,osman]
+if(%prince_progress = ^prince_spoken_osman & (last_useitem = bronze_bar | last_useitem = key_print)) {
+    p_opnpc(1);
+}

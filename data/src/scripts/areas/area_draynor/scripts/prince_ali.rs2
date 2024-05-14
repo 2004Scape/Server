@@ -1,5 +1,30 @@
 [opnpc1,prince_ali]
-if(%prince_progress = 6) {
+if(%prince_progress = ^prince_tied_keli) {
     @prince_rescue;
 }
-~chatnpc(neutral, "I owe you my life for that escape. You cannot help me this time, they know who you are. Go in peace, friend of Al-Kharid.");
+~chatnpc(neutral, "I owe you my life for that escape.|You cannot help me this time, they know who you are.|Go in peace, friend of Al-Kharid.");
+
+[label,prince_rescue]
+~chatplayer(happy, "Prince, I come to rescue you.");
+~chatnpc(neutral, "That is very very kind of you, how do I get out?");
+~chatplayer(happy, "With a disguise. I have removed the Lady Keli.|She is tied up, but will not stay tied up for long.");
+if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
+    ~chatplayer(neutral, "Take this disguise, and this key.");
+    ~mesbox("You hand over the disguise and key over to Prince Ali.");
+    inv_del(inv, bronze_key, 1);
+    inv_del(inv, wig_blonde, 1);
+    inv_del(inv, pink_skirt, 1);
+    inv_del(inv, paste, 1);
+    %prince_progress = ^prince_saved;
+    npc_changetype(npc_921);
+    ~chatnpc_specific("Prince Ali", lady_keli, happy, "Thank you my friend, I must leave you now.|My father will pay you well for this.");
+    ~chatplayer(happy, "Go to Leela, she is close to here.");
+    npc_del;
+    ~mesbox("The prince has escaped, well done!|You are now a friend of Al-Kharid|and may pass through the Al-Kharid toll gate for free.");
+} 
+
+
+[opnpcu,prince_ali]
+if(%prince_progress = ^prince_tied_keli & (last_useitem = pink_skirt | last_useitem = wig_blonde | last_useitem = paste)) {
+    p_opnpc(1);
+}
