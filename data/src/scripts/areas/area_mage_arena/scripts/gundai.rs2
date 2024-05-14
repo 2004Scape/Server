@@ -1,0 +1,11 @@
+[opnpc1,gundai]
+~chatplayer(quiz, "Hello, what are you doing out here?");
+~chatnpc(happy, "I'm a banker, the only one around these dangerous parts.");
+
+def_int $choice = ~p_choice2("Cool, I'd like to access my bank account please.", 1, "Well, now I know.", 2);
+if ($choice = 2) {
+    ~chatplayer(neutral, "Well, now I know.");
+    ~chatnpc(neutral, "Knowledge is power my friend.");
+    return;
+}
+@openbank;
