@@ -37,7 +37,7 @@ if(~trail_clue_easy_complete = true) {
 [label,standard_ned]
 ~chatnpc(neutral, "Why hello there, me friends call me Ned.|I was a man of the sea, but it's past me now.|Could I be making or selling you some rope?");
 def_int $option;
-if(%prince_progress >= 2 & %prince_progress < ^prince_saved) {
+if(%prince_progress >= ^prince_spoken_osman & %prince_progress < ^prince_saved) {
     if (~quest_dragon_getting_map_parts = true & %dragon_ned_hired = ^false) {
         $option = ~p_choice4("You're a sailor? Could you take me to the island of Crandor?", 4, "Ned, could you make other things from wool?", 3, "Yes, I would like some rope.", 1, "No thanks, Ned. I don't need any.", 2);
     } else {

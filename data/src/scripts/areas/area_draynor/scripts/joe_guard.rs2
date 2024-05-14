@@ -1,10 +1,85 @@
 [opnpc1,joe_guard]
 switch_int (%prince_progress) {
-    case 4: @joe_distract;
-    case 5, 6: @joe_drunk;
-    case 7, 8: @joe_postquest;
+    case ^prince_prep_finished: @joe_distract;
+    case ^prince_guard_drunk, ^prince_tied_keli: @joe_drunk;
+    case ^prince_saved, ^prince_complete: @joe_postquest;
     case default: @joe_prequest;
 }
+
+[opnpcu,joe_guard]
+if(last_useitem = beer) {
+    if(%prince_progress = ^prince_prep_finished) {
+        @joe_beer;
+    }
+    ~chatplayer(neutral, "I don't see any need to give the guard my beer. I'll keep it for myself.");
+    return;
+}
+@nothing_interesting_happens;
+
+[label,joe_distract]
+@multi4("I have some beer here, fancy one?", joe_beer, "Tell me about the life of a guard.", joe_life, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);
+
+[label,joe_beer]
+~chatplayer(happy, "I have some beer here, fancy one?");
+~chatnpc(happy, "Ah, that would be lovely,|just one now, just to wet my throat.");
+~chatplayer(neutral, "Of course, it must be tough being here without a drink.");
+if(inv_total(inv, beer) <= 0) {
+    ~chatplayer(sad, "Oh dear, seems like I don't have any beer.");
+    return;
+} else {
+    ~mesbox("You hand a beer to the guard, he drinks it in seconds.");
+    inv_del(inv, beer, 1);
+}
+~chatnpc(happy, "That was perfect, I can't thank you enough.");
+~chatplayer(happy, "How are you? Still ok? Not too drunk?");
+if(inv_total(inv, beer) < 2) {
+    ~chatnpc(happy, "No, I don't get drunk with only one drink. You would need a few to do that. But thanks for the beer.");
+    return;
+} 
+~chatplayer(happy, "Would you care for another, my friend?");
+~chatnpc(bored, "I better not, I don't want to be drunk on duty.");
+~chatplayer(happy, "Here, just keep these for later,|I hate to see a thirsty guard.");
+inv_del(inv, beer, 2);
+%prince_progress = ^prince_guard_drunk;
+~mesbox("You hand two more beers to the guard.|He takes a sip of one, and then he drinks them both.");
+~chatnpc(confused, "Franksh, that wash just what I need to shtay on guard. No more beersh, I don't want to get drunk.");
+~mesbox("The guard is drunk, and no longer a problem.");
+
+[label,joe_life]
+~chatplayer(neutral, "Tell me about the life of a guard.");
+~chatnpc(happy, "Well, the hours are good.....");
+~chatnpc(sad, ".... But most of those hours are a drag. If only I had spent more time in Knight school when I was a young boy. Maybe I wouldn't be here now, scared of Keli.");
+@multi3("Hey, chill out, I won't cause you trouble.", joe_chill_out, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);
+
+[label,joe_boy]
+~chatplayer(neutral, "What did you want to be when you were a boy?");
+~chatnpc(bored, "Well, I loved to sit by the lake, with my toes in the water and shoot the fish with my bow and arrow.");
+~chatplayer(confused, "That was a strange hobby for a little boy.");
+~chatnpc(happy, "It kept us from goblin hunting, which was what most boys did. What are you here for?");
+@multi3("Hey, chill out, I won't cause you trouble.", joe_chill_out, "Tell me about the life of a guard.", joe_life, "I had better leave, I don't want trouble.", joe_leave);
+
+[label,joe_chill_out]
+~chatplayer(happy, "Hey, chill out, I won't cause you trouble. I was just wondering what you do to relax.");
+~chatnpc(neutral, "You never relax with these people, but it's a good career for a young man and some of the shouting I rather like.");
+~chatnpc(angry, "RESISTANCE IS USELESS!");
+@multi4("So what do you buy with these great wages?", joe_wages, "Tell me about the life of a guard.", joe_life, "Would you be interested in making a little more money?", joe_money, "I had better leave, I don't want trouble.", joe_leave);
+
+[label,joe_wages]
+~chatplayer(happy, "So what do you buy with these great wages?");
+~chatnpc(bored, "Really, after working here, there's only time for a drink or three. All us guards go to the same bar and drink ourselves stupid.");
+~chatnpc(happy, "It's what I enjoy these days, that fade into unconciousness. I can't resist the sight of a really cold beer.");
+@multi3("Tell me about the life of a guard.", joe_life, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);
+
+[label,joe_money]
+~chatplayer(happy, "Would you be interested in making a little more money?");
+~chatnpc(angry, "WHAT?! Are you trying to bribe me? I may not be a great guard, but I am loyal. How DARE you try to bribe me!");
+~chatplayer(shock, "No, no, you've got the wrong idea, totally. I just wondered if you wanted some part-time bodyguard work.");
+~chatnpc(neutral, "Oh... sorry. No, I don't need money. As long as you were not offering me a bribe.");
+@multi3("Tell me about the life of a guard.", joe_life, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);
+
+[label,joe_leave]
+~chatplayer(neutral, "I had better leave, I don't want trouble.");
+~chatnpc(happy, "Thanks, I appreciate that. Talking on duty can be punishable by having your mouth stitched up. These are tough people, no mistake.");
 
 [label,joe_prequest]
 ~chatnpc(neutral, "Hi, I'm Joe, door guard for Lady Keli.");
@@ -12,9 +87,10 @@ switch_int (%prince_progress) {
 ~chatnpc(shifty, "Can't say, all very secret. You should get out of here. I am not supposed to talk while I guard.");
 
 [label,joe_drunk]
-~chatnpc(drunk, "Halt! Who goes there?");
+// https://youtu.be/UHv5WzFKTsg?si=UAmcVfLQ5zi5_ngZ&t=657
+~chatnpc(confused, "Halt! Who goes there?");
 ~chatplayer(quiz, "Hello friend, I am just rescuing the prince, is that ok?");
-~chatnpc(drunk, "Thatsh a funny joke. You are lucky I am shober. Go in peace, friend.");
+~chatnpc(confused, "Thatsh a funny joke. You are lucky I am shober. Go in peace, friend.");
 
 [label,joe_postquest]
 ~chatnpc(angry, "Halt! Who goes there? Friend or foe?");
