@@ -13,7 +13,10 @@ if (last_useitem = shield_left_half) {
 
 
 [label,make_dragon_sq]
-~require_members_make_item;
+if (map_members = false) {
+    mes("You can only make that on a members' server.");
+    return;
+}
 // check if player has both halfs
 if (inv_total(inv, shield_left_half) < 1 | inv_total(inv, shield_right_half) < 1) {
     ~mesbox("You need to find the other half of this shield in order to repair it.");

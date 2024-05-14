@@ -111,8 +111,9 @@ mes("You add the cheese to the pizza.");
 
 [label,make_pizza_with_topping](int $last)
 def_obj $ingredient = inv_getobj(inv, $last);
-if (oc_members($ingredient) = true) {
-    ~require_members_make_item;
+if (oc_members($ingredient) = true & map_members = false) {
+    mes("You can only make that on a members' server.");
+    return;
 }
 def_struct $struct = oc_param($ingredient, pizza_topping_struct);
 //check if required level is met
