@@ -41,7 +41,9 @@ if (npc_param(magicattack_anim) = null) {
     npc_anim(npc_param(magicattack_anim), 0);
 }
 // origin spell visual effect
-spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
+if (db_getfieldcount($spell_data, magic_spell_table:spotanim_origin) > 0) {
+    spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
+}
 // shoot spell projectile
 %npc_action_delay = add(map_clock, 5);
 def_int $duration = 64;
