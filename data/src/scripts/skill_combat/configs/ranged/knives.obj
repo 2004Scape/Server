@@ -31,6 +31,8 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,iron_tknife_launch
 param=proj_travel,iron_tknife_travel
+param=weapon_poisoned,iron_knife_p
+param=weapon_poisoned_message,You poison some knives.
 tradeable=yes
 
 [bronze_knife]
@@ -66,6 +68,8 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,bronze_tknife_launch
 param=proj_travel,bronze_tknife_travel
+param=weapon_poisoned,bronze_knife_p
+param=weapon_poisoned_message,You poison some knives.
 tradeable=yes
 
 [steel_knife]
@@ -99,6 +103,8 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,steel_tknife_launch
 param=proj_travel,steel_tknife_travel
+param=weapon_poisoned,steel_knife_p
+param=weapon_poisoned_message,You poison some knives.
 tradeable=yes
 
 [mithril_knife]
@@ -134,6 +140,8 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,mithril_tknife_launch
 param=proj_travel,mithril_tknife_travel
+param=weapon_poisoned,mithril_knife_p
+param=weapon_poisoned_message,You poison some knives.
 tradeable=yes
 
 [adamant_knife]
@@ -169,6 +177,8 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,adamant_tknife_launch
 param=proj_travel,adamant_tknife_travel
+param=weapon_poisoned,adamant_knife_p
+param=weapon_poisoned_message,You poison some knives.
 tradeable=yes
 
 [rune_knife]
@@ -204,6 +214,8 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,rune_tknife_launch
 param=proj_travel,rune_tknife_travel
+param=weapon_poisoned,rune_knife_p
+param=weapon_poisoned_message,You poison some knives.
 tradeable=yes
 
 [black_knife]
@@ -239,6 +251,8 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,black_tknife_launch
 param=proj_travel,black_tknife_travel
+param=weapon_poisoned,black_knife_p
+param=weapon_poisoned_message,You poison some knives.
 tradeable=yes
 
 [bronze_knife_p]
@@ -274,8 +288,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,bronze_tknife_launch
 param=proj_travel,bronze_tknife_travel
-param=proj_launch,bronze_tknife_launch
-param=proj_travel,bronze_tknife_travel
+param=poison_severity,20
 tradeable=yes
 
 [iron_knife_p]
@@ -311,6 +324,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,iron_tknife_launch
 param=proj_travel,iron_tknife_travel
+param=poison_severity,20
 tradeable=yes
 
 [steel_knife_p]
@@ -344,6 +358,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,steel_tknife_launch
 param=proj_travel,steel_tknife_travel
+param=poison_severity,20
 tradeable=yes
 
 [mithril_knife_p]
@@ -379,6 +394,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,mithril_tknife_launch
 param=proj_travel,mithril_tknife_travel
+param=poison_severity,20
 tradeable=yes
 
 [black_knife_p]
@@ -414,6 +430,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,black_tknife_launch
 param=proj_travel,black_tknife_travel
+param=poison_severity,20
 tradeable=yes
 
 [adamant_knife_p]
@@ -449,6 +466,7 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,adamant_tknife_launch
 param=proj_travel,adamant_tknife_travel
+param=poison_severity,20
 tradeable=yes
 
 [rune_knife_p]
@@ -484,4 +502,5 @@ param=defend_anim,human_unarmedblock
 param=rangeattack_sound,throwingknife
 param=proj_launch,rune_tknife_launch
 param=proj_travel,rune_tknife_travel
+param=poison_severity,20
 tradeable=yes

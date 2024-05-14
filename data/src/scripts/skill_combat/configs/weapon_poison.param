@@ -1,0 +1,7 @@
+[weapon_poisoned]
+type=namedobj
+default=null
+
+[weapon_poisoned_message]
+type=string
+default=^string_empty
