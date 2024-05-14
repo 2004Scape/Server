@@ -38,32 +38,17 @@ switch_obj(last_useitem) {
     case default : ~chatnpc(default, "Er... Thanks, but no thanks!");
 }
 
+// https://web.archive.org/web/20040804232357/http://runehq.com/viewcityguide.php?id=00390
 [label,tan_leather_choices]
 def_int $total_dragon_hides = calc(inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
 def_int $total_cow_hides = inv_total(inv, cow_hide);
 def_int $choice;
-def_boolean $exit = false;
 if ($total_dragon_hides < 1) {
-    $choice = ~p_choice3_header("Soft leather.", 1, "Hard leather.", 2, "Nevermind.", 3, "What would you like to make?");
-    if ($choice = 3) {
-        $exit = true;
-    }
+    $choice = ~p_choice3_header("Soft leather", 1, "Hard leather", 2, "Cancel", 4, "What kind of leather do you wish to make?");
 } else if (inv_total(inv, cow_hide) < 1) {
-    $choice = ~p_choice2_header("Dragonhide leather.", 1, "Nevermind.", 2, "What would you like to make?");
-    if ($choice = 2) {
-        $exit = true;
-    }
-    $choice = 3;
+    $choice = ~p_choice2_header("Dragon hide", 3, "Cancel", 4, "What kind of leather do you wish to make?");
 } else {
-    $choice = ~p_choice4_header("Soft leather.", 1, "Hard leather.", 2, "Dragonhide leather.", 3, "Nevermind.", 4, "What would you like to make?");
-    if ($choice = 4) {
-        $exit = true;
-    }
-}
-if ($exit = true) {
-    ~chatplayer(happy, "Nevermind.");
-    ~chatnpc(happy, text_gender("Very well, sir, as you wish.", "Very well, madam, as you wish."));
-    return;
+    $choice = ~p_choice4_header("Soft leather", 1, "Hard leather", 2, "Dragon hide", 3, "Cancel", 4, "What kind of leather do you wish to make?");
 }
 switch_int($choice) {
     case 1 : ~tan_leather(cow_hide, leather, 1);
@@ -79,12 +64,15 @@ switch_int($choice) {
             mes("The tanner tans <tostring($total_dragon_hides)> dragonhides for you.");
         }
         return;
+    case 4 : 
+        return;
 }
 if ($total_cow_hides = 1) {
     mes("The tanner tans your cowhide.");
 } else {
     mes("The tanner tans <tostring($total_cow_hides)> cowhides for you.");
 }
+
 
 [proc,tan_leather](namedobj $hide, namedobj $leather, int $cost)
 if (oc_members($hide) = true | oc_members($leather) = true) {
