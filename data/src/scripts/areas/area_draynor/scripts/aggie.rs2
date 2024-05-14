@@ -39,7 +39,7 @@ switch_obj(last_useitem) {
     case onion: @aggie_yellow_dye;
     case redberry: @aggie_red_dye;
     case woad_leaf: @aggie_blue_dye;
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [label,aggie_fine]

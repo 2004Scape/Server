@@ -138,4 +138,4 @@ if(inv_total(inv, rope) >= 1) {
 if(%prince_progress = ^prince_spoken_osman & (last_useitem = bronze_bar | last_useitem = key_print)) {
     @osman_items;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
