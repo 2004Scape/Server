@@ -1025,8 +1025,8 @@ class World {
         return this.getZone(x, z, level).getDynObj(x, z, objId);
     }
 
-    getObj(x: number, z: number, level: number, objId: number) {
-        return this.getZone(x, z, level).getObj(x, z, objId);
+    getObj(x: number, z: number, level: number, objId: number, player: Player | null = null) {
+        return this.getZone(x, z, level).getObj(x, z, objId, player);
     }
 
     addLoc(loc: Loc, duration: number) {

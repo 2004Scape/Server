@@ -213,7 +213,7 @@ describe('Zone', () => {
                         it('should not contain the OBJ_DEL packet', () => {
                             const packets = zone.getEvents(player);
 
-                            expect(packets.length).toBe(0);
+                            expect(packets.pos).toBe(0);
                         });
 
                         it('should not contain the OBJ_ADD packet in state', () => {
@@ -233,7 +233,7 @@ describe('Zone', () => {
                         it('should not contain the OBJ_DEL packet', () => {
                             const packets = zone.getEvents(player);
 
-                            expect(packets.length).toBe(0);
+                            expect(packets.pos).toBe(0);
                         });
 
                         it('should not contain the OBJ_ADD packet in state', () => {
@@ -371,7 +371,7 @@ describe('Zone', () => {
                                 it('should not contain the OBJ_DEL packet', () => {
                                     const packets = zone.getEvents(viewer);
 
-                                    expect(packets.length).toBe(0);
+                                    expect(packets.pos).toBe(0);
                                 });
 
                                 it('should not contain the OBJ_ADD packet in state', () => {
@@ -434,7 +434,7 @@ describe('Zone', () => {
                                 it('should not contain the OBJ_DEL packet', () => {
                                     const packets = zone.getEvents(viewer);
 
-                                    expect(packets.length).toBe(0);
+                                    expect(packets.pos).toBe(0);
                                 });
 
                                 it('should not contain the OBJ_ADD packet in state', () => {
@@ -564,7 +564,7 @@ describe('Zone', () => {
                                 it('should not contain the OBJ_DEL packet', () => {
                                     const packets = zone.getEvents(viewer);
 
-                                    expect(packets.length).toBe(0);
+                                    expect(packets.pos).toBe(0);
                                 });
                             });
                         });
@@ -710,7 +710,7 @@ describe('Zone', () => {
                                     it('should not contain the OBJ_REVEAL packet', () => {
                                         const packets = zone.getEvents(viewer);
 
-                                        expect(packets.length).toBe(0);
+                                        expect(packets.pos).toBe(0);
                                     });
                                 });
                             });

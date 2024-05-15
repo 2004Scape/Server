@@ -138,6 +138,19 @@ export default class Packet extends Hashable {
         return this.data.length - this.pos;
     }
 
+    // IDEALLY one prefers pos over length!
+    get length(): number {
+        return this.data.length;
+    }
+
+    // if you have to use this then you're probably circumventing the byte pooling optimization
+    copy(): Packet {
+        const temp = new Packet(new Uint8Array(this.length));
+        temp.data.set(this.data);
+        temp.pos = this.pos;
+        return temp;
+    }
+
     release(): void {
         this.pos = 0;
         this.bitPos = 0;

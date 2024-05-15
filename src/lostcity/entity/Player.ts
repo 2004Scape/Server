@@ -1410,7 +1410,7 @@ export default class Player extends PathingEntity {
             const buffer = zone.getEvents(this);
 
             // shared events
-            if (buffer.length > 0) {
+            if (buffer.pos > 0) {
                 this.write(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, x, z, this.loadedX, this.loadedZ, buffer);
 
                 World.getZone(x << 3, z << 3, this.level).debug();

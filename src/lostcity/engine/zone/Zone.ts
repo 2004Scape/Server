@@ -26,7 +26,7 @@ export default class Zone {
 
     index = -1; // packed coord
     level = 0;
-    sharedEventBuffer: Packet = new Packet();
+    sharedEventBuffer: Packet = Packet.alloc(1); // todo: holy moly this will be like 800MB RAM usage without releasing!
     events: Packet[] = [];
 
     // zone entities
@@ -221,7 +221,7 @@ export default class Zone {
     }
 
     computeSharedEvents() {
-        this.sharedEventBuffer = new Packet();
+        this.sharedEventBuffer.pos = 0;
 
         for (const packed of this.locDelEvent) {
             let info = this.locInfo.get(packed);
@@ -242,7 +242,7 @@ export default class Zone {
             const angle = (info >> 21) & 3;
 
             const buf = Zone.write(ServerProt.LOC_DEL, x, z, shape, angle);
-            this.sharedEventBuffer.pdata(buf);
+            this.sharedEventBuffer.pdata(buf.data, 0, buf.pos);
 
             const isStatic = (packed >> 8) & 1;
             if (isStatic) {
@@ -274,7 +274,7 @@ export default class Zone {
             const angle = (info >> 21) & 3;
 
             const buf = Zone.write(ServerProt.LOC_ADD_CHANGE, x, z, shape, angle, id);
-            this.sharedEventBuffer.pdata(buf);
+            this.sharedEventBuffer.pdata(buf.data, 0, buf.pos);
 
             const isStatic = (packed >> 8) & 1;
             if (!isStatic) {
@@ -289,7 +289,7 @@ export default class Zone {
         }
 
         for (const event of this.events) {
-            this.sharedEventBuffer.pdata(event);
+            this.sharedEventBuffer.pdata(event.data, 0, event.pos);
         }
 
         this.locDelEvent = new Set();
@@ -310,7 +310,7 @@ export default class Zone {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private static write(opcode: ServerProt, ...args: any[]) {
-        const buf = new Packet();
+        const buf = Packet.alloc(0);
         buf.p1(opcode.id);
         ServerProtEncoders[opcode.id](buf, ...args);
         return buf;
@@ -609,11 +609,8 @@ export default class Zone {
     }
 
     getDynObj(x: number, z: number, type: number): Obj | null {
-        const dynamicObj = this.objs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type);
-        if (dynamicObj !== -1) {
-            return this.objs[dynamicObj];
-        }
-        return null;
+        // todo: specifically dynamic objects
+        return this.getObj(x, z, type);
     }
 
     /**
@@ -625,12 +622,14 @@ export default class Zone {
      * @param player The observing player
      * @returns The object, or null if not found
      */
-    public getObj(x: number, z: number, type: number, player: Player): Obj | null {
+    public getObj(x: number, z: number, type: number, player: Player | null = null): Obj | null {
         // look through private objects first
-        const privateObjs = this.privateObjs.get(player) ?? [];
-        for (const { obj } of privateObjs){
-            if (obj.x === x && obj.z === z && obj.type === type) {
-                return obj;
+        if (player) {
+            const privateObjs = this.privateObjs.get(player) ?? [];
+            for (const { obj } of privateObjs){
+                if (obj.x === x && obj.z === z && obj.type === type) {
+                    return obj;
+                }
             }
         }
 
@@ -673,13 +672,13 @@ export default class Zone {
      */
     private writeObjEvents(player: Player, buffer: Packet): Packet {        
         for (const packet of this.objEvents) {
-            buffer.pdata(packet);
+            buffer.pdata(packet.data, 0, packet.pos);
         }
 
         const packets = this.privateObjEvents.get(player.uid) ?? [];
 
         for (const packet of packets) {
-            buffer.pdata(packet);
+            buffer.pdata(packet.data, 0, packet.pos);
         }
 
         return buffer;
