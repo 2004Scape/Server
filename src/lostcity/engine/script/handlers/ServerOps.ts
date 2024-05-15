@@ -129,7 +129,7 @@ const ServerOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(check(coord, CoordValid));
 
-        World.getZone(x, z, level).anim(x, z, spotanim, height, delay);
+        World.getZone(x, z, level).animMap(x, z, spotanim, height, delay);
     },
 
     [ScriptOpcode.DISTANCE]: state => {
@@ -268,7 +268,7 @@ const ServerOps: CommandHandlers = {
 
         const srcPos = Position.unpackCoord(srcCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-        zone.projanim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
+        zone.mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.PROJANIM_NPC]: state => {
@@ -287,7 +287,7 @@ const ServerOps: CommandHandlers = {
 
         const srcPos = Position.unpackCoord(srcCoord);
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-        zone.projanim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
+        zone.mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanim, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.PROJANIM_MAP]: state => {
@@ -298,7 +298,7 @@ const ServerOps: CommandHandlers = {
         const srcPos = Position.unpackCoord(check(srcCoord, CoordValid));
         const dstPos = Position.unpackCoord(check(dstCoord, CoordValid));
         const zone = World.getZone(srcPos.x, srcPos.z, srcPos.level);
-        zone.projanim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight + 100, dstHeight, delay, duration, peak, arc);
+        zone.mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanim, srcHeight + 100, dstHeight, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.MAP_LOCADDUNSAFE]: state => {

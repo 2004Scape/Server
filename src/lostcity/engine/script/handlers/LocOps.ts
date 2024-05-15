@@ -52,7 +52,7 @@ const LocOps: CommandHandlers = {
         const seq = state.popInt();
 
         const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).locanim(loc, seq);
+        World.getZone(loc.x, loc.z, loc.level).animLoc(loc, seq);
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, state => {

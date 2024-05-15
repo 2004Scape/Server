@@ -316,19 +316,31 @@ export default class Zone {
         return buf;
     }
 
-    anim(x: number, z: number, spotanim: number, height: number, delay: number) {
+    /**
+     * TODO (jkm) consider rename to anim 
+     */
+    animMap(x: number, z: number, spotanim: number, height: number, delay: number) {
         this.events.push(Zone.write(ServerProt.MAP_ANIM, x, z, spotanim, height, delay));
     }
 
-    projanim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
+    /**
+     * TODO (jkm) consider rename to projanim 
+     */
+    mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
         this.events.push(Zone.write(ServerProt.MAP_PROJANIM, x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc));
     }
 
-    locmerge(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
+    /**
+     * TODO (jkm) consider rename to locmerge
+     */
+    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
         this.events.push(Zone.write(ServerProt.LOC_MERGE, loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north));
     }
 
-    locanim(loc: Loc, seq: number) {
+    /**
+     * TODO (jkm) consider rename to locanim
+     */
+    animLoc(loc: Loc, seq: number) {
         this.events.push(Zone.write(ServerProt.LOC_ANIM, loc.x, loc.z, loc.shape, loc.angle, seq));
     }
 
