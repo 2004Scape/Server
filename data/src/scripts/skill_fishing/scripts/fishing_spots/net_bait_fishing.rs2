@@ -15,7 +15,7 @@
 
 [opnpcu,_saltfish]
 switch_obj(last_useitem) {
-    case fly_fishing_rod : @nothing_interesting_happens;
+    case fly_fishing_rod : ~displaymessage(^dm_default);
     case fishing_rod : @attempt_fish_sardine;
     case net : @attempt_fish_shrimp;
     case net_big : ~mesbox("The fish here aren't suitable for catching with a Big Net.");

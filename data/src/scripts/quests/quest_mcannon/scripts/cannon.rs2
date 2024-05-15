@@ -93,7 +93,7 @@ if (last_useitem = cannon_stand) {
     loc_add(%mcannon_coord, cannon_stand, 0, centrepiece_straight, 10000);
     mes("You add the stand.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oploc1,cannon_stand]
@@ -111,7 +111,7 @@ if (last_useitem = cannon_barrels) {
     loc_add(%mcannon_coord, cannon_barrels, 0, centrepiece_straight, 10000);
     mes("You add the barrels.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oploc1,cannon_barrels]
@@ -130,7 +130,7 @@ if (last_useitem = cannon_furnace) {
     loc_add(%mcannon_coord, cannon, 0, centrepiece_straight, 10000);
     mes("You add the furnace.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oploc2,cannon]

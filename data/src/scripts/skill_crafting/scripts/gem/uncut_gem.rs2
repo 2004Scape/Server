@@ -4,40 +4,40 @@ switch_obj (last_useitem)
     case uncut_sapphire, uncut_emerald, uncut_ruby, uncut_diamond, uncut_dragonstone, uncut_opal, uncut_jade, uncut_red_topaz : @crafting_gem(last_useitem);
     case opal, oyster_perl, oyster_perls : @make_bolt_tips(last_useitem);
     case wolf_bones : @make_wolf_bone_tips;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,uncut_sapphire]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,uncut_emerald]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,uncut_ruby]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,uncut_diamond]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,uncut_opal]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,uncut_jade]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,uncut_red_topaz]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,uncut_dragonstone]
 if (last_useitem = chisel) @crafting_gem(last_item);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 //--- Label to craft a gem
 [label,crafting_gem](obj $uncut_gem)
@@ -47,7 +47,8 @@ if (oc_members($uncut_gem) = true) {
 db_find(gem_cutting_table:uncut_gem, $uncut_gem);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 // check if the player has the required level
 def_int $level = db_getfield($data, gem_cutting_table:level, 0);

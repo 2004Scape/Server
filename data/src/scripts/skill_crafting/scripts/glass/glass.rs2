@@ -1,6 +1,6 @@
 [oplocu,sand_pit]
 if (last_useitem = bucket_empty) @sand_fill;
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,glassblowing_pipe]
 if (last_useitem = molten_glass) @craft_glass_interface;
@@ -54,6 +54,10 @@ def_namedobj $item = ~multiobj3 ("What would you like to make?",
     vial_empty, 2, 10, 180, "Vial", 0, 0,
     stafforb, 2, -10, 200, "Orb", 0, 0
 );
+if ($item = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 @crafting_glass($item);
 
 

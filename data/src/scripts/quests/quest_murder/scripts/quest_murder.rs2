@@ -294,19 +294,19 @@ inv_add(inv, pungent_pot, 1);
 if(last_item = pot_of_flour) {
     @flour_proofobj(last_useitem);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,_murder_flourobj]
 if(last_item = flypaper) {
     @create_flourprints(last_useitem);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unknown_print]
 if(oc_category(last_useitem) = murder_printobj) {
     @check_murderer_print(last_useitem);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,flour_proofobj](obj $proof_obj)
 inv_del(inv, $proof_obj, 1);

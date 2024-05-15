@@ -9,12 +9,14 @@ def_obj $used_on = inv_getobj(inv, $last_slot);
 def_obj $used_with = inv_getobj(inv, $use_slot);
 
 if ($used_with ! pestle_and_mortar) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 def_namedobj $refined = oc_param($used_on, grindable_ingredient_refined);
 if ($refined = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 ~require_members_feature;

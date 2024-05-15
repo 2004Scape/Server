@@ -3,7 +3,7 @@ switch_obj (last_useitem) {
     case bowl_water : @make_incomplete_stew(last_slot);
     case incomplete_stew_meat : @make_uncooked_stew(last_slot, last_useslot);
     case bowl_empty : @no_water_stew_message;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,uncooked_stew]
@@ -61,7 +61,10 @@ if ($used_on = incomplete_stew_potato | $used_with = incomplete_stew_potato) {
 }
 
 [label,make_curry]
-~require_members_make_item;
+if (map_members = false) {
+    mes("You can only make that on a members' server.");
+    return;
+}
 inv_del(inv, uncooked_stew, 1);
 inv_del(inv, spice, 1);
 

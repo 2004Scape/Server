@@ -76,7 +76,8 @@ if ($option = 1) {
 
 [opnpcu,redbeard_frank]
 if (last_useitem ! karamja_rum) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 // I'm unsure what happens if you attempt this when progress = 0,

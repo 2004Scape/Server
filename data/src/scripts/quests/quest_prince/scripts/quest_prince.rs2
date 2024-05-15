@@ -2,7 +2,7 @@
 if(last_useitem = yellow_dye) {
     @make_blonde_wig;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,make_blonde_wig]
 inv_del(inv, yellow_dye, 1);
@@ -12,8 +12,9 @@ inv_add(inv, wig_blonde, 1);
 mes("You dye the wig blonde.");
 
 [opnpcu,lady_keli]
-if (last_useitem ! rope | %prince_progress < ^prince_spoken_osman) {
-    @nothing_interesting_happens;
+if (last_useitem ! rope | %prince_progress <= 3) {
+    ~displaymessage(^dm_default);
+    return;
 }
 if(%prince_progress >= ^prince_saved) {
     mes("You have rescued the prince already, you cannot use the same plan again!");
@@ -32,7 +33,8 @@ if(inv_total(inv, rope) > 0) {
 
 [oplocu,loc_2881]
 if (last_useitem ! bronze_key | coordz(coord) <= coordz(loc_coord)) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if(%prince_progress <= ^prince_guard_drunk | npc_finduid(~npc_within_distance(coord, lady_keli, 10)) = true) {
     mes("You'd better get rid of Lady Keli before trying to go through there.");

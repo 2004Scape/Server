@@ -2,7 +2,7 @@
 if (oc_param(last_useitem, is_water_source) = ^true) {
     @tut_make_dough;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [oplocu,loc_3039]
 if (last_useitem = bread_dough) {
@@ -40,7 +40,7 @@ if (last_useitem = bread_dough) {
       inv_del(inv, raw_rat_meat, 1);
       @tut_random_meat_chance;
   }else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,tut_attempt_cook_item](obj $uncooked_item)
@@ -77,7 +77,7 @@ if ($uncooked_item = tutorial_raw_shrimps) {
     inv_del(inv, raw_rat_meat, 1);
     @tut_random_meat_chance;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,tut_random_shrimp_chance]

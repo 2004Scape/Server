@@ -8,7 +8,7 @@ switch_obj (last_useitem)
         if (oc_category(last_useitem) = category_91) {
             @smelt_ore(last_useitem);
         }
-        @nothing_interesting_happens;
+        ~displaymessage(^dm_default);
 };
 
 //--- this is the code that uses p_delays instead of weakqueues
@@ -22,7 +22,8 @@ if (($last = iron_ore & inv_total(inv, coal) >= 2 & stat(smithing) >= 30) | $las
 }
 // for some reason jagex has blankrune and clay in the ores category
 if ($bar = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_struct $struct = oc_param($bar, smelting_struct); 
 // If smithing level isnt high enough, dislpay level fail message
@@ -102,7 +103,8 @@ if (%ring_of_forging >= 140) {
 // // mes(oc_name($bar));
 // // for some reason jagex has blankrune and clay in the ores category
 // if ($bar = null) {
-//     @nothing_interesting_happens;
+//     ~displaymessage(^dm_default);
+//     return;
 // }
 // def_struct $struct = oc_param($bar, smelting_struct); 
 // // If smithing level isnt high enough, dislpay level fail message

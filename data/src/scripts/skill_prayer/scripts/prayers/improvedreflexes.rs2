@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 8);
 
 [label,activate_prayer_improvedreflexes]
 def_dbrow $data = ~get_prayer_data(^prayer_improvedreflexes);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_improvedreflexes = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_improvedreflexes));
     %prayer_improvedreflexes = ^false;

@@ -65,7 +65,7 @@ if(last_useitem = ghost_skull) {
     ~mesbox("I can't give it to him. It goes right through him.");
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,priest_ghost_no_amulet]
 ~chatnpc(neutral, "Wooo wooo wooooo!");

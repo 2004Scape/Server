@@ -1,5 +1,9 @@
 [oploc1,_rc_exit_portal]
 def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 sound_synth(teleport_all, 0, 0);
 mes("You step through the portal...");
 p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:exit_coord, random(db_getfieldcount($data, runecraft_table:exit_coord)))));
@@ -7,7 +11,7 @@ p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:exit_coor
 [oplocu,_rc_altar]
 switch_obj(last_useitem) {
     case blankrune : @runecraft_runes;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [oploc1,_rc_altar] @runecraft_runes;
@@ -16,14 +20,15 @@ switch_obj(last_useitem) {
 if (oc_category(last_useitem) = talismans) {
     @teleport_to_ruins;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 
 [label,teleport_to_ruins]
 def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
-if (db_getfield($data, runecraft_table:talisman, 0) ! last_useitem) {
-    @nothing_interesting_happens;
+if ($data = null | db_getfield($data, runecraft_table:talisman, 0) ! last_useitem) {
+    ~displaymessage(^dm_default);
+    return;
 }
 if (db_getfield($data, runecraft_table:members, 0) = ^true) {
     ~require_members_do_that;
@@ -38,6 +43,10 @@ p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coo
 
 [label,runecraft_runes]
 def_dbrow $data = ~get_runecraft_data(loc_param(rune_type));
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 def_int $levelreq = db_getfield($data, runecraft_table:level, 0);
 def_namedobj $rune = db_getfield($data, runecraft_table:rune, 0);
 if (oc_members($rune) = true) {
@@ -85,6 +94,10 @@ p_delay(3);
 [opheld4,_talismans]
 def_obj $last_item = last_item;
 def_dbrow $data = ~get_runecraft_data(oc_param($last_item, rune_type));
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 // if they're already in the temple
 if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
     if (~inmap(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
@@ -101,6 +114,10 @@ if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
 [opheld4,cosmic_talisman]
 def_obj $last_item = last_item;
 def_dbrow $data = ~get_runecraft_data(oc_param($last_item, rune_type));
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 // if they're already in the temple
 if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
     if (~inmap(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
@@ -148,7 +165,4 @@ if ($delta_x < 0 & $delta_z > 0) {
 [proc,get_runecraft_data](int $rune_type)(dbrow)
 db_find(runecraft_table:type, $rune_type);
 def_dbrow $data = db_findnext;
-if ($data = null) {
-    @nothing_interesting_happens;
-}
 return ($data);

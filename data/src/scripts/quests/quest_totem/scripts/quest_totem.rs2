@@ -28,7 +28,7 @@ switch_obj(last_useitem) {
         %totem_progress = ^totem_crate_marked;
         ~chatplayer(happy, "Now I just need someone to deliver it for me.");
         return;
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 // for the %handlemort_traps_disabled varp, bit 0 holds the lock completion state (0/1), bits 1-20 store the current lock values (a-z -> 1-25)

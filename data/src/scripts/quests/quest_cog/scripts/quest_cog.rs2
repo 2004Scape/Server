@@ -51,7 +51,7 @@ if(last_useitem = bucket_water) {
         obj_takeitem(inv);
     }
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 
@@ -61,7 +61,7 @@ if(last_useitem = black_cog) {
 } else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oplocu,red_clock_spindle]
@@ -70,7 +70,7 @@ if(last_useitem = red_cog) {
 } else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oplocu,white_clock_spindle]
@@ -79,7 +79,7 @@ if(last_useitem = white_cog) {
 } else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oplocu,blue_clock_spindle]
@@ -88,14 +88,14 @@ if(last_useitem = blue_cog) {
 } else if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oplocu,_incorrect_clock_spindle]
 if(oc_category(last_useitem) = cog) {
     mes("The cog doesn't seem to fit.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oplocu,loc_40] // Rat Food Trough
@@ -106,7 +106,7 @@ if(last_useitem = rat_poison) {
     mes("You see them smashing against the gates in panic.");
     mes("They seem to be dying.");
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 

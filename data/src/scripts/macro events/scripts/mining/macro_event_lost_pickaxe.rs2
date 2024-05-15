@@ -39,7 +39,7 @@ if (inv_total(inv, pickaxe_handle) > 0 & inv_total(inv, $pickaxe_head) > 0) {
 [opheldu,pickaxe_handle]
 switch_obj(last_useitem) {
     case bronze_pickaxe_head, iron_pickaxe_head, steel_pickaxe_head, mithril_pickaxe_head, adamant_pickaxe_head, rune_pickaxe_head : @reattach_pickaxe(last_useitem);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,bronze_pickaxe_head] @check_pickaxe_head;
@@ -53,5 +53,5 @@ switch_obj(last_useitem) {
 if (last_useitem = pickaxe_handle) {
     @reattach_pickaxe(last_item);
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }

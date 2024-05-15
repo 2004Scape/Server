@@ -37,7 +37,8 @@ if (%demon_progress < 2) {
     p_delay(2);
 } else {
     if (last_useitem ! bucket_water) {
-        @nothing_interesting_happens;
+        ~displaymessage(^dm_default);
+        return;
     }
     mes("You pour the liquid down the drain.");
     p_delay(2);

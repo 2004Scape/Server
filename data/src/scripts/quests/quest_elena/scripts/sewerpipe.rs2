@@ -15,7 +15,7 @@ switch_int(%elena_progress) {
             ~mesbox("You should wear your gas mask before entering West Ardougne.");
         }
     }
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [oplocu,loc_2541]
@@ -27,10 +27,10 @@ switch_int(%elena_progress) {
                 inv_del(inv, rope, 1);
                 ~mesbox("You tie the end of the rope to the sewer pipe's grill and hold the other end in your hand.");
             }
-            case default: @nothing_interesting_happens;
+            case default: ~displaymessage(^dm_default);
         }
     }
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [label,elena_climb_through_sewerpipe]

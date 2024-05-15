@@ -73,12 +73,12 @@ p_delay(0);
 [oplocu,loc_41]
 switch_obj (last_useitem) {
     case garlic: @stash_garlic;
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 // option doesn't exist in RSC, but based off the 2005 image, I think it probably always sends nothing interesting happens
 // when searching it (this matches the behaviour of OSRS when searching it from 3-8 tiles away)
-[oploc1,loc_41] @nothing_interesting_happens;
+[oploc1,loc_41] ~displaymessage(^dm_default);
 
 [label,stash_garlic]
 mes("You stash the garlic in the pipe.");

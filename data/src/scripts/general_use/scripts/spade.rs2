@@ -13,7 +13,7 @@ if(~trail_hasclue_inv = true) {
         if(oc_param($clue, trail_coord) = coord) {
             if(oc_param($clue, trail_sextant) = true) {
                 if(inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 1 | inv_total(inv, trail_sextant) = 1) {
-                    @nothing_interesting_happens;
+                    ~displaymessage(^dm_default);
                     return;
                 }
             }
@@ -31,4 +31,4 @@ if(~trail_hasclue_inv = true) {
         }
     }
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);

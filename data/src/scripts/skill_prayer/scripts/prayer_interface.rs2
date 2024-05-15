@@ -20,10 +20,6 @@ switch_int($prayer) {
 [proc,get_prayer_data](int $prayer)(dbrow)
 db_find(prayers:prayer, $prayer);
 def_dbrow $data = db_findnext;
-if ($data = null) {
-    mes("data null");
-    @nothing_interesting_happens;
-}
 return ($data);
 
 [proc,prayer_checks](dbrow $data)(boolean)

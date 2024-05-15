@@ -4,7 +4,8 @@ sound_synth(locked, 0, 0);
 
 [oplocu,muddy_chest_closed]
 if (last_useitem ! muddy_key) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 anim(human_openchest, 0);
 sound_synth(chest_open, 0, 0);

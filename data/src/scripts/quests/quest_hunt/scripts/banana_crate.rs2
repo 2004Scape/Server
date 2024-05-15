@@ -18,7 +18,8 @@ if (%crate_bananas = 0 & %crate_rum = 0) {
 
 [oplocu,banana_crate]
 if (last_useitem ! banana & last_useitem ! karamja_rum) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 if (%plantation_employed = 0) {

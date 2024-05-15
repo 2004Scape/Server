@@ -2,48 +2,49 @@
 if (oc_param(last_useitem, weapon_poisoned) ! null) {
     @make_weapon_poisoned(last_useslot, last_slot);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,_weapon_stab]
 switch_obj(last_useitem) {
     case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [opheldu,_weapon_spear]
 switch_obj(last_useitem) {
     case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [opheldu,_weapon_javelin]
 switch_obj(last_useitem) {
     case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [opheldu,_weapon_thrown]
 switch_obj(last_useitem) {
     case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [opheldu,_bolts]
 switch_obj(last_useitem) {
     case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [opheldu,_arrows]
 switch_obj(last_useitem) {
     case weapon_poison: @make_weapon_poisoned(last_slot, last_useslot);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [label,make_weapon_poisoned](int $weapon_slot, int $poison_slot)
 def_obj $weapon = inv_getobj(inv, $weapon_slot);
 if (oc_param($weapon, weapon_poisoned) = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if (oc_category($weapon) = weapon_javelin) { // javelins inv_add poisoned wep, but setslot for the weapon poison
     def_int $wep_count = min(inv_total(inv, $weapon), 5);

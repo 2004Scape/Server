@@ -3,14 +3,15 @@
 [label,fishing_wrong_spot_message](obj $item)
 def_struct $struct = oc_param($item, fish_equipment_struct);
 if ($struct = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_string $message = struct_param($struct, fish_wrong_spot_message);
 if (string_length($message) > 0) {
     ~mesbox($message);
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 
 // checks if you actually have the fish equipment required.

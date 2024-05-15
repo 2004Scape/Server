@@ -3,7 +3,7 @@
 switch_obj(last_useitem) {
     case knife : @fletch_log(last_item);
     case tinderbox : @light_logs_inv(last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,fletch_log](obj $log)
@@ -11,7 +11,8 @@ switch_obj(last_useitem) {
 db_find(fletch_bow_table:log, $log);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_namedobj $obj1 = arrow_shaft;
 def_int $shaft_count = db_getfield($data, fletch_bow_table:shafts, 0);
@@ -32,6 +33,10 @@ if ($shaft_count < 1) {
         $obj2, 175, "Short Bow.",
         $obj3, 175, "Long Bow."
     );
+}
+if ($product = null) {
+    ~displaymessage(^dm_default);
+    return;
 }
 def_int $level = 1;
 // default to shafts

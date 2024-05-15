@@ -59,7 +59,8 @@ if ($entering = true) {
 db_find(locked_door:loc, $loc);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);
 
@@ -72,7 +73,8 @@ mes("You go through the door.");
 db_find(locked_door:loc, $loc);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 def_loc $replacement = db_getfield($data, locked_door:replacement, 0);

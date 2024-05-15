@@ -9,7 +9,8 @@ switch_obj (last_useitem) {
         if (oc_param(last_useitem, is_water_source) = ^true) {
             @dough_interface(last_useitem);
         }
-        @nothing_interesting_happens;
+        ~displaymessage(^dm_default);
+        return;
 }
 
 [label,dough_interface](obj $water_source)
@@ -25,7 +26,9 @@ switch_int (~p_choice3_header("Bread dough.", 1, "Pastry dough.", 2, "Pizza doug
     case 3 : 
         $choice = pizza_base;
         $end_string = "a"; // only pizza adds an article
-    case default : @nothing_interesting_happens;
+    case default : 
+        ~displaymessage(^dm_default);
+        return;
 }
 
 inv_del(inv, pot_of_flour, 1);

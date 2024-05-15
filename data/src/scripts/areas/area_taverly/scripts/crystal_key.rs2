@@ -2,14 +2,14 @@
 if (last_useitem = half_key2) {
     @join_keys;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [opheldu,half_key2]
 if (last_useitem = half_key1) {
     @join_keys;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,join_keys]

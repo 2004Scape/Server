@@ -110,5 +110,5 @@ if($useitem = raw_rat_meat) {
     inv_del(inv, raw_chicken, 1);
     inv_add(inv, druid_enchanted_chicken, 1);
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }

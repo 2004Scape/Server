@@ -2,7 +2,7 @@
 [opheldu,_category_969]
 switch_obj(last_useitem) {
     case feather : @make_darts(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 [opheldu,feather]
 switch_obj(last_useitem) {
@@ -12,13 +12,17 @@ switch_obj(last_useitem) {
         if (oc_category(last_useitem) = category_969) {
             @make_darts(last_useitem);
         } else {
-            @nothing_interesting_happens;
+            ~displaymessage(^dm_default);
         }
 }
 
 [label,make_darts](obj $dart_tips)
 ~require_members_fletching;
 def_dbrow $data = ~get_fletching_data($dart_tips);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 def_namedobj $product;
 def_int $max_count;
 // TODO: Tourist trap requirement.

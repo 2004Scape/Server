@@ -41,7 +41,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case king_worm, onion, cheese, dwellberry, tomato, equa_leaves, gnome_spice, toad_legs, chocolate_bar : @add_bowl_ingredient(last_useitem);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,king_worm]
@@ -49,7 +49,7 @@ switch_obj(last_useitem) {
     case gnome_spice : @opheldu_make_gnome_food(spicy_worm, "You add the gnome spice to the king worm.");
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,toad_legs]
@@ -58,7 +58,7 @@ switch_obj(last_useitem) {
     case equa_leaves : @opheldu_make_gnome_food(equa_toad_legs, "You add the equa leaves to the toad legs.");
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [proc,get_gnome_bowl_product]()(namedobj)

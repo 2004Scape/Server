@@ -1,0 +1,2 @@
+[proc,displaymessage](int $index)
+mes(enum(int, string, displaymessage_enum, $index));

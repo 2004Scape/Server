@@ -67,4 +67,4 @@ inv_add(inv, $item, 1);
 if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcrawl_card) {
     @gnome_barman_barcrawl;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);

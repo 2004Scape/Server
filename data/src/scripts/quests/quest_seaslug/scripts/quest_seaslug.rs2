@@ -12,7 +12,7 @@ say("Ouch!");
 if(last_useitem = pot_of_flour) {
     @make_swamp_paste;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,make_swamp_paste]
 mes("You mix the flour with the swamp tar.");
@@ -27,13 +27,13 @@ inv_add(inv, swamp_paste, 1);
 if(last_useitem = broken_glass) {
     @dry_damp_sticks;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,broken_glass]
 if(last_useitem = damp_sticks) {
     @dry_damp_sticks;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,dry_damp_sticks] // 1-1 RSC, combined messages
 mes("You hold the glass to the sun above the damp sticks.");

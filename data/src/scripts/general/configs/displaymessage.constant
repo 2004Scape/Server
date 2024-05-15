@@ -1,0 +1,12 @@
+// confirmed
+^dm_default = 0
+// all bellow are guessed https://chisel.weirdgloop.org/structs_rs3/index.html?type=enums&id=33
+^dm_invspace = 1
+^dm_members_feature = 2
+^dm_farming_spade = 64
+^dm_farming_dibber = 65
+^dm_farming_patch_no_crops = 66
+^dm_farming_patch_weeding = 67
+^dm_farming_patch_planted = 68
+^dm_farming_trowel = 69
+^dm_need_plant_cure = 70

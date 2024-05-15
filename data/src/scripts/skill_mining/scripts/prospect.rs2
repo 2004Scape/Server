@@ -18,7 +18,8 @@ if ($is_empty = ^true) {
     db_find(mining_table:rock, loc_type);
     def_dbrow $data = db_findnext;
     if ($data = null) {
-        @nothing_interesting_happens;
+        ~displaymessage(^dm_default);
+        return;
     }
     mes("This rock contains <db_getfield($data, mining_table:ore_name, 0)>.");
 }

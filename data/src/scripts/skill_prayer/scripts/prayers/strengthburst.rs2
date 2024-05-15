@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 4);
 
 [label,activate_prayer_strengthburst]
 def_dbrow $data = ~get_prayer_data(^prayer_strengthburst);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_strengthburst = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_strengthburst));
     %prayer_strengthburst = ^false;
