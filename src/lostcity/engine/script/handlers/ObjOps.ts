@@ -16,10 +16,13 @@ import Environment from '#lostcity/util/Environment.js';
 import {
     check,
     CoordValid,
-    DurationValid, InvTypeValid, ObjNotDummyValid,
+    DurationValid,
+    InvTypeValid,
+    ObjNotDummyValid,
     ObjStackValid,
-    ObjTypeValid, ParamTypeValid
-} from '#lostcity/engine/script/ScriptInputValidator.js';
+    ObjTypeValid,
+    ParamTypeValid
+} from '#lostcity/engine/script/ScriptValidators.js';
 
 const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
 
@@ -27,13 +30,17 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: state => {
         const [coord, objId, count, duration] = state.popInts(4);
 
+        if (objId === -1 || count === -1) {
+            return;
+        }
+
         check(objId, ObjTypeValid, ObjNotDummyValid);
         check(duration, DurationValid);
         check(coord, CoordValid);
         check(count, ObjStackValid);
 
-        const pos = Position.unpackCoord(coord);
-        const obj = new Obj(pos.level, pos.x, pos.z, objId, count);
+        const {level, x, z} = Position.unpackCoord(coord);
+        const obj: Obj = new Obj(level, x, z, objId, count);
 
         World.addObj(obj, state.activePlayer, duration);
         state.activeObj = obj;

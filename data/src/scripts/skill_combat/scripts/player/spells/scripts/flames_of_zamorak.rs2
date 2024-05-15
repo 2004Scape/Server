@@ -2,7 +2,7 @@
 [apnpct,magic:flames_of_zamorak] ~pvm_flames_of_zamorak;
 
 [proc,pvm_flames_of_zamorak]
-def_dbrow $spell_data = ~get_spell_data(^claws_of_guthix);
+def_dbrow $spell_data = ~get_spell_data(^flames_of_zamorak);
 if (~pvm_combat_spell_checks($spell_data) = false) {
     return;
 }

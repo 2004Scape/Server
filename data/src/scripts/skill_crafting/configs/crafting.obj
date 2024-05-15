@@ -54,7 +54,7 @@ param=magicdefence,2
 param=rangedefence,2
 param=prayerbonus,8
 
-[obj_1722]
+[unpowered_symbol]
 name=Unpowered symbol
 desc=An unholy symbol of Zamorak.
 cost=200

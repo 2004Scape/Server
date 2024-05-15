@@ -9,6 +9,8 @@ const Configuration = defineConfig({
         globals: true,
         // Prevent test cross-contamination when mocking implementations
         mockReset: true,
+        // Files to run before tests
+        setupFiles: [ './vitest/mock-worker.ts' ]
     },
 });
 

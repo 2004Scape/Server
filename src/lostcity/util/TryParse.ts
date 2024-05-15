@@ -32,3 +32,11 @@ export function tryParseString(value: string | undefined, defaultValue: string):
 
     return value;
 }
+
+export function tryParseArray<T>(value: T[] | undefined, defaultValue: T[]): T[] {
+    if (!Array.isArray(value)) {
+        return defaultValue;
+    }
+
+    return value;
+}

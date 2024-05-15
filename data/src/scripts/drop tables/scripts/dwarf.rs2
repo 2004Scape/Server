@@ -48,5 +48,5 @@ if ($random < 13) {
 } else if ($random < 104) {
     obj_add(npc_coord, coal, 1, ^lootdrop_duration);
 } else if ($random < 105) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

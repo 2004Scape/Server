@@ -16,7 +16,7 @@ export function countPix(dat: Packet, idx: Packet) {
     dat.pos = 0;
     idx.pos = dat.g2();
 
-    if (idx.pos > idx.length) {
+    if (idx.pos > idx.data.length) {
         // console.error('not pix encoding');
         return 0;
     }
@@ -50,7 +50,7 @@ export function countPix(dat: Packet, idx: Packet) {
         }
 
         dat.pos += width * height;
-        if (dat.pos > dat.length) {
+        if (dat.pos > dat.data.length) {
             // console.error('out of bounds');
             break;
         }

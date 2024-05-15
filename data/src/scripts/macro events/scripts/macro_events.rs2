@@ -43,14 +43,8 @@ if ($event_coord = null) {
 def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
 %macro_event_uid = npc_uid;
-
-switch_int ($event) {
-    case ^macro_event_swarm : ~macro_event_swarm_spawn;
-    case ^macro_event_triffid_friendly : ~macro_event_triffid_spawn;
-    case ^macro_event_drunken_dwarf : ~macro_event_drunken_dwarf_spawn;
-    case ^macro_event_genie : ~macro_event_genie_spawn;
-    case ^macro_event_mysterious_old_man_general : ~macro_event_mysterious_old_man_general_spawn;
-}
+%npc_attacking_uid = uid;
+npc_queue(4, 0, 0); // greets the player
 
 // called when the player logs in
 [proc,macro_event_general_check]
@@ -101,7 +95,7 @@ p_delay(1);
 npc_del;
 p_delay(0);
 // https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=37
-spotanim_map(spotanim_86, coord, 124, 0);
+spotanim_map(small_smokepuff, coord, 124, 0);
 sound_synth(smokepuff2, 0, 0);
 //--
 p_telejump($teleport_coord);
@@ -124,7 +118,7 @@ while ($i < inv_size(inv)) {
     if (inv_getobj(inv, $i) ! null) {
         inv_dropslot(inv, $coord, $i, 200);
     }
-    spotanim_map(spotanim_86, $coord, 124, 0);
+    spotanim_map(small_smokepuff, $coord, 124, 0);
     $i = calc($i + 1);
 }
 
@@ -159,7 +153,7 @@ while ($i < inv_size(worn)) {
 if (npc_findhero = true) {
     sound_synth(smokepuff2, 0, 0);
 }
-spotanim_map(spotanim_86, npc_coord, 124, 0);
+spotanim_map(small_smokepuff, npc_coord, 124, 0);
 npc_del;
 
 // check if other general macro events already exist

@@ -1,18 +1,31 @@
 [opnpc1,hassan]
 switch_int (%prince_progress) {
-    case 0: @hassan_prince_start;
-    case 1: @hassan_preosman;
-    case 7: @hassan_reward;
-    case 8: @hassan_postquest;
-    case default: @hassan_postosman;
+    case ^prince_not_started:
+        ~chatnpc(neutral, "Greetings I am Hassan, Chancellor to the Emir of Al- Kharid.");
+        def_int $option = ~p_choice3("Can I help you? You must need some help here in the desert.", 1, "It's just too hot here. How can you stand it?", 2, "Do you mind if I just kill your warriors?", 3);
+        if($option = 1) {
+            ~chatplayer(happy, "Can I help you? You must need some help here in the desert.");
+            ~chatnpc(neutral, "I need the services of someone, yes. If you are interested, see the spymaster, Osman. I manage the finances here. Come to me when you need payment.");
+            %prince_progress = ^prince_started;
+            ~send_quest_progress(questlist:prince, %prince_progress, ^prince_complete);
+        } else if($option = 2) {
+            ~chatplayer(sad, "It's just too hot here. How can you stand it?");
+            ~chatnpc(neutral, "We manage, in our humble way. We are a wealthy town and we have water. It cures many thirsts.");
+            if(inv_freespace(inv) ! 0) {
+                inv_add(inv, jug_of_water, 1);
+                ~objboxb(jug_of_water, "The chancellor hands you some water.");
+            }
+        } else if($option = 3) {
+            ~chatplayer(quiz, "Do you mind if I just kill your warriors?");
+            ~chatnpc(neutral, "You are welcome. They are not expensive. We have them here to stop the elite guard being bothered. They are a little harder to kill.");
+        }
+    case ^prince_started: ~chatnpc(quiz, "Have you found the spymaster, Osman, yet? You cannot proceed in your task without reporting to him.");
+    case ^prince_spoken_osman: ~chatnpc(happy, "I understand the Spymaster has hired you. I will pay the reward only when the Prince is rescued.");
+    case ^prince_saved:
+        ~chatnpc(happy, "You have the eternal gratitude of the Emir for rescuing his son. I am authorised to pay you 700 coins.");
+        queue(prince_complete, 0);
+    case ^prince_complete:
+        //https://web.archive.org/web/20060428031722/http://www.runecrypt.com/index.php?pid=202
+        ~chatnpc(happy, "You are a friend of the town of Al-Kharid.|If we have more tasks to complete, we will ask you.|Please, keep in contact.|Good employees are not easy to find.");
+    case default: ~chatnpc(happy, "I see you are getting on well with the rescue. Obtaining a key must have saved you some time.");
 }
-
-[label,hassan_preosman]
-~chatnpc(happy, "Have you found the spymaster, Osman, yet? You cannot proceed in your task without reporting to him.");
-
-[label,hassan_postosman]
-~chatnpc(happy, "I understand the Spymaster has hired you. I will pay the reward only when the Prince is rescued.");
-
-[label,hassan_postquest]
-//https://web.archive.org/web/20060428031722/http://www.runecrypt.com/index.php?pid=202
-~chatnpc(happy, "You are a friend of the town of Al-Kharid.|If we have more tasks to complete, we will ask you.|Please, keep in contact.|Good employees are not easy to find.");

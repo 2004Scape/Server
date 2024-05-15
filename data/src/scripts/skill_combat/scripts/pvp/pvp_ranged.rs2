@@ -43,7 +43,7 @@ if (~pvp_hit_roll(%damagetype) = true) {
     ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
 }
 .if_close;
-def_int $delay = ~pvp_ranged_use_weapon($rhand, $ammo);
+def_int $delay = add(~pvp_ranged_use_weapon($rhand, $ammo), 30);
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 .sound_synth(.%com_attacksound, 0, 0);

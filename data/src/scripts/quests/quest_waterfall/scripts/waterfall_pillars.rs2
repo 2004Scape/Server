@@ -15,7 +15,7 @@ inv_del(inv, $rune, 1);
 mes("You place the rune on the stand.");
 p_delay(0);
 mes("The rune stone disappears in a puff of smoke.");
-spotanim_map(spotanim_86, $pillar_coord, 160, 0); // no sound: https://youtu.be/uwoCjPXgzYY?si=WN0PVUJ6NRXnfYPl&t=1672
+spotanim_map(small_smokepuff, $pillar_coord, 160, 0); // no sound: https://youtu.be/uwoCjPXgzYY?si=WN0PVUJ6NRXnfYPl&t=1672
 %waterfall_golrie_and_puzzle = setbit(%waterfall_golrie_and_puzzle, $bit);
 
 [proc,get_pillar_index](coord $pillar_coord)(int)

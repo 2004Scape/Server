@@ -10,7 +10,7 @@
 ^gobdip_complete = 6
 ^sheep_complete = 22
 ^demon_complete = 30
-^prince_complete = 8
+^prince_complete = 110
 ^blackknight_complete = 4
 ^haunted_complete = 3
 ^hunt_complete = 4
@@ -36,6 +36,7 @@
 ^ball_complete = 7
 ^murder_complete = 2
 ^hazeelcult_complete = 9
+^itgronigen_complete = 7
 
 ^blackarmgang_questpoints = 1
 ^blackknight_questpoints = 3
@@ -70,3 +71,4 @@
 ^ball_questpoints = 4
 ^murder_questpoints = 3
 ^hazeelcult_questpoints = 1
+^itgronigen_questpoints = 2

@@ -20,13 +20,13 @@ if (p_finduid(uid) = true) {
     inv_add(bank, green_partyhat, 255);
     inv_add(bank, yellow_partyhat, 255);
     inv_add(bank, santa_hat, 255);
-    inv_add(bank, obj_1053, 255);
-    inv_add(bank, obj_1055, 255);
-    inv_add(bank, obj_1057, 255);
-    inv_add(bank, obj_1961, 255);
+    inv_add(bank, green_halloween_mask, 255);
+    inv_add(bank, blue_halloween_mask, 255);
+    inv_add(bank, red_halloween_mask, 255);
+    inv_add(bank, easter_egg, 255);
     inv_add(bank, pumpkin, 255);
-    inv_add(bank, obj_981, 255);
-    inv_add(bank, obj_1989, 255);
+    inv_add(bank, disk_of_returning, 255);
+    inv_add(bank, half_full_wine_jug, 255);
 
     inv_add(bank, firerune, ^max_32bit_int);
     inv_add(bank, waterrune, ^max_32bit_int);

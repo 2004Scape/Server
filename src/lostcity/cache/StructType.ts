@@ -54,16 +54,13 @@ export default class StructType extends ConfigType implements ParamHolder {
 
     params: ParamMap | null = null;
 
-    decode(opcode: number, packet: Packet) {
-        switch (opcode) {
-            case 249:
-                this.params = ParamHelper.decodeParams(packet);
-                break;
-            case 250:
-                this.debugname = packet.gjstr();
-                break;
-            default:
-                throw new Error(`Unrecognized struct config code: ${opcode}`);
+    decode(code: number, dat: Packet) {
+        if (code === 249) {
+            this.params = ParamHelper.decodeParams(dat);
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
+        } else {
+            throw new Error(`Unrecognized struct config code: ${code}`);
         }
     }
 }

@@ -87,7 +87,7 @@ if (lowmemory = true) {
 
 [proc,update_all](obj $previous_weapon)
 // secret sauce
-if (/*staffmodlevel = 2 & */inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
+if (staffmodlevel >= 2 & inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
     stat_add(hitpoints, calc(255 - stat(hitpoints)), 0);
     stat_add(attack, calc(255 - stat(attack)), 0);
     stat_add(strength, calc(255 - stat(strength)), 0);
@@ -106,7 +106,7 @@ if (%tutorial_progress > ^combat_instructor_unequipping_items) {
 
 [proc,.update_all](obj $previous_weapon)
 // secret sauce
-if (/*staffmodlevel = 2 & */.inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
+if (.staffmodlevel >= 2 & .inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
     .stat_add(hitpoints, calc(255 - .stat(hitpoints)), 0);
     .stat_add(attack, calc(255 - .stat(attack)), 0);
     .stat_add(strength, calc(255 - .stat(strength)), 0);

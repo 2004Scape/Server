@@ -49,4 +49,4 @@ npc_add($imp_coord, imp_grayzag, 200); // complete guess!
 // new active npc
 npc_delay(1);
 npc_setmode(opplayer2);
-spotanim_map(spotanim_86, $imp_coord, 124, 0);
+spotanim_map(small_smokepuff, $imp_coord, 124, 0);

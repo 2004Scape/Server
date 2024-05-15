@@ -39,7 +39,7 @@ if (p_finduid(uid) = true) {
 }
 npc_add($coord, kolodion_ogre_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
-spotanim_npc(spotanim_188, 124, 34);
+spotanim_npc(smokepuff_large, 124, 34);
 npc_setmode(applayer2);
 npc_delay(1);
 npc_say("This is only the beginning; you can't beat me!");
@@ -85,7 +85,7 @@ if (p_finduid(uid) = true) {
 }
 npc_add(movecoord($coord, 1, 0, 1), kolodion_ethereal_form, 1000);
 npc_anim(npc_param(spawn_anim), 0);
-spotanim_npc(spotanim_188, 124, 10);
+spotanim_npc(smokepuff_large, 124, 10);
 npc_setmode(opplayer2);
 npc_delay(1);
 npc_say("Now you feel it... The dark energy.");
@@ -125,7 +125,7 @@ npc_delay(0);
 npc_delay(1);
 npc_setmode(none);
 npc_anim(delrith_banish, 30);
-spotanim_map(spotanim_188, npc_coord, 124, 90);
+spotanim_map(smokepuff_large, npc_coord, 124, 90);
 npc_delay(2);
 npc_changetype(kolodion_defeated);
 npc_anim(null, 0);

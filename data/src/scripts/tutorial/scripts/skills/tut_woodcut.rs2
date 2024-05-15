@@ -20,7 +20,7 @@ if (%tutorial_progress > ^survival_guide_complete) {
     return;
 }
 
-if (inv_total(inv, logs) > 2) {
+if (inv_total(inv, tutorial_logs) > 2) {
     ~mesbox("Perhaps you've got enough logs for now.");
     return;
 }

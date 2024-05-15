@@ -19,13 +19,13 @@ export async function packClientTitle() {
     const files: Record<string, Packet> = {};
 
     const title = Packet.load('data/src/binary/title.jpg');
-    title.pos = title.length;
+    title.pos = title.data.length;
 
     files['title.dat'] = title;
 
     // ----
 
-    const index = new Packet();
+    const index = Packet.alloc(1);
 
     // TODO (jkm) check for presence , rather than using `!`
 
@@ -67,5 +67,8 @@ export async function packClientTitle() {
     }
 
     jag.save('data/pack/client/title');
+    for (const packet of Object.values(files)) {
+        packet.release();
+    }
     //console.timeEnd('title.jag');
 }

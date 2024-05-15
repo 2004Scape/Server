@@ -61,28 +61,28 @@ export default class DbRowType extends ConfigType {
     types: number[][] = [];
     columnValues: (number | string)[][] = [];
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode === 3) {
-            const numColumns = packet.g1();
+    decode(code: number, dat: Packet) {
+        if (code === 3) {
+            const numColumns = dat.g1();
             this.types = new Array(numColumns);
             this.columnValues = new Array(numColumns);
 
-            for (let columnId = packet.g1(); columnId != 255; columnId = packet.g1()) {
-                const columnTypes = new Array(packet.g1());
+            for (let columnId = dat.g1(); columnId != 255; columnId = dat.g1()) {
+                const columnTypes = new Array(dat.g1());
 
                 for (let i = 0; i < columnTypes.length; i++) {
-                    columnTypes[i] = packet.g1();
+                    columnTypes[i] = dat.g1();
                 }
 
                 this.types[columnId] = columnTypes;
-                this.columnValues[columnId] = this.decodeValues(packet, columnId);
+                this.columnValues[columnId] = this.decodeValues(dat, columnId);
             }
-        } else if (opcode === 4) {
-            this.tableId = packet.g2();
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 4) {
+            this.tableId = dat.g2();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized dbtable config code: ${opcode}`);
+            throw new Error(`Unrecognized dbtable config code: ${code}`);
         }
     }
 
@@ -95,9 +95,9 @@ export default class DbRowType extends ConfigType {
         return value;
     }
 
-    decodeValues(packet: Packet, column: number) {
+    decodeValues(dat: Packet, column: number) {
         const types = this.types[column];
-        const fieldCount = packet.g1();
+        const fieldCount = dat.g1();
         const values: string[] | number[] = new Array(fieldCount * types.length);
 
         for (let fieldId = 0; fieldId < fieldCount; fieldId++) {
@@ -106,9 +106,9 @@ export default class DbRowType extends ConfigType {
                 const index = typeId + fieldId * types.length;
 
                 if (type === ScriptVarType.STRING) {
-                    values[index] = packet.gjstr();
+                    values[index] = dat.gjstr();
                 } else {
-                    values[index] = packet.g4s();
+                    values[index] = dat.g4();
                 }
             }
         }

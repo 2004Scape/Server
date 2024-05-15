@@ -56,6 +56,8 @@ import ClientProt from '#lostcity/server/ClientProt.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import {LoginResponse} from '#lostcity/server/LoginServer.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -85,7 +87,7 @@ class World {
 
     queue: LinkList<EntityQueueState> = new LinkList();
 
-    friendThread: Worker = new Worker('./src/lostcity/server/FriendThread.ts');
+    friendThread: Worker = createWorker('./src/lostcity/server/FriendThread.ts');
 
     constructor() {
         this.players.fill(null);
@@ -508,6 +510,11 @@ class World {
                     npc.executeScript(npc.activeScript);
                 }
 
+                if (npc.despawn !== -1) {
+                    // if the npc just despawned then don't do anything else.
+                    continue;
+                }
+
                 npc.processTimers();
                 npc.processQueue();
                 npc.processNpcModes();
@@ -639,7 +646,7 @@ class World {
             if (pid === -1) {
                 if (player instanceof NetworkPlayer && player.client) {
                     // world full
-                    player.client.send(Uint8Array.from([7]));
+                    player.client.send(LoginResponse.WORLD_FULL);
                     player.client.close();
                 }
 
@@ -675,7 +682,11 @@ class World {
 
             if (player instanceof NetworkPlayer && player.client) {
                 player.client.state = 1;
-                player.client.send(Uint8Array.from([2]));
+                if (player.staffModLevel >= 2) {
+                    player.client.send(LoginResponse.STAFF_MOD_LEVEL);
+                } else {
+                    player.client.send(LoginResponse.SUCCESSFUL);
+                }
             }
 
             this.socialLogin(player.username37);
@@ -803,34 +814,34 @@ class World {
             // Increase or Decrease shop stock
             const invType = InvType.get(inv.type);
 
-            if (invType.restock) {
-                inv.items.forEach((item, index) => {
-                    if (item) {
-                        // Item stock is under min
-                        if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
-                            inv.add(item?.id, 1, index, true, false, false);
-                            inv.update = true;
-                            return;
-                        }
+            if (!invType.restock || !invType.stockcount || !invType.stockrate) {
+                continue;
+            }
 
-                        // Item stock is over min
-                        if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
-                            inv.remove(item?.id, 1, index, true);
-                            inv.update = true;
-                            return;
-                        }
+            for (let index: number = 0; index < inv.items.length; index++) {
+                const item = inv.items[index];
+                if (!item) {
+                    continue;
+                }
+                // Item stock is under min
+                if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                    inv.add(item?.id, 1, index, true, false, false);
+                    inv.update = true;
+                    continue;
+                }
+                // Item stock is over min
+                if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                    inv.remove(item?.id, 1, index, true);
+                    inv.update = true;
+                    continue;
+                }
 
-                        // Item stock is not listed, such as general stores
-                        // Tested on low and high player count worlds, ever 1 minute stock decreases.
-                        if (invType.allstock) {
-                            if (!invType.stockcount[index] && this.currentTick % 100 === 0) {
-                                inv.remove(item?.id, 1, index, true);
-                                inv.update = true;
-                                return;
-                            }
-                        }
-                    }
-                });
+                // Item stock is not listed, such as general stores
+                // Tested on low and high player count worlds, ever 1 minute stock decreases.
+                if (invType.allstock && !invType.stockcount[index] && this.currentTick % 100 === 0) {
+                    inv.remove(item?.id, 1, index, true);
+                    inv.update = true;
+                }
             }
         }
         cleanup = Date.now() - cleanup;
@@ -991,6 +1002,7 @@ class World {
 
     removeNpc(npc: Npc) {
         const zone = this.getZone(npc.x, npc.z, npc.level);
+        console.log('Removing npc', npc.nid, 'from zone', zone.index);
         zone.leave(npc);
 
         npc.respawn = this.currentTick + NpcType.get(npc.type).respawnrate;
@@ -1009,8 +1021,12 @@ class World {
         return null;
     }
 
-    getObj(x: number, z: number, level: number, objId: number, player: Player) {
-        return this.getZone(x, z, level).getObj(x, z, objId, player);
+    getDynObj(x: number, z: number, level: number, objId: number) {
+        return this.getZone(x, z, level).getDynObj(x, z, objId);
+    }
+
+    getObj(x: number, z: number, level: number, objId: number) {
+        return this.getZone(x, z, level).getObj(x, z, objId);
     }
 
     addLoc(loc: Loc, duration: number) {
@@ -1030,6 +1046,17 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
+        // const existing = this.getDynObj(obj.x, obj.z, obj.level, obj.id);
+        // const global: boolean = zone.staticObjs.includes(obj);
+        // if (!global && existing && existing.id == obj.id) {
+        //     const type = ObjType.get(obj.type);
+        //     const nextCount = obj.count + existing.count;
+        //     if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
+        //         // if an obj of the same type exists and is stackable, then we merge them.
+        //         obj.count = nextCount;
+        //         zone.removeObj(existing, receiver);
+        //     }
+        // }
         zone.addObj(obj, receiver, duration);
     }
 
@@ -1041,7 +1068,7 @@ class World {
     // ----
 
     async readIn(socket: ClientSocket, stream: Packet) {
-        this.lastCycleBandwidth[0] += stream.length;
+        this.lastCycleBandwidth[0] += stream.data.length;
 
         while (stream.available > 0) {
             const start = stream.pos;
@@ -1076,7 +1103,13 @@ class World {
                 continue;
             }
 
-            socket.in.set(stream.gdata(stream.pos - start, start, false), socket.inOffset);
+            const data = new Uint8Array(stream.pos - start);
+            const pos = stream.pos;
+            stream.pos = start;
+            stream.gdata(data, 0, data.length);
+            stream.pos = pos;
+
+            socket.in.set(data, socket.inOffset);
             socket.inOffset += stream.pos - start;
         }
     }

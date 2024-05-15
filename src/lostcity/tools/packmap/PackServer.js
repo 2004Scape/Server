@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import Packet from '#jagex2/io/Packet.js';
+import Packet2 from '#jagex2/io/Packet.ts';
 import { shouldBuildFile } from '#lostcity/util/PackFile.js';
 
 function readMap(map) {
@@ -95,7 +95,7 @@ function readMap(map) {
 export function packServerMap() {
     let queue = [];
 
-    fs.readdirSync('data/src/maps').forEach(file => {
+    fs.readdirSync('data/src/maps').filter(f => f.endsWith('.jm2')).forEach(file => {
         let [x, z] = file.slice(1).split('.').shift().split('_');
         if (
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/m${x}_${z}`) &&
@@ -230,7 +230,7 @@ export function packServerMap() {
                 }
             }
 
-            let out = Packet.alloc(size);
+            let out = Packet2.alloc(3);
             for (let level = 0; level < 4; level++) {
                 for (let x = 0; x < 64; x++) {
                     for (let z = 0; z < 64; z++) {
@@ -280,6 +280,7 @@ export function packServerMap() {
             }
 
             out.save(`data/pack/server/maps/m${x}_${z}`);
+            out.release();
         }
 
         // encode loc data
@@ -332,7 +333,7 @@ export function packServerMap() {
             let locIds = Object.keys(locs)
                 .map(id => parseInt(id))
                 .sort((a, b) => a - b);
-            let out = new Packet();
+            let out = Packet2.alloc(2);
             let lastLocId = -1;
             for (let i = 0; i < locIds.length; i++) {
                 let locId = locIds[i];
@@ -358,11 +359,12 @@ export function packServerMap() {
 
             out.psmart(0); // end of map
             out.save(`data/pack/server/maps/l${x}_${z}`);
+            out.release();
         }
 
         // encode npc data
         {
-            let out = new Packet();
+            let out = Packet2.alloc(1);
 
             for (let level = 0; level < 4; level++) {
                 if (!map.npc[level]) {
@@ -393,11 +395,12 @@ export function packServerMap() {
             }
 
             out.save(`data/pack/server/maps/n${x}_${z}`);
+            out.release();
         }
 
         // encode obj data
         {
-            let out = new Packet();
+            let out = Packet2.alloc(1);
 
             for (let level = 0; level < 4; level++) {
                 if (!map.obj[level]) {
@@ -429,6 +432,7 @@ export function packServerMap() {
             }
 
             out.save(`data/pack/server/maps/o${x}_${z}`);
+            out.release();
         }
     });
     // console.timeEnd('Packing maps');

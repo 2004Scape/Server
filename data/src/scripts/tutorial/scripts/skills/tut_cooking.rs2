@@ -1,3 +1,9 @@
+[opheldu,tutorial_pot_of_flour]
+if (oc_param(last_useitem, is_water_source) = ^true) {
+    @tut_make_dough;
+}
+@nothing_interesting_happens;
+
 [oplocu,loc_3039]
 if (last_useitem = bread_dough) {
     anim(human_cooking, 0);

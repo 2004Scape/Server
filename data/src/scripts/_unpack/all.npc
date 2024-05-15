@@ -577,7 +577,7 @@ param=slashdefence,1
 param=attackrate,6
 param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_defend
+param=defend_anim,human_spear_def
 param=attack_sound,staff_stab
 param=defend_sound,female_hit
 param=death_sound,female_death
@@ -2338,7 +2338,7 @@ param=defend_sound,bat_hit
 param=death_sound,bat_death
 huntmode=aggressive_melee
 
-[npc_81]
+[cow_1]
 size=2
 walkanim=cow_walk
 readyanim=cow_ready
@@ -2578,6 +2578,7 @@ param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
 param=attack_sound,horse_hit
 param=defend_sound,horse_hit
+category=unicorn
 
 [npc_90]
 name=Skeleton
@@ -3643,8 +3644,8 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^crush_style
-param=attack_anim,earthwarrior_crush
-param=defend_anim,earthwarrior_defend
+param=attack_anim,earthwarrior_chop
+param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,mace_crush
 // param=defend_sound,blade5
@@ -3692,8 +3693,8 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^slash_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
@@ -3887,6 +3888,7 @@ param=death_anim,unicorn_death
 param=attack_sound,horse_hit
 param=defend_sound,horse_hit
 huntmode=cowardly
+category=unicorn
 
 [npc_134]
 walkanim=giantspider_walk
@@ -4233,8 +4235,8 @@ param=crushdefence,20
 param=magicdefence,10
 param=rangedefence,30
 param=damagetype,^slash_style
-param=attack_anim,icewarrior_slash
-param=defend_anim,earthwarrior_defend
+param=attack_anim,human_sword_transslash
+param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
@@ -4457,8 +4459,8 @@ param=crushdefence,19
 param=magicdefence,15
 param=rangedefence,38
 param=damagetype,^slash_style
-param=attack_anim,shadowwarrior_crush
-param=defend_anim,earthwarrior_defend
+param=attack_anim,human_trans_axe_chop
+param=defend_anim,earthwarrior_def
 param=death_anim,earthwarrior_death
 param=attack_sound,baxe_slash
 // param=defend_sound,steel
@@ -4782,7 +4784,7 @@ param=attack_sound,hacksword_slash
 // https://www.youtube.com/watch?v=QqLSZgZLwvA
 // https://www.youtube.com/watch?v=ympIobOpG4M
 // year 2024 attack seq_386 defend seq_387 and same animations used 2007 + original osrs launch
-huntmode=cowardly
+huntmode=ranged
 
 [chaos_druid]
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5173,7 +5175,7 @@ param=slashdefence,6
 param=crushdefence,6
 param=damagetype,^stab_style
 param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_defend
+param=defend_anim,human_spear_def
 param=attack_sound,staff_stab
 param=poison_severity,55
 
@@ -5959,7 +5961,7 @@ attack=75
 strength=78
 defence=80
 param=damagetype,^slash_style
-param=attack_anim,human_2h_sword_slash2
+param=attack_anim,human_2h_slash
 param=defend_anim,human_2h_sword_defend
 // param=attack_sound,
 // param=defend_sound,
@@ -7455,7 +7457,7 @@ head1=model_44_obj_wear
 head2=model_52_idk_head
 head3=model_82_idk_head
 
-[npc_397]
+[cow_2]
 size=2
 walkanim=cow_walk
 readyanim=cow_ready
@@ -7687,182 +7689,6 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
 param=defend_sound,animated_hit
 param=death_sound,animated_death
-param=death_drop,null
-
-[npc_487]
-vislevel=hide
-name=Observatory assistant
-desc=He helps the professor.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=32767
-recol2s=14724
-recol2d=23254
-recol3s=14801
-recol3d=23254
-model1=model_235_idk
-model2=model_248_idk
-model3=model_292_idk
-model4=model_327_idk
-model5=model_170_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-head1=model_67_idk_head
-head2=model_80_idk_head
-moverestrict=indoors
-
-[npc_488]
-vislevel=hide
-name=Observatory professor
-desc=A learned man in the ways of the stars.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=32767
-recol2s=14724
-recol2d=23254
-recol3s=14801
-recol3d=23254
-recol4s=13600
-recol4d=23254
-model1=model_230_idk
-model2=model_245_npc
-model3=model_246_idk
-model4=model_295_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-head1=model_63_idk_head
-head2=model_78_npc_head
-moverestrict=indoors
-
-[npc_489]
-name=Goblin guard
-desc=I will have to kill him to get past him.
-walkanim=goblin_walk
-readyanim=goblin_ready
-op1=Talk-to
-op2=Attack
-vislevel=42
-model1=model_2951_npc
-model2=model_2953_npc
-model3=model_2955_npc
-model4=model_2956_npc
-model5=model_2957_npc
-head1=model_142_npc_head
-wanderrange=0
-attackrange=15
-respawnrate=250
-hitpoints=43
-attack=32
-strength=37
-defence=37
-param=attackbonus,8
-param=strengthbonus,5
-param=stabdefence,4
-param=slashdefence,6
-param=crushdefence,6
-param=damagetype,^stab_style
-param=attack_anim,goblin_attack_armed
-param=defend_anim,goblin_block
-param=death_anim,goblin_death
-param=attack_sound,goblin_attack
-param=defend_sound,goblin_hit
-param=death_sound,goblin_death
-
-[npc_490]
-vislevel=hide
-name=Observatory professor
-desc=A learned man in the ways of the stars.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=32767
-recol2s=14724
-recol2d=23254
-recol3s=14801
-recol3d=23254
-model1=model_230_idk
-model2=model_245_npc
-model3=model_246_idk
-model4=model_295_obj_wear
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-head1=model_63_idk_head
-head2=model_78_npc_head
-
-[npc_491]
-name=Ghost
-desc=Spooky!
-walkanim=ghost_walk
-readyanim=ghost_ready
-hasalpha=yes
-op1=Talk-to
-op2=Attack
-vislevel=24
-model1=model_2961_npc
-model2=model_2964_npc
-model3=model_2965_npc
-head1=model_10_npc_head
-// TODO
-param=attack_anim,ghost_attack
-param=defend_anim,ghost_block
-param=death_anim,ghost_death
-param=attack_sound,ghost_attack
-param=defend_sound,ghost_hit
-param=death_sound,ghost_death
-param=death_drop,null
-param=undead,^true
-
-[npc_492]
-vislevel=hide
-name=Spirit of Scorpius
-desc=The essence of evil.
-walkanim=ghost_walk
-readyanim=ghost_ready
-hasalpha=yes
-op1=Talk-to
-model1=model_2961_npc
-model2=model_2964_npc
-model3=model_2965_npc
-head1=model_10_npc_head
-wanderrange=2
-param=undead,^true
-param=death_anim,ghost_death
-param=death_sound,ghost_death
-
-[npc_493]
-name=Grave Scorpion
-desc=A vicious little stinging thing.
-walkanim=smallscorpion_walk
-readyanim=smallscorpion_ready
-op2=Attack
-vislevel=12
-model1=model_2968_npc
-wanderrange=4
-attackrange=6
-respawnrate=50
-hitpoints=7
-attack=11
-strength=12
-defence=14
-param=slashdefence,3
-param=crushdefence,3
-param=damagetype,^crush_style
-param=attack_anim,smallscorpion_attack
-param=defend_anim,smallscorpion_block
-param=death_anim,smallscorpion_death
-param=attack_sound,insect_attack
-param=defend_sound,insect_hit
-param=death_sound,insect_death
 param=death_drop,null
 
 [npc_500]
@@ -11199,8 +11025,8 @@ ranged=0
 param=attackbonus,7
 param=strengthbonus,3
 param=rangebonus,7
-param=attack_anim,human_staff_crush
-param=defend_anim,human_staff_defend
+param=attack_anim,human_staff_pound
+param=defend_anim,human_staff_def
 // param=attack_sound,staff_double
 
 [npc_930]
@@ -11244,8 +11070,8 @@ magic=0
 ranged=0
 param=strengthbonus,3
 param=rangebonus,7
-param=attack_anim,human_staff_crush
-param=defend_anim,human_staff_defend
+param=attack_anim,human_staff_pound
+param=defend_anim,human_staff_def
 // osrs param=attack_sound,staff_double
 // sound and animation data taken normal version ungadulu
 // wander distance attack distance missing.
@@ -11613,7 +11439,7 @@ param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
 
-[npc_955]
+[cow_3]
 size=2
 walkanim=cow_walk
 readyanim=cow_ready
@@ -12399,7 +12225,7 @@ param=damagetype,^crush_style
 vislevel=hide
 size=2
 walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=lord_iban_ready
+readyanim=sitting_ready
 name=Lord Iban
 desc=The great and dreadful Lord Iban
 recol1s=15855
@@ -12514,7 +12340,7 @@ defence=24
 magic=80
 param=magicdefence,3
 
-[npc_1009]
+[poison_spider_observatory]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Poison spider

@@ -56,8 +56,8 @@ export default class CategoryType extends ConfigType {
 
     // ----
 
-    decode(opcode: number, packet: Packet) {
-        this.debugname = packet.gjstr();
+    decode(code: number, dat: Packet) {
+        this.debugname = dat.gjstr();
     }
 
     toString() {

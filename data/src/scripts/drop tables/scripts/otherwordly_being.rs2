@@ -31,5 +31,5 @@ if ($random < 9) {
 } else if ($random < 107) {
     obj_add(npc_coord, mackerel, 1, ^lootdrop_duration);
 } else if ($random < 110) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

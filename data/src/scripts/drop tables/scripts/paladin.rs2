@@ -41,5 +41,5 @@ if ($random < 2) {
 } else if ($random < 124) {
     obj_add(npc_coord, coins, 120, ^lootdrop_duration);
 } else if ($random < 126) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

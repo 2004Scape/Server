@@ -146,7 +146,7 @@ return (false);
 
 
 [proc,npc_out_of_combat]()(boolean)
-if (add(%npc_lastattack, 8) < map_clock | (npc_getmode ! applayer2 & npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
+if ((add(%npc_lastattack, 8) < map_clock & add(%npc_lastcombat, 8) < map_clock) | (npc_getmode ! applayer2 & npc_getmode ! opplayer2 & npc_getmode ! playerescape)) {
     return (true);
 }
 return (false);

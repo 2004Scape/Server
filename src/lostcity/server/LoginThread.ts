@@ -9,7 +9,7 @@ import { toBase37, toSafeName } from '#jagex2/jstring/JString.js';
 
 import { CrcBuffer32 } from '#lostcity/cache/CrcTable.js';
 
-import { LoginClient } from '#lostcity/server/LoginServer.js';
+import {LoginClient, LoginResponse} from '#lostcity/server/LoginServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -49,7 +49,7 @@ parentPort.on('message', async msg => {
                 if (revision !== 225) {
                     parentPort.postMessage({
                         type: 'loginreply',
-                        status: 6,
+                        status: LoginResponse.SERVER_UPDATED,
                         socket
                     });
                     return;
@@ -57,11 +57,12 @@ parentPort.on('message', async msg => {
 
                 const info = stream.g1();
 
-                const crcs = stream.gdata(9 * 4);
-                if (Packet.crc32(crcs) !== CrcBuffer32) {
+                const crcs = new Uint8Array(9 * 4);
+                stream.gdata(crcs, 0, crcs.length);
+                if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
                     parentPort.postMessage({
                         type: 'loginreply',
-                        status: 6,
+                        status: LoginResponse.SERVER_UPDATED,
                         socket
                     });
                     return;
@@ -72,7 +73,7 @@ parentPort.on('message', async msg => {
                 if (stream.g1() !== 10) {
                     parentPort.postMessage({
                         type: 'loginreply',
-                        status: 11,
+                        status: LoginResponse.LOGIN_REJECTED,
                         socket
                     });
                     return;
@@ -90,7 +91,7 @@ parentPort.on('message', async msg => {
                 if (username.length < 1 || username.length > 12) {
                     parentPort.postMessage({
                         type: 'loginreply',
-                        status: 3,
+                        status: LoginResponse.INVALID_USER_OR_PASS,
                         socket
                     });
                     return;
@@ -100,7 +101,7 @@ parentPort.on('message', async msg => {
                     if (password.length < 5 || password.length > 20) {
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 3,
+                            status: LoginResponse.INVALID_USER_OR_PASS,
                             socket
                         });
                         return;
@@ -112,7 +113,7 @@ parentPort.on('message', async msg => {
                     if (request.reply === 1 && request.data) {
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 2,
+                            status: LoginResponse.SUCCESSFUL,
                             socket,
                             info,
                             seed,
@@ -123,7 +124,7 @@ parentPort.on('message', async msg => {
                         // new connection + already logged in
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 5,
+                            status: LoginResponse.LOGGED_IN,
                             socket
                         });
                         return;
@@ -131,14 +132,14 @@ parentPort.on('message', async msg => {
                         // reconnection + already logged into another world (???)
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 5,
+                            status: LoginResponse.LOGGED_IN,
                             socket
                         });
                         return;
                     } else if (request.reply === 4) {
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 2,
+                            status: LoginResponse.SUCCESSFUL,
                             socket,
                             info,
                             seed,
@@ -149,7 +150,7 @@ parentPort.on('message', async msg => {
                         // invalid credentials (bad user or bad pass)
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 3,
+                            status: LoginResponse.INVALID_USER_OR_PASS,
                             socket
                         });
                         return;
@@ -157,14 +158,14 @@ parentPort.on('message', async msg => {
                         // login server connection error
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 8,
+                            status: LoginResponse.LOGIN_SERVER_OFFLINE,
                             socket
                         });
                         return;
                     } else {
                         parentPort.postMessage({
                             type: 'loginreply',
-                            status: 11,
+                            status: LoginResponse.LOGIN_REJECTED,
                             socket
                         });
                         return;
@@ -177,7 +178,7 @@ parentPort.on('message', async msg => {
 
                     parentPort.postMessage({
                         type: 'loginreply',
-                        status: 2,
+                        status: LoginResponse.SUCCESSFUL,
                         socket,
                         info,
                         seed,

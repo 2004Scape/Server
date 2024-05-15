@@ -66,13 +66,13 @@ export class NetworkPlayer extends Player {
             } else if (length == -2) {
                 length = (this.client.in[offset++] << 8) | this.client.in[offset++];
             }
-            const data = new Packet(this.client.in.subarray(offset, offset + length));
+            const data = new Packet(this.client.in.slice(offset, offset + length));
             offset += length;
 
             if (packetType === ClientProt.REBUILD_GETMAPS) {
                 const requested = [];
 
-                for (let i = 0; i < data.length / 3; i++) {
+                for (let i = 0; i < data.data.length / 3; i++) {
                     const type = data.g1();
                     const x = data.g1();
                     const z = data.g1();
@@ -120,8 +120,8 @@ export class NetworkPlayer extends Player {
                 if (checkpoints != 0) {
                     // Just grab the last one we need skip the rest.
                     data.pos += (checkpoints - 1) << 1;
-                    pathfindX = data.g1s() + startX;
-                    pathfindZ = data.g1s() + startZ;
+                    pathfindX = data.g1b() + startX;
+                    pathfindZ = data.g1b() + startZ;
                 }
 
                 if (
@@ -173,7 +173,7 @@ export class NetworkPlayer extends Player {
             } else if (packetType === ClientProt.MESSAGE_PUBLIC) {
                 const colour = data.g1();
                 const effect = data.g1();
-                const message = WordPack.unpack(data, data.length - 2);
+                const message = WordPack.unpack(data, data.data.length - 2);
 
                 if (colour < 0 || colour > 11 || effect < 0 || effect > 2 || message.length > 100) {
                     continue;
@@ -183,10 +183,12 @@ export class NetworkPlayer extends Player {
                 this.messageEffect = effect;
                 this.messageType = 0;
 
-                const out = new Packet();
+                const out = Packet.alloc(0);
                 WordPack.pack(out, WordEnc.filter(message));
+                this.message = new Uint8Array(out.pos);
                 out.pos = 0;
-                this.message = out.gdata();
+                out.gdata(this.message, 0, this.message.length);
+                out.release();
                 this.mask |= Player.CHAT;
 
                 World.socialPublicMessage(this.username37, message);
@@ -418,7 +420,12 @@ export class NetworkPlayer extends Player {
                 }
 
                 const type = ObjType.get(item);
-                if ((packetType === ClientProt.OPHELD1 && !type.iops[0]) || (packetType === ClientProt.OPHELD2 && !type.iops[1]) || (packetType === ClientProt.OPHELD3 && !type.iops[2]) || (packetType === ClientProt.OPHELD4 && !type.iops[3])) {
+                if (
+                    (packetType === ClientProt.OPHELD1 && ((type.iop && !type.iop[0]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD2 && ((type.iop && !type.iop[1]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD3 && ((type.iop && !type.iop[2]) || !type.iop)) ||
+                    (packetType === ClientProt.OPHELD4 && ((type.iop && !type.iop[3]) || !type.iop))
+                ) {
                     continue;
                 }
 
@@ -516,6 +523,11 @@ export class NetworkPlayer extends Player {
 
                 const objType = ObjType.get(this.lastItem);
                 const useObjType = ObjType.get(this.lastUseItem);
+
+                if((objType.members || useObjType.members) && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
 
                 // [opheldu,b]
                 let script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.OPHELDU, objType.id, -1);
@@ -621,12 +633,15 @@ export class NetworkPlayer extends Player {
                 }
 
                 const locType = LocType.get(loc.type);
+                if (!locType.op) {
+                    continue;
+                }
                 if (
-                    (packetType === ClientProt.OPLOC1 && !locType.ops[0]) ||
-                    (packetType === ClientProt.OPLOC2 && !locType.ops[1]) ||
-                    (packetType === ClientProt.OPLOC3 && !locType.ops[2]) ||
-                    (packetType === ClientProt.OPLOC4 && !locType.ops[3]) ||
-                    (packetType === ClientProt.OPLOC5 && !locType.ops[4])
+                    (packetType === ClientProt.OPLOC1 && !locType.op[0]) ||
+                    (packetType === ClientProt.OPLOC2 && !locType.op[1]) ||
+                    (packetType === ClientProt.OPLOC3 && !locType.op[2]) ||
+                    (packetType === ClientProt.OPLOC4 && !locType.op[3]) ||
+                    (packetType === ClientProt.OPLOC5 && !locType.op[4])
                 ) {
                     continue;
                 }
@@ -644,6 +659,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APLOC5;
                 }
 
+                this.clearWaypoints();
                 this.setInteraction(loc, mode);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -688,13 +704,17 @@ export class NetworkPlayer extends Player {
                 if (this.delayed()) {
                     continue;
                 }
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
 
                 this.lastUseItem = item;
                 this.lastUseSlot = slot;
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(loc, ServerTriggerType.APLOCU);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -729,7 +749,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(loc, ServerTriggerType.APLOCT, spellComId);
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
@@ -748,12 +768,15 @@ export class NetworkPlayer extends Player {
                 }
 
                 const npcType = NpcType.get(npc.type);
+                if (!npcType.op) {
+                    continue;
+                }
                 if (
-                    (packetType === ClientProt.OPNPC1 && !npcType.ops[0]) ||
-                    (packetType === ClientProt.OPNPC2 && !npcType.ops[1]) ||
-                    (packetType === ClientProt.OPNPC3 && !npcType.ops[2]) ||
-                    (packetType === ClientProt.OPNPC4 && !npcType.ops[3]) ||
-                    (packetType === ClientProt.OPNPC5 && !npcType.ops[4])
+                    (packetType === ClientProt.OPNPC1 && !npcType.op[0]) ||
+                    (packetType === ClientProt.OPNPC2 && !npcType.op[1]) ||
+                    (packetType === ClientProt.OPNPC3 && !npcType.op[2]) ||
+                    (packetType === ClientProt.OPNPC4 && !npcType.op[3]) ||
+                    (packetType === ClientProt.OPNPC5 && !npcType.op[4])
                 ) {
                     continue;
                 }
@@ -771,6 +794,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APNPC5;
                 }
 
+                this.clearWaypoints();
                 this.setInteraction(npc, mode);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -809,12 +833,17 @@ export class NetworkPlayer extends Player {
                     continue;
                 }
 
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
+                
                 this.lastUseItem = item;
                 this.lastUseSlot = slot;
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(npc, ServerTriggerType.APNPCU);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -843,7 +872,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(npc, ServerTriggerType.APNPCT, spellComId);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
@@ -869,7 +898,10 @@ export class NetworkPlayer extends Player {
 
                 const objType = ObjType.get(obj.type);
                 // todo: validate all options
-                if ((packetType === ClientProt.OPOBJ1 && !objType.ops[0]) || (packetType === ClientProt.OPOBJ4 && !objType.ops[3])) {
+                if (
+                    (packetType === ClientProt.OPOBJ1 && ((objType.op && !objType.op[0]) || !objType.op)) ||
+                    (packetType === ClientProt.OPOBJ4 && ((objType.op && !objType.op[3]) || !objType.op))
+                ) {
                     continue;
                 }
 
@@ -886,6 +918,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APOBJ5;
                 }
 
+                this.clearWaypoints();
                 this.setInteraction(obj, mode);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -930,13 +963,18 @@ export class NetworkPlayer extends Player {
                 if (this.delayed()) {
                     continue;
                 }
+                
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
 
                 this.lastUseItem = item;
                 this.lastUseSlot = slot;
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(obj, ServerTriggerType.APOBJU);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -971,7 +1009,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(obj, ServerTriggerType.APOBJT, spellComId);
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
@@ -1001,6 +1039,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APPLAYER4;
                 }
 
+                this.clearWaypoints();
                 this.setInteraction(player, mode);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1040,12 +1079,16 @@ export class NetworkPlayer extends Player {
                 if (this.delayed()) {
                     continue;
                 }
+                if(ObjType.get(item).members && !World.members) {
+                    this.messageGame("To use this item please login to a members' server.");
+                    continue;
+                }
 
                 this.lastUseSlot = slot;
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(player, ServerTriggerType.APPLAYERU, item);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1076,7 +1119,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-
+                this.clearWaypoints();
                 this.setInteraction(player, ServerTriggerType.APPLAYERT, spellComId);
                 pathfindX = player.x;
                 pathfindZ = player.z;
@@ -1104,17 +1147,10 @@ export class NetworkPlayer extends Player {
                 }
             } else if (packetType === ClientProt.MESSAGE_PRIVATE) {
                 const other = data.g8();
-                const message = WordPack.unpack(data, data.length - 8);
+                const message = WordPack.unpack(data, data.data.length - 8);
 
                 World.socialPrivateMessage(this.username37, other, message);
             }
-        }
-
-        if (this.forceMove && pathfindX !== -1 && pathfindZ !== -1) {
-            this.unsetMapFlag();
-            pathfindRequest = false;
-            pathfindX = -1;
-            pathfindZ = -1;
         }
 
         this.client?.reset();
@@ -1136,9 +1172,6 @@ export class NetworkPlayer extends Player {
             } else {
                 this.queueWaypoints(findPath(this.level, this.x, this.z, pathfindX, pathfindZ));
             }
-
-            pathfindX = -1;
-            pathfindZ = -1;
         }
     }
 
@@ -1172,19 +1205,18 @@ export class NetworkPlayer extends Player {
             this.refreshModal = false;
         }
 
-        for (let j = 0; j < this.netOut.length; j++) {
-            const out = this.netOut[j];
-
+        for (let packet: Packet | null = this.netOut.pop() as Packet | null; packet; packet = this.netOut.pop() as Packet | null) {
             if (this.client.encryptor) {
-                out.data[0] = (out.data[0] + this.client.encryptor.nextInt()) & 0xff;
+                packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
             }
+            World.lastCycleBandwidth[1] += packet.pos;
 
-            World.lastCycleBandwidth[1] += out.length;
-            this.client.write(out);
+            this.client.write(packet);
+
+            packet.release();
         }
 
         this.client.flush();
-        this.netOut = [];
     }
 
     writeImmediately(packet: Packet) {
@@ -1201,7 +1233,7 @@ export class NetworkPlayer extends Player {
     }
 
     override logout() {
-        const out = new Packet();
+        const out = new Packet(new Uint8Array(1));
         out.p1(ServerProt.LOGOUT.id);
 
         this.writeImmediately(out);
@@ -1222,5 +1254,5 @@ export class NetworkPlayer extends Player {
 }
 
 export function isNetworkPlayer(player: Player): player is NetworkPlayer {
-    return (player as NetworkPlayer).client !== null;
+    return (player as NetworkPlayer).client !== null && (player as NetworkPlayer).client !== undefined;
 }

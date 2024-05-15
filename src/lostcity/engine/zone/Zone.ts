@@ -596,6 +596,14 @@ export default class Zone {
         console.log('removeObj: obj not found');
     }
 
+    getDynObj(x: number, z: number, type: number): Obj | null {
+        const dynamicObj = this.objs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type);
+        if (dynamicObj !== -1) {
+            return this.objs[dynamicObj];
+        }
+        return null;
+    }
+
     /**
      * Find an object at a location in the zone, visible to a given player.
      * 

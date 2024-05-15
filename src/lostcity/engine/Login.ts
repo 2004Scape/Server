@@ -9,9 +9,11 @@ import Player from '#lostcity/entity/Player.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import {LoginResponse} from '#lostcity/server/LoginServer.js';
 
 class Login {
-    loginThread: Worker = new Worker('./src/lostcity/server/LoginThread.ts');
+    loginThread: Worker = createWorker('./src/lostcity/server/LoginThread.ts');
     loginRequests: Map<string, ClientSocket> = new Map();
     logoutRequests: Set<bigint> = new Set();
 
@@ -36,10 +38,13 @@ class Login {
                 return;
             }
 
+            const post = new Uint8Array(length);
+            data.gdata(post, 0, post.length);
+
             this.loginThread.postMessage({
                 type: 'loginreq',
                 opcode,
-                data: data.gdata(length),
+                data: post,
                 socket: socket.uniqueId
             });
 
@@ -54,11 +59,13 @@ class Login {
             return;
         }
 
+        const save = player.save();
         this.loginThread.postMessage({
             type: 'logout',
             username: player.username,
-            save: player.save().data
+            save: save.data.subarray(0, save.pos)
         });
+        save.release();
     }
 
     private onMessage(msg: any) {
@@ -73,8 +80,8 @@ class Login {
 
                 this.loginRequests.delete(socket);
 
-                if (status !== 2) {
-                    client.writeImmediate(Uint8Array.from([status]));
+                if (status[0] !== 2) {
+                    client.writeImmediate(status);
                     client.close();
                     return;
                 }
@@ -82,13 +89,13 @@ class Login {
                 const { info, seed, username, save } = msg;
 
                 if (World.getTotalPlayers() >= 2000) {
-                    client.writeImmediate(Uint8Array.from([7]));
+                    client.writeImmediate(LoginResponse.WORLD_FULL);
                     client.close();
                     return;
                 }
 
                 if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
-                    client.writeImmediate(Uint8Array.from([14]));
+                    client.writeImmediate(LoginResponse.SERVER_UPDATING);
                     client.close();
                     return;
                 }

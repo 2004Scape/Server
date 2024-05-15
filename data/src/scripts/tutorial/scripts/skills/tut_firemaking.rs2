@@ -97,7 +97,7 @@ return ($first_from_opheld);
 
 [label,tut_firemaking_success](coord $fire_coord, obj $log)
 obj_del();
-~tutorial_give_xp(firemaking, oc_param($log, productexp));
+~tutorial_give_xp(firemaking, 400);
 sound_synth(fire_lit, 0, 0);
 facesquare($fire_coord);
 if (%tutorial_progress = ^survival_guide_build_fire) {

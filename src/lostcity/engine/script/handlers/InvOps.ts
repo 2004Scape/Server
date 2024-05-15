@@ -20,7 +20,7 @@ import {
     ObjNotDummyValid,
     ObjStackValid,
     ObjTypeValid
-} from '#lostcity/engine/script/ScriptInputValidator.js';
+} from '#lostcity/engine/script/ScriptValidators.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -47,8 +47,13 @@ const InvOps: CommandHandlers = {
         const [inv, obj] = state.popInts(2);
 
         const type = InvType.get(check(inv, InvTypeValid));
-        const index = type.stockobj.indexOf(check(obj, ObjTypeValid));
 
+        if (!type.stockobj || !type.stockcount) {
+            state.pushInt(-1);
+            return;
+        }
+
+        const index = type.stockobj.indexOf(check(obj, ObjTypeValid));
         state.pushInt(index >= 0 ? type.stockcount[index] : -1);
     },
 

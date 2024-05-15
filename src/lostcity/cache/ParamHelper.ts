@@ -23,17 +23,17 @@ export const ParamHelper = {
         return value;
     },
 
-    decodeParams: function (packet: Packet): Map<number, number | string> {
-        const count = packet.g1();
+    decodeParams: function (dat: Packet): ParamMap {
+        const count = dat.g1();
         const params = new Map<number, number | string>();
         for (let i = 0; i < count; i++) {
-            const key = packet.g3();
-            const isString = packet.gbool();
+            const key = dat.g3();
+            const isString = dat.gbool();
 
             if (isString) {
-                params.set(key, packet.gjstr());
+                params.set(key, dat.gjstr());
             } else {
-                params.set(key, packet.g4s());
+                params.set(key, dat.g4());
             }
         }
         return params;

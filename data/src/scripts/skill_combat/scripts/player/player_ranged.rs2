@@ -1,4 +1,5 @@
 [label,player_ranged_attack]
+p_stopaction;
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 
@@ -47,15 +48,21 @@ if (~player_npc_hit_roll(%damagetype) = true) {
     ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
 }
 
+def_int $poison_severity = oc_param($ammo, poison_severity);
+if ($damage > 0 & $poison_severity > 0 & random(8) = 0) { // 1/8 chance to poison
+    // poison npc
+    ~npc_poison_start(max(sub($poison_severity, 14), 0)); // lowered by 14 if ranged attack
+}
+
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
-def_int $delay = ~player_ranged_use_weapon($rhand, $ammo);
+def_int $delay = add(~player_ranged_use_weapon($rhand, $ammo), 30); // osrs it seems to be delayed an extra tick
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 ~npc_retaliate(calc($delay / 30));
 npc_queue(2, $damage, calc($delay / 30));
-npc_anim(npc_param(defend_anim), $delay); // delay npc this tick
+npc_anim(npc_param(defend_anim), sub($delay, 30)); // delay npc this tick
 if (npc_param(defend_sound) ! null) {
-    sound_synth(npc_param(defend_sound), 0, $delay); // delay 1 client tick for the hit queue
+    sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
 }
 npc_heropoints($damage);
 // set the skill clock depending on the weapon attack rate

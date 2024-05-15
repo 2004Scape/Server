@@ -53,13 +53,13 @@ export default class MesanimType extends ConfigType {
 
     len: number[] = new Array(4).fill(-1);
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode >= 1 && opcode < 5) {
-            this.len[opcode - 1] = packet.g2();
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+    decode(code: number, dat: Packet) {
+        if (code >= 1 && code < 5) {
+            this.len[code - 1] = dat.g2();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized mesanim config code: ${opcode}`);
+            throw new Error(`Unrecognized mesanim config code: ${code}`);
         }
     }
 }

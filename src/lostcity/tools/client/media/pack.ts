@@ -129,7 +129,7 @@ export async function packClientMedia() {
 
     // ----
 
-    const index = new Packet();
+    const index = Packet.alloc(2);
     for (let i = 0; i < indexOrder.length; i++) {
         const safeName = indexOrder[i].replace('.dat', '');
         const data = await convertImage(index, 'data/src/sprites', safeName);
@@ -152,5 +152,8 @@ export async function packClientMedia() {
     }
 
     jag.save('data/pack/client/media');
+    for (const packet of Object.values(files)) {
+        packet.release();
+    }
     //console.timeEnd('media.jag');
 }

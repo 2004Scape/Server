@@ -65,5 +65,5 @@ if ($random < 5) {
 } else if ($random < 116) {
     obj_add(npc_coord, banana, 1, ^lootdrop_duration);
 } else if ($random < 120) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

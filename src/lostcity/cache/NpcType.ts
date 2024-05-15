@@ -68,8 +68,8 @@ export default class NpcType extends ConfigType {
     name: string | null = null;
     desc: string | null = null;
     size = 1;
-    models: number[] = [];
-    heads: number[] = [];
+    models: Uint16Array | null = null;
+    heads: Uint16Array | null = null;
     hasanim = false;
     readyanim = -1;
     walkanim = -1;
@@ -77,12 +77,12 @@ export default class NpcType extends ConfigType {
     walkanim_r = -1;
     walkanim_l = -1;
     hasalpha = false;
-    recol_s: number[] = [];
-    recol_d: number[] = [];
-    ops: (string | null)[] = [];
-    code90 = -1;
-    code91 = -1;
-    code92 = -1;
+    recol_s: Uint16Array | null = null;
+    recol_d: Uint16Array | null = null;
+    op: (string | null)[] | null = null;
+    resizex = -1;
+    resizey = -1;
+    resizez = -1;
     minimap = true;
     vislevel = -1;
     resizeh = 128;
@@ -107,109 +107,116 @@ export default class NpcType extends ConfigType {
     patrolDelay: number[] = [];
     givechase = true;
 
-    decode(opcode: number, packet: Packet): void {
-        if (opcode === 1) {
-            const count = packet.g1();
+    decode(code: number, dat: Packet): void {
+        if (code === 1) {
+            const count = dat.g1();
+            this.models = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
-                this.models[i] = packet.g2();
+                this.models[i] = dat.g2();
             }
-        } else if (opcode === 2) {
-            this.name = packet.gjstr();
-        } else if (opcode === 3) {
-            this.desc = packet.gjstr();
-        } else if (opcode === 12) {
-            this.size = packet.g1();
-        } else if (opcode === 13) {
-            this.readyanim = packet.g2();
-        } else if (opcode === 14) {
-            this.walkanim = packet.g2();
-        } else if (opcode === 16) {
+        } else if (code === 2) {
+            this.name = dat.gjstr();
+        } else if (code === 3) {
+            this.desc = dat.gjstr();
+        } else if (code === 12) {
+            this.size = dat.g1();
+        } else if (code === 13) {
+            this.readyanim = dat.g2();
+        } else if (code === 14) {
+            this.walkanim = dat.g2();
+        } else if (code === 16) {
             this.hasanim = true;
-        } else if (opcode === 17) {
-            this.walkanim = packet.g2();
-            this.walkanim_b = packet.g2();
-            this.walkanim_r = packet.g2();
-            this.walkanim_l = packet.g2();
-        } else if (opcode === 18) {
-            this.category = packet.g2();
-        } else if (opcode >= 30 && opcode < 40) {
-            this.ops[opcode - 30] = packet.gjstr();
-
-            if (this.ops[opcode - 30] === 'hidden') {
-                this.ops[opcode - 30] = null;
+        } else if (code === 17) {
+            this.walkanim = dat.g2();
+            this.walkanim_b = dat.g2();
+            this.walkanim_r = dat.g2();
+            this.walkanim_l = dat.g2();
+        } else if (code === 18) {
+            this.category = dat.g2();
+        } else if (code >= 30 && code < 40) {
+            if (!this.op) {
+                this.op = new Array(5).fill(null);
             }
-        } else if (opcode === 40) {
-            const count = packet.g1();
 
-            for (let i = 0; i < count; i++) {
-                this.recol_s[i] = packet.g2();
-                this.recol_d[i] = packet.g2();
+            this.op[code - 30] = dat.gjstr();
+            if (this.op[code - 30] === 'hidden') {
+                this.op[code - 30] = null;
             }
-        } else if (opcode === 60) {
-            const count = packet.g1();
+        } else if (code === 40) {
+            const count = dat.g1();
+            this.recol_s = new Uint16Array(count);
+            this.recol_d = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
-                this.heads[i] = packet.g2();
+                this.recol_s[i] = dat.g2();
+                this.recol_d[i] = dat.g2();
             }
-        } else if (opcode === 90) {
-            this.code90 = packet.g2();
-        } else if (opcode === 91) {
-            this.code91 = packet.g2();
-        } else if (opcode === 92) {
-            this.code92 = packet.g2();
-        } else if (opcode === 93) {
+        } else if (code === 60) {
+            const count = dat.g1();
+            this.heads = new Uint16Array(count);
+
+            for (let i = 0; i < count; i++) {
+                this.heads[i] = dat.g2();
+            }
+        } else if (code === 90) {
+            this.resizex = dat.g2();
+        } else if (code === 91) {
+            this.resizey = dat.g2();
+        } else if (code === 92) {
+            this.resizez = dat.g2();
+        } else if (code === 93) {
             this.minimap = false;
-        } else if (opcode === 95) {
-            this.vislevel = packet.g2();
-        } else if (opcode === 97) {
-            this.resizeh = packet.g2();
-        } else if (opcode === 98) {
-            this.resizev = packet.g2();
-        } else if (opcode === 200) {
-            this.wanderrange = packet.g1();
-        } else if (opcode === 201) {
-            this.maxrange = packet.g1();
-        } else if (opcode === 202) {
-            this.huntrange = packet.g1();
-        } else if (opcode === 203) {
-            this.timer = packet.g2();
-        } else if (opcode === 204) {
-            this.respawnrate = packet.g2();
-        } else if (opcode === 205) {
+        } else if (code === 95) {
+            this.vislevel = dat.g2();
+        } else if (code === 97) {
+            this.resizeh = dat.g2();
+        } else if (code === 98) {
+            this.resizev = dat.g2();
+        } else if (code === 200) {
+            this.wanderrange = dat.g1();
+        } else if (code === 201) {
+            this.maxrange = dat.g1();
+        } else if (code === 202) {
+            this.huntrange = dat.g1();
+        } else if (code === 203) {
+            this.timer = dat.g2();
+        } else if (code === 204) {
+            this.respawnrate = dat.g2();
+        } else if (code === 205) {
             for (let i = 0; i < 6; i++) {
-                this.stats[i] = packet.g2();
+                this.stats[i] = dat.g2();
             }
-        } else if (opcode === 206) {
-            this.moverestrict = packet.g1();
-        } else if (opcode == 207) {
-            this.attackrange = packet.g1();
-        } else if (opcode === 208) {
-            this.blockwalk = packet.g1();
-        } else if (opcode === 209) {
-            this.huntmode = packet.g1();
-        } else if (opcode === 210) {
-            this.defaultmode = packet.g1();
-        } else if (opcode === 211) {
+        } else if (code === 206) {
+            this.moverestrict = dat.g1();
+        } else if (code == 207) {
+            this.attackrange = dat.g1();
+        } else if (code === 208) {
+            this.blockwalk = dat.g1();
+        } else if (code === 209) {
+            this.huntmode = dat.g1();
+        } else if (code === 210) {
+            this.defaultmode = dat.g1();
+        } else if (code === 211) {
             this.members = true;
-        } else if (opcode === 212) {
-            const count = packet.g1();
+        } else if (code === 212) {
+            const count = dat.g1();
 
             this.patrolCoord = new Array(count);
             this.patrolDelay = new Array(count);
 
             for (let j = 0; j < count; j++) {
-                this.patrolCoord[j] = packet.g4();
-                this.patrolDelay[j] = packet.g1();
+                this.patrolCoord[j] = dat.g4();
+                this.patrolDelay[j] = dat.g1();
             }
-        } else if (opcode === 213) {
+        } else if (code === 213) {
             this.givechase = false;
-        } else if (opcode === 249) {
-            this.params = ParamHelper.decodeParams(packet);
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 249) {
+            this.params = ParamHelper.decodeParams(dat);
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized npc config code: ${opcode} while reading npc ${this.id}`);
+            throw new Error(`Unrecognized npc config code: ${code} while reading npc ${this.id}`);
         }
     }
 }

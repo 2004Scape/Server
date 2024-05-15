@@ -60,19 +60,19 @@ export default class ParamType extends ConfigType {
     defaultString: string | null = null;
     autodisable = true;
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode === 1) {
-            this.type = packet.g1();
-        } else if (opcode === 2) {
-            this.defaultInt = packet.g4s();
-        } else if (opcode === 4) {
+    decode(code: number, dat: Packet) {
+        if (code === 1) {
+            this.type = dat.g1();
+        } else if (code === 2) {
+            this.defaultInt = dat.g4();
+        } else if (code === 4) {
             this.autodisable = false;
-        } else if (opcode === 5) {
-            this.defaultString = packet.gjstr();
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 5) {
+            this.defaultString = dat.gjstr();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized param config code: ${opcode}`);
+            throw new Error(`Unrecognized param config code: ${code}`);
         }
     }
 

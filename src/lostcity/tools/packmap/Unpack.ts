@@ -50,7 +50,7 @@ function readLand(data: Packet) {
                     }
 
                     if (code <= 49) {
-                        overlayIds[level][x][z] = data.g1s();
+                        overlayIds[level][x][z] = data.g1b();
                         overlayShape[level][x][z] = Math.trunc((code - 2) / 4);
                         overlayRotation[level][x][z] = (code - 2) & 3;
                     } else if (code <= 81) {

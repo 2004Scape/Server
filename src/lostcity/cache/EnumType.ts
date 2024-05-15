@@ -62,31 +62,31 @@ export default class EnumType extends ConfigType {
     defaultString: string = 'null';
     values = new Map<number, number | string>();
 
-    decode(opcode: number, packet: Packet): void {
-        if (opcode === 1) {
-            this.inputtype = packet.g1();
-        } else if (opcode === 2) {
-            this.outputtype = packet.g1();
-        } else if (opcode === 3) {
-            this.defaultString = packet.gjstr();
-        } else if (opcode === 4) {
-            this.defaultInt = packet.g4s();
-        } else if (opcode === 5) {
-            const count = packet.g2();
+    decode(code: number, dat: Packet): void {
+        if (code === 1) {
+            this.inputtype = dat.g1();
+        } else if (code === 2) {
+            this.outputtype = dat.g1();
+        } else if (code === 3) {
+            this.defaultString = dat.gjstr();
+        } else if (code === 4) {
+            this.defaultInt = dat.g4();
+        } else if (code === 5) {
+            const count = dat.g2();
 
             for (let i = 0; i < count; i++) {
-                this.values.set(packet.g4s(), packet.gjstr());
+                this.values.set(dat.g4(), dat.gjstr());
             }
-        } else if (opcode === 6) {
-            const count = packet.g2();
+        } else if (code === 6) {
+            const count = dat.g2();
 
             for (let i = 0; i < count; i++) {
-                this.values.set(packet.g4s(), packet.g4s());
+                this.values.set(dat.g4(), dat.g4());
             }
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized enum config opcode: ${opcode}`);
+            throw new Error(`Unrecognized enum config code: ${code}`);
         }
     }
 }

@@ -32,10 +32,10 @@ export default class LocType extends ConfigType {
             config.decodeType(server);
             config.decodeType(client);
 
-            if (config.active === -1) {
+            if (config.active === -1 && config.shapes) {
                 config.active = config.shapes.length > 0 && config.shapes[0] === 10 ? 1 : 0;
 
-                if (config.ops.length > 0) {
+                if (config.op && config.op.length > 0) {
                     config.active = 1;
                 }
             }
@@ -70,12 +70,12 @@ export default class LocType extends ConfigType {
     }
 
     // ----
-    models: number[] = [];
-    shapes: number[] = [];
+    models: Uint16Array | null = null;
+    shapes: Uint8Array | null = null;
     name: string | null = null;
     desc: string | null = null;
-    recol_s: number[] = [];
-    recol_d: number[] = [];
+    recol_s: Uint16Array | null = null;
+    recol_d: Uint16Array | null = null;
     width = 1;
     length = 1;
     blockwalk = true;
@@ -89,7 +89,7 @@ export default class LocType extends ConfigType {
     wallwidth = 16;
     ambient = 0;
     contrast = 0;
-    ops: (string | null)[] = [];
+    op: (string | null)[] | null = null;
     mapfunction = -1;
     mapscene = -1;
     mirror = false;
@@ -107,93 +107,100 @@ export default class LocType extends ConfigType {
     category = -1;
     params: ParamMap = new Map();
 
-    decode(opcode: number, packet: Packet) {
-        if (opcode === 1) {
-            const count = packet.g1();
+    decode(code: number, dat: Packet) {
+        if (code === 1) {
+            const count = dat.g1();
+            this.models = new Uint16Array(count);
+            this.shapes = new Uint8Array(count);
 
             for (let i = 0; i < count; i++) {
-                this.models[i] = packet.g2();
-                this.shapes[i] = packet.g1();
+                this.models[i] = dat.g2();
+                this.shapes[i] = dat.g1();
             }
-        } else if (opcode === 2) {
-            this.name = packet.gjstr();
-        } else if (opcode === 3) {
-            this.desc = packet.gjstr();
-        } else if (opcode === 14) {
-            this.width = packet.g1();
-        } else if (opcode === 15) {
-            this.length = packet.g1();
-        } else if (opcode === 17) {
+        } else if (code === 2) {
+            this.name = dat.gjstr();
+        } else if (code === 3) {
+            this.desc = dat.gjstr();
+        } else if (code === 14) {
+            this.width = dat.g1();
+        } else if (code === 15) {
+            this.length = dat.g1();
+        } else if (code === 17) {
             this.blockwalk = false;
-        } else if (opcode === 18) {
+        } else if (code === 18) {
             this.blockrange = false;
-        } else if (opcode === 19) {
-            this.active = packet.g1();
-        } else if (opcode === 21) {
+        } else if (code === 19) {
+            this.active = dat.g1();
+        } else if (code === 21) {
             this.hillskew = true;
-        } else if (opcode === 22) {
+        } else if (code === 22) {
             this.sharelight = true;
-        } else if (opcode === 23) {
+        } else if (code === 23) {
             this.occlude = true;
-        } else if (opcode === 24) {
-            this.anim = packet.g2();
+        } else if (code === 24) {
+            this.anim = dat.g2();
 
             if (this.anim == 65535) {
                 this.anim = -1;
             }
-        } else if (opcode === 25) {
+        } else if (code === 25) {
             this.hasalpha = true;
-        } else if (opcode === 28) {
-            this.wallwidth = packet.g1();
-        } else if (opcode === 29) {
-            this.ambient = packet.g1s();
-        } else if (opcode === 39) {
-            this.contrast = packet.g1s();
-        } else if (opcode >= 30 && opcode < 35) {
-            this.ops[opcode - 30] = packet.gjstr();
-
-            if (this.ops[opcode - 30] === 'hidden') {
-                this.ops[opcode - 30] = null;
+        } else if (code === 28) {
+            this.wallwidth = dat.g1();
+        } else if (code === 29) {
+            this.ambient = dat.g1b();
+        } else if (code === 39) {
+            this.contrast = dat.g1b();
+        } else if (code >= 30 && code < 35) {
+            if (!this.op) {
+                this.op = new Array(5).fill(null);
             }
-        } else if (opcode === 40) {
-            const count = packet.g1();
+
+            this.op[code - 30] = dat.gjstr();
+            if (this.op[code - 30] === 'hidden') {
+                this.op[code - 30] = null;
+            }
+        } else if (code === 40) {
+            const count = dat.g1();
+            this.recol_s = new Uint16Array(count);
+            this.recol_d = new Uint16Array(count);
 
             for (let i = 0; i < count; i++) {
-                this.recol_s[i] = packet.g2();
-                this.recol_d[i] = packet.g2();
+                this.recol_s[i] = dat.g2();
+                this.recol_d[i] = dat.g2();
             }
-        } else if (opcode === 60) {
-            this.mapfunction = packet.g2();
-        } else if (opcode === 62) {
+        } else if (code === 60) {
+            this.mapfunction = dat.g2();
+        } else if (code === 62) {
             this.mirror = true;
-        } else if (opcode === 64) {
+        } else if (code === 64) {
             this.shadow = false;
-        } else if (opcode === 65) {
-            this.resizex = packet.g2();
-        } else if (opcode === 66) {
-            this.resizey = packet.g2();
-        } else if (opcode === 67) {
-            this.resizez = packet.g2();
-        } else if (opcode === 68) {
-            this.mapscene = packet.g2();
-        } else if (opcode === 69) {
-            this.forceapproach = packet.g1();
-        } else if (opcode === 70) {
-            this.xoff = packet.g2s();
-        } else if (opcode === 71) {
-            this.yoff = packet.g2s();
-        } else if (opcode === 72) {
-            this.zoff = packet.g2s();
-        } else if (opcode === 73) {
+        } else if (code === 65) {
+            this.resizex = dat.g2();
+        } else if (code === 66) {
+            this.resizey = dat.g2();
+        } else if (code === 67) {
+            this.resizez = dat.g2();
+        } else if (code === 68) {
+            this.mapscene = dat.g2();
+        } else if (code === 69) {
+            this.forceapproach = dat.g1();
+        } else if (code === 70) {
+            this.xoff = dat.g2s();
+        } else if (code === 71) {
+            this.yoff = dat.g2s();
+        } else if (code === 72) {
+            this.zoff = dat.g2s();
+        } else if (code === 73) {
             this.forcedecor = true;
-        } else if (opcode === 200) {
-            this.category = packet.g2();
-        } else if (opcode === 249) {
-            this.params = ParamHelper.decodeParams(packet);
-        } else if (opcode === 250) {
-            this.debugname = packet.gjstr();
+        } else if (code === 200) {
+            this.category = dat.g2();
+        } else if (code === 249) {
+            this.params = ParamHelper.decodeParams(dat);
+        } else if (code === 250) {
+            this.debugname = dat.gjstr();
         } else {
-            throw new Error(`Unrecognized loc config code: ${opcode}`);
+            throw new Error(`Unrecognized loc config code: ${code}`);
         }
     }
 }

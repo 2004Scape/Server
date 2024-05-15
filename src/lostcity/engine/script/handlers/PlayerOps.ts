@@ -28,8 +28,7 @@ import {
     NumberNotNull,
     ObjTypeValid,
     SpotAnimTypeValid,
-    StringNotNull
-} from '#lostcity/engine/script/ScriptInputValidator.js';
+} from '#lostcity/engine/script/ScriptValidators.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
@@ -284,9 +283,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_APRANGE]: checkedHandler(ProtectedActivePlayer, state => {
-        const apRange = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.apRange = apRange;
+        state.activePlayer.apRange = check(state.popInt(), NumberNotNull);
         state.activePlayer.apRangeCalled = true;
     }),
 
@@ -330,9 +327,6 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
-        if (state.activePlayer.hasWaypoints()) {
-            return;
-        }
         if (state.activePlayer.target !== null) {
             return;
         }
@@ -340,7 +334,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
-        const spellId = state.popInt();
+        const spellId: number = state.popInt();
         if (state.activePlayer.target !== null) {
             return;
         }
@@ -385,7 +379,7 @@ const PlayerOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
         const player = state.activePlayer;
         player.queueWaypoints(findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
-        player.updateMovement(); // try to walk immediately
+        player.updateMovement(false); // try to walk immediately
     }),
 
     [ScriptOpcode.SAY]: checkedHandler(ActivePlayer, state => {
@@ -399,7 +393,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.STAFFMODLEVEL]: checkedHandler(ActivePlayer, state => {
-        throw new Error('unimplemented');
+        state.pushInt(state.activePlayer.staffModLevel);
     }),
 
     [ScriptOpcode.STAT]: checkedHandler(ActivePlayer, state => {
@@ -848,9 +842,6 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opplayer: ${type + 1}`);
         }
-        if (state.activePlayer.hasWaypoints()) {
-            return;
-        }
         if (state.activePlayer.target !== null) {
             return;
         }
@@ -956,9 +947,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.P_OPPLAYERT]: checkedHandler(ProtectedActivePlayer, state => {
         const spellId = state.popInt();
-        if (state.activePlayer.hasWaypoints()) {
-            return;
-        }
         if (state.activePlayer.target !== null) {
             return;
         }

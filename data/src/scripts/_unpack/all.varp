@@ -109,6 +109,7 @@ transmit=yes
 
 [questpoints]
 transmit=yes
+protect=no
 
 [poison]
 scope=perm
@@ -132,10 +133,6 @@ scope=perm
 [varp_109]
 
 [varp_110]
-
-[varp_113]
-
-[varp_114]
 
 [bank_noted]
 transmit=yes
@@ -413,8 +410,6 @@ scope=perm
 
 [charge_god_spell]
 scope=perm
-
-[varp_274]
 
 [varp_275]
 

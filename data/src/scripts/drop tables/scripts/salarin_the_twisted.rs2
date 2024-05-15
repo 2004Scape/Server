@@ -38,5 +38,5 @@ if ($random < 1) {
 } else if ($random < 90) {
     obj_add(npc_coord, sinister_key, 1, ^lootdrop_duration);
 } else if ($random < 91) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

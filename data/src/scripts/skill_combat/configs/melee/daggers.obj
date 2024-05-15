@@ -33,6 +33,8 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,iron_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // osrs defend anim seq_388
 
 [bronze_dagger]
@@ -70,6 +72,8 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,bronze_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // osrs defend anim seq_388
 
 [steel_dagger]
@@ -99,6 +103,8 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,steel_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // osrs defend anim seq_388
 
 [mithril_dagger]
@@ -136,6 +142,8 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,mithril_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // osrs defend anim seq_388
 
 [adamant_dagger]
@@ -173,6 +181,8 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,adamant_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // osrs defend anim seq_388
 
 [rune_dagger]
@@ -210,6 +220,8 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,rune_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // osrs defend anim seq_388
 
 [dragon_dagger]
@@ -237,11 +249,13 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
-param=stabattack_anim,human_ddagger_stab
-param=slashattack_anim,human_ddagger_slash
+param=stabattack_anim,human_ddagger_lunge
+param=slashattack_anim,human_ddagger_hack
 param=defend_anim,human_dagger_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,dragon_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // TODO check sounds 
 // osrs defend anim seq_378
 
@@ -280,6 +294,8 @@ param=slashattack_anim,human_sword_slash
 param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
+param=weapon_poisoned,black_dagger_p
+param=weapon_poisoned_message,You poison the dagger.
 // osrs defend anim seq_388
 
 [iron_dagger_p]
@@ -321,6 +337,7 @@ param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_388
+param=poison_severity,20
 
 [bronze_dagger_p]
 members=yes
@@ -361,6 +378,7 @@ param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_388
+param=poison_severity,20
 
 [steel_dagger_p]
 members=yes
@@ -393,6 +411,7 @@ param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_388
+param=poison_severity,20
 
 [mithril_dagger_p]
 members=yes
@@ -433,6 +452,7 @@ param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_388
+param=poison_severity,20
 
 [adamant_dagger_p]
 members=yes
@@ -473,6 +493,7 @@ param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_388
+param=poison_severity,20
 
 [rune_dagger_p]
 members=yes
@@ -513,6 +534,7 @@ param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_388
+param=poison_severity,20
 
 [dragon_dagger_p]
 members=yes
@@ -537,12 +559,13 @@ param=crushattack,-4
 param=magicattack,1
 param=magicdefence,1
 param=strengthbonus,40
-param=stabattack_anim,human_ddagger_stab
-param=slashattack_anim,human_ddagger_slash
+param=stabattack_anim,human_ddagger_lunge
+param=slashattack_anim,human_ddagger_hack
 param=defend_anim,human_dagger_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_378
+param=poison_severity,20
 
 [black_dagger_p]
 members=yes
@@ -583,6 +606,7 @@ param=defend_anim,human_dagger_defend1
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 // osrs defend anim seq_388
+param=poison_severity,20
 
 [poisoned_dagger]
 members=yes

@@ -1,12 +1,12 @@
 import fs from 'fs';
 
 import Jagfile from '#jagex2/io/Jagfile.js';
-import Packet from '#jagex2/io/Packet.js';
 
 import WordEncFragments from '#lostcity/cache/WordEncFragments.js';
 import WordEncBadWords from '#lostcity/cache/WordEncBadWords.js';
 import WordEncDomains from '#lostcity/cache/WordEncDomains.js';
 import WordEncTlds from '#lostcity/cache/WordEncTlds.js';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class WordEnc {
     static PERIOD = new Uint16Array(
@@ -202,7 +202,7 @@ export default class WordEnc {
         const count = packet.g4();
         for (let index = 0; index < count; index++) {
             this.wordEncBadWords.bads[index] = new Uint16Array(packet.g1()).map(() => packet.g1());
-            const combos: number[][] = new Array(packet.g1()).fill([]).map(() => [packet.g1s(), packet.g1s()]);
+            const combos: number[][] = new Array(packet.g1()).fill([]).map(() => [packet.g1b(), packet.g1b()]);
             if (combos.length > 0) {
                 this.wordEncBadWords.badCombinations[index] = combos;
             }

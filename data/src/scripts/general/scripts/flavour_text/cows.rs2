@@ -1,10 +1,10 @@
-[ai_timer,npc_81]
+[ai_timer,cow_1]
 @cow_moo;
 
-[ai_timer,npc_397]
+[ai_timer,cow_2]
 @cow_moo;
 
-[ai_timer,npc_955]
+[ai_timer,cow_3]
 @cow_moo;
 
 

@@ -28,7 +28,7 @@ stock2=cake,3,1000
 stock3=chocolate_slice,6,400
 stock4=chocolate_bar,9,250
 
-[ardougne_fur]
+[furshop]
 scope=shared
 size=40
 restock=yes

@@ -28,6 +28,7 @@ recol1d=15871
 cost=1
 weight=1kg
 tradeable=yes
+param=is_water_source,^true
 param=changesto,jug_empty
 
 [bucket_empty]
@@ -56,6 +57,7 @@ model=model_2504_obj
 2dxan=204
 weight=3kg
 tradeable=yes
+param=is_water_source,^true
 param=changesto,bucket_empty
 
 [bowl_water]
@@ -68,6 +70,7 @@ model=model_2367_obj
 2dxan=204
 weight=2lb
 tradeable=yes
+param=is_water_source,^true
 param=changesto,bowl_empty
 
 [bowl_empty]

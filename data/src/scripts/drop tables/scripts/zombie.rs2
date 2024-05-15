@@ -128,5 +128,5 @@ if ($dropint < 3) {
 } else if ($dropint < 4) {
     obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
 } else if ($dropint < 125) {
-    ~lootdrop(npc_coord, ~randomjewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

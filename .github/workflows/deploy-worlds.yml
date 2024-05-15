@@ -64,9 +64,7 @@ jobs:
           rm loader-client.zip
           cp public/runescape*.jar public/runescape.jar
           pm2 start w${{ matrix.world.number }}-maintenance
-          npm run client:clean
-          npm run client:pack
-          npm run server:clean
-          npm run server:build
+          npm run clean
+          npm run build
           pm2 stop w${{ matrix.world.number }}-maintenance
           pm2 start w${{ matrix.world.number }}-server

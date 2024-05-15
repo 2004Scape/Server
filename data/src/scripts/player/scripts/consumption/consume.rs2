@@ -92,12 +92,6 @@ switch_obj(last_item) {
 [label,player_consume_item](label $consume_effect, int $eat_delay, int $skill_delay)
 def_obj $obj = inv_getobj(inv, last_slot);
 
-// check if item is members
-if (oc_members($obj) = true) {
-    // complete guess
-    ~require_members_use_item;
-}
-
 if (~duel_arena_consume_check($obj) = false) {
     return;
 }

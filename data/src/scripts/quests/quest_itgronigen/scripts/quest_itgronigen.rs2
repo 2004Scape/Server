@@ -1,0 +1,271 @@
+[oploc1,loc_2187]
+p_arrivedelay;
+if(%itgronigen_progress < ^itgronigen_complete) {
+    // dialogue doesn't exist on OSRS
+    ~chatnpc_specific(nc_name(observatory_assistant), observatory_assistant, neutral, "Take great care down there.|Remember the goblins have taken over the cavern.");
+    ~chatplayer(neutral, "Oh, okay thanks for the warning.");
+    if_close;
+}
+anim(human_pickupfloor, 0);
+p_delay(1);
+p_telejump(0_37_147_52_51);
+if(%itgronigen_progress = ^itgronigen_not_started) {
+    mes("You climb down the ladder.");
+}
+
+[oploc1,loc_2188]
+p_arrivedelay;
+@climb_ladder(0_38_49_12_56, true);
+
+[oploc1,loc_2189]
+p_arrivedelay;
+@climb_ladder(0_38_49_8_29, true);
+
+[oploc1,loc_2190]
+p_arrivedelay;
+@climb_ladder(0_37_147_55_30, false);
+
+[oploc1,loc_2191] 
+mes("You open the chest.");
+~open_chest(loc_2194);
+
+[oploc1,loc_2192] 
+mes("You open the chest.");
+~open_chest(loc_2195);
+
+[oploc1,loc_2193] 
+mes("You open the chest.");
+~open_chest(loc_2196);
+
+[oploc1,loc_2197] 
+mes("You open the chest.");
+~open_chest(loc_2198);
+
+[oploc1,loc_2194] 
+mes("You close the chest.");
+~close_chest(loc_2191);
+
+[oploc1,loc_2195] 
+mes("You close the chest.");
+~close_chest(loc_2192);
+
+[oploc1,loc_2196] 
+mes("You close the chest.");
+~close_chest(loc_2193);
+
+[oploc1,loc_2198]
+mes("You close the chest.");
+~close_chest(loc_2197);
+
+[oploc2,loc_2194]
+mes("You search the chest.");
+mes("The chest contains a poisonous spider.");
+npc_add(~coord_lineofwalk_radius(coord,1), poison_spider_observatory, 500);
+npc_setmode(opplayer2);
+~npc_retaliate(0);
+queue(poison_player, 0, 12);
+loc_change(loc_2191, 300);
+
+[oploc2,loc_2195]
+mes("You search the chest.");
+mes("The chest contains some antipoison.");
+loc_change(loc_2192, 300);
+if(inv_freespace(inv) = 0) {
+    mes("But you don't have space to carry it.");
+    return;
+}
+inv_add(inv, 1doseantipoison, 1);
+
+[oploc2,loc_2196]
+mes("You search the chest.");
+mes("The chest contains nothing.");
+
+[oploc2,loc_2198]
+mes("You search the chest.");
+mes("You find a small key inside.");
+loc_change(loc_2197, 300);
+if(~obj_gettotal(keep_key) > 0) {
+    mes("You already have a keep key.");
+    mes("Another one will be of no use.");
+    return;
+}
+inv_add(inv, keep_key, 1);
+
+[oplocu,_observatory_dungeon_gate] 
+if(last_useitem = keep_key) {
+    @open_keep_gate;
+}
+[oploc1,_observatory_dungeon_gate] 
+if(%keepdoor_unlocked ! 0 & coordz(coord) > coordz(loc_coord)) {
+    mes("The gate is locked.");
+    return;
+}
+@open_keep_gate;
+
+[label,open_keep_gate]
+// some guides mention you have to kill the goblin and some don't, RSC just has it aggro you 
+// so we'll do that for now
+if(npc_finduid(~npc_within_distance(coord, goblin_guard, 8)) = true) {
+    ~npc_retaliate(0);
+}
+if(coordz(coord) > coordz(loc_coord)) { 
+    p_teleport(movecoord(coord, 0, 0, -1));
+} else {
+    p_teleport(movecoord(coord, 0, 0, 1));
+}
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = observatory_dungeon_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_2199) {
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1562, 0, loc_shape, 2);
+                loc_add(movecoord($central_coord, 0, 0, 1), loc_1563, 2, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+     }
+}
+sound_synth(grate_open, 0, 0); //iron_door_open
+if(%keepdoor_unlocked = 0) {
+    %keepdoor_unlocked = 1;
+    mes("The gate unlocks.");
+    mes("The key is useless now. You discard it.");
+    inv_del(inv, keep_key, 1);
+}
+if(coordz(coord) < coordz(loc_coord)) { 
+    ~chatplayer(neutral, "I'd better be quick,|there may be more guards about.");
+}   
+
+[oploc1,loc_2210]
+p_delay(2); // delays for 3t before doing anything, might be a rework thing
+switch_int(%itgronigen_progress) {
+    case ^itgronigen_complete, ^itgronigen_claimed_wine: @observatory_telescope;
+    case ^itgronigen_sent_telescope:
+        if (npc_finduid(~npc_within_distance(coord, observatory_professor_tower, 7)) = true) {
+            ~chatnpc(happy, "Well done, well done!!|Let's see what the stars have in store for us today.");
+            @observatory_telescope;
+        }
+    case default: mes("It seems the telescope is not operational at the moment.");
+}
+
+[oploc1,loc_2212]
+// RSC messages, OSRS checks bank here
+if(~obj_gettotal(lens_mould) > 0) {
+    mes("You already have this lens mould.");
+    mes("Another one will be of no use.");
+    return;
+}
+mes("Underneath you find a peculiar mould.");
+inv_add(inv, lens_mould, 1);
+
+[opheldu,lens_mould]
+if (last_useitem = molten_glass) @craft_telescope_disc;
+
+[label,craft_telescope_disc]
+if(inv_total(inv, lens) > 0) {
+    mes("You already have a lens made.");
+    return;
+}
+inv_del(inv, molten_glass, 1);
+inv_add(inv, lens, 1);
+// https://web.archive.org/web/20050521225136im_/http://www.runeweb.net/fireball/Observatory%20Images/lensmake.gif
+~objboxt(lens, "It has produced a small convex glass disc.");
+
+[label,observatory_telescope]
+mes("You look through the telescope.");
+if_openmainmodal(telescope);
+// appearntly RSC doesn't save this and just sends scorpio
+if(%itgronigen_progress = ^itgronigen_complete) {
+    if_setmodel(telescope:com_92, 3053);
+    return;
+}
+def_int $constellation = random(12);
+// "You will automatically talk to the professor and finish the quest." (https://web.archive.org/web/20050206190040/http://runehq.com/cacheguides/viewquestguide00179.htm)
+// i'm guessing the dialogue is probably queued here, you can "re-roll" the constellation in classic so we'll do the same thing
+// don't need to use a varp here, can just pass through queue as an arg
+queue(constellation_dialogue, 0, $constellation);
+if($constellation > 6) { // because model 3056 isn't a constellation for some reason!
+    $constellation = calc($constellation + 1);
+}
+if_setmodel(telescope:com_92, calc(3049 + $constellation));
+
+[queue,constellation_dialogue](int $constellation_numb)
+if (npc_finduid(~npc_within_distance(coord, observatory_professor_tower, 7)) = false) {
+    return;
+}
+switch_int(~p_choice2("I can see a constellation.", 1, "What am I looking at?", 2)) {
+    case 1:
+        ~chatplayer(happy, "I can see a constellation.");
+        ~chatnpc(happy, "Yes, with this device|the heavens are opened to us...");
+        @constellation_reward($constellation_numb);
+    case 2:
+        ~chatplayer(quiz, "What am I looking at?");
+        ~chatnpc(happy, "This is the revealed sky.");
+        @constellation_reward($constellation_numb);
+}
+
+[label,constellation_reward](int $constellation_numb)
+~chatnpc(happy, "The constellation you saw was...");
+switch_int($constellation_numb) {
+    case ^sign_capricorn: 
+        ~chatnpc(happy, "Capricorn the goat.|You are granted an increase in strength.");
+        givexp(strength, 8750);
+    case ^sign_virgo: 
+        ~chatnpc(happy, "Virgo the virtuous.|The strong and peaceful nature of Virgo boosts your defence.");
+        givexp(defence, 8750);
+    case ^sign_libra: 
+        // https://web.archive.org/web/20050521225136/http://www.runeweb.net/index.php?page=rs2-quest-observator mentions it in text
+        ~chatnpc(happy, "Libra the scales.|The scales of justice award you with law runes.");
+        inv_add(inv, lawrune, 3);
+    case ^sign_aquarius: 
+        ~chatnpc(happy, "Aquarius the water-bearer.|The Gods of water award you with water runes.");
+        inv_add(inv, waterrune, 25);
+    case ^sign_scorpio: 
+        ~chatnpc(happy, "Scorpio the scorpion.|The scorpion gives you poison from it's sting.");
+        inv_add(inv, weapon_poison, 1);
+    case ^sign_leo: 
+        ~chatnpc(happy, "Leo the lion.|The power of the lion has increased your hitpoints.");
+        givexp(hitpoints, 8750);
+    case ^sign_aries: 
+        ~chatnpc(happy, "Aries the ram.|The ram's strength improves your attack abilites.");
+        givexp(attack, 8750);
+    case ^sign_sagittarius: 
+        ~chatnpc(happy, "Sagittarius the Centaur.|The Gods award you a maple longbow.");
+        inv_add(inv, maple_longbow, 1);
+    case ^sign_gemini: 
+        ~chatnpc(happy, "Gemini the twins.|The double nature of Gemini awards you a two-handed weapon.");
+        inv_add(inv, black_2h_sword, 1);
+    case ^sign_pisces:
+        ~chatnpc(happy, "Pisces the fish.|The gods rain food from the sea on you.");
+        inv_add(inv, tuna, 3);
+    case ^sign_taurus: 
+        ~chatnpc(happy, "Taurus the bull.|You are given the strength of a bull.");
+        inv_add(inv, 1dose2strength, 1);
+    case ^sign_cancer:
+        ~chatnpc(happy, "Cancer the crab.|The armoured crab gives you an amulet of defence.");
+        inv_add(inv, amulet_of_defence, 1);
+}
+givexp(crafting, 22500);
+%itgronigen_progress = ^itgronigen_complete;
+%questpoints = calc(%questpoints + ^itgronigen_questpoints);
+queue(itgronigen_quest_complete, 0);
+@professor_friend_of_gods;
+
+[queue,itgronigen_quest_complete]
+// Random quest complete jingle.
+def_int $random = random(128);
+if ($random < 32) {
+    // The least common music that plays when completing a quest.
+    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+} else if ($random < 64) {
+    // A less common music that plays when completing a quest.
+    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+} else {
+    // The most common music that plays when completing a quest.
+    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+}
+if_openmainmodal(questscroll_itgronigen);
+if_setcolour(questlist:itgronigen, ^green_rgb);
+if_settab(questlist, ^tab_quest_journal);
+mes("Congratulations! Quest complete!");
