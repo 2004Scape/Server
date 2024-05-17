@@ -50,8 +50,8 @@ export class PackedData {
     marker: number;
 
     constructor(size: number) {
-        this.dat = Packet.alloc(4);
-        this.idx = Packet.alloc(2);
+        this.dat = Packet.alloc(5);
+        this.idx = Packet.alloc(3);
         this.size = size;
 
         this.dat.p2(size);
@@ -194,8 +194,8 @@ export type ConfigDatIdx = { client: PackedData, server: PackedData };
 export type ConfigPackCallback = (configs: Map<string, ConfigLine[]>) => ConfigDatIdx;
 export type ConfigSaveCallback = (dat: Packet, idx: Packet) => void;
 
-export function readConfigs(extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback) {
-    const files = readFiles(findFiles('data/src/scripts', extension));
+export function readConfigs(extension: string, requiredProperties: string[], parse: ConfigParseCallback, pack: ConfigPackCallback, saveClient: ConfigSaveCallback, saveServer: ConfigSaveCallback, srcDir: string = 'data/src/scripts') {
+    const files = readFiles(findFiles(srcDir, extension));
 
     const configs = new Map<string, ConfigLine[]>();
     files.forEach((value, file) => {

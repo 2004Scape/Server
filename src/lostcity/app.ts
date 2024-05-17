@@ -18,11 +18,6 @@ if (!fs.existsSync('.env')) {
 
 fs.mkdirSync('data/players', { recursive: true });
 
-if (fs.existsSync('dump')) {
-    fs.rmSync('dump', { recursive: true, force: true });
-    fs.mkdirSync('dump', { recursive: true });
-}
-
 await World.start();
 
 startWeb();

@@ -189,7 +189,7 @@ export default class FileStream {
                 available = 512;
             }
 
-            this.dat.pdata(data.slice(written, written + available));
+            this.dat.pdata(data.subarray(written, written + available));
             written += available;
             sector = nextSector;
         }

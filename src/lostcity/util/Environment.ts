@@ -35,6 +35,9 @@ export default {
 
     SKIP_CRC: tryParseBoolean(process.env.SKIP_CRC, false),
     JAVA_PATH: tryParseString(process.env.JAVA_PATH, 'java'),
+    DATA_SRC_DIR: tryParseString(process.env.DATA_SRC_DIR, 'data/src'),
+    VALIDATE_PACK: tryParseBoolean(process.env.VALIDATE_PACK, true),
+    STRICT_FOLDERS: tryParseBoolean(process.env.STRICT_FOLDERS, true),
 
     JMODS: tryParseArray(process.env.JMODS?.split(','), ['pazaz'])
 };
