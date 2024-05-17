@@ -80,7 +80,11 @@ export function packEnumConfigs(configs: Map<string, ConfigLine[]>): { client: P
                 val.push(value as string);
             } else if (key === 'inputtype') {
                 server.p1(1);
-                server.p1(value as number);
+                if (value as number === ScriptVarType.AUTOINT) {
+                    server.p1(ScriptVarType.INT);
+                } else {
+                    server.p1(value as number);
+                }
             } else if (key === 'outputtype') {
                 server.p1(2);
                 server.p1(value as number);
