@@ -6,7 +6,7 @@ on:
   push:
     branches: [ main, live ]
     paths:
-      - '.github/workflows/engine-test.yml'
+      - '.github/workflows/engine-lint.yml'
       - 'src/**'
   workflow_dispatch:
 
