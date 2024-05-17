@@ -1,7 +1,7 @@
 [npc_352]
 name=Woman
 desc=One of RuneScapes' many citizens.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -32,7 +32,7 @@ param=death_sound,female_death
 [npc_353]
 name=Woman
 desc=One of RuneScapes' many citizens.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -61,7 +61,7 @@ param=death_sound,female_death
 [npc_354]
 name=Woman
 desc=One of RuneScapes' many citizens.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -89,7 +89,7 @@ param=death_sound,female_death
 [npc_360]
 name=Woman
 desc=One of RuneScapes' many citizens.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -120,7 +120,7 @@ param=death_sound,female_death
 [npc_362]
 name=Woman
 desc=One of RuneScapes' many citizens.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -146,7 +146,7 @@ param=death_sound,female_death
 [npc_363]
 name=Woman
 desc=One of RuneScapes' many citizens.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack

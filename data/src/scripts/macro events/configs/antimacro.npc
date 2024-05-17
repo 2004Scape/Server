@@ -88,7 +88,7 @@ param=follow_player_on_logout,^true
 vislevel=hide
 name=Mysterious Old Man
 desc=A very strange old man...
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14724
@@ -815,7 +815,7 @@ param=combat_xp_multiplier,25
 [macro_event_watchman1]
 name=Watchman
 desc=The strong arm of the law.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 hasalpha=yes
@@ -852,7 +852,7 @@ param=combat_xp_multiplier,25
 [macro_event_watchman2]
 name=Watchman
 desc=The strong arm of the law.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 hasalpha=yes
@@ -887,7 +887,7 @@ param=combat_xp_multiplier,25
 [macro_event_watchman3]
 name=Watchman
 desc=The strong arm of the law.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 hasalpha=yes
@@ -922,7 +922,7 @@ param=combat_xp_multiplier,25
 [macro_event_watchman4]
 name=Watchman
 desc=The strong arm of the law.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 hasalpha=yes
@@ -957,7 +957,7 @@ param=combat_xp_multiplier,25
 [macro_event_watchman5]
 name=Watchman
 desc=The strong arm of the law.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 hasalpha=yes
@@ -992,7 +992,7 @@ param=combat_xp_multiplier,25
 [macro_event_watchman6]
 name=Watchman
 desc=The strong arm of the law.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 hasalpha=yes

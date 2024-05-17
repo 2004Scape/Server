@@ -2,7 +2,7 @@
 vislevel=hide
 name=Achietties
 desc=Distinctly heroic.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=6273
@@ -30,7 +30,7 @@ param=death_sound,female_death
 vislevel=hide
 name=Helemos
 desc=A retired hero.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade

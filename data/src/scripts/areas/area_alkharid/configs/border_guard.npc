@@ -1,7 +1,7 @@
 [border_guard_lumby]
 name=Border Guard
 desc=Guards the border.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 vislevel=hide
@@ -32,7 +32,7 @@ timer=4
 [border_guard_alkharid]
 name=Border Guard
 desc=Guards the border.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 vislevel=hide

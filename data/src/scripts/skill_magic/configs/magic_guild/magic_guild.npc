@@ -1,7 +1,7 @@
 [npc_460]
 name=Wizard Frumscone
 desc=A Wizard of the Magic Guild.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -26,7 +26,7 @@ head3=model_81_idk_head
 [npc_461]
 name=Magic Store owner
 desc=A Supplier of Magical items.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade
@@ -52,7 +52,7 @@ head2=model_44_obj_wear
 vislevel=hide
 name=Wizard Distentor
 desc=Head of the Magic Guild.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 recol1s=2340

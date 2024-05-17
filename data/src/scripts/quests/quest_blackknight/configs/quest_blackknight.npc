@@ -1,7 +1,7 @@
 [fortress_guard]
 name=Fortress Guard
 desc=A generic evil henchman.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 op2=Attack
@@ -43,7 +43,7 @@ param=attack_sound,staff_stab
 vislevel=hide
 name=Black Knight
 desc=One of the Black Knights.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=17969
@@ -69,7 +69,7 @@ head1=model_56_obj_wear
 vislevel=hide
 name=Witch
 desc=The Black Knights' resident witch.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 recol1s=2340
 recol1d=4226

@@ -1,6 +1,6 @@
 [elena]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 name=Elena
@@ -28,7 +28,7 @@ param=death_sound,female_death
 vislevel=hide
 name=Elena
 desc=She doesn't look too happy.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14724

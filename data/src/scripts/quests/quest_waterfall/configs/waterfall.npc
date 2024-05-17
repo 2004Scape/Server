@@ -1,7 +1,7 @@
 [hadley]
 name=Hadley
 desc=Could do with losing a bit of weight.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -24,7 +24,7 @@ head2=model_82_idk_head
 [gerald]
 name=Gerald
 desc=Looks suspiciously like a fisherman.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -46,7 +46,7 @@ wanderrange=2
 [almera]
 name=Almera
 desc=Nice hair.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide

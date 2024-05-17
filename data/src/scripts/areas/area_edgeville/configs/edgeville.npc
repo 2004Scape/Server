@@ -2,7 +2,7 @@
 vislevel=hide
 name=Oziach
 desc=A strange little man.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade
@@ -35,7 +35,7 @@ param=shop_title,oziach
 vislevel=hide
 name=Oracle
 desc=A mystical fount of knowledge.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14801

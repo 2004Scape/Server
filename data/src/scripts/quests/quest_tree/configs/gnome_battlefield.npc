@@ -1,7 +1,7 @@
 [khazard_trooper_mace]
 name=Khazard trooper
 desc=It's one of General Khazard's warriors.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 vislevel=19
@@ -40,7 +40,7 @@ param=attack_sound,baxe_crush
 [khazard_trooper_spear]
 name=Khazard trooper
 desc=It's one of General Khazard's warriors.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op2=Attack
 vislevel=19
@@ -77,7 +77,7 @@ param=attack_sound,staff_stab
 [khazard_warlord]
 name=Khazard warlord
 desc=He looks real nasty, smells bad too.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -116,7 +116,7 @@ param=attack_sound,baxe_crush
 [khazard_commander]
 name=Khazard commander
 desc=It's one of General Khazard's commanders.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 vislevel=48

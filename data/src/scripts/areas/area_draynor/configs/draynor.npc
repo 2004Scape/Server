@@ -1,7 +1,7 @@
 [ned]
 name=Ned
 desc=An old sailor.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -29,7 +29,7 @@ moverestrict=indoors
 [leela]
 name=Leela
 desc=She comes from Al-Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -55,7 +55,7 @@ param=death_sound,female_death
 [joe_guard]
 name=Joe
 desc=Lady Keli's head guard.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -78,7 +78,7 @@ head1=model_55_idk_head
 [aggie]
 name=Aggie
 desc=A witch.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -105,7 +105,7 @@ param=death_sound,female_death
 [lady_keli]
 name=Lady Keli
 desc=An infamous bandit.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -128,7 +128,7 @@ param=death_sound,female_death
 [prince_ali]
 name=Prince Ali
 desc=A young prince.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -156,7 +156,7 @@ wanderrange=2
 [jail_guard]
 name=Jail guard
 desc=I wonder who he's guarding?
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -203,7 +203,7 @@ param=attack_sound,mace_crush
 vislevel=107
 name=Traiborn
 desc=An old wizard.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -232,7 +232,7 @@ moverestrict=indoors
 vislevel=hide
 name=Veronica
 desc=She doesn't look too happy.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=2340
@@ -255,7 +255,7 @@ param=death_sound,female_death
 vislevel=hide
 name=Professor Oddenstein
 desc=A mad scientist if ever I saw one!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=2340
@@ -278,7 +278,7 @@ wanderrange=2
 
 [morgan]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 name=Morgan
@@ -303,7 +303,7 @@ moverestrict=indoors
 vislevel=hide
 name=Diango
 desc=He smells funny.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade

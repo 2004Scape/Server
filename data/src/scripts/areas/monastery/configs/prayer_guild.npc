@@ -2,7 +2,7 @@
 vislevel=hide
 name=Abbot Langley
 desc=A holy man.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=2340
@@ -28,7 +28,7 @@ wanderrange=3
 vislevel=hide
 name=Brother Jered
 desc=A holy man.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=2340
@@ -52,7 +52,7 @@ wanderrange=3
 [monk]
 name=Monk
 desc=A holy man.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack

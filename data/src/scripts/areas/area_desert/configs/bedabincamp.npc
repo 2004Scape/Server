@@ -2,7 +2,7 @@
 vislevel=hide
 name=Al Shabim.
 desc=He's the leader of the Bedabin tribe.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 vislevel=hide
@@ -37,7 +37,7 @@ wanderrange=3
 vislevel=hide
 name=Bedabin Nomad
 desc=A bedabin nomad, they live in the harshest extremes in the desert.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade
@@ -75,7 +75,7 @@ category=shop_keeper
 [npc_834]
 name=Bedabin Nomad Guard
 desc=A bedabin nomad guard - it looks like he's protecting an area.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack

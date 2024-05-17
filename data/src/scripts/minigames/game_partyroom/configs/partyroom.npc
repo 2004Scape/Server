@@ -1,7 +1,7 @@
 [party_pete]
 name=Party Pete
 desc=He likes to paaaarty!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -27,7 +27,7 @@ head3=model_29_obj_wear
 [partyroom_dancingknight]
 name=Knight
 desc=You'd need a tin opener to get him out.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=seq_784
 op1=Talk-to
 vislevel=hide
@@ -44,7 +44,7 @@ moverestrict=nomove
 [partyroom_megan]
 name=Megan
 desc=Pretty barmaid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide
@@ -65,7 +65,7 @@ head2=model_87_obj_wear
 [partyroom_lucy]
 name=Lucy
 desc=Pretty barmaid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide

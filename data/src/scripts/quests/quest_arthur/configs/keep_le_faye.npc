@@ -1,7 +1,7 @@
 [renegade_knight]
 name=Renegade Knight
 desc=He isn't very friendly.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 vislevel=35
@@ -44,7 +44,7 @@ huntmode=cowardly
 [sir_mordred]
 name=Sir Mordred
 desc=Leader of the Renegade Knights.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -94,7 +94,7 @@ param=attack_sound,2H_slash
 vislevel=hide
 name=Morgan Le Faye
 desc=An evil and powerful sorceress.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 recol1s=6273

@@ -1,7 +1,7 @@
 [mubariz]
 name=Mubariz
 desc=Tough looking combat type.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -33,7 +33,7 @@ wanderrange=2
 [fadli]
 name=Fadli
 desc=Looks kinda bored.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -66,7 +66,7 @@ param=shop_title,Shop of Distate
 [aabla]
 name=A'abla
 desc=Trained to deal with all sorts of injuries.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -99,7 +99,7 @@ category=healer
 [sabreen]
 name=Sabreen
 desc=Wow! She's made a statement with that hair!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -130,7 +130,7 @@ category=healer
 [tafani]
 name=Tafani
 desc=Looks after injured fighters.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -161,7 +161,7 @@ category=healer
 [jaraah]
 name=Jaraah
 desc=Has the messy job of putting players back together again.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -194,7 +194,7 @@ moverestrict=indoors
 [zahwa]
 name=Zahwa
 desc='Battle scarred'.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -224,7 +224,7 @@ moverestrict=indoors
 [ima]
 name=Ima
 desc=A citizen of Al Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -254,7 +254,7 @@ wanderrange=10
 [sabeil]
 name=Sabeil
 desc=A citizen of Al Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -284,7 +284,7 @@ wanderrange=10
 [jadid]
 name=Jadid
 desc=A citizen of Al Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -314,7 +314,7 @@ wanderrange=10
 [dalal]
 name=Dalal
 desc=A citizen of Al Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -342,7 +342,7 @@ wanderrange=10
 [afrah]
 name=Afrah
 desc=A citizen of Al Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -370,7 +370,7 @@ wanderrange=10
 [jeed]
 name=Jeed
 desc=A citizen of Al Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 resizeh=128
 resizev=128
@@ -396,7 +396,7 @@ wanderrange=10
 [hamid]
 name=Hamid
 desc=A holy man.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=hide

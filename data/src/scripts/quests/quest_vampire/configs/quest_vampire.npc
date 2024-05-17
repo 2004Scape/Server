@@ -1,5 +1,5 @@
 [count_draynor]
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Count Draynor
 desc=Stop looking and run!
@@ -37,7 +37,7 @@ param=crushdefence,3
 
 [harlow]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 name=Dr Harlow

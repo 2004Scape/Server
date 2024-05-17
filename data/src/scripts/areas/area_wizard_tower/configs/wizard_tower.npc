@@ -1,7 +1,7 @@
 [wizard_mizgog]
 name=Wizard Mizgog
 desc=An old wizard.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 vislevel=hide
 op1=Talk-to
@@ -28,7 +28,7 @@ head3=model_81_idk_head
 [wizard_grayzag]
 name=Wizard Grayzag
 desc=Master of imps.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op2=Attack
 vislevel=41
