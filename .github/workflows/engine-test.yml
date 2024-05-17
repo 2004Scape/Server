@@ -26,12 +26,12 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.npm
-        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package.json') }}
         restore-keys: |
           ${{ runner.OS }}-node-
 
     - name: Install Dependencies
-      run: npm ci
+      run: npm i
 
     - name: Run tests
       run: CI_MODE=true npm test
