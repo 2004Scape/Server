@@ -1167,9 +1167,7 @@ export class NetworkPlayer extends Player {
                 this.mask |= Player.FACE_ENTITY;
             }
 
-            if (this.target) {
-                this.pathToTarget();
-            } else {
+            if (!this.target) {
                 this.queueWaypoints(findPath(this.level, this.x, this.z, pathfindX, pathfindZ));
             }
         }

@@ -1046,6 +1046,7 @@ export default class Player extends PathingEntity {
             this.faceZ = target.z * 2 + 1;
             this.mask |= Player.FACE_COORD;
         }
+        this.pathToTarget();
     }
 
     clearInteraction() {
@@ -1102,22 +1103,26 @@ export default class Player extends PathingEntity {
 
         if (this.target.level !== this.level) {
             this.clearInteraction();
+            this.unsetMapFlag(); // assuming its right
             return;
         }
 
         // todo: clear interaction on npc_changetype
         if (this.target instanceof Npc && this.target.delayed()) {
             this.clearInteraction();
+            this.unsetMapFlag(); // assuming its right
             return;
         }
 
         if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
             this.clearInteraction();
+            this.unsetMapFlag();
             return;
         }
 
         if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
             this.clearInteraction();
+            this.unsetMapFlag();
             return;
         }
 

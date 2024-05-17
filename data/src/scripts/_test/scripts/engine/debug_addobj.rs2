@@ -1,0 +1,8 @@
+[debugproc,addobj]
+if_close;
+if (p_finduid(uid) = true) {
+    obj_add(movecoord(coord, 0, 0, 5), logs, 1, ^lootdrop_duration);
+    p_opobj(4);
+} else {
+    @please_finish;
+}
