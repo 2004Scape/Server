@@ -58,6 +58,7 @@ import ClientProt from '#lostcity/server/ClientProt.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import Watcher from 'watcher';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -91,6 +92,9 @@ class World {
     queue: LinkList<EntityQueueState> = new LinkList();
 
     friendThread: Worker = createWorker('./src/lostcity/server/FriendThread.ts');
+
+    devWatcher: Watcher | null = null;
+    devThread: Worker | null = null;
 
     constructor() {
         this.players.fill(null);
@@ -306,7 +310,7 @@ class World {
         if (this.shouldReload('script')) {
             const count = ScriptProvider.load('data/pack');
             if (count === -1) {
-                this.broadcastMes('There was an issue while reloading. Please wait or try again.');
+                this.broadcastMes('There was an issue while reloading scripts.');
             } else {
                 this.broadcastMes(`Reloaded ${count} scripts.`);
             }
@@ -350,6 +354,14 @@ class World {
             type: 'reset'
         });
 
+        if (Environment.LOCAL_DEV) {
+            this.startDevWatcher();
+
+            this.devThread!.postMessage({
+                type: 'pack'
+            });
+        }
+
         console.log('World ready!');
 
         if (startCycle) {
@@ -357,8 +369,54 @@ class World {
         }
     }
 
+    startDevWatcher() {
+        this.devThread = createWorker('./src/lostcity/tools/pack/server.ts');
+
+        this.devThread.on('message', msg => {
+            if (msg.type === 'done') {
+                this.reload();
+            }
+        });
+
+        this.devThread.on('exit', () => {
+            this.broadcastMes('Error while rebuilding - see console for more info.');
+            this.stopDevWatcher();
+            this.startDevWatcher();
+        });
+
+        this.devWatcher = new Watcher('./data/src', {
+            ignoreInitial: true,
+            ignore: /.*\.pack/,
+            recursive: true
+        });
+
+        this.devWatcher.on('change', (targetPath: string) => {
+            this.broadcastMes('Rebuilding, please wait...');
+
+            if (!this.devThread) {
+                this.devThread = createWorker('./src/lostcity/tools/pack/server.ts');
+            }
+
+            this.devThread.postMessage({
+                type: 'pack'
+            });
+        });
+    }
+
+    stopDevWatcher() {
+        if (this.devWatcher) {
+            this.devWatcher.close();
+        }
+
+        if (this.devThread) {
+            this.devThread.terminate();
+            this.devThread = null;
+        }
+    }
+
     rebootTimer(duration: number) {
         this.shutdownTick = this.currentTick + duration;
+        this.stopDevWatcher();
 
         for (let i = 0; i < this.players.length; i++) {
             const player = this.players[i];
@@ -371,14 +429,6 @@ class World {
     }
 
     async cycle(continueCycle = true) {
-        if (Environment.LOCAL_DEV) {
-            const lastModified = getLatestModified('data/pack/server', '.dat');
-            if (lastModified != this.allLastModified) {
-                console.log('Reloading data...');
-                this.reload();
-            }
-        }
-
         const start = Date.now();
 
         // world processing

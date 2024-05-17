@@ -64,9 +64,9 @@ Another option for building your Dev Container is to instead clone your reposito
 
 ## Development Workflow
 
-You can run `npm run dev` to start the server. This will watch for changes to the source, config, or script files and automatically rebuild them.
+Content developers (likely you!) can run `npm start` to start the server. This will watch for changes to the config and script files as well as automatically rebuild them.
 
-Whenever you make a change to a config or script file while the server is running you can hotload loaded data by running `::reload` in-game.
+Engine developers can run `npm run dev` to start the server. This does what `npm start` does above, but also restarts the world when any TypeScript code has changed.
 
 ### Running tests
 
