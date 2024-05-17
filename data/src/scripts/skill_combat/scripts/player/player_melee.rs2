@@ -32,10 +32,12 @@ if (~player_npc_hit_roll(%damagetype) = true) {
 }
 
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-def_int $poison_severity = oc_param($weapon, poison_severity);
-if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
-    // poison npc
-    ~npc_poison_start($poison_severity);
+if ($weapon ! null) {
+    def_int $poison_severity = oc_param($weapon, poison_severity);
+    if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
+        // poison npc
+        ~npc_poison_start($poison_severity);
+    }
 }
 
 //mes("attackstyle: <tostring(%attackstyle)>, damagestyle: <tostring(%damagestyle)>, damage: <tostring($damage)>, damagetype: <tostring(%damagetype)>");
