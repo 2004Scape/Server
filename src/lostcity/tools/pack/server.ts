@@ -25,7 +25,7 @@ async function packServer() {
     try {
         child_process.execSync(`"${Environment.JAVA_PATH}" -jar RuneScriptCompiler.jar`, { stdio: 'inherit' });
     } catch (err) {
-        // ignore
+        process.exit(1);
     }
     console.timeEnd('packing server...');
 }
