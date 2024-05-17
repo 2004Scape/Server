@@ -23,9 +23,5 @@
     "allowUnreachableCode": true
   },
   "include": ["src/**/*.ts", "src/**/*.js"],
-  "exclude": ["node_modules", "<node_internals>/**"],
-  "ts-node": {
-    "swc": true,
-    "esm": true
-  }
+  "exclude": ["node_modules", "<node_internals>/**"]
 }

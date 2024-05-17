@@ -29,7 +29,7 @@
     "start": "npm run ts-loader src/lostcity/app.ts",
     "test": "vitest run ./src",
     "todo": "leasot src/ --skip-unsupported --exit-nicely",
-    "ts-loader": "node --enable-source-maps --no-warnings --loader ts-node/esm",
+    "ts-loader": "node --import @swc-node/register/esm-register --enable-source-maps --no-warnings",
     "web": "npm run ts-loader src/lostcity/web.ts"
   },
   "lint-staged": {
@@ -64,6 +64,7 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/types": "^19.0.3",
+    "@swc-node/register": "1.9.0",
     "@swc/core": "1.5.7",
     "@swc/helpers": "^0.5.11",
     "@types/bcrypt": "^5.0.2",
@@ -86,7 +87,6 @@
     "prisma-kysely": "^1.8.0",
     "sort-package-json": "^2.10.0",
     "tinybench": "^2.8.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
   },
