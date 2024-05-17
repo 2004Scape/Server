@@ -6,7 +6,9 @@ on:
   push:
     branches: [ main, live ]
     paths:
+      - '.github/workflows/content-pack.yml'
       - 'data/src/**'
+  workflow_dispatch:
 
 jobs:
   build:

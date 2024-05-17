@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Executing commands over SSH
-      uses: appleboy/ssh-action@v0.1.7
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.SSH_MASTER_HOST }}
         username: ${{ secrets.SSH_MASTER_USER }}
