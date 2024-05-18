@@ -844,7 +844,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.clearWaypoints();
-                this.setInteraction(npc, ServerTriggerType.APNPCU);
+                this.setInteraction(npc, ServerTriggerType.APNPCU, npc.type);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;

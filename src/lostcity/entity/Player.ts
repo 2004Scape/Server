@@ -1107,10 +1107,16 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        // todo: clear interaction on npc_changetype
-        if (this.target instanceof Npc && this.target.delayed()) {
+        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
             this.clearInteraction();
-            this.unsetMapFlag(); // assuming its right
+            this.unsetMapFlag();
+            return;
+        }
+
+        // this is effectively checking if the npc did a changetype
+        if (this.target instanceof Npc && this.targetSubject !== -1 && World.getNpcByUid((this.targetSubject << 16) | this.target.nid) === null) {
+            this.clearInteraction();
+            this.unsetMapFlag();
             return;
         }
 
