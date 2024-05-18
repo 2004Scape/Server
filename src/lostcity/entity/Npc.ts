@@ -180,6 +180,7 @@ export default class Npc extends PathingEntity {
 
         if (respawn) {
             this.type = this.origType;
+            this.uid = (this.type << 16) | this.nid;
             this.despawn = -1;
             this.respawn = -1;
             this.orientation = Direction.SOUTH;
@@ -835,9 +836,10 @@ export default class Npc extends PathingEntity {
         this.mask |= Npc.FACE_COORD;
     }
 
-    changeType(id: number) {
-        this.type = id;
+    changeType(type: number) {
+        this.type = type;
         this.mask |= Npc.CHANGE_TYPE;
+        this.uid = (type << 16) | this.nid;
     }
 
     facePlayer(pid: number) {
