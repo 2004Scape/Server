@@ -69,7 +69,7 @@ loadDir('data/src/maps', (lines: string[], file: string) => {
 
     const npcs = allNpcs.filter(npc => npc.mapsquareX === mapsquareX && npc.mapsquareZ === mapsquareZ);
     allNpcs = allNpcs.filter(npc => npc.mapsquareX !== mapsquareX || npc.mapsquareZ !== mapsquareZ); // remove processed npcs
-    // npcs.sort((a, b) => a.level - b.level || a.localX - b.localX || a.localZ - b.localZ);
+    npcs.sort((a, b) => a.level - b.level || a.localX - b.localX || a.localZ - b.localZ);
 
     const npcStartIndex = lines.indexOf('==== NPC ====');
     if (npcStartIndex !== -1) {

@@ -71,7 +71,7 @@ loadDir('data/src/maps', (lines: string[], file: string) => {
 
     const objs = allObjs.filter(obj => obj.mapsquareX === mapsquareX && obj.mapsquareZ === mapsquareZ);
     allObjs = allObjs.filter(obj => obj.mapsquareX !== mapsquareX || obj.mapsquareZ !== mapsquareZ); // remove processed objs
-    // objs.sort((a, b) => a.level - b.level || a.localX - b.localX || a.localZ - b.localZ);
+    objs.sort((a, b) => a.level - b.level || a.localX - b.localX || a.localZ - b.localZ);
 
     const objStartIndex = lines.indexOf('==== OBJ ====');
     if (objStartIndex !== -1) {
