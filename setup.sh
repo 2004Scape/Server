@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Running npm ci..."
-npm ci
+echo "Installing node dependencies..."
+npm i
 
 if  [ ! -f .env ]; then
     echo "Copying default .env..."

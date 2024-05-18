@@ -1,5 +1,6 @@
 out/
 .env
+package-lock.json
 tsconfig.tsbuildinfo
 
 data/pack/

@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y openjdk-17-jre
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm i
 
 # TODO consider using volumes/mounts for the source code + data
 COPY . .

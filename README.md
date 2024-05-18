@@ -23,7 +23,7 @@ It won't ever profit off your trademarks. Without this project, this version of 
 2. Install our list of [dependencies](#environment-dependencies)
 3. Create a `.env` file by copying the file `.env.example` to be called `.env`
 4. Open the folder you downloaded in a command prompt
-5. Run `npm ci`, this installs necessary packages
+5. Run `npm i`, this installs necessary packages
 6. Run `npm run build`, this creates the client and server cache the first time
 7. Run `npm start`
 

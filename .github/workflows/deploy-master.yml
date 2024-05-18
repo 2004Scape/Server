@@ -34,5 +34,5 @@ jobs:
           git fetch origin
           git checkout live
           git pull
-          npm ci
+          npm i
           pm2 start master

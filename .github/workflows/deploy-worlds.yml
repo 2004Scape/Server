@@ -57,7 +57,7 @@ jobs:
           git fetch origin
           git checkout live
           git pull
-          npm ci
+          npm i
           rm -f public/loader.jar public/runescape*.jar
           wget https://github.com/2004scape/Client/releases/latest/download/loader-client.zip
           unzip loader-client.zip -d public
