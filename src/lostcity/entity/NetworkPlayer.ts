@@ -795,7 +795,7 @@ export class NetworkPlayer extends Player {
                 }
 
                 this.clearWaypoints();
-                this.setInteraction(npc, mode);
+                this.setInteraction(npc, mode, npc.type);
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
