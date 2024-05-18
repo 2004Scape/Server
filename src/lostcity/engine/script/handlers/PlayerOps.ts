@@ -330,7 +330,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
-        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type);
+        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type, state.activeNpc.type);
     }),
 
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
