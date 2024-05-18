@@ -330,7 +330,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
-        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type, state.activeNpc.type);
+        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type, {type: state.activeNpc.type, com: -1});
     }),
 
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
@@ -338,7 +338,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
-        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPCT, spellId);
+        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPCT, {type: state.activeNpc.type, com: spellId});
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, state => {
@@ -954,7 +954,7 @@ const PlayerOps: CommandHandlers = {
         if (!target) {
             return;
         }
-        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYERT, spellId);
+        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
     }),
 };
 
