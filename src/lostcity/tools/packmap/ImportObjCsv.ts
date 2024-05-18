@@ -27,6 +27,10 @@ const objList = fs
     .slice(1)
     .filter(line => line.length > 0);
 objList.forEach((line, index) => {
+    if (line.startsWith('//')) {
+        return;
+    }
+
     const csv = line.split(',');
     if (csv.length < 4) {
         return;
@@ -58,11 +62,16 @@ objList.forEach((line, index) => {
 });
 
 loadDir('data/src/maps', (lines: string[], file: string) => {
+    if (!file.endsWith('.jm2')) {
+        return;
+    }
+
     const safeName = basename(file, '.jm2').slice(1);
     const [mapsquareX, mapsquareZ] = safeName.split('_').map(x => parseInt(x));
 
     const objs = allObjs.filter(obj => obj.mapsquareX === mapsquareX && obj.mapsquareZ === mapsquareZ);
     allObjs = allObjs.filter(obj => obj.mapsquareX !== mapsquareX || obj.mapsquareZ !== mapsquareZ); // remove processed objs
+    // objs.sort((a, b) => a.level - b.level || a.localX - b.localX || a.localZ - b.localZ);
 
     const objStartIndex = lines.indexOf('==== OBJ ====');
     if (objStartIndex !== -1) {

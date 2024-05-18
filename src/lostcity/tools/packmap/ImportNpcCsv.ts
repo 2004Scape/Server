@@ -26,6 +26,10 @@ const npcList = fs
     .slice(1)
     .filter(line => line.length > 0);
 npcList.forEach((line, index) => {
+    if (line.startsWith('//')) {
+        return;
+    }
+
     const csv = line.split(',');
     if (csv.length < 4) {
         return;
@@ -56,15 +60,16 @@ npcList.forEach((line, index) => {
 });
 
 loadDir('data/src/maps', (lines: string[], file: string) => {
+    if (!file.endsWith('.jm2')) {
+        return;
+    }
+
     const safeName = basename(file, '.jm2').slice(1);
     const [mapsquareX, mapsquareZ] = safeName.split('_').map(x => parseInt(x));
 
     const npcs = allNpcs.filter(npc => npc.mapsquareX === mapsquareX && npc.mapsquareZ === mapsquareZ);
-    if (npcs.length === 0) {
-        return;
-    }
-
     allNpcs = allNpcs.filter(npc => npc.mapsquareX !== mapsquareX || npc.mapsquareZ !== mapsquareZ); // remove processed npcs
+    // npcs.sort((a, b) => a.level - b.level || a.localX - b.localX || a.localZ - b.localZ);
 
     const npcStartIndex = lines.indexOf('==== NPC ====');
     if (npcStartIndex !== -1) {
@@ -77,21 +82,23 @@ loadDir('data/src/maps', (lines: string[], file: string) => {
         }
     }
 
-    const objStartIndex = lines.indexOf('==== OBJ ====');
-    if (objStartIndex !== -1) {
-        // place npc section before obj section
-        const objs = lines.splice(objStartIndex);
-        lines.push('==== NPC ====');
-        // format - level x z: id
-        lines.push(...npcs.map(npc => `${npc.level} ${npc.localX} ${npc.localZ}: ${npc.id}`));
-        lines.push('');
-        lines.push(...objs);
-    } else {
-        // place npc section at the end
-        lines.push('==== NPC ====');
-        // format - level x z: id
-        lines.push(...npcs.map(npc => `${npc.level} ${npc.localX} ${npc.localZ}: ${npc.id}`));
-        lines.push('');
+    if (npcs.length) {
+        const objStartIndex = lines.indexOf('==== OBJ ====');
+        if (objStartIndex !== -1) {
+            // place npc section before obj section
+            const objs = lines.splice(objStartIndex);
+            lines.push('==== NPC ====');
+            // format - level x z: id
+            lines.push(...npcs.map(npc => `${npc.level} ${npc.localX} ${npc.localZ}: ${npc.id}`));
+            lines.push('');
+            lines.push(...objs);
+        } else {
+            // place npc section at the end
+            lines.push('==== NPC ====');
+            // format - level x z: id
+            lines.push(...npcs.map(npc => `${npc.level} ${npc.localX} ${npc.localZ}: ${npc.id}`));
+            lines.push('');
+        }
     }
 
     fs.writeFileSync('data/src/maps/' + file, lines.join('\n'));
