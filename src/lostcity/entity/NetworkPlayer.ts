@@ -34,6 +34,7 @@ import {findPath} from '@2004scape/rsmod-pathfinder';
 import Player from '#lostcity/entity/Player.js';
 import { PRELOADED } from '#lostcity/entity/PreloadedPacks.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
+import Interaction from '#lostcity/entity/Interaction.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -54,9 +55,7 @@ export class NetworkPlayer extends Player {
         let offset = 0;
         this.lastResponse = World.currentTick;
 
-        let pathfindRequest = false;
-        let pathfindX = 0;
-        let pathfindZ = 0;
+        const path: number[] = [];
 
         while (this.client.inOffset > offset) {
             const packetType = ClientProt.byId[this.client.in[offset++]];
@@ -108,53 +107,36 @@ export class NetworkPlayer extends Player {
                         this.write(ServerProt.DATA_LOC_DONE, x, z);
                     }
                 }
-            } else if (packetType === ClientProt.MOVE_GAMECLICK || packetType === ClientProt.MOVE_MINIMAPCLICK) {
-                const running = data.g1();
-                const startX = data.g2();
-                const startZ = data.g2();
-                const offset = packetType === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
-                const checkpoints = (data.available - offset) >> 1;
+            } else if (packetType === ClientProt.MOVE_GAMECLICK || packetType === ClientProt.MOVE_MINIMAPCLICK || packetType === ClientProt.MOVE_OPCLICK) {
+                const running: number = data.g1();
+                const startX: number = data.g2();
+                const startZ: number = data.g2();
+                const offset: number = packetType === ClientProt.MOVE_MINIMAPCLICK ? 14 : 0;
+                const waypoints: number = (data.available - offset) >> 1;
 
-                pathfindX = startX;
-                pathfindZ = startZ;
-                if (checkpoints != 0) {
-                    // Just grab the last one we need skip the rest.
-                    data.pos += (checkpoints - 1) << 1;
-                    pathfindX = data.g1b() + startX;
-                    pathfindZ = data.g1b() + startZ;
+                // const path: number[] = [];
+                path[0] = Position.packCoord(this.level, startX, startZ);
+
+                if (waypoints !== 0) {
+                    if (Environment.CLIENT_PATHFINDER) {
+                        for (let index: number = 1; index <= waypoints && index < 25; index++) {
+                            path[index] = Position.packCoord(this.level, data.g1b() + startX, data.g1b() + startZ);
+                        }
+                    } else {
+                        // Just grab the last one we need skip the rest.
+                        data.pos += (waypoints - 1) << 1;
+                        path[0] = Position.packCoord(this.level, data.g1b() + startX, data.g1b() + startZ);
+                    }
                 }
 
-                if (
-                    this.delayed() ||
-                    running < 0 ||
-                    running > 1 ||
-                    Position.distanceTo(this, {
-                        x: pathfindX,
-                        z: pathfindZ,
-                        width: this.width,
-                        length: this.length
-                    }) > 104
-                ) {
-                    pathfindX = -1;
-                    pathfindZ = -1;
+                if (this.delayed() || running < 0 || running > 1 || Position.distanceToSW(this, {x: startX, z: startZ}) > 104) {
                     this.unsetMapFlag();
                     continue;
                 }
 
-                this.clearInteraction();
-                this.closeModal();
-
-                if (this.runenergy < 100) {
-                    this.setVar(VarPlayerType.getId('temp_run'), 0);
-                } else {
-                    this.setVar(VarPlayerType.getId('temp_run'), running);
-                }
-                pathfindRequest = true;
-            } else if (packetType === ClientProt.MOVE_OPCLICK) {
-                const running = data.g1();
-
-                if (running < 0 || running > 1) {
-                    continue;
+                if (packetType !== ClientProt.MOVE_OPCLICK) {
+                    this.clearInteraction();
+                    this.closeModal();
                 }
 
                 if (this.runenergy < 100) {
@@ -659,11 +641,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APLOC5;
                 }
 
-                this.clearWaypoints();
-                this.setInteraction(loc, mode);
-                pathfindX = loc.x;
-                pathfindZ = loc.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, loc, mode);
             } else if (packetType === ClientProt.OPLOCU) {
                 const x = data.g2();
                 const z = data.g2();
@@ -714,11 +692,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(loc, ServerTriggerType.APLOCU);
-                pathfindX = loc.x;
-                pathfindZ = loc.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCU);
             } else if (packetType === ClientProt.OPLOCT) {
                 const x = data.g2();
                 const z = data.g2();
@@ -749,11 +723,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(loc, ServerTriggerType.APLOCT, {type: loc.type, com: spellComId});
-                pathfindX = loc.x;
-                pathfindZ = loc.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCT, {type: loc.type, com: spellComId});
             } else if (packetType === ClientProt.OPNPC1 || packetType === ClientProt.OPNPC2 || packetType === ClientProt.OPNPC3 || packetType === ClientProt.OPNPC4 || packetType === ClientProt.OPNPC5) {
                 const nid = data.g2();
 
@@ -794,11 +764,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APNPC5;
                 }
 
-                this.clearWaypoints();
-                this.setInteraction(npc, mode, {type: npc.type, com: -1});
-                pathfindX = npc.x;
-                pathfindZ = npc.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, npc, mode, {type: npc.type, com: -1});
             } else if (packetType === ClientProt.OPNPCU) {
                 const nid = data.g2();
                 const item = data.g2();
@@ -843,11 +809,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(npc, ServerTriggerType.APNPCU, {type: npc.type, com: -1});
-                pathfindX = npc.x;
-                pathfindZ = npc.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU, {type: npc.type, com: -1});
             } else if (packetType === ClientProt.OPNPCT) {
                 const nid = data.g2();
                 const spellComId = data.g2();
@@ -872,11 +834,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(npc, ServerTriggerType.APNPCT, {type: npc.type, com: spellComId});
-                pathfindX = npc.x;
-                pathfindZ = npc.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCT, {type: npc.type, com: spellComId});
             } else if (packetType === ClientProt.OPOBJ1 || packetType === ClientProt.OPOBJ2 || packetType === ClientProt.OPOBJ3 || packetType === ClientProt.OPOBJ4 || packetType === ClientProt.OPOBJ5) {
                 const x = data.g2();
                 const z = data.g2();
@@ -918,11 +876,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APOBJ5;
                 }
 
-                this.clearWaypoints();
-                this.setInteraction(obj, mode);
-                pathfindX = obj.x;
-                pathfindZ = obj.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, obj, mode);
             } else if (packetType === ClientProt.OPOBJU) {
                 const x = data.g2();
                 const z = data.g2();
@@ -974,11 +928,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(obj, ServerTriggerType.APOBJU);
-                pathfindX = obj.x;
-                pathfindZ = obj.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJU);
             } else if (packetType === ClientProt.OPOBJT) {
                 const x = data.g2();
                 const z = data.g2();
@@ -1009,11 +959,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(obj, ServerTriggerType.APOBJT, {type: obj.type, com: spellComId});
-                pathfindX = obj.x;
-                pathfindZ = obj.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJT, {type: obj.type, com: spellComId});
             } else if (packetType === ClientProt.OPPLAYER1 || packetType === ClientProt.OPPLAYER2 || packetType === ClientProt.OPPLAYER3 || packetType === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
 
@@ -1039,11 +985,7 @@ export class NetworkPlayer extends Player {
                     mode = ServerTriggerType.APPLAYER4;
                 }
 
-                this.clearWaypoints();
-                this.setInteraction(player, mode);
-                pathfindX = player.x;
-                pathfindZ = player.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, player, mode);
             } else if (packetType === ClientProt.OPPLAYERU) {
                 const pid = data.g2();
                 const item = data.g2();
@@ -1088,11 +1030,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(player, ServerTriggerType.APPLAYERU, {type: item, com: -1});
-                pathfindX = player.x;
-                pathfindZ = player.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, player, ServerTriggerType.APPLAYERU, {type: item, com: -1});
             } else if (packetType === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
                 const spellComId = data.g2();
@@ -1119,11 +1057,7 @@ export class NetworkPlayer extends Player {
 
                 this.clearInteraction();
                 this.closeModal();
-                this.clearWaypoints();
-                this.setInteraction(player, ServerTriggerType.APPLAYERT, {type: -1, com: spellComId});
-                pathfindX = player.x;
-                pathfindZ = player.z;
-                pathfindRequest = true;
+                this.setInteraction(Interaction.ENGINE, player, ServerTriggerType.APPLAYERT, {type: -1, com: spellComId});
             } else if (packetType === ClientProt.FRIENDLIST_ADD) {
                 const other = data.g8();
 
@@ -1155,8 +1089,7 @@ export class NetworkPlayer extends Player {
 
         this.client?.reset();
 
-        // process any pathfinder requests now
-        if (pathfindRequest && pathfindX !== -1 && pathfindZ !== -1) {
+        if (path.length > 0) {
             if (this.delayed()) {
                 this.unsetMapFlag();
                 return;
@@ -1167,9 +1100,18 @@ export class NetworkPlayer extends Player {
                 this.mask |= Player.FACE_ENTITY;
             }
 
-            if (!this.target) {
-                this.queueWaypoints(findPath(this.level, this.x, this.z, pathfindX, pathfindZ));
+            if (Environment.CLIENT_PATHFINDER) {
+                this.queueWaypoints(path);
+                return;
             }
+
+            if (this.target) {
+                this.pathToTarget();
+                return;
+            }
+
+            const {x, z} = Position.unpackCoord(path[0]);
+            this.queueWaypoints(findPath(this.level, this.x, this.z, x, z));
         }
     }
 

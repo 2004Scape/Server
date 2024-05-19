@@ -39,5 +39,6 @@ export default {
     VALIDATE_PACK: tryParseBoolean(process.env.VALIDATE_PACK, true),
     STRICT_FOLDERS: tryParseBoolean(process.env.STRICT_FOLDERS, true),
 
-    JMODS: tryParseArray(process.env.JMODS?.split(','), ['pazaz'])
+    JMODS: tryParseArray(process.env.JMODS?.split(','), ['pazaz']),
+    CLIENT_PATHFINDER: tryParseBoolean(process.env.CLIENT_PATHFINDER, false),
 };
