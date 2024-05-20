@@ -28,7 +28,10 @@ if ($uncooked_item = raw_oomlie) {
 // check if mems obj
 if (oc_members($cooked_item) = true | oc_members($uncooked_item) = true) {
     // complete guess btw, i have no idea what sorta message they'd use here. Perhaps theres early osrs footage of this but ive not found any.
-    ~require_members_make_item;
+    if (map_members = false) {
+        mes("You can only make that on a members' server.");
+        return;
+    }
 }
 // check if player has high enough level
 def_int $levelrequired = db_getfield($data,cooking_generic:levelrequired,0);

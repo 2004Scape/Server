@@ -1,7 +1,7 @@
 [opheldu,gianne_dough]
 switch_obj(last_useitem) {
     case crunchy_tray, gnomebowl_mould, batta_tin: @make_raw_gnome(last_useitem);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 };
 
 [label,make_raw_gnome](obj $tin)
@@ -22,7 +22,7 @@ if ($tin = gnomebowl_mould) {
 switch_int(oc_param(last_item, gnome_cooking_type)) {
     case ^gnome_cocktail: @finish_cocktail(last_item, last_useitem);
     case ^gnome_bowl, ^gnome_batta, ^gnome_crunchies: @finish_gnome_food(last_useitem, last_item);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 
@@ -37,22 +37,23 @@ switch_obj(last_useitem) {
     case equa_toad_legs : @opheldu_make_gnome_food(seasoned_toad_legs, "You add the gnome spice to the equa toad legs.");
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,finish_gnome_food](obj $gnome_food, obj $ingredient)
-mes("<oc_debugname($gnome_food)>, <oc_debugname($ingredient)>");
-if_close;
-//p_stopaction;
 // look up item in dbtable
 db_find(gnome_food_cooking:gnome_food, $gnome_food);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    mes("Here");
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_namedobj $next_gnome_food;
 $next_gnome_food = ~handle_gnome_food_data($data, $gnome_food, $ingredient);
+if ($next_gnome_food = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 
 inv_del(inv, $gnome_food, 1);
 // in osrs gnome spice doesnt get used up during gnome cooking
@@ -105,7 +106,7 @@ while ($i < calc(db_getfieldcount($data, gnome_food_cooking:step) + 1)) {
         switch_obj($ingredient) {
             case pot_of_cream, chocolate_dust, gnome_spice, equa_leaves, lime_chunks, orange_chunks, pineapple_chunks : 
                 $end_fail_gnome_food = $fail_gnome_food;
-            case default: @nothing_interesting_happens;
+            case default: return(null);
         }
     }
     $i = calc($i + 1);

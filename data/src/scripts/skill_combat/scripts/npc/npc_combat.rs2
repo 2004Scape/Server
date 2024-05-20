@@ -33,6 +33,7 @@ if (finduid(%npc_attacking_uid) = true & npc_getmode ! applayer2) {
 // a default melee attack script.
 [proc,npc_default_attack]
 if (stat(hitpoints) = 0) {
+    npc_setmode(null);
     return;
 }
 if (%npc_action_delay > map_clock) return;

@@ -5,7 +5,7 @@ switch_obj(last_useitem) {
     case raw_herring, herring : 
         mes("This is not the mightiest tree in the forest.");
         return;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [oploc1,loc_2409]
@@ -74,7 +74,7 @@ anim(null, 0);
 if(last_useitem = knife) {
     @cut_dramenstaff;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,cut_dramenstaff]
 if(stat(crafting) < 31) {

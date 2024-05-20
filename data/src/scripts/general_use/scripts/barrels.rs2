@@ -1,6 +1,7 @@
 [oplocu,loc_364]
 if (last_useitem ! beer_glass) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 switch_coord(loc_coord) {

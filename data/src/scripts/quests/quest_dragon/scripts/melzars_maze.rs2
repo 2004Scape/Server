@@ -14,7 +14,7 @@ mes("The door is securely locked.");
  if (last_useitem = maze_key) {
     ~open_and_close_door(loc_1535, ~check_axis_locactive(coord), false);
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [oploc1,melzar_maze_exit_door]
@@ -60,7 +60,7 @@ mes("The ladder is broken, I can't climb it."); // osrs
     inv_del(inv, $key, 1);
     ~open_and_close_door(loc_1535, ~check_axis_locactive(coord), false);
 } else {
-    @nothing_interesting_happens; // osrs
+    ~displaymessage(^dm_default); // osrs
 }
 
 // rat

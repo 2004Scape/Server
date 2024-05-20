@@ -7,7 +7,7 @@ switch_obj (last_useitem)
         @craft_spinning(last_useitem);
     case ball_of_wool : ~objbox(ball_of_wool, "You have already spun this wool.");
     case bow_string : ~objbox(bow_string, "You have already spun this bow string.");
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [label,craft_spinning](obj $spinning_obj)

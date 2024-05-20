@@ -316,7 +316,10 @@ export default class Player extends PathingEntity {
     repathed: boolean = false;
     target: Player | Npc | Loc | Obj | null = null;
     targetOp: number = -1;
-    targetSubject: number = -1; // for [opplayeru,obj]
+    targetSubject: { // for [opplayeru,obj]
+        type: number,
+        com: number;
+    } = {type: -1, com: -1};
     apRange: number = 10;
     apRangeCalled: boolean = false;
 
@@ -1011,7 +1014,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: number) {
+    setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: {type: number, com: number}) {
         if (this.hasWaypoints()) {
             return;
         }
@@ -1026,7 +1029,7 @@ export default class Player extends PathingEntity {
 
         this.target = target;
         this.targetOp = op;
-        this.targetSubject = subject ?? -1;
+        this.targetSubject = subject ?? {type: -1, com: -1};
         this.apRange = 10;
         this.apRangeCalled = false;
 
@@ -1046,12 +1049,13 @@ export default class Player extends PathingEntity {
             this.faceZ = target.z * 2 + 1;
             this.mask |= Player.FACE_COORD;
         }
+        this.pathToTarget();
     }
 
     clearInteraction() {
         this.target = null;
         this.targetOp = -1;
-        this.targetSubject = -1;
+        this.targetSubject = {type: -1, com: -1};
         this.apRange = 10;
         this.apRangeCalled = false;
         this.alreadyFacedCoord = true;
@@ -1065,12 +1069,18 @@ export default class Player extends PathingEntity {
 
         let typeId = -1;
         let categoryId = -1;
-        if (this.targetSubject !== -1) {
-            typeId = this.targetSubject;
-        } else if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
+
+        // prio trigger details by target<type<com
+        if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
             const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
             typeId = type.id;
             categoryId = type.category;
+        }
+        if (this.targetSubject.type !== -1) {
+            typeId = this.targetSubject.type;
+        }
+        if (this.targetSubject.com !== -1) {
+            typeId = this.targetSubject.com;
         }
 
         return ScriptProvider.getByTrigger(this.targetOp + 7, typeId, categoryId) ?? null;
@@ -1083,12 +1093,18 @@ export default class Player extends PathingEntity {
 
         let typeId = -1;
         let categoryId = -1;
-        if (this.targetSubject !== -1) {
-            typeId = this.targetSubject;
-        } else if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
+
+        // prio trigger details by target<type<com
+        if (this.target instanceof Npc || this.target instanceof Loc || this.target instanceof Obj) {
             const type = this.target instanceof Npc ? NpcType.get(this.target.type) : this.target instanceof Loc ? LocType.get(this.target.type) : ObjType.get(this.target.type);
             typeId = type.id;
             categoryId = type.category;
+        }
+        if (this.targetSubject.type !== -1) {
+            typeId = this.targetSubject.type;
+        }
+        if (this.targetSubject.com !== -1) {
+            typeId = this.targetSubject.com;
         }
 
         return ScriptProvider.getByTrigger(this.targetOp, typeId, categoryId) ?? null;
@@ -1102,22 +1118,32 @@ export default class Player extends PathingEntity {
 
         if (this.target.level !== this.level) {
             this.clearInteraction();
+            this.unsetMapFlag(); // assuming its right
             return;
         }
 
-        // todo: clear interaction on npc_changetype
-        if (this.target instanceof Npc && this.target.delayed()) {
+        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
             this.clearInteraction();
+            this.unsetMapFlag();
+            return;
+        }
+
+        // this is effectively checking if the npc did a changetype
+        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+            this.clearInteraction();
+            this.unsetMapFlag();
             return;
         }
 
         if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
             this.clearInteraction();
+            this.unsetMapFlag();
             return;
         }
 
         if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
             this.clearInteraction();
+            this.unsetMapFlag();
             return;
         }
 
@@ -1165,8 +1191,8 @@ export default class Player extends PathingEntity {
             if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
-                    if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.OPNPCT) {
-                        debugname = Component.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
+                    if (this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.OPNPCT) {
+                        debugname = Component.get(this.targetSubject.com)?.comName ?? this.targetSubject.toString();
                     } else {
                         debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
                     }
@@ -1174,12 +1200,10 @@ export default class Player extends PathingEntity {
                     debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
                 } else if (this.target instanceof Obj) {
                     debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                } else if (this.targetSubject !== -1) {
-                    if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
-                        debugname = Component.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
-                    } else {
-                        debugname = ObjType.get(this.targetSubject)?.debugname ?? this.targetSubject.toString();
-                    }
+                } else if (this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
+                    debugname = Component.get(this.targetSubject.com)?.comName ?? this.targetSubject.toString();
+                } else if (this.targetSubject.type !== -1) {
+                    debugname = ObjType.get(this.targetSubject.type)?.debugname ?? this.targetSubject.toString();
                 }
 
                 this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);
@@ -1245,12 +1269,10 @@ export default class Player extends PathingEntity {
                         debugname = LocType.get(this.target.type)?.debugname ?? this.target.type.toString();
                     } else if (this.target instanceof Obj) {
                         debugname = ObjType.get(this.target.type)?.debugname ?? this.target.type.toString();
-                    } else if (this.targetSubject !== -1) {
-                        if (this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
-                            debugname = Component.get(this.targetSubject)?.comName ?? this.targetSubject.toString();
-                        } else {
-                            debugname = ObjType.get(this.targetSubject)?.debugname ?? this.targetSubject.toString();
-                        }
+                    } else if (this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.APPLAYERT || this.targetOp === ServerTriggerType.APLOCT || this.targetOp === ServerTriggerType.APOBJT) {
+                        debugname = Component.get(this.targetSubject.com)?.comName ?? this.targetSubject.toString();
+                    } else if (this.targetSubject.type !== -1) {
+                        debugname = ObjType.get(this.targetSubject.type)?.debugname ?? this.targetSubject.toString();
                     }
 
                     this.messageGame(`No trigger for [${ServerTriggerType[this.targetOp + 7].toLowerCase()},${debugname}]`);

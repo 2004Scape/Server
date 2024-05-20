@@ -2,7 +2,7 @@
 vislevel=hide
 name=Velrak the explorer
 desc=He looks cold and hungry.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14724
@@ -30,7 +30,7 @@ head2=model_82_idk_head
 [jailer]
 name=Jailer
 desc=Guards prisoners for the black knights.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack

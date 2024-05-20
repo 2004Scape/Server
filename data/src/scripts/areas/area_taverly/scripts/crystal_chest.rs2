@@ -5,7 +5,7 @@
 if(last_useitem = crystal_key) {
     @open_crystal_chest;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,open_crystal_chest]

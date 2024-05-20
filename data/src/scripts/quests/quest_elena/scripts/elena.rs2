@@ -1,6 +1,6 @@
 [opnpc1,elena_imprisoned]
 switch_int(%elena_progress) {
-    case ^elena_complete: @nothing_interesting_happens; // TODO not sure what would happen here.
+    case ^elena_complete: ~displaymessage(^dm_default); // TODO not sure what would happen here.
     case default: {
         ~chatplayer(happy, "Hi, you're free to go! Your kidnappers don't seem to be about right now.");
         ~chatnpc(neutral, "Thank you, being kidnapped was so inconvenient. I was on my way back to East Ardougne with some samples, I want to see if I can diagnose a cure for this plague.");

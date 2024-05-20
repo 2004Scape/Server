@@ -750,7 +750,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.clearWaypoints();
-                this.setInteraction(loc, ServerTriggerType.APLOCT, spellComId);
+                this.setInteraction(loc, ServerTriggerType.APLOCT, {type: loc.type, com: spellComId});
                 pathfindX = loc.x;
                 pathfindZ = loc.z;
                 pathfindRequest = true;
@@ -795,7 +795,7 @@ export class NetworkPlayer extends Player {
                 }
 
                 this.clearWaypoints();
-                this.setInteraction(npc, mode);
+                this.setInteraction(npc, mode, {type: npc.type, com: -1});
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
@@ -844,7 +844,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.clearWaypoints();
-                this.setInteraction(npc, ServerTriggerType.APNPCU);
+                this.setInteraction(npc, ServerTriggerType.APNPCU, {type: npc.type, com: -1});
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
@@ -873,7 +873,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.clearWaypoints();
-                this.setInteraction(npc, ServerTriggerType.APNPCT, spellComId);
+                this.setInteraction(npc, ServerTriggerType.APNPCT, {type: npc.type, com: spellComId});
                 pathfindX = npc.x;
                 pathfindZ = npc.z;
                 pathfindRequest = true;
@@ -1010,7 +1010,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.clearWaypoints();
-                this.setInteraction(obj, ServerTriggerType.APOBJT, spellComId);
+                this.setInteraction(obj, ServerTriggerType.APOBJT, {type: obj.type, com: spellComId});
                 pathfindX = obj.x;
                 pathfindZ = obj.z;
                 pathfindRequest = true;
@@ -1089,7 +1089,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.clearWaypoints();
-                this.setInteraction(player, ServerTriggerType.APPLAYERU, item);
+                this.setInteraction(player, ServerTriggerType.APPLAYERU, {type: item, com: -1});
                 pathfindX = player.x;
                 pathfindZ = player.z;
                 pathfindRequest = true;
@@ -1120,7 +1120,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.clearWaypoints();
-                this.setInteraction(player, ServerTriggerType.APPLAYERT, spellComId);
+                this.setInteraction(player, ServerTriggerType.APPLAYERT, {type: -1, com: spellComId});
                 pathfindX = player.x;
                 pathfindZ = player.z;
                 pathfindRequest = true;
@@ -1167,9 +1167,7 @@ export class NetworkPlayer extends Player {
                 this.mask |= Player.FACE_ENTITY;
             }
 
-            if (this.target) {
-                this.pathToTarget();
-            } else {
+            if (!this.target) {
                 this.queueWaypoints(findPath(this.level, this.x, this.z, pathfindX, pathfindZ));
             }
         }

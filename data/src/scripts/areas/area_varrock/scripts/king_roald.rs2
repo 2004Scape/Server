@@ -3,7 +3,7 @@
 if(last_useitem = arravcert_scroll) {
     @roald_dialogue;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 // copying rsc logic here, no dialogue without both shield pieces or the certificate
 [label,roald_dialogue]

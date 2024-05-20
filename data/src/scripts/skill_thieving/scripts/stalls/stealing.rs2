@@ -26,7 +26,8 @@ p_arrivedelay;
 db_find(stealing:loc, $loc);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 
 if (afk_event = ^true) {

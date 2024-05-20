@@ -10,7 +10,7 @@ switch_obj(last_useitem) {
     case insect_repellent: @pour_repellent_bees;
     case bucket_empty: @take_beehive;
     case tinderbox, lit_torch, lit_candle, lit_black_candle: mes("Burning the hive would be a rather extreme measure for repelling bees.");
-    case default: @nothing_interesting_happens; // OSRS mes is different but it doesn't even fit in orig chatbox so probably new
+    case default: ~displaymessage(^dm_default); // OSRS mes is different but it doesn't even fit in orig chatbox so probably new
 }
 
 [label,pour_repellent_bees]

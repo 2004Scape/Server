@@ -6,41 +6,41 @@ switch_obj (last_useitem)
         ~require_members_feature;
         @string_amulet(last_useslot);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unstrung_sapphire_amulet]
 if (last_useitem = ball_of_wool) @string_amulet(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unstrung_emerald_amulet]
 if (last_useitem = ball_of_wool) @string_amulet(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unstrung_ruby_amulet]
 if (last_useitem = ball_of_wool) @string_amulet(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unstrung_diamond_amulet]
 if (last_useitem = ball_of_wool) @string_amulet(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unstrung_dragonstone_amulet]
 if (last_useitem = ball_of_wool) {
     ~require_members_feature;
     @string_amulet(last_slot);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unstrung_symbol]
 if (last_useitem = ball_of_wool) @string_amulet(last_slot);
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheldu,unstrung_emblem]
 if (last_useitem = ball_of_wool) {
     ~require_members_feature;
     @string_amulet(last_slot);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 
 [label,string_amulet](int $last)

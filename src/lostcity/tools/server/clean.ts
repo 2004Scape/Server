@@ -22,5 +22,3 @@ rmIfExists('data/src/pack/hunt.pack');
 
 // these get rebuilt anyways but since we're here...
 rmIfExists('data/symbols/');
-
-rmIfExists('dump');

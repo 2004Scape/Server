@@ -2,7 +2,7 @@
 vislevel=hide
 name=Nora T. Hagg
 desc=Distinctly witchey.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 recol1s=2340
 recol1d=4226

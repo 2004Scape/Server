@@ -132,7 +132,7 @@ if(last_useitem = hazeelcult_key) {
     ~open_chest(loc_2857);
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [oploc1,loc_2857]
 if(inv_total(inv, scroll_of_hazeel) > 0) {

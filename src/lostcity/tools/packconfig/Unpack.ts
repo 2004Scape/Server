@@ -3,8 +3,16 @@ import fs from 'fs';
 import Jagfile from '#jagex2/io/Jagfile.js';
 import { loadPack } from '#lostcity/util/NameMap.js';
 
-if (!fs.existsSync('data/client/config')) {
-    console.error('data/client/config does not exist');
+const input = process.argv[2];
+const output = process.argv[3];
+
+if (!input || !output) {
+    console.error('Usage: node Unpack.js <input> <output>');
+    process.exit(1);
+}
+
+if (!fs.existsSync(input)) {
+    console.error('input does not exist');
     process.exit(1);
 }
 
@@ -13,14 +21,15 @@ if (process.argv.includes('--194')) {
     decode194 = true;
 }
 
-fs.mkdirSync('data/src/scripts', { recursive: true });
-fs.mkdirSync('data/pack', { recursive: true });
+fs.mkdirSync(`${output}/scripts`, { recursive: true });
+fs.mkdirSync(`${output}/pack`, { recursive: true });
 
-const config = Jagfile.load('data/client/config');
+const config = Jagfile.load(input);
 
 // ----
 
-const texturePack = loadPack('data/src/pack/texture.pack');
+const texturePack = loadPack(`${output}/pack/texture.pack`);
+
 const floPack = [];
 const floConfig = [];
 
@@ -46,7 +55,7 @@ for (let id = 0; id < count; id++) {
         }
 
         if (code === 1) {
-            floConfig.push(`rgb=0x${flo.g3().toString(16).toUpperCase()}`);
+            floConfig.push(`rgb=0x${flo.g3().toString(16).toUpperCase().padStart(6, '0')}`);
         } else if (code === 2) {
             const texture = flo.g1();
             floConfig.push(`texture=${texturePack[texture]}`);
@@ -64,13 +73,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/flo.pack',
+    `${output}/pack/flo.pack`,
     floPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.flo', floConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.flo`, floConfig.join('\n') + '\n');
 
 // ----
 
@@ -169,13 +178,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/idk.pack',
+    `${output}/pack/idk.pack`,
     idkPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.idk', idkConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.idk`, idkConfig.join('\n') + '\n');
 
 // ----
 
@@ -197,94 +206,105 @@ for (let id = 0; id < count; id++) {
     locPack.push(`loc_${id}`);
     locConfig.push(`[loc_${id}]`);
 
+    let modelsRead = false;
     while (true) {
         const code = loc.g1();
         if (code === 0) {
             break;
         }
 
-        if (code === 1) {
+        if (code === 1 || code === 5) {
             const models = loc.g1();
 
             for (let i = 0; i < models; i++) {
                 const model = loc.g2();
-                let shape: number | string = loc.g1();
+                let shape: number | string = 'centrepiece_straight';
 
-                // shape is part of the model filename, but we can't control that right now
-                switch (shape) {
-                    case 10:
-                        shape = 'centrepiece_straight';
-                        break;
-                    case 0:
-                        shape = 'wall_straight';
-                        break;
-                    case 1:
-                        shape = 'wall_diagonalcorner';
-                        break;
-                    case 2:
-                        shape = 'wall_l';
-                        break;
-                    case 3:
-                        shape = 'wall_squarecorner';
-                        break;
-                    case 9:
-                        shape = 'wall_diagonal';
-                        break;
-                    case 4:
-                        shape = 'walldecor_straight_nooffset';
-                        break;
-                    case 5:
-                        shape = 'walldecor_straight_offset';
-                        break;
-                    case 6:
-                        shape = 'walldecor_diagonal_nooffset';
-                        break;
-                    case 7:
-                        shape = 'walldecor_diagonal_offset';
-                        break;
-                    case 8:
-                        shape = 'walldecor_diagonal_both';
-                        break;
-                    case 11:
-                        shape = 'centrepiece_diagonal';
-                        break;
-                    case 12:
-                        shape = 'roof_straight';
-                        break;
-                    case 13:
-                        shape = 'roof_diagonal_with_roofedge';
-                        break;
-                    case 14:
-                        shape = 'roof_diagonal';
-                        break;
-                    case 15:
-                        shape = 'roof_l_concave';
-                        break;
-                    case 16:
-                        shape = 'roof_l_convex';
-                        break;
-                    case 17:
-                        shape = 'roof_flat';
-                        break;
-                    case 18:
-                        shape = 'roofedge_straight';
-                        break;
-                    case 19:
-                        shape = 'roofedge_diagonalcorner';
-                        break;
-                    case 20:
-                        shape = 'roofedge_l';
-                        break;
-                    case 21:
-                        shape = 'roofedge_squarecorner';
-                        break;
-                    case 22:
-                        shape = 'grounddecor';
-                        break;
+                if (code === 1) {
+                    shape = loc.g1();
+
+                    // shape is part of the model filename, but we can't control that right now
+                    switch (shape) {
+                        case 10:
+                            shape = 'centrepiece_straight';
+                            break;
+                        case 0:
+                            shape = 'wall_straight';
+                            break;
+                        case 1:
+                            shape = 'wall_diagonalcorner';
+                            break;
+                        case 2:
+                            shape = 'wall_l';
+                            break;
+                        case 3:
+                            shape = 'wall_squarecorner';
+                            break;
+                        case 9:
+                            shape = 'wall_diagonal';
+                            break;
+                        case 4:
+                            shape = 'walldecor_straight_nooffset';
+                            break;
+                        case 5:
+                            shape = 'walldecor_straight_offset';
+                            break;
+                        case 6:
+                            shape = 'walldecor_diagonal_nooffset';
+                            break;
+                        case 7:
+                            shape = 'walldecor_diagonal_offset';
+                            break;
+                        case 8:
+                            shape = 'walldecor_diagonal_both';
+                            break;
+                        case 11:
+                            shape = 'centrepiece_diagonal';
+                            break;
+                        case 12:
+                            shape = 'roof_straight';
+                            break;
+                        case 13:
+                            shape = 'roof_diagonal_with_roofedge';
+                            break;
+                        case 14:
+                            shape = 'roof_diagonal';
+                            break;
+                        case 15:
+                            shape = 'roof_l_concave';
+                            break;
+                        case 16:
+                            shape = 'roof_l_convex';
+                            break;
+                        case 17:
+                            shape = 'roof_flat';
+                            break;
+                        case 18:
+                            shape = 'roofedge_straight';
+                            break;
+                        case 19:
+                            shape = 'roofedge_diagonalcorner';
+                            break;
+                        case 20:
+                            shape = 'roofedge_l';
+                            break;
+                        case 21:
+                            shape = 'roofedge_squarecorner';
+                            break;
+                        case 22:
+                            shape = 'grounddecor';
+                            break;
+                    }
                 }
 
-                locConfig.push(`model${i + 1}=model_${model},${shape}`);
+                if (!modelsRead) {
+                    locConfig.push(`model${i + 1}=model_${model},${shape}`);
+                } else {
+                    locConfig.push(`ldmodel${i + 1}=model_${model},${shape}`);
+                }
             }
+
+            modelsRead = true;
         } else if (code === 2) {
             locConfig.push(`name=${loc.gjstr()}`);
         } else if (code === 3) {
@@ -318,11 +338,18 @@ for (let id = 0; id < count; id++) {
         } else if (code >= 30 && code < 39) {
             locConfig.push(`op${code - 30 + 1}=${loc.gjstr()}`);
         } else if (code === 40) {
-            const recol = loc.g1();
+            const count = loc.g1();
 
-            for (let i = 0; i < recol; i++) {
+            for (let i = 0; i < count; i++) {
                 locConfig.push(`recol${i + 1}s=${loc.g2()}`);
                 locConfig.push(`recol${i + 1}d=${loc.g2()}`);
+            }
+        } else if (code === 41) {
+            const count = loc.g1();
+
+            for (let i = 0; i < count; i++) {
+                locConfig.push(`retex${i + 1}s=${loc.g2()}`);
+                locConfig.push(`retex${i + 1}d=${loc.g2()}`);
             }
         } else if (code === 60) {
             locConfig.push(`mapfunction=${loc.g2()}`);
@@ -361,6 +388,77 @@ for (let id = 0; id < count; id++) {
             locConfig.push(`zoff=${loc.g2s()}`);
         } else if (code === 73) {
             locConfig.push('forcedecor=yes');
+        } else if (code === 74) {
+            locConfig.push('breakroutefinding=yes');
+        } else if (code === 75) {
+            locConfig.push(`raiseobject=${loc.gbool() ? 'yes' : 'no'}`);
+        } else if (code === 77 || code === 92) {
+            let multiLocVarbit = loc.g2();
+            if (multiLocVarbit === 65535) {
+                multiLocVarbit = -1;
+            }
+
+            if (multiLocVarbit !== -1) {
+                locConfig.push(`multivarbit=varbit_${multiLocVarbit}`);
+            }
+
+            let multiLocVarp = loc.g2();
+            if (multiLocVarp === 65535) {
+                multiLocVarp = -1;
+            }
+
+            if (multiLocVarp !== -1) {
+                locConfig.push(`multivar=varp_${multiLocVarp}`);
+            }
+
+            let defaultMultiLoc: number = -1;
+            if (code === 92) {
+                defaultMultiLoc = loc.g2();
+
+                if (defaultMultiLoc === 65535) {
+                    defaultMultiLoc = -1;
+                }
+            }
+
+            const count: number = loc.g1();
+            const multiLocs = new Int32Array(count + 1);
+
+            for (let i: number = 0; i <= count; i++) {
+                multiLocs[i] = loc.g2();
+
+                if (multiLocs[i] === 65535) {
+                    multiLocs[i] = -1;
+                }
+            }
+
+            multiLocs[count + 1] = defaultMultiLoc;
+
+            if (defaultMultiLoc !== -1) {
+                locConfig.push(`defaultloc=loc_${defaultMultiLoc}`);
+            }
+
+            for (let i: number = 0; i <= count; i++) {
+                if (multiLocs[i] !== -1) {
+                    locConfig.push(`multiloc=${i},loc_${multiLocs[i]}`);
+                }
+            }
+        } else if (code === 78) {
+            locConfig.push(`bgsound=sound_${loc.g2()},${loc.g1()}`);
+        } else if (code === 79) {
+            locConfig.push(`randomsound=${loc.g2()},${loc.g2()},${loc.g1()}`);
+
+            const count: number = loc.g1();
+            const bgsounds = new Int32Array(count);
+            for (let i: number = 0; i < count; i++) {
+                bgsounds[i] = loc.g2();
+                locConfig.push(`randomsound${i + 1}=sound_${bgsounds[i]}`);
+            }
+            locConfig.push(`bgsound=sound_${loc.g2()},${loc.g1()}`);
+        } else if (code === 81) {
+            locConfig.push(`treeskew=${loc.g1()}`);
+        } else if (code === 82) {
+            // osrs
+            locConfig.push(`mapfunction=${loc.g2()}`);
         } else {
             console.error(`Unrecognized loc config code: ${code}`);
             process.exit(1);
@@ -369,13 +467,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/loc.pack',
+    `${output}/pack/loc.pack`,
     locPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.loc', locConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.loc`, locConfig.join('\n') + '\n');
 
 // ----
 
@@ -394,8 +492,8 @@ for (let id = 0; id < count; id++) {
         npcConfig.push('');
     }
 
-    npcPack.push(`flo_${id}`);
-    npcConfig.push(`[flo_${id}]`);
+    npcPack.push(`npc_${id}`);
+    npcConfig.push(`[npc_${id}]`);
 
     while (true) {
         const code = npc.g1();
@@ -422,7 +520,7 @@ for (let id = 0; id < count; id++) {
         } else if (code === 16) {
             npcConfig.push('hasalpha=yes'); // TODO: inherit from anim
         } else if (code === 17) {
-            npcConfig.push(`walkanims=seq_${npc.g2()},seq_${npc.g2()},seq_${npc.g2()},seq_${npc.g2()}`);
+            npcConfig.push(`walkanim=seq_${npc.g2()},seq_${npc.g2()},seq_${npc.g2()},seq_${npc.g2()}`);
         } else if (code >= 30 && code < 40) {
             npcConfig.push(`op${code - 30 + 1}=${npc.gjstr()}`);
         } else if (code === 40) {
@@ -439,11 +537,11 @@ for (let id = 0; id < count; id++) {
                 npcConfig.push(`head${i + 1}=model_${npc.g2()}`);
             }
         } else if (code === 90) {
-            npcConfig.push(`code90=${npc.g2()}`);
+            npcConfig.push(`resizex=${npc.g2()}`);
         } else if (code === 91) {
-            npcConfig.push(`code91=${npc.g2()}`);
+            npcConfig.push(`resizey=${npc.g2()}`);
         } else if (code === 92) {
-            npcConfig.push(`code92=${npc.g2()}`);
+            npcConfig.push(`resizez=${npc.g2()}`);
         } else if (code === 93) {
             npcConfig.push('minimap=no');
         } else if (code === 95) {
@@ -457,6 +555,53 @@ for (let id = 0; id < count; id++) {
             npcConfig.push(`resizeh=${npc.g2()}`);
         } else if (code === 98) {
             npcConfig.push(`resizev=${npc.g2()}`);
+        } else if (code === 99) {
+            npcConfig.push('alwaysontop=yes');
+        } else if (code === 100) {
+            npcConfig.push(`ambient=${npc.g1b()}`);
+        } else if (code === 101) {
+            npcConfig.push(`contrast=${npc.g1b()}`);
+        } else if (code === 102) {
+            npcConfig.push(`headicon=${npc.g2()}`);
+        } else if (code === 103) {
+            npcConfig.push(`turnspeed=${npc.g2()}`);
+        } else if (code === 106) {
+            let multiNpcVarbit = npc.g2();
+            if (multiNpcVarbit === 65535) {
+                multiNpcVarbit = -1;
+            }
+
+            if (multiNpcVarbit !== -1) {
+                npcConfig.push(`multivarbit=varbit_${multiNpcVarbit}`);
+            }
+
+            let multiNpcVarp = npc.g2();
+            if (multiNpcVarp === 65535) {
+                multiNpcVarp = -1;
+            }
+
+            if (multiNpcVarp !== -1) {
+                npcConfig.push(`multivar=varp_${multiNpcVarp}`);
+            }
+
+            const count: number = npc.g1();
+            const multiNpcs = new Int32Array(count + 1);
+
+            for (let i: number = 0; i <= count; i++) {
+                multiNpcs[i] = npc.g2();
+
+                if (multiNpcs[i] === 65535) {
+                    multiNpcs[i] = -1;
+                }
+            }
+
+            for (let i: number = 0; i <= count; i++) {
+                if (multiNpcs[i] !== -1) {
+                    npcConfig.push(`multinpc=${i},npc_${multiNpcs[i]}`);
+                }
+            }
+        } else if (code === 107) {
+            npcConfig.push('active=no');
         } else {
             console.error(`Unrecognized npc config code: ${code}`);
             process.exit(1);
@@ -465,13 +610,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/npc.pack',
+    `${output}/pack/npc.pack`,
     npcPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.npc', npcConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.npc`, npcConfig.join('\n') + '\n');
 
 // ----
 
@@ -508,9 +653,9 @@ for (let id = 0; id < count; id++) {
         } else if (code === 4) {
             objConfig.push(`2dzoom=${obj.g2()}`);
         } else if (code === 5) {
-            objConfig.push(`2dxan=${obj.g2()}`);
+            objConfig.push(`2dxan=${obj.g2s()}`);
         } else if (code === 6) {
-            objConfig.push(`2dyan=${obj.g2()}`);
+            objConfig.push(`2dyan=${obj.g2s()}`);
         } else if (code === 7) {
             objConfig.push(`2dxof=${obj.g2s()}`);
         } else if (code === 8) {
@@ -564,6 +709,18 @@ for (let id = 0; id < count; id++) {
             objConfig.push(`certtemplate=obj_${obj.g2()}`);
         } else if (code >= 100 && code < 110) {
             objConfig.push(`count${code - 100 + 1}=obj_${obj.g2()},${obj.g2()}`);
+        } else if (code === 110) {
+            objConfig.push(`resizex=${obj.g2()}`);
+        } else if (code === 111) {
+            objConfig.push(`resizey=${obj.g2()}`);
+        } else if (code === 112) {
+            objConfig.push(`resizez=${obj.g2()}`);
+        } else if (code === 113) {
+            objConfig.push(`ambient=${obj.g1b()}`);
+        } else if (code === 114) {
+            objConfig.push(`contrast=${obj.g1b()}`);
+        } else if (code === 115) {
+            objConfig.push(`team=${obj.g1()}`);
         } else {
             console.error(`Unrecognized obj config code: ${code}`);
             process.exit(1);
@@ -572,13 +729,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/obj.pack',
+    `${output}/pack/obj.pack`,
     objPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.obj', objConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.obj`, objConfig.join('\n') + '\n');
 
 // ----
 
@@ -684,13 +841,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/seq.pack',
+    `${output}/pack/seq.pack`,
     seqPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.seq', seqConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.seq`, seqConfig.join('\n') + '\n');
 
 // ----
 
@@ -746,13 +903,13 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/spotanim.pack',
+    `${output}/pack/spotanim.pack`,
     spotanimPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.spotanim', spotanimConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.spotanim`, spotanimConfig.join('\n') + '\n');
 
 // ----
 
@@ -806,10 +963,10 @@ for (let id = 0; id < count; id++) {
 }
 
 fs.writeFileSync(
-    'data/src/pack/varp.pack',
+    `${output}/pack/varp.pack`,
     varpPack
         .map((name, id) => `${id}=${name}`)
         .filter(x => x)
         .join('\n') + '\n'
 );
-fs.writeFileSync('data/src/scripts/all.varp', varpConfig.join('\n') + '\n');
+fs.writeFileSync(`${output}/scripts/all.varp`, varpConfig.join('\n') + '\n');

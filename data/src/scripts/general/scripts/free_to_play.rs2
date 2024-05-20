@@ -16,12 +16,6 @@ if (map_members = true) {
 }
 @you_need_to_be_on_a_members_server_to_gain_experience_in_that_skill;
 
-[proc,require_members_make_item]()
-if (map_members = true) {
-    return;
-}
-@you_need_to_be_on_a_members_server_to_make_that;
-
 [proc,require_members_spell]()
 if (map_members = true) {
     return;
@@ -60,9 +54,6 @@ mes("Sorry, but you need to be on a members' server to talk to this store owner.
 
 [label,you_need_to_be_on_a_members_server_to_gain_experience_in_that_skill]
 mes("You need to be on a members' server to gain experience in that skill.");
-
-[label,you_need_to_be_on_a_members_server_to_make_that]
-mes("You need to be on a members' server to make that.");
 
 [label,you_need_to_be_on_a_members_world_to_gain_experience_in_agility]
 mes("You need to be on a members' world to gain experience in Agility.");

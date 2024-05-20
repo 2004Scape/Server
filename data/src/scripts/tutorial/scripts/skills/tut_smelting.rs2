@@ -7,7 +7,7 @@ if (%tutorial_progress < ^mining_instructor_before_smelt_bronze_bar) {
 if (last_useitem = copper_ore | last_useitem = tin_ore) {
     @tut_smelting;
 } else {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
 }
 
 [label,tut_smelting]

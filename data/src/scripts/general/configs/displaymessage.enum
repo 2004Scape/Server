@@ -1,0 +1,14 @@
+// https://chisel.weirdgloop.org/structs_rs3/index.html?type=enums&id=33
+[displaymessage_enum]
+inputtype=int
+outputtype=string
+val=^dm_default,Nothing interesting happens.
+val=^dm_invspace,You don't have enough inventory space to do that.
+val=^dm_members_feature,This feature can only be used on a members' server.
+val=^dm_farming_spade,You need a spade to do that.
+val=^dm_farming_dibber,You need a seed dibber to do that.
+val=^dm_farming_patch_no_crops,This patch doesn't have any crops in it.
+val=^dm_farming_patch_weeding,This patch needs weeding first.
+val=^dm_farming_patch_planted,This patch needs to be empty and weeded or just planted to do that.
+val=^dm_farming_trowel,You need a gardening trowel to do that.
+val=^dm_need_plant_cure,Secateurs don't work with this - you need to use plant cure.

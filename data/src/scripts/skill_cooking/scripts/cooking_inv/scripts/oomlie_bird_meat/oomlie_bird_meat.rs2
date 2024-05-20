@@ -9,7 +9,10 @@ switch_obj (last_useitem) {
 };
 
 [label,make_oomlie_wrap]
-~require_members_make_item;
+if (map_members = false) {
+    mes("You can only make that on a members' server.");
+    return;
+}
 // this is a guess
 if (stat(cooking) < 50) {
     mes("You need a Cooking level of 50 to make wrapped oomlie meat.");

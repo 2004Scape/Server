@@ -15,7 +15,8 @@ if (%vampire_progress > ^quest_vampire_not_started) {
     while (npc_findnext = true) {
         if (npc_type = count_draynor) {
             // TODO check if in combat. can't open during combat.
-            @nothing_interesting_happens;
+            ~displaymessage(^dm_default);
+            return;
         }
     }
 }

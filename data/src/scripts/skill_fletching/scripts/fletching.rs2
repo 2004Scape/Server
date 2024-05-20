@@ -1,7 +1,4 @@
 [proc,get_fletching_data](obj $item)(dbrow)
 db_find(fletching_table:item, $item);
 def_dbrow $data = db_findnext;
-if ($data = null) {
-    @nothing_interesting_happens;
-}
 return ($data);

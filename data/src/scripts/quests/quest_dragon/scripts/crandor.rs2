@@ -20,7 +20,8 @@ if (%dragon_wall = ^false) {
         mes("You remember where the secret door is for future reference.");
         %dragon_wall = ^true;
     } else {
-        @nothing_interesting_happens;
+        ~displaymessage(^dm_default);
+        return;
     }
 }
 ~open_and_close_door(loc_param(next_loc_stage), $entering, false);

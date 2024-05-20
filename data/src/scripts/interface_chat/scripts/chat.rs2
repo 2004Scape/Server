@@ -613,7 +613,7 @@ p_pausebutton;
 switch_component (last_com) {
     case multiobj2:com_2 : return($obj1);
     case multiobj2:com_3 : return($obj2);
-    case default : @nothing_interesting_happens;
+    case default : return(null);
 }
 
 [proc,multiobj3](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2, namedobj $obj3, int $x3, int $y3, int $scale3, string $string3, int $sx3, int $sy3)(namedobj)
@@ -641,7 +641,7 @@ switch_component (last_com) {
     case multiobj3:com_2 : return($obj1);
     case multiobj3:com_3 : return($obj2);
     case multiobj3:com_4 : return($obj3);
-    case default : @nothing_interesting_happens;
+    case default : return(null);
 }
 
 [if_button,multiobj3_close:com_8] if_close;
@@ -662,7 +662,7 @@ switch_component (last_com) {
     case multiobj3_close:com_1 : return($obj1);
     case multiobj3_close:com_2 : return($obj2);
     case multiobj3_close:com_3 : return($obj3);
-    case default : @nothing_interesting_happens;
+    case default : return(null);
 }
 
 [proc,multiobj4](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2, namedobj $obj3, int $x3, int $y3, int $scale3, string $string3, int $sx3, int $sy3, namedobj $obj4, int $x4, int $y4, int $scale4, string $string4, int $sx4, int $sy4)(namedobj)
@@ -695,5 +695,5 @@ switch_component (last_com) {
     case multiobj4:com_3 : return($obj2);
     case multiobj4:com_4 : return($obj3);
     case multiobj4:com_5 : return($obj4);
-    case default : @nothing_interesting_happens;
+    case default : return(null);
 }

@@ -150,7 +150,9 @@ switch_obj ($last_item)
         inv_transmit(runite3, smithing:column3);
         inv_transmit(runite4, smithing:column4);
         inv_transmit(runite5, smithing:column5);
-    case default : @nothing_interesting_happens;
+    case default : 
+        ~displaymessage(^dm_default);
+        return;
 }
 
 if_openmainmodal(smithing);
@@ -161,7 +163,8 @@ if_close;
 db_find(smithing:ifproduct, $last_item);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 // TODO: check if they have tourist trap completed for dart tips
 // IT CHECKS FOR DARTS FIRST BTW (before members check)
@@ -181,8 +184,9 @@ if (inzone(0_48_148_0_0, 0_48_148_63_63,coord) = true & last_item ! bronze_dagge
 }
 
 // check if mems obj is selected
-if (oc_members($last_item) = true) {
-    ~require_members_make_item;
+if (oc_members($last_item) = true & map_members = false) {
+    mes("You can only make that on a members' server.");
+    return;
 }
 // check if player has enough bars
 def_int $bar_amount = db_getfield($data,smithing:bar_amount,0);

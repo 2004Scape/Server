@@ -5,7 +5,7 @@ switch_obj (last_useitem)
     case clay : @make_softclay(bowl_water);
     case bucket_empty, jug_empty : @water_fill(last_useslot, last_slot);
     case potato, cooked_meat, cooked_chicken : @make_incomplete_stew(last_useslot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,bucket_water]
@@ -15,7 +15,7 @@ switch_obj (last_useitem)
     case pot_of_flour : @dough_interface(last_item);
     case clay : @make_softclay(bucket_water);
     case jug_empty, bowl_empty : @water_fill(last_useslot, last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,jug_of_water]
@@ -25,21 +25,21 @@ switch_obj (last_useitem)
     case pot_of_flour : @dough_interface(last_item);
     case clay : @make_softclay(jug_of_water);
     case bucket_empty, bowl_empty : @water_fill(last_useslot, last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,bucket_empty]
 switch_obj (last_useitem)
 {
     case jug_of_water, bowl_water : @water_fill(last_useslot, last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,jug_empty]
 switch_obj (last_useitem)
 {
     case bucket_water, bowl_water : @water_fill(last_useslot, last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [opheldu,bowl_empty]
@@ -47,7 +47,7 @@ switch_obj (last_useitem)
 {
     case onion, tomato, ugthanki_meat : @make_bowl_mixture(last_useslot);
     case bucket_water, jug_of_water : @water_fill(last_useslot, last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [label,water_fill](int $use_slot, int $last_slot)
@@ -60,14 +60,15 @@ inv_setslot(inv, $use_slot, oc_param($used_with, changesto), 1); //new empty sou
 [oplocu,_watersource]
 switch_obj (last_useitem) {
     case bucket_empty, jug_empty, vial_empty, bowl_empty: @fill_container_water(last_useitem);
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [label,fill_container_water](obj $container)
 def_string $source_name = lowercase(loc_name);
 def_string $container_name = lowercase(oc_name($container));
 if(compare($source_name, "well") = 0 & compare($container_name, "bucket") ! 0) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 inv_del(inv, $container, 1);
 inv_add(inv, oc_param($container, changesto), 1);

@@ -2,6 +2,7 @@ import fs from 'fs';
 
 import { listFilesExt, loadDirExtFull, loadFile } from '#lostcity/util/Parse.js';
 import { basename, dirname } from 'path';
+import Environment from './Environment.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PackFileValidator = (packfile: PackFile, ...args: any[]) => void;
@@ -23,7 +24,7 @@ export class PackFile {
         if (validator !== null) {
             validator(this, ...validatorArgs);
         } else {
-            this.load(`data/src/pack/${type}.pack`);
+            this.load(`${Environment.DATA_SRC_DIR}/pack/${type}.pack`);
         }
     }
 
@@ -62,7 +63,7 @@ export class PackFile {
     }
 
     save() {
-        fs.writeFileSync(`data/src/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
+        fs.writeFileSync(`${Environment.DATA_SRC_DIR}/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
     }
 
     getById(id: number): string {
@@ -85,7 +86,7 @@ export class PackFile {
 }
 
 function validateFilesPack(pack: PackFile, path: string, ext: string): void {
-    pack.load(`data/src/pack/${pack.type}.pack`);
+    pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
 
     const files = listFilesExt(path, ext);
 
@@ -100,15 +101,17 @@ function validateFilesPack(pack: PackFile, path: string, ext: string): void {
         const name = files[i];
 
         if (!pack.names.has(name)) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit data/src/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
 
-    for (const name of pack.names) {
-        if (!fileNames.has(name)) {
-            console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit data/src/pack/${pack.type}.pack`);
-            process.exit(1);
+    if (Environment.VALIDATE_PACK) {
+        for (const name of pack.names) {
+            if (!fileNames.has(name)) {
+                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+                process.exit(1);
+            }
         }
     }
 
@@ -129,7 +132,7 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
             // completely scorched earth (resets ids)
         } else {
             // just add new ids to the end
-            pack.load(`data/src/pack/${pack.type}.pack`);
+            pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
         }
 
         for (let i = 0; i < names.length; i++) {
@@ -139,21 +142,21 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
         }
         pack.refreshNames();
     } else {
-        pack.load(`data/src/pack/${pack.type}.pack`);
+        pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
     }
 
     for (let i = 0; i < names.length; i++) {
         const name = names[i];
 
         if (!pack.names.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit data/src/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
 
     for (const name of pack.names) {
         if (!configNames.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit data/src/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
@@ -164,9 +167,9 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
 }
 
 function validateCategoryPack(pack: PackFile) {
-    if (shouldBuild('data/src/scripts', '.loc', 'data/src/pack/category.pack') ||
-        shouldBuild('data/src/scripts', '.npc', 'data/src/pack/category.pack') ||
-        shouldBuild('data/src/scripts', '.obj', 'data/src/pack/category.pack')) {
+    if (shouldBuild(`${Environment.DATA_SRC_DIR}/scripts`, '.loc', `${Environment.DATA_SRC_DIR}/pack/category.pack`) ||
+        shouldBuild(`${Environment.DATA_SRC_DIR}/scripts`, '.npc', `${Environment.DATA_SRC_DIR}/pack/category.pack`) ||
+        shouldBuild(`${Environment.DATA_SRC_DIR}/scripts`, '.obj', `${Environment.DATA_SRC_DIR}/pack/category.pack`)) {
         const categories = crawlConfigCategories();
         for (let i = 0; i < categories.length; i++) {
             pack.register(i, categories[i]);
@@ -174,24 +177,26 @@ function validateCategoryPack(pack: PackFile) {
         pack.refreshNames();
         pack.save();
     } else {
-        pack.load('data/src/pack/category.pack');
+        pack.load(`${Environment.DATA_SRC_DIR}/pack/category.pack`);
     }
 }
 
 function validateInterfacePack(pack: PackFile) {
-    pack.load('data/src/pack/interface.pack');
+    pack.load(`${Environment.DATA_SRC_DIR}/pack/interface.pack`);
 
-    loadDirExtFull('data/src/scripts', '.if', (lines: string[], file: string) => {
-        const parent = basename(dirname(dirname(file)));
-        const dir = basename(dirname(file));
-        if (dir !== 'interfaces' && parent !== 'interfaces') {
-            console.error(`Interface file ${file} must be located inside an "interfaces" directory.`);
-            process.exit(1);
+    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.if', (lines: string[], file: string) => {
+        if (Environment.STRICT_FOLDERS) {
+            const parent = basename(dirname(dirname(file)));
+            const dir = basename(dirname(file));
+            if (dir !== 'interfaces' && parent !== 'interfaces') {
+                console.error(`Interface file ${file} must be located inside an "interfaces" directory.`);
+                process.exit(1);
+            }
         }
 
         const inter = basename(file, '.if');
         if (!pack.names.has(inter)) {
-            console.error(`data/src/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
+            console.error(`${Environment.DATA_SRC_DIR}/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
             process.exit(1);
         }
 
@@ -203,7 +208,7 @@ function validateInterfacePack(pack: PackFile) {
                 const name = `${inter}:${com}`;
 
                 if (!pack.names.has(name)) {
-                    console.error(`data/src/pack/interface.pack is missing ID for component ${name} from ${file}`);
+                    console.error(`${Environment.DATA_SRC_DIR}/pack/interface.pack is missing ID for component ${name} from ${file}`);
                     process.exit(1);
                 }
             }
@@ -213,7 +218,7 @@ function validateInterfacePack(pack: PackFile) {
 
 // todo: validate triggers, names, and/or reuse IDs?
 function regenScriptPack(pack: PackFile) {
-    pack.load('data/src/pack/script.pack');
+    pack.load(`${Environment.DATA_SRC_DIR}/pack/script.pack`);
 
     const names = crawlConfigNames('.rs2', true);
     for (let i = 0; i < names.length; i++) {
@@ -225,8 +230,8 @@ function regenScriptPack(pack: PackFile) {
     pack.save();
 }
 
-export const AnimPack = new PackFile('anim', validateFilesPack, 'data/src/models', '.frame');
-export const BasePack = new PackFile('base', validateFilesPack, 'data/src/models', '.base');
+export const AnimPack = new PackFile('anim', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.frame');
+export const BasePack = new PackFile('base', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.base');
 export const CategoryPack = new PackFile('category', validateCategoryPack);
 export const DbRowPack = new PackFile('dbrow', validateConfigPack, '.dbrow', true, false, false, true);
 export const DbTablePack = new PackFile('dbtable', validateConfigPack, '.dbtable', true, false, false, true);
@@ -238,16 +243,16 @@ export const InterfacePack = new PackFile('interface', validateInterfacePack);
 export const InvPack = new PackFile('inv', validateConfigPack, '.inv', true);
 export const LocPack = new PackFile('loc', validateConfigPack, '.loc');
 export const MesAnimPack = new PackFile('mesanim', validateConfigPack, '.mesanim', true, false, false, true);
-export const ModelPack = new PackFile('model', validateFilesPack, 'data/src/models', '.ob2');
+export const ModelPack = new PackFile('model', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.ob2');
 export const NpcPack = new PackFile('npc', validateConfigPack, '.npc');
 export const ObjPack = new PackFile('obj', validateConfigPack, '.obj');
 export const ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
 export const ScriptPack = new PackFile('script', regenScriptPack);
 export const SeqPack = new PackFile('seq', validateConfigPack, '.seq');
-export const SoundPack = new PackFile('sound', validateFilesPack, 'data/src/sounds', '.synth');
+export const SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
 export const SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
 export const StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
-export const TexturePack = new PackFile('texture', validateFilesPack, 'data/src/textures', '.png');
+export const TexturePack = new PackFile('texture', validateFilesPack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
 export const VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
 export const VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
 export const VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);
@@ -255,8 +260,8 @@ export const VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, 
 export function crawlConfigNames(ext: string, includeBrackets = false) {
     const names: string[] = [];
 
-    loadDirExtFull('data/src/scripts', ext, (lines: string[], file: string) => {
-        if (file === 'data/src/scripts/engine.rs2') {
+    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, ext, (lines: string[], file: string) => {
+        if (file === `${Environment.DATA_SRC_DIR}/scripts/engine.rs2`) {
             // these command signatures are specifically for the compiler to have type information
             return;
         }
@@ -270,13 +275,15 @@ export function crawlConfigNames(ext: string, includeBrackets = false) {
                     name = name.substring(1, name.length - 1);
                 }
 
-                const parent = basename(dirname(dirname(file)));
-                const dir = basename(dirname(file));
-                if (dir !== '_unpack' && ext !== '.flo') {
-                    if (ext === '.rs2' && dir !== 'scripts' && parent !== 'scripts') {
-                        throw new Error(`Script file ${file} must be located inside a "scripts" directory.`);
-                    } else if (ext !== '.rs2' && dir !== 'configs' && parent !== 'configs') {
-                        throw new Error(`Config file ${file} must be located inside a "configs" directory.`);
+                if (Environment.STRICT_FOLDERS) {
+                    const parent = basename(dirname(dirname(file)));
+                    const dir = basename(dirname(file));
+                    if (dir !== '_unpack' && ext !== '.flo') {
+                        if (ext === '.rs2' && dir !== 'scripts' && parent !== 'scripts') {
+                            throw new Error(`Script file ${file} must be located inside a "scripts" directory.`);
+                        } else if (ext !== '.rs2' && dir !== 'configs' && parent !== 'configs') {
+                            throw new Error(`Config file ${file} must be located inside a "configs" directory.`);
+                        }
                     }
                 }
 
@@ -293,7 +300,7 @@ export function crawlConfigNames(ext: string, includeBrackets = false) {
 function crawlConfigCategories() {
     const names: string[] = [];
 
-    loadDirExtFull('data/src/scripts', '.loc', (lines: string[]) => {
+    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.loc', (lines: string[]) => {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
 
@@ -307,7 +314,7 @@ function crawlConfigCategories() {
         }
     });
 
-    loadDirExtFull('data/src/scripts', '.npc', (lines: string[]) => {
+    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.npc', (lines: string[]) => {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
 
@@ -321,7 +328,7 @@ function crawlConfigCategories() {
         }
     });
 
-    loadDirExtFull('data/src/scripts', '.obj', (lines: string[]) => {
+    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.obj', (lines: string[]) => {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
 

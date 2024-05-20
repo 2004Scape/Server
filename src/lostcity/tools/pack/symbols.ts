@@ -179,9 +179,7 @@ export function generateServerSymbols() {
     }
     fs.writeFileSync('data/symbols/vars.sym', varsSymbols);
 
-    console.time('Loading param.dat');
     ParamType.load('data/pack');
-    console.timeEnd('Loading param.dat');
 
     let paramSymbols = '';
     const params = loadPack('data/src/pack/param.pack');

@@ -1,7 +1,7 @@
 [npc_921]
 name=Prince Ali
 desc=Now that's an effective disguise!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 vislevel=hide
 recol1s=2340

@@ -17,26 +17,17 @@ It won't ever profit off your trademarks. Without this project, this version of 
 
 *To players*: So happy to have you interested! RuneScape 2 launched on March 29, 2004. We have no copies of that revision, but we do have some client caches from May 2004. This project emulates *May 18, 2004*, which was live until June 1 of that year. It has Treasure Trails and Big Chompy Bird Hunting. The next revision after this added Elemental Workshop I.
 
-## Environment Dependencies
-
-- [NodeJS 20+](https://nodejs.org/) (current LTS) or [18](https://nodejs.org/download/release/v18.18.2/) (last LTS)
-- [Java 17+](https://adoptium.net/)
-- If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
-
-Java is required for RuneScriptCompiler.jar, our content language compiler.
-
-You can download RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel. Place the jar file in the root directory of the project.  
-
-RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
-
 ## Getting Started
 
-1. Clone the repo
-2. Install [environment dependencies](#environment-dependencies)
-3. Run `npm ci` to install code dependencies
-4. Copy the file `.env.example` to `.env`
-5. Run `npm run build` to create the client and server cache. This may take a few minutes the first time
-6. Run `npm start` to start the server
+1. Download this repo to your computer
+2. Install our list of [dependencies](#environment-dependencies)
+3. Create a `.env` file by copying the file `.env.example` to be called `.env`
+4. Open the folder you downloaded in a command prompt
+5. Run `npm i`, this installs necessary packages
+6. Run `npm run build`, this creates the client and server cache the first time
+7. Run `npm start`
+
+Now open [http://localhost](http://localhost) in your browser and play!
 
 ### Using the setup script
 
@@ -62,11 +53,23 @@ Once the container starts, it automatically starts running `setup.sh`. You can c
 
 Another option for building your Dev Container is to instead clone your repository onto your local machine first and then run `Dev Containers: Open Folder in Container` and work that way by mounting the local files into your container. This way, you can have RuneScriptCompiler.jar in your workspace from the get-go. **Note: The npm scripts are much slower when the container is running this way.**
 
+## Environment Dependencies
+
+- [NodeJS 20+](https://nodejs.org/) (current LTS) or [18](https://nodejs.org/download/release/v18.18.2/) (last LTS)
+- [Java 17+](https://adoptium.net/)
+- If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
+
+Java is required for RuneScriptCompiler.jar, our content language compiler.
+
+You can download RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel. Place the jar file in the root directory of the project.  
+
+RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
+
 ## Development Workflow
 
-You can run `npm run dev` to start the server. This will watch for changes to the source, config, or script files and automatically rebuild them.
+Content developers (likely you!) can run `npm start` to start the server. This will watch for changes to the config and script files as well as automatically rebuild them.
 
-Whenever you make a change to a config or script file while the server is running you can hotload loaded data by running `::reload` in-game.
+Engine developers can run `npm run dev` to start the server. This does what `npm start` does above, but also restarts the world when any TypeScript code has changed.
 
 ### Running tests
 

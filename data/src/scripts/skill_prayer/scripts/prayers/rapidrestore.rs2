@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 10);
 
 [label,activate_prayer_rapidrestore]
 def_dbrow $data = ~get_prayer_data(^prayer_rapidrestore);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_rapidrestore = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_rapidrestore));
     %prayer_rapidrestore = ^false;

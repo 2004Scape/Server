@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 3);
 
 [label,activate_prayer_steelskin]
 def_dbrow $data = ~get_prayer_data(^prayer_steelskin);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_steelskin = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_steelskin));
     %prayer_steelskin = ^false;

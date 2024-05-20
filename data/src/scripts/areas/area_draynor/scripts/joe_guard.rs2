@@ -14,7 +14,7 @@ if(last_useitem = beer) {
     ~chatplayer(neutral, "I don't see any need to give the guard my beer. I'll keep it for myself.");
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,joe_distract]
 @multi4("I have some beer here, fancy one?", joe_beer, "Tell me about the life of a guard.", joe_life, "What did you want to be when you were a boy?", joe_boy, "I had better leave, I don't want trouble.", joe_leave);

@@ -19,7 +19,7 @@ def_boolean $leaving = ~check_axis(coord, loc_coord, loc_angle);
 if(last_useitem = ball_doorkey | $leaving = true) {
     @open_witch_house_door($leaving);
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,open_witch_house_door](boolean $leaving)
 if($leaving ! true & (%ball_progress < ^ball_started | %ball_progress = ^ball_complete)) {
@@ -91,7 +91,7 @@ npc_add(^ball_mouse_coord, ball_mouse, 50);
 if(last_useitem = cheese) {
     @ball_cheese("the");
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opheld5,cheese]
 if(inzone(0_45_54_21_10, 0_45_54_23_11, coord) = true) {
@@ -115,7 +115,7 @@ if(last_useitem = magnet) {
     ~mesbox("You attach the magnet to the mouse's harness. The mouse finishes the cheese and runs back into its hole. You hear some odd noises from inside the walls. There is a strange whirring noise from above the door frame.");
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [oploc1,loc_2862]
 if(%ball_progress < ^ball_unlocked_mousedoor) {

@@ -2,7 +2,7 @@
 vislevel=hide
 name=Shop keeper
 desc=If he doesn't have it, he can't sell it!
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade
@@ -36,7 +36,7 @@ moverestrict=indoors
 vislevel=hide
 name=Shop assistant
 desc=Is here on work experience.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade

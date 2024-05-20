@@ -2,7 +2,7 @@
 vislevel=hide
 name=Irena
 desc=A resident of Al-Kharid.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14724
@@ -28,7 +28,7 @@ param=death_sound,female_death
 vislevel=hide
 name=Shantay
 desc=He's in control of the Shantay pass.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade
@@ -58,7 +58,7 @@ param=shop_title,Shantay Pass Shop
 [shantay_guard]
 name=Shantay Guard
 desc=He patrols the Shantay Pass.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -105,7 +105,7 @@ param=attack_sound,stabsword_slash
 [shantay_pass_guard]
 name=Shantay Guard
 desc=He patrols the Shantay Pass.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 vislevel=22

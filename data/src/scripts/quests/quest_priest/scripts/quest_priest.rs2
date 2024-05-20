@@ -43,7 +43,7 @@ if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {
     ~mesbox("Maybe I should open it first.");
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [oplocu,loc_2146]
 if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {
@@ -57,7 +57,7 @@ if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [opobj3,ghost_skull]
 if(inv_total(inv, ghost_skull) > 0 | inv_total(bank, ghost_skull) > 0) {

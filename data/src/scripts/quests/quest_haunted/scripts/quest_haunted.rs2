@@ -30,7 +30,8 @@ sound_synth(door_open, 0, 0);
 
 [oplocu,loc_152]
 if(last_useitem ! spade) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 anim(human_dig, 0);
 mes("You dig through the compost heap.");
@@ -52,7 +53,8 @@ if(coordx(coord) <= coordx(loc_coord) & inv_total(inv, key_haunted) = 0) {
 
 [oplocu,loc_131]
 if(last_useitem ! key_haunted) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 @ernest_open_key_door;
 
@@ -99,7 +101,8 @@ mes("You poison the fish food.");
 
 [oplocu,loc_153]
 if(last_useitem ! poisoned_fish_good) { 
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 anim(human_pickpocket, 0);
 inv_del(inv, poisoned_fish_good, 1);

@@ -123,30 +123,32 @@ export function parseNpcConfig(key: string, value: string): ConfigValue | null |
 
         return index;
     } else if (key === 'walkanim') {
+        if (value.includes(',')) {
+            const anims = value.split(',');
+            const indices: number[] = [];
+
+            for (const anim of anims) {
+                const index = SeqPack.getByName(anim);
+                if (index === -1) {
+                    return null;
+                }
+
+                indices.push(index);
+            }
+
+            if (indices.length !== 4) {
+                return null;
+            }
+
+            return indices;
+        }
+
         const index = SeqPack.getByName(value);
         if (index === -1) {
             return null;
         }
 
         return index;
-    } else if (key === 'walkanims') {
-        const anims = value.split(',');
-        const indices: number[] = [];
-
-        for (const anim of anims) {
-            const index = SeqPack.getByName(anim);
-            if (index === -1) {
-                return null;
-            }
-
-            indices.push(index);
-        }
-
-        if (indices.length === 0) {
-            return null;
-        }
-
-        return indices;
     } else if (key === 'vislevel') {
         if (value === 'hide') {
             return 0;
@@ -312,20 +314,20 @@ export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                 client.p1(13);
                 client.p2(value as number);
             } else if (key === 'walkanim') {
-                client.p1(14);
-                client.p2(value as number);
+                if (Array.isArray(value)) {
+                    client.p1(17);
+                    client.p2(value[0] as number);
+                    client.p2(value[1] as number);
+                    client.p2(value[2] as number);
+                    client.p2(value[3] as number);
+                } else {
+                    client.p1(14);    
+                    client.p2(value as number);
+                }
             } else if (key === 'hasalpha') {
                 if (value === true) {
                     client.p1(16);
                 }
-            } else if (key === 'walkanims') {
-                client.p1(17);
-
-                const anims = value as number[];
-                client.p2(anims[0]);
-                client.p2(anims[1]);
-                client.p2(anims[2]);
-                client.p2(anims[3]);
             } else if (key === 'category') {
                 server.p1(18);
                 server.p2(value as number);

@@ -4,6 +4,10 @@ queue(prayer_activate, 0, 14);
 
 [label,activate_prayer_protectfrommissiles]
 def_dbrow $data = ~get_prayer_data(^prayer_protectfrommissiles);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 if (%prayer_protectfrommissiles = ^true) {
     %prayer_drain_effect = sub(%prayer_drain_effect, enum(int, int, prayer_drain_effects, ^prayer_protectfrommissiles));
     %prayer_protectfrommissiles = ^false;

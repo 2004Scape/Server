@@ -74,7 +74,8 @@ inv_add(inv, holy_grail, 1); // no space check
 
 [opheld1,magic_gold_feather]
 if(%grail_progress ! ^grail_finding_percival) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_coord $sack_coord = 0_46_54_16_51; // it looks like OSRS still uses this original coord (the sack was moved), only way the logic makes sense
 def_int $delta_x = calc(coordx($sack_coord) - coordx(coord));

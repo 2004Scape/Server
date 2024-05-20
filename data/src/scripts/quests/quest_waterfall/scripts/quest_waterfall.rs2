@@ -83,7 +83,8 @@ return(true);
 
 [oplocu,loc_1992]
 if (last_useitem ! glarials_pebble) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 // TODO: Check inv_totalcat for each category we need
 // Can't bring in jewelry, armour, runes, arrows, bows, or any type of logs?
@@ -191,7 +192,8 @@ p_teleport(^waterfall_fail_coord);
 // Rope on Rock
 [aplocu,loc_1996]
 if(last_useitem ! rope) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if(coordz(coord) <= coordz(loc_coord)) {
     mes("You don't see that being any help.");
@@ -226,7 +228,8 @@ mes("You are washed up by the river side.");
 
 [oplocu,loc_2020]
 if(last_useitem ! rope) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 mes("You tie the rope to the tree");
 p_delay(1);
@@ -325,7 +328,7 @@ if($is_outside = false) {
 if (last_useitem = golrie_key) {
     @waterfall_golrie_door;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [label,waterfall_golrie_door]
 def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
@@ -379,7 +382,7 @@ if(last_useitem = waterfall_key) {
     }
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [oplocu,loc_2006]
 def_obj $useitem = last_useitem;
@@ -408,7 +411,7 @@ if($useitem = glarials_amulet & %waterfall_progress = ^waterfall_entered_puzzle_
     ~damage_self(20); // OSRS wiki
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 //https://www.youtube.com/watch?v=b8aojMS0VDI&t=480s, https://www.youtube.com/watch?v=qfmXXQ68pis&t=344s
 [oploc1,loc_2014]
@@ -454,7 +457,7 @@ if(last_useitem = glarials_urn_full) {
     mes("two diamonds and two gold bars.");
     return;
 }
-@nothing_interesting_happens;
+~displaymessage(^dm_default);
 
 [queue,waterfall_quest_complete]
 %waterfall_progress = ^waterfall_complete;

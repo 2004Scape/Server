@@ -16,10 +16,5 @@ if (!fs.existsSync('data/config/login.json')) {
 
 fs.mkdirSync('data/players', { recursive: true });
 
-if (fs.existsSync('dump')) {
-    fs.rmSync('dump', { recursive: true, force: true });
-    fs.mkdirSync('dump', { recursive: true });
-}
-
 const login = new LoginServer();
 login.start();

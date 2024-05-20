@@ -1,6 +1,4 @@
 [opheldu,knife]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case lemon, orange, lime, pineapple : @slice_or_dice_interface(last_item);
     case achey_logs : @make_ogre_shafts;
@@ -9,44 +7,36 @@ switch_obj(last_useitem) {
         if (oc_category(last_useitem) = category_22) {
             @fletch_log(last_useitem);
         } else {
-            @nothing_interesting_happens;
+            ~displaymessage(^dm_default);
         }
 }
 
 [opheldu,lemon]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,orange]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,lime]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,pineapple]
-if_close;
-//p_stopaction;
 switch_obj(last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case knife : @slice_or_dice_interface(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,slice_or_dice_interface](obj $fruit)
@@ -65,7 +55,7 @@ switch_obj($fruit) {
     case pineapple :
         $sliced = pineapple_ring;
         $diced = pineapple_chunks;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 // https://youtu.be/cC26OwAULXM?t=257
 // lime is lower for some reason, need to look into this
@@ -73,6 +63,10 @@ def_namedobj $product = ~multiobj2("Would you like to...",
     $sliced, 0, -26, 175, "Slice the <lowercase(oc_name($fruit))>.", 5, -1,
     $diced, 0, -24, 175, "Dice the <lowercase(oc_name($fruit))>.", 4, -1
 );
+if ($product = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 inv_del(inv, $fruit, 1);
 if ($product = pineapple_ring) {
     inv_add(inv, $product, 4);

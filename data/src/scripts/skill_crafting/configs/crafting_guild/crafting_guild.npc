@@ -2,7 +2,7 @@
 name= Master crafter
 desc=The man in charge of the crafter's guild.
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=2340

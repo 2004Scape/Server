@@ -1,6 +1,6 @@
 [bailey]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 name=Bailey
@@ -43,7 +43,7 @@ param=death_anim,midget_death
 
 [holgart_island]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 name=Holgart
@@ -67,7 +67,7 @@ wanderrange=2
 
 [holgart_platform]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 name=Holgart
@@ -90,7 +90,7 @@ head2=model_82_idk_head
 
 [kent]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_staffready
 op1=Talk-to
 name=Kent
@@ -114,7 +114,7 @@ wanderrange=2
 
 [npc_702]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 name=Fisherman
@@ -137,7 +137,7 @@ category=fisherman_platform
 
 [npc_703]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 name=Fisherman
@@ -160,7 +160,7 @@ category=fisherman_platform
 
 [npc_704]
 vislevel=hide
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 name=Fisherman
@@ -185,7 +185,7 @@ category=fisherman_platform
 vislevel=hide
 name=Fisherman
 desc=Something fishy about him...
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 recol1s=2340
 recol1d=18788

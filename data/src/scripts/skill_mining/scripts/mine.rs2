@@ -25,7 +25,8 @@ if ($is_empty = ^true) {
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -70,7 +71,8 @@ if (%action_delay < map_clock) {
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
@@ -112,7 +114,8 @@ p_oploc(3);
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 // roll for gem
 def_int $chance = 256;
@@ -151,7 +154,8 @@ p_oploc(3);
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 // roll for gem
 def_int $chance = 256;
@@ -187,7 +191,8 @@ p_oploc(3);
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
 givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
@@ -200,7 +205,8 @@ p_oploc(3);
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
 if ($data = null) {
-    @nothing_interesting_happens;
+    ~displaymessage(^dm_default);
+    return;
 }
 def_int $low;
 def_int $high;

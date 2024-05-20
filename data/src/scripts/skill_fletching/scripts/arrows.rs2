@@ -2,14 +2,14 @@
 [opheldu,arrow_shaft]
 switch_obj(last_useitem) {
     case feather : @make_headless_arrows;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 // arrows
 [opheldu,_category_968]
 switch_obj(last_useitem) {
     case headless_arrow : @make_arrows(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,headless_arrow]
@@ -18,7 +18,7 @@ switch_obj(last_useitem) {
         if (oc_category(last_useitem) = category_968) {
             @make_arrows(last_useitem);
         } else {
-            @nothing_interesting_happens;
+            ~displaymessage(^dm_default);
         }
 }
 
@@ -43,6 +43,10 @@ inv_add(inv, headless_arrow, $arrow_count);
 [label,make_arrows](obj $arrow_tips)
 ~require_members_fletching;
 def_dbrow $data = ~get_fletching_data($arrow_tips);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 def_namedobj $product;
 def_int $max_count;
 $product, $max_count = db_getfield($data, fletching_table:product, 0);

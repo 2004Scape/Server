@@ -2,7 +2,7 @@
 vislevel=hide
 name=Ted Rehnison
 desc=The head of the Rehnison family.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14801
@@ -24,7 +24,7 @@ moverestrict=indoors
 vislevel=hide
 name=Martha Rehnison
 desc=A fairly poor looking woman.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14801

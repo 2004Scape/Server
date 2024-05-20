@@ -5,7 +5,7 @@ switch_int (%vampire_progress) {
     case ^quest_vampire_not_started: @morgan_before_vampire_slayer;
     case ^quest_vampire_started, ^quest_vampire_spoke_to_harlow: @morgan_during_vampire_slayer;
     case ^vampire_complete: @morgan_after_vampire_slayer;
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 [label,morgan_before_vampire_slayer]
@@ -17,7 +17,7 @@ switch_int (~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventur
     case 1: @morgan_decline_vampire_slayer;
     case 2: ~chatplayer(quiz, "Okay, I'm up for an adventure.");
     case 3: ~chatplayer(quiz, "Have you got any tips on killing the vampire?");
-    case default: @nothing_interesting_happens;
+    case default: ~displaymessage(^dm_default);
 }
 
 ~chatnpc(default, "I think first you should seek help. I have a friend who is a retired vampire hunter, his name is Dr. Harlow. He may be able to give you some tips. He can normally be found in the Jolly Boar Inn in Varrock, he's a bit of");

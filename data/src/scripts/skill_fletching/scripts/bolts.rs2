@@ -2,26 +2,26 @@
 [opheldu,opal]
 switch_obj(last_useitem) {
     case chisel : @make_bolt_tips(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,oyster_perl]
 switch_obj(last_useitem) {
     case chisel : @make_bolt_tips(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,oyster_perls]
 switch_obj(last_useitem) {
     case chisel : @make_bolt_tips(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 // bolts
 [opheldu,_category_530]
 switch_obj(last_useitem) {
     case bolt : @make_bolts(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 [opheldu,bolt]
 switch_obj(last_useitem) {
@@ -29,13 +29,17 @@ switch_obj(last_useitem) {
         if (oc_category(last_useitem) = category_530) {
             @make_bolts(last_useitem);
         } else {
-            @nothing_interesting_happens;
+            ~displaymessage(^dm_default);
         }
 }
 
 [label,make_bolt_tips](obj $item)
 ~require_members_fletching;
 def_dbrow $data = ~get_fletching_data($item);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 def_int $level = db_getfield($data, fletching_table:level, 0);
 if (stat(fletching) < $level) {
     // osrs
@@ -61,6 +65,10 @@ mes("You use your chisel to fletch small bolt tips.");
 [label,make_bolts](obj $bolt_tips)
 ~require_members_fletching;
 def_dbrow $data = ~get_fletching_data($bolt_tips);
+if ($data = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 def_int $level = db_getfield($data, fletching_table:level, 0);
 if (stat(fletching) < $level) {
     // osrs

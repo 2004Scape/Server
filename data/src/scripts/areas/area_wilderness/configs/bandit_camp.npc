@@ -2,7 +2,7 @@
 vislevel=hide
 name=Fat tony
 desc=An expert on Pizzas. Both making and eating.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade
@@ -37,7 +37,7 @@ moverestrict=indoors
 vislevel=hide
 name=Noterazzo
 desc=The lawless shop keeper.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op3=Trade
@@ -67,7 +67,7 @@ moverestrict=indoors
 [black_heather]
 name=Black Heather
 desc=Has a fearsome scowl.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -111,7 +111,7 @@ huntmode=cowardly
 [donny_the_lad]
 name=Donny the lad
 desc=Has a fearsome posture.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -154,7 +154,7 @@ huntmode=cowardly
 [speedy_keith]
 name=Speedy Keith
 desc=Nice hair.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack

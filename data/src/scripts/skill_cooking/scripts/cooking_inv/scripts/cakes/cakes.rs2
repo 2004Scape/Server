@@ -1,12 +1,12 @@
 [opheldu,cake_tin]
 switch_obj (last_useitem) {
     case pot_of_flour, egg, bucket_milk : @make_uncooked_cake;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 [opheldu,egg]
 switch_obj (last_useitem) {
     case cake_tin : @make_uncooked_cake;
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,bucket_milk]
@@ -14,13 +14,13 @@ switch_obj (last_useitem) {
     case cocktail_shaker : @add_cocktail_ingredient(last_item);
     case cake_tin : @make_uncooked_cake;
     case chocolate_dust : @make_chocolate_milk(last_useslot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,chocolaty_milk]
 switch_obj (last_useitem) {
     case snape_grass : @make_hangover_cure(last_useslot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,chocolate_bar]
@@ -33,7 +33,7 @@ switch_obj (last_useitem) {
     case pestle_and_mortar : ~attempt_grind_ingredient(last_useslot, last_slot);
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_crunchies : @add_crunchies_ingredient(last_item);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,chocolate_dust]
@@ -44,19 +44,19 @@ switch_int(oc_param(last_useitem, gnome_cooking_type)) {
 switch_obj (last_useitem) {
     case cake : @make_chocolate_cake(last_slot);
     case bucket_milk : @make_chocolate_milk(last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,snape_grass]
 switch_obj (last_useitem) {
     case chocolaty_milk : @make_hangover_cure(last_slot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [opheldu,cake]
 switch_obj (last_useitem) {
     case chocolate_bar, chocolate_dust : @make_chocolate_cake(last_useslot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 }
 
 [label,make_uncooked_cake]

@@ -2,7 +2,7 @@
 switch_obj (last_useitem)
 {
     case bowl_water, bucket_water, jug_of_water : @make_softclay(last_useitem);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [oplocu,potters_wheel]
@@ -10,14 +10,14 @@ switch_obj (last_useitem)
 {
     case soft_clay : @craft_pottery_interface;
     case clay : ~objbox(clay, "This clay is too hard to craft|You'll need to soften it with some water.");
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 [oplocu,pottery_oven]
 switch_obj (last_useitem)
 {
     case unfired_bowl, unfired_piedish, unfired_pot : @fire_pottery(last_useslot);
-    case default : @nothing_interesting_happens;
+    case default : ~displaymessage(^dm_default);
 };
 
 
@@ -43,6 +43,10 @@ def_namedobj $choice = ~multiobj3(
     unfired_piedish, 0, -4, 190, "Pie Dish", 0, 0, 
     unfired_bowl, 0, 0, 200, "Bowl", 0, 0
 );
+if ($choice = null) {
+    ~displaymessage(^dm_default);
+    return;
+}
 @craft_pottery($choice);
 
 // osrs is a weak queue that sets and checks %action_delay.
