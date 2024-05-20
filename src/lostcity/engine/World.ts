@@ -1,4 +1,7 @@
 import { Worker } from 'worker_threads';
+import fs from 'fs';
+import Watcher from 'watcher';
+import { basename } from 'path';
 
 import Packet from '#jagex2/io/Packet.js';
 
@@ -58,7 +61,6 @@ import ClientProt from '#lostcity/server/ClientProt.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
-import Watcher from 'watcher';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -95,6 +97,8 @@ class World {
 
     devWatcher: Watcher | null = null;
     devThread: Worker | null = null;
+    devRebuilding: boolean = false;
+    devMTime: Map<string, number> = new Map();
 
     constructor() {
         this.players.fill(null);
@@ -374,23 +378,42 @@ class World {
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
+                this.devRebuilding = false;
                 this.reload();
             }
         });
 
         this.devThread.on('exit', () => {
+            this.devRebuilding = false;
             this.broadcastMes('Error while rebuilding - see console for more info.');
             this.stopDevWatcher();
             this.startDevWatcher();
         });
 
-        this.devWatcher = new Watcher('./data/src', {
-            ignoreInitial: true,
-            ignore: /.*\.pack/,
+        this.devWatcher = new Watcher('./data/src/scripts', {
             recursive: true
         });
 
+        this.devWatcher.on('add', (targetPath: string) => {
+            const stat = fs.statSync(targetPath);
+            this.devMTime.set(targetPath, stat.mtimeMs);
+        });
+
         this.devWatcher.on('change', (targetPath: string) => {
+            const stat = fs.statSync(targetPath);
+            const known = this.devMTime.get(targetPath);
+
+            if (known && known >= stat.mtimeMs) {
+                return;
+            }
+
+            this.devMTime.set(targetPath, stat.mtimeMs);
+            if (this.devRebuilding) {
+                return;
+            }
+
+            console.log('dev:', basename(targetPath), 'was edited');
+            this.devRebuilding = true;
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {

@@ -46,3 +46,12 @@ coverage/
 public/loader.jar
 public/runescape*.jar
 public/downloads/LostCityInstaller.msi
+
+### Windows ###
+Thumbs.db
+[Dd]esktop.ini
+*.lnk
+
+### macOS ###
+.DS_Store
+._*
