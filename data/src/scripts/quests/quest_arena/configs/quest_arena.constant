@@ -1,0 +1,5 @@
+^arena_not_started = 0
+^arena_started = 1
+^arena_obtained_armour = 2
+^arena_spoken_drunkguard = 3
+^arena_given_khali_brew = 5

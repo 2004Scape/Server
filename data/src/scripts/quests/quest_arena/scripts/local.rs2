@@ -1,0 +1,20 @@
+[opnpc1,local]
+switch_int(%arena_progress) {
+    case ^arena_started, ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew:
+        // mesanims from rs3, lines up with this fortunately: https://web.archive.org/web/20051025134523im_/http://runeweb.net/rathofdoom/quests/fightarena/2.png
+        if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0) {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(happy, "I heard the Servil family are fighting soon. Should be very entertaining.");
+            return;
+        }
+        ~chatnpc(quiz, "Hello stranger, are you new to these parts?");
+        ~chatplayer(neutral, "I suppose I am.");
+        ~chatnpc(angry, "What's your business?");
+        ~chatplayer(neutral, "Just visiting friends in the cells.");
+        ~chatnpc(happy, "Visiting, that's funny.");
+        ~chatnpc(angry, "Only Khazard guards are allowed to see prisoners. Unless you know where to get some Khazard armour, you won't be visiting anyone.");
+    case ^arena_not_started:
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(quiz, "Hello stranger, are you new to these parts?|You look lost.");
+        ~chatnpc(happy, "I suppose you're here for the fight arena?|There are some rich folk fighting tomorrow.|Should be entertaining.");
+}

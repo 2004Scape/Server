@@ -1,0 +1,33 @@
+[opnpc1,lady_servil]
+switch_int(%arena_progress) {
+    case ^arena_spoken_drunkguard, ^arena_given_khali_brew:
+        ~chatplayer(neutral, "Lady Servil, I've managed to infiltrate General Khazard's arena.");
+        ~chatnpc(quiz, "And my family?");
+        ~chatplayer(neutral, "I'm working on it.");
+        ~chatnpc(sad, "Please hurry.");
+    case ^arena_obtained_armour: // TODO: check mesanims (maybe rs3?)
+        ~chatplayer(neutral, "Hello Lady Servil.");
+        ~chatnpc(quiz, "Have you had any luck with freeing my family?");
+        ~chatplayer(neutral, "I've managed to get a guard's uniform, hopefully I can infiltrate the arena.");
+        ~chatnpc(sad, "Please hurry.");
+    case ^arena_not_started:
+        ~chatplayer(neutral, "Hi there, looks like you're in some trouble.");
+        ~chatnpc(sad, "Oh I wish this broken cart was my only problem. sob.. I've got to find my family.. sob.");
+        switch_int(~p_choice2("I hope you can, good luck.", 1, "Can I help you?", 2)) {
+            case 1:
+                ~chatplayer(neutral, "I hope you can, good luck.");
+            case 2:
+                ~chatplayer(quiz, "Can I help you?");
+                ~chatnpc(sad, "Would you? Please?");
+                ~chatnpc(sad, "I'm Lady Servil, my husband is Sir Servil. We were travelling north together with our son Jeremy when we were ambushed by General Khazard's men.");
+                ~chatplayer(quiz, "General Khazard?");
+                ~chatnpc(sad, "He's been after me ever since I declined his hand in marriage.");
+                ~chatnpc(sad, "Now he's kidnapped my husband and son to fight in his battle arena to the south of here. I hate to think what he'll do to them. He's a sick and twisted man.");
+                %arena_progress = ^arena_started;
+                ~chatplayer(neutral, "I'll try my best to return your family.");
+                ~chatnpc(sad, "Please do. My family is wealthy and can reward you handsomely. I'll be waiting here for you.");
+        }
+    case default:
+        ~chatplayer(neutral, "Hello Lady Servil.");
+        ~chatnpc(sad, "Brave traveller, please... bring back my family.");
+}

@@ -1,0 +1,18 @@
+[apnpc1,jeremy_servil]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+switch_int(%arena_progress) {
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard:
+        // https://youtu.be/Oltfw1gvWjQ?si=_bu-CCXvPLSecu_N&t=120
+        ~chatplayer(neutral, "Hello.");
+        ~chatnpc(sad, "Please Sir, don't hurt me.");
+        if(~wearing_khazard_armour = true) {
+            ~chatplayer(neutral, "Sshh. This uniform is a disguise, I'm here to help. Where do they keep the keys?");
+        } else {
+            ~chatplayer(neutral, "Sshh. I'm here to help. Where do they keep the keys?");
+        }
+        ~chatnpc(sad, "The guard always keeps hold of them.");
+        ~chatplayer(neutral, "Don't lose heart, I'll be back.");
+}

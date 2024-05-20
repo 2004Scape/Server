@@ -1,0 +1,9 @@
+[apnpc1,hengrad] 
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+~chatplayer(quiz, "Do you know a Justin or Jeremy Servil?");
+~chatnpc(shifty, "You're not a real guard. I've been in here long enough to know that. What's your business?");
+~chatplayer(neutral, "I've been sent to rescue Sir Servil and his son.");
+~chatnpc(neutral, "I've seen them in here, although they don't look up to much. My advice to you is to leave before you end up in a cell too.");

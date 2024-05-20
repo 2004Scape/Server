@@ -1,0 +1,54 @@
+[apnpc1,kelvin] 
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+@joe_kelvin_dialogue(joe_fightslave);
+
+[apnpc1,joe_fightslave] 
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+@joe_kelvin_dialogue(kelvin); 
+
+[label,joe_kelvin_dialogue](npc $partner)
+switch_int(%arena_progress) {
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard:
+        if(~wearing_khazard_armour = true) {
+            if (.npc_finduid(~.npc_within_distance(coord, $partner, 3)) = true) { // uses other set if greater than 2 away in RS3
+                ~chatplayer(quiz, "Do either of you know a Justin or Sammy Servil?");
+                ~chatnpc(angry, "If we did, why would we tell you guard?");
+                ~.chatnpc(angry, "Until our last breath, our every action will be against Khazard. Never will we help you.");
+                ~chatnpc(angry, "I spit on Khazard's grave, and all who do his bidding.");
+                return;
+            }
+            ~chatplayer(quiz, "Do you know a Justin or Sammy Servil?");
+            ~chatnpc(angry, "If I did, why would I tell you guard?");
+        } else {
+            if (.npc_finduid(~.npc_within_distance(coord, $partner, 3)) = true) { // uses other set if greater than 2 away in RS3
+                ~chatplayer(quiz, "Do either of you know a Justin or Jeremy Servil?");
+                ~chatnpc(bored, "I have heard of those of whom you speak. But I fear it may be too late.");
+                ~.chatnpc(bored, "It is said that Khazard has a personal vendetta against those two, their time is therefore short.");
+                ~chatnpc(bored, "You're a brave <text_gender("man", "woman")>. If the guards get you, you'll be in here next.");
+                return;
+            }
+            ~chatplayer(quiz, "Do you know a Justin or Sammy Servil?");
+            ~chatnpc(bored, "I have heard of those of whom you speak. But I fear it may be too late.");
+        }
+}
+
+[apnpc1,fightslave]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+switch_int(%arena_progress) {
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard:
+        ~chatplayer(quiz, "Do you know of a Justin or Jeremy Servil in this arena?");
+        if(~wearing_khazard_armour = true) {
+            ~chatnpc(sad, "Please leave me alone.");
+        } else {
+            ~chatnpc(sad, "I've not met anybody in here by that name.");
+        }
+}

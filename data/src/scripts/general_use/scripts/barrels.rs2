@@ -11,6 +11,8 @@ switch_coord(loc_coord) {
     case default: @fill_beer_glass;
 }
 
+[oplocu,loc_885]
+mes("I don't think I can get free beer here."); // any obj, think it might only be this loc specifcially (no 886 to check on osrs, other pumps dont work)
 
 [label,fill_beer_glass]
 anim(human_pickupfloor, 0);

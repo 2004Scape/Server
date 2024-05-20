@@ -1,0 +1,39 @@
+// in osrs he has an apnpc script, this was added later: https://youtu.be/DMYjQrzmBT8?si=_caaKMIGPS5YeaRq&t=149
+[opnpc1,khazard_barman]
+~chatplayer(neutral, "Hello.");
+~chatnpc(happy, "Hi, what can I get you? We have a range of quality brews.");
+def_int $option;
+if(%arena_progress >= ^arena_spoken_drunkguard) {
+    $option = ~p_choice3("I'll have a beer please.", 1, "I'd like a Khali brew please.", 3, "Got any news?", 2);
+} else {
+    $option = ~p_choice2("I'll have a beer please.", 1, "Got any news?", 2);
+}
+switch_int($option) {
+    case 1:
+        ~chatplayer(happy, "I'll have a beer please.");
+        // chisel, wiki (historic) has it in the wrong order
+        if(inv_total(inv, coins) < 2) { 
+            ~chatnpc(neutral, "That'll be two coins please.");
+            ~chatplayer(sad, "Oh, I don't have enough money with me.");
+            return;
+        }
+        inv_del(inv, coins, 2);
+        inv_add(inv, beer, 1);
+        ~chatnpc(happy, "There you go, that's two gold coins.");
+    case 2:
+        // https://youtu.be/Oltfw1gvWjQ?si=LixZCKfHSm-zyTs7&t=238
+        ~chatplayer(quiz, "Got any news?");
+        ~chatnpc(happy, "If you want to see the action around here you should visit the famous Khazard fight arena. I've seen some grand battles in my time. Ogres, goblins, even dragons have fought there.");
+        ~chatnpc(sad, "Although you have to feel sorry for some of the slaves sent in there.");
+    case 3:
+        // https://youtu.be/Oltfw1gvWjQ?si=Khm5ce54r4JF8Ynx&t=225
+        ~chatplayer(happy, "I'd like a Khali brew please.");
+        if(inv_total(inv, coins) < 2) { 
+            ~chatnpc(neutral, "That'll be five gold coins please.");
+            ~chatplayer(sad, "Oh, I don't have enough money with me.");
+            return;
+        }
+        inv_del(inv, coins, 5);
+        inv_add(inv, khali_brew, 1);
+        ~chatnpc(happy, "There you go, that's five gold coins. I suggest lying down before you drink it. That way you have less distance to collapse.");
+}

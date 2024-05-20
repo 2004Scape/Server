@@ -1,0 +1,79 @@
+[oploc1,loc_75]
+mes("You open the chest.");
+~open_chest(loc_76);
+
+[oploc1,loc_76]
+// doesnt check bank in RS3, assuming this will probably work the same way
+def_int $armour_count = calc(inv_total(inv, khazard_armour) + inv_total(worn, khazard_armour));
+def_int $helmet_count = calc(inv_total(inv, khazard_helmet) + inv_total(worn, khazard_helmet)); 
+if(%arena_progress = 0 | ($armour_count > 0 & $helmet_count > 0)) {
+    mes("You search the chest, but find nothing.");
+    return;
+}
+if($armour_count > 0 & $helmet_count = 0) {
+    inv_add(inv, khazard_helmet, 1);
+    // assuming these 2 have linebreaks at the same point as below image
+    ~mesbox("You search the chest, and find the|helmet of a Khazard guard.");
+    return;
+}
+if($helmet_count > 0 & $armour_count = 0) {
+    inv_add(inv, khazard_armour, 1);
+    ~mesbox("You search the chest, and find the|armour of a Khazard guard.");
+    return;
+}
+if(%arena_progress = ^arena_started) {
+    %arena_progress = ^arena_obtained_armour;
+}
+inv_add(inv, khazard_armour, 1);
+inv_add(inv, khazard_helmet, 1);
+// https://web.archive.org/web/20050305053139im_/http://runevillage.com/images/rsfight2.gif
+~mesbox("You search the chest, and find the|helmet and armour of a Khazard guard.");
+
+[oploc1,loc_81]
+if(~check_axis(coord, loc_coord, loc_angle) = true) {
+    ~open_and_close_door(loc_1532, true, false);
+    return;
+}
+// no "locked" sound... (osrs has it): https://youtu.be/Oltfw1gvWjQ?si=pAK0N9CJmLUyWOBk&t=106
+~chatplayer(neutral, "This door appears to be locked.");
+if (npc_finduid(~npc_within_distance(coord, khazard_guard_cells, 5)) = false) {
+    return;
+}
+switch_int(%arena_progress) {
+    case default:
+        if(%arena_progress < ^arena_obtained_armour | (inv_total(worn, khazard_helmet) = 0 & inv_total(worn, khazard_armour) = 0)) {
+            ~chatnpc(angry, "Yeah, it's to prevent people like you bothering us. Get out of here.");
+            return;
+        }
+        ~chatnpc(bored, "Nice observation guard. You could have just asked to be let in like a normal person.");
+}
+~open_and_close_door(loc_1532, false, false);
+
+[proc,wearing_khazard_armour](boolean)
+if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0) {
+    return (true);
+}
+return (false);
+
+[oploc1,loc_79]
+mes("The door appears to be locked."); // RS3
+
+[oploc1,loc_80]
+mes("The cell gate is securely locked."); // RS3
+
+[oplocu,loc_79]
+// use keys
+if(last_useitem = khazard_cell_keys) {
+    ~chatplayer(neutral, "The gate is locked, but Jeremy's not in there anyway."); // chisel
+    return;
+}  
+
+[oploc1,loc_82]
+if(~check_axis(coord, loc_coord, loc_angle) = true) {
+    if (npc_finduid(~npc_within_distance(coord, khazard_guard_standard, 5)) = false) {
+        mes("This door appears to be locked.");
+        return;
+    }
+    ~chatnpc(angry, "And where do you think you're going? Only General Khazard decides who fights in the arena. Get out of here.");
+}
+//~open_and_close_door(loc_1532, false, false);
