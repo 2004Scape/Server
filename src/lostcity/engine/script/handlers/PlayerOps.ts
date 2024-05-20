@@ -30,6 +30,7 @@ import {
     SpotAnimTypeValid,
 } from '#lostcity/engine/script/ScriptValidators.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
+import Interaction from '#lostcity/entity/Interaction.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
@@ -319,7 +320,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
-        state.activePlayer.setInteraction(state.activeLoc, ServerTriggerType.APLOC1 + type);
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeLoc, ServerTriggerType.APLOC1 + type);
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, state => {
@@ -330,7 +331,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
-        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPC1 + type, {type: state.activeNpc.type, com: -1});
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPC1 + type, {type: state.activeNpc.type, com: -1});
     }),
 
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
@@ -338,7 +339,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
-        state.activePlayer.setInteraction(state.activeNpc, ServerTriggerType.APNPCT, {type: state.activeNpc.type, com: spellId});
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT, {type: state.activeNpc.type, com: spellId});
     }),
 
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, state => {
@@ -834,7 +835,7 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
-        state.activePlayer.setInteraction(state.activeObj, ServerTriggerType.APOBJ1 + type);
+        state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, state => {
@@ -849,7 +850,7 @@ const PlayerOps: CommandHandlers = {
         if (!target) {
             return;
         }
-        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYER1 + type);
+        state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYER1 + type);
     }),
 
     [ScriptOpcode.ALLOWDESIGN]: state => {
@@ -954,7 +955,7 @@ const PlayerOps: CommandHandlers = {
         if (!target) {
             return;
         }
-        state.activePlayer.setInteraction(target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
+        state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
     }),
 };
 

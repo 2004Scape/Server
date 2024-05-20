@@ -58,6 +58,7 @@ import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import {tryParseInt} from '#lostcity/util/TryParse.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
+import Interaction from '#lostcity/entity/Interaction.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -1014,8 +1015,8 @@ export default class Player extends PathingEntity {
         }
     }
 
-    setInteraction(target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: {type: number, com: number}) {
-        if (this.hasWaypoints()) {
+    setInteraction(interaction: Interaction, target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: {type: number, com: number}) {
+        if (interaction === Interaction.SCRIPT && this.hasWaypoints()) {
             return;
         }
         if (this.delayed()) {
@@ -1049,7 +1050,9 @@ export default class Player extends PathingEntity {
             this.faceZ = target.z * 2 + 1;
             this.mask |= Player.FACE_COORD;
         }
-        this.pathToTarget();
+        if (interaction === Interaction.SCRIPT) {
+            this.pathToTarget();
+        }
     }
 
     clearInteraction() {
