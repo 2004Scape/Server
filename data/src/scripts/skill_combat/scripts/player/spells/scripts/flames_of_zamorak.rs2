@@ -24,7 +24,7 @@ if (~player_npc_hit_roll(^magic_style) = true) {
 }
 if (%flames_of_zamorak_casts = ^mage_arena_spell_last_cast) {
     // https://youtu.be/cX7x62vqRV0?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=439
-    mes("You can now cast Flames of Zamorak outside the arena.");
+    mes("You can now cast Flames of Zamorak outside the Arena.");
     %flames_of_zamorak_casts = ^mage_arena_spell_finished;
     ~mesbox("Congratulations. Your ability to summon the Flames of Zamorak has|improved. You may now use this spell outside of the Arena.");
 } else if (%flames_of_zamorak_casts < ^mage_arena_spell_last_cast) {
