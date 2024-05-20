@@ -40,5 +40,5 @@ export default {
     STRICT_FOLDERS: tryParseBoolean(process.env.STRICT_FOLDERS, true),
 
     JMODS: tryParseArray(process.env.JMODS?.split(','), ['pazaz']),
-    CLIENT_PATHFINDER: tryParseBoolean(process.env.CLIENT_PATHFINDER, false),
+    CLIENT_PATHFINDER: tryParseBoolean(process.env.CLIENT_PATHFINDER, true),
 };
