@@ -56,7 +56,7 @@ export class NetworkPlayer extends Player {
         this.lastResponse = World.currentTick;
 
         const path: number[] = [];
-        let repath: boolean = false;
+        let opcalled: boolean = false;
 
         while (this.client.inOffset > offset) {
             const packetType = ClientProt.byId[this.client.in[offset++]];
@@ -131,6 +131,7 @@ export class NetworkPlayer extends Player {
 
                 if (this.delayed() || running < 0 || running > 1 || Position.distanceToSW(this, {x: startX, z: startZ}) > 104) {
                     this.unsetMapFlag();
+                    path.length = 0;
                     continue;
                 }
 
@@ -642,9 +643,7 @@ export class NetworkPlayer extends Player {
                 }
 
                 this.setInteraction(Interaction.ENGINE, loc, mode);
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPLOCU) {
                 const x = data.g2();
                 const z = data.g2();
@@ -696,9 +695,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCU);
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPLOCT) {
                 const x = data.g2();
                 const z = data.g2();
@@ -730,9 +727,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCT, {type: loc.type, com: spellComId});
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPNPC1 || packetType === ClientProt.OPNPC2 || packetType === ClientProt.OPNPC3 || packetType === ClientProt.OPNPC4 || packetType === ClientProt.OPNPC5) {
                 const nid = data.g2();
 
@@ -774,9 +769,7 @@ export class NetworkPlayer extends Player {
                 }
 
                 this.setInteraction(Interaction.ENGINE, npc, mode, {type: npc.type, com: -1});
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPNPCU) {
                 const nid = data.g2();
                 const item = data.g2();
@@ -822,9 +815,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU, {type: npc.type, com: -1});
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPNPCT) {
                 const nid = data.g2();
                 const spellComId = data.g2();
@@ -850,9 +841,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCT, {type: npc.type, com: spellComId});
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPOBJ1 || packetType === ClientProt.OPOBJ2 || packetType === ClientProt.OPOBJ3 || packetType === ClientProt.OPOBJ4 || packetType === ClientProt.OPOBJ5) {
                 const x = data.g2();
                 const z = data.g2();
@@ -895,9 +884,7 @@ export class NetworkPlayer extends Player {
                 }
 
                 this.setInteraction(Interaction.ENGINE, obj, mode);
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPOBJU) {
                 const x = data.g2();
                 const z = data.g2();
@@ -950,9 +937,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJU);
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPOBJT) {
                 const x = data.g2();
                 const z = data.g2();
@@ -984,9 +969,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJT, {type: obj.type, com: spellComId});
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPPLAYER1 || packetType === ClientProt.OPPLAYER2 || packetType === ClientProt.OPPLAYER3 || packetType === ClientProt.OPPLAYER4) {
                 const pid = data.g2();
 
@@ -1013,9 +996,7 @@ export class NetworkPlayer extends Player {
                 }
 
                 this.setInteraction(Interaction.ENGINE, player, mode);
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPPLAYERU) {
                 const pid = data.g2();
                 const item = data.g2();
@@ -1061,9 +1042,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, player, ServerTriggerType.APPLAYERU, {type: item, com: -1});
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.OPPLAYERT) {
                 const pid = data.g2();
                 const spellComId = data.g2();
@@ -1091,9 +1070,7 @@ export class NetworkPlayer extends Player {
                 this.clearInteraction();
                 this.closeModal();
                 this.setInteraction(Interaction.ENGINE, player, ServerTriggerType.APPLAYERT, {type: -1, com: spellComId});
-                if (path.length === 0) {
-                    repath = true;
-                }
+                opcalled = true;
             } else if (packetType === ClientProt.FRIENDLIST_ADD) {
                 const other = data.g8();
 
@@ -1125,7 +1102,7 @@ export class NetworkPlayer extends Player {
 
         this.client?.reset();
 
-        if (path.length > 0 || repath) {
+        if (path.length > 0 || opcalled) {
             if (this.delayed()) {
                 this.unsetMapFlag();
                 return;
@@ -1136,7 +1113,7 @@ export class NetworkPlayer extends Player {
                 this.mask |= Player.FACE_ENTITY;
             }
 
-            if (repath) {
+            if (opcalled && (path.length === 0 || !Environment.CLIENT_PATHFINDER)) {
                 this.pathToTarget();
                 return;
             }
