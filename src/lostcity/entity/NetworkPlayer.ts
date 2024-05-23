@@ -83,7 +83,7 @@ export class NetworkPlayer extends Player {
                 for (let i = 0; i < requested.length; i++) {
                     const { type, x, z } = requested[i];
 
-                    const CHUNK_SIZE = 5000 - 1 - 2 - 1 - 1 - 2 - 2;
+                    const CHUNK_SIZE = 1000 - 1 - 2 - 1 - 1 - 2 - 2;
                     if (type == 0) {
                         const land = PRELOADED.get(`m${x}_${z}`);
                         if (!land) {
@@ -91,10 +91,10 @@ export class NetworkPlayer extends Player {
                         }
 
                         for (let off = 0; off < land.length; off += CHUNK_SIZE) {
-                            this.write(ServerProt.DATA_LAND, x, z, off, land.length, land.subarray(off, off + CHUNK_SIZE));
+                            this.writeHighPriority(ServerProt.DATA_LAND, x, z, off, land.length, land.subarray(off, off + CHUNK_SIZE));
                         }
 
-                        this.write(ServerProt.DATA_LAND_DONE, x, z);
+                        this.writeHighPriority(ServerProt.DATA_LAND_DONE, x, z);
                     } else if (type == 1) {
                         const loc = PRELOADED.get(`l${x}_${z}`);
                         if (!loc) {
@@ -102,10 +102,10 @@ export class NetworkPlayer extends Player {
                         }
 
                         for (let off = 0; off < loc.length; off += CHUNK_SIZE) {
-                            this.write(ServerProt.DATA_LOC, x, z, off, loc.length, loc.subarray(off, off + CHUNK_SIZE));
+                            this.writeHighPriority(ServerProt.DATA_LOC, x, z, off, loc.length, loc.subarray(off, off + CHUNK_SIZE));
                         }
 
-                        this.write(ServerProt.DATA_LOC_DONE, x, z);
+                        this.writeHighPriority(ServerProt.DATA_LOC_DONE, x, z);
                     }
                 }
             } else if (packetType === ClientProt.MOVE_GAMECLICK || packetType === ClientProt.MOVE_MINIMAPCLICK || packetType === ClientProt.MOVE_OPCLICK) {
@@ -375,7 +375,7 @@ export class NetworkPlayer extends Player {
 
                 if (this.delayed()) {
                     // do nothing; revert the client visual
-                    this.write(ServerProt.UPDATE_INV_PARTIAL, comId, inv, [slot, targetSlot]);
+                    this.writeLowPriority(ServerProt.UPDATE_INV_PARTIAL, comId, inv, [slot, targetSlot]);
                     continue;
                 }
 
@@ -1134,7 +1134,7 @@ export class NetworkPlayer extends Player {
 
         if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
             if (this.refreshModalClose) {
-                this.write(ServerProt.IF_CLOSE);
+                this.writeLowPriority(ServerProt.IF_CLOSE);
             }
             this.refreshModalClose = false;
 
@@ -1145,27 +1145,38 @@ export class NetworkPlayer extends Player {
 
         if (this.refreshModal) {
             if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
-                this.write(ServerProt.IF_OPENMAINSIDEMODAL, this.modalTop, this.modalSidebar);
+                this.writeLowPriority(ServerProt.IF_OPENMAINSIDEMODAL, this.modalTop, this.modalSidebar);
             } else if ((this.modalState & 1) === 1) {
-                this.write(ServerProt.IF_OPENMAINMODAL, this.modalTop);
+                this.writeLowPriority(ServerProt.IF_OPENMAINMODAL, this.modalTop);
             } else if ((this.modalState & 2) === 2) {
-                this.write(ServerProt.IF_OPENCHATMODAL, this.modalBottom);
+                this.writeLowPriority(ServerProt.IF_OPENCHATMODAL, this.modalBottom);
             } else if ((this.modalState & 4) === 4) {
-                this.write(ServerProt.IF_OPENSIDEMODAL, this.modalSidebar);
+                this.writeLowPriority(ServerProt.IF_OPENSIDEMODAL, this.modalSidebar);
             }
 
             this.refreshModal = false;
         }
 
-        for (let packet: Packet | null = this.netOut.pop() as Packet | null; packet; packet = this.netOut.pop() as Packet | null) {
+        for (let packet: Packet | null = this.highPriorityOut.head(); packet !== null; packet = this.highPriorityOut.next()) {
             if (this.client.encryptor) {
                 packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
             }
             World.lastCycleBandwidth[1] += packet.pos;
 
             this.client.write(packet);
-
             packet.release();
+            packet.uncache();
+        }
+
+        for (let packet: Packet | null = this.lowPriorityOut.head(); packet !== null; packet = this.lowPriorityOut.next()) {
+            if (this.client.encryptor) {
+                packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
+            }
+            World.lastCycleBandwidth[1] += packet.pos;
+
+            this.client.write(packet);
+            packet.release();
+            packet.uncache();
         }
 
         this.client.flush();
