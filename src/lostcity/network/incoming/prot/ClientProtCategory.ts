@@ -1,6 +1,7 @@
 export default class ClientProtCategory {
     // todo: measure how many events we should expect to receive from the client
     // osrs has this as 50/10 but we know that's not true in rs2
+    // todo: determine which packets belong in which category for this era
     static CLIENT_EVENT = new ClientProtCategory(0, 20);
     static USER_EVENT = new ClientProtCategory(1, 5);
 

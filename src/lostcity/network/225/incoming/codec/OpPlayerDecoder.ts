@@ -1,17 +1,15 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import InvButton from '#lostcity/network/225/incoming/InvButton.js';
+import OpPlayer from '#lostcity/network/225/incoming/OpPlayer.js';
 
-export default class InvButtonDecoder extends MessageDecoder<InvButton> {
+export default class OpPlayerDecoder extends MessageDecoder<OpPlayer> {
     constructor(readonly prot: ClientProt, readonly op: number) {
         super();
     }
 
     decode(buf: Packet) {
-        const obj = buf.g2();
-        const slot = buf.g2();
-        const component = buf.g2();
-        return new InvButton(this.op, obj, slot, component);
+        const pid = buf.g2();
+        return new OpPlayer(this.op, pid);
     }
 }

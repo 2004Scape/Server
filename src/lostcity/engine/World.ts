@@ -57,10 +57,10 @@ import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import ClientProt from '#lostcity/server/ClientProt.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 
 class World {
     id = Environment.WORLD_ID as number;

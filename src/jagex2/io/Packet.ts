@@ -138,6 +138,10 @@ export default class Packet extends Hashable {
         return this.data.length - this.pos;
     }
 
+    get length(): number {
+        return this.data.length;
+    }
+
     release(): void {
         this.pos = 0;
         this.bitPos = 0;
