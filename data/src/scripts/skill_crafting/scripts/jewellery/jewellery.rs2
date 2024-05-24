@@ -281,6 +281,7 @@ def_struct $struct = oc_param($product, crafting_jewelry_struct);
 
 anim(human_furnace, 0);
 sound_synth(furnace, 0, 0);
+if_close;
 // osrs is 4 ticks on first
 // openrsc uses delay(2); 2 ticks on first, 3 ticks on remaining
 // ill just make it 3 ticks for now
@@ -290,7 +291,7 @@ inv_add(inv, $product, 1);
 givexp(crafting, struct_param($struct, productexp));
 // Confirmed, no period at the end. https://i.imgur.com/sCKRVO9.png
 mes("You make <~add_article(struct_param($struct, name))>");
-//if_close;
+
 // weakqueue(crafting_silver, 1, $productexp, $product);
 //----------------------
 

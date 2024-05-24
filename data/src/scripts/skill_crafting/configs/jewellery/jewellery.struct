@@ -118,7 +118,7 @@ param=name,Holy Symbol of Saradomin
 
 [unstrung_emblem]
 param=product,unstrung_emblem
-param=strung,unholy_symbol
+param=strung,unpowered_symbol
 param=levelrequired,17
 param=productexp,500
 param=name,Unholy Symbol of Zamorak
