@@ -447,7 +447,7 @@ class World {
                 continue;
             }
 
-            player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
+            player.writeLowPriority(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
         }
     }
 
@@ -746,7 +746,8 @@ class World {
             this.newPlayers.splice(i--, 1);
 
             if (this.shutdownTick > -1) {
-                player.write(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
+                // todo: confirm if reboot timer is low or high priority
+                player.writeLowPriority(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
             }
 
             if (player instanceof NetworkPlayer && player.client) {

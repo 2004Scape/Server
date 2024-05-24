@@ -270,7 +270,8 @@ export default class Player extends PathingEntity {
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
 
-    netOut: Stack = new Stack();
+    highPriorityOut: Stack<Packet> = new Stack();
+    lowPriorityOut: Stack<Packet> = new Stack();
     lastResponse = -1;
 
     mask: number = 0;
@@ -425,21 +426,21 @@ export default class Player extends PathingEntity {
         this.playerLog('Logging in');
 
         // normalize client between logins
-        this.write(ServerProt.IF_CLOSE);
-        this.write(ServerProt.UPDATE_UID192, this.pid);
+        this.writeLowPriority(ServerProt.IF_CLOSE);
+        this.writeHighPriority(ServerProt.UPDATE_UID192, this.pid); // todo: low or high priority
         this.unsetMapFlag();
-        this.write(ServerProt.RESET_ANIMS);
+        this.writeHighPriority(ServerProt.RESET_ANIMS); // todo: low or high priority
 
-        this.write(ServerProt.RESET_CLIENT_VARCACHE);
+        this.writeHighPriority(ServerProt.RESET_CLIENT_VARCACHE);
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
 
             if (type.transmit) {
                 if (value < 256) {
-                    this.write(ServerProt.VARP_SMALL, varp, value);
+                    this.writeHighPriority(ServerProt.VARP_SMALL, varp, value);
                 } else {
-                    this.write(ServerProt.VARP_LARGE, varp, value);
+                    this.writeHighPriority(ServerProt.VARP_LARGE, varp, value);
                 }
             }
         }
@@ -845,7 +846,7 @@ export default class Player extends PathingEntity {
             }
 
             this.modalSticky = -1;
-            this.write(ServerProt.TUTORIAL_OPENCHAT, -1);
+            this.writeLowPriority(ServerProt.TUTORIAL_OPENCHAT, -1);
         }
     }
 
@@ -1342,7 +1343,7 @@ export default class Player extends PathingEntity {
                 // todo: receiver/shared buffer logic
                 if (typeof this.loadedZones[zone.index] === 'undefined') {
                     // full update necessary to clear client zone memory
-                    this.write(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
+                    this.writeHighPriority(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
                     this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
                 }
 
@@ -1351,7 +1352,7 @@ export default class Player extends PathingEntity {
                 });
 
                 if (updates.length) {
-                    this.write(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
+                    this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
 
                     for (let i = 0; i < updates.length; i++) {
                         // have to copy because encryption will be applied to buffer
@@ -1364,7 +1365,7 @@ export default class Player extends PathingEntity {
                         out.pos = pos;
 
                         // the packet is released elsewhere.
-                        this.netOut.push(out);
+                        this.highPriorityOut.push(out);
                     }
                 }
 
@@ -1557,7 +1558,7 @@ export default class Player extends PathingEntity {
         // debug.pdata(bitBlock);
         // debug.pdata(byteBlock);
         // debug.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
-        this.write(ServerProt.PLAYER_INFO, bitBlock, byteBlock);
+        this.writeHighPriority(ServerProt.PLAYER_INFO, bitBlock, byteBlock);
     }
 
     getAppearanceInSlot(slot: number) {
@@ -1983,20 +1984,20 @@ export default class Player extends PathingEntity {
         // debug.pdata(bitBlock);
         // debug.pdata(byteBlock);
         // debug.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
-        this.write(ServerProt.NPC_INFO, bitBlock, byteBlock);
+        this.writeHighPriority(ServerProt.NPC_INFO, bitBlock, byteBlock);
     }
 
     updateStats() {
         for (let i = 0; i < this.stats.length; i++) {
             if (this.stats[i] !== this.lastStats[i] || this.levels[i] !== this.lastLevels[i]) {
-                this.write(ServerProt.UPDATE_STAT, i, this.stats[i], this.levels[i]);
+                this.writeLowPriority(ServerProt.UPDATE_STAT, i, this.stats[i], this.levels[i]);
                 this.lastStats[i] = this.stats[i];
                 this.lastLevels[i] = this.levels[i];
             }
         }
 
         if (Math.floor(this.runenergy) / 100 !== Math.floor(this.lastRunEnergy) / 100) {
-            this.write(ServerProt.UPDATE_RUNENERGY, this.runenergy);
+            this.writeLowPriority(ServerProt.UPDATE_RUNENERGY, this.runenergy);
             this.lastRunEnergy = this.runenergy;
         }
     }
@@ -2016,6 +2017,7 @@ export default class Player extends PathingEntity {
         }
     }
 
+    // todo: partial updates
     updateInvs() {
         let runWeightChanged = false;
 
@@ -2033,7 +2035,7 @@ export default class Player extends PathingEntity {
                 }
 
                 if (inv.update || listener.firstSeen) {
-                    this.write(ServerProt.UPDATE_INV_FULL, listener.com, inv);
+                    this.writeLowPriority(ServerProt.UPDATE_INV_FULL, listener.com, inv);
                     listener.firstSeen = false;
                 }
             } else {
@@ -2049,7 +2051,7 @@ export default class Player extends PathingEntity {
                 }
 
                 if (inv.update || listener.firstSeen) {
-                    this.write(ServerProt.UPDATE_INV_FULL, listener.com, inv);
+                    this.writeLowPriority(ServerProt.UPDATE_INV_FULL, listener.com, inv);
                     listener.firstSeen = false;
 
                     const invType = InvType.get(listener.type);
@@ -2067,7 +2069,7 @@ export default class Player extends PathingEntity {
         }
 
         if (runWeightChanged) {
-            this.write(ServerProt.UPDATE_RUNWEIGHT, Math.ceil(this.runweight / 1000));
+            this.writeLowPriority(ServerProt.UPDATE_RUNWEIGHT, Math.ceil(this.runweight / 1000));
         }
     }
 
@@ -2123,7 +2125,8 @@ export default class Player extends PathingEntity {
         }
 
         this.invListeners.splice(index, 1);
-        this.write(ServerProt.UPDATE_INV_STOP_TRANSMIT, com);
+        // this one is high, but the other update_invs are low
+        this.writeHighPriority(ServerProt.UPDATE_INV_STOP_TRANSMIT, com);
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -2335,9 +2338,9 @@ export default class Player extends PathingEntity {
 
             if (varp.transmit) {
                 if (value >= 0x80) {
-                    this.write(ServerProt.VARP_LARGE, id, value);
+                    this.writeHighPriority(ServerProt.VARP_LARGE, id, value);
                 } else {
-                    this.write(ServerProt.VARP_SMALL, id, value);
+                    this.writeHighPriority(ServerProt.VARP_SMALL, id, value);
                 }
             }
         }
@@ -2449,7 +2452,7 @@ export default class Player extends PathingEntity {
         if (song && crc) {
             const length = song.length;
 
-            this.write(ServerProt.MIDI_SONG, name, crc, length);
+            this.writeLowPriority(ServerProt.MIDI_SONG, name, crc, length);
         }
     }
 
@@ -2460,13 +2463,13 @@ export default class Player extends PathingEntity {
         }
         const jingle = PRELOADED.get(name + '.mid');
         if (jingle) {
-            this.write(ServerProt.MIDI_JINGLE, delay, jingle);
+            this.writeLowPriority(ServerProt.MIDI_JINGLE, delay, jingle);
         }
     }
 
     openMainModal(com: number) {
         if (this.modalState & 4) {
-            this.write(ServerProt.IF_CLOSE); // need to close sidemodal
+            this.writeLowPriority(ServerProt.IF_CLOSE); // need to close sidemodal
             this.modalState &= ~4;
             this.modalSidebar = -1;
         }
@@ -2489,7 +2492,7 @@ export default class Player extends PathingEntity {
     }
 
     openChatSticky(com: number) {
-        this.write(ServerProt.TUTORIAL_OPENCHAT, com);
+        this.writeLowPriority(ServerProt.TUTORIAL_OPENCHAT, com);
         this.modalState |= 8;
         this.modalSticky = com;
     }
@@ -2519,7 +2522,7 @@ export default class Player extends PathingEntity {
 
     setTab(com: number, tab: number) {
         this.overlaySide[tab] = com;
-        this.write(ServerProt.IF_OPENSIDEOVERLAY, com, tab);
+        this.writeLowPriority(ServerProt.IF_OPENSIDEOVERLAY, com, tab);
     }
 
     isComponentVisible(com: Component) {
@@ -2597,9 +2600,9 @@ export default class Player extends PathingEntity {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    write(packetType: ServerProt, ...args: any[]) {
+    private writeInner(packetType: ServerProt, ...args: any[]): Packet | null {
         if (!ServerProtEncoders[packetType.id]) {
-            return;
+            return null;
         }
 
         let buf: Packet;
@@ -2628,33 +2631,53 @@ export default class Player extends PathingEntity {
             buf.psize2(buf.pos - start);
         }
 
-        // the packet is released elsewhere.
-        this.netOut.push(buf);
+        return buf;
+    }
+
+    writeHighPriority(packetType: ServerProt, ...args: any[]) {
+        const buf = this.writeInner(packetType, ...args);
+        if (buf === null) {
+            return;
+        }
+
+        this.highPriorityOut.push(buf);
+    }
+
+    writeLowPriority(packetType: ServerProt, ...args: any[]) {
+        const buf = this.writeInner(packetType, ...args);
+        if (buf === null) {
+            return;
+        }
+
+        this.lowPriorityOut.push(buf);
     }
 
     unsetMapFlag() {
         this.clearWaypoints();
-        this.write(ServerProt.UNSET_MAP_FLAG);
+        // in OSRS, SET_MAP_FLAG is high priority
+        this.writeHighPriority(ServerProt.UNSET_MAP_FLAG);
     }
 
     hintNpc(nid: number) {
-        this.write(ServerProt.HINT_ARROW, 1, nid, 0, 0, 0, 0);
+        // todo: is HINT_ARROW low or high priority?
+        this.writeLowPriority(ServerProt.HINT_ARROW, 1, nid, 0, 0, 0, 0);
     }
 
     hintTile(offset: number, x: number, z: number, height: number) {
-        this.write(ServerProt.HINT_ARROW, offset, 0, 0, x, z, height);
+        this.writeLowPriority(ServerProt.HINT_ARROW, offset, 0, 0, x, z, height);
     }
 
     hintPlayer(pid: number) {
-        this.write(ServerProt.HINT_ARROW, 10, 0, pid, 0, 0, 0);
+        this.writeLowPriority(ServerProt.HINT_ARROW, 10, 0, pid, 0, 0, 0);
     }
 
     stopHint() {
-        this.write(ServerProt.HINT_ARROW, -1, 0, 0, 0, 0, 0);
+        this.writeLowPriority(ServerProt.HINT_ARROW, -1, 0, 0, 0, 0, 0);
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
-        this.write(ServerProt.LAST_LOGIN_INFO, lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount);
+        // this is like an interface packet so assume low priority
+        this.writeLowPriority(ServerProt.LAST_LOGIN_INFO, lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount);
         this.modalState |= 16;
     }
 
@@ -2667,7 +2690,7 @@ export default class Player extends PathingEntity {
     }
 
     messageGame(msg: string) {
-        this.write(ServerProt.MESSAGE_GAME, msg);
+        this.writeHighPriority(ServerProt.MESSAGE_GAME, msg);
     }
 
     rebuildNormal(zoneX: number, zoneZ: number) {
@@ -2703,6 +2726,6 @@ export default class Player extends PathingEntity {
         out.psize2(out.pos - start);
 
         // the packet is released elsewhere.
-        this.netOut.push(out);
+        this.highPriorityOut.push(out);
     }
 }
