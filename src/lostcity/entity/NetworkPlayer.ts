@@ -35,6 +35,8 @@ import Player from '#lostcity/entity/Player.js';
 import { PRELOADED } from '#lostcity/entity/PreloadedPacks.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import Interaction from '#lostcity/entity/Interaction.js';
+import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
+import InvButton from '#lostcity/network/225/incoming/InvButton.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -69,7 +71,67 @@ export class NetworkPlayer extends Player {
             const data = new Packet(this.client.in.slice(offset, offset + length));
             offset += length;
 
-            if (packetType === ClientProt.REBUILD_GETMAPS) {
+            const newLogic = ClientProtRepository.get(packetType);
+            if (newLogic) {
+                const message = newLogic.decode(data);
+
+                // todo: register these handlers in a different place / separate functions :)
+                if (message instanceof InvButton) {
+                    // todo: this was pretty much just copy-pasted from the last handler, could use a rewrite/cleanup after this new network code
+                    // jagex has if_button1-5
+                    const { op, item, slot, component: comId } = message;
+
+                    const com = Component.get(comId);
+                    if (typeof com === 'undefined' || !com.inventoryOptions || !com.inventoryOptions.length || !this.isComponentVisible(com)) {
+                        continue;
+                    }
+
+                    if (!com.inventoryOptions[op - 1]) {
+                        continue;
+                    }
+
+                    const listener = this.invListeners.find(l => l.com === comId);
+                    if (!listener) {
+                        continue;
+                    }
+
+                    const inv = this.getInventoryFromListener(listener);
+                    if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                        continue;
+                    }
+
+                    if (this.delayed()) {
+                        continue;
+                    }
+
+                    this.lastItem = item;
+                    this.lastSlot = slot;
+
+                    let trigger: ServerTriggerType;
+                    if (op === 1) {
+                        trigger = ServerTriggerType.INV_BUTTON1;
+                    } else if (op === 2) {
+                        trigger = ServerTriggerType.INV_BUTTON2;
+                    } else if (op === 3) {
+                        trigger = ServerTriggerType.INV_BUTTON3;
+                    } else if (op === 4) {
+                        trigger = ServerTriggerType.INV_BUTTON4;
+                    } else {
+                        trigger = ServerTriggerType.INV_BUTTON5;
+                    }
+
+                    const script = ScriptProvider.getByTrigger(trigger, comId, -1);
+                    if (script) {
+                        const root = Component.get(com.rootLayer);
+
+                        this.executeScript(ScriptRunner.init(script, this), root.overlay == false);
+                    } else {
+                        if (Environment.LOCAL_DEV) {
+                            this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${com.comName}]`);
+                        }
+                    }
+                }
+            } else if (packetType === ClientProt.REBUILD_GETMAPS) {
                 const requested = [];
 
                 for (let i = 0; i < data.data.length / 3; i++) {
@@ -291,67 +353,6 @@ export class NetworkPlayer extends Player {
                         }
                     }
                 }
-            } else if (packetType === ClientProt.INV_BUTTON1 || packetType === ClientProt.INV_BUTTON2 || packetType === ClientProt.INV_BUTTON3 || packetType === ClientProt.INV_BUTTON4 || packetType === ClientProt.INV_BUTTON5) {
-                // jagex has if_button1-5
-                const item = data.g2();
-                const slot = data.g2();
-                const comId = data.g2();
-
-                const com = Component.get(comId);
-                if (typeof com === 'undefined' || !com.inventoryOptions || !com.inventoryOptions.length || !this.isComponentVisible(com)) {
-                    continue;
-                }
-
-                if (
-                    (packetType === ClientProt.INV_BUTTON1 && !com.inventoryOptions[0]) ||
-                    (packetType === ClientProt.INV_BUTTON2 && !com.inventoryOptions[1]) ||
-                    (packetType === ClientProt.INV_BUTTON3 && !com.inventoryOptions[2]) ||
-                    (packetType === ClientProt.INV_BUTTON4 && !com.inventoryOptions[3]) ||
-                    (packetType === ClientProt.INV_BUTTON5 && !com.inventoryOptions[4])
-                ) {
-                    continue;
-                }
-
-                const listener = this.invListeners.find(l => l.com === comId);
-                if (!listener) {
-                    continue;
-                }
-
-                const inv = this.getInventoryFromListener(listener);
-                if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
-                    continue;
-                }
-
-                if (this.delayed()) {
-                    continue;
-                }
-
-                this.lastItem = item;
-                this.lastSlot = slot;
-
-                let trigger: ServerTriggerType;
-                if (packetType === ClientProt.INV_BUTTON1) {
-                    trigger = ServerTriggerType.INV_BUTTON1;
-                } else if (packetType === ClientProt.INV_BUTTON2) {
-                    trigger = ServerTriggerType.INV_BUTTON2;
-                } else if (packetType === ClientProt.INV_BUTTON3) {
-                    trigger = ServerTriggerType.INV_BUTTON3;
-                } else if (packetType === ClientProt.INV_BUTTON4) {
-                    trigger = ServerTriggerType.INV_BUTTON4;
-                } else {
-                    trigger = ServerTriggerType.INV_BUTTON5;
-                }
-
-                const script = ScriptProvider.getByTrigger(trigger, comId, -1);
-                if (script) {
-                    const root = Component.get(com.rootLayer);
-
-                    this.executeScript(ScriptRunner.init(script, this), root.overlay == false);
-                } else {
-                    if (Environment.LOCAL_DEV) {
-                        this.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${com.comName}]`);
-                    }
-                }
             } else if (packetType === ClientProt.INV_BUTTOND) {
                 // jagex has if_buttond
                 const comId = data.g2();
@@ -375,7 +376,7 @@ export class NetworkPlayer extends Player {
 
                 if (this.delayed()) {
                     // do nothing; revert the client visual
-                    this.writeLowPriority(ServerProt.UPDATE_INV_PARTIAL, comId, inv, [slot, targetSlot]);
+                    this.writeHighPriority(ServerProt.UPDATE_INV_PARTIAL, comId, inv, [slot, targetSlot]);
                     continue;
                 }
 

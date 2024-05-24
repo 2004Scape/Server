@@ -361,9 +361,9 @@ class World {
         if (Environment.LOCAL_DEV) {
             this.startDevWatcher();
 
-            this.devThread!.postMessage({
-                type: 'pack'
-            });
+            // this.devThread!.postMessage({
+            //     type: 'pack'
+            // });
         }
 
         console.log('World ready!');

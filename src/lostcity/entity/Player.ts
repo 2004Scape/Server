@@ -2035,7 +2035,7 @@ export default class Player extends PathingEntity {
                 }
 
                 if (inv.update || listener.firstSeen) {
-                    this.writeLowPriority(ServerProt.UPDATE_INV_FULL, listener.com, inv);
+                    this.writeHighPriority(ServerProt.UPDATE_INV_FULL, listener.com, inv);
                     listener.firstSeen = false;
                 }
             } else {
@@ -2051,7 +2051,7 @@ export default class Player extends PathingEntity {
                 }
 
                 if (inv.update || listener.firstSeen) {
-                    this.writeLowPriority(ServerProt.UPDATE_INV_FULL, listener.com, inv);
+                    this.writeHighPriority(ServerProt.UPDATE_INV_FULL, listener.com, inv);
                     listener.firstSeen = false;
 
                     const invType = InvType.get(listener.type);
@@ -2125,7 +2125,6 @@ export default class Player extends PathingEntity {
         }
 
         this.invListeners.splice(index, 1);
-        // this one is high, but the other update_invs are low
         this.writeHighPriority(ServerProt.UPDATE_INV_STOP_TRANSMIT, com);
     }
 
