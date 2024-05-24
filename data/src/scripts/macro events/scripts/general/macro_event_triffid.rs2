@@ -35,6 +35,7 @@ if (%npc_macro_event_status = ^triffid_ready_to_attack) { // turn hostile
     npc_changetype(macro_event_triffid_hostile);
     npc_delay(1);
     if (finduid(%npc_attacking_uid) = true) {
+        %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
         npc_setmode(opplayer2);
     }
 }
