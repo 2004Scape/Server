@@ -300,7 +300,7 @@ export default abstract class PathingEntity extends Entity {
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        return Position.distanceTo(this, target) <= range && hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, target.width, target.length, CollisionFlag.PLAYER);
+        return Position.distanceTo(this, target) <= range && hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, CollisionFlag.PLAYER);
     }
 
     getCollisionStrategy(): CollisionType | null {

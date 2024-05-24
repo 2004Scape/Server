@@ -110,7 +110,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(check(c1, CoordValid));
         const to = Position.unpackCoord(check(c2, CoordValid));
 
-        state.pushInt(hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
+        state.pushInt(hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.STAT_RANDOM]: state => {
@@ -247,7 +247,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(check(c1, CoordValid));
         const to = Position.unpackCoord(check(c2, CoordValid));
 
-        state.pushInt(hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1) ? 1 : 0);
+        state.pushInt(hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.WORLD_DELAY]: state => {
