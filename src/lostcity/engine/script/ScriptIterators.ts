@@ -74,10 +74,10 @@ export class HuntIterator extends ScriptIterator<Player> {
                     if (Position.distanceToSW({x: this.x, z: this.z}, player) > this.distance) {
                         continue;
                     }
-                    if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
+                    if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
                         continue;
                     }
-                    if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1)) {
+                    if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
                         continue;
                     }
                     yield player;
