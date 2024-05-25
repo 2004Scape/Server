@@ -1,21 +1,21 @@
 [oploc1,_cupboard_closed] @open_cupboard(~cupboards_use_message);
-[oploc1,_cupboard_opened] @search_supboard;
+[oploc1,_cupboard_opened] @search_cupboard;
 [oploc2,_cupboard_opened] @close_cupboard(~cupboards_use_message);
 
 // fight arena
-[oploc2,loc_370] @search_supboard;
+[oploc2,loc_370] @search_cupboard;
 [oploc3,loc_370] @close_cupboard(~cupboards_use_message);
 
 // ranging guild
 // this cupboard is not accessible
-[oploc2,loc_371] @search_supboard;
+[oploc2,loc_371] @search_cupboard;
 [oploc3,loc_371] @close_cupboard(~cupboards_use_message);
 
 // sorcerers tower
-[oploc2,loc_372] @search_supboard;
+[oploc2,loc_372] @search_cupboard;
 [oploc3,loc_372] @close_cupboard(~cupboards_use_message);
 
-[label,search_supboard]
+[label,search_cupboard]
 //mes(~coord_tostring(loc_coord));
 switch_coord (loc_coord) {
     case 2_46_52_40_8: // falador castle sir vyvin room
