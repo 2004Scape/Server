@@ -87,6 +87,7 @@ class World {
     playerIds: number[] = new Array(2048); // indexes into players
 
     npcs: (Npc | null)[] = new Array<Npc>(8192);
+    removeNpcs: Npc[] = [];
 
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
@@ -901,6 +902,11 @@ class World {
             npc.resetEntity(false);
         }
 
+        for (let i = 0; i < this.removeNpcs.length; i++) {
+            this.npcs[this.removeNpcs[i].nid] = null;
+        }
+        this.removeNpcs = [];
+
         for (let i = 0; i < this.invs.length; i++) {
             const inv = this.invs[i];
             if (!inv) {
@@ -1170,12 +1176,12 @@ class World {
                 break;
         }
 
+        const type = NpcType.get(npc.type);
+        npc.despawn = this.currentTick;
+        npc.respawn = this.currentTick + type.respawnrate;
+
         if (!npc.static) {
-            this.npcs[npc.nid] = null;
-        } else {
-            const type = NpcType.get(npc.type);
-            npc.despawn = this.currentTick;
-            npc.respawn = this.currentTick + type.respawnrate;
+            this.removeNpcs.push(npc);
         }
     }
 

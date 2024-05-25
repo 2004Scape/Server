@@ -6,6 +6,7 @@ if(npc_findhero = false) {
     return;
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p2, 500);
+~npc_set_attack_vars;
 npc_setmode(opplayer2);
 mes("The shapeshifters' body begins to deform!");
 mes("The shapeshifter turns into a spider!");
@@ -16,6 +17,7 @@ if(npc_findhero = false) {
     return;
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p3, 500);
+~npc_set_attack_vars;
 npc_setmode(opplayer2);
 mes("The shapeshifters' body begins to twist!");
 mes("The shapeshifter turns into a bear!");
@@ -26,6 +28,7 @@ if(npc_findhero = false) {
     return;
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p4, 500);
+~npc_set_attack_vars;
 npc_setmode(opplayer2);
 mes("The shapeshifters' body pulses!");
 mes("The shapeshifter turns into a wolf!");
