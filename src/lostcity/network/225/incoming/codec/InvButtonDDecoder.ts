@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import InvButtonD from '#lostcity/network/225/incoming/InvButtonD.js';
+import InvButtonD from '#lostcity/network/incoming/model/InvButtonD.js';
 
 export default class InvButtonDDecoder extends MessageDecoder<InvButtonD> {
     prot = ClientProt.INV_BUTTOND;

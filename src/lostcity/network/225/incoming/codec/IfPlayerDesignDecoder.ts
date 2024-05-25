@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import IfPlayerDesign from '#lostcity/network/225/incoming/IfPlayerDesign.js';
+import IfPlayerDesign from '#lostcity/network/incoming/model/IfPlayerDesign.js';
 
 export default class IfPlayerDesignDecoder extends MessageDecoder<IfPlayerDesign> {
     prot = ClientProt.IF_PLAYERDESIGN;

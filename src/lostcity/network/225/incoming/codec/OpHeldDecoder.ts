@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import OpHeld from '#lostcity/network/225/incoming/OpHeld.js';
+import OpHeld from '#lostcity/network/incoming/model/OpHeld.js';
 
 export default class OpHeldDecoder extends MessageDecoder<OpHeld> {
     constructor(readonly prot: ClientProt, readonly op: number) {

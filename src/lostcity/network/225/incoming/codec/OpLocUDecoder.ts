@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import OpLocU from '#lostcity/network/225/incoming/OpLocU.js';
+import OpLocU from '#lostcity/network/incoming/model/OpLocU.js';
 
 export default class OpLocUDecoder extends MessageDecoder<OpLocU> {
     prot = ClientProt.OPLOCU;

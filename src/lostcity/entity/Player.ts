@@ -1,24 +1,16 @@
 import 'dotenv/config';
 
 import Packet from '#jagex2/io/Packet.js';
-import {fromBase37, toBase37, toDisplayName} from '#jagex2/jstring/JString.js';
+import {fromBase37, toDisplayName} from '#jagex2/jstring/JString.js';
 
-import CategoryType from '#lostcity/cache/CategoryType.js';
 import FontType from '#lostcity/cache/FontType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import EnumType from '#lostcity/cache/EnumType.js';
-import HuntType from '#lostcity/cache/HuntType.js';
 import Component from '#lostcity/cache/Component.js';
 import InvType from '#lostcity/cache/InvType.js';
 import LocType from '#lostcity/cache/LocType.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import ObjType from '#lostcity/cache/ObjType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import SeqType from '#lostcity/cache/SeqType.js';
-import StructType from '#lostcity/cache/StructType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
@@ -42,21 +34,16 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import IdkType from '#lostcity/cache/IdkType.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
 import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import Stack from '#jagex2/datastruct/Stack.js';
 
-import {CollisionFlag, findPath, isFlagged} from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, findPath} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
-import {NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
-import NullClientSocket from '#lostcity/server/NullClientSocket.js';
-import {tryParseInt} from '#lostcity/util/TryParse.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 
@@ -492,258 +479,6 @@ export default class Player extends PathingEntity {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     playerLog(message: string, ...args: string[]): void {
         // to be overridden
-    }
-
-    onCheat(cheat: string) {
-        const args: string[] = cheat.toLowerCase().split(' ');
-        const cmd: string | undefined = args.shift();
-        if (cmd === undefined || cmd.length <= 0) {
-            return;
-        }
-
-        this.playerLog('Cheat ran', cheat);
-
-        if (cmd === 'reload' && Environment.LOCAL_DEV) {
-            // TODO: only reload config types that have changed to save time
-            CategoryType.load('data/pack');
-            ParamType.load('data/pack');
-            EnumType.load('data/pack');
-            StructType.load('data/pack');
-            InvType.load('data/pack');
-            IdkType.load('data/pack');
-            VarPlayerType.load('data/pack');
-            ObjType.load('data/pack', World.members);
-            LocType.load('data/pack');
-            NpcType.load('data/pack');
-            Component.load('data/pack');
-            SeqType.load('data/pack');
-            SpotanimType.load('data/pack');
-            MesanimType.load('data/pack');
-            DbTableType.load('data/pack');
-            DbRowType.load('data/pack');
-            HuntType.load('data/pack');
-
-            const count = ScriptProvider.load('data/pack');
-            this.messageGame(`Reloaded ${count} scripts.`);
-        } else if (cmd === 'setvar') {
-            const varp = args.shift();
-            if (!varp) {
-                this.messageGame('Usage: ::setvar <var> <value>');
-                return;
-            }
-
-            const value = args.shift();
-            if (!value) {
-                this.messageGame('Usage: ::setvar <var> <value>');
-                return;
-            }
-
-            const varpType = VarPlayerType.getByName(varp);
-            if (varpType) {
-                this.setVar(varpType.id, parseInt(value, 10));
-                this.messageGame(`Setting var ${varp} to ${value}`);
-            } else {
-                this.messageGame(`Unknown var ${varp}`);
-            }
-        } else if (cmd === 'getvar') {
-            const varp = args.shift();
-            if (!varp) {
-                this.messageGame('Usage: ::getvar <var>');
-                return;
-            }
-
-            const varpType = VarPlayerType.getByName(varp);
-            if (varpType) {
-                this.messageGame(`Var ${varp}: ${this.vars[varpType.id]}`);
-            } else {
-                this.messageGame(`Unknown var ${varp}`);
-            }
-        } else if (cmd === 'setlevel') {
-            if (args.length < 2) {
-                this.messageGame('Usage: ::setlevel <stat> <level>');
-                return;
-            }
-
-            const stat = Player.SKILLS.indexOf(args[0]);
-            if (stat === -1) {
-                this.messageGame(`Unknown stat ${args[0]}`);
-                return;
-            }
-
-            this.setLevel(stat, parseInt(args[1]));
-        } else if (cmd === 'setxp') {
-            if (args.length < 2) {
-                this.messageGame('Usage: ::setxp <stat> <xp>');
-                return;
-            }
-
-            const stat = Player.SKILLS.indexOf(args[0]);
-            if (stat === -1) {
-                this.messageGame(`Unknown stat ${args[0]}`);
-                return;
-            }
-
-            const exp = parseInt(args[1]) * 10;
-            this.setLevel(stat, getLevelByExp(exp));
-            this.stats[stat] = exp;
-        } else if (cmd === 'minlevel') {
-            for (let i = 0; i < Player.SKILLS.length; i++) {
-                if (i === Player.HITPOINTS) {
-                    this.setLevel(i, 10);
-                } else {
-                    this.setLevel(i, 1);
-                }
-            }
-        } else if (cmd === 'serverdrop') {
-            this.terminate();
-        } else if (cmd === 'random') {
-            this.afkEventReady = true;
-        } else if (cmd === 'bench' && this.staffModLevel >= 3) {
-            const start = Date.now();
-            for (let index = 0; index < 100_000; index++) {
-                findPath(this.level, this.x, this.z, this.x, this.z + 10);
-            }
-            const end = Date.now();
-            console.log(`took = ${end - start} ms`);
-        } else if (cmd === 'bots' && this.staffModLevel >= 3) {
-            this.messageGame('Adding bots');
-            for (let i = 0; i < 2000; i++) {
-                const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
-                bot.onLogin();
-                World.addPlayer(bot);
-            }
-        } else if (cmd === 'teleall' && this.staffModLevel >= 3) {
-            this.messageGame('Teleporting all players');
-            for (let i = 0; i < World.players.length; i++) {
-                const player = World.players[i];
-                if (!player) {
-                    continue;
-                }
-
-                player.closeModal();
-
-                do {
-                    const x = Math.floor(Math.random() * 640) + 3200;
-                    const z = Math.floor(Math.random() * 640) + 3200;
-
-                    player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
-                } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
-            }
-        } else if (cmd === 'moveall' && this.staffModLevel >= 3) {
-            this.messageGame('Moving all players');
-            console.time('moveall');
-            for (let i = 0; i < World.players.length; i++) {
-                const player = World.players[i];
-                if (!player) {
-                    continue;
-                }
-
-                player.closeModal();
-                player.queueWaypoints(findPath(player.level, player.x, player.z, (player.x >>> 6 << 6) + 32, (player.z >>> 6 << 6) + 32));
-            }
-            console.timeEnd('moveall');
-        } else if (cmd === 'speed' && this.staffModLevel >= 3) {
-            if (args.length < 1) {
-                this.messageGame('Usage: ::speed <ms>');
-                return;
-            }
-            const speed: number = tryParseInt(args.shift(), 20);
-            if (speed < 20) {
-                this.messageGame('::speed input was too low.');
-                return;
-            }
-            this.messageGame(`World speed was changed to ${speed}ms`);
-            World.tickRate = speed;
-        }
-
-        // lookup debugproc with the name and execute it
-        const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
-        if (!script) {
-            return;
-        }
-
-        const params = new Array(script.info.parameterTypes.length).fill(-1);
-
-        for (let i = 0; i < script.info.parameterTypes.length; i++) {
-            const type = script.info.parameterTypes[i];
-
-            try {
-                switch (type) {
-                    case ScriptVarType.STRING: {
-                        const value = args.shift();
-                        params[i] = value ?? '';
-                        break;
-                    }
-                    case ScriptVarType.INT: {
-                        const value = args.shift();
-                        params[i] = parseInt(value ?? '0', 10) | 0;
-                        break;
-                    }
-                    case ScriptVarType.OBJ:
-                    case ScriptVarType.NAMEDOBJ: {
-                        const name = args.shift();
-                        params[i] = ObjType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.NPC: {
-                        const name = args.shift();
-                        params[i] = NpcType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.LOC: {
-                        const name = args.shift();
-                        params[i] = LocType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.SEQ: {
-                        const name = args.shift();
-                        params[i] = SeqType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.STAT: {
-                        const name = args.shift();
-                        params[i] = Player.SKILLS.indexOf(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.INV: {
-                        const name = args.shift();
-                        params[i] = InvType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.COORD: {
-                        const args2 = cheat.split('_');
-
-                        const level = parseInt(args2[0].slice(6));
-                        const mx = parseInt(args2[1]);
-                        const mz = parseInt(args2[2]);
-                        const lx = parseInt(args2[3]);
-                        const lz = parseInt(args2[4]);
-
-                        params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
-                        break;
-                    }
-                    case ScriptVarType.INTERFACE: {
-                        const name = args.shift();
-                        params[i] = Component.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.SPOTANIM: {
-                        const name = args.shift();
-                        params[i] = SpotanimType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.IDKIT: {
-                        const name = args.shift();
-                        params[i] = IdkType.getId(name ?? '');
-                        break;
-                    }
-                }
-            } catch (err) {
-                return;
-            }
-        }
-
-        this.executeScript(ScriptRunner.init(script, this, null, params), false);
     }
 
     processEngineQueue() {

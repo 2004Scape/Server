@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import TutorialClickSide from '#lostcity/network/225/incoming/TutorialClickSide.js';
+import TutorialClickSide from '#lostcity/network/incoming/model/TutorialClickSide.js';
 
 export default class TutorialClickSideDecoder extends MessageDecoder<TutorialClickSide> {
     prot = ClientProt.TUTORIAL_CLICKSIDE;

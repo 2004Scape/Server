@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import MessagePrivate from '#lostcity/network/225/incoming/MessagePrivate.js';
+import MessagePrivate from '#lostcity/network/incoming/model/MessagePrivate.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
 
 export default class MessagePrivateDecoder extends MessageDecoder<MessagePrivate> {

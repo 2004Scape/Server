@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import MessageDecoder from '#lostcity/network/incoming/codec/MessageDecoder.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import RebuildGetMaps from '#lostcity/network/225/incoming/RebuildGetMaps.js';
+import RebuildGetMaps from '#lostcity/network/incoming/model/RebuildGetMaps.js';
 
 export default class RebuildGetMapsDecoder extends MessageDecoder<RebuildGetMaps> {
     prot = ClientProt.REBUILD_GETMAPS;
