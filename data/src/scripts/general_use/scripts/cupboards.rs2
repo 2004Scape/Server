@@ -4,16 +4,16 @@
 
 // fight arena
 [oploc2,loc_370] @search_cupboard;
-[oploc3,loc_370] @close_cupboard(~cupboards_use_message);
+[oploc3,loc_370] @close_cupboard(false);
 
 // ranging guild
 // this cupboard is not accessible
 [oploc2,loc_371] @search_cupboard;
-[oploc3,loc_371] @close_cupboard(~cupboards_use_message);
+[oploc3,loc_371] @close_cupboard(false);
 
 // sorcerers tower
 [oploc2,loc_372] @search_cupboard;
-[oploc3,loc_372] @close_cupboard(~cupboards_use_message);
+[oploc3,loc_372] @close_cupboard(false);
 
 [label,search_cupboard]
 //mes(~coord_tostring(loc_coord));
