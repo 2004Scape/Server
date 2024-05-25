@@ -1,7 +1,22 @@
 [oploc1,_cupboard_closed] @open_cupboard(~cupboards_use_message);
+[oploc1,_cupboard_opened] @search_supboard;
 [oploc2,_cupboard_opened] @close_cupboard(~cupboards_use_message);
 
-[oploc1,_cupboard_opened]
+// fight arena
+[oploc2,loc_370] @search_supboard;
+[oploc3,loc_370] @close_cupboard(~cupboards_use_message);
+
+// ranging guild
+// this cupboard is not accessible
+[oploc2,loc_371] @search_supboard;
+[oploc3,loc_371] @close_cupboard(~cupboards_use_message);
+
+// sorcerers tower
+[oploc2,loc_372] @search_supboard;
+[oploc3,loc_372] @close_cupboard(~cupboards_use_message);
+
+[label,search_supboard]
+//mes(~coord_tostring(loc_coord));
 switch_coord (loc_coord) {
     case 2_46_52_40_8: // falador castle sir vyvin room
         if(%squire_progress >= 5) {
@@ -18,6 +33,7 @@ switch_coord (loc_coord) {
             ~mesbox("There is just a load of junk in here.");
     case 1_48_51_24_4: @cupboard_take_garlic; // draynor morgans house level 1
     case 0_40_52_14_6: @elena_search_cupboard; // alrenas house for plague city
+    case 0_42_53_10_12, 0_40_49_29_46, 0_41_53_36_34: mes("You search the cupboard but find nothing."); // sorcerers tower, fight arena, ranging guild
     case default: mes("The cupboard is empty.");
 }
 
