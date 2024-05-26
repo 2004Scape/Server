@@ -658,7 +658,7 @@ class World {
             const player = this.newPlayers[i];
             this.newPlayers.splice(i--, 1);
 
-            let pid: number = -1;
+            let pid: number;
             try {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
                 pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
