@@ -671,7 +671,6 @@ class World {
 
             // insert player into first available slot
             this.players.set(pid, player);
-            console.log(`pid = ${pid}`);
             player.pid = pid;
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
 
@@ -1046,7 +1045,6 @@ class World {
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
-        console.log('Adding npc', npc.nid, 'to zone', zone.index);
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
