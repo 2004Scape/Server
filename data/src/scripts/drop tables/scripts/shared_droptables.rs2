@@ -69,7 +69,7 @@ if ($random < 32) {
     }
 } else if ($random < 65) {
     if (map_members = true) {
-        if (coordz > 6400) {
+        if (coordz(coord) > 6400) {
             return (chaos_talisman, 1);
         } else {
             return (nature_talisman, 1);
