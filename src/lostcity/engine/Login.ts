@@ -119,10 +119,7 @@ class Login {
                 const player = World.getPlayerByUsername(username);
                 if (player) {
                     World.getZone(player.x, player.z, player.level).leave(player);
-
-                    const index = World.playerIds[player.pid];
-                    World.players[index] = null;
-                    World.playerIds[player.pid] = -1;
+                    World.players.remove(player.pid);
                     player.pid = -1;
                     player.terminate();
 

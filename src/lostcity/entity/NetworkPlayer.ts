@@ -79,6 +79,9 @@ export class NetworkPlayer extends Player {
                 this.mask |= Player.FACE_ENTITY;
             }
 
+            console.log(this.opcalled);
+            console.log(this.target !== null);
+
             if (this.opcalled && (this.userPath.length === 0 || !Environment.CLIENT_PATHFINDER)) {
                 this.pathToTarget();
                 return;

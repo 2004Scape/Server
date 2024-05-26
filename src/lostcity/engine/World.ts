@@ -61,6 +61,7 @@ import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.j
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
+import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -83,11 +84,8 @@ class World {
     varsString: string[] = [];
 
     newPlayers: Player[] = []; // players joining at the end of this tick
-    players: (Player | null)[] = new Array<Player | null>(2048);
-    playerIds: number[] = new Array(2048); // indexes into players
-
-    npcs: (Npc | null)[] = new Array<Npc>(8192);
-    removeNpcs: Npc[] = [];
+    players: PlayerList = new PlayerList(2048);
+    npcs: NpcList = new NpcList(8192);
 
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
@@ -102,9 +100,6 @@ class World {
     devMTime: Map<string, number> = new Map();
 
     constructor() {
-        this.players.fill(null);
-        this.playerIds.fill(-1);
-
         this.friendThread.on('message', data => {
             try {
                 this.onFriendMessage(data);
@@ -325,22 +320,13 @@ class World {
     }
 
     broadcastMes(message: string) {
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             player.messageGame(message);
         }
     }
 
     async start(skipMaps = false, startCycle = true) {
         console.log('Starting world...');
-
-        for (let i = 0; i < this.npcs.length; i++) {
-            this.npcs[i] = null;
-        }
 
         FontType.load('data/pack');
         WordEnc.load('data/pack');
@@ -442,12 +428,7 @@ class World {
         this.shutdownTick = this.currentTick + duration;
         this.stopDevWatcher();
 
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             player.writeLowPriority(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
         }
     }
@@ -490,31 +471,22 @@ class World {
         }
 
         if (this.currentTick % 500 === 0) {
-            for (let i = 0; i < this.players.length; i++) {
-                const player = this.players[i];
-                if (!player) {
-                    continue;
-                }
-
+            for (const player of this.players) {
                 // 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
                 player.afkEventReady = Math.random() < 0.0833;
             }
         }
 
-        for (let i = 0; i < this.npcs.length; i++) {
-            const npc = this.npcs[i];
-
-            if (!npc || npc.respawn !== this.currentTick) {
+        for (const npc of this.npcs) {
+            if (npc.respawn !== this.currentTick) {
                 continue;
             }
 
             this.addNpc(npc);
         }
 
-        for (let i = 0; i < this.npcs.length; i++) {
-            const npc = this.npcs[i];
-
-            if (!npc || npc.despawn !== -1 || npc.delayed()) {
+        for (const npc of this.npcs) {
+            if (npc.despawn !== -1 || npc.delayed()) {
                 continue;
             }
 
@@ -528,17 +500,7 @@ class World {
         // - decode packets
         this.lastCycleBandwidth[0] = 0; // reset bandwidth counter
         let clientInput = Date.now();
-        for (let i = 0; i < this.playerIds.length; i++) {
-            // iterate on playerIds so pid order matters
-            if (this.playerIds[i] === -1) {
-                continue;
-            }
-
-            const player = this.players[this.playerIds[i]];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
                 continue;
             }
@@ -560,10 +522,8 @@ class World {
         // - movement
         // - modes
         let npcProcessing = Date.now();
-        for (let i = 1; i < this.npcs.length; i++) {
-            const npc = this.npcs[i];
-
-            if (!npc || npc.despawn !== -1) {
+        for (const npc of this.npcs) {
+            if (npc.despawn !== -1) {
                 continue;
             }
 
@@ -609,17 +569,7 @@ class World {
         // - player/npc interactions
         // - close interface if attempting to logout
         let playerProcessing = Date.now();
-        for (let i = 0; i < this.playerIds.length; i++) {
-            // iterate on playerIds so pid order matters
-            if (this.playerIds[i] === -1) {
-                continue;
-            }
-
-            const player = this.players[this.playerIds[i]];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             try {
                 player.playtime++;
 
@@ -660,12 +610,7 @@ class World {
 
         // player logout
         let playerLogout = Date.now();
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             if (this.currentTick - player.lastResponse >= 100) {
                 // remove after 60 seconds
                 player.queue.clear();
@@ -725,15 +670,8 @@ class World {
             }
 
             // insert player into first available slot
-            let index = -1;
-            for (let i = 0; i < this.players.length; i++) {
-                if (this.players[i] === null) {
-                    index = i;
-                    break;
-                }
-            }
-            this.players[index] = player;
-            this.playerIds[pid] = index;
+            this.players.set(pid, player);
+            console.log(`pid = ${pid}`);
             player.pid = pid;
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
 
@@ -847,12 +785,7 @@ class World {
         // - flush packets
         this.lastCycleBandwidth[1] = 0; // reset bandwidth counter
         let clientOutput = Date.now();
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
                 continue;
             }
@@ -875,12 +808,7 @@ class World {
 
         // reset entity masks
         let cleanup = Date.now();
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             player.resetEntity(false);
 
             for (const inv of player.invs.values()) {
@@ -892,20 +820,13 @@ class World {
             }
         }
 
-        for (let i = 1; i < this.npcs.length; i++) {
-            const npc = this.npcs[i];
-
-            if (!npc || npc.despawn !== -1) {
+        for (const npc of this.npcs) {
+            if (npc.despawn !== -1) {
                 continue;
             }
 
             npc.resetEntity(false);
         }
-
-        for (let i = 0; i < this.removeNpcs.length; i++) {
-            this.npcs[this.removeNpcs[i].nid] = null;
-        }
-        this.removeNpcs = [];
 
         for (let i = 0; i < this.invs.length; i++) {
             const inv = this.invs[i];
@@ -952,12 +873,7 @@ class World {
 
         if (this.currentTick % 100 === 0) {
             const players: bigint[] = [];
-            for (let i = 0; i < this.players.length; i++) {
-                const player = this.players[i];
-                if (!player) {
-                    continue;
-                }
-
+            for (const player of this.players) {
                 players.push(player.username37);
             }
 
@@ -975,15 +891,10 @@ class World {
         // server shutdown
         if (this.shutdownTick > -1 && this.currentTick >= this.shutdownTick) {
             const duration = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
-            const online = this.playerIds.filter(p => p !== -1).length;
+            const online = this.getTotalPlayers();
 
             if (online) {
-                for (let i = 0; i < this.players.length; i++) {
-                    const player = this.players[i];
-                    if (!player) {
-                        continue;
-                    }
-
+                for (const player of this.players) {
                     player.logoutRequested = true;
 
                     if (isNetworkPlayer(player)) {
@@ -996,9 +907,7 @@ class World {
                     }
                 }
 
-                if (this.npcs.length > 0) {
-                    this.npcs = [];
-                }
+                this.npcs.reset();
 
                 if (duration > 2) {
                     // we've already attempted to shutdown, now we speed things up
@@ -1008,12 +917,8 @@ class World {
 
                     // if we've exceeded 24000 ticks then we *really* need to shut down now
                     if (duration > 24000) {
-                        for (let i = 0; i < this.players.length; i++) {
-                            const player = this.players[i];
-
-                            if (player !== null) {
-                                await this.removePlayer(player);
-                            }
+                        for (const player of this.players) {
+                            await this.removePlayer(player);
                         }
 
                         this.tickRate = 600;
@@ -1072,12 +977,7 @@ class World {
         this.trackedZones = [];
         this.zoneBuffers = new Map();
 
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            if (!player) {
-                continue;
-            }
-
+        for (const player of this.players) {
             // TODO: optimize this
             const zones = Object.keys(player.loadedZones);
             for (let j = 0; j < zones.length; j++) {
@@ -1140,12 +1040,13 @@ class World {
     }
 
     addNpc(npc: Npc) {
-        this.npcs[npc.nid] = npc;
+        this.npcs.set(npc.nid, npc);
         npc.x = npc.startX;
         npc.z = npc.startZ;
 
         const zone = this.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
+        console.log('Adding npc', npc.nid, 'to zone', zone.index);
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
@@ -1181,7 +1082,7 @@ class World {
         npc.respawn = this.currentTick + type.respawnrate;
 
         if (!npc.static) {
-            this.removeNpcs.push(npc);
+            this.npcs.remove(npc.nid);
         }
     }
 
@@ -1374,29 +1275,14 @@ class World {
     }
 
     getPlayer(pid: number) {
-        const slot = this.playerIds[pid];
-        if (slot === -1) {
-            return null;
-        }
-
-        const player = this.players[slot];
-        if (!player) {
-            return null;
-        }
-
-        return player;
+        return this.players.get(pid);
     }
 
     getPlayerByUid(uid: number) {
         const pid = uid & 0x7ff;
         const name37 = (uid >> 11) & 0x1fffff;
 
-        const slot = this.playerIds[pid];
-        if (slot === -1) {
-            return null;
-        }
-
-        const player = this.players[slot];
+        const player = this.getPlayer(pid);
         if (!player) {
             return null;
         }
@@ -1409,27 +1295,37 @@ class World {
     }
 
     getPlayerByUsername(username: string) {
-        const username37 = toBase37(username);
-        return this.players.find(p => p && p.username37 === username37) ?? this.newPlayers.find(p => p && p.username37 === username37);
+        const username37: bigint = toBase37(username);
+        for (const player of this.players) {
+            if (player.username37 === username37) {
+                return player;
+            }
+        }
+        for (const player of this.newPlayers) {
+            if (player.username37 === username37) {
+                return player;
+            }
+        }
+        return undefined;
     }
 
     getTotalPlayers() {
-        return this.players.filter(p => p).length;
+        return this.players.count;
     }
 
     getTotalNpcs() {
-        return this.npcs.filter(n => n).length;
+        return this.npcs.count;
     }
 
     getNpc(nid: number) {
-        return this.npcs[nid];
+        return this.npcs.get(nid);
     }
 
     getNpcByUid(uid: number) {
         const slot = uid & 0xffff;
         const type = (uid >> 16) & 0xffff;
 
-        const npc = this.npcs[slot];
+        const npc = this.getNpc(slot);
         if (!npc || npc.type !== type) {
             return null;
         }
@@ -1438,41 +1334,19 @@ class World {
     }
 
     getNextNid() {
-        return this.npcs.indexOf(null, 1);
+        return this.npcs.next();
     }
 
     getNextPid(client: ClientSocket | null = null) {
-        let pid = -1;
-
         // valid pid range is 1-2046
         if (client) {
             // pid = first available index starting from (low ip octet % 20) * 100
             const ip = client.remoteAddress;
             const octets = ip.split('.');
             const start = (parseInt(octets[3]) % 20) * 100;
-
-            // start searching at 1 if the calculated start is 0
-            const init = start === 0 ? 1 : 0;
-            for (let i = init; i < 100; i++) {
-                const index = start + i;
-                if (this.playerIds[index] === -1) {
-                    pid = index;
-                    break;
-                }
-            }
+            return this.players.next(true, start);
         }
-
-        if (pid === -1) {
-            // pid = first available index starting at 1 (0 is reserved for the protocol's local character)
-            for (let i = 1; i < this.playerIds.length - 1; i++) {
-                if (this.playerIds[i] === -1) {
-                    pid = i;
-                    break;
-                }
-            }
-        }
-
-        return pid;
+        return this.players.next();
     }
 }
 

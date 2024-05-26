@@ -157,12 +157,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             }
         } else if (cmd === 'teleall' && player.staffModLevel >= 3) {
             player.messageGame('Teleporting all players');
-            for (let i = 0; i < World.players.length; i++) {
-                const player = World.players[i];
-                if (!player) {
-                    continue;
-                }
-
+            for (const player of World.players) {
                 player.closeModal();
 
                 do {
@@ -175,12 +170,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
         } else if (cmd === 'moveall' && player.staffModLevel >= 3) {
             player.messageGame('Moving all players');
             console.time('moveall');
-            for (let i = 0; i < World.players.length; i++) {
-                const player = World.players[i];
-                if (!player) {
-                    continue;
-                }
-
+            for (const player of World.players) {
                 player.closeModal();
                 player.queueWaypoints(findPath(player.level, player.x, player.z, ((player.x >>> 6) << 6) + 32, ((player.z >>> 6) << 6) + 32));
             }
