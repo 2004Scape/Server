@@ -84,6 +84,7 @@ abstract class EntityList<T extends Entity> {
     reset(): void {
         this.entities.fill(null);
         this.ids.fill(-1);
+        this.free.clear();
         for (let i: number = 0; i < this.ids.length; i++) {
             this.free.add(i);
         }
