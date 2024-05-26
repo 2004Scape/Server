@@ -7,10 +7,12 @@ import { generateServerSymbols } from '#lostcity/tools/pack/symbols.js';
 import { packConfigs } from '#lostcity/tools/packconfig/PackShared.js';
 import { packWorldmap } from '#lostcity/tools/packmap/Worldmap.js';
 import Environment from '#lostcity/util/Environment.js';
+import { revalidatePack } from '#lostcity/util/PackFile.js';
 
 async function packServer() {
     console.time('packing server...');
     try {
+        revalidatePack();
         packConfigs();
         packServerInterface();
 

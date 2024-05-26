@@ -208,6 +208,10 @@ export function packInterface(server: boolean) {
 
             if (key === 'layer') {
                 const layerId = InterfacePack.getByName(`${ifName}:${value}`);
+                if (!layerId) {
+                    console.error(`ERROR: Layer ${ifName}:${value} does not exist`);
+                    process.exit(1);
+                }
 
                 if (component[layerId].children.indexOf(comId) !== -1) {
                     console.error(`ERROR: Layer ${ifName}:${value} already has ${comName} as a child`);

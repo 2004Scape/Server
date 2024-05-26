@@ -230,32 +230,61 @@ function regenScriptPack(pack: PackFile) {
     pack.save();
 }
 
-export const AnimPack = new PackFile('anim', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.frame');
-export const BasePack = new PackFile('base', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.base');
-export const CategoryPack = new PackFile('category', validateCategoryPack);
-export const DbRowPack = new PackFile('dbrow', validateConfigPack, '.dbrow', true, false, false, true);
-export const DbTablePack = new PackFile('dbtable', validateConfigPack, '.dbtable', true, false, false, true);
-export const EnumPack = new PackFile('enum', validateConfigPack, '.enum', true, false, false, true);
-export const FloPack = new PackFile('flo', validateConfigPack, '.flo');
-export const HuntPack = new PackFile('hunt', validateConfigPack, '.hunt', true, false, false, true);
-export const IdkPack = new PackFile('idk', validateConfigPack, '.idk');
-export const InterfacePack = new PackFile('interface', validateInterfacePack);
-export const InvPack = new PackFile('inv', validateConfigPack, '.inv', true);
-export const LocPack = new PackFile('loc', validateConfigPack, '.loc');
-export const MesAnimPack = new PackFile('mesanim', validateConfigPack, '.mesanim', true, false, false, true);
-export const ModelPack = new PackFile('model', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.ob2');
-export const NpcPack = new PackFile('npc', validateConfigPack, '.npc');
-export const ObjPack = new PackFile('obj', validateConfigPack, '.obj');
-export const ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
-export const ScriptPack = new PackFile('script', regenScriptPack);
-export const SeqPack = new PackFile('seq', validateConfigPack, '.seq');
-export const SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
-export const SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
-export const StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
-export const TexturePack = new PackFile('texture', validateFilesPack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
-export const VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
-export const VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
-export const VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);
+export let AnimPack = new PackFile('anim', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.frame');
+export let BasePack = new PackFile('base', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.base');
+export let CategoryPack = new PackFile('category', validateCategoryPack);
+export let DbRowPack = new PackFile('dbrow', validateConfigPack, '.dbrow', true, false, false, true);
+export let DbTablePack = new PackFile('dbtable', validateConfigPack, '.dbtable', true, false, false, true);
+export let EnumPack = new PackFile('enum', validateConfigPack, '.enum', true, false, false, true);
+export let FloPack = new PackFile('flo', validateConfigPack, '.flo');
+export let HuntPack = new PackFile('hunt', validateConfigPack, '.hunt', true, false, false, true);
+export let IdkPack = new PackFile('idk', validateConfigPack, '.idk');
+export let InterfacePack = new PackFile('interface', validateInterfacePack);
+export let InvPack = new PackFile('inv', validateConfigPack, '.inv', true);
+export let LocPack = new PackFile('loc', validateConfigPack, '.loc');
+export let MesAnimPack = new PackFile('mesanim', validateConfigPack, '.mesanim', true, false, false, true);
+export let ModelPack = new PackFile('model', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.ob2');
+export let NpcPack = new PackFile('npc', validateConfigPack, '.npc');
+export let ObjPack = new PackFile('obj', validateConfigPack, '.obj');
+export let ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
+export let ScriptPack = new PackFile('script', regenScriptPack);
+export let SeqPack = new PackFile('seq', validateConfigPack, '.seq');
+export let SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
+export let SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
+export let StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
+export let TexturePack = new PackFile('texture', validateFilesPack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
+export let VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
+export let VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
+export let VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);
+
+export function revalidatePack() {
+    AnimPack = new PackFile('anim', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.frame');
+    BasePack = new PackFile('base', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.base');
+    CategoryPack = new PackFile('category', validateCategoryPack);
+    DbRowPack = new PackFile('dbrow', validateConfigPack, '.dbrow', true, false, false, true);
+    DbTablePack = new PackFile('dbtable', validateConfigPack, '.dbtable', true, false, false, true);
+    EnumPack = new PackFile('enum', validateConfigPack, '.enum', true, false, false, true);
+    FloPack = new PackFile('flo', validateConfigPack, '.flo');
+    HuntPack = new PackFile('hunt', validateConfigPack, '.hunt', true, false, false, true);
+    IdkPack = new PackFile('idk', validateConfigPack, '.idk');
+    InterfacePack = new PackFile('interface', validateInterfacePack);
+    InvPack = new PackFile('inv', validateConfigPack, '.inv', true);
+    LocPack = new PackFile('loc', validateConfigPack, '.loc');
+    MesAnimPack = new PackFile('mesanim', validateConfigPack, '.mesanim', true, false, false, true);
+    ModelPack = new PackFile('model', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.ob2');
+    NpcPack = new PackFile('npc', validateConfigPack, '.npc');
+    ObjPack = new PackFile('obj', validateConfigPack, '.obj');
+    ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
+    ScriptPack = new PackFile('script', regenScriptPack);
+    SeqPack = new PackFile('seq', validateConfigPack, '.seq');
+    SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
+    SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
+    StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
+    TexturePack = new PackFile('texture', validateFilesPack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
+    VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
+    VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
+    VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);
+}
 
 export function crawlConfigNames(ext: string, includeBrackets = false) {
     const names: string[] = [];
