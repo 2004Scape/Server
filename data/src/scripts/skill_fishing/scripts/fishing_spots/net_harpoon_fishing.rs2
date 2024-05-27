@@ -235,6 +235,7 @@ if ($random < 25) {
 // https://youtu.be/Tp2VxwIWMcQ
 [opheld1,casket]
 inv_delslot(inv, last_slot);
+sound_synth(lever, 0, 0);
 def_int $random = random(128);
 // drop rates are from https://oldschool.runescape.wiki/w/Casket
 // todo: find screenshots for these objbox's
@@ -242,33 +243,26 @@ if ($random < 60) { // 10/128 coins for each
     // 20, 40, 80, 160, 320, 640
     inv_add(inv, coins, multiply(pow(2, add(random(6), 1)), 10)); // 2 ^ (random(6) + 1) * 10
     ~objbox(coins_250, "You open the casket. Inside you find some coins.");
-    return;
 } else if ($random < 92) { // 32/128 uncut sapphire
     inv_add(inv, uncut_sapphire, 1);
     ~objbox(uncut_sapphire, "You open the casket. Inside you find an uncut|sapphire.");
-    return;
 } else if ($random < 108) { // 16/128 uncut emerald
     inv_add(inv, uncut_emerald, 1);
     ~objbox(uncut_emerald, "You open the casket. Inside you find an uncut|emerald.");
-    return;
 } else if ($random < 116) { // 8/128 uncut ruby
     inv_add(inv, uncut_ruby, 1);
     ~objbox(uncut_ruby, "You open the casket. Inside you find an uncut ruby.");
-    return;
 } else if ($random < 124) { // 8/128 cosmic talisman
     inv_add(inv, cosmic_talisman, 1);
     ~objboxt(cosmic_talisman, "You open the casket. Inside you find a cosmic talisman.");
-    return;
 } else if ($random < 126) { // 2/128 uncut diamond
     inv_add(inv, uncut_diamond, 1);
     ~objbox(uncut_diamond, "You open the casket. Inside you find an uncut|diamond.");
-    return;
 } else if ($random < 127) { // 1/128 tooth half key
     inv_add(inv, half_key1, 1);
     ~objboxt(half_key1, "You open the casket. Inside you find half a key.");
-    return;
 } else if ($random < 128) { // 1/128 loop half of key
     inv_add(inv, half_key2, 1);
     ~objboxt(half_key2, "You open the casket. Inside you find half a key.");
-    return;
 }
+sound_synth(found_gem, 0, 0); // https://youtu.be/fWox14AFvEM 
