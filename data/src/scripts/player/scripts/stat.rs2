@@ -1,6 +1,9 @@
 [proc,stat_name](stat $stat)(string)
 return(enum(stat, string, stat_names, $stat));
 
+[proc,stat_members](stat $stat)(int)
+return(enum(stat, int, stat_members, $stat));
+
 [proc,npc_stat_name](npc_stat $stat)(string)
 switch_npc_stat($stat) {
     case attack: return("Attack");
