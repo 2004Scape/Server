@@ -195,7 +195,7 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
     //         return(true);
     //     }
     //
-    if (npc_getmode = playerfollow | npc_getmode = playerfaceclose) {
+    if (~npc_out_of_combat = true) {
         npc_tele(coord); // osrs
     } else {
         return(true);
