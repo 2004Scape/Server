@@ -134,7 +134,6 @@ transmit=yes
 
 [bank_noted]
 transmit=yes
-scope=perm
 
 [pk_prey1]
 protect=no
