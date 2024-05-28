@@ -16,6 +16,7 @@ if_openmainmodalsideoverlay(bank_main, bank_side);
 
 [label,closebank]
 ~reorganize_bank;
+%bank_noted = 0;
 inv_stoptransmit(bank_side:inv);
 inv_stoptransmit(bank_main:inv);
 
