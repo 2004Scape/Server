@@ -165,14 +165,6 @@ if (%macro_event < add(~macro_event_general_count, 1)){
     return(true);
 }
 
-[proc,macro_event_give_reward](namedobj $reward, int $count)
-if (inv_freespace(inv) < 1) {
-    // drop on the ground for 3 hours https://twitter.com/JagexAsh/status/1574393627421417478
-    obj_add(coord, $reward, $count, 18000);
-} else {
-    inv_add(inv, $reward, $count);
-}
-
 [proc,macro_event_lost_and_follow]()(boolean)
 if (finduid(%npc_attacking_uid) = false) {
     return(true);
