@@ -656,16 +656,18 @@ class World {
         let playerLogin = Date.now();
         for (let i = 0; i < this.newPlayers.length; i++) {
             const player = this.newPlayers[i];
+            this.newPlayers.splice(i--, 1);
 
-            const pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
-            if (pid === -1) {
+            let pid: number;
+            try {
+                // if it throws then there was no available pid. otherwise guaranteed to not be -1.
+                pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
+            } catch (e) {
                 if (player instanceof NetworkPlayer && player.client) {
                     // world full
                     player.client.send(LoginResponse.WORLD_FULL);
                     player.client.close();
                 }
-
-                this.newPlayers.splice(i--, 1);
                 continue;
             }
 
@@ -680,8 +682,6 @@ class World {
                 // todo: check response from login script?
                 player.onLogin();
             }
-
-            this.newPlayers.splice(i--, 1);
 
             if (this.shutdownTick > -1) {
                 // todo: confirm if reboot timer is low or high priority

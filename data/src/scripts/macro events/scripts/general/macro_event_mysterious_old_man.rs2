@@ -30,7 +30,7 @@ if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
     return;
 }
 %macro_event = ^no_macro_event;
-~macro_event_give_reward(~macro_event_mysterious_old_man_general_reward);
+inv_add(inv, ~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
 npc_queue(6, 0, 2); // say goodbye to player
 ~chatnpc(neutral, "Ah, so you are there. I hoped you would talk to me, I get so lonely. Here, have a present! I must be going now though.");

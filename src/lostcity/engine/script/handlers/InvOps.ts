@@ -17,7 +17,6 @@ import {
     DurationValid,
     InvTypeValid,
     NumberNotNull,
-    ObjNotDummyValid,
     ObjStackValid,
     ObjTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
@@ -62,7 +61,7 @@ const InvOps: CommandHandlers = {
         const [inv, objId, count] = state.popInts(3);
 
         check(inv, InvTypeValid);
-        check(objId, ObjTypeValid, ObjNotDummyValid);
+        check(objId, ObjTypeValid/*, ObjNotDummyValid*/);
         check(count, ObjStackValid);
 
         const obj = ObjType.get(objId);
@@ -479,7 +478,7 @@ const InvOps: CommandHandlers = {
         const [inv, slot, objId, count] = state.popInts(4);
 
         check(inv, InvTypeValid);
-        check(objId, ObjTypeValid, ObjNotDummyValid);
+        check(objId, ObjTypeValid/*, ObjNotDummyValid*/);
         check(count, ObjStackValid);
 
         const type = InvType.get(inv);

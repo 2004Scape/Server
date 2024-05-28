@@ -37,3 +37,7 @@ default=no
 [deathanim_delay]
 type=int
 default=2
+
+[retreat]
+type=int
+default=0

@@ -62,4 +62,5 @@ param=death_anim,camel_death
 param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
+param=retreat,5
 huntmode=cowardly

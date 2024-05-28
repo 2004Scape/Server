@@ -12,7 +12,11 @@ if (~npc_out_of_combat = true) {
     %npc_lastattack = map_clock;
 }
 if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(opplayer2);
+    if (npc_stat(hitpoints) <= npc_param(retreat)) {
+        npc_setmode(playerescape);
+    } else {
+        npc_setmode(opplayer2);
+    }
 }
 
 // mostly used for ranged and magic npc's
@@ -27,8 +31,12 @@ if (~npc_out_of_combat = true) {
     }
     return;
 }
-if (finduid(%npc_attacking_uid) = true & npc_getmode ! applayer2) { 
-    npc_setmode(opplayer2); // only set mode to op if the npc is not currently ap
+if (finduid(%npc_attacking_uid) = true & npc_getmode ! applayer2) {
+    if (npc_stat(hitpoints) <= npc_param(retreat)) {
+        npc_setmode(playerescape);
+    } else {
+        npc_setmode(opplayer2); // only set mode to op if the npc is not currently ap
+    }
 }
 
 

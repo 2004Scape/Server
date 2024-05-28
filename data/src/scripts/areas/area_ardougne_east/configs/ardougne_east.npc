@@ -87,6 +87,7 @@ attack=2
 strength=2
 defence=3
 param=damagetype,^crush_style
+param=retreat,2
 
 [silver_merchant]
 vislevel=hide

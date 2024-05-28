@@ -430,8 +430,20 @@ export default class Npc extends PathingEntity {
         //     return;
         // }
 
-        this.defaultMode();
-        this.queueWaypoint(this.startX, this.startZ);
+        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
+        if (collisionStrategy === null) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
+        }
+        const extraFlag: CollisionFlag = this.blockWalkFlag();
+        if (extraFlag === CollisionFlag.NULL) {
+            // nomove moverestrict returns as null = no walking allowed.
+            this.defaultMode();
+            return;
+        }
+        // this might have to be a smart path idk tho
+        this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.startX, this.startZ, this.width, this.length, this.width, this.length, extraFlag, collisionStrategy));
     }
 
     playerFollowMode(): void {

@@ -50,6 +50,11 @@ switch_int (%xplamp) {
 error("case not found for xplamp varp: <tostring(%xplamp)>");
 
 [label,xplamp_select](stat $stat)
+if (map_members = false & ~stat_members($stat) = ^true) {
+    mes("You need to be on a members' world to gain experience in <~stat_name($stat)>.");
+    %xplamp = ^xplamp_none;
+    return;
+}
 switch_stat ($stat) {
     case attack: @xplamp_select_stat(^xplamp_attack);
     case strength: @xplamp_select_stat(^xplamp_strength);
@@ -75,17 +80,12 @@ error("case not found for stat: <enum(stat, string, stat_names, $stat)>");
 
 [label,xplamp_select_stat](int $selection)
 switch_int ($selection) {
-    case ^xplamp_agility:
-        ~require_members_gain_experience_in_stat(agility);
     case ^xplamp_herblore:
-        ~require_members_gain_experience_in_stat(herblore);
         if (%druid_progress ! ^druid_complete) {
             %xplamp = ^xplamp_none;
             mes("You need to complete the Druidic Ritual quest to choose that option.");
             return;
         }
-    case ^xplamp_thieving:
-        ~require_members_gain_experience_in_stat(thieving);
     case ^xplamp_runecraft:
         if (%runemysteries_progress ! ^runemysteries_complete) {
             %xplamp = ^xplamp_none;
@@ -97,7 +97,11 @@ switch_int ($selection) {
 
 [label,xplamp_confirm](stat $stat)
 // sanity check
-~require_members_gain_experience_in_stat($stat);
+if (map_members = false & ~stat_members($stat) = ^true) {
+    mes("You need to be on a members' world to gain experience in <~stat_name($stat)>.");
+    %xplamp = ^xplamp_none;
+    return;
+}
 
 if_close;
 inv_del(inv, lamp, 1);
@@ -108,15 +112,3 @@ givexp($stat, multiply($base_level, 100)); // stat level * 10
 sound_synth(found_gem, 0, 0);
 
 ~mesbox("Your wish has been granted!|You have been awarded <tostring(multiply($base_level, 10))> <enum(stat, string, stat_names, $stat)> experience!");
-
-[proc,require_members_gain_experience_in_stat](stat $stat)
-if (map_members = true) {
-    return;
-}
-%xplamp = ^xplamp_none;
-switch_stat ($stat) {
-    case agility: @you_need_to_be_on_a_members_world_to_gain_experience_in_agility;
-    case herblore: @you_need_to_be_on_a_members_world_to_gain_experience_in_herblore;
-    case thieving: @you_need_to_be_on_a_members_world_to_gain_experience_in_thieving;
-    case fletching: @you_need_to_be_on_a_members_world_to_gain_experience_in_fletching;
-}
