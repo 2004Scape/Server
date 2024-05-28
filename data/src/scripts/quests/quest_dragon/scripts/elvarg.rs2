@@ -54,7 +54,7 @@ if (random(8) = 0) {
 if (random(4) = 0) {
     ~elvarg_dragon_fire_op;
 } else {
-    ~dragon_melee;
+    ~npc_default_attack;
 }
 
 [proc,elvarg_dragon_fire_op]
