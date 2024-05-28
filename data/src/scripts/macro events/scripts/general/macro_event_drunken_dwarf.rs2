@@ -65,6 +65,7 @@ if (finduid(%npc_attacking_uid) = true) {
         npc_say("I hates yoo <displayname>!");
     } else if (%npc_macro_event_status >= 5) { // fail
         // todo: figure out the message that goes here
+        %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
         npc_setmode(opplayer2);
     }
 

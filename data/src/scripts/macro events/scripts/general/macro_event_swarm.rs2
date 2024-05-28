@@ -2,6 +2,7 @@
 // spotanim_map(spotanim_86, npc_coord, 124, 0);
 if (finduid(%npc_attacking_uid) = true) {
     sound_synth(swarm_appear, 0, 0);
+    %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
     npc_setmode(opplayer2);
     %macro_event = ^no_macro_event;
 }
