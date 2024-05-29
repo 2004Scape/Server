@@ -71,7 +71,6 @@ export default class Npc extends PathingEntity {
     queue: LinkList<EntityQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
-    // mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
     nextHuntTick: number = -1;
     huntrange: number = 5;
