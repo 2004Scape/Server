@@ -10,6 +10,11 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
     handle(message: OpObj, player: NetworkPlayer): boolean {
         const { x, z, obj: objId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const absLeftX = player.loadedX - 52;
         const absRightX = player.loadedX + 52;
         const absTopZ = player.loadedZ + 52;
@@ -43,6 +48,8 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
             mode = ServerTriggerType.APOBJ5;
         }
 
+        player.clearInteraction();
+        player.closeModal();
         player.setInteraction(Interaction.ENGINE, obj, mode);
         player.opcalled = true;
         return true;

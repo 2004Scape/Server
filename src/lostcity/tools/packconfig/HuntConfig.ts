@@ -136,69 +136,128 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
                 return null;
         }
     } else if (key === 'find_newmode') {
-        switch (value) {
-            case 'opplayer1':
-                return NpcMode.OPPLAYER1;
-            case 'opplayer2':
-                return NpcMode.OPPLAYER2;
-            case 'opplayer3':
-                return NpcMode.OPPLAYER3;
-            case 'opplayer4':
-                return NpcMode.OPPLAYER4;
-            case 'opplayer5':
-                return NpcMode.OPPLAYER5;
-            case 'applayer1':
-                return NpcMode.APPLAYER1;
-            case 'applayer2':
-                return NpcMode.APPLAYER2;
-            case 'applayer3':
-                return NpcMode.APPLAYER3;
-            case 'applayer4':
-                return NpcMode.APPLAYER4;
-            case 'applayer5':
-                return NpcMode.APPLAYER5;
-            case 'queue1':
-                return NpcMode.QUEUE1;
-            case 'queue2':
-                return NpcMode.QUEUE2;
-            case 'queue3':
-                return NpcMode.QUEUE3;
-            case 'queue4':
-                return NpcMode.QUEUE4;
-            case 'queue5':
-                return NpcMode.QUEUE5;
-            case 'queue6':
-                return NpcMode.QUEUE6;
-            case 'queue7':
-                return NpcMode.QUEUE7;
-            case 'queue8':
-                return NpcMode.QUEUE8;
-            case 'queue9':
-                return NpcMode.QUEUE9;
-            case 'queue10':
-                return NpcMode.QUEUE10;
-            case 'queue11':
-                return NpcMode.QUEUE11;
-            case 'queue12':
-                return NpcMode.QUEUE12;
-            case 'queue13':
-                return NpcMode.QUEUE13;
-            case 'queue14':
-                return NpcMode.QUEUE14;
-            case 'queue15':
-                return NpcMode.QUEUE15;
-            case 'queue16':
-                return NpcMode.QUEUE16;
-            case 'queue17':
-                return NpcMode.QUEUE17;
-            case 'queue18':
-                return NpcMode.QUEUE18;
-            case 'queue19':
-                return NpcMode.QUEUE19;
-            case 'queue20':
-                return NpcMode.QUEUE20;
-            default:
-                return null;
+        if (value === 'opplayer1') {
+            return NpcMode.OPPLAYER1;
+        } else if (value === 'opplayer2') {
+            return NpcMode.OPPLAYER2;
+        } else if (value === 'opplayer3') {
+            return NpcMode.OPPLAYER3;
+        } else if (value === 'opplayer4') {
+            return NpcMode.OPPLAYER4;
+        } else if (value === 'opplayer5') {
+            return NpcMode.OPPLAYER5;
+        } else if (value === 'applayer1') {
+            return NpcMode.APPLAYER1;
+        } else if (value === 'applayer2') {
+            return NpcMode.APPLAYER2;
+        } else if (value === 'applayer3') {
+            return NpcMode.APPLAYER3;
+        } else if (value === 'applayer4') {
+            return NpcMode.APPLAYER4;
+        } else if (value === 'applayer5') {
+            return NpcMode.APPLAYER5;
+        } else if (value === 'queue1') {
+            return NpcMode.QUEUE1;
+        } else if (value === 'queue2') {
+            return NpcMode.QUEUE2;
+        } else if (value === 'queue3') {
+            return NpcMode.QUEUE3;
+        } else if (value === 'queue4') {
+            return NpcMode.QUEUE4;
+        } else if (value === 'queue5') {
+            return NpcMode.QUEUE5;
+        } else if (value === 'queue6') {
+            return NpcMode.QUEUE6;
+        } else if (value === 'queue7') {
+            return NpcMode.QUEUE7;
+        } else if (value === 'queue8') {
+            return NpcMode.QUEUE8;
+        } else if (value === 'queue9') {
+            return NpcMode.QUEUE9;
+        } else if (value === 'queue10') {
+            return NpcMode.QUEUE10;
+        } else if (value === 'queue11') {
+            return NpcMode.QUEUE11;
+        } else if (value === 'queue12') {
+            return NpcMode.QUEUE12;
+        } else if (value === 'queue13') {
+            return NpcMode.QUEUE13;
+        } else if (value === 'queue14') {
+            return NpcMode.QUEUE14;
+        } else if (value === 'queue15') {
+            return NpcMode.QUEUE15;
+        } else if (value === 'queue16') {
+            return NpcMode.QUEUE16;
+        } else if (value === 'queue17') {
+            return NpcMode.QUEUE17;
+        } else if (value === 'queue18') {
+            return NpcMode.QUEUE18;
+        } else if (value === 'queue19') {
+            return NpcMode.QUEUE19;
+        } else if (value === 'queue20') {
+            return NpcMode.QUEUE20;
+        } else if (value === 'opobj1') {
+            return NpcMode.OPOBJ1;
+        } else if (value === 'opobj2') {
+            return NpcMode.OPOBJ1;
+        } else if (value === 'opobj3') {
+            return NpcMode.OPOBJ3;
+        } else if (value === 'opobj4') {
+            return NpcMode.OPOBJ4;
+        } else if (value === 'opobj5') {
+            return NpcMode.OPOBJ5;
+        } else if (value === 'apobj1') {
+            return NpcMode.APOBJ1;
+        } else if (value === 'apobj2') {
+            return NpcMode.APOBJ2;
+        } else if (value === 'apobj3') {
+            return NpcMode.APOBJ3;
+        } else if (value === 'apobj4') {
+            return NpcMode.APOBJ4;
+        } else if (value === 'apobj5') {
+            return NpcMode.APOBJ5;
+        } else if (value === 'opnpc1') {
+            return NpcMode.OPNPC1;
+        } else if (value === 'opnpc2') {
+            return NpcMode.OPNPC2;
+        } else if (value === 'opnpc3') {
+            return NpcMode.OPNPC3;
+        } else if (value === 'opnpc4') {
+            return NpcMode.OPNPC4;
+        } else if (value === 'opnpc5') {
+            return NpcMode.OPNPC5;
+        } else if (value === 'apnpc1') {
+            return NpcMode.APNPC1;
+        } else if (value === 'apnpc2') {
+            return NpcMode.APNPC2;
+        } else if (value === 'apnpc3') {
+            return NpcMode.APNPC3;
+        } else if (value === 'apnpc4') {
+            return NpcMode.APNPC4;
+        } else if (value === 'apnpc5') {
+            return NpcMode.APNPC5;
+        } else if (value === 'oploc1') {
+            return NpcMode.OPLOC1;
+        } else if (value === 'oploc2') {
+            return NpcMode.OPLOC2;
+        } else if (value === 'oploc3') {
+            return NpcMode.OPLOC3;
+        } else if (value === 'oploc4') {
+            return NpcMode.OPLOC4;
+        } else if (value === 'oploc5') {
+            return NpcMode.OPLOC5;
+        } else if (value === 'aploc1') {
+            return NpcMode.APLOC1;
+        } else if (value === 'aploc2') {
+            return NpcMode.APLOC2;
+        } else if (value === 'aploc3') {
+            return NpcMode.APLOC3;
+        } else if (value === 'aploc4') {
+            return NpcMode.APLOC4;
+        } else if (value === 'aploc5') {
+            return NpcMode.APLOC5;
+        } else {
+            return null;
         }
     } else if (key === 'nobodynear') {
         switch (value) {

@@ -10,6 +10,11 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
     handle(message: OpNpc, player: NetworkPlayer): boolean {
         const { nid } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed()) {
             player.unsetMapFlag();
@@ -38,6 +43,8 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
             mode = ServerTriggerType.APNPC5;
         }
 
+        player.clearInteraction();
+        player.closeModal();
         player.setInteraction(Interaction.ENGINE, npc, mode, { type: npc.type, com: -1 });
         player.opcalled = true;
         return true;

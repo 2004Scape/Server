@@ -42,10 +42,9 @@ import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import Stack from '#jagex2/datastruct/Stack.js';
 
-import {CollisionFlag, findPath} from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
-import Interaction from '#lostcity/entity/Interaction.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -261,24 +260,10 @@ export default class Player extends PathingEntity {
     lowPriorityOut: Stack<Packet> = new Stack();
     lastResponse = -1;
 
-    mask: number = 0;
-    animId: number = -1;
-    animDelay: number = -1;
-    faceEntity: number = -1;
-    alreadyFacedCoord: boolean = false;
-    alreadyFacedEntity: boolean = false;
-    chat: string | null = null;
-    damageTaken: number = -1;
-    damageType: number = -1;
-    faceX: number = -1;
-    faceZ: number = -1;
     messageColor: number | null = null;
     messageEffect: number | null = null;
     messageType: number | null = null;
     message: Uint8Array | null = null;
-    graphicId: number = -1;
-    graphicHeight: number = -1;
-    graphicDelay: number = -1;
 
     // ---
 
@@ -301,17 +286,6 @@ export default class Player extends PathingEntity {
     overlaySide: number[] = new Array(14).fill(-1);
     receivedFirstClose = false; // workaround to not close welcome screen on login
 
-    interacted: boolean = false;
-    repathed: boolean = false;
-    target: Player | Npc | Loc | Obj | null = null;
-    targetOp: number = -1;
-    targetSubject: { // for [opplayeru,obj]
-        type: number,
-        com: number;
-    } = {type: -1, com: -1};
-    apRange: number = 10;
-    apRangeCalled: boolean = false;
-
     protect: boolean = false; // whether protected access is available
     activeScript: ScriptState | null = null;
     resumeButtons: number[] = [];
@@ -327,7 +301,7 @@ export default class Player extends PathingEntity {
     staffModLevel: number = 0;
 
     constructor(username: string, username37: bigint) {
-        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC); // tutorial island.
+        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC, Player.FACE_COORD, Player.FACE_ENTITY, true); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.displayName = toDisplayName(username);
@@ -352,59 +326,16 @@ export default class Player extends PathingEntity {
     }
 
     resetEntity(respawn: boolean) {
-        this.resetPathingEntity();
-        this.repathed = false;
-        this.protect = false;
-
         if (respawn) {
             // if needed for respawning
         }
-
-        this.mask = 0;
-        this.animId = -1;
-        this.animDelay = -1;
-
-        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.target) {
-            this.mask |= Player.FACE_ENTITY;
-            this.faceEntity = -1;
-            this.alreadyFacedEntity = false;
-        }
-
-        this.animId = -1;
-        this.animDelay = -1;
-
-        this.chat = null;
-
-        this.damageTaken = -1;
-        this.damageType = -1;
-
+        super.resetPathingEntity();
+        this.repathed = false;
+        this.protect = false;
         this.messageColor = null;
         this.messageEffect = null;
         this.messageType = null;
         this.message = null;
-
-        this.graphicId = -1;
-        this.graphicHeight = -1;
-        this.graphicDelay = -1;
-    }
-
-    pathToTarget() {
-        if (!this.target || this.target.x === -1 || this.target.z === -1) {
-            return;
-        }
-
-        if (this.target instanceof PathingEntity) {
-            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
-        } else if (this.target instanceof Loc) {
-            const forceapproach = LocType.get(this.target.type).forceapproach;
-            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
-        } else {
-            this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z));
-        }
     }
 
     // ----
@@ -751,56 +682,6 @@ export default class Player extends PathingEntity {
         }
     }
 
-    setInteraction(interaction: Interaction, target: Player | Npc | Loc | Obj, op: ServerTriggerType, subject?: {type: number, com: number}) {
-        if (interaction === Interaction.SCRIPT && this.hasWaypoints()) {
-            return;
-        }
-        if (this.delayed()) {
-            // console.log('not setting interaction');
-            this.unsetMapFlag();
-            return;
-        }
-
-        // console.log('setting interaction');
-        this.closeModal();
-
-        this.target = target;
-        this.targetOp = op;
-        this.targetSubject = subject ?? {type: -1, com: -1};
-        this.apRange = 10;
-        this.apRangeCalled = false;
-
-        if (target instanceof Player) {
-            this.faceEntity = target.pid + 32768;
-            this.mask |= Player.FACE_ENTITY;
-        } else if (target instanceof Npc) {
-            this.faceEntity = target.nid;
-            this.mask |= Player.FACE_ENTITY;
-        } else if (target instanceof Loc) {
-            const type = LocType.get(target.type);
-            this.faceX = target.x * 2 + type.width;
-            this.faceZ = target.z * 2 + type.length;
-            this.mask |= Player.FACE_COORD;
-        } else {
-            this.faceX = target.x * 2 + 1;
-            this.faceZ = target.z * 2 + 1;
-            this.mask |= Player.FACE_COORD;
-        }
-        if (interaction === Interaction.SCRIPT) {
-            this.pathToTarget();
-        }
-    }
-
-    clearInteraction() {
-        this.target = null;
-        this.targetOp = -1;
-        this.targetSubject = {type: -1, com: -1};
-        this.apRange = 10;
-        this.apRangeCalled = false;
-        this.alreadyFacedCoord = true;
-        this.alreadyFacedEntity = true;
-    }
-
     getOpTrigger() {
         if (!this.target) {
             return null;
@@ -895,12 +776,11 @@ export default class Player extends PathingEntity {
         // console.log('operable', opTrigger != null, 'trigger exists', this.inOperableDistance(this.target), 'in range');
         // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
 
-        if (this.inOperableDistance(this.target) && opTrigger && this.target instanceof PathingEntity) {
+        if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             const target = this.target;
             this.target = null;
-            const state = ScriptRunner.init(opTrigger, this, target);
 
-            this.executeScript(state, true);
+            this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
 
             if (this.target === null) {
                 this.unsetMapFlag();
@@ -908,12 +788,11 @@ export default class Player extends PathingEntity {
 
             this.interacted = true;
             this.clearWaypoints();
-        } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
+        } else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
             const target = this.target;
             this.target = null;
-            const state = ScriptRunner.init(apTrigger, this, target);
 
-            this.executeScript(state, true);
+            this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
 
             // if aprange was called then we did not interact.
             if (this.apRangeCalled) {
@@ -926,7 +805,7 @@ export default class Player extends PathingEntity {
             if (this.target === null) {
                 this.unsetMapFlag();
             }
-        } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
+        } else if (this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
@@ -954,7 +833,7 @@ export default class Player extends PathingEntity {
             this.clearWaypoints();
         }
 
-        const moved = this.updateMovement();
+        const moved: boolean = this.updateMovement();
         if (moved) {
             // we need to keep the mask if the player had to move.
             this.alreadyFacedEntity = false;
@@ -965,13 +844,12 @@ export default class Player extends PathingEntity {
         if (this.target && (!this.interacted || this.apRangeCalled)) {
             this.interacted = false;
 
-            if (this.inOperableDistance(this.target) && opTrigger && (this.target instanceof PathingEntity || !moved)) {
+            if (opTrigger && (this.target instanceof PathingEntity || !moved) && this.inOperableDistance(this.target)) {
 
                 const target = this.target;
                 this.target = null;
-                const state = ScriptRunner.init(opTrigger, this, target);
 
-                this.executeScript(state, true);
+                this.executeScript(ScriptRunner.init(opTrigger, this, target), true);
 
                 if (this.target === null) {
                     this.unsetMapFlag();
@@ -979,14 +857,13 @@ export default class Player extends PathingEntity {
 
                 this.interacted = true;
                 this.clearWaypoints();
-            } else if (this.inApproachDistance(this.apRange, this.target) && apTrigger) {
+            } else if (apTrigger && this.inApproachDistance(this.apRange, this.target)) {
                 this.apRangeCalled = false;
 
                 const target = this.target;
                 this.target = null;
-                const state = ScriptRunner.init(apTrigger, this, target);
 
-                this.executeScript(state, true);
+                this.executeScript(ScriptRunner.init(apTrigger, this, target), true);
 
                 // if aprange was called then we did not interact.
                 if (this.apRangeCalled) {
@@ -999,7 +876,7 @@ export default class Player extends PathingEntity {
                 if (this.target === null) {
                     this.unsetMapFlag();
                 }
-            } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
+            } else if ((this.target instanceof PathingEntity || !moved) && this.inOperableDistance(this.target)) {
                 if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
                     let debugname = '_';
                     if (this.target instanceof Npc) {

@@ -10,6 +10,11 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
     handle(message: OpLocT, player: NetworkPlayer): boolean {
         const { x, z, loc: locId, spellComponent: spellComId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
             return false;
@@ -25,10 +30,6 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
 
         const loc = World.getLoc(x, z, player.level, locId);
         if (!loc) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

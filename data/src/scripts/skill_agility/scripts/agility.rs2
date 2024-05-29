@@ -37,6 +37,7 @@ def_coord $movement_coord = movecoord(coord, $move_x, 0, $move_z);
 p_teleport(movecoord(coord, $move_x, 0, $move_z));
 $change_x = calc($change_x - $move_x);
 $change_z = calc($change_z - $move_z);
+p_stopaction;
 p_delay(0);
 // recursive call
 ~agility_walk($change_x, $change_z);

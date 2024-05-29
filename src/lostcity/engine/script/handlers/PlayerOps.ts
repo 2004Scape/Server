@@ -320,6 +320,11 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeLoc, ServerTriggerType.APLOC1 + type);
     }),
 
@@ -331,6 +336,11 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPC1 + type, {type: state.activeNpc.type, com: -1});
     }),
 
@@ -339,6 +349,11 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeNpc, ServerTriggerType.APNPCT, {type: state.activeNpc.type, com: spellId});
     }),
 
@@ -835,6 +850,11 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
 
@@ -846,10 +866,15 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
         const target = state._activePlayer2;
         if (!target) {
             return;
         }
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
         state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYER1 + type);
     }),
 
@@ -951,10 +976,15 @@ const PlayerOps: CommandHandlers = {
         if (state.activePlayer.target !== null) {
             return;
         }
+        if (state.activePlayer.hasWaypoints()) {
+            return;
+        }
         const target = state._activePlayer2;
         if (!target) {
             return;
         }
+        state.activePlayer.clearInteraction();
+        state.activePlayer.closeModal();
         state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
     }),
 };

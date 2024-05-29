@@ -10,6 +10,11 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
     handle(message: OpObjT, player: NetworkPlayer): boolean {
         const { x, z, obj: objId, spellComponent: spellComId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
             return false;
@@ -25,10 +30,6 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
 
         const obj = World.getObj(x, z, player.level, objId);
         if (!obj) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

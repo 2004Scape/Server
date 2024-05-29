@@ -120,7 +120,7 @@ export default class ScriptState {
     dbRow: number = -1;
     dbRowQuery: number[] = [];
 
-    huntIterator: IterableIterator<Player> | null = null;
+    huntIterator: IterableIterator<Entity> | null = null;
     npcIterator: IterableIterator<Npc> | null = null;
     locIterator: IterableIterator<Loc> | null = null;
 
