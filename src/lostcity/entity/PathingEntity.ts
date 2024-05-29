@@ -33,9 +33,9 @@ type TargetSubject = {
 export default abstract class PathingEntity extends Entity {
     // constructor properties
     protected readonly moveRestrict: MoveRestrict;
-    private readonly blockWalk: BlockWalk;
-    private readonly facecoord: number;
-    private readonly faceentity: number;
+    readonly blockWalk: BlockWalk;
+    private readonly coordmask: number;
+    private readonly entitymask: number;
     private readonly smart: boolean;
 
     // runtime properties
@@ -83,12 +83,12 @@ export default abstract class PathingEntity extends Entity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
-    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk, facecoord: number, faceentity: number, smart: boolean) {
+    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk, coordmask: number, entitymask: number, smart: boolean) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
         this.blockWalk = blockWalk;
-        this.facecoord = facecoord;
-        this.faceentity = faceentity;
+        this.coordmask = coordmask;
+        this.entitymask = entitymask;
         this.smart = smart;
     }
 
@@ -396,13 +396,13 @@ export default abstract class PathingEntity extends Entity {
             const pid: number = target.pid + 32768;
             if (this.faceEntity !== pid) {
                 this.faceEntity = pid;
-                this.mask |= this.faceentity;
+                this.mask |= this.entitymask;
             }
         } else if (target instanceof Npc) {
             const nid: number = target.nid;
             if (this.faceEntity !== nid) {
                 this.faceEntity = nid;
-                this.mask |= this.faceentity;
+                this.mask |= this.entitymask;
             }
         } else {
             const faceX: number = target.x * 2 + target.width;
@@ -410,7 +410,7 @@ export default abstract class PathingEntity extends Entity {
             if (this.faceX !== faceX || this.faceZ !== faceZ) {
                 this.faceX = faceX;
                 this.faceZ = faceZ;
-                this.mask |= this.facecoord;
+                this.mask |= this.coordmask;
             }
         }
         if (interaction === Interaction.SCRIPT) {
@@ -460,7 +460,7 @@ export default abstract class PathingEntity extends Entity {
             this.faceZ = -1;
             this.alreadyFacedCoord = false;
         } else if (this.alreadyFacedEntity && !this.target) {
-            this.mask |= this.faceentity;
+            this.mask |= this.entitymask;
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;
         }
