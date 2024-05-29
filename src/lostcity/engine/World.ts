@@ -348,9 +348,11 @@ class World {
         if (Environment.LOCAL_DEV) {
             this.startDevWatcher();
 
-            // this.devThread!.postMessage({
-            //     type: 'pack'
-            // });
+            if (Environment.BUILD_ON_STARTUP) {
+                this.devThread!.postMessage({
+                    type: 'pack'
+                });
+            }
         }
 
         console.log('World ready!');
