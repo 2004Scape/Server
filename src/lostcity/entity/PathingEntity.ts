@@ -2,19 +2,41 @@ import World from '#lostcity/engine/World.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
+import Npc from '#lostcity/entity/Npc.js';
 import Loc from '#lostcity/entity/Loc.js';
+import Interaction from '#lostcity/entity/Interaction.js';
+import Player from '#lostcity/entity/Player.js';
+import NpcMode from '#lostcity/entity/NpcMode.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 
 import LocType from '#lostcity/cache/LocType.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
-import {canTravel, CollisionFlag, CollisionType, hasLineOfSight, isFlagged, reached} from '@2004scape/rsmod-pathfinder';
+import {
+    canTravel,
+    CollisionFlag,
+    CollisionType,
+    findNaivePath,
+    findPath,
+    hasLineOfSight,
+    isFlagged,
+    reached
+} from '@2004scape/rsmod-pathfinder';
+
+type TargetSubject = {
+    type: number,
+    com: number;
+}
 
 export default abstract class PathingEntity extends Entity {
     // constructor properties
-    readonly moveRestrict: MoveRestrict;
+    protected readonly moveRestrict: MoveRestrict;
     readonly blockWalk: BlockWalk;
+    private readonly coordmask: number;
+    private readonly entitymask: number;
+    private readonly smart: boolean;
 
     // runtime properties
     moveSpeed: MoveSpeed = MoveSpeed.INSTANT;
@@ -31,6 +53,17 @@ export default abstract class PathingEntity extends Entity {
 
     orientation: number = Direction.SOUTH;
 
+    interacted: boolean = false;
+    repathed: boolean = false;
+    target: Entity | null = null;
+    targetOp: number = -1;
+    targetSubject: TargetSubject = {type: -1, com: -1};
+    apRange: number = 10;
+    apRangeCalled: boolean = false;
+    alreadyFacedCoord: boolean = false;
+    alreadyFacedEntity: boolean = false;
+
+    mask: number = 0;
     exactStartX: number = -1;
     exactStartZ: number = -1;
     exactEndX: number = -1;
@@ -38,17 +71,31 @@ export default abstract class PathingEntity extends Entity {
     exactMoveStart: number = -1;
     exactMoveEnd: number = -1;
     exactMoveDirection: number = -1;
+    faceX: number = -1;
+    faceZ: number = -1;
+    faceEntity: number = -1;
+    damageTaken: number = -1;
+    damageType: number = -1;
+    animId: number = -1;
+    animDelay: number = -1;
+    chat: string | null = null;
+    graphicId: number = -1;
+    graphicHeight: number = -1;
+    graphicDelay: number = -1;
 
-    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
+    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk, coordmask: number, entitymask: number, smart: boolean) {
         super(level, x, z, width, length);
         this.moveRestrict = moveRestrict;
         this.blockWalk = blockWalk;
+        this.coordmask = coordmask;
+        this.entitymask = entitymask;
+        this.smart = smart;
     }
 
     /**
      * Attempts to update movement for a PathingEntity.
      */
-    abstract updateMovement(): void;
+    abstract updateMovement(repathAllowed: boolean): boolean;
     abstract blockWalkFlag(): CollisionFlag;
     abstract defaultMoveSpeed(): MoveSpeed;
 
@@ -98,7 +145,7 @@ export default abstract class PathingEntity extends Entity {
      * @param previousZ Their previous recorded z position before movement.
      * @param previousLevel Their previous recorded level position before movement. This one is important for teleport.
      */
-    refreshZonePresence(previousX: number, previousZ: number, previousLevel: number): void {
+    private refreshZonePresence(previousX: number, previousZ: number, previousLevel: number): void {
         // only update collision map when the entity moves.
         if (this.x != previousX || this.z !== previousZ || this.level !== previousLevel) {
             // update collision map
@@ -138,7 +185,7 @@ export default abstract class PathingEntity extends Entity {
      *
      * Returns the final validated step direction.
      */
-    validateAndAdvanceStep(): number {
+    private validateAndAdvanceStep(): number {
         const dir: number | null = this.takeStep();
         if (dir === null) {
             return -1;
@@ -267,7 +314,7 @@ export default abstract class PathingEntity extends Entity {
         return this.waypointIndex === 0;
     }
 
-    inOperableDistance(target: Entity): boolean {
+    protected inOperableDistance(target: Entity): boolean {
         if (target.level !== this.level) {
             return false;
         }
@@ -278,8 +325,7 @@ export default abstract class PathingEntity extends Entity {
             return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
         }
         // instanceof Obj
-        const reachedAdjacent = reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
-        const reachedTile = reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1);
+        const reachedAdjacent: boolean = reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
         if (isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED)) {
             // picking up off of tables
             return reachedAdjacent;
@@ -288,10 +334,10 @@ export default abstract class PathingEntity extends Entity {
             // picking up while walktrigger prevents movement
             return true;
         }
-        return reachedTile;
+        return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1);
     }
 
-    inApproachDistance(range: number, target: Entity): boolean {
+    protected inApproachDistance(range: number, target: Entity): boolean {
         if (target.level !== this.level) {
             return false;
         }
@@ -303,32 +349,123 @@ export default abstract class PathingEntity extends Entity {
         return Position.distanceTo(this, target) <= range && hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, CollisionFlag.PLAYER);
     }
 
-    getCollisionStrategy(): CollisionType | null {
-        switch (this.moveRestrict) {
-            case MoveRestrict.NORMAL:
-                return CollisionType.NORMAL;
-            case MoveRestrict.BLOCKED:
-                return CollisionType.BLOCKED;
-            case MoveRestrict.BLOCKED_NORMAL:
-                return CollisionType.LINE_OF_SIGHT;
-            case MoveRestrict.INDOORS:
-                return CollisionType.INDOORS;
-            case MoveRestrict.OUTDOORS:
-                return CollisionType.OUTDOORS;
-            case MoveRestrict.NOMOVE:
-                return null;
-            case MoveRestrict.PASSTHRU:
-                return CollisionType.NORMAL;
+    protected pathToTarget(): void {
+        if (!this.target) {
+            return;
+        }
+
+        if (this.smart) {
+            if (this.target instanceof PathingEntity) {
+                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
+            } else if (this.target instanceof Loc) {
+                const forceapproach = LocType.get(this.target.type).forceapproach;
+                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
+            } else {
+                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z));
+            }
+            return;
+        }
+
+        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
+        if (collisionStrategy === null) {
+            // nomove moverestrict returns as null = no walking allowed.
+            return;
+        }
+
+        const extraFlag: CollisionFlag = this.blockWalkFlag();
+        if (extraFlag === CollisionFlag.NULL) {
+            // nomove moverestrict returns as null = no walking allowed.
+            return;
+        }
+        if (this.target instanceof PathingEntity) {
+            this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, extraFlag, collisionStrategy));
+        } else {
+            this.queueWaypoint(this.target.x, this.target.z);
         }
     }
 
-    resetPathingEntity(): void {
+    setInteraction(interaction: Interaction, target: Entity, op: ServerTriggerType | NpcMode, subject?: TargetSubject): void {
+        this.target = target;
+        this.targetOp = op;
+        this.targetSubject = subject ?? {type: -1, com: -1};
+        this.apRange = 10;
+        this.apRangeCalled = false;
+
+        // less packets out thanks to me :-)
+        if (target instanceof Player) {
+            const pid: number = target.pid + 32768;
+            if (this.faceEntity !== pid) {
+                this.faceEntity = pid;
+                this.mask |= this.entitymask;
+            }
+        } else if (target instanceof Npc) {
+            const nid: number = target.nid;
+            if (this.faceEntity !== nid) {
+                this.faceEntity = nid;
+                this.mask |= this.entitymask;
+            }
+        } else {
+            const faceX: number = target.x * 2 + target.width;
+            const faceZ: number = target.z * 2 + target.length;
+            if (this.faceX !== faceX || this.faceZ !== faceZ) {
+                this.faceX = faceX;
+                this.faceZ = faceZ;
+                this.mask |= this.coordmask;
+            }
+        }
+        if (interaction === Interaction.SCRIPT) {
+            this.pathToTarget();
+        }
+    }
+
+    clearInteraction(): void {
+        this.target = null;
+        this.targetOp = -1;
+        this.targetSubject = {type: -1, com: -1};
+        this.apRange = 10;
+        this.apRangeCalled = false;
+        this.alreadyFacedCoord = true;
+        this.alreadyFacedEntity = true;
+    }
+
+    protected getCollisionStrategy(): CollisionType | null {
+        if (this.moveRestrict === MoveRestrict.NORMAL) {
+            return CollisionType.NORMAL;
+        } else if (this.moveRestrict === MoveRestrict.BLOCKED) {
+            return CollisionType.BLOCKED;
+        } else if (this.moveRestrict === MoveRestrict.BLOCKED_NORMAL) {
+            return CollisionType.LINE_OF_SIGHT;
+        } else if (this.moveRestrict === MoveRestrict.INDOORS) {
+            return CollisionType.INDOORS;
+        } else if (this.moveRestrict === MoveRestrict.OUTDOORS) {
+            return CollisionType.OUTDOORS;
+        } else if (this.moveRestrict === MoveRestrict.NOMOVE) {
+            return null;
+        } else if (this.moveRestrict === MoveRestrict.PASSTHRU) {
+            return CollisionType.NORMAL;
+        }
+        return null;
+    }
+
+    protected resetPathingEntity(): void {
         this.moveSpeed = this.defaultMoveSpeed();
         this.walkDir = -1;
         this.runDir = -1;
         this.jump = false;
         this.lastX = this.x;
         this.lastZ = this.z;
+
+        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.alreadyFacedCoord = false;
+        } else if (this.alreadyFacedEntity && !this.target) {
+            this.mask |= this.entitymask;
+            this.faceEntity = -1;
+            this.alreadyFacedEntity = false;
+        }
+
+        this.mask = 0;
         this.exactStartX = -1;
         this.exactStartZ = -1;
         this.exactEndX = -1;
@@ -336,6 +473,16 @@ export default abstract class PathingEntity extends Entity {
         this.exactMoveStart = -1;
         this.exactMoveEnd = -1;
         this.exactMoveDirection = -1;
+        this.animId = -1;
+        this.animDelay = -1;
+        this.animId = -1;
+        this.animDelay = -1;
+        this.chat = null;
+        this.damageTaken = -1;
+        this.damageType = -1;
+        this.graphicId = -1;
+        this.graphicHeight = -1;
+        this.graphicDelay = -1;
     }
 
     private takeStep(): number | null {

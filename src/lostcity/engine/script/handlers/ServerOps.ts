@@ -15,8 +15,18 @@ import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import { Position } from '#lostcity/entity/Position.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import Player from '#lostcity/entity/Player.js';
 
-import {CollisionFlag, hasLineOfSight, hasLineOfWalk, isFlagged, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
+import {
+    CollisionFlag,
+    hasLineOfSight,
+    hasLineOfWalk,
+    isFlagged,
+    LocAngle,
+    LocLayer,
+    locShapeLayer
+} from '@2004scape/rsmod-pathfinder';
 
 import {
     check,
@@ -71,7 +81,7 @@ const ServerOps: CommandHandlers = {
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.huntIterator = new HuntIterator(World.currentTick, level, x, z, distance, checkVis);
+        state.huntIterator = new HuntIterator(World.currentTick, level, x, z, distance, checkVis, HuntModeType.PLAYER);
     },
 
     [ScriptOpcode.HUNTNEXT]: state => {
@@ -79,6 +89,10 @@ const ServerOps: CommandHandlers = {
         if (!result || result.done) {
             state.pushInt(0);
             return;
+        }
+
+        if (!(result.value instanceof Player)) {
+            throw new Error('[ServerOps] huntnext command must result instance of Player.');
         }
 
         state.activePlayer = result.value;

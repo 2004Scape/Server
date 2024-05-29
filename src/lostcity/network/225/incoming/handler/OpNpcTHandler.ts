@@ -10,6 +10,11 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
     handle(message: OpNpcT, player: NetworkPlayer): boolean {
         const { nid, spellComponent: spellComId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
             return false;
@@ -21,10 +26,6 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
         }
 
         if (!player.npcs.has(npc.nid)) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

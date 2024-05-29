@@ -11,6 +11,11 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
     handle(message: OpNpcU, player: NetworkPlayer): boolean {
         const { nid, useObj: item, useSlot: slot, useComponent: comId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
             return false;
@@ -32,10 +37,6 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
         }
 
         if (!player.npcs.has(npc.nid)) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

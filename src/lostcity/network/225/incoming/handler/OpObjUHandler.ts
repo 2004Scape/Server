@@ -11,6 +11,11 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
     handle(message: OpObjU, player: NetworkPlayer): boolean {
         const { x, z, obj: objId, useObj: item, useSlot: slot, useComponent: comId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
             return false;
@@ -36,10 +41,6 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
 
         const obj = World.getObj(x, z, player.level, objId);
         if (!obj) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

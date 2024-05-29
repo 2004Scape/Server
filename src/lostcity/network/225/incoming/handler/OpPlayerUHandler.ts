@@ -11,6 +11,11 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
     handle(message: OpPlayerU, player: NetworkPlayer): boolean {
         const { pid, useObj: item, useSlot: slot, useComponent: comId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
             return false;
@@ -32,10 +37,6 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
         }
 
         if (!player.players.has(player.uid)) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

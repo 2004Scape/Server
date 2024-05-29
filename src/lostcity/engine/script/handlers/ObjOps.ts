@@ -25,6 +25,7 @@ import {
 } from '#lostcity/engine/script/ScriptValidators.js';
 
 const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
+const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 
 const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: state => {
@@ -74,7 +75,11 @@ const ObjOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OBJ_DEL]: state => {
-        World.removeObj(state.activeObj, state.activePlayer);
+        if (state.pointerGet(ActivePlayer[state.intOperand])) {
+            World.removeObj(state.activeObj, state.activePlayer);
+        } else {
+            World.removeObj(state.activeObj, null);
+        }
     },
 
     [ScriptOpcode.OBJ_COUNT]: state => {

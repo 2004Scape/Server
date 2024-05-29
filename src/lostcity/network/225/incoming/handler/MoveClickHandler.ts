@@ -7,6 +7,13 @@ import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
 
 export default class MoveClickHandler extends MessageHandler<MoveClick> {
     handle(message: MoveClick, player: NetworkPlayer): boolean {
+        const start = message.path[0];
+        if (player.delayed() || message.ctrlHeld < 0 || message.ctrlHeld > 1 || Position.distanceToSW(player, { x: start.x, z: start.z }) > 104) {
+            player.unsetMapFlag();
+            player.userPath = [];
+            return false;
+        }
+
         if (Environment.CLIENT_PATHFINDER) {
             player.userPath = [];
 
@@ -16,13 +23,6 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
         } else {
             const dest = message.path[message.path.length - 1];
             player.userPath = [Position.packCoord(player.level, dest.x, dest.z)];
-        }
-
-        const start = message.path[0];
-        if (player.delayed() || message.ctrlHeld < 0 || message.ctrlHeld > 1 || Position.distanceToSW(player, { x: start.x, z: start.z }) > 104) {
-            player.unsetMapFlag();
-            player.userPath = [];
-            return false;
         }
 
         if (!message.opClick) {

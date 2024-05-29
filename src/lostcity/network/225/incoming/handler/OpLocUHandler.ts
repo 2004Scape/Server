@@ -11,6 +11,11 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
     handle(message: OpLocU, player: NetworkPlayer): boolean {
         const { x, z, loc: locId, useObj: item, useSlot: slot, useComponent: comId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
             return false;
@@ -36,10 +41,6 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
 
         const loc = World.getLoc(x, z, player.level, locId);
         if (!loc) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

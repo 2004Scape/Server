@@ -5,6 +5,9 @@ import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import {hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
+import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import Entity from '#lostcity/entity/Entity.js';
+import Obj from '#lostcity/entity/Obj.js';
 
 abstract class ScriptIterator<T> implements IterableIterator<T> {
     private readonly iterator: IterableIterator<T>;
@@ -26,7 +29,7 @@ abstract class ScriptIterator<T> implements IterableIterator<T> {
     }
 }
 
-export class HuntIterator extends ScriptIterator<Player> {
+export class HuntIterator extends ScriptIterator<Entity> {
     // a radius of 1 will loop 9 zones
     // a radius of 2 will loop 25 zones
     // a radius of 3 will loop 49 zones
@@ -39,8 +42,9 @@ export class HuntIterator extends ScriptIterator<Player> {
     private readonly maxZ: number;
     private readonly distance: number;
     private readonly checkVis: HuntVis;
+    private readonly type: HuntModeType;
 
-    constructor(tick: number, level: number, x: number, z: number, distance: number, checkVis: HuntVis) {
+    constructor(tick: number, level: number, x: number, z: number, distance: number, checkVis: HuntVis, type: HuntModeType) {
         super(tick);
         const centerX: number = Position.zone(x);
         const centerZ: number = Position.zone(z);
@@ -54,33 +58,96 @@ export class HuntIterator extends ScriptIterator<Player> {
         this.minZ = centerZ - radius;
         this.distance = distance;
         this.checkVis = checkVis;
+        this.type = type;
     }
 
-    protected *generator(): IterableIterator<Player> {
+    protected *generator(): IterableIterator<Entity> {
         for (let x: number = this.maxX; x >= this.minX; x--) {
             const zoneX: number = x << 3;
             for (let z: number = this.maxZ; z >= this.minZ; z--) {
                 const zoneZ: number = z << 3;
-                const players: Set<number> = World.getZonePlayers(zoneX, zoneZ, this.level);
 
-                for (const uid of players) {
-                    if (World.currentTick > this.tick) {
-                        throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
+                if (this.type === HuntModeType.PLAYER) {
+                    const players: Set<number> = World.getZonePlayers(zoneX, zoneZ, this.level);
+
+                    for (const uid of players) {
+                        if (World.currentTick > this.tick) {
+                            throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
+                        }
+                        const player: Player | null = World.getPlayerByUid(uid);
+                        if (!player) {
+                            continue;
+                        }
+                        if (Position.distanceToSW({x: this.x, z: this.z}, player) > this.distance) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        yield player;
                     }
-                    const player: Player | null = World.getPlayerByUid(uid);
-                    if (!player) {
-                        continue;
+                } else if (this.type === HuntModeType.NPC) {
+                    const npcs: Set<number> = World.getZoneNpcs(zoneX, zoneZ, this.level);
+
+                    for (const nid of npcs) {
+                        if (World.currentTick > this.tick) {
+                            throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
+                        }
+                        const npc: Npc | null = World.getNpc(nid);
+                        if (!npc) {
+                            continue;
+                        }
+                        if (Position.distanceToSW({x: this.x, z: this.z}, npc) > this.distance) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        yield npc;
                     }
-                    if (Position.distanceToSW({x: this.x, z: this.z}, player) > this.distance) {
-                        continue;
+                } else if (this.type === HuntModeType.OBJ) {
+                    // scripting only cares about dynamic objs??
+                    const objs: Obj[] = World.getZone(zoneX, zoneZ, this.level).objs;
+
+                    for (const obj of objs) {
+                        if (World.currentTick > this.tick) {
+                            throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
+                        }
+                        if (Position.distanceToSW({x: this.x, z: this.z}, obj) > this.distance) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        yield obj;
                     }
-                    if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
-                        continue;
+                } else if (this.type === HuntModeType.SCENERY) {
+                    const locs: Loc[] = World.getZoneLocs(zoneX, zoneZ, this.level);
+
+                    for (const loc of locs) {
+                        if (World.currentTick > this.tick) {
+                            throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
+                        }
+                        if (Position.distanceToSW({x: this.x, z: this.z}, loc) > this.distance) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        yield loc;
                     }
-                    if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
-                        continue;
-                    }
-                    yield player;
                 }
             }
         }

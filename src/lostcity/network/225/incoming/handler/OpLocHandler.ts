@@ -10,6 +10,11 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
     handle(message: OpLoc, player: NetworkPlayer): boolean {
         const { x, z, loc: locId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const absLeftX = player.loadedX - 52;
         const absRightX = player.loadedX + 52;
         const absTopZ = player.loadedZ + 52;
@@ -42,6 +47,8 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
             mode = ServerTriggerType.APLOC5;
         }
 
+        player.clearInteraction();
+        player.closeModal();
         player.setInteraction(Interaction.ENGINE, loc, mode);
         player.opcalled = true;
         return true;

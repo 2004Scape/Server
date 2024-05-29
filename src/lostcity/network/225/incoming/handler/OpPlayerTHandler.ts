@@ -10,6 +10,11 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
     handle(message: OpPlayerT, player: NetworkPlayer): boolean {
         const { pid, spellComponent: spellComId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
             return false;
@@ -21,10 +26,6 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
         }
 
         if (!player.players.has(other.uid)) {
-            return false;
-        }
-
-        if (player.delayed()) {
             return false;
         }
 

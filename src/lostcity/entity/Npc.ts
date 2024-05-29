@@ -31,6 +31,8 @@ import {CollisionFlag, CollisionType, findNaivePath} from '@2004scape/rsmod-path
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
+import Entity from '#lostcity/entity/Entity.js';
+import Interaction from '#lostcity/entity/Interaction.js';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -63,19 +65,6 @@ export default class Npc extends PathingEntity {
     vars: Int32Array;
     varsString: string[];
 
-    mask: number = 0;
-    faceX: number = -1;
-    faceZ: number = -1;
-    faceEntity: number = -1;
-    damageTaken: number = -1;
-    damageType: number = -1;
-    animId: number = -1;
-    animDelay: number = -1;
-    chat: string | null = null;
-    graphicId: number = -1;
-    graphicHeight: number = -1;
-    graphicDelay: number = -1;
-
     // script variables
     activeScript: ScriptState | null = null;
     delay: number = 0;
@@ -87,10 +76,6 @@ export default class Npc extends PathingEntity {
     nextHuntTick: number = -1;
     huntrange: number = 5;
 
-    interacted: boolean = false;
-    target: Player | Npc | Loc | Obj | null = null;
-    targetOp: number = -1;
-
     nextPatrolTick: number = -1;
     nextPatrolPoint : number = 0;
     delayedPatrol : boolean = false;
@@ -101,7 +86,7 @@ export default class Npc extends PathingEntity {
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, moveRestrict, blockWalk);
+        super(level, x, z, width, length, moveRestrict, blockWalk, Npc.FACE_COORD, Npc.FACE_ENTITY, false);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
@@ -176,8 +161,6 @@ export default class Npc extends PathingEntity {
     }
 
     resetEntity(respawn: boolean) {
-        this.resetPathingEntity();
-
         if (respawn) {
             this.type = this.origType;
             this.uid = (this.type << 16) | this.nid;
@@ -193,30 +176,17 @@ export default class Npc extends PathingEntity {
             const npcType: NpcType = NpcType.get(this.type);
             this.huntrange = npcType.huntrange;
         }
-
-        if (this.mask === 0) {
-            return;
-        }
-
-        this.mask = 0;
-
-        this.animId = -1;
-        this.animDelay = -1;
-
-        this.chat = null;
-
-        this.damageTaken = -1;
-        this.damageType = -1;
-
-        this.graphicId = -1;
-        this.graphicHeight = -1;
-        this.graphicDelay = -1;
+        super.resetPathingEntity();
     }
 
-    updateMovement(): void {
+    updateMovement(repathAllowed: boolean = true): boolean {
         const type = NpcType.get(this.type);
         if (type.moverestrict === MoveRestrict.NOMOVE) {
-            return;
+            return false;
+        }
+
+        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
+            this.pathToTarget();
         }
 
         if (this.walktrigger !== -1) {
@@ -234,26 +204,26 @@ export default class Npc extends PathingEntity {
             this.moveSpeed = this.defaultMoveSpeed();
         }
 
-        super.processMovement();
+        return super.processMovement();
     }
 
     blockWalkFlag(): CollisionFlag {
-        switch (this.moveRestrict) {
-            case MoveRestrict.NORMAL:
-                return CollisionFlag.NPC;
-            case MoveRestrict.BLOCKED:
-                return CollisionFlag.OPEN;
-            case MoveRestrict.BLOCKED_NORMAL:
-                return CollisionFlag.NPC;
-            case MoveRestrict.INDOORS:
-                return CollisionFlag.NPC;
-            case MoveRestrict.OUTDOORS:
-                return CollisionFlag.NPC;
-            case MoveRestrict.NOMOVE:
-                return CollisionFlag.NULL;
-            case MoveRestrict.PASSTHRU:
-                return CollisionFlag.OPEN;
+        if (this.moveRestrict === MoveRestrict.NORMAL) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.BLOCKED) {
+            return CollisionFlag.OPEN;
+        } else if (this.moveRestrict === MoveRestrict.BLOCKED_NORMAL) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.INDOORS) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.OUTDOORS) {
+            return CollisionFlag.NPC;
+        } else if (this.moveRestrict === MoveRestrict.NOMOVE) {
+            return CollisionFlag.NULL;
+        } else if (this.moveRestrict === MoveRestrict.PASSTHRU) {
+            return CollisionFlag.OPEN;
         }
+        return CollisionFlag.NULL;
     }
 
     defaultMoveSpeed(): MoveSpeed {
@@ -343,50 +313,38 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        switch (this.mode) {
-            case NpcMode.NULL:
-                this.defaultMode();
-                break;
-            case NpcMode.NONE:
-                this.noMode();
-                break;
-            case NpcMode.WANDER:
-                this.wanderMode();
-                break;
-            case NpcMode.PATROL:
-                this.patrolMode();
-                break;
-            case NpcMode.PLAYERESCAPE:
-                this.playerEscapeMode();
-                break;
-            case NpcMode.PLAYERFOLLOW:
-                this.playerFollowMode();
-                break;
-            case NpcMode.PLAYERFACE:
-                this.playerFaceMode();
-                break;
-            case NpcMode.PLAYERFACECLOSE:
-                this.playerFaceCloseMode();
-                break;
-            default:
-                this.aiMode();
-                break;
-        }
-
-        if (this.mode !== NpcMode.NONE) {
-            this.updateMovement();
+        if (this.mode === NpcMode.NULL) {
+            this.defaultMode();
+        } else if (this.mode === NpcMode.NONE) {
+            this.noMode();
+        } else if (this.mode === NpcMode.WANDER) {
+            this.wanderMode();
+        } else if (this.mode === NpcMode.PATROL) {
+            this.patrolMode();
+        } else if (this.mode === NpcMode.PLAYERESCAPE) {
+            this.playerEscapeMode();
+        } else if (this.mode === NpcMode.PLAYERFOLLOW) {
+            this.playerFollowMode();
+        } else if (this.mode === NpcMode.PLAYERFACE) {
+            this.playerFaceMode();
+        } else if (this.mode === NpcMode.PLAYERFACECLOSE) {
+            this.playerFaceCloseMode();
+        } else {
+            this.aiMode();
         }
     }
 
     noMode(): void {
         this.mode = NpcMode.NONE;
         this.clearInteraction();
+        this.updateMovement(false);
     }
 
     defaultMode(): void {
         const type = NpcType.get(this.type);
         this.mode = type.defaultmode;
         this.clearInteraction();
+        this.updateMovement(false);
     }
 
     wanderMode(): void {
@@ -394,6 +352,7 @@ export default class Npc extends PathingEntity {
         if (type.moverestrict !== MoveRestrict.NOMOVE && Math.random() < 0.125) {
             this.randomWalk(type.wanderrange);
         }
+        this.updateMovement(false);
     }
 
     patrolMode(): void {
@@ -405,10 +364,10 @@ export default class Npc extends PathingEntity {
         if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
-        if(!(this.x == dest.x && this.z == dest.z) && World.currentTick > this.nextPatrolTick) {
+        if(!(this.x === dest.x && this.z === dest.z) && World.currentTick > this.nextPatrolTick) {
             this.teleJump(dest.x, dest.z, dest.level);
         }
-        if ((this.x == dest.x && this.z == dest.z) && !this.delayedPatrol) {
+        if ((this.x === dest.x && this.z === dest.z) && !this.delayedPatrol) {
             this.nextPatrolTick = World.currentTick + patrolDelay;
             this.delayedPatrol = true;
         }
@@ -421,6 +380,7 @@ export default class Npc extends PathingEntity {
         this.delayedPatrol = false;
         dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]); // recalc dest
         this.queueWaypoint(dest.x, dest.z);
+        this.updateMovement(false);
     }
 
     playerEscapeMode(): void {
@@ -429,6 +389,13 @@ export default class Npc extends PathingEntity {
         //     World.removeNpc(this);
         //     return;
         // }
+        if (!this.target) {
+            return;
+        }
+
+        if (!(this.target instanceof Player)) {
+            throw new Error('[Npc] Target must be a Player for playerescape mode.');
+        }
 
         const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
         if (collisionStrategy === null) {
@@ -444,6 +411,7 @@ export default class Npc extends PathingEntity {
         }
         // this might have to be a smart path idk tho
         this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.startX, this.startZ, this.width, this.length, this.width, this.length, extraFlag, collisionStrategy));
+        this.updateMovement(false);
     }
 
     playerFollowMode(): void {
@@ -451,33 +419,22 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const target = this.target as Player;
-
-        if (World.getPlayerByUid(target.uid) == null) {
-            this.playerEscapeMode();
-            return;
+        if (!(this.target instanceof Player)) {
+            throw new Error('[Npc] Target must be a Player for playerfollow mode.');
         }
 
-        if (this.level != target.level) {
+        if (World.getPlayerByUid(this.target.uid) === null) {
             this.defaultMode();
             return;
         }
 
-        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
-        if (collisionStrategy === null) {
-            // nomove moverestrict returns as null = no walking allowed.
+        if (this.level !== this.target.level) {
             this.defaultMode();
             return;
         }
 
-        const extraFlag: CollisionFlag = this.blockWalkFlag();
-        if (extraFlag === CollisionFlag.NULL) {
-            // nomove moverestrict returns as null = no walking allowed.
-            this.defaultMode();
-            return;
-        }
-        this.facePlayer(target.pid); // face the player
-        this.queueWaypoints(findNaivePath(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, extraFlag, collisionStrategy));
+        this.pathToTarget();
+        this.updateMovement();
     }
 
     playerFaceMode(): void {
@@ -485,26 +442,28 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const target = this.target as Player;
+        if (!(this.target instanceof Player)) {
+            throw new Error('[Npc] Target must be a Player for playerface mode.');
+        }
 
-        if (World.getPlayerByUid(target.uid) == null) {
+        if (World.getPlayerByUid(this.target.uid) === null) {
             this.defaultMode();
             return;
         }
 
-        if (this.level != target.level) {
+        if (this.level !== this.target.level) {
             this.defaultMode();
             return;
         }
 
         const type = NpcType.get(this.type);
 
-        if (Position.distanceTo(this, target) > type.maxrange) {
+        if (Position.distanceTo(this, this.target) > type.maxrange) {
             this.defaultMode();
             return;
         }
 
-        this.facePlayer(target.pid);
+        this.updateMovement(false);
     }
 
     playerFaceCloseMode(): void {
@@ -512,24 +471,26 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const target = this.target as Player;
+        if (!(this.target instanceof Player)) {
+            throw new Error('[Npc] Target must be a Player for playerfaceclose mode.');
+        }
 
-        if (World.getPlayerByUid(target.uid) == null) {
+        if (World.getPlayerByUid(this.target.uid) == null) {
             this.defaultMode();
             return;
         }
 
-        if (this.level != target.level) {
+        if (this.level !== this.target.level) {
             this.defaultMode();
             return;
         }
 
-        if (Position.distanceTo(this, target) > 1) {
+        if (Position.distanceTo(this, this.target) > 1) {
             this.defaultMode();
             return;
         }
 
-        this.facePlayer(target.pid);
+        this.updateMovement(false);
     }
 
     aiMode(): void {
@@ -537,229 +498,251 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const target = this.target as Player;
-
-        if (World.getPlayerByUid(target.uid) == null) {
-            this.playerEscapeMode();
+        if (this.target.level !== this.level) {
+            this.defaultMode();
             return;
         }
 
-        const distanceToTarget = Position.distanceTo(this, target);
-        const distanceToEscape = Position.distanceTo(this, {
-            x: this.startX,
-            z: this.startZ,
-            width: this.width,
-            length: this.length
-        });
-        const targetDistanceFromStart = Position.distanceTo(target, {
-            x: this.startX,
-            z: this.startZ,
-            width: target.width,
-            length: target.length
-        });
+        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
+            this.defaultMode();
+            return;
+        }
+
+        // this is effectively checking if the npc did a changetype
+        if (this.target instanceof Npc && this.targetSubject.type !== -1 && World.getNpcByUid((this.targetSubject.type << 16) | this.target.nid) === null) {
+            this.defaultMode();
+            return;
+        }
+
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+            this.defaultMode();
+            return;
+        }
+
+        if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
+            this.defaultMode();
+            return;
+        }
+
+        if (this.target instanceof Player && World.getPlayerByUid(this.target.uid) == null) {
+            this.defaultMode();
+            return;
+        }
+
+        const distanceToTarget = Position.distanceTo(this, this.target);
         const type = NpcType.get(this.type);
 
         if (distanceToTarget > type.maxrange) {
-            this.playerEscapeMode();
+            this.defaultMode();
             return;
         }
 
-        this.facePlayer(target.pid);
+        this.interacted = false;
 
-        // todo: rework this logic
-        const op =
-            (this.mode >= NpcMode.OPNPC1 && this.mode <= NpcMode.OPNPC5) ||
-            (this.mode >= NpcMode.OPPLAYER1 && this.mode <= NpcMode.OPPLAYER5) ||
-            (this.mode >= NpcMode.OPLOC1 && this.mode <= NpcMode.OPLOC5) ||
-            (this.mode >= NpcMode.OPOBJ1 && this.mode <= NpcMode.OPOBJ5);
-
-        if (op && !this.inOperableDistance(this.target)) {
-            if (targetDistanceFromStart > type.attackrange && distanceToEscape > type.attackrange) {
-                return;
-            }
-            this.playerFollowMode();
-            return;
-        }
-
-        const ap =
+        const apTrigger: boolean =
             (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
             (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
             (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
             (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
+        const opTrigger: boolean = !apTrigger;
 
-        if (ap && !this.inApproachDistance(type.attackrange, this.target)) {
+        const script: Script | null = this.getTrigger();
+        if (script && opTrigger && this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
+            this.executeScript(ScriptRunner.init(script, this, this.target));
+            this.interacted = true;
+            this.clearWaypoints();
+        } else if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
+            this.executeScript(ScriptRunner.init(script, this, this.target));
+            this.interacted = true;
+            this.clearWaypoints();
+        } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
+            this.target = null;
+            this.interacted = true;
+            this.clearWaypoints();
+        }
+
+        // stand there stupidly
+        if (this.target) {
+            const distanceToEscape = Position.distanceTo(this, {
+                x: this.startX,
+                z: this.startZ,
+                width: this.width,
+                length: this.length
+            });
+            const targetDistanceFromStart = Position.distanceTo(this.target, {
+                x: this.startX,
+                z: this.startZ,
+                width: this.target.width,
+                length: this.target.length
+            });
             if (targetDistanceFromStart > type.attackrange && distanceToEscape > type.attackrange) {
                 return;
             }
-            this.playerFollowMode();
-            return;
         }
 
-        this.clearWaypoints();
+        const moved: boolean = this.updateMovement();
+        if (moved) {
+            this.alreadyFacedEntity = false;
+            this.alreadyFacedCoord = false;
+        }
 
-        const trigger = this.getTriggerForMode(this.mode);
-        if (trigger) {
-            const script = ScriptProvider.getByTrigger(trigger, this.type, -1);
-
-            if (script) {
+        if (this.target && !this.interacted) {
+            this.interacted = false;
+            if (script && opTrigger && this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
                 this.executeScript(ScriptRunner.init(script, this, this.target));
+                this.interacted = true;
+                this.clearWaypoints();
+            } else if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
+                this.executeScript(ScriptRunner.init(script, this, this.target));
+                this.interacted = true;
+                this.clearWaypoints();
+            } else if (this.inOperableDistance(this.target) && (this.target instanceof PathingEntity || !moved)) {
+                this.target = null;
+                this.interacted = true;
+                this.clearWaypoints();
             }
         }
     }
 
-    getTriggerForMode(mode: NpcMode): ServerTriggerType | null {
-        switch (mode) {
-            // [ai_opplayerX,npc]
-            case NpcMode.OPPLAYER1:
-                return ServerTriggerType.AI_OPPLAYER1;
-            case NpcMode.OPPLAYER2:
-                return ServerTriggerType.AI_OPPLAYER2;
-            case NpcMode.OPPLAYER3:
-                return ServerTriggerType.AI_OPPLAYER3;
-            case NpcMode.OPPLAYER4:
-                return ServerTriggerType.AI_OPPLAYER4;
-            case NpcMode.OPPLAYER5:
-                return ServerTriggerType.AI_OPPLAYER5;
-            // [ai_applayerX,npc]
-            case NpcMode.APPLAYER1:
-                return ServerTriggerType.AI_APPLAYER1;
-            case NpcMode.APPLAYER2:
-                return ServerTriggerType.AI_APPLAYER2;
-            case NpcMode.APPLAYER3:
-                return ServerTriggerType.AI_APPLAYER3;
-            case NpcMode.APPLAYER4:
-                return ServerTriggerType.AI_APPLAYER4;
-            case NpcMode.APPLAYER5:
-                return ServerTriggerType.AI_APPLAYER5;
-            // [ai_oplocX,npc]
-            case NpcMode.OPLOC1:
-                return ServerTriggerType.AI_OPLOC1;
-            case NpcMode.OPLOC2:
-                return ServerTriggerType.AI_OPLOC2;
-            case NpcMode.OPLOC3:
-                return ServerTriggerType.AI_OPLOC3;
-            case NpcMode.OPLOC4:
-                return ServerTriggerType.AI_OPLOC4;
-            case NpcMode.OPLOC5:
-                return ServerTriggerType.AI_OPLOC5;
-            // [ai_aplocX,npc]
-            case NpcMode.APLOC1:
-                return ServerTriggerType.AI_APLOC1;
-            case NpcMode.APLOC2:
-                return ServerTriggerType.AI_APLOC2;
-            case NpcMode.APLOC3:
-                return ServerTriggerType.AI_APLOC3;
-            case NpcMode.APLOC4:
-                return ServerTriggerType.AI_APLOC4;
-            case NpcMode.APLOC5:
-                return ServerTriggerType.AI_APLOC5;
-            // [ai_opobjX,npc]
-            case NpcMode.OPOBJ1:
-                return ServerTriggerType.AI_OPOBJ1;
-            case NpcMode.OPOBJ2:
-                return ServerTriggerType.AI_OPOBJ2;
-            case NpcMode.OPOBJ3:
-                return ServerTriggerType.AI_OPOBJ3;
-            case NpcMode.OPOBJ4:
-                return ServerTriggerType.AI_OPOBJ4;
-            case NpcMode.OPOBJ5:
-                return ServerTriggerType.AI_OPOBJ5;
-            // [ai_apobjX,npc]
-            case NpcMode.APOBJ1:
-                return ServerTriggerType.AI_APOBJ1;
-            case NpcMode.APOBJ2:
-                return ServerTriggerType.AI_APOBJ2;
-            case NpcMode.APOBJ3:
-                return ServerTriggerType.AI_APOBJ3;
-            case NpcMode.APOBJ4:
-                return ServerTriggerType.AI_APOBJ4;
-            case NpcMode.APOBJ5:
-                return ServerTriggerType.AI_APOBJ5;
-            // [ai_opnpcX,npc]
-            case NpcMode.OPNPC1:
-                return ServerTriggerType.AI_OPNPC1;
-            case NpcMode.OPNPC2:
-                return ServerTriggerType.AI_OPNPC2;
-            case NpcMode.OPNPC3:
-                return ServerTriggerType.AI_OPNPC3;
-            case NpcMode.OPNPC4:
-                return ServerTriggerType.AI_OPNPC4;
-            case NpcMode.OPNPC5:
-                return ServerTriggerType.AI_OPNPC5;
-            // [ai_apnpcX,npc]
-            case NpcMode.APNPC1:
-                return ServerTriggerType.AI_APNPC1;
-            case NpcMode.APNPC2:
-                return ServerTriggerType.AI_APNPC2;
-            case NpcMode.APNPC3:
-                return ServerTriggerType.AI_APNPC3;
-            case NpcMode.APNPC4:
-                return ServerTriggerType.AI_APNPC4;
-            case NpcMode.APNPC5:
-                return ServerTriggerType.AI_APNPC5;
-            // [ai_queueX,npc]
-            case NpcMode.QUEUE1:
-                return ServerTriggerType.AI_QUEUE1;
-            case NpcMode.QUEUE2:
-                return ServerTriggerType.AI_QUEUE2;
-            case NpcMode.QUEUE3:
-                return ServerTriggerType.AI_QUEUE3;
-            case NpcMode.QUEUE4:
-                return ServerTriggerType.AI_QUEUE4;
-            case NpcMode.QUEUE5:
-                return ServerTriggerType.AI_QUEUE5;
-            case NpcMode.QUEUE6:
-                return ServerTriggerType.AI_QUEUE6;
-            case NpcMode.QUEUE7:
-                return ServerTriggerType.AI_QUEUE7;
-            case NpcMode.QUEUE8:
-                return ServerTriggerType.AI_QUEUE8;
-            case NpcMode.QUEUE9:
-                return ServerTriggerType.AI_QUEUE9;
-            case NpcMode.QUEUE10:
-                return ServerTriggerType.AI_QUEUE10;
-            case NpcMode.QUEUE11:
-                return ServerTriggerType.AI_QUEUE11;
-            case NpcMode.QUEUE12:
-                return ServerTriggerType.AI_QUEUE12;
-            case NpcMode.QUEUE13:
-                return ServerTriggerType.AI_QUEUE13;
-            case NpcMode.QUEUE14:
-                return ServerTriggerType.AI_QUEUE14;
-            case NpcMode.QUEUE15:
-                return ServerTriggerType.AI_QUEUE15;
-            case NpcMode.QUEUE16:
-                return ServerTriggerType.AI_QUEUE16;
-            case NpcMode.QUEUE17:
-                return ServerTriggerType.AI_QUEUE17;
-            case NpcMode.QUEUE18:
-                return ServerTriggerType.AI_QUEUE18;
-            case NpcMode.QUEUE19:
-                return ServerTriggerType.AI_QUEUE19;
-            case NpcMode.QUEUE20:
-                return ServerTriggerType.AI_QUEUE20;
-            default:
-                return null;
+    private getTrigger(): Script | null {
+        const trigger: ServerTriggerType | null = this.getTriggerForMode(this.mode);
+        if (trigger) {
+            return ScriptProvider.getByTrigger(trigger, this.type, -1) ?? null;
         }
+        return null;
     }
 
-    setInteraction(target: Player | Npc | Loc | Obj, op: NpcMode) {
-        this.target = target;
-        this.targetOp = op;
-        this.mode = op;
-    }
-
-    clearInteraction() {
-        this.target = null;
-        this.targetOp = -1;
-
-        this.faceEntity = -1;
-        this.mask |= Npc.FACE_ENTITY;
+    private getTriggerForMode(mode: NpcMode): ServerTriggerType | null {
+        if (mode === NpcMode.OPPLAYER1) {
+            return ServerTriggerType.AI_OPPLAYER1;
+        } else if (mode === NpcMode.OPPLAYER2) {
+            return ServerTriggerType.AI_OPPLAYER2;
+        } else if (mode === NpcMode.OPPLAYER3) {
+            return ServerTriggerType.AI_OPPLAYER3;
+        } else if (mode === NpcMode.OPPLAYER4) {
+            return ServerTriggerType.AI_OPPLAYER4;
+        } else if (mode === NpcMode.OPPLAYER5) {
+            return ServerTriggerType.AI_OPPLAYER5;
+        } else if (mode === NpcMode.APPLAYER1) {
+            return ServerTriggerType.AI_APPLAYER1;
+        } else if (mode === NpcMode.APPLAYER2) {
+            return ServerTriggerType.AI_APPLAYER2;
+        } else if (mode === NpcMode.APPLAYER3) {
+            return ServerTriggerType.AI_APPLAYER3;
+        } else if (mode === NpcMode.APPLAYER4) {
+            return ServerTriggerType.AI_APPLAYER4;
+        } else if (mode === NpcMode.APPLAYER5) {
+            return ServerTriggerType.AI_APPLAYER5;
+        } else if (mode === NpcMode.OPLOC1) {
+            return ServerTriggerType.AI_OPLOC1;
+        } else if (mode === NpcMode.OPLOC2) {
+            return ServerTriggerType.AI_OPLOC2;
+        } else if (mode === NpcMode.OPLOC3) {
+            return ServerTriggerType.AI_OPLOC3;
+        } else if (mode === NpcMode.OPLOC4) {
+            return ServerTriggerType.AI_OPLOC4;
+        } else if (mode === NpcMode.OPLOC5) {
+            return ServerTriggerType.AI_OPLOC5;
+        } else if (mode === NpcMode.APLOC1) {
+            return ServerTriggerType.AI_APLOC1;
+        } else if (mode === NpcMode.APLOC2) {
+            return ServerTriggerType.AI_APLOC2;
+        } else if (mode === NpcMode.APLOC3) {
+            return ServerTriggerType.AI_APLOC3;
+        } else if (mode === NpcMode.APLOC4) {
+            return ServerTriggerType.AI_APLOC4;
+        } else if (mode === NpcMode.APLOC5) {
+            return ServerTriggerType.AI_APLOC5;
+        } else if (mode === NpcMode.OPOBJ1) {
+            return ServerTriggerType.AI_OPOBJ1;
+        } else if (mode === NpcMode.OPOBJ2) {
+            return ServerTriggerType.AI_OPOBJ2;
+        } else if (mode === NpcMode.OPOBJ3) {
+            return ServerTriggerType.AI_OPOBJ3;
+        } else if (mode === NpcMode.OPOBJ4) {
+            return ServerTriggerType.AI_OPOBJ4;
+        } else if (mode === NpcMode.OPOBJ5) {
+            return ServerTriggerType.AI_OPOBJ5;
+        } else if (mode === NpcMode.APOBJ1) {
+            return ServerTriggerType.AI_APOBJ1;
+        } else if (mode === NpcMode.APOBJ2) {
+            return ServerTriggerType.AI_APOBJ2;
+        } else if (mode === NpcMode.APOBJ3) {
+            return ServerTriggerType.AI_APOBJ3;
+        } else if (mode === NpcMode.APOBJ4) {
+            return ServerTriggerType.AI_APOBJ4;
+        } else if (mode === NpcMode.APOBJ5) {
+            return ServerTriggerType.AI_APOBJ5;
+        } else if (mode === NpcMode.OPNPC1) {
+            return ServerTriggerType.AI_OPNPC1;
+        } else if (mode === NpcMode.OPNPC2) {
+            return ServerTriggerType.AI_OPNPC2;
+        } else if (mode === NpcMode.OPNPC3) {
+            return ServerTriggerType.AI_OPNPC3;
+        } else if (mode === NpcMode.OPNPC4) {
+            return ServerTriggerType.AI_OPNPC4;
+        } else if (mode === NpcMode.OPNPC5) {
+            return ServerTriggerType.AI_OPNPC5;
+        } else if (mode === NpcMode.APNPC1) {
+            return ServerTriggerType.AI_APNPC1;
+        } else if (mode === NpcMode.APNPC2) {
+            return ServerTriggerType.AI_APNPC2;
+        } else if (mode === NpcMode.APNPC3) {
+            return ServerTriggerType.AI_APNPC3;
+        } else if (mode === NpcMode.APNPC4) {
+            return ServerTriggerType.AI_APNPC4;
+        } else if (mode === NpcMode.APNPC5) {
+            return ServerTriggerType.AI_APNPC5;
+        } else if (mode === NpcMode.QUEUE1) {
+            return ServerTriggerType.AI_QUEUE1;
+        } else if (mode === NpcMode.QUEUE2) {
+            return ServerTriggerType.AI_QUEUE2;
+        } else if (mode === NpcMode.QUEUE3) {
+            return ServerTriggerType.AI_QUEUE3;
+        } else if (mode === NpcMode.QUEUE4) {
+            return ServerTriggerType.AI_QUEUE4;
+        } else if (mode === NpcMode.QUEUE5) {
+            return ServerTriggerType.AI_QUEUE5;
+        } else if (mode === NpcMode.QUEUE6) {
+            return ServerTriggerType.AI_QUEUE6;
+        } else if (mode === NpcMode.QUEUE7) {
+            return ServerTriggerType.AI_QUEUE7;
+        } else if (mode === NpcMode.QUEUE8) {
+            return ServerTriggerType.AI_QUEUE8;
+        } else if (mode === NpcMode.QUEUE9) {
+            return ServerTriggerType.AI_QUEUE9;
+        } else if (mode === NpcMode.QUEUE10) {
+            return ServerTriggerType.AI_QUEUE10;
+        } else if (mode === NpcMode.QUEUE11) {
+            return ServerTriggerType.AI_QUEUE11;
+        } else if (mode === NpcMode.QUEUE12) {
+            return ServerTriggerType.AI_QUEUE12;
+        } else if (mode === NpcMode.QUEUE13) {
+            return ServerTriggerType.AI_QUEUE13;
+        } else if (mode === NpcMode.QUEUE14) {
+            return ServerTriggerType.AI_QUEUE14;
+        } else if (mode === NpcMode.QUEUE15) {
+            return ServerTriggerType.AI_QUEUE15;
+        } else if (mode === NpcMode.QUEUE16) {
+            return ServerTriggerType.AI_QUEUE16;
+        } else if (mode === NpcMode.QUEUE17) {
+            return ServerTriggerType.AI_QUEUE17;
+        } else if (mode === NpcMode.QUEUE18) {
+            return ServerTriggerType.AI_QUEUE18;
+        } else if (mode === NpcMode.QUEUE19) {
+            return ServerTriggerType.AI_QUEUE19;
+        } else if (mode === NpcMode.QUEUE20) {
+            return ServerTriggerType.AI_QUEUE20;
+        }
+        return null;
     }
 
     huntAll() {
         const type = NpcType.get(this.type);
         const hunt = HuntType.get(this.huntMode);
+        if (hunt.type === HuntModeType.OFF) {
+            return;
+        }
         if (!hunt.findKeepHunting && this.target !== null) {
             return;
         }
@@ -768,13 +751,15 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const found: (Player | Npc | Loc | Obj)[] = [];
-        let foundCount: number = 0;
+        const hunted: Entity[] = [];
+        const huntAll: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, hunt.type);
 
         if (hunt.type === HuntModeType.PLAYER) {
-            const huntAll: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis);
-
             for (const player of huntAll) {
+                if (!(player instanceof Player)) {
+                    throw new Error('[Npc] huntAll must be of type Player here.');
+                }
+
                 // TODO: probably zone check to see if they're in the wilderness as well?
                 if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
                     continue;
@@ -790,14 +775,19 @@ export default class Npc extends PathingEntity {
                     continue;
                 }
 
-                found[foundCount++] = player;
+                hunted.push(player);
             }
+        } else {
+            for (const entity of huntAll) {
+                // npc, loc and obj here.
+                hunted.push(entity);
+            }
+        }
 
-            // pick randomly from the found players
-            if (foundCount > 0) {
-                const player = found[Math.floor(Math.random() * foundCount)];
-                this.setInteraction(player, hunt.findNewMode);
-            }
+        // pick randomly from the hunted entities
+        if (hunted.length > 0) {
+            const entity: Entity = hunted[Math.floor(Math.random() * hunted.length)];
+            this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
         }
         this.nextHuntTick = World.currentTick + hunt.rate;
     }
@@ -852,15 +842,6 @@ export default class Npc extends PathingEntity {
         this.type = type;
         this.mask |= Npc.CHANGE_TYPE;
         this.uid = (type << 16) | this.nid;
-    }
-
-    facePlayer(pid: number) {
-        if (this.faceEntity === pid + 32768) {
-            return;
-        }
-
-        this.faceEntity = pid + 32768;
-        this.mask |= Npc.FACE_ENTITY;
     }
 
     calculateUpdateSize(newlyObserved: boolean) {
@@ -921,6 +902,10 @@ export default class Npc extends PathingEntity {
         }
 
         if (mask & Npc.FACE_ENTITY) {
+            if (this.faceEntity !== -1) {
+                this.alreadyFacedEntity = true;
+            }
+
             out.p2(this.faceEntity);
         }
 
@@ -946,6 +931,10 @@ export default class Npc extends PathingEntity {
         }
 
         if (mask & Npc.FACE_COORD) {
+            if (this.faceX !== -1) {
+                this.alreadyFacedCoord = true;
+            }
+
             if (newlyObserved && this.faceX != -1) {
                 out.p2(this.faceX);
                 out.p2(this.faceZ);
