@@ -457,16 +457,6 @@ export default abstract class PathingEntity extends Entity {
         this.lastX = this.x;
         this.lastZ = this.z;
 
-        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.target) {
-            this.mask |= this.entitymask;
-            this.faceEntity = -1;
-            this.alreadyFacedEntity = false;
-        }
-
         this.mask = 0;
         this.exactStartX = -1;
         this.exactStartZ = -1;
@@ -485,6 +475,16 @@ export default abstract class PathingEntity extends Entity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
+
+        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.alreadyFacedCoord = false;
+        } else if (this.alreadyFacedEntity && !this.target) {
+            this.mask |= this.entitymask;
+            this.faceEntity = -1;
+            this.alreadyFacedEntity = false;
+        }
     }
 
     private takeStep(): number | null {
