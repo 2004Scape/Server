@@ -337,6 +337,8 @@ export default class Npc extends PathingEntity {
         this.targetOp = NpcMode.NONE;
         this.clearInteraction();
         this.updateMovement(false);
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     defaultMode(): void {
@@ -344,6 +346,8 @@ export default class Npc extends PathingEntity {
         this.targetOp = type.defaultmode;
         this.clearInteraction();
         this.updateMovement(false);
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     wanderMode(): void {
@@ -370,7 +374,7 @@ export default class Npc extends PathingEntity {
             this.nextPatrolTick = World.currentTick + patrolDelay;
             this.delayedPatrol = true;
         }
-        if(this.nextPatrolTick > World.currentTick) { 
+        if(this.nextPatrolTick > World.currentTick) {
             return;
         }
 
