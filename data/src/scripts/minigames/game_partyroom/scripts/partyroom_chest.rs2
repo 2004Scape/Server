@@ -56,7 +56,7 @@ def_int $total = inv_total(inv, $obj);
 if ($amount < $total) $total = $amount;
 if(oc_stackable($obj) = false & $total > inv_freespace(partyroomoffer)) $total = inv_freespace(partyroomoffer);
 if($total = 0 | inv_itemspace(partyroomoffer, $obj, $total, inv_size(partyroomoffer)) = false) {
-    mes("You cannot offer any more items until you've confirmed the current ones.");
+    mes("You must accept the current items before adding any more."); // 2006 https://www.youtube.com/watch?v=Ve5UF8B3BMw&t=194s
     return;
 }
 inv_moveitem(inv, partyroomoffer, $obj, $total);
