@@ -4,7 +4,6 @@ import MessagePublic from '#lostcity/network/incoming/model/MessagePublic.js';
 import Packet from '#jagex2/io/Packet.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
 import WordEnc from '#lostcity/cache/WordEnc.js';
-import World from '#lostcity/engine/World.js';
 
 export default class MessagePublicHandler extends MessageHandler<MessagePublic> {
     handle(message: MessagePublic, player: Player): boolean {
@@ -24,8 +23,6 @@ export default class MessagePublicHandler extends MessageHandler<MessagePublic> 
         out.gdata(player.message, 0, player.message.length);
         out.release();
         player.mask |= Player.CHAT;
-
-        World.socialPublicMessage(player.username37, input);
         return true;
     }
 }

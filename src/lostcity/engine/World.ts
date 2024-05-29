@@ -94,96 +94,10 @@ class World {
     futureUpdates: Map<number, number[]> = new Map();
     queue: LinkList<EntityQueueState> = new LinkList();
 
-    friendThread: Worker = createWorker('./src/lostcity/server/FriendThread.ts');
-
     devWatcher: Watcher | null = null;
     devThread: Worker | null = null;
     devRebuilding: boolean = false;
     devMTime: Map<string, number> = new Map();
-
-    constructor() {
-        this.friendThread.on('message', data => {
-            try {
-                this.onFriendMessage(data);
-            } catch (err) {
-                console.error('Friend Thread:', err);
-            }
-        });
-    }
-
-    // ----
-
-    onFriendMessage(msg: any) {
-        switch (msg.type) {
-            default:
-                throw new Error('Unknown message type: ' + msg.type);
-        }
-    }
-
-    socialAddFriend(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'addfriend',
-            player: player,
-            other: other
-        });
-    }
-
-    socialRemoveFriend(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'delfriend',
-            player: player,
-            other: other
-        });
-    }
-
-    socialAddIgnore(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'addignore',
-            player: player,
-            other: other
-        });
-    }
-
-    socialRemoveIgnore(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'delignore',
-            player: player,
-            other: other
-        });
-    }
-
-    socialLogin(username: bigint) {
-        this.friendThread.postMessage({
-            type: 'login',
-            world: this.id,
-            username
-        });
-    }
-
-    socialLogout(username: bigint) {
-        this.friendThread.postMessage({
-            type: 'logout',
-            world: this.id,
-            username
-        });
-    }
-
-    socialPrivateMessage(from: bigint, to: bigint, text: string) {
-        this.friendThread.postMessage({
-            type: 'private_message',
-            from,
-            to,
-            text
-        });
-    }
-
-    socialPublicMessage(from: bigint, text: string) {
-        this.friendThread.postMessage({
-            type: 'public_message',
-            from,
-            text
-        });
-    }
 
     // ----
 
@@ -357,10 +271,6 @@ class World {
         }
 
         Login.loginThread.postMessage({
-            type: 'reset'
-        });
-
-        this.friendThread.postMessage({
             type: 'reset'
         });
 
@@ -725,8 +635,6 @@ class World {
                     player.client.send(LoginResponse.SUCCESSFUL);
                 }
             }
-
-            this.socialLogin(player.username37);
         }
         playerLogin = Date.now() - playerLogin;
 
@@ -909,11 +817,6 @@ class World {
                 type: 'heartbeat',
                 players
             });
-
-            this.friendThread.postMessage({
-                type: 'heartbeat',
-                players
-            });
         }
 
         // server shutdown
@@ -968,10 +871,6 @@ class World {
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
             setTimeout(this.cycle.bind(this), nextTick);
-
-            this.friendThread.postMessage({
-                type: 'latest'
-            });
         }
     }
 
@@ -1298,7 +1197,6 @@ class World {
         }
 
         Login.logout(player);
-        this.socialLogout(player.username37);
     }
 
     getPlayer(pid: number) {
