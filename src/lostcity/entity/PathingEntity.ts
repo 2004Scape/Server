@@ -30,6 +30,8 @@ type TargetSubject = {
     com: number;
 }
 
+type TargetOp = ServerTriggerType | NpcMode;
+
 export default abstract class PathingEntity extends Entity {
     // constructor properties
     protected readonly moveRestrict: MoveRestrict;
@@ -56,7 +58,7 @@ export default abstract class PathingEntity extends Entity {
     interacted: boolean = false;
     repathed: boolean = false;
     target: Entity | null = null;
-    targetOp: number = -1;
+    targetOp: TargetOp = -1;
     targetSubject: TargetSubject = {type: -1, com: -1};
     apRange: number = 10;
     apRangeCalled: boolean = false;

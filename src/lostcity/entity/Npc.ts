@@ -71,7 +71,6 @@ export default class Npc extends PathingEntity {
     queue: LinkList<EntityQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
-    mode: NpcMode = NpcMode.NONE;
     huntMode: number = -1;
     nextHuntTick: number = -1;
     huntrange: number = 5;
@@ -111,7 +110,7 @@ export default class Npc extends PathingEntity {
 
         this.vars = new Int32Array(VarNpcType.count);
         this.varsString = new Array(VarNpcType.count);
-        this.mode = npcType.defaultmode;
+        this.targetOp = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
         this.huntrange = npcType.huntrange;
     }
@@ -313,21 +312,21 @@ export default class Npc extends PathingEntity {
     }
 
     processNpcModes() {
-        if (this.mode === NpcMode.NULL) {
+        if (this.targetOp === NpcMode.NULL) {
             this.defaultMode();
-        } else if (this.mode === NpcMode.NONE) {
+        } else if (this.targetOp === NpcMode.NONE) {
             this.noMode();
-        } else if (this.mode === NpcMode.WANDER) {
+        } else if (this.targetOp === NpcMode.WANDER) {
             this.wanderMode();
-        } else if (this.mode === NpcMode.PATROL) {
+        } else if (this.targetOp === NpcMode.PATROL) {
             this.patrolMode();
-        } else if (this.mode === NpcMode.PLAYERESCAPE) {
+        } else if (this.targetOp === NpcMode.PLAYERESCAPE) {
             this.playerEscapeMode();
-        } else if (this.mode === NpcMode.PLAYERFOLLOW) {
+        } else if (this.targetOp === NpcMode.PLAYERFOLLOW) {
             this.playerFollowMode();
-        } else if (this.mode === NpcMode.PLAYERFACE) {
+        } else if (this.targetOp === NpcMode.PLAYERFACE) {
             this.playerFaceMode();
-        } else if (this.mode === NpcMode.PLAYERFACECLOSE) {
+        } else if (this.targetOp === NpcMode.PLAYERFACECLOSE) {
             this.playerFaceCloseMode();
         } else {
             this.aiMode();
@@ -335,16 +334,20 @@ export default class Npc extends PathingEntity {
     }
 
     noMode(): void {
-        this.mode = NpcMode.NONE;
+        this.targetOp = NpcMode.NONE;
         this.clearInteraction();
         this.updateMovement(false);
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     defaultMode(): void {
         const type = NpcType.get(this.type);
-        this.mode = type.defaultmode;
+        this.targetOp = type.defaultmode;
         this.clearInteraction();
         this.updateMovement(false);
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     wanderMode(): void {
@@ -371,7 +374,7 @@ export default class Npc extends PathingEntity {
             this.nextPatrolTick = World.currentTick + patrolDelay;
             this.delayedPatrol = true;
         }
-        if(this.nextPatrolTick > World.currentTick) { 
+        if(this.nextPatrolTick > World.currentTick) {
             return;
         }
 
@@ -540,10 +543,10 @@ export default class Npc extends PathingEntity {
         this.interacted = false;
 
         const apTrigger: boolean =
-            (this.mode >= NpcMode.APNPC1 && this.mode <= NpcMode.APNPC5) ||
-            (this.mode >= NpcMode.APPLAYER1 && this.mode <= NpcMode.APPLAYER5) ||
-            (this.mode >= NpcMode.APLOC1 && this.mode <= NpcMode.APLOC5) ||
-            (this.mode >= NpcMode.APOBJ1 && this.mode <= NpcMode.APOBJ5);
+            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
+            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
+            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
+            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
         const opTrigger: boolean = !apTrigger;
 
         const script: Script | null = this.getTrigger();
@@ -605,14 +608,14 @@ export default class Npc extends PathingEntity {
     }
 
     private getTrigger(): Script | null {
-        const trigger: ServerTriggerType | null = this.getTriggerForMode(this.mode);
+        const trigger: ServerTriggerType | null = this.getTriggerForMode(this.targetOp);
         if (trigger) {
             return ScriptProvider.getByTrigger(trigger, this.type, -1) ?? null;
         }
         return null;
     }
 
-    private getTriggerForMode(mode: NpcMode): ServerTriggerType | null {
+    private getTriggerForMode(mode: NpcMode | ServerTriggerType): ServerTriggerType | null {
         if (mode === NpcMode.OPPLAYER1) {
             return ServerTriggerType.AI_OPPLAYER1;
         } else if (mode === NpcMode.OPPLAYER2) {

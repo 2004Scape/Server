@@ -228,7 +228,7 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, state => {
         const mode = check(state.popInt(), NpcModeValid);
 
-        state.activeNpc.mode = mode;
+        state.activeNpc.targetOp = mode;
         state.activeNpc.clearWaypoints();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
@@ -367,7 +367,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, state => {
-        state.pushInt(state.activeNpc.mode);
+        state.pushInt(state.activeNpc.targetOp);
     }),
 
     [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], state => {
