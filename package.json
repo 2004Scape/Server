@@ -8,10 +8,9 @@
     "#lostcity/*": "./src/lostcity/*"
   },
   "scripts": {
-    "build": "npm run client:build && npm run server:build",
+    "build": "npm run ts-loader src/lostcity/tools/pack/pack.ts",
     "clean": "npm run client:clean && npm run server:clean",
     "client": "java -cp 225.2004-05-18.jar client 10 0 highmem members",
-    "client:build": "npm run ts-loader src/lostcity/tools/pack/client.ts",
     "client:clean": "npm run ts-loader src/lostcity/tools/client/clean.ts",
     "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
@@ -24,7 +23,6 @@
     "maintenance": "npm run ts-loader src/lostcity/maintenance.ts",
     "precommit": "prettier . --write && eslint . --ext .ts --ext .js --fix",
     "prepare": "husky",
-    "server:build": "npm run ts-loader src/lostcity/tools/pack/server.ts",
     "server:clean": "npm run ts-loader src/lostcity/tools/server/clean.ts",
     "start": "npm run ts-loader src/lostcity/app.ts",
     "test": "vitest run ./src",

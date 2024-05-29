@@ -9,6 +9,16 @@ import { packWorldmap } from '#lostcity/tools/packmap/Worldmap.js';
 import Environment from '#lostcity/util/Environment.js';
 import { revalidatePack } from '#lostcity/util/PackFile.js';
 
+import { packClientInterface } from '#lostcity/tools/packinterface/PackClient.js';
+import { packClientMap } from '#lostcity/tools/packmap/PackClient.js';
+import { packClientModel } from '#lostcity/tools/client/models/pack.js';
+import { packClientMusic } from '#lostcity/tools/client/music/pack.js';
+import { packClientSound } from '#lostcity/tools/client/sounds/pack.js';
+import { packClientWordenc } from '#lostcity/tools/client/wordenc/pack.js';
+import { packClientTitle } from '#lostcity/tools/client/title/pack.js';
+import { packClientTexture } from '#lostcity/tools/client/textures/pack.js';
+import { packClientMedia } from '#lostcity/tools/client/media/pack.js';
+
 async function packServer() {
     console.time('packing server...');
     try {
@@ -32,8 +42,25 @@ async function packServer() {
     console.timeEnd('packing server...');
 }
 
+async function packClient() {
+    console.time('packing client...');
+    await packClientTitle();
+    packConfigs();
+    packClientInterface();
+    await packClientMedia();
+    packClientModel();
+    await packClientTexture();
+    packClientWordenc();
+    packClientSound();
+    
+    packClientMap();
+    packClientMusic();
+    console.timeEnd('packing client...');
+}
+
 if (!parentPort) {
     await packServer();
+    await packClient();
 }
 
 if (parentPort) {
@@ -47,6 +74,7 @@ if (parentPort) {
         if (msg.type === 'pack') {
             active = true;
             await packServer();
+            await packClient();
             parentPort!.postMessage({ type: 'done' });
             active = false;
         }

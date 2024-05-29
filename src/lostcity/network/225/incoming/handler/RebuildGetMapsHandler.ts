@@ -1,6 +1,6 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import Player from '#lostcity/entity/Player.js';
-import { PRELOADED } from '#lostcity/entity/PreloadedPacks.js';
+import { PRELOADED } from '#lostcity/server/PreloadedPacks.js';
 import RebuildGetMaps from '#lostcity/network/incoming/model/RebuildGetMaps.js';
 import ServerProt from '#lostcity/server/ServerProt.js';
 

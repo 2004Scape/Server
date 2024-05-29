@@ -43,7 +43,7 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
-import { PRELOADED, PRELOADED_CRC } from '#lostcity/entity/PreloadedPacks.js';
+import { PRELOADED, PRELOADED_CRC } from '#lostcity/server/PreloadedPacks.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 const levelExperience = new Int32Array(99);

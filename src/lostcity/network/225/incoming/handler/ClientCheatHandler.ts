@@ -2,10 +2,6 @@ import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js
 import Player from '#lostcity/entity/Player.js';
 import ClientCheat from '#lostcity/network/incoming/model/ClientCheat.js';
 import Environment from '#lostcity/util/Environment.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import EnumType from '#lostcity/cache/EnumType.js';
-import StructType from '#lostcity/cache/StructType.js';
 import InvType from '#lostcity/cache/InvType.js';
 import IdkType from '#lostcity/cache/IdkType.js';
 import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
@@ -16,10 +12,6 @@ import NpcType from '#lostcity/cache/NpcType.js';
 import Component from '#lostcity/cache/Component.js';
 import SeqType from '#lostcity/cache/SeqType.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import HuntType from '#lostcity/cache/HuntType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
@@ -47,27 +39,15 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
         player.playerLog('Cheat ran', cheat);
 
         if (cmd === 'reload' && Environment.LOCAL_DEV) {
-            // TODO: only reload config types that have changed to save time
-            CategoryType.load('data/pack');
-            ParamType.load('data/pack');
-            EnumType.load('data/pack');
-            StructType.load('data/pack');
-            InvType.load('data/pack');
-            IdkType.load('data/pack');
-            VarPlayerType.load('data/pack');
-            ObjType.load('data/pack', World.members);
-            LocType.load('data/pack');
-            NpcType.load('data/pack');
-            Component.load('data/pack');
-            SeqType.load('data/pack');
-            SpotanimType.load('data/pack');
-            MesanimType.load('data/pack');
-            DbTableType.load('data/pack');
-            DbRowType.load('data/pack');
-            HuntType.load('data/pack');
+            World.reload();
 
+            // todo: we're probably reloading twice now, just to get count?
             const count = ScriptProvider.load('data/pack');
             player.messageGame(`Reloaded ${count} scripts.`);
+        } else if (cmd === 'rebuild' && Environment.LOCAL_DEV) {
+            World.devThread!.postMessage({
+                type: 'pack'
+            });
         } else if (cmd === 'setvar') {
             const varp = args.shift();
             if (!varp) {

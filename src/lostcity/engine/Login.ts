@@ -11,6 +11,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
+import { CrcBuffer32 } from '#lostcity/server/CrcTable.js';
 
 class Login {
     loginThread: Worker = createWorker('./src/lostcity/server/LoginThread.ts');
@@ -40,6 +41,22 @@ class Login {
 
             const post = new Uint8Array(length);
             data.gdata(post, 0, post.length);
+            data.pos -= post.length;
+
+            const revision = data.g1();
+            if (revision !== 225) {
+                socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                return;
+            }
+
+            data.pos += 1;
+
+            const crcs = new Uint8Array(9 * 4);
+            data.gdata(crcs, 0, crcs.length);
+            if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
+                socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                return;
+            }
 
             this.loginThread.postMessage({
                 type: 'loginreq',

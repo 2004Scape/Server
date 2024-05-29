@@ -62,6 +62,8 @@ import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
+import { makeCrcs } from '#lostcity/server/CrcTable.js';
+import { preloadClient } from '#lostcity/server/PreloadedPacks.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -205,8 +207,11 @@ class World {
     }
 
     reload() {
+        let transmitted = false;
+
         if (this.shouldReload('varp', true)) {
             VarPlayerType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('param')) {
@@ -215,18 +220,22 @@ class World {
 
         if (this.shouldReload('obj', true)) {
             ObjType.load('data/pack', this.members);
+            transmitted = true;
         }
 
         if (this.shouldReload('loc', true)) {
             LocType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('npc', true)) {
             NpcType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('idk', true)) {
             IdkType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('frame_del')) {
@@ -235,10 +244,12 @@ class World {
 
         if (this.shouldReload('seq', true)) {
             SeqType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('spotanim', true)) {
             SpotanimType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('category')) {
@@ -305,6 +316,7 @@ class World {
 
         if (this.shouldReload('interface')) {
             Component.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('script')) {
@@ -315,6 +327,13 @@ class World {
                 this.broadcastMes(`Reloaded ${count} scripts.`);
             }
         }
+
+        if (transmitted) {
+            makeCrcs();
+        }
+
+        // todo: detect and reload static data (like maps)
+        preloadClient();
 
         this.allLastModified = getLatestModified('data/pack', '.dat');
     }
@@ -363,7 +382,7 @@ class World {
     }
 
     startDevWatcher() {
-        this.devThread = createWorker('./src/lostcity/tools/pack/server.ts');
+        this.devThread = createWorker('./src/lostcity/tools/pack/pack.ts');
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -379,16 +398,24 @@ class World {
             this.startDevWatcher();
         });
 
-        this.devWatcher = new Watcher('./data/src/scripts', {
+        this.devWatcher = new Watcher('./data/src', {
             recursive: true
         });
 
         this.devWatcher.on('add', (targetPath: string) => {
+            if (targetPath.endsWith('.pack')) {
+                return;
+            }
+
             const stat = fs.statSync(targetPath);
             this.devMTime.set(targetPath, stat.mtimeMs);
         });
 
         this.devWatcher.on('change', (targetPath: string) => {
+            if (targetPath.endsWith('.pack')) {
+                return;
+            }
+
             const stat = fs.statSync(targetPath);
             const known = this.devMTime.get(targetPath);
 
@@ -406,7 +433,7 @@ class World {
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/tools/pack/server.ts');
+                this.devThread = createWorker('./src/lostcity/tools/pack/pack.ts');
             }
 
             this.devThread.postMessage({
