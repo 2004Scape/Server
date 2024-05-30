@@ -372,10 +372,7 @@ export default class Npc extends PathingEntity {
                 this.aiMode();
                 break;
         }
-
-        if (this.mode !== NpcMode.NONE) {
-            this.updateMovement();
-        }
+        this.updateMovement();
     }
 
     noMode(): void {
@@ -582,7 +579,7 @@ export default class Npc extends PathingEntity {
             this.playerFollowMode();
             return;
         }
-
+        
         this.clearWaypoints();
 
         const trigger = this.getTriggerForMode(this.mode);

@@ -11,7 +11,6 @@ switch_int(%arena_progress) {
         ~chatnpc(angry, "I don't know you stranger. Get off our land.");
 }
 
-
 [opnpc1,khazard_guard_chest] 
 switch_int(%arena_progress) {
     case default:
@@ -30,6 +29,14 @@ switch_int(%arena_progress) {
 
 [opnpc1,khazard_guard_cells]
 switch_int(%arena_progress) {
+    case ^arena_entered_ogre_fight, ^arena_defeated_ogre:
+        if(~wearing_khazard_armour = true) {
+            ~chatplayer(neutral, "Hello.");
+            ~chatnpc(angry, "I hope you're keeping busy.");
+            ~chatplayer(neutral, "Of course.");
+            ~chatnpc(angry, "General Khazard doesn't tolerate the lazy. If you're not keeping busy I'll practice my combat skills on your hide.");
+        }
+        @khazard_guard_restricted;
     case default:
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0 & %arena_progress > ^arena_obtained_armour) {
             // https://youtu.be/Oltfw1gvWjQ?si=eSP7-x6D-mQvNEZx&t=132
@@ -46,6 +53,7 @@ switch_int(%arena_progress) {
         @khazard_guard_restricted;
 }
 
+// theres no opnpcu here (rs3 and osrs has one): https://youtu.be/nptASzjG_Xk?si=wfdwpDNiM98YMi5t&t=165
 [opnpc1,khazard_guard_drunk]
 switch_int(%arena_progress) {
     case ^arena_given_khali_brew:
@@ -102,11 +110,6 @@ inv_del(inv, khali_brew, 1);
 inv_add(inv, khazard_cell_keys, 1);
 ~chatnpc(drunk, "Yeesh, yes that shounds reasonable. Here, 'hiccup', take the keysch. Any trouble, you give... you givem a good beating.");
 ~chatplayer(happy, "No problem, I'll keep them in line.");
-
-[opnpcu,khazard_guard_drunk]
-if(last_useitem = khali_brew & %arena_progress = ^arena_spoken_drunkguard) {
-    @khazard_guard_drunk_interested;
-}
 
 [label,khazard_guard_restricted]
 ~chatplayer(neutral, "Hello.");

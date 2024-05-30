@@ -3,3 +3,12 @@
 ^arena_obtained_armour = 2
 ^arena_spoken_drunkguard = 3
 ^arena_given_khali_brew = 5
+^arena_entered_ogre_fight = 6
+^arena_defeated_ogre = 8
+^arena_sent_jail = 9
+^arena_defeated_scorpion = 10
+^arena_entered_bouncer_fight = 11
+^arena_defeated_bouncer = 12
+^arena_defeated_genkhazard = 13
+^arena_complete = 14
+^arena_complete_defeated_khazard = 15

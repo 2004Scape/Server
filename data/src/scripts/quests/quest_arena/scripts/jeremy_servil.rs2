@@ -4,8 +4,12 @@ if (npc_range(coord) > 2) {
     return;
 }
 switch_int(%arena_progress) {
-    case ^arena_obtained_armour, ^arena_spoken_drunkguard:
+    case ^arena_entered_ogre_fight, ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion: mes("Jeremy is in the arena with his father now.");
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew:
         // https://youtu.be/Oltfw1gvWjQ?si=_bu-CCXvPLSecu_N&t=120
+        if(inv_total(inv, khazard_cell_keys) > 0) {
+            @free_jeremy_servil;
+        }
         ~chatplayer(neutral, "Hello.");
         ~chatnpc(sad, "Please Sir, don't hurt me.");
         if(~wearing_khazard_armour = true) {
@@ -16,3 +20,180 @@ switch_int(%arena_progress) {
         ~chatnpc(sad, "The guard always keeps hold of them.");
         ~chatplayer(neutral, "Don't lose heart, I'll be back.");
 }
+
+[opnpc1,jeremy_servil_arena]
+switch_int(%arena_progress) {
+    case ^arena_given_khali_brew, ^arena_entered_ogre_fight: @jeremy_where_father;
+}
+
+[label,jeremy_where_father]
+~chatplayer(quiz, "Jeremy, where's your father?");
+~chatnpc(shock, "Quick, help him! That beast will kill him. He's too old to fight.");
+@ogre_attack_justin;
+
+[label,free_jeremy_servil]
+~chatplayer(happy, "Jeremy look, I have the keys.");
+~chatnpc(happy, "Wow! Please set me free, then we can find my dad. I overheard a guard talking. I think they've taken him to the arena.");
+~chatplayer(neutral, "Ok, we'd better hurry.");
+if_close;
+def_coord $move_to = 0_40_49_56_31;
+def_int $delay = distance(coord, $move_to);
+if(loc_find(movecoord($move_to, 1, 0, 0), loc_80) = false) {
+    return;
+}
+p_walk(movecoord($move_to, 1, 0, 1));
+facesquare(movecoord(coord, 0, 0, -16));
+// to make sure we cant queue multiple of these when more than 1 person is doing the quest
+// idk if this is how they checked it, maybe there's a bettter way
+if(npc_getmode ! none & inzone(0_40_49_54_30, 0_40_49_56_34, npc_coord) = true) {
+    npc_setmode(none);
+    npc_queue(10, $delay, 0);
+}
+npc_setmode(null);
+if($delay >= 0) {
+    p_delay($delay);
+}
+def_int $x;
+def_int $z;
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+$x, $z = ~door_open($angle, loc_shape);
+loc_change(loc_83, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+sound_synth(grate_open, 0, 0);
+p_delay(6);
+npc_del;
+p_teleport(0_40_49_47_16);
+// these numbers are all eyeballed (cam packets) since OSRS has changed this part entirely
+cam_moveto(0_40_49_45_24, 270, 0, 100);
+cam_lookat(0_40_49_43_17, 200, 0, 100);
+p_delay(1);
+if(loc_find(0_40_49_46_16, loc_82) = true) {
+    $loc_coord = loc_coord;
+    $angle = loc_angle;
+    $shape = loc_shape;
+    $x, $z = ~door_open($angle, loc_shape);
+    loc_change(loc_83, 2);
+    loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+    sound_synth(door_open, 0, 0);
+}
+cam_moveto(0_40_49_43_26, 270, 1, 1);
+cam_lookat(0_40_49_43_15, 270, 1, 1);
+~forcemove(movecoord(coord, -2, 0, 0));
+cam_reset;
+cam_moveto(0_40_49_43_26, 270, 2, 1);
+cam_lookat(0_40_49_43_15, 270, 2, 1);
+~forcemove(movecoord(coord, -2, 0, 2));
+~forcemove(movecoord(coord, 0, 0, 1));
+p_delay(1);
+cam_reset;
+if (npc_finduid(~npc_within_distance(coord, jeremy_servil_arena, 8)) = true) {
+    ~chatnpc(shock, "Quick, help him! That beast will kill him. He's too old to fight.");
+    @ogre_attack_justin;
+}
+
+[label,ogre_attack_justin]
+if_close;
+if(%arena_progress = ^arena_given_khali_brew) {
+    %arena_progress = ^arena_entered_ogre_fight;
+}
+if (npc_finduid(~npc_within_distance(movecoord(coord, 0, 0, 8), khazard_ogre, 14)) = false
+    | inzone(0_40_49_47_29, 0_40_49_49_30, npc_coord) = false) {
+    return;
+}
+def_coord $ogre_to = 0_40_49_46_29;
+def_int $delay = distance(npc_coord, movecoord($ogre_to, 2, 0, 0));
+if (.npc_finduid(~.npc_within_distance(movecoord(coord, 0, 0, 8), justin_servil, 14)) = true) {
+    .npc_setmode(none);
+    .npc_walk(0_40_49_40_32);
+    .npc_facesquare(0_40_49_42_32);
+    .npc_queue(10, 0, calc(9 + $delay));
+}
+cam_reset;
+cam_moveto(movecoord($ogre_to, -7, 0, -4), 400, 0, 100);
+cam_lookat(movecoord($ogre_to, -1, 0, 0), 200, 0, 100);
+// open gate
+npc_setmode(none);
+npc_walk(movecoord($ogre_to, 2, 0, 0));
+p_delay($delay);
+if(loc_find(0_40_49_46_29, loc_78) = true) {
+    loc_del(3);
+    loc_add(movecoord(loc_coord, 1, 0, 0), loc_type, 3, loc_shape, 5);
+}
+if(loc_find(0_40_49_46_30, loc_77) = true) {
+    loc_del(3);
+    loc_add(movecoord(loc_coord, 1, 0, 0), loc_type, 1, loc_shape, 5);
+}
+npc_tele($ogre_to);
+npc_queue(10, 0, 1);
+p_delay(2);
+cam_reset;
+cam_lookat(0_40_49_40_32, 270, 2, 1);
+p_delay(6);
+cam_reset;
+
+[ai_queue10,khazard_ogre](int $arg)
+npc_walk(0_40_49_44_32);
+npc_queue(11, 0, 3);
+
+[ai_queue11,khazard_ogre](int $arg)
+npc_walk(0_40_49_41_32);
+npc_queue(12, 0, 4);
+
+[ai_queue12,khazard_ogre](int $arg)
+npc_anim(npc_param(attack_anim), 0);
+npc_setmode(null);
+
+[ai_queue10,justin_servil](int $arg)
+npc_anim(npc_param(defend_anim), 0);
+npc_setmode(null);
+
+[debugproc,c1a]
+if(p_finduid(uid) = false) {
+    return;
+}
+p_teleport(0_40_49_47_16);
+// these numbers are all eyeballed (cam packets) since OSRS has changed this part entirely
+cam_moveto(0_40_49_45_24, 270, 100, 100);
+cam_lookat(0_40_49_43_17, 200, 100, 100);
+p_delay(1);
+if(loc_find(0_40_49_46_16, loc_82) = true) {
+    def_int $x;
+    def_int $z;
+    def_coord $loc_coord = loc_coord;
+    def_int $angle = loc_angle;
+    def_locshape $shape = loc_shape;
+    $x, $z = ~door_open($angle, loc_shape);
+    loc_change(loc_83, 2);
+    loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+    sound_synth(door_open, 0, 0);
+}
+cam_moveto(0_40_49_43_26, 270, 1, 1);
+cam_lookat(0_40_49_43_15, 270, 1, 1);
+~forcemove(movecoord(coord, -2, 0, 0));
+cam_reset;
+cam_moveto(0_40_49_43_26, 270, 2, 1);
+cam_lookat(0_40_49_43_15, 270, 2, 1);
+~forcemove(movecoord(coord, -2, 0, 2));
+~forcemove(movecoord(coord, 0, 0, 1));
+p_delay(1);
+cam_reset;
+if (npc_finduid(~npc_within_distance(coord, jeremy_servil_arena, 8)) = true) {
+    ~chatnpc(shock, "Quick, help him! That beast will kill him. He's too old to fight.");
+    @ogre_attack_justin;
+}
+
+[ai_queue10,jeremy_servil](int $arg)
+npc_walk(0_40_49_56_31);
+npc_queue(11, 0, calc($arg + 1));
+
+[ai_queue11,jeremy_servil](int $arg)
+npc_tele(movecoord(0_40_49_56_31, 1, 0, 0));
+npc_queue(12, 0, 2);
+
+[ai_queue12,jeremy_servil](int $arg)
+// https://youtu.be/etS0gMlcxx8?si=xHy9CJHoitA58DUW&t=185 switches back to default mode here?
+npc_say("I'll run ahead.");
+npc_setmode(null);
+npc_walk(movecoord(npc_coord, 0, 0, -5));

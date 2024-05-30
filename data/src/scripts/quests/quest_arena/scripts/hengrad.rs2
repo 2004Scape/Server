@@ -3,7 +3,73 @@ if (npc_range(coord) > 2) {
     p_aprange(2);
     return;
 }
-~chatplayer(quiz, "Do you know a Justin or Jeremy Servil?");
-~chatnpc(shifty, "You're not a real guard. I've been in here long enough to know that. What's your business?");
-~chatplayer(neutral, "I've been sent to rescue Sir Servil and his son.");
-~chatnpc(neutral, "I've seen them in here, although they don't look up to much. My advice to you is to leave before you end up in a cell too.");
+// I don't think you can be in the jail area at this quest-stage?
+if(%arena_progress = 9) {
+    ~chatplayer(quiz, "Are you ok stranger?");
+    ~chatnpc(neutral, "I'm fine thanks.");
+    ~chatnpc(quiz, "So Khazard got his hands on you too?");
+    ~chatplayer(sad, "I'm afraid so.");
+    ~chatnpc(neutral, "If you're lucky you may last as long as me.");
+    ~chatplayer(quiz, "How long have you been here?");
+    ~chatnpc(sad, "I've been in Khazard's prisons ever since I can remember. I was a child when his men kidnapped me. My whole life has been spent killing and fighting, all in the hope that one day I might escape.");
+    ~chatplayer(sad, "Don't give up.");
+    ~chatnpc(happy, "Thanks friend.");
+    ~chatnpc(shifty, "Wait.. sshh, the guard is coming. Looks like you'll be going into the arena. Good luck friend.");
+    if_close;
+    // https://youtu.be/NHsQfeSPUb0?si=c_S0jTnjDBF0xilE&t=189
+    npc_add(0_40_49_26_4, npc_257, 100);
+    npc_setmode(none);
+    p_delay(0);
+    // https://youtu.be/Y6eWjQnV4Mo?si=7aaHIhL6qoxCuntZ&t=170 the guard can get stuck at any point, doesnt interrupt anything
+    npc_walk(movecoord(coord, 1, 1, 0));
+    npc_queue(10, 0, 1);
+    p_delay(7);
+    def_int $delay_diff = distance(coord, 0_40_49_40_6);
+    ~forcemove(0_40_49_40_6);
+    p_delay(calc(5 - $delay_diff));
+    if(loc_find(0_40_49_40_6, loc_79) = true) {
+        def_int $x;
+        def_int $z;
+        def_coord $loc_coord = loc_coord;
+        def_int $angle = loc_angle;
+        def_locshape $shape = loc_shape;
+        $x, $z = ~door_open($angle, loc_shape);
+        loc_change(loc_83, 2);
+        loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+        sound_synth(door_open, 0, 0);
+    }
+    p_teleport(movecoord(coord, 0, 0, -1));
+    p_delay(1);
+    ~forcemove(0_40_49_42_5);
+    ~forcemove(0_40_49_47_6);
+    ~forcemove(0_40_49_47_15);
+    p_delay(1);
+    if(loc_find(0_40_49_46_16, loc_82) = true) {
+        def_int $x;
+        def_int $z;
+        def_coord $loc_coord = loc_coord;
+        def_int $angle = loc_angle;
+        def_locshape $shape = loc_shape;
+        $x, $z = ~door_open($angle, loc_shape);
+        loc_change(loc_83, 2);
+        loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+        sound_synth(door_open, 0, 0);
+    }
+    ~forcemove(movecoord(coord, -4, 0, 4));
+    ~mesbox("From above you hear a voice..... 'Ladies and gentlemen! Let today's first fight between the outsider and everyone's favourite scorpion commence.'");
+}
+if(%arena_progress >= ^arena_defeated_ogre) {
+
+} else {
+    ~chatplayer(quiz, "Do you know a Justin or Jeremy Servil?");
+    ~chatnpc(shifty, "You're not a real guard. I've been in here long enough to know that. What's your business?");
+    ~chatplayer(neutral, "I've been sent to rescue Sir Servil and his son.");
+    ~chatnpc(neutral, "I've seen them in here, although they don't look up to much. My advice to you is to leave before you end up in a cell too.");
+}
+
+[ai_queue10,npc_257](int $arg)
+npc_walk(0_40_49_39_5);
+npc_queue(11, 0, 7);
+
+[ai_queue11,npc_257](int $arg)
+npc_say("Right you, move it.");

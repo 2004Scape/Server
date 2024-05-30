@@ -1,0 +1,13 @@
+[opnpc1,justin_servil]
+switch_int(%arena_progress) {
+    case ^arena_given_khali_brew, ^arena_entered_ogre_fight:
+        ~chatplayer(angry, "Lady Servil sent me to rescue you and your son. Come on, we have to get out of here.");
+        ~chatnpc(sad, "I'm too old to fight. I'm afraid you'll have to kill that ogre by yourself.");
+    case ^arena_defeated_ogre: 
+        ~chatplayer(quiz, "Are you alright?");
+        @justin_servil_saved;
+}
+
+[label,justin_servil_saved]
+~chatnpc(happy, "You saved my life and my son's, I am eternally in your debt brave traveller.");
+@khazard_welldone;

@@ -132,6 +132,7 @@ const PlayerOps: CommandHandlers = {
         const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
         const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
 
+
         state.activePlayer.write(ServerProt.CAM_LOOKAT, localX, localZ, height, rotationSpeed, rotationMultiplier);
     }),
 
@@ -143,6 +144,8 @@ const PlayerOps: CommandHandlers = {
         const pos = Position.unpackCoord(coord);
         const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
         const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
+
+        console.log(localX + ',' + localZ);
 
         state.activePlayer.write(ServerProt.CAM_MOVETO, localX, localZ, height, rotationSpeed, rotationMultiplier);
     }),

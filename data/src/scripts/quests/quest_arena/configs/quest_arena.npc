@@ -1,7 +1,7 @@
 [khazard_guard_cells]
 name=Khazard Guard
 desc=It's one of General Khazard's guards.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -41,7 +41,7 @@ param=attack_sound,baxe_slash
 [khazard_guard_drunk]
 name=Khazard Guard
 desc=It's one of General Khazard's guards.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -81,7 +81,7 @@ param=attack_sound,baxe_slash
 [khazard_guard_chest]
 name=Khazard Guard
 desc=It's one of General Khazard's guards.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -120,7 +120,7 @@ param=attack_sound,baxe_slash
 [khazard_guard_standard]
 name=Khazard Guard
 desc=It's one of General Khazard's guards.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -160,7 +160,7 @@ param=attack_sound,baxe_slash
 [npc_257]
 name=Khazard Guard
 desc=It's one of General Khazard's guards.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 vislevel=25
 recol1s=15855
@@ -178,6 +178,7 @@ model8=model_550_obj_wear
 head1=model_63_idk_head
 head2=model_84_idk_head
 respawnrate=50
+wanderrange=0
 hitpoints=25
 attack=20
 strength=18
@@ -196,7 +197,7 @@ param=attack_sound,baxe_slash
 [general_khazard]
 name=General Khazard
 desc=He looks really nasty. Smells bad too.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 op2=Attack
@@ -230,7 +231,7 @@ param=defend_anim,human_2h_sword_defend
 vislevel=hide
 name=Khazard barman
 desc=A tough looking barman.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=2340
@@ -255,7 +256,7 @@ wanderrange=4
 vislevel=hide
 name=Kelvin
 desc=A fightslave. He looks mistreated and weak.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=7298
@@ -278,7 +279,7 @@ wanderrange=1
 vislevel=hide
 name=Joe
 desc=A fightslave. He looks mistreated and weak.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=7298
@@ -306,7 +307,7 @@ wanderrange=1
 vislevel=hide
 name=Fightslave
 desc=A fightslave. He looks mistreated and weak.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=7298
@@ -327,7 +328,7 @@ wanderrange=1
 vislevel=hide
 name=Hengrad
 desc=He looks mistreated and weak.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=7298
@@ -350,7 +351,7 @@ wanderrange=1
 vislevel=hide
 name=Lady Servil
 desc=She looks wealthy.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=2340
@@ -386,7 +387,7 @@ head1=model_53_idk_head
 wanderrange=1
 param=death_anim,midget_death
 
-[npc_266]
+[jeremy_servil_arena]
 vislevel=hide
 name=Jeremy Servil
 desc=A young squire. He looks worse for wear.
@@ -404,11 +405,11 @@ head1=model_53_idk_head
 wanderrange=1
 param=death_anim,midget_death
 
-[npc_267]
+[justin_servil]
 vislevel=hide
 name=Justin Servil
 desc=Jeremy's father Sir Servil.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=7298
@@ -430,7 +431,7 @@ wanderrange=7
 vislevel=hide
 name=Local
 desc=A scruffy looking chap.
-walkanims=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
 recol1s=14724
@@ -470,7 +471,7 @@ param=death_anim,hellhound_death
 // param=defend_sound,
 // param=death_sound,
 
-[npc_270]
+[khazard_ogre]
 name=Khazard Ogre
 desc=Khazard's strongest ogre warrior.
 size=2
@@ -480,7 +481,8 @@ op2=Attack
 vislevel=55
 model1=model_2880_npc
 model2=model_2876_npc
-// TODO respawnrate
+// TODO respawnrate might be wrong, copying bouncers
+respawnrate=50
 hitpoints=60
 attack=54
 strength=53
@@ -510,7 +512,8 @@ recol1d=10570
 recol2s=11426
 recol2d=6342
 model1=model_2967_npc
-// TODO respawnrate
+// TODO respawnrate might be wrong, copying bouncers
+respawnrate=50
 hitpoints=40
 attack=40
 strength=39

@@ -103,7 +103,6 @@ if(npc_findhero = true) {
     if_close;
     if(p_finduid(uid) = true) { // get protected access, if not then queue
         @defeat_alomone;
-        return;
     }
     queue(queue_defeat_alomone, 0, npc_uid); //strongqueue probably
 }

@@ -1,0 +1,91 @@
+[opnpc1,general_khazard]
+switch_int(%arena_progress) {
+    case ^arena_defeated_ogre:
+        ~chatplayer(neutral, "I have come to demand the release of Sir Servil and his son.");
+        ~chatnpc(quiz, "Why would I give them up, those two men are my property now.");
+        @general_khazard_belong_nobody;
+    case default:
+        if(~wearing_khazard_armour = true) {
+            ~chatplayer(quiz, "General Khazard?");
+            ~chatnpc(neutral, "What do you want guard? I'm a busy man.");
+            ~chatplayer(neutral, "Of course sir.");
+            ~chatnpc(neutral, "In the last two hundred years, I have survived all horrors imaginable. Now it is my turn to cover this land in darkness. One day you shall see, all will quake on hearing my name.");
+            ~chatnpc(angry, "Now leave me.");
+            return;
+        }
+        ~chatnpc(angry, "Who dares enter my home? You? A feeble traveller?");
+        ~chatplayer(angry, "Feeble?!");
+        ~chatnpc(angry, "Get out! Whoever let you in shall be severely punished for this.");
+}
+
+[label,khazard_welldone]
+if(npc_finduid(~npc_within_distance(coord, general_khazard, 15)) = false) {
+    return;
+}
+~chatnpc(happy, "Haha, well done, well done that was rather entertaining. I am the great General Khazard, and the two men you just 'saved' are my property.");
+@general_khazard_belong_nobody;
+
+[label,general_khazard_belong_nobody]
+~chatplayer(angry, "They belong to nobody.");
+~chatnpc(neutral, "Well, I suppose we could find some arrangement for their freedom... hmmm?");
+~chatplayer(quiz, "What do you mean?");
+~chatnpc(happy, "I'll let them go, but you must stay and fight for me. You'll make me double the gold if you manage to last a few fights.");
+// https://youtu.be/nptASzjG_Xk?si=e5G8rcOt_AvKLmkI&t=258 (not gendered, wiki mentions this as well but extra confirmation anyways)
+~chatnpc(happy, "Guards! Take him to the cells.");
+if_close;
+cam_reset;
+cam_moveto(0_40_49_45_4, 270, 0, 100);
+cam_lookat(0_40_49_42_5, 200, 0, 100);
+npc_add(0_40_49_47_5, npc_257, 25);
+p_teleport(0_40_49_45_5);
+npc_setmode(none);
+npc_walk(0_40_49_41_5);
+~forcemove(0_40_49_40_5);
+if(loc_find(0_40_49_40_6, loc_79) = true) {
+    def_int $x;
+    def_int $z;
+    def_coord $loc_coord = loc_coord;
+    def_int $angle = loc_angle;
+    def_locshape $shape = loc_shape;
+    $x, $z = ~door_open($angle, loc_shape);
+    loc_change(loc_83, 2);
+    loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+    sound_synth(door_open, 0, 0);
+}
+~forcemove(movecoord(coord, 0, 0, 1));
+p_delay(0);
+npc_anim(seq_552, 0); // looks right?: https://youtu.be/NHsQfeSPUb0?si=ppVvy7QV4CQOdeQv&t=159
+p_delay(0);
+npc_walk(movecoord(npc_coord, -1, 0, 0));
+p_delay(1);
+~chatnpc(shifty, "The General seems to have taken a liking to you. He'd normally kill imposters like you without a second thought.");
+
+
+[debugproc,test23]
+if(p_finduid(uid) = false) {
+    return;
+}
+cam_reset;
+cam_moveto(0_40_49_45_5, 400, 0, 100);
+cam_lookat(0_40_49_46_6, 100, 0, 100);
+npc_add(0_40_49_47_5, npc_257, 25);
+p_teleport(0_40_49_45_5);
+npc_setmode(none);
+npc_walk(0_40_49_41_5);
+~forcemove(0_40_49_40_5);
+if(loc_find(0_40_49_40_6, loc_79) = true) {
+    def_int $x;
+    def_int $z;
+    def_coord $loc_coord = loc_coord;
+    def_int $angle = loc_angle;
+    def_locshape $shape = loc_shape;
+    $x, $z = ~door_open($angle, loc_shape);
+    loc_change(loc_83, 2);
+    loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+    sound_synth(door_open, 0, 0);
+}
+~forcemove(movecoord(coord, 0, 0, 1));
+
+
+[opnpc2,general_khazard]
+mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");

@@ -1,0 +1,26 @@
+[proc,npc_forcemove](coord $dest)
+def_int $change_x = calc(coordx($dest) - coordx(npc_coord));
+def_int $change_z = calc(coordz($dest) - coordz(npc_coord));
+~npc_telewalk($change_x, $change_z);
+
+[proc,npc_telewalk](int $change_x, int $change_z)
+def_int $move_x = 0;
+def_int $move_z = 0;
+if ($change_x >= 1) {
+    $move_x = 1;
+} else if ($change_x <= -1) {
+    $move_x = -1;
+}
+if ($change_z >= 1) {
+    $move_z = 1;
+} else if ($change_z <= -1) {
+    $move_z = -1;
+}
+// Perform movement and re-calc
+def_coord $movement_coord = movecoord(npc_coord, $move_x, 0, $move_z);
+npc_tele(movecoord(npc_coord, $move_x, 0, $move_z));
+$change_x = calc($change_x - $move_x);
+$change_z = calc($change_z - $move_z);
+npc_delay(0);
+// recursive call
+~npc_telewalk($change_x, $change_z);

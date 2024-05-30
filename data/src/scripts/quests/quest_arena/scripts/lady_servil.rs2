@@ -1,5 +1,8 @@
 [opnpc1,lady_servil]
 switch_int(%arena_progress) {
+    case ^arena_entered_ogre_fight:
+        ~chatplayer(neutral, "Lady Servil. I freed your son, however he has returned to the arena to help your husband.");
+        ~chatnpc(shock, "Oh no, they won't stand a chance. Please go back and help.");
     case ^arena_spoken_drunkguard, ^arena_given_khali_brew:
         ~chatplayer(neutral, "Lady Servil, I've managed to infiltrate General Khazard's arena.");
         ~chatnpc(quiz, "And my family?");

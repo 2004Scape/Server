@@ -101,7 +101,7 @@ const LocOps: CommandHandlers = {
         }
 
         state._activeLoc = loc;
-        state.pointerAdd(ScriptPointer.ActiveLoc);
+        state.pointerAdd(ActiveLoc[state.intOperand]);
         state.pushInt(1);
     },
 
