@@ -20,7 +20,7 @@ export default class TcpServer {
             s.setNoDelay(true);
 
             const ip: string = s.remoteAddress ?? 'unknown';
-            console.log(`[Maintenance]: Connection from ${ip}`);
+            //console.log(`[Maintenance]: Connection from ${ip}`);
 
             const socket = new ClientSocket(s, ip, ClientSocket.TCP);
 
@@ -35,7 +35,7 @@ export default class TcpServer {
             });
 
             s.on('close', () => {
-                console.log(`[Maintenance]: Disconnected from ${socket.remoteAddress}`);
+                //console.log(`[Maintenance]: Disconnected from ${socket.remoteAddress}`);
             });
 
             s.on('end', () => {
@@ -52,7 +52,7 @@ export default class TcpServer {
         });
 
         this.tcp.listen(Environment.GAME_PORT as number, '0.0.0.0', () => {
-            console.log(`[Maintenance]: Listening on port ${Environment.GAME_PORT}`);
+            //console.log(`[Maintenance]: Listening on port ${Environment.GAME_PORT}`);
         });
     }
 }

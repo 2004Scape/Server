@@ -287,7 +287,11 @@ class World {
             // console.timeEnd('checker');
         }
 
-        console.log('World ready!');
+        if (Environment.WEB_PORT === 80) {
+            console.log('World ready: http://' + Environment.PUBLIC_IP);
+        } else {
+            console.log('World ready: http://' + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT);
+        }
 
         if (startCycle) {
             await this.cycle();
