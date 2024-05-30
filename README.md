@@ -55,15 +55,13 @@ Another option for building your Dev Container is to instead clone your reposito
 
 ## Environment Dependencies
 
-- [NodeJS 20+](https://nodejs.org/) (current LTS) or [18](https://nodejs.org/download/release/v18.18.2/) (last LTS)
+- [NodeJS 20](https://nodejs.org/) (current LTS)
 - [Java 17+](https://adoptium.net/)
 - If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
-Java is required for RuneScriptCompiler.jar, our content language compiler.
+Java is required for our RuneScript compiler.
 
-You can download RuneScriptCompiler from [our public Git releases](https://github.com/2004scape/RuneScriptCompiler/releases) or the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel. Place the jar file in the root directory of the project.  
-
-RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
+RuneScriptCompiler.jar is not yet open-source, sorry for any inconvenience.
 
 ## Development Workflow
 

@@ -2,6 +2,7 @@ import { Worker } from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
 import { basename } from 'path';
+import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
@@ -288,9 +289,9 @@ class World {
         }
 
         if (Environment.WEB_PORT === 80) {
-            console.log('World ready: http://' + Environment.PUBLIC_IP);
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP));
         } else {
-            console.log('World ready: http://' + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT);
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT));
         }
 
         if (startCycle) {

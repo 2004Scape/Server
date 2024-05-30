@@ -10,7 +10,7 @@ export default class ScriptProvider {
     /**
      * The expected version of the script compiler that the runtime should be loading scripts from.
      */
-    private static readonly COMPILER_VERSION = 15;
+    public static readonly COMPILER_VERSION = 15;
 
     /**
      * Array of loaded scripts.
@@ -46,7 +46,7 @@ export default class ScriptProvider {
 
         const version = dat.g4();
         if (version !== ScriptProvider.COMPILER_VERSION) {
-            console.error('\nFatal: Compiler is out of date. Check the #dev-resources channel in Discord for the latest RuneScriptCompiler.jar and re-run server:build.');
+            console.error('\nFatal: Compiler is out of date. Please download the latest RuneScriptCompiler.jar and restart this.');
             process.exit(1);
         }
 

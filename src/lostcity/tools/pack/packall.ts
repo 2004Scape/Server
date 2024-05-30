@@ -20,6 +20,11 @@ import { packClientTexture } from '#lostcity/tools/client/textures/pack.js';
 import { packClientMedia } from '#lostcity/tools/client/media/pack.js';
 
 export async function packServer() {
+    if (!fs.existsSync('RuneScriptCompiler.jar')) {
+        console.log('The RuneScript compiler is missing and the build process cannot continue.');
+        process.exit(1);
+    }
+
     console.time('Packing server cache (1/2)');
     try {
         revalidatePack();
