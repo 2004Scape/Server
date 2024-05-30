@@ -243,9 +243,12 @@ class World {
             }
         }
 
-        if (transmitted) {
-            makeCrcs();
-        }
+        // todo: check if any jag files changed (transmitted) then reload crcs
+        // if (transmitted) {
+        //     makeCrcs();
+        // }
+
+        makeCrcs();
 
         // todo: detect and reload static data (like maps)
         preloadClient();
