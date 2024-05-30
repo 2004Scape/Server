@@ -21,6 +21,20 @@ check_notbusy=off
 find_keephunting=on
 find_newmode=opplayer2
 
+// Always hunt players regardless of combat level
+// and regardless if another of the same NPC is already
+// fighting the player.
+// This is similar to how Flesh Crawlers target players
+// regardless of combat level.
+// https://oldschool.runescape.wiki/w/Flesh_crawler
+[constant_melee_always]
+type=player
+check_vis=lineofsight
+check_nottoostrong=off
+check_notbusy=off
+find_keephunting=on
+find_newmode=opplayer2
+
 // guessing that constant means keephunting=on
 // and the difference between aggressive may include nottoostrong
 [constant_ranged]
