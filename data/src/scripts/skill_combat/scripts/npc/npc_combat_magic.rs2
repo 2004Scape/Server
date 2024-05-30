@@ -100,6 +100,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
             if ($percent < 0) $percent = multiply($percent, -1);
             //mes("Reduced stat: <~stat_name($stat)>, <tostring($constant)>, <tostring($percent)>");
             stat_sub($stat, $constant, $percent);
+            mes("You feel weakened.");
         }
         $i = add($i, 1);
     }
