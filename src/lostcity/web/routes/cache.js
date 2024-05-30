@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { CrcBuffer } from '#lostcity/cache/CrcTable.js';
+import { CrcBuffer } from '#lostcity/server/CrcTable.js';
 
 export default function (f, opts, next) {
     if (!fs.existsSync('data/pack/client')) {

@@ -15,6 +15,7 @@ if (finduid(uid) = false) {
 }
 sound_synth(watersplash, 0, 0); // osrs
 npc_delay(2);
+%aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
 npc_setmode(opplayer2);
 
 [ai_timer,_macro_event_river_troll]

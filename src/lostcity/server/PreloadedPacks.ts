@@ -1,18 +1,15 @@
-import 'dotenv/config';
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import Environment from '#lostcity/util/Environment.js';
-
 export const PRELOADED = new Map<string, Uint8Array>();
 export const PRELOADED_CRC = new Map<string, number>();
 
-if (!Environment.CI_MODE) {
+export function preloadClient() {
     console.log('Preloading client data');
     console.time('Preloaded client data');
     if (!fs.existsSync('data/pack/client') || !fs.existsSync('data/pack/client/maps')) {
-        console.log('Please build the client cache with client:build!');
+        console.log('Please build the cache with `npm run build`!');
         process.exit(1);
     }
 

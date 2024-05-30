@@ -1,31 +1,54 @@
 import Hashable from '#jagex2/datastruct/Hashable.js';
 
-export default class Stack {
-    readonly head: Hashable;
+export default class Stack<T extends Hashable> {
+    readonly sentinel: Hashable;
+    private cursor: Hashable | null = null;
 
     constructor() {
-        this.head = new Hashable();
+        const head: Hashable = new Hashable();
+        head.nextHashable = head;
+        head.prevHashable = head;
+        this.sentinel = head;
     }
 
-    push(node: Hashable): void {
+    push(node: T): void {
         if (node.prevHashable) {
             node.uncache();
         }
-        node.prevHashable = this.head.prevHashable;
-        node.nextHashable = this.head;
+        node.prevHashable = this.sentinel.prevHashable;
+        node.nextHashable = this.sentinel;
         if (node.prevHashable) {
             node.prevHashable.nextHashable = node;
         }
         node.nextHashable.prevHashable = node;
     }
 
-    pop(): Hashable | null {
-        const node: Hashable | null = this.head.nextHashable;
-        if (node === this.head) {
+    pop(): T | null {
+        const node: T | null = this.sentinel.nextHashable as T | null;
+        if (node === this.sentinel) {
             return null;
-        } else {
-            node?.uncache();
-            return node;
         }
+        node?.uncache();
+        return node;
+    }
+
+    head(): T | null {
+        const node: T | null = this.sentinel.nextHashable as T | null;
+        if (node === this.sentinel) {
+            this.cursor = null;
+            return null;
+        }
+        this.cursor = node?.nextHashable || null;
+        return node;
+    }
+
+    next(): T | null {
+        const node: T | null = this.cursor as T | null;
+        if (node === this.sentinel) {
+            this.cursor = null;
+            return null;
+        }
+        this.cursor = node?.nextHashable || null;
+        return node;
     }
 }

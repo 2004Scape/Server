@@ -1,4 +1,4 @@
-[ai_queue1,tut_giant_rat](int $arg) gosub(giant_rat_attack);
+[ai_queue1,tut_giant_rat](int $arg) gosub(npc_default_retaliate);
 
 // death
 [ai_queue3,tut_giant_rat](int $arg)
@@ -111,15 +111,6 @@ if (~player_in_combat_check = false) {
 }
 p_aprange($attackrange);
 @player_combat_start;
-
-[proc,giant_rat_attack]
-if (~npc_out_of_combat = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    %npc_attacking_uid = %npc_aggressive_player;
-}
-if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(opplayer2);
-}
 
 [queue,set_rat_kill]
 if (%tutorial_progress = ^combat_instructor_during_attacking_melee) {

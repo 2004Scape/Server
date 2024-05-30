@@ -9,6 +9,7 @@
 [if_close,bank_main] @closebank;
 
 [label,openbank]
+%bank_noted = 0;
 ~reorganize_bank;
 inv_transmit(inv, bank_side:inv);
 inv_transmit(bank, bank_main:inv);

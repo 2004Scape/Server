@@ -16,6 +16,7 @@ if (finduid(uid) = false) {
 }
 sound_synth(rock_spirit_appear, 0, 0);
 npc_delay(2);
+%aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
 npc_setmode(opplayer2);
 
 // [ai_queue1,_macro_event_rock_golem](int $arg) ~npc_default_retaliate_ap;

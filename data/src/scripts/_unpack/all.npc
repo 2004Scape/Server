@@ -268,6 +268,7 @@ attack=14
 strength=13
 defence=12
 wanderrange=7
+param=retreat,8
 huntmode=cowardly
 
 [guard_sword]
@@ -1334,6 +1335,7 @@ param=death_anim,chicken_death
 param=attack_sound,chicken_attack
 param=defend_sound,chicken_hit
 param=death_sound,chicken_death
+param=retreat,1
 category=chicken
 
 [sheep_sheared]
@@ -2578,6 +2580,7 @@ param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
 param=attack_sound,horse_hit
 param=defend_sound,horse_hit
+param=retreat,6
 category=unicorn
 
 [npc_90]
@@ -4069,6 +4072,7 @@ param=death_anim,souless_death
 // TODO param=attack_sound,
 // TODO param=defend_sound,
 // TODO param=death_sound,
+param=retreat,9
 huntmode=cowardly
 
 [npc_141]
@@ -4765,7 +4769,8 @@ model10=model_519_obj_wear
 head1=model_53_idk_head
 head2=model_76_obj_wear
 wanderrange=12
-attackrange=14
+maxrange=12
+attackrange=3
 hitpoints=13
 attack=2
 strength=2
@@ -5644,6 +5649,7 @@ attack=2
 strength=2
 defence=3
 param=damagetype,^crush_style
+param=retreat,7
 
 [npc_224]
 resizeh=64
@@ -6020,6 +6026,7 @@ param=rangedefence,9
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
+param=retreat,8
 huntmode=cowardly
 
 [head_thief]
@@ -8247,6 +8254,7 @@ param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
+param=retreat,4
 // https://oldschool.runescape.wiki/w/Demon_(attribute)
 
 [npc_726]

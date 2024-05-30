@@ -16,6 +16,7 @@ if (finduid(uid) = false) {
     return;
 }
 npc_delay(3);
+%aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
 npc_setmode(opplayer2);
 
 

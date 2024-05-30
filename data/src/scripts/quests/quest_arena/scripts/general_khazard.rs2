@@ -66,8 +66,8 @@ if(p_finduid(uid) = false) {
     return;
 }
 cam_reset;
-cam_moveto(0_40_49_45_5, 400, 0, 100);
-cam_lookat(0_40_49_46_6, 100, 0, 100);
+cam_moveto(0_40_49_45_4, 270, 0, 100);
+cam_lookat(0_40_49_42_5, 200, 0, 100);
 npc_add(0_40_49_47_5, npc_257, 25);
 p_teleport(0_40_49_45_5);
 npc_setmode(none);
@@ -85,6 +85,13 @@ if(loc_find(0_40_49_40_6, loc_79) = true) {
     sound_synth(door_open, 0, 0);
 }
 ~forcemove(movecoord(coord, 0, 0, 1));
+p_delay(0);
+npc_anim(seq_552, 0); // looks right?: https://youtu.be/NHsQfeSPUb0?si=ppVvy7QV4CQOdeQv&t=159
+p_delay(0);
+npc_walk(movecoord(npc_coord, -1, 0, 0));
+p_delay(1);
+cam_reset;
+~chatnpc(shifty, "The General seems to have taken a liking to you. He'd normally kill imposters like you without a second thought.");
 
 
 [opnpc2,general_khazard]

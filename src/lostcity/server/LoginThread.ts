@@ -7,8 +7,6 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37, toSafeName } from '#jagex2/jstring/JString.js';
 
-import { CrcBuffer32 } from '#lostcity/cache/CrcTable.js';
-
 import {LoginClient, LoginResponse} from '#lostcity/server/LoginServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
@@ -59,14 +57,6 @@ parentPort.on('message', async msg => {
 
                 const crcs = new Uint8Array(9 * 4);
                 stream.gdata(crcs, 0, crcs.length);
-                if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
-                    parentPort.postMessage({
-                        type: 'loginreply',
-                        status: LoginResponse.SERVER_UPDATED,
-                        socket
-                    });
-                    return;
-                }
 
                 stream.rsadec(priv);
 

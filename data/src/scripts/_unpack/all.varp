@@ -32,7 +32,6 @@ protect=no
 
 [attackstyle]
 transmit=yes
-scope=perm
 
 [com_stabattack]
 protect=no
@@ -128,7 +127,6 @@ transmit=yes
 
 [attackstyle_magic]
 transmit=yes
-scope=perm
 
 [varp_109]
 
@@ -136,7 +134,6 @@ scope=perm
 
 [bank_noted]
 transmit=yes
-scope=perm
 
 [pk_prey1]
 protect=no

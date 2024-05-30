@@ -7,6 +7,9 @@
 def_int $mapsquare_x;
 def_int $mapsquare_y;
 $mapsquare_x, $mapsquare_y = ~mapsquare(coord);
-
-%newcomers_pos = calc($mapsquare_x - 46 + ($mapsquare_y - 49) * 6);
+if ($mapsquare_x < 46 | $mapsquare_y < 49 | $mapsquare_x > 51 | $mapsquare_y > 54) {
+    %newcomers_pos = null;
+} else {
+    %newcomers_pos = calc($mapsquare_x - 46 + ($mapsquare_y - 49) * 6);
+}
 if_openmainmodal(playermap_east);
