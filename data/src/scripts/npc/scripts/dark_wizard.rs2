@@ -10,9 +10,8 @@ if (~npc_can_attack_player = false) {
 
 npc_setmode(applayer2);
 
-if (random(8) = 0) {
-    // dunno real chance
-    ~npc_cast_spell(^confuse, 4);
+if (stat_base(strength) = stat(strength) & random(2) = 0) { // guessed
+    ~npc_cast_spell(^weaken, 4);
 } else {
     ~npc_cast_spell(^earth_strike, 4);
 }
@@ -27,9 +26,8 @@ if (~npc_can_attack_player = false) {
     return;
 }
 
-if (random(8) = 0) {
-    // dunno real chance
-    ~npc_cast_spell(^weaken, 4);
+if (stat_base(attack) = stat(attack) & random(2) = 0) { // guessed
+    ~npc_cast_spell(^confuse, 4);
 } else {
     ~npc_cast_spell(^water_strike, 4);
 }
