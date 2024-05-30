@@ -54,7 +54,7 @@ import ServerProt from '#lostcity/server/ServerProt.js';
 import Environment from '#lostcity/util/Environment.js';
 import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
+import { getLatestModified, getModified, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
@@ -277,11 +277,14 @@ class World {
         if (Environment.LOCAL_DEV) {
             this.startDevWatcher();
 
-            if (Environment.BUILD_ON_STARTUP) {
+            // console.time('checker');
+            // todo: this check takes me 300ms on startup! but it saves double building fresh setups
+            if (Environment.BUILD_ON_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
                 this.devThread!.postMessage({
                     type: 'pack'
                 });
             }
+            // console.timeEnd('checker');
         }
 
         console.log('World ready!');

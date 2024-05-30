@@ -74,7 +74,7 @@ export function packClientMap() {
         return;
     }
 
-    console.log('Packing client maps');
+    //console.log('Packing client maps');
     //console.time('maps');
 
     fs.mkdirSync('data/pack/client/maps', { recursive: true });

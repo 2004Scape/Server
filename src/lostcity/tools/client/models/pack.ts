@@ -22,7 +22,7 @@ export function packClientModel() {
     'ob_axis.dat'
     */
 
-    console.log('Packing models.jag');
+    //console.log('Packing models.jag');
     //console.time('models.jag');
 
     const modelOrder = loadOrder('data/src/pack/model.order');

@@ -9,7 +9,7 @@ export async function packClientMedia() {
         return;
     }
 
-    console.log('Packing media.jag');
+    //console.log('Packing media.jag');
     //console.time('media.jag');
 
     const jagOrder = [
