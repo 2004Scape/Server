@@ -7,5 +7,12 @@ def_npc_mode $npc_mode = npc_getmode;
 ~npc_default_retaliate;
 if (finduid(%npc_attacking_uid) = true & $npc_mode ! opplayer2) { // in osrs it checks mode rather than ~npc_out_of_combat
     // todo: npc_huntall?
-    ~npc_say_within_distance(npc_coord, alkharid_warrior, 5, "Brother, I will help thee with this infidel!");
+    npc_huntall(npc_coord, 5, 0);
+    while (npc_huntnext = true) {
+        if (npc_type = alkharid_warrior & npc_getmode ! opplayer2) {
+            npc_say("Brother, I will help thee with this infidel!");
+            %npc_aggressive_player = uid;
+            ~npc_default_retaliate;
+        }
+    }
 }
