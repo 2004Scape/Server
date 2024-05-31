@@ -1,0 +1,11 @@
+[debugproc,npc_huntall]
+npc_huntall(coord, 10, 0);
+while (npc_huntnext = true) {
+    npc_say("Hello noob");
+}
+
+[debugproc,npc_huntall_secondary]
+npc_huntall(coord, 10, 0);
+while (.npc_huntnext = true) {
+    .npc_say("Hello noob");
+}

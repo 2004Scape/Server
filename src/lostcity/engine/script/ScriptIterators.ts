@@ -5,6 +5,7 @@ import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import {hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
+import NpcType from '#lostcity/cache/NpcType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -78,7 +79,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (!player) {
                             continue;
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, player) > this.distance) {
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
@@ -100,7 +101,14 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (!npc) {
                             continue;
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, npc) > this.distance) {
+                        const npcType = NpcType.get(npc.type);
+                        if (!npcType.op) {
+                            continue;
+                        }
+                        if (!npcType.op[1]) {
+                            continue;
+                        }
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
@@ -119,7 +127,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, obj) > this.distance) {
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, obj) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
@@ -137,7 +145,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, loc) > this.distance) {
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, loc) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {

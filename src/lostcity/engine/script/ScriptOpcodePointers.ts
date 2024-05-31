@@ -140,6 +140,16 @@ const ScriptOpcodePointers: {
         set2: ['active_player2'],
         conditional: true
     },
+    [ScriptOpcode.NPC_HUNTALL]: {
+        set: ['find_npc']
+    },
+    [ScriptOpcode.NPC_HUNTNEXT]: {
+        require: ['find_npc'],
+        require2: ['find_npc'],
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
     [ScriptOpcode.IF_CLOSE]: {
         require: ['active_player'],
         require2: ['active_player2']

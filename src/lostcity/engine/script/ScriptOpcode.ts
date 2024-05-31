@@ -206,6 +206,8 @@ enum ScriptOpcode {
     NPC_QUEUE, // official
     NPC_RANGE, // official
     NPC_SAY, // official
+    NPC_HUNTALL, // official
+    NPC_HUNTNEXT,
     NPC_SETHUNT, // official
     NPC_SETHUNTMODE, // official
     NPC_SETMODE, // official
