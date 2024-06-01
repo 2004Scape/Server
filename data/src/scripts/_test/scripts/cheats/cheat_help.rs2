@@ -14,7 +14,7 @@ if (p_finduid(uid) = true) {
     ~mesbox("@blu@Client commands|@whi@::debug@bla@ - Toggles the debug overlay|@whi@::chat@bla@ - Switches the chat font-era|@whi@::perf@bla@ - Show FPS");
 
     // Content
-    ~mesbox("@blu@Content testing|@whi@::reset@bla@ - Reset your progress|@whi@::minlevel@bla@ - Set all your stats to level 1|@whi@::maxlevel@bla@ - Set all your stats to level 99|@whi@::setlevel@bla@ - Set a skill to a specific level");
+    ~mesbox("@blu@Content testing|@whi@::reset@bla@ - Reset your progress|@whi@::minlevel@bla@ - Set all your stats to level 1|@whi@::maxme@bla@ - Set all your stats to level 99|@whi@::setstat@bla@ - Set a stat to a specific level");
     ~mesbox("@blu@Content testing|@whi@::addxp@bla@ - Add XP to a skill|@whi@::setxp@bla@ - Set your XP in a skill");
     ~mesbox("@blu@Content testing|@whi@::bank@bla@ - Open your bank anywhere|@whi@::bank_preset@bla@ - Fill your bank with common items|@whi@::clearinv@bla@ - Clear a named inventory|@whi@::give@bla@ - Give yourself any item");
     ~mesbox("@blu@Content testing|@whi@::1hp@bla@ - Set your health to 1|@whi@::foodbank@bla@ - Fill your bank with food|@whi@::energy@bla@ - Restore your run energy");
@@ -22,8 +22,7 @@ if (p_finduid(uid) = true) {
     ~mesbox("@blu@Content testing|@whi@::fmtest@bla@ - Give yourself items to test firemaking|@whi@::fmbank@bla@ - Fill your bank with firemaking items");
     ~mesbox("@blu@Content testing|@whi@::fishtest@bla@ - Give yourself items to test fishing");
     ~mesbox("@blu@Content testing|@whi@::giverunes@bla@ - Give yourself items to test magic|@whi@::magicbank@bla@ - Fill your bank with magic items");
-    ~mesbox("@blu@Content testing|@whi@::tele@bla@ - Teleport to specific coordinates|@whi@::jtele@bla@ - Teleport to specific coordinates in Jagex's format");
-    ~mesbox("@blu@Content testing|@whi@::north@bla@/@whi@::east@bla@/@whi@::south@bla@/@whi@::west@bla@ - Teleport 1 tile in a direction|@whi@::up@bla@/@whi@::down@bla@ - Teleport 1 tile up or down|@whi@::telelevel@bla@ - Teleport to a specific level at your current position");
+    ~mesbox("@blu@Content testing|@whi@::tele@bla@ - Teleport to specific coordinates|@whi@::tele up@bla@ - Teleport up a level|@whi@::tele down@bla@ - Teleport down a level|@whi@::north@bla@/@whi@::east@bla@/@whi@::south@bla@/@whi@::west@bla@ - Teleport 1 tile in a direction");
     ~mesbox("@blu@Content testing|@whi@::home@bla@ - Teleport to Lumbridge|@whi@::varrock@bla@ - Teleport to Varrock|@whi@::falador@bla@ - Teleport to Falador|@whi@::draynor@bla@ - Teleport to Draynor Village");
     ~mesbox("@blu@Content testing|@whi@::portsarim@bla@ - Teleport to Port Sarim|@whi@::rimmington@bla@ - Teleport to Rimmington|@whi@::alkharid@bla@ - Teleport to Al Kharid|@whi@::seers@bla@ - Teleport to Seers Village");
     ~mesbox("@blu@Content testing|@whi@::giants@bla@ - Teleport to Giants in Edgeville Dungeon");

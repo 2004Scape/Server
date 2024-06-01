@@ -7,11 +7,16 @@ import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
 
 export default class VarPlayerType extends ConfigType {
+    private static configNames = new Map<string, number>();
+    private static configs: VarPlayerType[] = [];
+
     static SCOPE_TEMP = 0;
     static SCOPE_PERM = 1;
 
-    private static configNames = new Map<string, number>();
-    private static configs: VarPlayerType[] = [];
+    // commonly referenced in-engine
+    static PLAYER_RUN = -1;
+    static TEMP_RUN = -1;
+    static LASTCOMBAT = -1;
 
     static load(dir: string) {
         VarPlayerType.configNames = new Map();
@@ -40,6 +45,10 @@ export default class VarPlayerType extends ConfigType {
                 VarPlayerType.configNames.set(config.debugname, id);
             }
         }
+
+        VarPlayerType.PLAYER_RUN = VarPlayerType.getId('player_run');
+        VarPlayerType.TEMP_RUN = VarPlayerType.getId('temp_run');
+        VarPlayerType.LASTCOMBAT = VarPlayerType.getId('lastcombat');
     }
 
     static get(id: number): VarPlayerType {

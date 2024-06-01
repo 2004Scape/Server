@@ -1,4 +1,5 @@
-[debugproc,maxlevel]
+// official name
+[debugproc,maxme]
 if_close;
 if (p_finduid(uid) = true) {
     def_int $max_xp = 130344310;
@@ -21,6 +22,7 @@ if (p_finduid(uid) = true) {
     givexp(agility, $max_xp);
     givexp(thieving, $max_xp);
     givexp(runecraft, $max_xp);
+    mes("You're maxed.");
 } else {
     @please_finish;
 }
