@@ -12,6 +12,8 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import {NpcIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
+import {hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
 
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -319,6 +321,54 @@ const NpcOps: CommandHandlers = {
 
         state.activeNpc.spotanim(spotanim, height, delay);
     }),
+
+    [ScriptOpcode.NPC_FIND]: state => {
+        const [coord, npcType, distance, checkVis] = state.popInts(4);
+
+        const {level, x, z} = Position.unpackCoord(coord);
+        const centerX: number = Position.zone(x);
+        const centerZ: number = Position.zone(z);
+        const radius: number = (1 + (distance / 8)) | 0;
+        const maxX = centerX + radius;
+        const minX = centerX - radius;
+        const maxZ = centerZ + radius;
+        const minZ = centerZ - radius;
+
+        let closestNpc;
+        let closestDistance = distance;
+
+        for (let i: number = maxX; i >= minX; i--) {
+            const zoneX: number = i << 3;
+            for (let j: number = maxZ; j >= minZ; j--) {
+                const zoneZ: number = j << 3;
+                state.npcIterator = new NpcIterator(World.currentTick, level, zoneX, zoneZ);
+                for (const npc of state.npcIterator) {
+                    if(npc && npc.type === npcType) {
+                        if (checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(level, x, z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(level, x, z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        const npcDistance = Position.distanceToSW({x, z}, npc);
+                        if (npcDistance <= closestDistance) {
+                            closestNpc = npc;
+                            closestDistance = npcDistance;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!closestNpc) {
+            state.pushInt(0);
+            return;
+        }
+        // not necessary but if we want to refer to the original npc again, we can
+        state.activeNpc = closestNpc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
+    },
 
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
         const coord: number = check(state.popInt(), CoordValid);

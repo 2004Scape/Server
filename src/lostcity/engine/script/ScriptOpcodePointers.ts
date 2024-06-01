@@ -502,6 +502,11 @@ const ScriptOpcodePointers: {
         require: ['active_npc'],
         require2: ['active_npc2']
     },
+    [ScriptOpcode.NPC_FIND]: {
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
     [ScriptOpcode.NPC_FINDALLZONE]: {
         set: ['find_npc']
     },
