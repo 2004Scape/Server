@@ -3,10 +3,8 @@
 echo "Installing node dependencies..."
 npm i
 
-if  [ ! -f .env ]; then
-    echo "Copying default .env..."
-    cp .env.example .env
-fi
+# TODO: let's build for the user here while we can, have to add RuneScriptCompiler.jar to download during build
+#  currently only does it during start
 
-echo "Building..."
-npm run build
+# echo "Building..."
+# npm run build

@@ -29,39 +29,34 @@ Now open [http://localhost](http://localhost) in your browser and play!
 
 Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
 
+If you run into issues please see our [common issues](#common-issues) or hop in Discord.
+
 ### Using the setup script
 
-You can instead run `setup.sh` to get your repository ready for running the server. Manually download RuneScriptCompiler.jar, from [environment dependencies](#environment-dependencies), and then run `setup.sh` to run the above commands.
+You can instead run `setup.sh` to get your repository ready for running the server.
 
 ### Using the DevContainer
 
 An alternative way to set up your environment is to utilize a [Development Container](https://containers.dev/). In order to start the Dev Container, you'll need to install [Docker](https://www.docker.com/products/docker-desktop/). If you're running Windows, I suggest getting Docker Desktop. Linux users can use whatever means they prefer to install Docker. Once docker is installed, install the VSCode extension [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
-Make sure to still grab the RuneScriptCompiler.jar from the [environment dependencies](#environment-dependencies) as that can't be automatically installed yet.
-
-Once that is done follow these steps:
+Follow these steps:
 
 1. Make sure Docker is running
 2. Open VSCode and run `Dev Containers: Clone Repository in Container Volume`
 3. Select `GitHub` as the remote Source
 4. Find your fork of this repo
 5. Select the branch you want to work from
-6. At any point once the container has started and you can see the files in VSCode, drag the RuneScriptCompiler.jar into the root of your repo
-7. Once the startup script is finished, run `npm start`
+6. Once the startup script is finished, run `npm start`
 
-Once the container starts, it automatically starts running `setup.sh`. You can cancel this and do the [Getting Started](#getting-started) steps manually as well. If you let the startup script finish before moving RuneScriptCompiler.jar into the root of your repo and the script fails, you just need to run `npm run server:build` again before starting your server.
-
-Another option for building your Dev Container is to instead clone your repository onto your local machine first and then run `Dev Containers: Open Folder in Container` and work that way by mounting the local files into your container. This way, you can have RuneScriptCompiler.jar in your workspace from the get-go. **Note: The npm scripts are much slower when the container is running this way.**
+Once the container starts, it automatically starts running `setup.sh`. You can cancel this and do the [Getting Started](#getting-started) steps manually as well.
 
 ## Environment Dependencies
 
-- [NodeJS 20](https://nodejs.org/) (current LTS)
+- [NodeJS 20.6+](https://nodejs.org/) (22 is fine as well)
 - [Java 17+](https://adoptium.net/)
 - If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
-Java is required for our RuneScript compiler.
-
-RuneScriptCompiler.jar is not yet open-source, sorry for any inconvenience.
+Java is required for our RuneScript compiler, it will be downloded for you the first time you run `npm start`.
 
 ## Development Workflow
 
@@ -89,6 +84,10 @@ It's recommended to install a suitable plugin/extension for your IDE, to show yo
 **Please aim to avoid warnings!** They are rules that we eventually want to switch to errors.
 
 Configuration for the linter can be found in `.eslintrc.cjs`.
+
+## Common Issues
+
+* `bad option: --import`: You are using node an older version of node. We are targeting 20.6+
 
 ## Credits
 
