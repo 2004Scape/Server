@@ -1,7 +1,13 @@
 import { parentPort } from 'worker_threads';
 import { packClient, packServer } from './packall.js';
+import Environment from '#lostcity/util/Environment.js';
+import { updateCompiler } from '#lostcity/util/RuneScriptCompiler.js';
 
 if (!parentPort) {
+    if (Environment.UPDATE_ON_STARTUP) {
+        await updateCompiler();
+    }
+
     await packServer();
     await packClient();
 }
