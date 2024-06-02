@@ -5,7 +5,7 @@ import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptPointer, {ActiveLoc, checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import {LocIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
@@ -21,8 +21,6 @@ import {
     LocTypeValid,
     ParamTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
-
-const ActiveLoc = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
 
 const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: state => {

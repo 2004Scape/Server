@@ -6,7 +6,7 @@ import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ScriptPointer, { checkedHandler } from '#lostcity/engine/script/ScriptPointer.js';
+import ScriptPointer, {ActiveNpc, checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -39,8 +39,6 @@ import {
     QueueValid,
     SpotAnimTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
-
-const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
 const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDUID]: state => {
