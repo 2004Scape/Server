@@ -49,7 +49,7 @@ export default class VarSharedType extends ConfigType {
     }
 
     static get count() {
-        return VarSharedType.configs.length;
+        return this.configs.length;
     }
 
     // ----
