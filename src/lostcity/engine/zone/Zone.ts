@@ -6,7 +6,7 @@ import Player from '#lostcity/entity/Player.js';
 import ServerProt from '#lostcity/server/ServerProt.js';
 import World from '#lostcity/engine/World.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import {locShapeLayer} from '@2004scape/rsmod-pathfinder';
+import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 export class ZoneEvent {
     type = -1;
@@ -256,10 +256,10 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === locShapeLayer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape)) {
                 return false;
             }
 
@@ -286,10 +286,10 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === locShapeLayer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape)) {
                 return false;
             }
 
@@ -321,7 +321,7 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
@@ -334,7 +334,7 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
