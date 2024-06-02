@@ -46,6 +46,20 @@ const LocConfigOps: CommandHandlers = {
 
         const locType = LocType.get(locId);
         state.pushString(locType.debugname ?? 'null');
+    },
+
+    [ScriptOpcode.LC_WIDTH]: state => {
+        const locId = check(state.popInt(), LocTypeValid);
+
+        const locType = LocType.get(locId);
+        state.pushInt(locType.width ?? 0);
+    },
+
+    [ScriptOpcode.LC_LENGTH]: state => {
+        const locId = check(state.popInt(), LocTypeValid);
+
+        const locType = LocType.get(locId);
+        state.pushInt(locType.length ?? 0);
     }
 };
 
