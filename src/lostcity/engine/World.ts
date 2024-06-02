@@ -570,7 +570,7 @@ class World {
                 player.closeModal();
                 player.unsetMapFlag();
                 player.logoutRequested = true;
-                player.setVar(VarPlayerType.getId('lastcombat'), 0); // temp fix for logging out in combat, since logout trigger conditions still run...
+                player.setVar(VarPlayerType.LASTCOMBAT, 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
 
             if (!player.logoutRequested) {

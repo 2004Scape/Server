@@ -124,5 +124,13 @@ export const Position = {
         const destHorizontal: number = destX + destWidth;
         const destVertical: number = destZ + destHeight;
         return !(destX >= srcHorizontal || destHorizontal <= srcX || destZ >= srcVertical || destVertical <= srcZ);
+    },
+
+    formatString(level: number, x: number, z: number, separator = '_'): string {
+        const mx = x >> 6;
+        const mz = z >> 6;
+        const lx = x & 0x3f;
+        const lz = z & 0x3f;
+        return level + separator + mx + separator + mz + separator + lx + separator + lz;
     }
 } as const;

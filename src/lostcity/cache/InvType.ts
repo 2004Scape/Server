@@ -12,6 +12,10 @@ export default class InvType extends ConfigType {
     static SCOPE_PERM = 1;
     static SCOPE_SHARED = 2;
 
+    // commonly referenced in-engine
+    static INV = -1;
+    static WORN = -1;
+
     static load(dir: string) {
         InvType.configNames = new Map();
         InvType.configs = [];
@@ -34,6 +38,9 @@ export default class InvType extends ConfigType {
                 InvType.configNames.set(config.debugname, id);
             }
         }
+
+        InvType.INV = InvType.getId('inv');
+        InvType.WORN = InvType.getId('worn');
     }
 
     static get(id: number): InvType {

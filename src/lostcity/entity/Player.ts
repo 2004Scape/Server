@@ -446,20 +446,20 @@ export default class Player extends PathingEntity {
         }
 
         if (this.runenergy < 100) {
-            this.setVar(VarPlayerType.getId('player_run'), 0);
-            this.setVar(VarPlayerType.getId('temp_run'), 0);
+            this.setVar(VarPlayerType.PLAYER_RUN, 0);
+            this.setVar(VarPlayerType.TEMP_RUN, 0);
         }
 
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
-            if (this.getVar(VarPlayerType.getId('temp_run'))) {
+            if (this.getVar(VarPlayerType.TEMP_RUN)) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
 
         if (!super.processMovement()) {
             // todo: this is running every idle tick
-            this.setVar(VarPlayerType.getId('temp_run'), 0);
+            this.setVar(VarPlayerType.TEMP_RUN, 0);
         }
 
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
@@ -479,8 +479,8 @@ export default class Player extends PathingEntity {
 
                 this.runenergy = Math.max(this.runenergy - loss, 0);
                 if (this.runenergy === 0) {
-                    this.setVar(VarPlayerType.getId('player_run'), 0);
-                    this.setVar(VarPlayerType.getId('temp_run'), 0);
+                    this.setVar(VarPlayerType.PLAYER_RUN, 0);
+                    this.setVar(VarPlayerType.TEMP_RUN, 0);
                 }
             }
         }
@@ -499,7 +499,7 @@ export default class Player extends PathingEntity {
     }
 
     defaultMoveSpeed(): MoveSpeed {
-        return this.getVar(VarPlayerType.getId('player_run')) ? MoveSpeed.RUN : MoveSpeed.WALK;
+        return this.getVar(VarPlayerType.PLAYER_RUN) ? MoveSpeed.RUN : MoveSpeed.WALK;
     }
 
     // ----
@@ -1993,18 +1993,20 @@ export default class Player extends PathingEntity {
 
         if (this.combatLevel != this.getCombatLevel()) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.getId('worn'));
+            this.generateAppearance(InvType.WORN);
         }
     }
 
     setLevel(stat: number, level: number) {
+        level = Math.min(99, Math.max(1, level));
+
         this.baseLevels[stat] = level;
         this.levels[stat] = level;
         this.stats[stat] = getExpByLevel(level);
 
         if (this.getCombatLevel() != this.combatLevel) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.getId('worn'));
+            this.generateAppearance(InvType.WORN);
         }
     }
 
