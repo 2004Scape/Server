@@ -3,7 +3,7 @@
 if(%grail_progress > ^grail_not_started) {
     def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
     if($entering = true) {
-        if(npc_finduid(~npc_within_distance(coord, merlin_workshop, 6)) = true) {
+        if(npc_find(coord, merlin_workshop, 6, 0) = true) {
             npc_del;
         }
         npc_add(1_43_54_15_44, merlin_workshop, 500);
@@ -20,7 +20,7 @@ mes("The door won't open.");
 [oploc2,loc_23]
 if(%grail_progress = ^grail_finding_percival) {
     ~mesbox("You hear muffled noises from the sack.|You open the sack.");
-    if(npc_finduid(~npc_within_distance(coord, sir_percival, 4)) = false) {
+    if(npc_find(coord, sir_percival, 4, 0) = false) {
         npc_add(movecoord(loc_coord, -1, 0, -1), sir_percival, 500);
     }
     @percival_found;
@@ -51,7 +51,7 @@ if(inzone(0_42_50_52_34, 0_42_50_55_37, coord) = true) { // Karamja -> fisher's 
 
 [opheld1,grail_bell]
 ~mesbox("Ting-a-ling-a-ling!");
-if(npc_finduid(~npc_within_distance(coord, grail_maiden, 4)) = true & inzone(0_43_73_0_0, 0_43_73_63_63, coord) = true) {
+if(npc_find(coord, grail_maiden, 4, 0) = true & inzone(0_43_73_0_0, 0_43_73_63_63, coord) = true) {
     ~chatnpc(confused, "Welcome to the Grail castle.|You should come inside,|it's cold out here.");
     def_coord $dest = 0_43_73_9_20; 
     // osrs does p_teleport with controlling walkspeed, can't do 1 tile each here since the next mesbox would be stalled by p_delay

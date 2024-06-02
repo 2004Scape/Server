@@ -36,7 +36,7 @@ if (last_useitem ! bronze_key | coordz(coord) <= coordz(loc_coord)) {
     ~displaymessage(^dm_default);
     return;
 }
-if(%prince_progress <= ^prince_guard_drunk | npc_finduid(~npc_within_distance(coord, lady_keli, 10)) = true) {
+if(%prince_progress <= ^prince_guard_drunk | npc_find(coord, lady_keli, 10, 0) = true) {
     mes("You'd better get rid of Lady Keli before trying to go through there.");
     return;
 }

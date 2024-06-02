@@ -194,6 +194,8 @@ enum ScriptOpcode {
     NPC_DEL, // official
     NPC_DELAY, // official
     NPC_FACESQUARE, // official
+    NPC_FIND, // official
+    NPC_FINDALLANY, // official
     NPC_FINDEXACT, // official
     NPC_FINDHERO, // official
     NPC_FINDALLZONE,
@@ -206,6 +208,8 @@ enum ScriptOpcode {
     NPC_QUEUE, // official
     NPC_RANGE, // official
     NPC_SAY, // official
+    NPC_HUNTALL, // official
+    NPC_HUNTNEXT,
     NPC_SETHUNT, // official
     NPC_SETHUNTMODE, // official
     NPC_SETMODE, // official

@@ -47,7 +47,7 @@ p_telejump(movecoord(coord, 0, 0, -3));
 
 [oploc1,shantay_jail_door]
 def_boolean $is_inside = ~check_axis_locactive(coord);
-if (%shantay_jail_progress = ^put_in_shantay_jail & npc_finduid(~npc_within_distance(coord, shantay, 12)) = true) {
+if (%shantay_jail_progress = ^put_in_shantay_jail & npc_find(coord, shantay, 12, 0) = true) {
     if ($is_inside = false) {
         %shantay_jail_progress = ^paid_shantay_jail_fine;
         ~chatnpc(neutral, "You should be in jail! Well, no doubt the authorities in|Port Sarim know what they're doing. But if you get|into any more trouble, you'll be stuck back in jail.");
@@ -67,7 +67,7 @@ if (coordz(coord) <= coordz(loc_coord)) {
     p_telejump(movecoord(coord, 0, 0, 3));
     return;
 }
-if (npc_finduid(~npc_within_distance(coord, shantay_pass_guard, 5)) = false) {
+if (npc_find(coord, shantay_pass_guard, 5, 0) = false) {
     return;
 }
 if (inv_total(inv, shantay_pass) < 1) {

@@ -35,8 +35,10 @@ import {
     NumberNotNull,
     SpotAnimTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
+import Npc from '#lostcity/entity/Npc.js';
 
 const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
+const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: state => {
@@ -97,6 +99,34 @@ const ServerOps: CommandHandlers = {
 
         state.activePlayer = result.value;
         state.pointerAdd(ActivePlayer[state.intOperand]);
+        state.pushInt(1);
+    },
+
+    [ScriptOpcode.NPC_HUNTALL]: state => {
+        const [coord, distance, checkVis] = state.popInts(3);
+
+        check(coord, CoordValid);
+        check(distance, NumberNotNull);
+        check(checkVis, HuntVisValid);
+
+        const {level, x, z} = Position.unpackCoord(coord);
+
+        state.huntIterator = new HuntIterator(World.currentTick, level, x, z, distance, checkVis, HuntModeType.NPC);
+    },
+
+    [ScriptOpcode.NPC_HUNTNEXT]: state => {
+        const result = state.huntIterator?.next();
+        if (!result || result.done) {
+            state.pushInt(0);
+            return;
+        }
+
+        if (!(result.value instanceof Npc)) {
+            throw new Error('[ServerOps] npc_huntnext command must result instance of Npc.');
+        }
+
+        state.activeNpc = result.value;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
         state.pushInt(1);
     },
 

@@ -16,6 +16,7 @@ import {NpcIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import { Position } from '#lostcity/entity/Position.js';
+import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Npc from '#lostcity/entity/Npc.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Entity from '#lostcity/entity/Entity.js';
@@ -29,6 +30,7 @@ import {
     DurationValid,
     HitTypeValid,
     HuntTypeValid,
+    HuntVisValid,
     NpcModeValid,
     NpcStatValid,
     NpcTypeValid,
@@ -130,7 +132,7 @@ const NpcOps: CommandHandlers = {
         check(id, NpcTypeValid);
 
         const {level, x, z} = Position.unpackCoord(coord);
-        state.npcIterator = new NpcIterator(World.currentTick, level, x, z);
+        state.npcIterator = new NpcIterator(World.currentTick, level, x, z, 0, 0, NpcIteratorType.ZONE);
 
         for (const npc of state.npcIterator) {
             if(npc && npc.type === id && npc.x === x && npc.level === level && npc.z === z) {
@@ -320,12 +322,61 @@ const NpcOps: CommandHandlers = {
         state.activeNpc.spotanim(spotanim, height, delay);
     }),
 
+    [ScriptOpcode.NPC_FIND]: state => {
+        const [coord, npcType, distance, checkVis] = state.popInts(4);
+
+        check(coord, CoordValid);
+        check(npcType, NpcTypeValid);
+        check(distance, NumberNotNull);
+        check(checkVis, HuntVisValid);
+
+        const {level, x, z} = Position.unpackCoord(coord);
+        let closestNpc;
+        let closestDistance = distance;
+
+        const npcs = new NpcIterator(World.currentTick, level, x, z, distance, checkVis, NpcIteratorType.DISTANCE);
+        for (const npc of npcs) {
+            if(npc && npc.type === npcType) {
+                const npcDistance = Position.distanceToSW({x, z}, npc);
+                if (npcDistance <= closestDistance) {
+                    closestNpc = npc;
+                    closestDistance = npcDistance;
+                }
+            }
+        }
+        if (!closestNpc) {
+            state.pushInt(0);
+            return;
+        }
+        // not necessary but if we want to refer to the original npc again, we can
+        state.activeNpc = closestNpc;
+        state.pointerAdd(ActiveNpc[state.intOperand]);
+        state.pushInt(1);
+    },
+
+    [ScriptOpcode.NPC_FINDALLANY]: state => {
+        const [coord, distance, checkVis] = state.popInts(3);
+
+        check(coord, CoordValid);
+        check(distance, NumberNotNull);
+        check(checkVis, HuntVisValid);
+
+        const {level, x, z} = Position.unpackCoord(coord);
+
+        state.npcIterator = new NpcIterator(World.currentTick, level, x, z, distance, checkVis, NpcIteratorType.DISTANCE);
+        // not necessary but if we want to refer to the original npc again, we can
+        if (state._activeNpc) {
+            state._activeNpc2 = state._activeNpc;
+            state.pointerAdd(ScriptPointer.ActiveNpc2);
+        }
+    },
+
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
         const coord: number = check(state.popInt(), CoordValid);
 
         const {level, x, z} = Position.unpackCoord(coord);
 
-        state.npcIterator = new NpcIterator(World.currentTick, level, x, z);
+        state.npcIterator = new NpcIterator(World.currentTick, level, x, z, 0, 0, NpcIteratorType.ZONE);
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
             state._activeNpc2 = state._activeNpc;

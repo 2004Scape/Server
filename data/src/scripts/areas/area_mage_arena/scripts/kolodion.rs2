@@ -139,7 +139,12 @@ p_delay(3);
 p_teleport(^mage_arena_start_coord);
 anim(null, 0);
 def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena_progress);
-~npc_del_within_distance2(^mage_arena_start_coord, $boss, 20); // remove the boss if its the same stage, and not in combat
+npc_huntall(^mage_arena_start_coord, 20, 0);
+while (npc_huntnext = true) {
+    if (npc_type = $boss & add(%npc_lastcombat, 8) <= map_clock) {
+        npc_del;
+    }
+}
 switch_int (%magearena_progress) {
     case ^mage_arena_started:
         // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)

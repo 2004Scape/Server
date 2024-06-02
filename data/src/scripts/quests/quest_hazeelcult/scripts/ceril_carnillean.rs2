@@ -124,7 +124,7 @@ if(inv_total(inv, carnillean_armour) = 0 ) {
     inv_del(worn, carnillean_armour, 1);
 }
 queue(hazeelcult_fake_complete, 0);
-if (.npc_finduid(~.npc_within_distance(coord, butler_jones, 6)) = false) { // not sure what the distance would of been but it always works on OSRS
+if (.npc_find(coord, butler_jones, 6, 0) = false) { // not sure what the distance would of been but it always works on OSRS
     return;
 }
 ~chatnpc(angry, "Jones! This commoner says you had something to do with the theft of my armour. What do you have to say for yourself about that?");

@@ -190,7 +190,7 @@ if (%option2 = 1) {
 buildappearance(worn);
 inv_del(inv, coins, 500);
 
-if (npc_finduid(~npc_within_distance(coord, thessalia, 4)) = true) {
+if (npc_find(coord, thessalia, 4, 0) = true) {
     ~chatnpc(happy, "Very stylish! It really suits you!");
     ~chatplayer(happy, "Thanks!");
 }
@@ -284,7 +284,7 @@ if (%option1 = 1) {
 buildappearance(worn);
 inv_del(inv, coins, 500);
 
-if (npc_finduid(~npc_within_distance(coord, thessalia, 4)) = true) {
+if (npc_find(coord, thessalia, 4, 0) = true) {
     ~chatnpc(happy, "Totally cool! That outfit looks great!");
     ~chatplayer(happy, "Thanks!");
 }
