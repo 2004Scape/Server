@@ -32,7 +32,7 @@ switch_int(stat_base(smithing)) {
     case 32: ~objbox(steel_mace,"You can now make @dbl@Steel Maces@bla@.");
     case 33: ~doubleobjbox(iron_platebody,steel_med_helm,"You can now make @dbl@Iron Plate Bodies@bla@ and @dbl@Steel|@dbl@Medium Helms@bla@.");
     case 34: ~doubleobjbox(steel_sword,steel_dart_tip,"You can now make @dbl@Steel Short Swords@bla@ and members|can make @dbl@Steel Dart Tips@bla@.");
-    case 35: ~doubleobjbox(steel_scimitar,steel_spear,"You can now make @dbl@Steel Scimitars and members can|make @dbl@Steel Arrow Heads@bla@ and @dbl@Steel @dbl@Spears@bla@.");
+    case 35: ~doubleobjbox(steel_scimitar,steel_spear,"You can now make @dbl@Steel Scimitars and members can|make @dbl@Steel Arrow Heads@bla@ and @dbl@Steel Spears@bla@.");
     case 36: ~doubleobjbox(steel_longsword,steel_studs,"You can now make @dbl@ISteel Long Swords@bla@. Members can|make @dbl@Steel Studs@bla@.");
     case 37: ~doubleobjbox(steel_full_helm,steel_knife,"You can now make @dbl@Steel Full Helms@bla@ and members can|make @dbl@Steel Throwing Knives@bla@.");
     case 38: ~objboxt(steel_sq_shield,"You can now make @dbl@Steel Square Shields@bla@.");
