@@ -18,15 +18,8 @@ import { Position } from '#lostcity/entity/Position.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import Player from '#lostcity/entity/Player.js';
 
-import {
-    CollisionFlag,
-    hasLineOfSight,
-    hasLineOfWalk,
-    isFlagged,
-    LocAngle,
-    LocLayer,
-    locShapeLayer
-} from '@2004scape/rsmod-pathfinder';
+import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, LocLayer, LocAngle} from '@2004scape/rsmod-pathfinder';
 
 import {
     check,
@@ -154,7 +147,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(check(c1, CoordValid));
         const to = Position.unpackCoord(check(c2, CoordValid));
 
-        state.pushInt(hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
+        state.pushInt(rsmod.hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.STAT_RANDOM]: state => {
@@ -275,14 +268,14 @@ const ServerOps: CommandHandlers = {
         const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-        state.pushInt(isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
+        state.pushInt(rsmod.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.WALK_BLOCKED) ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_INDOORS]: state => {
         const coord = check(state.popInt(), CoordValid);
 
         const pos = Position.unpackCoord(coord);
-        state.pushInt(isFlagged(pos.x, pos.z, pos.level, CollisionFlag.ROOF) ? 1 : 0);
+        state.pushInt(rsmod.isFlagged(pos.x, pos.z, pos.level, CollisionFlag.ROOF) ? 1 : 0);
     },
 
     [ScriptOpcode.LINEOFSIGHT]: state => {
@@ -291,7 +284,7 @@ const ServerOps: CommandHandlers = {
         const from = Position.unpackCoord(check(c1, CoordValid));
         const to = Position.unpackCoord(check(c2, CoordValid));
 
-        state.pushInt(hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
+        state.pushInt(rsmod.hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
     },
 
     [ScriptOpcode.WORLD_DELAY]: state => {
@@ -361,7 +354,7 @@ const ServerOps: CommandHandlers = {
                 continue;
             }
 
-            const layer = locShapeLayer(loc.shape);
+            const layer = rsmod.locShapeLayer(loc.shape);
 
             if (loc.respawn !== -1 && layer === LocLayer.WALL) {
                 continue;

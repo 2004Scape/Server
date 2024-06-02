@@ -27,12 +27,14 @@ import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.j
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import {CollisionFlag, CollisionType, findNaivePath} from '@2004scape/rsmod-pathfinder';
 import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Interaction from '#lostcity/entity/Interaction.js';
+
+import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 
 export default class Npc extends PathingEntity {
     static ANIM = 0x2;
@@ -413,7 +415,7 @@ export default class Npc extends PathingEntity {
             return;
         }
         // this might have to be a smart path idk tho
-        this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.startX, this.startZ, this.width, this.length, this.width, this.length, extraFlag, collisionStrategy));
+        this.queueWaypoints(rsmod.findNaivePath(this.level, this.x, this.z, this.startX, this.startZ, this.width, this.length, this.width, this.length, extraFlag, collisionStrategy));
         this.updateMovement(false);
     }
 

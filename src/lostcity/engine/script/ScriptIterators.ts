@@ -2,7 +2,6 @@ import World from '#lostcity/engine/World.js';
 import {Position} from '#lostcity/entity/Position.js';
 import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
-import {hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import NpcType from '#lostcity/cache/NpcType.js';
@@ -10,6 +9,8 @@ import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
+
+import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 abstract class ScriptIterator<T> implements IterableIterator<T> {
     private readonly iterator: IterableIterator<T>;
@@ -83,10 +84,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (Position.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield player;
@@ -112,10 +113,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield npc;
@@ -131,10 +132,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (Position.distanceToSW({ x: this.x, z: this.z }, obj) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield obj;
@@ -149,10 +150,10 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (Position.distanceToSW({ x: this.x, z: this.z }, loc) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield loc;
@@ -222,10 +223,10 @@ export class NpcIterator extends ScriptIterator<Npc> {
                         if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield npc;
