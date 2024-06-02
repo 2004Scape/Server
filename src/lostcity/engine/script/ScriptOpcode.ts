@@ -268,6 +268,8 @@ enum ScriptOpcode {
     LC_NAME,
     LC_OP,
     LC_PARAM,
+    LC_WIDTH,
+    LC_LENGTH,
 
     // Obj config ops (4200-4299)
     OC_CATEGORY = 4200, // official

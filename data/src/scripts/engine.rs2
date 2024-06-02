@@ -307,6 +307,8 @@
 [command,lc_category](loc $loc)(category)
 [command,lc_desc](loc $loc)(string)
 [command,lc_debugname](loc $loc)(string)
+[command,lc_width](loc $loc)(int)
+[command,lc_length](loc $loc)(int)
 
 // Obj config ops (4200-4299)
 [command,oc_name](obj $obj)(string)
