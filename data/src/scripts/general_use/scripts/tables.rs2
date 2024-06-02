@@ -4,7 +4,6 @@ sound_synth(put_down, 0, 0);
 
 def_coord $obj_coord = loc_coord;
 
-// todo: lc command for length/width?
 def_int $width = lc_width(loc_type);
 def_int $length = lc_length(loc_type);
 
