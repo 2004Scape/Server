@@ -53,7 +53,7 @@ switch_int(%elena_progress) {
 ~chatnpc(neutral, "I'll see what I can do I suppose.");
 ~quest_elena_set_progress(^quest_elena_spoke_to_clerk);
 ~chatnpc(neutral, "Mr <nc_name(bravek)> there's a <text_gender("man", "lady")> here who really needs to speak to you.");
-if (.npc_finduid(~.npc_within_distance(coord, bravek, 7)) = true) { // yes its possible this doesnt pop off if hes too far
+if (.npc_find(coord, bravek, 7, 0) = true) { // yes its possible this doesnt pop off if hes too far
     ~.chatnpc(confused, "I suppose they can come in then. If they keep it short.");
 }
 

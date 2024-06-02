@@ -123,6 +123,6 @@ if (%tutorial_progress > ^mining_instructor_before_smelt_bronze_bar & inv_total(
 
 // quest guide ladder 3088 3120 0
 [proc,set_hint_icon_mining_instructor]
-if (npc_finduid(~npc_within_distance(0_48_148_7_33, mining_instructor, 10)) = true) {
+if (npc_find(0_48_148_7_33, mining_instructor, 10, 0) = true) {
     hint_npc(npc_uid);
 }

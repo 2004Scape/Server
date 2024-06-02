@@ -10,18 +10,18 @@ if (~check_axis(coord, loc_coord, loc_angle) = false) {
 switch_int(%elena_progress) {
     case ^quest_elena_spoke_to_milli: {
         ~mesbox("The door won't open.|You notice a black cross on the door.");
-        if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
+        if (npc_find(coord, npc_719, 14, 0) = true) {
             ~chatnpcrange(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
             @multi3("But I think a kidnap victim is in here.", plague_house_but_i_think_a_kidnap_victim_is_in_here, "I fear not a mere plague.", plague_house_i_fear_not_a_mere_plague, "Thanks for the warning.", plague_house_thanks_for_the_warning);
         }
     }
     case ^quest_elena_spoke_cured_bravek: {
-        if (inv_total(inv, elena_warrant) > 0 & npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
+        if (inv_total(inv, elena_warrant) > 0 & npc_find(coord, npc_719, 14, 0) = true) {
             ~chatnpcrange(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
             ~chatplayer(neutral, "I have a warrant from <nc_name(bravek)> to enter here.");
             if_close;
             ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
-        } else if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
+        } else if (npc_find(coord, npc_719, 14, 0) = true) {
             ~mesbox("The door won't open.|You notice a black cross on the door.");
             ~chatnpcrange(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
         }
@@ -29,7 +29,7 @@ switch_int(%elena_progress) {
     case ^quest_elena_freed_elena, ^elena_complete: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     case default: {
         ~mesbox("The door won't open.|You notice a black cross on the door.");
-        if (npc_finduid(~npc_within_distance(coord, npc_719, 14)) = true) {
+        if (npc_find(coord, npc_719, 14, 0) = true) {
             ~chatnpcrange(neutral, "I'd stand away from there. That black cross means that house has been touched by the plague.");
         }
     }
@@ -68,7 +68,7 @@ if (%elena_progress >= ^quest_elena_returned_book) {
     ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     return;
 }
-if (npc_finduid(~npc_within_distance(coord, ted_rehnison, 7)) = false) {
+if (npc_find(coord, ted_rehnison, 7, 0) = false) {
     return;
 }
 ~chatnpc(angry, "Go away. We don't want any.");

@@ -85,10 +85,10 @@ mes("You can hear there is a hollow behind this wall."); // from rs3
 if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side = ^hazeelcult_goodside) {
     ~mesbox("You search the cupbaord thoroughly. You find a bottle of poison and a mysterious amulet. You pass your discovery on to Ceril.");
     ~chatplayer(angry, "Ceril!");
-    if (npc_finduid(~npc_within_distance(coord, ceril_carnillean, 6)) = false) { 
+    if (npc_find(coord, ceril_carnillean, 6, 0) = false) { 
         return;
     }
-    if (.npc_finduid(~.npc_within_distance(coord, butler_jones, 6)) = false) {
+    if (.npc_find(coord, butler_jones, 6, 0) = false) {
         return;
     }
     ~chatnpc(angry, "What do you want now you scoundrel?");

@@ -25,7 +25,7 @@ if(p_finduid(%npc_attacking_uid) = false) {
 // clear player and mordred interactions
 p_stopaction;
 npc_setmode(playerfaceclose);
-if(npc_finduid(~npc_within_distance(coord, morgan_le_faye, 6)) = false) { 
+if(npc_find(coord, morgan_le_faye, 6, 0) = false) { 
     npc_add(^morgan_spawn_coord, morgan_le_faye, 50);
     spotanim_map(small_smokepuff, npc_coord, 124, 0);
 }
@@ -48,12 +48,12 @@ switch_int(~p_choice3("Tell me how to untrap Merlin and I might.", 1, "No. He de
     case 2:
         ~chatplayer(sad, "No. He deserves to die.");
         if_close;
-        if(npc_finduid(~npc_within_distance(coord, sir_mordred, 6)) = true) { 
+        if(npc_find(coord, sir_mordred, 6, 0) = true) { 
             mes("You kill Mordred.");
             npc_queue(4, 0, 0);
             p_delay(1);
         }
-        if(npc_finduid(~npc_within_distance(coord, morgan_le_faye, 6)) = true) { 
+        if(npc_find(coord, morgan_le_faye, 6, 0) = true) { 
             spotanim_map(small_smokepuff, npc_coord, 124, 0);
             npc_del;
         }

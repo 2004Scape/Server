@@ -42,6 +42,6 @@ if ($choice = 1) {
 ~chatnpc(quiz, "I don't think you're ready to go down there yet.");
 
 [proc,set_hint_icon_quest_guide]
-if (npc_finduid(~npc_within_distance(0_48_48_12_52, quest_guide, 10)) = true) {
+if (npc_find(0_48_48_12_52, quest_guide, 10, 0) = true) {
     hint_npc(npc_uid);
 }

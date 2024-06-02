@@ -94,6 +94,6 @@ inv_add(inv, airrune, 5);
 inv_add(inv, mindrune, 5);
 
 [proc,set_hint_icon_magic_instructor]
-if (npc_finduid(~npc_within_distance(0_49_48_5_17, magic_instructor, 10)) = true) {
+if (npc_find(0_49_48_5_17, magic_instructor, 10, 0) = true) {
     hint_npc(npc_uid);
 }

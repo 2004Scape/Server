@@ -146,7 +146,7 @@ sound_synth(teleport_all, 0, 0);
 p_delay(2);
 p_teleport(~coord_lineofwalk_radius(^mage_arena_finish_coord, 2));
 anim(null, 0);
-if (npc_finduid(~npc_within_distance(coord, kolodion, 5)) = true) {
+if (npc_find(coord, kolodion, 5, 0) = true) {
     ~chatnpc(happy, "Well done, young adventurer; you truly are a worthy|battle mage.");
     @kolodion_what_now;
     return;

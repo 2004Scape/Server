@@ -128,13 +128,13 @@ switch_int(~p_choice2("Yes please.", 1, "No thanks Elkoy.", 2)) {
 
 [label,elkoy_leavemaze_initial]
 p_telejump(movecoord(^elkoy_entrance_coord, 0, 0, -1));
-if(npc_finduid(~npc_within_distance(coord, elkoy_outmaze, 4)) = true) {
+if(npc_find(coord, elkoy_outmaze, 4, 0) = true) {
     ~chatnpc(happy, "We're out of the maze now. Please hurry, we must have the orb if we are to survive.");
 }
 
 [label,elkoy_leavemaze_second]
 p_telejump(movecoord(^elkoy_entrance_coord, 0, 0, -1));
-if(npc_finduid(~npc_within_distance(coord, elkoy_outmaze, 4)) = true) {
+if(npc_find(coord, elkoy_outmaze, 4, 0) = true) {
     ~chatnpc(happy, "Good luck friend.");
 }
 

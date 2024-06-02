@@ -74,6 +74,6 @@ if (%tutorial_progress = ^brother_brace_after_friends_tab) {
 ~chatnpc(neutral, "Ok then, <displayname>.");
 
 [proc,set_hint_icon_brother_brace]
-if (npc_finduid(~npc_within_distance(0_48_48_53_34, brother_brace, 10)) = true) {
+if (npc_find(0_48_48_53_34, brother_brace, 10, 0) = true) {
     hint_npc(npc_uid);
 }

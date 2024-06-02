@@ -104,7 +104,7 @@ switch_int(%tree_progress) {
         ~gnome_chant("En tania.");
         ~gnome_chant("Su tana.");
         ~gnome_chant("En tania.");
-        if(npc_finduid(~npc_within_distance(coord, king_bolren, 4)) = false) { 
+        if(npc_find(coord, king_bolren, 4, 0) = false) { 
             return; // should never happen, just switching active npc
         }
         npc_anim(midget_seq_199, 20);

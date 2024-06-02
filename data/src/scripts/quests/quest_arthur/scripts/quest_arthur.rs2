@@ -79,7 +79,7 @@ p_teleport(%arhein_crate_coord);
 
 
 [oploc1,loc_69]
-if (npc_finduid(~npc_within_distance(coord, arhein, 12)) = true) {
+if (npc_find(coord, arhein, 12, 0) = true) {
     ~chatnpc(angry, "Hey buddy! Get away from my ship alright?");
     ~chatplayer(sad, "Yeah... uh... sorry...");
 }
@@ -209,11 +209,11 @@ sound_synth(put_down, 0, 0);
 [oploc1,loc_59]
 if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
     if(testbit(%excalibur_components_progress, ^excalibur_spoken_beggar) = true) {
-        if(npc_finduid(~npc_within_distance(coord, beggar, 1)) = false) {
+        if(npc_find(coord, beggar, 1, 0) = false) {
             npc_add(movecoord(loc_coord, 0, 0, 1), beggar, 100);
         }
     } else if(testbit(%excalibur_components_progress, ^excalibur_started) = true) {
-        if(npc_finduid(~npc_within_distance(coord, beggar, 1)) = false) {
+        if(npc_find(coord, beggar, 1, 0) = false) {
             npc_add(movecoord(loc_coord, 0, 0, 1), beggar, 100);
         }
         @beggar_dialogue;
@@ -227,7 +227,7 @@ anim(human_reachforladdertop, 0);
 p_delay(0);
 p_telejump(movecoord(loc_coord, 0, 1, 1));
 if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbit(%excalibur_components_progress, ^excalibur_started) = true & map_members = true) {
-    if(npc_finduid(~npc_within_distance(coord, lady_of_the_lake, 4)) = false) {
+    if(npc_find(coord, lady_of_the_lake, 4, 0) = false) {
         npc_add(movecoord(coord, -1, 0, 3), lady_of_the_lake, 100);
     }
     ~chatplayer(neutral, "Hello. I am here for Excalibur. Can I have it yet?");

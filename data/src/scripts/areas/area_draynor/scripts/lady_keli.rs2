@@ -2,7 +2,7 @@
 if(%prince_progress >= ^prince_tied_keli) {
     npc_say("You tricked me, and tied me up, Guards kill this stranger!!");
     p_delay(1);
-    if (npc_finduid(~npc_within_distance(coord, jail_guard, 7)) = true) {
+    if (npc_find(coord, jail_guard, 7, 0) = true) {
         npc_say("Yes M'lady");
         ~npc_retaliate(0);
     }

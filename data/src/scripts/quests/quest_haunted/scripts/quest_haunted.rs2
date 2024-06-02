@@ -210,7 +210,7 @@ mes("This door is locked.");
 sound_synth(locked, 0, 0);
 
 [proc,change_ernest]
-if(npc_finduid(~npc_within_distance(coord, ernest_chicken, 8)) = true) {
+if(npc_find(coord, ernest_chicken, 8, 0) = true) {
     npc_changetype(ernest_human);
     npc_settimer(100);
 }
