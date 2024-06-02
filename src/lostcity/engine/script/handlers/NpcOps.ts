@@ -348,7 +348,6 @@ const NpcOps: CommandHandlers = {
             state.pushInt(0);
             return;
         }
-        console.log(NpcType.get(closestNpc.type));
         // not necessary but if we want to refer to the original npc again, we can
         state.activeNpc = closestNpc;
         state.pointerAdd(ActiveNpc[state.intOperand]);
