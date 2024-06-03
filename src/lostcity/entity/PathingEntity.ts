@@ -306,8 +306,11 @@ export default abstract class PathingEntity extends Entity {
         return this.waypointIndex !== -1;
     }
 
-    isLastWaypoint(): boolean {
-        return this.waypointIndex === 0;
+    /*
+     * Returns if this PathingEntity is at the last waypoint or is out of waypoints.
+     */
+    isLastOrNoWaypoint(): boolean {
+        return this.waypointIndex <= 0;
     }
 
     protected inOperableDistance(target: Entity): boolean {

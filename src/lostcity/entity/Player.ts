@@ -433,7 +433,7 @@ export default class Player extends PathingEntity {
 
         if (
             repathAllowed &&
-            this.target instanceof PathingEntity && this.isLastWaypoint() && (this.targetX !== this.target.x || this.targetZ !== this.target.z) &&
+            this.target instanceof PathingEntity && this.isLastOrNoWaypoint() && (this.targetX !== this.target.x || this.targetZ !== this.target.z) &&
             !this.interacted && this.walktrigger === -1
         ) {
             this.pathToTarget();
