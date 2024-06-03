@@ -22,18 +22,15 @@ It won't ever profit off your trademarks. Without this project, this version of 
 1. Download this repo to your computer
 2. Install our list of [dependencies](#environment-dependencies)
 3. Open the folder you downloaded in a command prompt
-4. Run `npm install`
-5. Run `npm start`
+4. Run `npm start`
 
 Now open [http://localhost](http://localhost) in your browser and play!
+
+Windows users: We have a script called `quickstart.bat` that will launch the server for you, combining steps 3 and 4 above.
 
 Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
 
 If you run into issues please see our [common issues](#common-issues) or hop in Discord.
-
-### Using the setup script
-
-You can instead run `setup.sh` to get your repository ready for running the server.
 
 ### Using the DevContainer
 
@@ -56,7 +53,7 @@ Once the container starts, it automatically starts running `setup.sh`. You can c
 - [Java 17+](https://adoptium.net/)
 - If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
-Java is required for our RuneScript compiler, it will be downloded for you the first time you run `npm start`.
+Java is required for our RuneScript compiler, it will be downloaded for you when you run `npm start`.
 
 ## Development Workflow
 
@@ -87,7 +84,14 @@ Configuration for the linter can be found in `.eslintrc.cjs`.
 
 ## Common Issues
 
-* `bad option: --import`: You are using node an older version of node. We are targeting 20.6+
+* `bad option: --import`  
+You are using an older version of Node (maybe 18). We are targeting 20.6+
+
+* `'"java"' is not recognized as an internal or external command`  
+You do not have Java 17 installed.
+
+* `has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 52.0`  
+You are likely using Java 8 or Java 11. You can either reinstall Java 17 or become an advanced user, and set `JAVA_PATH=path-to-java.exe` in your .env file.
 
 ## Credits
 
