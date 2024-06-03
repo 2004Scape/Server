@@ -4,17 +4,17 @@ import { CameraProt } from '#lostcity/server/ServerProt.js';
 export default class CameraInfo extends Linkable {
 
     readonly type: CameraProt;
-    readonly localX : number;
-    readonly localZ : number;
+    readonly camX : number;
+    readonly camZ : number;
     readonly height : number;
     readonly rotationSpeed : number;
     readonly rotationMultiplier : number;
 
-    constructor(type: CameraProt, localX : number, localZ : number, height : number, rotationSpeed : number, rotationMultiplier : number) {
+    constructor(type: CameraProt, camX : number, camZ : number, height : number, rotationSpeed : number, rotationMultiplier : number) {
         super();
         this.type = type;
-        this.localX = localX;
-        this.localZ = localZ;
+        this.camX = camX;
+        this.camZ = camZ;
         this.height = height;
         this.rotationSpeed = rotationSpeed;
         this.rotationMultiplier = rotationMultiplier;
