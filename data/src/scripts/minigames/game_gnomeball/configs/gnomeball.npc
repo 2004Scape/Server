@@ -1,0 +1,259 @@
+[npc_621]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Tackle
+recol1s=9513
+recol1d=25699
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+wanderrange=4
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_622]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Tackle
+recol1s=9513
+recol1d=25699
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2921_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_623]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_seq_205
+readyanim=midget_seq_205
+recol1s=9513
+recol1d=25699
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_624]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_seq_208
+readyanim=midget_seq_208
+recol1s=9513
+recol1d=25699
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_625]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Tackle
+recol1s=9513
+recol1d=28001
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_626]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Tackle
+recol1s=9513
+recol1d=28001
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2921_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_627]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_seq_205
+readyanim=midget_seq_205
+recol1s=9513
+recol1d=28001
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_628]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_seq_208
+readyanim=midget_seq_208
+recol1s=9513
+recol1d=28001
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_629]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Tackle
+recol1s=9513
+recol1d=26305
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+wanderrange=3
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_630]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Tackle
+recol1s=9513
+recol1d=26305
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2921_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_631]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_seq_205
+readyanim=midget_seq_205
+recol1s=9513
+recol1d=26305
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_632]
+name=Gnome baller
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_seq_208
+readyanim=midget_seq_208
+recol1s=9513
+recol1d=26305
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_633]
+name=Gnome winger
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=9513
+recol1d=704
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2924_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_634]
+name=Gnome winger
+desc=A professional gnome baller.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=9513
+recol1d=704
+model1=model_2914_npc
+model2=model_2905_npc
+model3=model_2921_npc
+head1=model_21_npc_head
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_635]
+name=Gnome ball referee
+desc=Keeps the game fair.
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=416
+recol1d=2114
+recol2s=24075
+recol2d=13537
+recol3s=21961
+recol3d=13537
+recol4s=20904
+recol4d=13537
+model1=model_2909_npc
+model2=model_2900_npc
+model3=model_2915_npc
+head1=model_23_npc_head
+wanderrange=1
+param=death_anim,midget_death
+param=death_sound,gnome_death
+
+[npc_636]
+name=Cheerleader
+desc=Cheerleading is a real sport!
+vislevel=hide
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+model1=model_2913_npc
+model2=model_2904_npc
+model3=model_2923_npc
+head1=model_21_npc_head
+wanderrange=0
+moverestrict=nomove
+param=death_anim,midget_death
+param=death_sound,gnome_death
