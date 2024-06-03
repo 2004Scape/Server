@@ -350,6 +350,9 @@ export default abstract class PathingEntity extends Entity {
             return;
         }
 
+        this.targetX = this.target.x;
+        this.targetZ = this.target.z;
+
         if (this.smart) {
             if (this.target instanceof PathingEntity) {
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
