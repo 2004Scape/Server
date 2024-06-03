@@ -205,6 +205,9 @@
 [command,afk_event]()(int)
 [command,lowmemory]()(boolean)
 [command,setidkit](idkit $kit, int $color)
+[command,lastcoord]()(coord)
+[command,.lastcoord]()(coord)
+[command,p_walk2](coord $dest)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

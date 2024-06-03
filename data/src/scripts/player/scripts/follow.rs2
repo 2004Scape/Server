@@ -1,0 +1,13 @@
+[applayer3,_]
+p_stopaction;
+if (distance(coord, .lastcoord) >= 8) {
+    return;
+}
+p_opplayer(3);
+def_int $distance = 1;
+if (%player_run = ^player_run_on | %temp_run = ^player_run_on) {
+    $distance = 2;
+}
+if (.%move_clock ! map_clock | distance(coord, .lastcoord) > $distance) {
+    p_walk2(.lastcoord);
+}

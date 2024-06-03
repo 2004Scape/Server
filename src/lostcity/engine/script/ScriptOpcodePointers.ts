@@ -449,6 +449,10 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.WEAKQUEUE]: {
         require: ['active_player']
     },
+    [ScriptOpcode.LASTCOORD]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
 
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {

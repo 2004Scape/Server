@@ -40,6 +40,9 @@ export default abstract class PathingEntity extends Entity {
     waypoints: Int32Array = new Int32Array(25);
     lastX: number = -1;
     lastZ: number = -1;
+    previousX: number = -1;
+    previousZ: number = -1;
+    previousLevel: number = -1;
     jump: boolean = false;
 
     walktrigger: number = -1;
@@ -191,6 +194,8 @@ export default abstract class PathingEntity extends Entity {
             }
             return -1;
         }
+        this.previousX = this.x;
+        this.previousZ = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
         return dir;
@@ -238,6 +243,7 @@ export default abstract class PathingEntity extends Entity {
         const previousZ = this.z;
         const previousLevel = this.level;
 
+        this.previousLevel = this.level;
         this.x = x;
         this.z = z;
         this.level = level;
@@ -422,7 +428,7 @@ export default abstract class PathingEntity extends Entity {
         this.alreadyFacedEntity = true;
     }
 
-    protected getCollisionStrategy(): CollisionType | null {
+    getCollisionStrategy(): CollisionType | null {
         if (this.moveRestrict === MoveRestrict.NORMAL) {
             return CollisionType.NORMAL;
         } else if (this.moveRestrict === MoveRestrict.BLOCKED) {

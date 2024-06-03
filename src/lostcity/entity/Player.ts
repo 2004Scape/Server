@@ -374,6 +374,9 @@ export default class Player extends PathingEntity {
             const script = ScriptRunner.init(moveTrigger, this);
             this.runScript(script, true);
         }
+        this.previousLevel = this.level;
+        this.previousX = this.x - 1;
+        this.previousZ = this.z;
     }
 
     calculateRunWeight() {
@@ -2129,6 +2132,8 @@ export default class Player extends PathingEntity {
         this.mask |= Player.EXACT_MOVE;
 
         // todo: interpolate over time? instant teleport? verify with true tile on osrs
+        this.previousX = this.x;
+        this.previousZ = this.z;
         this.x = endX;
         this.z = endZ;
     }

@@ -987,6 +987,19 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.closeModal();
         state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
     }),
+
+    [ScriptOpcode.LASTCOORD]: checkedHandler(ActivePlayer, state => {
+        const player = state.activePlayer;
+        state.pushInt(Position.packCoord(player.previousLevel, player.previousX, player.previousZ));
+    }),
+
+    [ScriptOpcode.P_WALK2]: checkedHandler(ProtectedActivePlayer, state => {
+        const {x, z} = Position.unpackCoord(check(state.popInt(), CoordValid));
+
+        const player = state.activePlayer;
+        player.queueWaypoint(x, z);
+        player.updateMovement(false); // try to walk immediately
+    }),
 };
 
 /**
