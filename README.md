@@ -1,10 +1,15 @@
-# 2004scape Server
+<div align="center">
 
-[Website](https://2004scape.org) | [Discord](https://discord.gg/hN3tHUmZEN) | [Rune-Server](https://www.rune-server.ee/runescape-development/rs2-server/projects/701698-lost-city-225-emulation.html)
+<h1>2004Scape Server</h1>
+
+[Website](https://2004scape.org) | [Discord](https://discord.2004scape.org) | [Rune-Server](https://www.rune-server.ee/runescape-development/rs2-server/projects/701698-lost-city-225-emulation.html)
+
+**status: alpha, in-development**  
+Contributors are welcome to help out!
 
 **disclaimer: All server code has been written from scratch for this project, Jagex has never had any source code leaks.**
 
-**status: in-development, not ready for players**. Contributors are welcome to help out.
+</div>
 
 ---
 
@@ -26,11 +31,14 @@ It won't ever profit off your trademarks. Without this project, this version of 
 
 Now open [http://localhost](http://localhost) in your browser and play!
 
-Windows users: We have a script called `quickstart.bat` that will launch the server for you, combining steps 3 and 4 above.
+> [!NOTE]
+> Windows users: We have a script called `quickstart.bat` that will launch the server for you, combining steps 3 and 4 above.
 
-Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
+> [!NOTE]
+> Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
 
-If you run into issues please see our [common issues](#common-issues) or hop in Discord.
+> [!NOTE]
+> If you run into issues please see our [common issues](#common-issues) or hop in Discord.
 
 ### Using the DevContainer
 
@@ -52,8 +60,6 @@ Once the container starts, it automatically starts running `setup.sh`. You can c
 - [NodeJS 20.6+](https://nodejs.org/) (22 is fine as well)
 - [Java 17+](https://adoptium.net/)
 - If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
-
-Java is required for our RuneScript compiler, it will be downloaded for you when you run `npm start`.
 
 ## Development Workflow
 
