@@ -52,6 +52,8 @@ export default abstract class PathingEntity extends Entity {
     target: Entity | null = null;
     targetOp: TargetOp = -1;
     targetSubject: TargetSubject = {type: -1, com: -1};
+    targetX: number = -1;
+    targetZ: number = -1;
     apRange: number = 10;
     apRangeCalled: boolean = false;
     alreadyFacedCoord: boolean = false;
@@ -382,6 +384,8 @@ export default abstract class PathingEntity extends Entity {
         this.target = target;
         this.targetOp = op;
         this.targetSubject = subject ?? {type: -1, com: -1};
+        this.targetX = target.x;
+        this.targetZ = target.z;
         this.apRange = 10;
         this.apRangeCalled = false;
 
@@ -416,6 +420,8 @@ export default abstract class PathingEntity extends Entity {
         this.target = null;
         this.targetOp = -1;
         this.targetSubject = {type: -1, com: -1};
+        this.targetX = -1;
+        this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
         this.alreadyFacedCoord = true;
