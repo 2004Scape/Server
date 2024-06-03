@@ -929,8 +929,8 @@ export default class Player extends PathingEntity {
             this.loadedZones = {};
         }
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
-            const localX = info.localX - Position.zoneOrigin(this.loadedX);
-            const localZ = info.localZ - Position.zoneOrigin(this.loadedZ);
+            const localX = info.camX - Position.zoneOrigin(this.loadedX);
+            const localZ = info.camZ - Position.zoneOrigin(this.loadedZ);
             this.writeLowPriority(info.type, localX, localZ, info.height, info.rotationSpeed, info.rotationMultiplier);
             info.unlink();
         }
