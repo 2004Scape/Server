@@ -1,7 +1,7 @@
-import HuntType from '#lostcity/cache/HuntType.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import NpcType from '#lostcity/cache/NpcType.js';
 import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import SpotanimType from '#lostcity/cache/SpotanimType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -21,6 +21,7 @@ import Npc from '#lostcity/entity/Npc.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Interaction from '#lostcity/entity/Interaction.js';
+import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -60,15 +61,11 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_ADD]: state => {
         const [coord, id, duration] = state.popInts(3);
 
-        check(coord, CoordValid);
-        check(id, NpcTypeValid);
+        const position: Position = check(coord, CoordValid);
+        const npcType: NpcType = check(id, NpcTypeValid);
         check(duration, DurationValid);
 
-        const pos = Position.unpackCoord(coord);
-        const npcType = NpcType.get(id);
-
-        const npc = new Npc(pos.level, pos.x, pos.z, npcType.size, npcType.size, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-
+        const npc = new Npc(position.level, position.x, position.z, npcType.size, npcType.size, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
         npc.static = false;
         npc.despawn = World.currentTick + duration;
         World.addNpc(npc);
@@ -77,7 +74,7 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_ANIM]: checkedHandler(ActiveNpc, state => {
-        const delay = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
         const seq = state.popInt();
 
         state.activeNpc.playAnimation(seq, delay);
@@ -90,13 +87,12 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_CATEGORY]: checkedHandler(ActiveNpc, state => {
-        const npc = NpcType.get(state.activeNpc.type);
-        state.pushInt(npc.category);
+        state.pushInt(check(state.activeNpc.type, NpcTypeValid).category);
     }),
 
     [ScriptOpcode.NPC_COORD]: checkedHandler(ActiveNpc, state => {
-        const npc = state.activeNpc;
-        state.pushInt(Position.packCoord(npc.level, npc.x, npc.z));
+        const position: Position = state.activeNpc;
+        state.pushInt(Position.packCoord(position.level, position.x, position.z));
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, state => {
@@ -117,23 +113,21 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const position: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
-        state.activeNpc.faceSquare(pos.x, pos.z);
+        state.activeNpc.faceSquare(position.x, position.z);
     }),
 
     [ScriptOpcode.NPC_FINDEXACT]: state => {
         const [coord, id] = state.popInts(2);
 
-        check(coord, CoordValid);
-        check(id, NpcTypeValid);
+        const position: Position = check(coord, CoordValid);
+        const npcType: NpcType = check(id, NpcTypeValid);
 
-        const {level, x, z} = Position.unpackCoord(coord);
-        state.npcIterator = new NpcIterator(World.currentTick, level, x, z, 0, 0, NpcIteratorType.ZONE);
+        state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, 0, 0, NpcIteratorType.ZONE);
 
         for (const npc of state.npcIterator) {
-            if(npc && npc.type === id && npc.x === x && npc.level === level && npc.z === z) {
+            if (npc.type === npcType.id && npc.x === position.x && npc.level === position.level && npc.z === position.z) {
                 state.activeNpc = npc;
                 state.pointerAdd(ActiveNpc[state.intOperand]);
                 state.pushInt(1);
@@ -163,46 +157,39 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_PARAM]: checkedHandler(ActiveNpc, state => {
-        const paramId = state.popInt();
+        const paramType: ParamType = check(state.popInt(), ParamTypeValid);
 
-        check(paramId, ParamTypeValid);
-
-        const param = ParamType.get(paramId);
-        const npc = NpcType.get(state.activeNpc.type);
-        if (param.isString()) {
-            state.pushString(ParamHelper.getStringParam(paramId, npc, param.defaultString));
+        const npcType: NpcType = check(state.activeNpc.type, NpcTypeValid);
+        if (paramType.isString()) {
+            state.pushString(ParamHelper.getStringParam(paramType.id, npcType, paramType.defaultString));
         } else {
-            state.pushInt(ParamHelper.getIntParam(paramId, npc, param.defaultInt));
+            state.pushInt(ParamHelper.getIntParam(paramType.id, npcType, paramType.defaultInt));
         }
     }),
 
     [ScriptOpcode.NPC_QUEUE]: checkedHandler(ActiveNpc, state => {
-        const delay = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
         const arg = state.popInt();
-        const queueId = state.popInt() - 1;
+        const queueId = check(state.popInt(), QueueValid);
 
-        check(queueId, QueueValid);
-
-        const type = NpcType.get(state.activeNpc.type);
-        const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId, type.id, type.category);
+        const npcType: NpcType = check(state.activeNpc.type, NpcTypeValid);
+        const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId - 1, npcType.id, npcType.category);
         if (script) {
             state.activeNpc.enqueueScript(script, delay, [arg]);
         }
     }),
 
     [ScriptOpcode.NPC_RANGE]: checkedHandler(ActiveNpc, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const position: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
         const npc = state.activeNpc;
-
-        if (pos.level !== npc.level) {
+        if (position.level !== npc.level) {
             state.pushInt(-1);
         } else {
             state.pushInt(
                 Position.distanceTo(npc, {
-                    x: pos.x,
-                    z: pos.z,
+                    x: position.x,
+                    z: position.z,
                     width: 1,
                     length: 1
                 })
@@ -219,10 +206,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, state => {
-        const mode = check(state.popInt(), HuntTypeValid);
-
-        const huntType = HuntType.get(mode);
-        state.activeNpc.huntMode = huntType.id;
+        state.activeNpc.huntMode = check(state.popInt(), HuntTypeValid).id;
     }),
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, state => {
@@ -284,7 +268,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_TYPE]: checkedHandler(ActiveNpc, state => {
-        state.pushInt(state.activeNpc.type);
+        state.pushInt(check(state.activeNpc.type, NpcTypeValid).id);
     }),
 
     [ScriptOpcode.NPC_DAMAGE]: checkedHandler(ActiveNpc, state => {
@@ -295,9 +279,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_NAME]: checkedHandler(ActiveNpc, state => {
-        const npcType = NpcType.get(state.activeNpc.type);
-
-        state.pushString(npcType.name ?? 'null');
+        state.pushString(check(state.activeNpc.type, NpcTypeValid).name ?? 'null');
     }),
 
     [ScriptOpcode.NPC_UID]: checkedHandler(ActiveNpc, state => {
@@ -305,37 +287,33 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETTIMER]: checkedHandler(ActiveNpc, state => {
-        const interval = check(state.popInt(), NumberNotNull);
-
-        state.activeNpc.setTimer(interval);
+        state.activeNpc.setTimer(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.SPOTANIM_NPC]: checkedHandler(ActiveNpc, state => {
-        const delay = state.popInt();
-        const height = state.popInt();
-        const spotanim = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
+        const height = check(state.popInt(), NumberNotNull);
+        const spotanimType: SpotanimType = check(state.popInt(), SpotAnimTypeValid);
 
-        check(spotanim, SpotAnimTypeValid);
-
-        state.activeNpc.spotanim(spotanim, height, delay);
+        state.activeNpc.spotanim(spotanimType.id, height, delay);
     }),
 
     [ScriptOpcode.NPC_FIND]: state => {
-        const [coord, npcType, distance, checkVis] = state.popInts(4);
+        const [coord, npc, distance, checkVis] = state.popInts(4);
 
-        check(coord, CoordValid);
-        check(npcType, NpcTypeValid);
+        const position: Position = check(coord, CoordValid);
+        const npcType: NpcType = check(npc, NpcTypeValid);
         check(distance, NumberNotNull);
-        check(checkVis, HuntVisValid);
+        const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
-        const {level, x, z} = Position.unpackCoord(coord);
         let closestNpc;
         let closestDistance = distance;
 
-        const npcs = new NpcIterator(World.currentTick, level, x, z, distance, checkVis, NpcIteratorType.DISTANCE);
+        const npcs = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
+
         for (const npc of npcs) {
-            if(npc && npc.type === npcType) {
-                const npcDistance = Position.distanceToSW({x, z}, npc);
+            if(npc && npc.type === npcType.id) {
+                const npcDistance = Position.distanceToSW(position, npc);
                 if (npcDistance <= closestDistance) {
                     closestNpc = npc;
                     closestDistance = npcDistance;
@@ -355,13 +333,11 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDALLANY]: state => {
         const [coord, distance, checkVis] = state.popInts(3);
 
-        check(coord, CoordValid);
+        const position: Position = check(coord, CoordValid);
         check(distance, NumberNotNull);
-        check(checkVis, HuntVisValid);
+        const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
-        const {level, x, z} = Position.unpackCoord(coord);
-
-        state.npcIterator = new NpcIterator(World.currentTick, level, x, z, distance, checkVis, NpcIteratorType.DISTANCE);
+        state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE);
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
             state._activeNpc2 = state._activeNpc;
@@ -370,11 +346,9 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
-        const coord: number = check(state.popInt(), CoordValid);
+        const position: Position = check(state.popInt(), CoordValid);
 
-        const {level, x, z} = Position.unpackCoord(coord);
-
-        state.npcIterator = new NpcIterator(World.currentTick, level, x, z, 0, 0, NpcIteratorType.ZONE);
+        state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, 0, 0, NpcIteratorType.ZONE);
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
             state._activeNpc2 = state._activeNpc;
@@ -396,23 +370,19 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const position: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
-        state.activeNpc.teleport(pos.x, pos.z, pos.level);
+        state.activeNpc.teleport(position.x, position.z, position.level);
     }),
 
     [ScriptOpcode.NPC_WALK]: checkedHandler(ActiveNpc, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const position: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
-        state.activeNpc.queueWaypoint(pos.x, pos.z);
+        state.activeNpc.queueWaypoint(position.x, position.z);
     }),
 
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, state => {
-        const id = check(state.popInt(), NpcTypeValid);
-
-        state.activeNpc.changeType(id);
+        state.activeNpc.changeType(check(state.popInt(), NpcTypeValid).id);
     }),
 
     [ScriptOpcode.NPC_GETMODE]: checkedHandler(ActiveNpc, state => {
@@ -420,9 +390,7 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ...ActiveNpc], state => {
-        const damage = check(state.popInt(), NumberNotNull);
-
-        state.activeNpc.addHero(state.activePlayer.uid, damage);
+        state.activeNpc.addHero(state.activePlayer.uid, check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.NPC_WALKTRIGGER]: checkedHandler(ActiveNpc, state => {
@@ -466,8 +434,7 @@ const NpcOps: CommandHandlers = {
 
     // https://twitter.com/JagexAsh/status/1614498680144527360
     [ScriptOpcode.NPC_ATTACKRANGE]: checkedHandler(ActiveNpc, state => {
-        const type: NpcType = NpcType.get(state.activeNpc.type);
-        state.pushInt(type.attackrange);
+        state.pushInt(check(state.activeNpc.type, NpcTypeValid).attackrange);
     }),
 };
 

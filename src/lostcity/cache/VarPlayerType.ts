@@ -69,7 +69,7 @@ export default class VarPlayerType extends ConfigType {
     }
 
     static get count() {
-        return VarPlayerType.configs.length;
+        return this.configs.length;
     }
 
     // ----

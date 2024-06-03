@@ -1,4 +1,6 @@
 import IdkType from '#lostcity/cache/IdkType.js';
+import SpotanimType from '#lostcity/cache/SpotanimType.js';
+
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
@@ -12,10 +14,13 @@ import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueReq
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
+import Interaction from '#lostcity/entity/Interaction.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import ColorConversion from '#lostcity/util/ColorConversion.js';
+
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 import {
@@ -27,10 +32,10 @@ import {
     NpcTypeValid,
     NumberNotNull,
     ObjTypeValid,
+    SeqTypeValid,
     SpotAnimTypeValid,
+    StringNotNull,
 } from '#lostcity/engine/script/ScriptValidators.js';
-import ColorConversion from '#lostcity/util/ColorConversion.js';
-import Interaction from '#lostcity/entity/Interaction.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
@@ -70,7 +75,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.STRONGQUEUE]: checkedHandler(ActivePlayer, state => {
         const args = popScriptArgs(state);
-        const delay = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
         const scriptId = state.popInt();
 
         const script = ScriptProvider.get(scriptId);
@@ -82,7 +87,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.WEAKQUEUE]: checkedHandler(ActivePlayer, state => {
         const args = popScriptArgs(state);
-        const delay = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
         const scriptId = state.popInt();
 
         const script = ScriptProvider.get(scriptId);
@@ -94,7 +99,7 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.QUEUE]: checkedHandler(ActivePlayer, state => {
         const args = popScriptArgs(state);
-        const delay = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
         const scriptId = state.popInt();
 
         const script = ScriptProvider.get(scriptId);
@@ -105,7 +110,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, state => {
-        const delay = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
         const seq = state.popInt();
 
         state.activePlayer.playAnimation(seq, delay);
@@ -116,17 +121,14 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.BUILDAPPEARANCE]: checkedHandler(ActivePlayer, state => {
-        const inv = check(state.popInt(), InvTypeValid);
-
-        state.activePlayer.generateAppearance(inv);
+        state.activePlayer.generateAppearance(check(state.popInt(), InvTypeValid).id);
     }),
 
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
-        check(coord, CoordValid);
+        const pos: Position = check(coord, CoordValid);
 
-        const pos = Position.unpackCoord(coord);
         const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
         const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
 
@@ -136,9 +138,8 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
-        check(coord, CoordValid);
+        const pos: Position = check(coord, CoordValid);
 
-        const pos = Position.unpackCoord(coord);
         const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
         const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
 
@@ -156,8 +157,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, state => {
-        const player = state.activePlayer;
-        state.pushInt(Position.packCoord(player.level, player.x, player.z));
+        const position: Position = state.activePlayer;
+        state.pushInt(Position.packCoord(position.level, position.x, position.z));
     }),
 
     [ScriptOpcode.DISPLAYNAME]: checkedHandler(ActivePlayer, state => {
@@ -165,9 +166,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const pos: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
         state.activePlayer.faceSquare(pos.x, pos.z);
     }),
 
@@ -300,7 +300,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = state.popInt() + 1;
+        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
         state.execution = ScriptState.SUSPENDED;
         // TODO should this wipe any pointers?
     }),
@@ -310,7 +310,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPLOC]: checkedHandler(ProtectedActivePlayer, state => {
-        const type = state.popInt() - 1;
+        const type = check(state.popInt(), NumberNotNull) - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid oploc: ${type + 1}`);
         }
@@ -326,7 +326,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPNPC]: checkedHandler(ProtectedActivePlayer, state => {
-        const type = state.popInt() - 1;
+        const type = check(state.popInt(), NumberNotNull) - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opnpc: ${type + 1}`);
         }
@@ -342,7 +342,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPNPCT]: checkedHandler(ProtectedActivePlayer, state => {
-        const spellId: number = state.popInt();
+        const spellId: number = check(state.popInt(), NumberNotNull);
         if (state.activePlayer.target !== null) {
             return;
         }
@@ -373,23 +373,20 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const position: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
-        state.activePlayer.teleJump(pos.x, pos.z, pos.level);
+        state.activePlayer.teleJump(position.x, position.z, position.level);
     }),
 
     [ScriptOpcode.P_TELEPORT]: checkedHandler(ProtectedActivePlayer, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const position: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
-        state.activePlayer.teleport(pos.x, pos.z, pos.level);
+        state.activePlayer.teleport(position.x, position.z, position.level);
     }),
 
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, state => {
-        const coord = check(state.popInt(), CoordValid);
+        const pos: Position = check(state.popInt(), CoordValid);
 
-        const pos = Position.unpackCoord(coord);
         const player = state.activePlayer;
         player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
         player.updateMovement(false); // try to walk immediately
@@ -448,11 +445,11 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.SPOTANIM_PL]: checkedHandler(ActivePlayer, state => {
-        const delay = state.popInt();
+        const delay = check(state.popInt(), NumberNotNull);
         const height = state.popInt();
-        const spotanim = check(state.popInt(), SpotAnimTypeValid);
+        const spotanimType: SpotanimType = check(state.popInt(), SpotAnimTypeValid);
 
-        state.activePlayer.spotanim(spotanim, height, delay);
+        state.activePlayer.spotanim(spotanimType.id, height, delay);
     }),
 
     [ScriptOpcode.STAT_HEAL]: checkedHandler(ActivePlayer, state => {
@@ -487,9 +484,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_OPENCHAT]: checkedHandler(ActivePlayer, state => {
-        const com = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.openChat(com);
+        state.activePlayer.openChat(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
@@ -521,9 +516,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, state => {
-        const tab = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.writeLowPriority(ServerProt.IF_SHOWSIDE, tab);
+        state.activePlayer.writeLowPriority(ServerProt.IF_SHOWSIDE, check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_SETMODEL]: checkedHandler(ActivePlayer, state => {
@@ -544,9 +537,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETTABFLASH]: checkedHandler(ActivePlayer, state => {
-        const tab = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.writeLowPriority(ServerProt.TUTORIAL_FLASHSIDE, tab);
+        state.activePlayer.writeLowPriority(ServerProt.TUTORIAL_FLASHSIDE, check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, state => {
@@ -566,27 +557,19 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_OPENMAINMODAL]: checkedHandler(ActivePlayer, state => {
-        const com = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.openMainModal(com);
+        state.activePlayer.openMainModal(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, state => {
-        const com = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.openChatSticky(com);
+        state.activePlayer.openChatSticky(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_OPENSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
-        const com = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.openSideOverlay(com);
+        state.activePlayer.openSideOverlay(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, state => {
-        const com = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.writeLowPriority(ServerProt.IF_SETPLAYERHEAD, com);
+        state.activePlayer.writeLowPriority(ServerProt.IF_SETPLAYERHEAD, check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_SETTEXT]: checkedHandler(ActivePlayer, state => {
@@ -614,9 +597,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, state => {
-        const multi = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.writeLowPriority(ServerProt.SET_MULTIWAY, multi === 1);
+        state.activePlayer.writeLowPriority(ServerProt.SET_MULTIWAY, check(state.popInt(), NumberNotNull) === 1);
     }),
 
     [ScriptOpcode.GIVEXP]: checkedHandler(ProtectedActivePlayer, state => {
@@ -657,12 +638,12 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.MIDI_SONG]: state => {
-        state.activePlayer.playSong(state.popString());
+        state.activePlayer.playSong(check(state.popString(), StringNotNull));
     },
 
     [ScriptOpcode.MIDI_JINGLE]: state => {
-        const delay = state.popInt();
-        const name = state.popString();
+        const delay = check(state.popInt(), NumberNotNull);
+        const name = check(state.popString(), StringNotNull);
         state.activePlayer.playJingle(delay, name);
     },
 
@@ -679,9 +660,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.CLEARSOFTTIMER]: checkedHandler(ActivePlayer, state => {
-        const timerId = state.popInt();
-
-        state.activePlayer.clearTimer(timerId);
+        state.activePlayer.clearTimer(state.popInt());
     }),
 
     [ScriptOpcode.SETTIMER]: checkedHandler(ActivePlayer, state => {
@@ -697,18 +676,14 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.CLEARTIMER]: checkedHandler(ActivePlayer, state => {
-        const timerId = state.popInt();
-
-        state.activePlayer.clearTimer(timerId);
+        state.activePlayer.clearTimer(state.popInt());
     }),
 
     [ScriptOpcode.HINT_COORD]: state => {
         const [offset, coord, height] = state.popInts(3);
 
-        check(coord, CoordValid);
-
-        const pos = Position.unpackCoord(coord);
-        state.activePlayer.hintTile(offset, pos.x, pos.z, height);
+        const position: Position = check(coord, CoordValid);
+        state.activePlayer.hintTile(offset, position.x, position.z, height);
     },
 
     [ScriptOpcode.HINT_STOP]: state => {
@@ -722,8 +697,8 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_EXACTMOVE]: checkedHandler(ProtectedActivePlayer, state => {
         const [start, end, startCycle, endCycle, direction] = state.popInts(5);
 
-        const startPos = Position.unpackCoord(check(start, CoordValid));
-        const endPos = Position.unpackCoord(check(end, CoordValid));
+        const startPos: Position = check(start, CoordValid);
+        const endPos: Position = check(end, CoordValid);
 
         state.activePlayer.unsetMapFlag();
         state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
@@ -754,17 +729,11 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_LOCMERGE]: checkedHandler(ProtectedActivePlayer, state => {
         const [startCycle, endCycle, southEast, northWest] = state.popInts(4);
 
-        const se = Position.unpackCoord(check(southEast, CoordValid));
-        const nw = Position.unpackCoord(check(northWest, CoordValid));
-
-        const east = se.x;
-        const south = se.z;
-
-        const west = nw.x;
-        const north = nw.z;
+        const se: Position = check(southEast, CoordValid);
+        const nw: Position = check(northWest, CoordValid);
 
         const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, south, east, north, west);
+        World.getZone(loc.x, loc.z, loc.level).mergeLoc(loc, state.activePlayer, startCycle, endCycle, se.z, se.x, nw.z, nw.x);
     }),
 
     [ScriptOpcode.LAST_LOGIN_INFO]: state => {
@@ -788,31 +757,31 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BAS_READYANIM]: state => {
-        state.activePlayer.basReadyAnim = state.popInt();
+        state.activePlayer.basReadyAnim = check(state.popInt(), SeqTypeValid).id;
     },
 
     [ScriptOpcode.BAS_TURNONSPOT]: state => {
-        state.activePlayer.basTurnOnSpot = state.popInt();
+        state.activePlayer.basTurnOnSpot = check(state.popInt(), SeqTypeValid).id;
     },
 
     [ScriptOpcode.BAS_WALK_F]: state => {
-        state.activePlayer.basWalkForward = state.popInt();
+        state.activePlayer.basWalkForward = check(state.popInt(), SeqTypeValid).id;
     },
 
     [ScriptOpcode.BAS_WALK_B]: state => {
-        state.activePlayer.basWalkBackward = state.popInt();
+        state.activePlayer.basWalkBackward = check(state.popInt(), SeqTypeValid).id;
     },
 
     [ScriptOpcode.BAS_WALK_L]: state => {
-        state.activePlayer.basWalkLeft = state.popInt();
+        state.activePlayer.basWalkLeft = check(state.popInt(), SeqTypeValid).id;
     },
 
     [ScriptOpcode.BAS_WALK_R]: state => {
-        state.activePlayer.basWalkRight = state.popInt();
+        state.activePlayer.basWalkRight = check(state.popInt(), SeqTypeValid).id;
     },
 
     [ScriptOpcode.BAS_RUNNING]: state => {
-        state.activePlayer.basRunning = state.popInt();
+        state.activePlayer.basRunning = check(state.popInt(), SeqTypeValid).id;
     },
 
     [ScriptOpcode.GENDER]: state => {
@@ -820,15 +789,11 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.HINT_NPC]: state => {
-        const npc_uid = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.hintNpc(npc_uid);
+        state.activePlayer.hintNpc(check(state.popInt(), NumberNotNull));
     },
 
     [ScriptOpcode.HINT_PLAYER]: state => {
-        const player_uid = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.hintPlayer(player_uid);
+        state.activePlayer.hintPlayer(check(state.popInt(), NumberNotNull));
     },
 
     [ScriptOpcode.HEADICONS_GET]: state => {
@@ -836,11 +801,11 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.HEADICONS_SET]: state => {
-        state.activePlayer.headicons = state.popInt();
+        state.activePlayer.headicons = check(state.popInt(), NumberNotNull);
     },
 
     [ScriptOpcode.P_OPOBJ]: checkedHandler(ProtectedActivePlayer, state => {
-        const type = state.popInt() - 1;
+        const type = check(state.popInt(), NumberNotNull) - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opobj: ${type + 1}`);
         }
@@ -856,7 +821,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_OPPLAYER]: checkedHandler(ProtectedActivePlayer, state => {
-        const type = state.popInt() - 1;
+        const type = check(state.popInt(), NumberNotNull) - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opplayer: ${type + 1}`);
         }
@@ -876,9 +841,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.ALLOWDESIGN]: state => {
-        const allow = check(state.popInt(), NumberNotNull);
-
-        state.activePlayer.allowDesign = allow === 1;
+        state.activePlayer.allowDesign = check(state.popInt(), NumberNotNull) === 1;
     },
 
     [ScriptOpcode.LAST_TARGETSLOT]: state => {
@@ -914,11 +877,10 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.HEALENERGY]: state => {
-        const amount = state.popInt(); // 100=1%, 1000=10%, 10000=100%
+        const amount = check(state.popInt(), NumberNotNull); // 100=1%, 1000=10%, 10000=100%
 
         const player = state.activePlayer;
-        const energy = Math.min(Math.max(player.runenergy + amount, 0), 10000);
-        player.runenergy = energy;
+        player.runenergy = Math.min(Math.max(player.runenergy + amount, 0), 10000);
     },
 
     [ScriptOpcode.AFK_EVENT]: state => {
@@ -933,15 +895,13 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.SETIDKIT]: (state) => {
         const [idkit, color] = state.popInts(2);
 
-        check(idkit, IDKTypeValid);
+        const idkType: IdkType = check(idkit, IDKTypeValid);
 
-        const idk = IdkType.get(idkit);
-
-        let slot = idk.type;
+        let slot = idkType.type;
         if (state.activePlayer.gender === 1) {
             slot -= 7;
         }
-        state.activePlayer.body[slot] = idkit;
+        state.activePlayer.body[slot] = idkType.id;
 
         // 0 - hair
         // 1 - torso
@@ -949,17 +909,17 @@ const PlayerOps: CommandHandlers = {
         // 3 - boots
         // 4 - jaw
         let colorSlot = -1;
-        if (idk.type === 0) {
+        if (idkType.type === 0) {
             colorSlot = 0;
-        } else if (idk.type === 1) {
+        } else if (idkType.type === 1) {
             colorSlot = 4;
-        } else if (idk.type === 2 || idk.type === 3) {
+        } else if (idkType.type === 2 || idkType.type === 3) {
             colorSlot = 1;
-        } else if (idk.type === 4) {
+        } else if (idkType.type === 4) {
             /* no-op (no hand recoloring) */
-        } else if (idk.type === 5) {
+        } else if (idkType.type === 5) {
             colorSlot = 2;
-        } else if (idk.type === 6) {
+        } else if (idkType.type === 6) {
             colorSlot = 3;
         }
 
@@ -969,7 +929,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.P_OPPLAYERT]: checkedHandler(ProtectedActivePlayer, state => {
-        const spellId = state.popInt();
+        const spellId = check(state.popInt(), NumberNotNull);
         if (state.activePlayer.target !== null) {
             return;
         }
