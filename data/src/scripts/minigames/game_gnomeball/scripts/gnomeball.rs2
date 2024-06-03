@@ -1,0 +1,6 @@
+[debugproc,gb]
+if_settab(gnomeball, 0);
+
+[opheld2,gnomeball]
+~equip(last_slot);
+if_settab(gnomeball, 0);
