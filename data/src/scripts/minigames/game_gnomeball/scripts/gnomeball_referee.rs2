@@ -23,14 +23,14 @@ if_close;
 npc_say("Peeeeeeeeeep");
 sound_synth(whistle, 0, 0);
 mes("The ref throws the ball into the air.");
-def_int $duration = ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 60, 0, 11, 0);
+~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 60, 30, 11, 0);
 %gnomeball_progress = ^gnomeball_game_started;
 if_settab(gnomeball, 0);
-p_delay(divide($duration, 30));
-
-mes("You jump up and catch it.");
 anim(seq_782, 27);
+p_delay(0);
+mes("You jump up and catch it.");
 sound_synth(sound_152, 0, 0);
+p_delay(0);
 inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
 facesquare(npc_coord);
 ~update_bas;
