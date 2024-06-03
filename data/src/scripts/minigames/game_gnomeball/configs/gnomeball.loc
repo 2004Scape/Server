@@ -11,3 +11,4 @@ model=model_loc_193
 op1=Open
 active=yes
 blockrange=no
+param=next_loc_stage,loc_2395

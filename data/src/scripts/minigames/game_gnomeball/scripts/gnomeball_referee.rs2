@@ -1,0 +1,80 @@
+[opnpc1,gnome_ball_referee]
+if (%gnomeball_progress = ^gnomeball_not_started) {
+    @gnomeball_ref_first_start;
+}
+if (inv_total(worn, gnomeball) = 0) { // if games not in progress
+    ~chatnpc(neutral, "Hi, welcome back to Gnomeball. Would you like to hear the rules again?");
+    @multi3("Yes please.", gnomeball_hear_rules, "I just want to play.", gnomeball_just_want_to_play, "No, I don't want to play.", gnomeball_dont_want_to_play);
+} else {
+    ~chatnpc(neutral, "You have a ball in play.|Do you need to hear the rules again?");
+    @multi2("Yes please.", gnomeball_hear_rules, "No thanks.", gnomeball_no_hear_rules);
+}
+
+
+
+
+// doesnt let you enter with a full inventory
+// upon entering, it unequips right hand slot
+// cant equip items with right hand slot when inside gnome ball area
+
+
+[proc,gnomeball_game_start]
+if_close;
+npc_say("Peeeeeeeeeep");
+sound_synth(whistle, 0, 0);
+mes("The ref throws the ball into the air.");
+def_int $duration = ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 60, 0, 11, 0);
+%gnomeball_progress = ^gnomeball_game_started;
+if_settab(gnomeball, 0);
+p_delay(divide($duration, 30));
+
+mes("You jump up and catch it.");
+anim(seq_782, 27);
+sound_synth(sound_152, 0, 0);
+inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
+facesquare(npc_coord);
+~update_bas;
+
+// other npcs complain about not getting passed to?
+p_delay(0);
+
+
+[label,gnomeball_ref_first_start]
+~chatnpc(happy, "Hi, welcome to Gnomeball. It's pretty simple really: You take the ball from me, charge at the gnome defence and try to throw the ball through the net using your ranged skill.");
+~chatnpc(neutral, "It's a rough game but great fun. It's also great for improving agility. So do you fancy a game?");
+def_int $choice = ~p_choice2("Looks too dangerous for me!", 1, "Okay then, I'll have a go.", 2);
+
+if ($choice = 1) {
+    ~chatplayer(neutral, "Looks too dangerous for me!");
+    ~chatnpc(neutral, "You may be right, we've seen humans die on this field.");
+    return;
+}
+
+~chatplayer(neutral, "Okay then, I'll have a go.");
+~chatnpc(neutral, "Great stuff! There are few rules to Gnomeball, so it can get a bit rough.");
+~chatnpc(neutral, "You can pass to the green winger gnomes. Then you can make a run and they'll pass back. Otherwise, if you're feeling brave, you can just charge and dodge.");
+~chatplayer(neutral, "Sounds easy enough.");
+~chatnpc(neutral, "The main aim is to leave with no broken limbs. I think you should be fine.");
+%gnomeball_progress = ^gnomeball_talked_to_ref;
+~gnomeball_game_start;
+
+[label,gnomeball_hear_rules]
+~chatnpc(happy, "It's pretty simple really: You take the ball from me, charge at the gnome defence and try to throw the ball through the net using your ranged skill.");
+~chatnpc(neutral, "It's a rough game but great fun. It's also great for improving agility.");
+~chatnpc(neutral, "You can pass to the green winger gnomes. Then you can make a run and they'll pass back. Otherwise, if you're feeling brave, you can just charge and dodge.");
+~chatplayer(neutral, "Sounds easy enough.");
+~chatnpc(neutral, "The main aim is to leave with no broken limbs. I think you should be fine.");
+~gnomeball_game_start;
+
+[label,gnomeball_no_hear_rules]
+~chatplayer(neutral, "No thanks.");
+~chatnpc(neutral, "Okay, good luck.");
+
+[label,gnomeball_just_want_to_play]
+~chatplayer(neutral, "I just want to play.");
+~chatnpc(neutral, "Okay... Let's play GNOMEBALL!");
+~gnomeball_game_start;
+
+[label,gnomeball_dont_want_to_play]
+~chatplayer(neutral, "No, I don't want to play.");
+~chatnpc(neutral, "Okay, never mind. Maybe next time...");

@@ -1,6 +1,69 @@
 [debugproc,gb]
-if_settab(gnomeball, 0);
+if (p_finduid(uid) = true) {
+    p_teleport(0_37_54_14_32);
+}
 
-[opheld2,gnomeball]
-~equip(last_slot);
-if_settab(gnomeball, 0);
+[if_button,gnomeball:com_6]
+if (loc_find(^gnomeball_goal_coord, gnome_goal) = true) {
+    if (distance(loc_coord, coord) < 6 & coordx(coord) < coordx(loc_coord)) {
+        // shoot ball
+    } else {
+        // miss?
+    }
+}
+
+
+[oplocu,gnome_goal]
+mes(~coord_tostring(loc_coord));
+
+
+[oploc1,gnomeball_gate]
+if (%gnomeball_progress > ^gnomeball_not_started) {
+    %gnomeball_progress = ^gnomeball_talked_to_ref;
+}
+def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
+def_boolean $exiting = ~check_axis(coord, loc_coord, loc_angle);
+if ($exiting = false) { 
+    if ($obj ! null) {
+        if (inv_itemspace(inv, $obj, inv_total(worn, $obj), inv_size(inv)) = false) {
+            mes("You do not have free inventory space for what you carry.");
+            return;
+        }
+        ~unequip(^wearpos_rhand);
+    }
+    ~open_and_close_door(loc_param(next_loc_stage), $exiting, false);
+    if (inv_total(worn, gnomeball) > 0 | inv_total(inv, gnomeball) > 0) {
+        mes("The ref takes your ball for safe keeping. You will get it back when you leave.");
+        inv_delslot(worn, ^wearpos_rhand);
+        inv_del(inv, gnomeball, inv_total(inv, gnomeball));
+    }
+} else {
+    ~open_and_close_door(loc_param(next_loc_stage), $exiting, false);
+    if (%gnomeball_progress = ^gnomeball_player_has_won) {
+        // give free gnomeball
+        if (inv_freespace(inv) = 0) {
+            inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
+        } else {
+            inv_add(inv, gnomeball, 1);
+        }
+    } else  {
+        def_int $ball_inv = inv_total(inv, gnomeball);
+        def_int $ball_worn = inv_total(worn, gnomeball);
+        if ($ball_inv > 0) {
+            inv_del(inv, gnomeball, $ball_inv);
+        }
+        if ($ball_worn > 0) {
+            inv_del(worn, gnomeball, $ball_worn);
+        }
+    }
+}
+
+
+~update_bas;
+
+
+[proc,gnomeball_game_active]()(boolean)
+if (%gnomeball_progress = ^gnomeball_game_started) {
+    return(true);
+}
+return(false);
