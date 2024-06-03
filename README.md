@@ -1,39 +1,46 @@
-# 2004scape Server
+<div align="center">
 
-[Website](https://2004scape.org) | [Discord](https://discord.gg/hN3tHUmZEN) | [Rune-Server](https://www.rune-server.ee/runescape-development/rs2-server/projects/701698-lost-city-225-emulation.html)
+<h1>2004Scape Server - May 18, 2004</h1>
 
-**disclaimer: All server code has been written from scratch for this project, Jagex has never had any source code leaks.**
+[Website](https://2004scape.org) | [Discord](https://discord.2004scape.org) | [Rune-Server](https://www.rune-server.ee/runescape-development/rs2-server/projects/701698-lost-city-225-emulation.html) | [Getting Started](#getting-started)
 
-**status: in-development, not ready for players**. Contributors are welcome to help out.
+**status: alpha, in-development**  
+Contributors are welcome to help out!
 
----
+**All server code has been written from scratch for this project.**  
+**Jagex has never had any source code leaks.**
+</div>
 
-This project aims to replicate an authentic RuneScape experience from May 2004. It should be considered an emulator first and foremost, as replicating behaviors by emulating the underlying systems is the biggest focus. The config system and scripting system is as close to authentic as we understand it, and is continually refined as we learn more info.
+## Mission Statement
 
----
+> [!IMPORTANT]
+> Our goal is to authentically, accurately, and precisely emulate old RuneScape to our best knowledge. There are countless hours behind adding and quadruple-checking every bit of logic that goes into this.
 
-*To Jagex*: This project comes out of love for the game. As MMOs age, their previous versions are lost to history. An experience becomes ephemeral and time-limited. We're aware that you have no backups for this era and so we're putting in the effort to recreate what we can.  
-It won't ever profit off your trademarks. Without this project, this version of the game only lives in our memories. Screenshots and videos are scarce, and the original data is lost to time. This is no easy task.
+Caches and clients are sourced from old PCs that played the game at a given time. That gives us the original maps, models, and NPC / Item / Scenery configurations. Then we can unpack that data into a readable and workable format based on what we've been able to observe Jagex doing, as outsiders.
 
-*To players*: So happy to have you interested! RuneScape 2 launched on March 29, 2004. We have no copies of that revision, but we do have some client caches from May 2004. This project emulates *May 18, 2004*, which was live until June 1 of that year. It has Treasure Trails and Big Chompy Bird Hunting. The next revision after this added Elemental Workshop I.
+The server side (engine, quests, combat, skills) was not preserved and that's what we're recreating here. The engine takes a lot of effort and is not perfected, but you should consider it our best interpretation of behaviors we can measure.
+
+We try to take very little liberties when it comes to guessing, our sources are era-videos, era-screenshots, and RS3/OSRS/RSC.
+
+Our content language of choice is a recreation of RuneScript: this gives us the same limitations, and the opportunity to recreate bugs out of the same circumstances. We don't simply see a bug and add it as an edge case, we have the script and engine work together to reproduce the exact reasons behind the bug.
 
 ## Getting Started
 
 1. Download this repo to your computer
 2. Install our list of [dependencies](#environment-dependencies)
 3. Open the folder you downloaded in a command prompt
-4. Run `npm install`
-5. Run `npm start`
+4. Run `npm start`
 
 Now open [http://localhost](http://localhost) in your browser and play!
 
-Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
+> [!IMPORTANT]
+> If you run into issues please see our [common issues](#common-issues) or hop in Discord.
 
-If you run into issues please see our [common issues](#common-issues) or hop in Discord.
+> [!TIP]
+> Windows users: We have a script called `quickstart.bat` that will launch the server for you, combining steps 3 and 4 above.
 
-### Using the setup script
-
-You can instead run `setup.sh` to get your repository ready for running the server.
+> [!TIP]
+> Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
 
 ### Using the DevContainer
 
@@ -54,9 +61,9 @@ Once the container starts, it automatically starts running `setup.sh`. You can c
 
 - [NodeJS 20.6+](https://nodejs.org/) (22 is fine as well)
 - [Java 17+](https://adoptium.net/)
-- If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
-Java is required for our RuneScript compiler, it will be downloded for you the first time you run `npm start`.
+> [!TIP]
+> If you're using VS Code (recommended), [we have an extension to install on the marketplace.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
 ## Development Workflow
 
@@ -87,7 +94,14 @@ Configuration for the linter can be found in `.eslintrc.cjs`.
 
 ## Common Issues
 
-* `bad option: --import`: You are using node an older version of node. We are targeting 20.6+
+* `bad option: --import`  
+You are using an older version of Node (maybe 18). We are targeting 20.6+
+
+* `'"java"' is not recognized as an internal or external command`  
+You do not have Java 17 installed.
+
+* `has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 52.0`  
+You are likely using Java 8 or Java 11. You can either reinstall Java 17 or become an advanced user, and set `JAVA_PATH=path-to-java.exe` in your .env file.
 
 ## Credits
 

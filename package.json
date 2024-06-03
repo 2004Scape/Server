@@ -24,7 +24,7 @@
     "precommit": "prettier . --write && eslint . --ext .ts --ext .js --fix",
     "prepare": "husky",
     "server:clean": "npm run ts-loader src/lostcity/tools/server/clean.ts",
-    "start": "npm run ts-loader src/lostcity/app.ts",
+    "start": "npm i && npm run ts-loader src/lostcity/app.ts",
     "test": "vitest run ./src",
     "todo": "leasot src/ --skip-unsupported --exit-nicely",
     "ts-loader": "node --import @swc-node/register/esm-register --enable-source-maps --no-warnings",

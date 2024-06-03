@@ -6,7 +6,7 @@ import ParamType from '#lostcity/cache/ParamType.js';
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import {ActiveObj, ActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 import Obj from '#lostcity/entity/Obj.js';
@@ -23,9 +23,6 @@ import {
     ObjTypeValid,
     ParamTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
-
-const ActiveObj = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
-const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
 
 const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: state => {
