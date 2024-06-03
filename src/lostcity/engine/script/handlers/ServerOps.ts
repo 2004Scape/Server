@@ -11,7 +11,7 @@ import World from '#lostcity/engine/World.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
+import {ActiveNpc, ActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import { Position } from '#lostcity/entity/Position.js';
@@ -29,9 +29,6 @@ import {
     SpotAnimTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
 import Npc from '#lostcity/entity/Npc.js';
-
-const ActivePlayer = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
-const ActiveNpc = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
 
 const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_CLOCK]: state => {

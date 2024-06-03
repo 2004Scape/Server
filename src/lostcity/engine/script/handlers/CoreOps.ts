@@ -7,12 +7,10 @@ import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-
-const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
+import {ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
 function gosub(state: ScriptState, id: number) {
     if (state.fp >= 50) {
