@@ -13,8 +13,9 @@ if (p_finduid(uid) = true) {
     if (~duel_arena_flower_power_equip_check($obj) = false) {
         return;
     }
-    if (~gnomeball_game_active = true & inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
-        mes("You feel it would be cheating to put the ball in your pack whilst on the pitch.");
+    if (oc_wearpos($obj) = ^wearpos_rhand & ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+        mes("You feel it would be cheating to hold anything other than a gnomeball on the");
+        mes("gnomeball pitch");
         return;
     }
     //// first: we remove the inventory item, so the slot can be filled with inv_add
@@ -53,7 +54,7 @@ if (p_finduid(uid) = true) {
     if (~duel_arena_flower_power_unequip_check($slot) = false) {
         return;
     }
-    if (~gnomeball_game_active = true & $obj = gnomeball) {
+    if ($slot = ^wearpos_rhand & ~gnomeball_game_active = true & $obj = gnomeball & ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
         mes("You feel it would be cheating to put the ball in your pack whilst on the pitch.");
         return;
     }

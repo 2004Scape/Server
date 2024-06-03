@@ -33,7 +33,7 @@ sound_synth(sound_152, 0, 0);
 p_delay(0);
 inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
 facesquare(npc_coord);
-~update_bas;
+~update_all(inv_getobj(worn, ^wearpos_rhand));
 
 // other npcs complain about not getting passed to?
 p_delay(0);

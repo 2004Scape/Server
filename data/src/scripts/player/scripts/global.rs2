@@ -102,7 +102,7 @@ if (staffmodlevel >= 2 & inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
 ~update_bas; // update appearance
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight
-if (%tutorial_progress > ^combat_instructor_unequipping_items) {
+if (%tutorial_progress > ^combat_instructor_unequipping_items & inv_getobj(worn, ^wearpos_rhand) ! gnomeball) {
     ~update_weapon_category($previous_weapon); // the attack tab weapon category
 }
 ~player_combat_stat; // update combat varps
@@ -121,7 +121,7 @@ if (.staffmodlevel >= 2 & .inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
 ~.update_bas; // update appearance
 ~.update_bonuses; // update bonuses if
 ~.update_weight; // update weight
-if (.%tutorial_progress > ^combat_instructor_unequipping_items) {
+if (.%tutorial_progress > ^combat_instructor_unequipping_items & .inv_getobj(worn, ^wearpos_rhand) ! gnomeball) {
     ~.update_weapon_category($previous_weapon); // the attack tab weapon category
 }
 ~.player_combat_stat; // update combat varps

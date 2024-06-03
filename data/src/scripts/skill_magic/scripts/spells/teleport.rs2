@@ -69,5 +69,5 @@ if (%gnomeball_progress = ^gnomeball_game_started) {
     if (%gnomeball_progress > ^gnomeball_not_started) {
         %gnomeball_progress = ^gnomeball_talked_to_ref;
     }
-    ~update_bas;
+    ~update_all(inv_getobj(worn, ^wearpos_rhand));
 }

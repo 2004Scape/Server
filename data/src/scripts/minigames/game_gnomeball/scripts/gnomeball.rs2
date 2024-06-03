@@ -58,8 +58,7 @@ if ($exiting = false) {
     }
 }
 
-
-~update_bas;
+~update_all($obj);
 
 
 [proc,gnomeball_game_active]()(boolean)
@@ -67,3 +66,9 @@ if (%gnomeball_progress = ^gnomeball_game_started) {
     return(true);
 }
 return(false);
+
+
+[debugproc,gg]
+if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    mes("TRUE");
+}
