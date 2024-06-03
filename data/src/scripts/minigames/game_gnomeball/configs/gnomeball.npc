@@ -1,4 +1,4 @@
-[npc_621]
+[gnome_baller1]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -15,7 +15,7 @@ wanderrange=4
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_622]
+[gnome_baller2]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -31,7 +31,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_623]
+[gnome_baller3]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -46,7 +46,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_624]
+[gnome_baller4]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -61,7 +61,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_625]
+[gnome_baller5]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -78,7 +78,7 @@ wanderrange=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_626]
+[gnome_baller6]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -94,7 +94,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_627]
+[gnome_baller7]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -109,7 +109,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_628]
+[gnome_baller8]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -124,7 +124,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_629]
+[gnome_baller9]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -141,7 +141,7 @@ wanderrange=3
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_630]
+[gnome_baller10]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -157,7 +157,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_631]
+[gnome_baller11]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -172,7 +172,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_632]
+[gnome_baller12]
 name=Gnome baller
 desc=A professional gnome baller.
 vislevel=hide
@@ -187,7 +187,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_633]
+[gnome_winger1]
 name=Gnome winger
 desc=A professional gnome baller.
 vislevel=hide
@@ -203,7 +203,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_634]
+[gnome_winger2]
 name=Gnome winger
 desc=A professional gnome baller.
 vislevel=hide
@@ -219,7 +219,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_635]
+[gnome_ball_referee]
 name=Gnome ball referee
 desc=Keeps the game fair.
 vislevel=hide
@@ -242,7 +242,7 @@ wanderrange=1
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_636]
+[gnome_cheerleader]
 name=Cheerleader
 desc=Cheerleading is a real sport!
 vislevel=hide

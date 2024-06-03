@@ -1,10 +1,10 @@
-[loc_2393]
+[gnome_goal]
 name=Gnome goal
 desc=Aim for the goal!
 model=model_loc_2393
 active=yes
 
-[loc_2394]
+[gnomeball_gate]
 name=Gate
 desc=A gate to the Gnomeball pitch.
 model=model_loc_193
