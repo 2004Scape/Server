@@ -2,7 +2,7 @@ FROM node:22
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y openjdk-17-jre
+RUN apt-get update && apt-get install -y openjdk-17-jre-headless
 
 COPY package*.json ./
 
