@@ -1,6 +1,6 @@
-[ai_applayer2,gnome_baller1] @gnome_baller_tackle;
-[ai_applayer2,gnome_baller5] @gnome_baller_tackle;
-[ai_applayer2,gnome_baller9] @gnome_baller_tackle;
+[ai_opplayer2,gnome_baller1] @gnome_baller_tackle;
+[ai_opplayer2,gnome_baller5] @gnome_baller_tackle;
+[ai_opplayer2,gnome_baller9] @gnome_baller_tackle;
 
 [label,gnome_baller_tackle]
 npc_setmode(null);
