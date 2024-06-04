@@ -21,7 +21,6 @@
 // This is probably an OSRS change as the khazard shop uses the same dialogue as classic (although the khazard shop has different mesanims)
 // meaning most generalshops probably call the same label whereas khazard calls a seperate one
 [label,generalshop_help]
-~chatnpc("");
 ~chatnpc("<p,happy>Can I help you at all?");
 def_int $option = ~p_choice2("Yes please. What are you selling?", 1, "No thanks.", 2);
 if($option = 1) {
