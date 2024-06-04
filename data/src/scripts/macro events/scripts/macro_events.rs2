@@ -29,7 +29,7 @@ if (%macro_event > 0) {
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
 // area check here, because stuff like bones and alching for example can spawn random events.
-if (~macro_event_area(coord) = false) {
+if (~in_duel_arena = true | ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     return;
 }
 def_coord $event_coord = ~macro_event_coord;
