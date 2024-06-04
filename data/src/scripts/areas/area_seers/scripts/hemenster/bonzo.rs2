@@ -1,7 +1,7 @@
 [opnpc1,bonzo]
 if(%fishingcompo_progress = ^fishingcompo_started) {
     if(%hemenster_comp_stage = ^hemenster_comp_paidfee) {
-        ~chatplayer(neutral, "I'll enter the competition please.");
+        ~chatplayer("<p,neutral>I'll enter the competition please.");
         @bonzo_set_places;
     }
     @bonzo_waiting_entry;
@@ -13,29 +13,29 @@ if(%fishingcompo_progress = ^fishingcompo_in_comp | %fishingcompo_progress = ^fi
 }
 
 [label,bonzo_waiting_entry]
-~chatnpc(happy, "Roll up, roll up!");
-~chatnpc(happy, "Enter the great Hemenster fishing competition!");
-~chatnpc(happy, "Only 5gp entrance fee!");
+~chatnpc("<p,happy>Roll up, roll up!");
+~chatnpc("<p,happy>Enter the great Hemenster fishing competition!");
+~chatnpc("<p,happy>Only 5gp entrance fee!");
 def_int $option = ~p_choice2("I'll enter the competition please.", 1, "No thanks, I'll just watch the fun.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "I'll enter the competition please.");
-    ~chatnpc(happy, "Marvelous!");
+    ~chatplayer("<p,neutral>I'll enter the competition please.");
+    ~chatnpc("<p,happy>Marvelous!");
     if(inv_total(inv, coins) < 5) {
-        ~chatplayer(sad, "I don't have the 5gp though...");
-        ~chatnpc(angry, "No pay, no play.");
+        ~chatplayer("<p,sad>I don't have the 5gp though...");
+        ~chatnpc("<p,angry>No pay, no play.");
         return;
     }
     inv_del(inv, coins, 5);
     %hemenster_comp_stage = ^hemenster_comp_paidfee;
     ~objbox(coins_250, "You pay Bonzo 5 coins.");
-    ~chatnpc(happy, "Ok, we've got all the fishermen!|It's time to roll!");
+    ~chatnpc("<p,happy>Ok, we've got all the fishermen!|It's time to roll!");
     @bonzo_set_places;
 } else if($option = 2) {
-    ~chatplayer(neutral, "No thanks, I'll just watch the fun.");
+    ~chatplayer("<p,neutral>No thanks, I'll just watch the fun.");
 }
 
 [label,bonzo_set_places]
-~chatnpc(neutral, "Ok, nearly everyone is in their place already.|You fish in the spot by the willow tree,|and the Sinister Stranger, you fish by the pipes.");
+~chatnpc("<p,neutral>Ok, nearly everyone is in their place already.|You fish in the spot by the willow tree,|and the Sinister Stranger, you fish by the pipes.");
 if(%hemenster_pipe_stashed = true) {
     @move_hemenster_pipe;
 }
@@ -43,12 +43,12 @@ if(%hemenster_pipe_stashed = true) {
 ~mesbox("Your fishing competition spot is beside the willow tree.");
 
 [label,bonzo_howdoing]
-~chatnpc(happy, "So how are you doing so far?");
+~chatnpc("<p,happy>So how are you doing so far?");
 if(%hemenster_comp_stage = ^hemenster_comp_paidfee) { // fee paid, no fish caught yet
-    ~chatplayer(confused, "I think I might still be able to find a bigger fish.");
+    ~chatplayer("<p,confused>I think I might still be able to find a bigger fish.");
     return;
 }
-~chatplayer(happy, "I caught some fish! Here...");
+~chatplayer("<p,happy>I caught some fish! Here...");
 @bonzo_handover_catch;
 
 [label,bonzo_handover_catch]
@@ -58,39 +58,39 @@ if(inv_total(inv, raw_giant_carp) > 0) {
     inv_del(inv, raw_giant_carp, 3);
     %fishingcompo_progress = ^fishingcompo_won_comp;
     inv_add(inv, fishing_trophy, 1);
-    ~chatnpc(happy, "We have a new winner!|The heroic-looking person who was fishing by the pipes|has caught the biggest carp|I've seen since Grandpa Jack used to compete!");
+    ~chatnpc("<p,happy>We have a new winner!|The heroic-looking person who was fishing by the pipes|has caught the biggest carp|I've seen since Grandpa Jack used to compete!");
     ~objboxb(fishing_trophy, "You are given the Hemenster fishing trophy!");
 } else {
     inv_del(inv, raw_sardine, 3);
     %fishingcompo_progress = ^fishingcompo_started;
     %hemenster_comp_stage = ^hemenster_comp_not_entered;
-    ~chatnpc(happy, "And the winner is... The stranger in black!");
+    ~chatnpc("<p,happy>And the winner is... The stranger in black!");
 }
 
 [label,bonzo_quits]
-~chatnpc(neutral, "So you're calling it quits here for now?");
+~chatnpc("<p,neutral>So you're calling it quits here for now?");
 def_int $option = ~p_choice2("Yes I'll compete again another day.", 1, "Actually I'll go back and catch some more.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "Yes I'll compete again another day.");
+    ~chatplayer("<p,neutral>Yes I'll compete again another day.");
     %fishingcompo_progress = ^fishingcompo_started;
     // in OSRS this sets to paid w/no fish caught, in RSC you have to pay again so we'll copy that 
     %hemenster_comp_stage = ^hemenster_comp_not_entered;
     p_teleport(movecoord(loc_coord, 1, 0, 0));
     ~open_fishingcompo_gate;
 } else if($option = 2) {
-    ~chatplayer(neutral, "Actually I'll go back and catch some more.");
-    ~chatnpc(happy, "Good luck!");
+    ~chatplayer("<p,neutral>Actually I'll go back and catch some more.");
+    ~chatnpc("<p,happy>Good luck!");
 }
 
 [label,bonzo_champ]
-~chatnpc(happy, "Hello champ!");
+~chatnpc("<p,happy>Hello champ!");
 if(%fishingcompo_progress = ^fishingcompo_won_comp & inv_total(inv, fishing_trophy) = 0) {
-    ~chatplayer(sad, "I don't feel like a champ...");
-    ~chatnpc(quiz, "Why not champ?");
-    ~chatplayer(sad, "I lost my fishing trophy...");
-    ~chatnpc(happy, "Is that all chump? Don't worry, I have a spare!");
+    ~chatplayer("<p,sad>I don't feel like a champ...");
+    ~chatnpc("<p,quiz>Why not champ?");
+    ~chatplayer("<p,sad>I lost my fishing trophy...");
+    ~chatnpc("<p,happy>Is that all chump? Don't worry, I have a spare!");
     inv_add(inv, fishing_trophy, 1);
     return;
 }
-~chatnpc(happy, "So any hints on how to fish?");
-~chatplayer(neutral, "I think I'll keep them to myself.");
+~chatnpc("<p,happy>So any hints on how to fish?");
+~chatplayer("<p,neutral>I think I'll keep them to myself.");

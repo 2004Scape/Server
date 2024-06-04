@@ -1,5 +1,5 @@
 [opnpc1,zambo]
-~chatnpc(quiz, "Hey, are you wanting to try some of my fine wines and spirits? All brewed locally on Karamja island.");
+~chatnpc("<p,quiz>Hey, are you wanting to try some of my fine wines and spirits? All brewed locally on Karamja island.");
 
 def_int $option;
 if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & inv_total(inv, barcrawl_card) > 0) {
@@ -9,7 +9,7 @@ if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & inv_total(inv, b
 }
 switch_int ($option) {
     case 1: p_opnpc(3);
-    case 2: ~chatplayer(neutral, "No, thank you.");
+    case 2: ~chatplayer("<p,neutral>No, thank you.");
     case 3: @karamjaspirits_barcrawl;
 }
 
@@ -19,10 +19,10 @@ if(testbit(%barcrawl_progress, ^karamjaspirits_index) = false & last_useitem = b
 }
 
 [label,karamjaspirits_barcrawl]
-~chatplayer(neutral, "I'm doing Alfred Grimhand's barcrawl.");
-~chatnpc(neutral, "Ah, you'll be wanting some Ape Bite Liqueur then. It's got a lovely banana taste, and it'll only cost you 7 coins.");
+~chatplayer("<p,neutral>I'm doing Alfred Grimhand's barcrawl.");
+~chatnpc("<p,neutral>Ah, you'll be wanting some Ape Bite Liqueur then. It's got a lovely banana taste, and it'll only cost you 7 coins.");
 if(inv_total(inv, coins) < 7) {
-    ~chatplayer(sad, "I don't have 7 coins right now.");
+    ~chatplayer("<p,sad>I don't have 7 coins right now.");
     return;
 }
 if_close;
@@ -34,4 +34,4 @@ p_delay(2);
 mes("Zambo signs your card.");
 p_delay(2);
 %barcrawl_progress = setbit(%barcrawl_progress, ^karamjaspirits_index);
-~chatplayer(confused, "Mmmmm, dat was luverly...");
+~chatplayer("<p,confused>Mmmmm, dat was luverly...");

@@ -1,11 +1,11 @@
 [opnpc1,redbeard_frank]
-~chatnpc(laugh, "Arr, Matey!");
+~chatnpc("<p,laugh>Arr, Matey!");
 
 if (%hunt_progress = 1) {
     @redboard_progress;
 } else if (%hunt_progress = 2 & inv_total(inv, hunt_chest_key) = 0) {
-    ~chatplayer(sad, "I seem to have lost my chest key...");
-    ~chatnpc(neutral, "Arr, silly you. Fortunately I took the precaution to have another one made.");
+    ~chatplayer("<p,sad>I seem to have lost my chest key...");
+    ~chatnpc("<p,neutral>Arr, silly you. Fortunately I took the precaution to have another one made.");
 
     ~objbox(hunt_chest_key, "Frank hands you a chest key");
     inv_add(inv, hunt_chest_key, 1);
@@ -22,20 +22,20 @@ if (%hunt_progress = 0) {
 }
 
 [label,redboard_progress]
-~chatnpc(quiz, "Have ye brought some rum for yer ol' mate Frank?");
+~chatnpc("<p,quiz>Have ye brought some rum for yer ol' mate Frank?");
 
 if (inv_total(inv, karamja_rum) >= 1) {
-    ~chatplayer(happy, "Yes, I've got some.");
+    ~chatplayer("<p,happy>Yes, I've got some.");
     @redbeard_hand_rum;
     return;
 }
 
-~chatplayer(sad, "No, not yet.");
+~chatplayer("<p,sad>No, not yet.");
 
 [label,redbeard_hand_rum]
-~chatnpc(shifty, "Now a deal's a deal, I'll tell ye about the treasure. I used to serve under a pirate captain called One-Eyed Hector.");
-~chatnpc(shifty, "Hector were very successful and became very rich. But about a year ago we were boarded by the Customs and Excise Agents.");
-~chatnpc(sad, "Hector were killed along with many of the crew, I were one of the few to escape and I escaped with this.");
+~chatnpc("<p,shifty>Now a deal's a deal, I'll tell ye about the treasure. I used to serve under a pirate captain called One-Eyed Hector.");
+~chatnpc("<p,shifty>Hector were very successful and became very rich. But about a year ago we were boarded by the Customs and Excise Agents.");
+~chatnpc("<p,sad>Hector were killed along with many of the crew, I were one of the few to escape and I escaped with this.");
 
 %hunt_progress = 2;
 
@@ -43,36 +43,36 @@ inv_del(inv, karamja_rum, 1);
 inv_add(inv, hunt_chest_key, 1);
 
 ~objbox(hunt_chest_key, "Frank happily takes the rum... ... and hands you a key.");
-~chatnpc(shifty, "This be Hector's key. I believe it opens his chest in his old room in the Blue Moon Inn in Varrock.");
-~chatnpc(neutral, "With any luck his treasure will be in there.");
+~chatnpc("<p,shifty>This be Hector's key. I believe it opens his chest in his old room in the Blue Moon Inn in Varrock.");
+~chatnpc("<p,neutral>With any luck his treasure will be in there.");
 
 def_int $option = ~p_choice2("Ok thanks, I'll go and get it.", 1, "So why didn't you ever get it?", 2);
 if ($option = 1) {
-    ~chatplayer(happy, "Ok thanks, I'll go and get it.");
+    ~chatplayer("<p,happy>Ok thanks, I'll go and get it.");
 } else if ($option = 2) {
-    ~chatplayer(quiz, "So why didn't you ever get it?");
-    ~chatnpc(sad, "I'm not allowed in the Blue Moon Inn. Apparently I'm a drunken trouble maker.");
+    ~chatplayer("<p,quiz>So why didn't you ever get it?");
+    ~chatnpc("<p,sad>I'm not allowed in the Blue Moon Inn. Apparently I'm a drunken trouble maker.");
 }
 
 
 [label,redbeard_treasure]
-~chatplayer(shifty, "I'm in search of treasure.");
-~chatnpc(shifty, "Arr, treasure you be after eh? Well I might be able to tell you where to find some... For a price...");
-~chatplayer(quiz, "What sort of price?");
-~chatnpc(neutral, "Well for example if you can get me a bottle of rum... Not just any rum mind...");
-~chatnpc(happy, "I'd like some rum made on Karamja Island. There's no rum like Karamja Rum!");
+~chatplayer("<p,shifty>I'm in search of treasure.");
+~chatnpc("<p,shifty>Arr, treasure you be after eh? Well I might be able to tell you where to find some... For a price...");
+~chatplayer("<p,quiz>What sort of price?");
+~chatnpc("<p,neutral>Well for example if you can get me a bottle of rum... Not just any rum mind...");
+~chatnpc("<p,happy>I'd like some rum made on Karamja Island. There's no rum like Karamja Rum!");
 
 %hunt_progress = 1;
 ~send_quest_progress(questlist:hunt, %hunt_progress, ^hunt_complete);
 
 [label,redbeard_arr]
-~chatplayer(laugh, "Arr!");
-~chatnpc(laugh, "Arr!");
+~chatplayer("<p,laugh>Arr!");
+~chatnpc("<p,laugh>Arr!");
 @redbeard_options;
 
 [label,redbeard_trade]
-~chatplayer(quiz, "Do you have anything for trade?");
-~chatnpc(neutral, "Nothin' at the moment, but then again the Customs Agents are on the warpath right now.");
+~chatplayer("<p,quiz>Do you have anything for trade?");
+~chatnpc("<p,neutral>Nothin' at the moment, but then again the Customs Agents are on the warpath right now.");
 
 [opnpcu,redbeard_frank]
 if (last_useitem ! karamja_rum) {
@@ -83,8 +83,8 @@ if (last_useitem ! karamja_rum) {
 // I'm unsure what happens if you attempt this when progress = 0,
 // but it shouldn't be possible anyway.
 if (%hunt_progress = 1) {
-    ~chatplayer(happy, "Frank, I have some Karamja Rum.");
+    ~chatplayer("<p,happy>Frank, I have some Karamja Rum.");
     @redbeard_hand_rum;
 } else {
-    ~chatnpc(happy, "Thanks fer the thought, but I still have to finish this bottle.");
+    ~chatnpc("<p,happy>Thanks fer the thought, but I still have to finish this bottle.");
 }

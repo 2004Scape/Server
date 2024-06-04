@@ -535,6 +535,11 @@ const PlayerOps: CommandHandlers = {
 
         check(com, NumberNotNull);
 
+        if (seq === -1) {
+            // uh, client crashes! which means empty dialogue wasn't an option at the time
+            return;
+        }
+
         state.activePlayer.writeLowPriority(ServerProt.IF_SETANIM, com, seq);
     }),
 

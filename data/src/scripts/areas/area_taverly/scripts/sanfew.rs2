@@ -1,5 +1,5 @@
 [opnpc1,sanfew]
-~chatnpc("quiz", "What can I do for you young 'un?");
+~chatnpc("<p,quiz>What can I do for you young 'un?");
 if(%druid_progress = 1) {
     @multi2("I've been sent to help purify the Varrock stone circle.", druid_sanfew_information, "Actually I don't need to speak to you.", sanfew_dont_need);
 } else if(%druid_progress = 2) {
@@ -11,13 +11,13 @@ if(%druid_progress = 1) {
 }
 
 [label,sanfew_teach_herblore]
-~chatplayer(quiz, "So... I've heard you druids might be able to teach me herblore...");
-~chatnpc(neutral, "Herblore eh? You're probably best off talking to Kaqemeex about that; he's the best herblore teacher we currently have. I believe at the moment he's at out stone circle just North of here.");
-~chatplayer(happy, "Thanks.");
+~chatplayer("<p,quiz>So... I've heard you druids might be able to teach me herblore...");
+~chatnpc("<p,neutral>Herblore eh? You're probably best off talking to Kaqemeex about that; he's the best herblore teacher we currently have. I believe at the moment he's at out stone circle just North of here.");
+~chatplayer("<p,happy>Thanks.");
 
 [label,sanfew_dont_need]
-~chatplayer(confused, "Actually, I don't need to speak to you.");
-~chatnpc(neutral, "Well, we all make mistakes sometimes.");
+~chatplayer("<p,confused>Actually, I don't need to speak to you.");
+~chatnpc("<p,neutral>Well, we all make mistakes sometimes.");
 if(%druid_progress > 2) { // guess they made a label with the exact same dialogue?
     mes("Sanfew grunts.");
 } else {
@@ -25,5 +25,5 @@ if(%druid_progress > 2) { // guess they made a label with the exact same dialogu
 }
 
 [label,sanfew_more_work]
-~chatplayer(quiz, "Have you any more work for me to help reclaim the stone circle?");
-~chatnpc(neutral, "Well, not right now I don't think young 'un. In fact, I need to make some more preparations myself for the ritual. Rest assured, if I need any more help I will ask you again.");
+~chatplayer("<p,quiz>Have you any more work for me to help reclaim the stone circle?");
+~chatnpc("<p,neutral>Well, not right now I don't think young 'un. In fact, I need to make some more preparations myself for the ritual. Rest assured, if I need any more help I will ask you again.");

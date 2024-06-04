@@ -1,13 +1,13 @@
 [opnpc1,npc_601]
-~chatplayer(neutral, "Hello.");
-~chatnpc(default, "Hello traveller. Have a look at my latest range of|gnome fashion. Rometti is the ultimate label in gnome|high society.");
-~chatplayer(bored, "Really.");
-~chatnpc(neutral, "Pastels are all the rage this season.");
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,default>Hello traveller. Have a look at my latest range of|gnome fashion. Rometti is the ultimate label in gnome|high society.");
+~chatplayer("<p,bored>Really.");
+~chatnpc("<p,neutral>Pastels are all the rage this season.");
 def_int $choice = ~p_choice2("I've no time for fashion.", 1, "OK then, let's have a look.", 2);
 if ($choice = 1) {
-    ~chatplayer(neutral, "I've no time for fashion.");
-    ~chatnpc(neutral, "Hmm... I did wonder.");
+    ~chatplayer("<p,neutral>I've no time for fashion.");
+    ~chatnpc("<p,neutral>Hmm... I did wonder.");
     return;
 }
-~chatplayer(neutral, "OK then, let's have a look.");
+~chatplayer("<p,neutral>OK then, let's have a look.");
 ~openshop_activenpc;

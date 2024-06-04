@@ -1,25 +1,25 @@
 [opnpc1,stankers]
-~chatnpc(happy, "Hello bold adventurer.");
+~chatnpc("<p,happy>Hello bold adventurer.");
 switch_int(~p_choice2("Are these your trucks?", 1, "Hello Mr. Stankers.", 2)) {
     case 1:
-        ~chatplayer(neutral, "Are these your trucks?");
-        ~chatnpc(happy, "Yes, I use them to transport coal over the river.|I will let other people use them too,|I'm a nice person like that...");
-        ~chatnpc(happy, "Just put coal in a truck and I'll move it down to my depot over the river.");
+        ~chatplayer("<p,neutral>Are these your trucks?");
+        ~chatnpc("<p,happy>Yes, I use them to transport coal over the river.|I will let other people use them too,|I'm a nice person like that...");
+        ~chatnpc("<p,happy>Just put coal in a truck and I'll move it down to my depot over the river.");
     case 2:
-        ~chatplayer(happy, "Hello Mr. Stankers.");
-        ~chatnpc(neutral, "Would you like a poison chalice?");
+        ~chatplayer("<p,happy>Hello Mr. Stankers.");
+        ~chatnpc("<p,neutral>Would you like a poison chalice?");
         @multi3("Yes please.", stankers_yes, "What's a poison chalice?", stankers_what, "No thank you.", stankers_no);
 }
 
 [label,stankers_yes]
-~chatplayer(happy, "Yes please.");
+~chatplayer("<p,happy>Yes please.");
 inv_add(inv, poison_chalice, 1);
 mes("Stankers hands you a glass of strangely coloured liquid...");
 
 [label,stankers_what]
-~chatplayer(confused, "What's a poison chalice?");
-~chatnpc(neutral, "It's an exciting drink I've invented.|I don't know what it tastes like,|I haven't tried it myself.");
+~chatplayer("<p,confused>What's a poison chalice?");
+~chatnpc("<p,neutral>It's an exciting drink I've invented.|I don't know what it tastes like,|I haven't tried it myself.");
 @multi2("Yes please.", stankers_yes, "No thank you.", stankers_no);
 
 [label,stankers_no]
-~chatplayer(neutral, "No thank you.");
+~chatplayer("<p,neutral>No thank you.");

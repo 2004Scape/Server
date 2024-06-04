@@ -2,8 +2,8 @@
 p_arrivedelay;
 if(%itgronigen_progress < ^itgronigen_complete) {
     // dialogue doesn't exist on OSRS
-    ~chatnpc_specific(nc_name(observatory_assistant), observatory_assistant, neutral, "Take great care down there.|Remember the goblins have taken over the cavern.");
-    ~chatplayer(neutral, "Oh, okay thanks for the warning.");
+    ~chatnpc_specific(nc_name(observatory_assistant), observatory_assistant, "<p,neutral>Take great care down there.|Remember the goblins have taken over the cavern.");
+    ~chatplayer("<p,neutral>Oh, okay thanks for the warning.");
     if_close;
 }
 anim(human_pickupfloor, 0);
@@ -134,7 +134,7 @@ if(%keepdoor_unlocked = 0) {
     inv_del(inv, keep_key, 1);
 }
 if(coordz(coord) < coordz(loc_coord)) { 
-    ~chatplayer(neutral, "I'd better be quick,|there may be more guards about.");
+    ~chatplayer("<p,neutral>I'd better be quick,|there may be more guards about.");
 }   
 
 [oploc1,loc_2210]
@@ -143,7 +143,7 @@ switch_int(%itgronigen_progress) {
     case ^itgronigen_complete, ^itgronigen_claimed_wine: @observatory_telescope;
     case ^itgronigen_sent_telescope:
         if (npc_find(coord, observatory_professor_tower, 7, 0) = true) {
-            ~chatnpc(happy, "Well done, well done!!|Let's see what the stars have in store for us today.");
+            ~chatnpc("<p,happy>Well done, well done!!|Let's see what the stars have in store for us today.");
             @observatory_telescope;
         }
     case default: mes("It seems the telescope is not operational at the moment.");
@@ -196,54 +196,54 @@ if (npc_find(coord, observatory_professor_tower, 7, 0) = false) {
 }
 switch_int(~p_choice2("I can see a constellation.", 1, "What am I looking at?", 2)) {
     case 1:
-        ~chatplayer(happy, "I can see a constellation.");
-        ~chatnpc(happy, "Yes, with this device|the heavens are opened to us...");
+        ~chatplayer("<p,happy>I can see a constellation.");
+        ~chatnpc("<p,happy>Yes, with this device|the heavens are opened to us...");
         @constellation_reward($constellation_numb);
     case 2:
-        ~chatplayer(quiz, "What am I looking at?");
-        ~chatnpc(happy, "This is the revealed sky.");
+        ~chatplayer("<p,quiz>What am I looking at?");
+        ~chatnpc("<p,happy>This is the revealed sky.");
         @constellation_reward($constellation_numb);
 }
 
 [label,constellation_reward](int $constellation_numb)
-~chatnpc(happy, "The constellation you saw was...");
+~chatnpc("<p,happy>The constellation you saw was...");
 switch_int($constellation_numb) {
     case ^sign_capricorn: 
-        ~chatnpc(happy, "Capricorn the goat.|You are granted an increase in strength.");
+        ~chatnpc("<p,happy>Capricorn the goat.|You are granted an increase in strength.");
         givexp(strength, 8750);
     case ^sign_virgo: 
-        ~chatnpc(happy, "Virgo the virtuous.|The strong and peaceful nature of Virgo boosts your defence.");
+        ~chatnpc("<p,happy>Virgo the virtuous.|The strong and peaceful nature of Virgo boosts your defence.");
         givexp(defence, 8750);
     case ^sign_libra: 
         // https://web.archive.org/web/20050521225136/http://www.runeweb.net/index.php?page=rs2-quest-observator mentions it in text
-        ~chatnpc(happy, "Libra the scales.|The scales of justice award you with law runes.");
+        ~chatnpc("<p,happy>Libra the scales.|The scales of justice award you with law runes.");
         inv_add(inv, lawrune, 3);
     case ^sign_aquarius: 
-        ~chatnpc(happy, "Aquarius the water-bearer.|The Gods of water award you with water runes.");
+        ~chatnpc("<p,happy>Aquarius the water-bearer.|The Gods of water award you with water runes.");
         inv_add(inv, waterrune, 25);
     case ^sign_scorpio: 
-        ~chatnpc(happy, "Scorpio the scorpion.|The scorpion gives you poison from it's sting.");
+        ~chatnpc("<p,happy>Scorpio the scorpion.|The scorpion gives you poison from it's sting.");
         inv_add(inv, weapon_poison, 1);
     case ^sign_leo: 
-        ~chatnpc(happy, "Leo the lion.|The power of the lion has increased your hitpoints.");
+        ~chatnpc("<p,happy>Leo the lion.|The power of the lion has increased your hitpoints.");
         givexp(hitpoints, 8750);
     case ^sign_aries: 
-        ~chatnpc(happy, "Aries the ram.|The ram's strength improves your attack abilites.");
+        ~chatnpc("<p,happy>Aries the ram.|The ram's strength improves your attack abilites.");
         givexp(attack, 8750);
     case ^sign_sagittarius: 
-        ~chatnpc(happy, "Sagittarius the Centaur.|The Gods award you a maple longbow.");
+        ~chatnpc("<p,happy>Sagittarius the Centaur.|The Gods award you a maple longbow.");
         inv_add(inv, maple_longbow, 1);
     case ^sign_gemini: 
-        ~chatnpc(happy, "Gemini the twins.|The double nature of Gemini awards you a two-handed weapon.");
+        ~chatnpc("<p,happy>Gemini the twins.|The double nature of Gemini awards you a two-handed weapon.");
         inv_add(inv, black_2h_sword, 1);
     case ^sign_pisces:
-        ~chatnpc(happy, "Pisces the fish.|The gods rain food from the sea on you.");
+        ~chatnpc("<p,happy>Pisces the fish.|The gods rain food from the sea on you.");
         inv_add(inv, tuna, 3);
     case ^sign_taurus: 
-        ~chatnpc(happy, "Taurus the bull.|You are given the strength of a bull.");
+        ~chatnpc("<p,happy>Taurus the bull.|You are given the strength of a bull.");
         inv_add(inv, 1dose2strength, 1);
     case ^sign_cancer:
-        ~chatnpc(happy, "Cancer the crab.|The armoured crab gives you an amulet of defence.");
+        ~chatnpc("<p,happy>Cancer the crab.|The armoured crab gives you an amulet of defence.");
         inv_add(inv, amulet_of_defence, 1);
 }
 givexp(crafting, 22500);

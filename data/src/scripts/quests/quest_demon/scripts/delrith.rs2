@@ -55,20 +55,20 @@ while (npc_findnext = true) {
 
 p_stopaction;
 p_delay(1);
-~chatplayer(neutral, "Now what was that incantation again?");
+~chatplayer("<p,neutral>Now what was that incantation again?");
 def_int $option = ~p_choice4("Carlem Gabindo Purchai Zaree Camerinthum", 1, "Purchai Zaree Gabindo Carlem Camerinthum", 2, "Purchai Camerinthum Aber Gabindo Carlem", 3, "Carlem Aber Camerinthum Purchai Gabindo", 4);
 
 if ($option = 1) {
-    ~chatplayer(happy, "Carlem Gabindo Purchai Zaree Camerinthum");
+    ~chatplayer("<p,happy>Carlem Gabindo Purchai Zaree Camerinthum");
     @demon_slayer_wrong_incantation;
 } else if ($option = 2) {
-    ~chatplayer(happy, "Purchai Zaree Gabindo Carlem Camerinthum");
+    ~chatplayer("<p,happy>Purchai Zaree Gabindo Carlem Camerinthum");
     @demon_slayer_wrong_incantation;
 } else if ($option = 3) {
-    ~chatplayer(happy, "Purchai Camerinthum Aber Gabindo Carlem");
+    ~chatplayer("<p,happy>Purchai Camerinthum Aber Gabindo Carlem");
     @demon_slayer_wrong_incantation;
 } else if ($option = 4) {
-    ~chatplayer(happy, "Carlem Aber Camerinthum Purchai Gabindo");
+    ~chatplayer("<p,happy>Carlem Aber Camerinthum Purchai Gabindo");
     @demon_slayer_correct_incantation;
 }
 

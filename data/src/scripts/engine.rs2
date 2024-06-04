@@ -19,7 +19,7 @@
 [command,distance](coord $coord1, coord $coord2)(int)
 [command,movecoord](coord $coord, int $x, int $y, int $z)(coord)
 [command,seqlength](seq $seq)(int)
-[command,split_init](string $text, int $width, int $lines, fontmetrics $font, mesanim $chathead)
+[command,split_init](string $text, int $width, int $lines, fontmetrics $font)
 [command,split_pagecount]()(int)
 [command,split_get](int $page, int $line)(string)
 [command,split_linecount](int $page)(int)

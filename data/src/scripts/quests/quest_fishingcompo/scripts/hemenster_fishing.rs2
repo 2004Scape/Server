@@ -155,7 +155,7 @@ p_opnpc(2);
 [proc,in_hemenster_comp](boolean)
 if (%hemenster_comp_stage = ^hemenster_comp_not_entered) { // Havn't entered the competition yet
     if(npc_find(coord, bonzo, 12, 0) = true) {
-        ~chatnpc(happy, "Hey, you need to pay to enter the competition first! Only 5 gp entrance fee!");
+        ~chatnpc("<p,happy>Hey, you need to pay to enter the competition first! Only 5 gp entrance fee!");
         mes("Talk to Bonzo to pay the entrance fee.");
     }
     return (false);
@@ -166,7 +166,7 @@ if (%hemenster_comp_stage = ^hemenster_comp_not_entered) { // Havn't entered the
     return (false);
 }else if (%hemenster_comp_stage = ^hemenster_comp_all_fish_caught) { // 3 fish caught 
     if(npc_find(coord, bonzo, 12, 0) = true) {
-        ~chatnpc(happy, "Okay folks, time's up!|Let's see who caught the biggest fish!");
+        ~chatnpc("<p,happy>Okay folks, time's up!|Let's see who caught the biggest fish!");
         @bonzo_handover_catch;
     }
     return (false);

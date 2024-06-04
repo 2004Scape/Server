@@ -1,13 +1,13 @@
 [opnpc1,jiminua]
-~chatnpc(default, "Welcome to the Jungle Store.|Can I help you at all?");
+~chatnpc("<p,default>Welcome to the Jungle Store.|Can I help you at all?");
 
 def_int $option = ~p_choice2("Yes please. What are you selling?", 1, "No thanks.", 2);
 
 switch_int ($option) {
     case 1:
-    ~chatplayer(default, "Yes please. What are you selling?");
+    ~chatplayer("<p,default>Yes please. What are you selling?");
     ~openshop_activenpc;
 
     case 2:
-    ~chatplayer(default, "No thanks.");
+    ~chatplayer("<p,default>No thanks.");
 }

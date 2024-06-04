@@ -77,14 +77,14 @@ if($dist > 0) {
 [oploc1,loc_153]
 if(%manor_fountain_poisoned = 1) {
     if(inv_total(inv, pressure_gauge) = 0 & %haunted_progress < ^haunted_complete) {
-        ~chatplayer(quiz, "There seems to be a pressure gauge in here.|There are also some dead fish.");
+        ~chatplayer("<p,quiz>There seems to be a pressure gauge in here.|There are also some dead fish.");
         ~mesbox("You get the pressure gauge from the fountain.");
         inv_add(inv, pressure_gauge, 1);
     } else {
         ~mesbox("It's full of dead fish!"); // same message as OSRS but should probably be a mesbox according to rsc
     }
 } else {
-    ~chatplayer(quiz, "There seems to be a pressure gauge in here.|There are a lot of pirhanas in there though.|I can't get the gauge out.");
+    ~chatplayer("<p,quiz>There seems to be a pressure gauge in here.|There are a lot of pirhanas in there though.|I can't get the gauge out.");
 }
 
 [opheldu,poison]

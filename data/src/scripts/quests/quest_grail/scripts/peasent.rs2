@@ -1,5 +1,5 @@
 [opnpc1,peasent_unhappy]
-~chatnpc(sad, "Woe is me!|Our crops are all failing...|how shall I feed myself this winter?");
+~chatnpc("<p,sad>Woe is me!|Our crops are all failing...|how shall I feed myself this winter?");
 
 [opnpc1,peasent_happy]
-~chatnpc(happy, "Oh happy day!|Suddenly our crops are growing again!|It'll be a bumper harvest this year!");
+~chatnpc("<p,happy>Oh happy day!|Suddenly our crops are growing again!|It'll be a bumper harvest this year!");

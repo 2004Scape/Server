@@ -1,5 +1,5 @@
 [opnpc1,bartender_brimhaven]
-~chatnpc(laugh, "Yohoho me hearty what would you like to drink?");
+~chatnpc("<p,laugh>Yohoho me hearty what would you like to drink?");
 def_int $option;
 if(testbit(%barcrawl_progress, ^deadman_index) = false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice4("Nothing, thank you.", 1, "A pint of Grog please.", 2, "A bottle of rum please.", 3, "I'm doing Alfred Grimhand's barcrawl.", 4);
@@ -7,22 +7,22 @@ if(testbit(%barcrawl_progress, ^deadman_index) = false & inv_total(inv, barcrawl
     $option = ~p_choice3("Nothing, thank you.", 1, "A pint of Grog please.", 2, "A bottle of rum please.", 3);
 }
 switch_int ($option) {
-    case 1: ~chatplayer(neutral, "Nothing, thank you.");
+    case 1: ~chatplayer("<p,neutral>Nothing, thank you.");
     case 2: 
-        ~chatplayer(happy, "A pint of Grog please.");
-        ~chatnpc(happy, "One grog coming right up, that'll be three coins.");
+        ~chatplayer("<p,happy>A pint of Grog please.");
+        ~chatnpc("<p,happy>One grog coming right up, that'll be three coins.");
         if (inv_total(inv, coins) < 3) {
-            ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+            ~chatplayer("<p,sad>Oh dear. I don't seem to have enough money.");
             return;
         } 
         inv_del(inv, coins, 3);
         inv_add(inv, grog, 1);
         mes("You buy a pint of Grog.");
     case 3: 
-        ~chatplayer(happy, "A bottle of rum please.");
-        ~chatnpc(happy, "That'll be 27 coins.");
+        ~chatplayer("<p,happy>A bottle of rum please.");
+        ~chatnpc("<p,happy>That'll be 27 coins.");
         if (inv_total(inv, coins) < 3) {
-            ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+            ~chatplayer("<p,sad>Oh dear. I don't seem to have enough money.");
             return;
         } 
         inv_del(inv, coins, 27);
@@ -37,10 +37,10 @@ if(testbit(%barcrawl_progress, ^deadman_index) = false & last_useitem = barcrawl
 }
 
 [label,deadman_barcrawl]
-~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
-~chatnpc(happy, "Haha time to be breaking out the old Supergrog.|That'll be 15 coins please.");
+~chatplayer("<p,happy>I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc("<p,happy>Haha time to be breaking out the old Supergrog.|That'll be 15 coins please.");
 if(inv_total(inv, coins) < 15) {
-    ~chatplayer(sad, "Sorry I don't have 15 coins.");
+    ~chatplayer("<p,sad>Sorry I don't have 15 coins.");
     return;
 }
 if_close;

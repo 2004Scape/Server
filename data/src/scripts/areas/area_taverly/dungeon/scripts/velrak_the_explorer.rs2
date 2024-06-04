@@ -1,25 +1,25 @@
 [opnpc1,velrak_the_explorer]
 if(inv_total(inv, dusty_key) > 0) {
-    ~chatplayer(quiz, "Are you still here?");
-    ~chatnpc(sad, "Yes... I'm still plucking up the courage|to run out past those Black Knights..");
+    ~chatplayer("<p,quiz>Are you still here?");
+    ~chatnpc("<p,sad>Yes... I'm still plucking up the courage|to run out past those Black Knights..");
     return;
 }
-~chatnpc(happy, "Thank you for rescuing me!|It isn't very comfy in this cell!");
+~chatnpc("<p,happy>Thank you for rescuing me!|It isn't very comfy in this cell!");
 def_int $option = ~p_choice2("So... do you know anywhere good to explore?", 1, "Do I get a reward?", 2);
 if($option = 1) {
-    ~chatplayer(quiz, "So... do you know anywhere good to explore?");
-    ~chatnpc(sad, "Well, this dungeon was quite good to explore|...until I got captured, anyway.|I was given a key to an inner part of this dungeon|by a mysterious cloaked stranger!");
-    ~chatnpc(sad, "It's rather tough for me to get that far into the dungeon however... I just keep getting captured!|Would you like to give it a go?");
+    ~chatplayer("<p,quiz>So... do you know anywhere good to explore?");
+    ~chatnpc("<p,sad>Well, this dungeon was quite good to explore|...until I got captured, anyway.|I was given a key to an inner part of this dungeon|by a mysterious cloaked stranger!");
+    ~chatnpc("<p,sad>It's rather tough for me to get that far into the dungeon however... I just keep getting captured!|Would you like to give it a go?");
     $option = ~p_choice2("Yes please!", 1, "Do I get a reward?", 2);
     if($option = 1) {
-        ~chatplayer(happy, "Yes please!");
+        ~chatplayer("<p,happy>Yes please!");
         inv_add(inv, dusty_key, 1);
         ~mesbox("Velrak reaches somewhere mysterious and passes you a key.");
     } else if($option = 2) {
-        ~chatplayer(confused, "No, it's too dangerous for me too.");
-        ~chatnpc(neutral, "I don't blame you!");
+        ~chatplayer("<p,confused>No, it's too dangerous for me too.");
+        ~chatnpc("<p,neutral>I don't blame you!");
     }
 } else if($option = 2) {
-    ~chatplayer(quiz, "Do I get a reward? For freeing you and all...");
-    ~chatnpc(sad, "Well... not really... The Black Knights took all of my stuff before throwing me in here to rot!");
+    ~chatplayer("<p,quiz>Do I get a reward? For freeing you and all...");
+    ~chatnpc("<p,sad>Well... not really... The Black Knights took all of my stuff before throwing me in here to rot!");
 }

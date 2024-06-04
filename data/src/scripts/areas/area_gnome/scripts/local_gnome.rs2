@@ -1,22 +1,22 @@
 [opnpc1,local_gnome]
 switch_int(%tree_progress) {
     case ^tree_retrieved_orb:
-        ~chatplayer(neutral, "Hello little man.");
-        ~chatnpc(happy, "Little man stronger than big man. Hee hee, lardi dee, lardi da.");
+        ~chatplayer("<p,neutral>Hello little man.");
+        ~chatnpc("<p,happy>Little man stronger than big man. Hee hee, lardi dee, lardi da.");
     case ^tree_returned_first_orb:
-        ~chatplayer(neutral, "Hi.");
-        ~chatnpc(happy, "Must save the orbs and kill the Khazard warlord.|That will be fun, hee hee.");
+        ~chatplayer("<p,neutral>Hi.");
+        ~chatnpc("<p,happy>Must save the orbs and kill the Khazard warlord.|That will be fun, hee hee.");
     case ^tree_defeated_warlord:
-        ~chatplayer(neutral, "Hello gnome.");
-        ~chatnpc(happy, "Soon we're gonna have the sacred ceremony|and boy am I going to party.|Lock up your daughters.|Hee hee.");
+        ~chatplayer("<p,neutral>Hello gnome.");
+        ~chatnpc("<p,happy>Soon we're gonna have the sacred ceremony|and boy am I going to party.|Lock up your daughters.|Hee hee.");
     case ^tree_complete:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(happy, "You're the best!");
-        ~chatplayer(happy, "Thanks.");
-        ~chatnpc(happy, "Well I'm better. Hee hee.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,happy>You're the best!");
+        ~chatplayer("<p,happy>Thanks.");
+        ~chatnpc("<p,happy>Well I'm better. Hee hee.");
     case default:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(happy, "Lardi dee, lardi da.");
-        ~chatplayer(confused, "Are you alright?");
-        ~chatnpc(happy, "Hee hee, lardi da, lardi dee.|@whi@(The gnome appears to be singing.)");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,happy>Lardi dee, lardi da.");
+        ~chatplayer("<p,confused>Are you alright?");
+        ~chatnpc("<p,happy>Hee hee, lardi da, lardi dee.|@whi@(The gnome appears to be singing.)");
 }

@@ -1,7 +1,7 @@
 [opnpc1,fortress_guard]
 if ((inv_getobj(worn, ^wearpos_hat) ! bronze_med_helm) | (inv_getobj(worn, ^wearpos_torso) ! iron_chainbody)) {
-    ~chatnpc(angry, "Get lost. This is private property.");
+    ~chatnpc("<p,angry>Get lost. This is private property.");
 } else {
-    ~chatnpc(angry, "Hey! Get back on duty!");
-    ~chatplayer(confused, "Uh...");
+    ~chatnpc("<p,angry>Hey! Get back on duty!");
+    ~chatplayer("<p,confused>Uh...");
 }

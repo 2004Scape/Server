@@ -2,6 +2,7 @@ import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
 import ParamType from '#lostcity/cache/ParamType.js';
 import StructType from '#lostcity/cache/StructType.js';
 import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import MesanimType from '#lostcity/cache/MesanimType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -191,13 +192,22 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SPLIT_INIT]: state => {
-        const [maxWidth, linesPerPage, fontId, mesanimId] = state.popInts(4);
-        const text = state.popString();
+        const [maxWidth, linesPerPage, fontId] = state.popInts(3);
+        let text = state.popString();
+
         const font = check(fontId, FontTypeValid);
-        const lines = font.split(text, maxWidth);
+
+        // todo: later this needs to lookup by <p=id> instead of <p,name>
+        if (text.startsWith('<p,') && text.indexOf('>') !== -1) {
+            const mesanim = text.substring(3, text.indexOf('>'));
+            state.splitMesanim = MesanimType.getId(mesanim);
+            text = text.substring(text.indexOf('>') + 1);
+        } else {
+            state.splitMesanim = -1;
+        }
 
         state.splitPages = [];
-        state.splitMesanim = mesanimId;
+        const lines = font.split(text, maxWidth);
         while (lines.length > 0) {
             state.splitPages.push(lines.splice(0, linesPerPage));
         }

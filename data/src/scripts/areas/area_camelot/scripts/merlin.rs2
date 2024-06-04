@@ -1,31 +1,31 @@
 [opnpc1,merlin_arthur]
-~chatplayer(happy, "Hello.");
-~chatnpc(confused, "Excuse me for rushing off like this,|but I must get back to my workroom.");
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,confused>Excuse me for rushing off like this,|but I must get back to my workroom.");
 npc_del;
 
 [opnpc1,merlin_workshop]
 switch_int (%grail_progress) {
     case ^grail_complete: 
-        ~chatnpc(happy, "Congratulations, brave knight, on aiding Camelot in so many ways! If we ever require help again, I will make sure to call upon you!");
-        ~chatplayer(happy, "Thanks!");
-    case ^grail_given_whistle: ~chatnpc(happy, "My magic powers tell me that you have discovered the Grail! Take it to Arthur immediately!");
+        ~chatnpc("<p,happy>Congratulations, brave knight, on aiding Camelot in so many ways! If we ever require help again, I will make sure to call upon you!");
+        ~chatplayer("<p,happy>Thanks!");
+    case ^grail_given_whistle: ~chatnpc("<p,happy>My magic powers tell me that you have discovered the Grail! Take it to Arthur immediately!");
     case default:
-        ~chatplayer(neutral, "Hello. King Arthur has sent me on a quest for the Holy Grail. He thought you could offer some assistance.");
-        ~chatnpc(happy, "Ah yes... the Holy Grail...");
-        ~chatnpc(happy, "That is a powerful artefact indeed.|Returning it here would help Camelot a lot.");
-        ~chatnpc(happy, "Due to its nature the Holy Grail is likely to reside in a holy place.");
-        ~chatplayer(quiz, "Any suggestions?");
-        ~chatnpc(quiz, "I believe there is a holy island somewhere not far away... I'm not entirely sure... I spent too long inside that crystal! Anyway, go and talk to someone over there.");
+        ~chatplayer("<p,neutral>Hello. King Arthur has sent me on a quest for the Holy Grail. He thought you could offer some assistance.");
+        ~chatnpc("<p,happy>Ah yes... the Holy Grail...");
+        ~chatnpc("<p,happy>That is a powerful artefact indeed.|Returning it here would help Camelot a lot.");
+        ~chatnpc("<p,happy>Due to its nature the Holy Grail is likely to reside in a holy place.");
+        ~chatplayer("<p,quiz>Any suggestions?");
+        ~chatnpc("<p,quiz>I believe there is a holy island somewhere not far away... I'm not entirely sure... I spent too long inside that crystal! Anyway, go and talk to someone over there.");
         if(%grail_progress = ^grail_started) {
             %grail_progress = ^grail_spoken_merlin;
         }
-        ~chatnpc(happy, "I suppose you could also try speaking to Sir Galahad?");
-        ~chatnpc(happy, "He returned from the quest many years after everyone else. He seems to know something about it, but he can only speak about those experiences cryptically.");
+        ~chatnpc("<p,happy>I suppose you could also try speaking to Sir Galahad?");
+        ~chatnpc("<p,happy>He returned from the quest many years after everyone else. He seems to know something about it, but he can only speak about those experiences cryptically.");
         switch_int(~p_choice2("Thank you for the advice.", 1, "Where can I find Sir Galahad?", 2)) {
             case 1:
-                ~chatplayer(neutral, "Thank you for the advice.");
+                ~chatplayer("<p,neutral>Thank you for the advice.");
             case 2:
-                ~chatplayer(quiz, "Where can I find Sir Galahad?");
-                ~chatnpc(happy, "Galahad now lives a life of religious contemplation. He lives somewhere west of McGrubor's Wood I think.");
+                ~chatplayer("<p,quiz>Where can I find Sir Galahad?");
+                ~chatnpc("<p,happy>Galahad now lives a life of religious contemplation. He lives somewhere west of McGrubor's Wood I think.");
         }
 }
