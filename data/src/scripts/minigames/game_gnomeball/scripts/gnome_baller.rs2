@@ -1,24 +1,31 @@
-[ai_opplayer2,gnome_baller1] @gnome_baller_tackle;
-[ai_opplayer2,gnome_baller5] @gnome_baller_tackle;
-[ai_opplayer2,gnome_baller9] @gnome_baller_tackle;
+[ai_opplayer2,gnome_baller1] @npc_gnomeball_tackle;
+[ai_opplayer2,gnome_baller2] npc_setmode(null);
+[ai_opplayer2,gnome_baller3] npc_setmode(null);
+[ai_opplayer2,gnome_baller4] npc_setmode(null);
+[ai_opplayer2,gnome_baller5] @npc_gnomeball_tackle;
+[ai_opplayer2,gnome_baller6] npc_setmode(null);
+[ai_opplayer2,gnome_baller7] npc_setmode(null);
+[ai_opplayer2,gnome_baller8] npc_setmode(null);
+[ai_opplayer2,gnome_baller9] @npc_gnomeball_tackle;
+[ai_opplayer2,gnome_baller10] npc_setmode(null);
+[ai_opplayer2,gnome_baller11] npc_setmode(null);
+[ai_opplayer2,gnome_baller12] npc_setmode(null);
 
-[label,gnome_baller_tackle]
+[label,npc_gnomeball_tackle]
 npc_setmode(null);
 if (%npc_action_delay > map_clock | ~npc_can_attack_player = false) {
     return;
 }
 if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
     if_close;
-    if (random(2) = 0) {
-        ~gnomeball_tackle_fail;
+    if (random(2) = 0) { // 50% guess for now
+        ~npc_gnomeball_tackle_fail;
     } else if (p_finduid(uid) = true) {
-        ~gnomeball_tackle_success;
+        ~npc_gnomeball_tackle_success;
     }
 }
 
-
-
-[proc,gnomeball_tackle_fail]
+[proc,npc_gnomeball_tackle_fail]
 def_npc $old = npc_type;
 npc_anim(midget_seq_207, 0);
 npc_changetype(npc_param(gnome_fallen));
@@ -27,7 +34,7 @@ npc_changetype($old);
 npc_anim(midget_seq_209, 0);
 npc_delay(1);
 
-[proc,gnomeball_tackle_success]
+[proc,npc_gnomeball_tackle_success]
 queue(damage_player, 0, randominc(3));
 anim(seq_779, 0);
 npc_changetype(npc_param(gnome_hasball));
@@ -35,3 +42,54 @@ npc_anim(midget_seq_210, 0);
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(gnomeball);
 npc_setmode(wander);
+
+
+[opnpc1,gnome_baller1] @player_gnomeball_tackle;
+[opnpc1,gnome_baller5] @player_gnomeball_tackle;
+[opnpc1,gnome_baller9] @player_gnomeball_tackle;
+
+[label,player_gnomeball_tackle]
+if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
+    mes("You may not tackle when you have a ball.");
+    return;
+}
+p_delay(0);
+if (random(2) = 0) { // 50% guess for now
+    ~player_gnomeball_tackle_success(npc_type);
+} else {
+    ~player_gnomeball_tackle_fail;
+}
+
+
+[proc,player_gnomeball_tackle_fail]
+anim(seq_780, 33);
+npc_anim(midget_seq_204, 33);
+// SoundEffect(name = "gnomeball_tackled_gnome_miss")
+
+[proc,player_gnomeball_tackle_success](npc $old)
+anim(seq_778, 33);
+npc_anim(midget_seq_203, 30);
+// SoundEffect(name = "gnomeball_tackled_gnome")
+npc_setmode(none);
+p_delay(1);
+npc_changetype(nc_param($old, gnome_tackled));
+npc_delay(10);
+npc_setmode(null);
+npc_changetype($old);
+npc_anim(midget_seq_206, 0);
+
+
+[opnpc1,gnome_baller2] @player_gnomeball_tackle_carrier;
+[opnpc1,gnome_baller6] @player_gnomeball_tackle_carrier;
+[opnpc1,gnome_baller10] @player_gnomeball_tackle_carrier;
+
+[label,player_gnomeball_tackle_carrier]
+p_delay(0);
+if (random(2) = 0) { // 50% guess for now
+    inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
+    ~update_all(gnomeball);
+    npc_changetype(npc_param(gnome_hasball));
+    ~player_gnomeball_tackle_success(npc_type);
+} else {
+    ~player_gnomeball_tackle_fail;
+}
