@@ -394,6 +394,9 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.QUEUE2]: {
+        require: ['active_player2']
+    },
     [ScriptOpcode.SAY]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -405,12 +408,18 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.WALKTRIGGER2]: {
+        require: ['active_player2']
+    },
     [ScriptOpcode.GETWALKTRIGGER]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
     [ScriptOpcode.SETTIMER]: {
         require: ['active_player']
+    },
+    [ScriptOpcode.SETTIMER2]: {
+        require: ['active_player2']
     },
     [ScriptOpcode.SOFTTIMER]: {
         require: ['active_player']

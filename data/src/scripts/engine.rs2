@@ -150,6 +150,7 @@
 [command,.softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
+[command,settimer2] // todo: will become .settimer later
 [command,cleartimer](timer $timer)
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
@@ -158,7 +159,7 @@
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
-[command,.queue](queue $queue, int $delay)
+[command,queue2](queue $queue, int $delay) // todo: will become .queue later
 [command,busy]()(boolean)
 [command,.busy]()(boolean)
 [command,busy2]()(boolean)
@@ -200,7 +201,7 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,walktrigger](walktrigger $trigger)
-[command,.walktrigger](walktrigger $trigger)
+[command,walktrigger2](walktrigger $trigger) // todo: will become .walktrigger later
 [command,getwalktrigger]()(walktrigger)
 [command,.getwalktrigger]()(walktrigger)
 [command,clearqueue](queue $queue)

@@ -174,7 +174,7 @@ if ($amount > 0) {
 //     .queue(player_death, 0);
 // }
 if (.stat(hitpoints) = 0){
-    .say("Pvp death is not implimented. Need support for .queue.");
+    .say("Pvp death is not implemented. Need support for .queue.");
 } 
 
 

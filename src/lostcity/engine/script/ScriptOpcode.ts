@@ -160,8 +160,8 @@ enum ScriptOpcode {
     P_WALK, // official
     PLAYER_FINDALLZONE, // todo: replace with huntall
     PLAYER_FINDNEXT, // todo: replace with huntnext
-    QUEUE,
-    SAY,
+    QUEUE, // official
+    SAY, // official
     WALKTRIGGER, // official
     SETTIMER,
     SOFTTIMER, // official
@@ -183,6 +183,9 @@ enum ScriptOpcode {
     P_CLEARPENDINGACTION, // official
     GETWALKTRIGGER, // official
     BUSY2, // official
+    QUEUE2, // workaround until .queue is supported in compiler
+    SETTIMER2, // workaround until .settimer is supported in compiler
+    WALKTRIGGER2, // workaround until .walktrigger is supported in compiler
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official

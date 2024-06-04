@@ -48,13 +48,11 @@ anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 .sound_synth(.%com_attacksound, 0, 0);
 
-// todo: queue these
+queue2(pvp_retaliate, calc($delay / 30), uid);
 if (.p_finduid(.uid) = true) {
-    ~.pvp_retaliate(uid);
-    ~.pvp_damage_player($damage);
+    ~.pvp_damage($damage);
 }
-// .queue(.pvp_retaliate, uid, calc($delay / 30));
-// .queue(.pvp_damage, uid, $damage, calc($delay / 30));
+// queue2(pvp_damage, calc($delay / 30), $damage);
 
 .anim(.%com_defendanim, 20);
 // .sound_synth(.%com_defendsound, 0, 20);
