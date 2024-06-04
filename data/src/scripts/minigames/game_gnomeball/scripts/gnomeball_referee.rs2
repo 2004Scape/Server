@@ -27,7 +27,6 @@ npc_say("Peeeeeeeeeep");
 sound_synth(whistle, 0, 0);
 mes("The ref throws the ball into the air.");
 ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 60, 30, 11, 0);
-if_settab(gnomeball, 0);
 anim(seq_782, 27);
 p_delay(0);
 mes("You jump up and catch it.");

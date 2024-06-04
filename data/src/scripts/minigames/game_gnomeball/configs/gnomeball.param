@@ -9,3 +9,7 @@ default=null
 [gnome_hasball]
 type=npc
 default=null
+
+[gnome_original]
+type=npc
+default=null
