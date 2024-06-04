@@ -433,7 +433,7 @@ export default class Player extends PathingEntity {
 
         if (
             repathAllowed &&
-            this.target instanceof PathingEntity && this.isLastOrNoWaypoint() && (this.targetX !== this.target.x || this.targetZ !== this.target.z) &&
+            this.target instanceof PathingEntity && this.isLastWaypoint() && (this.targetX !== this.target.x || this.targetZ !== this.target.z) &&
             !this.interacted && this.walktrigger === -1
         ) {
             this.pathToTarget();
@@ -684,6 +684,23 @@ export default class Player extends PathingEntity {
                 this.runScript(script, timer.type === PlayerTimerType.NORMAL);
             }
         }
+    }
+
+    // clear current interaction and walk queue
+    stopAction() {
+        this.clearInteraction();
+        this.closeModal();
+        this.unsetMapFlag();
+    }
+
+    // clear current interaction but leave walk queue intact
+    clearPendingAction() {
+        this.clearInteraction();
+        this.closeModal();
+    }
+
+    hasInteraction() {
+        return this.target !== null;
     }
 
     getOpTrigger() {

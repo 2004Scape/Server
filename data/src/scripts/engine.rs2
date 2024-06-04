@@ -161,6 +161,8 @@
 [command,.queue](queue $queue, int $delay)
 [command,busy]()(boolean)
 [command,.busy]()(boolean)
+[command,busy2]()(boolean)
+[command,.busy2]()(boolean)
 [command,getqueue](queue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]

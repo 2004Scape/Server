@@ -52,6 +52,10 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.BUSY2]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.CAM_LOOKAT]: {
         require: ['active_player'],
         require2: ['active_player2']

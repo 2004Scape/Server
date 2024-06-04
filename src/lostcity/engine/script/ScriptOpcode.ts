@@ -182,6 +182,7 @@ enum ScriptOpcode {
     SETIDKIT,
     P_CLEARPENDINGACTION, // official
     GETWALKTRIGGER, // official
+    BUSY2, // official
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official

@@ -1,5 +1,5 @@
 [queue,playerhit_n_retaliate](npc_uid $nid)
-if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~npc_is_attackable(npc_type) = true) {
+if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~npc_is_attackable(npc_type) = true & busy2 = false) {
     // npc flinches player
     if (%action_delay < map_clock) {
         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
@@ -16,6 +16,7 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~np
 
         %action_delay = add(map_clock, $delay);
     }
+
     p_opnpc(2);
 }
 
@@ -40,7 +41,7 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~np
 
 // proc for now
 [proc,.pvp_retaliate](player_uid $target_uid)
-if (.%auto_retaliate = ^player_auto_retaliate_on) {
+if (.%auto_retaliate = ^player_auto_retaliate_on & .busy2 = false) {
     // player flinches player
     if (.%action_delay < map_clock) {
         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
@@ -54,5 +55,6 @@ if (.%auto_retaliate = ^player_auto_retaliate_on) {
 
         .%action_delay = add(map_clock, $delay);
     }
+
     .p_opplayer(2);
 }
