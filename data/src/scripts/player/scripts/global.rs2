@@ -38,6 +38,8 @@ queue(macro_event_general_check, 0);
 ~set_antipoison_login;
 // if player is in a duel, they are removed from the duel
 ~duel_arena_login;
+// if player is in a gnomeball game, they login outside of the arena
+~gnomeball_login;
 
 if (%tutorial_progress < ^tutorial_complete) {
     // This is a check to not bork every account that currently has a tutorial complete progress of 5.

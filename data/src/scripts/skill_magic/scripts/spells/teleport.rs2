@@ -66,8 +66,6 @@ if (%gnomeball_progress = ^gnomeball_game_started) {
     if ($ball_worn > 0) {
         inv_del(worn, gnomeball, $ball_worn);
     }
-    if (%gnomeball_progress > ^gnomeball_not_started) {
-        %gnomeball_progress = ^gnomeball_talked_to_ref;
-    }
+    ~gnomeball_reset;
     ~update_all(inv_getobj(worn, ^wearpos_rhand));
 }

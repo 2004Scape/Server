@@ -18,9 +18,7 @@ mes(~coord_tostring(loc_coord));
 
 
 [oploc1,gnomeball_gate]
-if (%gnomeball_progress > ^gnomeball_not_started) {
-    %gnomeball_progress = ^gnomeball_talked_to_ref;
-}
+~gnomeball_reset;
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 def_boolean $exiting = ~check_axis(coord, loc_coord, loc_angle);
 if ($exiting = false) { 
@@ -67,8 +65,18 @@ if (%gnomeball_progress = ^gnomeball_game_started) {
 }
 return(false);
 
+[proc,gnomeball_reset]
+if (%gnomeball_progress > ^gnomeball_not_started) {
+    %gnomeball_progress = ^gnomeball_talked_to_ref;
+}
 
 [debugproc,gg]
 if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     mes("TRUE");
+}
+
+[proc,gnomeball_login]
+if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    p_telejump(0_37_54_14_32);
+    ~gnomeball_reset;
 }
