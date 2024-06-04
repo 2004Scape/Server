@@ -35,10 +35,7 @@ sound_synth(%com_attacksound, 0, 0);
 .sound_synth(.%com_attacksound, 0, 0);
 
 queue2(pvp_retaliate, 0, uid);
-if (.p_finduid(.uid) = true) {
-    ~.pvp_damage($damage);
-}
-// queue2(pvp_damage, calc($delay / 30), $damage);
+queue2(pvp_damage, 0, $damage);
 
 .anim(.%com_defendanim, 20);
 // .sound_synth(.%com_defendsound, 0, 20);
