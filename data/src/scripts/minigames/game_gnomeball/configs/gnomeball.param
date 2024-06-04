@@ -1,0 +1,11 @@
+[gnome_fallen]
+type=npc
+default=null
+
+[gnome_tackled]
+type=npc
+default=null
+
+[gnome_hasball]
+type=npc
+default=null

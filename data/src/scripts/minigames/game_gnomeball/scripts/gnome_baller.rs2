@@ -1,0 +1,37 @@
+[ai_applayer2,gnome_baller1] @gnome_baller_tackle;
+[ai_applayer2,gnome_baller5] @gnome_baller_tackle;
+[ai_applayer2,gnome_baller9] @gnome_baller_tackle;
+
+[label,gnome_baller_tackle]
+npc_setmode(null);
+if (%npc_action_delay > map_clock | ~npc_can_attack_player = false) {
+    return;
+}
+if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
+    if_close;
+    if (random(2) = 0) {
+        ~gnomeball_tackle_fail;
+    } else if (p_finduid(uid) = true) {
+        ~gnomeball_tackle_success;
+    }
+}
+
+
+
+[proc,gnomeball_tackle_fail]
+def_npc $old = npc_type;
+npc_anim(midget_seq_207, 0);
+npc_changetype(npc_param(gnome_fallen));
+npc_delay(5);
+npc_changetype($old);
+npc_anim(midget_seq_209, 0);
+npc_delay(1);
+
+[proc,gnomeball_tackle_success]
+queue(damage_player, 0, randominc(3));
+anim(seq_779, 0);
+npc_changetype(npc_param(gnome_hasball));
+npc_anim(midget_seq_210, 0);
+inv_delslot(worn, ^wearpos_rhand);
+~update_all(gnomeball);
+npc_setmode(wander);
