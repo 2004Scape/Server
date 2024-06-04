@@ -19,12 +19,16 @@ if (inv_total(worn, gnomeball) = 0) { // if games not in progress
 
 
 [proc,gnomeball_game_start]
+%gnomeball_progress = ^gnomeball_game_started;
+if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
+    ~chatnpc(neutral, "The ball you have in your hand is fine to play with...|Game on.");
+    return;
+}
 if_close;
 npc_say("Peeeeeeeeeep");
 sound_synth(whistle, 0, 0);
 mes("The ref throws the ball into the air.");
 ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 60, 30, 11, 0);
-%gnomeball_progress = ^gnomeball_game_started;
 if_settab(gnomeball, 0);
 anim(seq_782, 27);
 p_delay(0);
