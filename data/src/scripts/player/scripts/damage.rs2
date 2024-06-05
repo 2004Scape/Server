@@ -135,7 +135,9 @@ if ($amount > 0) {
 
 if (stat(hitpoints) = 0 & getqueue(player_death) < 1){
     queue(player_death, 0);
+    return;
 }
+~ring_of_life_check;
 
 
 [proc,human_hit_sound]

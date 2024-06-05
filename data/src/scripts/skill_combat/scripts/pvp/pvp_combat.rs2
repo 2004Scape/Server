@@ -169,8 +169,10 @@ if (stat(hitpoints) = 0) {
     } else {
         queue(pvp_death, 0, %pk_predator1); // todo dont pass this through the queue. instead use hero points to get opponent
     }
-    // these messages need to be in the death queue https://youtu.be/9Q8BbGi2VWg?t=136
+    return;
 }
+
+~ring_of_life_check;
 
 [queue,pvp_death](player_uid $opponent)
 p_delay(1);
