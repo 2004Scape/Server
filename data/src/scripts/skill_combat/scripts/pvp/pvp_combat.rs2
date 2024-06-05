@@ -154,6 +154,11 @@ if ($damage > 0) {
 } else {
     damage(uid, 0, 0);
 }
+if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) = true & $damage > 0) {
+    def_int $recoil_damage = add(scale(10, 100, $damage), 1);
+    queue2(pvp_damage, 0, $recoil_damage);
+    ~ring_of_recoil_lose_charge($recoil_damage);
+}
 if (stat(hitpoints) = 0) {
     if (~in_duel_arena = true) {
         queue(duel_arena_death, 0);
@@ -199,7 +204,7 @@ while ($i < $size) {
             mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
             inv_delslot(inv, $i);
         } else {
-            inv_dropslot(inv, coord, $i, 200);
+            inv_dropslot(inv, coord, $i, 200); // todo: inv_dropall
         }
     }
     $i = calc($i + 1);
@@ -213,7 +218,7 @@ while ($i < $size) {
             mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
             inv_delslot(worn, $i);
         } else {
-            inv_dropslot(worn, coord, $i, 200);
+            inv_dropslot(worn, coord, $i, 200); // todo: inv_dropall
         }
     }
     $i = calc($i + 1);
