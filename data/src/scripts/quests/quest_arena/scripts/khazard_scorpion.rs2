@@ -1,0 +1,23 @@
+[ai_queue3,khazard_scorpion](int $arg)
+gosub(npc_death);
+if(npc_findhero = true) {
+    if_close;
+    if(p_finduid(uid) = true) { // get protected access, if not then queue
+        @defeat_khazard_scorpion;
+    }
+    queue(queue_defeat_khazard_scorpion, 0, npc_uid); //strongqueue probably
+}
+
+[queue,queue_defeat_khazard_scorpion](npc_uid $npc)
+if (npc_finduid($npc) = true) {
+    @defeat_khazard_scorpion;
+}
+
+[label,defeat_khazard_scorpion]
+if(%arena_progress = ^arena_sent_jail) {
+    %arena_progress = ^arena_defeated_scorpion;
+    if (npc_finduid(~npc_within_distance(movecoord(coord, 8, 0, 0), general_khazard, 15)) = false) {
+        return;
+    }
+    @general_khazard_summon_bouncer;
+}

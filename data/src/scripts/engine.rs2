@@ -269,6 +269,7 @@
 [command,loc_category]()(category)
 [command,loc_change](loc $new_loc, int $duration)
 [command,loc_coord]()(coord)
+[command,.loc_coord]()(coord)
 [command,loc_del](int $duration)
 [command,.loc_del](int $duration)
 [command,loc_find](coord $coord, loc $loc)(boolean)
@@ -277,8 +278,10 @@
 [command,loc_findnext]()(boolean)
 [command,loc_param]/*(param $param)(dynamic)*/
 [command,loc_type]()(loc)
+[command,.loc_type]()(loc)
 [command,loc_name]()(string)
 [command,loc_shape]()(locshape)
+[command,.loc_shape]()(locshape)
 
 // Obj ops (3500-4000)
 [command,obj_add](coord $coord, obj $obj, int $count, int $duration)

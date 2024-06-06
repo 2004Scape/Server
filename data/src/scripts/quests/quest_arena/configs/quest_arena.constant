@@ -7,8 +7,8 @@
 ^arena_defeated_ogre = 8
 ^arena_sent_jail = 9
 ^arena_defeated_scorpion = 10
-^arena_entered_bouncer_fight = 11
-^arena_defeated_bouncer = 12
+^arena_defeated_bouncer = 11
+^arena_freed_servils = 12
 ^arena_defeated_genkhazard = 13
 ^arena_complete = 14
-^arena_complete_defeated_khazard = 15
+^arena_complete_defeated_genkhazard = 15

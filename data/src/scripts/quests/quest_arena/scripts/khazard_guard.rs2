@@ -1,5 +1,8 @@
 [opnpc1,khazard_guard_standard]
 switch_int(%arena_progress) {
+    case ^arena_freed_servils, ^arena_complete, ^arena_complete_defeated_genkhazard: 
+        ~chatplayer(neutral, "Hello.");
+        @khazard_guard_killed_bouncer;
     case default:
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0 & %arena_progress > ^arena_obtained_armour) {
             ~chatplayer(neutral, "Hello.");
@@ -13,6 +16,12 @@ switch_int(%arena_progress) {
 
 [opnpc1,khazard_guard_chest] 
 switch_int(%arena_progress) {
+    case ^arena_freed_servils, ^arena_complete, ^arena_complete_defeated_genkhazard:
+        ~chatplayer(happy, "Hi.");
+        ~chatnpc(shock, "You're the fiend who killed Bouncer.");
+        if_close;
+        npc_say("En garde fiend!");
+        ~npc_retaliate(0);
     case default:
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0 & %arena_progress > ^arena_obtained_armour) {
             ~chatplayer(neutral, "Hello.");
@@ -29,6 +38,9 @@ switch_int(%arena_progress) {
 
 [opnpc1,khazard_guard_cells]
 switch_int(%arena_progress) {
+    case ^arena_freed_servils, ^arena_complete, ^arena_complete_defeated_genkhazard:
+        ~chatplayer(happy, "Hi.");
+        @khazard_guard_generals_pet;
     case ^arena_entered_ogre_fight, ^arena_defeated_ogre:
         if(~wearing_khazard_armour = true) {
             ~chatplayer(neutral, "Hello.");
@@ -56,13 +68,14 @@ switch_int(%arena_progress) {
 // theres no opnpcu here (rs3 and osrs has one): https://youtu.be/nptASzjG_Xk?si=wfdwpDNiM98YMi5t&t=165
 [opnpc1,khazard_guard_drunk]
 switch_int(%arena_progress) {
-    case ^arena_given_khali_brew:
+    case ^arena_given_khali_brew, ^arena_entered_ogre_fight, ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion,
+        ^arena_defeated_bouncer, ^arena_freed_servils, ^arena_defeated_genkhazard:
         if(~wearing_khazard_armour = false) {
             ~chatplayer(neutral, "Hello.");
             ~chatnpc(drunk, "Go away. Thish areash resh... restricted! We don't like strangersh, 'specially ones who sway. Oooh!");
             return;
         }
-        if(inv_total(inv, khazard_cell_keys) = 0) {
+        if(inv_total(inv, khazard_cell_keys) = 0 & %arena_progress < ^arena_entered_ogre_fight) { // can't reclaim after this point on RS3, not sure if this was always the case
             ~chatplayer(quiz, "Hi, er.. I lost the keys.");
             ~chatnpc(angry, "What?! You're foolish...");
             ~chatplayer(drunk, "...and I'm drunk. Here, take my spare set.");
@@ -115,3 +128,15 @@ inv_add(inv, khazard_cell_keys, 1);
 ~chatplayer(neutral, "Hello.");
 ~chatnpc(angry, "This area is restricted, leave now!");
 ~chatnpc(angry, "OUT! And don't come back.");
+
+[label,khazard_guard_killed_bouncer]
+~chatnpc(angry, "You're the one who killed Bouncer.");
+if_close;
+npc_say("Die traitor!");
+~npc_retaliate(0);
+
+[label,khazard_guard_generals_pet]
+~chatnpc(shock, "You're him. The one who murdered the General's pet.");
+if_close;
+~npc_retaliate(0);
+npc_say("You'll pay for that mistake!");

@@ -17,7 +17,7 @@ if(%arena_progress = 9) {
     ~chatnpc(shifty, "Wait.. sshh, the guard is coming. Looks like you'll be going into the arena. Good luck friend.");
     if_close;
     // https://youtu.be/NHsQfeSPUb0?si=c_S0jTnjDBF0xilE&t=189
-    npc_add(0_40_49_26_4, npc_257, 100);
+    npc_add(0_40_49_26_4, khazard_guard_cutscene, 100);
     npc_setmode(none);
     p_delay(0);
     // https://youtu.be/Y6eWjQnV4Mo?si=7aaHIhL6qoxCuntZ&t=170 the guard can get stuck at any point, doesnt interrupt anything
@@ -44,6 +44,7 @@ if(%arena_progress = 9) {
     ~forcemove(0_40_49_47_6);
     ~forcemove(0_40_49_47_15);
     p_delay(1);
+    npc_say("Get out there!");
     if(loc_find(0_40_49_46_16, loc_82) = true) {
         def_int $x;
         def_int $z;
@@ -56,20 +57,24 @@ if(%arena_progress = 9) {
         sound_synth(door_open, 0, 0);
     }
     ~forcemove(movecoord(coord, -4, 0, 4));
+    npc_del;
     ~mesbox("From above you hear a voice..... 'Ladies and gentlemen! Let today's first fight between the outsider and everyone's favourite scorpion commence.'");
-}
-if(%arena_progress >= ^arena_defeated_ogre) {
-
+    @arena_release_scorp;
+} else if(%arena_progress >= ^arena_defeated_scorpion) { // you can't access the cells between being sent there and defeating bouncer
+    ~chatplayer(neutral, "Hello again.");
+    ~chatnpc(shifty, "I don't know how you managed to escape the arena, but you may not be as lucky next time. Get out of here while you can.");
 } else {
     ~chatplayer(quiz, "Do you know a Justin or Jeremy Servil?");
-    ~chatnpc(shifty, "You're not a real guard. I've been in here long enough to know that. What's your business?");
-    ~chatplayer(neutral, "I've been sent to rescue Sir Servil and his son.");
+    if(~wearing_khazard_armour = true) {
+        ~chatnpc(shifty, "You're not a real guard. I've been in here long enough to know that. What's your business?");
+        ~chatplayer(neutral, "I've been sent to rescue Sir Servil and his son.");
+    }
     ~chatnpc(neutral, "I've seen them in here, although they don't look up to much. My advice to you is to leave before you end up in a cell too.");
 }
 
-[ai_queue10,npc_257](int $arg)
+[ai_queue10,khazard_guard_cutscene](int $arg)
 npc_walk(0_40_49_39_5);
 npc_queue(11, 0, 7);
 
-[ai_queue11,npc_257](int $arg)
+[ai_queue11,khazard_guard_cutscene](int $arg)
 npc_say("Right you, move it.");

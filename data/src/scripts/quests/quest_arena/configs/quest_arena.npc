@@ -157,7 +157,7 @@ param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,blade3_mail
 
-[npc_257]
+[khazard_guard_cutscene]
 name=Khazard Guard
 desc=It's one of General Khazard's guards.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -470,6 +470,7 @@ param=death_anim,hellhound_death
 // param=attack_sound,
 // param=defend_sound,
 // param=death_sound,
+huntmode=aggressive_melee
 
 [khazard_ogre]
 name=Khazard Ogre
@@ -494,12 +495,12 @@ param=damagetype,^crush_style
 param=attack_anim,ogre_attack
 param=defend_anim,ogre_block
 param=death_anim,ogre_death
-// param=attack_sound,
-// param=defend_sound,
+param=attack_sound,giant_attack
+param=defend_sound,giant_hit
 param=death_sound,giant_death
-param=death_drop,big_bones
+huntmode=aggressive_melee
 
-[npc_271]
+[khazard_scorpion]
 name=Khazard Scorpion
 desc=A large angry scorpion.
 size=2
@@ -529,3 +530,4 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
+huntmode=aggressive_melee

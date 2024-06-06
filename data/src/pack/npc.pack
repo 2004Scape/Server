@@ -255,7 +255,7 @@
 254=khazard_guard_drunk
 255=khazard_guard_chest
 256=khazard_guard_standard
-257=npc_257
+257=khazard_guard_cutscene
 258=general_khazard
 259=khazard_barman
 260=kelvin
@@ -269,7 +269,7 @@
 268=local
 269=bouncer
 270=khazard_ogre
-271=npc_271
+271=khazard_scorpion
 272=npc_272
 273=npc_273
 274=npc_274

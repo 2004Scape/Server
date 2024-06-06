@@ -227,15 +227,15 @@ const NpcOps: CommandHandlers = {
 
     [ScriptOpcode.NPC_SETMODE]: checkedHandler(ActiveNpc, state => {
         const mode = check(state.popInt(), NpcModeValid);
-
-        state.activeNpc.targetOp = mode;
         state.activeNpc.clearWaypoints();
 
         if (mode === NpcMode.NULL || mode === NpcMode.NONE || mode === NpcMode.WANDER || mode === NpcMode.PATROL) {
             state.activeNpc.clearInteraction();
+            state.activeNpc.targetOp = mode;
             return;
         }
-
+        
+        state.activeNpc.targetOp = mode;
         let target: Entity | null;
         if (mode >= NpcMode.OPNPC1) {
             target = state._activeNpc2;

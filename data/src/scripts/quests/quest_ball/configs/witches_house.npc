@@ -26,8 +26,8 @@ head2=model_102_obj_wear
 defaultmode=patrol
 patrol1=0_45_54_50_7,0
 patrol2=0_45_54_24_7,0
-timer=1
-param=death_sound,female_death
+huntmode=ball_caught
+huntrange=3
 
 [witches_experiment_p1]
 name=Witches experiment

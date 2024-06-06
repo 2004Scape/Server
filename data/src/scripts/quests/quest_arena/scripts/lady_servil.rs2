@@ -1,6 +1,17 @@
 [opnpc1,lady_servil]
 switch_int(%arena_progress) {
-    case ^arena_entered_ogre_fight:
+    case ^arena_complete, ^arena_complete_defeated_genkhazard:
+        ~chatplayer(neutral, "Hello Lady Servil.");
+        ~chatnpc(happy, "Oh hello my dear. My husband and son are resting while I wait for the cart fixer.");
+        ~chatplayer(happy, "I hope he's not too long.");
+        ~chatnpc(happy, "Thanks again for everything.");
+    case ^arena_freed_servils, ^arena_defeated_genkhazard:
+        ~chatplayer(neutral, "Lady Servil.");
+        ~chatnpc(shock, "You're alive, I thought Khazard's men had taken you.");
+        ~chatnpc(happy, "My son and husband are safe and recovering at home. Without you they would certainly be dead. I am truly grateful for your service.");
+        ~chatnpc(happy, "All I can offer in return is material wealth. Please take these coins as a sign of my gratitude.");
+        queue(arena_quest_complete, 0);
+    case ^arena_entered_ogre_fight, ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion, ^arena_defeated_bouncer:
         ~chatplayer(neutral, "Lady Servil. I freed your son, however he has returned to the arena to help your husband.");
         ~chatnpc(shock, "Oh no, they won't stand a chance. Please go back and help.");
     case ^arena_spoken_drunkguard, ^arena_given_khali_brew:

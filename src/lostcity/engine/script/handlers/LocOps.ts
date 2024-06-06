@@ -100,7 +100,7 @@ const LocOps: CommandHandlers = {
             return;
         }
 
-        state._activeLoc = loc;
+        state.activeLoc = loc;
         state.pointerAdd(ActiveLoc[state.intOperand]);
         state.pushInt(1);
     },

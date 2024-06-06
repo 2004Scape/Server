@@ -14,7 +14,16 @@ if (npc_range(coord) > 2) {
 
 [label,joe_kelvin_dialogue](npc $partner)
 switch_int(%arena_progress) {
-    case ^arena_obtained_armour, ^arena_spoken_drunkguard:
+    case default:
+        ~chatplayer(quiz, "Are you ok?");
+        if(~wearing_khazard_armour = true) {
+            if (random(1) = 0) ~chatnpc(angry, "Get away, get away. One day I'll have my revenge, and I'll have all your heads.");
+            else ~chatnpc(angry, "Spare me your fake pity. I spit on Khazard's grave, and all who do his bidding.");
+        } else {
+            if (random(1) = 0) ~chatnpc(neutral, "You're not safe here traveller. Leave while you still can.");
+            else ~chatnpc(neutral, "You're a brave person. If the guards get you, you'll be in here next.");
+        }        
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew, ^arena_entered_ogre_fight:
         if(~wearing_khazard_armour = true) {
             if (.npc_finduid(~.npc_within_distance(coord, $partner, 3)) = true) { // uses other set if greater than 2 away in RS3
                 ~chatplayer(quiz, "Do either of you know a Justin or Sammy Servil?");
@@ -44,9 +53,20 @@ if (npc_range(coord) > 2) {
     return;
 }
 switch_int(%arena_progress) {
-    case ^arena_obtained_armour, ^arena_spoken_drunkguard:
-        ~chatplayer(quiz, "Do you know of a Justin or Jeremy Servil in this arena?");
+    case default:
         if(~wearing_khazard_armour = true) {
+            ~chatnpc(sad, "Please leave me alone.");
+        } else {
+            // TODO: check mesanims, pretty sure they're all correct though
+            def_int $rand = random(4);
+            if ($rand = 0) ~chatnpc(sad, "Why am I here?");
+            else if ($rand = 1) ~chatnpc(sad, "What did I do to deserve this?");
+            else if ($rand = 2) ~chatnpc(sad, "Please help me.");
+            else if ($rand = 3) ~chatnpc(sad, "You're not safe here, leave while you can.");
+        }
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew, ^arena_entered_ogre_fight:
+        ~chatplayer(quiz, "Do you know of a Justin or Jeremy Servil in this arena?");
+        if (~wearing_khazard_armour = true) {
             ~chatnpc(sad, "Please leave me alone.");
         } else {
             ~chatnpc(sad, "I've not met anybody in here by that name.");
