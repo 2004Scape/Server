@@ -146,41 +146,6 @@ if (.npc_find(npc_coord, justin_servil, 1, 0) = true) {
     .npc_setmode(null);
 }
 
-[debugproc,c1a]
-if(p_finduid(uid) = false) {
-    return;
-}
-p_teleport(0_40_49_47_16);
-// these numbers are all eyeballed (cam packets) since OSRS has changed this part entirely
-cam_moveto(0_40_49_45_24, 270, 100, 100);
-cam_lookat(0_40_49_43_17, 200, 100, 100);
-p_delay(1);
-if(loc_find(0_40_49_46_16, loc_82) = true) {
-    def_int $x;
-    def_int $z;
-    def_coord $loc_coord = loc_coord;
-    def_int $angle = loc_angle;
-    def_locshape $shape = loc_shape;
-    $x, $z = ~door_open($angle, loc_shape);
-    loc_change(loc_83, 2);
-    loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
-    sound_synth(door_open, 0, 0);
-}
-cam_moveto(0_40_49_43_26, 270, 1, 1);
-cam_lookat(0_40_49_43_15, 270, 1, 1);
-~forcemove(movecoord(coord, -2, 0, 0));
-cam_reset;
-cam_moveto(0_40_49_43_26, 270, 2, 1);
-cam_lookat(0_40_49_43_15, 270, 2, 1);
-~forcemove(movecoord(coord, -2, 0, 2));
-~forcemove(movecoord(coord, 0, 0, 1));
-p_delay(1);
-cam_reset;
-if (npc_find(coord, jeremy_servil_arena, 8, 0) = true) {
-    ~chatnpc("<p,shock>Quick, help him! That beast will kill him. He's too old to fight.");
-    @ogre_attack_justin;
-}
-
 [ai_queue10,jeremy_servil](int $arg)
 npc_walk(0_40_49_56_31);
 npc_queue(11, 0, calc($arg + 1));
