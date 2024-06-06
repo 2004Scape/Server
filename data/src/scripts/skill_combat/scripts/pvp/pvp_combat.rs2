@@ -160,88 +160,12 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) =
     ~ring_of_recoil_lose_charge($recoil_damage);
 }
 if (stat(hitpoints) = 0) {
-    if (~in_duel_arena = true) {
-        queue(duel_arena_death, 0);
-        if (.finduid(%duelpartner) = true) {
-            queue2(duel_arena_finished, 0, displayname, ~player_combat_level);
-            ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
-        }
-    } else {
-        queue(pvp_death, 0, %pk_predator1); // todo dont pass this through the queue. instead use hero points to get opponent
-    }
+    queue(player_death, 0);
     return;
 }
 
 ~ring_of_life_check;
 
-[queue,pvp_death](player_uid $opponent)
-p_delay(1);
-p_stopaction;
-if_close;
-midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
-anim(human_death, 0);
-p_delay(3);
-def_boolean $skulled = false;
-if (%pk_skull > 0) { $skulled = true; }
-def_boolean $protecting_item = false;
-if (%prayer_protectitems = ^true) { $protecting_item = true; }
-inv_clear(death);
-
-if($skulled = false) {
-    ~move_priciest_item_on_hero_to_death;
-    ~move_priciest_item_on_hero_to_death;
-    ~move_priciest_item_on_hero_to_death;
-}
-if($protecting_item = true) {
-    ~move_priciest_item_on_hero_to_death;
-}
-
-
-def_int $i = 0;
-def_int $size = inv_size(inv);
-def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
-while ($i < $size) {
-    if (inv_getnum(inv, $i) > 0) {
-        if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
-            mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
-            inv_delslot(inv, $i);
-        } else {
-            inv_dropslot(inv, coord, $i, 200); // todo: inv_dropall
-        }
-    }
-    $i = calc($i + 1);
-}
-
-$i = 0;
-$size = inv_size(worn);
-while ($i < $size) {
-    if (inv_getnum(worn, $i) > 0) {
-        if (oc_category(inv_getobj(worn, $i)) = armour_godcape) {
-            mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
-            inv_delslot(worn, $i);
-        } else {
-            inv_dropslot(worn, coord, $i, 200); // todo: inv_dropall
-        }
-    }
-    $i = calc($i + 1);
-}
-buildappearance(worn);
-
-~moveallinv(death, inv);
-~deactivate_prayers;
-p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
-anim(null, 0);
-mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
-~pvp_death_message($opponent);
-
-~stat_reset_all;
-healenergy(10000);
-~combat_clearqueue;
-~clear_pk_skull;
-~clear_poison;
-// todo: end poison timer ~player_end_poison
-~update_all($prev_wep);
-inv_clear(death);
 
 [proc,pvp_death_message](player_uid $opponent)
 if (.finduid($opponent) = false) {

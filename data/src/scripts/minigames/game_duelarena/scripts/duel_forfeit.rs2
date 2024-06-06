@@ -8,22 +8,16 @@
 if (~duel_arena_forfeit_check = false) {
     return;
 }
+def_int $choice = ~p_choice2_header("Yes", 1, "No", 2, "Do you wish to forfeit?");
+if ($choice = 2) {
+    return;
+}
 p_telejump(~duel_arena_finish_coord(coord));
 if (.finduid(%duelpartner) = true)  {
-    if (.p_finduid(%duelpartner) = true) {
-        .p_telejump(~duel_arena_finish_coord(.coord));
-        // todo: queue win on other player
-        .p_stopaction;
-        ~.stat_reset_all;
-        .healenergy(10000);
-        ~.combat_clearqueue;
-        ~.clear_poison;
-        ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
-        .%duelpartner = null;
-        .%duelstatus = 0;
-        ~duel_adjust_scoreboard(.displayname, ~.player_combat_level, displayname, ~player_combat_level);
-    }
+    .%duelstatus = ^duelstatus_opponent_resigned;
+    queue2(duel_arena_win, 0);
 }
+
 def_int $i = 0;
 while ($i < inv_size(duel_arena_arrows)) {
     if (inv_getobj(duel_arena_arrows, $i) ! null) {

@@ -21,3 +21,7 @@
 ^north_west_camera = 5
 ^south_east_camera = 6
 ^south_west_camera = 7
+
+^duelstatus_lost = 5
+^duelstatus_victory = 6
+^duelstatus_opponent_resigned = 7

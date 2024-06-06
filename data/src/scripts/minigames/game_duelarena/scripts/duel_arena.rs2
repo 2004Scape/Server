@@ -1,3 +1,18 @@
+[debugproc,tempinv]
+def_int $i = 0;
+def_int $null = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        mes("<tostring($i)>: <oc_debugname(inv_getobj(tempinv, $i))>");
+    } else {
+        $null = add($null, 1);
+    }
+    $i = add($i, 1);
+}
+if ($null = inv_size(tempinv)) {
+    mes("tempinv is empty");
+}
+
 [opplayer1,_]
 if (.busy = true) {
     mes("<.displayname> is busy at the moment."); // https://youtu.be/YkJQDvB14-U?t=26
@@ -354,6 +369,11 @@ if (~inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~inzone_coo
 }
 return(false);
 
+[proc,.in_duel_arena]()(boolean)
+if (~.inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~.inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
+    return(true);
+}
+return(false);
 
 [proc,duel_arena_login]
 if (~in_duel_arena = true) {

@@ -1,41 +1,49 @@
-[queue,duel_arena_finished](string $displayname, int $combat_level)
-p_delay(6);
-p_stopaction;
-mes("Well done! You have defeated <$displayname>!");
-p_telejump(~duel_arena_finish_coord(coord));
-~stat_reset_all;
-healenergy(10000);
-~combat_clearqueue;
-~clear_poison;
-~update_all(inv_getobj(worn, ^wearpos_rhand));
-hint_stop;
-if_openmainmodal(duel_win);
-if_settext(duel_win:displayname, $displayname);
-if_settext(duel_win:combat_level, tostring($combat_level));
-
-// get stuff back in ur tempinv
-def_int $i = 0;
-while ($i < inv_size(tempinv)) {
-    if (inv_getobj(tempinv, $i) ! null) {
-        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(tempinv, inv, $i);
-    }
-    $i = calc($i + 1);
+[queue,duel_arena_win]
+if (getqueue(duel_arena_loss) > 0) {
+    clearqueue(duel_arena_loss); // to make sure these only one loser and one winner
 }
-
-$i = 0;
-while ($i < inv_size(duel_arena_arrows)) {
-    if (inv_getobj(duel_arena_arrows, $i) ! null) {
-        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(duel_arena_arrows, inv, $i);
-    }
-    $i = calc($i + 1);
-}
-
-inv_clear(tempinv);
-
-// take stuff from other player's tempinv
 if (.finduid(%duelpartner) = true) {
+    p_stopaction;
+    if (%duelstatus = ^duelstatus_victory) {
+        p_delay(4);
+        if_settext(duel_win:com_99, "You are victorious!");
+        mes("Well done! You have defeated <.displayname>!");
+    } else if (%duelstatus = ^duelstatus_opponent_resigned) {
+        if_settext(duel_win:com_99, "You are victorious! Your opponent resigned!"); // 2006
+        mes("Well done! <.displayname> resigned!"); // 2006
+    }
+    p_telejump(~duel_arena_finish_coord(coord));
+    ~stat_reset_all;
+    healenergy(10000);
+    ~combat_clearqueue;
+    ~clear_poison;
+    ~update_all(inv_getobj(worn, ^wearpos_rhand));
+    hint_stop;
+    if_openmainmodal(duel_win);
+    ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
+    if_settext(duel_win:displayname, .displayname);
+    if_settext(duel_win:combat_level, tostring(~.player_combat_level));
+
+    // get stuff back in ur tempinv
+    def_int $i = 0;
+    while ($i < inv_size(tempinv)) {
+        if (inv_getobj(tempinv, $i) ! null) {
+            //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+            inv_movefromslot(tempinv, inv, $i);
+        }
+        $i = calc($i + 1);
+    }
+
+    $i = 0;
+    while ($i < inv_size(duel_arena_arrows)) {
+        if (inv_getobj(duel_arena_arrows, $i) ! null) {
+            //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+            inv_movefromslot(duel_arena_arrows, inv, $i);
+        }
+        $i = calc($i + 1);
+    }
+    inv_clear(tempinv);
+    // take stuff from other player's tempinv
     .both_moveinv(tempinv, tempinv);
     // .%duelpartner = null;
     // display spoils
@@ -44,6 +52,7 @@ if (.finduid(%duelpartner) = true) {
 
 %duelstatus = 0;
 %duelpartner = null;
+
 
 [if_close,duel_win]
 // take spoils
@@ -77,14 +86,7 @@ while (map_blocked($random_coord) = true) {
 }
 return($random_coord);
 
-[queue,duel_arena_death]
-p_delay(1);
-p_stopaction;
-if_close;
-midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
-anim(human_death, 0);
-p_delay(3);
-
+[queue,duel_arena_loss]
 anim(null, 0);
 mes("Oh dear you are dead!");
 p_telejump(~duel_arena_finish_coord(coord));
