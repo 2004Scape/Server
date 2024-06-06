@@ -19,10 +19,10 @@ if (.finduid(%duelpartner) = true)  {
 }
 
 def_int $i = 0;
-while ($i < inv_size(duel_arena_arrows)) {
-    if (inv_getobj(duel_arena_arrows, $i) ! null) {
+while ($i < inv_size(stakeinv)) {
+    if (inv_getobj(stakeinv, $i) ! null) {
         //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(duel_arena_arrows, inv, $i);
+        inv_movefromslot(stakeinv, inv, $i);
     }
     $i = calc($i + 1);
 }

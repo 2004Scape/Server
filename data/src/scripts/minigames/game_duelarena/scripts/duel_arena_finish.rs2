@@ -24,42 +24,38 @@ if (.finduid(%duelpartner) = true) {
     if_settext(duel_win:displayname, .displayname);
     if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 
-    // get stuff back in ur tempinv
     def_int $i = 0;
+    while ($i < inv_size(stakeinv)) {
+        if (inv_getobj(stakeinv, $i) ! null) {
+            //mes("<oc_debugname(inv_getobj(stakeinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+            inv_movefromslot(stakeinv, inv, $i);
+        }
+        $i = calc($i + 1);
+    }
+    // get arrows back
+    $i = 0;
     while ($i < inv_size(tempinv)) {
         if (inv_getobj(tempinv, $i) ! null) {
-            //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
             inv_movefromslot(tempinv, inv, $i);
         }
         $i = calc($i + 1);
     }
-
-    $i = 0;
-    while ($i < inv_size(duel_arena_arrows)) {
-        if (inv_getobj(duel_arena_arrows, $i) ! null) {
-            //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-            inv_movefromslot(duel_arena_arrows, inv, $i);
-        }
-        $i = calc($i + 1);
-    }
-    inv_clear(tempinv);
-    // take stuff from other player's tempinv
-    .both_moveinv(tempinv, tempinv);
+    inv_clear(stakeinv);
+    // take stuff from other player's stakeinv
+    .both_moveinv(stakeinv, stakeinv);
     // .%duelpartner = null;
     // display spoils
-    inv_transmit(tempinv, duel_win:spoils);
+    inv_transmit(stakeinv, duel_win:spoils);
 }
 
 %duelstatus = 0;
 %duelpartner = null;
 
-
 [if_close,duel_win]
-// take spoils
 def_int $i = 0;
-while ($i < inv_size(tempinv)) {
-    if (inv_getobj(tempinv, $i) ! null) {
-        inv_movefromslot(tempinv, inv, $i);
+while ($i < inv_size(stakeinv)) {
+    if (inv_getobj(stakeinv, $i) ! null) {
+        inv_movefromslot(stakeinv, inv, $i);
     }
     $i = calc($i + 1);
 }
@@ -96,11 +92,11 @@ healenergy(10000);
 ~clear_poison;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
 hint_stop;
+// get arrows back
 def_int $i = 0;
-while ($i < inv_size(duel_arena_arrows)) {
-    if (inv_getobj(duel_arena_arrows, $i) ! null) {
-        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(duel_arena_arrows, inv, $i);
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        inv_movefromslot(tempinv, inv, $i);
     }
     $i = calc($i + 1);
 }

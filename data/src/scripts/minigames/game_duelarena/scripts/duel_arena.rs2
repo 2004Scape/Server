@@ -275,9 +275,8 @@ if (.finduid(%duelpartner) = true) {
 
         if_close;
         .if_close;
-        if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
-            @start_duel;
-        }
+        queue(duel_arena_prepare_start, 0);
+        queue2(duel_arena_prepare_start, 0);
     } else {
         .if_settext(duel_confirm:status, "Other player has accepted."); // https://youtu.be/HFp6hOkiCns?t=481
         if_settext(duel_confirm:status, "Waiting for other player."); 
