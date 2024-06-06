@@ -47,4 +47,8 @@ if ($weapon = null) {
     %action_delay = add(map_clock, 4);
 } else {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
+    def_int $poison_severity = oc_param($weapon, poison_severity);
+    if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
+        queue2(poison_player, 0, $poison_severity);
+    }
 }
