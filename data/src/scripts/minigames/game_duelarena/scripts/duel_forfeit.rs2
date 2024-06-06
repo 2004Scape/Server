@@ -12,6 +12,7 @@ def_int $choice = ~p_choice2_header("Yes", 1, "No", 2, "Do you wish to forfeit?"
 if ($choice = 2) {
     return;
 }
+if_close;
 p_telejump(~duel_arena_finish_coord(coord));
 if (.finduid(%duelpartner) = true)  {
     .%duelstatus = ^duelstatus_opponent_resigned;

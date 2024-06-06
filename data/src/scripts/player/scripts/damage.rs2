@@ -13,6 +13,7 @@ clearqueue(pvp_damage);
 
 [queue,player_death]
 if (.finduid(%duelpartner) = true & ~.in_duel_arena = true) {
+    .if_close;
     .%duelstatus = ^duelstatus_victory;
     queue2(duel_arena_win, 0);
 }
