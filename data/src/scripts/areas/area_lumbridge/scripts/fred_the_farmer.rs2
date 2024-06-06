@@ -8,13 +8,13 @@ if(%sheep_progress = ^sheep_not_started) {
 }
 
 [label,fred_start]
-~chatnpc(angry, "What are you doing on my land? You're not the one keeps leaving all my gates open and letting out all my sheep?");
+~chatnpc("<p,angry>What are you doing on my land? You're not the one keeps leaving all my gates open and letting out all my sheep?");
 def_int $option = ~p_choice3("I'm looking for a quest.", 1, "I'm looking for something to kill.", 2, "I'm lost.", 3);
 if($option = 1) {
-    ~chatplayer(neutral, "I'm looking for a quest.");
-    ~chatnpc(neutral, "You're after a quest, you say? Actually I could do with a bit of help.");
-    ~chatnpc(neutral, "My sheep are getting mighty woolly. I'd be much obliged if you could shear them. And while you're at it spin the wool for me too.");
-    ~chatnpc(happy, "Yes, that's it. Bring me 20 balls of wool. And I'm sure I could sort out some sort of payment. Of course, there's the small matter of The Thing.");
+    ~chatplayer("<p,neutral>I'm looking for a quest.");
+    ~chatnpc("<p,neutral>You're after a quest, you say? Actually I could do with a bit of help.");
+    ~chatnpc("<p,neutral>My sheep are getting mighty woolly. I'd be much obliged if you could shear them. And while you're at it spin the wool for me too.");
+    ~chatnpc("<p,happy>Yes, that's it. Bring me 20 balls of wool. And I'm sure I could sort out some sort of payment. Of course, there's the small matter of The Thing.");
     @multi3("Yes okay. I can do that.", fred_yes_okay, "That doesn't sound a very exciting quest.", fred_not_exciting, "What do you mean, The Thing?", fred_the_thing);
 } else if($option = 2) {
     @fred_something_to_kill;
@@ -23,46 +23,46 @@ if($option = 1) {
 }
 
 [label,fred_something_to_kill]
-~chatplayer(happy, "I'm looking for something to kill.");
-~chatnpc(angry, "What, on my land? Leave my livestock alone you scoundrel!");
+~chatplayer("<p,happy>I'm looking for something to kill.");
+~chatnpc("<p,angry>What, on my land? Leave my livestock alone you scoundrel!");
 
 [label,fred_im_lost]
-~chatplayer(sad, "I'm lost.");
-~chatnpc(confused, "How can you be lost? Just follow the road east and south. You'll end up in Lumbridge fairly quickly.");
+~chatplayer("<p,sad>I'm lost.");
+~chatnpc("<p,confused>How can you be lost? Just follow the road east and south. You'll end up in Lumbridge fairly quickly.");
 
 [label,fred_not_exciting]
-~chatplayer(neutral, "That doesn't sound a very exciting quest.");
-~chatnpc(default, "Well what do you expect if you ask a farmer for a quest? Now are you going to help me or not?");
+~chatplayer("<p,neutral>That doesn't sound a very exciting quest.");
+~chatnpc("<p,default>Well what do you expect if you ask a farmer for a quest? Now are you going to help me or not?");
 @multi2("Yes okay. I can do that.", fred_yes_okay, "No, I'll give it a miss.", fred_no_miss);
 
 [label,fred_the_thing]
-~chatplayer(quiz, "What do you mean, The Thing?");
-~chatnpc(shifty, "I wouldn't worry about it. Something ate all the previous shearers. They probably got unlucky. So are you going to help me?");
+~chatplayer("<p,quiz>What do you mean, The Thing?");
+~chatnpc("<p,shifty>I wouldn't worry about it. Something ate all the previous shearers. They probably got unlucky. So are you going to help me?");
 @multi2("Yes okay. I can do that.", fred_yes_okay, "Erm, I'm a bit worried about this thing.", fred_worried_thing);
 
 [label,fred_no_miss]
-~chatplayer(neutral, "No, I'll give it a miss.");
+~chatplayer("<p,neutral>No, I'll give it a miss.");
 
 [label,fred_worried_thing]
-~chatplayer(confused, "Erm, I'm a bit worried about this thing.");
-~chatnpc(shifty, "I'm sure it's nothing to worry about. It's possible the other shearers aren't dead at all. And are just hiding in the woods or something.");
-~chatplayer(neutral, "I'm not convinced.");
+~chatplayer("<p,confused>Erm, I'm a bit worried about this thing.");
+~chatnpc("<p,shifty>I'm sure it's nothing to worry about. It's possible the other shearers aren't dead at all. And are just hiding in the woods or something.");
+~chatplayer("<p,neutral>I'm not convinced.");
 
 [label,fred_yes_okay]
-~chatplayer(happy, "Yes okay. I can do that.");
-~chatnpc(neutral, "Ok I'll see you when you have some wool.");
+~chatplayer("<p,happy>Yes okay. I can do that.");
+~chatnpc("<p,neutral>Ok I'll see you when you have some wool.");
 %sheep_progress = ^sheep_started;
 ~send_quest_progress_colour(questlist:sheep, %sheep_progress, ^sheep_started);
 
 [label,fred_progressed]
-~chatnpc(neutral, "How are you doing getting those balls of wool?");
+~chatnpc("<p,neutral>How are you doing getting those balls of wool?");
 if(inv_total(inv, ball_of_wool) > 0) {
-    ~chatplayer(happy, "I have some.");
-    ~chatnpc(neutral, "Give 'em here then.");
+    ~chatplayer("<p,happy>I have some.");
+    ~chatnpc("<p,neutral>Give 'em here then.");
     @fred_give_wool;
 } else {
-    ~chatplayer(happy, "I haven't got any at the moment.");
-    ~chatnpc(happy, "Ah well at least you haven't been eaten.");
+    ~chatplayer("<p,happy>I haven't got any at the moment.");
+    ~chatnpc("<p,happy>Ah well at least you haven't been eaten.");
 }
 
 [label,fred_give_wool]
@@ -79,15 +79,15 @@ if(inv_total(inv, ball_of_wool) > 0 & %sheep_progress ! ^sheep_last_wool) {
 
 [label,fred_end_giving_wool]
 if(%sheep_progress = ^sheep_last_wool & inv_total(inv, ball_of_wool) > 0) {
-    ~chatplayer(happy, "I have your last ball of wool.");
-    ~chatnpc(sad, "I guess I'd better pay you then.");
+    ~chatplayer("<p,happy>I have your last ball of wool.");
+    ~chatnpc("<p,sad>I guess I'd better pay you then.");
     queue(sheep_complete, 0);
     return;
 }
-~chatplayer(happy, "That's all I've got so far.");
-~chatnpc(neutral, "I need more before I can pay you.");
-~chatplayer(neutral, "Ok, I'll work on it.");
+~chatplayer("<p,happy>That's all I've got so far.");
+~chatnpc("<p,neutral>I need more before I can pay you.");
+~chatplayer("<p,neutral>Ok, I'll work on it.");
 
 [label,fred_post_quest]
-~chatnpc(angry, "What are you doing on my land?");
+~chatnpc("<p,angry>What are you doing on my land?");
 @multi2("I'm looking for something to kill.", fred_something_to_kill, "I'm lost.", fred_im_lost);

@@ -1,5 +1,5 @@
 [queue,playerhit_n_retaliate](npc_uid $nid)
-if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~npc_is_attackable(npc_type) = true) {
+if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~npc_is_attackable(npc_type) = true & busy2 = false) {
     // npc flinches player
     if (%action_delay < map_clock) {
         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
@@ -16,43 +16,29 @@ if (%auto_retaliate = ^player_auto_retaliate_on & npc_finduid($nid) = true & ~np
 
         %action_delay = add(map_clock, $delay);
     }
+
     p_opnpc(2);
 }
 
 // this needs fixing, and .queue support
-// [queue,.pvp_retaliate](player_uid $target_uid)
-// if (.finduid($target_uid) = true & .%auto_retaliate = ^player_auto_retaliate_on) {
-//     // player flinches player
-//     if (.%action_delay < map_clock) {
-//         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-//         def_int $delay = 4;
-//         if ($weapon ! null) {
-//             $delay = divide(oc_param($weapon, attackrate), 2);
-//         }
-//         if (.%damagestyle = ^style_ranged_rapid) {
-//             $delay = sub($delay, 1);
-//         }
-
-//         .%action_delay = add(map_clock, $delay);
-//     }
-//     .p_opplayer(2);
-// }
-
-// proc for now
-[proc,.pvp_retaliate](player_uid $target_uid)
-if (.%auto_retaliate = ^player_auto_retaliate_on) {
-    // player flinches player
-    if (.%action_delay < map_clock) {
+[queue,pvp_retaliate](player_uid $uid)
+if (%auto_retaliate = ^player_auto_retaliate_on & .finduid($uid) = true & busy2 = false) {
+    // npc flinches player
+    if (%action_delay < map_clock) {
         def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
         def_int $delay = 4;
         if ($weapon ! null) {
-            $delay = divide(oc_param($weapon, attackrate), 2);
+            $delay = oc_param($weapon, attackrate);
         }
-        if (.%damagestyle = ^style_ranged_rapid) {
+        
+        $delay = divide($delay, 2);
+
+        if (%damagestyle = ^style_ranged_rapid) {
             $delay = sub($delay, 1);
         }
 
-        .%action_delay = add(map_clock, $delay);
+        %action_delay = add(map_clock, $delay);
     }
-    .p_opplayer(2);
+
+    p_opplayer(2);
 }

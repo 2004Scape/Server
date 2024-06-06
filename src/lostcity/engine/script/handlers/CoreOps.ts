@@ -7,12 +7,11 @@ import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
-
-const ProtectedActivePlayer = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
+import {check, VarNpcValid, VarPlayerValid, VarSharedValid} from '#lostcity/engine/script/ScriptValidators.js';
+import {ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
 function gosub(state: ScriptState, id: number) {
     if (state.fp >= 50) {
@@ -75,11 +74,11 @@ const CoreOps: CommandHandlers = {
             throw new Error('No active_player.');
         }
 
-        const varp = VarPlayerType.get(state.intOperand & 0xffff);
-        if (varp.type === ScriptVarType.STRING) {
-            state.pushString(secondary ? state._activePlayer2!.getVar(varp.id) as string : state._activePlayer!.getVar(varp.id) as string);
+        const varpType: VarPlayerType = check(state.intOperand & 0xffff, VarPlayerValid);
+        if (varpType.type === ScriptVarType.STRING) {
+            state.pushString(secondary ? state._activePlayer2!.getVar(varpType.id) as string : state._activePlayer!.getVar(varpType.id) as string);
         } else {
-            state.pushInt(secondary ? state._activePlayer2!.getVar(varp.id) as number : state._activePlayer!.getVar(varp.id) as number);
+            state.pushInt(secondary ? state._activePlayer2!.getVar(varpType.id) as number : state._activePlayer!.getVar(varpType.id) as number);
         }
     },
 
@@ -91,24 +90,24 @@ const CoreOps: CommandHandlers = {
             throw new Error('No active_player.');
         }
 
-        const varp = VarPlayerType.get(state.intOperand & 0xffff);
-        if (!state.pointerGet(ProtectedActivePlayer[secondary]) && varp.protect) {
-            throw new Error(`%${varp.debugname} requires protected access`);
+        const varpType: VarPlayerType = check(state.intOperand & 0xffff, VarPlayerValid);
+        if (!state.pointerGet(ProtectedActivePlayer[secondary]) && varpType.protect) {
+            throw new Error(`%${varpType.debugname} requires protected access`);
         }
 
-        if (varp.type === ScriptVarType.STRING) {
+        if (varpType.type === ScriptVarType.STRING) {
             const value = state.popString();
             if (secondary) {
-                state._activePlayer2!.setVar(varp.id, value);
+                state._activePlayer2!.setVar(varpType.id, value);
             } else {
-                state._activePlayer!.setVar(varp.id, value);
+                state._activePlayer!.setVar(varpType.id, value);
             }
         } else {
             const value = state.popInt();
             if (secondary) {
-                state._activePlayer2!.setVar(varp.id, value);
+                state._activePlayer2!.setVar(varpType.id, value);
             } else {
-                state._activePlayer!.setVar(varp.id, value);
+                state._activePlayer!.setVar(varpType.id, value);
             }
         }
     },
@@ -121,11 +120,11 @@ const CoreOps: CommandHandlers = {
             throw new Error('No active_npc.');
         }
 
-        const varn = VarNpcType.get(state.intOperand & 0xffff);
-        if (varn.type === ScriptVarType.STRING) {
-            state.pushString(secondary ? state._activeNpc2!.getVar(varn.id) as string : state._activeNpc!.getVar(varn.id) as string);
+        const varnType: VarNpcType = check(state.intOperand & 0xffff, VarNpcValid);
+        if (varnType.type === ScriptVarType.STRING) {
+            state.pushString(secondary ? state._activeNpc2!.getVar(varnType.id) as string : state._activeNpc!.getVar(varnType.id) as string);
         } else {
-            state.pushInt(secondary ? state._activeNpc2!.getVar(varn.id) as number : state._activeNpc!.getVar(varn.id) as number);
+            state.pushInt(secondary ? state._activeNpc2!.getVar(varnType.id) as number : state._activeNpc!.getVar(varnType.id) as number);
         }
     },
 
@@ -137,20 +136,20 @@ const CoreOps: CommandHandlers = {
             throw new Error('No active_npc.');
         }
 
-        const varn = VarNpcType.get(state.intOperand & 0xffff);
-        if (varn.type === ScriptVarType.STRING) {
+        const varnType: VarNpcType = check(state.intOperand & 0xffff, VarNpcValid);
+        if (varnType.type === ScriptVarType.STRING) {
             const value = state.popInt();
             if (secondary) {
-                state._activeNpc2!.setVar(varn.id, value);
+                state._activeNpc2!.setVar(varnType.id, value);
             } else {
-                state._activeNpc!.setVar(varn.id, value);
+                state._activeNpc!.setVar(varnType.id, value);
             }
         } else {
             const value = state.popInt();
             if (secondary) {
-                state._activeNpc2!.setVar(varn.id, value);
+                state._activeNpc2!.setVar(varnType.id, value);
             } else {
-                state._activeNpc!.setVar(varn.id, value);
+                state._activeNpc!.setVar(varnType.id, value);
             }
         }
     },
@@ -303,24 +302,22 @@ const CoreOps: CommandHandlers = {
     },
 
     [ScriptOpcode.PUSH_VARS]: state => {
-        const vars = VarSharedType.get(state.intOperand & 0xFFFF);
+        const varsType: VarSharedType = check(state.intOperand & 0xffff, VarSharedValid);
 
-        if (vars.type === ScriptVarType.STRING) {
-            state.pushString(World.varsString[vars.id] ?? '');
+        if (varsType.type === ScriptVarType.STRING) {
+            state.pushString(World.varsString[varsType.id] ?? '');
         } else {
-            state.pushInt(World.vars[vars.id]);
+            state.pushInt(World.vars[varsType.id]);
         }
     },
 
     [ScriptOpcode.POP_VARS]: state => {
-        const vars = VarSharedType.get(state.intOperand & 0xFFFF);
+        const varsType: VarSharedType = check(state.intOperand & 0xffff, VarSharedValid);
 
-        if (vars.type === ScriptVarType.STRING) {
-            const value = state.popString();
-            World.varsString[vars.id] = value;
+        if (varsType.type === ScriptVarType.STRING) {
+            World.varsString[varsType.id] = state.popString();
         } else {
-            const value = state.popInt();
-            World.vars[vars.id] = value;
+            World.vars[varsType.id] = state.popInt();
         }
     }
 };

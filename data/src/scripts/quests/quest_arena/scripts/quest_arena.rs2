@@ -35,21 +35,21 @@ if(~check_axis(coord, loc_coord, loc_angle) = true) {
     return;
 }
 // no "locked" sound... (osrs has it): https://youtu.be/Oltfw1gvWjQ?si=pAK0N9CJmLUyWOBk&t=106
-~chatplayer(neutral, "This door appears to be locked.");
-if (npc_finduid(~npc_within_distance(coord, khazard_guard_cells, 5)) = false) {
+~chatplayer("<p,neutral>This door appears to be locked.");
+if (npc_find(coord, khazard_guard_cells, 5, 0) = false) {
     return;
 }
 switch_int(%arena_progress) {
     case ^arena_freed_servils, ^arena_defeated_genkhazard, ^arena_complete, ^arena_complete_defeated_genkhazard: @khazard_guard_generals_pet;
     case ^arena_sent_jail, ^arena_defeated_scorpion, ^arena_defeated_bouncer:
-        ~chatnpc(shifty, "So you're back for more are you? General Khazard will be pleased.");
+        ~chatnpc("<p,shifty>So you're back for more are you? General Khazard will be pleased.");
         @arena_enter;
     case default:
         if(%arena_progress < ^arena_obtained_armour | (inv_total(worn, khazard_helmet) = 0 & inv_total(worn, khazard_armour) = 0)) {
-            ~chatnpc(angry, "Yeah, it's to prevent people like you bothering us. Get out of here.");
+            ~chatnpc("<p,angry>Yeah, it's to prevent people like you bothering us. Get out of here.");
             return;
         }
-        ~chatnpc(bored, "Nice observation guard. You could have just asked to be let in like a normal person.");
+        ~chatnpc("<p,bored>Nice observation guard. You could have just asked to be let in like a normal person.");
 }
 ~open_and_close_door(loc_1532, false, false);
 
@@ -69,7 +69,7 @@ mes("The cell gate is securely locked.");
 [oplocu,loc_79]
 // use keys
 if(last_useitem = khazard_cell_keys) {
-    ~chatplayer(shifty, "The gate is locked, but Jeremy's not in there anyway."); // chisel
+    ~chatplayer("<p,shifty>The gate is locked, but Jeremy's not in there anyway."); // chisel
     return;
 }
 ~displaymessage(^dm_default);
@@ -78,7 +78,7 @@ if(last_useitem = khazard_cell_keys) {
 // use keys
 if(last_useitem = khazard_cell_keys) {
     if(%arena_progress = ^arena_given_khali_brew) {
-        if (npc_finduid(~npc_within_distance(coord, jeremy_servil, 4)) = true & npc_getmode ! null) {
+        if (npc_find(coord, jeremy_servil, 4, 0) = true & npc_getmode ! null) {
             @free_jeremy_servil;
         }
     } else if(%arena_progress < ^arena_defeated_bouncer & %arena_progress >= ^arena_entered_ogre_fight) { // rs3 cage works differently so using pre-rework messages from OSRS
@@ -93,32 +93,32 @@ if(last_useitem = khazard_cell_keys) {
 if(coordz(coord) < 3152) {
     switch_int(%arena_progress) { 
         case ^arena_freed_servils, ^arena_defeated_genkhazard, ^arena_complete, ^arena_complete_defeated_genkhazard:
-            if (npc_finduid(~npc_within_distance(coord, khazard_guard_standard, 7)) = false) {
+            if (npc_find(coord, khazard_guard_standard, 7, 0) = false) {
                 mes("This door appears to be locked."); // probably (this from RS3)? not sure
                 return;
             }
             @khazard_guard_killed_bouncer;
         case ^arena_entered_ogre_fight, ^arena_defeated_ogre: @open_arena_door;
         case default:
-            if (npc_finduid(~npc_within_distance(coord, khazard_guard_standard, 7)) = false) {
+            if (npc_find(coord, khazard_guard_standard, 7, 0) = false) {
                 mes("This door appears to be locked.");
                 return;
             }
-        ~chatnpc(angry, "And where do you think you're going? Only General Khazard decides who fights in the arena. Get out of here.");
+        ~chatnpc("<p,angry>And where do you think you're going? Only General Khazard decides who fights in the arena. Get out of here.");
     }
 } else {
     switch_int(%arena_progress) {
         case ^arena_sent_jail, ^arena_defeated_scorpion:
-            ~chatnpc_specific(nc_name(khazard_guard_cells), khazard_guard_cells, shifty, "It would be impolite to leave now. The General insists you stay a little longer.");
+            ~chatnpc_specific(nc_name(khazard_guard_cells), khazard_guard_cells, "<p,shifty>It would be impolite to leave now. The General insists you stay a little longer.");
             ~forcemove(movecoord(coord, -2, 0, 2));
             if (%arena_progress = ^arena_sent_jail) @arena_release_scorp;
             else if (%arena_progress = ^arena_defeated_scorpion) @arena_release_bouncer;
         case ^arena_defeated_ogre: @khazard_welldone;
         case ^arena_given_khali_brew, ^arena_entered_ogre_fight: 
             // chatnpc_specific on RS3
-            ~chatnpc_specific(nc_name(jeremy_servil), jeremy_servil, sad, "Please don't go, you must help us. We'll never survive in here alone.");
-            ~chatplayer(quiz, "Where's your father Jeremy?");
-            ~chatnpc_specific(nc_name(jeremy_servil), jeremy_servil, sad, "Quick, help him! That beast will kill him. He's too old to fight.");
+            ~chatnpc_specific(nc_name(jeremy_servil), jeremy_servil, "<p,sad>Please don't go, you must help us. We'll never survive in here alone.");
+            ~chatplayer("<p,quiz>Where's your father Jeremy?");
+            ~chatnpc_specific(nc_name(jeremy_servil), jeremy_servil, "<p,sad>Quick, help him! That beast will kill him. He's too old to fight.");
             @ogre_attack_justin;
         case default:
             sound_synth(door_open, 0, 0);
@@ -162,8 +162,8 @@ cam_lookat(0_40_49_43_15, 270, 2, 1);
 ~forcemove(movecoord(coord, 0, 0, 1));
 p_delay(1);
 cam_reset;
-if (%arena_progress = ^arena_entered_ogre_fight & npc_finduid(~npc_within_distance(coord, jeremy_servil_arena, 8)) = true) {
-    ~chatnpc(shock, "Quick, help him! That beast will kill him. He's too old to fight.");
+if (%arena_progress = ^arena_entered_ogre_fight & npc_find(coord, jeremy_servil_arena, 8, 0) = true) {
+    ~chatnpc("<p,shock>Quick, help him! That beast will kill him. He's too old to fight.");
     @ogre_attack_justin;
 } else if (%arena_progress = ^arena_sent_jail) {
     ~mesbox("From above you hear a voice..... 'Ladies and gentlemen! Let today's first fight between the outsider and everyone's favourite scorpion commence.'");
@@ -182,7 +182,7 @@ $x, $z = ~door_open($angle, loc_shape);
 loc_change(loc_83, 2);
 loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
 ~forcemove(movecoord(coord, -2, 0, 2));
-if (%arena_progress = ^arena_defeated_ogre & npc_finduid(~npc_within_distance(coord, general_khazard, 8)) = true) {
+if (%arena_progress = ^arena_defeated_ogre & npc_find(coord, general_khazard, 8, 0) = true) {
     @khazard_welldone;
 } 
 
@@ -190,7 +190,7 @@ if (%arena_progress = ^arena_defeated_ogre & npc_finduid(~npc_within_distance(co
 // again, guessed numbers
 if_close;
 def_coord $cam_coord = 0_40_49_39_23;
-if (npc_finduid(~npc_within_distance(movecoord(coord, 0, 0, 8), khazard_scorpion, 14)) = true) {
+if (npc_find(movecoord(coord, 0, 0, 8), khazard_scorpion, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(~npc_out_of_combat = true & inzone(0_40_49_47_23, 0_40_49_49_24, npc_coord) = false) {
@@ -222,7 +222,7 @@ cam_reset;
 // again, guessed numbers
 if_close;
 def_coord $cam_coord = 0_40_49_39_23;
-if (npc_finduid(~npc_within_distance(movecoord(coord, 0, 0, 8), bouncer, 14)) = true) {
+if (npc_find(movecoord(coord, 0, 0, 8), bouncer, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(~npc_out_of_combat = true & inzone(0_40_49_47_26, 0_40_49_49_27, npc_coord) = false) {

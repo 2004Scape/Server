@@ -1,33 +1,33 @@
 [opnpc1,galahad]
 if(%grail_progress = ^grail_complete) {
-    ~chatnpc(neutral, "Would you like a cup of tea? I'll just put the kettle on.");
+    ~chatnpc("<p,neutral>Would you like a cup of tea? I'll just put the kettle on.");
     ~mesbox("Brother Galahad hangs a kettle over the fire.");
-    ~chatplayer(happy, "I returned the Holy Grail to Camelot!");
-    ~chatnpc(neutral, "I'm impressed! That's something I was never able to do. Half a moment; your cup of tea is ready.");
+    ~chatplayer("<p,happy>I returned the Holy Grail to Camelot!");
+    ~chatnpc("<p,neutral>I'm impressed! That's something I was never able to do. Half a moment; your cup of tea is ready.");
     @galahad_give_tea;
 }
 if(%grail_progress = ^grail_failed_defeat_titan) {
-    ~chatnpc(neutral, "How goes thy quest?");
-    ~chatplayer(sad, "I now need to defeat a black knight titan.|He seems invulnerable!");
-    ~chatnpc(confused, "A black knight titan hmm?|Haven't seen one of them about in a while...");
-    ~chatnpc(neutral, "You'll need a special sword to defeat it, such as excalibur. You should be able to get that from the lady of the lake ...if you haven't already.");
+    ~chatnpc("<p,neutral>How goes thy quest?");
+    ~chatplayer("<p,sad>I now need to defeat a black knight titan.|He seems invulnerable!");
+    ~chatnpc("<p,confused>A black knight titan hmm?|Haven't seen one of them about in a while...");
+    ~chatnpc("<p,neutral>You'll need a special sword to defeat it, such as excalibur. You should be able to get that from the lady of the lake ...if you haven't already.");
     if(inv_total(inv, holy_table_napkin) = 0 & inv_total(bank, holy_table_napkin) = 0) {
         def_int $option = ~p_choice2("Thank you I shall continue with my quest", 1, "I have lost the holy table napkin", 2); // broken punc
         if($option = 2) {
-            ~chatplayer(sad, "I have lost the holy table napkin...");
+            ~chatplayer("<p,sad>I have lost the holy table napkin...");
             ~mesbox("Galahad gives you another table napkin.");
             inv_add(inv, holy_table_napkin, 1);
-            ~chatnpc(happy, "Lucky I had more than one, eh?");
+            ~chatnpc("<p,happy>Lucky I had more than one, eh?");
             ~mesbox("Galahad winks at you.");
-            ~chatnpc(happy, "Try not to lose this one!");
+            ~chatnpc("<p,happy>Try not to lose this one!");
             return;
         }
     }
-    ~chatplayer(neutral, "Thank you. I shall continue with my quest.");
-    ~chatnpc(neutral, "Half a moment, your cup of tea is ready.");
+    ~chatplayer("<p,neutral>Thank you. I shall continue with my quest.");
+    ~chatnpc("<p,neutral>Half a moment, your cup of tea is ready.");
     @galahad_give_tea;
 }
-~chatnpc(neutral, "Welcome to my home.|It's rare for me to have guests!|Would you like a cup of tea?|I'll just put the kettle on.");
+~chatnpc("<p,neutral>Welcome to my home.|It's rare for me to have guests!|Would you like a cup of tea?|I'll just put the kettle on.");
 ~mesbox("Brother Galahad hangs a kettle over the fire.");
 def_int $choice;
 if(%grail_progress = ^grail_spoken_crone & inv_total(inv, holy_table_napkin) = 0) { // no bank check
@@ -39,60 +39,60 @@ if(%grail_progress = ^grail_spoken_crone & inv_total(inv, holy_table_napkin) = 0
 }
 switch_int($choice) {
     case 1:
-        ~chatplayer(quiz, "Are you any relation to Sir Galahad?");
-        ~chatnpc(neutral, "I AM Sir Galahad.");
-        ~chatnpc(neutral, "Although I've retired as a Knight, and now live as a solitary monk. Also, I prefer to be known as brother rather than sir now. Half a moment, your cup of tea is ready.");
+        ~chatplayer("<p,quiz>Are you any relation to Sir Galahad?");
+        ~chatnpc("<p,neutral>I AM Sir Galahad.");
+        ~chatnpc("<p,neutral>Although I've retired as a Knight, and now live as a solitary monk. Also, I prefer to be known as brother rather than sir now. Half a moment, your cup of tea is ready.");
     case 2:
-        ~chatplayer(neutral, "Do you get lonely out here on your own?");
-        ~chatnpc(neutral, "Sometimes I do, yes. Still not many people to share my solidarity with, as most of the religious men around here are worshippers of Saradomin. Half a moment, your cup of tea is ready.");
+        ~chatplayer("<p,neutral>Do you get lonely out here on your own?");
+        ~chatnpc("<p,neutral>Sometimes I do, yes. Still not many people to share my solidarity with, as most of the religious men around here are worshippers of Saradomin. Half a moment, your cup of tea is ready.");
     case 3:
-        ~chatplayer(neutral, "I'm on a quest to find the Holy Grail!");
-        ~chatnpc(neutral, "Ah... the Grail... yes... that did fill me with wonder! Oh, that I could have stayed forever! The spear, the food, the people...");
+        ~chatplayer("<p,neutral>I'm on a quest to find the Holy Grail!");
+        ~chatnpc("<p,neutral>Ah... the Grail... yes... that did fill me with wonder! Oh, that I could have stayed forever! The spear, the food, the people...");
         @multi4("So how can I find it?", galahad_how, "What are you talking about?", galahad_what, "Why did you leave?", galahad_why_leave, "Why didn't you bring the Grail with you?", galahad_why_grail);
     case 4:
-        ~chatplayer(neutral, "I seek an item from the realm of the Fisher King.");
-        ~chatnpc(neutral, "Funny you should mention that, but when I left there I took this small cloth from the table as a keepsake.");
+        ~chatplayer("<p,neutral>I seek an item from the realm of the Fisher King.");
+        ~chatnpc("<p,neutral>Funny you should mention that, but when I left there I took this small cloth from the table as a keepsake.");
         @galahad_borrow_cloth;
 }
 @galahad_give_tea;
 
 [label,galahad_how]
-~chatplayer(neutral, "So how can I find it?");
-~chatnpc(neutral, "I did not find it through looking - though admittedly I looked long and hard - eventually, it found me.");
+~chatplayer("<p,neutral>So how can I find it?");
+~chatnpc("<p,neutral>I did not find it through looking - though admittedly I looked long and hard - eventually, it found me.");
 @multi4("What are you talking about?", galahad_what, "Why did you leave?", galahad_why_leave, "Why didn't you bring the Grail with you?", galahad_why_grail, "Well, I'd better be going then.", galahad_get_going);
 
 [label,galahad_what]
-~chatplayer(neutral, "What are you talking about?");
-~chatnpc(neutral, "The Grail castle...|It's... hard to describe with words.|It mostly felt like a dream!");
+~chatplayer("<p,neutral>What are you talking about?");
+~chatnpc("<p,neutral>The Grail castle...|It's... hard to describe with words.|It mostly felt like a dream!");
 @multi4("So how can I find it?", galahad_how, "Why did you leave?", galahad_why_leave, "Why didn't you bring the Grail with you?", galahad_why_grail, "Well, I'd better be going then.", galahad_get_going);
 
 [label,galahad_why_leave]
-~chatplayer(neutral, "Why did you leave?");
-~chatnpc(neutral, "Apparently the time is getting close when the world will need Arthur and his knights of the round table again.");
-~chatnpc(sad, "And that includes me.");
-~chatnpc(neutral, "Leaving was tough for me,|so I took this small cloth from the table as a keepsake.");
+~chatplayer("<p,neutral>Why did you leave?");
+~chatnpc("<p,neutral>Apparently the time is getting close when the world will need Arthur and his knights of the round table again.");
+~chatnpc("<p,sad>And that includes me.");
+~chatnpc("<p,neutral>Leaving was tough for me,|so I took this small cloth from the table as a keepsake.");
 if(%grail_progress >= ^grail_spoken_crone & inv_total(inv, holy_table_napkin) = 0) {
     @galahad_borrow_cloth;
 }
 
 [label,galahad_why_grail]
-~chatplayer(neutral, "Why didn't you bring the Grail with you?");
-~chatnpc(neutral, "...I'm not sure.|Because... it seemed to be... NEEDED in the Grail castle?|Half a moment, your cup of tea is ready.");
+~chatplayer("<p,neutral>Why didn't you bring the Grail with you?");
+~chatnpc("<p,neutral>...I'm not sure.|Because... it seemed to be... NEEDED in the Grail castle?|Half a moment, your cup of tea is ready.");
 @galahad_give_tea;
 
 [label,galahad_get_going]
-~chatplayer(neutral, "Well, I'd better be going then.");
-~chatnpc(neutral, "Half a moment, your cup of tea is ready.");
+~chatplayer("<p,neutral>Well, I'd better be going then.");
+~chatnpc("<p,neutral>Half a moment, your cup of tea is ready.");
 ~mesbox("Sir Galahad gives you a cup of tea.");
 inv_add(inv, cup_of_tea, 1);
-~chatnpc(neutral, "If you do come across any particularily difficult obstacles on your quest, do not hesitate to ask my advice.");
-~chatnpc(neutral, "I know more about the realm of the Grail than many, and I have a feeling you may need to come back and speak to me anyway...");
+~chatnpc("<p,neutral>If you do come across any particularily difficult obstacles on your quest, do not hesitate to ask my advice.");
+~chatnpc("<p,neutral>I know more about the realm of the Grail than many, and I have a feeling you may need to come back and speak to me anyway...");
 
 [label,galahad_give_tea]
 ~mesbox("Sir Galahad gives you a cup of tea.");
 inv_add(inv, cup_of_tea, 1);
 
 [label,galahad_borrow_cloth]
-~chatplayer(quiz, "I don't suppose I could borrow that?|It could come in useful on my quest.");
+~chatplayer("<p,quiz>I don't suppose I could borrow that?|It could come in useful on my quest.");
 ~mesbox("Galahad reluctantly passes you a small cloth.");
 inv_add(inv, holy_table_napkin, 1);

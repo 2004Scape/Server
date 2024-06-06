@@ -111,7 +111,7 @@ export function startWeb() {
                 process.exit(1);
             }
 
-            console.log(`[Web]: Listening on port ${Environment.WEB_PORT}`);
+            //console.log(`[Web]: Listening on port ${Environment.WEB_PORT}`);
         }
     );
 }

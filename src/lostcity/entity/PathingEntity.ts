@@ -14,16 +14,8 @@ import { Direction, Position } from '#lostcity/entity/Position.js';
 import LocType from '#lostcity/cache/LocType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
-import {
-    canTravel,
-    CollisionFlag,
-    CollisionType,
-    findNaivePath,
-    findPath,
-    hasLineOfSight,
-    isFlagged,
-    reached
-} from '@2004scape/rsmod-pathfinder';
+import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 
 type TargetSubject = {
     type: number,
@@ -60,6 +52,8 @@ export default abstract class PathingEntity extends Entity {
     target: Entity | null = null;
     targetOp: TargetOp = -1;
     targetSubject: TargetSubject = {type: -1, com: -1};
+    targetX: number = -1;
+    targetZ: number = -1;
     apRange: number = 10;
     apRangeCalled: boolean = false;
     alreadyFacedCoord: boolean = false;
@@ -312,8 +306,11 @@ export default abstract class PathingEntity extends Entity {
         return this.waypointIndex !== -1;
     }
 
+    /*
+     * Returns if this PathingEntity is at the last waypoint.
+     */
     isLastWaypoint(): boolean {
-        return this.waypointIndex === 0;
+        return this.waypointIndex <= 0;
     }
 
     protected inOperableDistance(target: Entity): boolean {
@@ -321,14 +318,14 @@ export default abstract class PathingEntity extends Entity {
             return false;
         }
         if (target instanceof PathingEntity) {
-            return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
+            return rsmod.reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
         } else if (target instanceof Loc) {
             const forceapproach = LocType.get(target.type).forceapproach;
-            return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
+            return rsmod.reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
         }
         // instanceof Obj
-        const reachedAdjacent: boolean = reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
-        if (isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED)) {
+        const reachedAdjacent: boolean = rsmod.reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -2);
+        if (rsmod.isFlagged(target.x, target.z, target.level, CollisionFlag.WALK_BLOCKED)) {
             // picking up off of tables
             return reachedAdjacent;
         }
@@ -336,7 +333,7 @@ export default abstract class PathingEntity extends Entity {
             // picking up while walktrigger prevents movement
             return true;
         }
-        return reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1);
+        return rsmod.reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, 0, -1);
     }
 
     protected inApproachDistance(range: number, target: Entity): boolean {
@@ -348,7 +345,7 @@ export default abstract class PathingEntity extends Entity {
             // you are not within ap distance of pathing entity if you are underneath it.
             return false;
         }
-        return Position.distanceTo(this, target) <= range && hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, CollisionFlag.PLAYER);
+        return Position.distanceTo(this, target) <= range && rsmod.hasLineOfSight(this.level, this.x, this.z, target.x, target.z, this.width, this.length, target.width, target.length, CollisionFlag.PLAYER);
     }
 
     protected pathToTarget(): void {
@@ -356,14 +353,17 @@ export default abstract class PathingEntity extends Entity {
             return;
         }
 
+        this.targetX = this.target.x;
+        this.targetZ = this.target.z;
+
         if (this.smart) {
             if (this.target instanceof PathingEntity) {
-                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
+                this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
             } else if (this.target instanceof Loc) {
                 const forceapproach = LocType.get(this.target.type).forceapproach;
-                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
+                this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
             } else {
-                this.queueWaypoints(findPath(this.level, this.x, this.z, this.target.x, this.target.z));
+                this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z));
             }
             return;
         }
@@ -380,7 +380,7 @@ export default abstract class PathingEntity extends Entity {
             return;
         }
         if (this.target instanceof PathingEntity) {
-            this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, extraFlag, collisionStrategy));
+            this.queueWaypoints(rsmod.findNaivePath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.length, this.target.width, this.target.length, extraFlag, collisionStrategy));
         } else {
             this.queueWaypoint(this.target.x, this.target.z);
         }
@@ -390,6 +390,8 @@ export default abstract class PathingEntity extends Entity {
         this.target = target;
         this.targetOp = op;
         this.targetSubject = subject ?? {type: -1, com: -1};
+        this.targetX = target.x;
+        this.targetZ = target.z;
         this.apRange = 10;
         this.apRangeCalled = false;
 
@@ -415,6 +417,7 @@ export default abstract class PathingEntity extends Entity {
                 this.mask |= this.coordmask;
             }
         }
+
         if (interaction === Interaction.SCRIPT) {
             this.pathToTarget();
         }
@@ -424,6 +427,8 @@ export default abstract class PathingEntity extends Entity {
         this.target = null;
         this.targetOp = -1;
         this.targetSubject = {type: -1, com: -1};
+        this.targetX = -1;
+        this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
         this.alreadyFacedCoord = true;
@@ -521,17 +526,17 @@ export default abstract class PathingEntity extends Entity {
         }
 
         // check current direction if can travel to chosen dest.
-        if (canTravel(this.level, this.x, this.z, dx, dz, this.width, extraFlag, collisionStrategy)) {
+        if (rsmod.canTravel(this.level, this.x, this.z, dx, dz, this.width, extraFlag, collisionStrategy)) {
             return dir;
         }
 
         // check another direction if can travel to chosen dest on current z-axis.
-        if (dx != 0 && canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
+        if (dx != 0 && rsmod.canTravel(this.level, this.x, this.z, dx, 0, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, x, srcZ);
         }
 
         // check another direction if can travel to chosen dest on current x-axis.
-        if (dz != 0 && canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
+        if (dz != 0 && rsmod.canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, srcX, z);
         }
         return null;

@@ -8,7 +8,7 @@ export function packClientMusic() {
         return;
     }
 
-    console.log('Packing jingles');
+    //console.log('Packing jingles');
     //console.time('jingles');
 
     fs.mkdirSync('data/pack/client/jingles', { recursive: true });
@@ -25,7 +25,7 @@ export function packClientMusic() {
 
     // ----
 
-    console.log('Packing songs');
+    //console.log('Packing songs');
     //console.time('songs');
 
     fs.mkdirSync('data/pack/client/songs', { recursive: true });

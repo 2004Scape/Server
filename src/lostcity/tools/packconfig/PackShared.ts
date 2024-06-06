@@ -348,7 +348,7 @@ export function packConfigs() {
         shouldBuildFile('data/src/pack/category.pack', 'data/pack/server/category.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/category.dat')
     ) {
-        console.log('Packing categories');
+        //console.log('Packing categories');
         //console.time('Packed categories');
         const dat = Packet.alloc(1);
         dat.p2(CategoryPack.size);
@@ -365,7 +365,7 @@ export function packConfigs() {
         shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/frame_del.dat')
     ) {
-        console.log('Packing frame_del');
+        //console.log('Packing frame_del');
         //console.time('Packed frame_del');
         const files = listFilesExt('data/src/models', '.frame');
         const frame_del = Packet.alloc(2);
@@ -408,7 +408,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbtable.dat')
     ) {
-        console.log('Packing .dbtable');
+        //console.log('Packing .dbtable');
         //console.time('Packed .dbtable');
         readConfigs('.dbtable', [], parseDbTableConfig, packDbTableConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/dbtable.dat');
@@ -428,7 +428,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbtable.dat')
     ) {
-        console.log('Packing .dbrow');
+        //console.log('Packing .dbrow');
         //console.time('Packed .dbrow');
         readConfigs('.dbrow', [], parseDbRowConfig, packDbRowConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/dbrow.dat');
@@ -443,7 +443,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.enum', 'data/pack/server/enum.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/enum.dat')
     ) {
-        console.log('Packing .enum');
+        //console.log('Packing .enum');
         //console.time('Packed .enum');
         readConfigs('.enum', [], parseEnumConfig, packEnumConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/enum.dat');
@@ -458,7 +458,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.inv', 'data/pack/server/inv.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/inv.dat')
     ) {
-        console.log('Packing .inv');
+        //console.log('Packing .inv');
         //console.time('Packed .inv');
         readConfigs('.inv', [], parseInvConfig, packInvConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/inv.dat');
@@ -473,7 +473,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/mesanim.dat')
     ) {
-        console.log('Packing .mesanim');
+        //console.log('Packing .mesanim');
         //console.time('Packed .mesanim');
         readConfigs('.mesanim', [], parseMesAnimConfig, packMesAnimConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/mesanim.dat');
@@ -488,7 +488,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.struct', 'data/pack/server/struct.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/struct.dat')
     ) {
-        console.log('Packing .struct');
+        //console.log('Packing .struct');
         //console.time('Packed .struct');
         readConfigs('.struct', [], parseStructConfig, packStructConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/struct.dat');
@@ -505,7 +505,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.seq', 'data/pack/server/seq.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/seq.dat')
     ) {
-        console.log('Packing .seq');
+        //console.log('Packing .seq');
         //console.time('Packed .seq');
         readConfigs('.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
@@ -528,7 +528,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.loc', 'data/pack/server/loc.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/loc.dat')
     ) {
-        console.log('Packing .loc');
+        //console.log('Packing .loc');
         //console.time('Packed .loc');
         readConfigs('.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
@@ -551,7 +551,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.flo', 'data/pack/server/flo.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/flo.dat')
     ) {
-        console.log('Packing .flo');
+        //console.log('Packing .flo');
         //console.time('Packed .flo');
         readConfigs('.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
@@ -574,7 +574,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/spotanim.dat')
     ) {
-        console.log('Packing .spotanim');
+        //console.log('Packing .spotanim');
         //console.time('Packed .spotanim');
         readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
@@ -597,7 +597,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.npc', 'data/pack/server/npc.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/npc.dat')
     ) {
-        console.log('Packing .npc');
+        //console.log('Packing .npc');
         //console.time('Packed .npc');
         readConfigs('.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
@@ -620,7 +620,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/obj.dat')
     ) {
-        console.log('Packing .obj');
+        //console.log('Packing .obj');
         //console.time('Packed .obj');
         readConfigs('.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
@@ -643,7 +643,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/idk.dat')
     ) {
-        console.log('Packing .idk');
+        //console.log('Packing .idk');
         //console.time('Packed .idk');
         readConfigs('.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
@@ -666,7 +666,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/varp.dat')
     ) {
-        console.log('Packing .varp');
+        //console.log('Packing .varp');
         //console.time('Packed .varp');
         readConfigs('.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
             if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
@@ -689,7 +689,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.hunt', 'data/pack/server/hunt.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/hunt.dat')
     ) {
-        console.log('Packing .hunt');
+        //console.log('Packing .hunt');
         //console.time('Packed .hunt');
         readConfigs('.hunt', [], parseHuntConfig, packHuntConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/hunt.dat');
@@ -704,7 +704,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.varn', 'data/pack/server/varn.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/varn.dat')
     ) {
-        console.log('Packing .varn');
+        //console.log('Packing .varn');
         //console.time('Packed .varn');
         readConfigs('.varn', [], parseVarnConfig, packVarnConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/varn.dat');
@@ -719,7 +719,7 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.vars', 'data/pack/server/vars.dat') ||
         shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/vars.dat')
     ) {
-        console.log('Packing .vars');
+        //console.log('Packing .vars');
         //console.time('Packed .vars');
         readConfigs('.vars', [], parseVarsConfig, packVarsConfigs, noOp, (dat: Packet, idx: Packet) => {
             dat.save('data/pack/server/vars.dat');
@@ -731,7 +731,7 @@ export function packConfigs() {
     }
 
     if (rebuildClient) {
-        console.log('Writing config.jag');
+        //console.log('Writing config.jag');
         // we would check the CRC of the config.jag file too, but bz2 can differ on Windows...
         jag.save('data/pack/client/config');
     }

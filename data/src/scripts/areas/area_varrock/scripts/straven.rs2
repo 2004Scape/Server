@@ -6,7 +6,7 @@ switch_int (%phoenixgang_progress) {
     case ^phoenixgang_spoken_straven: @straven_mission;
     case ^phoenixgang_joined, ^phoenixgang_complete: @straven_gangmember;
     case default:
-        ~chatplayer(quiz, "What's through that door?");
+        ~chatplayer("<p,quiz>What's through that door?");
         @straven_cant_enter;
 }
 
@@ -15,14 +15,14 @@ if(last_useitem = blackarmgang_scroll) {
     if(%phoenixgang_progress = ^phoenixgang_spoken_straven) {
         @straven_mission;
     } else if(%phoenixgang_progress >= ^phoenixgang_joined) {
-        ~chatnpc(quiz, "You've already given me that intelligence report!|Why are you offering me another copy of it?");
+        ~chatnpc("<p,quiz>You've already given me that intelligence report!|Why are you offering me another copy of it?");
         return;
     }
 }
 ~displaymessage(^dm_default);
 
 [label,straven_cant_enter]
-~chatnpc(neutral, "Hey! You can't go in there. Only authorised personnel of the VTAM Corporation are allowed beyond this point.");
+~chatnpc("<p,neutral>Hey! You can't go in there. Only authorised personnel of the VTAM Corporation are allowed beyond this point.");
 def_int $option;
 if(%phoenixgang_progress = 4) {
     $option = ~p_choice3("I know who you are!", 1, "How do I get a job with the VTAM corporation?", 2, "Why not?", 3);
@@ -31,86 +31,86 @@ if(%phoenixgang_progress = 4) {
 }
 switch_int ($option) {
     case 1:
-        ~chatplayer(sad, "I know who you are!");
-        ~chatnpc(neutral, "I see.|Carry on?");
-        ~chatplayer(sad, "This is the headquarters of the Phoenix Gang,|the most powerful crime syndicate this city has ever seen!");
-        ~chatnpc(neutral, "And supposing we were this crime gang,|what would you want with us?");
+        ~chatplayer("<p,sad>I know who you are!");
+        ~chatnpc("<p,neutral>I see.|Carry on?");
+        ~chatplayer("<p,sad>This is the headquarters of the Phoenix Gang,|the most powerful crime syndicate this city has ever seen!");
+        ~chatnpc("<p,neutral>And supposing we were this crime gang,|what would you want with us?");
         $option = ~p_choice2("I'd like to offer you my services.", 1, "I want nothing. I was just making sure you were them.", 2);
         if($option = 1) {
-            ~chatplayer(happy, "I'd like to offer you my services.");
-            ~chatnpc(neutral, "You mean you'd like to join the Phoenix Gang?");
-            ~chatnpc(neutral, "Well, the Phoenix Gang doesn't let people join just like that.");
-            ~chatnpc(neutral, "You can't be too careful, you understand.");
-            ~chatnpc(neutral, "Generally someone has to prove their loyalty before they can join.");
-            ~chatplayer(quiz, "How would I go about doing that?");
-            ~chatnpc(neutral, "Let me think...|I have an idea.");
-            ~chatnpc(neutral, "A rival gang of ours,|called the Black Arm Gang|is supposedly meeting a contact from Port Sarim today.|In the Blue Moon Inn");
+            ~chatplayer("<p,happy>I'd like to offer you my services.");
+            ~chatnpc("<p,neutral>You mean you'd like to join the Phoenix Gang?");
+            ~chatnpc("<p,neutral>Well, the Phoenix Gang doesn't let people join just like that.");
+            ~chatnpc("<p,neutral>You can't be too careful, you understand.");
+            ~chatnpc("<p,neutral>Generally someone has to prove their loyalty before they can join.");
+            ~chatplayer("<p,quiz>How would I go about doing that?");
+            ~chatnpc("<p,neutral>Let me think...|I have an idea.");
+            ~chatnpc("<p,neutral>A rival gang of ours,|called the Black Arm Gang|is supposedly meeting a contact from Port Sarim today.|In the Blue Moon Inn");
             %phoenixgang_progress = 8;
-            ~chatnpc(neutral, "by the south entrance to this city.|The name of the contact is Jonny the Beard.|Kill him and bring back his intelligence report.");
-            ~chatplayer(happy, "Ok, I'll get right on it.");
+            ~chatnpc("<p,neutral>by the south entrance to this city.|The name of the contact is Jonny the Beard.|Kill him and bring back his intelligence report.");
+            ~chatplayer("<p,happy>Ok, I'll get right on it.");
         } else if($option = 2) {
-            ~chatplayer(happy, "I want nothing. I was just making sure you were them.");
-            ~chatnpc(neutral, "Well then get lost and stop wasting my time.");
+            ~chatplayer("<p,happy>I want nothing. I was just making sure you were them.");
+            ~chatnpc("<p,neutral>Well then get lost and stop wasting my time.");
         }
     case 2:
-        ~chatplayer(quiz, "How do I get a job with the VTAM corporation?");
-        ~chatnpc(neutral, "Get a copy of the Varrock Herald.|If we have any positions right now,|they'll be advertised in there.");
+        ~chatplayer("<p,quiz>How do I get a job with the VTAM corporation?");
+        ~chatnpc("<p,neutral>Get a copy of the Varrock Herald.|If we have any positions right now,|they'll be advertised in there.");
     case 3:
-        ~chatplayer(quiz, "Why not?");
-        ~chatnpc(neutral, "Sorry. That's classified information.");
+        ~chatplayer("<p,quiz>Why not?");
+        ~chatnpc("<p,neutral>Sorry. That's classified information.");
 }
 
 [label,straven_mission]
-~chatnpc(neutral, "How's your little mission going?");
+~chatnpc("<p,neutral>How's your little mission going?");
 if(inv_total(inv, blackarmgang_scroll) > 0) {
-    ~chatplayer(happy, "I have the intelligence report!");
-    ~chatnpc(neutral, "Let's see it then.");
+    ~chatplayer("<p,happy>I have the intelligence report!");
+    ~chatnpc("<p,neutral>Let's see it then.");
     ~mesbox("You hand over the report.|The man reads the report.");
-    ~chatnpc(neutral, "Yes. Yes, this is very good.");
-    ~chatnpc(happy, "Ok! You can join the Phoenix Gang!|I am Straven, one of the gang leaders.");
-    ~chatplayer(neutral, "Nice to meet you.");
-    ~chatnpc(neutral, "Take this key.");
+    ~chatnpc("<p,neutral>Yes. Yes, this is very good.");
+    ~chatnpc("<p,happy>Ok! You can join the Phoenix Gang!|I am Straven, one of the gang leaders.");
+    ~chatplayer("<p,neutral>Nice to meet you.");
+    ~chatnpc("<p,neutral>Take this key.");
     %phoenixgang_progress = 9;
     inv_del(inv, blackarmgang_scroll, 1);
     inv_add(inv, weapon_store_key, 1);
     ~objbox(weapon_store_key, "Straven hands you a key.");
-    ~chatnpc(neutral, "This key will give you access to our weapons supply depot round the front of this building.");
+    ~chatnpc("<p,neutral>This key will give you access to our weapons supply depot round the front of this building.");
     return;
 }
-~chatplayer(sad, "I haven't managed to find the report yet...");
-~chatnpc(neutral, "You need to kill Jonny the Beard,|who should be in the Blue Moon Inn.");
+~chatplayer("<p,sad>I haven't managed to find the report yet...");
+~chatnpc("<p,neutral>You need to kill Jonny the Beard,|who should be in the Blue Moon Inn.");
 
 [label,straven_gangmember]
-~chatnpc(neutral, "Greetings fellow gang member.");
+~chatnpc("<p,neutral>Greetings fellow gang member.");
 if(inv_total(inv, weapon_store_key) = 0 & inv_total(bank, weapon_store_key) = 0) {
-    ~chatplayer(sad, "I'm afraid I've lost the key you gave me...");
-    ~chatnpc(neutral, "You really need to be more careful.|We don't want that key falling into the wrong hands.|Ah well...|Have this spare. Don't lose THIS one.");
+    ~chatplayer("<p,sad>I'm afraid I've lost the key you gave me...");
+    ~chatnpc("<p,neutral>You really need to be more careful.|We don't want that key falling into the wrong hands.|Ah well...|Have this spare. Don't lose THIS one.");
     inv_add(inv, weapon_store_key, 1);
     ~objbox(weapon_store_key, "Straven hands you a key.");
     return;
 }
 def_int $option = ~p_choice2("I've heard you've got some cool treasures in this place...", 1, "I want nothing. I was just making sure you were them.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "I've heard you've got some cool treasures in this place...");
-    ~chatnpc(happy, "Oh yeah, we've all stolen some stuff in our time.|Those candlesticks down here, for example,|were quite a challenge to get out of the palace.");
-    ~chatplayer(quiz, "And the shield of Arrav? I heard you got that!");
-    ~chatnpc(shock, "Woah... that's a blast from the past!|We stole that years and years ago!|We don't even have all the shield anymore.");
-    ~chatnpc(neutral, "About five years ago|we had a massive fight in our gang|and the shield got broken in half during that fight.");
-    ~chatnpc(neutral, "Shortly after the fight|some gang members decided|they didn't want to be part of our gang anymore.|So they split off to form their own gang.");
-    ~chatnpc(angry, "The Black Arm Gang.");
-    ~chatnpc(neutral, "On their way out|they looted what treasures they could from us - |which included one of the halves of the shield.|We've been rivals with the Black Arms ever since.");
+    ~chatplayer("<p,neutral>I've heard you've got some cool treasures in this place...");
+    ~chatnpc("<p,happy>Oh yeah, we've all stolen some stuff in our time.|Those candlesticks down here, for example,|were quite a challenge to get out of the palace.");
+    ~chatplayer("<p,quiz>And the shield of Arrav? I heard you got that!");
+    ~chatnpc("<p,shock>Woah... that's a blast from the past!|We stole that years and years ago!|We don't even have all the shield anymore.");
+    ~chatnpc("<p,neutral>About five years ago|we had a massive fight in our gang|and the shield got broken in half during that fight.");
+    ~chatnpc("<p,neutral>Shortly after the fight|some gang members decided|they didn't want to be part of our gang anymore.|So they split off to form their own gang.");
+    ~chatnpc("<p,angry>The Black Arm Gang.");
+    ~chatnpc("<p,neutral>On their way out|they looted what treasures they could from us - |which included one of the halves of the shield.|We've been rivals with the Black Arms ever since.");
 } else if($option = 2) {
-    ~chatplayer(quiz, "Any suggestions for where I can go thieving?");
-    ~chatnpc(neutral, "You can always try the marketplace in Ardougne.|LOTS of opportunity there!");
+    ~chatplayer("<p,quiz>Any suggestions for where I can go thieving?");
+    ~chatnpc("<p,neutral>You can always try the marketplace in Ardougne.|LOTS of opportunity there!");
 } else if($option = 3) {
-    ~chatplayer(happy, "Where's the Black Arm Gang hideout?|I wanna go sabotage 'em!");
-    ~chatnpc(neutral, "That would be a little tricky;|their security is pretty good.");
-    ~chatnpc(neutral, "Not as good as ours, obviously.");
-    ~chatnpc(neutral, "But still good.");
-    ~chatnpc(neutral, "If you really want to go there,|it's in the alleyway|to the west as you come in the south gate.");
-    ~chatnpc(neutral, "One of our operatives is often near the alley,|a red haired tramp.|He may be able to give you some ideas.");
-    ~chatplayer(happy, "Thanks for the help!");
+    ~chatplayer("<p,happy>Where's the Black Arm Gang hideout?|I wanna go sabotage 'em!");
+    ~chatnpc("<p,neutral>That would be a little tricky;|their security is pretty good.");
+    ~chatnpc("<p,neutral>Not as good as ours, obviously.");
+    ~chatnpc("<p,neutral>But still good.");
+    ~chatnpc("<p,neutral>If you really want to go there,|it's in the alleyway|to the west as you come in the south gate.");
+    ~chatnpc("<p,neutral>One of our operatives is often near the alley,|a red haired tramp.|He may be able to give you some ideas.");
+    ~chatplayer("<p,happy>Thanks for the help!");
 }
 
 [label,straven_blackarmdog]
-~chatnpc(neutral, "You stay away from here!|Black Arm dog!");
+~chatnpc("<p,neutral>You stay away from here!|Black Arm dog!");

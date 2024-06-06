@@ -2,6 +2,7 @@ import { Worker } from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
 import { basename } from 'path';
+import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
@@ -54,7 +55,7 @@ import ServerProt from '#lostcity/server/ServerProt.js';
 import Environment from '#lostcity/util/Environment.js';
 import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
+import { getLatestModified, getModified, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 import { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
@@ -242,9 +243,12 @@ class World {
             }
         }
 
-        if (transmitted) {
-            makeCrcs();
-        }
+        // todo: check if any jag files changed (transmitted) then reload crcs
+        // if (transmitted) {
+        //     makeCrcs();
+        // }
+
+        makeCrcs();
 
         // todo: detect and reload static data (like maps)
         preloadClient();
@@ -277,14 +281,21 @@ class World {
         if (Environment.LOCAL_DEV) {
             this.startDevWatcher();
 
-            if (Environment.BUILD_ON_STARTUP) {
+            // console.time('checker');
+            // todo: this check takes me 300ms on startup! but it saves double building fresh setups
+            if (Environment.BUILD_ON_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
                 this.devThread!.postMessage({
                     type: 'pack'
                 });
             }
+            // console.timeEnd('checker');
         }
 
-        console.log('World ready!');
+        if (Environment.WEB_PORT === 80) {
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP));
+        } else {
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT));
+        }
 
         if (startCycle) {
             await this.cycle();
@@ -559,7 +570,7 @@ class World {
                 player.closeModal();
                 player.unsetMapFlag();
                 player.logoutRequested = true;
-                player.setVar(VarPlayerType.getId('lastcombat'), 0); // temp fix for logging out in combat, since logout trigger conditions still run...
+                player.setVar(VarPlayerType.LASTCOMBAT, 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
 
             if (!player.logoutRequested) {

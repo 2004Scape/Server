@@ -22,7 +22,7 @@ export default class TcpServer {
             s.setNoDelay(true);
 
             const ip: string = s.remoteAddress ?? 'unknown';
-            console.log(`[World]: Connection from ${ip}`);
+            //console.log(`[World]: Connection from ${ip}`);
 
             const socket = new ClientSocket(s, ip, ClientSocket.TCP);
 
@@ -42,7 +42,7 @@ export default class TcpServer {
             });
 
             s.on('close', () => {
-                console.log(`[World]: Disconnected from ${socket.remoteAddress}`);
+                //console.log(`[World]: Disconnected from ${socket.remoteAddress}`);
 
                 if (socket.player) {
                     socket.player.client = null;
@@ -63,7 +63,7 @@ export default class TcpServer {
         });
 
         this.tcp.listen(Environment.GAME_PORT as number, '0.0.0.0', () => {
-            console.log(`[World]: Listening on port ${Environment.GAME_PORT}`);
+            //console.log(`[World]: Listening on port ${Environment.GAME_PORT}`);
         });
     }
 }

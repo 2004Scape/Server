@@ -15,10 +15,10 @@ p_delay(1);
 mes("...But they will not open.");
 
 [label,west_ardougne_mourner_headquarters_doors]
-~chatnpc_specific(nc_name(npc_357), npc_357, neutral, "Back away citizen. Only mourners are allowed inside the headquarters.");
+~chatnpc_specific(nc_name(npc_357), npc_357, "<p,neutral>Back away citizen. Only mourners are allowed inside the headquarters.");
 
 [label,bravek_go_away_im_busy]
-~chatnpc_specific(nc_name(bravek), bravek, angry, "Go away, I'm busy! I'm... Umm... In a meeting!");
+~chatnpc_specific(nc_name(bravek), bravek, "<p,angry>Go away, I'm busy! I'm... Umm... In a meeting!");
 
 [label,bravek_enter_room]
 ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);

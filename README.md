@@ -1,69 +1,69 @@
-# 2004scape Server
+<div align="center">
 
-[Website](https://2004scape.org) | [Discord](https://discord.gg/hN3tHUmZEN) | [Rune-Server](https://www.rune-server.ee/runescape-development/rs2-server/projects/701698-lost-city-225-emulation.html)
+<h1>2004Scape Server - May 18, 2004</h1>
 
-**disclaimer: All server code has been written from scratch for this project, Jagex has never had any source code leaks.**
+[Website](https://2004scape.org) | [Discord](https://discord.2004scape.org) | [Rune-Server](https://www.rune-server.ee/runescape-development/rs2-server/projects/701698-lost-city-225-emulation.html) | [Getting Started](#getting-started)
 
-**status: in-development, not ready for players**. Contributors are welcome to help out.
+**status: alpha, in-development**  
+Contributors are welcome to help out!
 
----
+**All server code has been written from scratch for this project.**  
+**Jagex has never had any source code leaks.**
+</div>
 
-This project aims to replicate an authentic RuneScape experience from May 2004. It should be considered an emulator first and foremost, as replicating behaviors by emulating the underlying systems is the biggest focus. The config system and scripting system is as close to authentic as we understand it, and is continually refined as we learn more info.
+## Mission Statement
 
----
+> [!IMPORTANT]
+> Our goal is to authentically, accurately, and precisely emulate old RuneScape to our best knowledge. There are countless hours behind adding and quadruple-checking every bit of logic that goes into this.
 
-*To Jagex*: This project comes out of love for the game. As MMOs age, their previous versions are lost to history. An experience becomes ephemeral and time-limited. We're aware that you have no backups for this era and so we're putting in the effort to recreate what we can.  
-It won't ever profit off your trademarks. Without this project, this version of the game only lives in our memories. Screenshots and videos are scarce, and the original data is lost to time. This is no easy task.
+Caches and clients are sourced from old PCs that played the game at a given time. That gives us the original maps, models, and NPC / Item / Scenery configurations. Then we can unpack that data into a readable and workable format based on what we've been able to observe Jagex doing, as outsiders.
 
-*To players*: So happy to have you interested! RuneScape 2 launched on March 29, 2004. We have no copies of that revision, but we do have some client caches from May 2004. This project emulates *May 18, 2004*, which was live until June 1 of that year. It has Treasure Trails and Big Chompy Bird Hunting. The next revision after this added Elemental Workshop I.
+The server side (engine, quests, combat, skills) was not preserved and that's what we're recreating here. The engine takes a lot of effort and is not perfected, but you should consider it our best interpretation of behaviors we can measure.
+
+We try to take very little liberties when it comes to guessing, our sources are era-videos, era-screenshots, and RS3/OSRS/RSC.
+
+Our content language of choice is a recreation of RuneScript: this gives us the same limitations, and the opportunity to recreate bugs out of the same circumstances. We don't simply see a bug and add it as an edge case, we have the script and engine work together to reproduce the exact reasons behind the bug.
 
 ## Getting Started
 
 1. Download this repo to your computer
 2. Install our list of [dependencies](#environment-dependencies)
-3. Create a `.env` file by copying the file `.env.example` to be called `.env`
-4. Open the folder you downloaded in a command prompt
-5. Run `npm i`, this installs necessary packages
-6. Run `npm run build`, this creates the client and server cache the first time
-7. Run `npm start`
+3. Open the folder you downloaded in a command prompt
+4. Run `npm start`
 
 Now open [http://localhost](http://localhost) in your browser and play!
 
-### Using the setup script
+> [!IMPORTANT]
+> If you run into issues please see our [common issues](#common-issues) or hop in Discord.
 
-You can instead run `setup.sh` to get your repository ready for running the server. Manually download RuneScriptCompiler.jar, from [environment dependencies](#environment-dependencies), and then run `setup.sh` to run the above commands.
+> [!TIP]
+> Windows users: We have a script called `quickstart.bat` that will launch the server for you, combining steps 3 and 4 above.
+
+> [!TIP]
+> Advanced users: You can customize your setup by copying the `.env.example` file to `.env`. This is not necessary for a simple localhost setup.
 
 ### Using the DevContainer
 
 An alternative way to set up your environment is to utilize a [Development Container](https://containers.dev/). In order to start the Dev Container, you'll need to install [Docker](https://www.docker.com/products/docker-desktop/). If you're running Windows, I suggest getting Docker Desktop. Linux users can use whatever means they prefer to install Docker. Once docker is installed, install the VSCode extension [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
-Make sure to still grab the RuneScriptCompiler.jar from the [environment dependencies](#environment-dependencies) as that can't be automatically installed yet.
-
-Once that is done follow these steps:
+Follow these steps:
 
 1. Make sure Docker is running
 2. Open VSCode and run `Dev Containers: Clone Repository in Container Volume`
 3. Select `GitHub` as the remote Source
 4. Find your fork of this repo
 5. Select the branch you want to work from
-6. At any point once the container has started and you can see the files in VSCode, drag the RuneScriptCompiler.jar into the root of your repo
-7. Once the startup script is finished, run `npm start`
+6. Once the startup script is finished, run `npm start`
 
-Once the container starts, it automatically starts running `setup.sh`. You can cancel this and do the [Getting Started](#getting-started) steps manually as well. If you let the startup script finish before moving RuneScriptCompiler.jar into the root of your repo and the script fails, you just need to run `npm run server:build` again before starting your server.
-
-Another option for building your Dev Container is to instead clone your repository onto your local machine first and then run `Dev Containers: Open Folder in Container` and work that way by mounting the local files into your container. This way, you can have RuneScriptCompiler.jar in your workspace from the get-go. **Note: The npm scripts are much slower when the container is running this way.**
+Once the container starts, it automatically starts running `setup.sh`. You can cancel this and do the [Getting Started](#getting-started) steps manually as well.
 
 ## Environment Dependencies
 
-- [NodeJS 20+](https://nodejs.org/) (current LTS) or [18](https://nodejs.org/download/release/v18.18.2/) (last LTS)
+- [NodeJS 20.6+](https://nodejs.org/) (22 is fine as well)
 - [Java 17+](https://adoptium.net/)
-- If you're using VS Code (recommended), [we have an extension to install here.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
-Java is required for RuneScriptCompiler.jar, our content language compiler.
-
-You can download RuneScriptCompiler from the [#dev-resources](https://discord.com/channels/953326730632904844/1125601647574396978) Discord channel. Place the jar file in the root directory of the project.  
-
-RuneScriptCompiler is not yet open-source, sorry for any inconvenience.
+> [!TIP]
+> If you're using VS Code (recommended), [we have an extension to install on the marketplace.](https://marketplace.visualstudio.com/items?itemName=2004scape.runescriptlanguage)
 
 ## Development Workflow
 
@@ -91,6 +91,17 @@ It's recommended to install a suitable plugin/extension for your IDE, to show yo
 **Please aim to avoid warnings!** They are rules that we eventually want to switch to errors.
 
 Configuration for the linter can be found in `.eslintrc.cjs`.
+
+## Common Issues
+
+* `bad option: --import`  
+You are using an older version of Node (maybe 18). We are targeting 20.6+
+
+* `'"java"' is not recognized as an internal or external command`  
+You do not have Java 17 installed.
+
+* `has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 52.0`  
+You are likely using Java 8 or Java 11. You can either reinstall Java 17 or become an advanced user, and set `JAVA_PATH=path-to-java.exe` in your .env file.
 
 ## Credits
 

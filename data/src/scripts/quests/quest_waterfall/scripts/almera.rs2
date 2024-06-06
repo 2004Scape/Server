@@ -1,43 +1,43 @@
 [opnpc1,almera]
 switch_int(%waterfall_progress) {
     case ^waterfall_not_started:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(neutral, "Ah, hello there.|Nice to see an outsider for a change.|Are you busy? I have a problem.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,neutral>Ah, hello there.|Nice to see an outsider for a change.|Are you busy? I have a problem.");
         switch_int(~p_choice2("I'm afraid I'm in a rush.", 1, "How can I help?", 2)) {
             case 1:
-                ~chatplayer(neutral, "I'm afraid I'm in a rush.");
-                ~chatnpc(confused, "Oh okay, never mind.");
+                ~chatplayer("<p,neutral>I'm afraid I'm in a rush.");
+                ~chatnpc("<p,confused>Oh okay, never mind.");
             case 2:
-                ~chatplayer(neutral, "How can I help?");
-                ~chatnpc(confused, "It's my son Hudon, he's always getting into trouble.|The boy's convinced there's hidden treasure in the river|and I'm a bit worried about his safety,|the poor lad can't even swim.");
-                ~chatplayer(confused, "I could go and take a look for you if you like?");
+                ~chatplayer("<p,neutral>How can I help?");
+                ~chatnpc("<p,confused>It's my son Hudon, he's always getting into trouble.|The boy's convinced there's hidden treasure in the river|and I'm a bit worried about his safety,|the poor lad can't even swim.");
+                ~chatplayer("<p,confused>I could go and take a look for you if you like?");
                 %waterfall_progress = ^waterfall_started;
                 ~send_quest_progress(questlist:waterfall, %waterfall_progress, ^waterfall_complete);
-                ~chatnpc(happy, "Would you? You are kind.|You can use the small raft out back if you wish,|do be careful, the current down stream is very strong.");
+                ~chatnpc("<p,happy>Would you? You are kind.|You can use the small raft out back if you wish,|do be careful, the current down stream is very strong.");
         }
     case ^waterfall_started:
-        ~chatplayer(happy, "Hello Almera.");
-        ~chatnpc(neutral, "Hello brave adventurer,|have you seen my boy yet?");
-        ~chatplayer(confused, "I'm afraid not, but I'm sure he hasn't gone far.");
-        ~chatnpc(confused, "I do hope so,|you can't be too careful these days.");
+        ~chatplayer("<p,happy>Hello Almera.");
+        ~chatnpc("<p,neutral>Hello brave adventurer,|have you seen my boy yet?");
+        ~chatplayer("<p,confused>I'm afraid not, but I'm sure he hasn't gone far.");
+        ~chatnpc("<p,confused>I do hope so,|you can't be too careful these days.");
     case ^waterfall_spoken_to_hudon:
-        ~chatplayer(happy, "Hello again.");
-        ~chatnpc(happy, "Well hello, you're still around then.");
-        ~chatplayer(confused, "I saw Hudon by the river but he refused to come back with me.");
-        ~chatnpc(neutral, "Yes he told me, the foolish lad came in drenched to the bone, he had fallen into the waterfall, lucky he wasn't killed! Now he can spend the rest of the summer in his room.");
-        ~chatplayer(happy, "Any ideas on what I could do while I'm here?");
-        ~chatnpc(neutral, "Why don't you visit the tourist centre south of the waterfall?");
+        ~chatplayer("<p,happy>Hello again.");
+        ~chatnpc("<p,happy>Well hello, you're still around then.");
+        ~chatplayer("<p,confused>I saw Hudon by the river but he refused to come back with me.");
+        ~chatnpc("<p,neutral>Yes he told me, the foolish lad came in drenched to the bone, he had fallen into the waterfall, lucky he wasn't killed! Now he can spend the rest of the summer in his room.");
+        ~chatplayer("<p,happy>Any ideas on what I could do while I'm here?");
+        ~chatnpc("<p,neutral>Why don't you visit the tourist centre south of the waterfall?");
     case ^waterfall_opened_book_on_baxtorian:
-        ~chatplayer(happy, "Hello again Almera.");
-        ~chatnpc(happy, "Well hello again brave adventurer,|are you enjoying the tranquil scenery of these parts?");
-        ~chatplayer(happy, "Yes, very relaxing.");
-        ~chatnpc(neutral, "Well I'm glad to hear it The authorities wanted to dig up this whole area for a mine, but the few locals who lived here wouldn't budge and they gave up.");
-        ~chatplayer(happy, "Good for you.");
-        ~chatnpc(happy, "Good for all of us!");
+        ~chatplayer("<p,happy>Hello again Almera.");
+        ~chatnpc("<p,happy>Well hello again brave adventurer,|are you enjoying the tranquil scenery of these parts?");
+        ~chatplayer("<p,happy>Yes, very relaxing.");
+        ~chatnpc("<p,neutral>Well I'm glad to hear it The authorities wanted to dig up this whole area for a mine, but the few locals who lived here wouldn't budge and they gave up.");
+        ~chatplayer("<p,happy>Good for you.");
+        ~chatnpc("<p,happy>Good for all of us!");
     case ^waterfall_entered_glarial_tomb, ^waterfall_entered_waterfall, ^waterfall_entered_puzzle_room, ^waterfall_complete:
-        ~chatplayer(happy, "Hello Almera.");
-        ~chatnpc(happy, "Hello adventurer, how's your treasure hunt going?");
-        ~chatplayer(neutral, "Oh, I'm just sight seeing.");
-        ~chatnpc(neutral, "No adventurer stays here this long just to sight see.|But your business is yours alone,|if you need to use the raft go ahead.|But please try not crash it this time!");
-        ~chatplayer(happy, "Thanks Almera.");
+        ~chatplayer("<p,happy>Hello Almera.");
+        ~chatnpc("<p,happy>Hello adventurer, how's your treasure hunt going?");
+        ~chatplayer("<p,neutral>Oh, I'm just sight seeing.");
+        ~chatnpc("<p,neutral>No adventurer stays here this long just to sight see.|But your business is yours alone,|if you need to use the raft go ahead.|But please try not crash it this time!");
+        ~chatplayer("<p,happy>Thanks Almera.");
 }

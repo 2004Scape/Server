@@ -113,7 +113,7 @@ export function packServerMap() {
         return;
     }
 
-    console.log('Packing server maps');
+    //console.log('Packing server maps');
 
     fs.mkdirSync('data/pack/server/maps', { recursive: true });
 

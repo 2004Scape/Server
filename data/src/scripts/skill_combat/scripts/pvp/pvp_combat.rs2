@@ -146,7 +146,7 @@ switch_int($damagestyle) {
 givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 
 // needs to be a queue
-[proc,.pvp_damage_player](int $damage)
+[proc,.pvp_damage](int $damage)
 ~.damage_self($damage);
 if (.stat(hitpoints) = 0) {
     // todo: duel arena death in the death queue

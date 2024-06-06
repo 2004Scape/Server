@@ -176,7 +176,7 @@ model=model_loc_611
 width=2
 length=2
 blockrange=no
-category=usable_table
+category=unusable_table
 
 [loc_612]
 name=Counter

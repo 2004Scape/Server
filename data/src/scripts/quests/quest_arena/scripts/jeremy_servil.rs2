@@ -11,52 +11,52 @@ switch_int(%arena_progress) {
         if(inv_total(inv, khazard_cell_keys) > 0) {
             @free_jeremy_servil;
         }
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(sad, "Please Sir, don't hurt me.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,sad>Please Sir, don't hurt me.");
         if(~wearing_khazard_armour = true) {
-            ~chatplayer(neutral, "Sshh. This uniform is a disguise, I'm here to help. Where do they keep the keys?");
+            ~chatplayer("<p,neutral>Sshh. This uniform is a disguise, I'm here to help. Where do they keep the keys?");
         } else {
-            ~chatplayer(neutral, "Sshh. I'm here to help. Where do they keep the keys?");
+            ~chatplayer("<p,neutral>Sshh. I'm here to help. Where do they keep the keys?");
         }
-        ~chatnpc(sad, "The guard always keeps hold of them.");
-        ~chatplayer(neutral, "Don't lose heart, I'll be back.");
+        ~chatnpc("<p,sad>The guard always keeps hold of them.");
+        ~chatplayer("<p,neutral>Don't lose heart, I'll be back.");
 }
 
 [opnpc1,jeremy_servil_arena]
 switch_int(%arena_progress) {
     case ^arena_defeated_genkhazard:
         // https://youtu.be/hh5v2nl4yT0?si=Tapg1Qypo5y0gNot&t=680
-        ~chatplayer(neutral, "Khazard is dead, you and your father can return to Lady Servil.");
-        ~chatnpc(neutral, "Thank you, we are truly indebted to you.");
+        ~chatplayer("<p,neutral>Khazard is dead, you and your father can return to Lady Servil.");
+        ~chatnpc("<p,neutral>Thank you, we are truly indebted to you.");
     case ^arena_freed_servils: // guessed mesanims
-        ~chatplayer(neutral, "You and your father should run, Khazard's interest is in me now.");
-        ~chatnpc(neutral, "I'm sorry to have gotten you into so much trouble. You should run as well, Khazard is too dangerous.");
+        ~chatplayer("<p,neutral>You and your father should run, Khazard's interest is in me now.");
+        ~chatnpc("<p,neutral>I'm sorry to have gotten you into so much trouble. You should run as well, Khazard is too dangerous.");
     case ^arena_defeated_bouncer: // guessed mesanims
-        ~chatplayer(quiz, "What does Khazard want with us now?");
-        ~chatnpc(neutral, "I don't know, but he won't be happy that you've killed his so called pet.");
+        ~chatplayer("<p,quiz>What does Khazard want with us now?");
+        ~chatnpc("<p,neutral>I don't know, but he won't be happy that you've killed his so called pet.");
         @general_khazard_agreement;
     case ^arena_sent_jail, ^arena_defeated_scorpion:
         // https://youtu.be/etS0gMlcxx8?si=xx4Hvgt28HsL6JCi&t=344
-        ~chatplayer(angry, "Don't worry, I'll get us out of here.");
-        ~chatnpc(neutral, "Thanks traveller. I'm sorry that you too are now a subject of this arena.");
+        ~chatplayer("<p,angry>Don't worry, I'll get us out of here.");
+        ~chatnpc("<p,neutral>Thanks traveller. I'm sorry that you too are now a subject of this arena.");
         if (%arena_progress = ^arena_sent_jail) @arena_release_scorp;
         else if (%arena_progress = ^arena_defeated_scorpion) @arena_release_bouncer;
     case ^arena_defeated_ogre:
         // TODO: check mesanim
-        ~chatplayer(neutral, "Come on Jeremy, we have to get out of here.");
-        ~chatnpc(happy, "Thank you for saving my father.");
+        ~chatplayer("<p,neutral>Come on Jeremy, we have to get out of here.");
+        ~chatnpc("<p,happy>Thank you for saving my father.");
         @khazard_welldone;
     case ^arena_entered_ogre_fight:
-        ~chatplayer(quiz, "Jeremy, where's your father?");
-        ~chatnpc(shock, "Quick, help him! That beast will kill him. He's too old to fight.");
+        ~chatplayer("<p,quiz>Jeremy, where's your father?");
+        ~chatnpc("<p,shock>Quick, help him! That beast will kill him. He's too old to fight.");
         @ogre_attack_justin;
 
 }
 
 [label,free_jeremy_servil]
-~chatplayer(happy, "Jeremy look, I have the keys.");
-~chatnpc(happy, "Wow! Please set me free, then we can find my dad. I overheard a guard talking. I think they've taken him to the arena.");
-~chatplayer(neutral, "Ok, we'd better hurry.");
+~chatplayer("<p,happy>Jeremy look, I have the keys.");
+~chatnpc("<p,happy>Wow! Please set me free, then we can find my dad. I overheard a guard talking. I think they've taken him to the arena.");
+~chatplayer("<p,neutral>Ok, we'd better hurry.");
 if_close;
 def_coord $move_to = 0_40_49_56_31;
 def_int $delay = distance(coord, $move_to);
@@ -92,7 +92,7 @@ npc_del;
 [label,ogre_attack_justin]
 if_close;
 def_coord $ogre_to = 0_40_49_46_29;
-if (npc_finduid(~npc_within_distance(movecoord(coord, 0, 0, 8), khazard_ogre, 14)) = true) {
+if (npc_find(movecoord(coord, 0, 0, 8), khazard_ogre, 14, 0) = true) {
     if(npc_getmode = none) { // npc in cutscene already, do nothing
         return;
     } else if(~npc_out_of_combat = true & inzone(0_40_49_47_29, 0_40_49_49_30, npc_coord) = false) {
@@ -104,7 +104,7 @@ if (npc_finduid(~npc_within_distance(movecoord(coord, 0, 0, 8), khazard_ogre, 14
     npc_add($ogre_to, khazard_ogre, 500);
 }
 def_int $delay = distance(npc_coord, movecoord($ogre_to, 2, 0, 0));
-if (.npc_finduid(~.npc_within_distance(movecoord(coord, 0, 0, 8), justin_servil, 14)) = true) {
+if (.npc_find(movecoord(coord, 0, 0, 8), justin_servil, 14, 0) = true) {
     .npc_setmode(none);
     .npc_walk(0_40_49_40_32);
     .npc_facesquare(0_40_49_42_32);
@@ -177,8 +177,8 @@ cam_lookat(0_40_49_43_15, 270, 2, 1);
 ~forcemove(movecoord(coord, 0, 0, 1));
 p_delay(1);
 cam_reset;
-if (npc_finduid(~npc_within_distance(coord, jeremy_servil_arena, 8)) = true) {
-    ~chatnpc(shock, "Quick, help him! That beast will kill him. He's too old to fight.");
+if (npc_find(coord, jeremy_servil_arena, 8, 0) = true) {
+    ~chatnpc("<p,shock>Quick, help him! That beast will kill him. He's too old to fight.");
     @ogre_attack_justin;
 }
 

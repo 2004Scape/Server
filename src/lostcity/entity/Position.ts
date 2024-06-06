@@ -11,6 +11,8 @@ export const Direction = {
 // TODO (jkm) consider making this an enum
 type Direction = (typeof Direction)[keyof typeof Direction];
 
+export type Position = {level: number, x: number, z: number};
+
 // TODO (jkm) consider making this a class
 export const Position = {
     zone: (pos: number) => pos >> 3,
@@ -107,7 +109,7 @@ export const Position = {
         return 0;
     },
 
-    unpackCoord(coord: number): { level: number; x: number; z: number } {
+    unpackCoord(coord: number): Position {
         const level = (coord >> 28) & 0x3;
         const x = (coord >> 14) & 0x3fff;
         const z = coord & 0x3fff;
@@ -124,5 +126,13 @@ export const Position = {
         const destHorizontal: number = destX + destWidth;
         const destVertical: number = destZ + destHeight;
         return !(destX >= srcHorizontal || destHorizontal <= srcX || destZ >= srcVertical || destVertical <= srcZ);
+    },
+
+    formatString(level: number, x: number, z: number, separator = '_'): string {
+        const mx = x >> 6;
+        const mz = z >> 6;
+        const lx = x & 0x3f;
+        const lz = z & 0x3f;
+        return level + separator + mx + separator + mz + separator + lx + separator + lz;
     }
 } as const;

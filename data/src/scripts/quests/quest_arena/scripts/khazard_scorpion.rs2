@@ -16,7 +16,7 @@ if (npc_finduid($npc) = true) {
 [label,defeat_khazard_scorpion]
 if(%arena_progress = ^arena_sent_jail) {
     %arena_progress = ^arena_defeated_scorpion;
-    if (npc_finduid(~npc_within_distance(movecoord(coord, 8, 0, 0), general_khazard, 15)) = false) {
+    if (npc_find(movecoord(coord, 8, 0, 0), general_khazard, 15, 0) = false) {
         return;
     }
     @general_khazard_summon_bouncer;

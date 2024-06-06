@@ -1,11 +1,11 @@
 [opnpc1,chadwell]
-~chatnpc(neutral, "Good day. What can I get you?");
+~chatnpc("<p,neutral>Good day. What can I get you?");
 @multi2("Let's see what you've got.", chadwell_lets_see_what_youve_got, "Nothing thanks.", chadwell_nothing_thanks);
 
 [label,chadwell_lets_see_what_youve_got]
-~chatplayer(happy, "Let's see what you've got.");
+~chatplayer("<p,happy>Let's see what you've got.");
 ~openshop_activenpc;
 
 [label,chadwell_nothing_thanks]
-~chatplayer(neutral, "Nothing thanks.");
-~chatnpc(happy, "Okay then.");
+~chatplayer("<p,neutral>Nothing thanks.");
+~chatnpc("<p,happy>Okay then.");

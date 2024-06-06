@@ -1,12 +1,12 @@
 [opnpc1,noterazzo]
-~chatnpc(shifty, "Hey wanna trade? I'll give the best deals you can find.");
+~chatnpc("<p,shifty>Hey wanna trade? I'll give the best deals you can find.");
 def_int $option = ~p_choice3("Yes please.", 1, "No thanks.", 2, "How can you afford to give such good deals?", 3);
 if($option = 1) {
-    ~chatplayer(neutral, "Yes please.");
+    ~chatplayer("<p,neutral>Yes please.");
     ~openshop_activenpc;
 } else if($option = 2) {
-    ~chatplayer(neutral, "No thanks.");
+    ~chatplayer("<p,neutral>No thanks.");
 } else if($option = 3) {
-    ~chatplayer(quiz, "How can you afford to give such good deals?");
-    ~chatnpc(shifty, "The general stores in Asgarnia and Misthalin are heavily taxed. It really makes it hard for them to run an effective business. For some reason taxmen don't visit my store.");
+    ~chatplayer("<p,quiz>How can you afford to give such good deals?");
+    ~chatnpc("<p,shifty>The general stores in Asgarnia and Misthalin are heavily taxed. It really makes it hard for them to run an effective business. For some reason taxmen don't visit my store.");
 }

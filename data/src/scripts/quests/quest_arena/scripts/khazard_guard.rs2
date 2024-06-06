@@ -1,65 +1,65 @@
 [opnpc1,khazard_guard_standard]
 switch_int(%arena_progress) {
     case ^arena_freed_servils, ^arena_complete, ^arena_complete_defeated_genkhazard: 
-        ~chatplayer(neutral, "Hello.");
+        ~chatplayer("<p,neutral>Hello.");
         @khazard_guard_killed_bouncer;
     case default:
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0 & %arena_progress > ^arena_obtained_armour) {
-            ~chatplayer(neutral, "Hello.");
-            ~chatnpc(angry, "Can I help you stranger?");
-            ~chatnpc(neutral, "Oh, you're a guard as well. That's ok then. We don't like strangers around here.");
+            ~chatplayer("<p,neutral>Hello.");
+            ~chatnpc("<p,angry>Can I help you stranger?");
+            ~chatnpc("<p,neutral>Oh, you're a guard as well. That's ok then. We don't like strangers around here.");
             return;
         }
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(angry, "I don't know you stranger. Get off our land.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,angry>I don't know you stranger. Get off our land.");
 }
 
 [opnpc1,khazard_guard_chest] 
 switch_int(%arena_progress) {
     case ^arena_freed_servils, ^arena_complete, ^arena_complete_defeated_genkhazard:
-        ~chatplayer(happy, "Hi.");
-        ~chatnpc(shock, "You're the fiend who killed Bouncer.");
+        ~chatplayer("<p,happy>Hi.");
+        ~chatnpc("<p,shock>You're the fiend who killed Bouncer.");
         if_close;
         npc_say("En garde fiend!");
         ~npc_retaliate(0);
     case default:
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0 & %arena_progress > ^arena_obtained_armour) {
-            ~chatplayer(neutral, "Hello.");
-            ~chatnpc(angry, "Despicable thieving scum, that was good armour. Did you see anyone around here soldier?");
-            ~chatplayer(shock, "Me? No, no one!");
-            ~chatnpc(angry, "Hmmmm.");
+            ~chatplayer("<p,neutral>Hello.");
+            ~chatnpc("<p,angry>Despicable thieving scum, that was good armour. Did you see anyone around here soldier?");
+            ~chatplayer("<p,shock>Me? No, no one!");
+            ~chatnpc("<p,angry>Hmmmm.");
             return;
         }
-        ~chatplayer(neutral, "Hi.");
-        ~chatnpc(angry, "Who goes there?");
-        ~chatplayer(confused, "Er... I... um...");
-        ~chatnpc(angry, "I don't know who you are. Get out of my house stranger.");
+        ~chatplayer("<p,neutral>Hi.");
+        ~chatnpc("<p,angry>Who goes there?");
+        ~chatplayer("<p,confused>Er... I... um...");
+        ~chatnpc("<p,angry>I don't know who you are. Get out of my house stranger.");
 }
 
 [opnpc1,khazard_guard_cells]
 switch_int(%arena_progress) {
     case ^arena_freed_servils, ^arena_complete, ^arena_complete_defeated_genkhazard:
-        ~chatplayer(happy, "Hi.");
+        ~chatplayer("<p,happy>Hi.");
         @khazard_guard_generals_pet;
     case ^arena_entered_ogre_fight, ^arena_defeated_ogre:
         if(~wearing_khazard_armour = true) {
-            ~chatplayer(neutral, "Hello.");
-            ~chatnpc(angry, "I hope you're keeping busy.");
-            ~chatplayer(neutral, "Of course.");
-            ~chatnpc(angry, "General Khazard doesn't tolerate the lazy. If you're not keeping busy I'll practice my combat skills on your hide.");
+            ~chatplayer("<p,neutral>Hello.");
+            ~chatnpc("<p,angry>I hope you're keeping busy.");
+            ~chatplayer("<p,neutral>Of course.");
+            ~chatnpc("<p,angry>General Khazard doesn't tolerate the lazy. If you're not keeping busy I'll practice my combat skills on your hide.");
         }
         @khazard_guard_restricted;
     case default:
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0 & %arena_progress > ^arena_obtained_armour) {
             // https://youtu.be/Oltfw1gvWjQ?si=eSP7-x6D-mQvNEZx&t=132
-            ~chatplayer(neutral, "Hello.");
-            ~chatnpc(angry, "I've never seen you around here before!");
-            ~chatplayer(happy, "Long live General Khazard!");
-            ~chatnpc(confused, "Erm.. yes.. soldier, I take it you're new around here?");
-            ~chatplayer(happy, "You could say that.");
-            ~chatnpc(neutral, "Khazard died two hundred years ago. However his dark spirit remains in the form of the undead maniac General Khazard. Remember he is your master, always watching.");
-            ~chatnpc(angry, "Got that newbie?");
-            ~chatplayer(happy, "Undead, maniac, master. Got it, loud and clear.");
+            ~chatplayer("<p,neutral>Hello.");
+            ~chatnpc("<p,angry>I've never seen you around here before!");
+            ~chatplayer("<p,happy>Long live General Khazard!");
+            ~chatnpc("<p,confused>Erm.. yes.. soldier, I take it you're new around here?");
+            ~chatplayer("<p,happy>You could say that.");
+            ~chatnpc("<p,neutral>Khazard died two hundred years ago. However his dark spirit remains in the form of the undead maniac General Khazard. Remember he is your master, always watching.");
+            ~chatnpc("<p,angry>Got that newbie?");
+            ~chatplayer("<p,happy>Undead, maniac, master. Got it, loud and clear.");
             return;
         }
         @khazard_guard_restricted;
@@ -71,36 +71,36 @@ switch_int(%arena_progress) {
     case ^arena_given_khali_brew, ^arena_entered_ogre_fight, ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion,
         ^arena_defeated_bouncer, ^arena_freed_servils, ^arena_defeated_genkhazard:
         if(~wearing_khazard_armour = false) {
-            ~chatplayer(neutral, "Hello.");
-            ~chatnpc(drunk, "Go away. Thish areash resh... restricted! We don't like strangersh, 'specially ones who sway. Oooh!");
+            ~chatplayer("<p,neutral>Hello.");
+            ~chatnpc("<p,drunk>Go away. Thish areash resh... restricted! We don't like strangersh, 'specially ones who sway. Oooh!");
             return;
         }
         if(inv_total(inv, khazard_cell_keys) = 0 & %arena_progress < ^arena_entered_ogre_fight) { // can't reclaim after this point on RS3, not sure if this was always the case
-            ~chatplayer(quiz, "Hi, er.. I lost the keys.");
-            ~chatnpc(angry, "What?! You're foolish...");
-            ~chatplayer(drunk, "...and I'm drunk. Here, take my spare set.");
+            ~chatplayer("<p,quiz>Hi, er.. I lost the keys.");
+            ~chatnpc("<p,angry>What?! You're foolish...");
+            ~chatplayer("<p,drunk>...and I'm drunk. Here, take my spare set.");
             inv_add(inv, khazard_cell_keys, 1);
         }
-        ~chatplayer(quiz, "Hello, how's the job?");
-        ~chatnpc(drunk, "Please, leave me alone. I'm sure the walls never used to sway that much.");
+        ~chatplayer("<p,quiz>Hello, how's the job?");
+        ~chatnpc("<p,drunk>Please, leave me alone. I'm sure the walls never used to sway that much.");
     case ^arena_spoken_drunkguard:
         if(~wearing_khazard_armour = true) {
-            ~chatplayer(neutral, "Hello again.");
-            ~chatnpc(bored, "Bored, bored, bored. You'd think the slaves would be more entertaining. Selfish the lot of them.");
+            ~chatplayer("<p,neutral>Hello again.");
+            ~chatnpc("<p,bored>Bored, bored, bored. You'd think the slaves would be more entertaining. Selfish the lot of them.");
             if(inv_total(inv, khali_brew) > 0) {
                 @khazard_guard_drunk_interested;
             }
             // https://web.archive.org/web/20050305053139im_/http://runevillage.com/images/rsfight5.gif
-            ~chatnpc(bored, "I used to enjoy this job, but now|all I want is a decent drink.");
+            ~chatnpc("<p,bored>I used to enjoy this job, but now|all I want is a decent drink.");
             return;
         }
         @khazard_guard_restricted; // not 100% sure on this
     case ^arena_obtained_armour:
         if(~wearing_khazard_armour = true) {
-            ~chatplayer(happy, "Long live General Khazard!");
-            ~chatnpc(confused, "Erm.. yes.. quite right.");
-            ~chatplayer(bored, "Have you come to laugh at the fight slaves? I used to really enjoy it, but after a while they become quite boring.");
-            ~chatnpc(bored, "Now I just want a decent drink. Mind you, too much Khali brew and I'll fall asleep.");
+            ~chatplayer("<p,happy>Long live General Khazard!");
+            ~chatnpc("<p,confused>Erm.. yes.. quite right.");
+            ~chatnpc("<p,bored>Have you come to laugh at the fight slaves? I used to really enjoy it, but after a while they become quite boring.");
+            ~chatnpc("<p,bored>Now I just want a decent drink. Mind you, too much Khali brew and I'll fall asleep.");
             %arena_progress = ^arena_spoken_drunkguard;
             return;
         }
@@ -108,35 +108,35 @@ switch_int(%arena_progress) {
 }
 
 [label,khazard_guard_drunk_interested]
-~chatplayer(quiz, "Do you still fancy a drink?");
-~chatnpc(neutral, "I really shouldn't... oh... ok then just the one.");
+~chatplayer("<p,quiz>Do you still fancy a drink?");
+~chatnpc("<p,neutral>I really shouldn't... oh... ok then just the one.");
 ~mesbox("You hand a bottle of Khali brew to the guard. He takes a mouthful of the drink.");
-~chatnpc(happy, "Blimey this stuff is pretty good. It's not too strong is it?");
-~chatplayer(happy, "No, not at all. You'll be fine.");
+~chatnpc("<p,happy>Blimey this stuff is pretty good. It's not too strong is it?");
+~chatplayer("<p,happy>No, not at all. You'll be fine.");
 ~mesbox("The guard quickly finishes the rest of the bottle and begins to sway slightly.");
-~chatnpc(happy, "That is some gooood stuff... yeah... wooh yeah!");
-~chatplayer(quiz, "Are you alright?");
-~chatnpc(drunk, "Yeesshh, hiccup! Oooh, maybe I sshould relax for a while.");
-~chatplayer(happy, "Good idea. I'll look after the prisoners.");
+~chatnpc("<p,happy>That is some gooood stuff... yeah... wooh yeah!");
+~chatplayer("<p,quiz>Are you alright?");
+~chatnpc("<p,drunk>Yeesshh, hiccup! Oooh, maybe I sshould relax for a while.");
+~chatplayer("<p,happy>Good idea. I'll look after the prisoners.");
 %arena_progress = ^arena_given_khali_brew;
 inv_del(inv, khali_brew, 1);
 inv_add(inv, khazard_cell_keys, 1);
-~chatnpc(drunk, "Yeesh, yes that shounds reasonable. Here, 'hiccup', take the keysch. Any trouble, you give... you givem a good beating.");
-~chatplayer(happy, "No problem, I'll keep them in line.");
+~chatnpc("<p,drunk>Yeesh, yes that shounds reasonable. Here, 'hiccup', take the keysch. Any trouble, you give... you givem a good beating.");
+~chatplayer("<p,happy>No problem, I'll keep them in line.");
 
 [label,khazard_guard_restricted]
-~chatplayer(neutral, "Hello.");
-~chatnpc(angry, "This area is restricted, leave now!");
-~chatnpc(angry, "OUT! And don't come back.");
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,angry>This area is restricted, leave now!");
+~chatnpc("<p,angry>OUT! And don't come back.");
 
 [label,khazard_guard_killed_bouncer]
-~chatnpc(angry, "You're the one who killed Bouncer.");
+~chatnpc("<p,angry>You're the one who killed Bouncer.");
 if_close;
 npc_say("Die traitor!");
 ~npc_retaliate(0);
 
 [label,khazard_guard_generals_pet]
-~chatnpc(shock, "You're him. The one who murdered the General's pet.");
+~chatnpc("<p,shock>You're him. The one who murdered the General's pet.");
 if_close;
 ~npc_retaliate(0);
 npc_say("You'll pay for that mistake!");

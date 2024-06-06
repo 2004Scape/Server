@@ -1,12 +1,12 @@
 [opnpc1,_gnome_troop]
 switch_int(random(3)) {
     case 0:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(angry, "Death to Khazard, and all who serve him.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,angry>Death to Khazard, and all who serve him.");
     case 1:
-        ~chatplayer(neutral, "Hi.");
-        ~chatnpc(angry, "Draw your sword warrior,|and fight along side us.");
+        ~chatplayer("<p,neutral>Hi.");
+        ~chatnpc("<p,angry>Draw your sword warrior,|and fight along side us.");
     case 2:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(angry, "I can't talk now,|can't you see we're trying|to win a battle here.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,angry>I can't talk now,|can't you see we're trying|to win a battle here.");
 }

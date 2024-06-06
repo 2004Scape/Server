@@ -49,6 +49,10 @@ export default class MesanimType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
 
     len: number[] = new Array(4).fill(-1);

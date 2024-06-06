@@ -6,58 +6,58 @@ if(%priest_progress = ^priest_complete) {
 
 // if (%priest_progress = 0) {
 //     // OSRS:
-//     ~chatnpc(neutral, "Wooooo! Ooooooh!");
-//     ~chatplayer(neutral, "I can't understand a word you are saying. Maybe Father Aereck will be able to help.");
+//     ~chatnpc("<p,neutral>Wooooo! Ooooooh!");
+//     ~chatplayer("<p,neutral>I can't understand a word you are saying. Maybe Father Aereck will be able to help.");
 //     return;
 // }
 
-~chatplayer(neutral, "Hello ghost, how are you?");
+~chatplayer("<p,neutral>Hello ghost, how are you?");
 if (inv_total(worn, amulet_of_ghostspeak) = 0) @priest_ghost_no_amulet;
 switch_int (%priest_progress) {
     case ^priest_spoken_urhney:
-        ~chatnpc(neutral, "Not very good actually.");
-        ~chatplayer(quiz, "What's the problem then?");
-        ~chatnpc(neutral, "Did you just understand what I said???");
+        ~chatnpc("<p,neutral>Not very good actually.");
+        ~chatplayer("<p,quiz>What's the problem then?");
+        ~chatnpc("<p,neutral>Did you just understand what I said???");
         def_int $option = ~p_choice3("Yep, now tell me what the problem is.", 1, "No, you sound like you're speaking nonsense to me.", 2, "Wow, this amulet works!", 3);
         switch_int ($option) {
             case 1:
-                ~chatplayer(neutral, "Yep, now tell me what the problem is.");
-                ~chatnpc(neutral, "WOW! This is INCREDIBLE! I didn't expect anyone to ever understand me again!");
-                ~chatplayer(angry, "Ok, Ok, I can understand you!");
-                ~chatplayer(quiz, "But have you any idea WHY you're doomed to be a ghost?");
-                ~chatnpc(neutral, "Well, to be honest... I'm not sure.");
+                ~chatplayer("<p,neutral>Yep, now tell me what the problem is.");
+                ~chatnpc("<p,neutral>WOW! This is INCREDIBLE! I didn't expect anyone to ever understand me again!");
+                ~chatplayer("<p,angry>Ok, Ok, I can understand you!");
+                ~chatplayer("<p,quiz>But have you any idea WHY you're doomed to be a ghost?");
+                ~chatnpc("<p,neutral>Well, to be honest... I'm not sure.");
                 @priest_ghost_certain_task;
             case 2:
-                ~chatplayer(happy, "No, you sound like you're speaking nonsense to me.");
-                ~chatnpc(neutral, "Oh that's a pity. You got my hopes up there.");
-                ~chatplayer(neutral, "Yeah, it is a pity. Sorry about that.");
-                ~chatnpc(neutral, "Hang on a second... you CAN understand me!");
+                ~chatplayer("<p,happy>No, you sound like you're speaking nonsense to me.");
+                ~chatnpc("<p,neutral>Oh that's a pity. You got my hopes up there.");
+                ~chatplayer("<p,neutral>Yeah, it is a pity. Sorry about that.");
+                ~chatnpc("<p,neutral>Hang on a second... you CAN understand me!");
                 $option = ~p_choice2("No I can't.", 1, "Yep, clever aren't I?", 2);
                 switch_int ($option) {
                     case 1:
-                        ~chatplayer(neutral, "No I can't.");
-                        ~chatnpc(neutral, "Great.");
-                        ~chatnpc(neutral, "The first person I can speak to in ages...");
-                        ~chatnpc(neutral, "..and they're a moron.");
+                        ~chatplayer("<p,neutral>No I can't.");
+                        ~chatnpc("<p,neutral>Great.");
+                        ~chatnpc("<p,neutral>The first person I can speak to in ages...");
+                        ~chatnpc("<p,neutral>..and they're a moron.");
                     case 2: 
-                        ~chatplayer(happy, "Yep, clever aren't I?");
-                        ~chatnpc(neutral, "I'm impressed. You must be very powerful. I don't suppose you can stop me being a ghost?");
+                        ~chatplayer("<p,happy>Yep, clever aren't I?");
+                        ~chatnpc("<p,neutral>I'm impressed. You must be very powerful. I don't suppose you can stop me being a ghost?");
                         @multi2("Yes, ok. Do you know WHY you're a ghost?", priest_ghost_why, "No, you're scary!", priest_ghost_scary);
                 }
             case 3:
-                ~chatplayer(happy, "Wow, this amulet works!");
-                ~chatnpc(neutral, "Oh! It's your amulet that's doing it!|I did wonder. I don't suppose you can help me?|I don't like being a ghost.");
+                ~chatplayer("<p,happy>Wow, this amulet works!");
+                ~chatnpc("<p,neutral>Oh! It's your amulet that's doing it!|I did wonder. I don't suppose you can help me?|I don't like being a ghost.");
                 @multi2("Yes, ok. Do you know why you're a ghost?", priest_ghost_why, "No, you're scary!", priest_ghost_scary);
         }
     case ^priest_spoken_ghost:
-        ~chatnpc(neutral, "How are you doing finding my skull?");
-        ~chatplayer(sad, "Sorry, I can't find it at the moment.");
-        ~chatnpc(neutral, "Ah well. Keep on looking.");
-        ~chatnpc(neutral, "I'm pretty sure it's somewhere in the tower south west from here. There's a lot of levels to the tower, though. I suppose it might take a little while to find.");
+        ~chatnpc("<p,neutral>How are you doing finding my skull?");
+        ~chatplayer("<p,sad>Sorry, I can't find it at the moment.");
+        ~chatnpc("<p,neutral>Ah well. Keep on looking.");
+        ~chatnpc("<p,neutral>I'm pretty sure it's somewhere in the tower south west from here. There's a lot of levels to the tower, though. I suppose it might take a little while to find.");
     case ^priest_obtained_skull:
-        ~chatnpc(neutral, "How are you doing finding my skull?");
-        ~chatplayer(happy, "I have found it!");
-        ~chatnpc(neutral, "Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, and I will be free!");
+        ~chatnpc("<p,neutral>How are you doing finding my skull?");
+        ~chatplayer("<p,happy>I have found it!");
+        ~chatnpc("<p,neutral>Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, and I will be free!");
 }
 
 [opnpcu,restless_ghost]
@@ -68,86 +68,86 @@ if(last_useitem = ghost_skull) {
 ~displaymessage(^dm_default);
 
 [label,priest_ghost_no_amulet]
-~chatnpc(neutral, "Wooo wooo wooooo!");
+~chatnpc("<p,neutral>Wooo wooo wooooo!");
 def_int $option = ~p_choice3("Sorry. I don't speak ghost.", 1, "Ooh... THAT'S interesting.", 2, "Any hints where I can find some treasure?", 3);
 switch_int ($option) {
     case 1: @priest_ghost_dontunderstand;
     case 2:
-        ~chatplayer(happy, "Ooh... THAT'S interesting.");
-        ~chatnpc(neutral, "Woo wooo. Woooooooooooooooooo!");
+        ~chatplayer("<p,happy>Ooh... THAT'S interesting.");
+        ~chatnpc("<p,neutral>Woo wooo. Woooooooooooooooooo!");
         $option = ~p_choice2("Did he really?", 1, "Yeah, that's what I thought.", 2);
         switch_int ($option) {
             case 1: 
-                ~chatplayer(quiz, "Did he really?");
-                ~chatnpc(neutral, "Woo.");
+                ~chatplayer("<p,quiz>Did he really?");
+                ~chatnpc("<p,neutral>Woo.");
                 switch_int (~p_choice2("My brother had EXACTLY the same problem.", 1, "Goodbye. Thanks for the chat.", 2)) {
                     case 1: 
-                        ~chatplayer(neutral, "My brother had EXACTLY the same problem.");
-                        ~chatnpc(neutral, "Woo Wooooo!");
-                        ~chatnpc(neutral, "Wooooo Woo woo woo!");
+                        ~chatplayer("<p,neutral>My brother had EXACTLY the same problem.");
+                        ~chatnpc("<p,neutral>Woo Wooooo!");
+                        ~chatnpc("<p,neutral>Wooooo Woo woo woo!");
                         switch_int (~p_choice2("Goodbye. Thanks for the chat.", 1, "ou'll have to give me the recipe some time...", 2)) {
                             case 1: @priest_ghost_goodbye;
                             case 2: 
-                                ~chatplayer(neutral, "You'll have to give me the recipe some time...");
-                                ~chatnpc(neutral, "Wooooooo woo woooooooo.");
+                                ~chatplayer("<p,neutral>You'll have to give me the recipe some time...");
+                                ~chatnpc("<p,neutral>Wooooooo woo woooooooo.");
                                 @multi2("Goodbye. Thanks for the chat.", priest_ghost_goodbye, "Hmm... I'm not so sure about that.", priest_ghost_notsure);
                         }
                     case 2: @priest_ghost_goodbye;
                 }
             case 2: 
-                ~chatplayer(happy, "Yeah, that's what I thought.");
-                ~chatnpc(neutral, "Wooo woooooooooooooo...");
+                ~chatplayer("<p,happy>Yeah, that's what I thought.");
+                ~chatnpc("<p,neutral>Wooo woooooooooooooo...");
                 @multi2("Goodbye. Thanks for the chat.", priest_ghost_goodbye, "Hmm I'm not sure about that.", priest_ghost_notsure);
     }
     case 3: 
-        ~chatplayer(quiz, "Any hints where I can find some treasure?");
-        ~chatnpc(neutral, "Wooooooo woo! Wooooo woo wooooo woowoowoo woo Woo wooo. Wooooo woo woo? Woooooooooooooooooo!");
+        ~chatplayer("<p,quiz>Any hints where I can find some treasure?");
+        ~chatnpc("<p,neutral>Wooooooo woo! Wooooo woo wooooo woowoowoo woo Woo wooo. Wooooo woo woo? Woooooooooooooooooo!");
         $option = ~p_choice2("Sorry I don't speak ghost.", 1, "Thank you. You've been very helpful.", 2);
         switch_int ($option) {
             case 1:  @priest_ghost_dontunderstand;
             case 2:
-                ~chatplayer(happy, "Thank you. You've been very helpful.");
-                ~chatnpc(neutral, "Wooooooo.");
+                ~chatplayer("<p,happy>Thank you. You've been very helpful.");
+                ~chatnpc("<p,neutral>Wooooooo.");
         }
 }
 
 [label,priest_ghost_why]
-~chatplayer(happy, "Yes, ok. Do you know WHY you're a ghost?");
-~chatnpc(neutral, "Nope. I just know I can't do much of anything like this!");
+~chatplayer("<p,happy>Yes, ok. Do you know WHY you're a ghost?");
+~chatnpc("<p,neutral>Nope. I just know I can't do much of anything like this!");
 @priest_ghost_certain_task;
 
 [label,priest_ghost_scary]
-~chatplayer(neutral, "No, you're scary!");
-~chatnpc(neutral, "Great.");
-~chatnpc(neutral, "The first person I can speak to in ages...");
-~chatnpc(neutral, "..and they're an idiot.");
+~chatplayer("<p,neutral>No, you're scary!");
+~chatnpc("<p,neutral>Great.");
+~chatnpc("<p,neutral>The first person I can speak to in ages...");
+~chatnpc("<p,neutral>..and they're an idiot.");
 
 [label,priest_ghost_goodbye]
-~chatplayer(neutral, "Goodbye. Thanks for the chat.");
-~chatnpc(neutral, "Wooo wooo?");
+~chatplayer("<p,neutral>Goodbye. Thanks for the chat.");
+~chatnpc("<p,neutral>Wooo wooo?");
 
 [label,priest_ghost_certain_task]
-~chatplayer(neutral, "I've been told a certain task may need to be completed so you can rest in peace.");
-~chatnpc(neutral, "I should think it is probably because|a warlock has come along and stolen my skull.|If you look inside my coffin there,|you'll find my corpse without a head on it.");
-~chatplayer(neutral, "Do you know where this warlock might be now?");
-~chatnpc(neutral, "I think it was one of the warlocks who lives in the big tower by the sea southwest from here.");
-~chatplayer(neutral, "Ok. I will try and get the skull back for you, so you can rest in peace.");
-~chatnpc(neutral, "Ooh, thank you. That would be such a great relief!");
+~chatplayer("<p,neutral>I've been told a certain task may need to be completed so you can rest in peace.");
+~chatnpc("<p,neutral>I should think it is probably because|a warlock has come along and stolen my skull.|If you look inside my coffin there,|you'll find my corpse without a head on it.");
+~chatplayer("<p,neutral>Do you know where this warlock might be now?");
+~chatnpc("<p,neutral>I think it was one of the warlocks who lives in the big tower by the sea southwest from here.");
+~chatplayer("<p,neutral>Ok. I will try and get the skull back for you, so you can rest in peace.");
+~chatnpc("<p,neutral>Ooh, thank you. That would be such a great relief!");
 %priest_progress = ^priest_spoken_ghost;
-~chatnpc(neutral, "It is so dull being a ghost...");
+~chatnpc("<p,neutral>It is so dull being a ghost...");
 
 [label,priest_ghost_dontunderstand]
-~chatplayer(confused, "Sorry, I don't speak ghost.");
-~chatnpc(neutral, "Woo woo?");
-~chatplayer(neutral, "Nope, still don't understand you.");
-~chatnpc(neutral, "WOOOOOOOOO!");
-~chatplayer(neutral, "Never mind.");
+~chatplayer("<p,confused>Sorry, I don't speak ghost.");
+~chatnpc("<p,neutral>Woo woo?");
+~chatplayer("<p,neutral>Nope, still don't understand you.");
+~chatnpc("<p,neutral>WOOOOOOOOO!");
+~chatplayer("<p,neutral>Never mind.");
 
 [label,priest_ghost_notsure]
-~chatplayer(quiz, "Hmm... I'm not so sure about that.");
-~chatnpc(neutral, "Wooo woo?");
-~chatplayer(angry, "Well, if you INSIST.");
-~chatnpc(neutral, "Wooooooooo!");
-~chatplayer(neutral, "Ah well, better be off now...");
-~chatnpc(neutral, "Woo.");
-~chatplayer(neutral, "Bye.");
+~chatplayer("<p,quiz>Hmm... I'm not so sure about that.");
+~chatnpc("<p,neutral>Wooo woo?");
+~chatplayer("<p,angry>Well, if you INSIST.");
+~chatnpc("<p,neutral>Wooooooooo!");
+~chatplayer("<p,neutral>Ah well, better be off now...");
+~chatnpc("<p,neutral>Woo.");
+~chatplayer("<p,neutral>Bye.");

@@ -1,14 +1,14 @@
 [opnpc1,guild_master]
 // osrs
-~chatnpc(neutral, "Greetings!");
+~chatnpc("<p,neutral>Greetings!");
 // rsc
 def_int $choice = ~p_choice2("What is this place?", 0, "Do you know where I could get a Rune Plate mail body?", 1);
 if ($choice = 1) {
     @guild_master_start_dragon_quest;
 }
-~chatplayer(quiz, "What is this place?");
+~chatplayer("<p,quiz>What is this place?");
 // rsc (not including typos) & osrs
-~chatnpc(neutral, "This is the Champions' Guild. Only adventurers who have proved themselves worthy by gaining influence from quests are allowed in here.");
+~chatnpc("<p,neutral>This is the Champions' Guild. Only adventurers who have proved themselves worthy by gaining influence from quests are allowed in here.");
 
 
 // most guides say that the guild master mentions oziach
@@ -16,11 +16,11 @@ if ($choice = 1) {
 // so portions of this dialogue is from osrs
 [label,guild_master_start_dragon_quest]
 // https://web.archive.org/web/20051231060826/http://runescape.salmoneus.net/guilds/guild_champs.html
-~chatplayer(quiz, "Do you know where I could get a Rune Plate mail body?");
+~chatplayer("<p,quiz>Do you know where I could get a Rune Plate mail body?");
 //I have a friend called Oziach (rsc), who could help you out with one.(https://web.archive.org/web/20051104235547/http://www.tip.it/runescape/index.php?rs2quest_id=21)
-~chatnpc(neutral, "I have a friend called Oziach, who could help you out with one.");
+~chatnpc("<p,neutral>I have a friend called Oziach, who could help you out with one.");
 // osrs
-~chatnpc(neutral, "Oziach lives in a hut, by the cliffs to the west of Edgeville. He can be a little...odd...sometimes, though.");
+~chatnpc("<p,neutral>Oziach lives in a hut, by the cliffs to the west of Edgeville. He can be a little...odd...sometimes, though.");
 if (%dragon_progress = ^quest_dragon_not_started) {
     %dragon_progress = ^quest_dragon_spoken_to_guildmaster;
     ~send_quest_progress(questlist:dragon, %dragon_progress, ^dragon_complete);

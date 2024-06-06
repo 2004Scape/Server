@@ -1,36 +1,36 @@
 [opnpc1,local]
 switch_int(%arena_progress) {
     case ^arena_defeated_bouncer, ^arena_defeated_genkhazard, ^arena_complete, ^arena_complete_defeated_genkhazard:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(shock, "You're the guy who beat Bouncer, amazing!");
-        ~chatnpc(shifty, "That makes you a champion to many, but you'd better get out of here while you still can. General Khazard liked that brute.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,shock>You're the guy who beat Bouncer, amazing!");
+        ~chatnpc("<p,shifty>That makes you a champion to many, but you'd better get out of here while you still can. General Khazard liked that brute.");
     case ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(shock, "Hey you're the guy from the arena! How'd you get out!");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,shock>Hey you're the guy from the arena! How'd you get out!");
     case ^arena_entered_ogre_fight:
-        ~chatplayer(neutral, "Hello.");
+        ~chatplayer("<p,neutral>Hello.");
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0) {
-            ~chatnpc(happy, "Hello stranger. Khazard's got some great fights lined up this week. I can't wait.");
+            ~chatnpc("<p,happy>Hello stranger. Khazard's got some great fights lined up this week. I can't wait.");
             return;
         }
-        ~chatnpc(sad, "Please, I havn't done anything");
-        ~chatplayer(confused, "What?");
-        ~chatnpc(sad, "I love General Khazard, please believe me.");
+        ~chatnpc("<p,sad>Please, I havn't done anything");
+        ~chatplayer("<p,confused>What?");
+        ~chatnpc("<p,sad>I love General Khazard, please believe me.");
     case ^arena_started, ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew:
         // mesanims from rs3, lines up with this fortunately: https://web.archive.org/web/20051025134523im_/http://runeweb.net/rathofdoom/quests/fightarena/2.png
-        ~chatplayer(neutral, "Hello.");
+        ~chatplayer("<p,neutral>Hello.");
         if(inv_total(worn, khazard_helmet) > 0 & inv_total(worn, khazard_armour) > 0) {
-            ~chatnpc(happy, "I heard the Servil family are fighting soon. Should be very entertaining.");
+            ~chatnpc("<p,happy>I heard the Servil family are fighting soon. Should be very entertaining.");
             return;
         }
-        ~chatnpc(quiz, "Hello stranger, are you new to these parts?");
-        ~chatplayer(neutral, "I suppose I am.");
-        ~chatnpc(angry, "What's your business?");
-        ~chatplayer(neutral, "Just visiting friends in the cells.");
-        ~chatnpc(happy, "Visiting, that's funny.");
-        ~chatnpc(angry, "Only Khazard guards are allowed to see prisoners. Unless you know where to get some Khazard armour, you won't be visiting anyone.");
+        ~chatnpc("<p,quiz>Hello stranger, are you new to these parts?");
+        ~chatplayer("<p,neutral>I suppose I am.");
+        ~chatnpc("<p,angry>What's your business?");
+        ~chatplayer("<p,neutral>Just visiting friends in the cells.");
+        ~chatnpc("<p,happy>Visiting, that's funny.");
+        ~chatnpc("<p,angry>Only Khazard guards are allowed to see prisoners. Unless you know where to get some Khazard armour, you won't be visiting anyone.");
     case ^arena_not_started:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(quiz, "Hello stranger, are you new to these parts?|You look lost.");
-        ~chatnpc(happy, "I suppose you're here for the fight arena?|There are some rich folk fighting tomorrow.|Should be entertaining.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,quiz>Hello stranger, are you new to these parts?|You look lost.");
+        ~chatnpc("<p,happy>I suppose you're here for the fight arena?|There are some rich folk fighting tomorrow.|Should be entertaining.");
 }

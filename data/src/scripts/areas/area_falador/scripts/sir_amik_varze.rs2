@@ -6,73 +6,73 @@ switch_int (%blackknight_progress) {
 }
 
 [label,black_knights_fortress_sir_amik_prequest]
-~chatnpc(quiz, "I am the leader of the White Knights of Falador.|Why do you seek my audience?");
+~chatnpc("<p,quiz>I am the leader of the White Knights of Falador.|Why do you seek my audience?");
 def_int $option = ~p_choice2("I seek a quest!", 1, "I don't, I'm just looking around.", 2);
 
 if ($option = 1) {
-    ~chatplayer(neutral, "I seek a quest.");
+    ~chatplayer("<p,neutral>I seek a quest.");
 
     if (%questpoints < 12) {
-        ~chatnpc(neutral, "Well I do have a task, but it is very dangerous and it's critical to us that no mistakes are made. I couldn't possibly let an unexperienced quester like yourself go.");
+        ~chatnpc("<p,neutral>Well I do have a task, but it is very dangerous and it's critical to us that no mistakes are made. I couldn't possibly let an unexperienced quester like yourself go.");
         mes("You need at least 12 quest points before you may attempt this quest.");
     } else {
         @black_knights_fortress_sir_amik_meets_requirements;
     }
 } else {
-    ~chatplayer(neutral, "I don't, I'm just looking around.");
-    ~chatnpc(neutral, "Ok, don't break anything.");
+    ~chatplayer("<p,neutral>I don't, I'm just looking around.");
+    ~chatnpc("<p,neutral>Ok, don't break anything.");
 }
 
 [label,black_knights_fortress_sir_amik_meets_requirements]
-~chatnpc(neutral, "Well, I need some spy work doing.|It's quite dangerous.|You will need to go into the Black Knight's fortress.");
+~chatnpc("<p,neutral>Well, I need some spy work doing.|It's quite dangerous.|You will need to go into the Black Knight's fortress.");
 def_int $option = ~p_choice2("I laugh in the face of danger!", 1, "I go and cower in a corner at the first sign of danger!", 2);
 
 if ($option = 1) {
-    ~chatplayer(happy, "I laugh in the face of danger.");
-    ~chatnpc(neutral, "Well that's good. Don't get too overconfident though.");
+    ~chatplayer("<p,happy>I laugh in the face of danger.");
+    ~chatnpc("<p,neutral>Well that's good. Don't get too overconfident though.");
     @black_knights_fortress_sir_amik_come_along_at_the_right_time;
 } else {
-    ~chatplayer(quiz, "I go and cower in a corner at the first sign of danger!");
-    ~chatnpc(confused, "Err...");
-    ~chatnpc(confused, "Well.");
-    ~chatnpc(quiz, "Spy work does involve a little hiding in corners I suppose.");
+    ~chatplayer("<p,quiz>I go and cower in a corner at the first sign of danger!");
+    ~chatnpc("<p,confused>Err...");
+    ~chatnpc("<p,confused>Well.");
+    ~chatnpc("<p,quiz>Spy work does involve a little hiding in corners I suppose.");
     def_int $give_it_a_go_or_no = ~p_choice2("Oh, I suppose I'll give it a go then.", 1, "No, I'm not convinced.", 2);
 
     if ($give_it_a_go_or_no = 1) {
         @black_knights_fortress_sir_amik_come_along_at_the_right_time;
     } else {
-        ~chatplayer(neutral, "No, I'm not convinced.");
+        ~chatplayer("<p,neutral>No, I'm not convinced.");
     }
 }
 
 [label,black_knights_fortress_sir_amik_come_along_at_the_right_time]
-~chatnpc(neutral, "You've come along just right actually.|All of my knights are already known to the Black Knights.");
-~chatnpc(sad, "Subtlety isn't exactly our strong point.");
-~chatplayer(quiz, "So what needs doing?");
-~chatnpc(angry, "Well the Black Knights have started making strange threats to us. Demanding large amounts of money and land, and threatening to invade Falador if we don't pay.");
-~chatnpc(neutral, "Now normally this wouldn't be a problem.");
-~chatnpc(sad, "But they claim to have a powerful new secret weapon.");
-~chatnpc(neutral, "What I want you to do is get inside their fortress.|Find out what their secret weapon is.|And then sabotage it. You will be well paid.");
-~chatplayer(neutral, "Ok, I'll give it a try.");
+~chatnpc("<p,neutral>You've come along just right actually.|All of my knights are already known to the Black Knights.");
+~chatnpc("<p,sad>Subtlety isn't exactly our strong point.");
+~chatplayer("<p,quiz>So what needs doing?");
+~chatnpc("<p,angry>Well the Black Knights have started making strange threats to us. Demanding large amounts of money and land, and threatening to invade Falador if we don't pay.");
+~chatnpc("<p,neutral>Now normally this wouldn't be a problem.");
+~chatnpc("<p,sad>But they claim to have a powerful new secret weapon.");
+~chatnpc("<p,neutral>What I want you to do is get inside their fortress.|Find out what their secret weapon is.|And then sabotage it. You will be well paid.");
+~chatplayer("<p,neutral>Ok, I'll give it a try.");
 ~update_blackknight_progress;
 
 [label,black_knights_fortress_sir_amik_in_progress]
 if (%blackknight_progress = 1) {
-    ~chatnpc(quiz, "How's the mission going?");
-    ~chatplayer(neutral, "I haven't managed to find what the secret weapon is yet.");
+    ~chatnpc("<p,quiz>How's the mission going?");
+    ~chatplayer("<p,neutral>I haven't managed to find what the secret weapon is yet.");
 } else if (%blackknight_progress = 2) {
-    ~chatnpc(quiz, "How' the mission going?");
-    ~chatplayer(neutral, "I've found out what the Black Knight's secret weapon is. It's a potion of invincibility.");
-    ~chatnpc(sad, "That is bad news.|If you can sabotage it somehow, you will be paid well.");
+    ~chatnpc("<p,quiz>How' the mission going?");
+    ~chatplayer("<p,neutral>I've found out what the Black Knight's secret weapon is. It's a potion of invincibility.");
+    ~chatnpc("<p,sad>That is bad news.|If you can sabotage it somehow, you will be paid well.");
 } else if (%blackknight_progress = 3) {
-    ~chatplayer(neutral, "I have ruined the Black Knight's invincibility potion.|That should put a stop to your problem.");
-    ~chatnpc(quiz, "Yes we have just received a message from the Black Knights saying they withdraw their demands. Which confirms your story.");
-    ~chatplayer(neutral, "You said you were going to pay me.");
-    ~chatnpc(happy, "Yes, that's right.");
+    ~chatplayer("<p,neutral>I have ruined the Black Knight's invincibility potion.|That should put a stop to your problem.");
+    ~chatnpc("<p,quiz>Yes we have just received a message from the Black Knights saying they withdraw their demands. Which confirms your story.");
+    ~chatplayer("<p,neutral>You said you were going to pay me.");
+    ~chatnpc("<p,happy>Yes, that's right.");
     ~update_blackknight_progress;
     queue(black_knights_fortress_quest_complete, 0);
 }
 
 [label,black_knights_fortress_sir_amik_postquest]
-~chatplayer(happy, "Hello Sir Amik.");
-~chatnpc(happy, "Hello, friend!");
+~chatplayer("<p,happy>Hello Sir Amik.");
+~chatnpc("<p,happy>Hello, friend!");

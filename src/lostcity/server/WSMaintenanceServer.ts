@@ -30,12 +30,12 @@ export default class WSServer {
         const port = (Environment.GAME_PORT as number) + 1;
 
         this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
-            console.log(`[WSMaintenance]: Listening on port ${port}`);
+            //console.log(`[WSMaintenance]: Listening on port ${port}`);
         });
 
         this.wss.on('connection', (ws, req) => {
             const ip: string = getIp(req) ?? 'unknown';
-            console.log(`[WSMaintenance]: Connection from ${ip}`);
+            //console.log(`[WSMaintenance]: Connection from ${ip}`);
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
 
@@ -50,7 +50,7 @@ export default class WSServer {
             });
 
             ws.on('close', () => {
-                console.log(`[WSMaintenance]: Disconnected from ${ip}`);
+                //console.log(`[WSMaintenance]: Disconnected from ${ip}`);
             });
         });
     }

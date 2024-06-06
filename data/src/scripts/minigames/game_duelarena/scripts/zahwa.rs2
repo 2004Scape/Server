@@ -4,43 +4,43 @@ def_int $random = random(8);
 
 switch_int ($random) {
     case 0:
-    ~chatplayer(happy, "Hi!");
-    ~chatnpc(default, "Hi!");
+    ~chatplayer("<p,happy>Hi!");
+    ~chatnpc("<p,default>Hi!");
 
     case 1:
-    ~chatplayer(happy, "Hi!");
-    ~chatnpc(sad, "Ughhhh....");
+    ~chatplayer("<p,happy>Hi!");
+    ~chatnpc("<p,sad>Ughhhh....");
 
     case 2:
-    ~chatplayer(default, "Hi!");
-    ~chatnpc(default, "I could've 'ad 'im!");
-    ~chatplayer(default, "Er...");
-    ~chatnpc(default, "I was robbed!");
-    ~chatplayer(default, "Right.");
-    ~chatnpc(default, "It was rigged I tell you!");
-    ~chatplayer(default, "Uh huh.");
-    ~chatnpc(default, "Leave me alone!");
+    ~chatplayer("<p,default>Hi!");
+    ~chatnpc("<p,default>I could've 'ad 'im!");
+    ~chatplayer("<p,default>Er...");
+    ~chatnpc("<p,default>I was robbed!");
+    ~chatplayer("<p,default>Right.");
+    ~chatnpc("<p,default>It was rigged I tell you!");
+    ~chatplayer("<p,default>Uh huh.");
+    ~chatnpc("<p,default>Leave me alone!");
 
     case 3:
-    ~chatplayer(default, "Are you alright?");
-    ~chatnpc(default, "NURSE!");
+    ~chatplayer("<p,default>Are you alright?");
+    ~chatnpc("<p,default>NURSE!");
 
     case 4:
-    ~chatplayer(default, "Are you alright?");
-    ~chatnpc(default, "Do I look alright?!");
+    ~chatplayer("<p,default>Are you alright?");
+    ~chatnpc("<p,default>Do I look alright?!");
 
     case 5:
-    ~chatplayer(default, "Are you alright?");
-    ~chatnpc(default, "Yeh. The nurses here are...wonderful!");
+    ~chatplayer("<p,default>Are you alright?");
+    ~chatnpc("<p,default>Yeh. The nurses here are...wonderful!");
 
     case 6:
-    ~chatplayer(default, "Are you alright?");
-    ~chatnpc(default, "It's just a flesh wound!");
+    ~chatplayer("<p,default>Are you alright?");
+    ~chatnpc("<p,default>It's just a flesh wound!");
 
     case 7:
-    ~chatplayer(confused, "Are you alright?");
-    ~chatnpc(sad, "Can't....go....on!");
-    ~chatnpc(sad, "Leave me behind!");
-    ~chatplayer(confused, "I'll leave you here, OK?");
-    ~chatnpc(sad, "Oh. OK.");
+    ~chatplayer("<p,confused>Are you alright?");
+    ~chatnpc("<p,sad>Can't....go....on!");
+    ~chatnpc("<p,sad>Leave me behind!");
+    ~chatplayer("<p,confused>I'll leave you here, OK?");
+    ~chatnpc("<p,sad>Oh. OK.");
 }

@@ -22,29 +22,29 @@ while (npc_findnext = true) {
 // osrs uses a different message. rsc uses this message.
 // https://youtu.be/gfWdQJH2Pmc?si=BKF8uqy1wLouzGCE&t=35
 // osrs using Pay-fare option on the gate gives different messages.
-~chatplayer(quiz, "Can I come through this gate?");
+~chatplayer("<p,quiz>Can I come through this gate?");
 
 if (%prince_progress >= ^prince_saved) {
-    ~chatnpc(quiz, "You may pass for free, you are a friend of Al-Kharid.");
+    ~chatnpc("<p,quiz>You may pass for free, you are a friend of Al-Kharid.");
     @pass_toll_gate($loc_coord);
 }
 
-~chatnpc(quiz, "You must pay a toll of 10 gold coins to pass.");
+~chatnpc("<p,quiz>You must pay a toll of 10 gold coins to pass.");
 
 def_int $choice = ~p_choice3("No thank you, I'll walk around.", 1, "Who does my money go to?", 2, "Yes, ok.", 3);
 if ($choice = 1) {
-    ~chatplayer(quiz, "No, thank you. I'll walk around.");
-    ~chatnpc(quiz, "Ok suit yourself.");
+    ~chatplayer("<p,quiz>No, thank you. I'll walk around.");
+    ~chatnpc("<p,quiz>Ok suit yourself.");
     return;
 } else if ($choice = 2) {
-    ~chatplayer(quiz, "Who does my money go to?");
-    ~chatnpc(quiz, "The money goes to the city of Al-Kharid.");
+    ~chatplayer("<p,quiz>Who does my money go to?");
+    ~chatnpc("<p,quiz>The money goes to the city of Al-Kharid.");
     return;
 }
 
-~chatplayer(quiz, "Yes, ok.");
+~chatplayer("<p,quiz>Yes, ok.");
 if (inv_total(inv, coins) < 10) {
-    ~chatplayer(quiz, "Oh dear, I don't actually seem to have enough money.");
+    ~chatplayer("<p,quiz>Oh dear, I don't actually seem to have enough money.");
     return;
 }
 

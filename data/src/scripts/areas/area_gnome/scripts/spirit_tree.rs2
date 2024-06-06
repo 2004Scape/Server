@@ -14,10 +14,10 @@ if(%tree_progress ! ^tree_complete) {
 ~mesbox("You friend of gnome people, you friend of mine.|Would you like me to take you somewhere?");
 switch_int(~p_choice2("No thanks, old tree.", 1, "Where can I go?", 2)) {
     case 1:
-        ~chatplayer(neutral, "No thanks, old tree.");
+        ~chatplayer("<p,neutral>No thanks, old tree.");
         return;
     case 2:
-        ~chatplayer(quiz, "Where can I go?");
+        ~chatplayer("<p,quiz>Where can I go?");
         ~mesbox("The tree talks again...");
         ~mesbox("You can travel to the trees|which are related to me.");
 }
@@ -38,10 +38,10 @@ if(%tree_progress ! ^tree_complete) {
 ~mesbox("Hello gnome friend. Would you like to|travel to the home of the tree gnomes?");
 switch_int(~p_choice2("Yes please.", 1, "No thank you.", 2)) {
     case 1: 
-        ~chatplayer(neutral, "Yes please.");
+        ~chatplayer("<p,neutral>Yes please.");
         @spirit_tree_tele(^village_tree);
     case 2: 
-        ~chatplayer(neutral, "No thank you.");
+        ~chatplayer("<p,neutral>No thank you.");
 }
 
 [label,spirit_tree_tele](coord $dest)

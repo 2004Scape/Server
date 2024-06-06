@@ -5,16 +5,16 @@ if (npc_range(coord) > 2) {
 }
 // I don't think you can be in the jail area at this quest-stage?
 if(%arena_progress = 9) {
-    ~chatplayer(quiz, "Are you ok stranger?");
-    ~chatnpc(neutral, "I'm fine thanks.");
-    ~chatnpc(quiz, "So Khazard got his hands on you too?");
-    ~chatplayer(sad, "I'm afraid so.");
-    ~chatnpc(neutral, "If you're lucky you may last as long as me.");
-    ~chatplayer(quiz, "How long have you been here?");
-    ~chatnpc(sad, "I've been in Khazard's prisons ever since I can remember. I was a child when his men kidnapped me. My whole life has been spent killing and fighting, all in the hope that one day I might escape.");
-    ~chatplayer(sad, "Don't give up.");
-    ~chatnpc(happy, "Thanks friend.");
-    ~chatnpc(shifty, "Wait.. sshh, the guard is coming. Looks like you'll be going into the arena. Good luck friend.");
+    ~chatplayer("<p,quiz>Are you ok stranger?");
+    ~chatnpc("<p,neutral>I'm fine thanks.");
+    ~chatnpc("<p,quiz>So Khazard got his hands on you too?");
+    ~chatplayer("<p,sad>I'm afraid so.");
+    ~chatnpc("<p,neutral>If you're lucky you may last as long as me.");
+    ~chatplayer("<p,quiz>How long have you been here?");
+    ~chatnpc("<p,sad>I've been in Khazard's prisons ever since I can remember. I was a child when his men kidnapped me. My whole life has been spent killing and fighting, all in the hope that one day I might escape.");
+    ~chatplayer("<p,sad>Don't give up.");
+    ~chatnpc("<p,happy>Thanks friend.");
+    ~chatnpc("<p,shifty>Wait.. sshh, the guard is coming. Looks like you'll be going into the arena. Good luck friend.");
     if_close;
     // https://youtu.be/NHsQfeSPUb0?si=c_S0jTnjDBF0xilE&t=189
     npc_add(0_40_49_26_4, khazard_guard_cutscene, 100);
@@ -61,15 +61,15 @@ if(%arena_progress = 9) {
     ~mesbox("From above you hear a voice..... 'Ladies and gentlemen! Let today's first fight between the outsider and everyone's favourite scorpion commence.'");
     @arena_release_scorp;
 } else if(%arena_progress >= ^arena_defeated_scorpion) { // you can't access the cells between being sent there and defeating bouncer
-    ~chatplayer(neutral, "Hello again.");
-    ~chatnpc(shifty, "I don't know how you managed to escape the arena, but you may not be as lucky next time. Get out of here while you can.");
+    ~chatplayer("<p,neutral>Hello again.");
+    ~chatnpc("<p,shifty>I don't know how you managed to escape the arena, but you may not be as lucky next time. Get out of here while you can.");
 } else {
-    ~chatplayer(quiz, "Do you know a Justin or Jeremy Servil?");
+    ~chatplayer("<p,quiz>Do you know a Justin or Jeremy Servil?");
     if(~wearing_khazard_armour = true) {
-        ~chatnpc(shifty, "You're not a real guard. I've been in here long enough to know that. What's your business?");
-        ~chatplayer(neutral, "I've been sent to rescue Sir Servil and his son.");
+        ~chatnpc("<p,shifty>You're not a real guard. I've been in here long enough to know that. What's your business?");
+        ~chatplayer("<p,neutral>I've been sent to rescue Sir Servil and his son.");
     }
-    ~chatnpc(neutral, "I've seen them in here, although they don't look up to much. My advice to you is to leave before you end up in a cell too.");
+    ~chatnpc("<p,neutral>I've seen them in here, although they don't look up to much. My advice to you is to leave before you end up in a cell too.");
 }
 
 [ai_queue10,khazard_guard_cutscene](int $arg)

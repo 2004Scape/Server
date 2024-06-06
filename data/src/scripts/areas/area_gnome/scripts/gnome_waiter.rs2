@@ -1,6 +1,6 @@
 [opnpc1,npc_851]
-~chatplayer(neutral, "Hello.");
-~chatnpc(sad, "Hello sir, can I tempt you with any of the dishes on|our new menu?");
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,sad>Hello sir, can I tempt you with any of the dishes on|our new menu?");
 def_int $choice;
 if (inv_totalcat(inv, category_125) > 0 | inv_totalcat(inv, category_128) > 0) {
     $choice = ~p_choice3("I'll take a look.", 1, "Not really.", 2, "Actually, I'd like to sell some dishes.", 3);
@@ -8,15 +8,15 @@ if (inv_totalcat(inv, category_125) > 0 | inv_totalcat(inv, category_128) > 0) {
     $choice = ~p_choice2("I'll take a look.", 1, "Not really.", 2);
 }
 if ($choice = 2) {
-    ~chatplayer(neutral, "Not really.");
-    ~chatnpc(sad, "That's your choice sir, enjoy your stay.");
+    ~chatplayer("<p,neutral>Not really.");
+    ~chatnpc("<p,sad>That's your choice sir, enjoy your stay.");
 } else if ($choice = 3) {
-    ~chatplayer(neutral, "Actually, I'd like to sell some dishes.");
-    ~chatnpc(sad, "Mr Gianne is the one to talk to if you want to sell any dishes you've made yourself.  He is the owner and head chef of this establishment.");
-    ~chatplayer(neutral, "Thank you.");
+    ~chatplayer("<p,neutral>Actually, I'd like to sell some dishes.");
+    ~chatnpc("<p,sad>Mr Gianne is the one to talk to if you want to sell any dishes you've made yourself.  He is the owner and head chef of this establishment.");
+    ~chatplayer("<p,neutral>Thank you.");
 } else {
-    ~chatplayer(happy, "I'll take a look.");
-    ~chatnpc(sad, "I hope you like what you see. Although all these|premade dishes are good to eat - they were made by|the last human assistant chef.  He wasn't up to Chef's|exacting standards - and you may find that they will");
-    ~chatnpc(sad, "not be accepted by some people as the 'real' thing.");
+    ~chatplayer("<p,happy>I'll take a look.");
+    ~chatnpc("<p,sad>I hope you like what you see. Although all these|premade dishes are good to eat - they were made by|the last human assistant chef.  He wasn't up to Chef's|exacting standards - and you may find that they will");
+    ~chatnpc("<p,sad>not be accepted by some people as the 'real' thing.");
     ~openshop_activenpc;
 }

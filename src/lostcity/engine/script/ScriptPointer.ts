@@ -18,6 +18,12 @@ enum ScriptPointer {
     _LAST
 }
 
+export const ActiveNpc: ScriptPointer[] = [ScriptPointer.ActiveNpc, ScriptPointer.ActiveNpc2];
+export const ActiveLoc: ScriptPointer[] = [ScriptPointer.ActiveLoc, ScriptPointer.ActiveLoc2];
+export const ActiveObj: ScriptPointer[] = [ScriptPointer.ActiveObj, ScriptPointer.ActiveObj2];
+export const ActivePlayer: ScriptPointer[] = [ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2];
+export const ProtectedActivePlayer: ScriptPointer[] = [ScriptPointer.ProtectedActivePlayer, ScriptPointer.ProtectedActivePlayer2];
+
 /**
  * Wraps a command handler in another function that will check for pointer presence in the state.
  *

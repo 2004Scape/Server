@@ -1,98 +1,98 @@
 [opnpc1,romeo]
 switch_int (%romeojuliet_progress) {
     case ^romeojuliet_not_started: @romeojuliet_start;
-    case ^romeojuliet_spoken_romeo: ~chatnpc(sad, "Please find my Juliet, I am so, so sad.");
+    case ^romeojuliet_spoken_romeo: ~chatnpc("<p,sad>Please find my Juliet, I am so, so sad.");
     case ^romeojuliet_spoken_juliet: @romeo_messagefrom;
     case ^romeojuliet_passed_message: 
-        ~chatnpc(sad, "Please friend, how goes our quest?");
-        ~chatnpc(sad, "Father Lawrence must be told. Only he can help.");
+        ~chatnpc("<p,sad>Please friend, how goes our quest?");
+        ~chatnpc("<p,sad>Father Lawrence must be told. Only he can help.");
     case ^romeojuliet_spoken_father: @romeo_father;
     case ^romeojuliet_spoken_apothecary: @romeo_potion;
     case ^romeojuliet_juliet_crypt: @romeo_allset;
     case ^romeojuliet_complete:
-        ~chatnpc(sad, "I heard Juliet had died. Terrible business.");
-        ~chatnpc(happy, "Her cousin and I are getting on well though.|Thanks for your help!");
+        ~chatnpc("<p,sad>I heard Juliet had died. Terrible business.");
+        ~chatnpc("<p,happy>Her cousin and I are getting on well though.|Thanks for your help!");
 }
 
 [label,romeojuliet_start]
-~chatnpc(sad, "Juliet, Juliet, Juliet!  Wherefore Art thou?"); // space is intentional
-~chatnpc(sad, "Kind friend, have you seen Juliet?");
-~chatnpc(sad, "She's disappeared and I can't find her anywhere.");
+~chatnpc("<p,sad>Juliet, Juliet, Juliet!  Wherefore Art thou?"); // space is intentional
+~chatnpc("<p,sad>Kind friend, have you seen Juliet?");
+~chatnpc("<p,sad>She's disappeared and I can't find her anywhere.");
 switch_int(~p_choice3("Yes, I have seen her.", 1, "No, but that's girls for you.", 2, "Can I help find her for you?", 3)) {
     case 1:
-        ~chatplayer(happy, "Yes, I have seen her.");
-        ~chatplayer(shifty, "I think it was her... Blonde? A bit stressed?");
-        ~chatnpc(happy, "Yes, that sounds like her.|Please tell her I long to be with her.");
+        ~chatplayer("<p,happy>Yes, I have seen her.");
+        ~chatplayer("<p,shifty>I think it was her... Blonde? A bit stressed?");
+        ~chatnpc("<p,happy>Yes, that sounds like her.|Please tell her I long to be with her.");
         @multi2("Yes, I will tell her.", romeo_tell_her, "Sorry, I am too busy. Maybe later?", romeo_busy);
     case 2:
-        ~chatplayer(happy, "No, but that's girls for you.");
-        ~chatnpc(sad, "Not my dear Juliet, she is different.");
-        ~chatnpc(quiz, "Could you find her for me?|Please tell her I long to be with her.");
+        ~chatplayer("<p,happy>No, but that's girls for you.");
+        ~chatnpc("<p,sad>Not my dear Juliet, she is different.");
+        ~chatnpc("<p,quiz>Could you find her for me?|Please tell her I long to be with her.");
         @multi2("Yes, I will tell her how you feel.", romeo_tell_her, "I can't, it sounds like work to me.", romeo_work);
     case 3:
-        ~chatplayer(happy, "Can I help find her for you?");
-        ~chatnpc(happy, "Oh would you? That would be wonderful!");
-        ~chatnpc(happy, "Please tell her I long to be with her.");
+        ~chatplayer("<p,happy>Can I help find her for you?");
+        ~chatnpc("<p,happy>Oh would you? That would be wonderful!");
+        ~chatnpc("<p,happy>Please tell her I long to be with her.");
         @romeo_tell_her;  
 }
 
 [label,romeo_tell_her]
-~chatplayer(neutral, "Yes, I will tell her how you feel.");
-~chatnpc(happy, "You are the saviour of my heart, thank you.");
-~chatplayer(neutral, "Err, yes. Ok. Thats.... Nice.");
+~chatplayer("<p,neutral>Yes, I will tell her how you feel.");
+~chatnpc("<p,happy>You are the saviour of my heart, thank you.");
+~chatplayer("<p,neutral>Err, yes. Ok. Thats.... Nice.");
 %romeojuliet_progress = ^romeojuliet_spoken_romeo;
 ~send_quest_progress(questlist:romeojuliet, %romeojuliet_progress, ^romeojuliet_complete);
 
 [label,romeo_busy]
-~chatplayer(quiz, "Sorry, I am too busy. Maybe later?");
-~chatnpc(sad, "Well if you do find her, I would be most grateful.");
+~chatplayer("<p,quiz>Sorry, I am too busy. Maybe later?");
+~chatnpc("<p,sad>Well if you do find her, I would be most grateful.");
 
 [label,romeo_work]
-~chatplayer(bored, "I can't, it sounds like work to me.");
-~chatnpc(angry, "Well, I guess you are not the romantic type.|Goodbye!");
+~chatplayer("<p,bored>I can't, it sounds like work to me.");
+~chatnpc("<p,angry>Well, I guess you are not the romantic type.|Goodbye!");
 
 [label,romeo_messagefrom]
-~chatplayer(happy, "Romeo, I have a message from Juliet.");
+~chatplayer("<p,happy>Romeo, I have a message from Juliet.");
 ~mesbox("You pass Juliet's message to Romeo.");
 inv_del(inv, juliet_message, 1);
 %romeojuliet_progress = ^romeojuliet_passed_message;
-~chatnpc(sad, "Tragic news. Her father is opposing our marriage.");
-~chatnpc(sad, "If her father sees me, he will kill me.");
-~chatnpc(sad, "I dare not go near his lands.");
-~chatnpc(sad, "She says Father Lawrence can help us.");
-~chatnpc(sad, "Please find him for me. Tell him of our plight.");
+~chatnpc("<p,sad>Tragic news. Her father is opposing our marriage.");
+~chatnpc("<p,sad>If her father sees me, he will kill me.");
+~chatnpc("<p,sad>I dare not go near his lands.");
+~chatnpc("<p,sad>She says Father Lawrence can help us.");
+~chatnpc("<p,sad>Please find him for me. Tell him of our plight.");
 
 [label,romeo_father]
-~chatnpc(quiz, "Did you find the Father? What did he suggest?");
+~chatnpc("<p,quiz>Did you find the Father? What did he suggest?");
 def_int $option = ~p_choice2("He sent me to the Apothecary.", 1, "He seems keen for you to marry Juliet.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "He sent me to the Apothecary.");
-    ~chatnpc(neutral, "I know him.");
-    ~chatnpc(neutral, "He lives near the town square,|the small house behind the sloped building.");
-    ~chatnpc(happy, "Good luck.");
+    ~chatplayer("<p,neutral>He sent me to the Apothecary.");
+    ~chatnpc("<p,neutral>I know him.");
+    ~chatnpc("<p,neutral>He lives near the town square,|the small house behind the sloped building.");
+    ~chatnpc("<p,happy>Good luck.");
 } else if($option = 2) {
-    ~chatplayer(happy, "He seems keen for you to marry Juliet.");
-    ~chatnpc(neutral, "I think he wants some peace.");
-    ~chatnpc(happy, "He was our messenger before you|were kind enough to help us.");
+    ~chatplayer("<p,happy>He seems keen for you to marry Juliet.");
+    ~chatnpc("<p,neutral>I think he wants some peace.");
+    ~chatnpc("<p,happy>He was our messenger before you|were kind enough to help us.");
 }
 
 [label,romeo_potion]
 if(inv_total(inv, cadaver) > 0) {
-    ~chatnpc(neutral, "Ah, you have the potion.");
-    ~chatnpc(neutral, "I was told what to do by the good Father.");
-    ~chatnpc(neutral, "Better get it to Juliet. She knows what is happening.");
+    ~chatnpc("<p,neutral>Ah, you have the potion.");
+    ~chatnpc("<p,neutral>I was told what to do by the good Father.");
+    ~chatnpc("<p,neutral>Better get it to Juliet. She knows what is happening.");
     return;
 }
-~chatnpc(happy, "I hope the potion is near ready.");
-~chatnpc(happy, "It is the last step for the great plan.");
-~chatnpc(happy, "I hope I will be with my dear one soon.");
+~chatnpc("<p,happy>I hope the potion is near ready.");
+~chatnpc("<p,happy>It is the last step for the great plan.");
+~chatnpc("<p,happy>I hope I will be with my dear one soon.");
 
 [label,romeo_allset]
-~chatplayer(happy, "Romeo, it's all set. Juliet has the potion.");
-~chatnpc(neutral, "Ah right.");
-~chatnpc(neutral, "What potion would that be then?");
-~chatplayer(neutral, "The one to get her to the crypt.");
-~chatnpc(neutral, "Ah right.");
-~chatnpc(sad, "So she is dead then. Aww that's a shame.");
-~chatnpc(sad, "Thanks for your help anyway.");
+~chatplayer("<p,happy>Romeo, it's all set. Juliet has the potion.");
+~chatnpc("<p,neutral>Ah right.");
+~chatnpc("<p,neutral>What potion would that be then?");
+~chatplayer("<p,neutral>The one to get her to the crypt.");
+~chatnpc("<p,neutral>Ah right.");
+~chatnpc("<p,sad>So she is dead then. Aww that's a shame.");
+~chatnpc("<p,sad>Thanks for your help anyway.");
 queue(romeo_and_juliet_complete, 0);

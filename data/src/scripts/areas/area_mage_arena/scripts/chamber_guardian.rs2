@@ -1,18 +1,18 @@
 [opnpc1,chamber_guardian]
 if (%magearena_progress <= ^mage_arena_complete) {
-    ~chatplayer(happy, "Hello my friend, Kolodion sent me down.");
-    ~chatnpc(angry, "Sssshhh... the gods are talking. I can hear their|whispers.");
-    ~chatnpc(quiz, "Can you hear them adventurer, they're calling you.");
-    ~chatplayer(confused, "Erm... ok!");
-    ~chatnpc(shifty, "Go chant at the statue of the god you most wish to|represent in this world, you will be rewarded.");
-    ~chatnpc(shifty, "Once you are done, come back to me. I shall supply|you with a mage staff ready for battle.");
+    ~chatplayer("<p,happy>Hello my friend, Kolodion sent me down.");
+    ~chatnpc("<p,angry>Sssshhh... the gods are talking. I can hear their|whispers.");
+    ~chatnpc("<p,quiz>Can you hear them adventurer, they're calling you.");
+    ~chatplayer("<p,confused>Erm... ok!");
+    ~chatnpc("<p,shifty>Go chant at the statue of the god you most wish to|represent in this world, you will be rewarded.");
+    ~chatnpc("<p,shifty>Once you are done, come back to me. I shall supply|you with a mage staff ready for battle.");
     return;
 } else if (%magearena_progress > ^mage_arena_prayed_at_statue & %magearena_progress < ^mage_arena_staff_given) {
     // after praying at the statue:
-    ~chatplayer(neutral, "Hi.");
-    ~chatnpc(quiz, "Hello adventurer, have you made your choice?");
-    ~chatplayer(neutral, "I have.");
-    ~chatnpc(neutral, "Good, good, I hope you have chosen well. I will now|present you with a magic staff. This, along with the|cape awarded to you by your chosen god, are all the|weapons and armour you will need here.");
+    ~chatplayer("<p,neutral>Hi.");
+    ~chatnpc("<p,quiz>Hello adventurer, have you made your choice?");
+    ~chatplayer("<p,neutral>I have.");
+    ~chatnpc("<p,neutral>Good, good, I hope you have chosen well. I will now|present you with a magic staff. This, along with the|cape awarded to you by your chosen god, are all the|weapons and armour you will need here.");
     // check staff type
     def_namedobj $staff = saradominstaff;
     switch_int(%magearena_progress) {
@@ -27,19 +27,19 @@ if (%magearena_progress <= ^mage_arena_complete) {
 }
 
 // default
-~chatplayer(neutral, "Hello again.");
-~chatnpc(quiz, "Hello adventurer, are you looking for another staff?");
+~chatplayer("<p,neutral>Hello again.");
+~chatnpc("<p,quiz>Hello adventurer, are you looking for another staff?");
 def_int $choice = ~p_choice3("What do you have to offer?", 1, "No thanks.", 2, "Tell me what you know about the charge spell.", 3);
 if ($choice = 1) {
     ~openshop_activenpc;
 } else if ($choice = 2) {
-    ~chatplayer(neutral, "No thanks.");
-    ~chatnpc(neutral, "Well let me know if you need one.");
+    ~chatplayer("<p,neutral>No thanks.");
+    ~chatnpc("<p,neutral>Well let me know if you need one.");
 } else if ($choice = 3) {
-    ~chatplayer(quiz, "Tell me what you know about the charge spell.");
-    ~chatnpc(shifty, "We believe the spells are gifts from the gods. The|charge spell draws even more power from the cosmos.");
-    ~chatnpc(shifty, "While wearing a matching cape and staff it will add|50% more damage to that already caused by battle|mage spells for several minutes.");
-    ~chatplayer(happy, "Good stuff.");
+    ~chatplayer("<p,quiz>Tell me what you know about the charge spell.");
+    ~chatnpc("<p,shifty>We believe the spells are gifts from the gods. The|charge spell draws even more power from the cosmos.");
+    ~chatnpc("<p,shifty>While wearing a matching cape and staff it will add|50% more damage to that already caused by battle|mage spells for several minutes.");
+    ~chatplayer("<p,happy>Good stuff.");
 }
 
 [opnpc3,chamber_guardian]

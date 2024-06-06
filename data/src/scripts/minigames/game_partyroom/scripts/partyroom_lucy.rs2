@@ -3,11 +3,11 @@ if (npc_range(coord) > 2) {
     p_aprange(2);
     return;
 }
-~chatnpc(happy, "Hi! I'm Lucy. Welcome to the Party Room!");
-~chatplayer(happy, "One beer please Lucy!");
-~chatnpc(happy, "Coming right up <text_gender("sir", "ma'am")>! That's two gold please.");
+~chatnpc("<p,happy>Hi! I'm Lucy. Welcome to the Party Room!");
+~chatplayer("<p,happy>One beer please Lucy!");
+~chatnpc("<p,happy>Coming right up <text_gender("sir", "ma'am")>! That's two gold please.");
 if(inv_total(inv, coins) < 2) {
-    ~chatplayer(sad, "I'm sorry but I don't have enough money!");
+    ~chatplayer("<p,sad>I'm sorry but I don't have enough money!");
     return;
 }
 inv_del(inv, coins, 2);
