@@ -187,7 +187,7 @@ export default class Npc extends PathingEntity {
         }
 
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
-            this.pathToTarget();
+            this.pathToPathingTarget();
         }
 
         if (this.walktrigger !== -1) {
@@ -541,8 +541,6 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
-        this.interacted = false;
 
         const apTrigger: boolean =
             (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||

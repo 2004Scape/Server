@@ -431,12 +431,8 @@ export default class Player extends PathingEntity {
             return false;
         }
 
-        if (
-            repathAllowed &&
-            this.target instanceof PathingEntity && // this.isLastWaypoint() && (this.targetX !== this.target.x || this.targetZ !== this.target.z) &&
-            !this.interacted && this.walktrigger === -1
-        ) {
-            this.pathToTarget();
+        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
+            this.pathToPathingTarget();
         }
 
         if (this.hasWaypoints() && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
@@ -787,9 +783,6 @@ export default class Player extends PathingEntity {
             this.unsetMapFlag();
             return;
         }
-
-        this.interacted = false;
-        this.apRangeCalled = false;
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
