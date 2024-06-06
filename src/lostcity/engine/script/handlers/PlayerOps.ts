@@ -130,8 +130,8 @@ const PlayerOps: CommandHandlers = {
         check(coord, CoordValid);
 
         const pos = Position.unpackCoord(coord);
-        const localX = pos.x - Position.zoneOrigin(state.activePlayer.x);
-        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.z);
+        const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
+        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
 
         state.activePlayer.writeLowPriority(ServerProt.CAM_LOOKAT, localX, localZ, height, rotationSpeed, rotationMultiplier);
     }),
@@ -142,8 +142,8 @@ const PlayerOps: CommandHandlers = {
         check(coord, CoordValid);
 
         const pos = Position.unpackCoord(coord);
-        const localX = pos.x - Position.zoneOrigin(state.activePlayer.x);
-        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.z);
+        const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
+        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
 
         state.activePlayer.writeLowPriority(ServerProt.CAM_MOVETO, localX, localZ, height, rotationSpeed, rotationMultiplier);
     }),
