@@ -108,14 +108,13 @@ if (.npc_find(movecoord(coord, 0, 0, 8), justin_servil, 14, 0) = true) {
     .npc_setmode(none);
     .npc_walk(0_40_49_40_32);
     .npc_facesquare(0_40_49_42_32);
-    .npc_queue(10, 0, calc(9 + $delay));
 }
 cam_reset;
 cam_moveto(movecoord($ogre_to, -7, 0, -4), 400, 0, 100);
 cam_lookat(movecoord($ogre_to, -1, 0, 0), 200, 0, 100);
 // open gate
 npc_setmode(none);
-npc_walk(movecoord($ogre_to, 2, 0, 0));
+npc_walk(movecoord($ogre_to, 1, 0, 0));
 p_delay($delay);
 if(loc_find(0_40_49_46_29, loc_78) = true & .loc_find(0_40_49_46_30, loc_77) = true) {
     loc_del(5);
@@ -133,19 +132,19 @@ cam_reset;
 
 [ai_queue10,khazard_ogre](int $arg)
 npc_walk(0_40_49_44_32);
-npc_queue(11, 0, 3);
+npc_queue(11, 0, 4);
 
 [ai_queue11,khazard_ogre](int $arg)
 npc_walk(0_40_49_41_32);
-npc_queue(12, 0, 4);
+npc_queue(12, 0, 3);
 
 [ai_queue12,khazard_ogre](int $arg)
 npc_anim(npc_param(attack_anim), 0);
 npc_setmode(null);
-
-[ai_queue10,justin_servil](int $arg)
-npc_anim(npc_param(defend_anim), 0);
-npc_setmode(null);
+if (.npc_find(npc_coord, justin_servil, 1, 0) = true) {
+    .npc_anim(human_defend_cowardly, 0);
+    .npc_setmode(null);
+}
 
 [debugproc,c1a]
 if(p_finduid(uid) = false) {

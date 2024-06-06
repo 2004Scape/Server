@@ -36,7 +36,7 @@ if(%arena_progress = 9) {
         $x, $z = ~door_open($angle, loc_shape);
         loc_change(loc_83, 2);
         loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
-        sound_synth(door_open, 0, 0);
+        sound_synth(grate_open, 0, 0);
     }
     p_teleport(movecoord(coord, 0, 0, -1));
     p_delay(1);
