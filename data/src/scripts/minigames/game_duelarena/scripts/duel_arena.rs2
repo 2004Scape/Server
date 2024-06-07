@@ -13,6 +13,21 @@ if ($null = inv_size(tempinv)) {
     mes("tempinv is empty");
 }
 
+[debugproc,stakeinv]
+def_int $i = 0;
+def_int $null = 0;
+while ($i < inv_size(stakeinv)) {
+    if (inv_getobj(stakeinv, $i) ! null) {
+        mes("<tostring($i)>: <oc_debugname(inv_getobj(stakeinv, $i))>");
+    } else {
+        $null = add($null, 1);
+    }
+    $i = add($i, 1);
+}
+if ($null = inv_size(stakeinv)) {
+    mes("stakeinv is empty");
+}
+
 [opplayer1,_]
 if (.busy = true) {
     mes("<.displayname> is busy at the moment."); // https://youtu.be/YkJQDvB14-U?t=26

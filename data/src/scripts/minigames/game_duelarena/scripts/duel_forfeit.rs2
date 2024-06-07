@@ -13,26 +13,13 @@ if ($choice = 2) {
     return;
 }
 if_close;
-p_telejump(~duel_arena_finish_coord(coord));
+%duelstatus = ^duelstatus_lost;
+if (getqueue(duel_arena_finish) < 1) {
+    queue(duel_arena_finish, 0);
+}
+
 if (.finduid(%duelpartner) = true)  {
+    .if_close;
     .%duelstatus = ^duelstatus_opponent_resigned;
-    queue2(duel_arena_win, 0);
+    queue2(duel_arena_finish, 0);
 }
-
-def_int $i = 0;
-while ($i < inv_size(stakeinv)) {
-    if (inv_getobj(stakeinv, $i) ! null) {
-        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(stakeinv, inv, $i);
-    }
-    $i = calc($i + 1);
-}
-
-p_stopaction;
-~stat_reset_all;
-healenergy(10000);
-~combat_clearqueue;
-~clear_poison;
-~update_all(inv_getobj(worn, ^wearpos_rhand));
-%duelpartner = null;
-%duelstatus = 0;

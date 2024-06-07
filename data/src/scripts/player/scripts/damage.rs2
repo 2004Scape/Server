@@ -12,33 +12,28 @@ clearqueue(pvp_damage);
 .clearqueue(pvp_damage);
 
 [queue,player_death]
-if (.finduid(%duelpartner) = true & ~.in_duel_arena = true) {
-    .if_close;
-    .%duelstatus = ^duelstatus_victory;
-    queue2(duel_arena_win, 0);
-}
-// todo, check if a player has recieved kill credit for your death
-// if so use inv_dropall and ~pvp_death_message
-if (~in_duel_arena = true) {
-    if (getqueue(duel_arena_win) > 0) {
-        clearqueue(duel_arena_win); // to make sure these only one loser and one winner
-    }
-    %duelstatus = ^duelstatus_lost;
-    queue(duel_arena_loss, 0);
-    p_delay(1);
-    p_stopaction;
-    if_close;
-    midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
-    anim(human_death, 0);
-    p_delay(3);
-    return;
-}
 p_delay(1);
 p_stopaction;
 if_close;
 midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
 p_delay(3);
+mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
+
+// todo, check if a player has recieved kill credit for your death
+// if so use inv_dropall and ~pvp_death_message
+if (~in_duel_arena = true & .finduid(%duelpartner) = true & ~.in_duel_arena = true) {
+    if_close;
+    .if_close;
+    %duelstatus = ^duelstatus_lost;
+    .%duelstatus = ^duelstatus_victory;
+    if (getqueue(duel_arena_finish) < 1) {
+        queue(duel_arena_finish, 0);
+    }
+    queue2(duel_arena_finish, 0);
+    // player2 can move freely whilst player 1 is in death anim: https://youtu.be/BBYbpuquiZw?t=412 (vid he equips dragon sword)
+    return;
+}
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
@@ -89,7 +84,6 @@ buildappearance(worn);
 ~deactivate_prayers;
 p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
 anim(null, 0);
-mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
 
 ~stat_reset_all;
 healenergy(10000);

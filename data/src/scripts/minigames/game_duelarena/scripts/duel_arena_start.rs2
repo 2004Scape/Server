@@ -9,8 +9,6 @@ if (.finduid(%duelpartner) = true) {
         ~mesbox("All arenas of this type are full! Select another type of arena, try|again in a few minutes or try a different server."); // https://youtu.be/TcrIr9O92sw?t=89
         return;
     }
-    // move tempinv to stakeinv
-    ~moveallinv(tempinv, stakeinv);
     p_telejump($random_coord1);
     def_int $i = 0;
     if (testbit(%duel_settings, ^no_movement) = true & .p_finduid(.uid) = true) {
@@ -26,6 +24,8 @@ if (.finduid(%duelpartner) = true) {
         .p_telejump($random_coord2);
     }
 
+    // move tempinv to stakeinv
+    ~moveallinv(tempinv, stakeinv);
     p_stopaction;
     // only deactive prayers if no prayers is selected. based off: https://imgur.com/ETH1z4L
     if (testbit(%duel_settings, ^no_prayer) = true) {
