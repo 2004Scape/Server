@@ -210,6 +210,9 @@
 [command,afk_event]()(int)
 [command,lowmemory]()(boolean)
 [command,setidkit](idkit $kit, int $color)
+[command,findhero]()(boolean)
+[command,.findhero]()(boolean)
+[command,both_heropoints](int $damage)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
