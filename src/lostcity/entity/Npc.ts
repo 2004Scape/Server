@@ -366,6 +366,7 @@ export default class Npc extends PathingEntity {
         const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
         let dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]);
 
+        this.updateMovement(false);
         if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
@@ -385,7 +386,6 @@ export default class Npc extends PathingEntity {
         this.delayedPatrol = false;
         dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]); // recalc dest
         this.queueWaypoint(dest.x, dest.z);
-        this.updateMovement(false);
     }
 
     playerEscapeMode(): void {

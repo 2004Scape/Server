@@ -10,6 +10,12 @@ if(npc_stat(hitpoints) = 0) {
 }
 @player_combat_start;
 
+[apnpc2,sir_mordred]
+if(npc_stat(hitpoints) = 0) {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+}
+@player_combat_start_ap;
+
 [ai_queue3,sir_mordred](int $arg)
 if (npc_findhero = true & %arthur_progress >= ^arthur_spoken_lancelot & %arthur_progress < ^arthur_complete) {
     @lefaye_spare_son;

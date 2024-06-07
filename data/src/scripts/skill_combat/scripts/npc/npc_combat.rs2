@@ -115,6 +115,11 @@ if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
     return(false);
 }
 
+if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
+    mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
+    return (false);
+}
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -133,6 +138,10 @@ if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(
 if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
     mes("You are not ready to fight the battle mages.");
     return(false);
+}
+if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
+    mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
+    return (false);
 }
 if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progress) ! npc_type) {
     if (%magearena_progress > ^mage_arena_complete) {
