@@ -1,4 +1,4 @@
-import Component from '#lostcity/cache/Component.js';
+import Component from '#lostcity/cache/config/Component.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';

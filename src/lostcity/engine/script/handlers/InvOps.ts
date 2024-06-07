@@ -1,6 +1,6 @@
-import InvType from '#lostcity/cache/InvType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import CategoryType from '#lostcity/cache/config/CategoryType.js';
 
 import World from '#lostcity/engine/World.js';
 

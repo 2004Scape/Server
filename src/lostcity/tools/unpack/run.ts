@@ -11,8 +11,8 @@ import {
     unpackWordenc
 } from '#lostcity/util/CacheUnpack.js';
 // import Packet from '#jagex2/io/Packet.js';
-import AnimFrame from '#lostcity/cache/AnimFrame.js';
-// import AnimBase from '#lostcity/cache/AnimBase.js';
+import AnimFrame from '#lostcity/cache/graphics/AnimFrame.js';
+// import AnimBase from '#lostcity/cache/graphics/AnimBase.js';
 
 let title: Jagfile | null = null;
 let config: Jagfile | null = null;

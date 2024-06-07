@@ -8,28 +8,28 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { toBase37 } from '#jagex2/jstring/JString.js';
 
-import CategoryType from '#lostcity/cache/CategoryType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import EnumType from '#lostcity/cache/EnumType.js';
-import FontType from '#lostcity/cache/FontType.js';
-import HuntType from '#lostcity/cache/HuntType.js';
-import IdkType from '#lostcity/cache/IdkType.js';
-import Component from '#lostcity/cache/Component.js';
-import InvType from '#lostcity/cache/InvType.js';
-import LocType from '#lostcity/cache/LocType.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import SeqFrame from '#lostcity/cache/SeqFrame.js';
-import SeqType from '#lostcity/cache/SeqType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import VarNpcType from '#lostcity/cache/VarNpcType.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import VarSharedType from '#lostcity/cache/VarSharedType.js';
-import WordEnc from '#lostcity/cache/WordEnc.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import CategoryType from '#lostcity/cache/config/CategoryType.js';
+import DbRowType from '#lostcity/cache/config/DbRowType.js';
+import DbTableType from '#lostcity/cache/config/DbTableType.js';
+import EnumType from '#lostcity/cache/config/EnumType.js';
+import FontType from '#lostcity/cache/config/FontType.js';
+import HuntType from '#lostcity/cache/config/HuntType.js';
+import IdkType from '#lostcity/cache/config/IdkType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import MesanimType from '#lostcity/cache/config/MesanimType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
+import SeqFrame from '#lostcity/cache/config/SeqFrame.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
+import StructType from '#lostcity/cache/config/StructType.js';
+import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
+import VarSharedType from '#lostcity/cache/config/VarSharedType.js';
+import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
 import GameMap from '#lostcity/engine/GameMap.js';
 import { Inventory } from '#lostcity/engine/Inventory.js';
@@ -303,7 +303,7 @@ class World {
     }
 
     startDevWatcher() {
-        this.devThread = createWorker('./src/lostcity/tools/pack/pack.ts');
+        this.devThread = createWorker('./src/lostcity/cache/pack.ts');
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -354,7 +354,7 @@ class World {
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/tools/pack/pack.ts');
+                this.devThread = createWorker('./src/lostcity/cache/pack.ts');
             }
 
             this.devThread.postMessage({

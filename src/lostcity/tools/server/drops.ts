@@ -1,14 +1,14 @@
 import fs from 'fs';
 
-import InvType from '#lostcity/cache/InvType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
 import World from '#lostcity/engine/World.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import Npc from '#lostcity/entity/Npc.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 
 import Environment from '#lostcity/util/Environment.js';
 

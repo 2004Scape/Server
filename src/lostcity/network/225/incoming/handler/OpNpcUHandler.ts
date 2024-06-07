@@ -1,8 +1,8 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import OpNpcU from '#lostcity/network/incoming/model/OpNpcU.js';
-import Component from '#lostcity/cache/Component.js';
+import Component from '#lostcity/cache/config/Component.js';
 import World from '#lostcity/engine/World.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';

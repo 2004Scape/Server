@@ -3,15 +3,15 @@ import 'dotenv/config';
 import Packet from '#jagex2/io/Packet.js';
 import {fromBase37, toDisplayName} from '#jagex2/jstring/JString.js';
 
-import FontType from '#lostcity/cache/FontType.js';
-import Component from '#lostcity/cache/Component.js';
-import InvType from '#lostcity/cache/InvType.js';
-import LocType from '#lostcity/cache/LocType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
-import SeqType from '#lostcity/cache/SeqType.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import FontType from '#lostcity/cache/config/FontType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';

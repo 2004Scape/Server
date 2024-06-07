@@ -1,7 +1,7 @@
-import ParamType from '#lostcity/cache/ParamType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
 import World from '#lostcity/engine/World.js';
 

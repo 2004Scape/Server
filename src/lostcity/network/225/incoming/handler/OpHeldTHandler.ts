@@ -4,7 +4,7 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import Environment from '#lostcity/util/Environment.js';
-import Component from '#lostcity/cache/Component.js';
+import Component from '#lostcity/cache/config/Component.js';
 import OpHeldT from '#lostcity/network/incoming/model/OpHeldT.js';
 
 export default class OpHeldTHandler extends MessageHandler<OpHeldT> {

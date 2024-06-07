@@ -3,7 +3,7 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
-import LocType from '#lostcity/cache/LocType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
 import Loc from '#lostcity/entity/Loc.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';

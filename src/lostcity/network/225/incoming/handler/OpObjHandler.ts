@@ -1,5 +1,5 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import World from '#lostcity/engine/World.js';
 import OpObj from '#lostcity/network/incoming/model/OpObj.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';

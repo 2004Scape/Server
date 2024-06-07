@@ -4,7 +4,7 @@ import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
-import NpcType from '#lostcity/cache/NpcType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Entity from '#lostcity/entity/Entity.js';
