@@ -1,0 +1,161 @@
+[apnpc1,jeremy_servil]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+switch_int(%arena_progress) {
+    case ^arena_freed_servils, ^arena_complete, ^arena_complete_defeated_genkhazard: mes("You've already rescued Jeremy from the fight arena.");
+    case ^arena_entered_ogre_fight, ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion, ^arena_defeated_bouncer: mes("Jeremy is in the arena with his father now.");
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew:
+        // https://youtu.be/Oltfw1gvWjQ?si=_bu-CCXvPLSecu_N&t=120
+        if(inv_total(inv, khazard_cell_keys) > 0) {
+            @free_jeremy_servil;
+        }
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,sad>Please Sir, don't hurt me.");
+        if(~wearing_khazard_armour = true) {
+            ~chatplayer("<p,neutral>Sshh. This uniform is a disguise, I'm here to help. Where do they keep the keys?");
+        } else {
+            ~chatplayer("<p,neutral>Sshh. I'm here to help. Where do they keep the keys?");
+        }
+        ~chatnpc("<p,sad>The guard always keeps hold of them.");
+        ~chatplayer("<p,neutral>Don't lose heart, I'll be back.");
+}
+
+[opnpc1,jeremy_servil_arena]
+switch_int(%arena_progress) {
+    case ^arena_defeated_genkhazard:
+        // https://youtu.be/hh5v2nl4yT0?si=Tapg1Qypo5y0gNot&t=680
+        ~chatplayer("<p,neutral>Khazard is dead, you and your father can return to Lady Servil.");
+        ~chatnpc("<p,neutral>Thank you, we are truly indebted to you.");
+    case ^arena_freed_servils: // guessed mesanims
+        ~chatplayer("<p,neutral>You and your father should run, Khazard's interest is in me now.");
+        ~chatnpc("<p,neutral>I'm sorry to have gotten you into so much trouble. You should run as well, Khazard is too dangerous.");
+    case ^arena_defeated_bouncer: // guessed mesanims
+        ~chatplayer("<p,quiz>What does Khazard want with us now?");
+        ~chatnpc("<p,neutral>I don't know, but he won't be happy that you've killed his so called pet.");
+        @general_khazard_agreement;
+    case ^arena_sent_jail, ^arena_defeated_scorpion:
+        // https://youtu.be/etS0gMlcxx8?si=xx4Hvgt28HsL6JCi&t=344
+        ~chatplayer("<p,angry>Don't worry, I'll get us out of here.");
+        ~chatnpc("<p,neutral>Thanks traveller. I'm sorry that you too are now a subject of this arena.");
+        if (%arena_progress = ^arena_sent_jail) @arena_release_scorp;
+        else if (%arena_progress = ^arena_defeated_scorpion) @arena_release_bouncer;
+    case ^arena_defeated_ogre:
+        // TODO: check mesanim
+        ~chatplayer("<p,neutral>Come on Jeremy, we have to get out of here.");
+        ~chatnpc("<p,happy>Thank you for saving my father.");
+        @khazard_welldone;
+    case ^arena_entered_ogre_fight:
+        ~chatplayer("<p,quiz>Jeremy, where's your father?");
+        ~chatnpc("<p,shock>Quick, help him! That beast will kill him. He's too old to fight.");
+        @ogre_attack_justin;
+
+}
+
+[label,free_jeremy_servil]
+~chatplayer("<p,happy>Jeremy look, I have the keys.");
+~chatnpc("<p,happy>Wow! Please set me free, then we can find my dad. I overheard a guard talking. I think they've taken him to the arena.");
+~chatplayer("<p,neutral>Ok, we'd better hurry.");
+if_close;
+def_coord $move_to = 0_40_49_56_31;
+def_int $delay = distance(coord, $move_to);
+if(loc_find(movecoord($move_to, 1, 0, 0), loc_80) = false) {
+    return;
+}
+p_walk(movecoord($move_to, 1, 0, 1));
+facesquare(movecoord(coord, 0, 0, -16));
+// to make sure we cant queue multiple of these when more than 1 person is doing the quest
+// idk if this is how they checked it, maybe there's a bettter way
+if(npc_getmode ! none & inzone(0_40_49_54_30, 0_40_49_56_34, npc_coord) = true) {
+    npc_setmode(none);
+    npc_queue(10, $delay, 0);
+}
+npc_setmode(null);
+%arena_progress = ^arena_entered_ogre_fight;
+if($delay >= 0) {
+    p_delay($delay);
+}
+def_int $x;
+def_int $z;
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+$x, $z = ~door_open($angle, loc_shape);
+loc_change(loc_83, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_37, modulo(add($angle, 1), 4), $shape, 2);
+sound_synth(grate_open, 0, 0);
+p_delay(6);
+npc_del;
+@arena_enter;
+
+[label,ogre_attack_justin]
+if_close;
+def_coord $ogre_to = 0_40_49_46_29;
+if (npc_find(movecoord(coord, 0, 0, 8), khazard_ogre, 14, 0) = true) {
+    if(npc_getmode = none) { // npc in cutscene already, do nothing
+        return;
+    } else if(~npc_out_of_combat = true & inzone(0_40_49_47_29, 0_40_49_49_30, npc_coord) = false) {
+        // out of combat and out of cage so attack player, otherwise we'll just set ptr and start cutscene
+        ~npc_retaliate(0);
+        return;
+    }
+} else {
+    npc_add($ogre_to, khazard_ogre, 500);
+}
+def_int $delay = distance(npc_coord, movecoord($ogre_to, 2, 0, 0));
+if (.npc_find(movecoord(coord, 0, 0, 8), justin_servil, 14, 0) = true) {
+    .npc_setmode(none);
+    .npc_walk(0_40_49_40_32);
+    .npc_facesquare(0_40_49_42_32);
+}
+cam_reset;
+cam_moveto(movecoord($ogre_to, -7, 0, -4), 400, 0, 100);
+cam_lookat(movecoord($ogre_to, -1, 0, 0), 200, 0, 100);
+// open gate
+npc_setmode(none);
+npc_walk(movecoord($ogre_to, 1, 0, 0));
+p_delay($delay);
+if(loc_find(0_40_49_46_29, loc_78) = true & .loc_find(0_40_49_46_30, loc_77) = true) {
+    loc_del(5);
+    loc_add(movecoord(loc_coord, 1, 0, 0), loc_type, 3, loc_shape, 5);
+    .loc_del(5);
+    .loc_add(movecoord(.loc_coord, 1, 0, 0), .loc_type, 1, .loc_shape, 5);
+}
+npc_tele($ogre_to);
+npc_queue(10, 0, 1);
+p_delay(2);
+cam_reset;
+cam_lookat(0_40_49_40_32, 270, 2, 1);
+p_delay(6);
+cam_reset;
+
+[ai_queue10,khazard_ogre](int $arg)
+npc_walk(0_40_49_44_32);
+npc_queue(11, 0, 4);
+
+[ai_queue11,khazard_ogre](int $arg)
+npc_walk(0_40_49_41_32);
+npc_queue(12, 0, 3);
+
+[ai_queue12,khazard_ogre](int $arg)
+npc_anim(npc_param(attack_anim), 0);
+npc_setmode(null);
+if (.npc_find(npc_coord, justin_servil, 1, 0) = true) {
+    .npc_anim(human_defend_cowardly, 0);
+    .npc_setmode(null);
+}
+
+[ai_queue10,jeremy_servil](int $arg)
+npc_walk(0_40_49_56_31);
+npc_queue(11, 0, calc($arg + 1));
+
+[ai_queue11,jeremy_servil](int $arg)
+npc_tele(movecoord(0_40_49_56_31, 1, 0, 0));
+npc_queue(12, 0, 2);
+
+[ai_queue12,jeremy_servil](int $arg)
+// https://youtu.be/etS0gMlcxx8?si=xHy9CJHoitA58DUW&t=185 switches back to default mode here?
+npc_say("I'll run ahead.");
+npc_setmode(null);
+npc_walk(movecoord(npc_coord, 0, 0, -5));

@@ -4,49 +4,49 @@
 [label,outpost_guard_talk]
 switch_int(%barcrawl_progress) {
     case 0: @outpost_guard_start;
-    case 2: ~chatnpc(happy, "'Ello friend.");
+    case 2: ~chatnpc("<p,happy>'Ello friend.");
     case default: @outpost_guard_progress;
 }
 
 [label,outpost_guard_start]
-~chatnpc(neutral, "Oi, whaddya want?");
+~chatnpc("<p,neutral>Oi, whaddya want?");
 def_int $option = ~p_choice2("I want to come through this gate.", 1, "I want some money.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "I want to come through this gate.");
-    ~chatnpc(neutral, "Barbarians only.|Are you a barbarian?|You don't look like one.");
+    ~chatplayer("<p,neutral>I want to come through this gate.");
+    ~chatnpc("<p,neutral>Barbarians only.|Are you a barbarian?|You don't look like one.");
     $option = ~p_choice2("Hmm, yep you've got me there.", 1, "Looks can be deceiving, I am in fact a barbarian.", 2);
     if($option = 1) {
-        ~chatplayer(sad, "Hmm, yep you've got me there.");
+        ~chatplayer("<p,sad>Hmm, yep you've got me there.");
     } else if($option = 2) {
-        ~chatplayer(shifty, "Looks can be deceiving, I am in fact a barbarian.");
-        ~chatnpc(shifty, "If you're a barbarian you need to be able to drink like one. We barbarians like a good drink.");
-        ~chatnpc(happy, "I have the perfect challenge for you...|The Alfred Grimhand Barcrawl!|First completed by Alfred Grimhand.");
+        ~chatplayer("<p,shifty>Looks can be deceiving, I am in fact a barbarian.");
+        ~chatnpc("<p,shifty>If you're a barbarian you need to be able to drink like one. We barbarians like a good drink.");
+        ~chatnpc("<p,happy>I have the perfect challenge for you...|The Alfred Grimhand Barcrawl!|First completed by Alfred Grimhand.");
         %barcrawl_progress = ^barcrawl_started;
         inv_add(inv, barcrawl_card, 1);
         ~mesbox("The guard hands you a Barcrawl card");
-        ~chatnpc(neutral, "Take that card to each of the bars named on it.|The bartenders will know what it means.|We're kinda well known.");
-        ~chatnpc(neutral, "They'll give you their strongest drink and sign your card. When you've done all that, we'll be happy to let you in.");
+        ~chatnpc("<p,neutral>Take that card to each of the bars named on it.|The bartenders will know what it means.|We're kinda well known.");
+        ~chatnpc("<p,neutral>They'll give you their strongest drink and sign your card. When you've done all that, we'll be happy to let you in.");
     }
 } else if($option = 2) {
-    ~chatplayer(neutral, "I want some money.");
-    ~chatnpc(angry, "Do I look like a bank to you?");
+    ~chatplayer("<p,neutral>I want some money.");
+    ~chatnpc("<p,angry>Do I look like a bank to you?");
 }
 
 [label,outpost_guard_progress]
-~chatnpc(quiz, "So, how's the Barcrawl coming along?");
+~chatnpc("<p,quiz>So, how's the Barcrawl coming along?");
 if(inv_total(inv, barcrawl_card) = 0 & inv_total(bank, barcrawl_card) = 0) {
-    ~chatplayer(sad, "I've lost my barcrawl card...");
-    ~chatnpc(angry, "What are you like?|You're gonna have to start all over now.");
+    ~chatplayer("<p,sad>I've lost my barcrawl card...");
+    ~chatnpc("<p,angry>What are you like?|You're gonna have to start all over now.");
     %barcrawl_progress = 1;
     inv_add(inv, barcrawl_card, 1);
     ~mesbox("The guard hands you a Barcrawl card");
 } else if(inv_total(bank, barcrawl_card) > 0 & inv_total(inv, barcrawl_card) = 0 ) {
     // RSC mes, OSRS is "Not too bad. I've got my barcrawl card stored somewhere for safe-keeping.", probably changed because of the multiple non-bank storages.
-    ~chatplayer(neutral, "Not too bad, my barcrawl card is in my bank now.");
-    ~chatnpc(neutral, "You need to take it with you when you're going on a barcrawl.");
+    ~chatplayer("<p,neutral>Not too bad, my barcrawl card is in my bank now.");
+    ~chatnpc("<p,neutral>You need to take it with you when you're going on a barcrawl.");
 } else {
     if(~visited_all_bars = true) {
-        ~chatplayer(confused, "I tink I jusht 'bout done dem all... but I losht count...");
+        ~chatplayer("<p,confused>I tink I jusht 'bout done dem all... but I losht count...");
         %barcrawl_progress = ^barcrawl_complete;
         // remove any dupe cards the player might have, this wont prevent drop tricking to keep one
         // (which will allow you to restart the minigame, this is consistent with OSRS)
@@ -55,8 +55,8 @@ if(inv_total(inv, barcrawl_card) = 0 & inv_total(bank, barcrawl_card) = 0) {
             inv_del(bank, barcrawl_card, inv_total(inv, barcrawl_card));
         }
         ~mesbox("You give the card to the barbarian");
-        ~chatnpc(happy, "Yep that seems fine, you can come in now.|I never learned to read,|but you look like you've drunk plenty.");
+        ~chatnpc("<p,happy>Yep that seems fine, you can come in now.|I never learned to read,|but you look like you've drunk plenty.");
     }
-    ~chatplayer(sad, "I haven't finished it yet.");
-    ~chatnpc(neutral, "Well come back when you have, you lightweight.");
+    ~chatplayer("<p,sad>I haven't finished it yet.");
+    ~chatnpc("<p,neutral>Well come back when you have, you lightweight.");
 }

@@ -5,23 +5,23 @@ if (gender = ^gender_female) {
     @not_written_yet;
 }
 
-~chatnpc(happy, "Good afternoon sir. In need of a haircut are we? Perhaps a shave too?");
+~chatnpc("<p,happy>Good afternoon sir. In need of a haircut are we? Perhaps a shave too?");
 @multi3("I'd like a haircut please.", hairdresser_b1_s1, "I'd like a shave please.", hairdresser_b1_s2, "No thank you.", hairdresser_b1_s3);
 
 [label,hairdresser_b1_s1]
-~chatplayer(happy, "I'd like a haircut please.");
-~chatnpc(happy, "Certainly sir. I cut men's hair at the bargain rate of only 1000 gold coins. I'll even throw in a free recolour!");
-~chatnpc(happy, "Please select the hairstyle and colour you would like from this brochure.");
+~chatplayer("<p,happy>I'd like a haircut please.");
+~chatnpc("<p,happy>Certainly sir. I cut men's hair at the bargain rate of only 1000 gold coins. I'll even throw in a free recolour!");
+~chatnpc("<p,happy>Please select the hairstyle and colour you would like from this brochure.");
 
 @not_written_yet;
 
 [label,hairdresser_b1_s2]
-~chatplayer(happy, "I'd like a shave please.");
+~chatplayer("<p,happy>I'd like a shave please.");
 // TODO: dialogue
 
 @not_written_yet;
 
 [label,hairdresser_b1_s3]
-~chatplayer(happy, "No thank you.");
+~chatplayer("<p,happy>No thank you.");
 
 // on confirm: Hope you like the new do!

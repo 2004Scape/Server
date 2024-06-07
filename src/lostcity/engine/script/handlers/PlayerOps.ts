@@ -14,6 +14,7 @@ import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueReq
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
+import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
@@ -144,22 +145,14 @@ const PlayerOps: CommandHandlers = {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         const pos: Position = check(coord, CoordValid);
-
-        const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
-        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
-
-        state.activePlayer.writeLowPriority(ServerProt.CAM_LOOKAT, localX, localZ, height, rotationSpeed, rotationMultiplier);
+        state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_LOOKAT, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
         const pos: Position = check(coord, CoordValid);
-
-        const localX = pos.x - Position.zoneOrigin(state.activePlayer.loadedX);
-        const localZ = pos.z - Position.zoneOrigin(state.activePlayer.loadedZ);
-
-        state.activePlayer.writeLowPriority(ServerProt.CAM_MOVETO, localX, localZ, height, rotationSpeed, rotationMultiplier);
+        state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_MOVETO, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
     [ScriptOpcode.CAM_SHAKE]: checkedHandler(ActivePlayer, state => {
@@ -535,6 +528,11 @@ const PlayerOps: CommandHandlers = {
 
         check(com, NumberNotNull);
 
+        if (seq === -1) {
+            // uh, client crashes! which means empty dialogue wasn't an option at the time
+            return;
+        }
+
         state.activePlayer.writeLowPriority(ServerProt.IF_SETANIM, com, seq);
     }),
 
@@ -818,12 +816,6 @@ const PlayerOps: CommandHandlers = {
         const type = check(state.popInt(), NumberNotNull) - 1;
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opobj: ${type + 1}`);
-        }
-        if (state.activePlayer.target !== null) {
-            return;
-        }
-        if (state.activePlayer.hasWaypoints()) {
-            return;
         }
         state.activePlayer.stopAction();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeObj, ServerTriggerType.APOBJ1 + type);

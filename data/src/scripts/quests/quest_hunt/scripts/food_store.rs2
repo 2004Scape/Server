@@ -13,11 +13,11 @@ if ($entering = true) {
 ~open_and_close_door(loc_2070, $entering, false);
 
 [label,wydin_employees_only]
-~chatnpc(neutral, "Hey, you can't go in there. Only employees of the grocery store can go in.");
-~chatplayer(neutral, "Sorry, I didn't realise.");
+~chatnpc("<p,neutral>Hey, you can't go in there. Only employees of the grocery store can go in.");
+~chatplayer("<p,neutral>Sorry, I didn't realise.");
 
 [label,wydin_apron_required]
-~chatnpc(neutral, "Can you put your apron on before going in there, please?");
+~chatnpc("<p,neutral>Can you put your apron on before going in there, please?");
 
 [label,wydin_get_pointer](label $l)
 npc_findallzone(coord);

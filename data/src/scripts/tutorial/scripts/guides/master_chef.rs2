@@ -8,16 +8,16 @@ switch_int(%tutorial_progress) {
 
 [label,master_chef_start]
 // https://web.archive.org/web/20051215201825im_/http://runevillage.com/images/rsTutorial13.gif older line breaks
-~chatnpc(neutral, "Ah... welcome newcomer. I am Lev, the chef.| It is here I will teach you how to |cook food truly fit for a king.");
-~chatplayer(neutral, "I already know how to cook.|Brynna taught me just now.");
-~chatnpc(laugh, "HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
-~chatnpc(neutral, "And no fine meal is complete without good music so|we'll cover that while you're here too.");
+~chatnpc("<p,neutral>Ah... welcome newcomer. I am Lev, the chef.| It is here I will teach you how to |cook food truly fit for a king.");
+~chatplayer("<p,neutral>I already know how to cook.|Brynna taught me just now.");
+~chatnpc("<p,laugh>HA HA HA HA HA HA! You call THAT cooking?|Some shrimp on an open log fire? Oh no no no... I am|going to teach you the fine art of cooking bread.");
+~chatnpc("<p,neutral>And no fine meal is complete without good music so|we'll cover that while you're here too.");
 %tutorial_progress = ^chef_make_dough;
 ~set_tutorial_progress;
 ~master_chef_give_ingredients;
 
 [label,master_chef_after_start]
-~chatnpc(neutral, "Time for you to learn the fine art of cooking bread.");
+~chatnpc("<p,neutral>Time for you to learn the fine art of cooking bread.");
 ~master_chef_give_ingredients;
 
 [proc,master_chef_give_ingredients]
@@ -46,7 +46,7 @@ if (inv_total(inv, tutorial_pot_of_flour) < 1 & inv_total(inv, bucket_water) < 1
 }
 
 [label,master_chef_recap]
-~chatnpc(quiz, "Hello again.");
+~chatnpc("<p,quiz>Hello again.");
 ~master_chef_give_ingredients;
 ~master_chef_recap_options;
 
@@ -60,16 +60,16 @@ if (%tutorial_progress < ^chef_opened_music_tab) {
 [proc,master_chef_recap_response](int $option)
 switch_int($option) {
     case 1:
-        ~chatplayer(neutral, "Tell me about making dough again.");
-        ~chatnpc(neutral, "It's quite simple: just use a pot of flour on a bucket of water, or vice versa, and you'll make dough. You can also refill your bucket at the sink.");
+        ~chatplayer("<p,neutral>Tell me about making dough again.");
+        ~chatnpc("<p,neutral>It's quite simple: just use a pot of flour on a bucket of water, or vice versa, and you'll make dough. You can also refill your bucket at the sink.");
         ~master_chef_recap_options;
     case 2:
-        ~chatplayer(neutral, "Tell me about range cooking again.");
-        ~chatnpc(neutral, "The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a range, right click the item you would like to cook, select 'use' then left click the range.");
+        ~chatplayer("<p,neutral>Tell me about range cooking again.");
+        ~chatnpc("<p,neutral>The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a range, right click the item you would like to cook, select 'use' then left click the range.");
         ~master_chef_recap_options;
     case 3:
-        ~chatplayer("default", "Tell me about music again.");
-        ~chatnpc(neutral, "Ah yes. The music was created by the great bard Ian. As you explore the world and complete quests you will unlock more of the tunes in your music player. Simply click on a tune in the music menu to listen to it.");
+        ~chatplayer("<p,default>Tell me about music again.");
+        ~chatnpc("<p,neutral>Ah yes. The music was created by the great bard Ian. As you explore the world and complete quests you will unlock more of the tunes in your music player. Simply click on a tune in the music menu to listen to it.");
         ~master_chef_recap_options;
 }
 

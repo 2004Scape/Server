@@ -7,7 +7,7 @@ if(inv_total(inv, arrav_book) > 0) {
     mes("You already own 'The Shield of Arrav', the book that was kept here.");
     return;
 }
-~chatplayer(happy, "Aha! 'The Shield of Arrav'!|Exactly what I was looking for.");
+~chatplayer("<p,happy>Aha! 'The Shield of Arrav'!|Exactly what I was looking for.");
 ~mesbox("You take the book from the bookcase.");
 inv_add(inv, arrav_book, 1);
 

@@ -84,40 +84,40 @@ mes("You can hear there is a hollow behind this wall."); // from rs3
 [oploc1,loc_2851]
 if(%hazeelcult_progress = ^hazeelcult_given_armour_or_scroll & %hazeelcult_side = ^hazeelcult_goodside) {
     ~mesbox("You search the cupbaord thoroughly. You find a bottle of poison and a mysterious amulet. You pass your discovery on to Ceril.");
-    ~chatplayer(angry, "Ceril!");
+    ~chatplayer("<p,angry>Ceril!");
     if (npc_find(coord, ceril_carnillean, 6, 0) = false) { 
         return;
     }
     if (.npc_find(coord, butler_jones, 6, 0) = false) {
         return;
     }
-    ~chatnpc(angry, "What do you want now you scoundrel?");
-    ~chatplayer(angry, "Look what I've found in the cupboard!");
+    ~chatnpc("<p,angry>What do you want now you scoundrel?");
+    ~chatplayer("<p,angry>Look what I've found in the cupboard!");
     ~mesbox("You hand Ceril the bottle of poison.");
-    ~chatnpc(shock, "I... I don't believe it! Poison! JONES!");
-    ~.chatnpc(neutral, "You called m'lud?");
-    ~chatnpc(angry, "JONES! Just WHAT is this POISON doing here???");
-    ~.chatnpc(worried, "P-p-poison??? yeah... uh... well, hmm... Oh, it's for Killing rats.");
-    ~.chatnpc(neutral, "Yes, that's right. Killing rats. I am but a loyal butler sir.");
-    ~chatnpc(angry, "Rats eh? Yes, fair enough. Sorry to have doubted you old boy.");
-    ~chatplayer(angry, "Then how about this?");
+    ~chatnpc("<p,shock>I... I don't believe it! Poison! JONES!");
+    ~.chatnpc("<p,neutral>You called m'lud?");
+    ~chatnpc("<p,angry>JONES! Just WHAT is this POISON doing here???");
+    ~.chatnpc("<p,worried>P-p-poison??? yeah... uh... well, hmm... Oh, it's for Killing rats.");
+    ~.chatnpc("<p,neutral>Yes, that's right. Killing rats. I am but a loyal butler sir.");
+    ~chatnpc("<p,angry>Rats eh? Yes, fair enough. Sorry to have doubted you old boy.");
+    ~chatplayer("<p,angry>Then how about this?");
     ~mesbox("You show Ceril the amulet from the cupboard.");
-    ~chatnpc(shock, "Wh-what??? I've seen this amulet before... The thieves that broke in... One of them was wearing an identical amulet! Jones! I don't believe it!");
-    ~chatnpc(angry, "Jones! We trusted you! We took you into our home!");
-    ~.chatnpc(angry, "You senile old fool... It was all too easy! I should have killed you and your pathetic family weeks ago!");   
-    ~chatnpc(sad, "To think we took you in and trusted you... and this is how you repay us...");
-    ~chatnpc(angry, "GUARD!");
+    ~chatnpc("<p,shock>Wh-what??? I've seen this amulet before... The thieves that broke in... One of them was wearing an identical amulet! Jones! I don't believe it!");
+    ~chatnpc("<p,angry>Jones! We trusted you! We took you into our home!");
+    ~.chatnpc("<p,angry>You senile old fool... It was all too easy! I should have killed you and your pathetic family weeks ago!");   
+    ~chatnpc("<p,sad>To think we took you in and trusted you... and this is how you repay us...");
+    ~chatnpc("<p,angry>GUARD!");
     ~mesbox("A Guard rushes into the house.");
-    ~chatnpc(angry, "Take him away. Attempted murder and burglary.");
-    ~.chatnpc(angry, "Don't think this is the last you have heard of me Ceril. You and your family will pay dearly for this. GLORY TO HAZEEL! ALL PRAISE ZAMORAK!");
-    ~chatnpc_specific(nc_name(carnillean_guard), carnillean_guard, neutral, "Now now. Come along quietly. There'll be no revenge where YOU'RE going - Port Sarim Jail.");
+    ~chatnpc("<p,angry>Take him away. Attempted murder and burglary.");
+    ~.chatnpc("<p,angry>Don't think this is the last you have heard of me Ceril. You and your family will pay dearly for this. GLORY TO HAZEEL! ALL PRAISE ZAMORAK!");
+    ~chatnpc_specific(nc_name(carnillean_guard), carnillean_guard, "<p,neutral>Now now. Come along quietly. There'll be no revenge where YOU'RE going - Port Sarim Jail.");
     .npc_del;
-    ~chatnpc(sad, "It looks like I am indebted to you sirrah!");
-    ~chatplayer(neutral, "No problem. We all make mistakes.");
-    ~chatnpc(sad, "But if it weren't for you... My whole family... we could have been... I apologise for my harshness before.");
-    ~chatnpc(neutral, "the very least I can do is to reward you for your noble efforts, and to offer my sincerest apologies as a Lord and gentleman.");
-    ~chatplayer(happy, "Thank you Lord Ceril.");
-    ~chatnpc(happy, "No, no, thank YOU! Feel free to stop by anytime adventurer!");
+    ~chatnpc("<p,sad>It looks like I am indebted to you sirrah!");
+    ~chatplayer("<p,neutral>No problem. We all make mistakes.");
+    ~chatnpc("<p,sad>But if it weren't for you... My whole family... we could have been... I apologise for my harshness before.");
+    ~chatnpc("<p,neutral>the very least I can do is to reward you for your noble efforts, and to offer my sincerest apologies as a Lord and gentleman.");
+    ~chatplayer("<p,happy>Thank you Lord Ceril.");
+    ~chatnpc("<p,happy>No, no, thank YOU! Feel free to stop by anytime adventurer!");
     queue(hazeelcult_quest_complete, 0);
     return;
 }

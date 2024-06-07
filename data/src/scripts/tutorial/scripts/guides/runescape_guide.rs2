@@ -9,7 +9,7 @@ switch_int(%tutorial_progress) {
 
 [label,runescape_guide_welcome]
 if (map_localdev = true) {
-    ~chatnpc("default", "Do you want to skip the tutorial?");
+    ~chatnpc("<p,default>Do you want to skip the tutorial?");
     def_int $choice = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
     if ($choice = 1) {
         %tutorial_progress = ^tutorial_complete;
@@ -17,27 +17,27 @@ if (map_localdev = true) {
     }
 }
 
-~chatnpc(neutral, "Greetings! I see you are a new arrival to this land. My|job is to welcome all the new visitors. So welcome!");
-~chatnpc(neutral, "You have already learnt the first thing needed to|succeed in this world... Talking to other people!");
-~chatnpc(neutral, "You will find many inhabitants of this world have useful|things to say to you. By clicking on them with your|mouse you can talk to them.");
-~chatnpc(neutral, "I would also suggest reading through some of the|supporting information on the website. There you can|find maps, a bestiary, and much more.");
-~chatnpc(neutral, "To continue the tutorial go through that door over there, and speak to your first instructor!");
+~chatnpc("<p,neutral>Greetings! I see you are a new arrival to this land. My|job is to welcome all the new visitors. So welcome!");
+~chatnpc("<p,neutral>You have already learnt the first thing needed to|succeed in this world... Talking to other people!");
+~chatnpc("<p,neutral>You will find many inhabitants of this world have useful|things to say to you. By clicking on them with your|mouse you can talk to them.");
+~chatnpc("<p,neutral>I would also suggest reading through some of the|supporting information on the website. There you can|find maps, a bestiary, and much more.");
+~chatnpc("<p,neutral>To continue the tutorial go through that door over there, and speak to your first instructor!");
 %tutorial_progress = ^runescape_guide_interact_with_scenery;
 ~set_tutorial_progress;
 // The below commented out code will be relevant in October 2006, but was absent in September 2006.
-//~chatnpc(neutral, "You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");
+//~chatnpc("<p,neutral>You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");
 //%tutorial_progress = 2;
 //~tutorial_step_player_controls_spanner;
 //if_settab(game_options, ^tab_game_options);
 //if_settabflash(^tab_game_options);
 
 //[label,runescape_guide_spanner]
-//~chatnpc(neutral, "You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");
+//~chatnpc("<p,neutral>You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");
 
 [label,runescape_guide_return]
-~chatnpc(neutral, "Welcome back. You have already learnt the first thing needed to succeed in this world: talking to other people!");
-~chatnpc(neutral, "You will find many inhabitants of this world have useful things to say to you. By clicking on them, you can talk to them.");
-~chatnpc(neutral, "To continue the tutorial go through that door over there, and speak to your first instructor!");
+~chatnpc("<p,neutral>Welcome back. You have already learnt the first thing needed to succeed in this world: talking to other people!");
+~chatnpc("<p,neutral>You will find many inhabitants of this world have useful things to say to you. By clicking on them, you can talk to them.");
+~chatnpc("<p,neutral>To continue the tutorial go through that door over there, and speak to your first instructor!");
 
 [proc,set_hint_runescape_guide]
 if (%tutorial_progress < ^runescape_guide_interact_with_scenery) {

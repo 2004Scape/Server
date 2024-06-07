@@ -33,10 +33,10 @@ if(coordx(coord) <= coordx(loc_coord)) {
     ~open_fishingcompo_gate;
     return;
 }
-~chatnpc_specific("Morris", morris, neutral, "Competition pass please.");
+~chatnpc_specific("Morris", morris, "<p,neutral>Competition pass please.");
 if(inv_total(inv, fishing_pass) > 0) {
     ~objboxt(fishing_pass, "You show Morris your pass.");
-    ~chatnpc_specific("Morris", morris, happy, "Move on through.");
+    ~chatnpc_specific("Morris", morris, "<p,happy>Move on through.");
     if_close;
     p_teleport(loc_coord);
     ~open_fishingcompo_gate;
@@ -44,10 +44,10 @@ if(inv_total(inv, fishing_pass) > 0) {
 }
 def_int $option = ~p_choice2("I don't have one of them.", 1, "What do I need that for?", 2);
 if($option = 1) {
-    ~chatplayer(sad, "I don't have one of them.");
+    ~chatplayer("<p,sad>I don't have one of them.");
 } else if($option = 2) {
-    ~chatplayer(confused, "What do I need that for?");
-    ~chatnpc_specific("Morris", morris, neutral, "This is the entrance to the Hemenster fishing|competition. It's a high class competition.|Invitation only.");
+    ~chatplayer("<p,confused>What do I need that for?");
+    ~chatnpc_specific("Morris", morris, "<p,neutral>This is the entrance to the Hemenster fishing|competition. It's a high class competition.|Invitation only.");
 }
 
 [proc,open_fishingcompo_gate]
@@ -93,12 +93,12 @@ if(%hemenster_comp_stage = ^hemenster_comp_paidfee) {
 
 [label,move_hemenster_pipe]
 if(npc_find(coord, sinister_stranger, 8, 0) = true) {
-    ~chatnpc(angry, "Arrgh! WHAT is that GHASTLY smell???|I think I will move over here instead...");
+    ~chatnpc("<p,angry>Arrgh! WHAT is that GHASTLY smell???|I think I will move over here instead...");
     npc_tele(0_41_53_7_43); // telejumps in classic
     npc_facesquare(movecoord(npc_coord, 1, 0, 0));
     if (npc_find(coord, bonzo, 12, 0) = true) {
         %fishingcompo_progress = ^fishingcompo_garlic_comp;
-        ~chatnpc(confused, "Hmm. You'd better go and take the area by the pipes then.");
+        ~chatnpc("<p,confused>Hmm. You'd better go and take the area by the pipes then.");
         ~mesbox("Your fishing competition spot is now beside the pipes.");
     }
 }

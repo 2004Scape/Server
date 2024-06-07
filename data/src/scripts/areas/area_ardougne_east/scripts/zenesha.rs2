@@ -1,9 +1,9 @@
 [opnpc1,zenesha]
-~chatnpc(happy, "Hello there! I sell plate mail bodies,|are you interested?");
+~chatnpc("<p,happy>Hello there! I sell plate mail bodies,|are you interested?");
 def_int $option = ~p_choice2("I'm interested.", 1, "Sorry, I'm not interested.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "I'm interested.");
+    ~chatplayer("<p,neutral>I'm interested.");
     ~openshop_activenpc;
 } else if($option = 2) {
-    ~chatplayer(neutral, "Sorry, I'm not interested.");
+    ~chatplayer("<p,neutral>Sorry, I'm not interested.");
 }

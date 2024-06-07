@@ -18,7 +18,7 @@ if ($axe = null) {
 }
 def_coord $shamus_spawnpoint = 0_49_50_3_11;
 if (npc_find($shamus_spawnpoint, shamus, 15, 0) = true) {
-    ~chatnpc_specific("Shamus", shamus, angry, "Hey! Yer big elephant! Don't go choppin' down me house, now!");
+    ~chatnpc_specific("Shamus", shamus, "<p,angry>Hey! Yer big elephant! Don't go choppin' down me house, now!");
     return;
 }
 npc_add($shamus_spawnpoint, shamus, 100);

@@ -13,38 +13,38 @@ if ($is_inside = false) {
 npc_findallzone(0_40_53_51_1);
 while (npc_findnext = true) {
     if (npc_type = npc_308) {
-        ~chatnpc(happy, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+        ~chatnpc("<p,happy>Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
         return;
     }
 }
 npc_findallzone(0_40_52_51_63);
 while (npc_findnext = true) {
     if (npc_type = npc_308) {
-        ~chatnpc(happy, "Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
+        ~chatnpc("<p,happy>Hello, only the top fishers are allowed in here, you need a fishing level of 68 to enter.");
         return;
     }
 }
 
 [opnpc1,npc_308]
 if (stat(fishing) < 68) {
-    ~chatnpc(happy, "Hello, I'm afraid only the top fishers are allowed to use our premier fishing facilities.");
+    ~chatnpc("<p,happy>Hello, I'm afraid only the top fishers are allowed to use our premier fishing facilities.");
 } else {
-    ~chatnpc(happy, "Hello, welcome to the fishing guild. Please feel free to make use of any of our facilities.");
+    ~chatnpc("<p,happy>Hello, welcome to the fishing guild. Please feel free to make use of any of our facilities.");
 }
 
 
 // TODO - facial animations.
 // TODO - linebreaks.
 [opnpc1,npc_592]
-~chatnpc(neutral, "Would you like to buy some fishing equipment, or sell some fish?");
+~chatnpc("<p,neutral>Would you like to buy some fishing equipment, or sell some fish?");
 
 def_int $option = ~p_choice2("Yes please.", 0, "No thank you.", 1);
 
 switch_int ($option) {
     case 0: {
-        ~chatplayer(neutral, "Yes please.");
+        ~chatplayer("<p,neutral>Yes please.");
         ~openshop_activenpc;
     }
 
-    case 1: ~chatplayer(neutral, "No thank you.");
+    case 1: ~chatplayer("<p,neutral>No thank you.");
 }

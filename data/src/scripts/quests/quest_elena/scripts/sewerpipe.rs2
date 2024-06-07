@@ -5,7 +5,7 @@ switch_int(%elena_progress) {
         if (inv_getobj(worn, ^wearpos_hat) = gasmask) {
             @elena_climb_through_sewerpipe;
         } else if (npc_find(coord, edmond, 20, 0) = true) {
-            ~chatnpc(neutral, "I can't let you enter the city without your gas mask on.");
+            ~chatnpc("<p,neutral>I can't let you enter the city without your gas mask on.");
         }
     }
     case ^elena_complete: {

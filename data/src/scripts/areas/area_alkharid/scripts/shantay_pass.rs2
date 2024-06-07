@@ -2,19 +2,19 @@
 // though most of this dialogue has rsc relics (mes's instead of mesbox's)
 // the "What is this place?" is forsure pre tourist trap rework. https://web.archive.org/web/20051117094041/http://runehq.com/RHQSpecialReportsView.php?id=00523
 [opnpc1,shantay_guard]
-~chatnpc(neutral, "Go talk to Shantay. I'm on duty and I don't have time to talk to the likes of you!");
+~chatnpc("<p,neutral>Go talk to Shantay. I'm on duty and I don't have time to talk to the likes of you!");
 ~mesbox("The guard seems quite bad tempered, probably from having to wear heavy armour in this intense heat.");
 
 [opnpc1,shantay_pass_guard]
-~chatnpc(neutral, "Hello there! What can I do for you?");
+~chatnpc("<p,neutral>Hello there! What can I do for you?");
 def_int $choice = ~p_choice2("I'd like to go into the desert please.", 1, "Nothing thanks.", 2);
 if ($choice = 2) {
-    ~chatplayer(neutral, "Nothing thanks.");
+    ~chatplayer("<p,neutral>Nothing thanks.");
     return;
 }
-~chatplayer(neutral, "I'd like to go into the desert please.");
+~chatplayer("<p,neutral>I'd like to go into the desert please.");
 if (inv_total(inv, shantay_pass) < 1) {
-    ~chatnpc(neutral, "You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
+    ~chatnpc("<p,neutral>You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
     return;
 }
 ~require_members_gate; // guess
@@ -28,13 +28,13 @@ if (inv_total(inv, shantay_disclaimer) < 1) {
         return;
     }
 }
-~chatnpc(neutral, "Can I see your Shantay Desert Pass please.");
+~chatnpc("<p,neutral>Can I see your Shantay Desert Pass please.");
 ~objboxt(shantay_pass, "You hand over a Shantay Pass.");
-~chatplayer(neutral, "Sure, here you go!");
+~chatplayer("<p,neutral>Sure, here you go!");
 inv_del(inv, shantay_pass, 1);
 if (inv_total(inv, shantay_disclaimer) < 1) {
     inv_add(inv, shantay_disclaimer, 1);
-    ~chatnpc(neutral, "Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
+    ~chatnpc("<p,neutral>Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
 }
 if_close;
 p_teleport(0_51_48_40_46);
@@ -50,10 +50,10 @@ def_boolean $is_inside = ~check_axis_locactive(coord);
 if (%shantay_jail_progress = ^put_in_shantay_jail & npc_find(coord, shantay, 12, 0) = true) {
     if ($is_inside = false) {
         %shantay_jail_progress = ^paid_shantay_jail_fine;
-        ~chatnpc(neutral, "You should be in jail! Well, no doubt the authorities in|Port Sarim know what they're doing. But if you get|into any more trouble, you'll be stuck back in jail.");
+        ~chatnpc("<p,neutral>You should be in jail! Well, no doubt the authorities in|Port Sarim know what they're doing. But if you get|into any more trouble, you'll be stuck back in jail.");
         return;
     }
-    ~chatnpc(neutral, "If you want to be let out, you have to pay a fine of five gold. Do you want to pay now?");
+    ~chatnpc("<p,neutral>If you want to be let out, you have to pay a fine of five gold. Do you want to pay now?");
     @multi2("Yes, okay.", shantay_yes_okay_ill_pay_the_fine, "No thanks, you're not having my money.", shantay_no_thanks_youre_not_having_my_money);
 }
 
@@ -71,7 +71,7 @@ if (npc_find(coord, shantay_pass_guard, 5, 0) = false) {
     return;
 }
 if (inv_total(inv, shantay_pass) < 1) {
-    ~chatnpc(neutral, "You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
+    ~chatnpc("<p,neutral>You need a Shantay pass to get through this gate. See|Shantay, he will sell you one for a very reasonable|price.");
     return;
 }
 //https://youtu.be/VXwMnz9tTUs
@@ -84,13 +84,13 @@ if (inv_total(inv, shantay_disclaimer) < 1) {
         return;
     }
 }
-~chatnpc(neutral, "Can I see your Shantay Desert Pass please.");
+~chatnpc("<p,neutral>Can I see your Shantay Desert Pass please.");
 ~objboxt(shantay_pass, "You hand over a Shantay Pass.");
-~chatplayer(neutral, "Sure, here you go!");
+~chatplayer("<p,neutral>Sure, here you go!");
 inv_del(inv, shantay_pass, 1);
 if (inv_total(inv, shantay_disclaimer) < 1) {
     inv_add(inv, shantay_disclaimer, 1);
-    ~chatnpc(neutral, "Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
+    ~chatnpc("<p,neutral>Here, have a disclaimer... It means that Shantay isn't|responsible if you die in the desert.");
 }
 if_close;
 facesquare(movecoord(coord, 0, 0, -3));

@@ -52,7 +52,7 @@ if(inzone(0_42_50_52_34, 0_42_50_55_37, coord) = true) { // Karamja -> fisher's 
 [opheld1,grail_bell]
 ~mesbox("Ting-a-ling-a-ling!");
 if(npc_find(coord, grail_maiden, 4, 0) = true & inzone(0_43_73_0_0, 0_43_73_63_63, coord) = true) {
-    ~chatnpc(confused, "Welcome to the Grail castle.|You should come inside,|it's cold out here.");
+    ~chatnpc("<p,confused>Welcome to the Grail castle.|You should come inside,|it's cold out here.");
     def_coord $dest = 0_43_73_9_20; 
     // osrs does p_teleport with controlling walkspeed, can't do 1 tile each here since the next mesbox would be stalled by p_delay
     p_teleport($dest);

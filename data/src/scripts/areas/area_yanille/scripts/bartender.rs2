@@ -1,9 +1,9 @@
 [opnpc1,bartender_dragoninn]
-~chatnpc(quiz, "What can I get you?");
-~chatplayer(quiz, "What's on the menu?");
+~chatnpc("<p,quiz>What can I get you?");
+~chatplayer("<p,quiz>What's on the menu?");
 // also sells beer in OSRS, just these 2 in RSC, sals and RHQ mentions it's only 2 drinks as well
 // so i'm guessing it was changed with watchtower rework
-~chatnpc(happy, "Dragon Bitter and Greenman's Ale.");
+~chatnpc("<p,happy>Dragon Bitter and Greenman's Ale.");
 def_int $option;
 if(testbit(%barcrawl_progress, ^dragoninn_index) = false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice4("I'll give it a miss I think.", 1, "I'll try the Dragon Bitter.", 2, "Can I have some Greenman's Ale?", 3, "I'm doing Alfred Grimhand's Barcrawl.", 4);
@@ -13,23 +13,23 @@ if(testbit(%barcrawl_progress, ^dragoninn_index) = false & inv_total(inv, barcra
 
 switch_int($option) {
     case 1:
-        ~chatplayer(neutral, "I'll give it a miss I think.");
-        ~chatnpc(happy, "Come back when you're a little thirstier.");
+        ~chatplayer("<p,neutral>I'll give it a miss I think.");
+        ~chatnpc("<p,happy>Come back when you're a little thirstier.");
     case 2:
-        ~chatplayer(happy, "I'll try the Dragon Bitter.");
-        ~chatnpc(happy, "Ok, that'll be two coins.");
+        ~chatplayer("<p,happy>I'll try the Dragon Bitter.");
+        ~chatnpc("<p,happy>Ok, that'll be two coins.");
         if (inv_total(inv, coins) < 2) {
-            ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+            ~chatplayer("<p,sad>Oh dear. I don't seem to have enough money.");
         } else {
             inv_del(inv, coins, 2);
             inv_add(inv, dragon_bitter, 1);
             mes("You buy a pint of Dragon Bitter.");
         }
     case 3:
-        ~chatplayer(quiz, "Can I have some Greenman's Ale?");
-        ~chatnpc(happy, "Ok, that'll be ten coins.");
+        ~chatplayer("<p,quiz>Can I have some Greenman's Ale?");
+        ~chatnpc("<p,happy>Ok, that'll be ten coins.");
         if (inv_total(inv, coins) < 10) {
-            ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+            ~chatplayer("<p,sad>Oh dear. I don't seem to have enough money.");
         } else {
             inv_del(inv, coins, 10);
             inv_add(inv, greenmans_ale, 1);
@@ -44,10 +44,10 @@ if(testbit(%barcrawl_progress, ^dragoninn_index) = false & last_useitem = barcra
 }
 
 [label,dragoninn_barcrawl]
-~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
-~chatnpc(happy, "I suppose you'll be wanting some Fire Brandy.|That'll cost you 12 coins.");
+~chatplayer("<p,happy>I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc("<p,happy>I suppose you'll be wanting some Fire Brandy.|That'll cost you 12 coins.");
 if(inv_total(inv, coins) < 12) {
-    ~chatplayer(sad, "Sorry I don't have 12 coins.");
+    ~chatplayer("<p,sad>Sorry I don't have 12 coins.");
     return;
 }  
 if_close;

@@ -1,0 +1,74 @@
+[apnpc1,kelvin] 
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+@joe_kelvin_dialogue(joe_fightslave);
+
+[apnpc1,joe_fightslave] 
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+@joe_kelvin_dialogue(kelvin); 
+
+[label,joe_kelvin_dialogue](npc $partner)
+switch_int(%arena_progress) {
+    case default:
+        ~chatplayer("<p,quiz>Are you ok?");
+        if(~wearing_khazard_armour = true) {
+            if (random(1) = 0) ~chatnpc("<p,angry>Get away, get away. One day I'll have my revenge, and I'll have all your heads.");
+            else ~chatnpc("<p,angry>Spare me your fake pity. I spit on Khazard's grave, and all who do his bidding.");
+        } else {
+            if (random(1) = 0) ~chatnpc("<p,neutral>You're not safe here traveller. Leave while you still can.");
+            else ~chatnpc("<p,neutral>You're a brave person. If the guards get you, you'll be in here next.");
+        }        
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew, ^arena_entered_ogre_fight:
+        if(~wearing_khazard_armour = true) {
+            if (.npc_find(coord, $partner, 3, 0) = true) { // uses other set if greater than 2 away in RS3
+                ~chatplayer("<p,quiz>Do either of you know a Justin or Sammy Servil?");
+                ~chatnpc("<p,angry>If we did, why would we tell you guard?");
+                ~.chatnpc("<p,angry>Until our last breath, our every action will be against Khazard. Never will we help you.");
+                ~chatnpc("<p,angry>I spit on Khazard's grave, and all who do his bidding.");
+                return;
+            }
+            ~chatplayer("<p,quiz>Do you know a Justin or Sammy Servil?");
+            ~chatnpc("<p,angry>If I did, why would I tell you guard?");
+        } else {
+            if (.npc_find(coord, $partner, 3, 0) = true) { // uses other set if greater than 2 away in RS3
+                ~chatplayer("<p,quiz>Do either of you know a Justin or Jeremy Servil?");
+                ~chatnpc("<p,bored>I have heard of those of whom you speak. But I fear it may be too late.");
+                ~.chatnpc("<p,bored>It is said that Khazard has a personal vendetta against those two, their time is therefore short.");
+                ~chatnpc("<p,bored>You're a brave <text_gender("man", "woman")>. If the guards get you, you'll be in here next.");
+                return;
+            }
+            ~chatplayer("<p,quiz>Do you know a Justin or Sammy Servil?");
+            ~chatnpc("<p,bored>I have heard of those of whom you speak. But I fear it may be too late.");
+        }
+}
+
+[apnpc1,fightslave]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+switch_int(%arena_progress) {
+    case default:
+        if(~wearing_khazard_armour = true) {
+            ~chatnpc("<p,sad>Please leave me alone.");
+        } else {
+            // TODO: check mesanims, pretty sure they're all correct though
+            def_int $rand = random(4);
+            if ($rand = 0) ~chatnpc("<p,sad>Why am I here?");
+            else if ($rand = 1) ~chatnpc("<p,sad>What did I do to deserve this?");
+            else if ($rand = 2) ~chatnpc("<p,sad>Please help me.");
+            else if ($rand = 3) ~chatnpc("<p,sad>You're not safe here, leave while you can.");
+        }
+    case ^arena_obtained_armour, ^arena_spoken_drunkguard, ^arena_given_khali_brew, ^arena_entered_ogre_fight:
+        ~chatplayer("<p,quiz>Do you know of a Justin or Jeremy Servil in this arena?");
+        if (~wearing_khazard_armour = true) {
+            ~chatnpc("<p,sad>Please leave me alone.");
+        } else {
+            ~chatnpc("<p,sad>I've not met anybody in here by that name.");
+        }
+}

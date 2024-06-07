@@ -1,23 +1,23 @@
 [opnpc1,khazard_warlord]
 switch_int(%tree_progress) {
     case ^tree_retrieved_orb:
-        ~chatplayer(happy, "Hello there.");
-        ~chatnpc(angry, "You think you're so clever.|You know nothing!");
-        ~chatplayer(quiz, "What?");
-        ~chatnpc(angry, "I'll crush you and those pesky little green men!");
+        ~chatplayer("<p,happy>Hello there.");
+        ~chatnpc("<p,angry>You think you're so clever.|You know nothing!");
+        ~chatplayer("<p,quiz>What?");
+        ~chatnpc("<p,angry>I'll crush you and those pesky little green men!");
     case ^tree_returned_first_orb:
-        ~chatplayer(angry, "You there, stop!");
-        ~chatnpc(angry, "Go back to your pesky little green friends.");
-        ~chatplayer(angry, "I've come for the orbs.");
-        ~chatnpc(angry, "You're out of your depth traveller.|These orbs are part of a much larger picture.");
-        ~chatplayer(angry, "They're stolen goods,|now give them here!");
-        ~chatnpc(angry, "Ha, you really think you stand a chance?|I'll crush you.");
+        ~chatplayer("<p,angry>You there, stop!");
+        ~chatnpc("<p,angry>Go back to your pesky little green friends.");
+        ~chatplayer("<p,angry>I've come for the orbs.");
+        ~chatnpc("<p,angry>You're out of your depth traveller.|These orbs are part of a much larger picture.");
+        ~chatplayer("<p,angry>They're stolen goods,|now give them here!");
+        ~chatnpc("<p,angry>Ha, you really think you stand a chance?|I'll crush you.");
     case ^tree_defeated_warlord, ^tree_complete:
-        ~chatplayer(shock, "I thought I killed you?");
-        ~chatnpc(angry, "Fool, warriors blessed by Khazard don't die.|You can't kill that which is already dead.|However I can kill you!");
+        ~chatplayer("<p,shock>I thought I killed you?");
+        ~chatnpc("<p,angry>Fool, warriors blessed by Khazard don't die.|You can't kill that which is already dead.|However I can kill you!");
     case default:
-        ~chatplayer(happy, "Hello, how are you?");
-        ~chatnpc(angry, "Don't speak to me you insignificant wretch!|Die in the name of Khazard!");
+        ~chatplayer("<p,happy>Hello, how are you?");
+        ~chatnpc("<p,angry>Don't speak to me you insignificant wretch!|Die in the name of Khazard!");
 }
 ~npc_retaliate(0);
 

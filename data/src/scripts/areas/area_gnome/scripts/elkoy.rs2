@@ -19,24 +19,24 @@ switch_int(%tree_progress) {
 }
 
 [label,elkoy_intro]
-~chatplayer(neutral, "Hello there.");
-~chatnpc(happy, "Hello, welcome to our maze.|I'm Elkoy the tree gnome.");
-~chatplayer(quiz, "I haven't heard of your sort.");
-~chatnpc(sad, "There's not many of us left.|Once you could find tree gnomes|anywhere in the world, now we hide|in small groups to avoid capture.");
-~chatplayer(quiz, "Capture by whom?");
-~chatnpc(angry, "Tree gnomes have been hunted|for so called 'fun' since as|long as I can remember.");
-~chatnpc(sad, "Our main threat nowadays|are General Khazard's troops.|They know no mercy, but are also very dense.|They'll never find their way through our maze.");
-~chatnpc(neutral, "Have fun.");
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,happy>Hello, welcome to our maze.|I'm Elkoy the tree gnome.");
+~chatplayer("<p,quiz>I haven't heard of your sort.");
+~chatnpc("<p,sad>There's not many of us left.|Once you could find tree gnomes|anywhere in the world, now we hide|in small groups to avoid capture.");
+~chatplayer("<p,quiz>Capture by whom?");
+~chatnpc("<p,angry>Tree gnomes have been hunted|for so called 'fun' since as|long as I can remember.");
+~chatnpc("<p,sad>Our main threat nowadays|are General Khazard's troops.|They know no mercy, but are also very dense.|They'll never find their way through our maze.");
+~chatnpc("<p,neutral>Have fun.");
 
 [label,elkoy_looking_orbs]
 if(%tree_progress = ^tree_started) {
-    ~chatplayer(happy, "Hello Elkoy.");
-    ~chatnpc(sad, "Oh my! Oh my!");
-    ~chatplayer(quiz, "What's wrong?");
-    ~chatnpc(sad, "The orb, they have the orb. We're doomed.|Do you need me to show you back to the village?");
+    ~chatplayer("<p,happy>Hello Elkoy.");
+    ~chatnpc("<p,sad>Oh my! Oh my!");
+    ~chatplayer("<p,quiz>What's wrong?");
+    ~chatnpc("<p,sad>The orb, they have the orb. We're doomed.|Do you need me to show you back to the village?");
 } else {
-    ~chatplayer(neutral, "Hello.");
-    ~chatnpc(sad, "You must retrieve the orb, or the gnome village is doomed. Do you need me to show you through the maze?");
+    ~chatplayer("<p,neutral>Hello.");
+    ~chatnpc("<p,sad>You must retrieve the orb, or the gnome village is doomed. Do you need me to show you through the maze?");
 }
 @elkoy_maze_preorb;
 
@@ -47,136 +47,136 @@ if(npc_type = elkoy_maze) {
 }
 switch_int(~p_choice2("Yes please.", 1, "Not now, thanks.", 2)) {
     case 1:
-        ~chatplayer(happy, "Yes please.");
-        ~chatnpc(happy, "Ok then, follow me.");
+        ~chatplayer("<p,happy>Yes please.");
+        ~chatnpc("<p,happy>Ok then, follow me.");
         p_telejump($dest_coord);
-        ~chatnpc_specific("Elkoy", elkoy_maze, sad, "Please help us get our orb back.");
+        ~chatnpc_specific("Elkoy", elkoy_maze, "<p,sad>Please help us get our orb back.");
     case 2:
-        ~chatplayer(neutral, "Not now, thanks.");
+        ~chatplayer("<p,neutral>Not now, thanks.");
 }
 
 [label,elkoy_retrieved_orb_outside]
 if(inv_total(inv, orb_of_protection) = 0) {
     @elkoy_missing_first_orb;
 }
-~chatplayer(happy, "Hello Elkoy.");
-~chatnpc(shock, "You're back! And the orb?");
-~chatplayer(happy, "I have it here.");
-~chatnpc(happy, "You're our saviour. Please return it to the village and we are all saved. Would you like me to show you the way to the village?");
+~chatplayer("<p,happy>Hello Elkoy.");
+~chatnpc("<p,shock>You're back! And the orb?");
+~chatplayer("<p,happy>I have it here.");
+~chatnpc("<p,happy>You're our saviour. Please return it to the village and we are all saved. Would you like me to show you the way to the village?");
 switch_int(~p_choice2("Yes please.", 1, "No thanks Elkoy.", 2)) {
     case 1:
-        ~chatplayer(happy, "Yes please.");
-        ~chatnpc(happy, "Ok then, follow me.");
+        ~chatplayer("<p,happy>Yes please.");
+        ~chatnpc("<p,happy>Ok then, follow me.");
         p_telejump(^elkoy_maze_coord);
-        ~chatnpc_specific("Elkoy", elkoy_maze, happy, "Here we are. Take the orb to King Bolren, I'm sure he'll be pleased to see you.");
+        ~chatnpc_specific("Elkoy", elkoy_maze, "<p,happy>Here we are. Take the orb to King Bolren, I'm sure he'll be pleased to see you.");
     case 2:
-        ~chatplayer(sad, "No thanks Elkoy.");
-        ~chatnpc(sad, "Please, we must have the orb if we are to survive.");
+        ~chatplayer("<p,sad>No thanks Elkoy.");
+        ~chatnpc("<p,sad>Please, we must have the orb if we are to survive.");
 }
 
 [label,elkoy_retrieved_orb_inside]
 if(inv_total(inv, orb_of_protection) = 0) {
     @elkoy_missing_first_orb;
 }
-~chatplayer(happy, "Hello Elkoy. I have the orb.");
-~chatnpc(happy, "Take it to King Bolren, I'm sure he'll be pleased to see you.");
+~chatplayer("<p,happy>Hello Elkoy. I have the orb.");
+~chatnpc("<p,happy>Take it to King Bolren, I'm sure he'll be pleased to see you.");
 switch_int(~p_choice2("Can you show me out of the village?", 1, "Okay.", 2)) {
     case 1:
-        ~chatplayer(quiz, "Can you show me out of the village?");
-        ~chatnpc(happy, "Ok then, follow me.");
+        ~chatplayer("<p,quiz>Can you show me out of the village?");
+        ~chatnpc("<p,happy>Ok then, follow me.");
         p_telejump(^elkoy_entrance_coord);
-        ~chatnpc_specific("Elkoy", elkoy_maze, sad, "Please return with our orb soon.");
-    case 2: ~chatplayer(happy, "Okay.");
+        ~chatnpc_specific("Elkoy", elkoy_maze, "<p,sad>Please return with our orb soon.");
+    case 2: ~chatplayer("<p,happy>Okay.");
 }
 
 [label,elkoy_missing_first_orb]
-~chatplayer(happy, "Hello Elkoy.");
-~chatnpc(shock, "You're back! And the orb?");
-~chatplayer(sad, "No, I'm afraid not.");
-~chatnpc(sad, "Please, we must have the orb if we are to survive.|Do you need me to show you through the maze?");
+~chatplayer("<p,happy>Hello Elkoy.");
+~chatnpc("<p,shock>You're back! And the orb?");
+~chatplayer("<p,sad>No, I'm afraid not.");
+~chatnpc("<p,sad>Please, we must have the orb if we are to survive.|Do you need me to show you through the maze?");
 @elkoy_maze_preorb;
 
 [label,elkoy_stolen_orbs_inside]
 ~elkoy_did_you_hear;
 switch_int(~p_choice2("Can you show me out of the village?", 1, "I'm very sorry.", 2)) {
     case 1:
-        ~chatplayer(quiz, "Can you show me out of the village?");
-        ~chatnpc(happy, "Ok then, follow me.");
+        ~chatplayer("<p,quiz>Can you show me out of the village?");
+        ~chatnpc("<p,happy>Ok then, follow me.");
         p_telejump(^elkoy_entrance_coord);
-        ~chatnpc_specific("Elkoy", elkoy_maze, sad, "Please help us find the orbs.");
-    case 2: ~chatplayer(sad, "I'm very sorry.");
+        ~chatnpc_specific("Elkoy", elkoy_maze, "<p,sad>Please help us find the orbs.");
+    case 2: ~chatplayer("<p,sad>I'm very sorry.");
 }
 
 [label,elkoy_stolen_orbs_outside]
 ~elkoy_did_you_hear;
-~chatnpc(sad, "Would you like me to show you the way to the village?");
+~chatnpc("<p,sad>Would you like me to show you the way to the village?");
 switch_int(~p_choice2("Yes please.", 1, "No thanks Elkoy.", 2)) {
     case 1:
-        ~chatplayer(happy, "Yes please.");
-        ~chatnpc(happy, "Ok then, follow me.");
+        ~chatplayer("<p,happy>Yes please.");
+        ~chatnpc("<p,happy>Ok then, follow me.");
         p_telejump(^elkoy_maze_coord);
-        ~chatnpc_specific("Elkoy", elkoy_maze, sad, "Here we are. Despite what has happened here, I hope you feel welcome.");
+        ~chatnpc_specific("Elkoy", elkoy_maze, "<p,sad>Here we are. Despite what has happened here, I hope you feel welcome.");
     case 2:
-        ~chatplayer(neutral, "No thanks Elkoy.");
-        ~chatnpc(neutral, "Ok then, take care.");
+        ~chatplayer("<p,neutral>No thanks Elkoy.");
+        ~chatnpc("<p,neutral>Ok then, take care.");
 }
 
 [proc,elkoy_did_you_hear]
-~chatplayer(neutral, "Hello Elkoy.");
-~chatnpc(sad, "Did you hear?");
-~chatnpc(sad, "Khazard's men have pillaged the village! They slaughtered many, and took the other orbs in an attempt to lead us out of the maze. When will the misery end?");
+~chatplayer("<p,neutral>Hello Elkoy.");
+~chatnpc("<p,sad>Did you hear?");
+~chatnpc("<p,sad>Khazard's men have pillaged the village! They slaughtered many, and took the other orbs in an attempt to lead us out of the maze. When will the misery end?");
 
 [label,elkoy_leavemaze_initial]
 p_telejump(movecoord(^elkoy_entrance_coord, 0, 0, -1));
 if(npc_find(coord, elkoy_outmaze, 4, 0) = true) {
-    ~chatnpc(happy, "We're out of the maze now. Please hurry, we must have the orb if we are to survive.");
+    ~chatnpc("<p,happy>We're out of the maze now. Please hurry, we must have the orb if we are to survive.");
 }
 
 [label,elkoy_leavemaze_second]
 p_telejump(movecoord(^elkoy_entrance_coord, 0, 0, -1));
 if(npc_find(coord, elkoy_outmaze, 4, 0) = true) {
-    ~chatnpc(happy, "Good luck friend.");
+    ~chatnpc("<p,happy>Good luck friend.");
 }
 
 [label,elkoy_hero_outside]
-~chatplayer(happy, "Hello Elkoy.");
-~chatnpc(happy, "You truly are a hero.");
-~chatplayer(neutral, "Thanks.");
-~chatnpc(happy, "You saved us by returning the orbs of protection. I'm humbled and wish you well.");
-~chatnpc(happy, "Would you like me to show you the way to the village?");
+~chatplayer("<p,happy>Hello Elkoy.");
+~chatnpc("<p,happy>You truly are a hero.");
+~chatplayer("<p,neutral>Thanks.");
+~chatnpc("<p,happy>You saved us by returning the orbs of protection. I'm humbled and wish you well.");
+~chatnpc("<p,happy>Would you like me to show you the way to the village?");
 @elkoy_jumpmaze_postquest;
 
 [label,elkoy_hero_inside]
-~chatplayer(happy, "Hello Elkoy.");
-~chatnpc(happy, "You truly are a hero.");
-~chatplayer(neutral, "Thanks.");
-~chatnpc(happy, "You saved us by returning the orbs of protection. I'm humbled and wish you well. Would you like me to show you through the maze?");
+~chatplayer("<p,happy>Hello Elkoy.");
+~chatnpc("<p,happy>You truly are a hero.");
+~chatplayer("<p,neutral>Thanks.");
+~chatnpc("<p,happy>You saved us by returning the orbs of protection. I'm humbled and wish you well. Would you like me to show you through the maze?");
 @elkoy_jumpmaze_postquest;
 
 [label,elkoy_postquest_outside]
-~chatplayer(happy, "Hello Elkoy.");
-~chatnpc(happy, "Hi there, I hope life is treating you well. Would you like me to show you the way to the village?");
+~chatplayer("<p,happy>Hello Elkoy.");
+~chatnpc("<p,happy>Hi there, I hope life is treating you well. Would you like me to show you the way to the village?");
 @elkoy_jumpmaze_postquest;
 
 [label,elkoy_postquest_inside]
-~chatplayer(happy, "Hello Elkoy.");
-~chatnpc(happy, "Hi there, I hope life is treating you well. Would you like me to show you the way out of the village?");
+~chatplayer("<p,happy>Hello Elkoy.");
+~chatnpc("<p,happy>Hi there, I hope life is treating you well. Would you like me to show you the way out of the village?");
 @elkoy_jumpmaze_postquest;
 
 [label,elkoy_jumpmaze_postquest]
 def_coord $dest_coord = ^elkoy_maze_coord;
-def_string $message = "Here we are. Feel free to look around.";
+def_string $message = "<p,happy>Here we are. Feel free to look around.";
 if(npc_type = elkoy_maze) {
     $dest_coord = ^elkoy_entrance_coord;
-    $message = "Here we are. Have a safe journey.";
+    $message = "<p,happy>Here we are. Have a safe journey.";
 }
 switch_int(~p_choice2("Yes please.", 1, "No thanks Elkoy.", 2)) {
     case 1:
-        ~chatplayer(happy, "Yes please.");
-        ~chatnpc(happy, "Ok then, follow me.");
+        ~chatplayer("<p,happy>Yes please.");
+        ~chatnpc("<p,happy>Ok then, follow me.");
         p_telejump($dest_coord);
-        ~chatnpc_specific("Elkoy", elkoy_maze, happy, $message);
+        ~chatnpc_specific("Elkoy", elkoy_maze, $message);
     case 2:
-        ~chatplayer(neutral, "No thanks Elkoy.");
-        ~chatnpc(neutral, "Ok then, take care.");
+        ~chatplayer("<p,neutral>No thanks Elkoy.");
+        ~chatnpc("<p,neutral>Ok then, take care.");
 }

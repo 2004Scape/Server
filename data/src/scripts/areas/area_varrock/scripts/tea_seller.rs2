@@ -5,19 +5,19 @@ if (map_clock < %last_stolen_from_stall_tea) {
 }
 
 // osrs:
-~chatnpc(happy, "Greetings!|Are you in need of refreshment?");
+~chatnpc("<p,happy>Greetings!|Are you in need of refreshment?");
 def_int $choice = ~p_choice3("Yes please.", 1, "What are you selling?", 2, "No thanks.", 3);
 if ($choice = 3) {
-    ~chatplayer(neutral, "No thanks.");
-    ~chatnpc(happy, "Well, if you're sure.|You know where to come if you do!");
+    ~chatplayer("<p,neutral>No thanks.");
+    ~chatnpc("<p,happy>Well, if you're sure.|You know where to come if you do!");
     return;
 }
 if ($choice = 2) {
-    ~chatplayer(neutral, "What are you selling?");
-    ~chatnpc(happy, "Only the most delicious infusion|of the leaves of the tea plant.|Grown in the exotic regions of this world.|Buy yourself a cup !");
+    ~chatplayer("<p,neutral>What are you selling?");
+    ~chatnpc("<p,happy>Only the most delicious infusion|of the leaves of the tea plant.|Grown in the exotic regions of this world.|Buy yourself a cup !");
     return;
 }
-~chatplayer(neutral, "Yes please.");
+~chatplayer("<p,neutral>Yes please.");
 ~openshop_activenpc;
 
 [opnpc3,tea_seller]
@@ -25,4 +25,4 @@ if ($choice = 2) {
 ~openshop_activenpc;
 
 
-[opobj3,obj_712] ~chatnpc_specific(nc_name(tea_seller), tea_seller, angry, "Hey! Put that back! Those are for display only!");
+[opobj3,obj_712] ~chatnpc_specific(nc_name(tea_seller), tea_seller, "<p,angry>Hey! Put that back! Those are for display only!");

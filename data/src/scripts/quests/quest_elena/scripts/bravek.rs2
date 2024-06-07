@@ -12,44 +12,44 @@ switch_obj(last_useitem) {
 }
 
 [label,bravek_my_head_hurts]
-~chatnpc(confused, "My head hurts! I'll speak to you another day...");
+~chatnpc("<p,confused>My head hurts! I'll speak to you another day...");
 @multi2("This is really important though!", bravek_this_is_really_important_though, "Ok, goodbye.", bravek_okay_goodbye);
 
 [label,bravek_this_is_really_important_though]
-~chatplayer(angry, "This is really important though!");
-~chatnpc(confused, "I can't possibly speak to you with my head spinning like this... I went a bit heavy on the drink again last night. Curse my herbalist, she made the best hang over cures. Darn inconvenient of her catching the plague.");
+~chatplayer("<p,angry>This is really important though!");
+~chatnpc("<p,confused>I can't possibly speak to you with my head spinning like this... I went a bit heavy on the drink again last night. Curse my herbalist, she made the best hang over cures. Darn inconvenient of her catching the plague.");
 @multi3("Ok, goodbye", bravek_okay_goodbye, "You shouldn't drink so much then!", bravek_you_shouldnt_drink_so_much_then, "Do you know what is in the cure?", bravek_do_you_know_what_is_in_the_cure);
 
 [label,bravek_thanks_again_for_the_hangover_cure]
-~chatnpc(happy, "Thanks again for the hangover cure.");
+~chatnpc("<p,happy>Thanks again for the hangover cure.");
 switch_int(%elena_progress) {
     case ^quest_elena_spoke_cured_bravek: {
         if (inv_total(inv, elena_warrant) > 0) {
-            ~chatplayer(happy, "Not a problem, happy to help out.");
-            ~chatnpc(happy, "I'm just having a little drop of whisky, then I'll feel really good.");
+            ~chatplayer("<p,happy>Not a problem, happy to help out.");
+            ~chatnpc("<p,happy>I'm just having a little drop of whisky, then I'll feel really good.");
         } else {
-            ~chatnpc(quiz, "Ah now what was it you wanted me to do for you?");
-            ~chatplayer(shock, "I need to rescue <nc_name(elena)>. She's now a kidnap victim! She's being held in a plague house, I need permission to enter.");
+            ~chatnpc("<p,quiz>Ah now what was it you wanted me to do for you?");
+            ~chatplayer("<p,shock>I need to rescue <nc_name(elena)>. She's now a kidnap victim! She's being held in a plague house, I need permission to enter.");
             @bravek_well_the_mourners_deal_with_that_sort_of_thing;
         }
     }
     case default: {
-        ~chatplayer(happy, "Not a problem, happy to help out.");
-        ~chatnpc(happy, "I'm just having a little drop of whisky, then I'll feel really good.");
+        ~chatplayer("<p,happy>Not a problem, happy to help out.");
+        ~chatnpc("<p,happy>I'm just having a little drop of whisky, then I'll feel really good.");
     }
 }
 
 [label,bravek_okay_goodbye]
-~chatplayer(neutral, "Ok, goodbye.");
+~chatplayer("<p,neutral>Ok, goodbye.");
 
 [label,bravek_you_shouldnt_drink_so_much_then]
-~chatplayer(angry, "You shouldn't drink so much then!");
-~chatnpc(sad, "Well position of responsibility are hard, I need something to take my mind off things... Especially with the problems this place has.");
+~chatplayer("<p,angry>You shouldn't drink so much then!");
+~chatnpc("<p,sad>Well position of responsibility are hard, I need something to take my mind off things... Especially with the problems this place has.");
 @multi3("Ok, goodbye", bravek_okay_goodbye, "Do you know what is in the cure?", bravek_do_you_know_what_is_in_the_cure, "I don't think drink is the solution.", bravek_i_dont_think_drink_is_the_solution);
 
 [label,bravek_do_you_know_what_is_in_the_cure]
-~chatplayer(quiz, "Do you know what is in the cure?");
-~chatnpc(confused, "Hmmm let me think... Ouch! Thinking not clever. Ah here, she did scribble it down for me.");
+~chatplayer("<p,quiz>Do you know what is in the cure?");
+~chatnpc("<p,confused>Hmmm let me think... Ouch! Thinking not clever. Ah here, she did scribble it down for me.");
 ~quest_elena_set_progress(^quest_elena_spoke_to_bravek);
 inv_add(inv, elena_scruffy_note, 1);
 ~objbox(elena_scruffy_note, "<nc_name(bravek)> hands you a tatty piece of paper.");
@@ -58,53 +58,53 @@ inv_add(inv, elena_scruffy_note, 1);
 if (%elena_progress ! ^quest_elena_spoke_to_bravek) {
     return; // sanity check
 }
-~chatnpc(sad, "*uurgh*|My head still hurts too much to think straight.|Oh for one of Trudi's hangover cures...");
+~chatnpc("<p,sad>*uurgh*|My head still hurts too much to think straight.|Oh for one of Trudi's hangover cures...");
 if (inv_total(inv, hangover_cure) > 0) {
-    ~chatplayer(happy, "Try this.");
+    ~chatplayer("<p,happy>Try this.");
     inv_del(inv, hangover_cure, 1);
     npc_say("Grruurgh!");
     // TODO i fuckin lost the animation here that he does... -jordan
     ~quest_elena_set_progress(^quest_elena_spoke_cured_bravek);
     ~objbox(hangover_cure, "You give <nc_name(bravek)> the <lowercase(oc_name(hangover_cure))>. <nc_name(bravek)> gulps down the foul-looking liquid.");
-    ~chatnpc(happy, "Ooh that's much better!|Thanks, that's the clearest my head has felt in a month. Ah now, what was it you wanted me to do for you?");
-    ~chatplayer(shock, "I need to rescue a kidnap victim called <nc_name(elena)>. She's being held in a plague house, I need permission to enter.");
+    ~chatnpc("<p,happy>Ooh that's much better!|Thanks, that's the clearest my head has felt in a month. Ah now, what was it you wanted me to do for you?");
+    ~chatplayer("<p,shock>I need to rescue a kidnap victim called <nc_name(elena)>. She's being held in a plague house, I need permission to enter.");
     @bravek_well_the_mourners_deal_with_that_sort_of_thing;
 }
 
 [label,bravek_i_dont_think_drink_is_the_solution]
-~chatplayer(confused, "I don't think drink is the solution.");
-~chatnpc(sad, "*uurgh*|My head still hurts too much to think straight.|Oh for one of Trudi's hangover cures...");
+~chatplayer("<p,confused>I don't think drink is the solution.");
+~chatnpc("<p,sad>*uurgh*|My head still hurts too much to think straight.|Oh for one of Trudi's hangover cures...");
 
 [label,bravek_well_the_mourners_deal_with_that_sort_of_thing]
-~chatnpc(neutral, "Well the mourners deal with that sort of thing...");
+~chatnpc("<p,neutral>Well the mourners deal with that sort of thing...");
 @multi3("Ok, I'll go speak to them.", bravek_okay_ill_go_speak_to_them, "Is that all anyone says around here?", bravek_is_that_all_anyone_says_around_here, "They won't listen to me!", bravek_they_wont_listen_to_me);
 
 [label,bravek_okay_ill_go_speak_to_them]
-~chatplayer(neutral, "Ok, I'll go speak to them.");
+~chatplayer("<p,neutral>Ok, I'll go speak to them.");
 
 [label,bravek_is_that_all_anyone_says_around_here]
-~chatplayer(angry, "Is that all anyone says around here?");
-~chatnpc(neutral, "Well, they know best about plague issues.");
+~chatplayer("<p,angry>Is that all anyone says around here?");
+~chatnpc("<p,neutral>Well, they know best about plague issues.");
 @multi2("Don't you want to take an interest in it at all?", bravek_dont_you_want_to_take_an_interest, "They won't listen to me!", bravek_they_wont_listen_to_me);
 
 [label,bravek_they_wont_listen_to_me]
-~chatplayer(angry, "They won't listen to me!");
-~chatplayer(angry, "They say I'm not properly equipped to go in the house, though I do have a very effective gas mask.");
-~chatnpc(confused, "Hmmm, well I guess they're not taking the issue of a kidnapping seriously enough. They do go a bit far sometimes.");
-~chatnpc(neutral, "I've heard of <nc_name(elena)>, she has helped us a lot... Okay, I'll give you this warrant to enter the house.");
+~chatplayer("<p,angry>They won't listen to me!");
+~chatplayer("<p,angry>They say I'm not properly equipped to go in the house, though I do have a very effective gas mask.");
+~chatnpc("<p,confused>Hmmm, well I guess they're not taking the issue of a kidnapping seriously enough. They do go a bit far sometimes.");
+~chatnpc("<p,neutral>I've heard of <nc_name(elena)>, she has helped us a lot... Okay, I'll give you this warrant to enter the house.");
 inv_add(inv, elena_warrant, 1);
 ~objboxt(elena_warrant, "<nc_name(bravek)> hands you a <lowercase(oc_name(elena_warrant))>.");
 
 [label,bravek_dont_you_want_to_take_an_interest]
-~chatplayer(quiz, "Don't you want to take an interest in it at all?");
-~chatnpc(shock, "Nope I don't wish to take a deep interest in plagues. That stuff is too scary for me!");
+~chatplayer("<p,quiz>Don't you want to take an interest in it at all?");
+~chatnpc("<p,shock>Nope I don't wish to take a deep interest in plagues. That stuff is too scary for me!");
 @multi3("I see why people say you're a weak leader.", bravek_i_see_why_people_say_youre_a_weak_leader, "Okay, I'll talk to the mourners.", bravek_okay_ill_talk_to_the_mourners, "They won't listen to me!", bravek_they_wont_listen_to_me);
 
 [label,bravek_i_see_why_people_say_youre_a_weak_leader]
-~chatplayer(shifty, "I see why people say you're a weak leader.");
-~chatnpc(neutral, "Bah, people always criticise their leaders but delegating is the only way to lead. I delegate all plague issues to the mourners.");
-~chatplayer(angry, "This whole city is a plague issue!");
+~chatplayer("<p,shifty>I see why people say you're a weak leader.");
+~chatnpc("<p,neutral>Bah, people always criticise their leaders but delegating is the only way to lead. I delegate all plague issues to the mourners.");
+~chatplayer("<p,angry>This whole city is a plague issue!");
 
 [label,bravek_okay_ill_talk_to_the_mourners]
-~chatplayer(neutral, "Okay, I'll talk to the mourners.");
+~chatplayer("<p,neutral>Okay, I'll talk to the mourners.");
 

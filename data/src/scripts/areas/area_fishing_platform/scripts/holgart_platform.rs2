@@ -6,30 +6,30 @@ switch_int(%seaslug_progress) {
 }
 
 [label,holgart_platform_standard]
-~chatplayer(happy, "Hey, Holgart.");
-~chatnpc(shifty, "Have you had enough of this place yet?|It's really starting to scare me.");
+~chatplayer("<p,happy>Hey, Holgart.");
+~chatnpc("<p,shifty>Have you had enough of this place yet?|It's really starting to scare me.");
 switch_int(~p_choice2("No, I'm going to stay a while.", 1, "Okay, let's go back.", 2)) {
     case 1:
-        ~chatplayer(neutral, "No, I'm going to stay a while.");
-        ~chatnpc(shifty, "Okay... you're the boss.");
+        ~chatplayer("<p,neutral>No, I'm going to stay a while.");
+        ~chatnpc("<p,shifty>Okay... you're the boss.");
     case 2:
-        ~chatplayer(neutral, "Okay, let's go back.");
-        ~chatnpc(happy, "Okay m'hearty, jump on.");
+        ~chatplayer("<p,neutral>Okay, let's go back.");
+        ~chatnpc("<p,happy>Okay m'hearty, jump on.");
         ~board_fishing_platform_to_ardougne;
 }
 
 [label,holgart_something_strange]
-~chatplayer(confused, "Holgart, something strange is going on here.");
-~chatnpc(confused, "You're telling me, none of the sailors seem to remember who I am.");
-~chatplayer(confused, "Apparently Kennith's father left for help a couple of days ago.");
-~chatnpc(confused, "That's a worry, no-one's heard from him on shore.|Come on, we'd better go look for him.");
+~chatplayer("<p,confused>Holgart, something strange is going on here.");
+~chatnpc("<p,confused>You're telling me, none of the sailors seem to remember who I am.");
+~chatplayer("<p,confused>Apparently Kennith's father left for help a couple of days ago.");
+~chatnpc("<p,confused>That's a worry, no-one's heard from him on shore.|Come on, we'd better go look for him.");
 %seaslug_progress = ^seaslug_sailed_kent;
 ~board_fishing_platform_to_island;
 
 [label,holgart_kid_shore]
-~chatplayer(quiz, "Did you get the kid back to shore?");
-~chatnpc(neutral, "Yes, he's safe and sound with his parents.|Your turn to return to land now adventurer.");
-~chatplayer(happy, "Looking forward to it.");
+~chatplayer("<p,quiz>Did you get the kid back to shore?");
+~chatnpc("<p,neutral>Yes, he's safe and sound with his parents.|Your turn to return to land now adventurer.");
+~chatplayer("<p,happy>Looking forward to it.");
 ~board_fishing_platform_to_ardougne;
 
 [proc,board_fishing_platform_to_island]

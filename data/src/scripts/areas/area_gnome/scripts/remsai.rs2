@@ -1,35 +1,35 @@
 [opnpc1,remsai]
 switch_int(%tree_progress) {
     case ^tree_not_started:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(happy, "Well done, well done.|Not many find their way in here.");
-        ~chatnpc(happy, "I'm Remsai, a tree gnome.|We live in this maze for our protection.|Have a look around and enjoy.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,happy>Well done, well done.|Not many find their way in here.");
+        ~chatnpc("<p,happy>I'm Remsai, a tree gnome.|We live in this maze for our protection.|Have a look around and enjoy.");
     case ^tree_started, ^tree_spoken_montai, ^tree_given_logs_montai, ^tree_finding_trackers, ^tree_ballista_fired:
-        ~chatnpc(sad, "Oh my, oh my!");
-        ~chatplayer(quiz, "What's wrong?");
-        ~chatnpc(sad, "The orb, they have the orb.|It must be returned or we're doomed.");
+        ~chatnpc("<p,sad>Oh my, oh my!");
+        ~chatplayer("<p,quiz>What's wrong?");
+        ~chatnpc("<p,sad>The orb, they have the orb.|It must be returned or we're doomed.");
     case ^tree_retrieved_orb:
-        ~chatplayer(neutral, "Hello Remsai.");
-        ~chatnpc(quiz, "Hello, did you find the orb?"); 
+        ~chatplayer("<p,neutral>Hello Remsai.");
+        ~chatnpc("<p,quiz>Hello, did you find the orb?"); 
         if(inv_total(inv, orb_of_protection) > 0) {
-            ~chatplayer(happy, "I have it here.");
-            ~chatnpc(happy, "You're our saviour.");
+            ~chatplayer("<p,happy>I have it here.");
+            ~chatnpc("<p,happy>You're our saviour.");
         } else if(inv_total(bank, orb_of_protection) > 0) { // only dialogue that does a bank check as well for some reason
-            ~chatplayer(sad, "Yes, although I've not got it with me right now.");
-            ~chatnpc(sad, "Please, we must have the orb if we are to survive."); 
+            ~chatplayer("<p,sad>Yes, although I've not got it with me right now.");
+            ~chatnpc("<p,sad>Please, we must have the orb if we are to survive."); 
         } else {
-            ~chatplayer(sad, "No, I'm afraid not.");
-            ~chatnpc(sad, "Please, we must have the orb if we are to survive.");
+            ~chatplayer("<p,sad>No, I'm afraid not.");
+            ~chatnpc("<p,sad>Please, we must have the orb if we are to survive.");
         }    
     case ^tree_returned_first_orb:
-        ~chatplayer(quiz, "Are you ok?");
-        ~chatnpc(sad, "Khazard's men came.|Without the orb we were defenceless.|They killed many and then took our last hope,|the other orbs.");
-        ~chatnpc(sad, "Now surely we're all doomed.|Without them the spirit tree is useless.");
+        ~chatplayer("<p,quiz>Are you ok?");
+        ~chatnpc("<p,sad>Khazard's men came.|Without the orb we were defenceless.|They killed many and then took our last hope,|the other orbs.");
+        ~chatnpc("<p,sad>Now surely we're all doomed.|Without them the spirit tree is useless.");
     case ^tree_defeated_warlord:
-        ~chatplayer(happy, "I've returned.");
-        ~chatnpc(happy, "You're back, well done brave adventurer.|Now the orbs are safe|we can perform the ritual for the spirit tree.|We can live in peace once again.");
+        ~chatplayer("<p,happy>I've returned.");
+        ~chatnpc("<p,happy>You're back, well done brave adventurer.|Now the orbs are safe|we can perform the ritual for the spirit tree.|We can live in peace once again.");
     case ^tree_complete:
-        ~chatplayer(happy, "Hello.");
-        ~chatnpc(happy, "Hi there traveller.|You're a legend around these parts."); // double space between break in osrs
-        ~chatplayer(happy, "Thanks Remsai.");
+        ~chatplayer("<p,happy>Hello.");
+        ~chatnpc("<p,happy>Hi there traveller.|You're a legend around these parts."); // double space between break in osrs
+        ~chatplayer("<p,happy>Thanks Remsai.");
 }

@@ -2,7 +2,7 @@
 // and https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/npcs/portsarim/Klarense.java
 [opnpc1,klarense]
 if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dragon_spoken_to_oziach) {
-    ~chatnpc(neutral, "You're interested in a trip on the Lady Lumbridge are|you? I admit she looks fine, but she isn't seaworthy|right now.");
+    ~chatnpc("<p,neutral>You're interested in a trip on the Lady Lumbridge are|you? I admit she looks fine, but she isn't seaworthy|right now.");
     @multi4("Do you know when she will be seaworthy?", klarense_when_sea_worthy, 
         "Would you take me to Crandor Isle when it's ready?", klarense_crandor_when_ready, 
         "I don't suppose I could buy it?", klarense_buy, 
@@ -10,7 +10,7 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
     );
 } else if (%dragon_progress >= ^quest_dragon_bought_ship & %dragon_progress < ^quest_dragon_sailed_to_crandor) {
     // https://youtu.be/juRWRm7hrGM?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=47
-    // ~chatnpc(neutral, "Hello, captain! Here to inspect your new ship? Just a|little work and she'll be seaworthy again."); // osrs
+    // ~chatnpc("<p,neutral>Hello, captain! Here to inspect your new ship? Just a|little work and she'll be seaworthy again."); // osrs
     @multi4("So would you like to sail this ship to Crandor Isle for me?", klarense_crandor_for_me, // rsc
         "So; what needs fixing on this ship?", klarense_fixing, // not a typo
         "What are you going to do now you don't have a ship?", klarense_no_ship,
@@ -18,8 +18,8 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
     );
 } else if (%dragon_progress = ^quest_dragon_sailed_to_crandor) {
     // osrs
-    ~chatnpc(shock, "Wow! You sure are lucky! Seems the Lady Lumbridge just washed right up into the dock by herself!");
-    ~chatnpc(neutral, "She's pretty badly damaged, though...");
+    ~chatnpc("<p,shock>Wow! You sure are lucky! Seems the Lady Lumbridge just washed right up into the dock by herself!");
+    ~chatnpc("<p,neutral>She's pretty badly damaged, though...");
     @multi4("So would you like to sail this ship to Crandor Isle for me?", klarense_crandor_for_me, // rsc
         "So; what needs fixing on this ship?", klarense_fixing, // not a typo
         "What are you going to do now you don't have a ship?", klarense_no_ship,
@@ -29,15 +29,15 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
     // no idea if this is supposed to exist. This dialogue is from osrs
     // people are saying you cant sail the ship after the quest is completed.
     // https://www.neoseeker.com/forums/2410/t419625-neds-ship-on-crandor/
-    ~chatplayer(quiz, "Hey, that's my ship!");
-    ~chatnpc(neutral, "No, it's not. It may, to the untrained eye, at first|appear to be the Lady Lumbridge, but it is definitely|not. It's my new ship. It just happens to look slightly|similar, is all.");
-    ~chatplayer(angry, "It has Lady Lumbridge painted out and 'Klarense's|Cruiser' painted over it!");
-    ~chatnpc(neutral, "Nope, you're mistaken. It's my new boat.");
-    ~chatplayer(quiz, "Well will you at least take me to Crandor in it?");
-    ~chatnpc(neutral, "Nope. I don't take passengers on my ship.");
-    ~chatplayer(angry, "Argh!");
+    ~chatplayer("<p,quiz>Hey, that's my ship!");
+    ~chatnpc("<p,neutral>No, it's not. It may, to the untrained eye, at first|appear to be the Lady Lumbridge, but it is definitely|not. It's my new ship. It just happens to look slightly|similar, is all.");
+    ~chatplayer("<p,angry>It has Lady Lumbridge painted out and 'Klarense's|Cruiser' painted over it!");
+    ~chatnpc("<p,neutral>Nope, you're mistaken. It's my new boat.");
+    ~chatplayer("<p,quiz>Well will you at least take me to Crandor in it?");
+    ~chatnpc("<p,neutral>Nope. I don't take passengers on my ship.");
+    ~chatplayer("<p,angry>Argh!");
 } else { 
-    ~chatnpc(neutral, "You're interested in a trip on the Lady Lumbridge are|you? I admit she looks fine, but she isn't seaworthy|right now.");
+    ~chatnpc("<p,neutral>You're interested in a trip on the Lady Lumbridge are|you? I admit she looks fine, but she isn't seaworthy|right now.");
     @multi2("Do you know when she will be seaworthy?", klarense_when_sea_worthy,
         "Ah well, nevermind.", klarense_nevermind
     );
@@ -45,56 +45,56 @@ if (%dragon_progress < ^quest_dragon_bought_ship & %dragon_progress >= ^quest_dr
 // in osrs this dialogue is very long, so its probably part of the rework?
 // in the video of klarense dialogue, a lot of the dialogue is shorter than osrs. so this is rsc dialogue
 [label,klarense_crandor_for_me]
-~chatplayer(quiz, "So would you like to sail this ship to Crandor for me?");
-~chatnpc(worried, "No not me, I'm frightened of dragons.");
+~chatplayer("<p,quiz>So would you like to sail this ship to Crandor for me?");
+~chatnpc("<p,worried>No not me, I'm frightened of dragons.");
 
 [label,klarense_fixing]
-~chatplayer(quiz, "So; what needs fixing on this ship?");
+~chatplayer("<p,quiz>So; what needs fixing on this ship?");
 if (%dragon_planks < 3) {
     // osrs and rsc are similar, so i chose osrs
-    ~chatnpc(neutral, "Well, the big gaping hole in the hold is the problem. You'll need a few wooden planks hammered in with steel nails to fix it.");
+    ~chatnpc("<p,neutral>Well, the big gaping hole in the hold is the problem. You'll need a few wooden planks hammered in with steel nails to fix it.");
     return;
 }
 //  Exists in osrs but no idea if it exists for our version
-~chatnpc(neutral, "I dunno. It looks fine to me.");
-~chatplayer(quiz, "But you said it needed fix-");
-~chatnpc(neutral, "Yes, but that was before you fixed it!");
+~chatnpc("<p,neutral>I dunno. It looks fine to me.");
+~chatplayer("<p,quiz>But you said it needed fix-");
+~chatnpc("<p,neutral>Yes, but that was before you fixed it!");
 
 
 [label,klarense_board_ship]
-~chatplayer(quiz, "Can I board the ship now?");
-~chatnpc(neutral, "Sure thing, she's all yours.");
+~chatplayer("<p,quiz>Can I board the ship now?");
+~chatnpc("<p,neutral>Sure thing, she's all yours.");
 
 [label,klarense_no_ship]
-~chatplayer(quiz, "What are you going to do now you don't have a ship?");
-~chatnpc(neutral, "Oh, I'll be fine. Ive got work as Port Sarim's first lifeguard!");
+~chatplayer("<p,quiz>What are you going to do now you don't have a ship?");
+~chatnpc("<p,neutral>Oh, I'll be fine. Ive got work as Port Sarim's first lifeguard!");
 
 [label,klarense_when_sea_worthy]
-~chatplayer(quiz, "Do you know when she will be seaworthy?");
-~chatnpc(neutral, "No, not really. Port Sarim's shipbuilders aren't very|efficient. So it would be quite a while...");
+~chatplayer("<p,quiz>Do you know when she will be seaworthy?");
+~chatnpc("<p,neutral>No, not really. Port Sarim's shipbuilders aren't very|efficient. So it would be quite a while...");
 
 [label,klarense_crandor_when_ready]
-~chatplayer(quiz, "Would you take me to Crandor Isle when it's ready?");
-~chatnpc(neutral, "Well, even if I knew how to get there, I wouldnt like to|risk it. Especially after going to all the effort of fixing|the old girl up.");
+~chatplayer("<p,quiz>Would you take me to Crandor Isle when it's ready?");
+~chatnpc("<p,neutral>Well, even if I knew how to get there, I wouldnt like to|risk it. Especially after going to all the effort of fixing|the old girl up.");
 
 [label,klarense_buy]
-~chatplayer(quiz, "I don't suppose I could buy it?");
-~chatnpc(neutral, "I guess you could... I'm sure the work needed to do|on it wouldn't be too expensive. How does 2000 gold|sound for a price?");
-~chatnpc(neutral, "I'll even throw in my Cabin boy Jenkins for free! He'll|swab the decks and splice the mainsails for you!");
+~chatplayer("<p,quiz>I don't suppose I could buy it?");
+~chatnpc("<p,neutral>I guess you could... I'm sure the work needed to do|on it wouldn't be too expensive. How does 2000 gold|sound for a price?");
+~chatnpc("<p,neutral>I'll even throw in my Cabin boy Jenkins for free! He'll|swab the decks and splice the mainsails for you!");
 def_int $choice = ~p_choice2("Yep, sounds good.", 0, "I'm not paying that much for a broken boat!", 1);
 if ($choice = 1) {
-    ~chatplayer(angry, "I'm not paying that much for a broken boat!");
-    ~chatnpc(neutral, "That's fair enough, I suppose."); // osrs
+    ~chatplayer("<p,angry>I'm not paying that much for a broken boat!");
+    ~chatnpc("<p,neutral>That's fair enough, I suppose."); // osrs
     return;
 }
-~chatplayer(quiz, "Yep, sounds good.");
+~chatplayer("<p,quiz>Yep, sounds good.");
 if (inv_total(inv, coins) < 2000) {
-    ~chatplayer(sad, "...except I don't have that kind of money on me...");
+    ~chatplayer("<p,sad>...except I don't have that kind of money on me...");
     return;
 }
 inv_del(inv, coins, 2000);
 %dragon_progress = ^quest_dragon_bought_ship;
-~chatnpc(quiz, "Okey dokey, she's all yours!");
+~chatnpc("<p,quiz>Okey dokey, she's all yours!");
 
 [label,klarense_nevermind]
-~chatplayer(sad, "Ah well, nevermind.");
+~chatplayer("<p,sad>Ah well, nevermind.");

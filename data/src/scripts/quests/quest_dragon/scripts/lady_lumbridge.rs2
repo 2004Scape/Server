@@ -1,7 +1,7 @@
 [oploc1,dragonslayer_gangplank_board]
 if (%dragon_progress < ^quest_dragon_bought_ship | %dragon_progress >= ^dragon_complete) {
     if (npc_find(coord, klarense, 5, 0) = true) {
-        ~chatnpc(neutral, "Hey, stay off my ship! That's private property!");
+        ~chatnpc("<p,neutral>Hey, stay off my ship! That's private property!");
     }
     return;
 }

@@ -80,8 +80,8 @@ p_teleport(%arhein_crate_coord);
 
 [oploc1,loc_69]
 if (npc_find(coord, arhein, 12, 0) = true) {
-    ~chatnpc(angry, "Hey buddy! Get away from my ship alright?");
-    ~chatplayer(sad, "Yeah... uh... sorry...");
+    ~chatnpc("<p,angry>Hey buddy! Get away from my ship alright?");
+    ~chatplayer("<p,sad>Yeah... uh... sorry...");
 }
 
 [oploc1,_keep_lefaye_door] 
@@ -107,25 +107,25 @@ sound_synth(door_open, 0, 0);
 
 [oploc2,_keep_lefaye_door]
 if(~check_axis(coord, loc_coord, loc_angle) = false) { 
-    ~chatplayer(confused, "Uh... I don't think anyone outside will answer me if I knock on the door...");
+    ~chatplayer("<p,confused>Uh... I don't think anyone outside will answer me if I knock on the door...");
     return;
 }
 ~mesbox("You knock at the door. You hear a voice from inside...");
-~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "Yes? What do you want?");
-~chatplayer(confused, "Um....");
+~chatnpc_specific(nc_name(renegade_knight), renegade_knight, "<p,angry>Yes? What do you want?");
+~chatplayer("<p,confused>Um....");
 switch_int(~p_choice4("Pizza Delivery!", 1, "Have you ever thought about letting Saradomin into your life?", 2, "Can I interest you in some double glazing?", 3, "Would you like to buy some lucky heather?", 4)) {
     case 1:
-        ~chatplayer(happy, "Pizza delivery!");
-        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "We didn't order any Pizza. Get lost!");
+        ~chatplayer("<p,happy>Pizza delivery!");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, "<p,angry>We didn't order any Pizza. Get lost!");
     case 2:
-        ~chatplayer(happy, "Have you ever considered letting the glory of Saradomin into your life? I have some pamphlets you may be interested in reading and discussing with me.");
-        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "No. Go away.");
+        ~chatplayer("<p,happy>Have you ever considered letting the glory of Saradomin into your life? I have some pamphlets you may be interested in reading and discussing with me.");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, "<p,angry>No. Go away.");
     case 3:
-        ~chatplayer(happy, "Can I interest you in some double glazing? An old castle like this must get very draughty in the winter...");
-        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "No. Get out of here before I run you through.");
+        ~chatplayer("<p,happy>Can I interest you in some double glazing? An old castle like this must get very draughty in the winter...");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, "<p,angry>No. Get out of here before I run you through.");
     case 4:
-        ~chatplayer(happy, "Would you like to buy some lucky heather?");
-        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, angry, "No. Go away.");
+        ~chatplayer("<p,happy>Would you like to buy some lucky heather?");
+        ~chatnpc_specific(nc_name(renegade_knight), renegade_knight, "<p,angry>No. Go away.");
 }
 ~mesbox("It looks like you'll have to find another way in...");
 
@@ -159,7 +159,7 @@ if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_
         npc_add(^camelot_magic_symbol, thrantax_the_mighty, 100);
         spotanim_map(small_smokepuff, npc_coord, 124, 0);
         ~mesbox("Suddenly a mighty spirit appears!");
-        ~chatplayer(shock, "Now what were those magic words again?");
+        ~chatplayer("<p,shock>Now what were those magic words again?");
         def_int $rand = random(3);
         def_int $choice;
         switch_int($rand) {
@@ -169,32 +169,32 @@ if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_
         }
         switch_int($choice) {
             case 1:
-                ~chatplayer(quiz, "Snarthtrick...");
-                ~chatplayer(quiz, "Candato...");
-                ~chatplayer(quiz, "Termon!");
+                ~chatplayer("<p,quiz>Snarthtrick...");
+                ~chatplayer("<p,quiz>Candato...");
+                ~chatplayer("<p,quiz>Termon!");
                 // respawn if removed
-                ~chatnpc(angry, "GRAAAAAARGH!");
+                ~chatnpc("<p,angry>GRAAAAAARGH!");
                 inv_del(inv, lit_black_candle, 1);
                 ~npc_retaliate(0);
             case 2:
-                ~chatplayer(quiz, "Snarthon...");
-                ~chatplayer(quiz, "Candtrick...");
-                ~chatplayer(quiz, "Termanto!");
+                ~chatplayer("<p,quiz>Snarthon...");
+                ~chatplayer("<p,quiz>Candtrick...");
+                ~chatplayer("<p,quiz>Termanto!");
                 // respawn if removed
-                ~chatnpc(angry, "GRAAAAAARGH!");
-                ~chatnpc(angry, "Thou hast me in thine control.|So that I mayst return from whence I came,|I must grant thee a boon.|What dost thou wish of me?");
-                ~chatplayer(shock, "I wish to free Merlin from his giant crystal!");
-                ~chatnpc(angry, "GRAAAAAARGH!");
+                ~chatnpc("<p,angry>GRAAAAAARGH!");
+                ~chatnpc("<p,angry>Thou hast me in thine control.|So that I mayst return from whence I came,|I must grant thee a boon.|What dost thou wish of me?");
+                ~chatplayer("<p,shock>I wish to free Merlin from his giant crystal!");
+                ~chatnpc("<p,angry>GRAAAAAARGH!");
                 // can't make black candles after this point, not sure about the chaos altar varp but we'll clear that as well
                 %excalibur_components_progress = clearbit_range(%excalibur_components_progress, ^chaosaltar_index, ^blackcandle_index); 
                 %arthur_progress = ^arthur_excalibur_bound;
-                ~chatnpc(angry, "The deed is done. Thou mayst now shatter Merlin's crystal with Excalibur, and I can once more rest. Begone! And leave me once more in peace.");
+                ~chatnpc("<p,angry>The deed is done. Thou mayst now shatter Merlin's crystal with Excalibur, and I can once more rest. Begone! And leave me once more in peace.");
                 npc_del;
             case 3:
-                ~chatplayer(quiz, "Snarthanto...");
-                ~chatplayer(quiz, "Candon...");
-                ~chatplayer(quiz, "Termtrick!");
-                ~chatnpc(angry, "GRAAAAAARGH!");
+                ~chatplayer("<p,quiz>Snarthanto...");
+                ~chatplayer("<p,quiz>Candon...");
+                ~chatplayer("<p,quiz>Termtrick!");
+                ~chatnpc("<p,angry>GRAAAAAARGH!");
                 inv_del(inv, lit_black_candle, 1);
                 ~npc_retaliate(0);               
         }
@@ -230,9 +230,9 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false & testbi
     if(npc_find(coord, lady_of_the_lake, 4, 0) = false) {
         npc_add(movecoord(coord, -1, 0, 3), lady_of_the_lake, 100);
     }
-    ~chatplayer(neutral, "Hello. I am here for Excalibur. Can I have it yet?");
-    ~chatnpc(neutral, "I don't think you are worthy enough.");
-    ~chatnpc(neutral, "Come back when you are a better person.");
+    ~chatplayer("<p,neutral>Hello. I am here for Excalibur. Can I have it yet?");
+    ~chatnpc("<p,neutral>I don't think you are worthy enough.");
+    ~chatnpc("<p,neutral>Come back when you are a better person.");
 }
 
 [oplocu,loc_62]
@@ -259,9 +259,9 @@ switch_obj(last_useitem) {
         %excalibur_components_progress = 0;
         %arthur_progress = ^arthur_freed_merlin;
         sound_synth(mine_quick, 0, 0);
-        ~chatnpc(happy, "Thank you! Thank you! Thank you!");
-        ~chatnpc(shock, "It's not fun being trapped in a giant crystal!");
-        ~chatnpc(happy, "Go speak to King Arthur, I'm sure he'll reward you!");
+        ~chatnpc("<p,happy>Thank you! Thank you! Thank you!");
+        ~chatnpc("<p,shock>It's not fun being trapped in a giant crystal!");
+        ~chatnpc("<p,happy>Go speak to King Arthur, I'm sure he'll reward you!");
         ~mesbox("You have set Merlin free. Now talk to King Arthur.");
         npc_del;
     case default: 
