@@ -118,6 +118,9 @@ export default class ServerProt {
     }
 }
 
+// for type safety in CameraInfo
+export type CameraProt = typeof ServerProt.CAM_MOVETO | typeof ServerProt.CAM_LOOKAT;
+
 // TODO: come up with another solution that preserves type-safety?
 export const ServerProtEncoders: {
     [key: number]: (buf: Packet, ...args: any[]) => void;

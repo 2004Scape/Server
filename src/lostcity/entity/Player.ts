@@ -23,6 +23,7 @@ import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import { Position } from '#lostcity/entity/Position.js';
+import CameraInfo from '#lostcity/entity/CameraInfo.js';
 
 import ServerProt, { ServerProtEncoders } from '#lostcity/server/ServerProt.js';
 
@@ -272,6 +273,7 @@ export default class Player extends PathingEntity {
     queue: LinkList<EntityQueueRequest> = new LinkList();
     weakQueue: LinkList<EntityQueueRequest> = new LinkList();
     engineQueue: LinkList<EntityQueueRequest> = new LinkList();
+    cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
@@ -946,6 +948,12 @@ export default class Player extends PathingEntity {
             this.loadedX = this.x;
             this.loadedZ = this.z;
             this.loadedZones = {};
+        }
+        for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
+            const localX = info.camX - Position.zoneOrigin(this.loadedX);
+            const localZ = info.camZ - Position.zoneOrigin(this.loadedZ);
+            this.writeLowPriority(info.type, localX, localZ, info.height, info.rotationSpeed, info.rotationMultiplier);
+            info.unlink();
         }
 
         if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
