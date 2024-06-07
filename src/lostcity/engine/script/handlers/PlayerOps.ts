@@ -817,12 +817,6 @@ const PlayerOps: CommandHandlers = {
         if (type < 0 || type >= 5) {
             throw new Error(`Invalid opobj: ${type + 1}`);
         }
-        if (state.activePlayer.target !== null) {
-            return;
-        }
-        if (state.activePlayer.hasWaypoints()) {
-            return;
-        }
         state.activePlayer.stopAction();
         state.activePlayer.setInteraction(Interaction.SCRIPT, state.activeObj, ServerTriggerType.APOBJ1 + type);
     }),
