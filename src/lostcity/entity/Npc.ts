@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import NpcType from '#lostcity/cache/NpcType.js';
-import VarNpcType from '#lostcity/cache/VarNpcType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -21,13 +21,13 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import {Direction, Position} from '#lostcity/entity/Position.js';
-import HuntType from '#lostcity/cache/HuntType.js';
+import HuntType from '#lostcity/cache/config/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import Entity from '#lostcity/entity/Entity.js';

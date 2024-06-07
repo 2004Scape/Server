@@ -11,7 +11,7 @@ import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
 
-import LocType from '#lostcity/cache/LocType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';

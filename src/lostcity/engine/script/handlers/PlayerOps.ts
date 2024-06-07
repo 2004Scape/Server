@@ -1,5 +1,5 @@
-import IdkType from '#lostcity/cache/IdkType.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import IdkType from '#lostcity/cache/config/IdkType.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
 import World from '#lostcity/engine/World.js';
 

@@ -2,8 +2,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import WordPack from '#jagex2/wordenc/WordPack.js';
 
-import Component from '#lostcity/cache/Component.js';
-import WordEnc from '#lostcity/cache/WordEnc.js';
+import Component from '#lostcity/cache/config/Component.js';
+import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
 

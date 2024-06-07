@@ -1,12 +1,12 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import Player from '#lostcity/entity/Player.js';
 import OpHeldU from '#lostcity/network/incoming/model/OpHeldU.js';
-import Component from '#lostcity/cache/Component.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import World from '#lostcity/engine/World.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
+import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import Environment from '#lostcity/util/Environment.js';
 

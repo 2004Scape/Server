@@ -3,7 +3,7 @@ import Player from '#lostcity/entity/Player.js';
 import MessagePublic from '#lostcity/network/incoming/model/MessagePublic.js';
 import Packet from '#jagex2/io/Packet.js';
 import WordPack from '#jagex2/wordenc/WordPack.js';
-import WordEnc from '#lostcity/cache/WordEnc.js';
+import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 
 export default class MessagePublicHandler extends MessageHandler<MessagePublic> {
     handle(message: MessagePublic, player: Player): boolean {

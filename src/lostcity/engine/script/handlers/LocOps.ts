@@ -1,7 +1,7 @@
-import ParamType from '#lostcity/cache/ParamType.js';
-import LocType from '#lostcity/cache/LocType.js';
-import SeqType from '#lostcity/cache/SeqType.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
+import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
 
 import World from '#lostcity/engine/World.js';
 

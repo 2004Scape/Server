@@ -1,8 +1,8 @@
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
+import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
+import StructType from '#lostcity/cache/config/StructType.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
+import MesanimType from '#lostcity/cache/config/MesanimType.js';
 
 import World from '#lostcity/engine/World.js';
 
