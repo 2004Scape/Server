@@ -50,6 +50,10 @@ export default class StructType extends ConfigType implements ParamHolder {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     // ----
 
     params: ParamMap | null = null;

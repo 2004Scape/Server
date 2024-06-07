@@ -7,7 +7,7 @@ if (npc_range(coord) > 2) {
 @tut_banker;
 
 [label,tut_banker]
-~chatnpc(quiz, "Good day, would you like to access your bank account?");
+~chatnpc("<p,quiz>Good day, would you like to access your bank account?");
 @multi2(
     "Yes.", tut_open_bank,
     "No thanks.", banker_no_thanks
@@ -22,4 +22,4 @@ if (%tutorial_progress = ^tutorial_open_banking) {
 @openbank;
 
 [label,banker_no_thanks]
-~chatplayer(neutral, "No thanks.");
+~chatplayer("<p,neutral>No thanks.");

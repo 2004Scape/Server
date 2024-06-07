@@ -11,7 +11,7 @@ export async function packClientTitle() {
         return;
     }
 
-    console.log('Packing title.jag');
+    //console.log('Packing title.jag');
     //console.time('title.jag');
 
     const order = ['p11.dat', 'p12.dat', 'titlebox.dat', 'title.dat', 'runes.dat', 'q8.dat', 'index.dat', 'titlebutton.dat', 'logo.dat', 'b12.dat'];

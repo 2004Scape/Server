@@ -1,3 +1,4 @@
+// official name
 [debugproc,clearinv](inv $inv)
 if ($inv = null) {
     $inv = inv;
@@ -6,6 +7,8 @@ if ($inv = null) {
 if ($inv = inv) {
     // inv is unprotected and we cannot check in content if something is (currently)
     inv_clear($inv);
+
+    mes("Inventory wiped.");
 } else {
     if_close;
     if (p_finduid(uid) = true) {
@@ -14,6 +17,8 @@ if ($inv = inv) {
         if ($inv = worn) {
             buildappearance(worn);
         }
+
+        mes("Inventory wiped.");
     } else {
         @please_finish;
     }

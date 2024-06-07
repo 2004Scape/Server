@@ -2,91 +2,91 @@
 switch_int(%elena_progress) {
     case ^quest_elena_not_started: {
         // TODO i missed this part of the dialogue so partial guessed (emotions). -jordan
-        ~chatplayer(happy, "Hello there.");
-        ~chatnpc(quiz, "Do you have a problem traveller?");
-        ~chatplayer(confused, "No, I just wondered why you're wearing that outfit... Is it fancy dress?");
-        ~chatnpc(neutral, "No! It's for protection.");
-        ~chatplayer(confused, "Protection from what?");
-        ~chatnpc(neutral, "The plague of course...");
+        ~chatplayer("<p,happy>Hello there.");
+        ~chatnpc("<p,quiz>Do you have a problem traveller?");
+        ~chatplayer("<p,confused>No, I just wondered why you're wearing that outfit... Is it fancy dress?");
+        ~chatnpc("<p,neutral>No! It's for protection.");
+        ~chatplayer("<p,confused>Protection from what?");
+        ~chatnpc("<p,neutral>The plague of course...");
     }
     case ^quest_elena_started: {
         // TODO i missed this part of the dialogue so partial guessed (emotions). -jordan
-        ~chatplayer(happy, "Hello.");
-        ~chatnpc(quiz, "What do you want?");
+        ~chatplayer("<p,happy>Hello.");
+        ~chatnpc("<p,quiz>What do you want?");
         @multi2("Who are you?", mourner_who_are_you, "Nothing, just being polite.", mourner_nothing_just_being_polite);
     }
     case ^quest_elena_gasmask: {
         // TODO i missed this part of the dialogue so partial guessed (emotions). -jordan
-        ~chatplayer(happy, "Hello.");
-        ~chatnpc(quiz, "Are you ok?");
-        ~chatplayer(happy, "Yes, I'm fine thanks.");
-        ~chatnpc(quiz, "Have you experienced any plague symptoms?");
+        ~chatplayer("<p,happy>Hello.");
+        ~chatnpc("<p,quiz>Are you ok?");
+        ~chatplayer("<p,happy>Yes, I'm fine thanks.");
+        ~chatnpc("<p,quiz>Have you experienced any plague symptoms?");
         @multi3("What are the symptoms?", mourner_who_are_you, "No, I feel fine.", mourner_nothing_just_being_polite, "No, but can you tell me where the plague came from?", mourner_no_but_can_you_tell_me_where_the_plague_came_from);
     }
     case ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3, ^quest_elena_mud_patch4: {
-        ~chatplayer(happy, "Hello.");
-        ~chatnpc(quiz, "What are you up to with old man <nc_name(edmond)>?");
-        ~chatplayer(confused, "Nothing, we've just been chatting.");
-        ~chatnpc(quiz, "What about his daughter?");
-        ~chatplayer(confused, "Oh, you know about that then?");
-        ~chatnpc(quiz, "We know about everything that goes on in Ardougne. We have to if we are to contain the plague.");
-        ~chatplayer(confused, "Have you see his daughter recently?");
-        ~chatnpc(neutral, "I imagine she's caught the plague. Either way she won't be allowed out of West Ardougne, the risk is too great.");
+        ~chatplayer("<p,happy>Hello.");
+        ~chatnpc("<p,quiz>What are you up to with old man <nc_name(edmond)>?");
+        ~chatplayer("<p,confused>Nothing, we've just been chatting.");
+        ~chatnpc("<p,quiz>What about his daughter?");
+        ~chatplayer("<p,confused>Oh, you know about that then?");
+        ~chatnpc("<p,quiz>We know about everything that goes on in Ardougne. We have to if we are to contain the plague.");
+        ~chatplayer("<p,confused>Have you see his daughter recently?");
+        ~chatnpc("<p,neutral>I imagine she's caught the plague. Either way she won't be allowed out of West Ardougne, the risk is too great.");
     }
     case ^quest_elena_opened_tunnel: {
-        ~chatplayer(happy, "Hello there.");
-        ~chatnpc(quiz, "Been digging have we?");
-        ~chatplayer(confused, "What do you mean?");
-        ~chatnpc(neutral, "Your hands are covered in mud.");
-        ~chatplayer(shifty, "Oh that...");
-        ~chatnpc(quiz, "Funny, you don't look like the gardening type.");
-        ~chatplayer(happy, "Oh no, I love gardening! It's my favorite pastime.");
+        ~chatplayer("<p,happy>Hello there.");
+        ~chatnpc("<p,quiz>Been digging have we?");
+        ~chatplayer("<p,confused>What do you mean?");
+        ~chatnpc("<p,neutral>Your hands are covered in mud.");
+        ~chatplayer("<p,shifty>Oh that...");
+        ~chatnpc("<p,quiz>Funny, you don't look like the gardening type.");
+        ~chatplayer("<p,happy>Oh no, I love gardening! It's my favorite pastime.");
     }
     case ^quest_elena_tied_rope: {
-        ~chatplayer(happy, "Hello there.");
-        ~chatnpc(quiz, "What are you up to?");
-        ~chatplayer(confused, "What do you mean?");
-        ~chatnpc(quiz, "You and that <nc_name(edmond)> fella, you're looking very suspicious.");
-        ~chatplayer(shifty, "We're just gardening. Have you heard any news about West Ardougne?");
-        ~chatnpc(angry, "Just the usual, everyone's sick or dying. I'm furious at King Tyras for bringing this plague to our lands.");
+        ~chatplayer("<p,happy>Hello there.");
+        ~chatnpc("<p,quiz>What are you up to?");
+        ~chatplayer("<p,confused>What do you mean?");
+        ~chatnpc("<p,quiz>You and that <nc_name(edmond)> fella, you're looking very suspicious.");
+        ~chatplayer("<p,shifty>We're just gardening. Have you heard any news about West Ardougne?");
+        ~chatnpc("<p,angry>Just the usual, everyone's sick or dying. I'm furious at King Tyras for bringing this plague to our lands.");
     }
     case ^quest_elena_opened_pipe, ^quest_elena_returned_book, ^quest_elena_spoke_to_milli, ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena, ^elena_complete: {
-        ~chatplayer(happy, "Hello.");
-        ~chatnpc(quiz, "What are you up to?");
-        ~chatplayer(neutral, "Nothing.");
-        ~chatnpc(quiz, "I don't trust you.");
-        ~chatplayer(neutral, "You don't have to.");
-        ~chatnpc(angry, "If I find you attempting to cross the wall I'll make sure you never return.");
+        ~chatplayer("<p,happy>Hello.");
+        ~chatnpc("<p,quiz>What are you up to?");
+        ~chatplayer("<p,neutral>Nothing.");
+        ~chatnpc("<p,quiz>I don't trust you.");
+        ~chatplayer("<p,neutral>You don't have to.");
+        ~chatnpc("<p,angry>If I find you attempting to cross the wall I'll make sure you never return.");
     }
 }
 
 [label,mourner_who_are_you]
-~chatplayer(quiz, "Who are you?");
-~chatnpc(neutral, "I'm a mourner. It's my job to help heal the plague victims of West Ardougne and to make sure the disease is contained.");
-~chatplayer(neutral, "Very noble of you.");
-~chatnpc(neutral, "If you come down with any symptoms such as flu or nightmares let me know immediately.");
+~chatplayer("<p,quiz>Who are you?");
+~chatnpc("<p,neutral>I'm a mourner. It's my job to help heal the plague victims of West Ardougne and to make sure the disease is contained.");
+~chatplayer("<p,neutral>Very noble of you.");
+~chatnpc("<p,neutral>If you come down with any symptoms such as flu or nightmares let me know immediately.");
 
 [label,mourner_nothing_just_being_polite]
-~chatplayer(neutral, "Nothing, just being polite.");
-~chatnpc(neutral, "Hmmm, ok then. Be on your way.");
+~chatplayer("<p,neutral>Nothing, just being polite.");
+~chatnpc("<p,neutral>Hmmm, ok then. Be on your way.");
 
 [label,mourner_what_are_the_symptoms]
-~chatplayer(quiz, "What are the symptoms?");
-~chatnpc(neutral, "First you'll come down with heavy flu, this is usually followed by horrifying nightmares.");
-~chatplayer(neutral, "I used to have nightmares when I was younger.");
-~chatnpc(neutral, "Not like these I assure you. Soon after a thick black liquid will seep from your nose and eyes.");
-~chatplayer(shock, "Yuck!");
-~chatnpc(neutral, "When it gets to that stage there's nothing we can do for you.");
+~chatplayer("<p,quiz>What are the symptoms?");
+~chatnpc("<p,neutral>First you'll come down with heavy flu, this is usually followed by horrifying nightmares.");
+~chatplayer("<p,neutral>I used to have nightmares when I was younger.");
+~chatnpc("<p,neutral>Not like these I assure you. Soon after a thick black liquid will seep from your nose and eyes.");
+~chatplayer("<p,shock>Yuck!");
+~chatnpc("<p,neutral>When it gets to that stage there's nothing we can do for you.");
 
 [label,mourner_no_i_feel_fine]
-~chatplayer(happy, "No, I feel fine.");
-~chatnpc(neutral, "Well if you take a turn for the worse let me know straight away.");
-~chatplayer(quiz, "Can you cure it then?");
-~chatnpc(neutral, "No... But you will have to be treated.");
-~chatplayer(quiz, "Treated?");
-~chatnpc(neutral, "We have to take measures to contain the disease. That's why you must let us know immediately if you take a turn for the worse.");
+~chatplayer("<p,happy>No, I feel fine.");
+~chatnpc("<p,neutral>Well if you take a turn for the worse let me know straight away.");
+~chatplayer("<p,quiz>Can you cure it then?");
+~chatnpc("<p,neutral>No... But you will have to be treated.");
+~chatplayer("<p,quiz>Treated?");
+~chatnpc("<p,neutral>We have to take measures to contain the disease. That's why you must let us know immediately if you take a turn for the worse.");
 
 [label,mourner_no_but_can_you_tell_me_where_the_plague_came_from]
-~chatplayer(quiz, "No, but can you tell me where the plague came from?");
-~chatnpc(neutral, "It all started when King Tyras of West Ardougne came back from one of his visits to the lands west of here.");
-~chatnpc(neutral, "Some of his men must have unknowingly caught it out there and brought it back with them");
+~chatplayer("<p,quiz>No, but can you tell me where the plague came from?");
+~chatnpc("<p,neutral>It all started when King Tyras of West Ardougne came back from one of his visits to the lands west of here.");
+~chatnpc("<p,neutral>Some of his men must have unknowingly caught it out there and brought it back with them");

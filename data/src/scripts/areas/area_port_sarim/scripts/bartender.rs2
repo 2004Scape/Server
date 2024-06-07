@@ -18,8 +18,8 @@ switch_int ($option) {
     case 2: @goblin_diplomacy_start;
     case 3: @rustyanchor_barcrawl;
     case 4: 
-        ~chatplayer(neutral, "Have you heard any more rumours in here?");
-        ~chatnpc(neutral, "No, it hasn't been very busy lately.");
+        ~chatplayer("<p,neutral>Have you heard any more rumours in here?");
+        ~chatnpc("<p,neutral>No, it hasn't been very busy lately.");
 }
 
 [opnpcu,bartender_port_sarim]
@@ -29,24 +29,24 @@ if(testbit(%barcrawl_progress, ^rustyanchor_index) = false & last_useitem = barc
 ~displaymessage(^dm_default);
 
 [label,bartender_port_sarim_beer]
-~chatplayer(happy, "Could I buy a beer please?");
-~chatnpc(happy, "Sure, that will be 2 gold coins please.");
+~chatplayer("<p,happy>Could I buy a beer please?");
+~chatnpc("<p,happy>Sure, that will be 2 gold coins please.");
 if(inv_total(inv, coins) < 2) {
-    ~chatplayer(sad, "I don't have enough coins.");
+    ~chatplayer("<p,sad>I don't have enough coins.");
     return;
 }
-~chatplayer(happy, "Ok, here you go.");
+~chatplayer("<p,happy>Ok, here you go.");
 inv_del(inv, coins, 2);
 inv_add(inv, beer, 1);
 ~mesbox("You buy a pint of beer!");
 
 [label,rustyanchor_barcrawl]
-~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
-~chatnpc(confused, "Are you sure?  You look a bit skinny for that.");
-~chatplayer(neutral, "Just give me whatever I need to drink here.");
-~chatnpc(happy, "Ok one Black Skull Ale coming up, 8 coins please.");
+~chatplayer("<p,happy>I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc("<p,confused>Are you sure?  You look a bit skinny for that.");
+~chatplayer("<p,neutral>Just give me whatever I need to drink here.");
+~chatnpc("<p,happy>Ok one Black Skull Ale coming up, 8 coins please.");
 if(inv_total(inv, coins) < 7) {
-    ~chatplayer(sad, "I don't have 8 coins with me.");
+    ~chatplayer("<p,sad>I don't have 8 coins with me.");
     return;
 }
 if_close;
@@ -62,7 +62,7 @@ mes("The bartender signs your card.");
 say("Hiccup!");
 
 [label,trail_bartender_port_sarim]
-~chatnpc(happy, "Congratulations! Here you go.");
+~chatnpc("<p,happy>Congratulations! Here you go.");
 ~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp020, 1);
 if(~trail_clue_easy_complete = true) {

@@ -1,11 +1,11 @@
 [opnpc1,recruiter]
-~chatnpc(neutral, "Citizens of West Ardougne! King Tyras needs you for his Royal Army! Who will join this noble cause?");
-if (.npc_finduid(~.npc_within_distance(coord, npc_728, 14)) = true) {
-    ~.chatnpc(angry, "Plague bringer!");
+~chatnpc("<p,neutral>Citizens of West Ardougne! King Tyras needs you for his Royal Army! Who will join this noble cause?");
+if (.npc_find(coord, npc_728, 14, 0) = true) {
+    ~.chatnpc("<p,angry>Plague bringer!");
 }
-if (.npc_finduid(~.npc_within_distance(coord, npc_729, 14)) = true) {
-    ~.chatnpc(angry, "King Tyras is scum!");
+if (.npc_find(coord, npc_729, 14, 0) = true) {
+    ~.chatnpc("<p,angry>King Tyras is scum!");
 }
-~chatnpc(shock, "Tyras will be informed of these words of treason!");
+~chatnpc("<p,shock>Tyras will be informed of these words of treason!");
 obj_add(npc_coord, tomato, 1, 200);
 ~mesbox("Someone throws a <lowercase(oc_name(tomato))> at the <lowercase(nc_name(recruiter))>.");

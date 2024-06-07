@@ -1,11 +1,11 @@
 [opnpc1,sir_lancelot]
-~chatnpc(happy, "Greetings! I am Sir Lancelot, the greatest Knight in the land! What do you want?");
+~chatnpc("<p,happy>Greetings! I am Sir Lancelot, the greatest Knight in the land! What do you want?");
 if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
-    ~chatplayer(neutral, "I am questing for the Holy Grail.");
-    ~chatnpc(neutral, "The Grail? Ha! Frankly, little <text_gender("man", "lady")>, you're not in that league.");
-    ~chatplayer(quiz, "Why do you say that?");
-    ~chatnpc(neutral, "You got lucky with freeing Merlin but there's no way a puny wannabe like you is going to find the Holy Grail where so many others have failed.");
-    ~chatplayer(sad, "We'll see about that.");
+    ~chatplayer("<p,neutral>I am questing for the Holy Grail.");
+    ~chatnpc("<p,neutral>The Grail? Ha! Frankly, little <text_gender("man", "lady")>, you're not in that league.");
+    ~chatplayer("<p,quiz>Why do you say that?");
+    ~chatnpc("<p,neutral>You got lucky with freeing Merlin but there's no way a puny wannabe like you is going to find the Holy Grail where so many others have failed.");
+    ~chatplayer("<p,sad>We'll see about that.");
     return;
 } 
 def_int $option;
@@ -13,25 +13,25 @@ switch_int (%arthur_progress) {
     case ^arthur_not_started: $option = ~p_choice2("You're a little full of yourself aren't you?", 1, "I seek a quest!", 2);
     case ^arthur_started, ^arthur_spoken_lancelot, ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin: $option = ~p_choice2("I  want to get Merlin out of the crystal.", 3, "You're a little full of yourself aren't you?", 1);
     case ^arthur_spoken_gawain: $option = ~p_choice3("I  want to get Merlin out of the crystal.", 3, "You're a little full of yourself aren't you?", 1, "Any ideas on how to get into Morgan Le Faye's stronghold?", 4);
-    case ^arthur_complete: ~chatnpc(neutral, "Hmmm. I heard you freed Merlin.|Either you're better than you look or you got lucky.|I think the latter.");
+    case ^arthur_complete: ~chatnpc("<p,neutral>Hmmm. I heard you freed Merlin.|Either you're better than you look or you got lucky.|I think the latter.");
 }
 switch_int($option) {
     case 1:
-        ~chatplayer(quiz, "You're a little full of yourself aren't you?");
-        ~chatnpc(happy, "I have every right to be proud of myself.");
-        ~chatnpc(happy, "My prowess in battle is world renowned!");
+        ~chatplayer("<p,quiz>You're a little full of yourself aren't you?");
+        ~chatnpc("<p,happy>I have every right to be proud of myself.");
+        ~chatnpc("<p,happy>My prowess in battle is world renowned!");
     case 2:
-        ~chatplayer(happy, "I seek a quest!");
-        ~chatnpc(neutral, "Leave questing to the professionals.");
-        ~chatnpc(happy, "Such as myself.");
+        ~chatplayer("<p,happy>I seek a quest!");
+        ~chatnpc("<p,neutral>Leave questing to the professionals.");
+        ~chatnpc("<p,happy>Such as myself.");
     case 3:
-        ~chatplayer(neutral, "I want to get Merlin out of the crystal.");
-        ~chatnpc(angry, "Well, if the Knights of the Round Table can't manage it, I can't see how a commoner like you could succeed where we have failed.");
+        ~chatplayer("<p,neutral>I want to get Merlin out of the crystal.");
+        ~chatnpc("<p,angry>Well, if the Knights of the Round Table can't manage it, I can't see how a commoner like you could succeed where we have failed.");
     case 4:
-        ~chatplayer(quiz, "Any ideas on how to get into Morgan Le Faye's stronghold?");
-        ~chatnpc(happy, "That stronghold is built in a strong defensive position.");
-        ~chatnpc(happy, "It's on a big rock sticking out into the sea.");
+        ~chatplayer("<p,quiz>Any ideas on how to get into Morgan Le Faye's stronghold?");
+        ~chatnpc("<p,happy>That stronghold is built in a strong defensive position.");
+        ~chatnpc("<p,happy>It's on a big rock sticking out into the sea.");
         %arthur_progress = ^arthur_spoken_lancelot;
-        ~chatnpc(neutral, "There are two ways in that I know of, the large|heavy front doors, and the sea entrance,|only penetrable by boat.");
-        ~chatnpc(neutral, "They get all their deliveries by boat from Catherby.");
+        ~chatnpc("<p,neutral>There are two ways in that I know of, the large|heavy front doors, and the sea entrance,|only penetrable by boat.");
+        ~chatnpc("<p,neutral>They get all their deliveries by boat from Catherby.");
 }

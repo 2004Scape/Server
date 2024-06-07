@@ -51,6 +51,10 @@ export default class DbRowType extends ConfigType {
         return this.get(id);
     }
 
+    static get count() {
+        return this.configs.length;
+    }
+
     static getInTable(tableId: number): DbRowType[] {
         return DbRowType.configs.filter(config => config.tableId === tableId);
     }

@@ -27,32 +27,32 @@ switch_int (%scorpcatcher_progress) {
         @multi2("Many greetings.", seer_many_greetings, "I seek knowledge and power!", seer_knowledge_and_power);
 }
 
-[proc,seers_greetings] ~chatnpc(happy, "Many greetings.");
+[proc,seers_greetings] ~chatnpc("<p,happy>Many greetings.");
 
 [label,seer_many_greetings]
-~chatplayer(happy, "Many greetings.");
-~chatnpc(happy, "Remember, whenever you set out to do something, something else must be done first.");
+~chatplayer("<p,happy>Many greetings.");
+~chatnpc("<p,happy>Remember, whenever you set out to do something, something else must be done first.");
 
 [label,seer_knowledge_and_power]
-~chatplayer(neutral, "I seek knowledge and power!");
-~chatnpc(neutral, "Knowledge comes from experience, power comes from battleaxes.");
+~chatplayer("<p,neutral>I seek knowledge and power!");
+~chatnpc("<p,neutral>Knowledge comes from experience, power comes from battleaxes.");
 
 [label,seer_locate_scorp]
-~chatplayer(neutral, "I need to locate some scorpions.");
-~chatnpc(happy, "Well you have come to the right place.|I am a master of animal detection.");
-~chatnpc(quiz, "Do you need to locate any particular scorpion?|Scorpions are a creature somewhat in abundance.");
-~chatplayer(neutral, "I'm looking for some lesser Kharid scorpions.|They belong to Thormac the Sorcerer.");
+~chatplayer("<p,neutral>I need to locate some scorpions.");
+~chatnpc("<p,happy>Well you have come to the right place.|I am a master of animal detection.");
+~chatnpc("<p,quiz>Do you need to locate any particular scorpion?|Scorpions are a creature somewhat in abundance.");
+~chatplayer("<p,neutral>I'm looking for some lesser Kharid scorpions.|They belong to Thormac the Sorcerer.");
 @seer_looking_glass;
 
 [label,seer_thormac]
-~chatplayer(happy, "Your friend Thormac sent me to speak to you.");
-~chatnpc(quiz, "What does the old fellow want?");
-~chatplayer(sad, "He's lost his valuable lesser Kharid scorpions.");
-~chatnpc(happy, "Well you have come to the right place.|I am a master of animal detection.");
+~chatplayer("<p,happy>Your friend Thormac sent me to speak to you.");
+~chatnpc("<p,quiz>What does the old fellow want?");
+~chatplayer("<p,sad>He's lost his valuable lesser Kharid scorpions.");
+~chatnpc("<p,happy>Well you have come to the right place.|I am a master of animal detection.");
 @seer_looking_glass;
 
 [label,seer_looking_glass]
-~chatnpc(neutral, "Let me look into my looking glass.");
+~chatnpc("<p,neutral>Let me look into my looking glass.");
 if_close;
 mes("The seer produces a small mirror");
 p_delay(3);
@@ -60,28 +60,28 @@ mes("The seer gazes into the mirror");
 p_delay(3);
 mes("The seer smoothes his hair with his hand");
 p_delay(3);
-~chatnpc(confused, "I can see a scorpion that you seek.|It would appear to be near some nasty spiders.|I can see two coffins there as well.");
+~chatnpc("<p,confused>I can see a scorpion that you seek.|It would appear to be near some nasty spiders.|I can see two coffins there as well.");
 %scorpcatcher_progress = ^scorpcatcher_first_hint;
-~chatnpc(confused, "The scorpion seems to be going through some crack in the wall. It's gone into some sort of secret room.");
-~chatnpc(neutral, "Well see if you can find that scorpion then, and I'll try and get you some information on the others.");
+~chatnpc("<p,confused>The scorpion seems to be going through some crack in the wall. It's gone into some sort of secret room.");
+~chatnpc("<p,neutral>Well see if you can find that scorpion then, and I'll try and get you some information on the others.");
 
 [label,seer_where_scorp]
-~chatplayer(quiz, "Where did you say that scorpion was again?");
+~chatplayer("<p,quiz>Where did you say that scorpion was again?");
 @seer_looking_glass;
 
 [label,seer_first_scorp]
-~chatplayer(happy, "Hi, I've retrieved the scorpion from near the spiders.");
-~chatnpc(confused, "Well, I've checked my looking glass.|There seems to be a kharid scorpion in a little village in the east,|surrounded by lots of uncivilised-looking warriors.|Some kind of merchant there seems to have picked it up.");
-~chatnpc(neutral, "That's all I can tell you about that scorpion.");
+~chatplayer("<p,happy>Hi, I've retrieved the scorpion from near the spiders.");
+~chatnpc("<p,confused>Well, I've checked my looking glass.|There seems to be a kharid scorpion in a little village in the east,|surrounded by lots of uncivilised-looking warriors.|Some kind of merchant there seems to have picked it up.");
+~chatnpc("<p,neutral>That's all I can tell you about that scorpion.");
 %scorpcatcher_progress = ^scorpcatcher_second_hint;
-~chatplayer(happy, "Any more scorpions?");
-~chatnpc(neutral, "It's good that you should ask.|I have information on the last scorpion for you.");
+~chatplayer("<p,happy>Any more scorpions?");
+~chatnpc("<p,neutral>It's good that you should ask.|I have information on the last scorpion for you.");
 @seer_last_scorp;
 
 [label,seer_second_scorp]
-~chatplayer(happy, "I've retrieved the second scorpion.");
-~chatnpc(neutral, "That's lucky because I've got some information on the last scorpion for you.");
+~chatplayer("<p,happy>I've retrieved the second scorpion.");
+~chatnpc("<p,neutral>That's lucky because I've got some information on the last scorpion for you.");
 @seer_last_scorp;
 
 [label,seer_last_scorp] 
-~chatnpc(confused, "It seems to be in some sort of upstairs room.|There seems to be some sort of brown clothing lying on a table.");
+~chatnpc("<p,confused>It seems to be in some sort of upstairs room.|There seems to be some sort of brown clothing lying on a table.");

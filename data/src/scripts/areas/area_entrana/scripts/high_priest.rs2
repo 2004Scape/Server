@@ -1,17 +1,17 @@
 [opnpc1,high_priest]
-~chatnpc(happy, "Many greetings. Welcome to our fair island.");
+~chatnpc("<p,happy>Many greetings. Welcome to our fair island.");
 if(%grail_progress < ^grail_finding_percival & %grail_progress >= ^grail_spoken_merlin) {
-    ~chatplayer(neutral, "Hello, I am in search of the Holy Grail.");
-    ~chatnpc(happy, "The object of which you speak did once pass through holy Entrana. I know not where it is now however.");
-    ~chatnpc(neutral, "Nor do I really care.");
-    if(npc_finduid(~npc_within_distance(coord, crone, 9)) = false) {
+    ~chatplayer("<p,neutral>Hello, I am in search of the Holy Grail.");
+    ~chatnpc("<p,happy>The object of which you speak did once pass through holy Entrana. I know not where it is now however.");
+    ~chatnpc("<p,neutral>Nor do I really care.");
+    if(npc_find(coord, crone, 9, 0) = false) {
         npc_add(0_44_52_35_14, crone, 500);
     } else {
-        ~chatnpc(neutral, "Wait!");
+        ~chatnpc("<p,neutral>Wait!");
     }
     @crone_the_grail;
 }
-~chatnpc(happy, "Enjoy your stay here.|May it be spiritually uplifting!");
+~chatnpc("<p,happy>Enjoy your stay here.|May it be spiritually uplifting!");
 
 [opnpcu,high_priest]
-~chatnpc(confused, "No thank you, I am not accepting donations for the church at this time.");
+~chatnpc("<p,confused>No thank you, I am not accepting donations for the church at this time.");

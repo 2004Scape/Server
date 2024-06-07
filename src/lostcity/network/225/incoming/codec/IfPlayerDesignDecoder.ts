@@ -20,7 +20,7 @@ export default class IfPlayerDesignDecoder extends MessageDecoder<IfPlayerDesign
 
         const color: number[] = [];
         for (let i = 0; i < 5; i++) {
-            idkit[i] = buf.g1();
+            color[i] = buf.g1();
         }
 
         return new IfPlayerDesign(gender, idkit, color);

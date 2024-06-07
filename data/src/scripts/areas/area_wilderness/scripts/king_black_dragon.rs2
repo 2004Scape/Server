@@ -256,9 +256,9 @@ if (randominc($attack_roll) > randominc($defence_roll)) {
         // mes("You're shocked and weakened!"); // https://youtu.be/R3ozXHcQkgs?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=106
         mes("You're zapped by the dragon's shocking breath!"); // earlier video has this: https://youtu.be/Kc0ZMLmWrYU?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=20
         // reduce every stat except hitpoints by 2
-        def_int $i = 0;
+        def_int $i = 1;
         def_stat $stat;
-        while ($i < enum_getoutputcount(stats)) {
+        while ($i <= enum_getoutputcount(stats)) {
             $stat = enum(int, stat, stats, $i);
             if ($stat ! hitpoints) {
                 stat_sub($stat, 2, 0);

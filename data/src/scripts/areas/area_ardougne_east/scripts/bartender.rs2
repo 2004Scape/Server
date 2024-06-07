@@ -1,7 +1,7 @@
 [opnpc1,bartender_flyinghorse]
-~chatnpc(quiz, "Would you like to buy a drink?");
-~chatplayer(quiz, "What do you serve?");
-~chatnpc(happy, "Beer!");
+~chatnpc("<p,quiz>Would you like to buy a drink?");
+~chatplayer("<p,quiz>What do you serve?");
+~chatnpc("<p,happy>Beer!");
 def_int $option;
 if(testbit(%barcrawl_progress, ^flyinghorse_index) = false & inv_total(inv, barcrawl_card) > 0) {
     $option = ~p_choice3("I'll have a beer then.", 1, "I'll not have anything then.", 2, "I'm doing Alfred Grimhand's Barcrawl.", 3);
@@ -10,17 +10,17 @@ if(testbit(%barcrawl_progress, ^flyinghorse_index) = false & inv_total(inv, barc
 }
 
 if($option = 1) {
-    ~chatplayer(happy, "I'll have a beer then.");
-    ~chatnpc(happy, "Ok, that'll be two coins.");
+    ~chatplayer("<p,happy>I'll have a beer then.");
+    ~chatnpc("<p,happy>Ok, that'll be two coins.");
     if (inv_total(inv, coins) < 2) {
-        ~chatplayer(sad, "Oh dear. I don't seem to have enough money.");
+        ~chatplayer("<p,sad>Oh dear. I don't seem to have enough money.");
         return;
     } 
     inv_del(inv, coins, 2);
     inv_add(inv, beer, 1);
     mes("You buy a pint of Beer.");
 } else if($option = 2) {
-    ~chatplayer(neutral, "I'll not have anything then.");
+    ~chatplayer("<p,neutral>I'll not have anything then.");
 } else if($option = 3) {
     @flyinghorse_barcrawl;
 }
@@ -31,10 +31,10 @@ if(testbit(%barcrawl_progress, ^flyinghorse_index) = false & last_useitem = barc
 }
 
 [label,flyinghorse_barcrawl]
-~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
-~chatnpc(happy, "Fancy a bit of Heart Stopper then do you?|It'll only be 8 coins.");
+~chatplayer("<p,happy>I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc("<p,happy>Fancy a bit of Heart Stopper then do you?|It'll only be 8 coins.");
 if(inv_total(inv, coins) < 8) {
-    ~chatplayer(sad, "Sorry, I don't have 8 coins.");
+    ~chatplayer("<p,sad>Sorry, I don't have 8 coins.");
     return;
 }  
 if_close;

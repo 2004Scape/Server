@@ -7,45 +7,45 @@
 [label,hudon_dialogue]
 switch_int (%waterfall_progress) {
     case ^waterfall_not_started:
-        ~chatplayer(neutral, "Hello there.");
-        ~chatnpc(neutral, "What do you want?");
-        ~chatplayer(neutral, "Nothing, just passing by.");
+        ~chatplayer("<p,neutral>Hello there.");
+        ~chatnpc("<p,neutral>What do you want?");
+        ~chatplayer("<p,neutral>Nothing, just passing by.");
     case ^waterfall_started:
-        ~chatplayer(neutral, "Hello son, are you okay?");
-        ~chatnpc(neutral, "Don't play nice with me,|I know you're looking for the treasure too.");
-        ~chatplayer(neutral, "Your mum sent me to find you.");
-        ~chatnpc(neutral, "I'll go home when I've found the treasure.|I'm going to be a rich man.");
-        ~chatplayer(neutral, "Where is this treasure you talk of?");
-        ~chatnpc(neutral, "Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
-        ~chatplayer(neutral, "Maybe I could help.");
+        ~chatplayer("<p,neutral>Hello son, are you okay?");
+        ~chatnpc("<p,neutral>Don't play nice with me,|I know you're looking for the treasure too.");
+        ~chatplayer("<p,neutral>Your mum sent me to find you.");
+        ~chatnpc("<p,neutral>I'll go home when I've found the treasure.|I'm going to be a rich man.");
+        ~chatplayer("<p,neutral>Where is this treasure you talk of?");
+        ~chatnpc("<p,neutral>Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
+        ~chatplayer("<p,neutral>Maybe I could help.");
         %waterfall_progress = ^waterfall_spoken_to_hudon;
-        ~chatnpc(neutral, "I'm fine alone.");
-        ~chatplayer(neutral, "Ok, I'll leave you to it.");
+        ~chatnpc("<p,neutral>I'm fine alone.");
+        ~chatplayer("<p,neutral>Ok, I'll leave you to it.");
     case ^waterfall_spoken_to_hudon: 
-        ~chatplayer(neutral, "So you're still here.");
-        ~chatnpc(neutral, "I'll find that treasure soon,|just you wait and see.");
+        ~chatplayer("<p,neutral>So you're still here.");
+        ~chatnpc("<p,neutral>I'll find that treasure soon,|just you wait and see.");
     case ^waterfall_opened_book_on_baxtorian:
-        ~chatplayer(neutral, "Hello Hudon.");
-        ~chatnpc(neutral, "Oh it's you,|trying to find my treasure again are you?");
-        ~chatplayer(neutral, "I didn't know it belonged to you.");
-        ~chatnpc(neutral, "It will do when I find it.|I just need to get into this blasted waterfall|I've been washed downstream three times already.");
+        ~chatplayer("<p,neutral>Hello Hudon.");
+        ~chatnpc("<p,neutral>Oh it's you,|trying to find my treasure again are you?");
+        ~chatplayer("<p,neutral>I didn't know it belonged to you.");
+        ~chatnpc("<p,neutral>It will do when I find it.|I just need to get into this blasted waterfall|I've been washed downstream three times already.");
     case ^waterfall_entered_glarial_tomb:
-        ~chatplayer(neutral, "Hello again.");
-        ~chatnpc(neutral, "Not you still, why don't you give up?");
-        ~chatplayer(neutral, "And miss all the fun!");
-        ~chatnpc(neutral, "You do understand that anything you find you have to share with me.");
-        ~chatplayer(neutral, "Why's that?");
-        ~chatnpc(neutral, "Because I told you about the treasure.");
-        ~chatplayer(neutral, "Well, I wouldn't count on it.");
-        ~chatnpc(neutral, "That's not fair.");
-        ~chatplayer(neutral, "Neither is life kid.");
+        ~chatplayer("<p,neutral>Hello again.");
+        ~chatnpc("<p,neutral>Not you still, why don't you give up?");
+        ~chatplayer("<p,neutral>And miss all the fun!");
+        ~chatnpc("<p,neutral>You do understand that anything you find you have to share with me.");
+        ~chatplayer("<p,neutral>Why's that?");
+        ~chatnpc("<p,neutral>Because I told you about the treasure.");
+        ~chatplayer("<p,neutral>Well, I wouldn't count on it.");
+        ~chatnpc("<p,neutral>That's not fair.");
+        ~chatplayer("<p,neutral>Neither is life kid.");
     case ^waterfall_entered_waterfall, ^waterfall_entered_puzzle_room, ^waterfall_placed_amulet:
-        ~chatplayer(neutral, "How are you doing, Hudon?");
-        ~chatnpc(neutral, "No luck yet I'm afraid.");
-        ~chatplayer(neutral, "Me neither. but I don't give up easily.");
+        ~chatplayer("<p,neutral>How are you doing, Hudon?");
+        ~chatnpc("<p,neutral>No luck yet I'm afraid.");
+        ~chatplayer("<p,neutral>Me neither. but I don't give up easily.");
     case ^waterfall_complete:
-        ~chatplayer(neutral, "Hello again.");
-        ~chatnpc(neutral, "You stole my treasure. I saw you!");
-        ~chatplayer(neutral, "I'll make sure it goes to a good cause.");
-        ~chatnpc(neutral, "Hmmmm!");
+        ~chatplayer("<p,neutral>Hello again.");
+        ~chatnpc("<p,neutral>You stole my treasure. I saw you!");
+        ~chatplayer("<p,neutral>I'll make sure it goes to a good cause.");
+        ~chatnpc("<p,neutral>Hmmmm!");
 }

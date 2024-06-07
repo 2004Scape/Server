@@ -11,42 +11,42 @@ switch_int(%tutorial_progress) {
 }
 
 [label,brother_brace_intro]
-~chatplayer(neutral, "Good day brother, my name's <displayname>.");
-~chatnpc(neutral, "Hello, <displayname>.|I'm Brother Brace. I'm here to |tell you all about prayer.");
+~chatplayer("<p,neutral>Good day brother, my name's <displayname>.");
+~chatnpc("<p,neutral>Hello, <displayname>.|I'm Brother Brace. I'm here to |tell you all about prayer.");
 if (%tutorial_progress = ^tutorial_exit_financial_advisors_room) {
     %tutorial_progress = ^brother_brace_open_prayer_tab;
     ~set_tutorial_progress;
 }
 
 [label,brother_brace_open_indicated_menu_prayer]
-~chatnpc(neutral, "You should open the indicated menu to continue.");
+~chatnpc("<p,neutral>You should open the indicated menu to continue.");
 
 [label,brother_brace_this_is_your_prayer_list]
-~chatnpc(neutral, "This is your prayer list. Prayers can help a lot in combat. Click on the prayer you wish to use to activate it, and click it again to deactivate it.");
-~chatnpc(neutral, "Active prayers will drain your prayer power which you can recharge by finding an altar or other holy spot, and praying there.");
-~chatnpc(neutral, "As you noticed, most enemies when defeated will drop bones as they die. Burying bones, by clicking them in your inventory, will gain you experience in prayer.");
-~chatnpc(neutral, "I'm also the community officer round here too. So it's my job to tell you about your friends and ignore list.");
+~chatnpc("<p,neutral>This is your prayer list. Prayers can help a lot in combat. Click on the prayer you wish to use to activate it, and click it again to deactivate it.");
+~chatnpc("<p,neutral>Active prayers will drain your prayer power which you can recharge by finding an altar or other holy spot, and praying there.");
+~chatnpc("<p,neutral>As you noticed, most enemies when defeated will drop bones as they die. Burying bones, by clicking them in your inventory, will gain you experience in prayer.");
+~chatnpc("<p,neutral>I'm also the community officer round here too. So it's my job to tell you about your friends and ignore list.");
 if (%tutorial_progress = ^brother_brace_opened_prayer_tab) {
     %tutorial_progress = ^brother_brace_after_prayer_tab;
     ~set_tutorial_progress;
 }
 
 [label,brother_brace_friends_and_ignore_tabs]
-~chatnpc(neutral, "Good. Now you have both menus open I'll tell you a little about each. You can add people to either list by clicking the add button then typing in their name into the box that appears.");
-~chatnpc(neutral, "You remove people from the lists in the same way. If you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
-~chatnpc(neutral, "Your friends list shows the online status of your friends. Friends in red are offline, green online and on the same server, and yellow online but on a different server.");
-~chatplayer(quiz, "Are there rules on ingame behavior?");
-~chatnpc(neutral, "Yes you should read the rules of conduct on our frontpage to make sure you do nothing to get yourself banned.");
-~chatnpc(neutral, "But as a general guide always try to be courteous to people in game, remember the people in the game are real people somewhere with real feelings.");
-~chatnpc(neutral, "If you go round being abusive or causing trouble your character could quickly be the one in trouble.");
-~chatplayer(neutral, "OK... Thanks I'll bear that in mind.");
+~chatnpc("<p,neutral>Good. Now you have both menus open I'll tell you a little about each. You can add people to either list by clicking the add button then typing in their name into the box that appears.");
+~chatnpc("<p,neutral>You remove people from the lists in the same way. If you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
+~chatnpc("<p,neutral>Your friends list shows the online status of your friends. Friends in red are offline, green online and on the same server, and yellow online but on a different server.");
+~chatplayer("<p,quiz>Are there rules on ingame behavior?");
+~chatnpc("<p,neutral>Yes you should read the rules of conduct on our frontpage to make sure you do nothing to get yourself banned.");
+~chatnpc("<p,neutral>But as a general guide always try to be courteous to people in game, remember the people in the game are real people somewhere with real feelings.");
+~chatnpc("<p,neutral>If you go round being abusive or causing trouble your character could quickly be the one in trouble.");
+~chatplayer("<p,neutral>OK... Thanks I'll bear that in mind.");
 if (%tutorial_progress = ^brother_brace_after_friends_tab) {
     %tutorial_progress = ^brother_brace_finish;
     ~set_tutorial_progress;
 }
 
 [label,brother_brace_recap]
-~chatnpc(neutral, "Peace be with you, my child.");
+~chatnpc("<p,neutral>Peace be with you, my child.");
 @brother_brace_recap_questions;
 
 [label,brother_brace_recap_questions]
@@ -58,22 +58,22 @@ if (%tutorial_progress = ^brother_brace_after_friends_tab) {
 );
 
 [label,brother_brace_prayer_recap]
-~chatnpc(neutral, "Ah, yes, your Prayer list. Prayers can help a lot in combat. Click on the prayer you wish to use to activate it, and click it again to deactivate it.");
-~chatnpc(neutral, "Active prayers will drain your prayer power which you can recharge by finding an altar or other holy spot, and praying there.");
-~chatnpc(neutral, "As you noticed, most enemies when defeated will drop bones as they die. Burying bones, by clicking them in your inventory, will gain you experience in prayer.");
+~chatnpc("<p,neutral>Ah, yes, your Prayer list. Prayers can help a lot in combat. Click on the prayer you wish to use to activate it, and click it again to deactivate it.");
+~chatnpc("<p,neutral>Active prayers will drain your prayer power which you can recharge by finding an altar or other holy spot, and praying there.");
+~chatnpc("<p,neutral>As you noticed, most enemies when defeated will drop bones as they die. Burying bones, by clicking them in your inventory, will gain you experience in prayer.");
 @brother_brace_recap_questions;
 
 [label,brother_brace_friends_recap]
-~chatnpc(neutral, "Your friends and ignore lists, yes... I'll tell you a little about each. You can add people to either list by clicking the add button then typing in their name into the box that appears.");
-~chatnpc(neutral, "You remove people from the lists in the same way. If you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
-~chatnpc(neutral, "Your friends list shows the online status of your friends. Friends in red are offline, green online and on the same server, and yellow online but on a different server.");
+~chatnpc("<p,neutral>Your friends and ignore lists, yes... I'll tell you a little about each. You can add people to either list by clicking the add button then typing in their name into the box that appears.");
+~chatnpc("<p,neutral>You remove people from the lists in the same way. If you add someone to your ignore list they will not be able to talk to you, or send any form of message to you.");
+~chatnpc("<p,neutral>Your friends list shows the online status of your friends. Friends in red are offline, green online and on the same server, and yellow online but on a different server.");
 @brother_brace_recap_questions;
 
 [label,brother_brace_no_thanks]
-~chatplayer(neutral, "Nope, I'm ready to move on!");
-~chatnpc(neutral, "Ok then, <displayname>.");
+~chatplayer("<p,neutral>Nope, I'm ready to move on!");
+~chatnpc("<p,neutral>Ok then, <displayname>.");
 
 [proc,set_hint_icon_brother_brace]
-if (npc_finduid(~npc_within_distance(0_48_48_53_34, brother_brace, 10)) = true) {
+if (npc_find(0_48_48_53_34, brother_brace, 10, 0) = true) {
     hint_npc(npc_uid);
 }

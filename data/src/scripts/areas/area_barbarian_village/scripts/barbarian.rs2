@@ -1,31 +1,31 @@
 [opnpc1,barbarian]
 
-~chatplayer(happy, "Hello!");
+~chatplayer("<p,happy>Hello!");
 
 switch_int(random(11)) {
     case 0: 
-    ~chatnpc(neutral, "Hello!");
+    ~chatnpc("<p,neutral>Hello!");
     case 1: 
     ~mesbox("The barbarian grunts.");
     case 2: 
-    ~chatnpc(happy, "Good day, my dear fellow.");
+    ~chatnpc("<p,happy>Good day, my dear fellow.");
     case 3: 
-    ~chatnpc(angry, "Ug");
+    ~chatnpc("<p,angry>Ug");
     case 4: 
     ~mesbox("The barbarian ignores you.");
     case 5: 
-    ~chatnpc(angry, "Grr!");
+    ~chatnpc("<p,angry>Grr!");
     case 6:
-    ~chatnpc(angry, "Wanna fight?");
+    ~chatnpc("<p,angry>Wanna fight?");
     npc_setmode(opplayer2);
     case 7:
-    ~chatnpc(angry, "I'm a little busy right now.|We're getting ready for our next barbarian raid!");
+    ~chatnpc("<p,angry>I'm a little busy right now.|We're getting ready for our next barbarian raid!");
     case 8:
-    ~chatnpc(angry, "Go away!|This is our village!");
+    ~chatnpc("<p,angry>Go away!|This is our village!");
     case 9:
-    ~chatnpc(quiz, "Who are you?");
-    ~chatplayer(happy, "I'm a bold adventurer!");
-    ~chatnpc(quiz, "You don't look very strong...");
+    ~chatnpc("<p,quiz>Who are you?");
+    ~chatplayer("<p,happy>I'm a bold adventurer!");
+    ~chatnpc("<p,quiz>You don't look very strong...");
     case 10:
-    ~chatnpc(quiz, "Beer?");
+    ~chatnpc("<p,quiz>Beer?");
 }

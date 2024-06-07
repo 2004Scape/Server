@@ -1,5 +1,5 @@
 [opnpc1,diango]
-~chatnpc(happy, "Howdy there partner!|Want to see my toy horseys?");
+~chatnpc("<p,happy>Howdy there partner!|Want to see my toy horseys?");
 @multi2(
     "Toy horseys?", diango_option1,
     "I'm fine, thanks.", exit
@@ -15,7 +15,7 @@
 // todo: this should probably branch into a little conversation before opening the shop
 // spinning plates -> that's right. there's a funny story behind them, their shipment was held up by thieves.
 // this type of anecdote but for toy horseys ^
-~chatplayer(quiz, "Toy horseys?");
+~chatplayer("<p,quiz>Toy horseys?");
 ~openshop_activenpc;
 
 [label,toy_horsey_say](seq $anim)

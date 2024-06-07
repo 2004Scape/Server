@@ -1,14 +1,11 @@
-
-
 [oplocu,_usable_table]
 anim(human_pickuptable, 0);
 sound_synth(put_down, 0, 0);
 
 def_coord $obj_coord = loc_coord;
 
-// todo: lc command for length/width?
-def_int $width = 1;
-def_int $length = 1;
+def_int $width = lc_width(loc_type);
+def_int $length = lc_length(loc_type);
 
 def_int $x = calc(coordx(loc_coord) - coordx(coord));
 def_int $z = calc(coordz(loc_coord) - coordz(coord));
@@ -26,7 +23,3 @@ inv_dropslot(inv, $obj_coord, last_useslot, 1000);
 
 [oplocu,_unusable_table]
 mes("The table appears to be in use.");
-
-
-
-

@@ -1,0 +1,17 @@
+// in osrs npc's with higher index's insta react to the player, whilst npcs with lower wait 1t
+// These videos however are always insta react. 1t mustve been an osrs change later.
+// https://youtu.be/D8VG03tRR1w?t=60
+// https://youtu.be/cjmEFliibGI
+[ai_queue1,alkharid_warrior](int $arg)
+def_npc_mode $npc_mode = npc_getmode;
+~npc_default_retaliate;
+if (finduid(%npc_attacking_uid) = true & $npc_mode ! opplayer2) { // in osrs it checks mode rather than ~npc_out_of_combat
+    npc_huntall(npc_coord, 5, 0);
+    while (npc_huntnext = true) {
+        if (npc_type = alkharid_warrior & npc_getmode ! opplayer2) {
+            npc_say("Brother, I will help thee with this infidel!");
+            %npc_aggressive_player = uid;
+            ~npc_default_retaliate;
+        }
+    }
+}

@@ -22,6 +22,7 @@ if (testbit(%attackstyle_magic, 0) = true & %attackstyle_magic = 3 & %autocast_s
 }
 
 if (($attackrange <= 1 & ~player_in_combat_check = false) | $distance > $attackrange) {
+    p_opnpc(2);
     p_aprange($attackrange);
     return;
 }

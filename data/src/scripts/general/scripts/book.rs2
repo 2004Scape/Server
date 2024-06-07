@@ -19,7 +19,7 @@ switch_obj (%open_book) {
 p_delay(0);
 
 [proc,book](string $title, string $string)
-split_init($string, 175, 22, q8, null);
+split_init($string, 175, 22, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {

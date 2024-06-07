@@ -3,33 +3,33 @@ switch_int(%hazeelcult_progress) {
     case ^hazeelcult_not_started: @philipe_toys;
     case ^hazeelcult_started, ^hazeelcult_spoken_clivet, ^hazeelcult_clivet_decision: @philipe_carnillean_breakin;
     case ^hazeelcult_poured_poison:
-        ~chatplayer(neutral, "Hello youngster.");
+        ~chatplayer("<p,neutral>Hello youngster.");
         ~mesbox("The boy looks very upset.");
-        ~chatnpc(sad, "Someone killed scruffy. I liked scruffy. He never told me off.");
-        ~chatplayer(neutral, "Yeah. It's a real shame.");
-        ~chatnpc(sad, "I want my mommy.");
+        ~chatnpc("<p,sad>Someone killed scruffy. I liked scruffy. He never told me off.");
+        ~chatplayer("<p,neutral>Yeah. It's a real shame.");
+        ~chatnpc("<p,sad>I want my mommy.");
     case ^hazeelcult_finished_side_task:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatplayer(neutral, "Hello youngster.");
+            ~chatplayer("<p,neutral>Hello youngster.");
             @philipe_carnillean_breakin;
         } else {
             @philipe_carnillean_breakin;
         }
     case ^hazeelcult_given_armour_or_scroll:
-        ~chatplayer(neutral, "Hello youngster.");
+        ~chatplayer("<p,neutral>Hello youngster.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             @philipe_jones;
         } else {
-            ~chatnpc(quiz, "Why are you still here?");
-            ~chatplayer(neutral, "Just looking around.");
-            ~chatnpc(quiz, "Have you got me some toys?");
-            ~chatplayer(neutral, "Nope.");
-            ~chatnpc(angry, "Then I don't like you!");
-            ~chatplayer(neutral, "Gee. I guess I'll just have to live with that then.");
+            ~chatnpc("<p,quiz>Why are you still here?");
+            ~chatplayer("<p,neutral>Just looking around.");
+            ~chatnpc("<p,quiz>Have you got me some toys?");
+            ~chatplayer("<p,neutral>Nope.");
+            ~chatnpc("<p,angry>Then I don't like you!");
+            ~chatplayer("<p,neutral>Gee. I guess I'll just have to live with that then.");
         }
     case ^hazeelcult_complete:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatplayer(neutral, "Hello youngster.");
+            ~chatplayer("<p,neutral>Hello youngster.");
             @philipe_jones;
         } else {
             @philipe_toys;
@@ -37,20 +37,20 @@ switch_int(%hazeelcult_progress) {
 }
 
 [label,philipe_toys]
-~chatplayer(neutral, "Hello there.");
-~chatnpc(quiz, "What have you brought me? I want some more toys!");
-~chatplayer(neutral, "I'm afraid I don't have any toys.");
-~chatnpc(angry, "TOYS! I WANT TOYS!");
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,quiz>What have you brought me? I want some more toys!");
+~chatplayer("<p,neutral>I'm afraid I don't have any toys.");
+~chatnpc("<p,angry>TOYS! I WANT TOYS!");
 
 [label,philipe_jones]
-~chatnpc(angry, "Daddy says you don't like Mr Jones. Mr Jones is nice. He brings me toys and sweets.");
-~chatplayer(neutral, "Jones is a bad man, Philipe.");
-~chatnpc(angry, "You're a bad <text_gender("man", "lady")>! I don't like you!");
-~chatplayer(neutral, "I'll try and console myself about that disappointment somehow.");
+~chatnpc("<p,angry>Daddy says you don't like Mr Jones. Mr Jones is nice. He brings me toys and sweets.");
+~chatplayer("<p,neutral>Jones is a bad man, Philipe.");
+~chatnpc("<p,angry>You're a bad <text_gender("man", "lady")>! I don't like you!");
+~chatplayer("<p,neutral>I'll try and console myself about that disappointment somehow.");
 
 [label,philipe_carnillean_breakin]
-~chatplayer(neutral, "Hello.");
-~chatnpc(quiz, "Mommy said you're here to kill all the nasty people that keep breaking in.");
-~chatplayer(confused, "Something like that.");
-~chatnpc(quiz, "Can I watch?");
-~chatplayer(shock, "No!");
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,quiz>Mommy said you're here to kill all the nasty people that keep breaking in.");
+~chatplayer("<p,confused>Something like that.");
+~chatnpc("<p,quiz>Can I watch?");
+~chatplayer("<p,shock>No!");

@@ -1,25 +1,3 @@
-[debugproc,tele](int $x, int $z, int $y)
-if ($x <= 0 & $z <= 0 & $y <= 0) {
-    @debugusage("::tele (x) (z) (level)", "::tele 3222 3222 0", "");
-    return;
-}
-
-if_close;
-if (p_finduid(uid) = true) {
-    def_int $dx = sub($x, coordx(coord));
-    def_int $dz = sub($z, coordz(coord));
-    def_int $dy = sub($y, coordy(coord));
-    p_teleport(movecoord(coord, $dx, $dy, $dz));
-}
-
-[debugproc,jtele](coord $coord)
-if_close;
-if (p_finduid(uid) = true) {
-    p_teleport($coord);
-} else {
-    @please_finish;
-}
-
 [debugproc,west](int $distance)
 if_close;
 if (p_finduid(uid) = true) {
@@ -32,22 +10,6 @@ if (p_finduid(uid) = true) {
 if_close;
 if (p_finduid(uid) = true) {
     p_teleport(movecoord(coord, max($distance, 1), 0, 0));
-} else {
-    @please_finish;
-}
-
-[debugproc,up](int $distance)
-if_close;
-if (p_finduid(uid) = true) {
-    p_teleport(movecoord(coord, 0, max($distance, 1), 0));
-} else {
-    @please_finish;
-}
-
-[debugproc,down](int $distance)
-if_close;
-if (p_finduid(uid) = true) {
-    p_teleport(movecoord(coord, 0, calc(0 - max($distance, 1)), 0));
 } else {
     @please_finish;
 }

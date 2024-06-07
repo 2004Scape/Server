@@ -55,7 +55,7 @@ async function refreshWorldList() {
     }
 }
 
-if (Environment.LOGIN_HOST) {
+if (Environment.LOGIN_KEY) {
     await refreshWorldList();
     setInterval(refreshWorldList, 20000);
 }

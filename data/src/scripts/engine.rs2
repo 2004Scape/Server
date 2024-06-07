@@ -9,6 +9,9 @@
 [command,huntall](coord $source, int $distance, int $checkvis)
 [command,huntnext]()(boolean)
 [command,.huntnext]()(boolean)
+[command,npc_huntall](coord $source, int $distance, int $checkvis)
+[command,npc_huntnext]()(boolean)
+[command,.npc_huntnext]()(boolean)
 [command,inzone](coord $from, coord $to, coord $pos)(boolean)
 [command,lineofwalk](coord $from, coord $to)(boolean)
 [command,stat_random](int $level, int $low, int $high)(boolean)
@@ -16,7 +19,7 @@
 [command,distance](coord $coord1, coord $coord2)(int)
 [command,movecoord](coord $coord, int $x, int $y, int $z)(coord)
 [command,seqlength](seq $seq)(int)
-[command,split_init](string $text, int $width, int $lines, fontmetrics $font, mesanim $chathead)
+[command,split_init](string $text, int $width, int $lines, fontmetrics $font)
 [command,split_pagecount]()(int)
 [command,split_get](int $page, int $line)(string)
 [command,split_linecount](int $page)(int)
@@ -147,6 +150,7 @@
 [command,.softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
+[command,settimer2] // todo: will become .settimer later
 [command,cleartimer](timer $timer)
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
@@ -155,9 +159,11 @@
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay)
-[command,.queue](queue $queue, int $delay)
+[command,queue2](queue $queue, int $delay) // todo: will become .queue later
 [command,busy]()(boolean)
 [command,.busy]()(boolean)
+[command,busy2]()(boolean)
+[command,.busy2]()(boolean)
 [command,getqueue](queue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]
@@ -195,7 +201,7 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,walktrigger](walktrigger $trigger)
-[command,.walktrigger](walktrigger $trigger)
+[command,walktrigger2](walktrigger $trigger) // todo: will become .walktrigger later
 [command,getwalktrigger]()(walktrigger)
 [command,.getwalktrigger]()(walktrigger)
 [command,clearqueue](queue $queue)
@@ -219,12 +225,17 @@
 [command,npc_delay](int $delay)
 [command,.npc_delay](int $delay)
 [command,npc_facesquare](coord $coord)
+[command,npc_find](coord $coord, npc $npc, int $distance, int $checkvis)(boolean)
+[command,.npc_find](coord $coord, npc $npc, int $distance, int $checkvis)(boolean)
+[command,npc_findallany](coord $coord, int $distance, int $checkvis)(boolean)
+[command,.npc_findallany](coord $coord, int $distance, int $checkvis)(boolean)
 [command,npc_findexact](coord $coord, npc $npc)(boolean)
 [command,npc_findhero]()(boolean)
 [command,npc_param]/*(param $param)(dynamic)*/
 [command,npc_queue](int $ai_queue, int $arg, int $delay)
 [command,npc_range](coord $coord)(int)
 [command,npc_say](string $text)
+[command,.npc_say](string $text)
 [command,npc_sethunt](int $distance)
 [command,npc_sethuntmode](hunt $hunt)
 [command,npc_setmode](npc_mode $mode)
@@ -299,6 +310,8 @@
 [command,lc_category](loc $loc)(category)
 [command,lc_desc](loc $loc)(string)
 [command,lc_debugname](loc $loc)(string)
+[command,lc_width](loc $loc)(int)
+[command,lc_length](loc $loc)(int)
 
 // Obj config ops (4200-4299)
 [command,oc_name](obj $obj)(string)

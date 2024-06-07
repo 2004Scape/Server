@@ -2,12 +2,15 @@ import World from '#lostcity/engine/World.js';
 import {Position} from '#lostcity/entity/Position.js';
 import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
-import {hasLineOfSight, hasLineOfWalk} from '@2004scape/rsmod-pathfinder';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
+import NpcType from '#lostcity/cache/NpcType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
+import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Obj from '#lostcity/entity/Obj.js';
+
+import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 abstract class ScriptIterator<T> implements IterableIterator<T> {
     private readonly iterator: IterableIterator<T>;
@@ -78,13 +81,13 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (!player) {
                             continue;
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, player) > this.distance) {
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield player;
@@ -100,13 +103,20 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (!npc) {
                             continue;
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, npc) > this.distance) {
+                        const npcType = NpcType.get(npc.type);
+                        if (!npcType.op) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (!npcType.op[1]) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield npc;
@@ -119,13 +129,13 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, obj) > this.distance) {
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, obj) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield obj;
@@ -137,13 +147,13 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
-                        if (Position.distanceToSW({x: this.x, z: this.z}, loc) > this.distance) {
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, loc) > this.distance) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFSIGHT && !hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
                             continue;
                         }
-                        if (this.checkVis === HuntVis.LINEOFWALK && !hasLineOfWalk(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
                             continue;
                         }
                         yield loc;
@@ -158,27 +168,74 @@ export class NpcIterator extends ScriptIterator<Npc> {
     private readonly level: number;
     private readonly x: number;
     private readonly z: number;
+    private readonly minX: number;
+    private readonly maxX: number;
+    private readonly minZ: number;
+    private readonly maxZ: number;
+    private readonly distance: number;
+    private readonly checkVis: HuntVis;
+    private readonly type: NpcIteratorType;
 
-    constructor(tick: number, level: number, x: number, z: number) {
+    constructor(tick: number, level: number, x: number, z: number,  distance: number, checkVis: HuntVis, type: NpcIteratorType) {
         super(tick);
-        this.level = level;
+        const centerX: number = Position.zone(x);
+        const centerZ: number = Position.zone(z);
+        const radius: number = (1 + (distance / 8)) | 0;
         this.x = x;
         this.z = z;
+        this.level = level;
+        this.maxX = centerX + radius;
+        this.minX = centerX - radius;
+        this.maxZ = centerZ + radius;
+        this.minZ = centerZ - radius;
+        this.distance = distance;
+        this.checkVis = checkVis;
+        this.type = type;
     }
 
     protected *generator(): IterableIterator<Npc> {
-        const npcs: Set<number> = World.getZoneNpcs(this.x, this.z, this.level);
-
-        for (const nid of npcs) {
-            if (World.currentTick > this.tick) {
-                throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
+        if (this.type === NpcIteratorType.ZONE) {
+            const npcs: Set<number> = World.getZoneNpcs(this.x, this.z, this.level);
+            for (const nid of npcs) {
+                if (World.currentTick > this.tick) {
+                    throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
+                }
+                const npc: Npc | null = World.getNpc(nid);
+                if (!npc) {
+                    continue;
+                }
+                yield npc;
             }
-            const npc: Npc | null = World.getNpc(nid);
-            if (!npc) {
-                continue;
+        } else if (this.type === NpcIteratorType.DISTANCE) {
+            for (let x: number = this.maxX; x >= this.minX; x--) {
+                const zoneX: number = x << 3;
+                for (let z: number = this.maxZ; z >= this.minZ; z--) {
+                    const zoneZ: number = z << 3;
+                    const npcs: Set<number> = World.getZoneNpcs(zoneX, zoneZ, this.level);
+                    for (const nid of npcs) {
+                        if (World.currentTick > this.tick) {
+                            throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
+                        }
+                        const npc: Npc | null = World.getNpc(nid);
+                        if (!npc) {
+                            continue;
+                        }
+                        if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        yield npc;
+                    }
+                }
             }
-            yield npc;
         }
+
+        
     }
 }
 

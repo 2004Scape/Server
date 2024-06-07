@@ -7,6 +7,10 @@ export let CrcTable: number[] = [];
 export let CrcBuffer32: number = 0;
 
 function makeCrc(path: string) {
+    if (!fs.existsSync(path)) {
+        return;
+    }
+
     const packet = Packet.load(path);
     const crc = Packet.getcrc(packet.data, 0, packet.data.length);
     CrcTable.push(crc);

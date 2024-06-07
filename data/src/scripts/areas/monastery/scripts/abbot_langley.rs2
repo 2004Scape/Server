@@ -1,5 +1,5 @@
 [opnpc1,abbot_langley]
-~chatnpc(quiz, "Greetings traveller.");
+~chatnpc("<p,quiz>Greetings traveller.");
 if (%prayer_guild < 1) {
     @multi3("Can you heal me? I'm injured.", can_you_heal_me_im_injured, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way, "How do I get further into the monastery?", ask_to_join_abbot_langley);
 } else {
@@ -7,12 +7,12 @@ if (%prayer_guild < 1) {
 }
 
 [label,ask_to_join_abbot_langley]
-~chatplayer(happy, "How do I get further into the monastery?");
-~chatnpc(quiz, "I'm sorry but only members of our order are allowed|in the second level of the monastery.");
+~chatplayer("<p,happy>How do I get further into the monastery?");
+~chatnpc("<p,quiz>I'm sorry but only members of our order are allowed|in the second level of the monastery.");
 @ask_to_join_abbot_langley2;
 
 [label,can_you_heal_me_im_injured]
-~chatplayer(happy, "Can you heal me? I'm injured.");
-~chatnpc(quiz, "Ok.");
+~chatplayer("<p,happy>Can you heal me? I'm injured.");
+~chatnpc("<p,quiz>Ok.");
 stat_heal(hitpoints, calc(4 + scale(12, 100, stat_base(hitpoints))), 0);
 ~mesbox("<npc_name> places his hands on your head.|You feel a little better.");

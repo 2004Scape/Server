@@ -11,7 +11,7 @@ export async function packClientTexture() {
         return;
     }
 
-    console.log('Packing textures.jag');
+    //console.log('Packing textures.jag');
     //console.time('textures.jag');
 
     const order = [

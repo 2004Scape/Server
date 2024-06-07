@@ -1,15 +1,15 @@
 [opnpc1,kolodion]
 if (%magearena_progress < ^mage_arena_started) {
-    ~chatplayer(neutral, "Hello there. What is this place?");
+    ~chatplayer("<p,neutral>Hello there. What is this place?");
     // https://web.archive.org/web/20050306051554/http://runevillage.com/rs2specialMageArena.php
     // "You must have level 60 Magic or higher, (Wizard’s Mind Bomb doesn't work in the Arena)"
     if (stat_base(magic) < 60) {
-        ~chatnpc(angry, "Do not waste my time with trivial questions. I am the|Great Kolodion, master of battle magic. I have an arena|to run.");
-        ~chatplayer(quiz, "Can I enter?");
-        ~chatnpc(angry, "Hah! A wizard of your level? Don't be absurd.");
+        ~chatnpc("<p,angry>Do not waste my time with trivial questions. I am the|Great Kolodion, master of battle magic. I have an arena|to run.");
+        ~chatplayer("<p,quiz>Can I enter?");
+        ~chatnpc("<p,angry>Hah! A wizard of your level? Don't be absurd.");
         return;
     }
-    ~chatnpc(shifty, "I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|Gielinor to fight here.");
+    ~chatnpc("<p,shifty>I am the great Kolodion, master of battle magic, and|this is my battle arena. Top wizards travel from all over|Gielinor to fight here.");
     @multi3("Can I fight here?", kolodion_can_i_fight_here, "What's the point of that?", kolodion_whats_the_point, "That's barbaric!", kolodion_barbaric);
 }
 if (~mage_arena_in_progress = true) {
@@ -17,98 +17,98 @@ if (~mage_arena_in_progress = true) {
 } else if (%magearena_progress = ^mage_arena_started) {
     @kolodion_lets_fight;
 } else if (%magearena_progress = ^mage_arena_complete) {
-    ~chatplayer(neutral, "Hello, Kolodion.");
-    ~chatnpc(shifty,  "Hello, young mage. You're a tough one.");
+    ~chatplayer("<p,neutral>Hello, Kolodion.");
+    ~chatnpc("<p,shifty>Hello, young mage. You're a tough one.");
     @kolodion_what_now;
 }
 
 // default
-~chatplayer(neutral, "Hello, Kolodion.");
-~chatnpc(shifty, "Hey there, how are you? Are you enjoying the|bloodshed?");
-~chatplayer(neutral, "It's not bad; I've seen worse.");
+~chatplayer("<p,neutral>Hello, Kolodion.");
+~chatnpc("<p,shifty>Hey there, how are you? Are you enjoying the|bloodshed?");
+~chatplayer("<p,neutral>It's not bad; I've seen worse.");
 def_int $choice = ~p_choice3("I think I've had enough for now.", 1, "How can I use my new spells outside of the arena?", 2, "Are there any more challenges available?", 3);
 if ($choice = 1) {
-    ~chatplayer(bored, "I think I've had enough for now.");
-    ~chatnpc(neutral, "A shame. You're a good battle mage. I hope to see you|soon.");
+    ~chatplayer("<p,bored>I think I've had enough for now.");
+    ~chatnpc("<p,neutral>A shame. You're a good battle mage. I hope to see you|soon.");
     return;
 } else if ($choice = 2) {
-    ~chatplayer(quiz, "How can I use my new spells outside of the arena?");
-    ~chatnpc(shifty, "Experience, my friend, experience. Once you've used|the spell enough times in the arena, you'll be able to use|them in the rest of Gielinor.");
-    ~chatplayer(happy, "Good stuff.");
-    ~chatnpc(happy,  "Not so good for the citizens; they won't stand a chance.");
-    ~chatplayer(quiz, "How am I doing so far?");
+    ~chatplayer("<p,quiz>How can I use my new spells outside of the arena?");
+    ~chatnpc("<p,shifty>Experience, my friend, experience. Once you've used|the spell enough times in the arena, you'll be able to use|them in the rest of Gielinor.");
+    ~chatplayer("<p,happy>Good stuff.");
+    ~chatnpc("<p,happy>Not so good for the citizens; they won't stand a chance.");
+    ~chatplayer("<p,quiz>How am I doing so far?");
     // check for each spell if they're unlocked
     if (%saradomin_strike_casts < ^mage_arena_spell_finished) {
-        ~chatnpc(neutral, "You still need to train with the strike spell inside the|arena before you can use it outside.");
+        ~chatnpc("<p,neutral>You still need to train with the strike spell inside the|arena before you can use it outside.");
     } else {
-        ~chatnpc(happy, "You're experienced enough to use the strike spell|anywhere.");
+        ~chatnpc("<p,happy>You're experienced enough to use the strike spell|anywhere.");
     }
     if (%claws_of_guthix_casts < ^mage_arena_spell_finished) {
-        ~chatnpc(neutral, "You still need to train with the claw spell inside the|arena before you can use it outside.");
+        ~chatnpc("<p,neutral>You still need to train with the claw spell inside the|arena before you can use it outside.");
     } else {
-        ~chatnpc(happy, "You're experienced enough to use the claw spell|anywhere.");
+        ~chatnpc("<p,happy>You're experienced enough to use the claw spell|anywhere.");
     }
     if (%flames_of_zamorak_casts < ^mage_arena_spell_finished) {
-        ~chatnpc(neutral, "You still need to train with the flame spell inside the|arena before you can use it outside.");
+        ~chatnpc("<p,neutral>You still need to train with the flame spell inside the|arena before you can use it outside.");
     } else {
-        ~chatnpc(happy, "You're experienced enough to use the flame spell|anywhere.");
+        ~chatnpc("<p,happy>You're experienced enough to use the flame spell|anywhere.");
     }
     return;
 } else if ($choice = 3) {
-    ~chatplayer(quiz, "Are there any more challenges available?");
+    ~chatplayer("<p,quiz>Are there any more challenges available?");
     // check if the player has learned the god spells
-    ~chatnpc(sad, "You still need to learn how to cast all god spells outside|of the arena.");
-    ~chatnpc(neutral, "I've made a note of the spells you still need to learn in|your journal.");
+    ~chatnpc("<p,sad>You still need to learn how to cast all god spells outside|of the arena.");
+    ~chatnpc("<p,neutral>I've made a note of the spells you still need to learn in|your journal.");
     return;
 }
 
 [label,kolodion_can_i_fight_here]
-~chatplayer(quiz, "Can I fight here?");
-~chatnpc(shifty, "My arena is open to any high level wizard, but this is|no game. Many wizards fall in this arena, never to rise|again. The strongest mages have been destroyed.");
-~chatnpc(quiz, "If you're sure you want in?");
+~chatplayer("<p,quiz>Can I fight here?");
+~chatnpc("<p,shifty>My arena is open to any high level wizard, but this is|no game. Many wizards fall in this arena, never to rise|again. The strongest mages have been destroyed.");
+~chatnpc("<p,quiz>If you're sure you want in?");
 @multi2("Yes indeedy.", kolodion_yes_indeedy, "No I don't.", kolodion_no_i_dont);
 
 
 [label,kolodion_whats_the_point]
-~chatplayer(quiz, "What's the point of that?");
-~chatnpc(neutral, "We learn how to use our magic to its fullest and how|to channel the forces of the cosmos into our world...");
-~chatnpc(happy, "But mainly, I just like blasting people into dust.");
+~chatplayer("<p,quiz>What's the point of that?");
+~chatnpc("<p,neutral>We learn how to use our magic to its fullest and how|to channel the forces of the cosmos into our world...");
+~chatnpc("<p,happy>But mainly, I just like blasting people into dust.");
 @multi2("Can I fight here?", kolodion_can_i_fight_here, "That's barbaric!", kolodion_barbaric);
 
 
 [label,kolodion_barbaric]
-~chatplayer(shock, "That's barbaric!");
-~chatnpc(happy, "Nope, it's magic. But I know what you mean. So do|you want to join us?");
+~chatplayer("<p,shock>That's barbaric!");
+~chatnpc("<p,happy>Nope, it's magic. But I know what you mean. So do|you want to join us?");
 @multi2("Yes indeedy.", kolodion_yes_indeedy, "No I don't.", kolodion_no_i_dont);
 
 
 [label,kolodion_yes_indeedy]
-~chatplayer(happy, "Yes indeedy.");
-~chatnpc(happy, "Good, good. You have a healthy sense of competition.");
-~chatnpc(neutral, "Remember, traveller - in my arena, hand-to-hand|combat is useless. Your strength will diminish as you|enter the arena, but the spells you can learn are|amongst the most powerful in all of Gielinor.");
-~chatnpc(neutral, "Before I can accept you in, we must duel.|You may not take armour or weapons into the arena."); // second sentence is rsc
+~chatplayer("<p,happy>Yes indeedy.");
+~chatnpc("<p,happy>Good, good. You have a healthy sense of competition.");
+~chatnpc("<p,neutral>Remember, traveller - in my arena, hand-to-hand|combat is useless. Your strength will diminish as you|enter the arena, but the spells you can learn are|amongst the most powerful in all of Gielinor.");
+~chatnpc("<p,neutral>Before I can accept you in, we must duel.|You may not take armour or weapons into the arena."); // second sentence is rsc
 @multi2("Okay, let's fight.", kolodion_lets_fight, "No thanks.", exit);
 
 [label,kolodion_no_i_dont]
-~chatplayer(angry, "No I don't.");
-~chatnpc(neutral, "Your loss.");
+~chatplayer("<p,angry>No I don't.");
+~chatnpc("<p,neutral>Your loss.");
 
 [label,kolodion_lets_fight]
-~chatplayer(happy, "Okay, let's fight.");
-~chatnpc(neutral, "I must first check that you are up to scratch.");
+~chatplayer("<p,happy>Okay, let's fight.");
+~chatnpc("<p,neutral>I must first check that you are up to scratch.");
 if (~can_enter_mage_arena = false) {
     ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
     return;
 }
-~chatplayer(happy, "You don't need to worry about that.");
-~chatnpc(neutral, "Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
+~chatplayer("<p,happy>You don't need to worry about that.");
+~chatnpc("<p,neutral>Not just any magician can enter - only the most|powerful and most feared. Before you can use the|power of this arena, you must prove yourself against|me.");
 %magearena_progress = 1;
 
 @kolodion_teleport;
 
 [label,kolodion_return]
-~chatplayer(happy, "Hi.");
-~chatnpc(neutral, "You return, young conjurer. You obviously have a|taste for the dark side of magic.");
+~chatplayer("<p,happy>Hi.");
+~chatnpc("<p,neutral>You return, young conjurer. You obviously have a|taste for the dark side of magic.");
 if (~can_enter_mage_arena = false) {
     ~mesbox("You cannot enter the arena while carrying weapons or armour."); // rsc, might be mes
     return;
@@ -118,10 +118,10 @@ if (~can_enter_mage_arena = false) {
 @kolodion_teleport;
 
 [label,kolodion_what_now]
-~chatplayer(quiz, "What now?");
-~chatnpc(shifty, "Step into the magic pool. It will take you to a chamber.|There, you must decide which god you will represent in|the arena.");
-~chatplayer(happy, "Thanks, Kolodion.");
-~chatnpc(happy, "That's what I'm here for.");
+~chatplayer("<p,quiz>What now?");
+~chatnpc("<p,shifty>Step into the magic pool. It will take you to a chamber.|There, you must decide which god you will represent in|the arena.");
+~chatplayer("<p,happy>Thanks, Kolodion.");
+~chatnpc("<p,happy>That's what I'm here for.");
 
 [label,kolodion_teleport]
 // for some reason you can move for 1 tick during this
@@ -139,7 +139,12 @@ p_delay(3);
 p_teleport(^mage_arena_start_coord);
 anim(null, 0);
 def_npc $boss = enum(int, npc, mage_arena_bosses, %magearena_progress);
-~npc_del_within_distance2(^mage_arena_start_coord, $boss, 20); // remove the boss if its the same stage, and not in combat
+npc_huntall(^mage_arena_start_coord, 20, 0);
+while (npc_huntnext = true) {
+    if (npc_type = $boss & add(%npc_lastcombat, 8) <= map_clock) {
+        npc_del;
+    }
+}
 switch_int (%magearena_progress) {
     case ^mage_arena_started:
         // looks like the smoke appears 1t sooner than osrs (no 34 client tick delay as well)

@@ -31,8 +31,5 @@ jobs:
         npm i
         wget https://github.com/2004scape/RuneScriptCompiler/releases/latest/download/RuneScriptCompiler.jar
 
-    - name: Validate Client Cache
-      run: npm run client:build
-
-    - name: Validate Server Cache
-      run: npm run server:build
+    - name: Validate and Build Cache
+      run: npm run build

@@ -1,9 +1,9 @@
 [opnpc1,harry]
-~chatnpc(happy, "Welcome, you can buy fishing equipment at my store. We'll also give you a good price for any fish that you catch.");
+~chatnpc("<p,happy>Welcome, you can buy fishing equipment at my store. We'll also give you a good price for any fish that you catch.");
 def_int $option = ~p_choice2("Let's see what you've got then.", 1, "Sorry, I'm not interested.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "Let's see what you've got then.");
+    ~chatplayer("<p,neutral>Let's see what you've got then.");
     ~openshop_activenpc;
 } else if($option = 2) {
-    ~chatplayer(neutral, "Sorry, I'm not interested.");
+    ~chatplayer("<p,neutral>Sorry, I'm not interested.");
 }

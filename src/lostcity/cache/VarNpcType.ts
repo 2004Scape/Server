@@ -51,7 +51,7 @@ export default class VarNpcType extends ConfigType {
     }
 
     static get count() {
-        return VarNpcType.configs.length;
+        return this.configs.length;
     }
 
     // ----

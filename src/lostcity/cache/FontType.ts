@@ -30,6 +30,10 @@ export default class FontType {
         return FontType.instances[id];
     }
 
+    static get count() {
+        return this.instances.length;
+    }
+
     // ----
 
     charMask: Uint8Array[] = new Array(94);

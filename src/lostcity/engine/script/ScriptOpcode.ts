@@ -160,8 +160,8 @@ enum ScriptOpcode {
     P_WALK, // official
     PLAYER_FINDALLZONE, // todo: replace with huntall
     PLAYER_FINDNEXT, // todo: replace with huntnext
-    QUEUE,
-    SAY,
+    QUEUE, // official
+    SAY, // official
     WALKTRIGGER, // official
     SETTIMER,
     SOFTTIMER, // official
@@ -182,6 +182,10 @@ enum ScriptOpcode {
     SETIDKIT,
     P_CLEARPENDINGACTION, // official
     GETWALKTRIGGER, // official
+    BUSY2, // official
+    QUEUE2, // workaround until .queue is supported in compiler
+    SETTIMER2, // workaround until .settimer is supported in compiler
+    WALKTRIGGER2, // workaround until .walktrigger is supported in compiler
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official
@@ -194,6 +198,8 @@ enum ScriptOpcode {
     NPC_DEL, // official
     NPC_DELAY, // official
     NPC_FACESQUARE, // official
+    NPC_FIND, // official
+    NPC_FINDALLANY, // official
     NPC_FINDEXACT, // official
     NPC_FINDHERO, // official
     NPC_FINDALLZONE,
@@ -206,6 +212,8 @@ enum ScriptOpcode {
     NPC_QUEUE, // official
     NPC_RANGE, // official
     NPC_SAY, // official
+    NPC_HUNTALL, // official
+    NPC_HUNTNEXT,
     NPC_SETHUNT, // official
     NPC_SETHUNTMODE, // official
     NPC_SETMODE, // official
@@ -264,6 +272,8 @@ enum ScriptOpcode {
     LC_NAME,
     LC_OP,
     LC_PARAM,
+    LC_WIDTH,
+    LC_LENGTH,
 
     // Obj config ops (4200-4299)
     OC_CATEGORY = 4200, // official

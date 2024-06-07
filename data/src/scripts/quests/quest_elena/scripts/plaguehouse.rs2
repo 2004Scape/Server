@@ -38,10 +38,10 @@ switch_int(%elena_progress) {
             ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
         } else {
             ~mesbox("The door is locked.");
-            if (npc_finduid(~npc_within_distance(coord, elena_imprisoned, 5)) = true) {
-                ~chatnpc(shock, "Hey get me out of here please!");
-                ~chatplayer(sad, "I would do but I don't have a key.");
-                ~chatnpc(confused, "I think there may be one around somewhere. I'm sure I heard them stashing it somewhere.");
+            if (npc_find(coord, elena_imprisoned, 5, 0) = true) {
+                ~chatnpc("<p,shock>Hey get me out of here please!");
+                ~chatplayer("<p,sad>I would do but I don't have a key.");
+                ~chatnpc("<p,confused>I think there may be one around somewhere. I'm sure I heard them stashing it somewhere.");
                 @multi2("Have you caught the plague?", elena_improsoned_have_you_caught_the_plague, "Okay, I'll look for it.", elena_improsioned_ok_ill_look_for_it);
             }
         }
@@ -49,10 +49,10 @@ switch_int(%elena_progress) {
 }
 
 [label,elena_improsoned_have_you_caught_the_plague]
-~chatplayer(quiz, "Have you caught the plague?");
-~chatnpc(neutral, "No, I have none of the symptoms.");
-~chatplayer(confused, "Strange, I was told this house was plague infected.");
-~chatnpc(neutral, "I suppose that was a cover up by the kidnappers.");
+~chatplayer("<p,quiz>Have you caught the plague?");
+~chatnpc("<p,neutral>No, I have none of the symptoms.");
+~chatplayer("<p,confused>Strange, I was told this house was plague infected.");
+~chatnpc("<p,neutral>I suppose that was a cover up by the kidnappers.");
 
 [label,elena_improsioned_ok_ill_look_for_it]
-~chatplayer(neutral, "Okay, I'll look for it.");
+~chatplayer("<p,neutral>Okay, I'll look for it.");

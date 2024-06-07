@@ -9,7 +9,7 @@ export function packClientWordenc() {
         return;
     }
 
-    console.log('Packing wordenc.jag');
+    //console.log('Packing wordenc.jag');
     //console.time('wordenc.jag');
 
     /* order:

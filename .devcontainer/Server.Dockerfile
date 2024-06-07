@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/typescript-node:0-18
+FROM mcr.microsoft.com/devcontainers/typescript-node:22
 
 ARG USERNAME=vscode
 ARG USER_UID=2000

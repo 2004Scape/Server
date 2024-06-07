@@ -5,8 +5,8 @@ export default abstract class Entity {
     z: number;
 
     // size
-    width: number;
-    length: number;
+    width: number = 1;
+    length: number = 1;
 
     // runtime variables
     despawn: number = -1;

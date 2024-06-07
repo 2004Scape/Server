@@ -10,7 +10,7 @@ export function packClientSound() {
         return;
     }
 
-    console.log('Packing sounds.jag');
+    //console.log('Packing sounds.jag');
     //console.time('sounds.jag');
 
     const order = loadOrder('data/src/pack/sound.order');

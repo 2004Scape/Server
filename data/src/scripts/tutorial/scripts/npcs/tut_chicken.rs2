@@ -8,6 +8,6 @@ return;
 
 
 [proc,set_hint_icon_chicken]
-if (npc_finduid(~npc_within_distance(0_49_48_3_20, tut_chicken, 10)) = true) {
+if (npc_find(0_49_48_3_20, tut_chicken, 10, 0) = true) {
     hint_npc(npc_uid);
 }

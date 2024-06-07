@@ -53,7 +53,7 @@ export default class IfPlayerDesignHandler extends MessageHandler<IfPlayerDesign
         player.gender = gender;
         player.body = idkit;
         player.colors = color;
-        player.generateAppearance(InvType.getId('worn'));
+        player.generateAppearance(InvType.WORN);
         return true;
     }
 }

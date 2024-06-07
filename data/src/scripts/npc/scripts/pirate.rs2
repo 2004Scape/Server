@@ -1,68 +1,68 @@
 [opnpc1,_pirate]
-~chatplayer(neutral, "Hello!");
+~chatplayer("<p,neutral>Hello!");
 
 def_int $rand = random(29);
 if($rand = 0) {
-    ~chatnpc(neutral, "Batton down the hatches there's a storm brewin!");
+    ~chatnpc("<p,neutral>Batton down the hatches there's a storm brewin!");
 } else if ($rand = 1) {
-    ~chatnpc(neutral, "Great blackbeard's beard!");
+    ~chatnpc("<p,neutral>Great blackbeard's beard!");
 } else if ($rand = 2) {
-    ~chatnpc(neutral, "All hands on deck!");
+    ~chatnpc("<p,neutral>All hands on deck!");
 } else if ($rand = 3) {
-    ~chatnpc(neutral, "I think ye'll be talking a long walk off a short plank!");
+    ~chatnpc("<p,neutral>I think ye'll be talking a long walk off a short plank!");
 } else if ($rand = 4) {
-    ~chatnpc(neutral, "Arrrh ye lily livered landlubber!");
+    ~chatnpc("<p,neutral>Arrrh ye lily livered landlubber!");
 } else if ($rand = 5) {
-    ~chatnpc(neutral, "I'm the scourge of the six seas!");
-    ~chatplayer(neutral, "Don't you mean the seven seas?");
-    ~chatnpc(neutral, "I'm the scourge of the seven seas!");
+    ~chatnpc("<p,neutral>I'm the scourge of the six seas!");
+    ~chatplayer("<p,neutral>Don't you mean the seven seas?");
+    ~chatnpc("<p,neutral>I'm the scourge of the seven seas!");
 } else if ($rand = 6) {
-    ~chatnpc(neutral, "Yo ho ho and a bottle of alcopop!");
+    ~chatnpc("<p,neutral>Yo ho ho and a bottle of alcopop!");
 } else if ($rand = 7) {
-    ~chatnpc(neutral, "Arrh be off with ye!");
+    ~chatnpc("<p,neutral>Arrh be off with ye!");
 } else if ($rand = 8) {
-    ~chatnpc(neutral, "Shiver me timbers!");
+    ~chatnpc("<p,neutral>Shiver me timbers!");
 } else if ($rand = 9) {
-    ~chatnpc(neutral, "Man overboard!");
+    ~chatnpc("<p,neutral>Man overboard!");
 } else if ($rand = 10) {
-    ~chatnpc(neutral, "Arrh!");
+    ~chatnpc("<p,neutral>Arrh!");
 } else if ($rand = 11) {
-    ~chatnpc(neutral, "Yo ho ho me hearties!");
+    ~chatnpc("<p,neutral>Yo ho ho me hearties!");
 } else if ($rand = 12) {
-    ~chatnpc(neutral, "A pox on ye!");
+    ~chatnpc("<p,neutral>A pox on ye!");
 } else if ($rand = 13) {
-    ~chatnpc(neutral, "Oooh arrh!");
-    ~chatnpc(quiz, "No wait. That's a farmer.");
+    ~chatnpc("<p,neutral>Oooh arrh!");
+    ~chatnpc("<p,quiz>No wait. That's a farmer.");
 } else if ($rand = 14) {
-    ~chatnpc(neutral, "I'm the scourge of the seven seas!");
+    ~chatnpc("<p,neutral>I'm the scourge of the seven seas!");
 } else if ($rand = 15) {
-    ~chatnpc(neutral, "Arrh arrh!");
+    ~chatnpc("<p,neutral>Arrh arrh!");
 } else if ($rand = 16) {
-    ~chatnpc(neutral, "Yo ho ho and a bottle of rum!");
+    ~chatnpc("<p,neutral>Yo ho ho and a bottle of rum!");
 } else if ($rand = 17) {
-    ~chatnpc(neutral, "Splice the mainbrace!");
+    ~chatnpc("<p,neutral>Splice the mainbrace!");
 } else if ($rand = 18) {
-    ~chatnpc(neutral, "Arrh I'll keel haul ye!");
+    ~chatnpc("<p,neutral>Arrh I'll keel haul ye!");
 } else if ($rand = 19) {
-    ~chatnpc(neutral, "Ahoy there!");
+    ~chatnpc("<p,neutral>Ahoy there!");
 } else if ($rand = 20) {
-    ~chatnpc(neutral, "Avast behind!");
-    ~chatplayer(angry, "I'm not that fat!");
+    ~chatnpc("<p,neutral>Avast behind!");
+    ~chatplayer("<p,angry>I'm not that fat!");
 } else if ($rand = 21) {
-    ~chatnpc(neutral, "Arrh ye scurvy sea dog!");
+    ~chatnpc("<p,neutral>Arrh ye scurvy sea dog!");
 } else if ($rand = 22) {
-    ~chatnpc(neutral, "Pieces of eight! pieces of eight!");
-    ~chatnpc(neutral, "Pieces of eight! pieces of eight!");
+    ~chatnpc("<p,neutral>Pieces of eight! pieces of eight!");
+    ~chatnpc("<p,neutral>Pieces of eight! pieces of eight!");
 } else if ($rand = 23) {
-    ~chatnpc(neutral, "Keel haul them I say!");
+    ~chatnpc("<p,neutral>Keel haul them I say!");
 } else if ($rand = 24) {
-    ~chatnpc(neutral, "Good day to you my dear sir!");
+    ~chatnpc("<p,neutral>Good day to you my dear sir!");
 } else if ($rand = 25) {
-    ~chatnpc(neutral, "Arrh! I be in search of buried treasure!");
+    ~chatnpc("<p,neutral>Arrh! I be in search of buried treasure!");
 } else if ($rand = 26) {
-    ~chatnpc(neutral, "You'll be joining Davey Jone sin his locker!");
+    ~chatnpc("<p,neutral>You'll be joining Davey Jone sin his locker!");
 } else if ($rand = 27) {
-    ~chatnpc(neutral, "3 days at port for resupply then out on the high sea!");
+    ~chatnpc("<p,neutral>3 days at port for resupply then out on the high sea!");
 } else if ($rand = 28) {
-    ~chatnpc(neutral, "Avast me hearties!");
+    ~chatnpc("<p,neutral>Avast me hearties!");
 }

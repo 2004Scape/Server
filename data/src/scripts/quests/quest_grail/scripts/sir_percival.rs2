@@ -1,50 +1,50 @@
 [opnpc1,sir_percival]
 switch_int(%grail_progress) {
     case ^grail_finding_percival: @percival_found;
-    case ^grail_given_whistle: ~chatnpc(neutral, "I said I will see you there then!");
+    case ^grail_given_whistle: ~chatnpc("<p,neutral>I said I will see you there then!");
     case ^grail_complete:
-        ~chatplayer(quiz, "Aren't you supposed to be at the Grail Castle?");
-        ~chatnpc(confused, "Huh? I think you're confusing me with somebody else...");
+        ~chatplayer("<p,quiz>Aren't you supposed to be at the Grail Castle?");
+        ~chatnpc("<p,confused>Huh? I think you're confusing me with somebody else...");
     case default:
-        ~chatplayer(neutral, "Hello.");
-        ~chatnpc(neutral, "Hello yourself.");
+        ~chatplayer("<p,neutral>Hello.");
+        ~chatnpc("<p,neutral>Hello yourself.");
 }
 
 [label,percival_found]
-~chatnpc(happy, "Wow, thank you! I could hardly breathe in there!");
+~chatnpc("<p,happy>Wow, thank you! I could hardly breathe in there!");
 @multi3("How did you end up in a sack?", percival_sack, "Come with me, I shall make you a king.", percival_make_king, "Your father wishes to speak to you.", percival_father);
 
 [label,percival_sack]
-~chatplayer(quiz, "How did you end up in a sack?");
-~chatnpc(sad, "It's a little embarrassing really.");
-~chatnpc(sad, "After going on a long and challenging quest|to retrieve the boots of Arkaneeses,|defeating many powerful enemies on the way,|I fell into a goblin trap!");
-~chatnpc(sad, "I've been kept as a slave here for the last 3 months!");
-~chatnpc(sad, "A day or so ago, they decided it was a fun game|to put me in this sack:|then they forgot about me!");
-~chatnpc(sad, "I'm now very hungry, and my bones feel very stiff.");
+~chatplayer("<p,quiz>How did you end up in a sack?");
+~chatnpc("<p,sad>It's a little embarrassing really.");
+~chatnpc("<p,sad>After going on a long and challenging quest|to retrieve the boots of Arkaneeses,|defeating many powerful enemies on the way,|I fell into a goblin trap!");
+~chatnpc("<p,sad>I've been kept as a slave here for the last 3 months!");
+~chatnpc("<p,sad>A day or so ago, they decided it was a fun game|to put me in this sack:|then they forgot about me!");
+~chatnpc("<p,sad>I'm now very hungry, and my bones feel very stiff.");
 @multi2("Come with me, I shall make you a king.", percival_make_king, "Your father wishes to speak to you.", percival_father);
 
 [label,percival_make_king]
-~chatplayer(neutral, "Come with me, I shall make you a king.");
-~chatnpc(quiz, "What are you talking about?");
-~chatnpc(quiz, "The king of where?");
-~chatplayer(sad, "Your father is apparently someone called the Fisher King. He is dying and wishes you to be his heir.");
+~chatplayer("<p,neutral>Come with me, I shall make you a king.");
+~chatnpc("<p,quiz>What are you talking about?");
+~chatnpc("<p,quiz>The king of where?");
+~chatplayer("<p,sad>Your father is apparently someone called the Fisher King. He is dying and wishes you to be his heir.");
 @percival_told_that;
 
 [label,percival_father]
-~chatplayer(neutral, "Your father wishes to speak to you.");
-~chatnpc(quiz, "My father? You have spoken to him recently?");
-~chatplayer(sad, "He is dying and wishes you to be his heir.");
+~chatplayer("<p,neutral>Your father wishes to speak to you.");
+~chatnpc("<p,quiz>My father? You have spoken to him recently?");
+~chatplayer("<p,sad>He is dying and wishes you to be his heir.");
 @percival_told_that;
 
 [label,percival_told_that]
-~chatnpc(sad, "I have been told that before.");
-~chatnpc(sad, "I have not been able to find that castle again though...");
-~chatplayer(neutral, "Well, I do have the means to get us there - a magic whistle!");
+~chatnpc("<p,sad>I have been told that before.");
+~chatnpc("<p,sad>I have not been able to find that castle again though...");
+~chatplayer("<p,neutral>Well, I do have the means to get us there - a magic whistle!");
 if(inv_total(inv, magic_whistle) > 0) {
     ~mesbox("You give a whistle to Sir Percival. You tell sir Percival what to do with the whistle.");
-    ~chatnpc(neutral, "Ok, I will see you there then!");
+    ~chatnpc("<p,neutral>Ok, I will see you there then!");
     inv_del(inv, magic_whistle, 1);
     %grail_progress = ^grail_given_whistle;
     return;
 }
-~chatplayer(neutral, "I will just go and get you one.");
+~chatplayer("<p,neutral>I will just go and get you one.");

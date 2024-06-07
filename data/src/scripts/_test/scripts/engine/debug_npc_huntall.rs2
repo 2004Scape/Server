@@ -1,0 +1,33 @@
+[debugproc,npc_huntall]
+npc_huntall(coord, 10, 0);
+while (npc_huntnext = true) {
+    npc_say("Hello noob");
+}
+
+[debugproc,npc_huntall_secondary]
+npc_huntall(coord, 10, 0);
+while (.npc_huntnext = true) {
+    .npc_say("Hello noob");
+}
+
+[debugproc,npc_find]
+if (npc_find(coord, goblin_unarmed1, 5, 0) = true) {
+    npc_say("Hello");
+}
+
+[debugproc,npc_find2]
+if (.npc_find(coord, goblin_unarmed1, 5, 0) = true) {
+    .npc_say("Hello");
+}
+
+[debugproc,npc_findallany]
+npc_findallany(coord, 10, 0);
+while (npc_findnext = true) {
+    npc_say("NOOOBS");
+}
+
+[debugproc,npc_findallany2]
+.npc_findallany(coord, 10, 0);
+while (.npc_findnext = true) {
+    .npc_say("NOOOBS");
+}

@@ -197,6 +197,11 @@ param=defend_anim,human_blunt_defend2
 param=attack_sound,mace_crush
 // osrs defend seq_403
 // TODO
+// At some point (in 2005?) the huntmode was updated to be aggressive
+// when players are 2x or less than the npc combat level instead of
+// being aggressive at every combat level.
+// https://youtu.be/38OXzFeLIe8?t=25
+huntmode=constant_melee_always
 
 [traiborn]
 vislevel=107

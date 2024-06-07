@@ -14,11 +14,11 @@ def_int $option = ~p_choice2("Hi, what ales are you serving?", 1, "I'm doing Alf
 if($option = 1) {
     @barmaid_what_ales;
 } else if($option = 2) {
-    ~chatplayer(happy, "I'm doing Alfred Grimhand's Barcrawl.");
-    ~chatnpc(laugh, "Heehee, this'll be fun!");
-    ~chatnpc(shifty, "You'll be after our Hand of Death cocktail, then.|Lots of expensive parts to the cocktail, though,|so it will cost you 70 coins.");
+    ~chatplayer("<p,happy>I'm doing Alfred Grimhand's Barcrawl.");
+    ~chatnpc("<p,laugh>Heehee, this'll be fun!");
+    ~chatnpc("<p,shifty>You'll be after our Hand of Death cocktail, then.|Lots of expensive parts to the cocktail, though,|so it will cost you 70 coins.");
     if(inv_total(inv, coins) < 70) {
-        ~chatplayer(sad, "I don't have that much money on me.");
+        ~chatplayer("<p,sad>I don't have that much money on me.");
         return;
     }  
     if_close;
@@ -47,39 +47,39 @@ if($option = 1) {
 }
 
 [label,barmaid_what_ales]
-~chatplayer(quiz, "Hi, what ales are you serving?");
-~chatnpc(happy, "Well, you can either have a nice Asgarnian Ale, a Wizard's Mind Bomb or a Dwarven Stout.");
+~chatplayer("<p,quiz>Hi, what ales are you serving?");
+~chatnpc("<p,happy>Well, you can either have a nice Asgarnian Ale, a Wizard's Mind Bomb or a Dwarven Stout.");
 def_int $option = ~p_choice4("One Asgarnian Ale, please.", 1, "I'll try the Mind Bomb.", 2, "Can I have a Dwarven Stout?", 3, "I don't feel like any of those.", 4);
 if($option = 1) {
-    ~chatplayer(happy, "One Asgarnian Ale, please.");
-    ~chatnpc(happy, "That'll be two gold.");
+    ~chatplayer("<p,happy>One Asgarnian Ale, please.");
+    ~chatnpc("<p,happy>That'll be two gold.");
     if(inv_total(inv, coins) < 2) {
-        ~chatplayer(sad, "Oh dear, I don't seem to have enough money.");
+        ~chatplayer("<p,sad>Oh dear, I don't seem to have enough money.");
         return;
     }   
     inv_del(inv, coins, 2);
     inv_add(inv, asgarnian_ale, 1);
     mes("You buy an Asgarnian Ale.");
 } else if ($option = 2) {
-    ~chatplayer(happy, "I'll try the Mind Bomb.");
-    ~chatnpc(happy, "That'll be two gold.");
+    ~chatplayer("<p,happy>I'll try the Mind Bomb.");
+    ~chatnpc("<p,happy>That'll be two gold.");
     if(inv_total(inv, coins) < 2) {
-        ~chatplayer(sad, "Oh dear, I don't seem to have enough money.");
+        ~chatplayer("<p,sad>Oh dear, I don't seem to have enough money.");
         return;
     }   
     inv_del(inv, coins, 2);
     inv_add(inv, wizards_mind_bomb, 1);
     mes("You buy a pint of Wizard's Mind Bomb.");    
 } else if($option = 3) {
-    ~chatplayer(quiz, "Can I have a Dwarven Stout?");
-    ~chatnpc(happy, "That'll be three gold.");
+    ~chatplayer("<p,quiz>Can I have a Dwarven Stout?");
+    ~chatnpc("<p,happy>That'll be three gold.");
     if(inv_total(inv, coins) < 3) {
-        ~chatplayer(sad, "Oh dear, I don't seem to have enough money.");
+        ~chatplayer("<p,sad>Oh dear, I don't seem to have enough money.");
         return;
     }   
     inv_del(inv, coins, 3);
     inv_add(inv, dwarven_stout, 1);
     mes("You buy a pint of Dwarven Stout.");
 } else if($option = 4) {
-    ~chatplayer(neutral, "I don't feel like any of those.");
+    ~chatplayer("<p,neutral>I don't feel like any of those.");
 }
