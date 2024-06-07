@@ -118,6 +118,40 @@ function validateFilesPack(pack: PackFile, path: string, ext: string): void {
     pack.save();
 }
 
+function validateImagePack(pack: PackFile, path: string, ext: string): void {
+    pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+
+    const files = listFilesExt(path, ext);
+
+    const fileNames = new Set(files.map(x => basename(x, ext)));
+    for (let i = 0; i < files.length; i++) {
+        if (basename(dirname(files[i])) === 'meta') {
+            continue;
+        }
+
+        files[i] = files[i].substring(files[i].lastIndexOf('/') + 1); // strip file path
+        files[i] = files[i].substring(0, files[i].length - ext.length); // strip extension
+        fileNames.add(files[i]);
+
+        const name = files[i];
+        if (!pack.names.has(name)) {
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+            process.exit(1);
+        }
+    }
+
+    if (Environment.VALIDATE_PACK) {
+        for (const name of pack.names) {
+            if (!fileNames.has(name)) {
+                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+                process.exit(1);
+            }
+        }
+    }
+
+    pack.save();
+}
+
 function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false, reduce: boolean = false, reuse: boolean = false, recycle: boolean = false): void {
     const names = crawlConfigNames(ext);
     const configNames = new Set(names);
@@ -252,7 +286,7 @@ export let SeqPack = new PackFile('seq', validateConfigPack, '.seq');
 export let SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
 export let SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
 export let StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
-export let TexturePack = new PackFile('texture', validateFilesPack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
+export let TexturePack = new PackFile('texture', validateImagePack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
 export let VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
 export let VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
 export let VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);
@@ -280,7 +314,7 @@ export function revalidatePack() {
     SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
     SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
     StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
-    TexturePack = new PackFile('texture', validateFilesPack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
+    TexturePack = new PackFile('texture', validateImagePack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
     VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
     VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
     VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);

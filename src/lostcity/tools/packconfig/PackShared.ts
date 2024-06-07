@@ -368,7 +368,7 @@ export function packConfigs() {
         //console.log('Packing frame_del');
         //console.time('Packed frame_del');
         const files = listFilesExt('data/src/models', '.frame');
-        const frame_del = Packet.alloc(2);
+        const frame_del = Packet.alloc(3);
         for (let i = 0; i < AnimPack.max; i++) {
             const name = AnimPack.getById(i);
             if (!name.length) {

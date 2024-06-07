@@ -44,10 +44,6 @@ export function parseVarpConfig(key: string, value: string): ConfigValue | null 
             return null;
         }
 
-        if (key === 'clientcode' && (number < 0 || number > 8)) {
-            return null;
-        }
-
         return number;
     } else if (booleanKeys.includes(key)) {
         if (!isConfigBoolean(value)) {

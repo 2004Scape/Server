@@ -87,30 +87,6 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        if ((key === 'width' || key === 'length') && (number < 1 || number > 255)) {
-            return null;
-        }
-
-        if (key === 'wallwidth' && (number < 0 || number > 32 || number % 8 !== 0)) {
-            return null;
-        }
-
-        if ((key === 'ambient' || key === 'contrast') && (number < -128 || number > 127)) {
-            return null;
-        }
-
-        if (key === 'mapfunction' && (number < 0 || number > 50)) {
-            return null;
-        }
-
-        if ((key === 'resizex' || key === 'resizey' || key === 'resizez') && (number < 0 || number > 512)) {
-            return null;
-        }
-
-        if (key === 'mapscene' && (number < 0 || number > 50)) {
-            return null;
-        }
-
         return number;
     } else if (booleanKeys.includes(key)) {
         if (!isConfigBoolean(value)) {
@@ -151,6 +127,10 @@ export function parseLocConfig(key: string, value: string): ConfigValue | null |
         }
 
         return null;
+    } else if (key.startsWith('model')) {
+        // freshly unpacked! format is model<index>=<modelname>,<shape>
+        const shape = parseInt(value.split(',')[1]);
+        return [{ model: ModelPack.getByName(value), shape: shape }];
     } else if (key.startsWith('recol')) {
         const index = parseInt(key[5]);
         if (index > 9) {
@@ -249,6 +229,10 @@ export function packLocConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                 desc = value as string;
             } else if (key === 'model') {
                 models = value as LocModelShape[];
+            } else if (key.startsWith('model')) {
+                // refreshly unpacked!
+                const index = parseInt(key[5]) - 1;
+                models[index] = (value as LocModelShape[])[0];
             } else if (key.startsWith('recol')) {
                 const index = parseInt(key[5]) - 1;
                 if (key.endsWith('s')) {

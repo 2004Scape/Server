@@ -33,9 +33,9 @@ export function packClientModel() {
 
     // ----
 
-    const base_head = Packet.alloc(1);
-    const base_type = Packet.alloc(1);
-    const base_label = Packet.alloc(2);
+    const base_head = Packet.alloc(5);
+    const base_type = Packet.alloc(5);
+    const base_label = Packet.alloc(5);
 
     {
         base_head.p2(baseOrder.length);
@@ -85,10 +85,10 @@ export function packClientModel() {
 
     // ----
 
-    const frame_head = Packet.alloc(3);
-    const frame_tran1 = Packet.alloc(4);
-    const frame_tran2 = Packet.alloc(4);
-    const frame_del = Packet.alloc(2);
+    const frame_head = Packet.alloc(5);
+    const frame_tran1 = Packet.alloc(5);
+    const frame_tran2 = Packet.alloc(5);
+    const frame_del = Packet.alloc(5);
 
     {
         frame_head.p2(animOrder.length);
@@ -148,20 +148,20 @@ export function packClientModel() {
 
     // ----
 
-    const ob_head = Packet.alloc(3);
+    const ob_head = Packet.alloc(5);
     const ob_face1 = Packet.alloc(5);
-    const ob_face2 = Packet.alloc(4);
-    const ob_face3 = Packet.alloc(4);
-    const ob_face4 = Packet.alloc(3);
-    const ob_face5 = Packet.alloc(3);
-    const ob_point1 = Packet.alloc(4);
-    const ob_point2 = Packet.alloc(4);
-    const ob_point3 = Packet.alloc(4);
-    const ob_point4 = Packet.alloc(4);
-    const ob_point5 = Packet.alloc(4);
+    const ob_face2 = Packet.alloc(5);
+    const ob_face3 = Packet.alloc(5);
+    const ob_face4 = Packet.alloc(5);
+    const ob_face5 = Packet.alloc(5);
+    const ob_point1 = Packet.alloc(5);
+    const ob_point2 = Packet.alloc(5);
+    const ob_point3 = Packet.alloc(5);
+    const ob_point4 = Packet.alloc(5);
+    const ob_point5 = Packet.alloc(5);
     const ob_vertex1 = Packet.alloc(5);
-    const ob_vertex2 = Packet.alloc(4);
-    const ob_axis = Packet.alloc(3);
+    const ob_vertex2 = Packet.alloc(5);
+    const ob_axis = Packet.alloc(5);
 
     {
         ob_head.p2(modelOrder.length);

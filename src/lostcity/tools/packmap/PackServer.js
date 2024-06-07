@@ -93,6 +93,10 @@ function readMap(map) {
 }
 
 export function packServerMap() {
+    if (!fs.existsSync('data/src/maps')) {
+        return;
+    }
+
     let queue = [];
 
     fs.readdirSync('data/src/maps').filter(f => f.endsWith('.jm2')).forEach(file => {

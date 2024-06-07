@@ -53,27 +53,6 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        // range checks
-        if (key === '2dzoom' && (number < 0 || number > 5000)) {
-            return null;
-        }
-
-        if ((key === '2dxan' || key === '2dyan' || key === '2dzan') && (number < 0 || number > 5000)) {
-            return null;
-        }
-
-        if ((key === '2dxof' || key === '2dyof') && (number < -5000 || number > 5000)) {
-            return null;
-        }
-
-        if (key === 'cost' && (number < 0 || number > 0x7fff_ffff)) {
-            return null;
-        }
-
-        if (key === 'respawnrate' && (number < 0 || number > 12000)) {
-            return null;
-        }
-
         return number;
     } else if (booleanKeys.includes(key)) {
         if (!isConfigBoolean(value)) {
@@ -200,6 +179,14 @@ export function parseObjConfig(key: string, value: string): ConfigValue | null |
             type: param.type,
             value: paramValue
         };
+    } else if (key === 'certlink' || key === 'certtemplate') {
+        // freshly unpacked
+        const index = ObjPack.getByName(value);
+        if (index === -1) {
+            return null;
+        }
+
+        return index;
     } else {
         return undefined;
     }
@@ -211,12 +198,13 @@ export function packObjConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
 
     const template_for_cert = ObjPack.getByName('template_for_cert');
     if (template_for_cert === -1) {
-        throw packStepError('template_for_cert', 'Template for certificate does not exist.');
+        console.log('warning: template_for_cert does not exist, cannot auto-generate certificates');
     }
 
     for (let i = 0; i < ObjPack.size; i++) {
         const debugname = ObjPack.getById(i);
         let config;
+
         if (debugname.startsWith('cert_')) {
             const uncert = ObjPack.getByName(debugname.substring('cert_'.length));
             if (uncert === -1) {

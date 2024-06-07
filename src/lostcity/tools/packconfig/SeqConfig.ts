@@ -49,7 +49,7 @@ export function parseSeqConfig(key: string, value: string): ConfigValue | null |
             return null;
         }
 
-        if (key === 'replaycount' && (number < 0 || number > 10)) {
+        if (key === 'replaycount' && (number < 0 || number > 1000)) {
             return null;
         }
 
