@@ -303,7 +303,7 @@ class World {
     }
 
     startDevWatcher() {
-        this.devThread = createWorker('./src/lostcity/cache/pack.ts');
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -354,7 +354,7 @@ class World {
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/cache/pack.ts');
+                this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
             }
 
             this.devThread.postMessage({

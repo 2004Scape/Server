@@ -32,7 +32,7 @@ export async function packWorldmap() {
 
     if (
         !shouldBuildFileAny('data/pack/server/maps', 'data/pack/mapview/worldmap.jag') &&
-        !shouldBuildFile('src/lostcity/tools/packmap/Worldmap.ts', 'data/pack/mapview/worldmap.jag')
+        !shouldBuildFile('src/lostcity/cache/packmap/Worldmap.ts', 'data/pack/mapview/worldmap.jag')
     ) {
         return;
     }

@@ -341,12 +341,12 @@ export function packConfigs() {
         shouldBuild('data/src/scripts', '.obj', 'data/pack/client/config') ||
         shouldBuild('data/src/scripts', '.idk', 'data/pack/client/config') ||
         shouldBuild('data/src/scripts', '.varp', 'data/pack/client/config') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/client/config');
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/client/config');
 
     // not a config but we want the server to know all the possible categories
     if (
         shouldBuildFile('data/src/pack/category.pack', 'data/pack/server/category.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/category.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/category.dat')
     ) {
         //console.log('Packing categories');
         //console.time('Packed categories');
@@ -363,7 +363,7 @@ export function packConfigs() {
     // want the server to access frame lengths without loading data from models
     if (
         shouldBuild('data/src/models', '.frame', 'data/pack/server/frame_del.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/frame_del.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/frame_del.dat')
     ) {
         //console.log('Packing frame_del');
         //console.time('Packed frame_del');
@@ -406,7 +406,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbtable.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/dbtable.dat')
     ) {
         //console.log('Packing .dbtable');
         //console.time('Packed .dbtable');
@@ -424,9 +424,9 @@ export function packConfigs() {
     // todo: rebuild when any data type changes
     if (
         shouldBuild('data/src/scripts', '.dbrow', 'data/pack/server/dbrow.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbrow.dat') ||
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/dbrow.dat') ||
         shouldBuild('data/src/scripts', '.dbtable', 'data/pack/server/dbtable.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/dbtable.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/dbtable.dat')
     ) {
         //console.log('Packing .dbrow');
         //console.time('Packed .dbrow');
@@ -441,7 +441,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.enum', 'data/pack/server/enum.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/enum.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/enum.dat')
     ) {
         //console.log('Packing .enum');
         //console.time('Packed .enum');
@@ -456,7 +456,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.inv', 'data/pack/server/inv.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/inv.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/inv.dat')
     ) {
         //console.log('Packing .inv');
         //console.time('Packed .inv');
@@ -471,7 +471,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.mesanim', 'data/pack/server/mesanim.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/mesanim.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/mesanim.dat')
     ) {
         //console.log('Packing .mesanim');
         //console.time('Packed .mesanim');
@@ -486,7 +486,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.struct', 'data/pack/server/struct.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/struct.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/struct.dat')
     ) {
         //console.log('Packing .struct');
         //console.time('Packed .struct');
@@ -503,7 +503,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.seq', 'data/pack/server/seq.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/seq.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/seq.dat')
     ) {
         //console.log('Packing .seq');
         //console.time('Packed .seq');
@@ -526,7 +526,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.loc', 'data/pack/server/loc.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/loc.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/loc.dat')
     ) {
         //console.log('Packing .loc');
         //console.time('Packed .loc');
@@ -549,7 +549,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.flo', 'data/pack/server/flo.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/flo.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/flo.dat')
     ) {
         //console.log('Packing .flo');
         //console.time('Packed .flo');
@@ -572,7 +572,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.spotanim', 'data/pack/server/spotanim.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/spotanim.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/spotanim.dat')
     ) {
         //console.log('Packing .spotanim');
         //console.time('Packed .spotanim');
@@ -595,7 +595,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.npc', 'data/pack/server/npc.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/npc.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/npc.dat')
     ) {
         //console.log('Packing .npc');
         //console.time('Packed .npc');
@@ -618,7 +618,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.obj', 'data/pack/server/obj.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/obj.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/obj.dat')
     ) {
         //console.log('Packing .obj');
         //console.time('Packed .obj');
@@ -641,7 +641,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.idk', 'data/pack/server/idk.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/idk.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/idk.dat')
     ) {
         //console.log('Packing .idk');
         //console.time('Packed .idk');
@@ -664,7 +664,7 @@ export function packConfigs() {
 
     if (rebuildClient ||
         shouldBuild('data/src/scripts', '.varp', 'data/pack/server/varp.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/varp.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/varp.dat')
     ) {
         //console.log('Packing .varp');
         //console.time('Packed .varp');
@@ -687,7 +687,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.hunt', 'data/pack/server/hunt.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/hunt.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/hunt.dat')
     ) {
         //console.log('Packing .hunt');
         //console.time('Packed .hunt');
@@ -702,7 +702,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.varn', 'data/pack/server/varn.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/varn.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/varn.dat')
     ) {
         //console.log('Packing .varn');
         //console.time('Packed .varn');
@@ -717,7 +717,7 @@ export function packConfigs() {
 
     if (
         shouldBuild('data/src/scripts', '.vars', 'data/pack/server/vars.dat') ||
-        shouldBuild('src/lostcity/tools/packconfig', '.ts', 'data/pack/server/vars.dat')
+        shouldBuild('src/lostcity/cache/packconfig', '.ts', 'data/pack/server/vars.dat')
     ) {
         //console.log('Packing .vars');
         //console.time('Packed .vars');
