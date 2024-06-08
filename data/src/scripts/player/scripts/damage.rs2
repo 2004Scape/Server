@@ -22,7 +22,8 @@ mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleap
 
 // todo, check if a player has recieved kill credit for your death
 // if so use inv_dropall and ~pvp_death_message
-if (~in_duel_arena = true & .finduid(%duelpartner) = true & ~.in_duel_arena = true) {
+def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
+if (~in_duel_arena = true & ~.in_duel_arena = true & .finduid(%duelpartner) = true) {
     if_close;
     .if_close;
     %duelstatus = ^duelstatus_lost;
@@ -33,7 +34,75 @@ if (~in_duel_arena = true & .finduid(%duelpartner) = true & ~.in_duel_arena = tr
     queue2(duel_arena_finish, 0);
     // player2 can move freely whilst player 1 is in death anim: https://youtu.be/BBYbpuquiZw?t=412 (vid he equips dragon sword)
     return;
+} else if (findhero = true) {
+    ~pvp_death_lose_items;
+} else {
+    ~player_death_lose_items;
 }
+
+buildappearance(worn);
+~deactivate_prayers;
+p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
+anim(null, 0);
+
+~stat_reset_all;
+healenergy(10000);
+~combat_clearqueue;
+clearqueue(player_death);
+~clear_pk_skull;
+~clear_poison;
+~update_all($prev_wep);
+// todo: end poison timer ~player_end_poison
+
+
+[proc,player_death_lose_items]
+def_boolean $skulled = false;
+if (%pk_skull > 0) { $skulled = true; }
+def_boolean $protecting_item = false;
+if (%prayer_protectitems = ^true) { $protecting_item = true; }
+inv_clear(death);
+
+if($skulled = false) {
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+    ~move_priciest_item_on_hero_to_death;
+}
+if($protecting_item = true) {
+    ~move_priciest_item_on_hero_to_death;
+}
+
+def_int $i = 0;
+def_int $size = inv_size(inv);
+while ($i < $size) {
+    if (inv_getnum(inv, $i) > 0) {
+        if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
+            inv_delslot(inv, $i);
+        } else {
+            inv_dropslot(inv, coord, $i, 200); // todo: inv_dropall (visible to all instantly)
+        }
+    }
+    $i = calc($i + 1);
+}
+
+$i = 0;
+$size = inv_size(worn);
+while ($i < $size) {
+    if (inv_getnum(worn, $i) > 0) {
+        if (oc_category(inv_getobj(worn, $i)) = armour_godcape) {
+            mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
+            inv_delslot(worn, $i);
+        } else {
+            inv_dropslot(worn, coord, $i, 200); // todo: inv_dropall (visible to all instantly)
+        }
+    }
+    $i = calc($i + 1);
+}
+~moveallinv(death, inv);
+inv_clear(death);
+
+[proc,pvp_death_lose_items]
+~pvp_death_message(.uid);
 
 def_boolean $skulled = false;
 if (%pk_skull > 0) { $skulled = true; }
@@ -52,7 +121,6 @@ if($protecting_item = true) {
 
 def_int $i = 0;
 def_int $size = inv_size(inv);
-def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
 while ($i < $size) {
     if (inv_getnum(inv, $i) > 0) {
         if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
@@ -78,21 +146,9 @@ while ($i < $size) {
     }
     $i = calc($i + 1);
 }
-buildappearance(worn);
-
 ~moveallinv(death, inv);
-~deactivate_prayers;
-p_telejump(~coord_lineofwalk_radius(0_50_50_21_18, 2));
-anim(null, 0);
-
-~stat_reset_all;
-healenergy(10000);
-~combat_clearqueue;
-~clear_pk_skull;
-~clear_poison;
-// todo: end poison timer ~player_end_poison
-~update_all($prev_wep);
 inv_clear(death);
+
 
 [proc,move_priciest_item_on_hero_to_death]
 def_obj $priciest_item;

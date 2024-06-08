@@ -159,7 +159,7 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) =
     queue2(pvp_damage, 0, $recoil_damage);
     ~ring_of_recoil_lose_charge($recoil_damage);
 }
-if (stat(hitpoints) = 0) {
+if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {
     queue(player_death, 0);
     return;
 }

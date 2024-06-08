@@ -51,11 +51,12 @@ sound_synth(%com_attacksound, 0, 0);
 queue2(pvp_retaliate, calc($delay / 30), uid);
 queue2(pvp_damage, calc($delay / 30), $damage);
 
+both_heropoints($damage);
+
 .anim(.%com_defendanim, $delay);
 // .sound_synth(.%com_defendsound, 0, 20);
 // sound_synth(.%com_defendsound, 0, 20);
 
-// todo: heropoints
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
     %action_delay = add(map_clock, 4);
