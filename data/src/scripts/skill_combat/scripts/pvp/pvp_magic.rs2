@@ -203,12 +203,6 @@ if ($maxhit ! null) {
     ~give_combat_experience_pvp(%damagestyle, $damage, ~pvp_xp_multiplier(~.player_combat_level));
 }
 
-if (.inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & $damage > 0) {
-    def_int $recoil_damage = add(scale(10, 100, $damage), 1);
-    queue(pvp_damage, 0, $recoil_damage);
-    ~ring_of_recoil_lose_charge($recoil_damage);
-}
-
 both_heropoints($damage);
 
 // spell visual
