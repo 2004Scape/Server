@@ -342,15 +342,12 @@ export default class Player extends PathingEntity {
         const index = this.heroPoints.findIndex(hero => hero && hero.uid === uid);
         if (index !== -1) {
             this.heroPoints[index].points += points;
-            console.log('Hero exists');
             return;
         }
 
         // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
         const emptyIndex = this.heroPoints.findIndex(hero => hero && hero.uid === -1);
-        console.log(this.heroPoints);
         if (emptyIndex !== -1) {
-            console.log(uid);
             this.heroPoints[emptyIndex] = { uid, points };
             return;
         }

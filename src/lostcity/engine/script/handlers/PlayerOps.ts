@@ -412,9 +412,8 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const added = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(added, 255);
-
-        if (player.levels[3] === player.baseLevels[3]) {
-            player.resetHeroPoints;
+        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+            player.resetHeroPoints();
         }
     }),
 
@@ -452,8 +451,8 @@ const PlayerOps: CommandHandlers = {
         const healed = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(healed, base);
 
-        if (player.levels[3] === player.baseLevels[3]) {
-            player.resetHeroPoints;
+        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+            player.resetHeroPoints();
         }
     }),
 
@@ -951,14 +950,12 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDHERO]: state => {
         const uid = state.activePlayer.findHero();
         if (uid === -1) {
-            console.log('No heros');
             state.pushInt(0);
             return;
         }
 
         const player = World.getPlayerByUid(uid);
         if (!player) {
-            console.log('Hero uid null');
             state.pushInt(0);
             return;
         }
@@ -969,7 +966,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.BOTH_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2], state => {
         if (!state._activePlayer2) {
-            console.log('No active_player2');
             return;
         }
         state.activePlayer.addHero(state._activePlayer2.uid, check(state.popInt(), NumberNotNull));
