@@ -947,7 +947,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
     }),
 
-    [ScriptOpcode.FINDHERO]: state => {
+    [ScriptOpcode.FINDHERO]: checkedHandler(ActivePlayer, state => {
         const uid = state.activePlayer.findHero();
         if (uid === -1) {
             state.pushInt(0);
@@ -962,7 +962,7 @@ const PlayerOps: CommandHandlers = {
         state._activePlayer2 = player;
         state.pointerAdd(ScriptPointer.ActivePlayer2);
         state.pushInt(1);
-    },
+    }),
 
     [ScriptOpcode.BOTH_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2], state => {
         if (!state._activePlayer2) {
