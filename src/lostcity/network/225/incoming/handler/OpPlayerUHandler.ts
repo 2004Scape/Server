@@ -47,8 +47,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
 
         player.lastUseSlot = slot;
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, { type: item, com: -1 });
         player.opcalled = true;
         return true;

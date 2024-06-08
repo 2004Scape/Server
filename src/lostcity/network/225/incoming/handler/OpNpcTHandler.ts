@@ -29,8 +29,7 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
             return false;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCT, { type: npc.type, com: spellComId });
         player.opcalled = true;
         return true;
