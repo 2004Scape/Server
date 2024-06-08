@@ -3,10 +3,10 @@ if (%gnomeball_progress = ^gnomeball_not_started) {
     @gnomeball_ref_first_start;
 }
 if (~gnomeball_game_active = true) {
-    ~chatnpc(neutral, "You have a ball in play.|Do you need to hear the rules again?");
+    ~chatnpc("<p,neutral>You have a ball in play.|Do you need to hear the rules again?");
     @multi2("Yes please.", gnomeball_hear_rules, "No thanks.", gnomeball_no_hear_rules);
 }
-~chatnpc(neutral, "Hi, welcome back to Gnomeball. Would you like to hear the rules again?");
+~chatnpc("<p,neutral>Hi, welcome back to Gnomeball. Would you like to hear the rules again?");
 @multi3("Yes please.", gnomeball_hear_rules, "I just want to play.", gnomeball_just_want_to_play, "No, I don't want to play.", gnomeball_dont_want_to_play);
 
 
@@ -19,7 +19,7 @@ if (~gnomeball_game_active = true) {
 [proc,gnomeball_game_start]
 %gnomeball_progress = ^gnomeball_game_started;
 if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
-    ~chatnpc(neutral, "The ball you have in your hand is fine to play with...|Game on.");
+    ~chatnpc("<p,neutral>The ball you have in your hand is fine to play with...|Game on.");
     return;
 }
 if_close;
@@ -41,41 +41,41 @@ p_delay(0);
 
 
 [label,gnomeball_ref_first_start]
-~chatnpc(happy, "Hi, welcome to Gnomeball. It's pretty simple really: You take the ball from me, charge at the gnome defence and try to throw the ball through the net using your ranged skill.");
-~chatnpc(neutral, "It's a rough game but great fun. It's also great for improving agility. So do you fancy a game?");
+~chatnpc("<p,happy>Hi, welcome to Gnomeball. It's pretty simple really: You take the ball from me, charge at the gnome defence and try to throw the ball through the net using your ranged skill.");
+~chatnpc("<p,neutral>It's a rough game but great fun. It's also great for improving agility. So do you fancy a game?");
 def_int $choice = ~p_choice2("Looks too dangerous for me!", 1, "Okay then, I'll have a go.", 2);
 
 if ($choice = 1) {
-    ~chatplayer(neutral, "Looks too dangerous for me!");
-    ~chatnpc(neutral, "You may be right, we've seen humans die on this field.");
+    ~chatplayer("<p,neutral>Looks too dangerous for me!");
+    ~chatnpc("<p,neutral>You may be right, we've seen humans die on this field.");
     return;
 }
 
-~chatplayer(neutral, "Okay then, I'll have a go.");
-~chatnpc(neutral, "Great stuff! There are few rules to Gnomeball, so it can get a bit rough.");
-~chatnpc(neutral, "You can pass to the green winger gnomes. Then you can make a run and they'll pass back. Otherwise, if you're feeling brave, you can just charge and dodge.");
-~chatplayer(neutral, "Sounds easy enough.");
-~chatnpc(neutral, "The main aim is to leave with no broken limbs. I think you should be fine.");
+~chatplayer("<p,neutral>Okay then, I'll have a go.");
+~chatnpc("<p,neutral>Great stuff! There are few rules to Gnomeball, so it can get a bit rough.");
+~chatnpc("<p,neutral>You can pass to the green winger gnomes. Then you can make a run and they'll pass back. Otherwise, if you're feeling brave, you can just charge and dodge.");
+~chatplayer("<p,neutral>Sounds easy enough.");
+~chatnpc("<p,neutral>The main aim is to leave with no broken limbs. I think you should be fine.");
 %gnomeball_progress = ^gnomeball_talked_to_ref;
 ~gnomeball_game_start;
 
 [label,gnomeball_hear_rules]
-~chatnpc(happy, "It's pretty simple really: You take the ball from me, charge at the gnome defence and try to throw the ball through the net using your ranged skill.");
-~chatnpc(neutral, "It's a rough game but great fun. It's also great for improving agility.");
-~chatnpc(neutral, "You can pass to the green winger gnomes. Then you can make a run and they'll pass back. Otherwise, if you're feeling brave, you can just charge and dodge.");
-~chatplayer(neutral, "Sounds easy enough.");
-~chatnpc(neutral, "The main aim is to leave with no broken limbs. I think you should be fine.");
+~chatnpc("<p,happy>It's pretty simple really: You take the ball from me, charge at the gnome defence and try to throw the ball through the net using your ranged skill.");
+~chatnpc("<p,neutral>It's a rough game but great fun. It's also great for improving agility.");
+~chatnpc("<p,neutral>You can pass to the green winger gnomes. Then you can make a run and they'll pass back. Otherwise, if you're feeling brave, you can just charge and dodge.");
+~chatplayer("<p,neutral>Sounds easy enough.");
+~chatnpc("<p,neutral>The main aim is to leave with no broken limbs. I think you should be fine.");
 ~gnomeball_game_start;
 
 [label,gnomeball_no_hear_rules]
-~chatplayer(neutral, "No thanks.");
-~chatnpc(neutral, "Okay, good luck.");
+~chatplayer("<p,neutral>No thanks.");
+~chatnpc("<p,neutral>Okay, good luck.");
 
 [label,gnomeball_just_want_to_play]
-~chatplayer(neutral, "I just want to play.");
-~chatnpc(neutral, "Okay... Let's play GNOMEBALL!");
+~chatplayer("<p,neutral>I just want to play.");
+~chatnpc("<p,neutral>Okay... Let's play GNOMEBALL!");
 ~gnomeball_game_start;
 
 [label,gnomeball_dont_want_to_play]
-~chatplayer(neutral, "No, I don't want to play.");
-~chatnpc(neutral, "Okay, never mind. Maybe next time...");
+~chatplayer("<p,neutral>No, I don't want to play.");
+~chatnpc("<p,neutral>Okay, never mind. Maybe next time...");
