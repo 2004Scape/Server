@@ -98,6 +98,8 @@ while ($i < $size) {
     }
     $i = calc($i + 1);
 }
+
+obj_add(coord, bones, 1, 200); // todo: obj_addall
 ~moveallinv(death, inv);
 inv_clear(death);
 
@@ -146,6 +148,7 @@ while ($i < $size) {
     }
     $i = calc($i + 1);
 }
+.obj_add(coord, bones, 1, 200);
 ~moveallinv(death, inv);
 inv_clear(death);
 
