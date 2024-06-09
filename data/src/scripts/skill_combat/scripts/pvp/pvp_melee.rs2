@@ -35,19 +35,21 @@ sound_synth(%com_attacksound, 0, 0);
 .sound_synth(.%com_attacksound, 0, 0);
 
 queue2(pvp_retaliate, 0, uid);
-if (.p_finduid(.uid) = true) {
-    ~.pvp_damage($damage);
-}
-// queue2(pvp_damage, calc($delay / 30), $damage);
+queue2(pvp_damage, 0, $damage);
+
+both_heropoints($damage);
 
 .anim(.%com_defendanim, 20);
 // .sound_synth(.%com_defendsound, 0, 20);
 // sound_synth(.%com_defendsound, 0, 20);
 
-// todo: heropoints
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
     %action_delay = add(map_clock, 4);
 } else {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
+    def_int $poison_severity = oc_param($weapon, poison_severity);
+    if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
+        queue2(poison_player, 0, $poison_severity);
+    }
 }

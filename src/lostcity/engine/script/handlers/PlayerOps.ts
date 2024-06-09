@@ -412,6 +412,9 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const added = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(added, 255);
+        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+            player.resetHeroPoints();
+        }
     }),
 
     [ScriptOpcode.STAT_SUB]: checkedHandler(ActivePlayer, state => {
@@ -447,6 +450,10 @@ const PlayerOps: CommandHandlers = {
         const current = player.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
         player.levels[stat] = Math.min(healed, base);
+
+        if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
+            player.resetHeroPoints();
+        }
     }),
 
     [ScriptOpcode.UID]: checkedHandler(ActivePlayer, state => {
@@ -938,6 +945,30 @@ const PlayerOps: CommandHandlers = {
         }
         state.activePlayer.stopAction();
         state.activePlayer.setInteraction(Interaction.SCRIPT, target, ServerTriggerType.APPLAYERT, {type: -1, com: spellId});
+    }),
+
+    [ScriptOpcode.FINDHERO]: checkedHandler(ActivePlayer, state => {
+        const uid = state.activePlayer.findHero();
+        if (uid === -1) {
+            state.pushInt(0);
+            return;
+        }
+
+        const player = World.getPlayerByUid(uid);
+        if (!player) {
+            state.pushInt(0);
+            return;
+        }
+        state._activePlayer2 = player;
+        state.pointerAdd(ScriptPointer.ActivePlayer2);
+        state.pushInt(1);
+    }),
+
+    [ScriptOpcode.BOTH_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2], state => {
+        if (!state._activePlayer2) {
+            return;
+        }
+        state.activePlayer.addHero(state._activePlayer2.uid, check(state.popInt(), NumberNotNull));
     }),
 };
 

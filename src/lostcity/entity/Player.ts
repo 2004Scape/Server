@@ -302,6 +302,11 @@ export default class Player extends PathingEntity {
 
     staffModLevel: number = 0;
 
+    heroPoints: {
+        uid: number;
+        points: number;
+    }[] = new Array(16); // be sure to reset when stats are recovered/reset
+
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC, Player.FACE_COORD, Player.FACE_ENTITY, true); // tutorial island.
         this.username = username;
@@ -327,6 +332,35 @@ export default class Player extends PathingEntity {
         this.lastLevels.fill(-1);
     }
 
+    resetHeroPoints() {
+        this.heroPoints = new Array(16);
+        this.heroPoints.fill({ uid: -1, points: 0 });
+    }
+
+    addHero(uid: number, points: number) {
+        // check if hero already exists, then add points
+        const index = this.heroPoints.findIndex(hero => hero && hero.uid === uid);
+        if (index !== -1) {
+            this.heroPoints[index].points += points;
+            return;
+        }
+
+        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
+        const emptyIndex = this.heroPoints.findIndex(hero => hero && hero.uid === -1);
+        if (emptyIndex !== -1) {
+            this.heroPoints[emptyIndex] = { uid, points };
+            return;
+        }
+    }
+
+    findHero(): number {
+        // quicksort heroes by points
+        this.heroPoints.sort((a, b) => {
+            return b.points - a.points;
+        });
+        return this.heroPoints[0]?.uid ?? -1;
+    }
+
     resetEntity(respawn: boolean) {
         if (respawn) {
             // if needed for respawning
@@ -350,6 +384,7 @@ export default class Player extends PathingEntity {
         this.writeHighPriority(ServerProt.UPDATE_UID192, this.pid); // todo: low or high priority
         this.unsetMapFlag();
         this.writeHighPriority(ServerProt.RESET_ANIMS); // todo: low or high priority
+        this.resetHeroPoints();
 
         this.writeHighPriority(ServerProt.RESET_CLIENT_VARCACHE);
         for (let varp = 0; varp < this.vars.length; varp++) {
