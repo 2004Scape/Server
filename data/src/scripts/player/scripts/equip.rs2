@@ -54,7 +54,7 @@ if (p_finduid(uid) = true) {
     if (~duel_arena_flower_power_unequip_check($slot) = false) {
         return;
     }
-    if ($slot = ^wearpos_rhand & ~gnomeball_game_active = true & $obj = gnomeball & ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    if ($slot = ^wearpos_rhand & %gnomeball_progress = ^gnomeball_game_started & $obj = gnomeball & ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
         mes("You feel it would be cheating to put the ball in your pack whilst on the pitch.");
         return;
     }

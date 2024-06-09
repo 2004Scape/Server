@@ -2,7 +2,7 @@
 if (%gnomeball_progress = ^gnomeball_not_started) {
     @gnomeball_ref_first_start;
 }
-if (~gnomeball_game_active = true) {
+if (%gnomeball_progress = ^gnomeball_game_started) {
     ~chatnpc("<p,neutral>You have a ball in play.|Do you need to hear the rules again?");
     @multi2("Yes please.", gnomeball_hear_rules, "No thanks.", gnomeball_no_hear_rules);
 }
