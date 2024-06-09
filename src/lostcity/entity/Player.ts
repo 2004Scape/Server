@@ -686,8 +686,7 @@ export default class Player extends PathingEntity {
 
     // clear current interaction and walk queue
     stopAction() {
-        this.clearInteraction();
-        this.closeModal();
+        this.clearPendingAction();
         this.unsetMapFlag();
     }
 

@@ -52,8 +52,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
         player.lastUseItem = item;
         player.lastUseSlot = slot;
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJU);
         player.opcalled = true;
         return true;
