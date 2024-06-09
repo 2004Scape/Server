@@ -109,7 +109,7 @@ if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     return;
 }
 if ($obj = null | (map_members = false & oc_members($obj) = true)) {
-    ~weapon_category_tab_attack_unarmed;
+    ~weapon_category_tab_attack_unarmed($obj);
     return;
 }
 switch_category (oc_category($obj)) {
@@ -130,7 +130,7 @@ switch_category (oc_category($obj)) {
     // magic
     case weapon_staff: ~weapon_category_tab_attack(combat_staff_2:preview, combat_staff_2:name, combat_staff_2, $obj);
     // unarmed everything else
-    case default: ~weapon_category_tab_attack_unarmed;
+    case default: ~weapon_category_tab_attack_unarmed($obj);
 }
 
 [proc,weapon_category_tab_attack](component $component1, component $component2, interface $interface, obj $obj)
@@ -139,9 +139,13 @@ if_settext($component2, "<oc_name($obj)>");
 if_settab($interface, 0);
 
 // sends the unarmed interface tab
-[proc,weapon_category_tab_attack_unarmed]
+[proc,weapon_category_tab_attack_unarmed](obj $obj)
 // yes this is actually "unarmed" between beta and 2005-ish.
-if_settext(combat_unarmed:name, "unarmed");
+if ($obj = null) {
+    if_settext(combat_unarmed:name, "unarmed");
+} else {
+    if_settext(combat_unarmed:name, "<oc_name($obj)>"); // gnomeball uses this
+}
 if_settab(combat_unarmed, 0);
 
 [proc,.update_weapon_category](obj $previous)
@@ -162,7 +166,7 @@ if (~.inzone_coord_pair_table(gnomeball_zones, .coord) = true) {
     return;
 }
 if ($obj = null | (map_members = false & oc_members($obj) = true)) {
-    ~weapon_category_tab_attack_unarmed;
+    ~.weapon_category_tab_attack_unarmed($obj);
     return;
 }
 switch_category (oc_category($obj)) {
@@ -183,7 +187,7 @@ switch_category (oc_category($obj)) {
     // magic
     case weapon_staff: ~.weapon_category_tab_attack(combat_staff_2:preview, combat_staff_2:name, combat_staff_2, $obj);
     // unarmed everything else
-    case default: ~.weapon_category_tab_attack_unarmed;
+    case default: ~.weapon_category_tab_attack_unarmed($obj);
 }
 
 [proc,.weapon_category_tab_attack](component $component1, component $component2, interface $interface, obj $obj)
@@ -192,7 +196,11 @@ switch_category (oc_category($obj)) {
 .if_settab($interface, 0);
 
 // sends the unarmed interface tab
-[proc,.weapon_category_tab_attack_unarmed]
+[proc,.weapon_category_tab_attack_unarmed](obj $obj)
 // yes this is actually "unarmed" between beta and 2005-ish.
-.if_settext(combat_unarmed:name, "unarmed");
+if ($obj = null) {
+    .if_settext(combat_unarmed:name, "unarmed");
+} else {
+    .if_settext(combat_unarmed:name, "<oc_name($obj)>"); // gnomeball uses this
+}
 .if_settab(combat_unarmed, 0);
