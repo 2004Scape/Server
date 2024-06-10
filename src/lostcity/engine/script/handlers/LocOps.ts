@@ -9,9 +9,11 @@ import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, {ActiveLoc, checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import {LocIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import Zone from '#lostcity/engine/zone/Zone.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import {
     check,
@@ -36,8 +38,18 @@ const LocOps: CommandHandlers = {
         const locShape: LocShape = check(shape, LocShapeValid);
         check(duration, DurationValid);
 
-        const loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, locType.id, locShape, locAngle);
-        World.addLoc(loc, duration);
+        const zone: Zone = World.getZone(position.x, position.z, position.level);
+
+        let loc: Loc;
+        const staticLoc: number = zone.staticLocs.findIndex(loc => loc.type === locType.id && loc.angle === locAngle && loc.shape === locShape && loc.x === position.x && loc.z === position.z && !loc.checkLifeCycle(World.currentTick));
+        if (staticLoc === -1) {
+            loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
+            World.addLoc(loc, duration);
+        } else {
+            loc = zone.staticLocs[staticLoc];
+            World.addLoc(loc, -1);
+        }
+
         state.activeLoc = loc;
         state.pointerAdd(ActiveLoc[state.intOperand]);
     },
@@ -65,7 +77,7 @@ const LocOps: CommandHandlers = {
 
         World.removeLoc(state.activeLoc, duration);
 
-        const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, id, state.activeLoc.shape, state.activeLoc.angle);
+        const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
         World.addLoc(loc, duration);
         state.activeLoc = loc;
         state.pointerAdd(ActiveLoc[state.intOperand]);
@@ -87,7 +99,7 @@ const LocOps: CommandHandlers = {
         const position: Position = check(coord, CoordValid);
 
         const loc = World.getLoc(position.x, position.z, position.level, locType.id);
-        if (!loc || loc.respawn !== -1) {
+        if (!loc) {
             state.pushInt(0);
             return;
         }

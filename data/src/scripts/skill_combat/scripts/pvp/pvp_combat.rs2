@@ -146,64 +146,49 @@ switch_int($damagestyle) {
 givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 
 // needs to be a queue
-[proc,.pvp_damage](int $damage)
-~.damage_self($damage);
-if (.stat(hitpoints) = 0) {
-    // todo: duel arena death in the death queue
-    if (~in_duel_arena = true) {
-        %duelstatus = 6;
-        .%duelstatus = 0;
-        .%duelpartner = null;
+[queue,pvp_damage](int $damage)
+if_close;
+if ($damage > 0) {
+    damage(uid, 1, $damage);
+    ~human_hit_sound;
+} else {
+    damage(uid, 0, 0);
+}
+if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) = true & $damage > 0) {
+    // https://oldschool.runescape.wiki/w/Update:Clue_Scroll_Step_Counter
+    // - "Recoil damage will now always target the entity that caused the initial damage, rather than the most recent entity to deal damage."
+    // Having it here instead of the opplayer2 trigger will allow this bug to occur
+    def_int $recoil_damage = add(scale(10, 100, $damage), 1);
+    queue2(recoil_damage, 0, $recoil_damage);
+    ~ring_of_recoil_lose_charge($recoil_damage);
+}
+if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {
+    queue(player_death, 0);
+    return;
+}
 
-        .if_close;
-        .p_stopaction;
-        // .midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
-        // .anim(human_death, 0);
-        // .p_delay(6);
-        .p_telejump(~duel_arena_finish_coord(.coord));
-        ~.stat_reset_all;
-        .healenergy(10000);
-        ~.combat_clearqueue;
-        ~.clear_poison;
-        ~.update_all(.inv_getobj(worn, ^wearpos_rhand));
-        .hint_stop;
-        def_int $i = 0;
-        while ($i < .inv_size(duel_arena_arrows)) {
-            if (.inv_getobj(duel_arena_arrows, $i) ! null) {
-                //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-                .inv_movefromslot(duel_arena_arrows, inv, $i);
-            }
-            $i = calc($i + 1);
-        }
-        
-        p_stopaction;
-        queue(duel_arena_finished, 0, .displayname, ~.player_combat_level);
-        ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
-        p_delay(0);
-        if_close;
-        p_telejump(~duel_arena_finish_coord(coord));
-        ~stat_reset_all;
-        healenergy(10000);
-        ~combat_clearqueue;
-        ~clear_poison;
-        ~update_all(inv_getobj(worn, ^wearpos_rhand));
-        hint_stop;
-        return;
-    }
-    // these messages need to be in the death queue https://youtu.be/9Q8BbGi2VWg?t=136
-    def_int $random = random(11);
-    switch_int($random) {
-        case 0 : mes("You have defeated <.displayname>.");
-        case 1 : mes("<.displayname> was no match for you.");
-        case 2 : mes("With a crushing blow you finish <.displayname>.");
-        case 3 : mes("Can anyone defeat you? Certainly not <.displayname>.");
-        case 4 : mes("<.displayname> regrets the day they met you in combat.");
-        case 5 : mes("It's all over for <.displayname>.");
-        case 6 : mes ("<.displayname> didn't stand a chance against you.");
-        case 7 : mes("A humiliating defeat for <.displayname>.");
-        case 8 : mes("<.displayname> falls before your might.");
-        case 9 : mes("<.displayname> has won a free ticket to Lumbridge.");
-        case 10 : mes("You were clearly a better fighter than <.displayname>.");
-        case default : mes("You have defeated <.displayname>.");
-    }
+~ring_of_life_check;
+
+
+[queue,recoil_damage](int $damage) // seperate queue to avoid infinite recoil loop
+~damage_self($damage);
+
+[proc,pvp_death_message](player_uid $opponent)
+if (.finduid($opponent) = false) {
+    return;
+}
+def_int $random = random(11);
+switch_int($random) {
+    case 0 : .mes("You have defeated <displayname>.");
+    case 1 : .mes("<displayname> was no match for you.");
+    case 2 : .mes("With a crushing blow you finish <displayname>.");
+    case 3 : .mes("Can anyone defeat you? Certainly not <displayname>.");
+    case 4 : .mes("<displayname> regrets the day they met you in combat.");
+    case 5 : .mes("It's all over for <displayname>.");
+    case 6 : .mes ("<displayname> didn't stand a chance against you.");
+    case 7 : .mes("A humiliating defeat for <displayname>.");
+    case 8 : .mes("<displayname> falls before your might.");
+    case 9 : .mes("<displayname> has won a free ticket to Lumbridge.");
+    case 10 : .mes("You were clearly a better fighter than <displayname>.");
+    case default : .mes("You have defeated <displayname>.");
 }

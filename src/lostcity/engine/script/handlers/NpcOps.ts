@@ -22,6 +22,7 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -65,10 +66,8 @@ const NpcOps: CommandHandlers = {
         const npcType: NpcType = check(id, NpcTypeValid);
         check(duration, DurationValid);
 
-        const npc = new Npc(position.level, position.x, position.z, npcType.size, npcType.size, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-        npc.static = false;
-        npc.despawn = World.currentTick + duration;
-        World.addNpc(npc);
+        const npc = new Npc(position.level, position.x, position.z, npcType.size, npcType.size, EntityLifeCycle.DESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
+        World.addNpc(npc, duration);
         state.activeNpc = npc;
         state.pointerAdd(ActiveNpc[state.intOperand]);
     },
@@ -100,7 +99,7 @@ const NpcOps: CommandHandlers = {
             return;
         }
 
-        World.removeNpc(state.activeNpc);
+        World.removeNpc(state.activeNpc, check(state.activeNpc.type, NpcTypeValid).respawnrate);
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, state => {

@@ -203,7 +203,8 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^flower_power) = true) {
-    mes("You can only use flowers for this duel."); // guess
+    mes("This is a 'flower power' duel. You can only use flowers."); // guess based off of 2006 vid
+    // 2006: "This is a 'fun weapon' duel. You can only use flowers or a rubber|chicken."
     return(false);
 }
 return(true);
@@ -216,7 +217,8 @@ if (~in_duel_arena = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^flower_power) = true) {
-    mes("You can only use flowers for this duel."); // guess
+    mes("This is a 'flower power' duel. You can only use flowers."); // guess based off of 2006 vid
+    // 2006: "This is a 'fun weapon' duel. You can only use flowers or a rubber|chicken."
     return(false);
 }
 return(true);
@@ -253,7 +255,8 @@ if (testbit(%duel_settings, ^no_magic) = true) {
     return(false);
 }
 if (testbit(%duel_settings, ^flower_power) = true) {
-    mes("You can only attack with flowers in this duel."); // guess
+    mes("This is a 'flower power' duel. You can only use flowers."); // guess based off of 2006 vid
+    // 2006: "This is a 'fun weapon' duel. You can only use flowers or a rubber|chicken."
     return(false);
 }
 return(true);

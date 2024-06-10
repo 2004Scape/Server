@@ -52,8 +52,7 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
         player.lastUseItem = item;
         player.lastUseSlot = slot;
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCU);
         player.opcalled = true;
         return true;

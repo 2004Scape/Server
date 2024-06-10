@@ -118,3 +118,22 @@ if ($new_ring = null) {
     mes("Your ring of dueling has <~pluralise(oc_param($new_ring, charges), "use")> left.");
 }
 
+[proc,ring_of_recoil_lose_charge](int $recoil_damage)
+%ring_of_recoil = add(max(%ring_of_recoil, 0), $recoil_damage);
+if (%ring_of_recoil >= 40) {
+    %ring_of_recoil = 0;
+    inv_delslot(worn, ^wearpos_ring);
+    mes("Your Ring of Recoil has shattered.");
+}
+
+[proc,ring_of_life_check]
+if (p_finduid(uid) = true) {
+    if (inv_getobj(worn, ^wearpos_ring) ! ring_of_life | ~wilderness_level(coord) > 30 | ~in_duel_arena = true) {
+        return;
+    }
+    if (stat(hitpoints) <= scale(10, 100, stat_base(hitpoints))) {
+        mes("Your Ring of Life saves you and is destroyed in the process.");
+        inv_delslot(worn, ^wearpos_ring);
+        ~player_teleport_normal(~coord_lineofwalk_radius(0_50_50_21_18, 2));
+    }
+}

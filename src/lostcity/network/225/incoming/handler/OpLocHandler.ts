@@ -47,8 +47,7 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
             mode = ServerTriggerType.APLOC5;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, loc, mode);
         player.opcalled = true;
         return true;

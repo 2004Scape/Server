@@ -3,8 +3,11 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+
 import LocType from '#lostcity/cache/config/LocType.js';
+
 import Loc from '#lostcity/entity/Loc.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
@@ -190,7 +193,7 @@ export default class CollisionManager {
                 const absoluteX: number = x + mapsquareX;
                 const absoluteZ: number = z + mapsquareZ;
 
-                zoneManager.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, locId, shape, angle));
+                zoneManager.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
 
                 if (type.blockwalk) {
                     this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);

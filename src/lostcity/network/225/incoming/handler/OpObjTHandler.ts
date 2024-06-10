@@ -33,8 +33,7 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
             return false;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJT, { type: obj.type, com: spellComId });
         player.opcalled = true;
         return true;

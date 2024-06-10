@@ -3,15 +3,15 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 import NpcType from '#lostcity/cache/config/NpcType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
-
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import World from '#lostcity/engine/World.js';
 
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
-import World from '#lostcity/engine/World.js';
-import ObjType from '#lostcity/cache/config/ObjType.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 export default class GameMap {
     readonly collisionManager = new CollisionManager();
@@ -44,12 +44,12 @@ export default class GameMap {
 
                     const size = npcType.size;
 
-                    const npc = new Npc(level, mapsquareX + localX, mapsquareZ + localZ, size, size, World.getNextNid(), id, npcType.moverestrict, npcType.blockwalk);
+                    const npc = new Npc(level, mapsquareX + localX, mapsquareZ + localZ, size, size, EntityLifeCycle.RESPAWN, World.getNextNid(), id, npcType.moverestrict, npcType.blockwalk);
 
                     if (npcType.members && World.members) {
-                        World.addNpc(npc);
+                        World.addNpc(npc, -1);
                     } else if (!npcType.members) {
-                        World.addNpc(npc);
+                        World.addNpc(npc, -1);
                     }
                 }
             }
@@ -66,7 +66,7 @@ export default class GameMap {
                     const objId = objMap.g2();
                     const objCount = objMap.g1();
 
-                    const obj = new Obj(level, mapsquareX + localX, mapsquareZ + localZ, objId, objCount);
+                    const obj = new Obj(level, mapsquareX + localX, mapsquareZ + localZ, EntityLifeCycle.RESPAWN, objId, objCount);
 
                     const objType = ObjType.get(objId);
                     if (objType.members && World.members) {

@@ -1,0 +1,18 @@
+[debugproc,findhero]
+if (findhero = true) {
+    mes(.displayname);
+    if (.findhero = true) {
+        mes(displayname);
+    }
+}
+
+
+[debugproc,both_heropoints]
+huntall(coord, 5, 0);
+while (.huntnext = true) {
+    if (uid ! .uid) {
+        both_heropoints(1);
+        mes("both_heropoints(1);");
+    }
+}
+

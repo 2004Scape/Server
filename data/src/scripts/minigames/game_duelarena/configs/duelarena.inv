@@ -7,5 +7,6 @@ allstock=no
 stock1=rotten_tomato,2000,10
 
 
-[duel_arena_arrows]
+[stakeinv]
 size=29
+protect=no

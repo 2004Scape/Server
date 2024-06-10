@@ -1,4 +1,5 @@
 import World from '#lostcity/engine/World.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
@@ -10,9 +11,9 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import { Direction, Position } from '#lostcity/entity/Position.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import LocType from '#lostcity/cache/config/LocType.js';
-import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
@@ -79,8 +80,8 @@ export default abstract class PathingEntity extends Entity {
     graphicHeight: number = -1;
     graphicDelay: number = -1;
 
-    protected constructor(level: number, x: number, z: number, width: number, length: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk, coordmask: number, entitymask: number, smart: boolean) {
-        super(level, x, z, width, length);
+    protected constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, moveRestrict: MoveRestrict, blockWalk: BlockWalk, coordmask: number, entitymask: number, smart: boolean) {
+        super(level, x, z, width, length, lifecycle);
         this.moveRestrict = moveRestrict;
         this.blockWalk = blockWalk;
         this.coordmask = coordmask;
@@ -503,7 +504,7 @@ export default abstract class PathingEntity extends Entity {
             this.faceX = -1;
             this.faceZ = -1;
             this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.target) {
+        } else if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
             this.mask |= this.entitymask;
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;

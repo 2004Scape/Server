@@ -33,8 +33,7 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
             return false;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCT, { type: loc.type, com: spellComId });
         player.opcalled = true;
         return true;

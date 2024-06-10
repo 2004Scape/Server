@@ -43,8 +43,7 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
             mode = ServerTriggerType.APNPC5;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, npc, mode, { type: npc.type, com: -1 });
         player.opcalled = true;
         return true;
