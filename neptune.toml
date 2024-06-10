@@ -8,7 +8,7 @@ symbols = ["data/symbols/"]
 # compile time cost.
 check_pointers = true
 
-# Bianry file writer configuration
+# Binary file writer configuration
 [writer.binary]
 # The output path
 output = "data/pack/server"
