@@ -9,6 +9,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import Npc from '#lostcity/entity/Npc.js';
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
+import {EntityLifeCycle} from '#lostcity/entity/EntityLifeCycle.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -45,8 +46,8 @@ if (!deathScript) {
     process.exit(1);
 }
 
-const npc = new Npc(0, 3222, 3221, 1, 1, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-World.addNpc(npc);
+const npc = new Npc(0, 3222, 3221, 1, 1, EntityLifeCycle.RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
+World.addNpc(npc, -1);
 npc.addHero(player.uid, 1);
 
 for (let i = 0; i < iterations; i++) {

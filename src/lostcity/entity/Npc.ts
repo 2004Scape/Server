@@ -32,6 +32,7 @@ import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Interaction from '#lostcity/entity/Interaction.js';
+import {EntityLifeCycle} from '#lostcity/entity/EntityLifeCycle.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
@@ -63,7 +64,6 @@ export default class Npc extends PathingEntity {
     baseLevels: Uint8Array;
 
     // runtime variables
-    static: boolean = true; // static (map) or dynamic (scripted) npc
     vars: Int32Array;
     varsString: string[];
 
@@ -86,8 +86,8 @@ export default class Npc extends PathingEntity {
         points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
-    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, moveRestrict, blockWalk, Npc.FACE_COORD, Npc.FACE_ENTITY, false);
+    constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
+        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, Npc.FACE_COORD, Npc.FACE_ENTITY, false);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
@@ -165,8 +165,6 @@ export default class Npc extends PathingEntity {
         if (respawn) {
             this.type = this.origType;
             this.uid = (this.type << 16) | this.nid;
-            this.despawn = -1;
-            this.respawn = -1;
             this.orientation = Direction.SOUTH;
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
