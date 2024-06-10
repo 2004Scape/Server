@@ -16,6 +16,7 @@ import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import Interaction from '#lostcity/entity/Interaction.js';
+import PlayerStat from '#lostcity/entity/PlayerStat.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
 
@@ -38,7 +39,6 @@ import {
     SpotAnimTypeValid,
     StringNotNull,
 } from '#lostcity/engine/script/ScriptValidators.js';
-import PlayerStat from '#lostcity/entity/PlayerStat.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
