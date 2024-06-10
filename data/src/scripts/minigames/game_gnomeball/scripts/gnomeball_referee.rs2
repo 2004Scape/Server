@@ -28,6 +28,9 @@ if (%gnomeball_progress = ^gnomeball_game_started) {
 if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
     ~chatnpc("<p,neutral>The ball you have in your hand is fine to play with...|Game on.");
     return;
+} else if (inv_total(inv, gnomeball) > 0) {
+    ~chatnpc("<p,neutral>Ahh I see you have your own ball. We can't play with|that; I'll give it back when you leave.");
+    inv_del(inv, gnomeball, inv_total(inv, gnomeball));
 }
 if_close;
 npc_say("Peeeeeeeeeep");

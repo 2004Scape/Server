@@ -11,7 +11,6 @@ mes(~coord_tostring(loc_coord));
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 def_boolean $exiting = ~check_axis(coord, loc_coord, loc_angle);
 if ($exiting = false) { 
-    ~gnomeball_reset;
     if ($obj ! null) {
         if (inv_itemspace(inv, $obj, inv_total(worn, $obj), inv_size(inv)) = false) {
             mes("You do not have free inventory space for what you carry.");
@@ -24,13 +23,15 @@ if ($exiting = false) {
         mes("The ref takes your ball for safe keeping. You will get it back when you leave.");
         inv_delslot(worn, ^wearpos_rhand);
         inv_del(inv, gnomeball, inv_total(inv, gnomeball));
+        inv_add(gnomeball, gnomeball, 1);
     }
 } else {
     ~open_and_close_door(loc_param(next_loc_stage), $exiting, false);
-    if (%gnomeball_progress = ^gnomeball_player_has_won) {
+    if (inv_total(gnomeball, gnomeball) > 0) {
         // give free gnomeball
         if (inv_freespace(inv) = 0) {
             inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
+            return; // https://youtu.be/acS5ZgHsZQM?t=190
         } else {
             inv_add(inv, gnomeball, 1);
         }
@@ -46,13 +47,18 @@ if ($exiting = false) {
     }
     ~gnomeball_reset;
 }
-
 ~update_all($obj);
 
 [proc,gnomeball_reset]
 if (%gnomeball_progress > ^gnomeball_not_started) {
     %gnomeball_progress = ^gnomeball_talked_to_ref;
 }
+
+inv_clear(gnomeball);
+if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
+    inv_delslot(worn, ^wearpos_rhand);
+}
+
 npc_findallany(^gnomeball_centre_coord, 14, 0);
 while (npc_findnext = true) {
     // basically if gnome has ball, and ball was taken from player no longer in gnomeball game, then reset npc
@@ -84,6 +90,17 @@ if ($npc_uid ! null) {
     }
 }
 return(false);
+
+[opheld5,gnomeball]
+if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    mes("The ball magically returns to the ref as you put it down.");
+    inv_delslot(inv, last_slot);
+    anim(human_pickupfloor, 0);
+    sound_synth(pick, 0, 0);
+    return;
+}
+~dropslot(last_slot);
+
 
 [debugproc,gg]
 if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {

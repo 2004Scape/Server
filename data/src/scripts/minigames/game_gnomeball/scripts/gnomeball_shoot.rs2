@@ -47,6 +47,7 @@ if ($land_coord = loc_coord) {
     %gnomeball = min(add(max(%gnomeball, 0), 1), 5);
     if (%gnomeball = 5) {
         mes("You win!");
+        inv_add(gnomeball, gnomeball, 1);
         %gnomeball = 0;
         givexp(ranged, 300);
         givexp(agility, 300);
