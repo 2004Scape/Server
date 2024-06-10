@@ -1,8 +1,8 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import Player from '#lostcity/entity/Player.js';
 import IfPlayerDesign from '#lostcity/network/incoming/model/IfPlayerDesign.js';
-import IdkType from '#lostcity/cache/IdkType.js';
-import InvType from '#lostcity/cache/InvType.js';
+import IdkType from '#lostcity/cache/config/IdkType.js';
+import InvType from '#lostcity/cache/config/InvType.js';
 
 export default class IfPlayerDesignHandler extends MessageHandler<IfPlayerDesign> {
     handle(message: IfPlayerDesign, player: Player): boolean {
@@ -53,7 +53,7 @@ export default class IfPlayerDesignHandler extends MessageHandler<IfPlayerDesign
         player.gender = gender;
         player.body = idkit;
         player.colors = color;
-        player.generateAppearance(InvType.getId('worn'));
+        player.generateAppearance(InvType.WORN);
         return true;
     }
 }

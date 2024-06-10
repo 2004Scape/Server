@@ -1,5 +1,5 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
-import NpcType from '#lostcity/cache/NpcType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import World from '#lostcity/engine/World.js';
@@ -43,8 +43,7 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
             mode = ServerTriggerType.APNPC5;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, npc, mode, { type: npc.type, com: -1 });
         player.opcalled = true;
         return true;

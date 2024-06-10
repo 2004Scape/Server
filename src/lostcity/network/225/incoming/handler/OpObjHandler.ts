@@ -1,5 +1,5 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import World from '#lostcity/engine/World.js';
 import OpObj from '#lostcity/network/incoming/model/OpObj.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
@@ -48,8 +48,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
             mode = ServerTriggerType.APOBJ5;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, obj, mode);
         player.opcalled = true;
         return true;

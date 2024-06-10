@@ -1,4 +1,4 @@
-import EnumType from '#lostcity/cache/EnumType.js';
+import EnumType from '#lostcity/cache/config/EnumType.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
@@ -9,9 +9,7 @@ const EnumOps: CommandHandlers = {
     [ScriptOpcode.ENUM]: state => {
         const [inputType, outputType, enumId, key] = state.popInts(4);
 
-        check(enumId, EnumTypeValid);
-
-        const enumType = EnumType.get(enumId);
+        const enumType: EnumType = check(enumId, EnumTypeValid);
 
         // verify types
         if (enumType.inputtype !== inputType || enumType.outputtype !== outputType) {
@@ -27,10 +25,7 @@ const EnumOps: CommandHandlers = {
     },
 
     [ScriptOpcode.ENUM_GETOUTPUTCOUNT]: state => {
-        const enumId = check(state.popInt(), EnumTypeValid);
-
-        const enumType = EnumType.get(enumId);
-        state.pushInt(enumType.values.size);
+        state.pushInt(check(state.popInt(), EnumTypeValid).values.size);
     }
 };
 

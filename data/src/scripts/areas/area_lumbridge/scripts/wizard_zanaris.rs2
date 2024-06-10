@@ -1,24 +1,24 @@
 [opnpc1,wizard_zanaris]
 if(map_members = false) { // RS3
-    ~chatplayer(happy, "Hello!");
-    ~chatnpc(neutral, "Blast! I was in the middle of my magical meditations - now you've gone and spoiled it! Why did you have to interrupt me?");
-    ~chatplayer(happy, "Oh, sorry. I was just trying to be friendly.");
-    ~chatnpc(neutral, "Never mind! Good day to you, sir.");
+    ~chatplayer("<p,happy>Hello!");
+    ~chatnpc("<p,neutral>Blast! I was in the middle of my magical meditations - now you've gone and spoiled it! Why did you have to interrupt me?");
+    ~chatplayer("<p,happy>Oh, sorry. I was just trying to be friendly.");
+    ~chatnpc("<p,neutral>Never mind! Good day to you, sir.");
     return;
 }
 switch_int (%zanaris_progress) {
     case ^zanaris_not_started:
-        ~chatplayer(quiz, "Why are all of you standing around here?");
-        ~chatnpc(happy, "Hahaha you dare talk to a mighty wizard such as myself? I bet you can't even cast windstrike yet amateur!");
-        ~chatplayer(neutral, "...You're an idiot.");
+        ~chatplayer("<p,quiz>Why are all of you standing around here?");
+        ~chatnpc("<p,happy>Hahaha you dare talk to a mighty wizard such as myself? I bet you can't even cast windstrike yet amateur!");
+        ~chatplayer("<p,neutral>...You're an idiot.");
         return;
     case ^zanaris_started:
-        ~chatplayer(quiz, "Found that leprechaun yet?");
-        ~chatnpc(happy, "Hahaha go away amateur!|You're not worthy of joining our great group!");
-        ~chatplayer(neutral, "...right.");
+        ~chatplayer("<p,quiz>Found that leprechaun yet?");
+        ~chatnpc("<p,happy>Hahaha go away amateur!|You're not worthy of joining our great group!");
+        ~chatplayer("<p,neutral>...right.");
     case default:
-        ~chatnpc(happy, "Hahaha you're such an amateur!");
-        ~chatnpc(happy, "Go away and play with some cabbage amateur!");
-        ~chatplayer(neutral, "...right.");
+        ~chatnpc("<p,happy>Hahaha you're such an amateur!");
+        ~chatnpc("<p,happy>Go away and play with some cabbage amateur!");
+        ~chatplayer("<p,neutral>...right.");
         return;
 }

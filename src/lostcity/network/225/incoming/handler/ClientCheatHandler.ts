@@ -2,25 +2,26 @@ import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js
 import Player from '#lostcity/entity/Player.js';
 import ClientCheat from '#lostcity/network/incoming/model/ClientCheat.js';
 import Environment from '#lostcity/util/Environment.js';
-import InvType from '#lostcity/cache/InvType.js';
-import IdkType from '#lostcity/cache/IdkType.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import IdkType from '#lostcity/cache/config/IdkType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import World from '#lostcity/engine/World.js';
-import LocType from '#lostcity/cache/LocType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import Component from '#lostcity/cache/Component.js';
-import SeqType from '#lostcity/cache/SeqType.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { toBase37 } from '#jagex2/jstring/JString.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import PlayerStat from '#lostcity/entity/PlayerStat.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -38,7 +39,129 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
         player.playerLog('Cheat ran', cheat);
 
-        if (cmd === 'reload' && Environment.LOCAL_DEV) {
+        // authentic
+        if (cmd === 'advancestat') {
+            // todo find a real usage to see if we have it right
+            if (args.length < 1) {
+                return false;
+            }
+
+            // ::advancestat <name> (levels)
+            const stat = Player.SKILLS.indexOf(args[0]);
+            const level = Math.min(99, Math.max(1, tryParseInt(args[1], 1)));
+
+            if (stat === -1) {
+                return false;
+            }
+
+            player.setLevel(stat, player.baseLevels[stat] + level);
+        } else if (cmd === 'getcoord') {
+            // todo find a real usage to see if we have it right
+            player.messageGame(Position.formatString(player.level, player.x, player.z, '_'));
+        } else if (cmd === 'getvar') {
+            // todo find a real usage to see if we have it right
+            if (args.length < 1) {
+                return false;
+            }
+
+            // ::getvar <name>
+            const varp = VarPlayerType.getId(args[0]);
+
+            if (varp === -1) {
+                return false;
+            }
+
+            const value = player.getVar(varp);
+            player.messageGame('get ' + args[0] + ': ' + value);
+        } else if (cmd === 'give') {
+            if (args.length < 1) {
+                return false;
+            }
+
+            // ::give <obj> (id)
+            const obj = ObjType.getId(args[0]);
+            const count = Math.max(1, Math.min(tryParseInt(args[1], 1), 0x7fffffff));
+
+            if (obj === -1) {
+                return false;
+            }
+
+            player.invAdd(InvType.INV, obj, count, false);
+        } else if (cmd === 'givecrap') {
+            // todo find a real usage to be able to write this
+        } else if (cmd === 'givemany') {
+            // todo find a real usage to be able to write this
+        } else if (cmd === 'setstat') {
+            if (args.length < 2) {
+                return false;
+            }
+
+            // ::setstat <name> <level>
+            const stat = Player.SKILLS.indexOf(args[0]);
+            if (stat === -1) {
+                return false;
+            }
+
+            player.setLevel(stat, parseInt(args[1]));
+        } else if (cmd === 'setvar') {
+            if (args.length < 2) {
+                return false;
+            }
+
+            // ::setvar <name> <value>
+            const varp = VarPlayerType.getId(args[0]);
+            const value = Math.max(-0x80000000, Math.min(tryParseInt(args[1], 0), 0x7fffffff));
+
+            if (varp === -1) {
+                return false;
+            }
+
+            player.setVar(varp, value);
+            player.messageGame('set ' + args[0] + ': to ' + value);
+        } else if (cmd === 'tele') {
+            if (args.length < 1) {
+                return false;
+            }
+
+            // ::tele level,x,z,x,z
+            // ::tele up
+            // ::tele down
+
+            if (args[0] === 'up') {
+                player.teleJump(player.x, player.z, player.level + 1);
+                player.messageGame('::tele ' + Position.formatString(player.level, player.x, player.z, ','));
+            } else if (args[0] === 'down') {
+                player.teleJump(player.x, player.z, player.level - 1);
+                player.messageGame('::tele ' + Position.formatString(player.level, player.x, player.z, ','));
+            } else if (args[0].indexOf(',') === -1) {
+                // not authentic but rsps users are used to absolute coordinates
+                player.teleJump(tryParseInt(args[0], 3200), tryParseInt(args[1], 3200), tryParseInt(args[2], player.level));
+            } else {
+                const coord = args[0].split(',');
+                if (coord.length !== 5) {
+                    return false;
+                }
+
+                const level = tryParseInt(coord[0], 0);
+                const mx = tryParseInt(coord[1], 50);
+                const mz = tryParseInt(coord[2], 50);
+                const lx = tryParseInt(coord[3], 0);
+                const lz = tryParseInt(coord[4], 0);
+
+                if (level < 0 || level > 3 ||
+                    mx < 0 || mx > 255 ||
+                    mz < 0 || mz > 255 ||
+                    lx < 0 || lx > 63 ||
+                    lz < 0 || lz > 63
+                ) {
+                    return false;
+                }
+
+                player.teleJump((mx << 6) + lx, (mz << 6) + lz, level);
+            }
+        }
+        // custom
+        else if (cmd === 'reload' && Environment.LOCAL_DEV) {
             World.reload();
 
             // todo: we're probably reloading twice now, just to get count?
@@ -48,52 +171,6 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             World.devThread!.postMessage({
                 type: 'pack'
             });
-        } else if (cmd === 'setvar') {
-            const varp = args.shift();
-            if (!varp) {
-                player.messageGame('Usage: ::setvar <var> <value>');
-                return false;
-            }
-
-            const value = args.shift();
-            if (!value) {
-                player.messageGame('Usage: ::setvar <var> <value>');
-                return false;
-            }
-
-            const varpType = VarPlayerType.getByName(varp);
-            if (varpType) {
-                player.setVar(varpType.id, parseInt(value, 10));
-                player.messageGame(`Setting var ${varp} to ${value}`);
-            } else {
-                player.messageGame(`Unknown var ${varp}`);
-            }
-        } else if (cmd === 'getvar') {
-            const varp = args.shift();
-            if (!varp) {
-                player.messageGame('Usage: ::getvar <var>');
-                return false;
-            }
-
-            const varpType = VarPlayerType.getByName(varp);
-            if (varpType) {
-                player.messageGame(`Var ${varp}: ${player.vars[varpType.id]}`);
-            } else {
-                player.messageGame(`Unknown var ${varp}`);
-            }
-        } else if (cmd === 'setlevel') {
-            if (args.length < 2) {
-                player.messageGame('Usage: ::setlevel <stat> <level>');
-                return false;
-            }
-
-            const stat = Player.SKILLS.indexOf(args[0]);
-            if (stat === -1) {
-                player.messageGame(`Unknown stat ${args[0]}`);
-                return false;
-            }
-
-            player.setLevel(stat, parseInt(args[1]));
         } else if (cmd === 'setxp') {
             if (args.length < 2) {
                 player.messageGame('Usage: ::setxp <stat> <xp>');
@@ -107,11 +184,10 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             }
 
             const exp = parseInt(args[1]) * 10;
-            // player.setLevel(stat, player.getLevelByExp(exp));
             player.stats[stat] = exp;
         } else if (cmd === 'minlevel') {
             for (let i = 0; i < Player.SKILLS.length; i++) {
-                if (i === Player.HITPOINTS) {
+                if (i === PlayerStat.HITPOINTS) {
                     player.setLevel(i, 10);
                 } else {
                     player.setLevel(i, 1);

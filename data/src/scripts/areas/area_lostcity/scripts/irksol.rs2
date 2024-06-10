@@ -1,11 +1,11 @@
 [opnpc1,irksol]
-~chatnpc(neutral, "Selling ruby rings! The best deals on rings in over twenty four hundred planes of existence!");
+~chatnpc("<p,neutral>Selling ruby rings! The best deals on rings in over twenty four hundred planes of existence!");
 def_int $option = ~p_choice2("I'm interested in these deals.", 1, "No thanks, just browsing.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "I'm interested in these deals.");
-    ~chatnpc(neutral, "Aha! A connoisseur! Check out these beauties!");
+    ~chatplayer("<p,neutral>I'm interested in these deals.");
+    ~chatnpc("<p,neutral>Aha! A connoisseur! Check out these beauties!");
     ~openshop_activenpc;
 } else if($option = 2) {
-    ~chatplayer(neutral, "No thanks, just browsing.");
-    ~chatnpc(neutral, "Fair enough.");
+    ~chatplayer("<p,neutral>No thanks, just browsing.");
+    ~chatnpc("<p,neutral>Fair enough.");
 }

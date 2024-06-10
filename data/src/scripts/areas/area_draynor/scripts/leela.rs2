@@ -1,29 +1,29 @@
 [opnpc1,leela]
 switch_int (%prince_progress) {
     case ^prince_not_started, ^prince_started:
-        ~chatplayer(happy, "What are you waiting here for?");
-        ~chatnpc(neutral, "That is no concern of yours, adventurer.");
+        ~chatplayer("<p,happy>What are you waiting here for?");
+        ~chatnpc("<p,neutral>That is no concern of yours, adventurer.");
     case ^prince_spoken_osman, ^prince_prep_finished: @leela_help;
-    case ^prince_guard_drunk: ~chatnpc(neutral, "Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
-    case ^prince_tied_keli: ~chatnpc(neutral, "You should carry on, get in and rescue the prince. Keli is sharp, she won't stay tied up long."); // from chisel
-    case ^prince_saved, ^prince_complete: ~chatnpc(happy, "Thank you, Al-Kharid will forever owe you for your help.|I think that if there is ever anything that needs to be done,|you will be someone they can rely on.");;
+    case ^prince_guard_drunk: ~chatnpc("<p,neutral>Great! The guard is now harmless. Now you just need to use the rope on Keli to remove her. Then you can go in and give everything to the prince.");
+    case ^prince_tied_keli: ~chatnpc("<p,neutral>You should carry on, get in and rescue the prince. Keli is sharp, she won't stay tied up long."); // from chisel
+    case ^prince_saved, ^prince_complete: ~chatnpc("<p,happy>Thank you, Al-Kharid will forever owe you for your help.|I think that if there is ever anything that needs to be done,|you will be someone they can rely on.");;
 }
 
 [label,leela_help]
 if(%prince_keystatus = ^prince_keymade) {
-    ~chatnpc(neutral, "My father sent this key for you.|Be careful not to lose it.");
+    ~chatnpc("<p,neutral>My father sent this key for you.|Be careful not to lose it.");
     ~mesbox("Leela gives you a copy of the key to the prince's door.");
     inv_add(inv, bronze_key, 1);
     %prince_keystatus = ^prince_prep_finished;
 }
 if(%prince_keystatus = ^prince_keyclaimed & inv_total(inv, bronze_key) = 0 & inv_total(bank, bronze_key) = 0) {
-    ~chatplayer(sad, "I'm afraid I lost that key you gave me.");
-    ~chatnpc(angry, "Foolish <text_gender("man", "woman")>! A new key will cost 15 coins.");
+    ~chatplayer("<p,sad>I'm afraid I lost that key you gave me.");
+    ~chatnpc("<p,angry>Foolish <text_gender("man", "woman")>! A new key will cost 15 coins.");
     if(inv_total(inv, coins) < 15) {
-        ~chatplayer(sad, "I haven't got 15 coins with me.");
-        ~chatnpc(neutral, "Then come back to me when you do.");
+        ~chatplayer("<p,sad>I haven't got 15 coins with me.");
+        ~chatnpc("<p,neutral>Then come back to me when you do.");
     }
-    ~chatplayer(neutral, "Here, I have 15 coins.");
+    ~chatplayer("<p,neutral>Here, I have 15 coins.");
     ~mesbox("Leela gives you another key.");
     inv_add(inv, bronze_key, 1);
     inv_del(inv, coins, 15);
@@ -31,96 +31,96 @@ if(%prince_keystatus = ^prince_keyclaimed & inv_total(inv, bronze_key) = 0 & inv
 } 
 if(%prince_progress = ^prince_spoken_osman & inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
     %prince_progress = ^prince_prep_finished;
-    ~chatnpc(shifty, "Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
+    ~chatnpc("<p,shifty>Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
 } else if(%prince_progress = ^prince_prep_finished) { // mesanims guessed cause no video + not on osrs, dialogue from chisel
-    ~chatnpc(neutral, "Ok now, you have all the basic equipment.|What are your plans to stop the guard interfering?");
+    ~chatnpc("<p,neutral>Ok now, you have all the basic equipment.|What are your plans to stop the guard interfering?");
     switch_int(~p_choice4("I haven't spoken to him yet.", 1, "I was going to attack him.", 2, "I hoped to get him drunk.", 3, "Maybe I could bribe him to leave.", 4)) {
         case 1:
-            ~chatplayer(neutral, "I haven't spoken to him yet.");
-            ~chatnpc(neutral, "Well, speaking to him may find a weakness he has.|See if there's something that could stop him bothering us.");
+            ~chatplayer("<p,neutral>I haven't spoken to him yet.");
+            ~chatnpc("<p,neutral>Well, speaking to him may find a weakness he has.|See if there's something that could stop him bothering us.");
         case 2:
-            ~chatplayer(neutral, "I was going to attack him.");
-            ~chatnpc(bored, "I don't think you should. If you do the rest of the gang and Keli would attack you. The door guard should be removed first, to make it easy.");
+            ~chatplayer("<p,neutral>I was going to attack him.");
+            ~chatnpc("<p,bored>I don't think you should. If you do the rest of the gang and Keli would attack you. The door guard should be removed first, to make it easy.");
         case 3:
-            ~chatplayer(neutral, "I hoped to get him drunk.");
-            ~chatnpc(neutral, "Well, that's possible. These guards do like a drink.|I would think it will take at least 3 beers to do it well.|You would probably have to do it all at the same time too.|The effects of the local beer wear off quickly.");
+            ~chatplayer("<p,neutral>I hoped to get him drunk.");
+            ~chatnpc("<p,neutral>Well, that's possible. These guards do like a drink.|I would think it will take at least 3 beers to do it well.|You would probably have to do it all at the same time too.|The effects of the local beer wear off quickly.");
         case 4:
-            ~chatplayer(neutral, "Maybe I could bribe him to leave.");
-            ~chatnpc(shifty, "You could try. I don't think the emir will pay anything towards it. And we did bribe one of their guards once.");
-            ~chatnpc(shifty, "Keli killed him in front of the other guards, as a deterrent. It would probably take a lot of gold.");
+            ~chatplayer("<p,neutral>Maybe I could bribe him to leave.");
+            ~chatnpc("<p,shifty>You could try. I don't think the emir will pay anything towards it. And we did bribe one of their guards once.");
+            ~chatnpc("<p,shifty>Keli killed him in front of the other guards, as a deterrent. It would probably take a lot of gold.");
     }
-    ~chatnpc(neutral, "Good luck with the guard. When the guard is out you can tie up Keli.");
+    ~chatnpc("<p,neutral>Good luck with the guard. When the guard is out you can tie up Keli.");
 } else {
-    ~chatplayer(neutral, "I am here to help you free the prince.");
-    ~chatnpc(neutral, "Your employment is known to me.|Now, do you know all that we need to make the break?");
+    ~chatplayer("<p,neutral>I am here to help you free the prince.");
+    ~chatnpc("<p,neutral>Your employment is known to me.|Now, do you know all that we need to make the break?");
     @multi4("I must make a disguise. What do you suggest?", leela_disguise, "I need to get the key made.", leela_need_key, "What can I do with the guards?", leela_guards, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 }
 
 
 [label,leela_disguise]
-~chatplayer(quiz, "I must make a disguise. What do you suggest?");
-~chatnpc(bored, "Only the lady Keli, can wander about outside the jail. The guards will shoot to kill if they see the prince out so we need a disguise good enough to fool them at a distance.");
+~chatplayer("<p,quiz>I must make a disguise. What do you suggest?");
+~chatnpc("<p,bored>Only the lady Keli, can wander about outside the jail. The guards will shoot to kill if they see the prince out so we need a disguise good enough to fool them at a distance.");
 if(inv_total(inv, wig_blonde) >= 1) {
-    ~chatnpc(neutral, "The wig you have got, well done.");
+    ~chatnpc("<p,neutral>The wig you have got, well done.");
 } else {
-    ~chatnpc(neutral, "You need a wig, maybe made from wool. If you find someone who can work with wool ask them about it. There's a witch nearby may be able to help you dye it.");
+    ~chatnpc("<p,neutral>You need a wig, maybe made from wool. If you find someone who can work with wool ask them about it. There's a witch nearby may be able to help you dye it.");
 }
 
 if(inv_total(inv, pink_skirt) >= 1) {
-    ~chatnpc(neutral, "You have got the skirt, good.");
+    ~chatnpc("<p,neutral>You have got the skirt, good.");
 } else {
-    ~chatnpc(neutral, "You will need to get a pink skirt, same as Keli's.");
+    ~chatnpc("<p,neutral>You will need to get a pink skirt, same as Keli's.");
 }
 
 if(inv_total(inv, paste) >= 1) {
-    ~chatnpc(neutral, "You have the skin paint, well done.|I thought you would struggle to make that.");
+    ~chatnpc("<p,neutral>You have the skin paint, well done.|I thought you would struggle to make that.");
 } else {
-    ~chatnpc(neutral, "We still need something to colour the Prince's skin lighter. There's a witch close to here. She knows about many things. She may know some way to make the skin lighter.");
+    ~chatnpc("<p,neutral>We still need something to colour the Prince's skin lighter. There's a witch close to here. She knows about many things. She may know some way to make the skin lighter.");
 }
 
 if(inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
-    ~chatnpc(neutral, "You do have everything for the disguise.");
+    ~chatnpc("<p,neutral>You do have everything for the disguise.");
 }
 
 if(inv_total(inv, rope) >= 1) {
-    ~chatnpc(shifty, "You have the rope I see, to tie up Keli.|That will be the most dangerous part of the plan.");
+    ~chatnpc("<p,shifty>You have the rope I see, to tie up Keli.|That will be the most dangerous part of the plan.");
 } else {
-    ~chatnpc(shifty, "You will still need some rope to tie up Keli, of course. I heard that there was a good rope maker around here...");
+    ~chatnpc("<p,shifty>You will still need some rope to tie up Keli, of course. I heard that there was a good rope maker around here...");
 }
 @multi3("I need to get the key made.", leela_need_key, "What can I do with the guards?", leela_guards, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
 [label,leela_need_key]
-~chatplayer(neutral, "I need to get the key made.");
-~chatnpc(neutral, "Yes, that is most important.|There is no way you can get the real key.|It is on a chain around Keli's neck. Almost impossible to steal.");
-~chatnpc(shifty, "Get some soft clay and get her to show you the key somehow. Then take the print, with bronze, to my father.");
+~chatplayer("<p,neutral>I need to get the key made.");
+~chatnpc("<p,neutral>Yes, that is most important.|There is no way you can get the real key.|It is on a chain around Keli's neck. Almost impossible to steal.");
+~chatnpc("<p,shifty>Get some soft clay and get her to show you the key somehow. Then take the print, with bronze, to my father.");
 @multi3("I must make a disguise. What do you suggest?", leela_disguise, "What can I do with the guards?", leela_guards, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
 [label,leela_guards]
-~chatplayer(neutral, "What can I do with the guards?");
-~chatnpc(bored, "Most of the guards will be easy. The disguise will get past them. The only guard who will be a problem will be the one at the door.");
-~chatnpc(bored, "We can discuss this more when you have the rest of the escape kit.");
+~chatplayer("<p,neutral>What can I do with the guards?");
+~chatnpc("<p,bored>Most of the guards will be easy. The disguise will get past them. The only guard who will be a problem will be the one at the door.");
+~chatnpc("<p,bored>We can discuss this more when you have the rest of the escape kit.");
 @multi3("I must make a disguise. What do you suggest?", leela_disguise, "I need to get the key made.", leela_need_key, "I will go and get the rest of the escape equipment.", leela_rest_escape);
 
 [label,leela_rest_escape]
-~chatplayer(neutral, "I will go and get the rest of the escape equipment.");
-~chatnpc(shifty, "Good, I shall await your return with everything.");
+~chatplayer("<p,neutral>I will go and get the rest of the escape equipment.");
+~chatnpc("<p,shifty>Good, I shall await your return with everything.");
 
 [label,leela_post_key]
 if(inv_total(inv, bronze_key) = 0 & inv_total(bank, bronze_key) = 0) {
-    ~chatplayer(sad, "I'm afraid I lost that key you gave me.");
-    ~chatnpc(angry, "Foolish <text_gender("man", "woman")>! A new key will cost 15 coins.");
+    ~chatplayer("<p,sad>I'm afraid I lost that key you gave me.");
+    ~chatnpc("<p,angry>Foolish <text_gender("man", "woman")>! A new key will cost 15 coins.");
     if(inv_total(inv, coins) < 15) {
-        ~chatplayer(sad, "I haven't got 15 coins with me.");
-        ~chatnpc(neutral, "Then come back to me when you do.");
+        ~chatplayer("<p,sad>I haven't got 15 coins with me.");
+        ~chatnpc("<p,neutral>Then come back to me when you do.");
     }
-    ~chatplayer(neutral, "Here, I have 15 coins.");
+    ~chatplayer("<p,neutral>Here, I have 15 coins.");
     ~mesbox("Leela gives you another key.");
     inv_add(inv, bronze_key, 1);
     inv_del(inv, coins, 15);
 } else if (%prince_progress >= ^prince_guard_drunk) { 
-    ~chatnpc(neutral, "Great! The guard is now harmless.|Now you just need to use the rope on Keli to remove her.|Then you can go in and give everything to the prince.");
+    ~chatnpc("<p,neutral>Great! The guard is now harmless.|Now you just need to use the rope on Keli to remove her.|Then you can go in and give everything to the prince.");
 } else if(inv_total(inv, bronze_key) >= 1 & inv_total(inv, wig_blonde) >= 1 & inv_total(inv, pink_skirt) >= 1 & inv_total(inv, paste) >= 1) {
-    ~chatnpc(shifty, "Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
+    ~chatnpc("<p,shifty>Good, you have all the basic equipment. Next to deal with the guard on the door. He is talkative, try to find a weakness in him.");
 } else {
     @leela_help;
 }

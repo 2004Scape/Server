@@ -67,7 +67,7 @@ table=consume_table
 data=consumable,asgarnian_ale
 data=stat_change,attack,-2,-5
 data=stat_change,strength,2,0
-data=stat_restore,hitpoints,2,0
+data=stat_heal,hitpoints,2,0
 
 [wizards_mind_bomb_effect]
 table=consume_table
@@ -76,7 +76,7 @@ data=stat_change,magic,2,2
 data=stat_change,attack,-1,-5
 data=stat_change,strength,-1,-5
 data=stat_change,defence,-1,-5
-data=stat_restore,hitpoints,1,0
+data=stat_heal,hitpoints,1,0
 
 [greenmans_ale_effect]
 table=consume_table
@@ -85,14 +85,14 @@ data=stat_change,herblore,1,0
 data=stat_change,attack,-3,0
 data=stat_change,strength,-3,0
 data=stat_change,defence,-3,0
-data=stat_restore,hitpoints,1,0
+data=stat_heal,hitpoints,1,0
 
 [dragon_bitter_effect]
 table=consume_table
 data=consumable,dragon_bitter
 data=stat_change,strength,2,0
 data=stat_change,attack,-2,-5
-data=stat_restore,hitpoints,1,0
+data=stat_heal,hitpoints,1,0
 
 [dwarven_stout_effect]
 table=consume_table
@@ -102,33 +102,33 @@ data=stat_change,smithing,1,0
 data=stat_change,attack,-2,4
 data=stat_change,strength,-2,4
 data=stat_change,defence,-2,4
-data=stat_restore,hitpoints,1,0
+data=stat_heal,hitpoints,1,0
 
 [grog_effect]
 table=consume_table
 data=consumable,grog
 data=stat_change,strength,1,4
 data=stat_change,attack,-5,-3
-data=stat_restore,hitpoints,3,0
+data=stat_heal,hitpoints,3,0
 
 [beer_effect]
 table=consume_table
 data=consumable,beer
 data=stat_change,strength,1,2
 data=stat_change,attack,-1,-6
-data=stat_restore,hitpoints,1,0
+data=stat_heal,hitpoints,1,0
 
 [wine_effect]
 table=consume_table
 data=consumable,jug_wine
 data=stat_change,attack,-2,0
-data=stat_restore,hitpoints,11,0
+data=stat_heal,hitpoints,11,0
 
 [half_wine_effect]
 table=consume_table
 data=consumable,half_full_wine_jug
 data=stat_change,attack,-2,0
-data=stat_restore,hitpoints,7,0
+data=stat_heal,hitpoints,7,0
 
 [bad_wine_effect]
 table=consume_table
@@ -139,7 +139,7 @@ data=stat_change,attack,-3,0
 table=consume_table
 data=consumable,cabbage_draynor
 data=stat_change,defence,1,2
-data=stat_restore,hitpoints,1,0
+data=stat_heal,hitpoints,1,0
 data=consume_sound,eat
 
 [jangerberries_effect]
@@ -148,8 +148,8 @@ data=consumable,jangerberries
 data=stat_change,attack,2,0
 data=stat_change,strength,1,0
 data=stat_change,defence,-1,0
-data=stat_restore,prayer,1,0
-data=stat_restore,hitpoints,2,0
+data=stat_heal,prayer,1,0
+data=stat_heal,hitpoints,2,0
 data=consume_sound,eat
 
 [restore_potion_effect]
@@ -192,7 +192,7 @@ data=consumable,gin
 data=consumable,brandy
 data=stat_change,strength,1,5
 data=stat_change,attack,-3,-2
-data=stat_restore,hitpoints,5,0
+data=stat_heal,hitpoints,5,0
 
 [cocktail_effect1]
 table=consume_table
@@ -200,7 +200,7 @@ data=consumable,premade_blurberry_special
 data=consumable,blurberry_special
 data=stat_change,attack,-3,-2
 data=stat_change,strength,2,5
-data=stat_restore,hitpoints,7,0
+data=stat_heal,hitpoints,7,0
 
 [cocktail_effect2]
 table=consume_table
@@ -210,7 +210,7 @@ data=consumable,premade_drunk_dragon
 data=consumable,drunk_dragon
 data=stat_change,attack,-3,-2
 data=stat_change,strength,2,5
-data=stat_restore,hitpoints,5,0
+data=stat_heal,hitpoints,5,0
 
 [cocktail_effect3]
 table=consume_table
@@ -220,7 +220,7 @@ data=consumable,premade_short_green_guy
 data=consumable,short_green_guy
 data=stat_change,attack,-3,-2
 data=stat_change,strength,1,6
-data=stat_restore,hitpoints,5,0
+data=stat_heal,hitpoints,5,0
 
 [cocktail_effect4]
 table=consume_table
@@ -228,7 +228,7 @@ data=consumable,premade_pineapple_punch
 data=consumable,pineapple_punch
 data=consumable,premade_fruit_blast
 data=consumable,fruit_blast
-data=stat_restore,hitpoints,9,0
+data=stat_heal,hitpoints,9,0
 
 // really unsure if unfinished cocktails belong here
 [odd_cocktail_effect]
@@ -262,13 +262,13 @@ data=consumable,unfinished_fruit_blast1
 data=consumable,unfinished_pineapple_punch1
 data=consumable,unfinished_pineapple_punch2
 data=consumable,unfinished_pineapple_punch3
-data=stat_restore,hitpoints,0,0
+data=stat_heal,hitpoints,0,0
 
 [tea_effect]
 table=consume_table
 data=consumable,cup_of_tea
 data=stat_change,attack,2,2
-data=stat_restore,hitpoints,3,0
+data=stat_heal,hitpoints,3,0
 
 [odd_gnomefood_effect]
 table=consume_table

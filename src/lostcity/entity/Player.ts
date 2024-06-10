@@ -3,15 +3,15 @@ import 'dotenv/config';
 import Packet from '#jagex2/io/Packet.js';
 import {fromBase37, toDisplayName} from '#jagex2/jstring/JString.js';
 
-import FontType from '#lostcity/cache/FontType.js';
-import Component from '#lostcity/cache/Component.js';
-import InvType from '#lostcity/cache/InvType.js';
-import LocType from '#lostcity/cache/LocType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
-import SeqType from '#lostcity/cache/SeqType.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import FontType from '#lostcity/cache/config/FontType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
@@ -23,6 +23,10 @@ import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import { Position } from '#lostcity/entity/Position.js';
+import CameraInfo from '#lostcity/entity/CameraInfo.js';
+import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+import PlayerStat from '#lostcity/entity/PlayerStat.js';
 
 import ServerProt, { ServerProtEncoders } from '#lostcity/server/ServerProt.js';
 
@@ -44,7 +48,6 @@ import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/server/PreloadedPacks.js';
-import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -71,35 +74,16 @@ export function getExpByLevel(level: number) {
 }
 
 export default class Player extends PathingEntity {
-    static APPEARANCE = 0x1;
-    static ANIM = 0x2;
-    static FACE_ENTITY = 0x4;
-    static SAY = 0x8;
-    static DAMAGE = 0x10;
-    static FACE_COORD = 0x20;
-    static CHAT = 0x40;
-    static SPOTANIM = 0x100;
-    static EXACT_MOVE = 0x200;
-
-    static ATTACK = 0;
-    static DEFENCE = 1;
-    static STRENGTH = 2;
-    static HITPOINTS = 3;
-    static RANGED = 4;
-    static PRAYER = 5;
-    static MAGIC = 6;
-    static COOKING = 7;
-    static WOODCUTTING = 8;
-    static FLETCHING = 9;
-    static FISHING = 10;
-    static FIREMAKING = 11;
-    static CRAFTING = 12;
-    static SMITHING = 13;
-    static MINING = 14;
-    static HERBLORE = 15;
-    static AGILITY = 16;
-    static THIEVING = 17;
-    static RUNECRAFT = 20;
+    static readonly APPEARANCE = 0x1;
+    static readonly ANIM = 0x2;
+    static readonly FACE_ENTITY = 0x4;
+    static readonly SAY = 0x8;
+    static readonly DAMAGE = 0x10;
+    static readonly FACE_COORD = 0x20;
+    static readonly CHAT = 0x40;
+    static readonly BIG_UPDATE = 0x80;
+    static readonly SPOTANIM = 0x100;
+    static readonly EXACT_MOVE = 0x200;
 
     static SKILLS = [
         'attack',
@@ -272,6 +256,7 @@ export default class Player extends PathingEntity {
     queue: LinkList<EntityQueueRequest> = new LinkList();
     weakQueue: LinkList<EntityQueueRequest> = new LinkList();
     engineQueue: LinkList<EntityQueueRequest> = new LinkList();
+    cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
     modalState = 0;
     modalTop = -1;
@@ -300,8 +285,13 @@ export default class Player extends PathingEntity {
 
     staffModLevel: number = 0;
 
+    heroPoints: {
+        uid: number;
+        points: number;
+    }[] = new Array(16); // be sure to reset when stats are recovered/reset
+
     constructor(username: string, username37: bigint) {
-        super(0, 3094, 3106, 1, 1, MoveRestrict.NORMAL, BlockWalk.NPC, Player.FACE_COORD, Player.FACE_ENTITY, true); // tutorial island.
+        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, Player.FACE_COORD, Player.FACE_ENTITY, true); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.displayName = toDisplayName(username);
@@ -323,6 +313,35 @@ export default class Player extends PathingEntity {
         this.playtime = 0;
         this.lastStats.fill(-1);
         this.lastLevels.fill(-1);
+    }
+
+    resetHeroPoints() {
+        this.heroPoints = new Array(16);
+        this.heroPoints.fill({ uid: -1, points: 0 });
+    }
+
+    addHero(uid: number, points: number) {
+        // check if hero already exists, then add points
+        const index = this.heroPoints.findIndex(hero => hero && hero.uid === uid);
+        if (index !== -1) {
+            this.heroPoints[index].points += points;
+            return;
+        }
+
+        // otherwise, add a new uid. if all 16 spaces are taken do we replace the lowest?
+        const emptyIndex = this.heroPoints.findIndex(hero => hero && hero.uid === -1);
+        if (emptyIndex !== -1) {
+            this.heroPoints[emptyIndex] = { uid, points };
+            return;
+        }
+    }
+
+    findHero(): number {
+        // quicksort heroes by points
+        this.heroPoints.sort((a, b) => {
+            return b.points - a.points;
+        });
+        return this.heroPoints[0]?.uid ?? -1;
     }
 
     resetEntity(respawn: boolean) {
@@ -348,6 +367,7 @@ export default class Player extends PathingEntity {
         this.writeHighPriority(ServerProt.UPDATE_UID192, this.pid); // todo: low or high priority
         this.unsetMapFlag();
         this.writeHighPriority(ServerProt.RESET_ANIMS); // todo: low or high priority
+        this.resetHeroPoints();
 
         this.writeHighPriority(ServerProt.RESET_CLIENT_VARCACHE);
         for (let varp = 0; varp < this.vars.length; varp++) {
@@ -432,7 +452,7 @@ export default class Player extends PathingEntity {
         }
 
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
-            this.pathToTarget();
+            this.pathToPathingTarget();
         }
 
         if (this.hasWaypoints() && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
@@ -446,20 +466,20 @@ export default class Player extends PathingEntity {
         }
 
         if (this.runenergy < 100) {
-            this.setVar(VarPlayerType.getId('player_run'), 0);
-            this.setVar(VarPlayerType.getId('temp_run'), 0);
+            this.setVar(VarPlayerType.PLAYER_RUN, 0);
+            this.setVar(VarPlayerType.TEMP_RUN, 0);
         }
 
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
-            if (this.getVar(VarPlayerType.getId('temp_run'))) {
+            if (this.getVar(VarPlayerType.TEMP_RUN)) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
 
         if (!super.processMovement()) {
             // todo: this is running every idle tick
-            this.setVar(VarPlayerType.getId('temp_run'), 0);
+            this.setVar(VarPlayerType.TEMP_RUN, 0);
         }
 
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
@@ -479,14 +499,14 @@ export default class Player extends PathingEntity {
 
                 this.runenergy = Math.max(this.runenergy - loss, 0);
                 if (this.runenergy === 0) {
-                    this.setVar(VarPlayerType.getId('player_run'), 0);
-                    this.setVar(VarPlayerType.getId('temp_run'), 0);
+                    this.setVar(VarPlayerType.PLAYER_RUN, 0);
+                    this.setVar(VarPlayerType.TEMP_RUN, 0);
                 }
             }
         }
 
         if (!this.delayed() && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
-            const recovered = this.baseLevels[Player.AGILITY] / 9 + 8;
+            const recovered = this.baseLevels[PlayerStat.AGILITY] / 9 + 8;
 
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
@@ -499,7 +519,7 @@ export default class Player extends PathingEntity {
     }
 
     defaultMoveSpeed(): MoveSpeed {
-        return this.getVar(VarPlayerType.getId('player_run')) ? MoveSpeed.RUN : MoveSpeed.WALK;
+        return this.getVar(VarPlayerType.PLAYER_RUN) ? MoveSpeed.RUN : MoveSpeed.WALK;
     }
 
     // ----
@@ -682,6 +702,22 @@ export default class Player extends PathingEntity {
         }
     }
 
+    // clear current interaction and walk queue
+    stopAction() {
+        this.clearPendingAction();
+        this.unsetMapFlag();
+    }
+
+    // clear current interaction but leave walk queue intact
+    clearPendingAction() {
+        this.clearInteraction();
+        this.closeModal();
+    }
+
+    hasInteraction() {
+        return this.target !== null;
+    }
+
     getOpTrigger() {
         if (!this.target) {
             return null;
@@ -766,9 +802,6 @@ export default class Player extends PathingEntity {
             this.unsetMapFlag();
             return;
         }
-
-        this.interacted = false;
-        this.apRangeCalled = false;
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
@@ -925,6 +958,12 @@ export default class Player extends PathingEntity {
             this.loadedX = this.x;
             this.loadedZ = this.z;
             this.loadedZones = {};
+        }
+        for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
+            const localX = info.camX - Position.zoneOrigin(this.loadedX);
+            const localZ = info.camZ - Position.zoneOrigin(this.loadedZ);
+            this.writeLowPriority(info.type, localX, localZ, info.height, info.rotationSpeed, info.rotationMultiplier);
+            info.unlink();
         }
 
         if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
@@ -1199,10 +1238,10 @@ export default class Player extends PathingEntity {
     }
 
     getCombatLevel() {
-        const base = 0.25 * (this.baseLevels[Player.DEFENCE] + this.baseLevels[Player.HITPOINTS] + Math.floor(this.baseLevels[Player.PRAYER] / 2));
-        const melee = 0.325 * (this.baseLevels[Player.ATTACK] + this.baseLevels[Player.STRENGTH]);
-        const range = 0.325 * (Math.floor(this.baseLevels[Player.RANGED] / 2) + this.baseLevels[Player.RANGED]);
-        const magic = 0.325 * (Math.floor(this.baseLevels[Player.MAGIC] / 2) + this.baseLevels[Player.MAGIC]);
+        const base = 0.25 * (this.baseLevels[PlayerStat.DEFENCE] + this.baseLevels[PlayerStat.HITPOINTS] + Math.floor(this.baseLevels[PlayerStat.PRAYER] / 2));
+        const melee = 0.325 * (this.baseLevels[PlayerStat.ATTACK] + this.baseLevels[PlayerStat.STRENGTH]);
+        const range = 0.325 * (Math.floor(this.baseLevels[PlayerStat.RANGED] / 2) + this.baseLevels[PlayerStat.RANGED]);
+        const magic = 0.325 * (Math.floor(this.baseLevels[PlayerStat.MAGIC] / 2) + this.baseLevels[PlayerStat.MAGIC]);
         return Math.floor(base + Math.max(melee, range, magic));
     }
 
@@ -1296,7 +1335,7 @@ export default class Player extends PathingEntity {
         }
 
         if (mask > 0xff) {
-            mask |= 0x80;
+            mask |= Player.BIG_UPDATE;
         }
 
         if (self && mask & Player.CHAT) {
@@ -1305,7 +1344,7 @@ export default class Player extends PathingEntity {
         }
 
         length += 1;
-        if (mask & 0x80) {
+        if (mask & Player.BIG_UPDATE) {
             length += 1;
         }
 
@@ -1363,7 +1402,7 @@ export default class Player extends PathingEntity {
         }
 
         if (mask > 0xff) {
-            mask |= 0x80;
+            mask |= Player.BIG_UPDATE;
         }
 
         if (self && mask & Player.CHAT) {
@@ -1372,7 +1411,7 @@ export default class Player extends PathingEntity {
         }
 
         out.p1(mask & 0xff);
-        if (mask & 0x80) {
+        if (mask & Player.BIG_UPDATE) {
             out.p1(mask >> 8);
         }
 
@@ -1401,8 +1440,8 @@ export default class Player extends PathingEntity {
         if (mask & Player.DAMAGE) {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
-            out.p1(this.levels[Player.HITPOINTS]);
-            out.p1(this.baseLevels[Player.HITPOINTS]);
+            out.p1(this.levels[PlayerStat.HITPOINTS]);
+            out.p1(this.baseLevels[PlayerStat.HITPOINTS]);
         }
 
         if (mask & Player.FACE_COORD) {
@@ -1480,7 +1519,7 @@ export default class Player extends PathingEntity {
 
                 for (const nid of npcs) {
                     const npc = World.getNpc(nid);
-                    if (npc === null || npc.despawn !== -1 || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
+                    if (npc === null || !npc.checkLifeCycle(World.currentTick) || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
                         continue;
                     }
 
@@ -1993,18 +2032,20 @@ export default class Player extends PathingEntity {
 
         if (this.combatLevel != this.getCombatLevel()) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.getId('worn'));
+            this.generateAppearance(InvType.WORN);
         }
     }
 
     setLevel(stat: number, level: number) {
+        level = Math.min(99, Math.max(1, level));
+
         this.baseLevels[stat] = level;
         this.levels[stat] = level;
         this.stats[stat] = getExpByLevel(level);
 
         if (this.getCombatLevel() != this.combatLevel) {
             this.combatLevel = this.getCombatLevel();
-            this.generateAppearance(InvType.getId('worn'));
+            this.generateAppearance(InvType.WORN);
         }
     }
 
@@ -2029,12 +2070,12 @@ export default class Player extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        const current = this.levels[Player.HITPOINTS];
+        const current = this.levels[PlayerStat.HITPOINTS];
         if (current - damage <= 0) {
-            this.levels[Player.HITPOINTS] = 0;
+            this.levels[PlayerStat.HITPOINTS] = 0;
             this.damageTaken = current;
         } else {
-            this.levels[Player.HITPOINTS] = current - damage;
+            this.levels[PlayerStat.HITPOINTS] = current - damage;
         }
 
         this.mask |= Player.DAMAGE;

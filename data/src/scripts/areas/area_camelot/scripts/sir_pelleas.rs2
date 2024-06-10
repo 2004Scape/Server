@@ -1,28 +1,28 @@
 [opnpc1,sir_pelleas]
-~chatnpc(happy, "Greetings to the court of King Arthur!");
+~chatnpc("<p,happy>Greetings to the court of King Arthur!");
 if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
-    ~chatplayer(neutral, "Any suggestions on finding the Grail?");
-    ~chatnpc(neutral, "My best guess would be some sort of spell. Merlin is our magic expert. Ask him?");
-    ~chatnpc(neutral, "Although having said that, I believe Galahad found its location once...");
-    ~chatplayer(quiz, "Really? Know where I can find him?");
-    ~chatnpc(neutral, "I'm afraid not. He left here many moons ago and I know not where he went.");
+    ~chatplayer("<p,neutral>Any suggestions on finding the Grail?");
+    ~chatnpc("<p,neutral>My best guess would be some sort of spell. Merlin is our magic expert. Ask him?");
+    ~chatnpc("<p,neutral>Although having said that, I believe Galahad found its location once...");
+    ~chatplayer("<p,quiz>Really? Know where I can find him?");
+    ~chatnpc("<p,neutral>I'm afraid not. He left here many moons ago and I know not where he went.");
     return;
 } 
 switch_int (%arthur_progress) {
     case ^arthur_not_started:
-        ~chatplayer(neutral, "Hello. I'm looking for a quest. Who should I talk to?");
-        ~chatnpc(neutral, "King Arthur will let you know.|I believe he has a quest at the moment.");
+        ~chatplayer("<p,neutral>Hello. I'm looking for a quest. Who should I talk to?");
+        ~chatnpc("<p,neutral>King Arthur will let you know.|I believe he has a quest at the moment.");
     case ^arthur_started:
-        ~chatplayer(quiz, "Any suggestions on freeing Merlin?");
-        ~chatnpc(neutral, "My best guess would be some sort of magic. Unfortunately Merlin is our magic expert.");
-        ~chatplayer(quiz, "Ok, well, thanks anyway.");
+        ~chatplayer("<p,quiz>Any suggestions on freeing Merlin?");
+        ~chatnpc("<p,neutral>My best guess would be some sort of magic. Unfortunately Merlin is our magic expert.");
+        ~chatplayer("<p,quiz>Ok, well, thanks anyway.");
     case ^arthur_spoken_gawain, ^arthur_spoken_lancelot:
-        ~chatplayer(quiz, "Any suggestions on getting into Mordred's fort?");
-        ~chatnpc(neutral, "My best guess would be using magic. Unfortunately Merlin is our magic expert.");
-        ~chatplayer(quiz, "Ok, well, thanks anyway.");
+        ~chatplayer("<p,quiz>Any suggestions on getting into Mordred's fort?");
+        ~chatnpc("<p,neutral>My best guess would be using magic. Unfortunately Merlin is our magic expert.");
+        ~chatplayer("<p,quiz>Ok, well, thanks anyway.");
     case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin:
-        ~chatplayer(quiz, "Any suggestions on finding Excalibur?");
-        ~chatnpc(neutral, "My best guess would be using magic. Unfortunately Merlin is our magic expert.");
-        ~chatplayer(quiz, "Ok, well, thanks anyway.");   
-    case ^arthur_complete: ~chatnpc(neutral, "You are a very talented Knight indeed to have freed Merlin so quickly. You have all of our gratitude.");
+        ~chatplayer("<p,quiz>Any suggestions on finding Excalibur?");
+        ~chatnpc("<p,neutral>My best guess would be using magic. Unfortunately Merlin is our magic expert.");
+        ~chatplayer("<p,quiz>Ok, well, thanks anyway.");   
+    case ^arthur_complete: ~chatnpc("<p,neutral>You are a very talented Knight indeed to have freed Merlin so quickly. You have all of our gratitude.");
 }

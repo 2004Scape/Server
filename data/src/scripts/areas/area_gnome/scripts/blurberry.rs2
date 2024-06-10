@@ -13,9 +13,9 @@ switch_int(%gnome_bar_progress) {
     case default :
         if (%gnome_bar_progress = 7 | %gnome_bar_progress > 12) {
             // rsc dialogue
-            ~chatplayer(default, "Hello again Blurberry!");
-            ~chatnpc(default, "Well hello traveller.");
-            ~chatnpc(neutral,"I'm quite busy as usual, any chance you could help?");
+            ~chatplayer("<p,default>Hello again Blurberry!");
+            ~chatnpc("<p,default>Well hello traveller.");
+            ~chatnpc("<p,neutral>I'm quite busy as usual, any chance you could help?");
             @gnome_bar_cocktail_job_start;
         }
         if (%gnome_bar_progress > 7 & %gnome_bar_progress < 13) {
@@ -30,7 +30,7 @@ if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcra
 def_category $category = oc_category(last_useitem);
 if ($category = category_83 | $category = category_15) {
     switch_int(%gnome_bar_progress) {
-        case 0 : ~chatnpc(default, "Nice cocktail, but I don't need any right now...");
+        case 0 : ~chatnpc("<p,default>Nice cocktail, but I don't need any right now...");
         case 1 : @gnome_bar_assign_fruit_blast;
         case 2 : @gnome_bar_assign_drunk_dragon;
         case 3 : @gnome_bar_assign_ssg;
@@ -39,7 +39,7 @@ if ($category = category_83 | $category = category_15) {
         case 6 : @gnome_bar_complete;
         case default :
             if (%gnome_bar_progress = 7 | %gnome_bar_progress > 12) {
-                ~chatnpc(default, "Nice cocktail, but I don't need any right now...");
+                ~chatnpc("<p,default>Nice cocktail, but I don't need any right now...");
             }
             if (%gnome_bar_progress > 7 & %gnome_bar_progress < 13) {
                 @gnome_bar_cocktail_job_finish;
@@ -49,10 +49,10 @@ if ($category = category_83 | $category = category_15) {
 }
 
 [label,blurberry_barcrawl]
-~chatplayer(neutral, "I'm doing Alfred Grimhand's Barcrawl.");
-~chatnpc(neutral, "Ah, you've come to the best stop on your list!|I'll give you my famous Fire Toad Blast!|It'll cost you 10 coins.");
+~chatplayer("<p,neutral>I'm doing Alfred Grimhand's Barcrawl.");
+~chatnpc("<p,neutral>Ah, you've come to the best stop on your list!|I'll give you my famous Fire Toad Blast!|It'll cost you 10 coins.");
 if(inv_total(inv, coins) < 10) {
-    ~chatplayer(sad, "I don't have 10 coins right now.");
+    ~chatplayer("<p,sad>I don't have 10 coins right now.");
     return;
 }   
 if_close;
@@ -66,4 +66,4 @@ mes("Blurberry signs your card.");
 p_delay(2);
 ~damage_self(calc((stat(hitpoints) * 5) / 100));
 // In OSRS this closes so you never see it (because damage is strongqueued, which isn't the case in 225)
-~chatplayer(confused, "Danks bery mush...");
+~chatplayer("<p,confused>Danks bery mush...");

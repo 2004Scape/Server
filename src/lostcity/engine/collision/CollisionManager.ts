@@ -3,10 +3,14 @@ import fs from 'fs';
 import Packet from '#jagex2/io/Packet.js';
 
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
-import LocType from '#lostcity/cache/LocType.js';
-import Loc from '#lostcity/entity/Loc.js';
 
-import {allocateIfAbsent, changeFloor, changeLoc, changeNpc, changePlayer, changeRoof, changeWall, LocAngle, LocLayer, locShapeLayer} from '@2004scape/rsmod-pathfinder';
+import LocType from '#lostcity/cache/config/LocType.js';
+
+import Loc from '#lostcity/entity/Loc.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+
+import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
 
 export default class CollisionManager {
     init(zoneManager: ZoneManager) {
@@ -34,7 +38,7 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changeLandCollision(x: number, z: number, level: number, add: boolean): void {
-        changeFloor(x, z, level, add);
+        rsmod.changeFloor(x, z, level, add);
     }
 
     /**
@@ -51,18 +55,18 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changeLocCollision(shape: number, angle: number, blockrange: boolean, length: number, width: number, active: number, x: number, z: number, level: number, add: boolean): void {
-        const locLayer: LocLayer = locShapeLayer(shape);
+        const locLayer: LocLayer = rsmod.locShapeLayer(shape);
         if (locLayer === LocLayer.WALL) {
-            changeWall(x, z, level, angle, shape, blockrange, false, add);
+            rsmod.changeWall(x, z, level, angle, shape, blockrange, false, add);
         } else if (locLayer === LocLayer.GROUND) {
             if (angle === LocAngle.NORTH || angle === LocAngle.SOUTH) {
-                changeLoc(x, z, level, length, width, blockrange, false, add);
+                rsmod.changeLoc(x, z, level, length, width, blockrange, false, add);
             } else {
-                changeLoc(x, z, level, width, length, blockrange, false, add);
+                rsmod.changeLoc(x, z, level, width, length, blockrange, false, add);
             }
         } else if (locLayer === LocLayer.GROUND_DECOR) {
             if (active === 1) {
-                changeFloor(x, z, level, add);
+                rsmod.changeFloor(x, z, level, add);
             }
         }
     }
@@ -76,7 +80,7 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changeNpcCollision(size: number, x: number, z: number, level: number, add: boolean): void {
-        changeNpc(x, z, level, size, add);
+        rsmod.changeNpc(x, z, level, size, add);
     }
 
     /**
@@ -88,7 +92,7 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changePlayerCollision(size: number, x: number, z: number, level: number, add: boolean): void {
-        changePlayer(x, z, level, size, add);
+        rsmod.changePlayer(x, z, level, size, add);
     }
 
     /**
@@ -99,7 +103,7 @@ export default class CollisionManager {
      * @param add True if adding this collision. False if removing.
      */
     changeRoofCollision(x: number, z: number, level: number, add: boolean): void {
-        changeRoof(x, z, level, add);
+        rsmod.changeRoof(x, z, level, add);
     }
 
     private decodeLands(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {
@@ -136,7 +140,7 @@ export default class CollisionManager {
                     const absoluteZ: number = z + mapsquareZ;
 
                     if (x % 7 === 0 && z % 7 === 0) { // allocate per zone
-                        allocateIfAbsent(absoluteX, absoluteZ, level);
+                        rsmod.allocateIfAbsent(absoluteX, absoluteZ, level);
                     }
 
                     const land: number = lands[this.packCoord(x, z, level)];
@@ -189,7 +193,7 @@ export default class CollisionManager {
                 const absoluteX: number = x + mapsquareX;
                 const absoluteZ: number = z + mapsquareZ;
 
-                zoneManager.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, locId, shape, angle));
+                zoneManager.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
 
                 if (type.blockwalk) {
                     this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);

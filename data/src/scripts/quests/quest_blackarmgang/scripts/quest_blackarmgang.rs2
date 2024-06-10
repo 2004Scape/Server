@@ -7,7 +7,7 @@ if(inv_total(inv, arrav_book) > 0) {
     mes("You already own 'The Shield of Arrav', the book that was kept here.");
     return;
 }
-~chatplayer(happy, "Aha! 'The Shield of Arrav'!|Exactly what I was looking for.");
+~chatplayer("<p,happy>Aha! 'The Shield of Arrav'!|Exactly what I was looking for.");
 ~mesbox("You take the book from the bookcase.");
 inv_add(inv, arrav_book, 1);
 
@@ -89,7 +89,7 @@ loc_add(movecoord($loc_coord, $x, 0, $z), loc_1535, modulo(add($angle, 1), 4), $
 
 [opobj3,phoenix_crossbow]
 // not a zone specific check, you can drop a crossbow in the nearby building to trigger this dialogue 
-if(npc_finduid(~npc_within_distance(coord, weaponsmaster, 10)) = true) {
+if(npc_find(coord, weaponsmaster, 10, 0) = true) {
     @weaponsmaster_stop;
 }
 if (inv_itemspace(inv, obj_type, obj_count, inv_size(inv)) = false) {

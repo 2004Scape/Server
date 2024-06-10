@@ -1,11 +1,11 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import Player from '#lostcity/entity/Player.js';
-import Component from '#lostcity/cache/Component.js';
+import Component from '#lostcity/cache/config/Component.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import Environment from '#lostcity/util/Environment.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import OpHeld from '#lostcity/network/incoming/model/OpHeld.js';
 
 export default class OpHeldHandler extends MessageHandler<OpHeld> {

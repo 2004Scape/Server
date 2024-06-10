@@ -66,7 +66,7 @@ p_delay(2);
 [proc,is_alchable](obj $item)(boolean)
 switch_obj($item) {
     case obj_1842 : 
-        mes("unimplimented");
+        mes("unimplemented");
         return(false);
     case coins : 
         mes("Coins are already made of gold.");

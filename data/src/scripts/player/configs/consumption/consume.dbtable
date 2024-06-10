@@ -3,6 +3,7 @@ column=consumable,obj
 column=consume_sound,synth
 column=stat_change,stat,int,int
 column=stat_restore,stat,int,int
+column=stat_heal,stat,int,int
 
 [consume_messages_table]
 column=consumable,obj

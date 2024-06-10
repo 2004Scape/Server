@@ -1,18 +1,23 @@
 import Packet from '#jagex2/io/Packet.js';
+
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
-import ServerProt from '#lostcity/server/ServerProt.js';
-import World from '#lostcity/engine/World.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import {locShapeLayer} from '@2004scape/rsmod-pathfinder';
+
+import ServerProt from '#lostcity/server/ServerProt.js';
+
+import World from '#lostcity/engine/World.js';
+
+import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 export class ZoneEvent {
     type = -1;
     receiverId = -1;
     buffer: Packet = new Packet(new Uint8Array());
     tick = -1;
+    subjectType = -1;
     static = false;
 
     // temp
@@ -236,7 +241,7 @@ export default class Zone {
         this.staticObjs.push(obj);
 
         const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
-        event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
+        event.buffer = Zone.objAdd(obj.x, obj.z, obj.type, obj.count);
         event.tick = World.currentTick;
         event.static = true;
         this.updates.push(event);
@@ -245,9 +250,8 @@ export default class Zone {
 
     // ----
 
-    addLoc(loc: Loc, duration: number) {
+    addLoc(loc: Loc): ZoneEvent {
         if (this.staticLocs.indexOf(loc) === -1) {
-            loc.despawn = World.currentTick + duration;
             this.locs.push(loc);
         }
 
@@ -256,10 +260,11 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
+        event.subjectType = loc.type;
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === locShapeLayer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape)) {
                 return false;
             }
 
@@ -268,9 +273,10 @@ export default class Zone {
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
+        return event;
     }
 
-    removeLoc(loc: Loc, duration: number) {
+    removeLoc(loc: Loc): ZoneEvent {
         const event = new ZoneEvent(ServerProt.LOC_DEL.id);
 
         const dynamicIndex = this.locs.indexOf(loc);
@@ -278,7 +284,6 @@ export default class Zone {
             this.locs.splice(dynamicIndex, 1);
         } else {
             // static locs remain forever in memory, just create a zone event
-            loc.respawn = World.currentTick + duration;
             event.static = true;
         }
 
@@ -286,10 +291,11 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
+        event.subjectType = loc.type;
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === locShapeLayer(loc.shape)) {
+            if (event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape)) {
                 return false;
             }
 
@@ -298,6 +304,7 @@ export default class Zone {
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
+        return event;
     }
 
     getLoc(x: number, z: number, type: number): Loc | null {
@@ -306,7 +313,7 @@ export default class Zone {
             return this.locs[dynamicLoc];
         }
 
-        const staticLoc = this.staticLocs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type && loc.respawn < World.currentTick);
+        const staticLoc = this.staticLocs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type && loc.checkLifeCycle(World.currentTick));
         if (staticLoc !== -1) {
             return this.staticLocs[staticLoc];
         }
@@ -321,7 +328,8 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
+        event.subjectType = loc.type;
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
@@ -334,7 +342,8 @@ export default class Zone {
         event.x = loc.x;
         event.z = loc.z;
         event.tick = World.currentTick;
-        event.layer = locShapeLayer(loc.shape);
+        event.layer = rsmod.locShapeLayer(loc.shape);
+        event.subjectType = loc.type;
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
@@ -342,10 +351,9 @@ export default class Zone {
 
     // ----
 
-    addObj(obj: Obj, receiver: Player | null, duration: number) {
+    addObj(obj: Obj, receiver: Player | null): ZoneEvent {
         const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
         if (this.staticObjs.indexOf(obj) === -1) {
-            obj.despawn = World.currentTick + duration;
             this.objs.push(obj);
         } else {
             event.static = true;
@@ -354,16 +362,18 @@ export default class Zone {
         if (receiver) {
             event.receiverId = receiver.uid;
         }
-        event.buffer = Zone.objAdd(obj.x, obj.z, obj.id, obj.count);
+        event.buffer = Zone.objAdd(obj.x, obj.z, obj.type, obj.count);
         event.x = obj.x;
         event.z = obj.z;
         event.tick = World.currentTick;
+        event.subjectType = obj.type;
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
+        return event;
     }
 
-    removeObj(obj: Obj, receiver: Player | null) {
+    removeObj(obj: Obj, receiver: Player | null): ZoneEvent {
         const event = new ZoneEvent(ServerProt.OBJ_DEL.id);
 
         const dynamicIndex = this.objs.indexOf(obj);
@@ -375,14 +385,17 @@ export default class Zone {
             }
         }
 
-        event.buffer = Zone.objDel(obj.x, obj.z, obj.id, obj.count);
+        event.buffer = Zone.objDel(obj.x, obj.z, obj.type, obj.count);
         event.x = obj.x;
         event.z = obj.z;
         event.tick = World.currentTick;
+        event.subjectType = obj.type;
 
         this.updates.push(event);
         this.lastEvent = World.currentTick;
+        return event;
     }
+
     getDynObj(x: number, z: number, type: number): Obj | null {
         const dynamicObj = this.objs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type);
         if (dynamicObj !== -1) {
@@ -397,7 +410,7 @@ export default class Zone {
             return dynamicObj;
         }
 
-        const staticObj = this.staticObjs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type && obj.respawn < World.currentTick);
+        const staticObj = this.staticObjs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type && obj.checkLifeCycle(World.currentTick));
         if (staticObj !== -1) {
             return this.staticObjs[staticObj];
         }

@@ -1,7 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import NpcType from '#lostcity/cache/NpcType.js';
-import VarNpcType from '#lostcity/cache/VarNpcType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
 
 import World from '#lostcity/engine/World.js';
 
@@ -21,34 +21,31 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import {Direction, Position} from '#lostcity/entity/Position.js';
-import HuntType from '#lostcity/cache/HuntType.js';
+import HuntType from '#lostcity/cache/config/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 
-import {CollisionFlag, CollisionType, findNaivePath} from '@2004scape/rsmod-pathfinder';
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Interaction from '#lostcity/entity/Interaction.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+import NpcStat from '#lostcity/entity/NpcStat.js';
+
+import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 
 export default class Npc extends PathingEntity {
-    static ANIM = 0x2;
-    static FACE_ENTITY = 0x4;
-    static SAY = 0x8;
-    static DAMAGE = 0x10;
-    static CHANGE_TYPE = 0x20;
-    static SPOTANIM = 0x40;
-    static FACE_COORD = 0x80;
-
-    static HITPOINTS = 0;
-    static ATTACK = 1;
-    static STRENGTH = 2;
-    static DEFENCE = 3;
-    static MAGIC = 4;
-    static RANGED = 5;
+    static readonly ANIM = 0x2;
+    static readonly FACE_ENTITY = 0x4;
+    static readonly SAY = 0x8;
+    static readonly DAMAGE = 0x10;
+    static readonly CHANGE_TYPE = 0x20;
+    static readonly SPOTANIM = 0x40;
+    static readonly FACE_COORD = 0x80;
 
     // constructor properties
     nid: number;
@@ -57,11 +54,10 @@ export default class Npc extends PathingEntity {
     origType: number;
     startX: number;
     startZ: number;
-    levels: Uint8Array;
-    baseLevels: Uint8Array;
+    levels: Uint8Array = new Uint8Array(6);
+    baseLevels: Uint8Array = new Uint8Array(6);
 
     // runtime variables
-    static: boolean = true; // static (map) or dynamic (scripted) npc
     vars: Int32Array;
     varsString: string[];
 
@@ -84,8 +80,8 @@ export default class Npc extends PathingEntity {
         points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
-    constructor(level: number, x: number, z: number, width: number, length: number, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, moveRestrict, blockWalk, Npc.FACE_COORD, Npc.FACE_ENTITY, false);
+    constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
+        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, Npc.FACE_COORD, Npc.FACE_ENTITY, false);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
@@ -94,9 +90,6 @@ export default class Npc extends PathingEntity {
         this.origType = type;
 
         const npcType = NpcType.get(type);
-
-        this.levels = new Uint8Array(6);
-        this.baseLevels = new Uint8Array(6);
 
         for (let index = 0; index < npcType.stats.length; index++) {
             const level = npcType.stats[index];
@@ -163,8 +156,6 @@ export default class Npc extends PathingEntity {
         if (respawn) {
             this.type = this.origType;
             this.uid = (this.type << 16) | this.nid;
-            this.despawn = -1;
-            this.respawn = -1;
             this.orientation = Direction.SOUTH;
             for (let index = 0; index < this.baseLevels.length; index++) {
                 this.levels[index] = this.baseLevels[index];
@@ -185,7 +176,7 @@ export default class Npc extends PathingEntity {
         }
 
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
-            this.pathToTarget();
+            this.pathToPathingTarget();
         }
 
         if (this.walktrigger !== -1) {
@@ -364,6 +355,7 @@ export default class Npc extends PathingEntity {
         const patrolDelay = type.patrolDelay[this.nextPatrolPoint];
         let dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]);
 
+        this.updateMovement(false);
         if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
@@ -383,7 +375,6 @@ export default class Npc extends PathingEntity {
         this.delayedPatrol = false;
         dest = Position.unpackCoord(patrolPoints[this.nextPatrolPoint]); // recalc dest
         this.queueWaypoint(dest.x, dest.z);
-        this.updateMovement(false);
     }
 
     playerEscapeMode(): void {
@@ -413,7 +404,7 @@ export default class Npc extends PathingEntity {
             return;
         }
         // this might have to be a smart path idk tho
-        this.queueWaypoints(findNaivePath(this.level, this.x, this.z, this.startX, this.startZ, this.width, this.length, this.width, this.length, extraFlag, collisionStrategy));
+        this.queueWaypoints(rsmod.findNaivePath(this.level, this.x, this.z, this.startX, this.startZ, this.width, this.length, this.width, this.length, extraFlag, collisionStrategy));
         this.updateMovement(false);
     }
 
@@ -539,8 +530,6 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
-        this.interacted = false;
 
         const apTrigger: boolean =
             (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
@@ -814,12 +803,12 @@ export default class Npc extends PathingEntity {
         this.damageTaken = damage;
         this.damageType = type;
 
-        const current = this.levels[Npc.HITPOINTS];
+        const current = this.levels[NpcStat.HITPOINTS];
         if (current - damage <= 0) {
-            this.levels[Npc.HITPOINTS] = 0;
+            this.levels[NpcStat.HITPOINTS] = 0;
             this.damageTaken = current;
         } else {
-            this.levels[Npc.HITPOINTS] = current - damage;
+            this.levels[NpcStat.HITPOINTS] = current - damage;
         }
 
         this.mask |= Npc.DAMAGE;
@@ -919,8 +908,8 @@ export default class Npc extends PathingEntity {
         if (mask & Npc.DAMAGE) {
             out.p1(this.damageTaken);
             out.p1(this.damageType);
-            out.p1(this.levels[Npc.HITPOINTS]);
-            out.p1(this.baseLevels[Npc.HITPOINTS]);
+            out.p1(this.levels[NpcStat.HITPOINTS]);
+            out.p1(this.baseLevels[NpcStat.HITPOINTS]);
         }
 
         if (mask & Npc.CHANGE_TYPE) {

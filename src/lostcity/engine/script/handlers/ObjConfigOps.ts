@@ -1,6 +1,6 @@
-import ObjType from '#lostcity/cache/ObjType.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import ParamType from '#lostcity/cache/ParamType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
@@ -9,124 +9,85 @@ import {check, ObjTypeValid, ParamTypeValid} from '#lostcity/engine/script/Scrip
 
 const ObjConfigOps: CommandHandlers = {
     [ScriptOpcode.OC_NAME]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
+        const objType: ObjType = check(state.popInt(), ObjTypeValid);
 
-        const objType = ObjType.get(objId);
         state.pushString(objType.name ?? objType.debugname ?? 'null');
     },
 
     [ScriptOpcode.OC_PARAM]: state => {
         const [objId, paramId] = state.popInts(2);
 
-        check(objId, ObjTypeValid);
-        check(paramId, ParamTypeValid);
-
-        const obj = ObjType.get(objId);
-        const param = ParamType.get(paramId);
-        if (param.isString()) {
-            state.pushString(ParamHelper.getStringParam(paramId, obj, param.defaultString));
+        const objType: ObjType = check(objId, ObjTypeValid);
+        const paramType: ParamType = check(paramId, ParamTypeValid);
+        if (paramType.isString()) {
+            state.pushString(ParamHelper.getStringParam(paramType.id, objType, paramType.defaultString));
         } else {
-            state.pushInt(ParamHelper.getIntParam(paramId, obj, param.defaultInt));
+            state.pushInt(ParamHelper.getIntParam(paramType.id, objType, paramType.defaultInt));
         }
     },
 
     [ScriptOpcode.OC_CATEGORY]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushInt(objType.category);
+        state.pushInt(check(state.popInt(), ObjTypeValid).category);
     },
 
     [ScriptOpcode.OC_DESC]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushString(objType.desc ?? 'null');
+        state.pushString(check(state.popInt(), ObjTypeValid).desc ?? 'null');
     },
 
     [ScriptOpcode.OC_MEMBERS]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushInt(objType.members ? 1 : 0);
+        state.pushInt(check(state.popInt(), ObjTypeValid).members ? 1 : 0);
     },
 
     [ScriptOpcode.OC_WEIGHT]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushInt(objType.weight);
+        state.pushInt(check(state.popInt(), ObjTypeValid).weight);
     },
 
     [ScriptOpcode.OC_WEARPOS]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushInt(objType.wearpos);
+        state.pushInt(check(state.popInt(), ObjTypeValid).wearpos);
     },
 
     [ScriptOpcode.OC_WEARPOS2]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushInt(objType.wearpos2);
+        state.pushInt(check(state.popInt(), ObjTypeValid).wearpos2);
     },
 
     [ScriptOpcode.OC_WEARPOS3]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushInt(objType.wearpos3);
+        state.pushInt(check(state.popInt(), ObjTypeValid).wearpos3);
     },
 
     [ScriptOpcode.OC_COST]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const obj = ObjType.get(objId);
-        state.pushInt(obj?.cost);
+        state.pushInt(check(state.popInt(), ObjTypeValid).cost);
     },
 
     [ScriptOpcode.OC_TRADEABLE]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const obj = ObjType.get(objId);
-        state.pushInt(obj?.tradeable ? 1 : 0);
+        state.pushInt(check(state.popInt(), ObjTypeValid).tradeable ? 1 : 0);
     },
 
     [ScriptOpcode.OC_DEBUGNAME]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushString(objType.debugname ?? 'null');
+        state.pushString(check(state.popInt(), ObjTypeValid).debugname ?? 'null');
     },
 
     [ScriptOpcode.OC_CERT]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
+        const objType: ObjType = check(state.popInt(), ObjTypeValid);
 
-        const objType = ObjType.get(objId);
         if (objType.certtemplate == -1 && objType.certlink >= 0) {
             state.pushInt(objType.certlink);
         } else {
-            state.pushInt(objId);
+            state.pushInt(objType.id);
         }
     },
 
     [ScriptOpcode.OC_UNCERT]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
+        const objType: ObjType = check(state.popInt(), ObjTypeValid);
 
-        const objType = ObjType.get(objId);
         if (objType.certtemplate >= 0 && objType.certlink >= 0) {
             state.pushInt(objType.certlink);
         } else {
-            state.pushInt(objId);
+            state.pushInt(objType.id);
         }
     },
 
     [ScriptOpcode.OC_STACKABLE]: state => {
-        const objId = check(state.popInt(), ObjTypeValid);
-
-        const objType = ObjType.get(objId);
-        state.pushInt(objType.stackable ? 1 : 0);
+        state.pushInt(check(state.popInt(), ObjTypeValid).stackable ? 1 : 0);
     }
 };
 

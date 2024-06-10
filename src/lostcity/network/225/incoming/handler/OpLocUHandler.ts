@@ -2,8 +2,8 @@ import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js
 import World from '#lostcity/engine/World.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import OpLocU from '#lostcity/network/incoming/model/OpLocU.js';
-import Component from '#lostcity/cache/Component.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
@@ -52,8 +52,7 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
         player.lastUseItem = item;
         player.lastUseSlot = slot;
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCU);
         player.opcalled = true;
         return true;

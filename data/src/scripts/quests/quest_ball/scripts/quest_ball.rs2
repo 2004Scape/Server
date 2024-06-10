@@ -23,7 +23,7 @@ if(last_useitem = ball_doorkey | $leaving = true) {
 
 [label,open_witch_house_door](boolean $leaving)
 if($leaving ! true & (%ball_progress < ^ball_started | %ball_progress = ^ball_complete)) {
-    ~chatplayer(neutral, "It would be rude to break into this house.");
+    ~chatplayer("<p,neutral>It would be rude to break into this house.");
     return;
 }
 // angles on these doors don't visually match osrs, but they actually do have the same loc_angle
@@ -120,7 +120,7 @@ if(last_useitem = magnet) {
 [oploc1,loc_2862]
 if(%ball_progress < ^ball_unlocked_mousedoor) {
     ~mesbox("This door is locked.");
-    ~chatplayer(confused, "Strange... I can't see any kind of lock or handle to open this door...");
+    ~chatplayer("<p,confused>Strange... I can't see any kind of lock or handle to open this door...");
     return;
 }
 ~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
@@ -138,21 +138,20 @@ if(last_useitem = ball_shedkey) {
     // prob just something weird with the new models
     def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
     if($entering = false) {
-        // TODO: change this to use huntall and inzone (i'm almost certain this is what it does on osrs)
         // this mechanic existed on OSRS release (2007), i'm not sure if it originally existed
         // but no proof otherwise
-        if(%ball_shed_entered = false) {
-            %ball_shed_entered = true;
-            %ball_shed_uid = null;
+        huntall(coord, 5, 0);
+        while(.huntnext = true) {
+            if(inzone(0_45_54_54_3, 0_45_54_57_11, .coord) = true) {
+                ~chatplayer("<p,neutral>I'd better not go in there yet... I think I can hear someone inside!");
+                return;
+            }
         }
-        if(%ball_shed_uid ! null) {
-            ~chatplayer(neutral, "I'd better not go in there yet... I think I can hear someone inside!");
-            return;
-        }
-        %ball_shed_uid = uid;
-        softtimer(shed_var_check, 1);
-        if(npc_finduid(~npc_category_within_distance(coord, witches_experiment, 7)) = true) {
-            npc_del;
+        npc_huntall(coord, 7, 0);
+        while (npc_huntnext = true) {
+            if (npc_category = witches_experiment) {
+                npc_del;
+            }
         }
         npc_add(^ball_experiment_spawn_coord, witches_experiment_p1, 500);
     }
@@ -160,17 +159,6 @@ if(last_useitem = ball_shedkey) {
     return;
 }
 mes("The shed door is locked.");
-
-[softtimer,shed_var_check]
-if(inzone(0_45_54_54_3, 0_45_54_57_11, coord) = false) {
-    ~clear_ball_shed_uid;
-    clearsofttimer(shed_var_check);
-} 
-
-[proc,clear_ball_shed_uid]
-if(%ball_shed_uid = uid) {
-    %ball_shed_uid = null;
-}
 
 [oploc2,loc_2864]
 if(~obj_gettotal(ball_shedkey) > 0) { // checks bank
@@ -194,13 +182,16 @@ if(%ball_progress = ^ball_defeated_experiment) {
     }
     @pickup_obj(obj_coord, obj_type, obj_count);
 }
-if(npc_finduid(~npc_category_within_distance(coord, witches_experiment, 7)) = true) {
-    mes("The shapeshifter glares at you. You feel slightly weakened.");
-    stat_sub(attack, calc(1 + ((stat(attack) * 5) / 100)), 0);
-    stat_sub(defence, calc(1 + ((stat(defence) * 5) / 100)), 0);
-    ~npc_retaliate(0);
-    queue(damage_player, 0, calc(1 + ((stat(hitpoints) * 5) / 100)));
-    return;
+npc_huntall(coord, 7, 0);
+while (npc_huntnext = true) {
+    if (npc_category = witches_experiment) {
+        mes("The shapeshifter glares at you. You feel slightly weakened.");
+        stat_sub(attack, calc(1 + ((stat(attack) * 5) / 100)), 0);
+        stat_sub(defence, calc(1 + ((stat(defence) * 5) / 100)), 0);
+        ~npc_retaliate(0);
+        queue(damage_player, 0, calc(1 + ((stat(hitpoints) * 5) / 100)));
+        return;
+    }
 }
 npc_add(^ball_experiment_spawn_coord, witches_experiment_p1, 500);
 mes("A shapeshifter appears, and knocks you back from the ball!");

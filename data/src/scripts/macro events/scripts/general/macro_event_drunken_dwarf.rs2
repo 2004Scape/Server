@@ -21,11 +21,11 @@ npc_del;
 
 [opnpc1,macro_event_drunken_dwarf]
 if (uid ! %npc_attacking_uid) {
-    ~chatnpc(drunk, "You're not my matey!"); // osrs
+    ~chatnpc("<p,drunk>You're not my matey!"); // osrs
     return;
 }
 if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
-    ~chatnpc(drunk, "'Ave a good 'un buddy!"); // osrs
+    ~chatnpc("<p,drunk>'Ave a good 'un buddy!"); // osrs
     return;
 }
 inv_add(inv, kebab, 1);
@@ -33,7 +33,7 @@ inv_add(inv, beer, 1);
 %macro_event = ^no_macro_event;
 
 npc_queue(6, 0, 0); // say good bye
-~chatnpc(drunk, "I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
+~chatnpc("<p,drunk>I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
 
 [ai_timer,macro_event_drunken_dwarf]
 if (~npc_out_of_combat = false) {

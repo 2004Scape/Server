@@ -1,6 +1,6 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import OpPlayerT from '#lostcity/network/incoming/model/OpPlayerT.js';
-import Component from '#lostcity/cache/Component.js';
+import Component from '#lostcity/cache/config/Component.js';
 import World from '#lostcity/engine/World.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
@@ -29,8 +29,7 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
             return false;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERT, { type: -1, com: spellComId });
         player.opcalled = true;
         return true;

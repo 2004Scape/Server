@@ -13,12 +13,13 @@ import World from '#lostcity/engine/World.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
-import { findPath } from '@2004scape/rsmod-pathfinder';
 import Player from '#lostcity/entity/Player.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
+
+import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -74,7 +75,7 @@ export class NetworkPlayer extends Player {
                 return;
             }
 
-            if (!this.target || this.target instanceof Loc || this.target instanceof Obj) {
+            if ((!this.target || this.target instanceof Loc || this.target instanceof Obj) && this.faceEntity !== -1) {
                 this.faceEntity = -1;
                 this.mask |= Player.FACE_ENTITY;
             }
@@ -88,7 +89,7 @@ export class NetworkPlayer extends Player {
                 this.queueWaypoints(this.userPath);
             } else {
                 const { x, z } = Position.unpackCoord(this.userPath[0]);
-                this.queueWaypoints(findPath(this.level, this.x, this.z, x, z));
+                this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, x, z));
             }
         }
     }

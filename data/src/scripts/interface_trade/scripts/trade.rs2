@@ -9,6 +9,18 @@ while ($i < $size) {
     $i = add($i, 1);
 }
 
+[proc,.moveallinv](inv $src, inv $dest)
+def_int $size = .inv_size($src);
+def_int $i = 0;
+while ($i < $size) {
+    def_obj $obj = .inv_getobj($src, $i);
+    if ($obj ! null) {
+        .inv_moveitem($src, $dest, $obj, .inv_total($src, $obj));
+    }
+    $i = add($i, 1);
+}
+
+
 // ----
 
 [opplayer4,_]

@@ -12,14 +12,14 @@ mes("Wall: <tostring(%dragon_wall)>.");
 // just incase the player gets to crandor with this varp value
 // since ned is also on crandor
 if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_dragon_sailed_to_crandor) & coordy(coord) = 3) {
-    ~chatnpc(quiz, "Ah! There you are! Ready to go?");
+    ~chatnpc("<p,quiz>Ah! There you are! Ready to go?");
     def_int $choice = ~p_choice2("Yep lets go!", 1, "No I'm not quite ready yet...", 2);
     if ($choice = 2) {
-        ~chatplayer(neutral, "No I'm not quite ready yet...");
-        ~chatnpc(neutral, "Well, you go do whatever you need to do. I'll wait here for you until you're ready.");
+        ~chatplayer("<p,neutral>No I'm not quite ready yet...");
+        ~chatnpc("<p,neutral>Well, you go do whatever you need to do. I'll wait here for you until you're ready.");
         return;
     }
-    ~chatplayer(quiz, "Yep lets go!");
+    ~chatplayer("<p,quiz>Yep lets go!");
     mes("You feel the ship begin to move...");
     mes("The ship is sailing across the ocean...");
     %boat_takeoff = ^sail_port_sarim_to_crandor;
@@ -37,8 +37,8 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     if_settext(ship_journey:com_0, "You Journey on the ship...."); // reset text
     // https://youtu.be/ucaYfz3ihWs?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=28
     ~mesbox("You hear a loud crack as the ship comes to a juddering halt.");
-    ~chatnpc(neutral,"Um... I think we're there. I probably should have paid closer attention.");
-    ~chatplayer(angry, "Gee.. you think?");
+    ~chatnpc("<p,neutral>Um... I think we're there. I probably should have paid closer attention.");
+    ~chatplayer("<p,angry>Gee.. you think?");
     return;
 } else {
     // https://youtu.be/uETjjZFKWus?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=10
@@ -46,13 +46,13 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     def_int $choice = ~p_choice2("Is the ship ready to sail back?", 1, "So are you enjoying this exotic island vacation?", 2);
     // MISSING DIALOGUE:
     if ($choice = 1) {
-        ~chatplayer(quiz, "Is the ship ready to sail back?");
-        ~chatnpc(sad, "I'm afraid not. It looks like we're stranded."); // complete guess
+        ~chatplayer("<p,quiz>Is the ship ready to sail back?");
+        ~chatnpc("<p,sad>I'm afraid not. It looks like we're stranded."); // complete guess
         return;
     }
     if ($choice = 2) {
-        ~chatplayer(quiz, "So are you enjoying this exotic island vacation?");
-        ~chatnpc(sad, "Not really. I'm afraid we're stranded here."); // complete guess
+        ~chatplayer("<p,quiz>So are you enjoying this exotic island vacation?");
+        ~chatnpc("<p,sad>Not really. I'm afraid we're stranded here."); // complete guess
         return;
     }
 }

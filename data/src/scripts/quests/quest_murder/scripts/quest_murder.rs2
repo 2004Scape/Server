@@ -75,7 +75,7 @@ if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
     if(%murder_murderer_id = ^murderer_elizabeth) {
         // https://youtu.be/P1IDGCA2f9o?si=6aKZAUVbGoVmUF8t&t=327
         ~mesbox("The fountain is swarming with mosquitos.|There's a nest of them underneath the fountain.");
-        ~chatplayer(angry, "I hate mosquitos, they're so annoying!");
+        ~chatplayer("<p,angry>I hate mosquitos, they're so annoying!");
         // not 100% sure if the varp is set at this point, the other locs should all be correct
         %murder_poisonproof_progress = ^poisonproof_searched_loc;
         ~mesbox("It's certainly clear nobody's used poison here.");

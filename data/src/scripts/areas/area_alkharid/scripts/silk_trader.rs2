@@ -1,22 +1,22 @@
 // dialogue taken from osrs
 [opnpc1,silk_trader]
-~chatnpc(neutral, "Do you want to buy any fine silks?");
+~chatnpc("<p,neutral>Do you want to buy any fine silks?");
 def_int $choice = ~p_choice2("How much are they?", 1, "No. Silk doesn't suit me.", 2);
 if ($choice = 2) {
-    ~chatplayer(neutral, "No. Silk doesn't suit me.");
+    ~chatplayer("<p,neutral>No. Silk doesn't suit me.");
     return;
 }
 
-~chatplayer(neutral, "How much are they?");
-~chatnpc(neutral, "3 gp.");
+~chatplayer("<p,neutral>How much are they?");
+~chatnpc("<p,neutral>3 gp.");
 
 $choice = ~p_choice2("No. That's too much for me", 1, "Okay, that sounds good.", 2);
 
 if ($choice = 2) {
-    ~chatplayer(neutral, "Okay, that sounds good.");
+    ~chatplayer("<p,neutral>Okay, that sounds good.");
     if (inv_total(inv, coins) < 3) {
-        ~chatplayer(sad, "Oh dear. I don't have enough money.");
-        ~chatnpc(angry, "Well, come back when you do have some money!");
+        ~chatplayer("<p,sad>Oh dear. I don't have enough money.");
+        ~chatnpc("<p,angry>Well, come back when you do have some money!");
         return;
     }
     ~objbox(silk, "You buy some silk for 3 gp.");
@@ -25,22 +25,22 @@ if ($choice = 2) {
     return;
 }
 
-~chatplayer(neutral, "No. That's too much for me.");
-~chatnpc(quiz, "2 gp and that's as low as I'll go.");
-~chatnpc(sad, "I'm not selling it for any less. You'll probably go and|sell it in Varrock for a profit, anyway.");
+~chatplayer("<p,neutral>No. That's too much for me.");
+~chatnpc("<p,quiz>2 gp and that's as low as I'll go.");
+~chatnpc("<p,sad>I'm not selling it for any less. You'll probably go and|sell it in Varrock for a profit, anyway.");
 
 $choice = ~p_choice2("2 gp sounds good.", 1, "No, really. I don't want it.", 2);
 
 if ($choice = 2) {
-    ~chatplayer(neutral, "No, really. I don't want it.");
-    ~chatnpc(neutral, "Okay, but that's the best price you're going to get.");
+    ~chatplayer("<p,neutral>No, really. I don't want it.");
+    ~chatnpc("<p,neutral>Okay, but that's the best price you're going to get.");
     return;
 }
 
-~chatplayer(neutral, "2 gp sounds good.");
+~chatplayer("<p,neutral>2 gp sounds good.");
 if (inv_total(inv, coins) < 2) {
-    ~chatplayer(sad, "Oh dear. I don't have enough money.");
-    ~chatnpc(angry, "Well, come back when you do have some money!");
+    ~chatplayer("<p,sad>Oh dear. I don't have enough money.");
+    ~chatnpc("<p,angry>Well, come back when you do have some money!");
     return;
 }
 ~objbox(silk, "You buy some silk for 2 gp.");

@@ -1,4 +1,4 @@
-import DbTableType from '#lostcity/cache/DbTableType.js';
+import DbTableType from '#lostcity/cache/config/DbTableType.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';

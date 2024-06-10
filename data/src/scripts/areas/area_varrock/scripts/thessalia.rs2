@@ -2,24 +2,24 @@
 // todo: options to retrieve scythe/bunny ears
 
 [opnpc1,thessalia]
-~chatnpc(happy, "Do you want to buy any fine clothes?");
+~chatnpc("<p,happy>Do you want to buy any fine clothes?");
 @multi2("What have you got?", thessalia_b1_s1, "No, thank you.", thessalia_b1_s2);
 
 [label,thessalia_b1_s1]
-~chatplayer(quiz, "What have you got?"); 
-~chatnpc(happy, "Well, I have a number of fine pieces of clothing on sale or, if you prefer I can offer you an exclusive, total clothing makeover?");
+~chatplayer("<p,quiz>What have you got?"); 
+~chatnpc("<p,happy>Well, I have a number of fine pieces of clothing on sale or, if you prefer I can offer you an exclusive, total clothing makeover?");
 @multi2("Tell me more about this makeover.", thessalia_b2_s1, "I'd just like to buy some clothes.", thessalia_b2_s2);
 
 [label,thessalia_b1_s2]
-~chatplayer(neutral, "No, thank you.");
-~chatnpc(happy, "Well, please return if you change your mind.");
+~chatplayer("<p,neutral>No, thank you.");
+~chatnpc("<p,happy>Well, please return if you change your mind.");
 
 [label,thessalia_b2_s1]
-~chatplayer(neutral, "Tell me more about this makeover.");
-~chatnpc(happy, "Certainly!");
-~chatnpc(happy, "Here at Thessalia's fine clothing boutique, we offer a unique service where we will totally revamp your outfit to your choosing, for... wait for it...");
-~chatnpc(happy, "A fee of only 500 gold coins! Tired of always wearing the same old outfit, day in, day out? This is the service for you!");
-~chatnpc(happy, "So what do you say? Interested? We can change either your top, or your legwear for only 500 gold an item!");
+~chatplayer("<p,neutral>Tell me more about this makeover.");
+~chatnpc("<p,happy>Certainly!");
+~chatnpc("<p,happy>Here at Thessalia's fine clothing boutique, we offer a unique service where we will totally revamp your outfit to your choosing, for... wait for it...");
+~chatnpc("<p,happy>A fee of only 500 gold coins! Tired of always wearing the same old outfit, day in, day out? This is the service for you!");
+~chatnpc("<p,happy>So what do you say? Interested? We can change either your top, or your legwear for only 500 gold an item!");
 @multi4("I'd like to change my top please.", thessalia_b3_s1, "I'd like to change my legwear please.", thessalia_b3_s2, "I'd just like to buy some clothes.", thessalia_b2_s2, "No, thank you.", thessalia_b1_s2);
 
 [label,thessalia_b3_s1]
@@ -27,7 +27,7 @@
 %option2 = 0;
 %option3 = 0;
 
-~chatnpc(happy, "Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
+~chatnpc("<p,happy>Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
 
 if (gender = ^gender_male) {
     if_openmainmodal(player_kit_tailor_torso_man);
@@ -41,7 +41,7 @@ if (gender = ^gender_male) {
 %option2 = 0;
 %option3 = 0;
 
-~chatnpc(happy, "Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
+~chatnpc("<p,happy>Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
 
 if (gender = ^gender_male) {
     if_openmainmodal(player_kit_tailor_legs_man);
@@ -51,7 +51,7 @@ if (gender = ^gender_male) {
 }
 
 [label,thessalia_b2_s2]
-~chatplayer(neutral, "I'd just like to buy some clothes.");
+~chatplayer("<p,neutral>I'd just like to buy some clothes.");
 ~openshop_activenpc;
 
 // ----
@@ -190,9 +190,9 @@ if (%option2 = 1) {
 buildappearance(worn);
 inv_del(inv, coins, 500);
 
-if (npc_finduid(~npc_within_distance(coord, thessalia, 4)) = true) {
-    ~chatnpc(happy, "Very stylish! It really suits you!");
-    ~chatplayer(happy, "Thanks!");
+if (npc_find(coord, thessalia, 4, 0) = true) {
+    ~chatnpc("<p,happy>Very stylish! It really suits you!");
+    ~chatplayer("<p,happy>Thanks!");
 }
 
 // ----
@@ -284,7 +284,7 @@ if (%option1 = 1) {
 buildappearance(worn);
 inv_del(inv, coins, 500);
 
-if (npc_finduid(~npc_within_distance(coord, thessalia, 4)) = true) {
-    ~chatnpc(happy, "Totally cool! That outfit looks great!");
-    ~chatplayer(happy, "Thanks!");
+if (npc_find(coord, thessalia, 4, 0) = true) {
+    ~chatnpc("<p,happy>Totally cool! That outfit looks great!");
+    ~chatplayer("<p,happy>Thanks!");
 }

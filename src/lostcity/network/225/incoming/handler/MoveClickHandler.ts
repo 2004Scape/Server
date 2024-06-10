@@ -3,7 +3,7 @@ import MoveClick from '#lostcity/network/incoming/model/MoveClick.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
 import Environment from '#lostcity/util/Environment.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 export default class MoveClickHandler extends MessageHandler<MoveClick> {
     handle(message: MoveClick, player: NetworkPlayer): boolean {
@@ -31,9 +31,9 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
         }
 
         if (player.runenergy < 100) {
-            player.setVar(VarPlayerType.getId('temp_run'), 0);
+            player.setVar(VarPlayerType.TEMP_RUN, 0);
         } else {
-            player.setVar(VarPlayerType.getId('temp_run'), message.ctrlHeld);
+            player.setVar(VarPlayerType.TEMP_RUN, message.ctrlHeld);
         }
 
         return true;

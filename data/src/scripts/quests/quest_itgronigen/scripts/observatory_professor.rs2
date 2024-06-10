@@ -2,19 +2,19 @@
 // TODO: treasure trails dialogue
 switch_int(%itgronigen_progress) {
     case ^itgronigen_complete, ^itgronigen_claimed_wine:
-        ~chatnpc(happy, "Aha, my friend returns.");
-        ~chatnpc(happy, "Thanks for all your help with the telescope.|What can I do for you?"); // still has this linebreak in OSRS
+        ~chatnpc("<p,happy>Aha, my friend returns.");
+        ~chatnpc("<p,happy>Thanks for all your help with the telescope.|What can I do for you?"); // still has this linebreak in OSRS
         // using OSRS dialogue here, seems like it's probably unchanged
         switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Nothing, thanks.", 2)) {
             case 1:
-                ~chatplayer(happy, "Do you need any more help with the telescope?");
-                ~chatnpc(happy, "Not right now,");
-                ~chatnpc(happy, "but the stars may hold a secret for you.");
+                ~chatplayer("<p,happy>Do you need any more help with the telescope?");
+                ~chatnpc("<p,happy>Not right now,");
+                ~chatnpc("<p,happy>but the stars may hold a secret for you.");
             case 2:
-                ~chatplayer(happy, "Nothing, thanks.");
-                ~chatnpc(happy, "Okay, no problem. See you again.");
+                ~chatplayer("<p,happy>Nothing, thanks.");
+                ~chatnpc("<p,happy>Okay, no problem. See you again.");
         }
-    case ^itgronigen_sent_telescope: ~chatnpc(happy, "The telescope is now repaired!|Let's go to the Observatory."); // dialogue doesn't exist on OSRS at all
+    case ^itgronigen_sent_telescope: ~chatnpc("<p,happy>The telescope is now repaired!|Let's go to the Observatory."); // dialogue doesn't exist on OSRS at all
     case ^itgronigen_given_mould: @professor_lens;
     case ^itgronigen_given_glass: @professor_mould;
     case ^itgronigen_given_bronze: @professor_glass;
@@ -23,118 +23,118 @@ switch_int(%itgronigen_progress) {
     case ^itgronigen_not_started:
         // this whole dialogue is quite different compared to OSRS, and unfortunately we have no RS2 reference so this
         // is mostly RSC + grammar corrected
-        ~chatnpc(neutral, "Hello adventurer.|What brings you to these parts?");
+        ~chatnpc("<p,neutral>Hello adventurer.|What brings you to these parts?");
         switch_int (~p_choice4("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "It is of no concern of yours...", 4)) {
             case 1:
-                ~chatplayer(sad, "I am lost!!!");
-                ~chatnpc(neutral, "Lost? It must have been those gnomes that led you astray.");
-                ~chatnpc(neutral, "Head north-east to find the city of Ardougne.");
-                ~chatplayer(neutral, "I'm sure I'll find the way.");
-                ~chatplayer(happy, "Thanks for all your help.");
-                ~chatnpc(neutral, "No problem at all. Come and visit again!");
+                ~chatplayer("<p,sad>I am lost!!!");
+                ~chatnpc("<p,neutral>Lost? It must have been those gnomes that led you astray.");
+                ~chatnpc("<p,neutral>Head north-east to find the city of Ardougne.");
+                ~chatplayer("<p,neutral>I'm sure I'll find the way.");
+                ~chatplayer("<p,happy>Thanks for all your help.");
+                ~chatnpc("<p,neutral>No problem at all. Come and visit again!");
                 ~mesbox("The professor carries on with his studies.");
             case 2:
-                ~chatplayer(neutral, "I'd like to have a look through that telescope.");
-                ~chatnpc(neutral, "So would I!");
-                ~chatnpc(sad, "The trouble is, its not working.");
-                ~chatplayer(quiz, "What do you mean?");
-                ~chatnpc(neutral, "Did you see those houses outside?");
-                ~chatplayer(neutral, "Up on the hill? Yes, I've seen them.");
-                ~chatnpc(neutral, "It's a family of goblins.");
-                ~chatnpc(sad, "Since they moved here they have caused nothing but trouble.");
-                ~chatnpc(neutral, "Last week, my telescope was tampered with.");
-                ~chatnpc(angry, "Now, parts need replacing before it can be used again.");
-                ~chatnpc(quiz, "Err, I don't suppose you would be willing to help?");
+                ~chatplayer("<p,neutral>I'd like to have a look through that telescope.");
+                ~chatnpc("<p,neutral>So would I!");
+                ~chatnpc("<p,sad>The trouble is, its not working.");
+                ~chatplayer("<p,quiz>What do you mean?");
+                ~chatnpc("<p,neutral>Did you see those houses outside?");
+                ~chatplayer("<p,neutral>Up on the hill? Yes, I've seen them.");
+                ~chatnpc("<p,neutral>It's a family of goblins.");
+                ~chatnpc("<p,sad>Since they moved here they have caused nothing but trouble.");
+                ~chatnpc("<p,neutral>Last week, my telescope was tampered with.");
+                ~chatnpc("<p,angry>Now, parts need replacing before it can be used again.");
+                ~chatnpc("<p,quiz>Err, I don't suppose you would be willing to help?");
                 switch_int (~p_choice2("Sounds interesting, what can I do for you?", 1, "Oh, sorry, I don't have time for that.", 2)) {
                     case 1:
-                        ~chatplayer(happy, "Sounds interesting, what can I do for you?");
-                        ~chatnpc(happy, "Oh, thanks so much.");
-                        ~chatnpc(happy, "I need three new parts for the telescope so it can be used again.");
-                        ~chatnpc(neutral, "I need wood to make a new tripod,|bronze to make a new tube|and glass for a replacement lens.");
-                        ~chatnpc(happy, "My assistant will help you obtaining these.");
-                        ~chatnpc(happy, "Go talk to him if you need some advice.");
-                        ~chatplayer(quiz, "Okay what do I need to do?");
-                        ~chatnpc(neutral, "First I need three planks of wood for the tripod.");
+                        ~chatplayer("<p,happy>Sounds interesting, what can I do for you?");
+                        ~chatnpc("<p,happy>Oh, thanks so much.");
+                        ~chatnpc("<p,happy>I need three new parts for the telescope so it can be used again.");
+                        ~chatnpc("<p,neutral>I need wood to make a new tripod,|bronze to make a new tube|and glass for a replacement lens.");
+                        ~chatnpc("<p,happy>My assistant will help you obtaining these.");
+                        ~chatnpc("<p,happy>Go talk to him if you need some advice.");
+                        ~chatplayer("<p,quiz>Okay what do I need to do?");
+                        ~chatnpc("<p,neutral>First I need three planks of wood for the tripod.");
                         %itgronigen_progress = ^itgronigen_started;
                         ~send_quest_progress(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
                     case 2:
-                        ~chatplayer(neutral, "Oh, sorry, I don't have time for that.");
-                        ~chatnpc(sad, "Oh dear. I really do need some help.");
-                        ~chatnpc(neutral, "If you see anyone who can help then please send them my way.");
+                        ~chatplayer("<p,neutral>Oh, sorry, I don't have time for that.");
+                        ~chatnpc("<p,sad>Oh dear. I really do need some help.");
+                        ~chatnpc("<p,neutral>If you see anyone who can help then please send them my way.");
                         ~mesbox("The professor carries on with his duties.");
                 }
             case 3:
-                ~chatplayer(quiz, "What's the ladder over there for?");
-                ~chatnpc(neutral, "The ladder leads to the entrance of the cavern|that leads from here to the observatory.");
+                ~chatplayer("<p,quiz>What's the ladder over there for?");
+                ~chatnpc("<p,neutral>The ladder leads to the entrance of the cavern|that leads from here to the observatory.");
             case 4:
-                ~chatplayer(neutral, "It is of no concern of yours...");
-                ~chatnpc(angry, "Okay okay, there's no need to be insulting!");
+                ~chatplayer("<p,neutral>It is of no concern of yours...");
+                ~chatnpc("<p,angry>Okay okay, there's no need to be insulting!");
         }
 }
 
 [label,professor_glass]
-~chatnpc(neutral, "How are you getting on finding me some glass?");
+~chatnpc("<p,neutral>How are you getting on finding me some glass?");
 if(inv_total(inv, molten_glass) = 0) {
-    ~chatplayer(neutral, "Still working on it.");
-    ~chatnpc(neutral, "I really need it. Please hurry.");
+    ~chatplayer("<p,neutral>Still working on it.");
+    ~chatnpc("<p,neutral>I really need it. Please hurry.");
     return;
 }
-~chatplayer(happy, "Here it is!");
+~chatplayer("<p,happy>Here it is!");
 // rsc version doesn't ever remove the molten glass, old guides say he removes and gives it back (same as post-rework)
 // so we'll do something similar here
 inv_del(inv, molten_glass, 1);
 %itgronigen_progress = ^itgronigen_given_glass;
-~chatnpc(happy, "Excellent! Now all I need is to make the lens...");
-~chatnpc(sad, "Oh no, I can't use this glass!|Until I find the lens mould used to cast it.");
-~chatplayer(quiz, "What do you mean, lens mould?");
-~chatnpc(neutral, "I need my lens mould.|Without it I'll never get the correct shape.");
-~chatnpc(neutral, "I'll have to ask you to try and find it.");
+~chatnpc("<p,happy>Excellent! Now all I need is to make the lens...");
+~chatnpc("<p,sad>Oh no, I can't use this glass!|Until I find the lens mould used to cast it.");
+~chatplayer("<p,quiz>What do you mean, lens mould?");
+~chatnpc("<p,neutral>I need my lens mould.|Without it I'll never get the correct shape.");
+~chatnpc("<p,neutral>I'll have to ask you to try and find it.");
 
 [label,professor_planks]
-~chatnpc(happy, "It's my helping hand, back again!");
-~chatnpc(quiz, "Do you have the planks yet?");
+~chatnpc("<p,happy>It's my helping hand, back again!");
+~chatnpc("<p,quiz>Do you have the planks yet?");
 if(inv_total(inv, plank) < 3) {
-    ~chatplayer(happy, "Sorry, not yet. Three planks was it?");
-    ~chatnpc(happy, "It was indeed.");
+    ~chatplayer("<p,happy>Sorry, not yet. Three planks was it?");
+    ~chatnpc("<p,happy>It was indeed.");
     return;
 }
-~chatplayer(happy, "Yes, I've got them. Here they are.");
+~chatplayer("<p,happy>Yes, I've got them. Here they are.");
 inv_del(inv, plank, 3);
 %itgronigen_progress = ^itgronigen_given_planks;
-~chatnpc(happy, "Well done, I can start the tripod construction now.");
-~chatnpc(happy, "Now, the bronze for the tube.");
+~chatnpc("<p,happy>Well done, I can start the tripod construction now.");
+~chatnpc("<p,happy>Now, the bronze for the tube.");
 
 [label,professor_bronze]
-~chatnpc(happy, "Hello again, do you have the bronze yet?");
+~chatnpc("<p,happy>Hello again, do you have the bronze yet?");
 if(inv_total(inv, bronze_bar) = 0) {
-    ~chatplayer(sad, "Not yet.");
-    ~chatnpc(neutral, "Please bring me one, then.");
+    ~chatplayer("<p,sad>Not yet.");
+    ~chatnpc("<p,neutral>Please bring me one, then.");
     return;
 }
-~chatplayer(happy, "Yes, I have it.");
+~chatplayer("<p,happy>Yes, I have it.");
 inv_del(inv, bronze_bar, 1);
 %itgronigen_progress = ^itgronigen_given_bronze;
-~chatnpc(happy, "Great. Now all I need is the lens made.");
-~chatnpc(happy, "Please get me some molten glass.");
+~chatnpc("<p,happy>Great. Now all I need is the lens made.");
+~chatnpc("<p,happy>Please get me some molten glass.");
 
 [label,professor_mould]
-~chatnpc(quiz, "Did you bring me the mould?");
+~chatnpc("<p,quiz>Did you bring me the mould?");
 if(inv_total(inv, lens_mould) = 0) {
-    ~chatplayer(neutral, "I haven't found it yet.");
-    ~chatnpc(neutral, "Perhaps the goblins have stolen it?");
+    ~chatplayer("<p,neutral>I haven't found it yet.");
+    ~chatnpc("<p,neutral>Perhaps the goblins have stolen it?");
     return;
 }
 // basing this off what guides have written (sals and runehq)
-~chatplayer(happy, "Yes, I've managed to find it.");
-~chatnpc(happy, "At last, you've brought all the items I need|to repair the telescope.");
-~chatnpc(sad, "Oh no! I can't do this.");
-~chatplayer(quiz, "What do you mean?");
-~chatnpc(shifty, "My crafting skill is not good enough|to finish this off.");
-~chatnpc(happy, "You can use the mould with molten glass to make a new lens.");
-~chatnpc(happy, "As long as you have practiced your crafting skills.");
+~chatplayer("<p,happy>Yes, I've managed to find it.");
+~chatnpc("<p,happy>At last, you've brought all the items I need|to repair the telescope.");
+~chatnpc("<p,sad>Oh no! I can't do this.");
+~chatplayer("<p,quiz>What do you mean?");
+~chatnpc("<p,shifty>My crafting skill is not good enough|to finish this off.");
+~chatnpc("<p,happy>You can use the mould with molten glass to make a new lens.");
+~chatnpc("<p,happy>As long as you have practiced your crafting skills.");
 if(inv_freespace(inv) = 0) { // TODO: check mesanims on this
-    ~chatplayer(neutral, "Hold on a second. I don't have space to carry it all.");
-    ~chatnpc(neutral, "Hurry and free up some space, then.");
+    ~chatplayer("<p,neutral>Hold on a second. I don't have space to carry it all.");
+    ~chatnpc("<p,neutral>Hurry and free up some space, then.");
     return;
 }
 %itgronigen_progress = ^itgronigen_given_mould;
@@ -142,25 +142,25 @@ inv_add(inv, molten_glass, 1);
 ~objboxt(molten_glass, "The professor gives you back the molten glass.");
 
 [label,professor_lens]
-~chatnpc(quiz, "Is the lens finished?");
+~chatnpc("<p,quiz>Is the lens finished?");
 if(inv_total(inv, lens) = 0) {
-    ~chatplayer(neutral, "I haven't finished it yet.");
-    ~chatnpc(neutral, "Oh, okay please hurry.");
+    ~chatplayer("<p,neutral>I haven't finished it yet.");
+    ~chatnpc("<p,neutral>Oh, okay please hurry.");
     return;
 }
-~chatplayer(happy, "Yes, here it is.");
+~chatplayer("<p,happy>Yes, here it is.");
 inv_del(inv, lens, 1);
 %itgronigen_progress = ^itgronigen_sent_telescope;
-~chatnpc(happy, "Wonderful, at last I can fix the telescope.");
+~chatnpc("<p,happy>Wonderful, at last I can fix the telescope.");
 if(inv_total(inv, lens_mould) > 0) {
-    ~chatnpc(happy, "I'll take back that mould for use again.");
+    ~chatnpc("<p,happy>I'll take back that mould for use again.");
     inv_del(inv, lens_mould, 1);
 }
-~chatnpc(neutral, "Meet me at the Observatory later...");
+~chatnpc("<p,neutral>Meet me at the Observatory later...");
 
 [label,professor_friend_of_gods]
-~chatnpc(happy, "By Saradomin's earlobes!|You must be a friend of the gods indeed.");
-~chatnpc(happy, "Look in your backpack for your reward,|in payment for your work.");
+~chatnpc("<p,happy>By Saradomin's earlobes!|You must be a friend of the gods indeed.");
+~chatnpc("<p,happy>Look in your backpack for your reward,|in payment for your work.");
 
 // This opnpcu interaction might've been added with the rework, not adding the interactions with the assistant because
 // it's all dialogue from after the rework (compared to the RSC version anyways)
@@ -169,8 +169,8 @@ if(inv_total(inv, lens_mould) > 0) {
 def_obj $used_item = last_useitem;
 if(last_useitem = plank | last_useitem = molten_glass | last_useitem = bronze_bar | last_useitem = lens_mould | last_useitem = lens) {
     if(oc_cert($used_item) = $used_item & oc_uncert($used_item) ! $used_item) {
-        ~chatplayer(happy, "What do you think of this!");
-        ~chatnpc(neutral, "I'd rather you show me the actual item, as opposed to the note form.");
+        ~chatplayer("<p,happy>What do you think of this!");
+        ~chatnpc("<p,neutral>I'd rather you show me the actual item, as opposed to the note form.");
         return;
     }
     if(last_useitem = plank & %itgronigen_progress = ^itgronigen_started) {
@@ -185,19 +185,19 @@ if(last_useitem = plank | last_useitem = molten_glass | last_useitem = bronze_ba
         @professor_lens;
     } 
 } 
-~chatplayer(happy, "What do you think of this!");
-~chatnpc(neutral, "Wonderful. You must be very proud to have it.");
+~chatplayer("<p,happy>What do you think of this!");
+~chatnpc("<p,neutral>Wonderful. You must be very proud to have it.");
 
 [opnpc1,observatory_professor_tower]
 // mostly 1-1 with RSC (with fixes) because this dialogue doesn't exist post-rework
 switch_int(%itgronigen_progress) {
     case ^itgronigen_complete, ^itgronigen_claimed_wine:
-        ~chatnpc(happy, "Hello friend.|The stars hold many secrets.");
-        ~chatnpc(happy, "The moon rises in Scorpio...");
-    case ^itgronigen_sent_telescope: ~chatnpc(happy, "Hello friend.|It's time to use the telescope.");
+        ~chatnpc("<p,happy>Hello friend.|The stars hold many secrets.");
+        ~chatnpc("<p,happy>The moon rises in Scorpio...");
+    case ^itgronigen_sent_telescope: ~chatnpc("<p,happy>Hello friend.|It's time to use the telescope.");
     case ^itgronigen_not_started:
-        ~chatnpc(sad, "Hello friend. This is my poor telescope.|It's been tampered with and is not working.");
-        ~chatnpc(neutral, "If you're good at crafting,|I would appreciate your help!|Come to the reception if you can.");
+        ~chatnpc("<p,sad>Hello friend. This is my poor telescope.|It's been tampered with and is not working.");
+        ~chatnpc("<p,neutral>If you're good at crafting,|I would appreciate your help!|Come to the reception if you can.");
     case default:
-        ~chatnpc(neutral, "Hello friend.|I hope you get all the parts soon.|Return to the reception|when you have the things I need.");
+        ~chatnpc("<p,neutral>Hello friend.|I hope you get all the parts soon.|Return to the reception|when you have the things I need.");
 }

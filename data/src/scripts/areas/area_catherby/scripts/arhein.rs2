@@ -2,16 +2,16 @@
 if(inv_total(inv, trail_clue_easy_simple_exp025) = 1) {
     @trail_arhein;
 }
-~chatnpc(happy, "Hello! Would you like to trade?");
+~chatnpc("<p,happy>Hello! Would you like to trade?");
 def_int $option = ~p_choice3("Yes.", 1, "No thank you.", 2, "Is that your ship?", 3);
 if($option = 1) {
-    ~chatplayer(neutral, "Sure.");
+    ~chatplayer("<p,neutral>Sure.");
     ~openshop_activenpc;
 } else if($option = 2) {
-    ~chatplayer(neutral, "No thank you.");
+    ~chatplayer("<p,neutral>No thank you.");
 } else if($option = 3) {
-    ~chatplayer(quiz, "Is that your ship?");
-    ~chatnpc(happy, "Yes, I use it to make deliveries to my customers up and down the coast. These crates here are all ready for my next trip.");
+    ~chatplayer("<p,quiz>Is that your ship?");
+    ~chatnpc("<p,happy>Yes, I use it to make deliveries to my customers up and down the coast. These crates here are all ready for my next trip.");
     if(%arthur_progress = ^arthur_spoken_lancelot) {
         @multi3("Do you deliver to the fort just down the coast?", arhein_fort, "Where do you deliver to?", arhein_deliver, "Are you rich then?", arhein_rich);
     }
@@ -19,37 +19,37 @@ if($option = 1) {
 }
 
 [label,arhein_deliver]
-~chatplayer(neutral, "Where do you deliver to?");
-~chatnpc(happy, "Oh, various places up and down the coast.|Mostly Karamja and Port Sarim.");
+~chatplayer("<p,neutral>Where do you deliver to?");
+~chatnpc("<p,happy>Oh, various places up and down the coast.|Mostly Karamja and Port Sarim.");
 def_int $option = ~p_choice2("I don't suppose I could get a lift anywhere?", 1, "Well, good luck with your business.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "I don't suppose I could get a lift anywhere?");
-    ~chatnpc(happy, "Sorry pal, but I'm afraid I'm not quite ready to sail yet.");
+    ~chatplayer("<p,neutral>I don't suppose I could get a lift anywhere?");
+    ~chatnpc("<p,happy>Sorry pal, but I'm afraid I'm not quite ready to sail yet.");
     // https://web.archive.org/web/20050521020137im_/http://www.runeweb.net/fireball/Merlin%20Crystal%20Images/merlin8.PNG
-    ~chatnpc(happy, "I'm waiting on a big delivery of candles|which I need to deliver further along the coast.");
+    ~chatnpc("<p,happy>I'm waiting on a big delivery of candles|which I need to deliver further along the coast.");
 } else if($option = 2) {
-    ~chatplayer(neutral, "Well, good luck with your business.");
-    ~chatnpc(happy, "Thanks buddy!");
+    ~chatplayer("<p,neutral>Well, good luck with your business.");
+    ~chatnpc("<p,happy>Thanks buddy!");
 } 
 
 [label,arhein_rich]
-~chatplayer(neutral, "Are you rich then?");
-~chatnpc(happy, "Business is going reasonably well...|I wouldn't say I was the richest of merchants ever,|but I'm doing fairly well all things considered.");
+~chatplayer("<p,neutral>Are you rich then?");
+~chatnpc("<p,happy>Business is going reasonably well...|I wouldn't say I was the richest of merchants ever,|but I'm doing fairly well all things considered.");
 
 [label,arhein_fort]
-~chatplayer(neutral, "Do you deliver to the fort just down the coast?");
-~chatnpc(happy, "Yes, I do have orders to deliver there from time to time. I think I may have some bits and pieces for them when I leave here next actually.");
+~chatplayer("<p,neutral>Do you deliver to the fort just down the coast?");
+~chatnpc("<p,happy>Yes, I do have orders to deliver there from time to time. I think I may have some bits and pieces for them when I leave here next actually.");
 switch_int(~p_choice2("Can you drop me off on the way down please?", 1, "Aren't you worried about supplying evil knights?", 2)) {
     case 1:
-        ~chatplayer(neutral, "Can you drop me off on the way down please?");
-        ~chatnpc(happy, "I don't think Sir Mordred would like that.|He wants as few outsiders visiting as possible.|I wouldn't want to lose his business.");
+        ~chatplayer("<p,neutral>Can you drop me off on the way down please?");
+        ~chatnpc("<p,happy>I don't think Sir Mordred would like that.|He wants as few outsiders visiting as possible.|I wouldn't want to lose his business.");
     case 2:
-        ~chatplayer(neutral, "Aren't you worried about supplying evil knights?");
-        ~chatnpc(happy, "Hey, you gotta take business where you can find it these days! Besides, if I didn't supply them, someone else would.");
+        ~chatplayer("<p,neutral>Aren't you worried about supplying evil knights?");
+        ~chatnpc("<p,happy>Hey, you gotta take business where you can find it these days! Besides, if I didn't supply them, someone else would.");
 }
 
 [label,trail_arhein]
-~chatnpc(default, "Well done, matey!");
+~chatnpc("<p,default>Well done, matey!");
 ~trail_clue_progress;
 inv_del(inv, trail_clue_easy_simple_exp025, 1);
 if(~trail_clue_easy_complete = true) {

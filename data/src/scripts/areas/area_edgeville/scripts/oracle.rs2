@@ -9,45 +9,45 @@ if (~quest_dragon_getting_map_parts = true & %dragon_oracle >= ^quest_dragon_kno
 
 
 [label,oracle_seek_map_piece]
-~chatplayer(neutral, "I seek a piece of the map to the island of Crandor.");
+~chatplayer("<p,neutral>I seek a piece of the map to the island of Crandor.");
 %dragon_oracle = ^quest_dragon_has_spoken_to_oracle; // osrs
-~chatnpc(neutral, "The map's behind a door below,|but entering is rather tough.|This is what you need to know:|You must use the following stuff.");
-~chatnpc(neutral, "First, a drink used by a mage.|Next, some worm string, changed to sheet.|Then, a small crustacean cage.|Last, a bowl that's not seen heat.");
+~chatnpc("<p,neutral>The map's behind a door below,|but entering is rather tough.|This is what you need to know:|You must use the following stuff.");
+~chatnpc("<p,neutral>First, a drink used by a mage.|Next, some worm string, changed to sheet.|Then, a small crustacean cage.|Last, a bowl that's not seen heat.");
 
 // Different than rsc, https://www.rsbandb.com/forums/viewtopic.php?f=2&t=6503&hilit=oracle
 // https://www.rsbandb.com/forums/viewtopic.php?f=1&t=2268&p=14226&hilit=oracle#p14226
 [label,oracle_random]
-~chatplayer(quiz, "Can you impart your wise knowledge to me, O Oracle?");
+~chatplayer("<p,quiz>Can you impart your wise knowledge to me, O Oracle?");
 def_int $random = random(30);
 switch_int ($random) {
-    case 0 : ~chatnpc(neutral, "Capes are always in fashion!");
-    case 1 : ~chatnpc(neutral, "The light at the end of the tunnel is the demon-infested lava pit.");
-    case 2 : ~chatnpc(neutral, "Beware the cabbage: it is both green AND leafy.");
-    case 3 : ~chatnpc(neutral, "They say that ham does not mix well with other kinds of meat.");
-    case 4 : ~chatnpc(neutral, "A woodchuck does not chuck wood.");
-    case 5 : ~chatnpc(sad, "No. I'm not in the mood.");
-    case 6 : ~chatnpc(neutral, "It's not you; it's me.");
-    case 7 : ~chatnpc(neutral, "Too many cooks spoil the anchovy pizza.");
-    case 8 : ~chatnpc(neutral, "The God Wars are over...as long as the thing they were fighting over remains hidden.");
-    case 9 : ~chatnpc(neutral, "He who uses the power of custard mixes it with his tears.");
-    case 10 : ~chatnpc(neutral, "Nothing like a tasty fish.");
-    case 11 : ~chatnpc(neutral, "Don't judge a book by its cover - judge it on its' grammar and, punctuation.");
-    case 12 : ~chatnpc(happy, "Yes, I can. But I'm not going to.");
-    case 13 : ~chatnpc(neutral, "A bird in the hand can make a tasty snack.");
-    case 14 : ~chatnpc(neutral, "Pies...they're great, aren't they?");
-    case 15 : ~chatnpc(neutral, "Who guards the guardsmen?");
-    case 16 : ~chatnpc(neutral, "The great snake of Guthix guards more than she knows.");
-    case 17 : ~chatnpc(shifty, "Do not fear the dragons...fear their kin.");
-    case 18 : ~chatnpc(neutral, "Everyone you know will one day be dead.");
-    case 19 : ~chatnpc(neutral, "If a tree falls in the forest and no one is around, then nobody gets Woodcutting xp.");
-    case 20 : ~chatnpc(neutral, "Sometimes you get lucky, sometimes you don't.");
-    case 21 : ~chatnpc(neutral, "The chicken came before the egg.");
-    case 22 : ~chatnpc(neutral, "Is it time to wake up? I am not sure...");
-    case 23 : ~chatnpc(neutral, "When in Asgarnia, do as the Asgarnians do.");
-    case 24 : ~chatnpc(neutral, "An answer is unimportant; it is the question that matters.");
-    case 25 : ~chatnpc(neutral, "The goblins will never make up their minds on their own.");
-    case 26 : ~chatnpc(neutral, "Jas left a stone behind.");
-    case 27 : ~chatnpc(neutral, "Many secrets are buried under this land.");
-    case 28 : ~chatnpc(neutral, "There are no crisps at the party.");
-    case 29 : ~chatnpc(neutral, "Help wanted? Enquire within.");
+    case 0 : ~chatnpc("<p,neutral>Capes are always in fashion!");
+    case 1 : ~chatnpc("<p,neutral>The light at the end of the tunnel is the demon-infested lava pit.");
+    case 2 : ~chatnpc("<p,neutral>Beware the cabbage: it is both green AND leafy.");
+    case 3 : ~chatnpc("<p,neutral>They say that ham does not mix well with other kinds of meat.");
+    case 4 : ~chatnpc("<p,neutral>A woodchuck does not chuck wood.");
+    case 5 : ~chatnpc("<p,sad>No. I'm not in the mood.");
+    case 6 : ~chatnpc("<p,neutral>It's not you; it's me.");
+    case 7 : ~chatnpc("<p,neutral>Too many cooks spoil the anchovy pizza.");
+    case 8 : ~chatnpc("<p,neutral>The God Wars are over...as long as the thing they were fighting over remains hidden.");
+    case 9 : ~chatnpc("<p,neutral>He who uses the power of custard mixes it with his tears.");
+    case 10 : ~chatnpc("<p,neutral>Nothing like a tasty fish.");
+    case 11 : ~chatnpc("<p,neutral>Don't judge a book by its cover - judge it on its' grammar and, punctuation.");
+    case 12 : ~chatnpc("<p,happy>Yes, I can. But I'm not going to.");
+    case 13 : ~chatnpc("<p,neutral>A bird in the hand can make a tasty snack.");
+    case 14 : ~chatnpc("<p,neutral>Pies...they're great, aren't they?");
+    case 15 : ~chatnpc("<p,neutral>Who guards the guardsmen?");
+    case 16 : ~chatnpc("<p,neutral>The great snake of Guthix guards more than she knows.");
+    case 17 : ~chatnpc("<p,shifty>Do not fear the dragons...fear their kin.");
+    case 18 : ~chatnpc("<p,neutral>Everyone you know will one day be dead.");
+    case 19 : ~chatnpc("<p,neutral>If a tree falls in the forest and no one is around, then nobody gets Woodcutting xp.");
+    case 20 : ~chatnpc("<p,neutral>Sometimes you get lucky, sometimes you don't.");
+    case 21 : ~chatnpc("<p,neutral>The chicken came before the egg.");
+    case 22 : ~chatnpc("<p,neutral>Is it time to wake up? I am not sure...");
+    case 23 : ~chatnpc("<p,neutral>When in Asgarnia, do as the Asgarnians do.");
+    case 24 : ~chatnpc("<p,neutral>An answer is unimportant; it is the question that matters.");
+    case 25 : ~chatnpc("<p,neutral>The goblins will never make up their minds on their own.");
+    case 26 : ~chatnpc("<p,neutral>Jas left a stone behind.");
+    case 27 : ~chatnpc("<p,neutral>Many secrets are buried under this land.");
+    case 28 : ~chatnpc("<p,neutral>There are no crisps at the party.");
+    case 29 : ~chatnpc("<p,neutral>Help wanted? Enquire within.");
 }

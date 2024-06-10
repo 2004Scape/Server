@@ -34,6 +34,7 @@ switch_coord (loc_coord) {
     case 0_49_52_52_27: p_telejump(1_49_52_52_26); // champs guild https://youtu.be/es_xD6jgCbM?t=236
     case 0_46_50_21_15: p_telejump(1_46_50_24_15); // Rimmington House
     case 1_41_73_16_10: p_telejump(2_41_73_16_13); // Grail castle - level 1
+    case 0_40_49_53_3: p_telejump(1_40_49_52_3);
     case default: @unhandled_stairs(loc_coord);
 }
 
@@ -74,6 +75,7 @@ switch_coord (loc_coord) {
     case 1_49_52_52_27: p_telejump(0_49_52_52_30); // champs guild
     case 1_46_50_22_15: p_telejump(0_46_50_20_15); // Rimmington House
     case 2_41_73_16_11: p_telejump(1_41_73_16_9); // Grail castle - level 2
+    case 1_40_49_53_3: p_telejump(0_40_49_56_3);
     case default: @unhandled_stairs(loc_coord);
 }
 

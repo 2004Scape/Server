@@ -64,7 +64,7 @@ export default class FileStream {
         }
 
         const data: Packet = new Packet(new Uint8Array(size));
-        for (let part: number = 0; data.pos < data.data.length; part++) {
+        for (let part: number = 0; data.pos < size; part++) {
             if (sector === 0) {
                 break;
             }

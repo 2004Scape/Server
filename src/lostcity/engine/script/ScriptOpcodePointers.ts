@@ -52,6 +52,10 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.BUSY2]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.CAM_LOOKAT]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -138,6 +142,16 @@ const ScriptOpcodePointers: {
         require2: ['find_player'],
         set: ['active_player'],
         set2: ['active_player2'],
+        conditional: true
+    },
+    [ScriptOpcode.NPC_HUNTALL]: {
+        set: ['find_npc']
+    },
+    [ScriptOpcode.NPC_HUNTNEXT]: {
+        require: ['find_npc'],
+        require2: ['find_npc'],
+        set: ['active_npc'],
+        set2: ['active_npc2'],
         conditional: true
     },
     [ScriptOpcode.IF_CLOSE]: {
@@ -380,6 +394,9 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.QUEUE2]: {
+        require: ['active_player2']
+    },
     [ScriptOpcode.SAY]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -391,12 +408,18 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.WALKTRIGGER2]: {
+        require: ['active_player2']
+    },
     [ScriptOpcode.GETWALKTRIGGER]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
     [ScriptOpcode.SETTIMER]: {
         require: ['active_player']
+    },
+    [ScriptOpcode.SETTIMER2]: {
+        require: ['active_player2']
     },
     [ScriptOpcode.SOFTTIMER]: {
         require: ['active_player']
@@ -438,6 +461,15 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.WEAKQUEUE]: {
         require: ['active_player']
+    },
+    [ScriptOpcode.FINDHERO]: {
+        set: ['active_player2'],
+        set2: ['active_player'],
+        conditional: true
+    },
+    [ScriptOpcode.BOTH_HEROPOINTS]: {
+        require: ['active_player', 'active_player2'],
+        require2: ['active_player2', 'active_player']
     },
 
     // Npc ops
@@ -491,6 +523,14 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.NPC_FACESQUARE]: {
         require: ['active_npc'],
         require2: ['active_npc2']
+    },
+    [ScriptOpcode.NPC_FIND]: {
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
+    [ScriptOpcode.NPC_FINDALLANY]: {
+        set: ['find_npc']
     },
     [ScriptOpcode.NPC_FINDALLZONE]: {
         set: ['find_npc']

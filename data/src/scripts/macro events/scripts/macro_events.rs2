@@ -22,9 +22,9 @@ if (%macro_event > 0) {
 // (probably every spell)
 // - cooking. Confirmed: https://youtu.be/Brq99Bdl0aI?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=198
 // - using flax wheel. Confirmed: https://youtu.be/sW48OR1I86M (early osrs)
-// - using anvil? Cant find a video, not implimented.
-// - fletching? Cant find a video, not implimented.
-// - flax picking? Cant find a video, but it is implimented.
+// - using anvil? Cant find a video, not implemented.
+// - fletching? Cant find a video, not implemented.
+// - flax picking? Cant find a video, but it is implemented.
 // - smithing at furnace. Confirmed? https://youtu.be/a6NobmSGBYw
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)

@@ -1,21 +1,21 @@
 [opnpc1,cabin_boy_jenkins]
-~chatnpc(happy, "Ahoy! What d'ye think of yer ship then?");
+~chatnpc("<p,happy>Ahoy! What d'ye think of yer ship then?");
 @multi3("I'm ready to go back to shore.", jenkins_back_to_shore, "I'd like to inspect her some more.", jenkins_inspect_her_more, "Can you sail this ship to Crandor?", jenkins_can_crandor);
 
 
 [label,jenkins_back_to_shore]
-~chatplayer(neutral, "I'm ready to go back to shore.");
+~chatplayer("<p,neutral>I'm ready to go back to shore.");
 p_telejump(0_47_50_39_4);
 ~mesbox("You disembark from the ship.");
 
 [label,jenkins_inspect_her_more]
-~chatplayer(neutral, "I'd like to inspect her some more.");
-~chatnpc(neutral, "Aye.");
+~chatplayer("<p,neutral>I'd like to inspect her some more.");
+~chatnpc("<p,neutral>Aye.");
 
 [label,jenkins_can_crandor]
-~chatplayer(quiz, "Can you sail this ship to Crandor?");
-~chatnpc(neutral, "Not me, sir! I'm just an 'umble cabin boy. You'll need|a proper cap'n.");
-~chatplayer(quiz, "Where can I find a captain?");
-~chatnpc(confused, "The cap'ns round 'ere seem to be a mite scared of|Crandor. I ask 'em why and they just say it was afore|my time,");
-~chatnpc(shifty, "but there is one cap'n I reckon might 'elp. I 'eard|there's a retired 'un who lives in Draynor Village who's|so desperate to sail again 'e'd take any job.");
-~chatnpc(neutral, "I can't remember 'is name, but 'e lives in Draynor|Village an' makes rope.");
+~chatplayer("<p,quiz>Can you sail this ship to Crandor?");
+~chatnpc("<p,neutral>Not me, sir! I'm just an 'umble cabin boy. You'll need|a proper cap'n.");
+~chatplayer("<p,quiz>Where can I find a captain?");
+~chatnpc("<p,confused>The cap'ns round 'ere seem to be a mite scared of|Crandor. I ask 'em why and they just say it was afore|my time,");
+~chatnpc("<p,shifty>but there is one cap'n I reckon might 'elp. I 'eard|there's a retired 'un who lives in Draynor Village who's|so desperate to sail again 'e'd take any job.");
+~chatnpc("<p,neutral>I can't remember 'is name, but 'e lives in Draynor|Village an' makes rope.");

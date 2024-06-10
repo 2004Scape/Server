@@ -11,22 +11,22 @@ switch_int(%tutorial_progress) {
 }
 
 [label,magic_instructor_start]
-~chatplayer(neutral, "Hello.");
-~chatnpc(neutral, "Good day newcomer.|My name is Terrova.|I'm here to tell you about magic.|Let's start by opening your spell list. ");
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Good day newcomer.|My name is Terrova.|I'm here to tell you about magic.|Let's start by opening your spell list. ");
 if (%tutorial_progress = ^tutorial_exit_chapel) {
     %tutorial_progress = ^tutorial_open_magic_tab;
     ~set_tutorial_progress;
 }
 
 [label,magic_instructor_open_tab]
-~chatnpc(neutral, "All you have to do is open the magic interface by clicking on the flashing icon.");
+~chatnpc("<p,neutral>All you have to do is open the magic interface by clicking on the flashing icon.");
 
 // This automagically triggers?!
 // https://youtu.be/Ln_NMq4eQss?t=264
 // https://youtu.be/Usd2R9PH_bk?t=246
 // https://youtu.be/GNRPeRShDzQ?t=660 can just keep claiming runes until you reach 25.
 [label,magic_instructor_opened_tab]
-~chatnpc(neutral, "Good. This is a list of your spells. Currently you can only cast one offensive spell called Wind Strike. Let's try it out on one of those chickens.");
+~chatnpc("<p,neutral>Good. This is a list of your spells. Currently you can only cast one offensive spell called Wind Strike. Let's try it out on one of those chickens.");
 ~magic_instructor_give_runes;
 // This weirdly comes after giving runes...
 if (%tutorial_progress = ^tutorial_opened_magic_tab) {
@@ -36,7 +36,7 @@ if (%tutorial_progress = ^tutorial_opened_magic_tab) {
 
 [label,magic_instructor_cast_wind_strike]
 if (inv_total(inv, airrune) >= 25 & inv_total(inv, mindrune) >= 25) {
-    ~chatnpc(neutral, "Sorry, I don't have any more runes just now. But I do see you have plenty.");
+    ~chatnpc("<p,neutral>Sorry, I don't have any more runes just now. But I do see you have plenty.");
     return;
 }
 
@@ -62,7 +62,7 @@ if (calc(25 - $total_runes) >= 5) {
 }
 
 [label,magic_instructor_successfully_cast_wind_strike]
-~chatnpc(neutral, "Well you're all finished here now. I'll give a reasonable number of runes when you leave.");
+~chatnpc("<p,neutral>Well you're all finished here now. I'll give a reasonable number of runes when you leave.");
 if (%tutorial_progress = ^tutorial_successful_wind_strike) {
     %tutorial_progress = ^magic_instructor_finished;
 }
@@ -94,6 +94,6 @@ inv_add(inv, airrune, 5);
 inv_add(inv, mindrune, 5);
 
 [proc,set_hint_icon_magic_instructor]
-if (npc_finduid(~npc_within_distance(0_49_48_5_17, magic_instructor, 10)) = true) {
+if (npc_find(0_49_48_5_17, magic_instructor, 10, 0) = true) {
     hint_npc(npc_uid);
 }
