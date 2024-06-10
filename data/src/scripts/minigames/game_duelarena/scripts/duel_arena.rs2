@@ -1,3 +1,33 @@
+[debugproc,tempinv]
+def_int $i = 0;
+def_int $null = 0;
+while ($i < inv_size(tempinv)) {
+    if (inv_getobj(tempinv, $i) ! null) {
+        mes("<tostring($i)>: <oc_debugname(inv_getobj(tempinv, $i))>");
+    } else {
+        $null = add($null, 1);
+    }
+    $i = add($i, 1);
+}
+if ($null = inv_size(tempinv)) {
+    mes("tempinv is empty");
+}
+
+[debugproc,stakeinv]
+def_int $i = 0;
+def_int $null = 0;
+while ($i < inv_size(stakeinv)) {
+    if (inv_getobj(stakeinv, $i) ! null) {
+        mes("<tostring($i)>: <oc_debugname(inv_getobj(stakeinv, $i))>");
+    } else {
+        $null = add($null, 1);
+    }
+    $i = add($i, 1);
+}
+if ($null = inv_size(stakeinv)) {
+    mes("stakeinv is empty");
+}
+
 [opplayer1,_]
 if (.busy = true) {
     mes("<.displayname> is busy at the moment."); // https://youtu.be/YkJQDvB14-U?t=26
@@ -260,9 +290,8 @@ if (.finduid(%duelpartner) = true) {
 
         if_close;
         .if_close;
-        if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
-            @start_duel;
-        }
+        queue(duel_arena_prepare_start, 0);
+        queue2(duel_arena_prepare_start, 0);
     } else {
         .if_settext(duel_confirm:status, "Other player has accepted."); // https://youtu.be/HFp6hOkiCns?t=481
         if_settext(duel_confirm:status, "Waiting for other player."); 
@@ -354,6 +383,11 @@ if (~inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~inzone_coo
 }
 return(false);
 
+[proc,.in_duel_arena]()(boolean)
+if (~.inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~.inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
+    return(true);
+}
+return(false);
 
 [proc,duel_arena_login]
 if (~in_duel_arena = true) {
