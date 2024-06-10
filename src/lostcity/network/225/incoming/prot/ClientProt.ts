@@ -4,9 +4,9 @@ export default class ClientProt {
 
     static readonly REBUILD_GETMAPS = new ClientProt(4, 150, -1);
 
-    static readonly IDLE_TIMER = new ClientProt(30, 70, 0);
-
     static readonly NO_TIMEOUT = new ClientProt(6, 108, 0); // NXT naming
+
+    static readonly IDLE_TIMER = new ClientProt(30, 70, 0);
 
     static readonly EVENT_TRACKING = new ClientProt(34, 81, -2);
     static readonly EVENT_CAMERA_POSITION = new ClientProt(35, 189, 6); // NXT naming
