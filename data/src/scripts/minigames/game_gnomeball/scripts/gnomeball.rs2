@@ -3,25 +3,15 @@ if (p_finduid(uid) = true) {
     p_teleport(0_37_54_14_32);
 }
 
-[if_button,gnomeball:com_6]
-if (loc_find(^gnomeball_goal_coord, gnome_goal) = true) {
-    if (distance(loc_coord, coord) < 6 & coordx(coord) < coordx(loc_coord)) {
-        // shoot ball
-    } else {
-        // miss?
-    }
-}
-
-
 [oplocu,gnome_goal]
 mes(~coord_tostring(loc_coord));
 
 
 [oploc1,gnomeball_gate]
-~gnomeball_reset;
 def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
 def_boolean $exiting = ~check_axis(coord, loc_coord, loc_angle);
 if ($exiting = false) { 
+    ~gnomeball_reset;
     if ($obj ! null) {
         if (inv_itemspace(inv, $obj, inv_total(worn, $obj), inv_size(inv)) = false) {
             mes("You do not have free inventory space for what you carry.");
@@ -54,6 +44,7 @@ if ($exiting = false) {
             inv_del(worn, gnomeball, $ball_worn);
         }
     }
+    ~gnomeball_reset;
 }
 
 ~update_all($obj);
@@ -61,22 +52,38 @@ if ($exiting = false) {
 [proc,gnomeball_reset]
 if (%gnomeball_progress > ^gnomeball_not_started) {
     %gnomeball_progress = ^gnomeball_talked_to_ref;
-} else {
-    npc_findallany(^gnomeball_centre_coord, 14, 0);
-    while (npc_findnext = true) {
-        if (npc_param(gnome_original) ! null & %npc_attacking_uid = uid) {
+}
+npc_findallany(^gnomeball_centre_coord, 14, 0);
+while (npc_findnext = true) {
+    // basically if gnome has ball, and ball was taken from player no longer in gnomeball game, then reset npc
+    if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
+        if (.finduid(%npc_attacking_uid) = false) {
+            npc_changetype(npc_param(gnome_original));
+        } else if (~.inzone_coord_pair_table(gnomeball_zones, .coord) = false) {
             npc_changetype(npc_param(gnome_original));
         }
     }
 }
 
-[proc,gnomeball_inplay]()(boolean)
+[proc,gnomeball_inplay](npc_uid $npc_uid)(boolean)
 npc_findallany(^gnomeball_centre_coord, 14, 0);
 while (npc_findnext = true) {
     if (npc_param(gnome_original) ! null) {
+        if ($npc_uid ! null) {
+            if (npc_finduid($npc_uid) = true) {
+                return(true);
+            }
+        }
         return(true);
     }
 }
+
+if ($npc_uid ! null) {
+    if (npc_finduid($npc_uid) = true) {
+        return(false);
+    }
+}
+return(false);
 
 [debugproc,gg]
 if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {

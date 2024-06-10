@@ -3,8 +3,15 @@ if (%gnomeball_progress = ^gnomeball_not_started) {
     @gnomeball_ref_first_start;
 }
 if (%gnomeball_progress = ^gnomeball_game_started) {
-    ~chatnpc("<p,neutral>You have a ball in play.|Do you need to hear the rules again?");
-    @multi2("Yes please.", gnomeball_hear_rules, "No thanks.", gnomeball_no_hear_rules);
+    if (~gnomeball_inplay(npc_uid) = true | inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
+        ~chatnpc("<p,neutral>You have a ball in play.|Do you need to hear the rules again?");
+        @multi2("Yes please.", gnomeball_hear_rules, "No thanks.", gnomeball_no_hear_rules);
+    } else {
+        ~chatnpc("<p,happy>Have a new ball!");
+        ~gnomeball_game_start;
+        return;
+    }
+    
 }
 ~chatnpc("<p,neutral>Hi, welcome back to Gnomeball. Would you like to hear the rules again?");
 @multi3("Yes please.", gnomeball_hear_rules, "I just want to play.", gnomeball_just_want_to_play, "No, I don't want to play.", gnomeball_dont_want_to_play);

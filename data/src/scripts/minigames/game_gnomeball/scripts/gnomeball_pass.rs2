@@ -23,7 +23,7 @@ if (.inv_getobj(worn, ^wearpos_rhand) ! null) {
     return;
 }
 if ($player1_ingame = true & $player2_ingame = true) {
-    if (~gnomeball_inplay = true) {
+    if (~gnomeball_inplay(null) = true) {
         mes("They already have a ball in play.");
         return;
     }
