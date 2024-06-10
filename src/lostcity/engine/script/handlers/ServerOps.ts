@@ -355,7 +355,7 @@ const ServerOps: CommandHandlers = {
 
             const layer = rsmod.locShapeLayer(loc.shape);
 
-            if (loc.respawn !== -1 && layer === LocLayer.WALL) {
+            if (!loc.checkLifeCycle(World.currentTick) && layer === LocLayer.WALL) {
                 continue;
             }
 

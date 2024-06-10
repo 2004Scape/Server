@@ -11,6 +11,7 @@ import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 
 import Obj from '#lostcity/entity/Obj.js';
 import { Position } from '#lostcity/entity/Position.js';
+import {EntityLifeCycle} from '#lostcity/entity/EntityLifeCycle.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
@@ -41,7 +42,7 @@ const ObjOps: CommandHandlers = {
             throw new Error(`attempted to add dummy item: ${objType.debugname}`);
         }
 
-        const obj: Obj = new Obj(position.level, position.x, position.z, objId, count);
+        const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
         World.addObj(obj, state.activePlayer, duration);
         state.activeObj = obj;
         state.pointerAdd(ActiveObj[state.intOperand]);
@@ -73,10 +74,11 @@ const ObjOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OBJ_DEL]: state => {
+        const duration: number = ObjType.get(state.activeObj.type).respawnrate;
         if (state.pointerGet(ActivePlayer[state.intOperand])) {
-            World.removeObj(state.activeObj, state.activePlayer);
+            World.removeObj(state.activeObj, state.activePlayer, duration);
         } else {
-            World.removeObj(state.activeObj, null);
+            World.removeObj(state.activeObj, null, duration);
         }
     },
 
@@ -92,12 +94,17 @@ const ObjOps: CommandHandlers = {
         const invType: InvType = check(state.popInt(), InvTypeValid);
 
         const obj = state.activeObj;
-        if (World.getObj(obj.x, obj.z, obj.level, obj.id)) {
+        if (World.getObj(obj.x, obj.z, obj.level, obj.type)) {
             const objType = ObjType.get(obj.type);
             state.activePlayer.playerLog('Picked up item', objType.debugname as string);
 
-            state.activePlayer.invAdd(invType.id, obj.id, obj.count);
-            World.removeObj(obj, state.activePlayer);
+            state.activePlayer.invAdd(invType.id, obj.type, obj.count);
+
+            if (World.getZone(obj.x, obj.z, obj.level).staticObjs.includes(obj)) {
+                World.removeObj(obj, state.activePlayer, objType.respawnrate);
+            } else {
+                World.removeObj(obj, state.activePlayer, -1);
+            }
         }
     },
 
