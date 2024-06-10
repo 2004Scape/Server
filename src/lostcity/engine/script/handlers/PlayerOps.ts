@@ -451,7 +451,7 @@ const PlayerOps: CommandHandlers = {
         const base = player.baseLevels[stat];
         const current = player.levels[stat];
         const healed = current + (constant + (current * percent) / 100);
-        player.levels[stat] = Math.min(healed, base);
+        player.levels[stat] = Math.max(Math.min(healed, base), current);
 
         if (stat === 3 && player.levels[3] >= player.baseLevels[3]) {
             player.resetHeroPoints();
