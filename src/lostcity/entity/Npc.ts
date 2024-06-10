@@ -33,10 +33,10 @@ import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+import NpcStat from '#lostcity/entity/NpcStat.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
-import NpcStat from '#lostcity/entity/NpcStat.js';
 
 export default class Npc extends PathingEntity {
     static readonly ANIM = 0x2;
