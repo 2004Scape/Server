@@ -5,11 +5,11 @@ import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import {ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
 import Obj from '#lostcity/entity/Obj.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 import {EntityLifeCycle} from '#lostcity/entity/EntityLifeCycle.js';
 
 import {
@@ -350,7 +350,7 @@ const InvOps: CommandHandlers = {
 
         const overflow = count - state.activePlayer.invAdd(toInvType.id, objType.id, completed);
         if (overflow > 0) {
-            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, objType.id, overflow);
+            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, EntityLifeCycle.DESPAWN, objType.id, overflow);
             World.addObj(floorObj, state.activePlayer, 200);
         }
     }),
