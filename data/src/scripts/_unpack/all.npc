@@ -469,7 +469,6 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
-huntmode=ranged
 
 [druid]
 name=Druid
