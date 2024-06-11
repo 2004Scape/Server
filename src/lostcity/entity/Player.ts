@@ -1971,6 +1971,27 @@ export default class Player extends PathingEntity {
         return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
+    invTotalParam(inv: number, param: number): number {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invTotalParam: Invalid inventory type: ' + inv);
+        }
+
+        return container.itemsFiltered.filter(obj => ObjType.get(obj.id).params.has(param)).reduce((count, obj) => count + obj.count, 0);
+    }
+
+    invTotalParamStack(inv: number, param: number): number {
+        const container = this.getInventory(inv);
+        if (!container) {
+            throw new Error('invTotalParamStack: Invalid inventory type: ' + inv);
+        }
+
+        return container.itemsFiltered.filter(obj => {
+            const objType: ObjType = ObjType.get(obj.id);
+            return objType.params.has(param) && objType.stackable;
+        }).reduce((count, obj) => count + obj.count, 0);
+    }
+
     // ----
 
     getVar(id: number) {

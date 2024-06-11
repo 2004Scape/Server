@@ -72,6 +72,14 @@ export default class HuntType extends ConfigType {
     checkNotCombatSelf: number = -1;
     checkAfk: boolean = false;
     rate: number = 1;
+    checkCategory: number = -1;
+    checkNpc: number = -1;
+    checkObj: number = -1;
+    checkLoc: number = -1;
+    checkInv: number = -1;
+    checkObjParam: number = -1;
+    checkInvMinQuantity: number = -1;
+    checkInvMaxQuantity: number = -1;
 
     decode(code: number, dat: Packet): void {
         if (code === 1) {
@@ -96,6 +104,24 @@ export default class HuntType extends ConfigType {
             this.checkAfk = true;
         } else if (code === 11) {
             this.rate = dat.g2();
+        } else if (code === 12) {
+            this.checkCategory = dat.g2();
+        } else if (code === 13) {
+            this.checkNpc = dat.g2();
+        } else if (code === 14) {
+            this.checkObj = dat.g2();
+        } else if (code === 15) {
+            this.checkLoc = dat.g2();
+        } else if (code === 16) {
+            this.checkInv = dat.g2();
+            this.checkObj = dat.g2();
+            this.checkInvMinQuantity = dat.g4();
+            this.checkInvMaxQuantity = dat.g4();
+        } else if (code === 17) {
+            this.checkInv = dat.g2();
+            this.checkObjParam = dat.g2();
+            this.checkInvMinQuantity = dat.g4();
+            this.checkInvMaxQuantity = dat.g4();
         } else if (code === 250) {
             this.debugname = dat.gjstr();
         } else {
