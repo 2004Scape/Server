@@ -1,10 +1,14 @@
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+
 import World from '#lostcity/engine/World.js';
+
 import {Position} from '#lostcity/entity/Position.js';
 import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
-import NpcType from '#lostcity/cache/config/NpcType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Entity from '#lostcity/entity/Entity.js';
@@ -12,7 +16,7 @@ import Obj from '#lostcity/entity/Obj.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
-abstract class ScriptIterator<T> implements IterableIterator<T> {
+abstract class ScriptIterator<T extends Entity> implements IterableIterator<T> {
     private readonly iterator: IterableIterator<T>;
     protected readonly tick: number;
 
@@ -45,9 +49,21 @@ export class HuntIterator extends ScriptIterator<Entity> {
     private readonly maxZ: number;
     private readonly distance: number;
     private readonly checkVis: HuntVis;
+    private readonly checkType: number;
+    private readonly checkCategory: number;
     private readonly type: HuntModeType;
 
-    constructor(tick: number, level: number, x: number, z: number, distance: number, checkVis: HuntVis, type: HuntModeType) {
+    constructor(
+        tick: number,
+        level: number,
+        x: number,
+        z: number,
+        distance: number,
+        checkVis: HuntVis,
+        checkType: number,
+        checkCategory: number,
+        type: HuntModeType
+    ) {
         super(tick);
         const centerX: number = Position.zone(x);
         const centerZ: number = Position.zone(z);
@@ -61,6 +77,8 @@ export class HuntIterator extends ScriptIterator<Entity> {
         this.minZ = centerZ - radius;
         this.distance = distance;
         this.checkVis = checkVis;
+        this.checkType = checkType;
+        this.checkCategory = checkCategory;
         this.type = type;
     }
 
@@ -103,7 +121,13 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (!npc) {
                             continue;
                         }
-                        const npcType = NpcType.get(npc.type);
+                        if (this.checkType !== -1 && npc.type !== this.checkType) {
+                            continue;
+                        }
+                        const npcType: NpcType = NpcType.get(npc.type);
+                        if (this.checkCategory !== -1 && npcType.category !== this.checkCategory) {
+                            continue;
+                        }
                         if (!npcType.op) {
                             continue;
                         }
@@ -129,6 +153,13 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
+                        if (this.checkType !== -1 && obj.type !== this.checkType) {
+                            continue;
+                        }
+                        const objType: ObjType = ObjType.get(obj.type);
+                        if (this.checkCategory !== -1 && objType.category !== this.checkCategory) {
+                            continue;
+                        }
                         if (Position.distanceToSW({ x: this.x, z: this.z }, obj) > this.distance) {
                             continue;
                         }
@@ -146,6 +177,13 @@ export class HuntIterator extends ScriptIterator<Entity> {
                     for (const loc of locs) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
+                        }
+                        if (this.checkType !== -1 && loc.type !== this.checkType) {
+                            continue;
+                        }
+                        const locType: LocType = LocType.get(loc.type);
+                        if (this.checkCategory !== -1 && locType.category !== this.checkCategory) {
+                            continue;
                         }
                         if (Position.distanceToSW({ x: this.x, z: this.z }, loc) > this.distance) {
                             continue;
@@ -234,8 +272,6 @@ export class NpcIterator extends ScriptIterator<Npc> {
                 }
             }
         }
-
-        
     }
 }
 

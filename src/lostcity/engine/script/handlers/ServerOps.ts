@@ -76,7 +76,7 @@ const ServerOps: CommandHandlers = {
         check(distance, NumberNotNull);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
-        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, HuntModeType.PLAYER);
+        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, -1, -1, HuntModeType.PLAYER);
     },
 
     [ScriptOpcode.HUNTNEXT]: state => {
@@ -102,7 +102,7 @@ const ServerOps: CommandHandlers = {
         check(distance, NumberNotNull);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
-        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, HuntModeType.NPC);
+        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, -1, -1, HuntModeType.NPC);
     },
 
     [ScriptOpcode.NPC_HUNTNEXT]: state => {
