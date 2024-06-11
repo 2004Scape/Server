@@ -2,6 +2,7 @@
 type=player
 check_vis=lineofsight
 check_afk=off
+check_inv=worn,gnomeball,1,2147483647
 check_notcombat=%lastcombat
 check_notcombat_self=%npc_lastcombat
 find_newmode=opplayer2

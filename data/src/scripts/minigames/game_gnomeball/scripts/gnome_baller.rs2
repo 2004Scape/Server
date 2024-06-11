@@ -16,15 +16,13 @@ npc_setmode(null);
 if (%npc_action_delay > map_clock | ~npc_can_attack_player = false) {
     return;
 }
-if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
+if_close;
+if (p_finduid(uid) = true) {
     %npc_aggressive_player = uid;
-    if_close;
-    if (p_finduid(uid) = true) {
-        if (random(2) = 0) { // 50% guess for now
-            ~npc_gnomeball_tackle_fail;
-        } else if (p_finduid(uid) = true) {
-            ~npc_gnomeball_tackle_success;
-        }
+    if (random(2) = 0 & inv_getobj(worn, ^wearpos_rhand) = gnomeball) { // 50% guess for now
+        ~npc_gnomeball_tackle_success;
+    } else {
+        ~npc_gnomeball_tackle_fail;
     }
 }
 
@@ -46,6 +44,8 @@ npc_anim(midget_seq_210, 0);
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(gnomeball);
 npc_setmode(wander);
+
+%npc_lastcombat = ^max_32bit_int;
 
 
 [opnpc1,gnome_baller1] @player_gnomeball_tackle;
@@ -69,6 +69,7 @@ if (random(2) = 0) { // 50% guess for now
     ~player_gnomeball_tackle_fail;
 }
 %npc_aggressive_player = null;
+%npc_lastcombat = map_clock;
 
 
 [proc,player_gnomeball_tackle_fail]
@@ -95,6 +96,15 @@ npc_anim(midget_seq_206, 0);
 [opnpc1,gnome_baller10] @player_gnomeball_tackle_carrier;
 
 [label,player_gnomeball_tackle_carrier]
+if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
+    mes("You may not tackle when you have a ball.");
+    return;
+}
+if (%npc_aggressive_player ! uid & %npc_aggressive_player ! null) {
+    mes("That gnome is being tackled.");
+    return;
+}
+%npc_aggressive_player = uid;
 p_delay(0);
 if (random(2) = 0) { // 50% guess for now
     inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
@@ -103,3 +113,5 @@ if (random(2) = 0) { // 50% guess for now
 } else {
     ~player_gnomeball_tackle_fail;
 }
+%npc_aggressive_player = null;
+%npc_lastcombat = map_clock;

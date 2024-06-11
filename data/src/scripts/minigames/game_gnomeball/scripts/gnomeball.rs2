@@ -30,6 +30,7 @@ if ($exiting = false) {
     if (inv_total(gnomeball, gnomeball) > 0) {
         // give free gnomeball
         if (inv_freespace(inv) = 0) {
+            ~gnomeball_reset;
             inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
             return; // https://youtu.be/acS5ZgHsZQM?t=190
         } else {
@@ -58,6 +59,8 @@ inv_clear(gnomeball);
 if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
     inv_delslot(worn, ^wearpos_rhand);
 }
+
+%gnomeball = 0;
 
 npc_findallany(^gnomeball_centre_coord, 14, 0);
 while (npc_findnext = true) {
