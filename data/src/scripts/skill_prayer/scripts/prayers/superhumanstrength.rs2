@@ -1,6 +1,6 @@
 [if_button,prayer:prayer_superhumanstrength]
 if_close;
-queue(prayer_activate, 0, 6);
+queue(prayer_activate, 0, 5);
 
 [label,activate_prayer_superhumanstrength]
 def_dbrow $data = ~get_prayer_data(^prayer_superhumanstrength);
