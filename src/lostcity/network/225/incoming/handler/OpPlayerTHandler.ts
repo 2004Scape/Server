@@ -25,7 +25,7 @@ export default class OpPlayerTHandler extends MessageHandler<OpPlayerT> {
             return false;
         }
 
-        if (!player.players.has(other.uid)) {
+        if (!player.otherPlayers.has(other.uid)) {
             return false;
         }
 

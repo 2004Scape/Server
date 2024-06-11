@@ -19,7 +19,7 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
             return false;
         }
 
-        if (!player.players.has(other.uid)) {
+        if (!player.otherPlayers.has(other.uid)) {
             return false;
         }
 

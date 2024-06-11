@@ -217,8 +217,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.closeModal();
 
                 do {
-                    const x = Math.floor(Math.random() * 640) + 3200;
-                    const z = Math.floor(Math.random() * 640) + 3200;
+                    const x = Math.floor(Math.random() * 64) + 3200;
+                    const z = Math.floor(Math.random() * 64) + 3200;
 
                     player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
                 } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));

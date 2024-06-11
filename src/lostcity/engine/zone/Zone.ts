@@ -9,6 +9,7 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import ServerProt from '#lostcity/server/ServerProt.js';
 
 import World from '#lostcity/engine/World.js';
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
@@ -171,6 +172,9 @@ export default class Zone {
     }
 
     index = -1; // packed coord
+    x = 0;
+    z = 0;
+    level = 0;
 
     // zone entities
     players: Set<number> = new Set(); // list of player uids
@@ -187,6 +191,11 @@ export default class Zone {
 
     constructor(index: number) {
         this.index = index;
+
+        const { x, z, level } = ZoneManager.unpackIndex(index);
+        this.x = x >> 3;
+        this.z = z >> 3;
+        this.level = level;
     }
 
     enter(entity: PathingEntity) {

@@ -634,6 +634,7 @@ class World {
             this.players.set(pid, player);
             player.pid = pid;
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
+            player.tele = true;
 
             this.getZone(player.x, player.z, player.level).enter(player);
 
@@ -730,6 +731,14 @@ class World {
 
         this.computeSharedEvents();
         zoneProcessing = Date.now() - zoneProcessing;
+
+        for (const player of this.players) {
+            player.convertMovementDir();
+        }
+
+        for (const npc of this.npcs) {
+            npc.convertMovementDir();
+        }
 
         // client output
         // - map update

@@ -41,6 +41,7 @@ export default abstract class PathingEntity extends Entity {
     waypoints: Int32Array = new Int32Array(25);
     lastX: number = -1;
     lastZ: number = -1;
+    tele: boolean = false;
     jump: boolean = false;
 
     walktrigger: number = -1;
@@ -268,7 +269,7 @@ export default abstract class PathingEntity extends Entity {
         }
     }
 
-    getMovementDir() {
+    convertMovementDir() {
         // temp variables to convert movement operations
         let walkDir = this.walkDir;
         let runDir = this.runDir;
@@ -297,7 +298,9 @@ export default abstract class PathingEntity extends Entity {
             tele = false;
         }
 
-        return { walkDir, runDir, tele };
+        this.walkDir = walkDir;
+        this.runDir = runDir;
+        this.tele = tele;
     }
 
     /**
@@ -476,6 +479,7 @@ export default abstract class PathingEntity extends Entity {
         this.walkDir = -1;
         this.runDir = -1;
         this.jump = false;
+        this.tele = false;
         this.lastX = this.x;
         this.lastZ = this.z;
         this.interacted = false;

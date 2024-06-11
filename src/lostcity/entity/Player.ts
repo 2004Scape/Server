@@ -48,6 +48,7 @@ import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/server/PreloadedPacks.js';
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -220,8 +221,9 @@ export default class Player extends PathingEntity {
     loadedX: number = -1;
     loadedZ: number = -1;
     loadedZones: Record<number, number> = {};
+    activeZones: Set<number> = new Set();
     npcs: Set<number> = new Set(); // observed npcs
-    players: Set<number> = new Set(); // observed players
+    otherPlayers: Set<number> = new Set(); // observed players
     lastMovement: number = 0; // for p_arrivedelay
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
@@ -951,14 +953,14 @@ export default class Player extends PathingEntity {
         const dz = Math.abs(this.z - this.loadedZ);
 
         // if the build area should be regenerated, do so now
-        const { tele } = this.getMovementDir(); // wasteful but saves time on loading lines
-        if (dx >= 36 || dz >= 36 || (tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
+        if (dx >= 36 || dz >= 36 || (this.tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.rebuildNormal(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
             this.loadedZ = this.z;
             this.loadedZones = {};
         }
+
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
             const localX = info.camX - Position.zoneOrigin(this.loadedX);
             const localZ = info.camZ - Position.zoneOrigin(this.loadedZ);
@@ -969,10 +971,9 @@ export default class Player extends PathingEntity {
         if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
             this.loadedZones = {};
         }
-    }
 
-    updateZones() {
-        // check nearby zones for updates
+        this.activeZones.clear();
+
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
 
@@ -981,7 +982,6 @@ export default class Player extends PathingEntity {
         const topZ = Position.zone(this.loadedZ) + 6;
         const bottomZ = Position.zone(this.loadedZ) - 6;
 
-        // update 3 zones around the player
         for (let x = centerX - 3; x <= centerX + 3; x++) {
             for (let z = centerZ - 3; z <= centerZ + 3; z++) {
                 // check if the zone is within the build area
@@ -989,39 +989,48 @@ export default class Player extends PathingEntity {
                     continue;
                 }
 
-                const zone = World.getZone(x << 3, z << 3, this.level);
-
-                // todo: receiver/shared buffer logic
-                if (typeof this.loadedZones[zone.index] === 'undefined') {
-                    // full update necessary to clear client zone memory
-                    this.writeHighPriority(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
-                    this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
-                }
-
-                const updates = World.getUpdates(zone.index).filter((event: ZoneEvent): boolean => {
-                    return event.tick > this.loadedZones[zone.index];
-                });
-
-                if (updates.length) {
-                    this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, x, z, this.loadedX, this.loadedZ);
-
-                    for (let i = 0; i < updates.length; i++) {
-                        // have to copy because encryption will be applied to buffer
-                        const data = updates[i].buffer;
-                        const out = new Packet(new Uint8Array(data.data.length));
-                        const pos = data.pos;
-                        data.pos = 0;
-                        data.gdata(out.data, 0, out.data.length);
-                        data.pos = pos;
-                        out.pos = pos;
-
-                        // the packet is released elsewhere.
-                        this.highPriorityOut.push(out);
-                    }
-                }
-
-                this.loadedZones[zone.index] = World.currentTick;
+                this.activeZones.add(ZoneManager.zoneIndex(x << 3, z << 3, this.level));
             }
+        }
+    }
+
+    updateZones() {
+        for (const zoneIndex of this.activeZones) {
+            const zone = World.getZoneIndex(zoneIndex);
+            if (!zone) {
+                continue;
+            }
+
+            // todo: receiver/shared buffer logic
+            if (typeof this.loadedZones[zone.index] === 'undefined') {
+                // full update necessary to clear client zone memory
+                this.writeHighPriority(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
+                this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
+            }
+
+            const updates = World.getUpdates(zone.index).filter((event: ZoneEvent): boolean => {
+                return event.tick > this.loadedZones[zone.index];
+            });
+
+            if (updates.length) {
+                this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
+
+                for (let i = 0; i < updates.length; i++) {
+                    // have to copy because encryption will be applied to buffer
+                    const data = updates[i].buffer;
+                    const out = new Packet(new Uint8Array(data.data.length));
+                    const pos = data.pos;
+                    data.pos = 0;
+                    data.gdata(out.data, 0, out.data.length);
+                    data.pos = pos;
+                    out.pos = pos;
+
+                    // the packet is released elsewhere.
+                    this.highPriorityOut.push(out);
+                }
+            }
+
+            this.loadedZones[zone.index] = World.currentTick;
         }
     }
 
@@ -1034,41 +1043,28 @@ export default class Player extends PathingEntity {
         return dz < 16 && dx < 16 && this.level == other.level;
     }
 
-    getNearbyPlayers(): number[] {
-        const centerX = Position.zone(this.x);
-        const centerZ = Position.zone(this.z);
-
-        const leftX = Position.zone(this.loadedX) - 6;
-        const rightX = Position.zone(this.loadedX) + 6;
-        const topZ = Position.zone(this.loadedZ) + 6;
-        const bottomZ = Position.zone(this.loadedZ) - 6;
-
-        // +/- 52 results in visibility at the border
+    getNearbyPlayers(): Set<number> {
         const absLeftX = this.loadedX - 48;
         const absRightX = this.loadedX + 48;
         const absTopZ = this.loadedZ + 48;
         const absBottomZ = this.loadedZ - 48;
 
-        // update 2 zones around the player
-        const nearby = [];
-        for (let x = centerX - 2; x <= centerX + 2; x++) {
-            for (let z = centerZ - 2; z <= centerZ + 2; z++) {
-                // check if the zone is within the build area
-                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+        const nearby: Set<number> = new Set();
+
+        for (const zoneIndex of this.activeZones) {
+            const zone = World.getZoneIndex(zoneIndex);
+            if (!zone) {
+                continue;
+            }
+
+            for (const uid of zone.players) {
+                const player = World.getPlayerByUid(uid);
+                if (player === null || uid === this.uid || player.x <= absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z <= absBottomZ) {
                     continue;
                 }
 
-                const { players } = World.getZone(x << 3, z << 3, this.level);
-
-                for (const uid of players) {
-                    const player = World.getPlayerByUid(uid);
-                    if (player === null || uid === this.uid || player.x < absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z < absBottomZ) {
-                        continue;
-                    }
-
-                    if (this.isWithinDistance(player)) {
-                        nearby.push(uid);
-                    }
+                if (this.isWithinDistance(player)) {
+                    nearby.add(uid);
                 }
             }
         }
@@ -1082,27 +1078,24 @@ export default class Player extends PathingEntity {
         const bitBlock = Packet.alloc(1);
         const byteBlock = Packet.alloc(1);
 
-        // temp variables to convert movement operations
-        const { walkDir, runDir, tele } = this.getMovementDir();
-
         // update local player
         bitBlock.bits();
-        bitBlock.pBit(1, tele || walkDir !== -1 || runDir !== -1 || this.mask > 0 ? 1 : 0);
-        if (tele) {
+        bitBlock.pBit(1, this.tele || this.walkDir !== -1 || this.runDir !== -1 || this.mask > 0 ? 1 : 0);
+        if (this.tele) {
             bitBlock.pBit(2, 3);
             bitBlock.pBit(2, this.level);
             bitBlock.pBit(7, Position.local(this.x));
             bitBlock.pBit(7, Position.local(this.z));
             bitBlock.pBit(1, this.jump ? 1 : 0);
             bitBlock.pBit(1, this.mask > 0 ? 1 : 0);
-        } else if (runDir !== -1) {
+        } else if (this.runDir !== -1) {
             bitBlock.pBit(2, 2);
-            bitBlock.pBit(3, walkDir);
-            bitBlock.pBit(3, runDir);
+            bitBlock.pBit(3, this.walkDir);
+            bitBlock.pBit(3, this.runDir);
             bitBlock.pBit(1, this.mask > 0 ? 1 : 0);
-        } else if (walkDir !== -1) {
+        } else if (this.walkDir !== -1) {
             bitBlock.pBit(2, 1);
-            bitBlock.pBit(3, walkDir);
+            bitBlock.pBit(3, this.walkDir);
             bitBlock.pBit(1, this.mask > 0 ? 1 : 0);
         } else if (this.mask > 0) {
             bitBlock.pBit(2, 0);
@@ -1113,27 +1106,27 @@ export default class Player extends PathingEntity {
         }
 
         // update other players (255 max - 8 bits)
-        bitBlock.pBit(8, this.players.size);
+        bitBlock.pBit(8, this.otherPlayers.size);
 
-        for (const uid of this.players) {
+        for (const uid of this.otherPlayers) {
             const player = World.getPlayerByUid(uid);
 
             const loggedOut = !player;
-            const notNearby = nearby.findIndex(p => p === uid) === -1;
+            const notNearby = !nearby.has(uid);
 
             if (loggedOut || notNearby) {
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
-                this.players.delete(uid);
+                this.otherPlayers.delete(uid);
                 continue;
             }
 
-            const { walkDir, runDir, tele } = player.getMovementDir();
+            const { walkDir, runDir, tele } = player;
             if (tele) {
                 // player full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
-                this.players.delete(uid);
+                this.otherPlayers.delete(uid);
                 continue;
             }
 
@@ -1164,10 +1157,9 @@ export default class Player extends PathingEntity {
         }
 
         // add new players
-        // todo: add based on distance radius that shrinks if too many players are visible?
-        for (let i = 0; i < nearby.length && this.players.size < 255; i++) {
-            const uid = nearby[i];
-            if (this.players.has(uid)) {
+        for (const uid of nearby) {
+            if (this.otherPlayers.size >= 255 || this.otherPlayers.has(uid)) {
+                // todo: add based on distance radius that shrinks if too many players are visible?
                 continue;
             }
 
@@ -1196,7 +1188,7 @@ export default class Player extends PathingEntity {
                 player.writeUpdate(this, byteBlock, false, true);
             }
 
-            this.players.add(player.uid);
+            this.otherPlayers.add(player.uid);
         }
 
         if (byteBlock.pos > 0) {
@@ -1491,41 +1483,28 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    getNearbyNpcs(): number[] {
-        const centerX = Position.zone(this.x);
-        const centerZ = Position.zone(this.z);
-
-        const leftX = Position.zone(this.loadedX) - 6;
-        const rightX = Position.zone(this.loadedX) + 6;
-        const topZ = Position.zone(this.loadedZ) + 6;
-        const bottomZ = Position.zone(this.loadedZ) - 6;
-
-        // +/- 52 results in visibility at the border
+    getNearbyNpcs(): Set<number> {
         const absLeftX = this.loadedX - 48;
         const absRightX = this.loadedX + 48;
         const absTopZ = this.loadedZ + 48;
         const absBottomZ = this.loadedZ - 48;
 
-        // update 2 zones around the player
-        const nearby = [];
-        for (let x = centerX - 2; x <= centerX + 2; x++) {
-            for (let z = centerZ - 2; z <= centerZ + 2; z++) {
-                // check if the zone is within the build area
-                if (x < leftX || x > rightX || z > topZ || z < bottomZ) {
+        const nearby: Set<number> = new Set();
+
+        for (const zoneIndex of this.activeZones) {
+            const zone = World.getZoneIndex(zoneIndex);
+            if (!zone) {
+                continue;
+            }
+
+            for (const nid of zone.npcs) {
+                const npc = World.getNpc(nid);
+                if (npc === null || !npc.checkLifeCycle(World.currentTick) || npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
                     continue;
                 }
 
-                const { npcs } = World.getZone(x << 3, z << 3, this.level);
-
-                for (const nid of npcs) {
-                    const npc = World.getNpc(nid);
-                    if (npc === null || !npc.checkLifeCycle(World.currentTick) || npc.x < absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z < absBottomZ) {
-                        continue;
-                    }
-
-                    if (this.isWithinDistance(npc)) {
-                        nearby.push(nid);
-                    }
+                if (this.isWithinDistance(npc)) {
+                    nearby.add(nid);
                 }
             }
         }
@@ -1547,7 +1526,7 @@ export default class Player extends PathingEntity {
             const npc = World.getNpc(nid);
 
             const despawned = !npc;
-            const notNearby = nearby.findIndex(n => n === nid) === -1;
+            const notNearby = !nearby.has(nid);
 
             if (despawned || notNearby) {
                 bitBlock.pBit(1, 1);
@@ -1556,7 +1535,7 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            const { walkDir, runDir, tele } = npc.getMovementDir();
+            const { walkDir, runDir, tele } = npc;
             if (tele) {
                 // npc full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
@@ -1592,9 +1571,8 @@ export default class Player extends PathingEntity {
         }
 
         // add new npcs
-        for (let i = 0; i < nearby.length && this.npcs.size < 255; i++) {
-            const nid = nearby[i];
-            if (this.npcs.has(nid)) {
+        for (const nid of nearby) {
+            if (this.npcs.size >= 255 || this.npcs.has(nid)) {
                 continue;
             }
 
