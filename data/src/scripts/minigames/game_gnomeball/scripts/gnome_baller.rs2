@@ -1,21 +1,9 @@
 [ai_opplayer2,gnome_baller1] @npc_gnomeball_tackle;
-[ai_opplayer2,gnome_baller2] npc_setmode(null);
-[ai_opplayer2,gnome_baller3] npc_setmode(null);
-[ai_opplayer2,gnome_baller4] npc_setmode(null);
 [ai_opplayer2,gnome_baller5] @npc_gnomeball_tackle;
-[ai_opplayer2,gnome_baller6] npc_setmode(null);
-[ai_opplayer2,gnome_baller7] npc_setmode(null);
-[ai_opplayer2,gnome_baller8] npc_setmode(null);
 [ai_opplayer2,gnome_baller9] @npc_gnomeball_tackle;
-[ai_opplayer2,gnome_baller10] npc_setmode(null);
-[ai_opplayer2,gnome_baller11] npc_setmode(null);
-[ai_opplayer2,gnome_baller12] npc_setmode(null);
 
 [label,npc_gnomeball_tackle]
 npc_setmode(null);
-if (%npc_action_delay > map_clock | ~npc_can_attack_player = false) {
-    return;
-}
 if_close;
 if (p_finduid(uid) = true) {
     if (random(2) = 0 & inv_getobj(worn, ^wearpos_rhand) = gnomeball) { // 50% guess for now
@@ -32,7 +20,7 @@ npc_changetype(npc_param(gnome_fallen));
 npc_delay(5);
 npc_changetype($old);
 npc_anim(midget_seq_209, 0);
-npc_delay(1);
+npc_delay(0);
 %npc_aggressive_player = null;
 
 [proc,npc_gnomeball_tackle_success]
@@ -83,10 +71,11 @@ npc_setmode(none);
 p_delay(1);
 ~update_all(gnomeball);
 npc_changetype(nc_param($old, gnome_tackled));
-npc_delay(10);
+npc_delay(9);
 npc_setmode(null);
 npc_changetype($old);
 npc_anim(midget_seq_206, 0);
+npc_delay(0);
 
 
 [opnpc1,gnome_baller2] @player_gnomeball_tackle_carrier;

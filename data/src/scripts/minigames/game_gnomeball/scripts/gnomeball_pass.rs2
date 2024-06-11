@@ -40,7 +40,7 @@ def_int $duration = ~player_projectile(coord, .coord, .uid, spotanim_55, 40, 40,
 sound_synth(throw, 0, 0);
 .sound_synth(throw, 0, 0);
 
-p_delay(0);
+world_delay(0);
 
 if (.p_finduid(.uid) = true) {
     .facesquare(coord);

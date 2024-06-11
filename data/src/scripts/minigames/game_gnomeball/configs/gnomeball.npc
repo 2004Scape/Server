@@ -242,6 +242,7 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2924_npc
 head1=model_21_npc_head
+respawnrate=0
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
@@ -258,6 +259,8 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2921_npc
 head1=model_21_npc_head
+timer=10
+respawnrate=0
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
@@ -297,5 +300,6 @@ model3=model_2923_npc
 head1=model_21_npc_head
 wanderrange=0
 moverestrict=nomove
+timer=1
 param=death_anim,midget_death
 param=death_sound,gnome_death

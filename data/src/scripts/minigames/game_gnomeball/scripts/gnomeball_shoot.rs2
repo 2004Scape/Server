@@ -58,10 +58,10 @@ if ($land_coord = loc_coord) {
     cam_lookat(movecoord(loc_coord, -7, 0, 5), 250, 10, 20);
     // todo: goal jingle
     if (npc_find(^gnomeball_cheer_coord1, gnome_cheerleader, 0, 0) = true) {
-        npc_queue(5, 0, 0);
+        npc_say("GOAL");
     }
     if (npc_find(^gnomeball_cheer_coord2, gnome_cheerleader, 0, 0) = true) {
-        npc_queue(6, 0, 0);
+        npc_say("GOAL");
     }  
 } else {
     mes("... and miss.");
@@ -77,16 +77,3 @@ def_int $x = ~random_range(-1, 1);
 def_int $z = ~random_range(-1, 1);
 return($coord);
 // return(movecoord($coord, $x, coordy($coord), $z));
-
-[ai_queue5,gnome_cheerleader](int $arg)
-npc_say("GOAL");
-npc_anim(midget_seq_216, 0);
-npc_delay(0);
-npc_anim(midget_seq_216, 0);
-
-[ai_queue6,gnome_cheerleader](int $arg)
-npc_say("GOAL");
-npc_delay(0);
-npc_anim(midget_seq_211, 0);
-npc_delay(0);
-npc_anim(midget_seq_212, 0);
