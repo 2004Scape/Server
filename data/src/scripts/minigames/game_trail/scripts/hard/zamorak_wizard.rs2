@@ -54,7 +54,7 @@ if ($random < 4) {
 } else if ($random < 65) {
     obj_add(npc_coord, firerune, 180, ^lootdrop_duration);
 } else if ($random < 66) {
-    obj_add(npc_coord, cosmic_rune, 25, ^lootdrop_duration);
+    obj_add(npc_coord, cosmicrune, 25, ^lootdrop_duration);
 } else if ($random < 67) {
     obj_add(npc_coord, lawrune, 9, ^lootdrop_duration);
 } else if ($random < 92) {

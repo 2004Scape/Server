@@ -4,12 +4,6 @@
 ~chatnpc("<p,angry>Have at thee knave!!!");
 ~npc_retaliate(0);
 
-[opnpc2,sir_mordred]
-if(npc_stat(hitpoints) = 0) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-@player_combat_start;
-
 [ai_queue3,sir_mordred](int $arg)
 if (npc_findhero = true & %arthur_progress >= ^arthur_spoken_lancelot & %arthur_progress < ^arthur_complete) {
     @lefaye_spare_son;

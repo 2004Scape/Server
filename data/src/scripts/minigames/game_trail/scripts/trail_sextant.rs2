@@ -50,11 +50,9 @@ if_setposition(trail_sextant:com_1, 0, ~unpack_negative_8bit(~get_sextant_horizo
 if_setposition(trail_sextant:com_2, 0,  ~unpack_negative_8bit(~get_sextant_sun));
 
 [if_button,trail_sextant:com_5]
-if(~get_sextant_frame >= ^sextant_frame_max) { // can't adjust position anymore
+if(~get_sextant_frame >= ^trail_sextant_frame_max) { // can't adjust position anymore
     return;
 }
-mes("up <tostring(~get_sextant_frame)>");
-mes("up <tostring(~get_sextant_horizon)>");
 %temp = setbit_range_toint(%temp, calc(~get_sextant_horizon + 7), 0, 7);
 %temp = setbit_range_toint(%temp, calc(~get_sextant_sun - 2), 8, 15);
 %temp = setbit_range_toint(%temp, calc(~get_sextant_frame + 1), 16, 23);
@@ -69,8 +67,6 @@ if_setposition(trail_sextant:com_2, 0,  ~unpack_negative_8bit(~get_sextant_sun))
 if(~get_sextant_frame <= 0) { // can't adjust position anymore
     return;
 }
-mes("<tostring(~get_sextant_frame)>");
-mes("<tostring(~get_sextant_horizon)>");
 %temp = setbit_range_toint(%temp, calc(~get_sextant_horizon - 7), 0, 7);
 %temp = setbit_range_toint(%temp, calc(~get_sextant_sun + 2), 8, 15);
 %temp = setbit_range_toint(%temp, calc(~get_sextant_frame - 1), 16, 23);
@@ -85,7 +81,6 @@ if_setposition(trail_sextant:com_2, 0,  ~unpack_negative_8bit(~get_sextant_sun))
 if(~get_sextant_needle >= ~get_sextant_needle_max) { // can't adjust position anymore
     return;
 }
-mes("<tostring(~get_sextant_needle)>");
 %temp = setbit_range_toint(%temp, calc(~get_sextant_sun + 2), 8, 15);
 %temp = setbit_range_toint(%temp, calc(~get_sextant_needle + 1), 24, 31);
 if_setposition(trail_sextant:com_2, 0, ~unpack_negative_8bit(~get_sextant_sun));
@@ -95,7 +90,6 @@ if_setanim(trail_sextant:com_10, enum(int, seq, sextant_seq_enum, ~get_sextant_n
 if(~get_sextant_needle <= ~get_sextant_needle_min) { // can't adjust position anymore
     return;
 }
-mes("<tostring(~get_sextant_needle)>");
 %temp = setbit_range_toint(%temp, calc(~get_sextant_sun - 2), 8, 15);
 %temp = setbit_range_toint(%temp, calc(~get_sextant_needle - 1), 24, 31);
 if_setposition(trail_sextant:com_2, 0, ~unpack_negative_8bit(~get_sextant_sun));

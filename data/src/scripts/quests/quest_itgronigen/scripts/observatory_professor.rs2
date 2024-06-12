@@ -202,7 +202,21 @@ switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Noth
 }
 
 [label,professor_trails]
-
+switch_int(~get_chart_progress) {
+    case ^trail_chart_not_started, ^trail_chart_spoken_prof, ^trail_chart_spoken_murphy:
+        // OSRS mesanims with rs3 dialogue
+        ~chatplayer("<p,quiz>Can you teach me to solve treasure trail clues?");
+        ~chatnpc("<p,happy>Ah, I get asked about Treasure Trails all the time! Listen carefully and I shall tell you what I know.");
+        ~chatnpc("<p,neutral>Lots of clues have @dre@degrees@bla@ and @dre@minutes@bla@ written on them. These are coordinates of the place where the treasure is buried.");
+        ~chatnpc("<p,neutral>You have to walk to the correct spot, so that your coordinates are exactly the same as the values written on the clue scroll.");
+        ~chatnpc("<p,neutral>To do this, you must use a @dre@sextant@bla@, a @dre@watch@bla@ and a @dre@chart@bla@ to find the coordinates of where you are.");
+        ~chatnpc("<p,happy>Once you know the coordinates of your position, you know which way you have to walk to get to the treasure's coordinates!");
+        ~chatplayer("<p,neutral>Riiight. So, where do I get these items from?");
+        ~chatnpc("<p,happy>I think Murphy, the owner of the Fishing Trawler moored at Port Khazard, might be able to spare you a sextant. After that, the nearest clock tower is south of Ardougne - you could probably get a watch there.");
+        ~chatnpc("<p,happy>I've got plenty of charts myself; just come back here when you've got the sextant and watch, and I'll give you one and teach you how to use them.");
+        %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_spoken_prof, 5, 8);
+        ~chatplayer("<p,confused>Thanks, I'll see you later.");
+}
 
 [opnpc1,observatory_professor_tower]
 // mostly 1-1 with RSC (with fixes) because this dialogue doesn't exist post-rework

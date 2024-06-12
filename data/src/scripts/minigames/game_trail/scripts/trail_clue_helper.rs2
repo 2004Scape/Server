@@ -53,8 +53,9 @@ return (getbit_range(%trail_clue, 0, 3));
 [proc,clear_trail_progress](int)
 %trail_clue = clearbit_range(%trail_clue, 0, 4);
 
+// 4 bits
 [proc,get_chart_progress](int)
-return (getbit_range(%trail_clue, 5, 7));
+return (getbit_range(%trail_clue, 5, 8));
 
 [proc,has_sextant_clue](boolean)
 def_int $slot = 0;
