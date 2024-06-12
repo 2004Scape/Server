@@ -259,7 +259,6 @@ model1=model_2914_npc
 model2=model_2905_npc
 model3=model_2921_npc
 head1=model_21_npc_head
-timer=10
 respawnrate=0
 param=death_anim,midget_death
 param=death_sound,gnome_death

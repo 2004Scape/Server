@@ -19,7 +19,7 @@ if (inv_getobj(worn, ^wearpos_rhand) ! gnomeball) {
     mes("You need a ball in your hand to throw."); // osrs
     return;
 }
-if (add(%npc_lastcombat, 3) >= map_clock) {
+if (%npc_attacking_uid ! null & add(%npc_lastcombat, 3) > map_clock) {
     mes("This gnome is helping someone else at the moment."); // osrs
     return;
 }
@@ -29,89 +29,64 @@ anim(seq_783, 0);
 npc_anim(midget_seq_200, 28);
 
 def_int $duration = ~npc_projectile(coord, npc_uid, spotanim_55, 40, 36, 41, 15, 5, 11, 5);
+def_int $delay = sub(divide($duration, 30), 1);
 sound_synth(sound_152, 0, 28);
 inv_delslot(worn, ^wearpos_rhand);
 ~update_all(gnomeball);
 npc_facesquare(coord);
 %npc_attacking_uid = uid;
-npc_delay(divide($duration, 30));
+%npc_lastcombat = map_clock;
+
+npc_delay($delay);
 npc_changetype(gnome_winger2);
+
 // no idea if this is how they do it but if you pass before 10 ticks after u first 
 // passed to them, they will always pass 10 ticks later
-if (add(%npc_lastattack, 10) <= map_clock) {
-    npc_queue(6, 0, ~random_range(4, 10));
+def_int $throw = add(random(10), 1);
+if (add(%npc_lastattack, 10) > map_clock) {
+    $throw = sub(add(%npc_lastattack, 10), map_clock);
 }
-
-// npc_queue(5, 0, 6);
+npc_settimer(add($throw, 1));
 
 [queue,player_catch_gnomeball]
 inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
 ~update_all(gnomeball);
 
-
-
-
-[ai_queue5,gnome_winger2](int $arg)
-if (finduid(%npc_attacking_uid) = true & ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
-    return;
-}
-npc_del;
-
-[ai_queue6,gnome_winger2](int $arg)
-if (finduid(%npc_attacking_uid) = true) {
-    if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
-        if_close;
-        if (p_finduid(%npc_attacking_uid) = true) {
-            npc_settimer(8);
-            %npc_lastcombat = map_clock;
-            %npc_lastattack = map_clock;
-            mes("The gnome passes the ball back.");
-            anim(seq_782, 22);
-            facesquare(npc_coord);
-
-            npc_anim(midget_seq_201, 0);
-            sound_synth(sound_152, 0, 22);
-            sound_synth(throw, 0, 0);
-            ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 15, 15, 11, 2);
-            p_delay(0);
-            npc_facesquare(coord);
-            npc_changetype(gnome_winger1);
-            p_delay(1);
-            inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
-            ~update_all(gnomeball);
-            return;
-        }
-    }
-}
-npc_queue(5, 0, 60);
-
-
 [ai_timer,gnome_winger2]
-// if (npc_type = gnome_winger1) {
-//     return;
-// }
-if (finduid(%npc_attacking_uid) = true) {
-    if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
-        if_close;
-        if (p_finduid(%npc_attacking_uid) = true) {
-            npc_settimer(8);
-            %npc_lastattack = map_clock;
-            mes("The gnome passes the ball back.");
-            anim(seq_782, 22);
-            facesquare(npc_coord);
-
-            npc_anim(midget_seq_201, 0);
-            sound_synth(sound_152, 0, 22);
-            sound_synth(throw, 0, 0);
-            ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 15, 15, 11, 2);
-            p_delay(0);
-            npc_facesquare(coord);
-            npc_changetype(gnome_winger1);
-            p_delay(1);
-            inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
-            ~update_all(gnomeball);
-            return;
-        }
+if (finduid(%npc_attacking_uid) = false | ~inzone_coord_pair_table(gnomeball_zones, coord) = false) {
+    if (add(%npc_lastcombat, 60) < map_clock & npc_type = gnome_winger2) {
+        %npc_attacking_uid = null;
+        npc_changetype(gnome_winger1);
+        npc_del;
+        return;
     }
 }
-npc_queue(5, 0, 60);
+if (finduid(%npc_attacking_uid) = true) {
+    if (~inzone_coord_pair_table(gnomeball_zones, coord) = true & inv_getobj(worn, ^wearpos_rhand) = null) {
+        ~npc_gnomeball_pass;
+        return;
+    }
+}
+npc_settimer(20);
+
+[proc,npc_gnomeball_pass]
+if_close;
+if (p_finduid(%npc_attacking_uid) = true) {
+    %npc_attacking_uid = null;
+    %npc_lastattack = map_clock;
+    mes("The gnome passes the ball back.");
+    anim(seq_782, 22);
+    facesquare(npc_coord);
+
+    npc_settimer(0);
+    npc_anim(midget_seq_201, 0);
+    sound_synth(sound_152, 0, 22);
+    sound_synth(throw, 0, 0);
+    ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 15, 15, 11, 2);
+    p_delay(0);
+    npc_facesquare(coord);
+    npc_changetype(gnome_winger1);
+    p_delay(1);
+    inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
+    ~update_all(gnomeball);
+}
