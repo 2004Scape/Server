@@ -373,7 +373,7 @@ type=obj
 [thread_used]
 scope=perm
 
-[varp_260]
+[temp]
 
 [option1]
 transmit=yes

@@ -1,4 +1,12 @@
 [opnpc1,cook]
+// https://www.youtube.com/watch?v=mtPhS3n2dAo
+if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0 & inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
+    @challenge_cook;
+}
+if(inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
+    @trail_cook;
+}
+
 if(%cook_progress = 0) {
     ~chatnpc("<p,sad>What am I to do?");
     @cooks_assistant_start;
@@ -23,4 +31,23 @@ if(%cook_progress = 0) {
         ~chatnpc("<p,happy>Go ahead - it's a very good range.|It's easier to use than most other ranges.");
     }
 
+}
+
+[label,trail_cook]
+~chatnpc("<p,confused>I've always wondered how many cannons the castle has. Could you find out for me?");
+inv_add(inv, trail_clue_medium_challenge_exp002, 1);
+~objboxt(trail_clue_medium_challenge_exp002, "The cook has given you a challenge scroll!");
+
+[label,challenge_cook]
+~chatnpc("<p,neutral>Please tell me how many cannons there are.");
+if_close;
+p_delay(0); // old videos have this it seems, I think it's a workaround otherwise the old chatnpc will appear for a tick after the countdialog is closed
+p_countdialog;
+def_int $entered_value = last_int;
+if($entered_value = oc_param(trail_clue_medium_challenge_exp002, trail_challenge_answer)) {
+    ~chatnpc("<p,happy>Cheers!");
+    inv_del(inv, trail_clue_medium_challenge_exp002, 1);
+    ~progress_clue_medium(trail_clue_medium_anagram_exp002, "The cook has given you your next clue!");
+} else {
+    ~chatnpc("<p,angry>Hmm, I don't think that's right.");
 }

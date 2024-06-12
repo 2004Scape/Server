@@ -1,4 +1,9 @@
 [opnpc1,abbot_langley]
+// https://www.youtube.com/watch?v=A45W72t3tjU
+if(inv_total(inv, trail_clue_hard_riddle_exp013) > 0) {
+    ~chatnpc("<p,happy>Congratulations, traveller!");
+    ~progress_clue_hard(trail_clue_hard_riddle_exp013, "Abbot Langley has given you another clue scroll!");
+}
 ~chatnpc("<p,quiz>Greetings traveller.");
 if (%prayer_guild < 1) {
     @multi3("Can you heal me? I'm injured.", can_you_heal_me_im_injured, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way, "How do I get further into the monastery?", ask_to_join_abbot_langley);

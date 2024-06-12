@@ -1,0 +1,30 @@
+[opnpc1,hazelmere]
+if(inv_total(inv, trail_clue_medium_challenge_exp001) > 0 & inv_total(inv, trail_clue_medium_anagram_exp001) > 0) {
+    @challenge_hazelmere;
+}
+if(inv_total(inv, trail_clue_medium_anagram_exp001) > 0) {
+    @trail_hazelmere;
+}
+~mesbox("The mage starts to speak but all you hear is:");
+~chatnpc("<p,happy>Blah. Blah, blah, blah, blah...blah!");
+
+[label,trail_hazelmere]
+~chatnpc("<p,neutral>Blah, blah, blah...blah!");
+~chatplayer("<p,confused>What?");
+~chatnpc("<p,neutral>Blah, blah.");
+inv_add(inv, trail_clue_medium_challenge_exp001, 1);
+~objboxt(trail_clue_medium_challenge_exp001, "Hazelmere has given you a challenge scroll!");
+
+[label,challenge_hazelmere]
+~chatnpc("<p,neutral>Blah, blah?");
+if_close;
+p_delay(0); 
+p_countdialog;
+def_int $entered_value = last_int;
+if($entered_value = oc_param(trail_clue_medium_challenge_exp001, trail_challenge_answer)) {
+    ~chatnpc("<p,happy>Blah, blah, blah!");
+    inv_del(inv, trail_clue_medium_challenge_exp001, 1);
+    ~progress_clue_medium(trail_clue_medium_anagram_exp001, "Hazelmere has given you another clue scroll!");
+} else {
+    ~chatnpc("<p,angry>Blah!"); // TODO: confirm mesanim
+}

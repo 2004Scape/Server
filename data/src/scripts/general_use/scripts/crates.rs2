@@ -20,6 +20,8 @@ if(loc_coord = 1_50_50_28_16 & inv_total(inv, trail_clue_easy_simple_exp002) = 1
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp009);
 } else if(loc_coord = 0_47_52_21_27 & inv_total(inv, trail_clue_easy_riddle_exp010) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp010);
+} else if(loc_coord = 0_50_150_18_17 & inv_total(inv, trail_clue_hard_riddle_exp001) = 1) {
+    ~trail_clue_easy_loc_interact(trail_clue_hard_riddle_exp001);
 } else {
     mes("You search the crate but find nothing.");
 }
@@ -28,7 +30,9 @@ if(loc_coord = 1_50_50_28_16 & inv_total(inv, trail_clue_easy_simple_exp002) = 1
 // Treasure Trail
 if(loc_coord = 0_40_52_57_19 & inv_total(inv, trail_clue_easy_riddle_exp005) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp005);
-} else {
+} else if(loc_coord = 2_49_51_30_45 & inv_total(inv, trail_clue_hard_riddle_exp008) = 1) {
+    ~trail_clue_hard_loc_interact(trail_clue_hard_riddle_exp008);
+}else {
     mes("You search the crates but find nothing of value.");
 }
 

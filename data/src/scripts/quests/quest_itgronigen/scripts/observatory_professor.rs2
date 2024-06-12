@@ -1,75 +1,23 @@
 [opnpc1,observatory_professor]
-// TODO: treasure trails dialogue
+// https://web.archive.org/web/20041021084243/http://www.runehq.net/RHQInn/viewtopic.php?t=158, you cannot talk about clues during the quest, only before and after completion
+// https://web.archive.org/web/20051214060247/http://www.tip.it/runescape/?page=treasure_trails.htm this mentions it as well
 switch_int(%itgronigen_progress) {
-    case ^itgronigen_complete, ^itgronigen_claimed_wine:
-        ~chatnpc("<p,happy>Aha, my friend returns.");
-        ~chatnpc("<p,happy>Thanks for all your help with the telescope.|What can I do for you?"); // still has this linebreak in OSRS
-        // using OSRS dialogue here, seems like it's probably unchanged
-        switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Nothing, thanks.", 2)) {
-            case 1:
-                ~chatplayer("<p,happy>Do you need any more help with the telescope?");
-                ~chatnpc("<p,happy>Not right now,");
-                ~chatnpc("<p,happy>but the stars may hold a secret for you.");
-            case 2:
-                ~chatplayer("<p,happy>Nothing, thanks.");
-                ~chatnpc("<p,happy>Okay, no problem. See you again.");
+    case ^itgronigen_complete, ^itgronigen_claimed_wine: 
+        if(~has_sextant_clue = true) {
+            @multi2("Talk about the Observatory quest.", professor_returns, "Talk about Treasure Trails.", professor_trails);
         }
+        @professor_returns;
     case ^itgronigen_sent_telescope: ~chatnpc("<p,happy>The telescope is now repaired!|Let's go to the Observatory."); // dialogue doesn't exist on OSRS at all
     case ^itgronigen_given_mould: @professor_lens;
     case ^itgronigen_given_glass: @professor_mould;
     case ^itgronigen_given_bronze: @professor_glass;
     case ^itgronigen_given_planks: @professor_bronze;
     case ^itgronigen_started: @professor_planks;
-    case ^itgronigen_not_started:
-        // this whole dialogue is quite different compared to OSRS, and unfortunately we have no RS2 reference so this
-        // is mostly RSC + grammar corrected
-        ~chatnpc("<p,neutral>Hello adventurer.|What brings you to these parts?");
-        switch_int (~p_choice4("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "It is of no concern of yours...", 4)) {
-            case 1:
-                ~chatplayer("<p,sad>I am lost!!!");
-                ~chatnpc("<p,neutral>Lost? It must have been those gnomes that led you astray.");
-                ~chatnpc("<p,neutral>Head north-east to find the city of Ardougne.");
-                ~chatplayer("<p,neutral>I'm sure I'll find the way.");
-                ~chatplayer("<p,happy>Thanks for all your help.");
-                ~chatnpc("<p,neutral>No problem at all. Come and visit again!");
-                ~mesbox("The professor carries on with his studies.");
-            case 2:
-                ~chatplayer("<p,neutral>I'd like to have a look through that telescope.");
-                ~chatnpc("<p,neutral>So would I!");
-                ~chatnpc("<p,sad>The trouble is, its not working.");
-                ~chatplayer("<p,quiz>What do you mean?");
-                ~chatnpc("<p,neutral>Did you see those houses outside?");
-                ~chatplayer("<p,neutral>Up on the hill? Yes, I've seen them.");
-                ~chatnpc("<p,neutral>It's a family of goblins.");
-                ~chatnpc("<p,sad>Since they moved here they have caused nothing but trouble.");
-                ~chatnpc("<p,neutral>Last week, my telescope was tampered with.");
-                ~chatnpc("<p,angry>Now, parts need replacing before it can be used again.");
-                ~chatnpc("<p,quiz>Err, I don't suppose you would be willing to help?");
-                switch_int (~p_choice2("Sounds interesting, what can I do for you?", 1, "Oh, sorry, I don't have time for that.", 2)) {
-                    case 1:
-                        ~chatplayer("<p,happy>Sounds interesting, what can I do for you?");
-                        ~chatnpc("<p,happy>Oh, thanks so much.");
-                        ~chatnpc("<p,happy>I need three new parts for the telescope so it can be used again.");
-                        ~chatnpc("<p,neutral>I need wood to make a new tripod,|bronze to make a new tube|and glass for a replacement lens.");
-                        ~chatnpc("<p,happy>My assistant will help you obtaining these.");
-                        ~chatnpc("<p,happy>Go talk to him if you need some advice.");
-                        ~chatplayer("<p,quiz>Okay what do I need to do?");
-                        ~chatnpc("<p,neutral>First I need three planks of wood for the tripod.");
-                        %itgronigen_progress = ^itgronigen_started;
-                        ~send_quest_progress(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
-                    case 2:
-                        ~chatplayer("<p,neutral>Oh, sorry, I don't have time for that.");
-                        ~chatnpc("<p,sad>Oh dear. I really do need some help.");
-                        ~chatnpc("<p,neutral>If you see anyone who can help then please send them my way.");
-                        ~mesbox("The professor carries on with his duties.");
-                }
-            case 3:
-                ~chatplayer("<p,quiz>What's the ladder over there for?");
-                ~chatnpc("<p,neutral>The ladder leads to the entrance of the cavern|that leads from here to the observatory.");
-            case 4:
-                ~chatplayer("<p,neutral>It is of no concern of yours...");
-                ~chatnpc("<p,angry>Okay okay, there's no need to be insulting!");
+    case ^itgronigen_not_started: 
+        if(~has_sextant_clue = true) {
+            @multi2("Talk about the Observatory quest.", professor_initial, "Talk about Treasure Trails.", professor_trails);
         }
+        @professor_initial;
 }
 
 [label,professor_glass]
@@ -187,6 +135,74 @@ if(last_useitem = plank | last_useitem = molten_glass | last_useitem = bronze_ba
 } 
 ~chatplayer("<p,happy>What do you think of this!");
 ~chatnpc("<p,neutral>Wonderful. You must be very proud to have it.");
+
+[label,professor_initial]
+// this whole dialogue is quite different compared to OSRS, and unfortunately we have no RS2 reference so this
+// is mostly RSC + grammar corrected
+~chatnpc("<p,neutral>Hello adventurer.|What brings you to these parts?");
+switch_int (~p_choice4("I am lost!!!", 1, "I'd like to have a look through that telescope.", 2, "What's the ladder over there for?", 3, "It is of no concern of yours...", 4)) {
+     case 1:
+        ~chatplayer("<p,sad>I am lost!!!");
+        ~chatnpc("<p,neutral>Lost? It must have been those gnomes that led you astray.");
+        ~chatnpc("<p,neutral>Head north-east to find the city of Ardougne.");
+        ~chatplayer("<p,neutral>I'm sure I'll find the way.");
+        ~chatplayer("<p,happy>Thanks for all your help.");
+        ~chatnpc("<p,neutral>No problem at all. Come and visit again!");
+        ~mesbox("The professor carries on with his studies.");
+    case 2:
+        ~chatplayer("<p,neutral>I'd like to have a look through that telescope.");
+        ~chatnpc("<p,neutral>So would I!");
+        ~chatnpc("<p,sad>The trouble is, its not working.");
+        ~chatplayer("<p,quiz>What do you mean?");
+        ~chatnpc("<p,neutral>Did you see those houses outside?");
+        ~chatplayer("<p,neutral>Up on the hill? Yes, I've seen them.");
+        ~chatnpc("<p,neutral>It's a family of goblins.");
+        ~chatnpc("<p,sad>Since they moved here they have caused nothing but trouble.");
+        ~chatnpc("<p,neutral>Last week, my telescope was tampered with.");
+        ~chatnpc("<p,angry>Now, parts need replacing before it can be used again.");
+        ~chatnpc("<p,quiz>Err, I don't suppose you would be willing to help?");
+        switch_int (~p_choice2("Sounds interesting, what can I do for you?", 1, "Oh, sorry, I don't have time for that.", 2)) {
+            case 1:
+                ~chatplayer("<p,happy>Sounds interesting, what can I do for you?");
+                ~chatnpc("<p,happy>Oh, thanks so much.");
+                ~chatnpc("<p,happy>I need three new parts for the telescope so it can be used again.");
+                ~chatnpc("<p,neutral>I need wood to make a new tripod,|bronze to make a new tube|and glass for a replacement lens.");
+                ~chatnpc("<p,happy>My assistant will help you obtaining these.");
+                ~chatnpc("<p,happy>Go talk to him if you need some advice.");
+                ~chatplayer("<p,quiz>Okay what do I need to do?");
+                ~chatnpc("<p,neutral>First I need three planks of wood for the tripod.");
+                %itgronigen_progress = ^itgronigen_started;
+                ~send_quest_progress(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
+            case 2:
+                ~chatplayer("<p,neutral>Oh, sorry, I don't have time for that.");
+                ~chatnpc("<p,sad>Oh dear. I really do need some help.");
+                ~chatnpc("<p,neutral>If you see anyone who can help then please send them my way.");
+                ~mesbox("The professor carries on with his duties.");
+        }
+    case 3:
+        ~chatplayer("<p,quiz>What's the ladder over there for?");
+        ~chatnpc("<p,neutral>The ladder leads to the entrance of the cavern|that leads from here to the observatory.");
+    case 4:
+        ~chatplayer("<p,neutral>It is of no concern of yours...");
+        ~chatnpc("<p,angry>Okay okay, there's no need to be insulting!");
+}
+
+[label,professor_returns]
+~chatnpc("<p,happy>Aha, my friend returns.");
+~chatnpc("<p,happy>Thanks for all your help with the telescope.|What can I do for you?"); // still has this linebreak in OSRS
+// using OSRS dialogue here, seems like it's probably unchanged
+switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Nothing, thanks.", 2)) {
+    case 1:
+        ~chatplayer("<p,happy>Do you need any more help with the telescope?");
+        ~chatnpc("<p,happy>Not right now,");
+        ~chatnpc("<p,happy>but the stars may hold a secret for you.");
+    case 2:
+        ~chatplayer("<p,happy>Nothing, thanks.");
+        ~chatnpc("<p,happy>Okay, no problem. See you again.");
+}
+
+[label,professor_trails]
+
 
 [opnpc1,observatory_professor_tower]
 // mostly 1-1 with RSC (with fixes) because this dialogue doesn't exist post-rework

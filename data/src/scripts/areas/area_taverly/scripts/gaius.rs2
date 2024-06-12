@@ -13,12 +13,6 @@ if($option = 1) {
 }
 
 [label,trail_gaius]
-~chatnpc("<p,default>Here you go.");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp021, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Gaius has given you another clue!");
-}
+// https://www.youtube.com/watch?v=P7bBF43f9Jw
+~chatnpc("<p,neutral>Here you go.");
+~progress_clue_easy(trail_clue_easy_simple_exp023, "Gaius has given you another clue scroll!");

@@ -1,12 +1,183 @@
 [opheld1,trail_sextant]
-//TODO - randomzie start positions in interface.
 if_openmainmodal(trail_sextant);
+%temp = 0;
+~randomize_sextant_pos;
 
-[if_button,trail_sextant:get_location] {
-    if(inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 0) {
-        ~mesbox("You need a watch and navigator's chart to work out your loocation.");
-        return;
-    } else {
+[if_button,trail_sextant:get_location] 
+if(inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 0) {
+    if_close;
+    ~mesbox("You need a watch and navigator's chart to work out your location.");
+    return;
+}
+if(coordz(coord) > 6400) {
+    if_close;
+    ~mesbox("You can't use the sextant underground.");
+    return;
+}
+// Not sure how exactly this is determined, areas like the essence mines and zanaris work, but the fisher realm
+// and the watchtower instance don't work
+if(~inzone_coord_pair_table(sextant_disabled_zones, coord) = true) {
+    if_close;
+    ~mesbox("The sextant doesn't seem to work here.");
+    return;
+}
+if(~unpack_negative_8bit(~get_sextant_horizon) ! 0) {
+    mes("You need to get the horizon in the middle of the eye piece.");
+    return;
+}
+if(~unpack_negative_8bit(~get_sextant_sun) ! 0) {
+    mes("You need to get the sun in the middle of the eye piece.");
+    return;
+}
+@output_sextant_coords;
 
-    }
+[proc,randomize_sextant_pos]
+def_int $horizon_rand = random(15);
+%temp = setbit_range_toint(%temp, ~pack_negative_8bit(calc(-56 + ($horizon_rand * 7))), 0, 7);
+if(coordz(coord) > 6400) {
+    // not sure what the offset is on osrs but all if cmds still run, the sun just never shows
+    %temp = setbit_range_toint(%temp, 1000, 8, 15);
+} else {
+    %temp = setbit_range_toint(%temp, ~pack_negative_8bit(calc(-60 + (random(60) * 2))), 8, 15);
+}
+def_int $needle_pos = ~rand_sextant_needle_pos;
+%temp = setbit_range_toint(%temp, $horizon_rand, 16, 23);
+%temp = setbit_range_toint(%temp, ~rand_sextant_needle_pos, 24, 31);
+if_setanim(trail_sextant:com_9, enum(int, seq, sextant_seq_enum, $horizon_rand));
+if_setanim(trail_sextant:com_10, enum(int, seq, sextant_seq_enum, ~get_sextant_needle));
+if_setanim(trail_sextant:com_11, enum(int, seq, sextant_seq_enum, $horizon_rand));
+if_setposition(trail_sextant:com_1, 0, ~unpack_negative_8bit(~get_sextant_horizon));
+if_setposition(trail_sextant:com_2, 0,  ~unpack_negative_8bit(~get_sextant_sun));
+
+[if_button,trail_sextant:com_5]
+if(~get_sextant_frame >= ^sextant_frame_max) { // can't adjust position anymore
+    return;
+}
+mes("up <tostring(~get_sextant_frame)>");
+mes("up <tostring(~get_sextant_horizon)>");
+%temp = setbit_range_toint(%temp, calc(~get_sextant_horizon + 7), 0, 7);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_sun - 2), 8, 15);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_frame + 1), 16, 23);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_needle + 1), 24, 31);
+if_setanim(trail_sextant:com_9, enum(int, seq, sextant_seq_enum, ~get_sextant_frame));
+if_setanim(trail_sextant:com_11, enum(int, seq, sextant_seq_enum, ~get_sextant_frame));
+if_setanim(trail_sextant:com_10, enum(int, seq, sextant_seq_enum, ~get_sextant_needle));
+if_setposition(trail_sextant:com_1, 0, ~unpack_negative_8bit(~get_sextant_horizon));
+if_setposition(trail_sextant:com_2, 0,  ~unpack_negative_8bit(~get_sextant_sun));
+
+[if_button,trail_sextant:com_6]
+if(~get_sextant_frame <= 0) { // can't adjust position anymore
+    return;
+}
+mes("<tostring(~get_sextant_frame)>");
+mes("<tostring(~get_sextant_horizon)>");
+%temp = setbit_range_toint(%temp, calc(~get_sextant_horizon - 7), 0, 7);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_sun + 2), 8, 15);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_frame - 1), 16, 23);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_needle - 1), 24, 31);
+if_setanim(trail_sextant:com_9, enum(int, seq, sextant_seq_enum, ~get_sextant_frame));
+if_setanim(trail_sextant:com_11, enum(int, seq, sextant_seq_enum, ~get_sextant_frame));
+if_setanim(trail_sextant:com_10, enum(int, seq, sextant_seq_enum, ~get_sextant_needle));
+if_setposition(trail_sextant:com_1, 0, ~unpack_negative_8bit(~get_sextant_horizon));
+if_setposition(trail_sextant:com_2, 0,  ~unpack_negative_8bit(~get_sextant_sun));
+
+[if_button,trail_sextant:com_7]
+if(~get_sextant_needle >= ~get_sextant_needle_max) { // can't adjust position anymore
+    return;
+}
+mes("<tostring(~get_sextant_needle)>");
+%temp = setbit_range_toint(%temp, calc(~get_sextant_sun + 2), 8, 15);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_needle + 1), 24, 31);
+if_setposition(trail_sextant:com_2, 0, ~unpack_negative_8bit(~get_sextant_sun));
+if_setanim(trail_sextant:com_10, enum(int, seq, sextant_seq_enum, ~get_sextant_needle));
+
+[if_button,trail_sextant:com_8]
+if(~get_sextant_needle <= ~get_sextant_needle_min) { // can't adjust position anymore
+    return;
+}
+mes("<tostring(~get_sextant_needle)>");
+%temp = setbit_range_toint(%temp, calc(~get_sextant_sun - 2), 8, 15);
+%temp = setbit_range_toint(%temp, calc(~get_sextant_needle - 1), 24, 31);
+if_setposition(trail_sextant:com_2, 0, ~unpack_negative_8bit(~get_sextant_sun));
+if_setanim(trail_sextant:com_10, enum(int, seq, sextant_seq_enum, ~get_sextant_needle));
+
+// very basic algo to ensure that the randomized position of the needle is "opposite" that of the sun
+// used to prevent a scenario where getting the sun in the middle is impossible (TODO: probably needs to be adjusted)
+[proc,rand_sextant_needle_pos](int)
+def_int $sun_pos = ~unpack_negative_8bit(~get_sextant_sun);
+def_int $frame_pos = ~get_sextant_frame;
+if($sun_pos < -40) {
+    return (calc(15 + $frame_pos + random(11)));
+} else if($sun_pos < 0) {
+    return (calc(15 + $frame_pos + random(23)));
+} else if($sun_pos < 40) {
+    return (calc(15 + $frame_pos + 23 + random(23)));
+}
+return (calc(15 + $frame_pos + 35 + random(8)));
+
+// maps a negative number to a +ve number so we can pack it using setbit_range (8 bits)
+[proc,pack_negative_8bit](int $val)(int)
+return (calc($val + 128));
+
+[proc,unpack_negative_8bit](int $val)(int)
+return (calc($val - 128));
+
+// the sextant's needle value can go 2 "over" seq_1006, it will still default to seq_1006 in these cases, meaning if you move the needle twice
+// to the right after seq_1006, you will need to move it 3 times back for seq_1005, this is the behaviour in OSRS
+[proc,get_sextant_needle_max](int)
+return (calc(~get_sextant_needle_min + 45));
+
+[proc,get_sextant_needle_min](int)
+return (calc(15 + ~get_sextant_frame));
+
+[proc,get_sextant_horizon](int)
+return (getbit_range(%temp, 0, 7));
+
+[proc,get_sextant_sun](int)
+return (getbit_range(%temp, 8, 15));
+
+[proc,get_sextant_frame](int)
+return (getbit_range(%temp, 16, 23));
+
+[proc,get_sextant_needle](int)
+return (getbit_range(%temp, 24, 31));
+
+[label,output_sextant_coords]
+// the first indicates how far the player is north or south of the Observatory, in degrees and minutes, 
+// and the second how far East or West. Note that one degree is 60 minutes, and each game square is approximately 1.875 minutes.
+if_close;
+def_coord $observatory = 0_38_49_8_25;
+def_int $x_disp = calc(coordx(coord) - coordx($observatory));
+def_int $z_disp = calc(coordz(coord) - coordz($observatory));
+
+def_int $mins_x = calc((1875 * $x_disp) / 1000);
+def_int $mins_z = calc((1875 * $z_disp) / 1000);
+
+def_string $dir_x = "East";
+if($mins_x < 0) {
+    $dir_x = "West";
+}
+
+def_string $dir_z = "North";
+if($mins_z < 0) {
+    $dir_z = "South";
+}
+
+def_int $degrees_x = calc($mins_x / 60);
+$mins_x = calc($mins_x - ($degrees_x * 60));
+
+def_int $degrees_z = calc($mins_z / 60);
+$mins_z = calc($mins_z - ($degrees_z *  60));
+
+// no capitalization on dir or commas on OSRS, https://media.discordapp.net/attachments/1126857544523063367/1203037995846996028/rs2_coords1_26n_8_1e.gif?ex=66673ff1&is=6665ee71&hm=6a9189e978f831cee7f1455b1e79613a27f2552e71624e066667cf77187f417e&=&width=569&height=698
+// https://www.youtube.com/watch?v=Yb53SKVt7z8 -> linebreak was removed at some point as well, OSRS has the linebreak again with the commas/capitalization change
+mes("The sextant displays:");
+mes("<tostring(abs($degrees_z))> degrees, <tostring(abs($mins_z))> minutes <$dir_z>");
+mes("<tostring(abs($degrees_x))> degrees, <tostring(abs($mins_x))> minutes <$dir_x>");
+
+~mesbox("<tostring(abs($degrees_z))> degrees, <tostring(abs($mins_z))> minutes <$dir_z>|<tostring(abs($degrees_x))> degrees, <tostring(abs($mins_x))> minutes <$dir_x>");
+
+[debugproc,tc]
+if(p_finduid(uid) = true) {
+    @output_sextant_coords;
 }

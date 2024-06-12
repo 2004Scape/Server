@@ -49,12 +49,6 @@ switch_int(~p_choice2("Can you drop me off on the way down please?", 1, "Aren't 
 }
 
 [label,trail_arhein]
-~chatnpc("<p,default>Well done, matey!");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp025, 1);
-if(~trail_clue_easy_complete = true) {
-
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Arhein has given you another clue!");
-}
+// https://www.youtube.com/watch?v=oLqbhQX1HpM
+~chatnpc("<p,happy>Well done, matey!");
+~progress_clue_easy(trail_clue_easy_simple_exp025, "Arhein has given you another clue scroll!");

@@ -11,6 +11,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_coord,0_48_50_21_27
+param=trail_casket,trail_casket_medium_map001
 
 [trail_clue_medium_map002]
 name=Clue scroll
@@ -25,6 +26,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_medium
 param=trail_coord,0_42_53_14_36
+param=trail_casket,trail_casket_medium_map002
 
 [trail_clue_medium_sextant_exp001]
 name=Clue scroll
@@ -40,6 +42,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,02 degrees 48 minutes north|22 degrees 30 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_49_50_24_51
+param=trail_casket,trail_casket_medium_sextant_exp001
 
 [trail_clue_medium_sextant_exp002]
 name=Clue scroll
@@ -55,6 +59,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,01 degrees 35 minutes south|07 degrees 28 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_41_48_55_38
+param=trail_casket,trail_casket_medium_sextant_exp002
 
 [trail_clue_medium_sextant_exp003]
 name=Clue scroll
@@ -68,8 +74,10 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_medium
-param=trail_desc,01 degrees 35 minutes south|07 degrees 28 minutes east
+param=trail_desc,01 degrees 26 minutes north|08 degrees 01 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_42_50_9_7
+param=trail_casket,trail_casket_medium_sextant_exp003
 
 [trail_clue_medium_sextant_exp004]
 name=Clue scroll
@@ -85,6 +93,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,06 degrees 31 minutes north|01 degrees 46 minutes west
 param=trail_sextant,yes
+param=trail_coord,0_37_52_15_42
+param=trail_casket,trail_casket_medium_sextant_exp004
 
 [trail_clue_medium_sextant_exp005]
 name=Clue scroll
@@ -100,6 +110,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 05 minutes south|01 degrees 13 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_38_49_47_22
+param=trail_casket,trail_casket_medium_sextant_exp005
 
 [trail_clue_medium_sextant_exp006]
 name=Clue scroll
@@ -115,6 +127,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,09 degrees 33 minutes north|02 degrees 15 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_39_54_16_11
+param=trail_casket,trail_casket_medium_sextant_exp006
 
 [trail_clue_medium_sextant_exp007]
 name=Clue scroll
@@ -130,6 +144,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,02 degrees 50 minutes north|06 degrees 20 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_41_50_19_52
+param=trail_casket,trail_casket_medium_sextant_exp007
 
 [trail_clue_medium_sextant_exp008]
 name=Clue scroll
@@ -145,6 +161,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,04 degrees 13 minutes north|12 degrees 45 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_44_51_32_32
+param=trail_casket,trail_casket_medium_sextant_exp008
 
 [trail_clue_medium_sextant_exp009]
 name=Clue scroll
@@ -160,6 +178,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,04 degrees 00 minutes south|12 degrees 46 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_44_47_33_25
+param=trail_casket,trail_casket_medium_sextant_exp009
 
 [trail_clue_medium_sextant_exp010]
 name=Clue scroll
@@ -175,6 +195,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 31 minutes south|17 degrees 43 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_46_49_63_8
+param=trail_casket,trail_casket_medium_sextant_exp010
 
 [trail_clue_medium_sextant_exp011]
 name=Clue scroll
@@ -188,8 +210,10 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_medium
-param=trail_desc,07 degrees 33 minutes north<br>15 degrees 00 minutes east
+param=trail_desc,07 degrees 33 minutes north|15 degrees 00 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_45_53_40_11
+param=trail_casket,trail_casket_medium_sextant_exp011
 
 [trail_clue_medium_sextant_exp012]
 name=Clue scroll
@@ -205,6 +229,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,00 degrees 30 minutes north|24 degrees 16 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_50_49_17_41
+param=trail_casket,trail_casket_medium_sextant_exp012
 
 [trail_clue_medium_sextant_exp013]
 name=Clue scroll
@@ -220,6 +246,8 @@ iop1=Read
 category=trail_clue_medium
 param=trail_desc,05 degrees 43 minutes north|23 degrees 05 minutes east
 param=trail_sextant,yes
+param=trail_coord,0_49_52_43_16
+param=trail_casket,trail_casket_medium_sextant_exp013
 
 [trail_clue_medium_riddle_exp001]
 name=Clue scroll
@@ -275,7 +303,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_medium
-param=trail_desc,In a town where everyone has <br> perfect vision, seek some <br> locked drawers in a house that <br>sits opposite a workshop.
+param=trail_desc,In a town where everyone has|perfect vision, seek some|locked drawers in a house that|sits opposite a workshop.
 
 [trail_clue_medium_riddle_exp005]
 name=Clue scroll
@@ -373,7 +401,8 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_medium
-param=trail_desc,This anagram reveals|who to speak to next:||R AK MI
+// changed to R AK MI on september 26th, 2005
+param=trail_desc,This anagram reveals|who to speak to next:||BAR BELL SEEK
 
 [trail_clue_medium_anagram_exp007]
 name=Clue scroll
@@ -470,7 +499,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_clue_medium
+category=trail_challenge
 param=trail_desc,What is 19 to the power of 3?
 param=trail_challenge_answer,6859
 
@@ -485,9 +514,9 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_clue_medium
+category=trail_challenge
 param=trail_desc,How many cannons does|Lumbridge Castle have?
-param=trail_challenge_answer,7
+param=trail_challenge_answer,9
 
 [trail_clue_medium_challenge_exp003]
 name=Challenge scroll
@@ -500,9 +529,9 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_clue_medium
+category=trail_challenge
 param=trail_desc,How many animals in total|are there in the zoo?
-param=trail_challenge_answer,40
+param=trail_challenge_answer,32
 
 [trail_clue_medium_challenge_exp004]
 name=Challenge scroll
@@ -515,7 +544,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_clue_medium
+category=trail_challenge
 param=trail_desc,I have 16 kebabs, I eat one|myself and then share the rest|equally between 3 friends.|How many do they have each?
 param=trail_challenge_answer,5
 
@@ -530,7 +559,7 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_clue_medium
+category=trail_challenge
 param=trail_desc,If x is 15 and y is 3|What is 3x + y?
 param=trail_challenge_answer,48
 
@@ -545,6 +574,6 @@ model=model_3374_obj
 2dyan=672
 2dxan=360
 iop1=Read
-category=trail_clue_medium
+category=trail_challenge
 param=trail_desc,What is 57 x 89 + 23?
 param=trail_challenge_answer,5096

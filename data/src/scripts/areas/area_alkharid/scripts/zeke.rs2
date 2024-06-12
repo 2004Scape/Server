@@ -15,12 +15,6 @@ if($option = 1) {
 }
 
 [label,trail_zeke]
-~chatnpc("<p,default>Well done!");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp007, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Zeke has given you your next clue!");
-}
+// https://youtu.be/klvUCL0XFyw?si=WWWusRMnfJOBl7E_&t=19
+~chatnpc("<p,happy>Well done!");
+~progress_clue_easy(trail_clue_easy_simple_exp007, "Zeke has given you your next clue!");

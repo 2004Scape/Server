@@ -1,0 +1,5 @@
+^trail_easy_maxsteps = 4
+^trail_medium_maxsteps = 5
+^trail_hard_maxsteps = 6
+
+^trail_sextant_frame_max = 14;

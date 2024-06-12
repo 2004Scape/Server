@@ -1,9 +1,26 @@
 [oploc1,_drawer]
+if(loc_coord = 1_40_51_14_62) {
+    @riddle_loc_medium_exp002;
+} else if(loc_coord = 1_40_51_51_60) {
+    @riddle_loc_medium_exp003;
+} else if(loc_coord = 0_42_54_21_22) {
+    @riddle_loc_medium_exp004;
+}
 p_arrivedelay;
 anim(human_openchest,0);
 p_delay(0);
 // TODO - Sound
 loc_change(loc_param(drawer_other), 300);
+
+[oplocu,_drawer]
+if(loc_coord = 1_40_51_14_62 & last_useitem = trail_clue_medium_key_exp002) {
+    @riddle_loc_medium_exp002;
+} else if(loc_coord = 1_40_51_51_60 & last_useitem = trail_clue_medium_key_exp003) {
+    @riddle_loc_medium_exp003;
+} else if(loc_coord = 0_42_54_21_22 & last_useitem = trail_clue_medium_key_exp004) {
+    @riddle_loc_medium_exp004;
+}
+~displaymessage(^dm_default);
 
 [oploc2,_empty_drawer]
 // Treasure Trail
@@ -21,6 +38,8 @@ if(loc_coord = 1_50_53_50_28 & inv_total(inv, trail_clue_easy_simple_exp011) = 1
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp006);
 } else if(loc_coord = 1_40_51_14_62 & inv_total(inv, trail_clue_easy_riddle_exp008) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp008);
+} else if(loc_coord = 1_50_50_13_16 & inv_total(inv, trail_clue_hard_riddle_exp006) = 1) {
+    ~trail_clue_hard_loc_interact(trail_clue_hard_riddle_exp006);
 } else {
     mes("The drawers are empty.");
 }

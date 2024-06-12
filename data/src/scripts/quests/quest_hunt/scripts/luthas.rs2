@@ -1,4 +1,10 @@
 [opnpc1,luthas]
+if(inv_total(inv, trail_clue_medium_anagram_exp012) > 0) {
+    ~chatnpc("<p,neutral>Congratulations.");
+    ~progress_clue_medium(trail_clue_medium_anagram_exp012, "Luthas has given you another clue scroll!");
+    return;
+}
+
 if (%plantation_employed = 0) {
     ~chatnpc("<p,happy>Hello I'm Luthas, I run the banana plantation here.");
     @multi2("Could you offer me employment on your plantation?", luthas_employment, "That customs officer is annoying isn't she?", luthas_annoying_customs);

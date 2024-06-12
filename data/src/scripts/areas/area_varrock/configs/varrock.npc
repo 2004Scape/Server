@@ -911,3 +911,21 @@ param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,600
 param=shop_delta,20
 param=shop_title,Ye Olde Tea Shoppe
+
+[wilough]
+vislevel=hide
+name=Wilough
+desc=One of Gertrude's Sons.
+walkanim=midget_walk
+readyanim=midget_ready
+op1=Talk-to
+recol1s=416
+recol1d=992
+recol2s=384
+recol2d=26425
+model1=model_2897_npc
+model2=model_2909_npc
+model3=model_2918_npc
+head1=model_139_npc_head
+wanderrange=2
+param=death_anim,midget_death

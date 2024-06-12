@@ -1,0 +1,179 @@
+[debugproc,testpuz]
+if(p_finduid(uid) = false){
+    return;
+}
+inv_clear(trail_puzzle_inv);
+~init_trail_puzzle;
+inv_transmit(trail_puzzle_inv, trail_puzzle:com_4);
+if_openmainmodal(trail_puzzle);
+
+[opheld1,trail_clue_hard_puzzle_exp014] @trail_open_puzzle;
+[opheld1,trail_clue_hard_puzzle_exp016] @trail_open_puzzle;
+[opheld1,trail_clue_hard_puzzle_exp017] @trail_open_puzzle;
+
+[label,trail_open_puzzle]
+if(inv_freespace(trail_puzzle_inv) > 1) {
+    inv_clear(trail_puzzle_inv); // prob shouldn't ever need this
+    ~init_trail_puzzle;
+}
+inv_transmit(trail_puzzle_inv, trail_puzzle:com_4);
+if_openmainmodal(trail_puzzle);
+
+[proc,init_trail_puzzle]
+inv_setslot(trail_puzzle_inv, 0, obj_2749, 1);
+inv_setslot(trail_puzzle_inv, 1, obj_2750, 1);
+inv_setslot(trail_puzzle_inv, 2, obj_2751, 1);
+inv_setslot(trail_puzzle_inv, 3, obj_2752, 1);
+inv_setslot(trail_puzzle_inv, 4, obj_2753, 1);
+inv_setslot(trail_puzzle_inv, 5, obj_2754, 1);
+inv_setslot(trail_puzzle_inv, 6, obj_2755, 1);
+inv_setslot(trail_puzzle_inv, 7, obj_2756, 1);
+inv_setslot(trail_puzzle_inv, 8, obj_2757, 1);
+inv_setslot(trail_puzzle_inv, 9, obj_2758, 1);
+inv_setslot(trail_puzzle_inv, 10, obj_2759, 1);
+inv_setslot(trail_puzzle_inv, 11, obj_2760, 1);
+inv_setslot(trail_puzzle_inv, 12, obj_2761, 1);
+inv_setslot(trail_puzzle_inv, 13, obj_2762, 1);
+inv_setslot(trail_puzzle_inv, 14, obj_2763, 1);
+inv_setslot(trail_puzzle_inv, 15, obj_2764, 1);
+inv_setslot(trail_puzzle_inv, 16, obj_2765, 1);
+inv_setslot(trail_puzzle_inv, 17, obj_2766, 1);
+inv_setslot(trail_puzzle_inv, 18, obj_2767, 1);
+inv_setslot(trail_puzzle_inv, 19, obj_2768, 1);
+inv_setslot(trail_puzzle_inv, 20, obj_2769, 1);
+inv_setslot(trail_puzzle_inv, 21, obj_2770, 1); 
+inv_setslot(trail_puzzle_inv, 22, obj_2771, 1);
+inv_setslot(trail_puzzle_inv, 23, obj_2772, 1);
+
+~shuffle_trail_puzzle;
+
+// This achieves randomization by essentially simulating 101 moves using the adj slot to each piece starting from the bottom right
+// (since the puzzle is init'd in a completed state: https://x.com/JagexAsh/status/1301202083845201921)
+[proc,shuffle_trail_puzzle]
+def_int $moves = 101;
+def_int $current_idx = 24;
+while($moves > 0) {
+    // horizontal
+    def_int $next_idx = ~random_puzzle_slot($current_idx);
+    if($next_idx ! -1) {
+        inv_movetoslot(trail_puzzle_inv, trail_puzzle_inv, $next_idx, $current_idx);
+    }
+    $moves = calc($moves - 1);
+    $current_idx = $next_idx;
+}
+
+[proc,random_puzzle_slot](int $slot)(int)
+def_int $left_slot = -1;
+def_int $right_slot = -1;
+def_int $down_slot = -1;
+def_int $up_slot = -1;
+def_int $adj_slots = 0;
+if (modulo($slot, 5) ! 0) {
+    $left_slot = calc($slot - 1);
+    $adj_slots = calc($adj_slots + 1);
+}
+if (modulo($slot, 5) ! 4) {
+    $right_slot = calc($slot + 1);
+    $adj_slots = calc($adj_slots + 1);
+}
+
+// vertical
+if($slot >= 5) {
+    $up_slot = calc($slot - 5);
+    $adj_slots = calc($adj_slots + 1);
+}
+if($slot <= 19) {
+    $down_slot = calc($slot + 5);
+    $adj_slots = calc($adj_slots + 1);
+} 
+
+// Randomly select one of the available adjacent slots
+if ($adj_slots > 0) {
+    def_int $random_index = random($adj_slots);
+    if ($left_slot ! -1) {
+        if ($random_index = 0) {
+            return ($left_slot);
+        }
+    } 
+
+    if ($right_slot ! -1) {
+        if ($random_index = 0 & $left_slot = -1) {
+            return ($right_slot);
+        } else if ($random_index = 1) {
+            return ($right_slot);
+        }
+    } 
+
+    if ($up_slot ! -1) {
+        if ($random_index <= 1 & $right_slot = -1) {
+            return ($up_slot);
+        } else if ($random_index = 2) {
+            return ($up_slot);
+        }
+    }
+
+    if ($down_slot ! -1) {
+        if ($random_index <= 2 & $up_slot = -1) {
+            return ($down_slot);
+        } else if ($random_index = 3) {
+            return ($down_slot);
+        }
+    }
+}
+return ($down_slot);
+
+[proc,trail_puzzle_complete](boolean)
+if (inv_getobj(trail_puzzle_inv, 0) = obj_2749 &
+        inv_getobj(trail_puzzle_inv, 1) = obj_2750 &
+        inv_getobj(trail_puzzle_inv, 2) = obj_2751 &
+        inv_getobj(trail_puzzle_inv, 3) = obj_2752 &
+        inv_getobj(trail_puzzle_inv, 4) = obj_2753 &
+        inv_getobj(trail_puzzle_inv, 5) = obj_2754 &
+        inv_getobj(trail_puzzle_inv, 6) = obj_2755 &
+        inv_getobj(trail_puzzle_inv, 7) = obj_2756 &
+        inv_getobj(trail_puzzle_inv, 8) = obj_2757 &
+        inv_getobj(trail_puzzle_inv, 9) = obj_2758 &
+        inv_getobj(trail_puzzle_inv, 10) = obj_2759 &
+        inv_getobj(trail_puzzle_inv, 11) = obj_2760 &
+        inv_getobj(trail_puzzle_inv, 12) = obj_2761 &
+        inv_getobj(trail_puzzle_inv, 13) = obj_2762 &
+        inv_getobj(trail_puzzle_inv, 14) = obj_2763 &
+        inv_getobj(trail_puzzle_inv, 15) = obj_2764 &
+        inv_getobj(trail_puzzle_inv, 16) = obj_2765 &
+        inv_getobj(trail_puzzle_inv, 17) = obj_2766 &
+        inv_getobj(trail_puzzle_inv, 18) = obj_2767 &
+        inv_getobj(trail_puzzle_inv, 19) = obj_2768 &
+        inv_getobj(trail_puzzle_inv, 20) = obj_2769 &
+        inv_getobj(trail_puzzle_inv, 21) = obj_2770 &
+        inv_getobj(trail_puzzle_inv, 22) = obj_2771 &
+        inv_getobj(trail_puzzle_inv, 23) = obj_2772) {
+    return (true);
+}
+return (false);
+
+[opheld5,_trail_puzzle_piece]
+def_int $slot = last_slot;
+def_int $open_slot = -1;
+    
+// horizontal
+if (modulo($slot, 5) ! 0) {
+    if (inv_getobj(trail_puzzle_inv, calc($slot - 1)) = null) $open_slot = calc($slot - 1);
+}
+if (modulo($slot, 5) ! 4) {
+    if (inv_getobj(trail_puzzle_inv, calc($slot + 1)) = null) $open_slot = calc($slot + 1);
+}
+
+// vertical
+if($slot >= 5) {
+    if (inv_getobj(trail_puzzle_inv, calc($slot - 5)) = null) $open_slot = calc($slot - 5);
+}
+if($slot <= 19) {
+    if (inv_getobj(trail_puzzle_inv, calc($slot + 5)) = null) $open_slot = calc($slot + 5);
+} 
+
+if($open_slot ! -1) {
+    sound_synth(slide_puzzle, 0, 0);
+    inv_movetoslot(trail_puzzle_inv, trail_puzzle_inv, $slot, $open_slot);
+}
+
+if_openmainmodal(trail_puzzle); // opheld5 closes modal so this is temp workaround

@@ -1,46 +1,22 @@
 [proc,trail_hasclue_all](boolean)
-def_int $slot = 0;
-
-while ($slot < inv_size(inv)) {
-    def_obj $slotobj = inv_getobj(inv, $slot);
-    if ($slotobj ! null) {
-        if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-            return(true);
-        }
-    }
-    $slot = calc($slot + 1);
+if (~trail_hasclue_inv = true) {
+    return (true);
 }
-$slot = 0;
-
-while ($slot < inv_size(bank)) {
-    def_obj $slotobj = inv_getobj(bank, $slot);
-    if ($slotobj ! null) {
-        if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-            return(true);
-        }
-    }
-    $slot = calc($slot + 1);
+if(inv_totalcat(bank, trail_clue_easy) > 0| inv_totalcat(bank, trail_clue_medium) > 0 | inv_totalcat(bank, trail_clue_hard) > 0 | 
+    inv_totalcat(bank, trail_casket_easy) > 0 | inv_totalcat(bank, trail_casket_medium) > 0 | inv_totalcat(bank, trail_casket_hard) > 0) {
+    return (true);
 }
 return(false);
 
 [proc,trail_hasclue_inv](boolean)
-def_int $slot = 0;
-
-while ($slot < inv_size(inv)) {
-    def_obj $slotobj = inv_getobj(inv, $slot);
-    if ($slotobj ! null) {
-        if(oc_category($slotobj) = trail_clue_easy | oc_category($slotobj) = trail_clue_medium | oc_category($slotobj) = trail_clue_hard) {
-            return(true);
-        }
-    }
-    $slot = calc($slot + 1);
+if (inv_totalcat(inv, trail_clue_easy) > 0| inv_totalcat(inv, trail_clue_medium) > 0| inv_totalcat(inv, trail_clue_hard) > 0 | 
+    inv_totalcat(inv, trail_casket_easy) > 0 | inv_totalcat(inv, trail_casket_medium) > 0 | inv_totalcat(inv, trail_casket_hard) > 0) {
+        return (true);
 }
-
 return(false);
 
 [proc,trail_getclue_inv](obj)
 def_int $slot = 0;
-
 while ($slot < inv_size(inv)) {
     def_obj $slotobj = inv_getobj(inv, $slot);
     if ($slotobj ! null) {
@@ -50,6 +26,7 @@ while ($slot < inv_size(inv)) {
     }
     $slot = calc($slot + 1);
 }
+return (null);
 
 [proc,trail_clue_coord](obj $clue)(boolean)
 def_coord $default_coord = 0_0_0_0_0;
@@ -59,12 +36,43 @@ if($clue ! null & oc_param($clue, trail_coord) ! $default_coord) {
 return(false);
 
 [proc,trail_clue_progress]
-%trail_clue = calc(%trail_clue + 1);
+if(testbit(%trail_clue, 4) = true) {
+    %trail_clue = clearbit(%trail_clue, 4);
+}
+%trail_clue = setbit_range_toint(%trail_clue, calc(%trail_clue + 1), 0, 3);
 
-[proc,trail_casket_obtained]
-~objbox(trail_casket_hard, "You've found a casket!");
+// bits 0-3 will store the progress of the clue, bit 4 is used to flag if the clue guardian (just zamorak wizard in version 225)
+// has been killed, bits 5-7 to store the progress of the "miniquest" to get sextant/chart/watch (possible this didnt use a varp in 225, it does in osrs
+// although it doesn't use 292 (trail_clue))
+// https://web.archive.org/web/20051214060247/http://www.tip.it/runescape/?page=treasure_trails.htm and runehq forums mention you can get the items back directly by talking
+// to the npc once you've claimed the items before meaning it likely used varp
+[proc,get_trail_progress](int)
+return (getbit_range(%trail_clue, 0, 3));
+
+// clears the trail progess, including the bit used for tracking the zamorak wizard
+[proc,clear_trail_progress](int)
+%trail_clue = clearbit_range(%trail_clue, 0, 4);
+
+[proc,get_chart_progress](int)
+return (getbit_range(%trail_clue, 5, 7));
+
+[proc,has_sextant_clue](boolean)
+def_int $slot = 0;
+while ($slot < inv_size(inv)) {
+    def_obj $slotobj = inv_getobj(inv, $slot);
+    if ($slotobj ! null) {
+        if(oc_param($slotobj, trail_sextant) = true) {
+            return (true);
+        }
+    }
+    $slot = calc($slot + 1);
+}
+
+[proc,trail_casket_obtained](namedobj $casket)
+~objbox($casket, "You've found a casket!");
 
 [proc,trail_complete]
+~clear_trail_progress;
 mes("Well done you've completed the Treasure Trail!");
 midi_jingle(^treasure_hunt_win_jingle, ^treasure_hunt_win_jingle_millis);
 inv_transmit(reward, trail_reward:inv);
@@ -73,7 +81,6 @@ queue(trail_give_reward, 0);
 
 [queue,trail_give_reward]
 def_int $slot = 0;
-
 while ($slot < inv_size(reward)) {
     if (inv_getnum(reward, $slot) > 0) {
         inv_movefromslot(reward, inv, $slot);

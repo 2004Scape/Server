@@ -6,6 +6,8 @@ if(loc_coord = 1_50_50_9_18 & inv_total(inv, trail_clue_easy_simple_exp001) = 1)
     ~trail_clue_easy_loc_interact(trail_clue_easy_simple_exp004);
 } else if(loc_coord = 2_42_54_60_39 & inv_total(inv, trail_clue_easy_riddle_exp001) = 1) {
     ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp001);
+} else if(loc_coord = 0_50_54_56_31) {
+    @riddle_loc_medium_exp001;
 }
 ~open_chest(loc_param(chest_other));
 

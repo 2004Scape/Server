@@ -1,4 +1,9 @@
 [opnpc1,gerrant]
+if(inv_total(inv, trail_clue_hard_riddle_exp004) > 0) {
+    ~chatnpc("<p,neutral>You've done it!");
+    ~progress_clue_hard(trail_clue_hard_riddle_exp004, "Gerrant has given you another clue scroll!");
+    return;
+}
 ~chatnpc("<p,happy>Welcome! You can buy fishing equipment at my store.|We'll also buy anything you catch off you.");
 def_int $option = ~p_choice2("Let's see what you've got then.", 1, "Sorry, I'm not interested.", 2);
 if($option = 1) {

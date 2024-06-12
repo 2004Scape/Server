@@ -24,15 +24,9 @@ if (last_useitem = crandor_map) {
 }
 
 [label,trail_ned]
+// https://www.youtube.com/watch?v=u70m7CofypU
 ~chatnpc("<p,happy>Well done!");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp021, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Ned has given you another clue!");
-}
+~progress_clue_easy(trail_clue_easy_simple_exp021, "Ned has given you another clue!");
 
 [label,standard_ned]
 ~chatnpc("<p,neutral>Why hello there, me friends call me Ned.|I was a man of the sea, but it's past me now.|Could I be making or selling you some rope?");
