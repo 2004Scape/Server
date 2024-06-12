@@ -1,16 +1,16 @@
 import InvType from '#lostcity/cache/config/InvType.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
-import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import {ParamHelper} from '#lostcity/cache/config/ParamHelper.js';
 import ParamType from '#lostcity/cache/config/ParamType.js';
 
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import {ActiveObj, ActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 
 import Obj from '#lostcity/entity/Obj.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import Environment from '#lostcity/util/Environment.js';
@@ -100,9 +100,9 @@ const ObjOps: CommandHandlers = {
 
             state.activePlayer.invAdd(invType.id, obj.type, obj.count);
 
-            if (World.getZone(obj.x, obj.z, obj.level).staticObjs.includes(obj)) {
+            if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
                 World.removeObj(obj, state.activePlayer, objType.respawnrate);
-            } else {
+            } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
                 World.removeObj(obj, state.activePlayer, -1);
             }
         }

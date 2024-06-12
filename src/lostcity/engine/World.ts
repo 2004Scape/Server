@@ -666,66 +666,47 @@ class World {
         let zoneProcessing = Date.now();
         const future = this.futureUpdates.get(this.currentTick);
         if (future) {
-            // despawn dynamic
             for (const [zoneIndex, events] of future.entries()) {
-                const zone = this.getZoneIndex(zoneIndex);
-                for (let i = 0; i < zone.locs.length; i++) {
-                    const loc = zone.locs[i];
-                    if (!events || !loc || !loc.updateLifeCycle(this.currentTick)) {
+                const zone: Zone = this.getZoneIndex(zoneIndex);
+
+                for (const obj of zone.getObjsUnsafe()) {
+                    if (!obj.updateLifeCycle(this.currentTick)) {
                         continue;
                     }
-
-                    this.removeLoc(loc, -1);
-                    i--;
-                    const event = events.findIndex(g => g.type === ServerProt.LOC_ADD_CHANGE.id && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape));
-                    if (event !== -1) {
-                        this.addCleanupZoneUpdate(zone, events[event]);
+                    if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+                        this.removeObj(obj, null, -1);
+                        const event: number = events?.findIndex(g => g.type === ServerProt.OBJ_ADD.id && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
+                        if (events && event !== -1) {
+                            this.addCleanupZoneUpdate(zone, events[event]);
+                        }
+                    } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+                        this.addObj(obj, null, -1);
+                        const event: number = events?.findIndex(g => g.type === ServerProt.OBJ_DEL.id && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
+                        if (events && event !== -1) {
+                            this.addCleanupZoneUpdate(zone, events[event]);
+                        }
                     }
                 }
-                for (let i = 0; i < zone.objs.length; i++) {
-                    const obj = zone.objs[i];
-                    if (!events || !obj || !obj.updateLifeCycle(this.currentTick)) {
+
+                for (const loc of zone.getLocsUnsafe()) {
+                    if (!loc.updateLifeCycle(this.currentTick)) {
                         continue;
                     }
-                    this.removeObj(obj, null, -1);
-                    i--;
-                    const event = events.findIndex(g => g.type === ServerProt.OBJ_ADD.id && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z);
-                    if (event !== -1) {
-                        this.addCleanupZoneUpdate(zone, events[event]);
+                    if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+                        this.removeLoc(loc, -1);
+                        const event = events?.findIndex(g => g.type === ServerProt.LOC_ADD_CHANGE.id && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
+                        if (events && event !== -1) {
+                            this.addCleanupZoneUpdate(zone, events[event]);
+                        }
+                    } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                        this.addLoc(loc, -1);
+                        const event = events?.findIndex(g => g.type === ServerProt.LOC_DEL.id && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
+                        if (events && event !== -1) {
+                            this.addCleanupZoneUpdate(zone, events[event]);
+                        }
                     }
                 }
             }
-
-            // respawn static
-            for (const [zoneIndex, events] of future.entries()) {
-                const zone = this.getZoneIndex(zoneIndex);
-                for (let i = 0; i < zone.staticLocs.length; i++) {
-                    const loc = zone.staticLocs[i];
-                    if (!events || !loc || !loc.updateLifeCycle(this.currentTick)) {
-                        continue;
-                    }
-
-                    this.addLoc(loc, -1);
-                    const event = events.findIndex(g => g.type === ServerProt.LOC_DEL.id && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape));
-                    if (event !== -1) {
-                        this.addCleanupZoneUpdate(zone, events[event]);
-                    }
-                }
-
-                for (let i = 0; i < zone.staticObjs.length; i++) {
-                    const obj = zone.staticObjs[i];
-                    if (!events || !obj || !obj.updateLifeCycle(this.currentTick)) {
-                        continue;
-                    }
-
-                    this.addObj(obj, null, -1);
-                    const event = events.findIndex(g => g.type === ServerProt.OBJ_DEL.id && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z);
-                    if (event !== -1) {
-                        this.addCleanupZoneUpdate(zone, events[event]);
-                    }
-                }
-            }
-
             this.futureUpdates.delete(this.currentTick);
         }
 
@@ -1009,14 +990,6 @@ class World {
         });
     }
 
-    getZonePlayers(x: number, z: number, level: number) {
-        return this.getZone(x, z, level).players;
-    }
-
-    getZoneNpcs(x: number, z: number, level: number) {
-        return this.getZone(x, z, level).npcs;
-    }
-
     addNpc(npc: Npc, duration: number) {
         this.npcs.set(npc.nid, npc);
         npc.x = npc.startX;
@@ -1067,14 +1040,6 @@ class World {
         return this.getZone(x, z, level).getLoc(x, z, locId);
     }
 
-    getZoneLocs(x: number, z: number, level: number) {
-        return [...this.getZone(x, z, level).staticLocs.filter(l => l.checkLifeCycle(this.currentTick)), ...this.getZone(x, z, level).locs];
-    }
-
-    getDynObj(x: number, z: number, level: number, objId: number) {
-        return this.getZone(x, z, level).getDynObj(x, z, objId);
-    }
-
     getObj(x: number, z: number, level: number, objId: number) {
         return this.getZone(x, z, level).getObj(x, z, objId);
     }
@@ -1120,9 +1085,8 @@ class World {
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        const existing = this.getDynObj(obj.x, obj.z, obj.level, obj.type);
-        const global: boolean = zone.staticObjs.includes(obj);
-        if (!global && existing && existing.type == obj.type) {
+        const existing = this.getObj(obj.x, obj.z, obj.level, obj.type);
+        if (existing && existing.type == obj.type && existing.lifecycle === EntityLifeCycle.DESPAWN) {
             const type = ObjType.get(obj.type);
             const nextCount = obj.count + existing.count;
             if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {

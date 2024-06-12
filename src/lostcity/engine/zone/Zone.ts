@@ -12,6 +12,9 @@ import World from '#lostcity/engine/World.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
+import LinkList from '#jagex2/datastruct/LinkList.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 export class ZoneEvent {
     type = -1;
@@ -19,7 +22,6 @@ export class ZoneEvent {
     buffer: Packet = new Packet(new Uint8Array());
     tick = -1;
     subjectType = -1;
-    static = false;
 
     // temp
     x = -1;
@@ -171,42 +173,53 @@ export default class Zone {
         return out;
     }
 
-    index = -1; // packed coord
-    x = 0;
-    z = 0;
-    level = 0;
+    readonly index: number; // packed coord
+    readonly x: number = 0;
+    readonly z: number = 0;
+    readonly level: number = 0;
 
     // zone entities
-    players: Set<number> = new Set(); // list of player uids
-    npcs: Set<number> = new Set(); // list of npc nids (not uid because type may change)
-    staticLocs: Loc[] = []; // source of truth from map data
-    locs: Loc[] = []; // dynamic locs
-    staticObjs: Obj[] = []; // source of truth from server map data
-    objs: Obj[] = []; // dynamic objs
+    private readonly players: Set<number>; // list of player uids
+    private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
+    private readonly locs: (LinkList<Loc> | null)[][];
+    private readonly objs: (LinkList<Obj> | null)[][];
 
     // zone events
     updates: ZoneEvent[] = [];
-    lastEvent = -1;
+    lastEvent: number = -1;
     // buffer: Packet2 = new Packet2(new Uint8Array());
 
     constructor(index: number) {
         this.index = index;
-
         const { x, z, level } = ZoneManager.unpackIndex(index);
         this.x = x >> 3;
         this.z = z >> 3;
         this.level = level;
+
+        // reset
+        this.players = new Set();
+        this.npcs = new Set();
+        this.objs = new Array(8);
+        this.locs = new Array(8);
+        for (let x: number = 0; x < 8; x++) {
+            this.objs[x] = new Array(8);
+            this.locs[x] = new Array(8);
+            for (let z: number = 0; z < 8; z++) {
+                this.objs[x][z] = null;
+                this.locs[x][z] = null;
+            }
+        }
     }
 
-    enter(entity: PathingEntity) {
-        if (entity instanceof Player && !this.players.has(entity.uid)) {
+    enter(entity: PathingEntity): void {
+        if (entity instanceof Player) {
             this.players.add(entity.uid);
-        } else if (entity instanceof Npc && !this.npcs.has(entity.nid)) {
+        } else if (entity instanceof Npc) {
             this.npcs.add(entity.nid);
         }
     }
 
-    leave(entity: PathingEntity) {
+    leave(entity: PathingEntity): void {
         if (entity instanceof Player) {
             this.players.delete(entity.uid);
         } else if (entity instanceof Npc) {
@@ -216,9 +229,8 @@ export default class Zone {
 
     // ---- not tied to any entities ----
 
-    animMap(x: number, z: number, spotanim: number, height: number, delay: number) {
-        const event = new ZoneEvent(ServerProt.MAP_ANIM.id);
-
+    animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
+        const event: ZoneEvent = new ZoneEvent(ServerProt.MAP_ANIM.id);
         event.buffer = Zone.mapAnim(x, z, spotanim, height, delay);
         event.x = x;
         event.z = z;
@@ -228,9 +240,8 @@ export default class Zone {
         this.lastEvent = World.currentTick;
     }
 
-    mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) {
-        const event = new ZoneEvent(ServerProt.MAP_PROJANIM.id);
-
+    mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
+        const event: ZoneEvent = new ZoneEvent(ServerProt.MAP_PROJANIM.id);
         event.buffer = Zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
         event.x = x;
         event.z = z;
@@ -242,17 +253,26 @@ export default class Zone {
 
     // ---- static locs/objs are added during world init ----
 
-    addStaticLoc(loc: Loc) {
-        this.staticLocs.push(loc);
+    addStaticLoc(loc: Loc): void {
+        const locs: LinkList<Loc> | null = this.locs[loc.x & 0x7][loc.z & 0x7];
+        if (!locs) {
+            this.locs[loc.x & 0x7][loc.z & 0x7] = new LinkList();
+        }
+        this.locs[loc.x & 0x7][loc.z & 0x7]?.addTail(loc);
+        this.sortLocs(loc.x, loc.z);
     }
 
-    addStaticObj(obj: Obj) {
-        this.staticObjs.push(obj);
+    addStaticObj(obj: Obj): void {
+        const objs: LinkList<Obj> | null = this.objs[obj.x & 0x7][obj.z & 0x7];
+        if (!objs) {
+            this.objs[obj.x & 0x7][obj.z & 0x7] = new LinkList();
+        }
+        this.objs[obj.x & 0x7][obj.z & 0x7]?.addTail(obj);
+        this.sortObjs(obj.x, obj.z);
 
-        const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
+        const event: ZoneEvent = new ZoneEvent(ServerProt.OBJ_ADD.id);
         event.buffer = Zone.objAdd(obj.x, obj.z, obj.type, obj.count);
         event.tick = World.currentTick;
-        event.static = true;
         this.updates.push(event);
         this.lastEvent = World.currentTick;
     }
@@ -260,11 +280,16 @@ export default class Zone {
     // ----
 
     addLoc(loc: Loc): ZoneEvent {
-        if (this.staticLocs.indexOf(loc) === -1) {
-            this.locs.push(loc);
+        if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+            const locs: LinkList<Loc> | null = this.locs[loc.x & 0x7][loc.z & 0x7];
+            if (!locs) {
+                this.locs[loc.x & 0x7][loc.z & 0x7] = new LinkList();
+            }
+            this.locs[loc.x & 0x7][loc.z & 0x7]?.addTail(loc);
         }
+        this.sortLocs(loc.x, loc.z);
 
-        const event = new ZoneEvent(ServerProt.LOC_ADD_CHANGE.id);
+        const event: ZoneEvent = new ZoneEvent(ServerProt.LOC_ADD_CHANGE.id);
         event.buffer = Zone.locAddChange(loc.x, loc.z, loc.type, loc.shape, loc.angle);
         event.x = loc.x;
         event.z = loc.z;
@@ -273,11 +298,7 @@ export default class Zone {
         event.subjectType = loc.type;
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape)) {
-                return false;
-            }
-
-            return true;
+            return !(event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape));
         });
 
         this.updates.push(event);
@@ -286,16 +307,23 @@ export default class Zone {
     }
 
     removeLoc(loc: Loc): ZoneEvent {
-        const event = new ZoneEvent(ServerProt.LOC_DEL.id);
-
-        const dynamicIndex = this.locs.indexOf(loc);
-        if (dynamicIndex !== -1) {
-            this.locs.splice(dynamicIndex, 1);
-        } else {
-            // static locs remain forever in memory, just create a zone event
-            event.static = true;
+        if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+            const locs: LinkList<Loc> | null = this.locs[loc.x & 0x7][loc.z & 0x7];
+            if (locs) {
+                for (let next: Loc | null = locs.head() as Loc | null; next; next = locs.next() as Loc | null) {
+                    if (next.type === loc.type) {
+                        next.unlink();
+                        break;
+                    }
+                }
+                if (!locs.head()) {
+                    this.locs[loc.x & 0x7][loc.z & 0x7] = null;
+                }
+            }
         }
+        this.sortLocs(loc.x, loc.z);
 
+        const event: ZoneEvent = new ZoneEvent(ServerProt.LOC_DEL.id);
         event.buffer = Zone.locDel(loc.x, loc.z, loc.shape, loc.angle);
         event.x = loc.x;
         event.z = loc.z;
@@ -304,11 +332,7 @@ export default class Zone {
         event.subjectType = loc.type;
 
         this.updates = this.updates.filter(event => {
-            if (event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape)) {
-                return false;
-            }
-
-            return true;
+            return !(event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape));
         });
 
         this.updates.push(event);
@@ -317,22 +341,20 @@ export default class Zone {
     }
 
     getLoc(x: number, z: number, type: number): Loc | null {
-        const dynamicLoc = this.locs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type);
-        if (dynamicLoc !== -1) {
-            return this.locs[dynamicLoc];
+        const locs: LinkList<Loc> | null = this.locs[x & 0x7][z & 0x7];
+        if (!locs) {
+            return null;
         }
-
-        const staticLoc = this.staticLocs.findIndex(loc => loc.x === x && loc.z === z && loc.type === type && loc.checkLifeCycle(World.currentTick));
-        if (staticLoc !== -1) {
-            return this.staticLocs[staticLoc];
+        for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+            if (loc.type === type && loc.checkLifeCycle(World.currentTick)) {
+                return loc;
+            }
         }
-
         return null;
     }
 
-    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number) {
-        const event = new ZoneEvent(ServerProt.LOC_MERGE.id);
-
+    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
+        const event: ZoneEvent = new ZoneEvent(ServerProt.LOC_MERGE.id);
         event.buffer = Zone.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north);
         event.x = loc.x;
         event.z = loc.z;
@@ -345,8 +367,7 @@ export default class Zone {
     }
 
     animLoc(loc: Loc, seq: number) {
-        const event = new ZoneEvent(ServerProt.LOC_ANIM.id);
-
+        const event: ZoneEvent = new ZoneEvent(ServerProt.LOC_ANIM.id);
         event.buffer = Zone.locAnim(loc.x, loc.z, loc.shape, loc.angle, seq);
         event.x = loc.x;
         event.z = loc.z;
@@ -361,13 +382,16 @@ export default class Zone {
     // ----
 
     addObj(obj: Obj, receiver: Player | null): ZoneEvent {
-        const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
-        if (this.staticObjs.indexOf(obj) === -1) {
-            this.objs.push(obj);
-        } else {
-            event.static = true;
+        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+            const objs: LinkList<Obj> | null = this.objs[obj.x & 0x7][obj.z & 0x7];
+            if (!objs) {
+                this.objs[obj.x & 0x7][obj.z & 0x7] = new LinkList();
+            }
+            this.objs[obj.x & 0x7][obj.z & 0x7]?.addTail(obj);
         }
+        this.sortObjs(obj.x, obj.z);
 
+        const event = new ZoneEvent(ServerProt.OBJ_ADD.id);
         if (receiver) {
             event.receiverId = receiver.uid;
         }
@@ -383,18 +407,27 @@ export default class Zone {
     }
 
     removeObj(obj: Obj, receiver: Player | null): ZoneEvent {
-        const event = new ZoneEvent(ServerProt.OBJ_DEL.id);
-
-        const dynamicIndex = this.objs.indexOf(obj);
-        if (dynamicIndex !== -1) {
-            this.objs.splice(dynamicIndex, 1);
-
-            if (receiver) {
-                event.receiverId = receiver.uid;
+        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+            const objs: LinkList<Obj> | null = this.objs[obj.x & 0x7][obj.z & 0x7];
+            if (objs) {
+                for (let next: Obj | null = objs.head() as Obj | null; next; next = objs.next() as Obj | null) {
+                    if (next.type === obj.type) {
+                        next.unlink();
+                        break;
+                    }
+                }
+                if (!objs.head()) {
+                    this.objs[obj.x & 0x7][obj.z & 0x7] = null;
+                }
             }
         }
+        this.sortObjs(obj.x, obj.z);
 
+        const event: ZoneEvent = new ZoneEvent(ServerProt.OBJ_DEL.id);
         event.buffer = Zone.objDel(obj.x, obj.z, obj.type, obj.count);
+        if (receiver) {
+            event.receiverId = receiver.uid;
+        }
         event.x = obj.x;
         event.z = obj.z;
         event.tick = World.currentTick;
@@ -405,25 +438,156 @@ export default class Zone {
         return event;
     }
 
-    getDynObj(x: number, z: number, type: number): Obj | null {
-        const dynamicObj = this.objs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type);
-        if (dynamicObj !== -1) {
-            return this.objs[dynamicObj];
+    getObj(x: number, z: number, type: number): Obj | null {
+        const objs: LinkList<Obj> | null = this.objs[x & 0x7][z & 0x7];
+        if (!objs) {
+            return null;
+        }
+        for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+            if (obj.type === type && obj.checkLifeCycle(World.currentTick)) {
+                return obj;
+            }
         }
         return null;
     }
 
-    getObj(x: number, z: number, type: number): Obj | null {
-        const dynamicObj = this.getDynObj(x, z, type);
-        if (dynamicObj !== null) {
-            return dynamicObj;
+    *getPlayers(): IterableIterator<Player> {
+        for (const uid of this.players) {
+            const player: Player | null = World.getPlayerByUid(uid);
+            if (!player) {
+                continue;
+            }
+            if (!player.checkLifeCycle(World.currentTick)) {
+                continue;
+            }
+            yield player;
+        }
+    }
+
+    *getNpcs(): IterableIterator<Npc> {
+        for (const nid of this.npcs) {
+            const npc: Npc | null = World.getNpc(nid);
+            if (!npc) {
+                continue;
+            }
+            if (!npc.checkLifeCycle(World.currentTick)) {
+                continue;
+            }
+            yield npc;
+        }
+    }
+
+    *getObjs(): IterableIterator<Obj> {
+        for (let x: number = 0; x < 8; x++) {
+            for (let z: number = 0; z < 8; z++) {
+                const objs: LinkList<Obj> | null = this.objs[x & 0x7][z & 0x7];
+                if (!objs) {
+                    continue;
+                }
+                for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+                    if (!obj.checkLifeCycle(World.currentTick)) {
+                        continue;
+                    }
+                    yield obj;
+                }
+            }
+        }
+    }
+
+    *getObjsUnsafe(): IterableIterator<Obj> {
+        for (let x: number = 0; x < 8; x++) {
+            for (let z: number = 0; z < 8; z++) {
+                const objs: LinkList<Obj> | null = this.objs[x & 0x7][z & 0x7];
+                if (!objs) {
+                    continue;
+                }
+                for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+                    yield obj;
+                }
+            }
+        }
+    }
+
+    *getLocs(): IterableIterator<Loc> {
+        for (let x: number = 0; x < 8; x++) {
+            for (let z: number = 0; z < 8; z++) {
+                const locs: LinkList<Loc> | null = this.locs[x & 0x7][z & 0x7];
+                if (!locs) {
+                    continue;
+                }
+                for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+                    if (!loc.checkLifeCycle(World.currentTick)) {
+                        continue;
+                    }
+                    yield loc;
+                }
+            }
+        }
+    }
+
+    *getLocsUnsafe(): IterableIterator<Loc> {
+        for (let x: number = 0; x < 8; x++) {
+            for (let z: number = 0; z < 8; z++) {
+                const locs: LinkList<Loc> | null = this.locs[x & 0x7][z & 0x7];
+                if (!locs) {
+                    continue;
+                }
+                for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+                    yield loc;
+                }
+            }
+        }
+    }
+
+    private sortObjs(x: number, z: number): void {
+        const objs: LinkList<Obj> | null = this.objs[x & 0x7][z & 0x7];
+        if (!objs) {
+            return;
         }
 
-        const staticObj = this.staticObjs.findIndex(obj => obj.x === x && obj.z === z && obj.type === type && obj.checkLifeCycle(World.currentTick));
-        if (staticObj !== -1) {
-            return this.staticObjs[staticObj];
+        let topCost: number = -99999999;
+        let topObj: Obj | null = null;
+
+        for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+            const type: ObjType = ObjType.get(obj.type);
+            let cost: number = type.cost;
+
+            if (type.stackable) {
+                cost *= obj.count + 1;
+            }
+
+            if (cost > topCost) {
+                topCost = cost;
+                topObj = obj;
+            }
         }
 
-        return null;
+        if (!topObj) {
+            return;
+        }
+        objs.addHead(topObj);
+    }
+
+    private sortLocs(x: number, z: number): void {
+        const locs: LinkList<Loc> | null = this.locs[x & 0x7][z & 0x7];
+        if (!locs) {
+            return;
+        }
+
+        let topCost: number = -99999999;
+        let topLoc: Loc | null = null;
+
+        for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+            const cost: number = loc.lifecycleTick + loc.lifecycle;
+            if (cost > topCost) {
+                topCost = cost;
+                topLoc = loc;
+            }
+        }
+
+        if (!topLoc) {
+            return;
+        }
+        locs.addHead(topLoc);
     }
 }
