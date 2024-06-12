@@ -1,12 +1,12 @@
-import {Worker} from 'worker_threads';
+import { Worker } from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
-import {basename} from 'path';
+import { basename } from 'path';
 import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import {toBase37} from '#jagex2/jstring/JString.js';
+import { toBase37 } from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import DbRowType from '#lostcity/cache/config/DbRowType.js';
@@ -32,7 +32,7 @@ import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
 import GameMap from '#lostcity/engine/GameMap.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
+import { Inventory } from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
 
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
@@ -50,22 +50,22 @@ import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
-import {isNetworkPlayer, NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
-import {EntityQueueState} from '#lostcity/entity/EntityQueueRequest.js';
-import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
+import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
+import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util/PackFile.js';
-import Zone, {ZoneEvent} from './zone/Zone.js';
+import { getLatestModified, getModified, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
+import Zone, { ZoneEvent } from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import {createWorker} from '#lostcity/util/WorkerFactory.js';
+import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import {makeCrcs} from '#lostcity/server/CrcTable.js';
-import {preloadClient} from '#lostcity/server/PreloadedPacks.js';
+import { makeCrcs } from '#lostcity/server/CrcTable.js';
+import { preloadClient } from '#lostcity/server/PreloadedPacks.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
