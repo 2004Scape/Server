@@ -8,7 +8,7 @@ import TcpServer from '#lostcity/server/TcpServer.js';
 import WSServer from '#lostcity/server/WSServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { packClient, packServer } from './tools/pack/packall.js';
+import { packClient, packServer } from './cache/packall.js';
 import { updateCompiler } from '#lostcity/util/RuneScriptCompiler.js';
 
 if (Environment.UPDATE_ON_STARTUP) {

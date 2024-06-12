@@ -1,6 +1,6 @@
-import ObjType from '#lostcity/cache/ObjType.js';
-import { ParamHelper } from '#lostcity/cache/ParamHelper.js';
-import ParamType from '#lostcity/cache/ParamType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';

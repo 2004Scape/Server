@@ -429,6 +429,7 @@ scope=perm
 [varp_289]
 
 [ring_of_recoil]
+scope=perm
 
 [ring_of_forging]
 scope=perm

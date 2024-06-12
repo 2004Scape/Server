@@ -176,6 +176,10 @@ if (%itgronigen_progress >= ^itgronigen_complete) { // varp is incremented for g
     $questpoints = add($questpoints, ^itgronigen_questpoints);
 }
 
+if (%arena_progress >= ^arena_complete) { // different completion states based on if you kill general khazard or not
+    $questpoints = add($questpoints, ^arena_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -216,6 +220,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:murder, %murder_progress, ^murder_complete);
 ~send_quest_progress_colour(questlist:hazeelcult, %hazeelcult_progress, ^hazeelcult_complete);
 ~send_quest_progress_colour(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
+~send_quest_progress_colour(questlist:arena, %arena_progress, ^arena_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

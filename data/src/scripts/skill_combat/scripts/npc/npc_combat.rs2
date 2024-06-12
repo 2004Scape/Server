@@ -115,6 +115,11 @@ if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
     return(false);
 }
 
+if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
+    mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
+    return (false);
+}
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -137,6 +142,10 @@ if (npc_type = zamorak_wizard & %npc_attacking_uid ! uid) {
 if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
     mes("You are not ready to fight the battle mages.");
     return(false);
+}
+if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
+    mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
+    return (false);
 }
 if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progress) ! npc_type) {
     if (%magearena_progress > ^mage_arena_complete) {
@@ -199,6 +208,13 @@ error("style of <tostring($style)> not defined in switch for npc_combat_defenceb
 //  this should be strong queued. Some damage is queued, some isnt
 [queue,damage_player](int $damage)
 ~damage_self($damage);
+if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & npc_finduid(%aggressive_npc) = true & %npc_attacking_uid = uid & $damage > 0) {
+    // https://oldschool.runescape.wiki/w/Update:Clue_Scroll_Step_Counter
+    // - "Recoil damage will now always target the entity that caused the initial damage, rather than the most recent entity to deal damage."
+    def_int $recoil_damage = add(scale(10, 100, $damage), 1);
+    npc_queue(2, $recoil_damage, 0);
+    ~ring_of_recoil_lose_charge($recoil_damage);
+}
 
 [proc,npc_retaliate](int $queue_delay)
 npc_queue(1, 0, $queue_delay);

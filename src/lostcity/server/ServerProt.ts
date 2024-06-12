@@ -2,8 +2,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import WordPack from '#jagex2/wordenc/WordPack.js';
 
-import Component from '#lostcity/cache/Component.js';
-import WordEnc from '#lostcity/cache/WordEnc.js';
+import Component from '#lostcity/cache/config/Component.js';
+import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
 
@@ -117,6 +117,9 @@ export default class ServerProt {
         ServerProt.byId[id] = this;
     }
 }
+
+// for type safety in CameraInfo
+export type CameraProt = typeof ServerProt.CAM_MOVETO | typeof ServerProt.CAM_LOOKAT;
 
 // TODO: come up with another solution that preserves type-safety?
 export const ServerProtEncoders: {

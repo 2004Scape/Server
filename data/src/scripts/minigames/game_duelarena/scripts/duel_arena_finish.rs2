@@ -1,50 +1,74 @@
-[queue,duel_arena_finished](string $displayname, int $combat_level)
-mes("Well done! You have defeated <$displayname>!");
-if_openmainmodal(duel_win);
-if_settext(duel_win:displayname, $displayname);
-if_settext(duel_win:combat_level, tostring($combat_level));
-
-// get stuff back in ur tempinv
+[queue,duel_arena_finish]
+if (getqueue(duel_arena_finish) > 0) {
+    clearqueue(duel_arena_finish);
+}
+if (~in_duel_arena = false) {
+    %duelstatus = 0;
+    %duelpartner = null;
+    return;
+}
+// get arrows back
 def_int $i = 0;
 while ($i < inv_size(tempinv)) {
     if (inv_getobj(tempinv, $i) ! null) {
-        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
         inv_movefromslot(tempinv, inv, $i);
     }
     $i = calc($i + 1);
 }
 
-$i = 0;
-while ($i < inv_size(duel_arena_arrows)) {
-    if (inv_getobj(duel_arena_arrows, $i) ! null) {
-        //mes("<oc_debugname(inv_getobj(tempinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
-        inv_movefromslot(duel_arena_arrows, inv, $i);
+p_telejump(~duel_arena_finish_coord(coord));
+anim(null, 0);
+p_stopaction;
+
+~stat_reset_all;
+healenergy(10000);
+~combat_clearqueue;
+clearqueue(player_death);
+~clear_poison;
+~update_all(inv_getobj(worn, ^wearpos_rhand));
+hint_stop;
+
+if (.finduid(%duelpartner) = true & (%duelstatus = ^duelstatus_victory | %duelstatus = ^duelstatus_opponent_resigned)) {
+    if (%duelstatus = ^duelstatus_opponent_resigned) {
+        if_settext(duel_win:com_99, "You are victorious! Your opponent resigned!"); // 2006
+        mes("Well done! <.displayname> resigned!"); // 2006
+    } else {
+        if_settext(duel_win:com_99, "You are victorious!");
+        mes("Well done! You have defeated <.displayname>!");
     }
-    $i = calc($i + 1);
-}
+    if_openmainmodal(duel_win);
+    ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
+    if_settext(duel_win:displayname, .displayname);
+    if_settext(duel_win:combat_level, tostring(~.player_combat_level));
 
-inv_clear(tempinv);
-
-// take stuff from other player's tempinv
-if (.finduid(%duelpartner) = true) {
-    .both_moveinv(tempinv, tempinv);
-    .%duelpartner = null;
+    $i = 0;
+    while ($i < inv_size(stakeinv)) {
+        if (inv_getobj(stakeinv, $i) ! null) {
+            //mes("<oc_debugname(inv_getobj(stakeinv, $i))>: <tostring(inv_getnum(tempinv, $i))>");
+            inv_movefromslot(stakeinv, inv, $i);
+        }
+        $i = calc($i + 1);
+    }
+    inv_clear(stakeinv);
+    // take stuff from other player's stakeinv
+    .both_moveinv(stakeinv, stakeinv);
+    // .%duelpartner = null;
     // display spoils
-    inv_transmit(tempinv, duel_win:spoils);
+    inv_transmit(stakeinv, duel_win:spoils);
 }
 
 %duelstatus = 0;
 %duelpartner = null;
 
 [if_close,duel_win]
-// take spoils
 def_int $i = 0;
-while ($i < inv_size(tempinv)) {
-    if (inv_getobj(tempinv, $i) ! null) {
-        inv_movefromslot(tempinv, inv, $i);
+while ($i < inv_size(stakeinv)) {
+    if (inv_getobj(stakeinv, $i) ! null) {
+        inv_movefromslot(stakeinv, inv, $i);
     }
     $i = calc($i + 1);
 }
+inv_clear(stakeinv);
 inv_stoptransmit(duel_win:spoils);
 
 // https://youtu.be/QggKGBAl_X8?t=111

@@ -186,6 +186,10 @@ export function unpackTitle(title: Jagfile | null) {
     unpackAndSave(title, index, 'titlebox', 'title');
     unpackAndSave(title, index, 'titlebutton', 'title');
     unpackAndSave(title, index, 'runes', 'title');
+    unpackAndSave(title, index, 'p11', 'fonts');
+    unpackAndSave(title, index, 'p12', 'fonts');
+    unpackAndSave(title, index, 'b12', 'fonts');
+    unpackAndSave(title, index, 'q8', 'fonts');
     unpackAndSave(title, index, 'p11_full', 'fonts');
     unpackAndSave(title, index, 'p12_full', 'fonts');
     unpackAndSave(title, index, 'b12_full', 'fonts');
@@ -208,6 +212,7 @@ export function unpackMedia(media: Jagfile | null) {
     unpackAndSave(media, index, 'backright1', 'sprites');
     unpackAndSave(media, index, 'backright2', 'sprites');
     unpackAndSave(media, index, 'backtop1', 'sprites');
+    unpackAndSave(media, index, 'backtop2', 'sprites');
     unpackAndSave(media, index, 'backvmid1', 'sprites');
     unpackAndSave(media, index, 'backvmid2', 'sprites');
     unpackAndSave(media, index, 'backvmid3', 'sprites');
@@ -249,6 +254,7 @@ export function unpackMedia(media: Jagfile | null) {
     unpackAndSave(media, index, 'magicon2', 'sprites');
     unpackAndSave(media, index, 'magicoff2', 'sprites');
     unpackAndSave(media, index, 'gnomeball_buttons', 'sprites');
+    unpackAndSave(media, index, 'mapflag', 'sprites');
     unpackAndSave(media, index, 'mapmarker', 'sprites');
     unpackAndSave(media, index, 'mod_icons', 'sprites');
     unpackAndSave(media, index, 'mapedge', 'sprites');
@@ -266,6 +272,7 @@ export function unpackMedia(media: Jagfile | null) {
     unpackAndSave(media, index, 'titlescroll', 'sprites');
     unpackAndSave(media, index, 'letter', 'sprites');
     unpackAndSave(media, index, 'button_brown_big', 'sprites');
+    unpackAndSave(media, index, 'headicons', 'sprites');
     unpackAndSave(media, index, 'headicons_pk', 'sprites');
     unpackAndSave(media, index, 'headicons_prayer', 'sprites');
     unpackAndSave(media, index, 'headicons_hint', 'sprites');
@@ -281,9 +288,14 @@ export function unpackTextures(textures: Jagfile | null) {
         return null;
     }
 
+    const packOut = 'data/src/pack/texture.pack';
+    fs.mkdirSync('data/src/pack', { recursive: true });
+    fs.writeFileSync(packOut, '');
+
     const index = textures.read('index.dat');
 
     for (let i = 0; i < 50; i++) {
+        fs.appendFileSync(packOut, i + '=' + i + '\n');
         unpackAndSave(textures, index, i.toString(), 'textures');
     }
 }
@@ -382,7 +394,7 @@ export function decodeLoc(dat: Packet, code: number) {
                 shape = dat.g1();
             }
 
-            out.push('model' + (i + 1) + '=model_' + id + ',' + LocShape[shape]);
+            out.push('model' + (i + 1) + '=model_' + id + ',' + shape); // LocShape[shape]);
         }
 
         return out;
@@ -489,13 +501,13 @@ export function decodeLoc(dat: Packet, code: number) {
         }
     } else if (code === 70) {
         const value = dat.g2s();
-        return 'xoff=' + value;
+        return 'offsetx=' + value;
     } else if (code === 71) {
         const value = dat.g2s();
-        return 'yoff=' + value;
+        return 'offsety=' + value;
     } else if (code === 72) {
         const value = dat.g2s();
-        return 'zoff=' + value;
+        return 'offsetz=' + value;
     } else if (code === 73) {
         return 'forcedecor=yes';
     } else if (code === 74) {
@@ -908,6 +920,7 @@ export function decodeSeq(dat: Packet, code: number) {
 
         return 'walkmerge=' + labels.map(l => 'label_' + l).join(',');
     } else if (code === 4) {
+        // dat.g2(); // 194
         return 'stretches=yes';
     } else if (code === 5) {
         const value = dat.g1();
@@ -976,10 +989,10 @@ export function decodeSpotAnim(dat: Packet, code: number) {
         const angle = dat.g2();
         return 'orientation=' + angle;
     } else if (code === 7) {
-        const value = dat.g1();
+        const value = dat.g1b();
         return 'ambient=' + value;
     } else if (code === 8) {
-        const value = dat.g1();
+        const value = dat.g1b();
         return 'contrast=' + value;
     } else if (code >= 40 && code < 50) {
         const hsl16 = dat.g2();
@@ -1062,7 +1075,7 @@ export function decodeFlo(dat: Packet, code: number) {
         return 'occlude=no';
     } else if (code === 6) {
         const name = dat.gjstr();
-        return 'editname=' + name;
+        return '//implicit: editname=' + name;
     } else if (code === 7) {
         const average = dat.g3();
         return '//unsupported: maprgb=0x' + average.toString(16).toUpperCase().padStart(6, '0');

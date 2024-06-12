@@ -1,0 +1,47 @@
+[opnpc1,lady_servil]
+switch_int(%arena_progress) {
+    case ^arena_complete, ^arena_complete_defeated_genkhazard: // mesanims guessed
+        ~chatplayer("<p,neutral>Hello Lady Servil.");
+        ~chatnpc("<p,happy>Oh hello my dear. My husband and son are resting while I wait for the cart fixer.");
+        ~chatplayer("<p,happy>I hope he's not too long.");
+        ~chatnpc("<p,happy>Thanks again for everything.");
+    case ^arena_freed_servils, ^arena_defeated_genkhazard:
+        ~chatplayer("<p,neutral>Lady Servil.");
+        ~chatnpc("<p,shock>You're alive, I thought Khazard's men had taken you.");
+        ~chatnpc("<p,happy>My son and husband are safe and recovering at home. Without you they would certainly be dead. I am truly grateful for your service.");
+        ~chatnpc("<p,happy>All I can offer in return is material wealth. Please take these coins as a sign of my gratitude.");
+        queue(arena_quest_complete, 0);
+    case ^arena_entered_ogre_fight, ^arena_defeated_ogre, ^arena_sent_jail, ^arena_defeated_scorpion, ^arena_defeated_bouncer:
+        ~chatplayer("<p,neutral>Lady Servil. I freed your son, however he has returned to the arena to help your husband.");
+        ~chatnpc("<p,shock>Oh no, they won't stand a chance. Please go back and help.");
+    case ^arena_spoken_drunkguard, ^arena_given_khali_brew:
+        ~chatplayer("<p,neutral>Lady Servil, I've managed to infiltrate General Khazard's arena.");
+        ~chatnpc("<p,quiz>And my family?");
+        ~chatplayer("<p,neutral>I'm working on it.");
+        ~chatnpc("<p,sad>Please hurry.");
+    case ^arena_obtained_armour: 
+        ~chatplayer("<p,neutral>Hello Lady Servil.");
+        ~chatnpc("<p,quiz>Have you had any luck with freeing my family?");
+        ~chatplayer("<p,neutral>I've managed to get a guard's uniform, hopefully I can infiltrate the arena.");
+        ~chatnpc("<p,sad>Please hurry.");
+    case ^arena_not_started:
+        ~chatplayer("<p,neutral>Hi there, looks like you're in some trouble.");
+        ~chatnpc("<p,sad>Oh I wish this broken cart was my only problem. sob.. I've got to find my family.. sob.");
+        switch_int(~p_choice2("I hope you can, good luck.", 1, "Can I help you?", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>I hope you can, good luck.");
+            case 2:
+                ~chatplayer("<p,quiz>Can I help you?");
+                ~chatnpc("<p,sad>Would you? Please?");
+                ~chatnpc("<p,sad>I'm Lady Servil, my husband is Sir Servil. We were travelling north together with our son Jeremy when we were ambushed by General Khazard's men.");
+                ~chatplayer("<p,quiz>General Khazard?");
+                ~chatnpc("<p,sad>He's been after me ever since I declined his hand in marriage.");
+                ~chatnpc("<p,sad>Now he's kidnapped my husband and son to fight in his battle arena to the south of here. I hate to think what he'll do to them. He's a sick and twisted man.");
+                %arena_progress = ^arena_started;
+                ~chatplayer("<p,neutral>I'll try my best to return your family.");
+                ~chatnpc("<p,sad>Please do. My family is wealthy and can reward you handsomely. I'll be waiting here for you.");
+        }
+    case default:
+        ~chatplayer("<p,neutral>Hello Lady Servil.");
+        ~chatnpc("<p,sad>Brave traveller, please... bring back my family.");
+}

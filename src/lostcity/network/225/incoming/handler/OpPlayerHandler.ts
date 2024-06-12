@@ -19,7 +19,7 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
             return false;
         }
 
-        if (!player.players.has(other.uid)) {
+        if (!player.otherPlayers.has(other.uid)) {
             return false;
         }
 
@@ -34,8 +34,7 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
             mode = ServerTriggerType.APPLAYER4;
         }
 
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, other, mode);
         player.opcalled = true;
         return true;

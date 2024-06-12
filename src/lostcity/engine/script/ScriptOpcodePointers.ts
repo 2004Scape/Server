@@ -462,6 +462,15 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.WEAKQUEUE]: {
         require: ['active_player']
     },
+    [ScriptOpcode.FINDHERO]: {
+        set: ['active_player2'],
+        set2: ['active_player'],
+        conditional: true
+    },
+    [ScriptOpcode.BOTH_HEROPOINTS]: {
+        require: ['active_player', 'active_player2'],
+        require2: ['active_player2', 'active_player']
+    },
 
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {

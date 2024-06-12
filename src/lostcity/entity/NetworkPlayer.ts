@@ -75,7 +75,7 @@ export class NetworkPlayer extends Player {
                 return;
             }
 
-            if (!this.target || this.target instanceof Loc || this.target instanceof Obj) {
+            if ((!this.target || this.target instanceof Loc || this.target instanceof Obj) && this.faceEntity !== -1) {
                 this.faceEntity = -1;
                 this.mask |= Player.FACE_ENTITY;
             }

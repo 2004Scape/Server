@@ -5,6 +5,9 @@ p_stopaction;
 
 // TODO this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
+if(%action_delay <= map_clock & npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+}
 
 if (npc_stat(hitpoints) = 0) {
     p_stopaction;

@@ -1,19 +1,20 @@
-import InvType from '#lostcity/cache/InvType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import CategoryType from '#lostcity/cache/config/CategoryType.js';
 
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import {ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
 import Obj from '#lostcity/entity/Obj.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import {
-    check,
     CategoryTypeValid,
+    check,
     CoordValid,
     DurationValid,
     InvTypeValid,
@@ -72,7 +73,7 @@ const InvOps: CommandHandlers = {
         const player = state.activePlayer;
         const overflow = count - player.invAdd(invType.id, objType.id, count);
         if (overflow > 0) {
-            const floorObj = new Obj(player.level, player.x, player.z, objType.id, overflow);
+            const floorObj = new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow);
 
             World.addObj(floorObj, player, 200);
         }
@@ -150,7 +151,7 @@ const InvOps: CommandHandlers = {
 
         player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
-        const floorObj = new Obj(position.level, position.x, position.z, objType.id, completed);
+        const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objType.id, completed);
         World.addObj(floorObj, player, duration);
     }),
 
@@ -180,7 +181,7 @@ const InvOps: CommandHandlers = {
         const objType = ObjType.get(obj.id);
         player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
-        const floorObj = new Obj(position.level, position.x, position.z, obj.id, completed);
+        const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
         World.addObj(floorObj, player, duration);
     }),
 
@@ -251,7 +252,7 @@ const InvOps: CommandHandlers = {
         const player = state.activePlayer;
         const { overflow, fromObj } = player.invMoveFromSlot(fromInvType.id, toInvType.id, fromSlot);
         if (overflow > 0) {
-            const floorObj = new Obj(player.level, player.x, player.z, fromObj, overflow);
+            const floorObj = new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow);
 
             World.addObj(floorObj, player, 200);
         }
@@ -347,7 +348,11 @@ const InvOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.invAdd(toInvType.id, objType.id, completed);
+        const overflow = count - state.activePlayer.invAdd(toInvType.id, objType.id, completed);
+        if (overflow > 0) {
+            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, EntityLifeCycle.DESPAWN, objType.id, overflow);
+            World.addObj(floorObj, state.activePlayer, 200);
+        }
     }),
 
     // inv write
@@ -378,7 +383,7 @@ const InvOps: CommandHandlers = {
         }
         const overflow = count - state.activePlayer.invAdd(toInvType.id, finalObj, completed);
         if (overflow > 0) {
-            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, finalObj, overflow);
+            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, EntityLifeCycle.DESPAWN, finalObj, overflow);
             World.addObj(floorObj, state.activePlayer, 200);
         }
     

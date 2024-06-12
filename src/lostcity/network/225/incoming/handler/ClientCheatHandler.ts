@@ -2,25 +2,26 @@ import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js
 import Player from '#lostcity/entity/Player.js';
 import ClientCheat from '#lostcity/network/incoming/model/ClientCheat.js';
 import Environment from '#lostcity/util/Environment.js';
-import InvType from '#lostcity/cache/InvType.js';
-import IdkType from '#lostcity/cache/IdkType.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import IdkType from '#lostcity/cache/config/IdkType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import World from '#lostcity/engine/World.js';
-import LocType from '#lostcity/cache/LocType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import Component from '#lostcity/cache/Component.js';
-import SeqType from '#lostcity/cache/SeqType.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { toBase37 } from '#jagex2/jstring/JString.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import PlayerStat from '#lostcity/entity/PlayerStat.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -186,7 +187,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             player.stats[stat] = exp;
         } else if (cmd === 'minlevel') {
             for (let i = 0; i < Player.SKILLS.length; i++) {
-                if (i === Player.HITPOINTS) {
+                if (i === PlayerStat.HITPOINTS) {
                     player.setLevel(i, 10);
                 } else {
                     player.setLevel(i, 1);
@@ -216,8 +217,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.closeModal();
 
                 do {
-                    const x = Math.floor(Math.random() * 640) + 3200;
-                    const z = Math.floor(Math.random() * 640) + 3200;
+                    const x = Math.floor(Math.random() * 64) + 3200;
+                    const z = Math.floor(Math.random() * 64) + 3200;
 
                     player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
                 } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));

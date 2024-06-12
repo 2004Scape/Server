@@ -1,7 +1,7 @@
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
-import VarNpcType from '#lostcity/cache/VarNpcType.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import VarSharedType from '#lostcity/cache/VarSharedType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
+import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
+import VarSharedType from '#lostcity/cache/config/VarSharedType.js';
 
 import World from '#lostcity/engine/World.js';
 

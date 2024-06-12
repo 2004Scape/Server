@@ -1,4 +1,4 @@
-import EnumType from '#lostcity/cache/EnumType.js';
+import EnumType from '#lostcity/cache/config/EnumType.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';

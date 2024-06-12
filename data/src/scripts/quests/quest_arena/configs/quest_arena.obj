@@ -1,4 +1,4 @@
-[obj_74]
+[khazard_helmet]
 members=yes
 name=Khazard helmet
 desc=A helmet, as worn by the minions of General Khazard.
@@ -26,7 +26,7 @@ param=stabdefence,4
 param=slashdefence,5
 param=crushdefence,3
 
-[obj_75]
+[khazard_armour]
 members=yes
 name=Khazard armour
 desc=Armour, as worn by the minions of General Khazard.
@@ -52,7 +52,7 @@ param=stabdefence,9
 param=slashdefence,11
 param=crushdefence,10
 
-[obj_76]
+[khazard_cell_keys]
 members=yes
 name=Khazard cell keys
 desc=These keys open the cells at the Khazard fight arena.
@@ -65,7 +65,7 @@ model=model_2424_obj
 weight=10g
 param=no_alchemy,1
 
-[obj_77]
+[khali_brew]
 members=yes
 cost=5
 name=Khali brew

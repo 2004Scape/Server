@@ -1,6 +1,6 @@
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import ScriptVarType from '#lostcity/cache/ScriptVarType.js';
+import DbRowType from '#lostcity/cache/config/DbRowType.js';
+import DbTableType from '#lostcity/cache/config/DbTableType.js';
+import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
