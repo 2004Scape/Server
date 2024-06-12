@@ -315,9 +315,9 @@ export default class Zone {
                         next.unlink();
                         break;
                     }
-                    if (!locs.head()) {
-                        this.locs[loc.x & 0x7][loc.z & 0x7] = null;
-                    }
+                }
+                if (!locs.head()) {
+                    this.locs[loc.x & 0x7][loc.z & 0x7] = null;
                 }
             }
         }
@@ -415,9 +415,9 @@ export default class Zone {
                         next.unlink();
                         break;
                     }
-                    if (!objs.head()) {
-                        this.objs[obj.x & 0x7][obj.z & 0x7] = null;
-                    }
+                }
+                if (!objs.head()) {
+                    this.objs[obj.x & 0x7][obj.z & 0x7] = null;
                 }
             }
         }
