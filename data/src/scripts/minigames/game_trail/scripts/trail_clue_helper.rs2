@@ -39,7 +39,7 @@ return(false);
 if(testbit(%trail_clue, 4) = true) {
     %trail_clue = clearbit(%trail_clue, 4);
 }
-%trail_clue = setbit_range_toint(%trail_clue, calc(%trail_clue + 1), 0, 3);
+%trail_clue = setbit_range_toint(%trail_clue, calc(~get_trail_progress + 1), 0, 3);
 
 // bits 0-3 will store the progress of the clue, bit 4 is used to flag if the clue guardian (just zamorak wizard in version 225)
 // has been killed, bits 5-7 to store the progress of the "miniquest" to get sextant/chart/watch (possible this didnt use a varp in 225, it does in osrs
