@@ -7,9 +7,7 @@ inv_clear(trail_puzzle_inv);
 inv_transmit(trail_puzzle_inv, trail_puzzle:com_4);
 if_openmainmodal(trail_puzzle);
 
-[opheld1,trail_clue_hard_puzzle_exp014] @trail_open_puzzle;
-[opheld1,trail_clue_hard_puzzle_exp016] @trail_open_puzzle;
-[opheld1,trail_clue_hard_puzzle_exp017] @trail_open_puzzle;
+[opheld1,_trail_puzzle] @trail_open_puzzle;
 
 [label,trail_open_puzzle]
 if(inv_freespace(trail_puzzle_inv) > 1) {

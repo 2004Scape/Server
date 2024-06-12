@@ -7,4 +7,5 @@
 ^trail_chart_not_started = 0
 ^trail_chart_spoken_prof = 1
 ^trail_chart_spoken_murphy = 2
-^trail_chart_complete = 3
+^trail_chart_spoken_kojo = 3
+^trail_chart_complete = 4

@@ -4,7 +4,7 @@
 switch_int(%itgronigen_progress) {
     case ^itgronigen_complete, ^itgronigen_claimed_wine: 
         if(~has_sextant_clue = true) {
-            @multi2("Talk about the Observatory quest.", professor_returns, "Talk about Treasure Trails.", professor_trails);
+            @professor_hastrail;
         }
         @professor_returns;
     case ^itgronigen_sent_telescope: ~chatnpc("<p,happy>The telescope is now repaired!|Let's go to the Observatory."); // dialogue doesn't exist on OSRS at all
@@ -15,10 +15,14 @@ switch_int(%itgronigen_progress) {
     case ^itgronigen_started: @professor_planks;
     case ^itgronigen_not_started: 
         if(~has_sextant_clue = true) {
-            @multi2("Talk about the Observatory quest.", professor_initial, "Talk about Treasure Trails.", professor_trails);
+            @professor_hastrail;
         }
         @professor_initial;
 }
+
+[label,professor_hastrail]
+~chatnpc("<p,neutral>What would you like to talk about?");
+@multi2("Talk about the Observatory quest.", professor_initial, "Talk about Treasure Trails.", professor_trails);
 
 [label,professor_glass]
 ~chatnpc("<p,neutral>How are you getting on finding me some glass?");
@@ -203,7 +207,7 @@ switch_int (~p_choice2("Do you need any more help with the telescope?", 1, "Noth
 
 [label,professor_trails]
 switch_int(~get_chart_progress) {
-    case ^trail_chart_not_started, ^trail_chart_spoken_prof, ^trail_chart_spoken_murphy:
+    case ^trail_chart_not_started:
         // OSRS mesanims with rs3 dialogue
         ~chatplayer("<p,quiz>Can you teach me to solve treasure trail clues?");
         ~chatnpc("<p,happy>Ah, I get asked about Treasure Trails all the time! Listen carefully and I shall tell you what I know.");
@@ -216,7 +220,50 @@ switch_int(~get_chart_progress) {
         ~chatnpc("<p,happy>I've got plenty of charts myself; just come back here when you've got the sextant and watch, and I'll give you one and teach you how to use them.");
         %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_spoken_prof, 5, 8);
         ~chatplayer("<p,confused>Thanks, I'll see you later.");
+    // https://youtu.be/yu_DOQ2vv10?si=CBKnNXojB7y5oxS-&t=35
+    case ^trail_chart_spoken_prof, ^trail_chart_spoken_murphy:
+        ~chatnpc("<p,happy>Hello. Having any luck getting the sextant and watch?");
+        if(~get_chart_progress = ^trail_chart_spoken_murphy) {
+            // TODO: complete guess based off the sextant + chart dialogue, try to verify (doesn't exist anymore on either game or rs3, removed from OSRS in 2014)
+            ~chatplayer("<p,happy>I've got the sextant!");
+            ~chatnpc("<p,neutral>The nearest clock tower is south of Ardougne - you could probably get a watch there.");
+        } else {
+            ~chatplayer("<p,sad>No, I don't have either yet.");
+            ~chatnpc("<p,neutral>I think Murphy, the owner of the Fishing Trawler moored at Port Khazard, might be able to spare you a sextant. After that, the nearest clock tower is south of Ardougne - you could probably get a watch there.");
+        }
+        ~chatplayer("<p,happy>Thanks, I'll get right onto it.");
+    case ^trail_chart_spoken_kojo:
+        // https://youtu.be/yu_DOQ2vv10?si=JbvxbB36pIgjT4Ka&t=215
+        ~chatplayer("<p,happy>I've got the sextant and watch!");
+        ~chatnpc("<p,happy>Well done!");
+        ~chatnpc("<p,neutral>You use the sextant to measure the angle that the sun is currently at. You need the watch so that you know what the time is back here at the Observatory.");
+        ~chatnpc("<p,neutral>You then need this chart to work out your position. Your position is recorded in terms of latitude and longitude. Latitude is your position above the equator and longitude is your position relative to here.");
+        inv_add(inv, trail_chart, 1);
+        %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_complete, 5, 8);
+        ~objbox(trail_chart, "The professor has given you a navigation chart.");
+        ~chatnpc("<p,neutral>So, if you have your sextant, watch and chart with you, then you can work out exactly where you are!");
+    case ^trail_chart_complete:
+        ~chatnpc("<p,happy>Welcome back! How can I help you today?");
+        if(~obj_gettotal(trail_chart) = 0) {
+            @multi2_header("I've lost my navigation chart.", observatory_professor_lostchart, "Can you remind me how to navigate?", observatory_professor_remind_navigate, "What would you like to say?");
+        }
+        @observatory_professor_remind_navigate;
 }
+
+
+[label,observatory_professor_remind_navigate]
+~chatplayer("<p,neutral>Can you remind me how to navigate?");
+~chatnpc("<p,happy>Certainly, it's not difficult.");
+~chatnpc("<p,neutral>Lots of clues have @dre@degrees@bla@ and @dre@minutes@bla@ written on them. These are coordinates of the place where the treasure is buried.");
+~chatnpc("<p,neutral>You have to walk to the correct spot, so that your coordinates are exactly the same as the values written on the clue scroll.");
+~chatnpc("<p,neutral>To do this, you must use a @dre@sextant@bla@, a @dre@watch@bla@ and a @dre@chart@bla@ to find the coordinates of where you are.");
+~chatnpc("<p,happy>Once you know the coordinates of your position, you know which way you have to walk to get to the treasure's coordinates!");
+
+[label,observatory_professor_lostchart]
+~chatplayer("<p,sad>I've lost my navigation chart.");
+~chatnpc("<p,neutral>That's not a problem, I've got lots of copies.");
+inv_add(inv, trail_chart, 1);
+~objbox(trail_chart, "The professor has given you a navigation chart.");
 
 [opnpc1,observatory_professor_tower]
 // mostly 1-1 with RSC (with fixes) because this dialogue doesn't exist post-rework
