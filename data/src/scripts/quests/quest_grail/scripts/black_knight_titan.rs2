@@ -7,18 +7,6 @@ switch_int(~p_choice2("Ok, have at ye oh evil knight!", 1, "Actually I think I'l
     case 2: ~chatplayer("<p,shock>Actually I think I'll run away!");
 }
 
-[opnpc2,black_knight_titan]
-if(npc_stat(hitpoints) = 0) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-@player_combat_start;
-
-[apnpc2,black_knight_titan]
-if(npc_stat(hitpoints) = 0) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-@player_combat_start_ap;
-
 [ai_queue3,black_knight_titan](int $arg)
 if(npc_findhero = true) {
     if_close;
