@@ -7,12 +7,10 @@ import World from '#lostcity/engine/World.js';
 import {Position} from '#lostcity/entity/Position.js';
 import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
-import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Entity from '#lostcity/entity/Entity.js';
-import Obj from '#lostcity/entity/Obj.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
@@ -89,15 +87,9 @@ export class HuntIterator extends ScriptIterator<Entity> {
                 const zoneZ: number = z << 3;
 
                 if (this.type === HuntModeType.PLAYER) {
-                    const players: Set<number> = World.getZonePlayers(zoneX, zoneZ, this.level);
-
-                    for (const uid of players) {
+                    for (const player of World.getZone(zoneX, zoneZ, this.level).getPlayers()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
-                        }
-                        const player: Player | null = World.getPlayerByUid(uid);
-                        if (!player) {
-                            continue;
                         }
                         if (Position.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
                             continue;
@@ -111,15 +103,9 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         yield player;
                     }
                 } else if (this.type === HuntModeType.NPC) {
-                    const npcs: Set<number> = World.getZoneNpcs(zoneX, zoneZ, this.level);
-
-                    for (const nid of npcs) {
+                    for (const npc of World.getZone(zoneX, zoneZ, this.level).getNpcs()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
-                        }
-                        const npc: Npc | null = World.getNpc(nid);
-                        if (!npc) {
-                            continue;
                         }
                         if (this.checkType !== -1 && npc.type !== this.checkType) {
                             continue;
@@ -147,9 +133,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                     }
                 } else if (this.type === HuntModeType.OBJ) {
                     // scripting only cares about dynamic objs??
-                    const objs: Obj[] = World.getZone(zoneX, zoneZ, this.level).objs;
-
-                    for (const obj of objs) {
+                    for (const obj of World.getZone(zoneX, zoneZ, this.level).getObjs()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -172,9 +156,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         yield obj;
                     }
                 } else if (this.type === HuntModeType.SCENERY) {
-                    const locs: Loc[] = World.getZoneLocs(zoneX, zoneZ, this.level);
-
-                    for (const loc of locs) {
+                    for (const loc of World.getZone(zoneX, zoneZ, this.level).getLocs()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -233,14 +215,9 @@ export class NpcIterator extends ScriptIterator<Npc> {
 
     protected *generator(): IterableIterator<Npc> {
         if (this.type === NpcIteratorType.ZONE) {
-            const npcs: Set<number> = World.getZoneNpcs(this.x, this.z, this.level);
-            for (const nid of npcs) {
+            for (const npc of World.getZone(this.x, this.z, this.level).getNpcs()) {
                 if (World.currentTick > this.tick) {
                     throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
-                }
-                const npc: Npc | null = World.getNpc(nid);
-                if (!npc) {
-                    continue;
                 }
                 yield npc;
             }
@@ -249,14 +226,9 @@ export class NpcIterator extends ScriptIterator<Npc> {
                 const zoneX: number = x << 3;
                 for (let z: number = this.maxZ; z >= this.minZ; z--) {
                     const zoneZ: number = z << 3;
-                    const npcs: Set<number> = World.getZoneNpcs(zoneX, zoneZ, this.level);
-                    for (const nid of npcs) {
+                    for (const npc of World.getZone(zoneX, zoneZ, this.level).getNpcs()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
-                        }
-                        const npc: Npc | null = World.getNpc(nid);
-                        if (!npc) {
-                            continue;
                         }
                         if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
@@ -288,8 +260,7 @@ export class LocIterator extends ScriptIterator<Loc> {
     }
 
     protected *generator(): IterableIterator<Loc> {
-        const locs: Loc[] = World.getZoneLocs(this.x, this.z, this.level);
-        for (const loc of locs) {
+        for (const loc of World.getZone(this.x, this.z, this.level).getLocs()) {
             if (World.currentTick > this.tick) {
                 throw new Error('[LocIterator] tried to use an old iterator. Create a new iterator instead.');
             }

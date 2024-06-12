@@ -53,12 +53,7 @@ const ServerOps: CommandHandlers = {
         let count = 0;
         for (let x = Math.floor(from.x / 8); x <= Math.ceil(to.x / 8); x++) {
             for (let z = Math.floor(from.z / 8); z <= Math.ceil(to.z / 8); z++) {
-                const { players } = World.getZone(x << 3, z << 3, from.level);
-                for (const uid of players) {
-                    const player = World.getPlayerByUid(uid);
-                    if (player === null) {
-                        continue;
-                    }
+                for (const player of World.getZone(x << 3, z << 3, from.level).getPlayers()) {
                     if (player.x >= from.x && player.x <= to.x && player.z >= from.z && player.z <= to.z) {
                         count++;
                     }
@@ -342,11 +337,7 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_LOCADDUNSAFE]: state => {
         const pos: Position = check(state.popInt(), CoordValid);
 
-        const zone = World.getZone(pos.x, pos.z, pos.level);
-        const locs = zone.staticLocs.concat(zone.locs);
-
-        for (let index = 0; index < locs.length; index++) {
-            const loc = locs[index];
+        for (const loc of World.getZone(pos.x, pos.z, pos.level).getLocsUnsafe()) {
             const type = check(loc.type, LocTypeValid);
 
             if (type.active !== 1) {

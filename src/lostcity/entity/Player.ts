@@ -1057,14 +1057,12 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            for (const uid of zone.players) {
-                const player = World.getPlayerByUid(uid);
-                if (player === null || uid === this.uid || player.x <= absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z <= absBottomZ) {
+            for (const player of zone.getPlayers()) {
+                if (player.uid === this.uid || player.x <= absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z <= absBottomZ) {
                     continue;
                 }
-
                 if (this.isWithinDistance(player)) {
-                    nearby.add(uid);
+                    nearby.add(player.uid);
                 }
             }
         }
@@ -1497,14 +1495,12 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            for (const nid of zone.npcs) {
-                const npc = World.getNpc(nid);
-                if (npc === null || !npc.checkLifeCycle(World.currentTick) || npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
+            for (const npc of zone.getNpcs()) {
+                if (npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
                     continue;
                 }
-
                 if (this.isWithinDistance(npc)) {
-                    nearby.add(nid);
+                    nearby.add(npc.nid);
                 }
             }
         }
