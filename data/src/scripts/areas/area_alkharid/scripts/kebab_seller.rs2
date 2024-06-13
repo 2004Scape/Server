@@ -1,12 +1,7 @@
 [opnpc1,kebab_seller]
 // https://www.youtube.com/watch?v=EJfNdZNjDvE
-if(map_members = true) {
-    if(inv_total(inv, trail_clue_medium_challenge_exp004) > 0 & inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
-        @challenge_kebab_seller;
-    }
-    if(inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
-        @trail_kebab_seller;
-    }
+if(map_members = true & inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
+    @trail_kebab_seller;
 }
 
 ~chatnpc("<p,quiz>Would you like to buy a nice kebab? Only one gold.");
@@ -27,20 +22,10 @@ inv_add(inv, kebab, 1);
 mes("You buy a kebab.");
 
 [label,trail_kebab_seller]
+if(inv_total(inv, trail_clue_medium_challenge_exp004) > 0) {
+    @trail_challengenpc_prompt("<p,neutral>Please enter the answer to the riddle.", "<p,happy>Correct!", "<p,angry>No that's not right, think again.", 
+    "The salesman has given you another clue scroll!", trail_clue_medium_anagram_exp006, trail_clue_medium_challenge_exp004);
+}
 ~chatnpc("<p,confused>I've got a little problem for you to solve.");
 inv_add(inv, trail_clue_medium_challenge_exp004, 1);
 ~objboxt(trail_clue_medium_challenge_exp004, "The salesman has given you a challenge scroll!");
-
-[label,challenge_kebab_seller]
-~chatnpc("<p,neutral>Please enter the answer to the riddle.");
-if_close;
-p_delay(0); // old videos have this it seems, I think it's a workaround otherwise the old chatnpc will appear for a tick after the countdialog is closed
-p_countdialog;
-def_int $entered_value = last_int;
-if($entered_value = oc_param(trail_clue_medium_challenge_exp004, trail_challenge_answer)) {
-    ~chatnpc("<p,happy>Correct!");
-    inv_del(inv, trail_clue_medium_challenge_exp004, 1);
-    ~progress_clue_medium(trail_clue_medium_anagram_exp006, "The salesman has given you another clue scroll!");
-} else {
-    ~chatnpc("<p,angry>No that's not right, think again.");
-}

@@ -1,6 +1,6 @@
 [opnpc1,wilough]
 // https://www.youtube.com/watch?v=fwWnxMS3d_Q
-if(map_members = true) {
+if(map_members = true & inv_total(inv, trail_clue_hard_riddle_exp017) > 0) {
     if(~obj_gettotal(trail_clue_hard_puzzle_exp016) > 0) {
         if(inv_total(inv, trail_clue_hard_puzzle_exp016) = 0) {
             ~chatplayer("<p,neutral>I don't have the puzzle box with me.");
@@ -16,9 +16,7 @@ if(map_members = true) {
         ~chatnpc("<p,neutral>That not right!"); // TODO: check mesanim
         return;
     }
-    if(inv_total(inv, trail_clue_hard_riddle_exp017) > 0) {
-        ~chatnpc("<p,happy>My brother reckons I can't solve this puzzle. I can't have him laughing at me! Do me a favour and solve it for me.");
-        ~give_trail_puzzle(trail_clue_hard_puzzle_exp014, "Wilough has given you a puzzle box!");
-        return;
-    }
+    ~chatnpc("<p,happy>My brother reckons I can't solve this puzzle. I can't have him laughing at me! Do me a favour and solve it for me.");
+    ~give_trail_puzzle(trail_clue_hard_puzzle_exp014, "Wilough has given you a puzzle box!");
+    return;
 }

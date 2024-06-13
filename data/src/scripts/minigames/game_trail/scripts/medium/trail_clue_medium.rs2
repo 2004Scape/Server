@@ -131,6 +131,19 @@ if(inv_total(inv, trail_clue_medium_riddle_exp005) > 0) {
 }
 mes("The chest is locked.");
 
+[label,trail_challengenpc_prompt](string $prompt_chat, string $correct_chat, string $wrong_chat, string $progress_mes, namedobj $clue, namedobj $challenge)
+~chatnpc($prompt_chat);
+if_close;
+p_delay(0); // old videos have this it seems, I think it's a workaround otherwise the old chatnpc will appear for a tick after the countdialog is closed
+p_countdialog;
+def_int $entered_value = last_int;
+if($entered_value = oc_param($challenge, trail_challenge_answer)) {
+    ~chatnpc($correct_chat);
+    inv_del(inv, $challenge, 1);
+    ~progress_clue_medium($clue, $progress_mes);
+} else {
+    ~chatnpc($wrong_chat);
+}
 
 [proc,trail_clue_medium_complete](boolean)
 if(~get_trail_progress >= ^trail_medium_maxsteps | (add(~get_trail_progress, 2) >= ^trail_medium_maxsteps & random(2) = 0)) {

@@ -1,8 +1,5 @@
 [opnpc1,zoo_keeper]
 // https://www.youtube.com/watch?v=1slVPlGyv48, https://web.archive.org/web/20040813233712/http://runehq.com/viewguidedb.php?id=00350 (answer: 32)
-if(inv_total(inv, trail_clue_medium_challenge_exp003) > 0 & inv_total(inv, trail_clue_medium_anagram_exp003) > 0) {
-    @challenge_zoo_keeper;
-}
 if(inv_total(inv, trail_clue_medium_anagram_exp003) > 0) {
     @trail_zoo_keeper;
 }
@@ -24,22 +21,12 @@ switch_int(~p_choice2("Do you have any quests for me?", 1, "Where did you get th
 }
 
 [label,trail_zoo_keeper]
+if(inv_total(inv, trail_clue_medium_challenge_exp003) > 0) {
+    @trail_challengenpc_prompt("<p,neutral>Please tell me how many animals there are.", "<p,happy>Thanks!", "<p,angry>Sorry, but that doesn't sound right!", 
+    "The zoo keeper has given you another clue scroll!", trail_clue_medium_anagram_exp003, trail_clue_medium_challenge_exp003);
+}
 ~chatnpc("<p,neutral>Before I help you, can you do something for me?");
 ~chatplayer("<p,neutral>Sure.");
 ~chatnpc("<p,neutral>I need to know how many animals we have now.");
 inv_add(inv, trail_clue_medium_challenge_exp003, 1);
 ~objboxt(trail_clue_medium_challenge_exp003, "The zoo keeper has given you a challenge scroll!");
-
-[label,challenge_zoo_keeper]
-~chatnpc("<p,neutral>Please tell me how many animals there are.");
-if_close;
-p_delay(0); // old videos have this it seems, I think it's a workaround otherwise the old chatnpc will appear for a tick after the countdialog is closed
-p_countdialog;
-def_int $entered_value = last_int;
-if($entered_value = oc_param(trail_clue_medium_challenge_exp003, trail_challenge_answer)) {
-    ~chatnpc("<p,happy>Thanks!");
-    inv_del(inv, trail_clue_medium_challenge_exp003, 1);
-    ~progress_clue_medium(trail_clue_medium_anagram_exp003, "Lowe has given you another clue scroll!");
-} else {
-    ~chatnpc("<p,angry>Sorry, but that doesn't sound right!"); 
-}
