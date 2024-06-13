@@ -59,7 +59,8 @@ import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { getLatestModified, getModified, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
-import Zone, { ZoneEvent } from './zone/Zone.js';
+import Zone from './zone/Zone.js';
+import { ZoneEvent } from './zone/ZoneEvent.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
@@ -675,13 +676,13 @@ class World {
                     }
                     if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
                         this.removeObj(obj, null, -1);
-                        const event: number = events?.findIndex(g => g.type === ServerProt.OBJ_ADD.id && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
+                        const event: number = events?.findIndex(g => g.prot === ServerProt.OBJ_ADD && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
                         if (events && event !== -1) {
                             this.addCleanupZoneUpdate(zone, events[event]);
                         }
                     } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
                         this.addObj(obj, null, -1);
-                        const event: number = events?.findIndex(g => g.type === ServerProt.OBJ_DEL.id && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
+                        const event: number = events?.findIndex(g => g.prot === ServerProt.OBJ_DEL && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
                         if (events && event !== -1) {
                             this.addCleanupZoneUpdate(zone, events[event]);
                         }
@@ -694,13 +695,13 @@ class World {
                     }
                     if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
                         this.removeLoc(loc, -1);
-                        const event = events?.findIndex(g => g.type === ServerProt.LOC_ADD_CHANGE.id && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
+                        const event = events?.findIndex(g => g.prot === ServerProt.LOC_ADD_CHANGE && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
                         if (events && event !== -1) {
                             this.addCleanupZoneUpdate(zone, events[event]);
                         }
                     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
                         this.addLoc(loc, -1);
-                        const event = events?.findIndex(g => g.type === ServerProt.LOC_DEL.id && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
+                        const event = events?.findIndex(g => g.prot === ServerProt.LOC_DEL && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
                         if (events && event !== -1) {
                             this.addCleanupZoneUpdate(zone, events[event]);
                         }
@@ -958,7 +959,7 @@ class World {
 
             zone.updates = updates.filter((event: ZoneEvent): boolean => {
                 // filter transient updates
-                if ((event.type === ServerProt.LOC_MERGE.id || event.type === ServerProt.LOC_ANIM.id || event.type === ServerProt.MAP_ANIM.id || event.type === ServerProt.MAP_PROJANIM.id) && event.tick < this.currentTick) {
+                if ((event.prot === ServerProt.LOC_MERGE || event.prot === ServerProt.LOC_ANIM || event.prot === ServerProt.MAP_ANIM || event.prot === ServerProt.MAP_PROJANIM) && event.tick < this.currentTick) {
                     return false;
                 }
 
@@ -978,7 +979,7 @@ class World {
     getReceiverUpdates(zoneIndex: number, receiverId: number) {
         const updates = this.getUpdates(zoneIndex);
         return updates.filter((event: ZoneEvent): boolean => {
-            if (event.type !== ServerProt.OBJ_ADD.id && event.type !== ServerProt.OBJ_DEL.id && event.type !== ServerProt.OBJ_COUNT.id && event.type !== ServerProt.OBJ_REVEAL.id) {
+            if (event.prot !== ServerProt.OBJ_ADD && event.prot !== ServerProt.OBJ_DEL && event.prot !== ServerProt.OBJ_COUNT && event.prot !== ServerProt.OBJ_REVEAL) {
                 return false;
             }
 
@@ -1077,7 +1078,7 @@ class World {
             this.addCleanupZoneUpdate(zone, event);
         }
 
-        const event2 = zone.updates.findIndex(g => g.type === ServerProt.LOC_ADD_CHANGE.id && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z);
+        const event2 = zone.updates.findIndex(g => g.prot === ServerProt.LOC_ADD_CHANGE && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z);
         if (event2 !== -1) {
             this.addCleanupZoneUpdate(zone, zone.updates[event2]);
         }
@@ -1117,7 +1118,7 @@ class World {
             this.addCleanupZoneUpdate(zone, event);
         }
 
-        const event2 = zone.updates.findIndex(g => g.type === ServerProt.OBJ_ADD.id && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z);
+        const event2 = zone.updates.findIndex(g => g.prot === ServerProt.OBJ_ADD && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z);
         if (event2 !== -1) {
             this.addCleanupZoneUpdate(zone, zone.updates[event2]);
         }

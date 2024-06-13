@@ -41,7 +41,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
+import { ZoneEvent } from '#lostcity/engine/zone/ZoneEvent.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import Stack from '#jagex2/datastruct/Stack.js';
@@ -1011,6 +1011,10 @@ export default class Player extends PathingEntity {
             const updates = World.getUpdates(zone.index).filter((event: ZoneEvent): boolean => {
                 return event.tick > this.loadedZones[zone.index];
             });
+
+            if (zone.updates.length > 0) {
+                console.log(`${World.currentTick} Zone: ${zoneIndex}, Updates: ${zone.updates.length}`);
+            }
 
             if (updates.length) {
                 this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
