@@ -57,7 +57,7 @@ switch_int ($random) {
 }
 
 [label,trail_oracle]
-if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0) {
+if(inv_total(inv, trail_clue_medium_challenge_exp005) > 0) {
     @trail_challengenpc_prompt("<p,neutral>Please enter the answer to the question.", "<p,happy>That's right, well done!", "<p,neutral>That's wrong I'm afraid.",
     "The Oracle has given you another clue scroll!", trail_clue_medium_anagram_exp007, trail_clue_medium_challenge_exp005);
 }

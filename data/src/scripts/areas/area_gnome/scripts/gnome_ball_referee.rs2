@@ -5,7 +5,7 @@ if(inv_total(inv, trail_clue_medium_anagram_exp008) > 0) {
 }
 
 [label,trail_gnome_ball_ref]
-if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0) {
+if(inv_total(inv, trail_clue_medium_challenge_exp006) > 0) {
     @trail_challengenpc_prompt("<p,neutral>Please enter the answer to the question.", "<p,happy>Well done!", "<p,angry>Wrong answer!",
     "The ref has given you another clue scroll!", trail_clue_medium_anagram_exp008, trail_clue_medium_challenge_exp006);
 }

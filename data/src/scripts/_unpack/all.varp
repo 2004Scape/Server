@@ -374,6 +374,7 @@ type=obj
 scope=perm
 
 [temp]
+scope=temp
 
 [option1]
 transmit=yes
