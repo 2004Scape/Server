@@ -1150,7 +1150,6 @@ class World {
         const zone = this.getZone(obj.x, obj.z, obj.level);
         const event: ZoneEvent = zone.revealObj(obj, receiverId);
 
-        obj.setLifeCycle(this.currentTick + duration);
         if (duration !== 0) {
             this.futureZoneEvent(zone, {
                 entity: obj,
