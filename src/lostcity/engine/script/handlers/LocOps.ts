@@ -44,7 +44,7 @@ const LocOps: CommandHandlers = {
         for (const loc of zone.getLocsUnsafe()) {
             if (loc.type === locType.id && loc.angle === locAngle && loc.shape === locShape && loc.x === position.x && loc.z === position.z && loc.lifecycle === EntityLifeCycle.RESPAWN) {
                 found = loc;
-                World.addLoc(loc, -1);
+                World.addLoc(loc, 0);
                 break;
             }
         }

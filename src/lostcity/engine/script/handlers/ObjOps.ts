@@ -43,7 +43,7 @@ const ObjOps: CommandHandlers = {
         }
 
         const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
-        World.addObj(obj, state.activePlayer, duration);
+        World.addObj(obj, state.activePlayer.pid, duration);
         state.activeObj = obj;
         state.pointerAdd(ActiveObj[state.intOperand]);
 
@@ -76,9 +76,9 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_DEL]: state => {
         const duration: number = ObjType.get(state.activeObj.type).respawnrate;
         if (state.pointerGet(ActivePlayer[state.intOperand])) {
-            World.removeObj(state.activeObj, state.activePlayer, duration);
+            World.removeObj(state.activeObj, duration);
         } else {
-            World.removeObj(state.activeObj, null, duration);
+            World.removeObj(state.activeObj, duration);
         }
     },
 
@@ -101,9 +101,9 @@ const ObjOps: CommandHandlers = {
             state.activePlayer.invAdd(invType.id, obj.type, obj.count);
 
             if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-                World.removeObj(obj, state.activePlayer, objType.respawnrate);
+                World.removeObj(obj, objType.respawnrate);
             } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                World.removeObj(obj, state.activePlayer, -1);
+                World.removeObj(obj, 0);
             }
         }
     },

@@ -1009,7 +1009,7 @@ export default class Player extends PathingEntity {
             }
 
             const updates = World.getUpdates(zone.index).filter((event: ZoneEvent): boolean => {
-                return event.tick > this.loadedZones[zone.index];
+                return event.tick > this.loadedZones[zone.index] && (event.receiverId === -1 || event.receiverId === this.pid);
             });
 
             if (zone.updates.length > 0) {

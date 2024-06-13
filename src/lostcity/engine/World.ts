@@ -36,7 +36,7 @@ import { Inventory } from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
 
 import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
-
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
@@ -60,15 +60,13 @@ import ServerProt from '#lostcity/server/ServerProt.js';
 import Environment from '#lostcity/util/Environment.js';
 import { getLatestModified, getModified, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 import Zone from './zone/Zone.js';
-import { ZoneEvent } from './zone/ZoneEvent.js';
+import {FutureZoneEvent, ZoneEvent} from './zone/ZoneEvent.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import { makeCrcs } from '#lostcity/server/CrcTable.js';
 import { preloadClient } from '#lostcity/server/PreloadedPacks.js';
-
-import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -98,7 +96,7 @@ class World {
     // zones
     trackedZones: number[] = [];
     zoneBuffers: Map<number, Packet> = new Map();
-    futureUpdates: Map<number, Map<number, ZoneEvent[] | undefined>> = new Map();
+    futureUpdates: Map<number, Map<number, FutureZoneEvent[] | undefined>> = new Map();
     cleanUpdates: Map<number, ZoneEvent[] | undefined> = new Map();
     queue: LinkList<EntityQueueState> = new LinkList();
 
@@ -668,43 +666,40 @@ class World {
         const future = this.futureUpdates.get(this.currentTick);
         if (future) {
             for (const [zoneIndex, events] of future.entries()) {
+                if (!events) {
+                    continue;
+                }
                 const zone: Zone = this.getZoneIndex(zoneIndex);
-
                 for (const obj of zone.getObjsUnsafe()) {
-                    if (!obj.updateLifeCycle(this.currentTick)) {
-                        continue;
-                    }
-                    if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                        this.removeObj(obj, null, -1);
-                        const event: number = events?.findIndex(g => g.prot === ServerProt.OBJ_ADD && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
-                        if (events && event !== -1) {
-                            this.addCleanupZoneUpdate(zone, events[event]);
+                    const futures: FutureZoneEvent[] = events.filter(x => x.entity === obj);
+                    for (const event of futures) {
+                        if (event.tick !== this.currentTick) {
+                            continue;
                         }
-                    } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-                        this.addObj(obj, null, -1);
-                        const event: number = events?.findIndex(g => g.prot === ServerProt.OBJ_DEL && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z) ?? -1;
-                        if (events && event !== -1) {
-                            this.addCleanupZoneUpdate(zone, events[event]);
+                        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+                            if (event.event.receiverId !== -1 && event.suspended) {
+                                this.revealObj(obj, event.event.receiverId, event.duration);
+                            } else {
+                                this.removeObj(obj, 0);
+                            }
+                        } else {
+                            this.addObj(obj, -1, 0);
                         }
+                        this.cleanupZoneEvent(zone, event.event);
                     }
                 }
-
                 for (const loc of zone.getLocsUnsafe()) {
-                    if (!loc.updateLifeCycle(this.currentTick)) {
-                        continue;
-                    }
-                    if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-                        this.removeLoc(loc, -1);
-                        const event = events?.findIndex(g => g.prot === ServerProt.LOC_ADD_CHANGE && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
-                        if (events && event !== -1) {
-                            this.addCleanupZoneUpdate(zone, events[event]);
+                    const futures: FutureZoneEvent[] = events.filter(x => x.entity === loc);
+                    for (const event of futures) {
+                        if (event.tick !== this.currentTick) {
+                            continue;
                         }
-                    } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
-                        this.addLoc(loc, -1);
-                        const event = events?.findIndex(g => g.prot === ServerProt.LOC_DEL && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z && g.layer === rsmod.locShapeLayer(loc.shape)) ?? -1;
-                        if (events && event !== -1) {
-                            this.addCleanupZoneUpdate(zone, events[event]);
+                        if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+                            this.removeLoc(loc, 0);
+                        } else {
+                            this.addLoc(loc, 0);
                         }
+                        this.cleanupZoneEvent(zone, event.event);
                     }
                 }
             }
@@ -1055,10 +1050,16 @@ class World {
         }
 
         loc.setLifeCycle(this.currentTick + duration);
-        if (duration !== -1) {
-            this.addFutureZoneUpdate(zone, event, this.currentTick + duration);
+        if (duration !== 0) {
+            this.futureZoneEvent(zone, {
+                entity: loc,
+                tick: this.currentTick + duration,
+                event: event,
+                suspended: false,
+                duration: -1
+            });
         } else {
-            this.addCleanupZoneUpdate(zone, event);
+            this.cleanupZoneEvent(zone, event);
         }
     }
 
@@ -1072,74 +1073,142 @@ class World {
         }
 
         loc.setLifeCycle(this.currentTick + duration);
-        if (duration !== -1) {
-            this.addFutureZoneUpdate(zone, event, this.currentTick + duration);
+        if (duration !== 0) {
+            this.futureZoneEvent(zone, {
+                entity: loc,
+                tick: this.currentTick + duration,
+                event: event,
+                suspended: false,
+                duration: -1
+            });
         } else {
-            this.addCleanupZoneUpdate(zone, event);
+            this.cleanupZoneEvent(zone, event);
         }
 
-        const event2 = zone.updates.findIndex(g => g.prot === ServerProt.LOC_ADD_CHANGE && g.subjectType === loc.type && g.x === loc.x && g.z === loc.z);
-        if (event2 !== -1) {
-            this.addCleanupZoneUpdate(zone, zone.updates[event2]);
+        for (const future of this.futures(loc)) {
+            if (future.event.prot === ServerProt.LOC_ADD_CHANGE) {
+                this.cleanupZoneEvent(zone, future.event);
+            }
         }
     }
 
-    addObj(obj: Obj, receiver: Player | null, duration: number) {
+    private *futures(entity: Obj | Loc): IterableIterator<FutureZoneEvent> {
+        for (const updates of this.futureUpdates.values()) {
+            const futures = updates.get(ZoneManager.zoneIndex(entity.x, entity.z, entity.level));
+            if (!futures) {
+                continue;
+            }
+            for (const future of futures) {
+                if (future.entity === entity) {
+                    yield future;
+                }
+            }
+        }
+    }
+
+    addObj(obj: Obj, receiverId: number, duration: number) {
+        const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
         const existing = this.getObj(obj.x, obj.z, obj.level, obj.type);
         if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
-            const type = ObjType.get(existing.type);
             const nextCount = obj.count + existing.count;
-            if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
+            if (objType.stackable && nextCount <= Inventory.STACK_LIMIT) {
                 // if an obj of the same type exists and is stackable, then we merge them.
-                this.changeObj(existing, receiver, nextCount, existing.lifecycleTick - this.currentTick);
+                this.changeObj(existing, receiverId, nextCount, existing.lifecycleTick - this.currentTick);
                 return;
             }
         }
+
         // addobj
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        const event: ZoneEvent = zone.addObj(obj, receiver);
+        const event: ZoneEvent = zone.addObj(obj, receiverId);
 
-        obj.setLifeCycle(this.currentTick + duration);
-        if (duration !== -1) {
-            this.addFutureZoneUpdate(zone, event, this.currentTick + duration);
+        obj.setLifeCycle(this.currentTick + duration + 100);
+        if (duration !== 0) {
+            this.futureZoneEvent(zone, {
+                entity: obj,
+                tick: this.currentTick + duration + 100,
+                event: event,
+                suspended: false,
+                duration: -1
+            });
+            if (receiverId !== -1 && objType.tradeable) {
+                this.futureZoneEvent(zone, {
+                    entity: obj,
+                    tick: this.currentTick + 100,
+                    event: event,
+                    suspended: true,
+                    duration: duration
+                });
+            }
         } else {
-            this.addCleanupZoneUpdate(zone, event);
+            this.cleanupZoneEvent(zone, event);
         }
     }
 
-    changeObj(obj: Obj, receiver: Player | null, newCount: number, duration: number) {
+    revealObj(obj: Obj, receiverId: number, duration: number) {
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        const event: ZoneEvent = zone.changeObj(obj, receiver, obj.count, newCount);
+        const event: ZoneEvent = zone.revealObj(obj, receiverId);
 
         obj.setLifeCycle(this.currentTick + duration);
-        if (duration !== -1) {
-            this.addFutureZoneUpdate(zone, event, this.currentTick + duration);
+        if (duration !== 0) {
+            this.futureZoneEvent(zone, {
+                entity: obj,
+                tick: this.currentTick + duration,
+                event: event,
+                suspended: false,
+                duration: -1
+            });
         } else {
-            this.addCleanupZoneUpdate(zone, event);
+            this.cleanupZoneEvent(zone, event);
         }
     }
 
-    removeObj(obj: Obj, receiver: Player | null, duration: number) {
+    changeObj(obj: Obj, receiverId: number, newCount: number, duration: number) {
+        const zone = this.getZone(obj.x, obj.z, obj.level);
+        const event: ZoneEvent = zone.changeObj(obj, receiverId, obj.count, newCount);
+
+        obj.setLifeCycle(this.currentTick + duration);
+        if (duration !== 0) {
+            this.futureZoneEvent(zone, {
+                entity: obj,
+                tick: this.currentTick + duration,
+                event: event,
+                suspended: false,
+                duration: -1
+            });
+        } else {
+            this.cleanupZoneEvent(zone, event);
+        }
+    }
+
+    removeObj(obj: Obj, duration: number) {
         // stackable objs when they overflow are created into another slot on the floor
         const zone = this.getZone(obj.x, obj.z, obj.level);
-        const event: ZoneEvent = zone.removeObj(obj, receiver);
+        const event: ZoneEvent = zone.removeObj(obj);
 
         obj.setLifeCycle(this.currentTick + duration);
-        if (duration !== -1) {
-            this.addFutureZoneUpdate(zone, event, this.currentTick + duration);
+        if (duration !== 0) {
+            this.futureZoneEvent(zone, {
+                entity: obj,
+                tick: this.currentTick + duration,
+                event: event,
+                suspended: false,
+                duration: -1
+            });
         } else {
-            this.addCleanupZoneUpdate(zone, event);
+            this.cleanupZoneEvent(zone, event);
         }
 
-        const event2 = zone.updates.findIndex(g => g.prot === ServerProt.OBJ_ADD && g.subjectType === obj.type && g.x === obj.x && g.z === obj.z);
-        if (event2 !== -1) {
-            this.addCleanupZoneUpdate(zone, zone.updates[event2]);
+        for (const future of this.futures(obj)) {
+            if (future.event.prot === ServerProt.OBJ_ADD || future.event.prot === ServerProt.OBJ_COUNT || future.event.prot === ServerProt.OBJ_REVEAL) {
+                this.cleanupZoneEvent(zone, future.event);
+            }
         }
     }
 
-    private addFutureZoneUpdate(zone: Zone, event: ZoneEvent, tick: number): void {
-        let future = this.futureUpdates.get(tick);
+    private futureZoneEvent(zone: Zone, event: FutureZoneEvent): void {
+        let future = this.futureUpdates.get(event.tick);
         if (!future) {
             future = new Map();
         }
@@ -1147,10 +1216,10 @@ class World {
             future.set(zone.index, []);
         }
         future.set(zone.index, future.get(zone.index)?.concat([event]));
-        this.futureUpdates.set(tick, future);
+        this.futureUpdates.set(event.tick, future);
     }
 
-    private addCleanupZoneUpdate(zone: Zone, event: ZoneEvent): void {
+    private cleanupZoneEvent(zone: Zone, event: ZoneEvent): void {
         if (!this.cleanUpdates.has(zone.index)) {
             this.cleanUpdates.set(zone.index, []);
         }

@@ -8,9 +8,9 @@ export type ZoneEvent = {
     tick: number;
     x: number;
     z: number;
-    layer?: number;
-    receiverId?: number;
-    subjectType?: number;
+    layer: number;
+    receiverId: number;
+    type: number;
     buffer: Packet;
 }
 
@@ -18,5 +18,6 @@ export type FutureZoneEvent = {
     entity: Obj | Loc;
     tick: number;
     event: ZoneEvent;
-    zone: number;
+    suspended: boolean;
+    duration: number;
 }
