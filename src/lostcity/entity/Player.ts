@@ -1013,7 +1013,7 @@ export default class Player extends PathingEntity {
             });
 
             if (zone.updates.length > 0) {
-                console.log(`${World.currentTick} Zone: ${zoneIndex}, Updates: ${zone.updates.length}`);
+                // console.log(`${World.currentTick} Zone: ${zoneIndex}, Updates: ${zone.updates.length}`);
             }
 
             if (updates.length) {

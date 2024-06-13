@@ -504,10 +504,11 @@ export const ServerProtEncoders: {
         buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         buf.p1((shape << 2) | (angle & 3));
     },
-    [ServerProt.OBJ_COUNT.id]: (buf: Packet, srcX: number, srcZ: number, obj: number, count: number) => {
+    [ServerProt.OBJ_COUNT.id]: (buf: Packet, srcX: number, srcZ: number, obj: number, oldCount: number, newCount: number) => {
         buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         buf.p2(obj);
-        buf.p2(Math.min(count, 65536));
+        buf.p2(Math.min(oldCount, 65535));
+        buf.p2(Math.min(newCount, 65535));
     },
     [ServerProt.MAP_ANIM.id]: (buf: Packet, srcX: number, srcZ: number, spotanim: number, height: number, delay: number) => {
         buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
@@ -518,6 +519,6 @@ export const ServerProtEncoders: {
     [ServerProt.OBJ_ADD.id]: (buf: Packet, srcX: number, srcZ: number, obj: number, count: number) => {
         buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
         buf.p2(obj);
-        buf.p2(Math.min(count, 65536));
+        buf.p2(Math.min(count, 65535));
     }
 };

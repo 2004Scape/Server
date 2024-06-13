@@ -1085,18 +1085,32 @@ class World {
     }
 
     addObj(obj: Obj, receiver: Player | null, duration: number) {
-        const zone = this.getZone(obj.x, obj.z, obj.level);
+        // check if we need to changeobj first.
         const existing = this.getObj(obj.x, obj.z, obj.level, obj.type);
-        if (existing && existing.type == obj.type && existing.lifecycle === EntityLifeCycle.DESPAWN) {
-            const type = ObjType.get(obj.type);
+        if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
+            const type = ObjType.get(existing.type);
             const nextCount = obj.count + existing.count;
             if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
                 // if an obj of the same type exists and is stackable, then we merge them.
-                obj.count = nextCount;
-                this.removeObj(existing, receiver, -1);
+                this.changeObj(existing, receiver, nextCount, existing.lifecycleTick - this.currentTick);
+                return;
             }
         }
+        // addobj
+        const zone = this.getZone(obj.x, obj.z, obj.level);
         const event: ZoneEvent = zone.addObj(obj, receiver);
+
+        obj.setLifeCycle(this.currentTick + duration);
+        if (duration !== -1) {
+            this.addFutureZoneUpdate(zone, event, this.currentTick + duration);
+        } else {
+            this.addCleanupZoneUpdate(zone, event);
+        }
+    }
+
+    changeObj(obj: Obj, receiver: Player | null, newCount: number, duration: number) {
+        const zone = this.getZone(obj.x, obj.z, obj.level);
+        const event: ZoneEvent = zone.changeObj(obj, receiver, obj.count, newCount);
 
         obj.setLifeCycle(this.currentTick + duration);
         if (duration !== -1) {

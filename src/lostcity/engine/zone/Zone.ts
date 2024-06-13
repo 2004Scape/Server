@@ -108,15 +108,13 @@ export default class Zone {
         return out;
     }
 
-    static objCount(coord: number, id: number, count: number): Packet {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2));
+    static objCount(coord: number, id: number, oldCount: number, newCount: number): Packet {
+        const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2 + 2));
         out.p1(ServerProt.OBJ_COUNT.id);
         out.p1(coord);
         out.p2(id);
-        if (count > 65535) {
-            count = 65535;
-        }
-        out.p2(count);
+        out.p2(Math.min(oldCount, 65535));
+        out.p2(Math.min(newCount, 65535));
         return out;
     }
 
@@ -346,6 +344,7 @@ export default class Zone {
     // ----
 
     addObj(obj: Obj, receiver: Player | null): ZoneEvent {
+        console.log('addObj');
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const objs: LinkList<Obj> | null = this.objs[coord];
@@ -370,7 +369,28 @@ export default class Zone {
         return event;
     }
 
+    changeObj(obj: Obj, receiver: Player | null, oldCount: number, newCount: number): ZoneEvent {
+        console.log('changeObj');
+        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        obj.count = newCount;
+        this.sortObjs(coord);
+
+        const event: ZoneEvent = {
+            prot: ServerProt.OBJ_COUNT,
+            tick: World.currentTick,
+            x: obj.x,
+            z: obj.z,
+            subjectType: obj.type,
+            receiverId: receiver?.uid,
+            buffer: Zone.objCount(coord, obj.type, oldCount, newCount)
+        };
+        this.updates.push(event);
+        this.lastEvent = World.currentTick;
+        return event;
+    }
+
     removeObj(obj: Obj, receiver: Player | null): ZoneEvent {
+        console.log('removeObj');
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const objs: LinkList<Obj> | null = this.objs[coord];
