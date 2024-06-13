@@ -18,6 +18,5 @@ export type FutureZoneEvent = {
     entity: Obj | Loc;
     tick: number;
     event: ZoneEvent;
-    suspended: boolean;
     duration: number;
 }

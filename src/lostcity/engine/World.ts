@@ -677,7 +677,7 @@ class World {
                             continue;
                         }
                         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                            if (event.event.receiverId !== -1 && event.suspended) {
+                            if (event.event.receiverId !== -1) {
                                 this.revealObj(obj, event.event.receiverId, event.duration);
                             } else {
                                 this.removeObj(obj, 0);
@@ -1055,8 +1055,7 @@ class World {
                 entity: loc,
                 tick: this.currentTick + duration,
                 event: event,
-                suspended: false,
-                duration: -1
+                duration: 0
             });
         } else {
             this.cleanupZoneEvent(zone, event);
@@ -1078,8 +1077,7 @@ class World {
                 entity: loc,
                 tick: this.currentTick + duration,
                 event: event,
-                suspended: false,
-                duration: -1
+                duration: 0
             });
         } else {
             this.cleanupZoneEvent(zone, event);
@@ -1129,15 +1127,13 @@ class World {
                 entity: obj,
                 tick: this.currentTick + duration + 100,
                 event: event,
-                suspended: false,
-                duration: -1
+                duration: 0
             });
             if (receiverId !== -1 && objType.tradeable) {
                 this.futureZoneEvent(zone, {
                     entity: obj,
                     tick: this.currentTick + 100,
                     event: event,
-                    suspended: true,
                     duration: duration
                 });
             }
@@ -1155,8 +1151,7 @@ class World {
                 entity: obj,
                 tick: this.currentTick + duration,
                 event: event,
-                suspended: false,
-                duration: -1
+                duration: 0
             });
         } else {
             this.cleanupZoneEvent(zone, event);
@@ -1173,8 +1168,7 @@ class World {
                 entity: obj,
                 tick: this.currentTick + duration,
                 event: event,
-                suspended: false,
-                duration: -1
+                duration: 0
             });
         } else {
             this.cleanupZoneEvent(zone, event);
@@ -1192,7 +1186,6 @@ class World {
                 entity: obj,
                 tick: this.currentTick + duration,
                 event: event,
-                suspended: false,
                 duration: -1
             });
         } else {
