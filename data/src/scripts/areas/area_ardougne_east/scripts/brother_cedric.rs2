@@ -72,5 +72,5 @@ if(inv_total(inv, logs) >= 1) {
 
 [label,cedric_almost_done]
 ~chatplayer("<p,neutral>Hello Cedric.");
-~chatnpc("<p,default>Hi, I'm almost done here. Could you tell Omad that I'll be back soon?");
+~chatnpc("<p,neutral>Hi, I'm almost done here. Could you tell Omad that I'll be back soon?");
 

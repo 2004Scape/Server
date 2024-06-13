@@ -9,7 +9,7 @@
 
 [label,sir_vyvin_knights]
 ~chatplayer("<p,quiz>Why are there so many knights in this city?");
-~chatnpc("<p,default>We are the White Knights of Falador. We are the most powerful order of knights in the land. We are helping the king Vallance rule the kingdom as he is getting old and tired.");
+~chatnpc("<p,neutral>We are the White Knights of Falador. We are the most powerful order of knights in the land. We are helping the king Vallance rule the kingdom as he is getting old and tired.");
 
 [label,sir_vyvin_distract]
 ~chatplayer("<p,happy>Can I just talk to you very slowly for a few minutes, while I distract you, so that my friend over there can do something while you're busy being distracted by me?");

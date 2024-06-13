@@ -36,8 +36,8 @@ if(inv_total(inv, silk) > 0) { //TODO - Add check for when player last stole fro
              ~chatplayer("<p,neutral>Ok, I guess 50 will do.");
              ~silk_merchant_sell_silk(50);
         } else if($option = 2) {
-            ~chatplayer("<p,happy>I'll give it to you for 60.");
-            ~chatnpc("<p,default>You drive a hard bargain, but|I guess that will have to do.");
+            ~chatplayer("<p,neutral>I'll give it to you for 60.");
+            ~chatnpc("<p,neutral>You drive a hard bargain, but|I guess that will have to do.");
             ~silk_merchant_sell_silk(60);
         } else if($option = 3) {
             ~chatplayer("<p,neutral>No, that is not enough.");

@@ -30,12 +30,12 @@ switch_int (~p_choice2("Can I help at all?", 1, "I'm sorry to hear that! I hope 
 
 [label,omad_help]
 ~chatplayer("<p,quiz>Can I help at all?");
-~chatnpc("<p,default>Please do. We won't be able to help you as we are peaceful men but we would be grateful for your help!");
+~chatnpc("<p,neutral>Please do. We won't be able to help you as we are peaceful men but we would be grateful for your help!");
 ~chatplayer("<p,neutral>Where are they?");
 %drunkmonk_progress = ^drunkmonk_spoken_to_omad;
 softtimer(blanket_ladder, 1);
 ~send_quest_progress(questlist:drunkmonk, %drunkmonk_progress, ^drunkmonk_complete);
-~chatnpc("<p,default>They hide in a secret cave in the forest. It's hidden under a ring of stones. Please, bring back the blanket!");
+~chatnpc("<p,neutral>They hide in a secret cave in the forest. It's hidden under a ring of stones. Please, bring back the blanket!");
 
 [label,omad_have_blanket]
 ~chatplayer("<p,neutral>Hello.");
@@ -64,7 +64,7 @@ if(inv_total(inv, childs_blanket) >= 1) {
 def_int $option = ~p_choice2("Who's Brother Cedric?", 1, "Enjoy it! I'll see you soon!", 2);
 if($option = 1) {
     ~chatplayer("<p,quiz>Who's Brother Cedric?");
-    ~chatnpc("<p,default>Cedric is a member of the order too. We sent him out three days ago to collect wine. But he didn't return!");
+    ~chatnpc("<p,neutral>Cedric is a member of the order too. We sent him out three days ago to collect wine. But he didn't return!");
     ~chatnpc("<p,angry>He most probably got drunk and lost in the forest!");
     ~chatnpc("<p,quiz>I don't suppose you could look for him?");
     @multi3("I've no time for that, sorry.", omad_no_time, "Where should I look?", omad_where_look, "Can I come to the party?", omad_come);

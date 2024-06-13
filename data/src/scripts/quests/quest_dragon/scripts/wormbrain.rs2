@@ -27,18 +27,18 @@ if (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) 
 
 [label,wormbrain_in_for]
 ~chatplayer("<p,quiz>What are you in for?");
-~chatnpc("<p,confused>Me not sure. Me pick some stuff up and take it away.");
+~chatnpc("<p,goblinchat>Me not sure. Me pick some stuff up and take it away."); // confused in osrs
 ~chatplayer("<p,neutral>Well, did the stuff belong to you?");
-~chatnpc("<p,confused>Umm...no.");
+~chatnpc("<p,goblinchat>Umm...no."); // confused in osrs
 ~chatplayer("<p,neutral>Well, that would be why then.");
-~chatnpc("<p,sad>Oh, right.");
+~chatnpc("<p,goblinchat>Oh, right."); // sad in osrs
 
 [label,wormbrain_zoo]
 ~chatplayer("<p,neutral>Sorry, thought this was a zoo.");
 
 [label,wormbrain_map]
 ~chatplayer("<p,quiz>I believe you've got a piece of map that I need.");
-~chatnpc("<p,quiz>So? Why should I be giving it to you? What you do for Wormbrain?");
+~chatnpc("<p,goblinchat>So? Why should I be giving it to you? What you do for Wormbrain?"); // quiz in osrs
 // "I'm not going to do anything for you. Forget it",
 // "I'll let you live. I could just kill you",
 // "I suppose I could pay you for the map piece ...",
@@ -49,36 +49,36 @@ if (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) 
 
 [label,wormbrain_forget_it]
 ~chatplayer("<p,neutral>I'm not going to do anything for you. Forget it.");
-~chatnpc("<p,neutral>Be dat way then.");
+~chatnpc("<p,goblinchat>Be dat way then."); // neutral in osrs
 
 [label,wormbrain_kill]
 ~chatplayer("<p,angry>I'll let you live. I could just kill you.");
-~chatnpc("<p,laugh>Ha! Me in here and you out dere. You not get map|piece.");
+~chatnpc("<p,goblinchat>Ha! Me in here and you out dere. You not get map|piece."); // laugh in osrs
 
 [label,wormbrain_pay]
 ~chatplayer("<p,shifty>I suppose I could pay you for the map piece. Say, 500 coins?"); // osrs
-~chatnpc("<p,laugh>Me not stoopid, it worth at least 10,000 coins!");
+~chatnpc("<p,goblinchat>Me not stoopid, it worth at least 10,000 coins!"); // laugh in osrs
 @multi2("You must be joking! Forget it.", wormbrain_forget_it, "Alright then, 10,000 it is.", wormbrain_accept_pay);
 
 [label,wormbrain_accept_pay]
 ~chatplayer("<p,neutral>Alright then, 10,000 coins it is.");
 if (inv_total(inv, coins) < 10000) {
     ~chatplayer("<p,sad>Oops, I don't have enough on me.");
-    ~chatnpc("<p,neutral>Comes back when you has enough.");
+    ~chatnpc("<p,goblinchat>Comes back when you has enough."); // neutral in osrs
     return;
 }
 inv_del(inv, coins, 10000);
 inv_add(inv, crandor_map_part2, 1);
 ~mesbox("You buy the map piece from Wormbrain.");
-~chatnpc("<p,laugh>Fank you very much! Now me can bribe da guards, hehehe.");
+~chatnpc("<p,goblinchat>Fank you very much! Now me can bribe da guards, hehehe."); // laugh in osrs
 
 
 [label,wormbrain_story]
 ~chatplayer("<p,quiz>Where did you get the map piece from?");
-~chatnpc("<p,laugh>We rob house of stupid wizard. She very old, not put|up much fight at all. Hahaha!");
+~chatnpc("<p,goblinchat>We rob house of stupid wizard. She very old, not put|up much fight at all. Hahaha!"); // laugh in osrs
 ~chatplayer("<p,angry>Uh... Hahaha.");
-~chatnpc("<p,neutral>Her house full of pictures of a city on island and old|pictures of people. Me not recognise island.");
-~chatnpc("<p,shifty>Me find map piece. Me not know what it is, but it in|locked box so me figure it important.");
-~chatnpc("<p,sad>But, by the time me get box open, other goblins gone.|Then me not run fast enough and guards catch me.");
-~chatnpc("<p,happy>But now you want map piece so must be special! What|you do for me to get it?");
+~chatnpc("<p,goblinchat>Her house full of pictures of a city on island and old|pictures of people. Me not recognise island."); // neutral in osrs
+~chatnpc("<p,goblinchat>Me find map piece. Me not know what it is, but it in|locked box so me figure it important."); // shifty
+~chatnpc("<p,goblinchat>But, by the time me get box open, other goblins gone.|Then me not run fast enough and guards catch me."); // sad
+~chatnpc("<p,goblinchat>But now you want map piece so must be special! What|you do for me to get it?"); // happy
 @multi3("I'm not going to do anything for you. Forget it.", wormbrain_forget_it, "I'll let you live. I could just kill you.", wormbrain_kill, "I suppose I could pay you for the map piece...", wormbrain_pay);

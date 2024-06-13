@@ -32,7 +32,7 @@ if($option = 1) {
 
 [label,fred_not_exciting]
 ~chatplayer("<p,neutral>That doesn't sound a very exciting quest.");
-~chatnpc("<p,default>Well what do you expect if you ask a farmer for a quest? Now are you going to help me or not?");
+~chatnpc("<p,neutral>Well what do you expect if you ask a farmer for a quest? Now are you going to help me or not?");
 @multi2("Yes okay. I can do that.", fred_yes_okay, "No, I'll give it a miss.", fred_no_miss);
 
 [label,fred_the_thing]

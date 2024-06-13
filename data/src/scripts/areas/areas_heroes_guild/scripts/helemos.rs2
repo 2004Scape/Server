@@ -1,15 +1,15 @@
 [opnpc1,helemos]
-~chatnpc("<p,default>Welcome to the Heroes' Guild!");
+~chatnpc("<p,neutral>Welcome to the Heroes' Guild!");
 
 def_int $choice = ~p_choice2("So do you sell anything here?", 1, "So what can I do here?", 2);
 
 switch_int ($choice) {
     case 1:
-    ~chatplayer("<p,default>So do you sell anything good here?");
-    ~chatnpc("<p,default>Why yes! We DO run an exclusive shop for our members!");
+    ~chatplayer("<p,quiz>So do you sell anything good here?");
+    ~chatnpc("<p,happy>Why yes! We DO run an exclusive shop for our members!");
     ~openshop_activenpc;
 
     case 2:
-    ~chatplayer("<p,default>So what can I do here?");
-    ~chatnpc("<p,default>Look around... there are all sorts of things to keep our guild members entertained!");
+    ~chatplayer("<p,quiz>So what can I do here?");
+    ~chatnpc("<p,neutral>Look around... there are all sorts of things to keep our guild members entertained!");
 }
