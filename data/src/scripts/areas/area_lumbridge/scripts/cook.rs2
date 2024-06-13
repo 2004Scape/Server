@@ -1,10 +1,12 @@
 [opnpc1,cook]
 // https://www.youtube.com/watch?v=mtPhS3n2dAo
-if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0 & inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
-    @challenge_cook;
-}
-if(inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
-    @trail_cook;
+if(map_members = true) {
+    if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0 & inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
+        @challenge_cook;
+    }
+    if(inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
+        @trail_cook;
+    }
 }
 
 if(%cook_progress = 0) {

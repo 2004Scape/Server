@@ -1,10 +1,12 @@
 [opnpc1,kebab_seller]
 // https://www.youtube.com/watch?v=EJfNdZNjDvE
-if(inv_total(inv, trail_clue_medium_challenge_exp004) > 0 & inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
-    @challenge_kebab_seller;
-}
-if(inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
-    @trail_kebab_seller;
+if(map_members = true) {
+    if(inv_total(inv, trail_clue_medium_challenge_exp004) > 0 & inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
+        @challenge_kebab_seller;
+    }
+    if(inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
+        @trail_kebab_seller;
+    }
 }
 
 ~chatnpc("<p,quiz>Would you like to buy a nice kebab? Only one gold.");

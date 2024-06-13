@@ -1,6 +1,6 @@
 [opnpc1,ned]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp021) = 1) {
+if(map_members = true & inv_total(inv, trail_clue_easy_simple_exp021) = 1) {
     @trail_ned;
 } else if (%dragon_ned_hired > 0) {
     // ned got the job

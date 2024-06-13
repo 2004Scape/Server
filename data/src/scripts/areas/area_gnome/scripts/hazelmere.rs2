@@ -26,5 +26,5 @@ if($entered_value = oc_param(trail_clue_medium_challenge_exp001, trail_challenge
     inv_del(inv, trail_clue_medium_challenge_exp001, 1);
     ~progress_clue_medium(trail_clue_medium_anagram_exp001, "Hazelmere has given you another clue scroll!");
 } else {
-    ~chatnpc("<p,angry>Blah!"); // TODO: confirm mesanim
+    ~chatnpc("<p,angry>Blah!"); 
 }

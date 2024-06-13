@@ -6,7 +6,7 @@ if (distance(coord, 0_46_52_55_55) <= 1) {
 // Everything else
 anim(human_dig, 0);
 // Treasure Trails
-if(~trail_hasclue_inv = true) {
+if(map_members = true & ~trail_hasclue_inv = true) {
     def_obj $clue = ~trail_getclue_inv;
 
     if(~trail_clue_coord($clue) = true) {

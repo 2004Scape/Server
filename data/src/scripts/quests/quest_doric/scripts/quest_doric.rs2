@@ -7,7 +7,7 @@
 
 [opnpc1,doric]
 // Treasure Trail
-if (inv_total(inv, trail_clue_easy_simple_exp022) = 1) {
+if (map_members = true & inv_total(inv, trail_clue_easy_simple_exp022) = 1) {
     @trail_doric;
 }
 

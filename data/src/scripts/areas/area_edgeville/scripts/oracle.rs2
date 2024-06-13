@@ -2,11 +2,13 @@
 // https://oldschool.runescape.wiki/w/Transcript:Oracle
 
 [opnpc1,oracle]
-if(inv_total(inv, trail_clue_medium_challenge_exp005) > 0 & inv_total(inv, trail_clue_medium_anagram_exp007) > 0) {
-    @challenge_oracle;
-}
-if(inv_total(inv, trail_clue_medium_anagram_exp007) > 0) {
-    @trail_oracle;
+if(map_members = true) {
+    if(inv_total(inv, trail_clue_medium_challenge_exp005) > 0 & inv_total(inv, trail_clue_medium_anagram_exp007) > 0) {
+        @challenge_oracle;
+    }
+    if(inv_total(inv, trail_clue_medium_anagram_exp007) > 0) {
+        @trail_oracle;
+    }
 }
 
 if (~quest_dragon_getting_map_parts = true & %dragon_oracle >= ^quest_dragon_knows_about_oracle) {
@@ -77,5 +79,5 @@ if($entered_value = oc_param(trail_clue_medium_challenge_exp005, trail_challenge
     inv_del(inv, trail_clue_medium_challenge_exp005, 1);
     ~progress_clue_medium(trail_clue_medium_anagram_exp007, "The Oracle has given you another clue scroll!");
 } else {
-    ~chatnpc("<p,angry>That's wrong I'm afraid."); // TODO: confirm this mesanim (99% sure it's right, seems to always use angry for wrong ans)
+    ~chatnpc("<p,neutral>That's wrong I'm afraid.");
 }

@@ -1,6 +1,6 @@
 [opnpc1,bartender_port_sarim]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp020) = 1) {
+if(map_members = true & inv_total(inv, trail_clue_easy_simple_exp020) = 1) {
     @trail_bartender_port_sarim;
 }
 def_int $option;

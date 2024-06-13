@@ -1,11 +1,13 @@
 // i used some transcribed dialogue from this. https://web.archive.org/web/20051104084237/http://www.nomadgaming.com/index.php?page=rs2_dragonslayer
 
 [opnpc1,npc_747]
-if(~obj_gettotal(trail_clue_hard_puzzle_exp014) > 0) {
-    @puzzle_oziach;
-}
-if(inv_total(inv, trail_clue_hard_riddle_exp014) > 0) {
-    @trail_oziach;
+if(map_members = true) {
+    if(~obj_gettotal(trail_clue_hard_puzzle_exp014) > 0) {
+        @puzzle_oziach;
+    }
+    if(inv_total(inv, trail_clue_hard_riddle_exp014) > 0) {
+        @trail_oziach;
+    }
 }
 if (%dragon_progress = ^quest_dragon_spoken_to_guildmaster) {
     // rsc

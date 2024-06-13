@@ -34,11 +34,10 @@ if(npc_type = black_heather & inv_total(inv, trail_clue_medium_riddle_exp001) > 
     obj_add(npc_coord, trail_clue_medium_key_exp003, 1, ^lootdrop_duration);
 } else if(npc_category = chicken & inv_total(inv, trail_clue_medium_riddle_exp004) > 0 & ~obj_gettotal(trail_clue_medium_key_exp004) = 0) {
     obj_add(npc_coord, trail_clue_medium_key_exp004, 1, ^lootdrop_duration);
-} else if(npc_category = citizen & inv_total(inv, trail_clue_medium_riddle_exp005) > 0 & ~obj_gettotal(trail_clue_medium_key_exp005) = 0) {
+} else if(compare(npc_name, "Man") = ^true & inv_total(inv, trail_clue_medium_riddle_exp005) > 0 & ~obj_gettotal(trail_clue_medium_key_exp005) = 0) {
     obj_add(npc_coord, trail_clue_medium_key_exp005, 1, ^lootdrop_duration);
 }
 
-// TODO: not the same loc or clue, but basing the lock message off this, probably confirm on OSRS: https://youtu.be/cFwNqBvSHNg?si=poX8EWgEZIEfvie7&t=66
 [label,riddle_loc_medium_exp001]
 if(inv_total(inv, trail_clue_medium_riddle_exp001) > 0) {
     // https://www.youtube.com/watch?v=tfnYvJrHnqw
@@ -53,7 +52,7 @@ if(inv_total(inv, trail_clue_medium_riddle_exp001) > 0) {
         ~progress_clue_medium(trail_clue_medium_riddle_exp001, "You've found another clue scroll!");
         return;
     }
-    ~mesbox("The chest is locked! A note on the top of the chest reads:|Property of Black Heather.");
+    ~mesbox("The chest is locked!|An inscription on the chest says:|Property of Black Heather.");
 }
 mes("The chest is locked.");
 
@@ -76,7 +75,6 @@ if(inv_total(inv, trail_clue_medium_riddle_exp002) > 0) {
 }
 mes("These drawers are locked.");
 
-// TODO: not the same drawer, but basing the lock message off this, probably confirm on OSRS: https://youtu.be/cFwNqBvSHNg?si=poX8EWgEZIEfvie7&t=66
 [label,riddle_loc_medium_exp003]
 if(inv_total(inv, trail_clue_medium_riddle_exp003) > 0) {
     // https://www.youtube.com/watch?v=cxAvPqh4WjM
@@ -91,9 +89,9 @@ if(inv_total(inv, trail_clue_medium_riddle_exp003) > 0) {
         ~progress_clue_medium(trail_clue_medium_riddle_exp003, "You've found another clue scroll!");
         return;
     }
-    ~mesbox("The drawers are locked! A note on the top of the drawers reads:|It's a guard's life.");
+    ~mesbox("The drawers are locked! A note is scratched on the top of the drawers: It's a guard's life.");
 }
-mes("These drawers are locked.");
+mes("The drawers are locked.");
 
 // TODO: not the same drawer, but basing the lock message off this, probably confirm on OSRS: https://youtu.be/cFwNqBvSHNg?si=poX8EWgEZIEfvie7&t=66
 [label,riddle_loc_medium_exp004]
@@ -128,7 +126,8 @@ if(inv_total(inv, trail_clue_medium_riddle_exp005) > 0) {
         ~progress_clue_medium(trail_clue_medium_riddle_exp005, "You've found another clue scroll!");
         return;
     }
-    ~mesbox("The chest is locked! A note on the top of the chest reads:|Stand by your man.");
+    // intentional doublespace
+    ~mesbox("The chest is locked!  An inscription on the chest reads: Stand by your man.");
 }
 mes("The chest is locked.");
 
@@ -147,11 +146,3 @@ return(false);
 
 [proc,trail_clue_medium_getrandom](namedobj)
 return(enum(int, namedobj, trail_medium_enum, random(enum_getoutputcount(trail_medium_enum))));
-
-[debugproc,ts](int $arg)
-//if_setanim(trail_sextant:com_9, seq_934);
-//if_setanim(trail_sextant:com_10, seq_997);
-//if_setanim(trail_sextant:com_11, seq_934);
-//if_setposition(trail_sextant:com_1, 0, -56);
-if_setposition(trail_sextant:com_2, 0, $arg);
-if_openmainmodal(trail_sextant);

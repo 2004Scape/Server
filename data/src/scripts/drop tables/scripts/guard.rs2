@@ -1,4 +1,8 @@
 [ai_queue3,_guard](int $arg)
+// https://www.youtube.com/watch?v=w7uD8RdQahs
+if(npc_findhero = true) {
+    ~trail_checkmediumdrop;
+}
 gosub(npc_death);
 if (npc_findhero = false) {
     return;
@@ -9,7 +13,6 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 // Tertiary
 ~trail_mediumcluedrop(128, npc_coord);
-~trail_checkmediumdrop;
 
 def_int $random = random(128);
 

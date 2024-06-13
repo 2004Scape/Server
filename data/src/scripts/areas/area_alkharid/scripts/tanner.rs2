@@ -1,6 +1,6 @@
 [opnpc1,tanner]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
+if(map_members = true & inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
     @trail_tanner;
 }
 ~chatnpc("<p,happy>Greetings friend. I am a manufacturer of leather.");
@@ -95,4 +95,4 @@ inv_add(inv, $leather, $hides_total);
 [label,trail_tanner]
 // https://www.youtube.com/watch?v=M8lX77a6Mt8, https://www.youtube.com/watch?v=CFDUdiUYzJY
 ~chatnpc("<p,happy>Here you go!");
-~progress_clue_easy(trail_clue_easy_simple_exp007, "The tanner has given you another clue!");
+~progress_clue_easy(trail_clue_easy_simple_exp008, "The tanner has given you another clue!");
