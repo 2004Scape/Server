@@ -685,7 +685,7 @@ class World {
                         } else {
                             this.addObj(obj, -1, 0);
                         }
-                        this.cleanupZoneEvent(zone, event.event);
+                        this.cleanupFuture(zone, event.event);
                     }
                 }
                 for (const loc of zone.getLocsUnsafe()) {
@@ -699,7 +699,7 @@ class World {
                         } else {
                             this.addLoc(loc, 0);
                         }
-                        this.cleanupZoneEvent(zone, event.event);
+                        this.cleanupFuture(zone, event.event);
                     }
                 }
             }
@@ -1041,65 +1041,26 @@ class World {
     }
 
     addLoc(loc: Loc, duration: number) {
-        const zone = this.getZone(loc.x, loc.z, loc.level);
-        const event: ZoneEvent = zone.addLoc(loc);
-
         const type = LocType.get(loc.type);
         if (type.blockwalk) {
             this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
-        loc.setLifeCycle(this.currentTick + duration);
-        if (duration !== 0) {
-            this.futureZoneEvent(zone, {
-                entity: loc,
-                tick: this.currentTick + duration,
-                event: event,
-                duration: 0
-            });
-        } else {
-            this.cleanupZoneEvent(zone, event);
-        }
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        this.emitFuture(loc, zone, zone.addLoc(loc), duration);
     }
 
     removeLoc(loc: Loc, duration: number) {
-        const zone = this.getZone(loc.x, loc.z, loc.level);
-        const event: ZoneEvent = zone.removeLoc(loc);
-
         const type = LocType.get(loc.type);
         if (type.blockwalk) {
             this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
         }
 
-        loc.setLifeCycle(this.currentTick + duration);
-        if (duration !== 0) {
-            this.futureZoneEvent(zone, {
-                entity: loc,
-                tick: this.currentTick + duration,
-                event: event,
-                duration: 0
-            });
-        } else {
-            this.cleanupZoneEvent(zone, event);
-        }
-
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        this.emitFuture(loc, zone, zone.removeLoc(loc), duration);
         for (const future of this.futures(loc)) {
             if (future.event.prot === ServerProt.LOC_ADD_CHANGE) {
-                this.cleanupZoneEvent(zone, future.event);
-            }
-        }
-    }
-
-    private *futures(entity: Obj | Loc): IterableIterator<FutureZoneEvent> {
-        for (const updates of this.futureUpdates.values()) {
-            const futures = updates.get(ZoneManager.zoneIndex(entity.x, entity.z, entity.level));
-            if (!futures) {
-                continue;
-            }
-            for (const future of futures) {
-                if (future.entity === entity) {
-                    yield future;
-                }
+                this.cleanupFuture(zone, future.event);
             }
         }
     }
@@ -1116,91 +1077,69 @@ class World {
                 return;
             }
         }
-
-        // addobj
-        const zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         const event: ZoneEvent = zone.addObj(obj, receiverId);
-
-        obj.setLifeCycle(this.currentTick + duration + 100);
-        if (duration !== 0) {
-            this.futureZoneEvent(zone, {
-                entity: obj,
-                tick: this.currentTick + duration + 100,
-                event: event,
-                duration: 0
-            });
-            if (receiverId !== -1 && objType.tradeable) {
-                this.futureZoneEvent(zone, {
-                    entity: obj,
-                    tick: this.currentTick + 100,
-                    event: event,
-                    duration: duration
-                });
-            }
-        } else {
-            this.cleanupZoneEvent(zone, event);
-        }
+        this.emitFuture(obj, zone, event, duration + 100, {
+            entity: obj,
+            tick: this.currentTick + 100,
+            event: event,
+            duration: duration
+        });
     }
 
     revealObj(obj: Obj, receiverId: number, duration: number) {
-        const zone = this.getZone(obj.x, obj.z, obj.level);
-        const event: ZoneEvent = zone.revealObj(obj, receiverId);
-
-        if (duration !== 0) {
-            this.futureZoneEvent(zone, {
-                entity: obj,
-                tick: this.currentTick + duration,
-                event: event,
-                duration: 0
-            });
-        } else {
-            this.cleanupZoneEvent(zone, event);
-        }
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        this.emitFuture(obj, zone, zone.revealObj(obj, receiverId), duration);
     }
 
     changeObj(obj: Obj, receiverId: number, newCount: number, duration: number) {
-        const zone = this.getZone(obj.x, obj.z, obj.level);
-        const event: ZoneEvent = zone.changeObj(obj, receiverId, obj.count, newCount);
-
-        obj.setLifeCycle(this.currentTick + duration);
-        if (duration !== 0) {
-            this.futureZoneEvent(zone, {
-                entity: obj,
-                tick: this.currentTick + duration,
-                event: event,
-                duration: 0
-            });
-        } else {
-            this.cleanupZoneEvent(zone, event);
-        }
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        this.emitFuture(obj, zone, zone.changeObj(obj, receiverId, obj.count, newCount), duration);
     }
 
     removeObj(obj: Obj, duration: number) {
-        // stackable objs when they overflow are created into another slot on the floor
-        const zone = this.getZone(obj.x, obj.z, obj.level);
-        const event: ZoneEvent = zone.removeObj(obj);
-
-        obj.setLifeCycle(this.currentTick + duration);
-        if (duration !== 0) {
-            this.futureZoneEvent(zone, {
-                entity: obj,
-                tick: this.currentTick + duration,
-                event: event,
-                duration: -1
-            });
-        } else {
-            this.cleanupZoneEvent(zone, event);
-        }
-
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        this.emitFuture(obj, zone, zone.removeObj(obj), duration);
         for (const future of this.futures(obj)) {
             if (future.event.prot === ServerProt.OBJ_ADD || future.event.prot === ServerProt.OBJ_COUNT || future.event.prot === ServerProt.OBJ_REVEAL) {
-                this.cleanupZoneEvent(zone, future.event);
+                this.cleanupFuture(zone, future.event);
+            }
+        }
+    }
+
+    private emitFuture(entity: Obj | Loc, zone: Zone, event: ZoneEvent, duration: number, suspend: FutureZoneEvent | null = null): void {
+        entity.setLifeCycle(this.currentTick + duration);
+        if (duration !== 0) {
+            this.futureZoneEvent(zone, {
+                entity: entity,
+                tick: this.currentTick + duration,
+                event: event,
+                duration: suspend ? duration : 0
+            });
+            if (suspend) {
+                this.futureZoneEvent(zone, suspend);
+            }
+        } else {
+            this.cleanupFuture(zone, event);
+        }
+    }
+
+    private *futures(entity: Obj | Loc): IterableIterator<FutureZoneEvent> {
+        for (const updates of this.futureUpdates.values()) {
+            const futures: FutureZoneEvent[] | undefined = updates.get(ZoneManager.zoneIndex(entity.x, entity.z, entity.level));
+            if (!futures) {
+                continue;
+            }
+            for (const future of futures) {
+                if (future.entity === entity) {
+                    yield future;
+                }
             }
         }
     }
 
     private futureZoneEvent(zone: Zone, event: FutureZoneEvent): void {
-        let future = this.futureUpdates.get(event.tick);
+        let future: Map<number, FutureZoneEvent[] | undefined> | undefined = this.futureUpdates.get(event.tick);
         if (!future) {
             future = new Map();
         }
@@ -1211,7 +1150,7 @@ class World {
         this.futureUpdates.set(event.tick, future);
     }
 
-    private cleanupZoneEvent(zone: Zone, event: ZoneEvent): void {
+    private cleanupFuture(zone: Zone, event: ZoneEvent): void {
         if (!this.cleanUpdates.has(zone.index)) {
             this.cleanUpdates.set(zone.index, []);
         }
