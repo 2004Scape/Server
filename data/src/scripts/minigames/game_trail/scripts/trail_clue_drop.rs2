@@ -70,14 +70,14 @@ if (p_finduid(uid) = true) {
 }
 
 [opobj3,_trail_challenge]
-if(inv_totalcat(inv, trail_challenge) > 0| inv_totalcat(bank, trail_challenge) > 0) {
+if(inv_totalcat(inv, trail_challenge) > 0 | inv_totalcat(bank, trail_challenge) > 0) {
     mes("You already have a challenge scroll."); // OSRS
     return;
 }
 @pickup_obj(obj_coord, obj_type, obj_count);
 
 [opobj3,_trail_puzzle]
-if(inv_totalcat(inv, trail_puzzle) > 0| inv_totalcat(bank, trail_puzzle) > 0) {
+if(inv_totalcat(inv, trail_puzzle) > 0 | inv_totalcat(bank, trail_puzzle) > 0) {
     mes("You already have a puzzle box."); // OSRS
     return;
 }
