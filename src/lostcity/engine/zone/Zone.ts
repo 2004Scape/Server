@@ -2,15 +2,13 @@ import ObjType from '#lostcity/cache/config/ObjType.js';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import LinkList from '#jagex2/datastruct/LinkList.js';
-
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
-import {Position, ZonePosition} from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
 
@@ -21,11 +19,11 @@ import ZoneEvent from '#lostcity/engine/zone/ZoneEvent.js';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 export default class Zone {
-    static mapAnim(coord: number, id: number, height: number, delay: number): Uint8Array {
+    static mapAnim(coord: number, spotanim: number, height: number, delay: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 1 + 2));
         out.p1(ServerProt.MAP_ANIM.id);
         out.p1(coord);
-        out.p2(id);
+        out.p2(spotanim);
         out.p1(height);
         out.p2(delay);
         return out.data;
@@ -33,14 +31,12 @@ export default class Zone {
 
     // variables fully broken out for now
     //coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $startDelay, int $endDelay, int $peak, int $arc
-    static mapProjAnim(coord: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): Uint8Array {
-        const unpack: ZonePosition = Position.unpackZoneCoord(coord);
-
+    static mapProjAnim(srcX: number, srcZ: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 1 + 2 + 2 + 1 + 1 + 2 + 2 + 1 + 1));
         out.p1(ServerProt.MAP_PROJANIM.id);
-        out.p1(coord);
-        out.p1(dstX - unpack.x);
-        out.p1(dstZ - unpack.z);
+        out.p1(Position.packZoneCoord(srcX, srcZ));
+        out.p1(dstX - srcX);
+        out.p1(dstZ - srcZ);
         out.p2(target); // 0: coord, > 0: npc, < 0: player
         out.p2(spotanim);
         out.p1(srcHeight);
@@ -71,21 +67,19 @@ export default class Zone {
 
     // merge player with loc, e.g. agility training through pipes
     // useful due to draw prioritizes
-    static locMerge(coord: number, shape: number, angle: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number): Uint8Array {
-        const unpack: ZonePosition = Position.unpackZoneCoord(coord);
-
+    static locMerge(srcX: number, srcZ: number, shape: number, angle: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 2 + 2 + 2 + 2 + 1 + 1 + 1 + 1));
         out.p1(ServerProt.LOC_MERGE.id);
-        out.p1(coord);
+        out.p1(Position.packZoneCoord(srcX, srcZ));
         out.p1((shape << 2) | (angle & 3));
         out.p2(locId);
         out.p2(startCycle);
         out.p2(endCycle);
         out.p2(pid);
-        out.p1(east - unpack.x);
-        out.p1(south - unpack.z);
-        out.p1(west - unpack.x);
-        out.p1(north - unpack.z);
+        out.p1(east - srcX);
+        out.p1(south - srcZ);
+        out.p1(west - srcX);
+        out.p1(north - srcZ);
         return out.data;
     }
 
@@ -143,8 +137,8 @@ export default class Zone {
     // zone entities
     private readonly players: Set<number>; // list of player uids
     private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
-    private readonly locs: (LinkList<Loc> | null)[];
-    private readonly objs: (LinkList<Obj> | null)[];
+    private readonly locs: (Set<Loc> | null)[];
+    private readonly objs: (Set<Obj> | null)[];
 
     // zone events
     enclosed: Set<ZoneEvent> = new Set();
@@ -181,17 +175,17 @@ export default class Zone {
 
     tick(tick: number): void {
         for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: LinkList<Obj> | null = this.objs[index];
+            const objs: Set<Obj> | null = this.objs[index];
             if (!objs) {
                 continue;
             }
-            for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+            for (const obj of objs) {
                 if (!obj.updateLifeCycle(tick)) {
                     continue;
                 }
                 if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
                     if (obj.receiverId !== -1) {
-                        World.revealObj(obj, obj.receiverId, obj.reveal);
+                        World.revealObj(obj);
                     } else {
                         World.removeObj(obj, 0);
                     }
@@ -201,11 +195,11 @@ export default class Zone {
             }
         }
         for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: LinkList<Loc> | null = this.locs[index];
+            const locs: Set<Loc> | null = this.locs[index];
             if (!locs) {
                 continue;
             }
-            for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+            for (const loc of locs) {
                 if (!loc.updateLifeCycle(tick)) {
                     continue;
                 }
@@ -216,30 +210,6 @@ export default class Zone {
                 }
             }
         }
-        // for (const obj of this.getObjsUnsafe()) {
-        //     if (!obj.updateLifeCycle(tick)) {
-        //         continue;
-        //     }
-        //     if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-        //         if (obj.receiverId !== -1) {
-        //             World.revealObj(obj, obj.receiverId, obj.reveal);
-        //         } else {
-        //             World.removeObj(obj, 0);
-        //         }
-        //     } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
-        //         World.addObj(obj, -1, 0);
-        //     }
-        // }
-        // for (const loc of this.getLocsUnsafe()) {
-        //     if (!loc.updateLifeCycle(tick)) {
-        //         continue;
-        //     }
-        //     if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-        //         World.removeLoc(loc, 0);
-        //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
-        //         World.addLoc(loc, 0);
-        //     }
-        // }
     }
 
     global(): void {
@@ -259,54 +229,27 @@ export default class Zone {
     reset(): void {
         this.enclosed.clear();
         this.follows.clear();
-        // this.shared = null;
-    }
-
-    // ---- not tied to any entities ----
-
-    animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
-        this.enclosed.add({
-            prot: ServerProt.MAP_ANIM,
-            x: x,
-            z: z,
-            layer: -1,
-            receiverId: -1,
-            type: -1,
-            buffer: Zone.mapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)
-        });
-    }
-
-    mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
-        this.enclosed.add({
-            prot: ServerProt.MAP_PROJANIM,
-            x: x,
-            z: z,
-            layer: -1,
-            receiverId: -1,
-            type: -1,
-            buffer: Zone.mapProjAnim(Position.packZoneCoord(x, z), dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)
-        });
     }
 
     // ---- static locs/objs are added during world init ----
 
     addStaticLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
-        const locs: LinkList<Loc> | null = this.locs[coord];
+        const locs: Set<Loc> | null = this.locs[coord];
         if (!locs) {
-            this.locs[coord] = new LinkList();
+            this.locs[coord] = new Set();
         }
-        this.locs[coord]?.addTail(loc);
+        this.locs[coord]?.add(loc);
         this.sortLocs(coord);
     }
 
     addStaticObj(obj: Obj): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
-        const objs: LinkList<Obj> | null = this.objs[coord];
+        const objs: Set<Obj> | null = this.objs[coord];
         if (!objs) {
-            this.objs[coord] = new LinkList();
+            this.objs[coord] = new Set();
         }
-        this.objs[coord]?.addTail(obj);
+        this.objs[coord]?.add(obj);
         this.sortObjs(coord);
     }
 
@@ -315,13 +258,13 @@ export default class Zone {
     addLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            const locs: LinkList<Loc> | null = this.locs[coord];
+            const locs: Set<Loc> | null = this.locs[coord];
             if (!locs) {
-                this.locs[coord] = new LinkList();
+                this.locs[coord] = new Set();
             }
-            this.locs[coord]?.addTail(loc);
+            this.locs[coord]?.add(loc);
+            this.sortLocs(coord);
         }
-        this.sortLocs(coord);
 
         this.enclosed.add({
             prot: ServerProt.LOC_ADD_CHANGE,
@@ -337,20 +280,12 @@ export default class Zone {
     removeLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            const locs: LinkList<Loc> | null = this.locs[coord];
+            const locs: Set<Loc> | null = this.locs[coord];
             if (locs) {
-                for (let next: Loc | null = locs.head() as Loc | null; next; next = locs.next() as Loc | null) {
-                    if (next.type === loc.type) {
-                        next.unlink();
-                        break;
-                    }
-                }
-                if (!locs.head()) {
-                    this.locs[coord] = null;
-                }
+                locs.delete(loc);
             }
+            this.sortLocs(coord);
         }
-        this.sortLocs(coord);
 
         this.enclosed.add({
             prot: ServerProt.LOC_DEL,
@@ -365,11 +300,11 @@ export default class Zone {
 
     getLoc(x: number, z: number, type: number): Loc | null {
         const coord: number = Position.packZoneCoord(x, z);
-        const locs: LinkList<Loc> | null = this.locs[coord];
+        const locs: Set<Loc> | null = this.locs[coord];
         if (!locs) {
             return null;
         }
-        for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+        for (const loc of locs) {
             if (loc.type === type && loc.checkLifeCycle(World.currentTick)) {
                 return loc;
             }
@@ -385,7 +320,7 @@ export default class Zone {
             layer: rsmod.locShapeLayer(loc.shape),
             type: loc.type,
             receiverId: -1,
-            buffer: Zone.locMerge(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
+            buffer: Zone.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
         });
     }
 
@@ -406,13 +341,13 @@ export default class Zone {
     addObj(obj: Obj, receiverId: number): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const objs: LinkList<Obj> | null = this.objs[coord];
+            const objs: Set<Obj> | null = this.objs[coord];
             if (!objs) {
-                this.objs[coord] = new LinkList();
+                this.objs[coord] = new Set();
             }
-            this.objs[coord]?.addTail(obj);
+            this.objs[coord]?.add(obj);
+            this.sortObjs(coord);
         }
-        this.sortObjs(coord);
 
         const event: ZoneEvent = {
             prot: ServerProt.OBJ_ADD,
@@ -434,6 +369,7 @@ export default class Zone {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         obj.receiverId = -1;
         obj.reveal = -1;
+        this.sortObjs(coord);
 
         this.enclosed.add({
             prot: ServerProt.OBJ_REVEAL,
@@ -465,17 +401,9 @@ export default class Zone {
     removeObj(obj: Obj): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const objs: LinkList<Obj> | null = this.objs[coord];
+            const objs: Set<Obj> | null = this.objs[coord];
             if (objs) {
-                for (let next: Obj | null = objs.head() as Obj | null; next; next = objs.next() as Obj | null) {
-                    if (next.type === obj.type) {
-                        next.unlink();
-                        break;
-                    }
-                }
-                if (!objs.head()) {
-                    this.objs[coord] = null;
-                }
+                objs.delete(obj);
             }
         }
         this.sortObjs(coord);
@@ -496,13 +424,39 @@ export default class Zone {
         }
     }
 
+    // ---- not tied to any entities ----
+
+    animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
+        this.enclosed.add({
+            prot: ServerProt.MAP_ANIM,
+            x: x,
+            z: z,
+            layer: -1,
+            receiverId: -1,
+            type: -1,
+            buffer: Zone.mapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)
+        });
+    }
+
+    mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
+        this.enclosed.add({
+            prot: ServerProt.MAP_PROJANIM,
+            x: x,
+            z: z,
+            layer: -1,
+            receiverId: -1,
+            type: -1,
+            buffer: Zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)
+        });
+    }
+
     getObj(x: number, z: number, type: number): Obj | null {
         const coord: number = Position.packZoneCoord(x, z);
-        const objs: LinkList<Obj> | null = this.objs[coord];
+        const objs: Set<Obj> | null = this.objs[coord];
         if (!objs) {
             return null;
         }
-        for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+        for (const obj of objs) {
             if (obj.type === type && obj.checkLifeCycle(World.currentTick)) {
                 return obj;
             }
@@ -538,11 +492,11 @@ export default class Zone {
 
     *getObjs(): IterableIterator<Obj> {
         for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: LinkList<Obj> | null = this.objs[index];
+            const objs: Set<Obj> | null = this.objs[index];
             if (!objs) {
                 continue;
             }
-            for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+            for (const obj of objs) {
                 if (!obj.checkLifeCycle(World.currentTick)) {
                     continue;
                 }
@@ -553,11 +507,11 @@ export default class Zone {
 
     *getObjsUnsafe(): IterableIterator<Obj> {
         for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: LinkList<Obj> | null = this.objs[index];
+            const objs: Set<Obj> | null = this.objs[index];
             if (!objs) {
                 continue;
             }
-            for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+            for (const obj of objs) {
                 yield obj;
             }
         }
@@ -565,11 +519,11 @@ export default class Zone {
 
     *getLocs(): IterableIterator<Loc> {
         for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: LinkList<Loc> | null = this.locs[index];
+            const locs: Set<Loc> | null = this.locs[index];
             if (!locs) {
                 continue;
             }
-            for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+            for (const loc of locs) {
                 if (!loc.checkLifeCycle(World.currentTick)) {
                     continue;
                 }
@@ -580,18 +534,18 @@ export default class Zone {
 
     *getLocsUnsafe(): IterableIterator<Loc> {
         for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: LinkList<Loc> | null = this.locs[index];
+            const locs: Set<Loc> | null = this.locs[index];
             if (!locs) {
                 continue;
             }
-            for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+            for (const loc of locs) {
                 yield loc;
             }
         }
     }
 
     private sortObjs(coord: number): void {
-        const objs: LinkList<Obj> | null = this.objs[coord];
+        const objs: Set<Obj> | null = this.objs[coord];
         if (!objs) {
             return;
         }
@@ -599,7 +553,7 @@ export default class Zone {
         let topCost: number = -99999999;
         let topObj: Obj | null = null;
 
-        for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+        for (const obj of objs) {
             const type: ObjType = ObjType.get(obj.type);
             let cost: number = type.cost;
 
@@ -618,11 +572,13 @@ export default class Zone {
         if (!topObj) {
             return;
         }
-        objs.addHead(topObj);
+
+        objs.delete(topObj);
+        objs.add(topObj);
     }
 
     private sortLocs(coord: number): void {
-        const locs: LinkList<Loc> | null = this.locs[coord];
+        const locs: Set<Loc> | null = this.locs[coord];
         if (!locs) {
             return;
         }
@@ -630,7 +586,7 @@ export default class Zone {
         let topCost: number = -99999999;
         let topLoc: Loc | null = null;
 
-        for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+        for (const loc of locs) {
             const cost: number = loc.lifecycleTick + loc.lifecycle;
             if (cost > topCost) {
                 topCost = cost;
@@ -641,6 +597,8 @@ export default class Zone {
         if (!topLoc) {
             return;
         }
-        locs.addHead(topLoc);
+
+        locs.delete(topLoc);
+        locs.add(topLoc);
     }
 }

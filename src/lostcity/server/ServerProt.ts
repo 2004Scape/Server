@@ -7,7 +7,7 @@ import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
 
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 
 export default class ServerProt {
     static readonly all: ServerProt[] = [];
@@ -488,7 +488,7 @@ export const ServerProtEncoders: {
         buf.p2(loc);
     },
     [ServerProt.MAP_PROJANIM.id]: (buf: Packet, srcX: number, srcZ: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number) => {
-        buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+        buf.p1(Position.packZoneCoord(srcX, srcZ));
         buf.p1(dstX - srcX);
         buf.p1(dstZ - srcZ);
         buf.p2(target); // 0: coord, > 0: npc, < 0: player

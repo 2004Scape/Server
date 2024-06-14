@@ -1,7 +1,6 @@
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
-import Linkable from '#jagex2/datastruct/Linkable.js';
 
-export default abstract class Entity extends Linkable {
+export default abstract class Entity {
     // constructor
     level: number;
     x: number;
@@ -14,7 +13,6 @@ export default abstract class Entity extends Linkable {
     lifecycleTick: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle) {
-        super();
         this.level = level;
         this.x = x;
         this.z = z;

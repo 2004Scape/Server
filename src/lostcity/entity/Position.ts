@@ -121,12 +121,6 @@ export const Position = {
         return (z & 0x3fff) | ((x & 0x3fff) << 14) | ((level & 0x3) << 28);
     },
 
-    unpackZoneCoord(coord: number): ZonePosition {
-        const x: number = (coord >> 4) & 0x7;
-        const z: number = coord & 0x7;
-        return { x, z };
-    },
-
     packZoneCoord(x: number, z: number): number {
         return ((x & 0x7) << 4) | (z & 0x7);
     },

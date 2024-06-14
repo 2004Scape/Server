@@ -990,6 +990,18 @@ class World {
         this.trackZone(this.currentTick, zone);
     }
 
+    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    animLoc(loc: Loc, seq: number): void {
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.animLoc(loc, seq);
+        this.trackZone(this.currentTick, zone);
+    }
+
     removeLoc(loc: Loc, duration: number): void {
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
@@ -1004,6 +1016,7 @@ class World {
     }
 
     addObj(obj: Obj, receiverId: number, duration: number): void {
+        console.log(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
         const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
         const existing = this.getObj(obj.x, obj.z, obj.level, obj.type);
@@ -1017,22 +1030,23 @@ class World {
         }
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
-        if (receiverId !== -1) {
+        if (receiverId !== -1 && objType.tradeable) {
             obj.setLifeCycle(this.currentTick + 100);
             this.trackZone(this.currentTick + 100, zone);
             this.trackZone(this.currentTick, zone);
             obj.receiverId = receiverId;
             obj.reveal = duration;
         } else {
-            obj.setLifeCycle(this.currentTick + duration);
-            this.trackZone(this.currentTick + duration, zone);
+            obj.setLifeCycle(this.currentTick + duration + 100);
+            this.trackZone(this.currentTick + duration + 100, zone);
             this.trackZone(this.currentTick, zone);
         }
     }
 
-    revealObj(obj: Obj, receiverId: number, duration: number): void {
+    revealObj(obj: Obj): void {
+        const duration: number = obj.reveal;
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
-        zone.revealObj(obj, receiverId);
+        zone.revealObj(obj, obj.receiverId);
         obj.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
         this.trackZone(this.currentTick, zone);
@@ -1045,10 +1059,23 @@ class World {
     }
 
     removeObj(obj: Obj, duration: number): void {
+        console.log(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj);
         obj.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    animMap(level: number, x: number, z: number, spotanim: number, height: number, delay: number): void {
+        const zone: Zone = this.getZone(x, z, level);
+        zone.animMap(x, z, spotanim, height, delay);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    mapProjAnim(level: number, x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
+        const zone: Zone = this.getZone(x, z, level);
+        zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
         this.trackZone(this.currentTick, zone);
     }
 

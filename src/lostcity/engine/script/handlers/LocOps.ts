@@ -64,8 +64,7 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, state => {
         const seqType: SeqType = check(state.popInt(), SeqTypeValid);
 
-        const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).animLoc(loc, seqType.id);
+        World.animLoc(state.activeLoc, seqType.id);
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, state => {
