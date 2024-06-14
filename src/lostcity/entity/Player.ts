@@ -1023,6 +1023,21 @@ export default class Player extends PathingEntity {
                 this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, zone.x, zone.z, this.loadedX, this.loadedZ, zone.shared);
             }
 
+            // const f: Uint8Array[] = Array.from(zone.enclosed.values()).map(x => x.buffer);
+            // const totalLength = f.reduce((acc, curr) => acc + curr.length, 0);
+            // if (totalLength > 0) {
+            //     // Create a new Uint8Array with the total length
+            //     const mergedArray = new Uint8Array(totalLength);
+            //
+            //     // Copy each Uint8Array into the new array
+            //     let offset = 0;
+            //     for (const arr of f) {
+            //         mergedArray.set(arr, offset);
+            //         offset += arr.length;
+            //     }
+            //     this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, zone.x, zone.z, this.loadedX, this.loadedZ, mergedArray);
+            // }
+
             if (zone.follows.size > 0) {
                 for (const event of zone.follows) {
                     if (event.receiverId != -1 && event.receiverId !== this.pid) {
