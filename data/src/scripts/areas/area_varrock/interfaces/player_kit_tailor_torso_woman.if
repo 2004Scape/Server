@@ -943,7 +943,7 @@ fill=yes
 colour=0x1C6135
 option=Emerald
 
-[com_107]
+[confirm]
 type=text
 x=197
 y=289
@@ -1329,7 +1329,7 @@ height=32
 model=model_343_idk
 zoom=800
 
-[com_147]
+[plain]
 type=graphic
 x=53
 y=100
@@ -1341,7 +1341,7 @@ script1=eq,1
 activegraphic=headicons,1
 option=Plain
 
-[com_148]
+[crop_top]
 type=graphic
 x=148
 y=100
@@ -1353,7 +1353,7 @@ script1=eq,2
 activegraphic=headicons,1
 option=Crop-top
 
-[com_149]
+[polo_neck]
 type=graphic
 x=243
 y=100
@@ -1365,7 +1365,7 @@ script1=eq,3
 activegraphic=headicons,1
 option=Polo-neck
 
-[com_150]
+[simple]
 type=graphic
 x=328
 y=100
@@ -1377,7 +1377,7 @@ script1=eq,4
 activegraphic=headicons,1
 option=Simple
 
-[com_151]
+[torn]
 type=graphic
 x=423
 y=100
@@ -1389,7 +1389,7 @@ script1=eq,5
 activegraphic=headicons,1
 option=Torn
 
-[com_152]
+[short_sleeves]
 type=graphic
 x=52
 y=180
@@ -1401,7 +1401,7 @@ script1=eq,1
 activegraphic=headicons,1
 option=Short sleeves
 
-[com_153]
+[bare_arms]
 type=graphic
 x=148
 y=180
@@ -1413,7 +1413,7 @@ script1=eq,2
 activegraphic=headicons,1
 option=Bare arms
 
-[com_154]
+[muscley]
 type=graphic
 x=243
 y=180
@@ -1425,7 +1425,7 @@ script1=eq,3
 activegraphic=headicons,1
 option=Muscley
 
-[com_155]
+[long_sleeved]
 type=graphic
 x=328
 y=180
@@ -1437,7 +1437,7 @@ script1=eq,4
 activegraphic=headicons,1
 option=Long sleeved
 
-[com_156]
+[large_cuffs]
 type=graphic
 x=423
 y=180

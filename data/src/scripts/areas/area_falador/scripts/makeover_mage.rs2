@@ -1,2 +1,31 @@
 [opnpc1,makeover_mage]
 @not_written_yet;
+
+[if_button,makeover_mage:com_102] %option1 = 1;
+[if_button,makeover_mage:com_104] %option1 = 2;
+
+[if_button,makeover_mage:com_113] %option1 = 1;
+[if_button,makeover_mage:com_114] %option1 = 2;
+
+[if_button,makeover_mage:com_94] %option2 = 1;
+[if_button,makeover_mage:com_95] %option2 = 2;
+[if_button,makeover_mage:com_96] %option2 = 3;
+[if_button,makeover_mage:com_97] %option2 = 4;
+[if_button,makeover_mage:com_98] %option2 = 5;
+[if_button,makeover_mage:com_99] %option2 = 6;
+[if_button,makeover_mage:com_100] %option2 = 7;
+[if_button,makeover_mage:com_101] %option2 = 8;
+
+[if_button,makeover_mage:com_89]
+if (%option1 = 0 | %option2 = 0) {
+    return;
+}
+
+if_close;
+def_int $color = calc(%option2 - 1);
+
+setgender(calc(%option1 - 1));
+setskincolour(%option2);
+
+buildappearance(worn);
+inv_del(inv, coins, 3000);
