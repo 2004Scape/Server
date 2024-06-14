@@ -141,8 +141,8 @@ export default class Zone {
     private readonly objs: (Obj[] | null)[];
 
     // zone events
-    enclosed: Set<ZoneEvent> = new Set();
-    follows: Set<ZoneEvent> = new Set();
+    readonly enclosed: Set<ZoneEvent>;
+    readonly follows: Set<ZoneEvent>;
     shared: Uint8Array | null = null;
 
     constructor(index: number) {
@@ -155,6 +155,8 @@ export default class Zone {
         this.npcs = new Set();
         this.objs = [];
         this.locs = [];
+        this.enclosed = new Set();
+        this.follows = new Set();
     }
 
     enter(entity: PathingEntity): void {
@@ -174,13 +176,11 @@ export default class Zone {
     }
 
     tick(tick: number): void {
-        for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Obj[] | null = this.objs[index];
-            if (!objs) {
-                continue;
-            }
-            for (const obj of objs) {
-                if (!obj.updateLifeCycle(tick)) {
+        let emitted: boolean;
+        do {
+            emitted = false;
+            for (const obj of this.getObjsUnsafe()) {
+                if (!obj.updateLifeCycle(tick) || obj.lastLifecycleTick === tick) {
                     continue;
                 }
                 if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
@@ -188,30 +188,26 @@ export default class Zone {
                         World.revealObj(obj);
                     } else {
                         World.removeObj(obj, 0);
-                        index--;
+                        emitted = true;
                     }
                 } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
                     World.addObj(obj, -1, 0);
+                    emitted = true;
                 }
             }
-        }
-        for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Loc[] | null = this.locs[index];
-            if (!locs) {
-                continue;
-            }
-            for (const loc of locs) {
-                if (!loc.updateLifeCycle(tick)) {
+            for (const loc of this.getLocsUnsafe()) {
+                if (!loc.updateLifeCycle(tick) || loc.lastLifecycleTick === tick) {
                     continue;
                 }
                 if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
                     World.removeLoc(loc, 0);
-                    index--;
+                    emitted = true;
                 } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
                     World.addLoc(loc, 0);
+                    emitted = true;
                 }
             }
-        }
+        } while (emitted);
     }
 
     global(): void {
@@ -264,7 +260,7 @@ export default class Zone {
             if (!locs) {
                 this.locs[coord] = [];
             }
-            this.locs[coord]?.push(loc);
+            this.locs[coord]?.unshift(loc);
         }
         this.sortLocs(coord);
 
@@ -470,7 +466,6 @@ export default class Zone {
         }
         for (const obj of objs) {
             if (obj.type === type && obj.checkLifeCycle(World.currentTick)) {
-                console.log(obj);
                 return obj;
             }
         }
@@ -586,9 +581,8 @@ export default class Zone {
             return;
         }
 
-        const index = objs.indexOf(topObj);
-        if (index !== -1) {
-            objs.splice(index, 1);
+        if (objs[0] !== topObj) {
+            objs.splice(objs.indexOf(topObj), 1);
             objs.unshift(topObj);
         }
     }
@@ -603,7 +597,7 @@ export default class Zone {
         let topLoc: Loc | null = null;
 
         for (const loc of locs) {
-            const cost: number = loc.lifecycleTick + loc.lifecycle;
+            const cost: number = loc.lifecycle;
             if (cost > topCost) {
                 topCost = cost;
                 topLoc = loc;
@@ -614,9 +608,8 @@ export default class Zone {
             return;
         }
 
-        const index = locs.indexOf(topLoc);
-        if (index !== -1) {
-            locs.splice(index, 1);
+        if (locs[0] !== topLoc) {
+            locs.splice(locs.indexOf(topLoc), 1);
             locs.unshift(topLoc);
         }
     }

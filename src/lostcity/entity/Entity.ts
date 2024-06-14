@@ -1,4 +1,5 @@
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+import World from '#lostcity/engine/World.js';
 
 export default abstract class Entity {
     // constructor
@@ -11,6 +12,7 @@ export default abstract class Entity {
 
     // runtime
     lifecycleTick: number = -1;
+    lastLifecycleTick: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle) {
         this.level = level;
@@ -42,5 +44,6 @@ export default abstract class Entity {
 
     setLifeCycle(tick: number): void {
         this.lifecycleTick = tick;
+        this.lastLifecycleTick = World.currentTick;
     }
 }
