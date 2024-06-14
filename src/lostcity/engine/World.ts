@@ -978,6 +978,7 @@ class World {
     }
 
     addLoc(loc: Loc, duration: number): void {
+        console.log(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
             this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
@@ -991,18 +992,21 @@ class World {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
+        console.log(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
         const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
         zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
         this.trackZone(this.currentTick, zone);
     }
 
     animLoc(loc: Loc, seq: number): void {
+        console.log(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
         const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
         zone.animLoc(loc, seq);
         this.trackZone(this.currentTick, zone);
     }
 
     removeLoc(loc: Loc, duration: number): void {
+        console.log(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
             this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
@@ -1020,7 +1024,7 @@ class World {
         const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
         const existing = this.getObj(obj.x, obj.z, obj.level, obj.type);
-        if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN) {
+        if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const nextCount = obj.count + existing.count;
             if (objType.stackable && nextCount <= Inventory.STACK_LIMIT) {
                 // if an obj of the same type exists and is stackable, then we merge them.
@@ -1037,13 +1041,14 @@ class World {
             obj.receiverId = receiverId;
             obj.reveal = duration;
         } else {
-            obj.setLifeCycle(this.currentTick + duration + 100);
-            this.trackZone(this.currentTick + duration + 100, zone);
+            obj.setLifeCycle(this.currentTick + duration);
+            this.trackZone(this.currentTick + duration, zone);
             this.trackZone(this.currentTick, zone);
         }
     }
 
     revealObj(obj: Obj): void {
+        console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
         const duration: number = obj.reveal;
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.revealObj(obj, obj.receiverId);
@@ -1053,6 +1058,7 @@ class World {
     }
 
     changeObj(obj: Obj, receiverId: number, newCount: number): void {
+        console.log(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.changeObj(obj, receiverId, obj.count, newCount);
         this.trackZone(this.currentTick, zone);

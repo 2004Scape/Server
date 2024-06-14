@@ -137,8 +137,8 @@ export default class Zone {
     // zone entities
     private readonly players: Set<number>; // list of player uids
     private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
-    private readonly locs: (Set<Loc> | null)[];
-    private readonly objs: (Set<Obj> | null)[];
+    private readonly locs: (Loc[] | null)[];
+    private readonly objs: (Obj[] | null)[];
 
     // zone events
     enclosed: Set<ZoneEvent> = new Set();
@@ -175,7 +175,7 @@ export default class Zone {
 
     tick(tick: number): void {
         for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Set<Obj> | null = this.objs[index];
+            const objs: Obj[] | null = this.objs[index];
             if (!objs) {
                 continue;
             }
@@ -188,6 +188,7 @@ export default class Zone {
                         World.revealObj(obj);
                     } else {
                         World.removeObj(obj, 0);
+                        index--;
                     }
                 } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
                     World.addObj(obj, -1, 0);
@@ -195,7 +196,7 @@ export default class Zone {
             }
         }
         for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Set<Loc> | null = this.locs[index];
+            const locs: Loc[] | null = this.locs[index];
             if (!locs) {
                 continue;
             }
@@ -205,6 +206,7 @@ export default class Zone {
                 }
                 if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
                     World.removeLoc(loc, 0);
+                    index--;
                 } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
                     World.addLoc(loc, 0);
                 }
@@ -235,21 +237,21 @@ export default class Zone {
 
     addStaticLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
-        const locs: Set<Loc> | null = this.locs[coord];
+        const locs: Loc[] | null = this.locs[coord];
         if (!locs) {
-            this.locs[coord] = new Set();
+            this.locs[coord] = [];
         }
-        this.locs[coord]?.add(loc);
+        this.locs[coord]?.push(loc);
         this.sortLocs(coord);
     }
 
     addStaticObj(obj: Obj): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
-        const objs: Set<Obj> | null = this.objs[coord];
+        const objs: Obj[] | null = this.objs[coord];
         if (!objs) {
-            this.objs[coord] = new Set();
+            this.objs[coord] = [];
         }
-        this.objs[coord]?.add(obj);
+        this.objs[coord]?.push(obj);
         this.sortObjs(coord);
     }
 
@@ -258,13 +260,13 @@ export default class Zone {
     addLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            const locs: Set<Loc> | null = this.locs[coord];
+            const locs: Loc[] | null = this.locs[coord];
             if (!locs) {
-                this.locs[coord] = new Set();
+                this.locs[coord] = [];
             }
-            this.locs[coord]?.add(loc);
-            this.sortLocs(coord);
+            this.locs[coord]?.push(loc);
         }
+        this.sortLocs(coord);
 
         this.enclosed.add({
             prot: ServerProt.LOC_ADD_CHANGE,
@@ -280,12 +282,17 @@ export default class Zone {
     removeLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            const locs: Set<Loc> | null = this.locs[coord];
+            const locs: Loc[] | null = this.locs[coord];
             if (locs) {
-                locs.delete(loc);
+                for (let index: number = 0; index < locs.length; index++) {
+                    if (loc === locs[index]) {
+                        locs.splice(index, 1);
+                        break;
+                    }
+                }
             }
-            this.sortLocs(coord);
         }
+        this.sortLocs(coord);
 
         this.enclosed.add({
             prot: ServerProt.LOC_DEL,
@@ -300,7 +307,7 @@ export default class Zone {
 
     getLoc(x: number, z: number, type: number): Loc | null {
         const coord: number = Position.packZoneCoord(x, z);
-        const locs: Set<Loc> | null = this.locs[coord];
+        const locs: Loc[] | null = this.locs[coord];
         if (!locs) {
             return null;
         }
@@ -341,13 +348,13 @@ export default class Zone {
     addObj(obj: Obj, receiverId: number): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const objs: Set<Obj> | null = this.objs[coord];
+            const objs: Obj[] | null = this.objs[coord];
             if (!objs) {
-                this.objs[coord] = new Set();
+                this.objs[coord] = [];
             }
-            this.objs[coord]?.add(obj);
-            this.sortObjs(coord);
+            this.objs[coord]?.push(obj);
         }
+        this.sortObjs(coord);
 
         const event: ZoneEvent = {
             prot: ServerProt.OBJ_ADD,
@@ -401,9 +408,14 @@ export default class Zone {
     removeObj(obj: Obj): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const objs: Set<Obj> | null = this.objs[coord];
+            const objs: Obj[] | null = this.objs[coord];
             if (objs) {
-                objs.delete(obj);
+                for (let index: number = 0; index < objs.length; index++) {
+                    if (obj === objs[index]) {
+                        objs.splice(index, 1);
+                        break;
+                    }
+                }
             }
         }
         this.sortObjs(coord);
@@ -452,12 +464,13 @@ export default class Zone {
 
     getObj(x: number, z: number, type: number): Obj | null {
         const coord: number = Position.packZoneCoord(x, z);
-        const objs: Set<Obj> | null = this.objs[coord];
+        const objs: Obj[] | null = this.objs[coord];
         if (!objs) {
             return null;
         }
         for (const obj of objs) {
             if (obj.type === type && obj.checkLifeCycle(World.currentTick)) {
+                console.log(obj);
                 return obj;
             }
         }
@@ -492,7 +505,7 @@ export default class Zone {
 
     *getObjs(): IterableIterator<Obj> {
         for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Set<Obj> | null = this.objs[index];
+            const objs: Obj[] | null = this.objs[index];
             if (!objs) {
                 continue;
             }
@@ -507,7 +520,7 @@ export default class Zone {
 
     *getObjsUnsafe(): IterableIterator<Obj> {
         for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Set<Obj> | null = this.objs[index];
+            const objs: Obj[] | null = this.objs[index];
             if (!objs) {
                 continue;
             }
@@ -519,7 +532,7 @@ export default class Zone {
 
     *getLocs(): IterableIterator<Loc> {
         for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Set<Loc> | null = this.locs[index];
+            const locs: Loc[] | null = this.locs[index];
             if (!locs) {
                 continue;
             }
@@ -534,7 +547,7 @@ export default class Zone {
 
     *getLocsUnsafe(): IterableIterator<Loc> {
         for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Set<Loc> | null = this.locs[index];
+            const locs: Loc[] | null = this.locs[index];
             if (!locs) {
                 continue;
             }
@@ -545,7 +558,7 @@ export default class Zone {
     }
 
     private sortObjs(coord: number): void {
-        const objs: Set<Obj> | null = this.objs[coord];
+        const objs: Obj[] | null = this.objs[coord];
         if (!objs) {
             return;
         }
@@ -573,12 +586,15 @@ export default class Zone {
             return;
         }
 
-        objs.delete(topObj);
-        objs.add(topObj);
+        const index = objs.indexOf(topObj);
+        if (index !== -1) {
+            objs.splice(index, 1);
+            objs.unshift(topObj);
+        }
     }
 
     private sortLocs(coord: number): void {
-        const locs: Set<Loc> | null = this.locs[coord];
+        const locs: Loc[] | null = this.locs[coord];
         if (!locs) {
             return;
         }
@@ -598,7 +614,10 @@ export default class Zone {
             return;
         }
 
-        locs.delete(topLoc);
-        locs.add(topLoc);
+        const index = locs.indexOf(topLoc);
+        if (index !== -1) {
+            locs.splice(index, 1);
+            locs.unshift(topLoc);
+        }
     }
 }
