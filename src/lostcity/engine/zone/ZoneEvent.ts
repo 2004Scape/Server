@@ -1,22 +1,21 @@
 import ServerProt from '#lostcity/server/ServerProt.js';
-import Packet from '#jagex2/io/Packet.js';
-import Obj from '#lostcity/entity/Obj.js';
-import Loc from '#lostcity/entity/Loc.js';
 
-export type ZoneEvent = {
-    prot: ServerProt;
-    tick: number;
-    x: number;
-    z: number;
-    layer: number;
-    receiverId: number;
-    type: number;
-    buffer: Packet;
-}
+export default class ZoneEvent {
+    readonly prot: ServerProt;
+    readonly x: number;
+    readonly z: number;
+    readonly layer: number;
+    readonly receiverId: number;
+    readonly type: number;
+    readonly buffer: Uint8Array;
 
-export type FutureZoneEvent = {
-    entity: Obj | Loc;
-    tick: number;
-    event: ZoneEvent;
-    duration: number;
+    constructor(prot: ServerProt, x: number, z: number, layer: number, receiverId: number, type: number, buffer: Uint8Array) {
+        this.prot = prot;
+        this.x = x;
+        this.z = z;
+        this.layer = layer;
+        this.receiverId = receiverId;
+        this.type = type;
+        this.buffer = buffer;
+    }
 }

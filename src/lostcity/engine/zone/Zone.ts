@@ -1,37 +1,39 @@
+import ObjType from '#lostcity/cache/config/ObjType.js';
+
 import Packet from '#jagex2/io/Packet.js';
+
+import LinkList from '#jagex2/datastruct/LinkList.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+import {Position, ZonePosition} from '#lostcity/entity/Position.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
 
 import World from '#lostcity/engine/World.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import ZoneEvent from '#lostcity/engine/zone/ZoneEvent.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
-import LinkList from '#jagex2/datastruct/LinkList.js';
-import ObjType from '#lostcity/cache/config/ObjType.js';
-import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
-import {Position, ZonePosition} from '#lostcity/entity/Position.js';
-import {ZoneEvent} from '#lostcity/engine/zone/ZoneEvent.js';
 
 export default class Zone {
-    static mapAnim(coord: number, id: number, height: number, delay: number): Packet {
+    static mapAnim(coord: number, id: number, height: number, delay: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 1 + 2));
         out.p1(ServerProt.MAP_ANIM.id);
         out.p1(coord);
         out.p2(id);
         out.p1(height);
         out.p2(delay);
-        return out;
+        return out.data;
     }
 
     // variables fully broken out for now
     //coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $startDelay, int $endDelay, int $peak, int $arc
-    static mapProjAnim(coord: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): Packet {
+    static mapProjAnim(coord: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): Uint8Array {
         const unpack: ZonePosition = Position.unpackZoneCoord(coord);
 
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 1 + 2 + 2 + 1 + 1 + 2 + 2 + 1 + 1));
@@ -47,29 +49,29 @@ export default class Zone {
         out.p2(endDelay);
         out.p1(peak);
         out.p1(arc);
-        return out;
+        return out.data;
     }
 
-    static locAddChange(coord: number, id: number, shape: number, angle: number): Packet {
+    static locAddChange(coord: number, loc: number, shape: number, angle: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 2));
         out.p1(ServerProt.LOC_ADD_CHANGE.id);
         out.p1(coord);
         out.p1((shape << 2) | (angle & 3));
-        out.p2(id);
-        return out;
+        out.p2(loc);
+        return out.data;
     }
 
-    static locDel(coord: number, shape: number, angle: number): Packet {
+    static locDel(coord: number, shape: number, angle: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 1));
         out.p1(ServerProt.LOC_DEL.id);
         out.p1(coord);
         out.p1((shape << 2) | (angle & 3));
-        return out;
+        return out.data;
     }
 
     // merge player with loc, e.g. agility training through pipes
     // useful due to draw prioritizes
-    static locMerge(coord: number, shape: number, angle: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number): Packet {
+    static locMerge(coord: number, shape: number, angle: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number): Uint8Array {
         const unpack: ZonePosition = Position.unpackZoneCoord(coord);
 
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 2 + 2 + 2 + 2 + 1 + 1 + 1 + 1));
@@ -84,56 +86,53 @@ export default class Zone {
         out.p1(south - unpack.z);
         out.p1(west - unpack.x);
         out.p1(north - unpack.z);
-        return out;
+        return out.data;
     }
 
-    static locAnim(coord: number, shape: number, angle: number, id: number): Packet {
+    static locAnim(coord: number, shape: number, angle: number, id: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 2));
         out.p1(ServerProt.LOC_ANIM.id);
         out.p1(coord);
         out.p1((shape << 2) | (angle & 3));
         out.p2(id);
-        return out;
+        return out.data;
     }
 
-    static objAdd(coord: number, id: number, count: number): Packet {
+    static objAdd(coord: number, obj: number, count: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2));
         out.p1(ServerProt.OBJ_ADD.id);
         out.p1(coord);
-        out.p2(id);
-        if (count > 65535) {
-            count = 65535;
-        }
-        out.p2(count);
-        return out;
+        out.p2(obj);
+        out.p2(Math.min(count, 65535));
+        return out.data;
     }
 
-    static objCount(coord: number, id: number, oldCount: number, newCount: number): Packet {
+    static objCount(coord: number, id: number, oldCount: number, newCount: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2 + 2));
         out.p1(ServerProt.OBJ_COUNT.id);
         out.p1(coord);
         out.p2(id);
         out.p2(Math.min(oldCount, 65535));
         out.p2(Math.min(newCount, 65535));
-        return out;
+        return out.data;
     }
 
-    static objDel(coord: number, id: number): Packet {
+    static objDel(coord: number, obj: number): Uint8Array {
         const out = new Packet(new Uint8Array(1 + 1 + 2));
         out.p1(ServerProt.OBJ_DEL.id);
         out.p1(coord);
-        out.p2(id);
-        return out;
+        out.p2(obj);
+        return out.data;
     }
 
-    static objReveal(coord: number, id: number, count: number, receiverId: number): Packet {
+    static objReveal(coord: number, id: number, count: number, receiverId: number): Uint8Array {
         const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2 + 2));
         out.p1(ServerProt.OBJ_REVEAL.id);
         out.p1(coord);
         out.p2(id);
         out.p2(count);
         out.p2(receiverId);
-        return out;
+        return out.data;
     }
 
     readonly index: number; // packed coord
@@ -148,8 +147,9 @@ export default class Zone {
     private readonly objs: (LinkList<Obj> | null)[];
 
     // zone events
-    updates: ZoneEvent[] = [];
-    lastEvent: number = -1;
+    enclosed: Set<ZoneEvent> = new Set();
+    follows: Set<ZoneEvent> = new Set();
+    shared: Uint8Array | null = null;
 
     constructor(index: number) {
         this.index = index;
@@ -159,8 +159,8 @@ export default class Zone {
         this.level = coord.level;
         this.players = new Set();
         this.npcs = new Set();
-        this.objs = new Array(8 * 8).fill(null);
-        this.locs = new Array(8 * 8).fill(null);
+        this.objs = [];
+        this.locs = [];
     }
 
     enter(entity: PathingEntity): void {
@@ -179,12 +179,94 @@ export default class Zone {
         }
     }
 
+    tick(tick: number): void {
+        for (let index: number = 0; index < this.objs.length; index++) {
+            const objs: LinkList<Obj> | null = this.objs[index];
+            if (!objs) {
+                continue;
+            }
+            for (let obj: Obj | null = objs.head() as Obj | null; obj; obj = objs.next() as Obj | null) {
+                if (!obj.updateLifeCycle(tick)) {
+                    continue;
+                }
+                if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+                    if (obj.receiverId !== -1) {
+                        World.revealObj(obj, obj.receiverId, obj.reveal);
+                    } else {
+                        World.removeObj(obj, 0);
+                    }
+                } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+                    World.addObj(obj, -1, 0);
+                }
+            }
+        }
+        for (let index: number = 0; index < this.locs.length; index++) {
+            const locs: LinkList<Loc> | null = this.locs[index];
+            if (!locs) {
+                continue;
+            }
+            for (let loc: Loc | null = locs.head() as Loc | null; loc; loc = locs.next() as Loc | null) {
+                if (!loc.updateLifeCycle(tick)) {
+                    continue;
+                }
+                if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+                    World.removeLoc(loc, 0);
+                } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                    World.addLoc(loc, 0);
+                }
+            }
+        }
+        // for (const obj of this.getObjsUnsafe()) {
+        //     if (!obj.updateLifeCycle(tick)) {
+        //         continue;
+        //     }
+        //     if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+        //         if (obj.receiverId !== -1) {
+        //             World.revealObj(obj, obj.receiverId, obj.reveal);
+        //         } else {
+        //             World.removeObj(obj, 0);
+        //         }
+        //     } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+        //         World.addObj(obj, -1, 0);
+        //     }
+        // }
+        // for (const loc of this.getLocsUnsafe()) {
+        //     if (!loc.updateLifeCycle(tick)) {
+        //         continue;
+        //     }
+        //     if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
+        //         World.removeLoc(loc, 0);
+        //     } else if (loc.lifecycle === EntityLifeCycle.RESPAWN) {
+        //         World.addLoc(loc, 0);
+        //     }
+        // }
+    }
+
+    global(): void {
+        const enclosed: Uint8Array[] = Array.from(this.enclosed.values()).map(x => x.buffer);
+        const length: number = enclosed.reduce((acc, curr) => acc + curr.length, 0);
+        if (length > 0) {
+            const shared: Uint8Array = new Uint8Array(length);
+            let ptr: number = 0;
+            for (const bytes of enclosed) {
+                shared.set(bytes, ptr);
+                ptr += bytes.length;
+            }
+            this.shared = shared;
+        }
+    }
+
+    reset(): void {
+        this.enclosed.clear();
+        this.follows.clear();
+        // this.shared = null;
+    }
+
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
-        this.updates.push({
+        this.enclosed.add({
             prot: ServerProt.MAP_ANIM,
-            tick: World.currentTick,
             x: x,
             z: z,
             layer: -1,
@@ -192,13 +274,11 @@ export default class Zone {
             type: -1,
             buffer: Zone.mapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)
         });
-        this.lastEvent = World.currentTick;
     }
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
-        this.updates.push({
+        this.enclosed.add({
             prot: ServerProt.MAP_PROJANIM,
-            tick: World.currentTick,
             x: x,
             z: z,
             layer: -1,
@@ -206,7 +286,6 @@ export default class Zone {
             type: -1,
             buffer: Zone.mapProjAnim(Position.packZoneCoord(x, z), dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)
         });
-        this.lastEvent = World.currentTick;
     }
 
     // ---- static locs/objs are added during world init ----
@@ -229,23 +308,11 @@ export default class Zone {
         }
         this.objs[coord]?.addTail(obj);
         this.sortObjs(coord);
-
-        this.updates.push({
-            prot: ServerProt.OBJ_ADD,
-            tick: World.currentTick,
-            x: obj.x,
-            z: obj.z,
-            layer: -1,
-            receiverId: -1,
-            type: obj.type,
-            buffer: Zone.objAdd(coord, obj.type, obj.count)
-        });
-        this.lastEvent = World.currentTick;
     }
 
     // ----
 
-    addLoc(loc: Loc): ZoneEvent {
+    addLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             const locs: LinkList<Loc> | null = this.locs[coord];
@@ -256,26 +323,18 @@ export default class Zone {
         }
         this.sortLocs(coord);
 
-        this.updates = this.updates.filter(event => {
-            return !(event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape));
-        });
-
-        const event: ZoneEvent = {
+        this.enclosed.add({
             prot: ServerProt.LOC_ADD_CHANGE,
-            tick: World.currentTick,
             x: loc.x,
             z: loc.z,
             layer: rsmod.locShapeLayer(loc.shape),
             type: loc.type,
             receiverId: -1,
             buffer: Zone.locAddChange(coord, loc.type, loc.shape, loc.angle)
-        };
-        this.updates.push(event);
-        this.lastEvent = World.currentTick;
-        return event;
+        });
     }
 
-    removeLoc(loc: Loc): ZoneEvent {
+    removeLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
             const locs: LinkList<Loc> | null = this.locs[coord];
@@ -293,23 +352,15 @@ export default class Zone {
         }
         this.sortLocs(coord);
 
-        this.updates = this.updates.filter(event => {
-            return !(event.x === loc.x && event.z === loc.z && event.layer === rsmod.locShapeLayer(loc.shape));
-        });
-
-        const event: ZoneEvent = {
+        this.enclosed.add({
             prot: ServerProt.LOC_DEL,
-            tick: World.currentTick,
             x: loc.x,
             z: loc.z,
             layer: rsmod.locShapeLayer(loc.shape),
             type: loc.type,
             receiverId: -1,
             buffer: Zone.locDel(coord, loc.shape, loc.angle)
-        };
-        this.updates.push(event);
-        this.lastEvent = World.currentTick;
-        return event;
+        });
     }
 
     getLoc(x: number, z: number, type: number): Loc | null {
@@ -327,9 +378,8 @@ export default class Zone {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
-        this.updates.push({
+        this.enclosed.add({
             prot: ServerProt.LOC_MERGE,
-            tick: World.currentTick,
             x: loc.x,
             z: loc.z,
             layer: rsmod.locShapeLayer(loc.shape),
@@ -337,13 +387,11 @@ export default class Zone {
             receiverId: -1,
             buffer: Zone.locMerge(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
         });
-        this.lastEvent = World.currentTick;
     }
 
     animLoc(loc: Loc, seq: number): void {
-        this.updates.push({
+        this.enclosed.add({
             prot: ServerProt.LOC_ANIM,
-            tick: World.currentTick,
             x: loc.x,
             z: loc.z,
             layer: rsmod.locShapeLayer(loc.shape),
@@ -351,12 +399,11 @@ export default class Zone {
             receiverId: -1,
             buffer: Zone.locAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)
         });
-        this.lastEvent = World.currentTick;
     }
 
     // ----
 
-    addObj(obj: Obj, receiverId: number): ZoneEvent {
+    addObj(obj: Obj, receiverId: number): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const objs: LinkList<Obj> | null = this.objs[coord];
@@ -369,7 +416,6 @@ export default class Zone {
 
         const event: ZoneEvent = {
             prot: ServerProt.OBJ_ADD,
-            tick: World.currentTick,
             x: obj.x,
             z: obj.z,
             layer: -1,
@@ -377,50 +423,46 @@ export default class Zone {
             receiverId: receiverId,
             buffer: Zone.objAdd(coord, obj.type, obj.count)
         };
-        this.updates.push(event);
-        this.lastEvent = World.currentTick;
-        return event;
+        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+            this.follows.add(event);
+        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+            this.enclosed.add(event);
+        }
     }
 
-    revealObj(obj: Obj, receiverId: number): ZoneEvent {
+    revealObj(obj: Obj, receiverId: number): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        obj.receiverId = -1;
+        obj.reveal = -1;
 
-        const event: ZoneEvent = {
+        this.enclosed.add({
             prot: ServerProt.OBJ_REVEAL,
-            tick: World.currentTick,
             x: obj.x,
             z: obj.z,
             layer: -1,
             type: obj.type,
             receiverId: -1,
             buffer: Zone.objReveal(coord, obj.type, obj.count, receiverId)
-        };
-        this.updates.push(event);
-        this.lastEvent = World.currentTick;
-        return event;
+        });
     }
 
-    changeObj(obj: Obj, receiverId: number, oldCount: number, newCount: number): ZoneEvent {
+    changeObj(obj: Obj, receiverId: number, oldCount: number, newCount: number): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         obj.count = newCount;
         this.sortObjs(coord);
 
-        const event: ZoneEvent = {
+        this.follows.add({
             prot: ServerProt.OBJ_COUNT,
-            tick: World.currentTick,
             x: obj.x,
             z: obj.z,
             layer: -1,
             type: obj.type,
             receiverId: receiverId,
             buffer: Zone.objCount(coord, obj.type, oldCount, newCount)
-        };
-        this.updates.push(event);
-        this.lastEvent = World.currentTick;
-        return event;
+        });
     }
 
-    removeObj(obj: Obj): ZoneEvent {
+    removeObj(obj: Obj): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const objs: LinkList<Obj> | null = this.objs[coord];
@@ -440,7 +482,6 @@ export default class Zone {
 
         const event: ZoneEvent = {
             prot: ServerProt.OBJ_DEL,
-            tick: World.currentTick,
             x: obj.x,
             z: obj.z,
             layer: -1,
@@ -448,9 +489,11 @@ export default class Zone {
             receiverId: -1,
             buffer: Zone.objDel(coord, obj.type)
         };
-        this.updates.push(event);
-        this.lastEvent = World.currentTick;
-        return event;
+        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+            this.follows.add(event);
+        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+            this.enclosed.add(event);
+        }
     }
 
     getObj(x: number, z: number, type: number): Obj | null {

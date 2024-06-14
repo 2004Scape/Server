@@ -472,8 +472,8 @@ export const ServerProtEncoders: {
         buf.p1((shape << 2) | (angle & 3));
         buf.p2(loc);
     },
-    [ServerProt.OBJ_DEL.id]: (buf: Packet, srcX: number, srcZ: number, obj: number) => {
-        buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+    [ServerProt.OBJ_DEL.id]: (buf: Packet, coord: number, obj: number) => {
+        buf.p1(coord);
         buf.p2(obj);
     },
     [ServerProt.OBJ_REVEAL.id]: (buf: Packet, srcX: number, srcZ: number, obj: number, count: number, owner: number) => {
@@ -482,8 +482,8 @@ export const ServerProtEncoders: {
         buf.p2(count);
         buf.p2(owner);
     },
-    [ServerProt.LOC_ADD_CHANGE.id]: (buf: Packet, srcX: number, srcZ: number, shape: number, angle: number, loc: number) => {
-        buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+    [ServerProt.LOC_ADD_CHANGE.id]: (buf: Packet, coord: number, shape: number, angle: number, loc: number) => {
+        buf.p1(coord);
         buf.p1((shape << 2) | (angle & 3));
         buf.p2(loc);
     },
@@ -500,8 +500,8 @@ export const ServerProtEncoders: {
         buf.p1(peak);
         buf.p1(arc);
     },
-    [ServerProt.LOC_DEL.id]: (buf: Packet, srcX: number, srcZ: number, shape: number, angle: number) => {
-        buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+    [ServerProt.LOC_DEL.id]: (buf: Packet, coord: number, shape: number, angle: number) => {
+        buf.p1(coord);
         buf.p1((shape << 2) | (angle & 3));
     },
     [ServerProt.OBJ_COUNT.id]: (buf: Packet, srcX: number, srcZ: number, obj: number, oldCount: number, newCount: number) => {
@@ -516,8 +516,8 @@ export const ServerProtEncoders: {
         buf.p1(height);
         buf.p2(delay);
     },
-    [ServerProt.OBJ_ADD.id]: (buf: Packet, srcX: number, srcZ: number, obj: number, count: number) => {
-        buf.p1(((srcX & 0x7) << 4) | (srcZ & 0x7));
+    [ServerProt.OBJ_ADD.id]: (buf: Packet, coord: number, obj: number, count: number) => {
+        buf.p1(coord);
         buf.p2(obj);
         buf.p2(Math.min(count, 65535));
     }

@@ -6,6 +6,10 @@ export default class Obj extends NonPathingEntity {
     type: number;
     count: number;
 
+    // runtime
+    receiverId: number = -1;
+    reveal: number = -1;
+
     constructor(level: number, x: number, z: number, lifecycle: EntityLifeCycle, type: number, count: number) {
         super(level, x, z, 1, 1, lifecycle);
         this.type = type;

@@ -15,22 +15,22 @@ import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
-import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityTimer, PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
+import {EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 
-import ServerProt, { ServerProtEncoders } from '#lostcity/server/ServerProt.js';
+import ServerProt, {ServerProtEncoders} from '#lostcity/server/ServerProt.js';
 
-import { Inventory } from '#lostcity/engine/Inventory.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
 
 import Script from '#lostcity/engine/script/Script.js';
@@ -41,13 +41,12 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { ZoneEvent } from '#lostcity/engine/zone/ZoneEvent.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
-import { PRELOADED, PRELOADED_CRC } from '#lostcity/server/PreloadedPacks.js';
+import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 const levelExperience = new Int32Array(99);
@@ -1001,39 +1000,40 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            // todo: receiver/shared buffer logic
             if (typeof this.loadedZones[zone.index] === 'undefined') {
                 // full update necessary to clear client zone memory
                 this.writeHighPriority(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
-                this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
-            }
-
-            const updates = World.getUpdates(zone.index).filter((event: ZoneEvent): boolean => {
-                return event.tick > this.loadedZones[zone.index] && (event.receiverId === -1 || event.receiverId === this.pid);
-            });
-
-            if (zone.updates.length > 0) {
-                // console.log(`${World.currentTick} Zone: ${zoneIndex}, Updates: ${zone.updates.length}`);
-            }
-
-            if (updates.length) {
-                this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
-
-                for (let i = 0; i < updates.length; i++) {
-                    // have to copy because encryption will be applied to buffer
-                    const data = updates[i].buffer;
-                    const out = new Packet(new Uint8Array(data.data.length));
-                    const pos = data.pos;
-                    data.pos = 0;
-                    data.gdata(out.data, 0, out.data.length);
-                    data.pos = pos;
-                    out.pos = pos;
-
-                    // the packet is released elsewhere.
-                    this.highPriorityOut.push(out);
+                for (const obj of zone.getObjs()) {
+                    if (obj.receiverId !== -1 && obj.receiverId !== this.pid) {
+                        continue;
+                    }
+                    this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
+                    this.writeHighPriority(ServerProt.OBJ_ADD, Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count);
+                }
+                for (const loc of zone.getLocsUnsafe()) {
+                    if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(World.currentTick)) {
+                        this.writeHighPriority(ServerProt.LOC_ADD_CHANGE, Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, loc.type);
+                    } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(World.currentTick)) {
+                        this.writeHighPriority(ServerProt.LOC_DEL, Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle);
+                    }
                 }
             }
 
+            if (zone.shared) {
+                this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, zone.x, zone.z, this.loadedX, this.loadedZ, zone.shared);
+            }
+
+            if (zone.follows.size > 0) {
+                for (const event of zone.follows) {
+                    if (event.receiverId != -1 && event.receiverId !== this.pid) {
+                        continue;
+                    }
+                    this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
+                    const out: Packet = new Packet(Uint8Array.from(event.buffer));
+                    out.pos = event.buffer.length;
+                    this.highPriorityOut.push(out);
+                }
+            }
             this.loadedZones[zone.index] = World.currentTick;
         }
     }

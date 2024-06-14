@@ -11,7 +11,7 @@ export default abstract class Entity extends Linkable {
     readonly lifecycle: EntityLifeCycle;
 
     // runtime
-    lifecycleTick: number = 0;
+    lifecycleTick: number = -1;
 
     protected constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle) {
         super();
