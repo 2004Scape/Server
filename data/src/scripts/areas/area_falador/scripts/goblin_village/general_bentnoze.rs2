@@ -24,6 +24,7 @@ if(map_members = true & inv_total(inv, trail_clue_hard_riddle_exp017) > 0) {
 if (~quest_dragon_getting_map_parts = true & %dragon_goblin = ^quest_dragon_knows_about_goblin) {
     def_int $choice = ~p_choice2("I've heard that one of your number has got hold of|part of a map.", 0, "So how is life for the goblins?", 1);
     if ($choice = 0) {
+        // chatnpc is neutral in osrs
         ~chatplayer("<p,neutral>I've heard that one of your number has got hold of|part of a map.");
         ~chatnpc("<p,goblinchat>Aha, that'd be Wormbrain.");
         ~chatplayer("<p,quiz>Where would he be?");
