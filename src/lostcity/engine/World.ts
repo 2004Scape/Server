@@ -35,7 +35,6 @@ import GameMap from '#lostcity/engine/GameMap.js';
 import {Inventory} from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
 
-import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
@@ -81,19 +80,19 @@ class World {
     lastCycleStats: number[] = [];
     lastCycleBandwidth: number[] = [0, 0];
 
-    gameMap = new GameMap();
-    invs: Inventory[] = []; // shared inventories (shops)
+    readonly gameMap = new GameMap();
+    readonly invs: Inventory[] = []; // shared inventories (shops)
     vars: Int32Array = new Int32Array(); // var shared
     varsString: string[] = [];
 
     // entities
-    newPlayers: Player[] = []; // players joining at the end of this tick
-    players: PlayerList = new PlayerList(2048);
-    npcs: NpcList = new NpcList(8192);
+    readonly newPlayers: Player[] = []; // players joining at the end of this tick
+    readonly players: PlayerList = new PlayerList(2048);
+    readonly npcs: NpcList = new NpcList(8192);
 
     // zones
-    zonesTracking: Map<number, Set<Zone>> = new Map();
-    queue: LinkList<EntityQueueState> = new LinkList();
+    readonly zonesTracking: Map<number, Set<Zone>> = new Map();
+    readonly queue: LinkList<EntityQueueState> = new LinkList();
 
     devWatcher: Watcher | null = null;
     devThread: Worker | null = null;
@@ -101,10 +100,6 @@ class World {
     devMTime: Map<string, number> = new Map();
 
     // ----
-
-    get collisionManager(): CollisionManager {
-        return this.gameMap.collisionManager;
-    }
 
     shouldReload(type: string, client: boolean = false): boolean {
         const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
@@ -901,11 +896,11 @@ class World {
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
                 break;
             case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.gameMap.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
                 break;
         }
 
@@ -921,11 +916,11 @@ class World {
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
                 break;
             case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.gameMap.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
                 break;
         }
 
@@ -960,7 +955,7 @@ class World {
         console.log(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
+            this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
         const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
@@ -988,7 +983,7 @@ class World {
         console.log(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
         const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
+            this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
         }
 
         const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
