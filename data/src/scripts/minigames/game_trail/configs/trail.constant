@@ -1,0 +1,11 @@
+^trail_easy_maxsteps = 4
+^trail_medium_maxsteps = 5
+^trail_hard_maxsteps = 6
+
+^trail_sextant_frame_max = 14
+
+^trail_chart_not_started = 0
+^trail_chart_spoken_prof = 1
+^trail_chart_spoken_murphy = 2
+^trail_chart_spoken_kojo = 3
+^trail_chart_complete = 4

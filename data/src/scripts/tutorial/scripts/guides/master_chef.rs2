@@ -68,7 +68,7 @@ switch_int($option) {
         ~chatnpc("<p,neutral>The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a range, right click the item you would like to cook, select 'use' then left click the range.");
         ~master_chef_recap_options;
     case 3:
-        ~chatplayer("<p,default>Tell me about music again.");
+        ~chatplayer("<p,neutral>Tell me about music again.");
         ~chatnpc("<p,neutral>Ah yes. The music was created by the great bard Ian. As you explore the world and complete quests you will unlock more of the tunes in your music player. Simply click on a tune in the music menu to listen to it.");
         ~master_chef_recap_options;
 }

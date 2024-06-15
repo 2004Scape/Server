@@ -6,27 +6,39 @@ if (distance(coord, 0_46_52_55_55) <= 1) {
 // Everything else
 anim(human_dig, 0);
 // Treasure Trails
-if(~trail_hasclue_inv = true) {
+if(map_members = true & ~trail_hasclue_inv = true) {
     def_obj $clue = ~trail_getclue_inv;
 
     if(~trail_clue_coord($clue) = true) {
-        if(oc_param($clue, trail_coord) = coord) {
-            if(oc_param($clue, trail_sextant) = true) {
-                if(inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 1 | inv_total(inv, trail_sextant) = 1) {
-                    ~displaymessage(^dm_default);
+        def_boolean $sextant_clue = oc_param($clue, trail_sextant);
+        def_coord $trail_coord = oc_param($clue, trail_coord);
+        // for coord clues, https://www.youtube.com/watch?v=rcNbwik5-Ig looking at wiki and this 2013 video you can be 1 tile off and it will still work
+        // TODO: try and confirm this behaviour for 2004, this pre dec-2006 video also has this behaviour https://www.youtube.com/watch?v=yH6YaavzuMc
+        // also https://www.youtube.com/watch?v=QhdRJd-g438 for maps
+        if($sextant_clue = true & (inv_total(inv, trail_watch) = 0 | inv_total(inv, trail_chart) = 0 | inv_total(inv, trail_sextant) = 0)) {
+            ~displaymessage(^dm_default);
+            return;
+        }
+        if(distance(coord, $trail_coord) <= 1) {
+            if(oc_param($clue, trail_guardian) ! null) {
+                def_npc $guard = oc_param($clue, trail_guardian);
+                if($guard = zamorak_wizard & testbit(%trail_clue, 4) = false) {
+                    if(npc_find(coord, zamorak_wizard, 8, 0) = true & %npc_attacking_uid = uid) {
+                        return;
+                    }
+                    npc_add(movecoord(coord, 1, 0, 0), zamorak_wizard, 500);
+                    spotanim_map(small_smokepuff, npc_coord, 124, 0);
+                    npc_say("Die, human!");
+                    %aggressive_npc = npc_uid;
+                    %npc_attacking_uid = uid;
+                    npc_setmode(applayer2);
                     return;
                 }
             }
-
             inv_del(inv, $clue, 1);
-            if(oc_category($clue) = trail_clue_easy) {
-                inv_add(inv, trail_casket_easy, 1);
-            } else if(oc_category($clue) = trail_clue_medium) {
-                inv_add(inv, trail_casket_medium, 1);
-            } else if(oc_category($clue) = trail_clue_hard) {
-                inv_add(inv, trail_casket_hard, 1);
-            }
-            ~trail_casket_obtained;
+            def_namedobj $casket = oc_param($clue, trail_casket);
+            inv_add(inv, $casket, 1);
+            ~trail_casket_obtained($casket);
             return;
         }
     }

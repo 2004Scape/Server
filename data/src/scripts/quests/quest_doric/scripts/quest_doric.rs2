@@ -7,7 +7,7 @@
 
 [opnpc1,doric]
 // Treasure Trail
-if (inv_total(inv, trail_clue_easy_simple_exp022) = 1) {
+if (map_members = true & inv_total(inv, trail_clue_easy_simple_exp022) = 1) {
     @trail_doric;
 }
 
@@ -138,15 +138,7 @@ givexp(mining, 13000);
 %doric_progress = calc(%doric_progress + 1);
 ~send_quest_progress(questlist:doric, %doric_progress, ^doric_complete);
 
-// Treasure Trail
 [label,trail_doric]
-~chatnpc("<p,default>So you've come to the right place?");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp022, 1);
-if(~trail_clue_easy_complete = true) {
-
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Doric has given you another clue!");
-}
-
+// https://www.youtube.com/watch?v=Smadil97tFc
+~chatnpc("<p,neutral>So you've come to the right place?");
+~progress_clue_easy(trail_clue_easy_simple_exp022, "Doric has given you another clue scroll!");

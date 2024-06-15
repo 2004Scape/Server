@@ -1,7 +1,11 @@
 // https://gitlab.com/open-runescape-classic/core/-/blob/develop/server/plugins/com/openrsc/server/plugins/authentic/npcs/barbarian/Oracle.java
 // https://oldschool.runescape.wiki/w/Transcript:Oracle
 
-[opnpc1,npc_746]
+[opnpc1,oracle]
+if(map_members = true & inv_total(inv, trail_clue_medium_anagram_exp007) > 0) {
+    @trail_oracle;
+}
+
 if (~quest_dragon_getting_map_parts = true & %dragon_oracle >= ^quest_dragon_knows_about_oracle) {
     @multi2("I seek a piece of the map to the island of Crandor.", oracle_seek_map_piece, "Can you impart your wise knowledge to me, O Oracle?", oracle_random);
 }
@@ -51,3 +55,14 @@ switch_int ($random) {
     case 28 : ~chatnpc("<p,neutral>There are no crisps at the party.");
     case 29 : ~chatnpc("<p,neutral>Help wanted? Enquire within.");
 }
+
+[label,trail_oracle]
+if(inv_total(inv, trail_clue_medium_challenge_exp005) > 0) {
+    @trail_challengenpc_prompt("<p,neutral>Please enter the answer to the question.", "<p,happy>That's right, well done!", "<p,neutral>That's wrong I'm afraid.",
+    "The Oracle has given you another clue scroll!", trail_clue_medium_anagram_exp007, trail_clue_medium_challenge_exp005);
+}
+~chatnpc("<p,neutral>I've got a little challenge for you.");
+~chatplayer("<p,neutral>OK...");
+~chatnpc("<p,neutral>Can you answer this for me please.");
+inv_add(inv, trail_clue_medium_challenge_exp005, 1);
+~objboxt(trail_clue_medium_challenge_exp005, "The Oracle has given you a challenge scroll!");

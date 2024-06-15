@@ -213,6 +213,8 @@
 [command,findhero]()(boolean)
 [command,.findhero]()(boolean)
 [command,both_heropoints](int $damage)
+[command,setgender](int $gender)
+[command,setskincolour](int $skin_colour)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -284,6 +286,7 @@
 [command,loc_anim](seq $anim)
 [command,loc_category]()(category)
 [command,loc_change](loc $new_loc, int $duration)
+[command,.loc_change](loc $new_loc, int $duration)
 [command,loc_coord]()(coord)
 [command,.loc_coord]()(coord)
 [command,loc_del](int $duration)

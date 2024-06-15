@@ -1,6 +1,6 @@
 [opnpc1,bartender_port_sarim]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp020) = 1) {
+if(map_members = true & inv_total(inv, trail_clue_easy_simple_exp020) = 1) {
     @trail_bartender_port_sarim;
 }
 def_int $option;
@@ -63,11 +63,4 @@ say("Hiccup!");
 
 [label,trail_bartender_port_sarim]
 ~chatnpc("<p,happy>Congratulations! Here you go.");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp020, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "The bartender hands you another scroll!");
-}
+~progress_clue_easy(trail_clue_easy_simple_exp020, "The bartender has given you another scroll!");

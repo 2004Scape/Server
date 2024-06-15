@@ -47,6 +47,4 @@ if (finduid(%npc_attacking_uid) = true) {
     if (npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord)) {
         npc_del;
     }
-} else {
-    npc_del;
 }

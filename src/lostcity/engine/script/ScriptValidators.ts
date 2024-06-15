@@ -122,6 +122,8 @@ export const MesanimValid: ScriptValidator<number, MesanimType> = new ScriptInpu
 export const StructTypeValid: ScriptValidator<number, StructType> = new ScriptInputConfigTypeValidator(StructType.get, (input: number) => input >= 0 && input < StructType.count, 'Struct');
 export const DbRowTypeValid: ScriptValidator<number, DbRowType> = new ScriptInputConfigTypeValidator(DbRowType.get, (input: number) => input >= 0 && input < DbRowType.count, 'Dbrow');
 export const DbTableTypeValid: ScriptValidator<number, DbTableType> = new ScriptInputConfigTypeValidator(DbTableType.get, (input: number) => input >= 0 && input < DbTableType.count, 'Dbtable');
+export const GenderValid: ScriptValidator<number, number> = new ScriptInputRangeValidator(0, 1, 'Gender');
+export const SkinColourValid: ScriptValidator<number, number> = new ScriptInputRangeValidator(0, 7, 'SkinColour');
 
 export function check<T, R>(input: T, validator: ScriptValidator<T, R>): R {
     return validator.validate(input);

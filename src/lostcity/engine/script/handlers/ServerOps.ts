@@ -53,12 +53,7 @@ const ServerOps: CommandHandlers = {
         let count = 0;
         for (let x = Math.floor(from.x / 8); x <= Math.ceil(to.x / 8); x++) {
             for (let z = Math.floor(from.z / 8); z <= Math.ceil(to.z / 8); z++) {
-                const { players } = World.getZone(x << 3, z << 3, from.level);
-                for (const uid of players) {
-                    const player = World.getPlayerByUid(uid);
-                    if (player === null) {
-                        continue;
-                    }
+                for (const player of World.getZone(x << 3, z << 3, from.level).getAllPlayersSafe()) {
                     if (player.x >= from.x && player.x <= to.x && player.z >= from.z && player.z <= to.z) {
                         count++;
                     }
@@ -76,7 +71,7 @@ const ServerOps: CommandHandlers = {
         check(distance, NumberNotNull);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
-        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, HuntModeType.PLAYER);
+        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, -1, -1, HuntModeType.PLAYER);
     },
 
     [ScriptOpcode.HUNTNEXT]: state => {
@@ -102,7 +97,7 @@ const ServerOps: CommandHandlers = {
         check(distance, NumberNotNull);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
-        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, HuntModeType.NPC);
+        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, -1, -1, HuntModeType.NPC);
     },
 
     [ScriptOpcode.NPC_HUNTNEXT]: state => {
@@ -168,7 +163,7 @@ const ServerOps: CommandHandlers = {
         const position: Position = check(coord, CoordValid);
         const spotanimType: SpotanimType = check(spotanim, SpotAnimTypeValid);
 
-        World.getZone(position.x, position.z, position.level).animMap(position.x, position.z, spotanimType.id, height, delay);
+        World.animMap(position.level, position.x, position.z, spotanimType.id, height, delay);
     },
 
     [ScriptOpcode.DISTANCE]: state => {
@@ -309,7 +304,7 @@ const ServerOps: CommandHandlers = {
             throw new Error(`attempted to use invalid player uid: ${uid}`);
         }
 
-        World.getZone(srcPos.x, srcPos.z, srcPos.level).mapProjAnim(srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanimType.id, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
+        World.mapProjAnim(srcPos.level, srcPos.x, srcPos.z, player.x, player.z, -player.pid - 1, spotanimType.id, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.PROJANIM_NPC]: state => {
@@ -326,7 +321,7 @@ const ServerOps: CommandHandlers = {
             throw new Error(`attempted to use invalid npc uid: ${npcUid}`);
         }
 
-        World.getZone(srcPos.x, srcPos.z, srcPos.level).mapProjAnim(srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanimType.id, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
+        World.mapProjAnim(srcPos.level, srcPos.x, srcPos.z, npc.x, npc.z, npc.nid + 1, spotanimType.id, srcHeight + 100, dstHeight + 100, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.PROJANIM_MAP]: state => {
@@ -336,17 +331,13 @@ const ServerOps: CommandHandlers = {
         const srcPos: Position = check(srcCoord, CoordValid);
         const dstPos: Position = check(dstCoord, CoordValid);
 
-        World.getZone(srcPos.x, srcPos.z, srcPos.level).mapProjAnim(srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanimType.id, srcHeight + 100, dstHeight, delay, duration, peak, arc);
+        World.mapProjAnim(srcPos.level, srcPos.x, srcPos.z, dstPos.x, dstPos.z, 0, spotanimType.id, srcHeight + 100, dstHeight, delay, duration, peak, arc);
     },
 
     [ScriptOpcode.MAP_LOCADDUNSAFE]: state => {
         const pos: Position = check(state.popInt(), CoordValid);
 
-        const zone = World.getZone(pos.x, pos.z, pos.level);
-        const locs = zone.staticLocs.concat(zone.locs);
-
-        for (let index = 0; index < locs.length; index++) {
-            const loc = locs[index];
+        for (const loc of World.getZone(pos.x, pos.z, pos.level).getAllLocsUnsafe()) {
             const type = check(loc.type, LocTypeValid);
 
             if (type.active !== 1) {
@@ -369,7 +360,7 @@ const ServerOps: CommandHandlers = {
                 const length = loc.angle === LocAngle.NORTH || loc.angle === LocAngle.SOUTH ? loc.width : loc.length;
                 for (let index = 0; index < width * length; index++) {
                     const deltaX = loc.x + (index % width);
-                    const deltaZ = loc.z + index / width;
+                    const deltaZ = loc.z + ((index / width) | 0);
                     if (deltaX === pos.x && deltaZ === pos.z) {
                         state.pushInt(1);
                         return;

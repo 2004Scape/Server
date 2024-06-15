@@ -1,49 +1,49 @@
-[idk_45]
+[woman_hair_bald]
 type=woman_hair
 head1=model_120_idk_head
 model1=model_403_idk
 
-[idk_46]
+[woman_hair_bun]
 type=woman_hair
 head1=model_103_idk_head
 model1=model_378_idk
 
-[idk_47]
+[woman_hair_dreadlocks]
 type=woman_hair
 head1=model_110_idk_head
 model1=model_387_idk
 
-[idk_48]
+[woman_hair_long]
 type=woman_hair
 head1=model_113_idk_head
 model1=model_390_idk
 
-[idk_49]
+[woman_hair_medium]
 type=woman_hair
 head1=model_115_idk_head
 model1=model_393_idk
 
-[idk_50]
+[woman_hair_pigtails]
 type=woman_hair
 head1=model_118_idk_head
 model1=model_399_idk
 
-[idk_51]
+[woman_hair_short]
 type=woman_hair
 head1=model_114_idk_head
 model1=model_391_idk
 
-[idk_52]
+[woman_hair_cropped]
 type=woman_hair
 head1=model_125_idk_head
 model1=model_408_idk
 
-[idk_53]
+[woman_hair_wildspikes]
 type=woman_hair
 head1=model_105_idk_head
 model1=model_382_idk
 
-[idk_54]
+[woman_hair_spikes]
 type=woman_hair
 head1=model_104_idk_head
 model1=model_379_idk
@@ -54,43 +54,43 @@ type=woman_hair
 head1=model_104_idk_head
 model1=model_379_idk
 
-[idk_56]
+[woman_torso_plain]
 type=woman_torso
 model1=model_456_idk
 
-[idk_57]
+[woman_torso_crop_top]
 type=woman_torso
 model1=model_469_idk
 
-[idk_58]
+[woman_torso_polo_neck]
 type=woman_torso
 model1=model_470_idk
 
-[idk_59]
+[woman_torso_simple]
 type=woman_torso
 model1=model_471_idk
 
-[idk_60]
+[woman_torso_torn]
 type=woman_torso
 model1=model_474_idk
 
-[idk_61]
+[woman_arms_short_sleeves]
 type=woman_arms
 model1=model_332_idk
 
-[idk_62]
+[woman_arms_bare_arms]
 type=woman_arms
 model1=model_351_idk
 
-[idk_63]
+[woman_arms_muscley]
 type=woman_arms
 model1=model_346_idk
 
-[idk_64]
+[woman_arms_long_sleeved]
 type=woman_arms
 model1=model_348_idk
 
-[idk_65]
+[woman_arms_large_cuffs]
 type=woman_arms
 model1=model_343_idk
 
@@ -114,35 +114,35 @@ disable=yes
 type=woman_hands
 model1=model_353_idk
 
-[idk_70]
+[woman_legs_plain]
 type=woman_legs
 model1=model_419_idk
 
-[idk_71]
+[woman_legs_shorts]
 type=woman_legs
 model1=model_433_idk
 
-[idk_72]
+[woman_legs_flares]
 type=woman_legs
 model1=model_431_idk
 
-[idk_73]
+[woman_legs_turn_ups]
 type=woman_legs
 model1=model_428_idk
 
-[idk_74]
+[woman_legs_turn_ups_2]
 type=woman_legs
 model1=model_421_idk
 
-[idk_75]
+[woman_legs_turn_ups_3]
 type=woman_legs
 model1=model_438_idk
 
-[idk_76]
+[woman_legs_turn_ups_4]
 type=woman_legs
 model1=model_437_idk
 
-[idk_77]
+[woman_legs_turn_ups_5]
 type=woman_legs
 model1=model_429_idk
 

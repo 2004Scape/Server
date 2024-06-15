@@ -1,18 +1,18 @@
 import ParamType from '#lostcity/cache/config/ParamType.js';
 import LocType from '#lostcity/cache/config/LocType.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
-import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import {ParamHelper} from '#lostcity/cache/config/ParamHelper.js';
 
 import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer, {ActiveLoc, checkedHandler} from '#lostcity/engine/script/ScriptPointer.js';
-import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
+import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import {LocIterator} from '#lostcity/engine/script/ScriptIterators.js';
 import Zone from '#lostcity/engine/zone/Zone.js';
 
 import Loc from '#lostcity/entity/Loc.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import {
@@ -40,17 +40,20 @@ const LocOps: CommandHandlers = {
 
         const zone: Zone = World.getZone(position.x, position.z, position.level);
 
-        let loc: Loc;
-        const staticLoc: number = zone.staticLocs.findIndex(loc => loc.type === locType.id && loc.angle === locAngle && loc.shape === locShape && loc.x === position.x && loc.z === position.z && !loc.checkLifeCycle(World.currentTick));
-        if (staticLoc === -1) {
-            loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
-            World.addLoc(loc, duration);
-        } else {
-            loc = zone.staticLocs[staticLoc];
-            World.addLoc(loc, -1);
+        let found: Loc | null = null;
+        for (const loc of zone.getAllLocsUnsafe()) {
+            if (loc.type === locType.id && loc.angle === locAngle && loc.shape === locShape && loc.x === position.x && loc.z === position.z && loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                found = loc;
+                World.addLoc(loc, 0);
+                break;
+            }
+        }
+        if (!found) {
+            found = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
+            World.addLoc(found, duration);
         }
 
-        state.activeLoc = loc;
+        state.activeLoc = found;
         state.pointerAdd(ActiveLoc[state.intOperand]);
     },
 
@@ -61,8 +64,7 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, state => {
         const seqType: SeqType = check(state.popInt(), SeqTypeValid);
 
-        const loc = state.activeLoc;
-        World.getZone(loc.x, loc.z, loc.level).animLoc(loc, seqType.id);
+        World.animLoc(state.activeLoc, seqType.id);
     }),
 
     [ScriptOpcode.LOC_CATEGORY]: checkedHandler(ActiveLoc, state => {
@@ -77,9 +79,24 @@ const LocOps: CommandHandlers = {
 
         World.removeLoc(state.activeLoc, duration);
 
-        const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
-        World.addLoc(loc, duration);
-        state.activeLoc = loc;
+        // const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
+        // World.addLoc(loc, duration);
+
+        const zone: Zone = World.getZone(state.activeLoc.x, state.activeLoc.z, state.activeLoc.level);
+        let found: Loc | null = null;
+        for (const loc of zone.getAllLocsUnsafe()) {
+            if (loc.type === locType.id && loc.angle === state.activeLoc.angle && loc.shape === state.activeLoc.shape && loc.x === state.activeLoc.x && loc.z === state.activeLoc.z && loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                found = loc;
+                World.addLoc(loc, 0);
+                break;
+            }
+        }
+        if (!found) {
+            found = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, state.activeLoc.shape, state.activeLoc.angle);
+            World.addLoc(found, duration);
+        }
+
+        state.activeLoc = found;
         state.pointerAdd(ActiveLoc[state.intOperand]);
     }),
 

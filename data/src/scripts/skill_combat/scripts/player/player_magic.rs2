@@ -83,6 +83,9 @@ if (~player_npc_hit_roll(^magic_style) = true) {
 [proc,pvm_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
 p_stopaction;
+if(npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+}
 if (npc_stat(hitpoints) = 0) {
     return(false); // this means the npc is not avail to fight i.e dead
 }

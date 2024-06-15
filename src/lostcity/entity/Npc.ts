@@ -21,6 +21,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import {Direction, Position} from '#lostcity/entity/Position.js';
+import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import HuntType from '#lostcity/cache/config/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
@@ -81,7 +82,7 @@ export default class Npc extends PathingEntity {
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, Npc.FACE_COORD, Npc.FACE_ENTITY, false);
+        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, Npc.FACE_COORD, Npc.FACE_ENTITY);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
@@ -508,7 +509,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, -1) === null) {
             this.defaultMode();
             return;
         }
@@ -729,51 +730,27 @@ export default class Npc extends PathingEntity {
         return null;
     }
 
-    huntAll() {
-        const type = NpcType.get(this.type);
-        const hunt = HuntType.get(this.huntMode);
+    huntAll(): void {
+        const hunt: HuntType = HuntType.get(this.huntMode);
         if (hunt.type === HuntModeType.OFF) {
             return;
         }
         if (!hunt.findKeepHunting && this.target !== null) {
             return;
         }
-
         if (this.nextHuntTick > World.currentTick) {
             return;
         }
 
-        const hunted: Entity[] = [];
-        const huntAll: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, hunt.type);
-
+        let hunted: Entity[];
         if (hunt.type === HuntModeType.PLAYER) {
-            for (const player of huntAll) {
-                if (!(player instanceof Player)) {
-                    throw new Error('[Npc] huntAll must be of type Player here.');
-                }
-
-                // TODO: probably zone check to see if they're in the wilderness as well?
-                if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
-                    continue;
-                }
-
-                if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
-                    continue;
-                } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
-                    continue;
-                }
-
-                if (hunt.checkNotBusy && player.busy()) {
-                    continue;
-                }
-
-                hunted.push(player);
-            }
+            hunted = this.huntPlayers(hunt);
+        } else if (hunt.type === HuntModeType.NPC) {
+            hunted = this.huntNpcs(hunt);
+        } else if (hunt.type === HuntModeType.OBJ) {
+            hunted = this.huntObjs(hunt);
         } else {
-            for (const entity of huntAll) {
-                // npc, loc and obj here.
-                hunted.push(entity);
-            }
+            hunted = this.huntLocs(hunt);
         }
 
         // pick randomly from the hunted entities
@@ -782,6 +759,58 @@ export default class Npc extends PathingEntity {
             this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
         }
         this.nextHuntTick = World.currentTick + hunt.rate;
+    }
+
+    private huntPlayers(hunt: HuntType): Entity[] {
+        const type: NpcType = NpcType.get(this.type);
+        const players: Entity[] = [];
+        const hunted: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType.PLAYER);
+        for (const player of hunted) {
+            if (!(player instanceof Player)) {
+                throw new Error('[Npc] huntAll must be of type Player here.');
+            }
+
+            // TODO: probably zone check to see if they're in the wilderness as well?
+            if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
+                continue;
+            }
+
+            if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
+                continue;
+            } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
+                continue;
+            }
+
+            if (hunt.checkInv !== -1) {
+                let quantity: number = 0;
+                if (hunt.checkObj !== -1) {
+                    quantity = player.invTotal(hunt.checkInv, hunt.checkObj);
+                } else if (hunt.checkObjParam !== -1) {
+                    quantity = player.invTotalParam(hunt.checkInv, hunt.checkObjParam);
+                }
+                if (quantity < hunt.checkInvMinQuantity || quantity > hunt.checkInvMaxQuantity) {
+                    continue;
+                }
+            }
+
+            if (hunt.checkNotBusy && player.busy()) {
+                continue;
+            }
+            players.push(player);
+        }
+        return players;
+    }
+
+    private huntNpcs(hunt: HuntType): Entity[] {
+        return Array.from(new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, hunt.checkNpc, hunt.checkCategory, HuntModeType.NPC));
+    }
+
+    private huntObjs(hunt: HuntType): Entity[] {
+        return Array.from(new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, hunt.checkObj, hunt.checkCategory, HuntModeType.OBJ));
+    }
+
+    private huntLocs(hunt: HuntType): Entity[] {
+        return Array.from(new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, hunt.checkLoc, hunt.checkCategory, HuntModeType.SCENERY));
     }
 
     // ----
