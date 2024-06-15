@@ -509,7 +509,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, -1) === null) {
             this.defaultMode();
             return;
         }

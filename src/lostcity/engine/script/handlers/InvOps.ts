@@ -75,7 +75,7 @@ const InvOps: CommandHandlers = {
         if (overflow > 0) {
             const floorObj = new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow);
 
-            World.addObj(floorObj, player, 200);
+            World.addObj(floorObj, player.pid, 200);
         }
     }),
 
@@ -152,7 +152,7 @@ const InvOps: CommandHandlers = {
         player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
         const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objType.id, completed);
-        World.addObj(floorObj, player, duration);
+        World.addObj(floorObj, player.pid, duration);
     }),
 
     // inv write
@@ -182,7 +182,7 @@ const InvOps: CommandHandlers = {
         player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
         const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
-        World.addObj(floorObj, player, duration);
+        World.addObj(floorObj, player.pid, duration);
     }),
 
     // inv read
@@ -254,7 +254,7 @@ const InvOps: CommandHandlers = {
         if (overflow > 0) {
             const floorObj = new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow);
 
-            World.addObj(floorObj, player, 200);
+            World.addObj(floorObj, player.pid, 200);
         }
     }),
 
@@ -351,7 +351,7 @@ const InvOps: CommandHandlers = {
         const overflow = count - state.activePlayer.invAdd(toInvType.id, objType.id, completed);
         if (overflow > 0) {
             const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, EntityLifeCycle.DESPAWN, objType.id, overflow);
-            World.addObj(floorObj, state.activePlayer, 200);
+            World.addObj(floorObj, state.activePlayer.pid, 200);
         }
     }),
 
@@ -384,7 +384,7 @@ const InvOps: CommandHandlers = {
         const overflow = count - state.activePlayer.invAdd(toInvType.id, finalObj, completed);
         if (overflow > 0) {
             const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, EntityLifeCycle.DESPAWN, finalObj, overflow);
-            World.addObj(floorObj, state.activePlayer, 200);
+            World.addObj(floorObj, state.activePlayer.pid, 200);
         }
     
     }),

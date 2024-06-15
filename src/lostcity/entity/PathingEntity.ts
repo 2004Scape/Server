@@ -163,14 +163,14 @@ export default abstract class PathingEntity extends Entity {
             // players and npcs both can change this collision
             switch (this.blockWalk) {
                 case BlockWalk.NPC:
-                    World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
-                    World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    World.gameMap.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.gameMap.changeNpcCollision(this.width, this.x, this.z, this.level, true);
                     break;
                 case BlockWalk.ALL:
-                    World.collisionManager.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
-                    World.collisionManager.changeNpcCollision(this.width, this.x, this.z, this.level, true);
-                    World.collisionManager.changePlayerCollision(this.width, previousX, previousZ, previousLevel, false);
-                    World.collisionManager.changePlayerCollision(this.width, this.x, this.z, this.level, true);
+                    World.gameMap.changeNpcCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.gameMap.changeNpcCollision(this.width, this.x, this.z, this.level, true);
+                    World.gameMap.changePlayerCollision(this.width, previousX, previousZ, previousLevel, false);
+                    World.gameMap.changePlayerCollision(this.width, this.x, this.z, this.level, true);
                     break;
             }
         }

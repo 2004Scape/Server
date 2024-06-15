@@ -15,26 +15,26 @@ import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
-import { EntityTimer, PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityTimer, PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
+import {EntityQueueRequest, PlayerQueueType, QueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import { Position } from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 
-import ServerProt, { ServerProtEncoders } from '#lostcity/server/ServerProt.js';
+import ServerProt, {ServerProtEncoders} from '#lostcity/server/ServerProt.js';
 
-import { Inventory } from '#lostcity/engine/Inventory.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
-import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import Zone from '#lostcity/engine/zone/Zone.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
@@ -49,7 +49,7 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
-import { PRELOADED, PRELOADED_CRC } from '#lostcity/server/PreloadedPacks.js';
+import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -794,7 +794,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.pid) === null) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
@@ -997,40 +997,16 @@ export default class Player extends PathingEntity {
 
     updateZones() {
         for (const zoneIndex of this.activeZones) {
-            const zone = World.getZoneIndex(zoneIndex);
+            const zone: Zone | undefined = World.getZoneIndex(zoneIndex);
             if (!zone) {
                 continue;
             }
-
-            // todo: receiver/shared buffer logic
             if (typeof this.loadedZones[zone.index] === 'undefined') {
-                // full update necessary to clear client zone memory
-                this.writeHighPriority(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
-                this.loadedZones[zone.index] = -1; // note: flash appears when changing floors
+                zone.writeFullFollows(this);
+            } else {
+                zone.writePartialEncloses(this);
+                zone.writePartialFollows(this);
             }
-
-            const updates = World.getUpdates(zone.index).filter((event: ZoneEvent): boolean => {
-                return event.tick > this.loadedZones[zone.index];
-            });
-
-            if (updates.length) {
-                this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
-
-                for (let i = 0; i < updates.length; i++) {
-                    // have to copy because encryption will be applied to buffer
-                    const data = updates[i].buffer;
-                    const out = new Packet(new Uint8Array(data.data.length));
-                    const pos = data.pos;
-                    data.pos = 0;
-                    data.gdata(out.data, 0, out.data.length);
-                    data.pos = pos;
-                    out.pos = pos;
-
-                    // the packet is released elsewhere.
-                    this.highPriorityOut.push(out);
-                }
-            }
-
             this.loadedZones[zone.index] = World.currentTick;
         }
     }
@@ -1058,7 +1034,7 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            for (const player of zone.getPlayers()) {
+            for (const player of zone.getAllPlayersSafe()) {
                 if (player.uid === this.uid || player.x <= absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z <= absBottomZ) {
                     continue;
                 }
@@ -1496,7 +1472,7 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            for (const npc of zone.getNpcs()) {
+            for (const npc of zone.getAllNpcsSafe()) {
                 if (npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
                     continue;
                 }
