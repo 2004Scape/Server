@@ -72,6 +72,7 @@ if_openmainmodal(player_kit_hair_jaw);
 
 [if_button,player_kit_hair_woman:com_100]
 if (%option1 = 0 | %option2 = 0) {
+    mes("You must make a selection from both categories."); // guess based of thessalia
     return;
 }
 
@@ -79,25 +80,25 @@ if_close;
 def_int $color = calc(%option2 - 1);
 
 if (%option1 = 1) {
-    setidkit(idk_45, $color);
+    setidkit(woman_hair_bald, $color);
 } else if (%option1 = 2) {
-    setidkit(idk_46, $color);
+    setidkit(woman_hair_bun, $color);
 } else if (%option1 = 3) {
-    setidkit(idk_47, $color);
+    setidkit(woman_hair_dreadlocks, $color);
 } else if (%option1 = 4) {
-    setidkit(idk_48, $color);
+    setidkit(woman_hair_long, $color);
 } else if (%option1 = 5) {
-    setidkit(idk_49, $color);
+    setidkit(woman_hair_medium, $color);
 } else if (%option1 = 6) {
-    setidkit(idk_50, $color);
+    setidkit(woman_hair_pigtails, $color);
 } else if (%option1 = 7) {
-    setidkit(idk_51, $color);
+    setidkit(woman_hair_short, $color);
 } else if (%option1 = 8) {
-    setidkit(idk_52, $color);
+    setidkit(woman_hair_cropped, $color);
 } else if (%option1 = 9) {
-    setidkit(idk_53, $color);
+    setidkit(woman_hair_wildspikes, $color);
 } else if (%option1 = 10) {
-    setidkit(idk_54, $color);
+    setidkit(woman_hair_spikes, $color);
 } 
 
 buildappearance(worn);
@@ -132,6 +133,7 @@ if (npc_find(coord, hairdresser, 5, 0) = true) {
 
 [if_button,player_kit_hair_man:com_99]
 if (%option1 = 0 | %option2 = 0) {
+    mes("You must make a selection from both categories."); // guess based of thessalia
     return;
 }
 
@@ -190,6 +192,7 @@ if (npc_find(coord, hairdresser, 5, 0) = true) {
 
 [if_button,player_kit_hair_jaw:com_105]
 if (%option1 = 0 | %option2 = 0) {
+    mes("You must make a selection from both categories."); // guess based of thessalia
     return;
 }
 
@@ -197,21 +200,21 @@ if_close;
 def_int $color = calc(%option2 - 1);
 
 if (%option1 = 1) {
-    setidkit(idk_11, $color);
+    setidkit(man_jaw_long, $color);
 } else if (%option1 = 2) {
-    setidkit(idk_10, $color);
+    setidkit(man_jaw_goatee, $color);
 } else if (%option1 = 3) {
-    setidkit(idk_13, $color);
+    setidkit(man_jaw_moustache, $color);
 } else if (%option1 = 4) {
-    setidkit(idk_15, $color);
+    setidkit(man_jaw_short, $color);
 } else if (%option1 = 5) {
-    setidkit(idk_17, $color);
+    setidkit(man_jaw_split, $color);
 } else if (%option1 = 6) {
-    setidkit(idk_12, $color);
+    setidkit(man_jaw_medium, $color);
 } else if (%option1 = 7) {
-    setidkit(idk_14, $color);
+    setidkit(man_jaw_none, $color);
 } else if (%option1 = 8) {
-    setidkit(idk_16, $color);
+    setidkit(man_jaw_pointy, $color);
 } 
 
 buildappearance(worn);

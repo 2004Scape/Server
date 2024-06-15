@@ -38,6 +38,8 @@ import {
     SeqTypeValid,
     SpotAnimTypeValid,
     StringNotNull,
+    GenderValid,
+    SkinColourValid
 } from '#lostcity/engine/script/ScriptValidators.js';
 
 const PlayerOps: CommandHandlers = {
@@ -943,7 +945,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SETGENDER]: (state) => {
-        const gender = state.popInt();
+        const gender = check(state.popInt(), GenderValid);
         // convert idkit
         for (let i = 0; i < 7; i++) {
             state.activePlayer.body[i] = -1;
@@ -958,7 +960,7 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.SETSKINCOLOUR]: (state) => {
-        const skin = state.popInt();
+        const skin = check(state.popInt(), SkinColourValid);
         state.activePlayer.colors[4] = skin;
     },
 

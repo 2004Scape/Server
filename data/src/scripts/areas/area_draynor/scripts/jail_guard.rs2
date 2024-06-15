@@ -1,0 +1,8 @@
+[opnpc1,jail_guard]
+~chatplayer("<p,quiz>Hi, who are you guarding here?");
+~chatnpc("<p,shifty>Can't say, all very secret. You should get out of here. I am not supposed to talk while I guard.");
+@multi2("Hey, chill out, I won't cause you trouble.", jail_guard_chill, "I had better leave, I don't want trouble.", joe_leave);
+
+[label,jail_guard_chill]
+~chatplayer("<p,happy>Hey, chill out, I won't cause you trouble. I was just wondering what you do to relax.");
+~chatnpc("<p,neutral>You never relax with these people, but it's a good career for a young man.");
