@@ -38,6 +38,8 @@ import {
     SeqTypeValid,
     SpotAnimTypeValid,
     StringNotNull,
+    GenderValid,
+    SkinColourValid
 } from '#lostcity/engine/script/ScriptValidators.js';
 
 const PlayerOps: CommandHandlers = {
@@ -913,29 +915,52 @@ const PlayerOps: CommandHandlers = {
         }
         state.activePlayer.body[slot] = idkType.id;
 
-        // 0 - hair
+        // 0 - hair/jaw
         // 1 - torso
         // 2 - legs
         // 3 - boots
-        // 4 - jaw
+        // 4 - skin
+        let type = idkType.type;
+        if(state.activePlayer.gender === 1) {
+            type -= 7;
+        }
+        console.log(type);
         let colorSlot = -1;
-        if (idkType.type === 0) {
+        if (type === 0 || type === 1) {
             colorSlot = 0;
-        } else if (idkType.type === 1) {
-            colorSlot = 4;
-        } else if (idkType.type === 2 || idkType.type === 3) {
+        } else if (type === 2 || type === 3) {
             colorSlot = 1;
-        } else if (idkType.type === 4) {
+        } else if (type === 4) {
             /* no-op (no hand recoloring) */
-        } else if (idkType.type === 5) {
+        } else if (type === 5) {
             colorSlot = 2;
-        } else if (idkType.type === 6) {
+        } else if (type === 6) {
             colorSlot = 3;
         }
 
         if (colorSlot !== -1) {
             state.activePlayer.colors[colorSlot] = color;
         }
+    },
+
+    [ScriptOpcode.SETGENDER]: (state) => {
+        const gender = check(state.popInt(), GenderValid);
+        // convert idkit
+        for (let i = 0; i < 7; i++) {
+            state.activePlayer.body[i] = -1;
+            for (let j = 0; j < IdkType.count; j++) {
+                if (!IdkType.get(j).disable && IdkType.get(j).type == i + (gender === 0 ? 0 : 7)) {
+                    state.activePlayer.body[i] = j;
+                    break;
+                }
+            }
+        }
+        state.activePlayer.gender = gender;
+    },
+
+    [ScriptOpcode.SETSKINCOLOUR]: (state) => {
+        const skin = check(state.popInt(), SkinColourValid);
+        state.activePlayer.colors[4] = skin;
     },
 
     [ScriptOpcode.P_OPPLAYERT]: checkedHandler(ProtectedActivePlayer, state => {
