@@ -28,7 +28,7 @@ export default class OpObjTHandler extends MessageHandler<OpObjT> {
             return false;
         }
 
-        const obj = World.getObj(x, z, player.level, objId);
+        const obj = World.getObj(x, z, player.level, objId, player.pid);
         if (!obj) {
             return false;
         }

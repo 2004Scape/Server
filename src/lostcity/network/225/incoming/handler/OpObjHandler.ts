@@ -23,7 +23,7 @@ export default class OpObjHandler extends MessageHandler<OpObj> {
             return false;
         }
 
-        const obj = World.getObj(x, z, player.level, objId);
+        const obj = World.getObj(x, z, player.level, objId, player.pid);
         if (!obj) {
             player.unsetMapFlag();
             return false;

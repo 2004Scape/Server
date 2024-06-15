@@ -87,7 +87,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                 const zoneZ: number = z << 3;
 
                 if (this.type === HuntModeType.PLAYER) {
-                    for (const player of World.getZone(zoneX, zoneZ, this.level).getPlayers()) {
+                    for (const player of World.getZone(zoneX, zoneZ, this.level).getAllPlayersSafe()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -103,7 +103,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         yield player;
                     }
                 } else if (this.type === HuntModeType.NPC) {
-                    for (const npc of World.getZone(zoneX, zoneZ, this.level).getNpcs()) {
+                    for (const npc of World.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -133,7 +133,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                     }
                 } else if (this.type === HuntModeType.OBJ) {
                     // scripting only cares about dynamic objs??
-                    for (const obj of World.getZone(zoneX, zoneZ, this.level).getObjs()) {
+                    for (const obj of World.getZone(zoneX, zoneZ, this.level).getAllObjsSafe()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -156,7 +156,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         yield obj;
                     }
                 } else if (this.type === HuntModeType.SCENERY) {
-                    for (const loc of World.getZone(zoneX, zoneZ, this.level).getLocs()) {
+                    for (const loc of World.getZone(zoneX, zoneZ, this.level).getAllLocsSafe()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -215,7 +215,7 @@ export class NpcIterator extends ScriptIterator<Npc> {
 
     protected *generator(): IterableIterator<Npc> {
         if (this.type === NpcIteratorType.ZONE) {
-            for (const npc of World.getZone(this.x, this.z, this.level).getNpcs()) {
+            for (const npc of World.getZone(this.x, this.z, this.level).getAllNpcsSafe()) {
                 if (World.currentTick > this.tick) {
                     throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
                 }
@@ -226,7 +226,7 @@ export class NpcIterator extends ScriptIterator<Npc> {
                 const zoneX: number = x << 3;
                 for (let z: number = this.maxZ; z >= this.minZ; z--) {
                     const zoneZ: number = z << 3;
-                    for (const npc of World.getZone(zoneX, zoneZ, this.level).getNpcs()) {
+                    for (const npc of World.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe()) {
                         if (World.currentTick > this.tick) {
                             throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
@@ -260,7 +260,7 @@ export class LocIterator extends ScriptIterator<Loc> {
     }
 
     protected *generator(): IterableIterator<Loc> {
-        for (const loc of World.getZone(this.x, this.z, this.level).getLocs()) {
+        for (const loc of World.getZone(this.x, this.z, this.level).getAllLocsSafe()) {
             if (World.currentTick > this.tick) {
                 throw new Error('[LocIterator] tried to use an old iterator. Create a new iterator instead.');
             }

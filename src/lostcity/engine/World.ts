@@ -92,13 +92,7 @@ class World {
     npcs: NpcList = new NpcList(8192);
 
     // zones
-    // trackedZones: number[] = [];
-    // zoneBuffers: Map<number, Packet> = new Map();
-    // futureUpdates: Map<number, Map<number, FutureZoneEvent[] | undefined>> = new Map();
-    // activeZones: Map<number, ZoneEvent[]> = new Map();
-    // cleanUpdates: Map<number, ZoneEvent[] | undefined> = new Map();
-    activeZones: Map<number, Set<Zone>> = new Map();
-    trackedZones: number[] = [];
+    zonesTracking: Map<number, Set<Zone>> = new Map();
     queue: LinkList<EntityQueueState> = new LinkList();
 
     devWatcher: Watcher | null = null;
@@ -664,7 +658,7 @@ class World {
         // - loc/obj despawn/respawn
         // - compute shared buffer
         let zoneProcessing = Date.now();
-        for (const zone of Array.from(this.activeZones.get(this.currentTick) ?? [])) {
+        for (const zone of Array.from(this.zonesTracking.get(this.currentTick) ?? [])) {
             zone.tick(this.currentTick);
         }
         this.computeSharedEvents();
@@ -711,17 +705,10 @@ class World {
 
         let cleanup = Date.now();
         // cleanup zone updates
-        for (const zone of Array.from(this.activeZones.get(this.currentTick) ?? [])) {
+        for (const zone of Array.from(this.zonesTracking.get(this.currentTick) ?? [])) {
             zone.reset();
         }
-        for (const index of this.trackedZones) {
-            const zone = this.getZoneIndex(index);
-            if (!zone) {
-                continue;
-            }
-            zone.shared = null;
-        }
-        this.activeZones.delete(this.currentTick);
+        this.zonesTracking.delete(this.currentTick);
 
         // reset entity masks
         for (const player of this.players) {
@@ -889,26 +876,18 @@ class World {
     }
 
     computeSharedEvents(): void {
-        this.trackedZones = [];
-
+        const zones: Set<number> = new Set();
         for (const player of this.players) {
-            // TODO: optimize this
-            const zones = Object.keys(player.loadedZones);
-            for (let j = 0; j < zones.length; j++) {
-                const zoneIndex = parseInt(zones[j]);
-                if (!this.trackedZones.includes(zoneIndex)) {
-                    this.trackedZones.push(zoneIndex);
-                }
+            for (const zone of Object.keys(player.loadedZones).map(Number)) {
+                zones.add(zone);
             }
         }
-
-        for (let i = 0; i < this.trackedZones.length; i++) {
-            const zoneIndex = this.trackedZones[i];
-            const zone = this.getZoneIndex(zoneIndex);
+        for (const zoneIndex of zones) {
+            const zone: Zone | undefined = this.getZoneIndex(zoneIndex);
             if (!zone) {
                 continue;
             }
-            zone.global();
+            zone.computeShared();
         }
     }
 
@@ -961,20 +940,20 @@ class World {
         return this.getZone(x, z, level).getLoc(x, z, locId);
     }
 
-    getObj(x: number, z: number, level: number, objId: number): Obj | null {
-        return this.getZone(x, z, level).getObj(x, z, objId);
+    getObj(x: number, z: number, level: number, objId: number, receiverId: number): Obj | null {
+        return this.getZone(x, z, level).getObj(x, z, objId, receiverId);
     }
 
     trackZone(tick: number, zone: Zone): void {
         let zones: Set<Zone>;
-        const active: Set<Zone> | undefined = this.activeZones.get(tick);
+        const active: Set<Zone> | undefined = this.zonesTracking.get(tick);
         if (!active) {
             zones = new Set();
         } else {
             zones = active;
         }
         zones.add(zone);
-        this.activeZones.set(tick, zones);
+        this.zonesTracking.set(tick, zones);
     }
 
     addLoc(loc: Loc, duration: number): void {
@@ -1023,7 +1002,7 @@ class World {
         console.log(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
         const objType: ObjType = ObjType.get(obj.type);
         // check if we need to changeobj first.
-        const existing = this.getObj(obj.x, obj.z, obj.level, obj.type);
+        const existing = this.getObj(obj.x, obj.z, obj.level, obj.type, receiverId);
         if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const nextCount = obj.count + existing.count;
             if (objType.stackable && nextCount <= Inventory.STACK_LIMIT) {

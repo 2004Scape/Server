@@ -32,6 +32,8 @@ import ServerProt, {ServerProtEncoders} from '#lostcity/server/ServerProt.js';
 
 import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import Zone from '#lostcity/engine/zone/Zone.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
@@ -47,7 +49,6 @@ import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';
-import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -792,7 +793,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type) === null) {
+        if (this.target instanceof Obj && World.getObj(this.target.x, this.target.z, this.level, this.target.type, this.pid) === null) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
@@ -995,44 +996,15 @@ export default class Player extends PathingEntity {
 
     updateZones() {
         for (const zoneIndex of this.activeZones) {
-            const zone = World.getZoneIndex(zoneIndex);
+            const zone: Zone | undefined = World.getZoneIndex(zoneIndex);
             if (!zone) {
                 continue;
             }
-
             if (typeof this.loadedZones[zone.index] === 'undefined') {
-                // full update necessary to clear client zone memory
-                this.writeHighPriority(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
-                for (const obj of zone.getObjs()) {
-                    if (obj.receiverId !== -1 && obj.receiverId !== this.pid) {
-                        continue;
-                    }
-                    this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
-                    this.writeHighPriority(ServerProt.OBJ_ADD, Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count);
-                }
-                for (const loc of zone.getLocsUnsafe()) {
-                    if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(World.currentTick)) {
-                        this.writeHighPriority(ServerProt.LOC_ADD_CHANGE, Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, loc.type);
-                    } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(World.currentTick)) {
-                        this.writeHighPriority(ServerProt.LOC_DEL, Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle);
-                    }
-                }
-            }
-
-            if (zone.shared) {
-                this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, zone.x, zone.z, this.loadedX, this.loadedZ, zone.shared);
-            }
-
-            if (zone.follows.size > 0) {
-                for (const event of zone.follows) {
-                    if (event.receiverId != -1 && event.receiverId !== this.pid) {
-                        continue;
-                    }
-                    this.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, zone.x, zone.z, this.loadedX, this.loadedZ);
-                    const out: Packet = new Packet(Uint8Array.from(event.buffer));
-                    out.pos = event.buffer.length;
-                    this.highPriorityOut.push(out);
-                }
+                zone.writeFullFollows(this);
+            } else {
+                zone.writePartialEncloses(this);
+                zone.writePartialFollows(this);
             }
             this.loadedZones[zone.index] = World.currentTick;
         }
@@ -1061,7 +1033,7 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            for (const player of zone.getPlayers()) {
+            for (const player of zone.getAllPlayersSafe()) {
                 if (player.uid === this.uid || player.x <= absLeftX || player.x >= absRightX || player.z >= absTopZ || player.z <= absBottomZ) {
                     continue;
                 }
@@ -1499,7 +1471,7 @@ export default class Player extends PathingEntity {
                 continue;
             }
 
-            for (const npc of zone.getNpcs()) {
+            for (const npc of zone.getAllNpcsSafe()) {
                 if (npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
                     continue;
                 }
