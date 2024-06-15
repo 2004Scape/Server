@@ -361,9 +361,6 @@ const ServerOps: CommandHandlers = {
                 for (let index = 0; index < width * length; index++) {
                     const deltaX = loc.x + (index % width);
                     const deltaZ = loc.z + ((index / width) | 0);
-                    if (type.id === 594) {
-                        console.log(`${deltaX}, ${deltaZ}`);
-                    }
                     if (deltaX === pos.x && deltaZ === pos.z) {
                         state.pushInt(1);
                         return;
