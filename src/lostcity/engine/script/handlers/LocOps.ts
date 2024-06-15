@@ -79,9 +79,24 @@ const LocOps: CommandHandlers = {
 
         World.removeLoc(state.activeLoc, duration);
 
-        const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
-        World.addLoc(loc, duration);
-        state.activeLoc = loc;
+        // const loc = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, id, state.activeLoc.shape, state.activeLoc.angle);
+        // World.addLoc(loc, duration);
+
+        const zone: Zone = World.getZone(state.activeLoc.x, state.activeLoc.z, state.activeLoc.level);
+        let found: Loc | null = null;
+        for (const loc of zone.getAllLocsUnsafe()) {
+            if (loc.type === locType.id && loc.angle === state.activeLoc.angle && loc.shape === state.activeLoc.shape && loc.x === state.activeLoc.x && loc.z === state.activeLoc.z && loc.lifecycle === EntityLifeCycle.RESPAWN) {
+                found = loc;
+                World.addLoc(loc, 0);
+                break;
+            }
+        }
+        if (!found) {
+            found = new Loc(state.activeLoc.level, state.activeLoc.x, state.activeLoc.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, state.activeLoc.shape, state.activeLoc.angle);
+            World.addLoc(found, duration);
+        }
+
+        state.activeLoc = found;
         state.pointerAdd(ActiveLoc[state.intOperand]);
     }),
 
