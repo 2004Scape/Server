@@ -76,6 +76,9 @@ if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
     | (inv_totalcat(inv, trail_clue_easy) > 0)
     | (inv_totalcat(inv, trail_clue_medium) > 0)
     | (inv_totalcat(inv, trail_clue_hard) > 0)
+    | (inv_totalcat(inv, trail_casket_easy) > 0)
+    | (inv_totalcat(inv, trail_casket_medium) > 0)
+    | (inv_totalcat(inv, trail_casket_hard) > 0)
     | (inv_totalcat(inv, cannon_parts) > 0)) {
     return(false);
 }

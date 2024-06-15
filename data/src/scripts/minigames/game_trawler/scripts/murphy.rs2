@@ -1,0 +1,29 @@
+[opnpc1,murphy]
+if(~has_sextant_clue = true) {
+    if(~get_chart_progress = ^trail_chart_spoken_prof) {
+        ~chatplayer("<p,happy>Ahoy there!");
+        ~chatnpc("<p,happy>Ahoy!");
+        ~chatplayer("<p,neutral>I'm trying to learn how to be a navigator.");
+        ~chatnpc("<p,happy>Well, you've come to the right place, m'hearty! What do you need to know?");
+        ~chatplayer("<p,neutral>The professor said that I need to have a sextant. Do you know where I can get one?");
+        ~chatnpc("<p,neutral>Hmm. I used to use a sextant when I was a young fella.");
+        ~chatplayer("<p,neutral>Do you still have it?");
+        ~chatnpc("<p,neutral>Aye.");
+        ~chatplayer("<p,neutral>Could I have it?");
+        ~chatnpc("<p,neutral>Aye.");
+        inv_add(inv, trail_sextant, 1);
+        %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_spoken_murphy, 5, 8);
+        ~objboxt(trail_sextant, "Murphy has given you his old sextant.");
+        ~chatplayer("<p,confused>Don't you still need it?");
+        ~chatnpc("<p,happy>I can tell from the taste of the sea spray where I am, m'hearty!");
+        ~chatplayer("<p,happy>Wow!");
+        return;
+    } else if(~get_chart_progress >= ^trail_chart_spoken_murphy & ~obj_gettotal(trail_sextant) = 0) {
+        // https://youtu.be/SN8Q0F7f6sg?si=B36aNd8DgnBRNn7X&t=212
+        ~chatplayer("<p,neutral>I've lost that sextant you gave me.");
+        ~chatnpc("<p,happy>You're in luck, matey! I found a sextant in my net the last time I went out!");
+        inv_add(inv, trail_sextant, 1);
+        ~objboxt(trail_sextant, "Murphy has given you a sextant.");
+        return;
+    }
+}

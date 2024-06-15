@@ -1,4 +1,9 @@
 [opnpc1,cook]
+// https://www.youtube.com/watch?v=mtPhS3n2dAo
+if(map_members = true &inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
+    @trail_cook;
+}
+
 if(%cook_progress = 0) {
     ~chatnpc("<p,sad>What am I to do?");
     @cooks_assistant_start;
@@ -24,3 +29,12 @@ if(%cook_progress = 0) {
     }
 
 }
+
+[label,trail_cook]
+if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0) {
+    @trail_challengenpc_prompt("<p,neutral>Please tell me how many cannons there are.", "<p,happy>Cheers!", "<p,angry>Hmm, I don't think that's right.",
+    "The cook has given you another clue scroll!", trail_clue_medium_anagram_exp002, trail_clue_medium_challenge_exp002);
+}
+~chatnpc("<p,confused>I've always wondered how many cannons the castle has. Could you find out for me?");
+inv_add(inv, trail_clue_medium_challenge_exp002, 1);
+~objboxt(trail_clue_medium_challenge_exp002, "The cook has given you a challenge scroll!");

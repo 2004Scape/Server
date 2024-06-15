@@ -1,4 +1,9 @@
 [opnpc1,sir_prysin]
+if(map_members = true & inv_total(inv, trail_clue_hard_riddle_exp015) > 0) {
+    ~chatnpc("<p,happy>You've come to the right place, well done!");
+    ~progress_clue_hard(trail_clue_hard_riddle_exp015, "Sir Prysin has given you another clue scroll!");
+    return;
+}
 if (%demon_progress = 0 | %demon_progress = 1) {
     @demon_slayer_sir_prysin_pre_silverlight;
 } else if (%demon_progress > 1 & %demon_progress < ^demon_complete) {

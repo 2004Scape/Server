@@ -11,6 +11,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_coord,0_49_52_41_32
+param=trail_casket,trail_casket_easy_map001
 
 [trail_clue_easy_map002]
 name=Clue scroll
@@ -25,6 +26,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_coord,0_51_52_26_46
+param=trail_casket,trail_casket_easy_map002
 
 [trail_clue_easy_map003]
 name=Clue scroll
@@ -39,6 +41,7 @@ model=model_3374_obj
 iop1=Read
 category=trail_clue_easy
 param=trail_coord,0_47_35_35_6
+param=trail_casket,trail_casket_easy_map003
 
 [trail_clue_easy_simple_exp001]
 name=Clue scroll

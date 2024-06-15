@@ -35,7 +35,7 @@ if (p_finduid(uid) = true) {
     if ($rng = 0) {
         def_obj $trail_clue_easy = enum(int, namedobj, trail_easy_enum, random(enum_getoutputcount(trail_easy_enum)));
         obj_add($coord, $trail_clue_easy, 1, ^lootdrop_duration);
-        %trail_clue = 0;
+        ~clear_trail_progress;
     }
 }
 
@@ -50,7 +50,7 @@ if (p_finduid(uid) = true) {
     if ($rng = 0) {
         def_obj $trail_clue_medium = enum(int, namedobj, trail_medium_enum, random(enum_getoutputcount(trail_medium_enum)));
         obj_add($coord, $trail_clue_medium, 1, ^lootdrop_duration);
-        %trail_clue = 0;
+        ~clear_trail_progress;
     }
 }
 
@@ -65,6 +65,34 @@ if (p_finduid(uid) = true) {
     if ($rng = 0) {
         def_obj $trail_clue_hard = enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_hard_enum)));
         obj_add($coord, $trail_clue_hard, 1, ^lootdrop_duration);
-        %trail_clue = 0;
+        ~clear_trail_progress;
     }
 }
+
+[opobj3,_trail_challenge]
+if(inv_totalcat(inv, trail_challenge) > 0 | inv_totalcat(bank, trail_challenge) > 0) {
+    mes("You already have a challenge scroll."); // OSRS
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
+
+[opobj3,_trail_puzzle]
+if(inv_totalcat(inv, trail_puzzle) > 0 | inv_totalcat(bank, trail_puzzle) > 0) {
+    mes("You already have a puzzle box."); // OSRS
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
+
+[opobj3,_trail_clue_easy] @pickup_cluescroll;
+[opobj3,_trail_clue_medium] @pickup_cluescroll;
+[opobj3,_trail_clue_hard] @pickup_cluescroll;
+[opobj3,_trail_casket_easy] @pickup_cluescroll;
+[opobj3,_trail_casket_medium] @pickup_cluescroll;
+[opobj3,_trail_casket_hard] @pickup_cluescroll;
+
+[label,pickup_cluescroll]
+if(~trail_hasclue_all = true) {
+    mes("You already have a clue scroll."); // OSRS
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);

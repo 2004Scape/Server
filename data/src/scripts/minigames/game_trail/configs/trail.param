@@ -10,6 +10,18 @@ default=null
 type=string
 default=null
 
+[trail_casket]
+type=namedobj
+default=null
+
+[trail_guardian]
+type=npc
+default=null
+
+[puzzle_piece_id]
+type=int
+default=0
+
 [trail_challenge_answer]
 type=int
 default=0
