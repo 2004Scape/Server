@@ -27,11 +27,14 @@ import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
+import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 
 import ServerProt, { ServerProtEncoders } from '#lostcity/server/ServerProt.js';
 
 import { Inventory } from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
+import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
+import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
@@ -41,14 +44,12 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { ZoneEvent } from '#lostcity/engine/zone/Zone.js';
 
 import LinkList from '#jagex2/datastruct/LinkList.js';
 import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import { PRELOADED, PRELOADED_CRC } from '#lostcity/server/PreloadedPacks.js';
-import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -293,7 +294,7 @@ export default class Player extends PathingEntity {
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     constructor(username: string, username37: bigint) {
-        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, Player.FACE_COORD, Player.FACE_ENTITY, true); // tutorial island.
+        super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
         this.username = username;
         this.username37 = username37;
         this.displayName = toDisplayName(username);

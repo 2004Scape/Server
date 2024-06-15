@@ -21,6 +21,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import {Direction, Position} from '#lostcity/entity/Position.js';
+import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import HuntType from '#lostcity/cache/config/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
@@ -81,7 +82,7 @@ export default class Npc extends PathingEntity {
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     constructor(level: number, x: number, z: number, width: number, length: number, lifecycle: EntityLifeCycle, nid: number, type: number, moveRestrict: MoveRestrict, blockWalk: BlockWalk) {
-        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, Npc.FACE_COORD, Npc.FACE_ENTITY, false);
+        super(level, x, z, width, length, lifecycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, Npc.FACE_COORD, Npc.FACE_ENTITY);
         this.nid = nid;
         this.type = type;
         this.uid = (type << 16) | nid;
