@@ -13,12 +13,6 @@ if(inv_total(inv, trail_clue_easy_simple_exp017) = 1) {
 }
 
 [label,trail_squire]
-~chatnpc("<p,quiz>OK, here you go.");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp017, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "You've been given another clue!");
-}
+// https://www.youtube.com/watch?v=8OoLv8-OsbY
+~chatnpc("<p,neutral>OK, here you go.");
+~progress_clue_easy(trail_clue_easy_simple_exp017, "You've found another clue scroll!");

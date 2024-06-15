@@ -1,0 +1,17 @@
+[opnpc1,hazelmere]
+if(inv_total(inv, trail_clue_medium_anagram_exp001) > 0) {
+    @trail_hazelmere;
+}
+~mesbox("The mage starts to speak but all you hear is:");
+~chatnpc("<p,happy>Blah. Blah, blah, blah, blah...blah!");
+
+[label,trail_hazelmere]
+if(inv_total(inv, trail_clue_medium_challenge_exp001) > 0) {
+    @trail_challengenpc_prompt("<p,neutral>Blah, blah?", "<p,happy>Blah, blah, blah!", "<p,angry>Blah!",
+        "Hazelmere has given you another clue scroll!", trail_clue_medium_anagram_exp001, trail_clue_medium_challenge_exp001);
+}
+~chatnpc("<p,neutral>Blah, blah, blah...blah!");
+~chatplayer("<p,confused>What?");
+~chatnpc("<p,neutral>Blah, blah.");
+inv_add(inv, trail_clue_medium_challenge_exp001, 1);
+~objboxt(trail_clue_medium_challenge_exp001, "Hazelmere has given you a challenge scroll!");

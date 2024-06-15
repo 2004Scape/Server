@@ -42,5 +42,5 @@ def_coord $end_pos = movecoord(coord, 0, 0, -2);
 if(coordz(coord) < coordz(loc_coord)) {
     $end_pos = movecoord(coord, 0, 0, 2);
 }
-p_teleport($end_pos);
-p_delay(2);
+~forcemove($end_pos);
+p_delay(0);

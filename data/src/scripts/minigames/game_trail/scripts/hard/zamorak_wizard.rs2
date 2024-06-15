@@ -1,0 +1,69 @@
+[ai_applayer2,zamorak_wizard]
+~npc_cast_spell(^flames_of_zamorak, 5);
+
+[ai_opplayer2,zamorak_wizard]
+~npc_cast_spell(^flames_of_zamorak, 5);
+
+[ai_queue1,zamorak_wizard](int $arg) gosub(npc_default_retaliate_ap);
+
+[ai_queue3,zamorak_wizard](int $arg)
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+queue(queue_defeat_zamorak_wizard, 0);
+
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 4) {
+    obj_add(npc_coord, zamorak_monk_bottom, 1, ^lootdrop_duration);
+} else if ($random < 7) {
+    obj_add(npc_coord, zamorak_monk_top, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    obj_add(npc_coord, water_battlestaff, 1, ^lootdrop_duration);
+} else if ($random < 13) {
+    obj_add(npc_coord, earth_battlestaff, 1, ^lootdrop_duration);
+} else if ($random < 15) {
+    obj_add(npc_coord, air_battlestaff, 12, ^lootdrop_duration);
+} else if ($random < 16) {
+    obj_add(npc_coord, fire_battlestaff, 3, ^lootdrop_duration);
+} else if ($random < 28) {
+    obj_add(npc_coord, bloodrune, 12, ^lootdrop_duration);
+} else if ($random < 35) {
+    obj_add(npc_coord, naturerune, 7, ^lootdrop_duration);
+} else if ($random < 41) {
+    obj_add(npc_coord, deathrune, 45, ^lootdrop_duration);
+} else if ($random < 45) {
+    obj_add(npc_coord, earthrune, 86, ^lootdrop_duration);
+} else if ($random < 48) {
+    obj_add(npc_coord, airrune, 60, ^lootdrop_duration);
+} else if ($random < 51) {
+    obj_add(npc_coord, waterrune, 42, ^lootdrop_duration);
+} else if ($random < 54) {
+    obj_add(npc_coord, earthrune, 79, ^lootdrop_duration);
+} else if ($random < 57) {
+    obj_add(npc_coord, firerune, 51, ^lootdrop_duration);
+} else if ($random < 59) {
+    obj_add(npc_coord, airrune, 189, ^lootdrop_duration);
+} else if ($random < 61) {
+    obj_add(npc_coord, waterrune, 126, ^lootdrop_duration);
+} else if ($random < 63) {
+    obj_add(npc_coord, earthrune, 107, ^lootdrop_duration);
+} else if ($random < 65) {
+    obj_add(npc_coord, firerune, 180, ^lootdrop_duration);
+} else if ($random < 66) {
+    obj_add(npc_coord, cosmicrune, 25, ^lootdrop_duration);
+} else if ($random < 67) {
+    obj_add(npc_coord, lawrune, 9, ^lootdrop_duration);
+} else if ($random < 92) {
+    obj_add(npc_coord, coins, 89, ^lootdrop_duration);
+} else if ($random < 109) {
+    obj_add(npc_coord, coins, 77, ^lootdrop_duration);
+} else if ($random < 112) {
+    obj_add(npc_coord, coins, 240, ^lootdrop_duration);
+}
+
+[queue,queue_defeat_zamorak_wizard] 
+%trail_clue = setbit(%trail_clue, 4);

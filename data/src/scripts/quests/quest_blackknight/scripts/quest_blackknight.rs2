@@ -147,7 +147,7 @@ if (%blackknight_progress = 1) {
     ~chatnpc_specific("Witch", black_knight_witch, "<p,neutral>The soil there is slightly magical.|And it gives the cabbages slight magic properties.");
     ~chatnpc_specific("Witch", black_knight_witch, "<p,shock>Not to mention the trees!");
     ~chatnpc_specific("Witch", black_knight_witch, "<p,neutral>Now remember Greldo only a Draynor Manor cabbage will do. Don't get lazy and bring any old cabbage.|That would entirely wreck the potion.");
-    ~chatnpc_specific("Greldo", greldo, "<p,default>Yes mithreth.");
+    ~chatnpc_specific("Greldo", greldo, "<p,goblinchat>Yes mithreth."); // neutral in osrs
     ~update_blackknight_progress;
 } else {
     mes("I can't hear much right now.");

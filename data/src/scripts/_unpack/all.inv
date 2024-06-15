@@ -34,5 +34,7 @@ size=9
 [inv_136]
 size=9
 
-[inv_140]
+[trail_puzzle_inv]
+scope=temp
 size=25
+dummyinv=yes

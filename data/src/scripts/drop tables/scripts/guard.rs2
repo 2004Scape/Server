@@ -1,4 +1,8 @@
 [ai_queue3,_guard](int $arg)
+// https://www.youtube.com/watch?v=w7uD8RdQahs
+if(npc_findhero = true) {
+    ~trail_checkmediumdrop;
+}
 gosub(npc_death);
 if (npc_findhero = false) {
     return;

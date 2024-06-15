@@ -5,7 +5,6 @@ import Packet from '#jagex2/io/Packet.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
-import { Position } from '#lostcity/entity/Position.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
 
@@ -18,8 +17,6 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-
-import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -85,12 +82,7 @@ export class NetworkPlayer extends Player {
                 return;
             }
 
-            if (Environment.CLIENT_PATHFINDER) {
-                this.queueWaypoints(this.userPath);
-            } else {
-                const { x, z } = Position.unpackCoord(this.userPath[0]);
-                this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, x, z));
-            }
+            this.pathToMoveClick(this.userPath, !Environment.CLIENT_PATHFINDER);
         }
     }
 

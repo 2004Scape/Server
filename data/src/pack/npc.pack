@@ -26,7 +26,7 @@
 25=woman_east_ardougne
 26=knight_of_ardougne_2
 27=npc_27
-28=npc_28
+28=zoo_keeper
 29=npc_29
 30=npc_30
 31=npc_31
@@ -97,7 +97,7 @@
 96=npc_96
 97=npc_97
 98=npc_98
-99=npc_99
+99=guard_dog
 100=goblin_unarmed1
 101=goblin_armed
 102=goblin_unarmed2
@@ -633,7 +633,7 @@
 632=npc_632
 633=npc_633
 634=npc_634
-635=npc_635
+635=gnome_ball_referee
 636=npc_636
 637=juliet
 638=apothecary
@@ -667,7 +667,7 @@
 666=crest_caleb
 667=crest_chronozon
 668=crest_johnathon
-669=npc_669
+669=hazelmere
 670=npc_670
 671=npc_671
 672=npc_672
@@ -744,7 +744,7 @@
 743=dragonslayer_ned
 744=klarense
 745=wormbrain
-746=npc_746
+746=oracle
 747=npc_747
 748=melzar_maze_giant_rat
 749=melzar_maze_ghost
@@ -781,7 +781,7 @@
 780=npc_780
 781=npc_781
 782=npc_782
-783=npc_783
+783=wilough
 784=npc_784
 785=civilian_blonde
 786=civilian_brown
@@ -1005,7 +1005,7 @@
 1004=npc_1004
 1005=npc_1005
 1006=sea_slug
-1007=npc_1007
+1007=zamorak_wizard
 1008=hamid
 1009=poison_spider_observatory
 1010=npc_1010

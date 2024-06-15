@@ -1,18 +1,28 @@
 [opnpc1,brother_kojo]
-if(inv_total(inv, trail_chart) > 0 & inv_total(inv, trail_sextant) > 0) {
-    ~chatplayer("<p,happy>Hello.");
-    ~chatnpc("<p,happy>Hello, traveller, how can I help?");
-    ~chatplayer("<p,neutral>I'm trying to learn to be a navigator.");
-    ~chatnpc("<p,sad>I don't know if I can help you there.");
-    ~chatplayer("<p,neutral>The professor from the Observatory says that I need a watch.");
-    ~chatnpc("<p,default>Ah, that I can help you with. I've been thinkeing with this new idea of a watch and made a few. The problem is the villagers don't see the point as they have the Clock Tower!");
-    ~chatplayer("<p,neutral>Can I have one?");
-    ~chatnpc("<p,happy>You can have this one! It's the display model.");
-    ~objbox(trail_watch, "Brother Kojo has given you a watch.");
-    inv_add(inv, trail_watch, 1);
-    return;
+if(~has_sextant_clue = true) {
+    if(~get_chart_progress = ^trail_chart_spoken_murphy) {
+        ~chatplayer("<p,happy>Hello.");
+        ~chatnpc("<p,happy>Hello, traveller, how can I help?");
+        ~chatplayer("<p,neutral>I'm trying to learn to be a navigator.");
+        ~chatnpc("<p,sad>I don't know if I can help you there.");
+        ~chatplayer("<p,neutral>The professor from the Observatory says that I need a watch.");
+        ~chatnpc("<p,neutral>Ah, that I can help you with. I've been thinkeing with this new idea of a watch and made a few. The problem is the villagers don't see the point as they have the Clock Tower!");
+        ~chatplayer("<p,neutral>Can I have one?");
+        ~chatnpc("<p,happy>You can have this one! It's the display model.");
+        inv_add(inv, trail_watch, 1);
+        %trail_clue = setbit_range_toint(%trail_clue, ^trail_chart_spoken_kojo, 5, 8);
+        ~objbox(trail_watch, "Brother Kojo has given you a watch.");
+        return;
+    } else if(~get_chart_progress >= ^trail_chart_spoken_kojo & ~obj_gettotal(trail_watch) = 0) {
+        // https://youtu.be/SN8Q0F7f6sg?si=B36aNd8DgnBRNn7X&t=212
+        ~chatplayer("<p,neutral>I've lost that watch you gave me.");
+        ~chatnpc("<p,happy>No problem, I have loads of them!");
+        inv_add(inv, trail_watch, 1);
+        ~objboxt(trail_watch, "Brother Kojo has given you a watch.");
+        return;
+    }
 }
 
-if(%cog_progress = 0) {
-    @cog_start_quest;
-}
+//if(%cog_progress = 0) {
+    //@cog_start_quest;
+//}

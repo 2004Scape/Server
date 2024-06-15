@@ -33,7 +33,7 @@ switch_int(%arena_progress) {
 }
 
 [label,khazard_welldone]
-if(npc_find(coord, general_khazard, 15, 0) = false) {
+if(npc_find(coord, general_khazard, 23, 0) = false) {
     return;
 }
 ~chatnpc("<p,genkhazard>Haha, well done, well done that was rather entertaining. I am the great General Khazard, and the two men you just 'saved' are my property.");
