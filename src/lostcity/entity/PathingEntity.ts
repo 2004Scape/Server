@@ -46,6 +46,7 @@ export default abstract class PathingEntity extends Entity {
     jump: boolean = false;
     previousX: number = -1;
     previousZ: number = -1;
+    stepsTaken: number = 0;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
@@ -204,6 +205,7 @@ export default abstract class PathingEntity extends Entity {
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
         this.orientation = dir; // important for like when you login you see all entities correct dir.
+        this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
         return dir;
     }
@@ -520,6 +522,7 @@ export default abstract class PathingEntity extends Entity {
         this.tele = false;
         this.lastX = this.x;
         this.lastZ = this.z;
+        this.stepsTaken = 0;
         this.interacted = false;
         this.apRangeCalled = false;
 
