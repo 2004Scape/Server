@@ -44,6 +44,8 @@ export default abstract class PathingEntity extends Entity {
     lastZ: number = -1;
     tele: boolean = false;
     jump: boolean = false;
+    previousX: number = -1;
+    previousZ: number = -1;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
@@ -101,6 +103,8 @@ export default abstract class PathingEntity extends Entity {
         this.moveStrategy = moveStrategy;
         this.coordmask = coordmask;
         this.entitymask = entitymask;
+        this.previousX = x - 1;
+        this.previousZ = z;
     }
 
     /**
@@ -126,10 +130,6 @@ export default abstract class PathingEntity extends Entity {
             return false;
         }
 
-        const previousX = this.x;
-        const previousZ = this.z;
-        const previousLevel = this.level;
-
         if (this.moveSpeed !== MoveSpeed.STATIONARY && this.walkDir === -1) {
             this.walkDir = this.validateAndAdvanceStep();
             if (this.moveSpeed !== MoveSpeed.WALK && this.walkDir !== -1 && this.runDir === -1) {
@@ -144,8 +144,6 @@ export default abstract class PathingEntity extends Entity {
         } else if (this.walkDir !== -1) {
             this.orientation = this.walkDir;
         }
-
-        this.refreshZonePresence(previousX, previousZ, previousLevel);
         return true;
     }
 
@@ -173,6 +171,8 @@ export default abstract class PathingEntity extends Entity {
                     World.gameMap.changePlayerCollision(this.width, this.x, this.z, this.level, true);
                     break;
             }
+            this.previousX = previousX;
+            this.previousZ = previousZ;
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
@@ -208,8 +208,11 @@ export default abstract class PathingEntity extends Entity {
             }
             return -1;
         }
+        const previousX: number = this.x;
+        const previousZ: number = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
+        this.refreshZonePresence(previousX, previousZ, this.level);
         return dir;
     }
 
@@ -254,7 +257,6 @@ export default abstract class PathingEntity extends Entity {
         const previousX = this.x;
         const previousZ = this.z;
         const previousLevel = this.level;
-
         this.x = x;
         this.z = z;
         this.level = level;
@@ -380,11 +382,16 @@ export default abstract class PathingEntity extends Entity {
     }
 
     pathToPathingTarget(): void {
-        if (!this.target) {
+        if (!this.target || !(this.target instanceof PathingEntity)) {
             return;
         }
 
         if (!this.isLastOrNoWaypoint()) {
+            return;
+        }
+
+        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
+            this.queueWaypoint(this.target.previousX, this.target.previousZ);
             return;
         }
 
@@ -395,7 +402,7 @@ export default abstract class PathingEntity extends Entity {
         this.pathToTarget();
     }
 
-    protected pathToTarget(): void {
+    pathToTarget(): void {
         if (!this.target) {
             return;
         }

@@ -3,14 +3,9 @@ import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import Loc from '#lostcity/entity/Loc.js';
-import Obj from '#lostcity/entity/Obj.js';
-
 import ServerProt from '#lostcity/server/ServerProt.js';
 
 import World from '#lostcity/engine/World.js';
-
-import Environment from '#lostcity/util/Environment.js';
 
 import Player from '#lostcity/entity/Player.js';
 import ClientSocket from '#lostcity/server/ClientSocket.js';
@@ -65,25 +60,6 @@ export class NetworkPlayer extends Player {
         }
 
         this.client?.reset();
-
-        if (this.userPath.length > 0 || this.opcalled) {
-            if (this.delayed()) {
-                this.unsetMapFlag();
-                return;
-            }
-
-            if ((!this.target || this.target instanceof Loc || this.target instanceof Obj) && this.faceEntity !== -1) {
-                this.faceEntity = -1;
-                this.mask |= Player.FACE_ENTITY;
-            }
-
-            if (this.opcalled && (this.userPath.length === 0 || !Environment.CLIENT_PATHFINDER)) {
-                this.pathToTarget();
-                return;
-            }
-
-            this.pathToMoveClick(this.userPath, !Environment.CLIENT_PATHFINDER);
-        }
     }
 
     encodeOut() {
