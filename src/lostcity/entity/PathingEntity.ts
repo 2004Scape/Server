@@ -129,20 +129,11 @@ export default abstract class PathingEntity extends Entity {
         if (!this.hasWaypoints()) {
             return false;
         }
-
         if (this.moveSpeed !== MoveSpeed.STATIONARY && this.walkDir === -1) {
             this.walkDir = this.validateAndAdvanceStep();
             if (this.moveSpeed !== MoveSpeed.WALK && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
             }
-        }
-
-        // keeps this pathing entity orientation updated as they move around the map.
-        // important for like when you login you see all entities correct dir.
-        if (this.runDir !== -1) {
-            this.orientation = this.runDir;
-        } else if (this.walkDir !== -1) {
-            this.orientation = this.walkDir;
         }
         return true;
     }
@@ -212,6 +203,7 @@ export default abstract class PathingEntity extends Entity {
         const previousZ: number = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
+        this.orientation = dir; // important for like when you login you see all entities correct dir.
         this.refreshZonePresence(previousX, previousZ, this.level);
         return dir;
     }
@@ -549,6 +541,12 @@ export default abstract class PathingEntity extends Entity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
+
+        if (this.faceX !== -1) {
+            this.orientation = Position.face(this.x, this.z, this.faceX, this.faceZ);
+        } else if (this.target) {
+            this.orientation = Position.face(this.x, this.z, this.target.x, this.target.z);
+        }
 
         if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
             this.faceX = -1;
