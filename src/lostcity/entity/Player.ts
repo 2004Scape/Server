@@ -397,6 +397,8 @@ export default class Player extends PathingEntity {
             const script = ScriptRunner.init(moveTrigger, this);
             this.runScript(script, true);
         }
+        this.previousX = this.x - 1;
+        this.previousZ = this.z;
     }
 
     calculateRunWeight() {
@@ -495,7 +497,7 @@ export default class Player extends PathingEntity {
             }
 
             // run energy drain
-            if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && (Math.abs(this.lastX - this.x) > 1 || Math.abs(this.lastZ - this.z) > 1)) {
+            if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
                 const weightKg = Math.floor(this.runweight / 1000);
                 const clampWeight = Math.min(Math.max(weightKg, 0), 64);
                 const loss = 67 + (67 * clampWeight) / 64;
@@ -803,6 +805,23 @@ export default class Player extends PathingEntity {
         if (this.target instanceof Loc && World.getLoc(this.target.x, this.target.z, this.level, this.target.type) === null) {
             this.clearInteraction();
             this.unsetMapFlag();
+            return;
+        }
+
+        if (this.target instanceof Player && World.getPlayerByUid(this.target.uid) === null) {
+            this.clearInteraction();
+            this.unsetMapFlag();
+            return;
+        }
+
+        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
+            const moved: boolean = this.updateMovement(false);
+            if (moved) {
+                // we need to keep the mask if the player had to move.
+                this.alreadyFacedEntity = false;
+                this.alreadyFacedCoord = false;
+                this.lastMovement = World.currentTick + 1;
+            }
             return;
         }
 
@@ -2140,6 +2159,8 @@ export default class Player extends PathingEntity {
         this.mask |= Player.EXACT_MOVE;
 
         // todo: interpolate over time? instant teleport? verify with true tile on osrs
+        this.previousX = this.x;
+        this.previousZ = this.z;
         this.x = endX;
         this.z = endZ;
     }
