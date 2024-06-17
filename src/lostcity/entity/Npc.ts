@@ -36,8 +36,8 @@ import Interaction from '#lostcity/entity/Interaction.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 
+import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
-import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
 
 export default class Npc extends PathingEntity {
     static readonly ANIM = 0x2;
@@ -174,6 +174,25 @@ export default class Npc extends PathingEntity {
         const type = NpcType.get(this.type);
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
+        }
+
+        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW) {
+            const distanceToEscape = Position.distanceTo(this, {
+                x: this.startX,
+                z: this.startZ,
+                width: this.width,
+                length: this.length
+            });
+            const targetDistanceFromStart = Position.distanceTo(this.target, {
+                x: this.startX,
+                z: this.startZ,
+                width: this.target.width,
+                length: this.target.length
+            });
+
+            if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
+                return false;
+            }
         }
 
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
@@ -379,12 +398,8 @@ export default class Npc extends PathingEntity {
     }
 
     playerEscapeMode(): void {
-        // if (!this.static) {
-        //     this.noMode();
-        //     World.removeNpc(this);
-        //     return;
-        // }
         if (!this.target) {
+            this.defaultMode();
             return;
         }
 
@@ -392,25 +407,62 @@ export default class Npc extends PathingEntity {
             throw new Error('[Npc] Target must be a Player for playerescape mode.');
         }
 
-        const collisionStrategy: CollisionType | null = this.getCollisionStrategy();
-        if (collisionStrategy === null) {
-            // nomove moverestrict returns as null = no walking allowed.
+        if (World.getPlayerByUid(this.target.uid) === null) {
             this.defaultMode();
             return;
         }
-        const extraFlag: CollisionFlag = this.blockWalkFlag();
-        if (extraFlag === CollisionFlag.NULL) {
-            // nomove moverestrict returns as null = no walking allowed.
+
+        if (Position.distanceToSW(this, this.target) > 25) {
             this.defaultMode();
             return;
         }
-        // this might have to be a smart path idk tho
-        this.queueWaypoints(rsmod.findNaivePath(this.level, this.x, this.z, this.startX, this.startZ, this.width, this.length, this.width, this.length, extraFlag, collisionStrategy));
+
+        let direction: number;
+        let flags: number;
+        if (this.target.x >= this.x && this.target.z >= this.z) {
+            direction = Direction.SOUTH_WEST;
+            flags = CollisionFlag.WALL_SOUTH | CollisionFlag.WALL_WEST;
+        } else if (this.target.x >= this.x && this.target.z < this.z) {
+            direction = Direction.NORTH_WEST;
+            flags = CollisionFlag.WALL_NORTH | CollisionFlag.WALL_WEST;
+        } else if (this.target.x < this.x && this.target.z >= this.z) {
+            direction = Direction.SOUTH_EAST;
+            flags = CollisionFlag.WALL_SOUTH | CollisionFlag.WALL_EAST;
+        } else {
+            direction = Direction.NORTH_EAST;
+            flags = CollisionFlag.WALL_NORTH | CollisionFlag.WALL_EAST;
+        }
+
+        const mx: number = Position.moveX(this.x, direction);
+        const mz: number = Position.moveZ(this.z, direction);
+
+        if (rsmod.isFlagged(mx, mz, this.level, flags)) {
+            this.defaultMode();
+            return;
+        }
+
+        const position: Position = {x: mx, z: mz, level: this.level};
+        if (Position.distanceToSW(position, {
+            x: this.startX,
+            z: this.startZ
+        }) < NpcType.get(this.type).maxrange) {
+            this.queueWaypoint(position.x, position.z);
+            this.updateMovement(false);
+            return;
+        }
+
+        // walk along other axis.
+        if (direction === Direction.NORTH_EAST || direction === Direction.NORTH_WEST) {
+            this.queueWaypoint(this.x, position.z);
+        } else {
+            this.queueWaypoint(position.x, this.z);
+        }
         this.updateMovement(false);
     }
 
     playerFollowMode(): void {
         if (!this.target) {
+            this.defaultMode();
             return;
         }
 
@@ -434,6 +486,7 @@ export default class Npc extends PathingEntity {
 
     playerFaceMode(): void {
         if (!this.target) {
+            this.defaultMode();
             return;
         }
 
@@ -463,6 +516,7 @@ export default class Npc extends PathingEntity {
 
     playerFaceCloseMode(): void {
         if (!this.target) {
+            this.defaultMode();
             return;
         }
 
@@ -490,6 +544,7 @@ export default class Npc extends PathingEntity {
 
     aiMode(): void {
         if (this.delayed() || !this.target) {
+            this.defaultMode();
             return;
         }
 
@@ -524,10 +579,9 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        const distanceToTarget = Position.distanceTo(this, this.target);
-        const type = NpcType.get(this.type);
+        const type: NpcType = NpcType.get(this.type);
 
-        if (distanceToTarget > type.maxrange) {
+        if (Position.distanceTo(this, this.target) > type.attackrange) {
             this.defaultMode();
             return;
         }
@@ -552,25 +606,6 @@ export default class Npc extends PathingEntity {
             this.target = null;
             this.interacted = true;
             this.clearWaypoints();
-        }
-
-        // stand there stupidly
-        if (this.target) {
-            const distanceToEscape = Position.distanceTo(this, {
-                x: this.startX,
-                z: this.startZ,
-                width: this.width,
-                length: this.length
-            });
-            const targetDistanceFromStart = Position.distanceTo(this.target, {
-                x: this.startX,
-                z: this.startZ,
-                width: this.target.width,
-                length: this.target.length
-            });
-            if (targetDistanceFromStart > type.attackrange && distanceToEscape > type.attackrange) {
-                return;
-            }
         }
 
         const moved: boolean = this.updateMovement();
