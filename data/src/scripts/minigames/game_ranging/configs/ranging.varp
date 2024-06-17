@@ -1,0 +1,11 @@
+[target1]
+scope=perm
+transmit=yes
+
+[target2]
+scope=perm
+transmit=yes
+
+[target3]
+scope=perm
+transmit=yes

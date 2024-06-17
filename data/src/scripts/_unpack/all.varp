@@ -211,18 +211,6 @@ scope=perm
 
 [varp_155]
 
-[target1]
-scope=perm
-transmit=yes
-
-[target2]
-scope=perm
-transmit=yes
-
-[target3]
-scope=perm
-transmit=yes
-
 [upass_progress]
 scope=perm
 
