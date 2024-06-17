@@ -418,39 +418,27 @@ export default class Npc extends PathingEntity {
         }
 
         let direction: number;
+        let flags: number;
         if (this.target.x >= this.x && this.target.z >= this.z) {
             direction = Direction.SOUTH_WEST;
+            flags = CollisionFlag.WALL_SOUTH | CollisionFlag.WALL_WEST;
         } else if (this.target.x >= this.x && this.target.z < this.z) {
             direction = Direction.NORTH_WEST;
+            flags = CollisionFlag.WALL_NORTH | CollisionFlag.WALL_WEST;
         } else if (this.target.x < this.x && this.target.z >= this.z) {
             direction = Direction.SOUTH_EAST;
+            flags = CollisionFlag.WALL_SOUTH | CollisionFlag.WALL_EAST;
         } else {
             direction = Direction.NORTH_EAST;
+            flags = CollisionFlag.WALL_NORTH | CollisionFlag.WALL_EAST;
         }
 
         const mx: number = Position.moveX(this.x, direction);
         const mz: number = Position.moveZ(this.z, direction);
 
-        if (direction === Direction.SOUTH_WEST) {
-            if (rsmod.isFlagged(mx, mz, this.level, CollisionFlag.WALL_SOUTH | CollisionFlag.WALL_WEST)) {
-                this.defaultMode();
-                return;
-            }
-        } else if (direction === Direction.NORTH_WEST) {
-            if (rsmod.isFlagged(mx, mz, this.level, CollisionFlag.WALL_NORTH | CollisionFlag.WALL_WEST)) {
-                this.defaultMode();
-                return;
-            }
-        } else if (direction === Direction.SOUTH_EAST) {
-            if (rsmod.isFlagged(mx, mz, this.level, CollisionFlag.WALL_SOUTH | CollisionFlag.WALL_EAST)) {
-                this.defaultMode();
-                return;
-            }
-        } else {
-            if (rsmod.isFlagged(mx, mz, this.level, CollisionFlag.WALL_NORTH | CollisionFlag.WALL_EAST)) {
-                this.defaultMode();
-                return;
-            }
+        if (rsmod.isFlagged(mx, mz, this.level, flags)) {
+            this.defaultMode();
+            return;
         }
 
         const position: Position = {x: mx, z: mz, level: this.level};
