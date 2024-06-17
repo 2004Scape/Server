@@ -24,9 +24,6 @@ if ($option = 1) {
     ~chatplayer("<p,angry>I have come to kill everyone in this castle.");
     npc_say("HELP HELP!");
     npc_setmode(playerescape);
-    if_close;
-    world_delay(2);
-    npc_setmode(null);
 } else if ($option = 3) {
     ~chatplayer("<p,confused>I don't know. I'm lost. Where am I?");
     ~chatnpc("<p,neutral>You are in Lumbridge Castle.");

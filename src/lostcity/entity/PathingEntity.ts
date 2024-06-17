@@ -389,9 +389,9 @@ export default abstract class PathingEntity extends Entity {
             return;
         }
 
-        if (this.targetX === this.target.x && this.targetZ === this.target.z && !Position.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+        /*if (this.targetX === this.target.x && this.targetZ === this.target.z && !Position.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
             return;
-        }
+        }*/
 
         this.pathToTarget();
     }
