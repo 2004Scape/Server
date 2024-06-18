@@ -210,6 +210,14 @@ export class NetworkPlayer extends Player {
     }
 
     updateZones() {
+        // unload any zones that are no longer active
+        for (const zoneIndex of this.loadedZones) {
+            if (!this.activeZones.has(zoneIndex)) {
+                this.loadedZones.delete(zoneIndex);
+            }
+        }
+
+        // update active zones
         for (const zoneIndex of this.activeZones) {
             const zone: Zone | undefined = World.getZoneIndex(zoneIndex);
             if (!zone) {
