@@ -16,10 +16,12 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
 
         const other = World.getPlayer(pid);
         if (!other) {
+            player.unsetMapFlag();
             return false;
         }
 
         if (!player.otherPlayers.has(other.uid)) {
+            player.unsetMapFlag();
             return false;
         }
 

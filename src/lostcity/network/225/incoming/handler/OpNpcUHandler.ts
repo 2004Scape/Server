@@ -18,30 +18,36 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            player.unsetMapFlag();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
+            player.unsetMapFlag();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+            player.unsetMapFlag();
             return false;
         }
 
         const npc = World.getNpc(nid);
         if (!npc || npc.delayed()) {
+            player.unsetMapFlag();
             return false;
         }
 
         if (!player.npcs.has(npc.nid)) {
+            player.unsetMapFlag();
             return false;
         }
 
         if (ObjType.get(item).members && !World.members) {
             player.messageGame("To use player item please login to a members' server.");
+            player.unsetMapFlag();
             return false;
         }
 

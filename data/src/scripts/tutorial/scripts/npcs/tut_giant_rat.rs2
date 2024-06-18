@@ -80,11 +80,11 @@ if (%tutorial_progress > ^combat_instructor_before_attacking_ranged
 
 // 2013 Vid shows that maybe the check is > tut_step && less than tut complete
 // https://youtu.be/7zsi7hiF4SQ?t=536
-if (%tutorial_progress > ^combat_instructor_before_attacking_ranged
+/*if (%tutorial_progress > ^combat_instructor_before_attacking_ranged
     & %tutorial_progress < ^tutorial_complete) {
     ~mesbox("You've already done that.|Perhaps you should move on.");
     return;
-}
+}*/
 
 def_int $distance = npc_range(coord);
 def_int $attackrange = 0;

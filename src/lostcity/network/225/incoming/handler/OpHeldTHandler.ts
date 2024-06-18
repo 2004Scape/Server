@@ -13,25 +13,30 @@ export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            player.unsetMapFlag();
             return false;
         }
 
         const spellCom = Component.get(comId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
+            player.unsetMapFlag();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
+            player.unsetMapFlag();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+            player.unsetMapFlag();
             return false;
         }
 
         if (player.delayed()) {
+            player.unsetMapFlag();
             return false;
         }
 

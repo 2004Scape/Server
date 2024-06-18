@@ -44,6 +44,9 @@ export default abstract class PathingEntity extends Entity {
     lastZ: number = -1;
     tele: boolean = false;
     jump: boolean = false;
+    previousX: number = -1;
+    previousZ: number = -1;
+    stepsTaken: number = 0;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
@@ -101,6 +104,8 @@ export default abstract class PathingEntity extends Entity {
         this.moveStrategy = moveStrategy;
         this.coordmask = coordmask;
         this.entitymask = entitymask;
+        this.previousX = x - 1;
+        this.previousZ = z;
     }
 
     /**
@@ -125,27 +130,12 @@ export default abstract class PathingEntity extends Entity {
         if (!this.hasWaypoints()) {
             return false;
         }
-
-        const previousX = this.x;
-        const previousZ = this.z;
-        const previousLevel = this.level;
-
         if (this.moveSpeed !== MoveSpeed.STATIONARY && this.walkDir === -1) {
             this.walkDir = this.validateAndAdvanceStep();
             if (this.moveSpeed !== MoveSpeed.WALK && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
             }
         }
-
-        // keeps this pathing entity orientation updated as they move around the map.
-        // important for like when you login you see all entities correct dir.
-        if (this.runDir !== -1) {
-            this.orientation = this.runDir;
-        } else if (this.walkDir !== -1) {
-            this.orientation = this.walkDir;
-        }
-
-        this.refreshZonePresence(previousX, previousZ, previousLevel);
         return true;
     }
 
@@ -173,6 +163,8 @@ export default abstract class PathingEntity extends Entity {
                     World.gameMap.changePlayerCollision(this.width, this.x, this.z, this.level, true);
                     break;
             }
+            this.previousX = previousX;
+            this.previousZ = previousZ;
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
@@ -208,8 +200,13 @@ export default abstract class PathingEntity extends Entity {
             }
             return -1;
         }
+        const previousX: number = this.x;
+        const previousZ: number = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
+        this.orientation = dir; // important for like when you login you see all entities correct dir.
+        this.stepsTaken++;
+        this.refreshZonePresence(previousX, previousZ, this.level);
         return dir;
     }
 
@@ -254,7 +251,6 @@ export default abstract class PathingEntity extends Entity {
         const previousX = this.x;
         const previousZ = this.z;
         const previousLevel = this.level;
-
         this.x = x;
         this.z = z;
         this.level = level;
@@ -380,7 +376,7 @@ export default abstract class PathingEntity extends Entity {
     }
 
     pathToPathingTarget(): void {
-        if (!this.target) {
+        if (!this.target || !(this.target instanceof PathingEntity)) {
             return;
         }
 
@@ -388,14 +384,19 @@ export default abstract class PathingEntity extends Entity {
             return;
         }
 
-        if (this.targetX === this.target.x && this.targetZ === this.target.z && !Position.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+        if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
+            this.queueWaypoint(this.target.previousX, this.target.previousZ);
             return;
         }
+
+        /*if (this.targetX === this.target.x && this.targetZ === this.target.z && !Position.intersects(this.x, this.z, this.width, this.length, this.target.x, this.target.z, this.target.width, this.target.length)) {
+            return;
+        }*/
 
         this.pathToTarget();
     }
 
-    protected pathToTarget(): void {
+    pathToTarget(): void {
         if (!this.target) {
             return;
         }
@@ -521,6 +522,7 @@ export default abstract class PathingEntity extends Entity {
         this.tele = false;
         this.lastX = this.x;
         this.lastZ = this.z;
+        this.stepsTaken = 0;
         this.interacted = false;
         this.apRangeCalled = false;
 
@@ -542,6 +544,12 @@ export default abstract class PathingEntity extends Entity {
         this.graphicId = -1;
         this.graphicHeight = -1;
         this.graphicDelay = -1;
+
+        if (this.faceX !== -1) {
+            this.orientation = Position.face(this.x, this.z, this.faceX, this.faceZ);
+        } else if (this.target) {
+            this.orientation = Position.face(this.x, this.z, this.target.x, this.target.z);
+        }
 
         if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
             this.faceX = -1;
