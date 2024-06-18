@@ -114,16 +114,6 @@ if ($coord = 0_48_149_31_40) {
 p_arrivedelay;
 @climb_ladder(0_50_52_44_54, true);
 
-// Ranging Guild - Center Tower Ladder - Up
-[oploc1,loc_2511]
-p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, 2, 0), true);
-
-// Ranging Guild - Center Tower Ladder - Down
-[oploc1,loc_2512]
-p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -2, 0), false);
-
 [oploc1,loc_2884]
 p_arrivedelay;
 @ladder_options(movecoord(coord(), 0, 1, 0), movecoord(coord(), 0, -1, 0));
