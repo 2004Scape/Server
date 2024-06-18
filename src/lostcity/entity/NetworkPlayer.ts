@@ -161,11 +161,13 @@ export class NetworkPlayer extends Player {
     }
 
     updateMap() {
-        const dx = Math.abs(this.x - this.loadedX);
-        const dz = Math.abs(this.z - this.loadedZ);
+        const reloadLeftX = (Position.zone(this.loadedX) - 4) << 3;
+        const reloadRightX = (Position.zone(this.loadedX) + 5) << 3;
+        const reloadTopZ = (Position.zone(this.loadedZ) + 5) << 3;
+        const reloadBottomZ = (Position.zone(this.loadedZ) - 4) << 3;
 
         // if the build area should be regenerated, do so now
-        if (dx >= 36 || dz >= 36 || (this.tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || (this.tele && (Position.zone(this.x) !== Position.zone(this.loadedX) || Position.zone(this.z) !== Position.zone(this.loadedZ)))) {
             this.rebuildNormal(Position.zone(this.x), Position.zone(this.z));
 
             this.loadedX = this.x;
