@@ -21,7 +21,7 @@ if (%target1 = 0) {
         } 
         mes("You'll be needing those bronze arrows...");
     }
-    if(coordz(coord) > 3421) {
+    if(distance(coord, loc_coord) < 5) {
         mes("You should probably be behind the <lowercase(lc_name(loc_299))>.");
         return;
     }
