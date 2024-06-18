@@ -303,9 +303,9 @@
 [command,.loc_shape]()(locshape)
 
 // Obj ops (3500-4000)
-[command,obj_add](coord $coord, obj $obj, int $count, int $duration)
-[command,.obj_add](coord $coord, obj $obj, int $count, int $duration)
-[command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
+[command,obj_add](coord $coord, namedobj $obj, int $count, int $duration)
+[command,.obj_add](coord $coord, namedobj $obj, int $count, int $duration)
+[command,obj_addall](coord $coord, namedobj $obj, int $count, int $duration)
 [command,obj_param]/*(param $param)(dynamic)*/
 [command,obj_name]()(string)
 [command,obj_del]
@@ -313,6 +313,7 @@
 [command,obj_type]()(namedobj)
 [command,obj_takeitem](inv $inv)
 [command,obj_coord]()(coord)
+[command,obj_addunsafe](coord $coord, obj $obj, int $count, int $duration)
 
 // Npc config ops (4000-4099)
 [command,nc_name](npc $npc)(string)
@@ -401,6 +402,8 @@
 [command,.invother_transmit](player_uid $player, inv $inv, component $component)
 [command,inv_stoptransmit](component $component)
 [command,.inv_stoptransmit](component $component)
+[command,both_dropslot](inv $inv, coord $coord, int $slot, int $duration)
+[command,.both_dropslot](inv $inv, coord $coord, int $slot, int $duration)
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)

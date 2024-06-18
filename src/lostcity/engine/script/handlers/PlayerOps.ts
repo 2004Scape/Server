@@ -17,6 +17,7 @@ import { Position } from '#lostcity/entity/Position.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
+import Player from '#lostcity/entity/Player.js';
 
 import ServerProt from '#lostcity/server/ServerProt.js';
 
@@ -990,11 +991,18 @@ const PlayerOps: CommandHandlers = {
         state.pushInt(1);
     }),
 
-    [ScriptOpcode.BOTH_HEROPOINTS]: checkedHandler([ScriptPointer.ActivePlayer, ScriptPointer.ActivePlayer2], state => {
-        if (!state._activePlayer2) {
-            return;
+    [ScriptOpcode.BOTH_HEROPOINTS]: checkedHandler(ActivePlayer, state => {
+        const damage: number = check(state.popInt(), NumberNotNull);
+        const secondary: boolean = state.intOperand === 1;
+
+        const fromPlayer: Player | null = secondary ? state._activePlayer2 : state._activePlayer;
+        const toPlayer: Player | null = secondary ? state._activePlayer : state._activePlayer2;
+
+        if (!fromPlayer || !toPlayer) {
+            throw new Error('player is null');
         }
-        state.activePlayer.addHero(state._activePlayer2.uid, check(state.popInt(), NumberNotNull));
+
+        toPlayer.addHero(fromPlayer.uid, damage);
     }),
 };
 

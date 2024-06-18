@@ -143,8 +143,7 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     return;
 }
 
-obj_add(coord, $log, 1, ^lootdrop_duration);
-inv_delslot(inv, $slot);
+inv_dropslot(inv, coord, $slot, ^lootdrop_duration);
 p_opobj(4); // interact with obj on the ground
 
 [proc,firemaking_success](coord $fire_coord, obj $log)

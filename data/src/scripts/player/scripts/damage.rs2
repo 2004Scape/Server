@@ -129,7 +129,7 @@ while ($i < $size) {
             mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
             inv_delslot(inv, $i);
         } else {
-            inv_dropslot(inv, coord, $i, 200);
+            both_dropslot(inv, coord, $i, 200);
         }
     }
     $i = calc($i + 1);
@@ -143,7 +143,7 @@ while ($i < $size) {
             mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
             inv_delslot(worn, $i);
         } else {
-            inv_dropslot(worn, coord, $i, 200);
+            both_dropslot(worn, coord, $i, 200);
         }
     }
     $i = calc($i + 1);
