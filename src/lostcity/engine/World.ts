@@ -907,6 +907,9 @@ class World {
     computeSharedEvents(): void {
         const zones: Set<number> = new Set();
         for (const player of this.players) {
+            if (!isNetworkPlayer(player)) {
+                continue;
+            }
             for (const zone of Object.keys(player.loadedZones).map(Number)) {
                 zones.add(zone);
             }
