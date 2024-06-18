@@ -323,5 +323,8 @@ inv_clear(worn);
 inv_clear(bank);
 inv_add(bank, coins, 25);
 
+~stat_reset_all;
+healenergy(10000);
+
 ~initalltabs;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));
