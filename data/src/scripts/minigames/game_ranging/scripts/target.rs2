@@ -39,7 +39,7 @@ if (%target1 = 0) {
     // calc pts
     def_int $points =  ~get_targetpts;
     %target2 = calc(%target2 + $points);
-    givexp(ranged, calc($points / 2));
+    givexp(ranged, calc(($points / 2) * 10));
     if_settext(target:com_120, ~get_targetstr);
     if_openmainmodal(target);
 } else if(%target1 = 11) {   
