@@ -112,7 +112,6 @@ switch_int(%junglepotion_progress) {
         ~chatnpc("<p,happy>Hello Bwana, have you been able to get the <oc_name(ardrigal)>?");
     case default:
         ~chatnpc("<p,happy>Greetings Bwana, have you been successful in getting the <oc_name($herb)>?");
-    return;
 }
 def_int $option6 = ~p_choice2("Of course!", 1, "Not yet, sorry, what's the clue again?", 2);
 if($option6 = 1) {
@@ -165,7 +164,6 @@ if($option6 = 1) {
             case default:
                 ~chatnpc("<p,angry>Please don't try to deceive me.");
                 ~mention_herb($herb);
-            return;
         }
     }
 } else if($option6 = 2) {
