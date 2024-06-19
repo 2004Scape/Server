@@ -8305,7 +8305,7 @@ head1=model_67_idk_head
 head2=model_79_idk_head
 wanderrange=2
 
-[npc_740]
+[trufitus]
 vislevel=hide
 name=Trufitus
 desc=A wise old witch doctor.
