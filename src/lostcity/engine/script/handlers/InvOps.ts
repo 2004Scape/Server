@@ -23,6 +23,7 @@ import {
     ObjStackValid,
     ObjTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 
 const InvOps: CommandHandlers = {
     // inv config
@@ -514,7 +515,7 @@ const InvOps: CommandHandlers = {
         }
 
         if (!state.pointerGet(ProtectedActivePlayer[secondary ? 1 : 0]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
-            throw new Error(`$from_inv requires protected access: ${invType.debugname}`);
+            throw new Error(`inv requires protected access: ${invType.debugname}`);
         }
 
         const obj = fromPlayer.invGetSlot(invType.id, slot);
@@ -530,7 +531,46 @@ const InvOps: CommandHandlers = {
         const objType: ObjType = ObjType.get(obj.id);
         fromPlayer.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
+        if (!objType.tradeable) {
+            return; // stop untradables after delete.
+        }
+
         World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed), toPlayer.pid, duration);
+    }),
+
+    // inv write
+    [ScriptOpcode.INV_DROPALL]: checkedHandler(ActivePlayer, state => {
+        const [inv, coord, duration] = state.popInts(3);
+
+        const invType: InvType = check(inv, InvTypeValid);
+        check(duration, DurationValid);
+        const position: Position = check(coord, CoordValid);
+
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
+            throw new Error(`$inv requires protected access: ${invType.debugname}`);
+        }
+
+        const inventory: Inventory | null = state.activePlayer.getInventory(invType.id);
+        if (!inventory) {
+            return;
+        }
+
+        for (let slot: number = 0; slot < inventory.capacity; slot++) {
+            const obj = inventory.get(slot);
+            if (!obj) {
+                continue;
+            }
+
+            inventory.delete(slot);
+
+            const objType: ObjType = ObjType.get(obj.id);
+            if (!objType.tradeable) {
+                continue; // stop untradables after delete.
+            }
+
+            World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), -1, duration);
+        }
     }),
 };
 

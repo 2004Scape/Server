@@ -328,6 +328,7 @@ enum ScriptOpcode {
     INVOTHER_TRANSMIT,
     INV_STOPTRANSMIT,
     BOTH_DROPSLOT,
+    INV_DROPALL,
 
     // Enum ops (4400-4499)
     ENUM = 4400, // official

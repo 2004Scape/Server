@@ -77,9 +77,6 @@ while ($i < $size) {
     if (inv_getnum(inv, $i) > 0) {
         if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
             mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
-            inv_delslot(inv, $i);
-        } else {
-            inv_dropslot(inv, coord, $i, 200); // todo: inv_dropall (visible to all instantly)
         }
     }
     $i = calc($i + 1);
@@ -91,15 +88,14 @@ while ($i < $size) {
     if (inv_getnum(worn, $i) > 0) {
         if (oc_category(inv_getobj(worn, $i)) = armour_godcape) {
             mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
-            inv_delslot(worn, $i);
-        } else {
-            inv_dropslot(worn, coord, $i, 200); // todo: inv_dropall (visible to all instantly)
         }
     }
     $i = calc($i + 1);
 }
 
-obj_add(coord, bones, 1, 200); // todo: obj_addall
+inv_dropall(inv, coord, 200);
+inv_dropall(worn, coord, 200);
+obj_addall(coord, bones, 1, 200);
 ~moveallinv(death, inv);
 inv_clear(death);
 

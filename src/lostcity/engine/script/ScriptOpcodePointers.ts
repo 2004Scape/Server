@@ -862,6 +862,10 @@ const ScriptOpcodePointers: {
         require: ['active_player', 'active_player2'],
         require2: ['active_player2', 'active_player']
     },
+    [ScriptOpcode.INV_DROPALL]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
 
     // String ops
     [ScriptOpcode.TEXT_GENDER]: {
