@@ -1052,8 +1052,8 @@ class World {
             obj.receiverId = receiverId;
             obj.reveal = duration;
         } else {
-            obj.setLifeCycle(this.currentTick + duration + 100);
-            this.trackZone(this.currentTick + duration + 100, zone);
+            obj.setLifeCycle(this.currentTick + duration);
+            this.trackZone(this.currentTick + duration, zone);
             this.trackZone(this.currentTick, zone);
         }
     }
