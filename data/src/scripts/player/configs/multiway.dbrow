@@ -57,6 +57,9 @@ data=coord_pair,0_44_54_0_0,0_44_54_63_63
 data=coord_pair,0_41_53_24_24,0_41_53_63_47
 data=coord_pair,0_41_53_32_16,0_41_53_55_23
 data=coord_pair,0_41_53_32_48,0_41_53_55_55
+data=coord_pair,2_41_53_24_24,2_41_53_63_47
+data=coord_pair,2_41_53_32_16,2_41_53_55_23
+data=coord_pair,2_41_53_32_48,2_41_53_55_55
 // necromancer tower
 data=coord_pair,0_41_50_32_32,0_41_50_55_55
 data=coord_pair,1_41_50_32_32,1_41_50_55_55

@@ -31,6 +31,7 @@ export default class OpLocHandler extends MessageHandler<OpLoc> {
 
         const locType = LocType.get(loc.type);
         if (!locType.op || !locType.op[message.op - 1]) {
+            player.unsetMapFlag();
             return false;
         }
 

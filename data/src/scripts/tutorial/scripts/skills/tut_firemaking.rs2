@@ -59,8 +59,7 @@ if(inv_total(inv, tinderbox) < 0) {
 p_delay(0);
 anim(human_createfire, 0);
 sound_synth(tinderbox_strike, 0, 0);
-obj_add(coord, $log, 1, ^lootdrop_duration);
-inv_delslot(inv, $slot);
+inv_dropslot(inv, coord, $slot, ^lootdrop_duration);
 ~tutorial_please_wait_firemaking;
 p_delay(3);
 sound_synth(tinderbox_strike, 0, 0);

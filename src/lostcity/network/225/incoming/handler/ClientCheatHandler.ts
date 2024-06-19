@@ -21,6 +21,8 @@ import { tryParseInt } from '#lostcity/util/TryParse.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 import { Position } from '#lostcity/entity/Position.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
+import PlayerStat from '#lostcity/entity/PlayerStat.js';
+import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -186,7 +188,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             player.stats[stat] = exp;
         } else if (cmd === 'minlevel') {
             for (let i = 0; i < Player.SKILLS.length; i++) {
-                if (i === Player.HITPOINTS) {
+                if (i === PlayerStat.HITPOINTS) {
                     player.setLevel(i, 10);
                 } else {
                     player.setLevel(i, 1);
@@ -216,8 +218,8 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.closeModal();
 
                 do {
-                    const x = Math.floor(Math.random() * 640) + 3200;
-                    const z = Math.floor(Math.random() * 640) + 3200;
+                    const x = Math.floor(Math.random() * 64) + 3200;
+                    const z = Math.floor(Math.random() * 64) + 3200;
 
                     player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
                 } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
@@ -244,6 +246,20 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
             player.messageGame(`World speed was changed to ${speed}ms`);
             World.tickRate = speed;
+        } else if (cmd === 'fly' && player.staffModLevel >= 3) {
+            if (player.moveStrategy === MoveStrategy.FLY) {
+                player.moveStrategy = MoveStrategy.SMART;
+            } else {
+                player.moveStrategy = MoveStrategy.FLY;
+            }
+            player.messageGame(`Fly is on? ${player.moveStrategy === MoveStrategy.FLY}`);
+        } else if (cmd === 'naive' && player.staffModLevel >= 3) {
+            if (player.moveStrategy === MoveStrategy.NAIVE) {
+                player.moveStrategy = MoveStrategy.SMART;
+            } else {
+                player.moveStrategy = MoveStrategy.NAIVE;
+            }
+            player.messageGame(`Naive is on? ${player.moveStrategy === MoveStrategy.NAIVE}`);
         }
 
         // lookup debugproc with the name and execute it

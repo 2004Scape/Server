@@ -10,10 +10,10 @@ if (~pvm_debuff_allowed($spell_data) = false) {
     return;
 }
 
-if (npc_type = tut_chicken & %tutorial_progress >= ^tutorial_successful_wind_strike) {
-        ~mesbox("You've already done that.|Perhaps you should move on.");
-        return;
-}
+/*if (npc_type = tut_chicken & %tutorial_progress >= ^tutorial_successful_wind_strike) {
+    ~mesbox("You've already done that.|Perhaps you should move on.");
+    return;
+}*/
 
 def_int $duration = ~tut_pvm_spell_cast($spell_data);
 

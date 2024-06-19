@@ -1,0 +1,28 @@
+[opnpc1,ticket_merchant]
+// this is a talk opt and probably(?) had a dialogue, but the op was replaced with trade
+// in mid-2005 so I have no idea what the dialogue would've been and would rather not guess
+// TODO: find out what the dialogue was
+if_openmainmodal(tickets_shop);
+
+[if_button,tickets_shop:com_88] @tickets_shop_buy(obj_47, 30, "140", 140);
+[if_button,tickets_shop:com_89] @tickets_shop_buy(studded_body, 1, "150", 150);
+[if_button,tickets_shop:com_90] @tickets_shop_buy(rune_arrow, 50, "2,000", 2000);
+[if_button,tickets_shop:com_92] @tickets_shop_buy(coif, 1, "100", 100);
+[if_button,tickets_shop:com_95] @tickets_shop_buy(dragonhide_body, 1, "2,400", 2400);
+[if_button,tickets_shop:com_97] @tickets_shop_buy(adamant_javelin, 20, "2,000", 2000);
+
+
+[label,tickets_shop_buy](namedobj $obj, int $count, string $price_str, int $price)
+if(inv_total(inv, archery_ticket) < $price) {
+    mes("You'd need <$price_str> Archery Tickets to buy that.");
+    return;
+}
+if(inv_itemspace(inv, $obj, $count, inv_size(inv)) = false & $price ! inv_total(inv, archery_ticket)) {
+    mes("You don't have enough inventory space to buy that.");
+    return;
+}
+inv_del(inv, archery_ticket, $price);
+inv_add(inv, $obj, $count);
+
+
+[if_button,tickets_shop:com_101] if_close;

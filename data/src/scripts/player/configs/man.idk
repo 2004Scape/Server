@@ -1,44 +1,44 @@
-[idk_0]
+[man_hair_bald]
 type=man_hair
 head1=model_63_idk_head
 model1=model_230_idk
 
-[idk_1]
+[man_hair_dreadlocks]
 type=man_hair
 head1=model_49_idk_head
 model1=model_210_idk
 
-[idk_2]
+[man_hair_long]
 type=man_hair
 head1=model_52_idk_head
 model1=model_214_idk
 
-[idk_3]
+[man_hair_medium]
 type=man_hair
 head1=model_55_idk_head
 model1=model_217_idk
 
-[idk_4]
+[man_hair_tonsure]
 type=man_hair
 head1=model_59_idk_head
 model1=model_223_idk
 
-[idk_5]
+[man_hair_short]
 type=man_hair
 head1=model_53_idk_head
 model1=model_215_idk
 
-[idk_6]
+[man_hair_cropped]
 type=man_hair
 head1=model_67_idk_head
 model1=model_235_idk
 
-[idk_7]
+[man_hair_wildspikes]
 type=man_hair
 head1=model_46_idk_head
 model1=model_206_idk
 
-[idk_8]
+[man_hair_spikes]
 type=man_hair
 head1=model_45_idk_head
 model1=model_203_idk
@@ -49,41 +49,41 @@ type=man_hair
 head1=model_45_idk_head
 model1=model_203_idk
 
-[idk_10]
+[man_jaw_goatee]
 type=man_jaw
 head1=model_81_idk_head
 model1=model_249_idk
 
-[idk_11]
+[man_jaw_long]
 type=man_jaw
 head1=model_82_idk_head
 model1=model_250_idk
 
-[idk_12]
+[man_jaw_medium]
 type=man_jaw
 head1=model_83_idk_head
 model1=model_251_idk
 
-[idk_13]
+[man_jaw_moustache]
 type=man_jaw
 head1=model_79_idk_head
 model1=model_247_idk
 
-[idk_14]
+[man_jaw_none]
 type=man_jaw
 model1=model_246_idk
 
-[idk_15]
+[man_jaw_short]
 type=man_jaw
 head1=model_80_idk_head
 model1=model_248_idk
 
-[idk_16]
+[man_jaw_pointy]
 type=man_jaw
 head1=model_85_idk_head
 model1=model_253_idk
 
-[idk_17]
+[man_jaw_split]
 type=man_jaw
 head1=model_84_idk_head
 model1=model_252_idk

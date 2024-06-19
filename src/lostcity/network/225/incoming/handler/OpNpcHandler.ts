@@ -22,11 +22,13 @@ export default class OpNpcHandler extends MessageHandler<OpNpc> {
         }
 
         if (!player.npcs.has(npc.nid)) {
+            player.unsetMapFlag();
             return false;
         }
 
         const npcType = NpcType.get(npc.type);
         if (!npcType.op || !npcType.op[message.op - 1]) {
+            player.unsetMapFlag();
             return false;
         }
 

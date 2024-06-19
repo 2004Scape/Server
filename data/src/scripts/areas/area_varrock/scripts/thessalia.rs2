@@ -32,8 +32,7 @@
 if (gender = ^gender_male) {
     if_openmainmodal(player_kit_tailor_torso_man);
 } else {
-    @not_written_yet;
-    // if_openmainmodal(player_kit_tailor_torso_woman);
+    if_openmainmodal(player_kit_tailor_torso_woman);
 }
 
 [label,thessalia_b3_s2]
@@ -46,8 +45,7 @@ if (gender = ^gender_male) {
 if (gender = ^gender_male) {
     if_openmainmodal(player_kit_tailor_legs_man);
 } else {
-    @not_written_yet;
-    // if_openmainmodal(player_kit_tailor_legs_woman);
+    if_openmainmodal(player_kit_tailor_legs_woman);
 }
 
 [label,thessalia_b2_s2]
@@ -145,11 +143,10 @@ if (gender = ^gender_male) {
 
 [if_button,player_kit_tailor_torso_man:confirm]
 if (%option1 = 0 | %option2 = 0 | %option3 = 0) {
+    mes("You must make a selection from all three categories.");
     return;
 }
-
 if_close;
-
 if (inv_total(inv, coins) < 500) {
     mes("You do not have enough money.");
     return;
@@ -187,13 +184,7 @@ if (%option2 = 1) {
     setidkit(man_arms_shoulder_pads, $color);
 }
 
-buildappearance(worn);
-inv_del(inv, coins, 500);
-
-if (npc_find(coord, thessalia, 4, 0) = true) {
-    ~chatnpc("<p,happy>Very stylish! It really suits you!");
-    ~chatplayer("<p,happy>Thanks!");
-}
+@thessalia_finished_makeover;
 
 // ----
 
@@ -259,6 +250,7 @@ if (npc_find(coord, thessalia, 4, 0) = true) {
 
 [if_button,player_kit_tailor_legs_man:confirm]
 if (%option1 = 0 | %option3 = 0) {
+    mes("You must make a selection from both categories.");
     return;
 }
 
@@ -281,10 +273,155 @@ if (%option1 = 1) {
     setidkit(man_legs_turn_ups, $color);
 }
 
+@thessalia_finished_makeover;
+
+[if_button,player_kit_tailor_torso_woman:plain] %option1 = 1;
+[if_button,player_kit_tailor_torso_woman:crop_top] %option1 = 2;
+[if_button,player_kit_tailor_torso_woman:polo_neck] %option1 = 3;
+[if_button,player_kit_tailor_torso_woman:simple] %option1 = 4;
+[if_button,player_kit_tailor_torso_woman:torn] %option1 = 5;
+
+[if_button,player_kit_tailor_torso_woman:short_sleeves] %option2 = 1;
+[if_button,player_kit_tailor_torso_woman:bare_arms] %option2 = 2;
+[if_button,player_kit_tailor_torso_woman:muscley] %option2 = 3;
+[if_button,player_kit_tailor_torso_woman:long_sleeved] %option2 = 4;
+[if_button,player_kit_tailor_torso_woman:large_cuffs] %option2 = 5;
+
+[if_button,player_kit_tailor_torso_woman:com_91] %option3 = 1;
+[if_button,player_kit_tailor_torso_woman:com_92] %option3 = 2;
+[if_button,player_kit_tailor_torso_woman:com_93] %option3 = 3;
+[if_button,player_kit_tailor_torso_woman:com_94] %option3 = 4;
+[if_button,player_kit_tailor_torso_woman:com_95] %option3 = 5;
+[if_button,player_kit_tailor_torso_woman:com_96] %option3 = 6;
+[if_button,player_kit_tailor_torso_woman:com_97] %option3 = 7;
+[if_button,player_kit_tailor_torso_woman:com_98] %option3 = 8;
+[if_button,player_kit_tailor_torso_woman:com_99] %option3 = 9;
+[if_button,player_kit_tailor_torso_woman:com_100] %option3 = 10;
+[if_button,player_kit_tailor_torso_woman:com_101] %option3 = 11;
+[if_button,player_kit_tailor_torso_woman:com_102] %option3 = 12;
+[if_button,player_kit_tailor_torso_woman:com_103] %option3 = 13;
+[if_button,player_kit_tailor_torso_woman:com_104] %option3 = 14;
+[if_button,player_kit_tailor_torso_woman:com_105] %option3 = 15;
+[if_button,player_kit_tailor_torso_woman:com_106] %option3 = 16;
+
+[if_button,player_kit_tailor_torso_woman:confirm]
+if (%option1 = 0 | %option2 = 0 | %option3 = 0) {
+    mes("You must make a selection from all three categories.");
+    return;
+}
+if_close;
+if (inv_total(inv, coins) < 500) {
+    mes("You do not have enough money.");
+    return;
+}
+
+def_int $color = calc(%option3 - 1);
+
+if (%option1 = 1) {
+    setidkit(woman_torso_plain, $color);
+} else if (%option1 = 2) {
+    setidkit(woman_torso_crop_top, $color);
+} else if (%option1 = 3) {
+    setidkit(woman_torso_polo_neck, $color);
+} else if (%option1 = 4) {
+    setidkit(woman_torso_simple, $color);
+} else if (%option1 = 5) {
+    setidkit(woman_torso_torn, $color);
+}
+
+if (%option2 = 1) {
+    setidkit(woman_arms_short_sleeves, $color);
+} else if (%option2 = 2) {
+    setidkit(woman_arms_bare_arms, $color);
+} else if (%option2 = 3) {
+    setidkit(woman_arms_muscley, $color);
+} else if (%option2 = 4) {
+    setidkit(woman_arms_long_sleeved, $color);
+} else if (%option2 = 5) {
+    setidkit(woman_arms_large_cuffs, $color);
+}
+
+@thessalia_finished_makeover;
+
+[if_button,player_kit_tailor_legs_woman:com_133] %option1 = 1;
+[if_button,player_kit_tailor_legs_woman:com_134] %option1 = 2;
+[if_button,player_kit_tailor_legs_woman:com_135] %option1 = 3;
+[if_button,player_kit_tailor_legs_woman:com_136] %option1 = 4;
+[if_button,player_kit_tailor_legs_woman:com_137] %option1 = 5;
+[if_button,player_kit_tailor_legs_woman:com_138] %option1 = 6;
+[if_button,player_kit_tailor_legs_woman:com_139] %option1 = 7;
+[if_button,player_kit_tailor_legs_woman:com_140] %option1 = 8;
+
+[if_button,player_kit_tailor_legs_woman:com_91] %option3 = 2;
+[if_button,player_kit_tailor_legs_woman:com_92] %option3 = 3;
+[if_button,player_kit_tailor_legs_woman:com_93] %option3 = 4;
+[if_button,player_kit_tailor_legs_woman:com_94] %option3 = 5;
+[if_button,player_kit_tailor_legs_woman:com_95] %option3 = 6;
+[if_button,player_kit_tailor_legs_woman:com_96] %option3 = 7;
+[if_button,player_kit_tailor_legs_woman:com_97] %option3 = 8;
+[if_button,player_kit_tailor_legs_woman:com_98] %option3 = 9;
+[if_button,player_kit_tailor_legs_woman:com_99] %option3 = 10;
+[if_button,player_kit_tailor_legs_woman:com_100] %option3 = 11;
+[if_button,player_kit_tailor_legs_woman:com_101] %option3 = 12;
+[if_button,player_kit_tailor_legs_woman:com_102] %option3 = 13;
+[if_button,player_kit_tailor_legs_woman:com_103] %option3 = 14;
+[if_button,player_kit_tailor_legs_woman:com_104] %option3 = 15;
+[if_button,player_kit_tailor_legs_woman:com_105] %option3 = 16;
+[if_button,player_kit_tailor_legs_woman:com_106] %option3 = 1;
+
+[if_button,player_kit_tailor_legs_woman:confirm]
+if (%option1 = 0 | %option3 = 0) {
+    mes("You must make a selection from both categories.");
+    return;
+}
+
+if_close;
+
+if (inv_total(inv, coins) < 500) {
+    mes("You do not have enough money.");
+    return;
+}
+
+def_int $color = calc(%option3 - 1);
+
+if (%option1 = 1) {
+    setidkit(woman_legs_plain, $color);
+} else if (%option1 = 2) {
+    setidkit(woman_legs_shorts, $color);
+} else if (%option1 = 3) {
+    setidkit(woman_legs_flares, $color);
+} else if (%option1 = 4) {
+    setidkit(woman_legs_turn_ups, $color);
+} else if (%option1 = 5) {
+    setidkit(woman_legs_turn_ups_2, $color);
+} else if (%option1 = 6) {
+    setidkit(woman_legs_turn_ups_3, $color);
+} else if (%option1 = 7) {
+    setidkit(woman_legs_turn_ups_4, $color);
+} else if (%option1 = 8) {
+    setidkit(woman_legs_turn_ups_5, $color);
+}
+
+@thessalia_finished_makeover;
+
+[label,thessalia_finished_makeover]
 buildappearance(worn);
 inv_del(inv, coins, 500);
-
-if (npc_find(coord, thessalia, 4, 0) = true) {
-    ~chatnpc("<p,happy>Totally cool! That outfit looks great!");
-    ~chatplayer("<p,happy>Thanks!");
+if (npc_find(coord, thessalia, 4, 0) = false) {
+    return;
 }
+def_int $rand = random(6);
+if ($rand = 0) {
+    ~chatnpc("<p,happy>Totally cool! That outfit looks great!");
+} else if ($rand = 1) {
+    ~chatnpc("<p,happy>Very stylish! It really suits you!");
+} else if ($rand = 2) {
+    ~chatnpc("<p,happy>Woah! Fabulous! You look absolutely great!");
+} else if ($rand = 3) {
+    ~chatnpc("<p,happy>Wow! Good choice! You're looking great!");
+} else if ($rand = 4) {
+    ~chatnpc("<p,happy>WoooOOOooo! Hot stuff!");
+} else if ($rand = 5) {
+    ~chatnpc("<p,happy>Fantastic! You should be a model!");
+}
+~chatplayer("<p,happy>Thanks!");

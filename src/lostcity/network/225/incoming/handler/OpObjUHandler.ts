@@ -18,6 +18,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            player.unsetMapFlag();
             return false;
         }
 
@@ -26,26 +27,31 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
         const absTopZ = player.loadedZ + 52;
         const absBottomZ = player.loadedZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+            player.unsetMapFlag();
             return false;
         }
 
         const listener = player.invListeners.find(l => l.com === comId);
         if (!listener) {
+            player.unsetMapFlag();
             return false;
         }
 
         const inv = player.getInventoryFromListener(listener);
         if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+            player.unsetMapFlag();
             return false;
         }
 
-        const obj = World.getObj(x, z, player.level, objId);
+        const obj = World.getObj(x, z, player.level, objId, player.pid);
         if (!obj) {
+            player.unsetMapFlag();
             return false;
         }
 
         if (ObjType.get(item).members && !World.members) {
             player.messageGame("To use player item please login to a members' server.");
+            player.unsetMapFlag();
             return false;
         }
 

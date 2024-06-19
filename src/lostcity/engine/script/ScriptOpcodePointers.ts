@@ -471,7 +471,12 @@ const ScriptOpcodePointers: {
         require: ['active_player', 'active_player2'],
         require2: ['active_player2', 'active_player']
     },
-
+    [ScriptOpcode.SETGENDER]: {
+        require: ['p_active_player']
+    },
+    [ScriptOpcode.SETSKINCOLOUR]: {
+        require: ['p_active_player']
+    },
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {
         set: ['active_npc'],
@@ -745,6 +750,12 @@ const ScriptOpcodePointers: {
         require: ['active_obj'],
         require2: ['active_obj2']
     },
+    [ScriptOpcode.OBJ_ADDUNSAFE]: {
+        require: ['active_player'],
+        set: ['active_obj'],
+        require2: ['active_player'],
+        set2: ['active_obj2']
+    },
 
     // Inventory ops
     [ScriptOpcode.INV_ADD]: {
@@ -769,11 +780,15 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.INV_DROPITEM]: {
         require: ['active_player'],
-        require2: ['active_player2']
+        set: ['active_obj'],
+        require2: ['active_player2'],
+        set2: ['active_obj2']
     },
     [ScriptOpcode.INV_DROPSLOT]: {
         require: ['active_player'],
-        require2: ['active_player2']
+        set: ['active_obj'],
+        require2: ['active_player2'],
+        set2: ['active_obj2']
     },
     [ScriptOpcode.INV_FREESPACE]: {
         require: ['active_player'],
@@ -840,6 +855,14 @@ const ScriptOpcodePointers: {
         require2: ['active_player2', 'active_player']
     },
     [ScriptOpcode.INV_STOPTRANSMIT]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
+    [ScriptOpcode.BOTH_DROPSLOT]: {
+        require: ['active_player', 'active_player2'],
+        require2: ['active_player2', 'active_player']
+    },
+    [ScriptOpcode.INV_DROPALL]: {
         require: ['active_player'],
         require2: ['active_player2']
     },

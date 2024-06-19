@@ -1,8 +1,6 @@
-
 [if_button,prayer:prayer_ultimatestrength]
 if_close;
 queue(prayer_activate, 0, 6);
-
 
 [label,activate_prayer_ultimatestrength]
 def_dbrow $data = ~get_prayer_data(^prayer_ultimatestrength);

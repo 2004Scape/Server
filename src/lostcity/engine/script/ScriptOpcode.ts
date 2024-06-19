@@ -188,6 +188,8 @@ enum ScriptOpcode {
     WALKTRIGGER2, // workaround until .walktrigger is supported in compiler
     FINDHERO, // official
     BOTH_HEROPOINTS, // official
+    SETGENDER,
+    SETSKINCOLOUR,
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official
@@ -258,6 +260,7 @@ enum ScriptOpcode {
     OBJ_PARAM,
     OBJ_TAKEITEM,
     OBJ_TYPE,
+    OBJ_ADDUNSAFE,
 
     // Npc config ops (4000-4099)
     NC_CATEGORY = 4000,
@@ -324,6 +327,8 @@ enum ScriptOpcode {
     INV_TRANSMIT,
     INVOTHER_TRANSMIT,
     INV_STOPTRANSMIT,
+    BOTH_DROPSLOT,
+    INV_DROPALL,
 
     // Enum ops (4400-4499)
     ENUM = 4400, // official

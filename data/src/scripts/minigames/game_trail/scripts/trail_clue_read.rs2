@@ -7,8 +7,6 @@ split_init($string, 340, 8, q8);
 def_int $pagetotal = split_pagecount;
 def_int $lines = split_linecount(0);
 
-//mes("TRAIL DEBUG: Linecount for clue -  <tostring($lines)>");
-
 if($lines = 2) {
     if_settext(trail_clue:com_2, "");
     if_settext(trail_clue:com_3, split_get(0, 0));

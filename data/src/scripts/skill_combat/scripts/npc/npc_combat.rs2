@@ -80,7 +80,7 @@ npc_queue(3, 0, 0);
 // a default death script.
 [proc,npc_default_death]
 gosub(npc_death);
-def_obj $drop = npc_param(death_drop);
+def_namedobj $drop = npc_param(death_drop);
 if ($drop ! null & npc_findhero = true) {
     obj_add(npc_coord, $drop, 1, 200);
 }
@@ -134,6 +134,10 @@ return (false);
 if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(inv, crandor_map_part2) > 0 | %dragon_goblin ! ^quest_dragon_knows_about_goblin)) {
     mes("The goblin is already in prison. You have no reason to attack him.");
     return (false);
+}
+if (npc_type = zamorak_wizard & %npc_attacking_uid ! uid) {
+    mes("It's not after you...");
+    return(false);
 }
 if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
     mes("You are not ready to fight the battle mages.");

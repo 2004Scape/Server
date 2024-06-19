@@ -76,11 +76,13 @@ if (~in_duel_arena = true) {
         inv_del(tempinv, $ammo, 1);
     }
 } else if ($random ! 0) {
-    world_delay(calc($delay / 30));
+    world_delay(calc($delay / 30 - 2));
     if (map_blocked(.coord) = true) {
         return;
     }
-    obj_add(.coord, $ammo, 1, 200);
+    if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
+        obj_addunsafe(.coord, $ammo, 1, 200);
+    }
 }
 
 

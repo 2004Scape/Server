@@ -469,7 +469,6 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
-huntmode=ranged
 
 [druid]
 name=Druid
@@ -958,35 +957,6 @@ param=rangedefence,45
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
 param=rangeattack_sound,longbow
-
-[npc_28]
-name=Zoo keeper
-desc=Enjoys locking up animals in small pens.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=2340
-recol1d=25299
-recol2s=14724
-recol2d=16737
-recol3s=14801
-recol3d=24075
-recol4s=5299
-recol4d=25299
-model1=model_215_idk
-model2=model_292_idk
-model3=model_250_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_271_idk
-model7=model_185_obj_wear
-model8=model_194_npc
-model9=model_327_idk
-model10=model_495_npc
-head1=model_53_idk_head
-head2=model_82_idk_head
-head3=model_37_npc_head
 
 [npc_29]
 name=Chuck
@@ -2793,7 +2763,7 @@ vislevel=hide
 model1=model_2935_npc
 param=death_anim,dog_death
 
-[npc_99]
+[guard_dog]
 name=Guard dog
 desc=Beware of the dog!
 walkanim=dog_walk
@@ -5477,6 +5447,7 @@ attack=58
 strength=58
 defence=62
 param=damagetype,^slash_style
+param=max_dealt,0
 
 [npc_206]
 walkanim=dwarf_walk
@@ -7874,7 +7845,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_635]
+[gnome_ball_referee]
 name=Gnome ball referee
 desc=Keeps the game fair.
 vislevel=hide
@@ -7974,7 +7945,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 
-[npc_669]
+[hazelmere]
 name=Hazelmere
 desc=An ancient looking gnome.
 walkanim=midget_walk
@@ -8804,24 +8775,6 @@ model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
 moverestrict=indoors
-param=death_anim,midget_death
-
-[npc_783]
-vislevel=hide
-name=Wilough
-desc=One of Gertrude's Sons.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=992
-recol2s=384
-recol2d=26425
-model1=model_2897_npc
-model2=model_2909_npc
-model3=model_2918_npc
-head1=model_139_npc_head
-wanderrange=2
 param=death_anim,midget_death
 
 [npc_784]
@@ -11737,7 +11690,7 @@ op1=Take
 model1=model_560_npc
 wanderrange=2
 
-[npc_1007]
+[zamorak_wizard]
 name=Zamorak Wizard
 desc=A servant of Zamorak.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

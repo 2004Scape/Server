@@ -211,15 +211,6 @@ scope=perm
 
 [varp_155]
 
-[target1]
-transmit=yes
-
-[target2]
-transmit=yes
-
-[target3]
-transmit=yes
-
 [upass_progress]
 scope=perm
 
@@ -373,7 +364,8 @@ type=obj
 [thread_used]
 scope=perm
 
-[varp_260]
+[temp]
+scope=temp
 
 [option1]
 transmit=yes

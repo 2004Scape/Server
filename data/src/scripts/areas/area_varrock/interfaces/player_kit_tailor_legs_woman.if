@@ -943,7 +943,7 @@ fill=yes
 colour=0x1C6135
 option=Emerald
 
-[com_107]
+[confirm]
 type=text
 x=197
 y=289

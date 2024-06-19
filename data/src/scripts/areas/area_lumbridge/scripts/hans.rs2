@@ -1,7 +1,18 @@
 [opnpc1,hans]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp005) = 1) {
-    @trail_hans_exp001;
+if(map_members = true) {
+    if(inv_total(inv, trail_clue_hard_riddle_exp012) > 0) {
+        // https://www.youtube.com/watch?v=F5i3JqU6dkY
+        ~chatnpc("<p,happy>Well done, here you go.");
+        ~progress_clue_hard(trail_clue_hard_riddle_exp012, "Hans has given you another clue scroll!");
+        return;
+    }
+    if(inv_total(inv, trail_clue_easy_simple_exp005) > 0) {
+        // https://www.youtube.com/watch?v=PlwFfW45HWk
+        ~chatnpc("<p,happy>Well done, you've solved the clue!");
+        ~progress_clue_easy(trail_clue_easy_simple_exp005, "Hans has given you another clue!");
+        return;
+    }
 }
 
 ~chatnpc("<p,neutral>Hello. What are you doing here?");
@@ -11,23 +22,11 @@ if ($option = 1) {
     ~chatnpc("<p,neutral>Sorry, I don't know where he is right now.");
 } else if ($option = 2) {
     ~chatplayer("<p,angry>I have come to kill everyone in this castle.");
-    npc_say("HELP HELP!");
     npc_setmode(playerescape);
     if_close;
-    world_delay(2);
-    npc_setmode(null);
+    p_delay(0);
+    npc_say("HELP HELP!");
 } else if ($option = 3) {
     ~chatplayer("<p,confused>I don't know. I'm lost. Where am I?");
     ~chatnpc("<p,neutral>You are in Lumbridge Castle.");
-}
-
-[label,trail_hans_exp001]
-~chatnpc("<p,quiz>Well done, you've solved the clue!");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp007, 1);
-if(~trail_clue_easy_complete = true) {
-
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Hans has given you another clue.");
 }

@@ -8,7 +8,8 @@ npc_setmode(playerfaceclose);
 p_delay(1);
 if(random(4) = 0) {
     mes("The sheep manages to get away from you!");
-    // TODO: entity retreat
+    npc_say("Baa!"); // todo: confirm if they say as they retreat
+    npc_setmode(playerescape);
     return;
 }
 inv_add(inv, wool, 1);

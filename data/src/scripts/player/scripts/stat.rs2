@@ -90,6 +90,11 @@ if (calc($level - $debuff) < $min_level) {
 // subtract the debuff, with no percent
 stat_sub($stat, $debuff, 0);
 
+// stat_heal but instead of scaling based off stat, it scales off of stat_base
+[proc,stat_healbase](stat $stat, int $constant, int $percent)
+def_int $heal = add(scale($percent, 100, stat_base($stat)), $constant);
+stat_heal($stat, $heal, 0);
+
 [proc,stat_reset](stat $stat)
 def_int $d = sub(stat($stat), stat_base($stat));
 

@@ -14,7 +14,7 @@ if(%prince_keystatus = ^prince_keymade) {
     ~chatnpc("<p,neutral>My father sent this key for you.|Be careful not to lose it.");
     ~mesbox("Leela gives you a copy of the key to the prince's door.");
     inv_add(inv, bronze_key, 1);
-    %prince_keystatus = ^prince_prep_finished;
+    %prince_keystatus = ^prince_keyclaimed;
 }
 if(%prince_keystatus = ^prince_keyclaimed & inv_total(inv, bronze_key) = 0 & inv_total(bank, bronze_key) = 0) {
     ~chatplayer("<p,sad>I'm afraid I lost that key you gave me.");

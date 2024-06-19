@@ -90,7 +90,7 @@ if(last_useitem = khazard_cell_keys) {
 ~displaymessage(^dm_default);
 
 [oploc1,loc_82]
-if(coordz(coord) < 3152) {
+if(coordx(coord) > coordx(loc_coord) | coordz(coord) < coordz(loc_coord)) {
     switch_int(%arena_progress) { 
         case ^arena_freed_servils, ^arena_defeated_genkhazard, ^arena_complete, ^arena_complete_defeated_genkhazard:
             if (npc_find(coord, khazard_guard_standard, 7, 0) = false) {

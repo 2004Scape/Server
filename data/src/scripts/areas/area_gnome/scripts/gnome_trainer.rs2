@@ -4,14 +4,14 @@ if($rand_value = 0) {
     ~chatplayer("<p,neutral>Hello how are you?");
     ~chatnpc("<p,angry>I'm amazed by how much humans chat. The sign over there says training area, not pointless conversation area.");
 } else if($rand_value = 1) {
-    ~chatplayer("<p,neutral>Hello, what is this place?");
+    ~chatplayer("<p,confused>Hello, what is this place?");
     ~chatnpc("<p,happy>This, my friend, is where we train. Here we improve our agility. It's an essential skill.");
     ~chatplayer("<p,neutral>It looks easy enough.");
-    ~chatnpc("<p,happy>If you complete the course in order from the slippery log to the end, your agility will increase much faster than by repeating just one obstacle.");
+    ~chatnpc("<p,neutral>If you complete the course in order from the slippery log to the end, your agility will increase much faster than by repeating just one obstacle.");
 } else if($rand_value = 2) {
     ~chatplayer("<p,happy>This is fun!");
     ~chatnpc("<p,angry>This is training soldier. If you want fun go make some cocktails.");
 } else if($rand_value = 3) {
     ~chatplayer("<p,happy>Hello there.");
-    ~chatnpc("<p,default>This isn't a grannies' tea party, let's see some sweat human. Go! Go! Go!");
+    ~chatnpc("<p,neutral>This isn't a grannies' tea party, let's see some sweat human. Go! Go! Go!");
 }

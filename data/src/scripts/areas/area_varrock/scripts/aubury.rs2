@@ -1,71 +1,4 @@
-[opnpc1,npc_553]
-if (~rune_mysteries_handle_aubury = true) {
-    @rune_mysteries_aubury;
-    return;
-}
-
-~chatnpc("<p,quiz>Do you want to buy some runes?");
-
-def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
-
-if ($choice = 1) {
-    ~openshop_activenpc;
-    return;
-} else if ($choice = 2) {
-    @aubury_rune_shop;
-    return;
-}
-
-~chatplayer("<p,happy>Can you teleport me to the Rune Essence?");
-@teleport_to_essence_mine(^essence_mine_to_aubury);
-
-[label,aubury_rune_shop]
-~chatplayer("<p,happy>Oh, it's a rune shop. No thank you, then.");
-~chatnpc("<p,happy>Well, if you find someone who does want runes, please send them my way.");
-
-
-[proc,rune_mysteries_handle_aubury](boolean)
-if(%runemysteries_progress < ^runemysteries_complete) {
-    return(true);
-}
-return(false);
-
-[label,rune_mysteries_aubury]
-// aubury cannot teleport until this quest is complete
-if (%runemysteries_progress = 0 | %runemysteries_progress = 1) {
-    ~chatnpc("<p,quiz>Do you want to buy some runes?");
-    def_int $choice = ~p_choice2("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2);
-    if ($choice = 1) {
-        ~openshop_activenpc;
-        return;
-    }
-    if ($choice = 2) {
-        @aubury_rune_shop;
-        return;
-    }
-}
-
-if (%runemysteries_progress = 2 & inv_total(inv, research_package) > 0) {
-    ~chatnpc("<p,quiz>Do you want to buy some runes?");
-    def_int $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "I have been sent here with a package for you.", 3);
-
-    if ($choice = 1) {
-        ~openshop_activenpc;
-        return;
-    }
-    if ($choice = 2) {
-        @aubury_rune_shop;
-        return;
-    }
-
-    ~chatplayer("<p,neutral>I have been sent here with a package for you. It's from the head wizard at the Wizards' Tower.");
-    ~chatnpc("<p,neutral>Really? But... surely he can't have..? Please, let me have it, it must be extremely important for him to have sent a stranger.");
-    inv_del(inv, research_package, 1);
-    %runemysteries_progress = 3;
-    ~mesbox("You hand Aubury the research package.");
-    ~chatnpc("<p,neutral>This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
-    return;
-}
+[opnpc1,aubury]
 if(%runemysteries_progress = 3) {
     ~chatnpc("<p,neutral>My gratitude to you adventurer for bringing me these research notes. I notice that you brought the head wizard a special talisman that was the key to our finally unlocking the puzzle.");
     ~chatnpc("<p,neutral>Combined with the information I had already already collated regarding the Rune Essence, I think we have finally unlocked the power to");
@@ -93,4 +26,30 @@ if(%runemysteries_progress = 4) {
        ~chatplayer("<p,neutral>Ok then, I will do that.");
     }
     return;
+}
+
+~chatnpc("<p,happy>Do you want to buy some runes?");
+def_int $choice;
+if (%runemysteries_progress <= 1) {
+    $choice = ~p_choice2("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2);
+} else if (%runemysteries_progress = 2 & inv_total(inv, research_package) > 0) {
+    $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "I have been sent here with a package for you.", 4);
+} else {
+    $choice = ~p_choice3("Yes please!", 1, "Oh, it's a rune shop. No thank you, then.", 2, "Can you teleport me to the Rune Essence?", 3);
+}
+if ($choice = 1) {
+    ~openshop_activenpc;
+} else if ($choice = 2) {
+    ~chatplayer("<p,happy>Oh, it's a rune shop. No thank you, then.");
+    ~chatnpc("<p,happy>Well, if you find someone who does want runes, please send them my way.");
+} else if ($choice = 3) {
+    ~chatplayer("<p,quiz>Can you teleport me to the Rune Essence?");
+    @teleport_to_essence_mine(^essence_mine_to_aubury);
+} else {
+    ~chatplayer("<p,neutral>I have been sent here with a package for you. It's from the head wizard at the Wizards' Tower.");
+    ~chatnpc("<p,neutral>Really? But... surely he can't have..? Please, let me have it, it must be extremely important for him to have sent a stranger.");
+    inv_del(inv, research_package, 1);
+    %runemysteries_progress = 3;
+    ~mesbox("You hand Aubury the research package.");
+    ~chatnpc("<p,neutral>This... is incredible. Please, give me a few moments to quickly look over this, and then talk to me again.");
 }

@@ -1,0 +1,9 @@
+[ai_queue3,guard_dog](int $arg)
+if (npc_findhero = true) { // intentional, https://youtu.be/tDN_dxiRQB8?si=tCHeB803TT5FJcps&t=32
+    ~trail_checkmediumdrop;
+}
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);

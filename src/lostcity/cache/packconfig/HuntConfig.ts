@@ -1,10 +1,30 @@
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/cache/packconfig/PackShared.js';
+import {
+    ConfigValue,
+    ConfigLine,
+    PackedData,
+    isConfigBoolean,
+    getConfigBoolean,
+    HuntCheckInv, HuntCheckInvParam
+} from '#lostcity/cache/packconfig/PackShared.js';
+
+import {Inventory} from '#lostcity/engine/Inventory.js';
+
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import HuntCheckNotTooStrong from '#lostcity/entity/hunt/HuntCheckNotTooStrong.js';
 import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
-import { HuntPack, VarnPack, VarpPack } from '#lostcity/util/PackFile.js';
+
+import {
+    CategoryPack,
+    HuntPack,
+    InvPack,
+    LocPack,
+    NpcPack,
+    ObjPack, ParamPack,
+    VarnPack,
+    VarpPack
+} from '#lostcity/util/PackFile.js';
 
 export function parseHuntConfig(key: string, value: string): ConfigValue | null | undefined {
     const stringKeys: string[] = [];
@@ -277,6 +297,100 @@ export function parseHuntConfig(key: string, value: string): ConfigValue | null 
             default:
                 return null;
         }
+    } else if (key === 'check_category') {
+        const index = CategoryPack.getByName(value);
+        if (index === -1) {
+            return null;
+        }
+        return index;
+    } else if (key === 'check_npc') {
+        const index = NpcPack.getByName(value);
+        if (index === -1) {
+            return null;
+        }
+        return index;
+    } else if (key === 'check_obj') {
+        const index = ObjPack.getByName(value);
+        if (index === -1) {
+            return null;
+        }
+        return index;
+    } else if (key === 'check_loc') {
+        const index = LocPack.getByName(value);
+        if (index === -1) {
+            return null;
+        }
+        return index;
+    } else if (key === 'check_inv') {
+        // check_inv=inv,obj,min,max
+        const parts: string[] = value.split(',');
+        if (parts.length !== 4) {
+            return null;
+        }
+
+        const inv = InvPack.getByName(parts[0]);
+        if (inv === -1) {
+            return null;
+        }
+
+        const obj = ObjPack.getByName(parts[1]);
+        if (obj === -1) {
+            return null;
+        }
+
+        if (!/^-?[0-9]+$/.test(parts[2])) {
+            return null;
+        }
+        const min = parseInt(parts[2]);
+
+        if (!/^-?[0-9]+$/.test(parts[3])) {
+            return null;
+        }
+        const max = parseInt(parts[3]);
+
+        if (min < 0 || min > Inventory.STACK_LIMIT || min > max) {
+            return null;
+        }
+
+        if (max < 0 || max > Inventory.STACK_LIMIT || max < min) {
+            return null;
+        }
+        return {inv, obj, min, max};
+    } else if (key === 'check_invparam') {
+        // check_inv=inv,param,min,max
+        const parts: string[] = value.split(',');
+        if (parts.length !== 4) {
+            return null;
+        }
+
+        const inv = InvPack.getByName(parts[0]);
+        if (inv === -1) {
+            return null;
+        }
+
+        const param = ParamPack.getByName(parts[1]);
+        if (param === -1) {
+            return null;
+        }
+
+        if (!/^-?[0-9]+$/.test(parts[2])) {
+            return null;
+        }
+        const min = parseInt(parts[2]);
+
+        if (!/^-?[0-9]+$/.test(parts[3])) {
+            return null;
+        }
+        const max = parseInt(parts[3]);
+
+        if (min < 0 || min > Inventory.STACK_LIMIT || min > max) {
+            return null;
+        }
+
+        if (max < 0 || max > Inventory.STACK_LIMIT || max < min) {
+            return null;
+        }
+        return {inv, param, min, max};
     } else {
         return undefined;
     }
@@ -344,6 +458,56 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                 if (value !== 1) {
                     server.p1(11);
                     server.p2(value as number);
+                }
+            } else if (key === 'check_category') {
+                if (config.every(x => x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && (x.value === HuntModeType.NPC || x.value === HuntModeType.OBJ || x.value === HuntModeType.SCENERY)).length > 0) {
+                    server.p1(12);
+                    server.p2(value as number);
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
+                }
+            } else if (key === 'check_npc') {
+                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.NPC).length > 0) {
+                    server.p1(13);
+                    server.p2(value as number);
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
+                }
+            } else if (key === 'check_obj') {
+                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_loc' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.OBJ).length > 0) {
+                    server.p1(14);
+                    server.p2(value as number);
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
+                }
+            } else if (key === 'check_loc') {
+                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_inv' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.SCENERY).length > 0) {
+                    server.p1(15);
+                    server.p2(value as number);
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
+                }
+            } else if (key === 'check_inv') {
+                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_invparam') && config.filter(x => x.key === 'type' && x.value === HuntModeType.PLAYER).length > 0) {
+                    const checkInv: HuntCheckInv = value as HuntCheckInv;
+                    server.p1(16);
+                    server.p2(checkInv.inv);
+                    server.p2(checkInv.obj);
+                    server.p4(checkInv.min);
+                    server.p4(checkInv.max);
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
+                }
+            } else if (key === 'check_invparam') {
+                if (config.every(x => x.key !== 'check_category' && x.key !== 'check_npc' && x.key !== 'check_obj' && x.key !== 'check_loc' && x.key !== 'check_inv') && config.filter(x => x.key === 'type' && x.value === HuntModeType.PLAYER).length > 0) {
+                    const checkInv: HuntCheckInvParam = value as HuntCheckInvParam;
+                    server.p1(17);
+                    server.p2(checkInv.inv);
+                    server.p2(checkInv.param);
+                    server.p4(checkInv.min);
+                    server.p4(checkInv.max);
+                } else {
+                    throw new Error(`Hunt config: [${debugname}] unable to pack line!!!.\nInvalid property value: ${key}=${value}`);
                 }
             }
         }

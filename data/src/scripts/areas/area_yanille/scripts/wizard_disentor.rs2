@@ -1,0 +1,13 @@
+[opnpc1,wizard_disentor]
+~chatnpc("<p,neutral>Welcome to the Magicians' Guild!");
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,quiz>What can I do for you?");
+if(%runemysteries_progress = ^runemysteries_complete) {
+    def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
+    if ($option = 2) {
+        ~chatplayer("<p,quiz>Can you teleport me to the Rune Essence?");
+        @teleport_to_essence_mine(^essence_mine_to_disentor);
+    }
+}
+~chatplayer("<p,neutral>Nothing thanks, I'm just looking around.");
+~chatnpc("<p,neutral>That's fine with me.");

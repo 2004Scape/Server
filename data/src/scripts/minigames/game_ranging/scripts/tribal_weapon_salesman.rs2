@@ -1,0 +1,12 @@
+[opnpc1,tribal_weapon_salesman]
+~chatplayer("<p,happy>Hello there.");
+~chatnpc("<p,happy>Greetings, traveller. Are you interested in any throwing weapons?");
+switch_int(~p_choice2("Yes I am.", 1, "Not really.", 2)) {
+    case 1:
+        ~chatplayer("<p,happy>Yes I am.");
+        ~chatnpc("<p,happy>That is a good thing.");
+        ~openshop_activenpc;
+    case 2:
+        ~chatplayer("<p,neutral>Not really.");
+        ~chatnpc("<p,neutral>No bother to me.");
+}

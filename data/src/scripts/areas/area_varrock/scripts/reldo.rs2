@@ -2,7 +2,7 @@
 if(%phoenixgang_progress = ^phoenixgang_read_book) {
     @reldo_read_book;
 }
-~chatnpc("<p,default>Hello stranger.");
+~chatnpc("<p,neutral>Hello stranger.");
 if(%squire_progress = 1 & %phoenixgang_progress = 0) { // knights sword started and arrav not started
     @multi4("I'm in search of a quest", reldo_phoenixstart, "Do you have anything to trade?", reldo_trade, "What do you do?", reldo_what_do, "What do you know about the Imcando dwarves?", reldo_imcando_dwaves);
 } else if(%squire_progress = 1) { // knights sword started and arrav in progress

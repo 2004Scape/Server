@@ -1,0 +1,9 @@
+[opnpc1,magic_store_owner]
+~chatnpc("<p,happy>Welcome to the Magic Guild Store.|Would you like to buy some magic supplies?");
+switch_int(~p_choice2("Yes please.", 1, "No thank you.", 2)) {
+    case 1:
+        ~chatplayer("<p,happy>Yes please.");
+        ~openshop_activenpc;
+    case 2:
+        ~chatplayer("<p,neutral>No thank you.");
+} 

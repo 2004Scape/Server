@@ -1,0 +1,36 @@
+[oploc1,loc_2514]
+if(coordx(coord) > coordx(loc_coord) | coordz(coord) < coordz(loc_coord)) {
+    sound_synth(door_open, 0, 0); // gate_open 
+    ~forcewalk(movecoord(loc_coord, 1, 0, -1));
+    def_int $x;
+    def_int $z;
+    def_coord $loc_coord = loc_coord;
+    def_int $angle = loc_angle;
+    def_locshape $shape = loc_shape;
+    $x, $z = ~door_open($angle, loc_shape);
+    loc_change(loc_83, 2);
+    loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+    ~forcemove(movecoord(coord, -2, 0, 2));
+    return;
+}
+if(stat(ranged) < 40) { // TODO: check if requirement is enforced from inside as well
+    if(npc_find(coord, ranging_guild_doorman, 5, 0) = true) {
+        ~chatnpc("<p,neutral>Hey you can't come in here. You must be a level 40 ranger to enter.");
+    }
+    return;
+}
+sound_synth(door_open, 0, 0);
+~forcewalk(movecoord(loc_coord, -1, 0, 1));
+def_int $x;
+def_int $z;
+def_coord $loc_coord = loc_coord;
+def_int $angle = loc_angle;
+def_locshape $shape = loc_shape;
+$x, $z = ~door_open($angle, loc_shape);
+loc_change(loc_83, 2);
+loc_add(movecoord($loc_coord, $x, 0, $z), loc_1532, modulo(add($angle, 1), 4), $shape, 2);
+~forcemove(movecoord(coord, 2, 0, -2));
+
+[opnpc1,ranging_guild_doorman]
+~chatplayer("<p,happy>Hello there.");
+~chatnpc("<p,happy>Greetings. If you are an experienced archer, you may want to visit the guild here...");
