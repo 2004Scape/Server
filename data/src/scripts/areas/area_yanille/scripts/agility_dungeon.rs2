@@ -88,13 +88,17 @@ sound_synth(locked, 0, 0);
 mes("The chest is locked.");
 
 [oplocu,loc_377]
-// https://www.youtube.com/watch?v=k_J38U5xZvQ, typos are all intentional
+// https://youtu.be/A4crb0CaneU?si=ty3obEvZ9cIxbJ4F&t=278, typos are all intentional
 if(last_useitem = sinister_key) {
     mes("you unlock the chest with your key...");
     p_delay(3);
     mes("A foul gas seeps from the chest");
-    queue(poison_player, 0, 27);
     sound_synth(gas_hiss, 0, 0);
+    if(%antipoison >= map_clock) {
+        mes("Luckily your poison antidote saves you from harm.");
+    } else {
+        queue(poison_player, 0, 27);
+    }
     mes("You find a lot of herbs in the chest...");
     inv_del(inv, sinister_key, 1);
     inv_add(inv, unidentified_harralander, 2);
