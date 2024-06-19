@@ -33,7 +33,7 @@ if (p_finduid(uid) = true) {
     }
     def_int $rng = random($rarity);
     if ($rng = 0) {
-        def_obj $trail_clue_easy = enum(int, namedobj, trail_easy_enum, random(enum_getoutputcount(trail_easy_enum)));
+        def_namedobj $trail_clue_easy = enum(int, namedobj, trail_easy_enum, random(enum_getoutputcount(trail_easy_enum)));
         obj_add($coord, $trail_clue_easy, 1, ^lootdrop_duration);
         ~clear_trail_progress;
     }
@@ -48,7 +48,7 @@ if (p_finduid(uid) = true) {
     }
     def_int $rng = random($rarity);
     if ($rng = 0) {
-        def_obj $trail_clue_medium = enum(int, namedobj, trail_medium_enum, random(enum_getoutputcount(trail_medium_enum)));
+        def_namedobj $trail_clue_medium = enum(int, namedobj, trail_medium_enum, random(enum_getoutputcount(trail_medium_enum)));
         obj_add($coord, $trail_clue_medium, 1, ^lootdrop_duration);
         ~clear_trail_progress;
     }
@@ -63,7 +63,7 @@ if (p_finduid(uid) = true) {
     }
     def_int $rng = random($rarity);
     if ($rng = 0) {
-        def_obj $trail_clue_hard = enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_hard_enum)));
+        def_namedobj $trail_clue_hard = enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_hard_enum)));
         obj_add($coord, $trail_clue_hard, 1, ^lootdrop_duration);
         ~clear_trail_progress;
     }

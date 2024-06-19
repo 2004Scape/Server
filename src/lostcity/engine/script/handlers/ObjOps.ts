@@ -54,7 +54,25 @@ const ObjOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OBJ_ADDALL]: state => {
-        throw new Error('unimplemented');
+        const [coord, objId, count, duration] = state.popInts(4);
+
+        if (objId === -1 || count === -1) {
+            return;
+        }
+
+        const objType: ObjType = check(objId, ObjTypeValid);
+        check(duration, DurationValid);
+        const position: Position = check(coord, CoordValid);
+        check(count, ObjStackValid);
+
+        if (objType.dummyitem !== 0) {
+            throw new Error(`attempted to add dummy item: ${objType.debugname}`);
+        }
+
+        const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
+        World.addObj(obj, -1, duration);
+        state.activeObj = obj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
     },
 
     [ScriptOpcode.OBJ_PARAM]: state => {
@@ -121,7 +139,33 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_COORD]: state => {
         const position: Position = state.activeObj;
         state.pushInt(Position.packCoord(position.level, position.x, position.z));
-    }
+    },
+
+    [ScriptOpcode.OBJ_ADDUNSAFE]: state => {
+        const [coord, objId, count, duration] = state.popInts(4);
+
+        if (objId === -1 || count === -1) {
+            return;
+        }
+
+        const objType: ObjType = check(objId, ObjTypeValid);
+        check(duration, DurationValid);
+        const position: Position = check(coord, CoordValid);
+        check(count, ObjStackValid);
+
+        if (objType.dummyitem !== 0) {
+            throw new Error(`attempted to add dummy item: ${objType.debugname}`);
+        }
+
+        const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
+        World.addObj(obj, state.activePlayer.pid, duration);
+        state.activeObj = obj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
+
+        if (Environment.CLIRUNNER) {
+            state.activePlayer.invAdd(InvType.getByName('bank')!.id, objId, count);
+        }
+    },
 };
 
 export default ObjOps;

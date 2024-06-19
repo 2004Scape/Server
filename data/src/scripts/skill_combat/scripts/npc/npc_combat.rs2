@@ -80,7 +80,7 @@ npc_queue(3, 0, 0);
 // a default death script.
 [proc,npc_default_death]
 gosub(npc_death);
-def_obj $drop = npc_param(death_drop);
+def_namedobj $drop = npc_param(death_drop);
 if ($drop ! null & npc_findhero = true) {
     obj_add(npc_coord, $drop, 1, 200);
 }

@@ -6,11 +6,12 @@ import World from '#lostcity/engine/World.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
-import {ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
+import {ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
 import Obj from '#lostcity/entity/Obj.js';
 import {Position} from '#lostcity/entity/Position.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+import Player from '#lostcity/entity/Player.js';
 
 import {
     CategoryTypeValid,
@@ -22,6 +23,7 @@ import {
     ObjStackValid,
     ObjTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 
 const InvOps: CommandHandlers = {
     // inv config
@@ -73,9 +75,7 @@ const InvOps: CommandHandlers = {
         const player = state.activePlayer;
         const overflow = count - player.invAdd(invType.id, objType.id, count);
         if (overflow > 0) {
-            const floorObj = new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow);
-
-            World.addObj(floorObj, player.pid, 200);
+            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
         }
     }),
 
@@ -151,8 +151,10 @@ const InvOps: CommandHandlers = {
 
         player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
-        const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objType.id, completed);
+        const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objType.id, completed);
         World.addObj(floorObj, player.pid, duration);
+        state.activeObj = floorObj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
     }),
 
     // inv write
@@ -163,26 +165,28 @@ const InvOps: CommandHandlers = {
         check(duration, DurationValid);
         const position: Position = check(coord, CoordValid);
 
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
+            throw new Error(`$inv requires protected access: ${invType.debugname}`);
+        }
+
         const obj = state.activePlayer.invGetSlot(invType.id, slot);
         if (!obj) {
             throw new Error('$slot is empty');
         }
 
-        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
-            throw new Error(`$inv requires protected access: ${invType.debugname}`);
-        }
-
         const player = state.activePlayer;
         const completed = player.invDel(invType.id, obj.id, obj.count, slot);
-        if (completed == 0) {
+        if (completed === 0) {
             return;
         }
 
         const objType = ObjType.get(obj.id);
         player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
-        const floorObj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
+        const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
         World.addObj(floorObj, player.pid, duration);
+        state.activeObj = floorObj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
     }),
 
     // inv read
@@ -252,9 +256,7 @@ const InvOps: CommandHandlers = {
         const player = state.activePlayer;
         const { overflow, fromObj } = player.invMoveFromSlot(fromInvType.id, toInvType.id, fromSlot);
         if (overflow > 0) {
-            const floorObj = new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow);
-
-            World.addObj(floorObj, player.pid, 200);
+            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow), player.pid, 200);
         }
     }),
 
@@ -343,15 +345,15 @@ const InvOps: CommandHandlers = {
             throw new Error(`$inv requires protected access: ${toInvType.debugname}`);
         }
 
-        const completed = state.activePlayer.invDel(fromInvType.id, objType.id, count);
+        const player: Player = state.activePlayer;
+        const completed = player.invDel(fromInvType.id, objType.id, count);
         if (completed == 0) {
             return;
         }
 
-        const overflow = count - state.activePlayer.invAdd(toInvType.id, objType.id, completed);
+        const overflow = count - player.invAdd(toInvType.id, objType.id, completed);
         if (overflow > 0) {
-            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, EntityLifeCycle.DESPAWN, objType.id, overflow);
-            World.addObj(floorObj, state.activePlayer.pid, 200);
+            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
         }
     }),
 
@@ -372,7 +374,8 @@ const InvOps: CommandHandlers = {
             throw new Error(`$inv requires protected access: ${toInvType.debugname}`);
         }
 
-        const completed = state.activePlayer.invDel(fromInvType.id, objType.id, count);
+        const player: Player = state.activePlayer;
+        const completed = player.invDel(fromInvType.id, objType.id, count);
         if (completed == 0) {
             return;
         }
@@ -381,10 +384,9 @@ const InvOps: CommandHandlers = {
         if (objType.certtemplate === -1 && objType.certlink >= 0) {
             finalObj = objType.certlink;
         }
-        const overflow = count - state.activePlayer.invAdd(toInvType.id, finalObj, completed);
+        const overflow = count - player.invAdd(toInvType.id, finalObj, completed);
         if (overflow > 0) {
-            const floorObj = new Obj(state.activePlayer.level, state.activePlayer.x, state.activePlayer.z, EntityLifeCycle.DESPAWN, finalObj, overflow);
-            World.addObj(floorObj, state.activePlayer.pid, 200);
+            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, finalObj, overflow), player.pid, 200);
         }
     
     }),
@@ -406,15 +408,16 @@ const InvOps: CommandHandlers = {
             throw new Error(`$inv requires protected access: ${toInvType.debugname}`);
         }
 
-        const completed = state.activePlayer.invDel(fromInvType.id, objType.id, count);
+        const player: Player = state.activePlayer;
+        const completed = player.invDel(fromInvType.id, objType.id, count);
         if (completed == 0) {
             return;
         }
 
         if (objType.certtemplate >= 0 && objType.certlink >= 0) {
-            state.activePlayer.invAdd(toInvType.id, objType.certlink, completed);
+            player.invAdd(toInvType.id, objType.certlink, completed);
         } else {
-            state.activePlayer.invAdd(toInvType.id, objType.id, completed);
+            player.invAdd(toInvType.id, objType.id, completed);
         }
     }),
 
@@ -488,7 +491,87 @@ const InvOps: CommandHandlers = {
         const com = check(state.popInt(), NumberNotNull);
 
         state.activePlayer.invStopListenOnCom(com);
-    })
+    }),
+
+    // inv write
+    [ScriptOpcode.BOTH_DROPSLOT]: checkedHandler(ActivePlayer, state => {
+        const [inv, coord, slot, duration] = state.popInts(4);
+
+        const invType: InvType = check(inv, InvTypeValid);
+        check(duration, DurationValid);
+        const position: Position = check(coord, CoordValid);
+
+        const secondary = state.intOperand == 1;
+
+        // from = active_player
+        // to = .active_player
+        // if both_dropslot is called as .both_dropslot, then from/to pointers are swapped
+
+        const fromPlayer: Player | null = secondary ? state._activePlayer2 : state._activePlayer;
+        const toPlayer: Player | null = secondary ? state._activePlayer : state._activePlayer2;
+
+        if (!fromPlayer || !toPlayer) {
+            throw new Error('player is null');
+        }
+
+        if (!state.pointerGet(ProtectedActivePlayer[secondary ? 1 : 0]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
+            throw new Error(`inv requires protected access: ${invType.debugname}`);
+        }
+
+        const obj = fromPlayer.invGetSlot(invType.id, slot);
+        if (!obj) {
+            throw new Error('$slot is empty');
+        }
+
+        const completed: number = fromPlayer.invDel(invType.id, obj.id, obj.count, slot);
+        if (completed === 0) {
+            return;
+        }
+
+        const objType: ObjType = ObjType.get(obj.id);
+        fromPlayer.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
+
+        if (!objType.tradeable) {
+            return; // stop untradables after delete.
+        }
+
+        World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed), toPlayer.pid, duration);
+    }),
+
+    // inv write
+    [ScriptOpcode.INV_DROPALL]: checkedHandler(ActivePlayer, state => {
+        const [inv, coord, duration] = state.popInts(3);
+
+        const invType: InvType = check(inv, InvTypeValid);
+        check(duration, DurationValid);
+        const position: Position = check(coord, CoordValid);
+
+
+        if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
+            throw new Error(`$inv requires protected access: ${invType.debugname}`);
+        }
+
+        const inventory: Inventory | null = state.activePlayer.getInventory(invType.id);
+        if (!inventory) {
+            return;
+        }
+
+        for (let slot: number = 0; slot < inventory.capacity; slot++) {
+            const obj = inventory.get(slot);
+            if (!obj) {
+                continue;
+            }
+
+            inventory.delete(slot);
+
+            const objType: ObjType = ObjType.get(obj.id);
+            if (!objType.tradeable) {
+                continue; // stop untradables after delete.
+            }
+
+            World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), -1, duration);
+        }
+    }),
 };
 
 export default InvOps;
