@@ -43,9 +43,9 @@ if(inv_total(inv, trail_clue_medium_riddle_exp001) > 0) {
     // https://www.youtube.com/watch?v=tfnYvJrHnqw
     if(inv_total(inv, trail_clue_medium_key_exp001) > 0) {
         p_arrivedelay;
-        anim(human_openchest,0);
+        anim(human_openchest, 0);
+        sound_synth(chest_open, 0, 0);
         p_delay(0);
-        // need to find how long it changes for
         loc_change(loc_3368, 4);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp001, 1);
@@ -62,27 +62,27 @@ if(inv_total(inv, trail_clue_medium_riddle_exp002) > 0) {
     // https://www.youtube.com/watch?v=tfnYvJrHnqw
     if(inv_total(inv, trail_clue_medium_key_exp002) > 0) {
         p_arrivedelay;
-        anim(human_openchest,0);
+        anim(human_openchest, 0);
+        sound_synth(cupboard_open, 0, 0);
         p_delay(0);
-        // need to find how long it changes for
         loc_change(loc_3369, 4);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp002, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp002, "You've found another clue scroll!");
         return;
     }
-    ~mesbox("The drawers are locked! A note on the top of the drawers reads:|Beware of the dog.");
+    ~mesbox("The drawers are locked!  A note left on the drawers reads: Beware of the dog!");
 }
-mes("These drawers are locked.");
+mes("The drawers are locked.");
 
 [label,riddle_loc_medium_exp003]
 if(inv_total(inv, trail_clue_medium_riddle_exp003) > 0) {
     // https://www.youtube.com/watch?v=cxAvPqh4WjM
     if(inv_total(inv, trail_clue_medium_key_exp003) > 0) {
         p_arrivedelay;
-        anim(human_openchest,0);
+        anim(human_openchest, 0);
+        sound_synth(cupboard_open, 0, 0);
         p_delay(0);
-        // need to confirm how long it changes for, seems like 4t in video
         loc_change(loc_3369, 4);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp003, 1);
@@ -93,33 +93,32 @@ if(inv_total(inv, trail_clue_medium_riddle_exp003) > 0) {
 }
 mes("The drawers are locked.");
 
-// TODO: not the same drawer, but basing the lock message off this, probably confirm on OSRS: https://youtu.be/cFwNqBvSHNg?si=poX8EWgEZIEfvie7&t=66
 [label,riddle_loc_medium_exp004]
 if(inv_total(inv, trail_clue_medium_riddle_exp004) > 0) {
     // https://www.youtube.com/watch?v=cxAvPqh4WjM
     if(inv_total(inv, trail_clue_medium_key_exp004) > 0) {
         p_arrivedelay;
-        anim(human_openchest,0);
+        anim(human_openchest, 0);
+        sound_synth(cupboard_open, 0, 0);
         p_delay(0);
-        // need to confirm how long it changes for, seems like 4t in video
         loc_change(loc_3370, 4);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp004, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp004, "You've found another clue scroll!");
         return;
     }
-    ~mesbox("The drawers are locked! A note on the top of the drawers reads:|Don't forget to feed the chickens.");
+    ~mesbox("The drawers are locked!|A note left on the drawers reads: Don't forget to feed the chickens.");
 }
-mes("These drawers are locked.");
+mes("The drawers are locked.");
 
 [label,riddle_loc_medium_exp005]
 if(inv_total(inv, trail_clue_medium_riddle_exp005) > 0) {
     // https://www.youtube.com/watch?v=cxAvPqh4WjM
     if(inv_total(inv, trail_clue_medium_key_exp005) > 0) {
         p_arrivedelay;
-        anim(human_openchest,0);
+        anim(human_openchest, 0);
+        sound_synth(chest_open, 0, 0);
         p_delay(0);
-        // need to confirm how long it changes for, seems like 4t in video
         loc_change(loc_3370, 4);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp005, 1);

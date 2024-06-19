@@ -5447,6 +5447,7 @@ attack=58
 strength=58
 defence=62
 param=damagetype,^slash_style
+param=max_dealt,0
 
 [npc_206]
 walkanim=dwarf_walk

@@ -139,6 +139,12 @@ model6=model_262_obj_wear
 model7=model_179_obj_wear
 head1=model_58_npc_head
 wanderrange=2
+category=shop_keeper
+param=owned_shop,aarons_archery_appendages
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,500
+param=shop_delta,10
+param=shop_title,Aaron's Archery Appendages.
 
 [bow_and_arrow_salesman]
 vislevel=hide
