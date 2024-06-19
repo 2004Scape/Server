@@ -82,3 +82,44 @@ mes("You climb up the pile of rubble...");
 [oploc1,loc_2318]
 mes("You climb down the pile of rubble...");
 p_telejump(0_40_149_56_35);
+
+[oploc1,loc_377]
+sound_synth(locked, 0, 0);
+mes("The chest is locked.");
+
+[oplocu,loc_377]
+// https://www.youtube.com/watch?v=k_J38U5xZvQ, typos are all intentional
+if(last_useitem = sinister_key) {
+    mes("you unlock the chest with your key...");
+    p_delay(3);
+    mes("A foul gas seeps from the chest");
+    queue(poison_player, 0, 27);
+    sound_synth(gas_hiss, 0, 0);
+    mes("You find a lot of herbs in the chest...");
+    inv_del(inv, sinister_key, 1);
+    inv_add(inv, unidentified_harralander, 2);
+    inv_add(inv, unidentified_ranarr_weed, 3);
+    inv_add(inv, unidentified_irit_leaf, 1);
+    inv_add(inv, unidentified_avantoe, 1);
+    inv_add(inv, unidentified_kwuarm, 1);
+    inv_add(inv, unidentified_torstol, 1);
+    loc_change(loc_3368, 4);
+    return;
+}
+~displaymessage(^dm_default);
+
+[oploc1,loc_412]
+if (stat(prayer) >= stat_base(prayer)) {
+    mes("You already have full prayer points.");
+} else {
+    // no seq
+    mes("You recharge your prayer points.");
+    sound_synth(prayer_recharge, 0, 0);
+    stat_add(prayer, calc(stat_base(prayer) - stat(prayer)), 0);
+}
+p_delay(3);
+mes("Suddenly a trap door opens beneath you...");
+p_teleport(0_40_149_28_37);
+sound_synth(door_open, 0, 0);
+~damage_self(calc(((stat_base(hitpoints) * 15) / 100) + 1));
+

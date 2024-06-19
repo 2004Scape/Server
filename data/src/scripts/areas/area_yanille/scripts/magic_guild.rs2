@@ -1,0 +1,32 @@
+[oploc1,_magic_guild_dungeon_door]
+if(npc_find(coord, wizard_frumscone, 12, 0) = true) {
+    ~chatnpc("<p,neutral>You can't attack the Zombies in the room, my Zombies are for magic target practice only and should be attacked from the other side of the fence.");
+} 
+
+[oploc1,loc_1600] @open_mageguild_door(^left);
+[oploc1,loc_1601] @open_mageguild_door(^right);
+
+[label,open_mageguild_door](int $side)
+def_boolean $entering = ~check_axis_locactive(coord);
+if($entering = true & stat(magic) < 66) {
+    if(npc_find(coord, wizard_disentor, 8, 0) = true) {
+        ~chatnpc("<p,neutral>You need a magic level of 66.|The magical energy in here is unsafe for those below that level.");
+    }
+    return;
+}
+~open_and_close_double_door2($entering, $side, door_open);
+
+[oploc1,loc_2156]
+mes("You enter the magic portal...");
+mes("You teleport to the Wizards' tower.");
+p_teleport(0_48_49_37_23);
+
+[oploc1,loc_2157]
+mes("You enter the magic portal...");
+mes("You teleport to the Dark Wizards' tower.");
+p_teleport(0_45_52_27_5);
+
+[oploc1,loc_2158]
+mes("You enter the magic portal...");
+mes("You teleport to Thormac the Sorcerer's house.");
+p_teleport(0_42_53_15_14);

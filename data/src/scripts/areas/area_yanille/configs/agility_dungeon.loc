@@ -1,3 +1,10 @@
+[loc_412]
+name=Chaos altar
+desc=Shrine to the glory of Zamorak.
+model=model_loc_61
+width=2
+op1=Pray-at
+
 [loc_2290]
 name=Obstacle pipe
 desc=A pipe I can squeeze through.
