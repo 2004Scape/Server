@@ -9,6 +9,7 @@ switch_int(~p_choice3("What do you do here?", 1, "I'd like to see what you sell.
     case 2:
         ~chatplayer("<p,happy>I'd like to see what you sell.");
         ~chatnpc("<p,happy>Indeed, cast your eyes on my wares, adventurer.");
+        ~openshop_activenpc;
     case 3:
         ~chatplayer("<p,neutral>I've seen enough, thanks.");
         ~chatnpc("<p,neutral>Very good, adventurer.");
