@@ -6,4 +6,70 @@ def_int $rangeattack = npc_param(rangeattack);
 def_int $effective_ranged = ~combat_effective_stat(1, npc_stat(ranged), 100); // no prayerbonus
 return(~combat_stat($effective_ranged, $rangeattack));
 
-// if_close; // close the player interface when taking a hit.
+[proc,npc_ranged_maxhit]()(int)
+def_int $rangebonus = npc_param(rangebonus);
+//npcs are essentially always on controlled
+def_int $effective_strength = ~combat_effective_stat(1, npc_stat(ranged), 100); // no prayerbonus
+def_int $range_strength = ~combat_stat($effective_strength, $rangebonus);
+return(~combat_maxhit($range_strength));
+
+[proc,npc_rangeattack]
+if (%npc_action_delay > map_clock) {
+    npc_setmode(applayer2);
+    return;
+}
+if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+
+def_int $attack_roll = ~npc_ranged_attack_roll;
+def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
+def_int $maxhit = ~npc_ranged_maxhit;
+
+npc_anim(npc_param(attack_anim), 0);
+sound_synth(npc_param(rangeattack_sound), 0, 0);
+spotanim_npc(npc_param(proj_launch), 96, 0);
+
+%npc_action_delay = add(map_clock, npc_param(attackrate));
+def_int $duration = 64;
+$duration = ~player_projectile(npc_coord, coord, uid, npc_param(proj_travel), 40, 36, 32, 15, 0, 11, 5);
+
+if (randominc($attack_roll) > randominc($defence_roll)) {
+    ~playerhit_n_ranged(randominc($maxhit), $duration, npc_param(attackrate));
+    return;
+}
+~playerhit_n_ranged(0, $duration, npc_param(attackrate));
+
+[proc,playerhit_n_ranged](int $damage, int $duration, int $delay)
+if_close; // close the player interface when taking a hit.
+// not sure if this is correct
+if (getqueue(player_death) < 1) {
+    queue(damage_player, calc($duration / 30), $damage);
+    if (npc_param(poison_severity) > 0 & $damage > 0) {
+        queue(poison_player, 0, npc_param(poison_severity));
+    }
+}
+if(npc_param(npc_ammo) ! null) {
+    ~npc_drop_ammo(npc_param(npc_ammo), $duration);
+}
+queue(playerhit_n_retaliate, calc($duration / 30), npc_uid); // this should be a queue* command
+~npc_set_attack_vars;
+
+// For npcs that will drop their ammo as they fire, might just be ranged guild specific?
+// rates: https://x.com/JagexAsh/status/1802647479772414116
+[proc,npc_drop_ammo](namedobj $ammo, int $delay)
+def_int $roll = 14;
+switch_namedobj ($ammo) {
+    case steel_arrow: $roll = 12;
+    case mithril_arrow: $roll = 10;
+    case adamant_arrow: $roll = 8;
+}
+if (random(100) < $roll) {
+    world_delay(calc($delay / 30 - 2));
+    if (map_blocked(coord) = true) {
+        return;
+    }
+    obj_add(coord, $ammo, 1, 200);
+}
+

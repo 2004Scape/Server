@@ -64,6 +64,7 @@ import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {makeCrcs} from '#lostcity/server/CrcTable.js';
 import {preloadClient} from '#lostcity/server/PreloadedPacks.js';
+import {Position} from '#lostcity/entity/Position.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -461,6 +462,39 @@ class World {
             }
         }
         clientInput = Date.now() - clientInput;
+
+        for (const player of this.players) {
+            if (!isNetworkPlayer(player)) {
+                continue;
+            }
+
+            if (player.userPath.length > 0 || player.opcalled) {
+                if (player.delayed()) {
+                    player.unsetMapFlag();
+                    continue;
+                }
+
+                if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
+                    player.faceEntity = -1;
+                    player.mask |= Player.FACE_ENTITY;
+                }
+
+                if (player.opcalled && (player.userPath.length === 0 || !Environment.CLIENT_PATHFINDER)) {
+                    player.pathToTarget();
+                    continue;
+                }
+
+                player.pathToMoveClick(player.userPath, !Environment.CLIENT_PATHFINDER);
+            }
+
+            if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
+                if (Position.distanceToSW(player, player.target) <= 25) {
+                    player.pathToPathingTarget();
+                } else {
+                    player.clearWaypoints();
+                }
+            }
+        }
 
         // npc processing (if npc is not busy)
         // - resume suspended script
@@ -873,7 +907,10 @@ class World {
     computeSharedEvents(): void {
         const zones: Set<number> = new Set();
         for (const player of this.players) {
-            for (const zone of Object.keys(player.loadedZones).map(Number)) {
+            if (!isNetworkPlayer(player)) {
+                continue;
+            }
+            for (const zone of player.loadedZones) {
                 zones.add(zone);
             }
         }

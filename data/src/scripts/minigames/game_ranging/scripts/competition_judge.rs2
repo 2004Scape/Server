@@ -1,0 +1,74 @@
+[opnpc1,competition_judge]
+if(%target1 = 11) {
+    @competition_judge_reward_pts;
+} else if(%target1 >= 1 & %target1 < 11) {
+    ~chatnpc("<p,happy>Hello again, do you need reminding of the rules?");
+    switch_int(~p_choice3("Yes please.", 1, "No thanks, I've got it.", 2, "How am I doing so far?", 3)) {
+        case 1:
+            ~chatplayer("<p,neutral>Yes please.");
+            ~chatnpc("<p,happy>The rules are very simple:");
+            ~chatnpc("<p,neutral>You're given 10 shots at the targets, for each hit you will receive points. At the end you'll be awarded 1 ticket for every 10 points.");
+            ~chatnpc("<p,neutral>The tickets can be exchanged for goods from our stores. Good luck!");
+        case 2:
+            ~chatplayer("<p,neutral>No thanks, I've got it.");
+            ~chatnpc("<p,happy>Glad to hear it, good luck!");
+        case 3:
+            def_string $encourage = "";
+            // based on pts/round, wiki info is inaccurate
+            def_int $denom = calc(%target1 - 1);
+            if($denom = 0) {
+                $encourage = "You haven't started yet.";
+            } else {
+                def_int $ratio = calc(%target2 / (%target1 - 1));
+                if ($ratio = 100) {
+                    $encourage = "Amazing, don't falter now.";
+                } else if ($ratio > 50 & $ratio < 100) {
+                    $encourage = "You're doing very well.";
+                } else if ($ratio > 20 & $ratio < 50) {
+                    $encourage = "You're pretty good, keep it up.";
+                } else {
+                    $encourage = "Not bad, keep going.";
+                }
+            }
+            ~chatnpc("<p,happy>So far your score is: <tostring(%target2)>. <$encourage>");
+    }
+} else {
+    ~chatnpc("<p,happy>Hello there, would you like to take part in the archery competition? It only costs 200 coins to enter.");
+    @multi3("Sure, I'll give it a go.", competition_judge_sure, "What are the rules?", competition_judge_rules, "No thanks.", competition_judge_no);
+}
+
+[label,competition_judge_sure]
+~chatplayer("<p,happy>Sure, I'll give it a go.");
+~chatnpc("<p,happy>Great! That will be 200 coins then please.");
+if(inv_total(inv, coins) < 200) {
+    ~chatplayer("<p,sad>Oops, I don't have enough coins on me...");
+    ~chatnpc("<p,neutral>Never mind, come back when you've got enough.");
+    return;
+}
+mes("You pay the judge and he gives you 10 bronze arrows.");
+inv_del(inv, coins, 200);
+inv_add(inv, bronze_arrow, 10);
+%target1 = 1;
+
+[label,competition_judge_rules]
+~chatplayer("<p,quiz>What are the rules?");
+~chatnpc("<p,happy>The rules are very simple:");
+~chatnpc("<p,neutral>You're given 10 shots at the targets, for each hit you will receive points. At the end you'll be awarded 1 ticket for every 10 points.");
+~chatnpc("<p,neutral>The tickets can be exchanged for goods from our stores. Do you want to give it a go? Only 200 coins.");
+@multi2("Sure, I'll give it a go.", competition_judge_sure, "No thanks.", competition_judge_no);
+
+[label,competition_judge_no] ~chatplayer("<p,neutral>No thanks.");
+
+[label,competition_judge_reward_pts]
+%target2 = calc(%target2 / 10);
+def_int $token_count = %target2; // this is what osrs does
+%target2 = 0;
+%target1 = 0;
+inv_add(inv, archery_ticket, $token_count);
+~chatnpc("<p,happy>Well done. Your score is: <tostring(calc($token_count * 10))>. For that score you will receive <tostring($token_count)> Archery tickets. Would you like to try again for another 200 coins?");
+if(inv_total(inv, coins) < 200) {
+    ~chatplayer("<p,sad>I haven't got the money.");
+    return;
+}
+@multi2("Sure, I'll give it a go.", competition_judge_sure, "No thanks.", competition_judge_no);
+

@@ -92,7 +92,9 @@ if (random(5) ! 0) {
     if (map_blocked(npc_coord) = true) {
         return;
     }
-    obj_add(npc_coord, $ammo, 1, 200);
+    if (p_finduid(uid) = true) {
+        obj_addunsafe(npc_coord, $ammo, 1, 200);
+    }
 }
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)

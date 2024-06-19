@@ -1,0 +1,79 @@
+[opnpc1,armour_salesman]
+~chatplayer("<p,happy>Good day to you.");
+~chatnpc("<p,happy>And to you. Can I help you?");
+switch_int(~p_choice3("What do you do here?", 1, "I'd like to see what you sell.", 2, "I've seen enough, thanks.", 3)) {
+    case 1:
+        ~chatplayer("<p,happy>What do you do here?");
+        ~chatnpc("<p,neutral>I am a supplier of leather armours and accessories. Ask and I will tell you what I know.");
+        @multi3("Tell me about your armours.", armour_salesman_armours, "Tell me about your accessories.", armour_salesman_accessories, "I've seen enough, thanks.", armour_salesman_enough);
+    case 2:
+        ~chatplayer("<p,happy>I'd like to see what you sell.");
+        ~chatnpc("<p,happy>Indeed, cast your eyes on my wares, adventurer.");
+    case 3:
+        ~chatplayer("<p,neutral>I've seen enough, thanks.");
+        ~chatnpc("<p,neutral>Very good, adventurer.");
+}
+
+[label,armour_salesman_armours]
+~chatplayer("<p,happy>Tell me about your armours.");
+~chatnpc("<p,happy>I have normal, studded and hard types.");
+@multi4("Tell me about normal leather.", armour_salesman_leather1, "What's studded leather?", armour_salesman_leather2, "What's hard leather?", armour_salesman_leather3, "Enough about armour.", armour_salesman_enougharmour);
+
+[label,armour_salesman_leather1]
+~chatplayer("<p,neutral>Tell me about normal leather.");
+~chatnpc("<p,happy>Indeed, leather armour is excellent for archers. It's supple and not very heavy.");
+@multi4("Tell me about normal leather.", armour_salesman_leather1, "What's studded leather?", armour_salesman_leather2, "What's hard leather?", armour_salesman_leather3, "Enough about armour.", armour_salesman_enougharmour);
+
+[label,armour_salesman_leather2]
+~chatplayer("<p,neutral>What's studded leather?");
+~chatnpc("<p,happy>Ah, now that's leather covered with studs. It's more protective than ordinary leather.");
+@multi4("Tell me about normal leather.", armour_salesman_leather1, "What's studded leather?", armour_salesman_leather2, "What's hard leather?", armour_salesman_leather3, "Enough about armour.", armour_salesman_enougharmour);
+
+[label,armour_salesman_leather3]
+~chatplayer("<p,neutral>What's hard leather?");
+~chatnpc("<p,happy>Hard leather is specially treated using oils and drying methods to create a hard-wearing armour.");
+@multi4("Tell me about normal leather.", armour_salesman_leather1, "What's studded leather?", armour_salesman_leather2, "What's hard leather?", armour_salesman_leather3, "Enough about armour.", armour_salesman_enougharmour);
+
+[label,armour_salesman_enougharmour]
+~chatplayer("<p,neutral>Enough about armour.");
+~chatnpc("<p,neutral>As you wish, traveller.");
+@multi3("Tell me about your armours.", armour_salesman_armours, "Tell me about your accessories.", armour_salesman_accessories, "I've seen enough, thanks.", armour_salesman_enough);
+
+[label,armour_salesman_accessories]
+~chatplayer("<p,happy>Tell me about your accessories.");
+~chatnpc("<p,happy>Ah yes we have a new range of accessories in stock. Essential items for an archer like you.");
+~chatnpc("<p,happy>We have vambraces, chaps, cowls and coifs.");
+@multi5("Tell me about vambraces.", armour_salesman_vambraces, "Tell me about chaps.", armour_salesman_chaps, "Tell me about cowls.", armour_salesman_cowls, "Tell me about coifs.", armour_salesman_coifs, "Enough about accessories.", armour_salesman_enoughaccessories);
+
+[label,armour_salesman_vambraces]
+~chatplayer("<p,happy>Tell me about vambraces.");
+~chatnpc("<p,happy>Ah yes, vambraces. These useful items are for your arms.");
+~chatnpc("<p,happy>A protective sheath that favours the bow and arrow. An essential purchase.");
+@multi5("Tell me about vambraces.", armour_salesman_vambraces, "Tell me about chaps.", armour_salesman_chaps, "Tell me about cowls.", armour_salesman_cowls, "Tell me about coifs.", armour_salesman_coifs, "Enough about accessories.", armour_salesman_enoughaccessories);
+
+[label,armour_salesman_chaps]
+~chatplayer("<p,happy>Tell me about chaps.");
+~chatnpc("<p,neutral>Chaps have two functions: firstly to protect your legs, and secondly for ease of reloading arrows.");
+~chatnpc("<p,neutral>I can highly recommend these to you for quick archery.");
+@multi5("Tell me about vambraces.", armour_salesman_vambraces, "Tell me about chaps.", armour_salesman_chaps, "Tell me about cowls.", armour_salesman_cowls, "Tell me about coifs.", armour_salesman_coifs, "Enough about accessories.", armour_salesman_enoughaccessories);
+
+[label,armour_salesman_cowls]
+~chatplayer("<p,happy>Tell me about cowls.");
+~chatnpc("<p,happy>The cowl is a soft leather hat, ideal for protection with maneuverability.");
+~chatnpc("<p,happy>These are highly favoured with our guards.");
+@multi5("Tell me about vambraces.", armour_salesman_vambraces, "Tell me about chaps.", armour_salesman_chaps, "Tell me about cowls.", armour_salesman_cowls, "Tell me about coifs.", armour_salesman_coifs, "Enough about accessories.", armour_salesman_enoughaccessories);
+
+[label,armour_salesman_coifs]
+~chatplayer("<p,happy>Tell me about coifs.");
+~chatnpc("<p,happy>The coif is a specialized cowl, that has extra chain protection to keep your neck and shoulders safe.");
+~chatnpc("<p,happy>An excellent addition to our range, traveller.");
+@multi5("Tell me about vambraces.", armour_salesman_vambraces, "Tell me about chaps.", armour_salesman_chaps, "Tell me about cowls.", armour_salesman_cowls, "Tell me about coifs.", armour_salesman_coifs, "Enough about accessories.", armour_salesman_enoughaccessories);
+
+[label,armour_salesman_enoughaccessories]
+~chatplayer("<p,neutral>Enough about accessories.");
+~chatnpc("<p,happy>As you wish.");
+@multi3("Tell me about your armours.", armour_salesman_armours, "Tell me about your accessories.", armour_salesman_accessories, "I've seen enough, thanks.", armour_salesman_enough);
+
+[label,armour_salesman_enough]
+~chatplayer("<p,neutral>I've seen enough, thanks.");
+~chatnpc("<p,neutral>Very good, adventurer.");

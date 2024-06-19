@@ -22,9 +22,7 @@ if (map_locaddunsafe(coord) = true | map_blocked(coord) = true) {
 // osrs, achey logs drop on ground
 // but only if u tinderbox -> log, and doesnt work if map_blocked
 // add obj to ground
-obj_add(coord, $log, 1, ^lootdrop_duration);
-// delete item slot from inv
-inv_delslot(inv, $slot);
+inv_dropslot(inv, coord, $slot, ^lootdrop_duration);
 if (~inzone_coord_pair_table(bank_zones, coord) = true) {
     mes("You can't light a fire here.");
     return;

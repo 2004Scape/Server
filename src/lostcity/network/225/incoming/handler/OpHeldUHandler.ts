@@ -16,22 +16,26 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            player.unsetMapFlag();
             return false;
         }
 
         const useCom = Component.get(comId);
         if (typeof useCom === 'undefined' || !player.isComponentVisible(useCom)) {
+            player.unsetMapFlag();
             return false;
         }
 
         {
             const listener = player.invListeners.find(l => l.com === comId);
             if (!listener) {
+                player.unsetMapFlag();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                player.unsetMapFlag();
                 return false;
             }
         }
@@ -39,16 +43,19 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         {
             const listener = player.invListeners.find(l => l.com === useComId);
             if (!listener) {
+                player.unsetMapFlag();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(useSlot) || !inv.hasAt(useSlot, useItem)) {
+                player.unsetMapFlag();
                 return false;
             }
         }
 
         if (player.delayed()) {
+            player.unsetMapFlag();
             return false;
         }
 
@@ -62,6 +69,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
         if ((objType.members || useObjType.members) && !World.members) {
             player.messageGame("To use player item please login to a members' server.");
+            player.unsetMapFlag();
             return false;
         }
 
