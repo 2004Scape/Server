@@ -1,8 +1,7 @@
-// TODO: move all these locs to areas/area_karamja if they're accessible pre-quest?
+// TODO: pre-quest can u pick these herbs or access cave?
+// NOTE: seqs+sounds for vine/fungus probably added later (seq 2094-2097) assuming no p_delay if there's no animation (unless they re-used some anim)
 
 [oploc2,junglepotion_marshy_jungle_vine]
-anim(human_pickupfloor, 0); // TODO correct anim
-p_delay(5); // TODO based on herb stat
 ~pick_herb("vine", unidentified_snake_weed, junglepotion_marshy_jungle_vine_empty);
 if (%junglepotion_progress = ^junglepotion_get_snake_weed) {
 	%junglepotion_progress = ^junglepotion_found_snake_weed;
@@ -18,8 +17,6 @@ if (%junglepotion_progress = ^junglepotion_get_snake_weed) {
 ~pick_herb("rock", unidentified_volencia_moss, junglepotion_rock_empty);
 
 [oploc2,junglepotion_wall_fungus]
-anim(human_pickuptable, 0); // TODO correct anim
-p_delay(5); // TODO based on herb stat
 ~pick_herb("wall", unidentified_rogues_purse, null);
 
 [oploc2,junglepotion_rocks]
@@ -35,7 +32,6 @@ if ($option = 1) {
 ~mesbox("You attempt to climb the rocks back out.");
 p_telejump(0_44_48_7_48);
 
-// TODO: can u pick these before quest start?
 [proc,pick_herb](string $str, namedobj $unid, loc $loc)
 mes("You search the <$str>...");
 // TODO: what happens if full inv while picking?

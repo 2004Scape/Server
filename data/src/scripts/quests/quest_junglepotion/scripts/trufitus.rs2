@@ -1,5 +1,6 @@
-// TODO: move trufitus to area_karamja/scripts dir, could you use herbs on trufitus in 04, check mesanims
-// TODO: After completing the quest, players can cash in additional cleaned herbs for a small amount of coins. https://oldschool.runescape.wiki/w/Jungle_Potion#Trivia
+// NOTE: rs classic dialogue is slightly different, so this may be the updated dialogue after more jungle vines, wall fungus, seqs with sounds were added: https://www.youtube.com/watch?v=qm8ZwROiW8s
+// TODO: could you use herbs on trufitus in 04, check mesanims
+// TODO: https://oldschool.runescape.wiki/w/Trufitus#Stock After completing the quest, players can cash in additional cleaned herbs for a small amount of coins. https://oldschool.runescape.wiki/w/Jungle_Potion#Trivia
 
 [opnpc1,trufitus]
 if(%junglepotion_progress = ^junglepotion_not_started) {
