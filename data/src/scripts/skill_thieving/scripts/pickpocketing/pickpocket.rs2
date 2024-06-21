@@ -125,11 +125,3 @@ if (%action_delay > map_clock) {
 // https://oldschool.runescape.wiki/w/Update:Halloween_2016, when check was added for preventing attacking when an npc is being pickpocketed
 
 ~pick_pocket($data);
-
-[debugproc,stun]
-if(p_finduid(uid) = false) {
-    return;
-}
-mes("You've been frozen!");
-%stunned = calc(map_clock + ~random_range(10, 20));
-walktrigger(frozen);

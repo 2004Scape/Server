@@ -1,7 +1,7 @@
 [oploc1,food_store_door]
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
 if ($entering = true) {
-    if (%food_store_employed = 0) {
+    if (testbit(%hunt_store_employed, ^food_store) = false) {
         @wydin_get_pointer(wydin_employees_only);
     }
 
