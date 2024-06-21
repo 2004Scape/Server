@@ -14,7 +14,20 @@ if (afk_event = ^true) {
 }
 // display tea
 if (obj_type = obj_712) {
-    ~chatnpc_specific(nc_name(tea_seller), tea_seller, angry, "Hey! Put that back! Those are for display only!");
+    ~chatnpc_specific(nc_name(tea_seller), tea_seller, "<p,angry>Hey! Put that back! Those are for display only!");
+    return;
+}
+if(oc_category(obj_type) = trail_puzzle & (inv_totalcat(inv, trail_puzzle) > 0 | inv_totalcat(bank, trail_puzzle) > 0)) {
+    mes("You already have a puzzle box."); // OSRS
+    return;
+}
+if(oc_category(obj_type) = trail_challenge & (inv_totalcat(inv, trail_challenge) > 0 | inv_totalcat(bank, trail_challenge) > 0)) {
+    mes("You already have a challenge scroll."); // OSRS
+    return;
+}
+if((oc_category(obj_type) = trail_clue_easy | oc_category(obj_type) = trail_clue_medium | oc_category(obj_type) = trail_clue_hard |
+    oc_category(obj_type) = trail_casket_easy | oc_category(obj_type) = trail_casket_medium | oc_category(obj_type) = trail_casket_hard) & ~trail_hasclue_all = true) {
+    mes("You already have a clue scroll."); // OSRS
     return;
 }
 // These use a different mes compared to obj's with the telegrab_disabled param (maybe make a 2nd param)

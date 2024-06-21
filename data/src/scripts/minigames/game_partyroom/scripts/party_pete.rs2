@@ -1,32 +1,39 @@
 [opnpc1,party_pete]
+// clue scroll
+if(inv_total(inv, trail_clue_medium_anagram_exp010) > 0) {
+    ~chatnpc("<p,happy>You've come to the right place!");
+    ~progress_clue_medium(trail_clue_medium_anagram_exp010, "Party Pete has given you another clue scroll!");
+    return;
+}
+
 // dialogue from OSRS, but I think it's mostly unchanged (besides the new option which I didn't include)
 // since it references the gold chest (falador one is white) and Kandarin (which is where seers is, not falador)
-~chatnpc(happy, "Hi! I'm Party Pete.|Welcome to the Party Room!");
+~chatnpc("<p,happy>Hi! I'm Party Pete.|Welcome to the Party Room!");
 switch_int(~p_choice4("So what's this room for?", 1, "What's the big lever over there for?", 2, "What's the gold chest for?", 3, "I wanna party!", 4)) {
     case 1:
-        ~chatplayer(confused, "So what's this room for?");
-        ~chatnpc(laugh, "This room is for partying the night away!");
-        ~chatplayer(laugh, "How do you have a party in RuneScape?");
-        ~chatnpc(happy, "Get a few mates round, get the beers in and have fun!");
-        ~chatnpc(neutral, "Some players organise parties so keep an eye open!");
-        ~chatplayer(happy, "Woop! Thanks Pete!");
+        ~chatplayer("<p,confused>So what's this room for?");
+        ~chatnpc("<p,laugh>This room is for partying the night away!");
+        ~chatplayer("<p,laugh>How do you have a party in RuneScape?");
+        ~chatnpc("<p,happy>Get a few mates round, get the beers in and have fun!");
+        ~chatnpc("<p,neutral>Some players organise parties so keep an eye open!");
+        ~chatplayer("<p,happy>Woop! Thanks Pete!");
     case 2:
-        ~chatplayer(confused, "What's the big lever over there for?");
-        ~chatnpc(happy, "Simple. With the lever you can do some fun stuff.");
-        ~chatplayer(confused, "What kind of stuff?");
-        ~chatnpc(happy, "A balloon drop costs 5000 gold. For this you get 200 balloons dropped across the whole of the party room. You can then have fun popping the balloons! If there are items in the Party Drop Chest they will be inside");
-        ~chatnpc(happy, "the balloons! For 2000 gold you can summon the Party Room Knights who will dance for your delight.");
-        ~chatnpc(laugh, "Their singing isn't a delight though!");
+        ~chatplayer("<p,confused>What's the big lever over there for?");
+        ~chatnpc("<p,happy>Simple. With the lever you can do some fun stuff.");
+        ~chatplayer("<p,confused>What kind of stuff?");
+        ~chatnpc("<p,happy>A balloon drop costs 5000 gold. For this you get 200 balloons dropped across the whole of the party room. You can then have fun popping the balloons! If there are items in the Party Drop Chest they will be inside");
+        ~chatnpc("<p,happy>the balloons! For 2000 gold you can summon the Party Room Knights who will dance for your delight.");
+        ~chatnpc("<p,laugh>Their singing isn't a delight though!");
     case 3:
-        ~chatplayer(confused, "What's the gold chest for?");
-        ~chatnpc(neutral, "Any items that are in the chest will be dropped inside the balloons when you pull the lever!");
-        ~chatplayer(happy, "Cool! Sounds like a fun way to do a drop party!");
-        ~chatnpc(laugh, "Exactly!");
-        ~chatnpc(neutral, "A word of warning though. Any items that you put into the chest can't be taken out again and it costs 5000 gold pieces for each balloon drop.");
+        ~chatplayer("<p,confused>What's the gold chest for?");
+        ~chatnpc("<p,neutral>Any items that are in the chest will be dropped inside the balloons when you pull the lever!");
+        ~chatplayer("<p,happy>Cool! Sounds like a fun way to do a drop party!");
+        ~chatnpc("<p,laugh>Exactly!");
+        ~chatnpc("<p,neutral>A word of warning though. Any items that you put into the chest can't be taken out again and it costs 5000 gold pieces for each balloon drop.");
     case 4:
-        ~chatplayer(happy, "I wanna party!");
-        ~chatnpc(happy, "I've won the Dance Trophy at the Kandarin Ball three years in a trot!");
-        ~chatplayer(laugh, "Show me your moves Pete!");
+        ~chatplayer("<p,happy>I wanna party!");
+        ~chatnpc("<p,happy>I've won the Dance Trophy at the Kandarin Ball three years in a trot!");
+        ~chatplayer("<p,laugh>Show me your moves Pete!");
         if_close;
         npc_anim(seq_784, 0);
 }

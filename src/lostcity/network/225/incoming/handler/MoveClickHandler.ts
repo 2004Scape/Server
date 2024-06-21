@@ -3,10 +3,17 @@ import MoveClick from '#lostcity/network/incoming/model/MoveClick.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
 import { Position } from '#lostcity/entity/Position.js';
 import Environment from '#lostcity/util/Environment.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 
 export default class MoveClickHandler extends MessageHandler<MoveClick> {
     handle(message: MoveClick, player: NetworkPlayer): boolean {
+        const start = message.path[0];
+        if (player.delayed() || message.ctrlHeld < 0 || message.ctrlHeld > 1 || Position.distanceToSW(player, { x: start.x, z: start.z }) > 104) {
+            player.unsetMapFlag();
+            player.userPath = [];
+            return false;
+        }
+
         if (Environment.CLIENT_PATHFINDER) {
             player.userPath = [];
 
@@ -18,22 +25,15 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
             player.userPath = [Position.packCoord(player.level, dest.x, dest.z)];
         }
 
-        const start = message.path[0];
-        if (player.delayed() || message.ctrlHeld < 0 || message.ctrlHeld > 1 || Position.distanceToSW(player, { x: start.x, z: start.z }) > 104) {
-            player.unsetMapFlag();
-            player.userPath = [];
-            return false;
-        }
-
         if (!message.opClick) {
             player.clearInteraction();
             player.closeModal();
         }
 
         if (player.runenergy < 100) {
-            player.setVar(VarPlayerType.getId('temp_run'), 0);
+            player.setVar(VarPlayerType.TEMP_RUN, 0);
         } else {
-            player.setVar(VarPlayerType.getId('temp_run'), message.ctrlHeld);
+            player.setVar(VarPlayerType.TEMP_RUN, message.ctrlHeld);
         }
 
         return true;

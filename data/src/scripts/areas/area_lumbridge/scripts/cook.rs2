@@ -1,26 +1,40 @@
 [opnpc1,cook]
+// https://www.youtube.com/watch?v=mtPhS3n2dAo
+if(map_members = true &inv_total(inv, trail_clue_medium_anagram_exp002) > 0) {
+    @trail_cook;
+}
+
 if(%cook_progress = 0) {
-    ~chatnpc("sad", "What am I to do?");
+    ~chatnpc("<p,sad>What am I to do?");
     @cooks_assistant_start;
 } else if(%cook_progress = 1) {
     @cooks_assistant_inprogress;
 } else if(%cook_progress = ^cook_complete) {
-    ~chatnpc("happy", "How is the adventuring going, my friend?");
+    ~chatnpc("<p,happy>How is the adventuring going, my friend?");
 
     def_int $option = ~p_choice4("I am getting strong and mighty.", 1, "I keep on dying.", 2, "Nice hat!", 3, "Can I use your range?", 4);
 
     if($option = 1) {
-        ~chatplayer("happy", "I am getting strong and mighty.");
-        ~chatnpc("happy", "Glad to hear it.");
+        ~chatplayer("<p,happy>I am getting strong and mighty.");
+        ~chatnpc("<p,happy>Glad to hear it.");
     } else if($option = 2) {
-        ~chatplayer("sad", "I keep on dying.");
-        ~chatnpc("happy", "Ah well, at least you keep coming back to life!");
+        ~chatplayer("<p,sad>I keep on dying.");
+        ~chatnpc("<p,happy>Ah well, at least you keep coming back to life!");
     } else if($option = 3) {
-        ~chatplayer("happy", "Nice hat!");
-        ~chatnpc("sad", "Err thank you. It's a pretty ordinary cooks hat really.");
+        ~chatplayer("<p,happy>Nice hat!");
+        ~chatnpc("<p,sad>Err thank you. It's a pretty ordinary cooks hat really.");
     } else if($option = 4) {
-        ~chatplayer("neutral", "Can I use your range?");
-        ~chatnpc("happy", "Go ahead - it's a very good range.|It's easier to use than most other ranges.");
+        ~chatplayer("<p,neutral>Can I use your range?");
+        ~chatnpc("<p,happy>Go ahead - it's a very good range.|It's easier to use than most other ranges.");
     }
 
 }
+
+[label,trail_cook]
+if(inv_total(inv, trail_clue_medium_challenge_exp002) > 0) {
+    @trail_challengenpc_prompt("<p,neutral>Please tell me how many cannons there are.", "<p,happy>Cheers!", "<p,angry>Hmm, I don't think that's right.",
+    "The cook has given you another clue scroll!", trail_clue_medium_anagram_exp002, trail_clue_medium_challenge_exp002);
+}
+~chatnpc("<p,confused>I've always wondered how many cannons the castle has. Could you find out for me?");
+inv_add(inv, trail_clue_medium_challenge_exp002, 1);
+~objboxt(trail_clue_medium_challenge_exp002, "The cook has given you a challenge scroll!");

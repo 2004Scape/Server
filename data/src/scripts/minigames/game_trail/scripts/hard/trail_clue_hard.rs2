@@ -7,17 +7,39 @@
 [opheld1,_trail_clue_hard]
 ~full_trail_readclue(oc_param(last_item, trail_desc));
 
-[opheld1,trail_casket_hard]
-inv_delslot(inv, last_slot);
-inv_setslot(inv, last_slot, ~trail_clue_hard_getrandom, 1);
-~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
+[opheld1,_trail_casket_hard] ~progress_clue_hard(last_item, "You've found another clue scroll!");
 
+[proc,trail_clue_hard_complete](boolean)
+if(~get_trail_progress >= ^trail_hard_maxsteps | (add(~get_trail_progress, 2) >= ^trail_hard_maxsteps & random(2) = 0)) {
+    return (true);
+}
+return(false);
 
 [proc,trail_clue_hard_getrandom](namedobj)
 return(enum(int, namedobj, trail_hard_enum, random(enum_getoutputcount(trail_hard_enum))));
 
-[proc,trail_clue_hard_loc_interact](namedobj $clue)
-inv_del(inv, $clue, 1);
+[proc,give_trail_puzzle](namedobj $puzzle, string $text)
+inv_clear(trail_puzzle_inv);
+inv_add(inv, $puzzle, 1);
+~objboxt($puzzle, $text);
 
-inv_add(inv, ~trail_clue_hard_getrandom, 1);
-~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
+[proc,progress_clue_hard](obj $current_clue, string $text)
+~trail_clue_progress;
+inv_del(inv, $current_clue, 1);
+if(~trail_clue_hard_complete = true) {
+    ~trail_clue_hard_reward;
+} else {
+    def_namedobj $new_clue = ~trail_clue_hard_getrandom;
+    inv_add(inv, $new_clue, 1);
+    ~objboxt($new_clue, $text);
+}
+
+[proc,trail_clue_hard_loc_interact](namedobj $clue)
+~trail_clue_progress;
+inv_del(inv, $clue, 1);
+if(~trail_clue_hard_complete = true) {
+    ~trail_clue_hard_reward;
+} else {
+    inv_add(inv, ~trail_clue_hard_getrandom, 1);
+    ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
+}

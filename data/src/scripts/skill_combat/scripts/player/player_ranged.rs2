@@ -5,6 +5,9 @@ p_stopaction;
 
 // TODO this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
+if(%action_delay <= map_clock & npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+}
 
 if (npc_stat(hitpoints) = 0) {
     p_stopaction;
@@ -76,7 +79,7 @@ if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
 }
 p_opnpc(2);
-if ($ammo = obj_732) {
+if ($ammo = holy_water) {
     world_delay(calc($delay / 30 - 2));
     if (map_blocked(npc_coord) = true) {
         return;
@@ -89,7 +92,9 @@ if (random(5) ! 0) {
     if (map_blocked(npc_coord) = true) {
         return;
     }
-    obj_add(npc_coord, $ammo, 1, 200);
+    if (p_finduid(uid) = true) {
+        obj_addunsafe(npc_coord, $ammo, 1, 200);
+    }
 }
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)

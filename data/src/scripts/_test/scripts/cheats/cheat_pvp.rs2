@@ -25,3 +25,13 @@ if (npc_finduid(%aggressive_npc) = true) {
         mes("Aggressive NPC's target: <.displayname>");
     }
 }
+
+[debugproc,pvp]
+if (p_finduid(uid) = true) {
+    p_telejump(0_52_60_37_37);
+}
+
+[debugproc,duel]
+if (p_finduid(uid) = true) {
+    p_telejump(0_52_51_42_4);
+}

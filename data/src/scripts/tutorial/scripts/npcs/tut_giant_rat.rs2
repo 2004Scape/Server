@@ -1,4 +1,4 @@
-[ai_queue1,tut_giant_rat](int $arg) gosub(giant_rat_attack);
+[ai_queue1,tut_giant_rat](int $arg) gosub(npc_default_retaliate);
 
 // death
 [ai_queue3,tut_giant_rat](int $arg)
@@ -80,11 +80,11 @@ if (%tutorial_progress > ^combat_instructor_before_attacking_ranged
 
 // 2013 Vid shows that maybe the check is > tut_step && less than tut complete
 // https://youtu.be/7zsi7hiF4SQ?t=536
-if (%tutorial_progress > ^combat_instructor_before_attacking_ranged
+/*if (%tutorial_progress > ^combat_instructor_before_attacking_ranged
     & %tutorial_progress < ^tutorial_complete) {
     ~mesbox("You've already done that.|Perhaps you should move on.");
     return;
-}
+}*/
 
 def_int $distance = npc_range(coord);
 def_int $attackrange = 0;
@@ -112,15 +112,6 @@ if (~player_in_combat_check = false) {
 p_aprange($attackrange);
 @player_combat_start;
 
-[proc,giant_rat_attack]
-if (~npc_out_of_combat = true) {
-    %npc_action_delay = add(map_clock, divide(npc_param(attackrate), 2));
-    %npc_attacking_uid = %npc_aggressive_player;
-}
-if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(opplayer2);
-}
-
 [queue,set_rat_kill]
 if (%tutorial_progress = ^combat_instructor_during_attacking_melee) {
     %tutorial_progress = ^combat_instructor_after_rat_kill_melee;
@@ -133,6 +124,6 @@ if (%tutorial_progress = ^combat_instructor_before_attacking_ranged) {
 }
 
 [proc,set_hint_icon_giant_rat]
-if (npc_finduid(~npc_within_distance(0_48_148_37_47, tut_giant_rat, 10)) = true) {
+if (npc_find(0_48_148_37_47, tut_giant_rat, 10, 0) = true) {
     hint_npc(npc_uid);
 }

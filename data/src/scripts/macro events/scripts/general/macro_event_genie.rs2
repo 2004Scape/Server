@@ -22,19 +22,19 @@ npc_delay(2);
 
 [opnpc1,macro_event_genie]
 if (uid ! %npc_attacking_uid) {
-    ~chatnpc(sad, "Sorry, I'm trying to talk to <text_gender("Master", "Mistress")> <displayname>, but <text_gender("he", "she")> seems to be ignoring me."); // osrs
+    ~chatnpc("<p,sad>Sorry, I'm trying to talk to <text_gender("Master", "Mistress")> <displayname>, but <text_gender("he", "she")> seems to be ignoring me."); // osrs
     return;
 }
 if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
-    ~chatnpc(neutral, "Have a nice day, <text_gender("master", "mistress")>.");
+    ~chatnpc("<p,neutral>Have a nice day, <text_gender("master", "mistress")>.");
     return;
 }
 %macro_event = ^no_macro_event;
-~macro_event_give_reward(lamp, 1);
+inv_add(inv, lamp, 1);
 // delays are taken from this video: https://youtu.be/EN4c2hV65Qk?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 npc_queue(6, 0, 2);
 // sept 2006 https://imgur.com/undefined
-~chatnpc(neutral, "Ah, so you are there <text_gender("master", "mistress")>. I'm so glad you|summoned me. Please take this lamp, and make your|wish!");
+~chatnpc("<p,neutral>Ah, so you are there <text_gender("master", "mistress")>. I'm so glad you|summoned me. Please take this lamp, and make your|wish!");
 
 [ai_timer,macro_event_genie]
 if (~macro_event_lost_and_follow = true) {

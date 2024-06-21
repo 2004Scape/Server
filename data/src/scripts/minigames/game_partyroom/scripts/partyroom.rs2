@@ -13,7 +13,7 @@ if_close;
 if ($choice = 2) {
     return;
 }
-if (npc_finduid(~npc_within_distance(coord, party_pete, 16)) = true) {
+if (npc_find(coord, party_pete, 16, 0) = true) {
     ~pull_partylever(5000);
     @partyroom_drop_balloons(0);
 }
@@ -35,7 +35,7 @@ if_close;
 if ($choice = 2) {
     return;
 }
-if(npc_finduid(~npc_within_distance(coord, partyroom_dancingknight, 7)) = true) {
+if(npc_find(coord, partyroom_dancingknight, 7, 0) = true) {
     ~mesbox("The party room knights are already here!");
     return;
 }
@@ -69,7 +69,7 @@ switch_int($arg) {
         npc_say("Like a party animal in the groove");
     case 9:
         npc_queue(10, 10, 3); // 2t
-        if (npc_finduid(~npc_within_distance(npc_coord, party_pete, 16)) = true) {
+        if (npc_find(npc_coord, party_pete, 16, 0) = true) {
             npc_say("The party room is a silly place!");
         }
         return;
@@ -144,8 +144,7 @@ if (~inzone_coord_pair_table(party_room_zones, loc_coord) = true & random(4) = 0
     if(oc_stackable($obj) = true | oc_uncert($obj) ! $obj) {
         $count = ~random_range(1, inv_getnum(partyroominv, $rand_slot));
     }
-    inv_del(partyroominv, $obj, $count);
-    obj_add(loc_coord, $obj, $count, 100);
+    inv_dropitem(partyroominv, loc_coord, $obj, $count, 100);
     return;
 }
 p_delay(0);

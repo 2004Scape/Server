@@ -1,10 +1,16 @@
 [opnpc1,lowe]
-~chatnpc(neutral, "Welcome to Lowe's Archery Emporium.|Do you want to see my wares?");
+if(map_members = true & inv_total(inv, trail_clue_medium_anagram_exp004) > 0) {
+    // https://www.youtube.com/watch?v=T1B7KXB06Vk
+    ~chatnpc("<p,happy>Here you go!");
+    ~progress_clue_medium(trail_clue_medium_anagram_exp004, "Lowe has given you another clue scroll!");
+    return;
+}
+~chatnpc("<p,neutral>Welcome to Lowe's Archery Emporium.|Do you want to see my wares?");
 def_int $option = ~p_choice2("Yes please.", 1, "No, I prefer to bash things close up.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "Yes please.");
+    ~chatplayer("<p,neutral>Yes please.");
     ~openshop_activenpc;
 } else if($option = 2) {
-    ~chatplayer(neutral, "No, I prefer to bash things close up."); 
-    ~chatnpc(neutral, "Humph, philistine.");
+    ~chatplayer("<p,neutral>No, I prefer to bash things close up."); 
+    ~chatnpc("<p,neutral>Humph, philistine.");
 }

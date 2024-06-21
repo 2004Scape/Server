@@ -32,12 +32,12 @@ export default class WSServer {
         const port = (Environment.GAME_PORT as number) + 1;
 
         this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
-            console.log(`[WSWorld]: Listening on port ${port}`);
+            //console.log(`[WSWorld]: Listening on port ${port}`);
         });
 
         this.wss.on('connection', (ws: WebSocket, req) => {
             const ip: string = getIp(req) ?? 'unknown';
-            console.log(`[WSWorld]: Connection from ${ip}`);
+            //console.log(`[WSWorld]: Connection from ${ip}`);
 
             const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
 
@@ -49,15 +49,19 @@ export default class WSServer {
             ws.on('message', async (data: Buffer) => {
                 const packet = new Packet(new Uint8Array(data));
 
-                if (socket.state === 1) {
-                    await World.readIn(socket, packet);
-                } else {
-                    await Login.readIn(socket, packet);
+                try {
+                    if (socket.state === 1) {
+                        await World.readIn(socket, packet);
+                    } else {
+                        await Login.readIn(socket, packet);
+                    }
+                } catch (err) {
+                    socket.close();
                 }
             });
 
             ws.on('close', () => {
-                console.log(`[WSWorld]: Disconnected from ${ip}`);
+                //console.log(`[WSWorld]: Disconnected from ${ip}`);
 
                 if (socket.player) {
                     socket.player.client = null;

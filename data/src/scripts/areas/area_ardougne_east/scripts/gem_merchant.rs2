@@ -2,5 +2,5 @@
 if (map_clock < %last_stolen_from_stall_gem) {
     @stall_owner_alert_guards;
 }
-~chatnpc(neutral, "Here, look at my lovely gems.");
+~chatnpc("<p,neutral>Here, look at my lovely gems.");
 ~openshop_activenpc;

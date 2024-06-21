@@ -2,137 +2,137 @@
 switch_int(%hazeelcult_progress) {
     case ^hazeelcult_not_started:
         // OSRS changed this dialogue quite a bit in 2023 (of course), using wiki/RSC + the linked video as reference
-        ~chatplayer(neutral, "Hello there.");
-        ~chatnpc(angry, "Blooming, thieving, weirdo cultists! Why don't they leave me alone? String 'em all up, that's what I say!");
+        ~chatplayer("<p,neutral>Hello there.");
+        ~chatnpc("<p,angry>Blooming, thieving, weirdo cultists! Why don't they leave me alone? String 'em all up, that's what I say!");
         // https://youtu.be/R5MdMtqvxaM?si=OepNhbR7fcTPaijN&t=19
         switch_int(~p_choice3("What's wrong?", 1, "You probably deserve it.", 2, "You seem uptight, I'll leave you alone.", 3)) {
             case 1:
-                ~chatplayer(quiz, "What's wrong?");
-                ~chatnpc(angry, "It's those blooming cultists from the forest! Those freaks keep breaking into my house!");
-                ~chatplayer(quiz, "Have they taken much?");
-                ~chatnpc(angry, "They first broke in months ago and stole a suit of armour. The strange thing is that they've broken in four more times since but taken nothing.");
-                ~chatplayer(quiz, "And you are...?");
-                ~chatnpc(angry, "Why, I am Sir Ceril Carnillean! We really are quite a famous bloodline... who've played a vital role in the politics of Ardougne for many generations.");
-                ~chatnpc(angry, "Perhaps you would be able to assist me in returning the stolen armour? For a modest cash reward of course!");
+                ~chatplayer("<p,quiz>What's wrong?");
+                ~chatnpc("<p,angry>It's those blooming cultists from the forest! Those freaks keep breaking into my house!");
+                ~chatplayer("<p,quiz>Have they taken much?");
+                ~chatnpc("<p,angry>They first broke in months ago and stole a suit of armour. The strange thing is that they've broken in four more times since but taken nothing.");
+                ~chatplayer("<p,quiz>And you are...?");
+                ~chatnpc("<p,angry>Why, I am Sir Ceril Carnillean! We really are quite a famous bloodline... who've played a vital role in the politics of Ardougne for many generations.");
+                ~chatnpc("<p,angry>Perhaps you would be able to assist me in returning the stolen armour? For a modest cash reward of course!");
                 switch_int(~p_choice2("No thanks. I've got other plans.", 1, "Yes, of course, I'd be happy to help.", 2)) {
                     case 1:
-                        ~chatplayer(neutral, "No thanks. I've got other plans.");
-                        ~chatnpc(angry, "Well no wonder I'm the one with the big house and you're the one on the streets.");
+                        ~chatplayer("<p,neutral>No thanks. I've got other plans.");
+                        ~chatnpc("<p,angry>Well no wonder I'm the one with the big house and you're the one on the streets.");
                     case 2:
-                        ~chatplayer(neutral, "Yes, of course, I'd be happy to help.");
-                        ~chatnpc(neutral, "That's very noble of you sirrah! I caught a glimpse of the thieves leaving but due to... uh.. yeah, my cold I was unable to give chase.");
-                        ~chatnpc(neutral, "They're some kind of crazy cult who dress all in black, and hang out near the cave entrance in the forest south of here.");
-                        ~chatplayer(quiz, "How do you know that?");
-                        ~chatnpc(neutral, "My old butler, Higson, once followed them to their hideout there. Unfortunately the next night he died in his sleep.");
-                        ~chatplayer(shock, "That's awful!");
+                        ~chatplayer("<p,neutral>Yes, of course, I'd be happy to help.");
+                        ~chatnpc("<p,neutral>That's very noble of you sirrah! I caught a glimpse of the thieves leaving but due to... uh.. yeah, my cold I was unable to give chase.");
+                        ~chatnpc("<p,neutral>They're some kind of crazy cult who dress all in black, and hang out near the cave entrance in the forest south of here.");
+                        ~chatplayer("<p,quiz>How do you know that?");
+                        ~chatnpc("<p,neutral>My old butler, Higson, once followed them to their hideout there. Unfortunately the next night he died in his sleep.");
+                        ~chatplayer("<p,shock>That's awful!");
                         %hazeelcult_progress = ^hazeelcult_started;
                         ~send_quest_progress(questlist:hazeelcult, %hazeelcult_progress, ^hazeelcult_complete);
-                        ~chatnpc(neutral, "No, it's ok. A replacement arrived the next day. He's been great - cooks an excellent broth!");
-                        ~chatplayer(neutral, "Ok. I'll see what I can do.");
+                        ~chatnpc("<p,neutral>No, it's ok. A replacement arrived the next day. He's been great - cooks an excellent broth!");
+                        ~chatplayer("<p,neutral>Ok. I'll see what I can do.");
                 }
             case 2:
-                ~chatplayer(neutral, "You probably deserve it.");
-                ~chatnpc(angry, "And who are YOU to judge ME? Hmmm. You look like a peasant anyway. I'm wasting my time talking to you.");
+                ~chatplayer("<p,neutral>You probably deserve it.");
+                ~chatnpc("<p,angry>And who are YOU to judge ME? Hmmm. You look like a peasant anyway. I'm wasting my time talking to you.");
             case 3:
-                ~chatplayer(neutral, "You seem uptight. I'll leave you alone.");
-                ~chatnpc(neutral, "Yes, I doubt you could help anyway.");
+                ~chatplayer("<p,neutral>You seem uptight. I'll leave you alone.");
+                ~chatnpc("<p,neutral>Yes, I doubt you could help anyway.");
         }
     case ^hazeelcult_started, ^hazeelcult_spoken_clivet:
-        ~chatplayer(neutral, "Hello Ceril.");
-        ~chatnpc(angry, "That's SIR Ceril to you, you impudent scamp. Show a bit of respect to your betters. And shouldn't you be recovering my armour?");
-        ~chatplayer(neutral, "Yeah yeah, I'm on it, I'm ON it.");
+        ~chatplayer("<p,neutral>Hello Ceril.");
+        ~chatnpc("<p,angry>That's SIR Ceril to you, you impudent scamp. Show a bit of respect to your betters. And shouldn't you be recovering my armour?");
+        ~chatplayer("<p,neutral>Yeah yeah, I'm on it, I'm ON it.");
     case ^hazeelcult_clivet_decision:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatnpc(quiz, "Have you had any luck yet?");
-            ~chatplayer(neutral, "Hello Ceril. Yes, I found their hideout.");
-            ~chatnpc(happy, "SIR Ceril to you. But good work there! BLOOMING good work! Hand over the armour then.");
-            ~chatplayer(confused, "Uh... yeah... about that... I interrogated a cult member at the hideout's entrance, but he managed to escape into the sewer system.");
-            ~chatplayer(neutral, "Seems they have some sort of grievance against you and your family. Something about some guy called Hazeel?");
-            ~chatnpc(confused, "Hazeel? Uh... umm... err.. hmmmm.");
-            ~chatnpc(angry, "Nope, they're obviously a bunch of blooming loonies! Go find them and bring me back my blooming armour! Nobody steals from Sir Ceril Carnillean!!!");
+            ~chatnpc("<p,quiz>Have you had any luck yet?");
+            ~chatplayer("<p,neutral>Hello Ceril. Yes, I found their hideout.");
+            ~chatnpc("<p,happy>SIR Ceril to you. But good work there! BLOOMING good work! Hand over the armour then.");
+            ~chatplayer("<p,confused>Uh... yeah... about that... I interrogated a cult member at the hideout's entrance, but he managed to escape into the sewer system.");
+            ~chatplayer("<p,neutral>Seems they have some sort of grievance against you and your family. Something about some guy called Hazeel?");
+            ~chatnpc("<p,confused>Hazeel? Uh... umm... err.. hmmmm.");
+            ~chatnpc("<p,angry>Nope, they're obviously a bunch of blooming loonies! Go find them and bring me back my blooming armour! Nobody steals from Sir Ceril Carnillean!!!");
         } else {
-            ~chatnpc(quiz, "Have you had any luck yet?");
-            ~chatplayer(neutral, "I'm afraid not Ceril.");
-            ~chatnpc(angry, "That's SIR Ceril you blooming scoundrel! Show respect when addressing someone of my rank! It's strange you haven't recovered it yet though as Jones seemed quite sure of their location.");
-            ~chatplayer(neutral, "Yeah, well, just unlucky I guess.");
+            ~chatnpc("<p,quiz>Have you had any luck yet?");
+            ~chatplayer("<p,neutral>I'm afraid not Ceril.");
+            ~chatnpc("<p,angry>That's SIR Ceril you blooming scoundrel! Show respect when addressing someone of my rank! It's strange you haven't recovered it yet though as Jones seemed quite sure of their location.");
+            ~chatplayer("<p,neutral>Yeah, well, just unlucky I guess.");
         }
     case ^hazeelcult_poured_poison:
-        ~chatplayer(neutral, "Hello again.");
-        ~chatnpc(sad, "Oh.. the inhumanity... the cruelty.. the misery... the pain... my son is a good boy, really, but how could he give his dinner to Scruffy without having the servants test it for poison first? How? How could he be so");
-        ~chatnpc(sad, "thoughtless and careless? He knows we are all under threat!");
-        ~chatplayer(quiz, "Scruffy?");
-        ~chatnpc(sad, "He's been with our family for twenty years... that's 140 in dog years! The poor dog... what did HE ever do to deserve such a fate???");
-        ~chatplayer(quiz, "Your DOG got poisoned???");
-        ~chatplayer(angry, "That's not right.");
-        ~chatnpc(angry, "I agree! I hope whichever evildoer is responsible gets the full weight of the law brought upon them!");
-        ~chatplayer(confused, "Uh.... yeah... me too.");
+        ~chatplayer("<p,neutral>Hello again.");
+        ~chatnpc("<p,sad>Oh.. the inhumanity... the cruelty.. the misery... the pain... my son is a good boy, really, but how could he give his dinner to Scruffy without having the servants test it for poison first? How? How could he be so");
+        ~chatnpc("<p,sad>thoughtless and careless? He knows we are all under threat!");
+        ~chatplayer("<p,quiz>Scruffy?");
+        ~chatnpc("<p,sad>He's been with our family for twenty years... that's 140 in dog years! The poor dog... what did HE ever do to deserve such a fate???");
+        ~chatplayer("<p,quiz>Your DOG got poisoned???");
+        ~chatplayer("<p,angry>That's not right.");
+        ~chatnpc("<p,angry>I agree! I hope whichever evildoer is responsible gets the full weight of the law brought upon them!");
+        ~chatplayer("<p,confused>Uh.... yeah... me too.");
     case ^hazeelcult_finished_side_task:
         // https://youtu.be/R5MdMtqvxaM?si=yhrFdqvFO4ucwsjr&t=334 and https://youtu.be/R5MdMtqvxaM?si=fQgsP_0Ax9CI19U9&t=394
         if(%hazeelcult_side = ^hazeelcult_goodside) {
             if(inv_total(inv, carnillean_armour) = 0 & inv_total(worn, carnillean_armour) = 0) {
-                ~chatplayer(neutral, "Ceril. How are you?");
-                ~chatnpc(quiz, "I'm fine. Where's my armour?");
-                ~chatplayer(confused, "Uh... I didn't get it yet... I DID find the cult's hideout though!");
-                ~chatnpc(angry, "Well what are you waiting for? I'm not paying you to blooming sight see you know!");
+                ~chatplayer("<p,neutral>Ceril. How are you?");
+                ~chatnpc("<p,quiz>I'm fine. Where's my armour?");
+                ~chatplayer("<p,confused>Uh... I didn't get it yet... I DID find the cult's hideout though!");
+                ~chatnpc("<p,angry>Well what are you waiting for? I'm not paying you to blooming sight see you know!");
                 return;
             }
             @ceril_give_armour;
         } else {
-            ~chatplayer(neutral, "Ceril. How are you?");
-            ~chatnpc(sad, "Oh cruel world! Scruffy... I knew you well... I... just... don't think I can... go on without...");
+            ~chatplayer("<p,neutral>Ceril. How are you?");
+            ~chatnpc("<p,sad>Oh cruel world! Scruffy... I knew you well... I... just... don't think I can... go on without...");
             ~mesbox("Sir Ceril breaks down into tears.");
-            ~chatplayer(angry, "Loosen up already. It was only a DOG.");
+            ~chatplayer("<p,angry>Loosen up already. It was only a DOG.");
         }
     case ^hazeelcult_given_armour_or_scroll:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatplayer(angry, "You owe me money.");
-            ~chatnpc(angry, "I owe you nothing you scoundrel! Now get out or I'll have Jones throw you out!");
+            ~chatplayer("<p,angry>You owe me money.");
+            ~chatnpc("<p,angry>I owe you nothing you scoundrel! Now get out or I'll have Jones throw you out!");
         } else {
-            ~chatplayer(quiz, "Hello Ceril. How's things?");
-            ~chatnpc(confused, "SIR Ceril! SIR! And I'm not sure but I think the thieves have been back in my house.");
-            ~chatplayer(quiz, "What makes you say that?");
-            ~chatnpc(confused, "Well, either I'm going crazy, or theres been an intruder in Jones' room upstairs!");
-            ~chatplayer(neutral, "Oh, heh, ok then.");
+            ~chatplayer("<p,quiz>Hello Ceril. How's things?");
+            ~chatnpc("<p,confused>SIR Ceril! SIR! And I'm not sure but I think the thieves have been back in my house.");
+            ~chatplayer("<p,quiz>What makes you say that?");
+            ~chatnpc("<p,confused>Well, either I'm going crazy, or theres been an intruder in Jones' room upstairs!");
+            ~chatplayer("<p,neutral>Oh, heh, ok then.");
         }
     case ^hazeelcult_complete:
-        ~chatplayer(neutral, "Hello Ceril.");
+        ~chatplayer("<p,neutral>Hello Ceril.");
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatnpc(neutral, "Well hello again adventurer! It's good to see you again! If it wasn't for your quick thinking the treacherous Jones would have poisoned my family and me by now! We are in your debt.");
-            ~chatplayer(neutral, "Don't worry about it, a good deed is its own reward. And that 2000 gold didn't hurt either.");
+            ~chatnpc("<p,neutral>Well hello again adventurer! It's good to see you again! If it wasn't for your quick thinking the treacherous Jones would have poisoned my family and me by now! We are in your debt.");
+            ~chatplayer("<p,neutral>Don't worry about it, a good deed is its own reward. And that 2000 gold didn't hurt either.");
         } else {
-            ~chatnpc(sad, "Oooooh... I may be wrong... but ever since I asked for your help things around here have gone from bad to worse...");
-            ~chatnpc(angry, "I think you'd better keep out of my way. And for the LAST time: it's SIR Ceril. SIR! It's not that hard to blooming remember!");
+            ~chatnpc("<p,sad>Oooooh... I may be wrong... but ever since I asked for your help things around here have gone from bad to worse...");
+            ~chatnpc("<p,angry>I think you'd better keep out of my way. And for the LAST time: it's SIR Ceril. SIR! It's not that hard to blooming remember!");
         }
 }
 
 [label,ceril_give_armour]
 if(coordy(coord) = 0) {
-    ~chatplayer(neutral, "Ceril. How are you?");
+    ~chatplayer("<p,neutral>Ceril. How are you?");
 }
-~chatplayer(happy, "Look! I've recovered your armour!");
-~chatnpc(happy, "Well done! I must say I am very impressed! Come on, hand it over.");
-~chatnpc(happy, "Before we send you on your way with your payment, I'll just get Jones to whip you up a batch of his special broth.");
-~chatplayer(confused, "I'd rather not if it's all the same to you. I overheard the cultists talking, and apparently Jones is in league with them.");
+~chatplayer("<p,happy>Look! I've recovered your armour!");
+~chatnpc("<p,happy>Well done! I must say I am very impressed! Come on, hand it over.");
+~chatnpc("<p,happy>Before we send you on your way with your payment, I'll just get Jones to whip you up a batch of his special broth.");
+~chatplayer("<p,confused>I'd rather not if it's all the same to you. I overheard the cultists talking, and apparently Jones is in league with them.");
 if(coordy(coord) = 0) {
-    ~chatnpc(angry, "W-what? RIGHT! You! Come with me upstairs! We're going to blooming well sort this out right now once and for all!");
+    ~chatnpc("<p,angry>W-what? RIGHT! You! Come with me upstairs! We're going to blooming well sort this out right now once and for all!");
     return;
 }
-~chatnpc(angry, "W-what? RIGHT! You! We're going to blooming well sort this out right now once and for all!");
+~chatnpc("<p,angry>W-what? RIGHT! You! We're going to blooming well sort this out right now once and for all!");
 if(inv_total(inv, carnillean_armour) = 0 ) {
     inv_del(inv, carnillean_armour, 1);
 } else if(inv_total(worn, carnillean_armour) = 0) {
     inv_del(worn, carnillean_armour, 1);
 }
 queue(hazeelcult_fake_complete, 0);
-if (.npc_finduid(~.npc_within_distance(coord, butler_jones, 6)) = false) { // not sure what the distance would of been but it always works on OSRS
+if (.npc_find(coord, butler_jones, 6, 0) = false) { // not sure what the distance would of been but it always works on OSRS
     return;
 }
-~chatnpc(angry, "Jones! This commoner says you had something to do with the theft of my armour. What do you have to say for yourself about that?");
-~.chatnpc(neutral, "It wasn't me m'lud. I am, as you know, a loyal servant.");
-~chatnpc(angry, "Humph. Quite right too. I cannot fathom why this scoundrel would accuse you of such a crime without evidence to back up his accusations.");
-~chatnpc(neutral, "Right. I have decided. I have given my word as a nobleman to reward you for your efforts in retrieving my armour.");
-~chatnpc(neutral, "but I must also compensate Jones for this terrible slander you have made against him.");
+~chatnpc("<p,angry>Jones! This commoner says you had something to do with the theft of my armour. What do you have to say for yourself about that?");
+~.chatnpc("<p,neutral>It wasn't me m'lud. I am, as you know, a loyal servant.");
+~chatnpc("<p,angry>Humph. Quite right too. I cannot fathom why this scoundrel would accuse you of such a crime without evidence to back up his accusations.");
+~chatnpc("<p,neutral>Right. I have decided. I have given my word as a nobleman to reward you for your efforts in retrieving my armour.");
+~chatnpc("<p,neutral>but I must also compensate Jones for this terrible slander you have made against him.");
 ~mesbox("Sir Ceril gives you 5 gold. Sir Ceril gives Jones 1995 gold.");
-~chatnpc(angry, "Now take it and leave you scoundrel! And don't darken my doorstep again!");
-~.chatnpc(happy, "Don't worry m'lud, this fool won't be bothering us any more.");
+~chatnpc("<p,angry>Now take it and leave you scoundrel! And don't darken my doorstep again!");
+~.chatnpc("<p,happy>Don't worry m'lud, this fool won't be bothering us any more.");
 ~mesbox("Jones smirks at you. You are going to need more than words to prove Jones' treachery.");

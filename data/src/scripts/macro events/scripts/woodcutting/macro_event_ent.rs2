@@ -55,7 +55,7 @@ if (inv_freespace(inv) < 1) {
     @your_inventory_is_full($product);
 }
 if (%action_delay < map_clock) {
-    // scuffed implimentation for lining up skill sounds (very first chop)
+    // scuffed implementation for lining up skill sounds (very first chop)
     if (%skill_sound = calc(map_clock + 4)) {
         sound_synth(woodchop_4,0,20);
     }

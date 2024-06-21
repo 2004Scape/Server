@@ -14,8 +14,6 @@
 // - https://youtu.be/Giyx_JsAWxg?t=114
 def_int $duration = 60;
 loc_change(loc_param(macro_gas), $duration);
-// todo: confirm if the player continued mining or stopped mining after gas spawned.
-loc_find(loc_coord, loc_param(macro_gas));
 sound_synth(gas_hiss, 0, 0);
 p_oploc(1);
 

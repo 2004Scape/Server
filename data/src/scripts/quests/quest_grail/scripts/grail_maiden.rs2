@@ -1,2 +1,2 @@
 [opnpc1,grail_maiden]
-~chatnpc(happy, "Welcome to the Grail castle.");
+~chatnpc("<p,happy>Welcome to the Grail castle.");

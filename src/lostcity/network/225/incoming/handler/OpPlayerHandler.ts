@@ -9,12 +9,19 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
     handle(message: OpPlayer, player: NetworkPlayer): boolean {
         const { pid } = message;
 
-        const other = World.getPlayer(pid);
-        if (!other) {
+        if (player.delayed()) {
+            player.unsetMapFlag();
             return false;
         }
 
-        if (!player.players.has(other.uid)) {
+        const other = World.getPlayer(pid);
+        if (!other) {
+            player.unsetMapFlag();
+            return false;
+        }
+
+        if (!player.otherPlayers.has(other.uid)) {
+            player.unsetMapFlag();
             return false;
         }
 
@@ -29,6 +36,7 @@ export default class OpPlayerHandler extends MessageHandler<OpPlayer> {
             mode = ServerTriggerType.APPLAYER4;
         }
 
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, other, mode);
         player.opcalled = true;
         return true;

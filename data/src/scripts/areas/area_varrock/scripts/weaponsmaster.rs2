@@ -1,24 +1,24 @@
 [opnpc1,weaponsmaster]
-~chatplayer(neutral, "Hello.");
+~chatplayer("<p,neutral>Hello.");
 if(%phoenixgang_progress >= ^phoenixgang_joined) {
-    ~chatnpc(happy, "Hello fellow Phoenix!|What are you after?");
+    ~chatnpc("<p,happy>Hello fellow Phoenix!|What are you after?");
     switch_int (~p_choice2("I'm after a weapon or two.", 1, "I'm looking for treasure.", 2)) {
         case 1:
-            ~chatplayer(neutral, "I'm after a weapon or two.");
-            ~chatnpc(neutral, "No problem. Feel free to look around.");
+            ~chatplayer("<p,neutral>I'm after a weapon or two.");
+            ~chatnpc("<p,neutral>No problem. Feel free to look around.");
         case 2:
-            ~chatplayer(neutral, "I'm looking for treasure.");
-            ~chatnpc(happy, "We've not got any up here.|Go mug someone somewhere|if you want some treasure."); 
+            ~chatplayer("<p,neutral>I'm looking for treasure.");
+            ~chatnpc("<p,happy>We've not got any up here.|Go mug someone somewhere|if you want some treasure."); 
     }   
 } else {
-    ~chatnpc(angry, "Hey! Who are you?|You're not meant to be here!");
+    ~chatnpc("<p,angry>Hey! Who are you?|You're not meant to be here!");
     ~npc_retaliate(0);
 }
 
 [label,weaponsmaster_stop]
 if(%phoenixgang_progress >= ^phoenixgang_joined) {
-    ~chatnpc(angry, "Hey! That's Stravens'!|He won't like you messing with that!");
+    ~chatnpc("<p,angry>Hey! That's Stravens'!|He won't like you messing with that!");
 } else {
-    ~chatnpc(angry, "Stop! thief!");
+    ~chatnpc("<p,angry>Stop! thief!");
     ~npc_retaliate(0);
 }

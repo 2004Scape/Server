@@ -127,6 +127,9 @@ if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
     | (inv_totalcat(inv, trail_clue_easy) > 0)
     | (inv_totalcat(inv, trail_clue_medium) > 0)
     | (inv_totalcat(inv, trail_clue_hard) > 0)
+    | (inv_totalcat(inv, trail_casket_easy) > 0)
+    | (inv_totalcat(inv, trail_casket_medium) > 0)
+    | (inv_totalcat(inv, trail_casket_hard) > 0)
     | (inv_totalcat(inv, cannon_parts) > 0)) {
     return (false);
 }
@@ -146,8 +149,8 @@ sound_synth(teleport_all, 0, 0);
 p_delay(2);
 p_teleport(~coord_lineofwalk_radius(^mage_arena_finish_coord, 2));
 anim(null, 0);
-if (npc_finduid(~npc_within_distance(coord, kolodion, 5)) = true) {
-    ~chatnpc(happy, "Well done, young adventurer; you truly are a worthy|battle mage.");
+if (npc_find(coord, kolodion, 5, 0) = true) {
+    ~chatnpc("<p,happy>Well done, young adventurer; you truly are a worthy|battle mage.");
     @kolodion_what_now;
     return;
 }

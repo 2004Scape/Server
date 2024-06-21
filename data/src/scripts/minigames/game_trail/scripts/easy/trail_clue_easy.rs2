@@ -10,29 +10,28 @@
 [opheld1,_trail_clue_easy]
 ~full_trail_readclue(oc_param(last_item, trail_desc));
 
-[opheld1,trail_casket_easy]
-inv_del(inv, trail_casket_easy, 1);
+[proc,progress_clue_easy](obj $current_clue, string $text)
+~trail_clue_progress;
+inv_del(inv, $current_clue, 1);
 if(~trail_clue_easy_complete = true) {
     ~trail_clue_easy_reward;
 } else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    // https://i.imgur.com/cohYEuj.jpeg
-    ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
+    def_namedobj $new_clue = ~trail_clue_easy_getrandom;
+    inv_add(inv, $new_clue, 1);
+    ~objboxt($new_clue, $text);
 }
 
-[proc,trail_clue_easy_complete](boolean)
-return(false);
+// https://i.imgur.com/cohYEuj.jpeg
+[opheld1,_trail_casket_easy] ~progress_clue_easy(last_item, "You've found another clue scroll!");
 
+[proc,trail_clue_easy_complete](boolean)
+if(~get_trail_progress >= ^trail_easy_maxsteps | (add(~get_trail_progress, 2) >= ^trail_easy_maxsteps & random(2) = 0)) {
+    return (true);
+}
+return(false);
 
 [proc,trail_clue_easy_getrandom](namedobj)
 return(enum(int, namedobj, trail_easy_enum, random(enum_getoutputcount(trail_easy_enum))));
 
 [proc,trail_clue_easy_loc_interact](namedobj $clue)
-~trail_clue_progress;
-inv_del(inv, $clue, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objboxt(trail_clue_hard_map001, "You've found another clue scroll!");
-}
+~progress_clue_easy($clue, "You've found another clue scroll!");

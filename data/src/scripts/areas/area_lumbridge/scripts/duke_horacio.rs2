@@ -1,5 +1,5 @@
 [opnpc1,duke_horacio]
-~chatnpc(neutral, "Greetings. Welcome to my castle.");
+~chatnpc("<p,neutral>Greetings. Welcome to my castle.");
 
 if (%dragon_shield = ^quest_dragon_knows_about_shield & inv_total(inv, dragonfire_shield) < 1 & inv_total(worn, dragonfire_shield) < 1) {
     @multi3("I seek a shield that will protect me from the dragon's breath.", duke_horacio_shield, "Have you any quests for me?", ~duke_handle_rune_mysteries, "Where can I find money?", duke_horacio_money);
@@ -16,20 +16,20 @@ else if (%runemysteries_progress = ^runemysteries_complete) return(duke_rune_mys
 else return (duke_rune_mysteries_in_progress);
 
 [label,duke_horacio_money]
-~chatplayer(neutral, "Where can I find money?");
-~chatnpc(neutral, "I've heard that the blacksmiths are prosperous amongst the peasantry. Maybe you could try your hand at that?");
+~chatplayer("<p,neutral>Where can I find money?");
+~chatnpc("<p,neutral>I've heard that the blacksmiths are prosperous amongst the peasantry. Maybe you could try your hand at that?");
 
 [label,duke_rune_mysteries_start]
-~chatplayer(quiz, "Have you any quests for me?");
-~chatnpc(neutral, "Well, it's not really a quest but I recently discovered this strange talisman.");
-~chatnpc(neutral, "It seems to be a mystical and I have never seen anything like it before. Would you take it to the head wizard at");
-~chatnpc(neutral, "the Wizards' Tower for me? It's just south-west of here and should not take you very long at all. I would be awfully grateful.");
+~chatplayer("<p,quiz>Have you any quests for me?");
+~chatnpc("<p,neutral>Well, it's not really a quest but I recently discovered this strange talisman.");
+~chatnpc("<p,neutral>It seems to be a mystical and I have never seen anything like it before. Would you take it to the head wizard at");
+~chatnpc("<p,neutral>the Wizards' Tower for me? It's just south-west of here and should not take you very long at all. I would be awfully grateful.");
 def_int $option = ~p_choice2("Sure, no problem.", 1, "Not right now.", 2);
 if ($option = 1) {
-    ~chatplayer(neutral, "Sure, no problem.");
+    ~chatplayer("<p,neutral>Sure, no problem.");
     %runemysteries_progress = 1;
     ~send_quest_progress(questlist:runemysteries, %runemysteries_progress, 5);
-    ~chatnpc(neutral, "Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
+    ~chatnpc("<p,neutral>Thank you very much, stranger. I am sure the head wizard will reward you for such an interesting find.");
     if(inv_freespace(inv) = 0) {
         ~mesbox("The Duke tries to hand you the talisman, but you don't have enough room to take it.");
     } else {
@@ -38,35 +38,35 @@ if ($option = 1) {
         inv_add(inv, air_talisman, 1);
     }
 } else if($option = 2) {
-    ~chatplayer(neutral, "Not right now.");
-    ~chatnpc(neutral, "As you wish. Hopefully I can find someone else to help.");
+    ~chatplayer("<p,neutral>Not right now.");
+    ~chatnpc("<p,neutral>As you wish. Hopefully I can find someone else to help.");
 }
 
 [label,duke_rune_mysteries_in_progress]
 if(~obj_gettotal(air_talisman) = 0) {
-    ~chatnpc(neutral, "Did you speak to the head wizard for me yet, adventurer?");
-    ~chatplayer(neutral, "No, I lost that talisman that you gave me.");
+    ~chatnpc("<p,neutral>Did you speak to the head wizard for me yet, adventurer?");
+    ~chatplayer("<p,neutral>No, I lost that talisman that you gave me.");
     if(inv_freespace(inv) = 0) {
         ~objbox(air_talisman, "The Duke tries to hand you a talisman, but you don't have enough room to take it.");
     } else {
-        ~chatnpc(neutral, "Ah, that would explain it. One of my servants found this outside, and it seemed too much of a coincidence that more than one strange.");
+        ~chatnpc("<p,neutral>Ah, that would explain it. One of my servants found this outside, and it seemed too much of a coincidence that more than one strange.");
         inv_add(inv, air_talisman, 1);
-        ~chatnpc(neutral, "object would appear on my land in such a short period of time. Please take this to the head wizard at the Wizards' Tower, south-west of here, and don't lose it this time.");
+        ~chatnpc("<p,neutral>object would appear on my land in such a short period of time. Please take this to the head wizard at the Wizards' Tower, south-west of here, and don't lose it this time.");
     }
 } else {
-    ~chatnpc(neutral, "The only task remotely approaching a quest is the delivery of that talisman I gave you to the head wizard of the Wizards' Tower,");
-    ~chatnpc(neutral, "south-west of here. I suggest you deliver it to him as soon as possible. I have the oddest feeling that it is important...");
+    ~chatnpc("<p,neutral>The only task remotely approaching a quest is the delivery of that talisman I gave you to the head wizard of the Wizards' Tower,");
+    ~chatnpc("<p,neutral>south-west of here. I suggest you deliver it to him as soon as possible. I have the oddest feeling that it is important...");
 }
 
 [label,duke_rune_mysteries_complete]
-~chatplayer(neutral, "Have you any quests for me?");
-//~chatnpc(neutral, "The only job I had was the delivery of that talisman, so I'm afraid not.");
-~chatnpc(neutral, "All is well for me."); // rsc
+~chatplayer("<p,neutral>Have you any quests for me?");
+//~chatnpc("<p,neutral>The only job I had was the delivery of that talisman, so I'm afraid not.");
+~chatnpc("<p,neutral>All is well for me."); // rsc
 
 // dragon slayer
 [label,duke_horacio_shield]
 // Dialogue is taken from rsc
-~chatplayer(neutral, "I seek a shield that will protect me from the dragon's breath.");
-~chatnpc(quiz, "A knight going on a dragon quest, hmm?|A most worthy cause.|Guard this well my friend.");
+~chatplayer("<p,neutral>I seek a shield that will protect me from the dragon's breath.");
+~chatnpc("<p,quiz>A knight going on a dragon quest, hmm?|A most worthy cause.|Guard this well my friend.");
 inv_add(inv, dragonfire_shield, 1);
 ~objboxt(dragonfire_shield, "The Duke hands you a shield.");

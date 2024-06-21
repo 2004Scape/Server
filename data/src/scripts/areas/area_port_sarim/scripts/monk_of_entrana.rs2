@@ -3,23 +3,23 @@ if(map_members = false) { // guessing, OSRS has the new member mesbox, RS3 has a
     mes("The Monk of Entrana does not appear interested in talking.");
     return;
 }
-~chatnpc(quiz, "Do you seek passage to holy Entrana? If so, you must leave your weaponry and armour behind. This is Saradomin's will.");
+~chatnpc("<p,quiz>Do you seek passage to holy Entrana? If so, you must leave your weaponry and armour behind. This is Saradomin's will.");
 def_int $option = ~p_choice2("No, not right now.", 1, "Yes, okay, I'm ready to go.", 2);
 if($option = 1){
-    ~chatplayer(neutral, "No, not right now.");
-    ~chatnpc(neutral, "Very well.");
+    ~chatplayer("<p,neutral>No, not right now.");
+    ~chatnpc("<p,neutral>Very well.");
 } else if($option = 2) {
-    ~chatplayer(happy, "Yes, okay, I'm ready to go.");
-    ~chatnpc(neutral, "Very well. One moment please.");
+    ~chatplayer("<p,happy>Yes, okay, I'm ready to go.");
+    ~chatnpc("<p,neutral>Very well. One moment please.");
     ~mesbox("The monk quickly searches you.");
     if(~has_entrana_restricted_items = true) {
-        ~chatnpc(angry, "NO WEAPONS OR ARMOUR are permitted on holy Entrana AT ALL. We will not allow you to travel there in breach of mighty Saradomin's edict.");
-        ~chatnpc(neutral, "Do not try and deceive us again. Come back when you have laid down your Zamorakian instruments of death.");
+        ~chatnpc("<p,angry>NO WEAPONS OR ARMOUR are permitted on holy Entrana AT ALL. We will not allow you to travel there in breach of mighty Saradomin's edict.");
+        ~chatnpc("<p,neutral>Do not try and deceive us again. Come back when you have laid down your Zamorakian instruments of death.");
         return;
     }
     // Taking the boat again lets you skip dialogue on OSRS if you've gone through it once in the current session (tracked w/varbit)
     // I don't think they'd waste a varp on this in 2004 so this probably wasn't the case originally
-    ~chatnpc(neutral, "All is satisfactory. You may board the boat now.");
+    ~chatnpc("<p,neutral>All is satisfactory. You may board the boat now.");
     ~set_sail("Entrana", "After a quick search, the monk smiles at you and allows you to board.", 1_44_52_18_3, ^sail_port_sarim_to_entrana, 13);
 }
 

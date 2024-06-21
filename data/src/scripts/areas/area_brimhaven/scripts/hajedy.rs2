@@ -1,0 +1,9 @@
+[opnpc1,hajedy]
+if(inv_total(inv, trail_clue_medium_anagram_exp005) > 0) {
+    // https://youtube.com/watch?v=1jHmIS9FGSY
+    ~chatnpc("<p,neutral>Well done.");
+    ~progress_clue_medium(trail_clue_medium_anagram_exp005, "Hajedy has given you another clue scroll!");
+    return;
+}
+// rsc linebreaks since all the other known shilo village dialogue has it
+~chatnpc("<p,sad>We used to run cart trips down to Shilo Village in south Karamja.|Since the troubles we had|we've had to stop them though,|too many people got killed.");

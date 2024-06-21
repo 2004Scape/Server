@@ -22,9 +22,9 @@ if (%macro_event > 0) {
 // (probably every spell)
 // - cooking. Confirmed: https://youtu.be/Brq99Bdl0aI?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=198
 // - using flax wheel. Confirmed: https://youtu.be/sW48OR1I86M (early osrs)
-// - using anvil? Cant find a video, not implimented.
-// - fletching? Cant find a video, not implimented.
-// - flax picking? Cant find a video, but it is implimented.
+// - using anvil? Cant find a video, not implemented.
+// - fletching? Cant find a video, not implemented.
+// - flax picking? Cant find a video, but it is implemented.
 // - smithing at furnace. Confirmed? https://youtu.be/a6NobmSGBYw
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
@@ -163,14 +163,6 @@ if (%macro_event < 1) {
 }
 if (%macro_event < add(~macro_event_general_count, 1)){
     return(true);
-}
-
-[proc,macro_event_give_reward](namedobj $reward, int $count)
-if (inv_freespace(inv) < 1) {
-    // drop on the ground for 3 hours https://twitter.com/JagexAsh/status/1574393627421417478
-    obj_add(coord, $reward, $count, 18000);
-} else {
-    inv_add(inv, $reward, $count);
 }
 
 [proc,macro_event_lost_and_follow]()(boolean)

@@ -1,41 +1,41 @@
 [opnpc1,tanner]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
+if(map_members = true & inv_total(inv, trail_clue_easy_simple_exp008) = 1) {
     @trail_tanner;
 }
-~chatnpc(happy, "Greetings friend. I am a manufacturer of leather.");
+~chatnpc("<p,happy>Greetings friend. I am a manufacturer of leather.");
 def_int $total = calc(inv_total(inv, cow_hide) + inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
 if($total > 0) {
     if ($total = 1) {
-        ~chatnpc(default, "I see you have brought me a hide.|Would you like me to tan it for you?");
+        ~chatnpc("<p,happy>I see you have brought me a hide.|Would you like me to tan it for you?");
     } else {
-        ~chatnpc(default, "I see you have brought me some hides.|Would you like me to tan them for you?");
+        ~chatnpc("<p,happy>I see you have brought me some hides.|Would you like me to tan them for you?");
     }
     switch_int(~p_choice2_header("Yes please.", 1, "No thanks.", 2, "What would you like to say?")) {
         case 1 : @tan_leather_choices;
         case 2 : 
-            ~chatplayer(happy, "No thanks.");
-            ~chatnpc(happy, text_gender("Very well, sir, as you wish.", "Very well, madam, as you wish."));
+            ~chatplayer("<p,bored>No thanks.");
+            ~chatnpc("<p,neutral>Very well, <text_gender("sir", "madam")>, as you wish.");
             return;
     }
 }
 switch_int (~p_choice2_header("Can I buy some leather then?", 1, "Leather is rather weak stuff.", 2, "What would you like to say?")) {
     case 1 :
-        ~chatplayer(quiz, "Can I buy some leather then?");
-        ~chatnpc(happy, "I make leather from animal hides. Bring me some|cowhides and one gold coin per hide, and I'll tan them|into soft leather for you.");
+        ~chatplayer("<p,quiz>Can I buy some leather then?");
+        ~chatnpc("<p,neutral>I make leather from animal hides. Bring me some|cowhides and one gold coin per hide, and I'll tan them|into soft leather for you.");
     case 2 :
-        ~chatplayer(default, "Leather is rather weak stuff.");
-        ~chatnpc(happy, "Normal leather may be quite weak, but it's very cheap - I make it from cowhides for only 1 gp per hide - and it's so easy to craft that anyone can work with it.");
-        ~chatnpc(happy, "Alternatively you could try hard leather. It's not so easy to craft, but I only charge 3 gp per cowhide to prepare it, and it makes much sturdier armour.");
-        ~chatnpc(default, "I can also tan dragonhides, suitable for crafting into the highest quality armour for rangers.");
-        ~chatplayer(happy, "Thanks, I'll bear it in mind.");
+        ~chatplayer("<p,neutral>Leather is rather weak stuff.");
+        ~chatnpc("<p,happy>Normal leather may be quite weak, but it's very cheap - I make it from cowhides for only 1 gp per hide - and it's so easy to craft that anyone can work with it.");
+        ~chatnpc("<p,happy>Alternatively you could try hard leather. It's not so easy to craft, but I only charge 3 gp per cowhide to prepare it, and it makes much sturdier armour.");
+        ~chatnpc("<p,happy>I can also tan dragonhides, suitable for crafting into the highest quality armour for rangers.");
+        ~chatplayer("<p,bored>Thanks, I'll bear it in mind.");
 }
 
 [opnpcu,tanner]
 switch_obj(last_useitem) {
     case cow_hide, dragonhide_green, dragonhide_blue, dragonhide_red, dragonhide_black : @tan_leather_choices;
-    case leather, hardleather, dragon_leather, dragon_leather_blue, dragon_leather_red, dragon_leather_black : ~chatnpc(default, "Err... I have no use for that, I make the stuff!");
-    case default : ~chatnpc(default, "Er... Thanks, but no thanks!");
+    case leather, hardleather, dragon_leather, dragon_leather_blue, dragon_leather_red, dragon_leather_black : ~chatnpc("<p,confused>Err... I have no use for that, I make the stuff!");
+    case default : ~chatnpc("<p,confused>Er... Thanks, but no thanks!");
 }
 
 // https://web.archive.org/web/20040804232357/http://runehq.com/viewcityguide.php?id=00390
@@ -80,7 +80,7 @@ if (oc_members($hide) = true | oc_members($leather) = true) {
 }
 def_int $coins_total = inv_total(inv, coins);
 if ($coins_total < $cost) {
-    ~chatnpc(happy, "You don't have enough coins to tan these hides.");
+    ~chatnpc("<p,happy>You don't have enough coins to tan these hides.");
     @exit;
 }
 def_int $hides_total = calc(inv_total(inv, $hide));
@@ -93,12 +93,6 @@ inv_del(inv, coins, calc($hides_total * $cost));
 inv_add(inv, $leather, $hides_total);
 
 [label,trail_tanner]
-~chatnpc(quiz, "Here you go!");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp007, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "You've been given another clue!");
-}
+// https://www.youtube.com/watch?v=M8lX77a6Mt8, https://www.youtube.com/watch?v=CFDUdiUYzJY
+~chatnpc("<p,happy>Here you go!");
+~progress_clue_easy(trail_clue_easy_simple_exp008, "The tanner has given you another clue!");

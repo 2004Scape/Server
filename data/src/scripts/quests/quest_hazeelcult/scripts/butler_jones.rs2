@@ -2,90 +2,90 @@
 switch_int(%hazeelcult_progress) {
     case ^hazeelcult_complete:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatplayer(neutral, "Hello stranger.");
-            ~chatnpc(neutral, "Why hello there.");
-            ~chatplayer(quiz, "I take it you're the new butler...?");
-            ~chatnpc(neutral, "That's right. I hear that they had some problems with the last one.");
-            ~chatplayer(neutral, "Yes, you could say that...");
+            ~chatplayer("<p,neutral>Hello stranger.");
+            ~chatnpc("<p,neutral>Why hello there.");
+            ~chatplayer("<p,quiz>I take it you're the new butler...?");
+            ~chatnpc("<p,neutral>That's right. I hear that they had some problems with the last one.");
+            ~chatplayer("<p,neutral>Yes, you could say that...");
         } else {
-            ~chatplayer(neutral, "Hello there.");
-            ~chatnpc(neutral, "It's an honour to be in your presence again, adventurer. I hope things are well?");
-            ~chatplayer(neutral, "Not bad, thanks. Yourself?");
-            ~chatnpc(neutral, "Unfortunately, I am still forced to deal with this insufferable family. Many generations have passed, but they are still the enemy. As such, they must be kept a close eye on.");
-            ~chatnpc(neutral, "Still, I have no doubt that the time will soon come for me to leave this place. Our lord will certainly have need of me elsewhere once his current work is complete.");
-            ~chatplayer(neutral, "I see. Well good luck with it all.");
+            ~chatplayer("<p,neutral>Hello there.");
+            ~chatnpc("<p,neutral>It's an honour to be in your presence again, adventurer. I hope things are well?");
+            ~chatplayer("<p,neutral>Not bad, thanks. Yourself?");
+            ~chatnpc("<p,neutral>Unfortunately, I am still forced to deal with this insufferable family. Many generations have passed, but they are still the enemy. As such, they must be kept a close eye on.");
+            ~chatnpc("<p,neutral>Still, I have no doubt that the time will soon come for me to leave this place. Our lord will certainly have need of me elsewhere once his current work is complete.");
+            ~chatplayer("<p,neutral>I see. Well good luck with it all.");
         }
     case ^hazeelcult_given_armour_or_scroll:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatnpc(angry, "Cretin. Did you think you could 'save the day' just by accusing me? We've been planning this for YEARS. your meddling has been nothing more than a minor inconvenience.");
-            ~chatnpc(angry, "When Lord Hazeel returns, the likes of you and the arrogant Carnilleans will be first to suffer his vengeance.");
-            ~chatplayer(angry, "Not if I can help it!");
-            ~chatnpc(angry, "That's basically my point. You cannot help it. Now begone!");
+            ~chatnpc("<p,angry>Cretin. Did you think you could 'save the day' just by accusing me? We've been planning this for YEARS. your meddling has been nothing more than a minor inconvenience.");
+            ~chatnpc("<p,angry>When Lord Hazeel returns, the likes of you and the arrogant Carnilleans will be first to suffer his vengeance.");
+            ~chatplayer("<p,angry>Not if I can help it!");
+            ~chatnpc("<p,angry>That's basically my point. You cannot help it. Now begone!");
         } else {
-            ~chatplayer(neutral, "Hello Jones.");
-            ~chatnpc(neutral, "Have you recovered the scroll?");
+            ~chatplayer("<p,neutral>Hello Jones.");
+            ~chatnpc("<p,neutral>Have you recovered the scroll?");
             if(inv_total(inv, scroll_of_hazeel) = 0) {
-                ~chatplayer(confused, "Uh... yeah... about that.. I don't exactly have it right now...");
-                ~chatnpc(angry, "Incompetent fool! The future of our entire plans relies on that scroll! You MUST find it and take it back to our hideout as soon as possible!");
+                ~chatplayer("<p,confused>Uh... yeah... about that.. I don't exactly have it right now...");
+                ~chatnpc("<p,angry>Incompetent fool! The future of our entire plans relies on that scroll! You MUST find it and take it back to our hideout as soon as possible!");
                 return;
             } 
-            ~chatplayer(happy, "I have it right here.");
-            ~chatnpc(shock, "Incredible!");
-            ~chatnpc(neutral, "Quick, get it back to our hideout! These are glorious times indeed adventurer, when the mighty Hazeel returns things are REALLY going to change around here!");
+            ~chatplayer("<p,happy>I have it right here.");
+            ~chatnpc("<p,shock>Incredible!");
+            ~chatnpc("<p,neutral>Quick, get it back to our hideout! These are glorious times indeed adventurer, when the mighty Hazeel returns things are REALLY going to change around here!");
         }
     case ^hazeelcult_finished_side_task:
         if(%hazeelcult_side = ^hazeelcult_goodside) {
-            ~chatplayer(neutral, "Jones. We need to talk.");
-            ~chatnpc(quiz, "Yes? You need some help with your quest?");
-            ~chatplayer(angry, "Drop the act Jones. I know you're in league with the cultists.");
-            ~chatnpc(shock, "W-what? N-no I'm not, don't be silly!");
-            ~chatplayer(angry, "Listen pal, I went to your hideout, I heard them talking about you. You're fooling nobody.");
-            ~chatnpc(angry, "You think you're so smart don't you? You might think you know what's going on but you have no idea.");
-            ~chatplayer(neutral, "I know all I need to know and when I reveal the truth you're going directly to jail.");
-            ~chatnpc(angry, "Oh, you think so do you? You think that silly old fool Ceril will take YOUR word over MINE? He trusts me completely!");
-            ~chatplayer(neutral, "We'll see about that.");
-            ~chatnpc(angry, "This is your last warning adventurer: keep your nose out of our business.");
+            ~chatplayer("<p,neutral>Jones. We need to talk.");
+            ~chatnpc("<p,quiz>Yes? You need some help with your quest?");
+            ~chatplayer("<p,angry>Drop the act Jones. I know you're in league with the cultists.");
+            ~chatnpc("<p,shock>W-what? N-no I'm not, don't be silly!");
+            ~chatplayer("<p,angry>Listen pal, I went to your hideout, I heard them talking about you. You're fooling nobody.");
+            ~chatnpc("<p,angry>You think you're so smart don't you? You might think you know what's going on but you have no idea.");
+            ~chatplayer("<p,neutral>I know all I need to know and when I reveal the truth you're going directly to jail.");
+            ~chatnpc("<p,angry>Oh, you think so do you? You think that silly old fool Ceril will take YOUR word over MINE? He trusts me completely!");
+            ~chatplayer("<p,neutral>We'll see about that.");
+            ~chatnpc("<p,angry>This is your last warning adventurer: keep your nose out of our business.");
         } else {
             if(inv_total(worn, mark_of_hazeel) > 0) {
-                ~chatnpc(happy, "Hello again friend. I see you have the mark now; You should keep it covered up.");
-                ~chatplayer(confused, "That? Oh, it's nothing. Just an old amulet.");
+                ~chatnpc("<p,happy>Hello again friend. I see you have the mark now; You should keep it covered up.");
+                ~chatplayer("<p,confused>That? Oh, it's nothing. Just an old amulet.");
             } else {
-                ~chatnpc(happy, "Hello again friend. I see you decided to keep the mark of Hazeel discreetly about you.");
-                ~chatplayer(confused, "Mark of Hazeel? I'm sure I don't know what you mean.");
+                ~chatnpc("<p,happy>Hello again friend. I see you decided to keep the mark of Hazeel discreetly about you.");
+                ~chatplayer("<p,confused>Mark of Hazeel? I'm sure I don't know what you mean.");
             }
-            ~chatnpc(happy, "You don't have to pretend with me, friend! Our cause is one and the same; the sooner Lord Hazeel is avenged the better for this city... and for us!");
-            ~chatplayer(quiz, "So do you have any idea where the scroll with the enchantment is?");
-            ~chatnpc(neutral, "No idea I'm afraid. I KNOW it's somewhere in this house, but for the life of me I can't find it anywhere. I've searched high and low for it!");
-            ~chatplayer(quiz, "And Sir Ceril doesn't suspect a thing?");
-            ~chatnpc(neutral, "Ha! That silly old fool? He can't see the forest for the trees.");
-            ~chatplayer(neutral, "I'll keep on looking then...");
+            ~chatnpc("<p,happy>You don't have to pretend with me, friend! Our cause is one and the same; the sooner Lord Hazeel is avenged the better for this city... and for us!");
+            ~chatplayer("<p,quiz>So do you have any idea where the scroll with the enchantment is?");
+            ~chatnpc("<p,neutral>No idea I'm afraid. I KNOW it's somewhere in this house, but for the life of me I can't find it anywhere. I've searched high and low for it!");
+            ~chatplayer("<p,quiz>And Sir Ceril doesn't suspect a thing?");
+            ~chatnpc("<p,neutral>Ha! That silly old fool? He can't see the forest for the trees.");
+            ~chatplayer("<p,neutral>I'll keep on looking then...");
         }
     case ^hazeelcult_poured_poison:
-        ~chatplayer(neutral, "Hello there.");
-        ~chatnpc(neutral, "Hello friend. I heard about your handiwork. Quite amusing really. I'm sure Hazeel will be pleased anyway; Keep up the good work!");
+        ~chatplayer("<p,neutral>Hello there.");
+        ~chatnpc("<p,neutral>Hello friend. I heard about your handiwork. Quite amusing really. I'm sure Hazeel will be pleased anyway; Keep up the good work!");
     case ^hazeelcult_clivet_decision: @butler_jones_howlong;
     case ^hazeelcult_started:
-        ~chatplayer(quiz, "Hello. What is this building?");
-        ~chatnpc(neutral, "This is the home of Sir Ceril Carnillean of the noble Carnillean family. You're welcome to look around, but I'm afraid I'll have to keep an eye on you.");
-        ~chatnpc(neutral, "Recently we've been having a real problem with thieves and strange cultists coming out of the forest for some reason.");
-        ~chatplayer(neutral, "That's a shame.");
-        ~chatnpc(neutral, "Yes, well, these things are bound to happen when you're as wealthy as the Carnilleans.");
+        ~chatplayer("<p,quiz>Hello. What is this building?");
+        ~chatnpc("<p,neutral>This is the home of Sir Ceril Carnillean of the noble Carnillean family. You're welcome to look around, but I'm afraid I'll have to keep an eye on you.");
+        ~chatnpc("<p,neutral>Recently we've been having a real problem with thieves and strange cultists coming out of the forest for some reason.");
+        ~chatplayer("<p,neutral>That's a shame.");
+        ~chatnpc("<p,neutral>Yes, well, these things are bound to happen when you're as wealthy as the Carnilleans.");
         @multi3("Have you any more info on the Carnilleans?", butler_jones_info, "How long have you worked here?", butler_jones_howlong, "Ok then, take care.", butler_jones_takecare);
     case ^hazeelcult_not_started, ^hazeelcult_spoken_clivet:
-        ~chatplayer(neutral, "Hello there.");
-        ~chatnpc(neutral, "Hello. How are you today?");
-        ~chatplayer(neutral, "Good thank you, and yourself?");
-        ~chatnpc(neutral, "Fine and dandy.");
+        ~chatplayer("<p,neutral>Hello there.");
+        ~chatnpc("<p,neutral>Hello. How are you today?");
+        ~chatplayer("<p,neutral>Good thank you, and yourself?");
+        ~chatnpc("<p,neutral>Fine and dandy.");
 }
 
 [label,butler_jones_info]
-~chatplayer(quiz, "Have you any more info on the Carnilleans?");
-~chatnpc(neutral, "There's a lot I could tell you about the Carnillean family history. However, I'm afraid if I did speak about such matters I would be at risk of losing my job.");
+~chatplayer("<p,quiz>Have you any more info on the Carnilleans?");
+~chatnpc("<p,neutral>There's a lot I could tell you about the Carnillean family history. However, I'm afraid if I did speak about such matters I would be at risk of losing my job.");
 
 [label,butler_jones_howlong]
-~chatplayer(quiz, "How long have you worked here?");
-~chatnpc(neutral, "Long enough to know the Carnilleans are not as innocent or noble as they seem.");
+~chatplayer("<p,quiz>How long have you worked here?");
+~chatnpc("<p,neutral>Long enough to know the Carnilleans are not as innocent or noble as they seem.");
 
 [label,butler_jones_takecare]
-~chatplayer(neutral, "Ok then, take care.");
-~chatnpc(neutral, "You too.");
+~chatplayer("<p,neutral>Ok then, take care.");
+~chatnpc("<p,neutral>You too.");

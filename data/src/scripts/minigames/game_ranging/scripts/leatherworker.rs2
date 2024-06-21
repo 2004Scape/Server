@@ -1,0 +1,41 @@
+[opnpc1,leatherworker]
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,happy>Can I help you?");
+def_int $total = calc(inv_total(inv, cow_hide) + inv_total(inv, dragonhide_green) + inv_total(inv, dragonhide_blue) + inv_total(inv, dragonhide_red) + inv_total(inv, dragonhide_black));
+if($total > 0) {
+    @multi2("I'd like you to tan something for me.", tan_leather_choices, "No thanks.", leatherworker_no);
+} 
+@multi2("What do you do here?", leatherworker_whatdo, "No thanks.", leatherworker_no);
+
+[label,leatherworker_whatdo]
+~chatplayer("<p,happy>What do you do here?");
+~chatnpc("<p,happy>Well, I can cure plain cowhides into pieces of leather ready for crafting.");
+~chatnpc("<p,happy>I work with ordinary, hard or dragonhide leather. What would you like to know about?"); // snake skin added in aug 2005
+@multi4("Ordinary leather.", leatherworker_ordinary, "Hard leather.", leatherworker_hard, "Dragonhide leather.", leatherworker_dragonhide, "I'm bored of leather already.", leatherworker_bored);
+
+[label,leatherworker_ordinary]
+~chatplayer("<p,neutral>Ordinary leather.");
+~chatnpc("<p,happy>I can work one piece of cow hide into ordinary leather. It only costs one piece of gold.");
+~chatnpc("<p,happy>Is there anything else I can help you with?");
+@multi2("What do you do here?", leatherworker_whatdo, "No thanks.", leatherworker_no);
+
+[label,leatherworker_hard]
+~chatplayer("<p,neutral>Hard leather.");
+~chatnpc("<p,happy>Hard leather is made by specially treating normal leather by wetting and drying several times.");
+~chatnpc("<p,happy>It's then treated with pine oils. It's harder wearing than ordinary leather.");
+~chatnpc("<p,happy>Is there anything else I can help you with?");
+@multi2("What do you do here?", leatherworker_whatdo, "No thanks.", leatherworker_no);
+
+[label,leatherworker_dragonhide]
+~chatplayer("<p,neutral>Dragonhide leather.");
+~chatnpc("<p,happy>Dragon leather is made from dragonhides. One piece of hide can be worked into one piece of dragon leather. It costs 20 coins each piece.");
+~chatnpc("<p,happy>Dragon leather is hard-wearing and has excellent flexibility. You can make strong and supple armour with this.");
+~chatnpc("<p,happy>Is there anything else I can help you with?");
+@multi2("What do you do here?", leatherworker_whatdo, "No thanks.", leatherworker_no);
+
+[label,leatherworker_bored]
+~chatplayer("<p,bored>I'm bored of leather already.");
+~chatnpc("<p,neutral>You may be bored now, but an arrow in the backside will soon fix that!");
+[label,leatherworker_no]
+~chatplayer("<p,neutral>No thanks.");
+~chatnpc("<p,neutral>Suit yourself.");

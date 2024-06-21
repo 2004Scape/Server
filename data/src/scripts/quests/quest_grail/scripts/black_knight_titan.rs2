@@ -1,17 +1,11 @@
 [opnpc1,black_knight_titan]
-~chatnpc(angry, "@red@I am the Black Knight Titan!|@red@You must pass through|@red@me before you can|@red@continue in this realm!");
+~chatnpc("<p,angry>@red@I am the Black Knight Titan!|@red@You must pass through|@red@me before you can|@red@continue in this realm!");
 switch_int(~p_choice2("Ok, have at ye oh evil knight!", 1, "Actually I think I'll run away!", 2)) {
     case 1:
-         ~chatplayer(angry, "Ok, have at ye oh evil knight!");
+         ~chatplayer("<p,angry>Ok, have at ye oh evil knight!");
          ~npc_retaliate(0);
-    case 2: ~chatplayer(shock, "Actually I think I'll run away!");
+    case 2: ~chatplayer("<p,shock>Actually I think I'll run away!");
 }
-
-[opnpc2,black_knight_titan]
-if(npc_stat(hitpoints) = 0) {
-    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
-}
-@player_combat_start;
 
 [ai_queue3,black_knight_titan](int $arg)
 if(npc_findhero = true) {
@@ -36,8 +30,8 @@ if(inv_total(worn, excalibur) = 0) { // if this was queued we'll need to regain 
         %grail_progress = ^grail_failed_defeat_titan;
     }
     mes("Maybe you need something more to beat the titan?");
-    ~chatnpc(angry, "@red@Puny mortal...|@red@You cannot defeat me...");
-    ~chatnpc(angry, "@red@I...|@red@Am...|@red@INVINCIBLE!!!");
+    ~chatnpc("<p,angry>@red@Puny mortal...|@red@You cannot defeat me...");
+    ~chatnpc("<p,angry>@red@I...|@red@Am...|@red@INVINCIBLE!!!");
 } else {
     mes("Well done! You have defeated the Black Knight Titan!");
     def_coord $dest = movecoord(npc_coord, 1, 0, 0);

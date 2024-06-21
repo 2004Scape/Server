@@ -12074,6 +12074,7 @@ model=model_loc_52
 op1=Open
 active=yes
 blockrange=no
+category=magic_guild_dungeon_door
 
 [loc_2155]
 name=Gate
@@ -12083,6 +12084,7 @@ op1=Open
 mirror=yes
 active=yes
 blockrange=no
+category=magic_guild_dungeon_door
 
 [loc_2156]
 name=Magic Portal

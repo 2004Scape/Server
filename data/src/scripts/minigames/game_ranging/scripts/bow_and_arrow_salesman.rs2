@@ -1,0 +1,11 @@
+[opnpc1,bow_and_arrow_salesman]
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,happy>A fair day, traveller. Would you like to see my wares?");
+switch_int(~p_choice2("Yes please.", 1, "No thanks.", 2)) {
+    case 1:
+        ~chatplayer("<p,happy>Yes please.");
+        ~openshop_activenpc;
+    case 2:
+        ~chatplayer("<p,neutral>No thanks.");
+        ~chatnpc("<p,neutral>Okay good day to you.");
+}

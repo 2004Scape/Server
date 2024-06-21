@@ -1,17 +1,31 @@
 [opnpc1,kebab_seller]
-~chatnpc(quiz, "Would you like to buy a nice kebab? Only one gold.");
+// https://www.youtube.com/watch?v=EJfNdZNjDvE
+if(map_members = true & inv_total(inv, trail_clue_medium_anagram_exp006) > 0) {
+    @trail_kebab_seller;
+}
+
+~chatnpc("<p,quiz>Would you like to buy a nice kebab? Only one gold.");
 @multi2("I think I'll give it a miss.", kebab_seller_miss, "Yes please.", kebab_seller_buy);
 
 [label,kebab_seller_miss]
-~chatplayer(neutral, "I think I'll give it a miss.");
+~chatplayer("<p,neutral>I think I'll give it a miss.");
 
 [label,kebab_seller_buy]
-~chatplayer(neutral, "Yes please.");
+~chatplayer("<p,neutral>Yes please.");
 if(inv_total(inv, coins) < 1) {
-    ~chatplayer(sad, "Oops, I forgot to bring any money with me.");
-    ~chatnpc(neutral, "Come back when you have some.");
+    ~chatplayer("<p,sad>Oops, I forgot to bring any money with me.");
+    ~chatnpc("<p,neutral>Come back when you have some.");
     return;
 }
 inv_del(inv, coins, 1);
 inv_add(inv, kebab, 1);
 mes("You buy a kebab.");
+
+[label,trail_kebab_seller]
+if(inv_total(inv, trail_clue_medium_challenge_exp004) > 0) {
+    @trail_challengenpc_prompt("<p,neutral>Please enter the answer to the riddle.", "<p,happy>Correct!", "<p,angry>No that's not right, think again.", 
+    "The salesman has given you another clue scroll!", trail_clue_medium_anagram_exp006, trail_clue_medium_challenge_exp004);
+}
+~chatnpc("<p,confused>I've got a little problem for you to solve.");
+inv_add(inv, trail_clue_medium_challenge_exp004, 1);
+~objboxt(trail_clue_medium_challenge_exp004, "The salesman has given you a challenge scroll!");

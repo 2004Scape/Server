@@ -1,12 +1,12 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import Player from '#lostcity/entity/Player.js';
 import OpHeldU from '#lostcity/network/incoming/model/OpHeldU.js';
-import Component from '#lostcity/cache/Component.js';
-import ObjType from '#lostcity/cache/ObjType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
 import World from '#lostcity/engine/World.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
-import CategoryType from '#lostcity/cache/CategoryType.js';
+import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import Environment from '#lostcity/util/Environment.js';
 
@@ -16,22 +16,26 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
         const com = Component.get(comId);
         if (typeof com === 'undefined' || !player.isComponentVisible(com)) {
+            player.unsetMapFlag();
             return false;
         }
 
         const useCom = Component.get(comId);
         if (typeof useCom === 'undefined' || !player.isComponentVisible(useCom)) {
+            player.unsetMapFlag();
             return false;
         }
 
         {
             const listener = player.invListeners.find(l => l.com === comId);
             if (!listener) {
+                player.unsetMapFlag();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(slot) || !inv.hasAt(slot, item)) {
+                player.unsetMapFlag();
                 return false;
             }
         }
@@ -39,16 +43,19 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         {
             const listener = player.invListeners.find(l => l.com === useComId);
             if (!listener) {
+                player.unsetMapFlag();
                 return false;
             }
 
             const inv = player.getInventoryFromListener(listener);
             if (!inv || !inv.validSlot(useSlot) || !inv.hasAt(useSlot, useItem)) {
+                player.unsetMapFlag();
                 return false;
             }
         }
 
         if (player.delayed()) {
+            player.unsetMapFlag();
             return false;
         }
 
@@ -62,6 +69,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
 
         if ((objType.members || useObjType.members) && !World.members) {
             player.messageGame("To use player item please login to a members' server.");
+            player.unsetMapFlag();
             return false;
         }
 

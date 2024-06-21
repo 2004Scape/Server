@@ -248,8 +248,8 @@ if ($lines = 0) {
 
 if_openchat($interface);
 
-[proc,chatplayer](mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,chatplayer](string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -300,8 +300,8 @@ if ($lines = 0) {
 }
 if_openchat($interface);
 
-[proc,chatnpc](mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,chatnpc](string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -312,8 +312,8 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,.chatnpc](mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,.chatnpc](string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -324,8 +324,8 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,chatnpcrange](mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,chatnpcrange](string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -336,8 +336,8 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,.chatnpcrange](mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,.chatnpcrange](string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -348,8 +348,8 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,chatnpcnoturn](mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,chatnpcnoturn](string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -359,8 +359,8 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,.chatnpcnoturn](mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,.chatnpcnoturn](string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -370,8 +370,8 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
-[proc,chatnpc_specific](string $npc_name, npc $npc, mesanim $chathead, string $string)
-split_init($string, 380, 4, q8, $chathead);
+[proc,chatnpc_specific](string $npc_name, npc $npc, string $string)
+split_init($string, 380, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -417,7 +417,7 @@ if ($lines = 0) {
 if_openchat($interface);
 
 [proc,mesbox](string $string)
-split_init($string, 470, 5, q8, null);
+split_init($string, 470, 5, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -462,7 +462,7 @@ if ($lines = 0) {
 .if_openchat($interface);
 
 [proc,.mesbox](string $string)
-split_init($string, 470, 5, q8, null);
+split_init($string, 470, 5, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -510,7 +510,7 @@ if ($lines = 0) {
 if_openchat($interface);
 
 [proc,objbox](obj $obj, string $string)
-split_init($string, 400, 4, q8, null);
+split_init($string, 400, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -520,7 +520,7 @@ while ($page < $pagetotal) {
 }
 
 [proc,objboxt](obj $obj, string $string)
-split_init($string, 400, 4, q8, null);
+split_init($string, 400, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -530,7 +530,7 @@ while ($page < $pagetotal) {
 }
 
 [proc,objboxb](obj $obj, string $string)
-split_init($string, 400, 4, q8, null);
+split_init($string, 400, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
@@ -584,7 +584,7 @@ if ($lines = 0) {
 if_openchat($interface);
 
 [proc,doubleobjbox](obj $obj_1, obj $obj_2, string $string)
-split_init($string, 350, 4, q8, null);
+split_init($string, 350, 4, q8);
 def_int $page = 0;
 def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {

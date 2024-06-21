@@ -1,40 +1,39 @@
-import { Worker } from 'worker_threads';
+import {Worker} from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
-import { basename } from 'path';
+import {basename} from 'path';
+import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import { toBase37 } from '#jagex2/jstring/JString.js';
+import {toBase37} from '#jagex2/jstring/JString.js';
 
-import CategoryType from '#lostcity/cache/CategoryType.js';
-import DbRowType from '#lostcity/cache/DbRowType.js';
-import DbTableType from '#lostcity/cache/DbTableType.js';
-import EnumType from '#lostcity/cache/EnumType.js';
-import FontType from '#lostcity/cache/FontType.js';
-import HuntType from '#lostcity/cache/HuntType.js';
-import IdkType from '#lostcity/cache/IdkType.js';
-import Component from '#lostcity/cache/Component.js';
-import InvType from '#lostcity/cache/InvType.js';
-import LocType from '#lostcity/cache/LocType.js';
-import MesanimType from '#lostcity/cache/MesanimType.js';
-import NpcType from '#lostcity/cache/NpcType.js';
-import ObjType from '#lostcity/cache/ObjType.js';
-import ParamType from '#lostcity/cache/ParamType.js';
-import SeqFrame from '#lostcity/cache/SeqFrame.js';
-import SeqType from '#lostcity/cache/SeqType.js';
-import StructType from '#lostcity/cache/StructType.js';
-import VarNpcType from '#lostcity/cache/VarNpcType.js';
-import VarPlayerType from '#lostcity/cache/VarPlayerType.js';
-import VarSharedType from '#lostcity/cache/VarSharedType.js';
-import WordEnc from '#lostcity/cache/WordEnc.js';
-import SpotanimType from '#lostcity/cache/SpotanimType.js';
+import CategoryType from '#lostcity/cache/config/CategoryType.js';
+import DbRowType from '#lostcity/cache/config/DbRowType.js';
+import DbTableType from '#lostcity/cache/config/DbTableType.js';
+import EnumType from '#lostcity/cache/config/EnumType.js';
+import FontType from '#lostcity/cache/config/FontType.js';
+import HuntType from '#lostcity/cache/config/HuntType.js';
+import IdkType from '#lostcity/cache/config/IdkType.js';
+import Component from '#lostcity/cache/config/Component.js';
+import InvType from '#lostcity/cache/config/InvType.js';
+import LocType from '#lostcity/cache/config/LocType.js';
+import MesanimType from '#lostcity/cache/config/MesanimType.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
+import ObjType from '#lostcity/cache/config/ObjType.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
+import SeqFrame from '#lostcity/cache/config/SeqFrame.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
+import StructType from '#lostcity/cache/config/StructType.js';
+import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
+import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
+import VarSharedType from '#lostcity/cache/config/VarSharedType.js';
+import WordEnc from '#lostcity/cache/wordenc/WordEnc.js';
+import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 
 import GameMap from '#lostcity/engine/GameMap.js';
-import { Inventory } from '#lostcity/engine/Inventory.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 import Login from '#lostcity/engine/Login.js';
-
-import CollisionManager from '#lostcity/engine/collision/CollisionManager.js';
 
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
@@ -47,21 +46,25 @@ import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
+import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
+import {isNetworkPlayer, NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
+import {EntityQueueState} from '#lostcity/entity/EntityQueueRequest.js';
+import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
 import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
-import { EntityQueueState } from '#lostcity/entity/EntityQueueRequest.js';
-import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
-import { getLatestModified, getModified } from '#lostcity/util/PackFile.js';
-import { ZoneEvent } from './zone/Zone.js';
+import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util/PackFile.js';
+import Zone from './zone/Zone.js';
 import LinkList from '#jagex2/datastruct/LinkList.js';
-import { NetworkPlayer, isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
-import { createWorker } from '#lostcity/util/WorkerFactory.js';
+import {createWorker} from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
+import {makeCrcs} from '#lostcity/server/CrcTable.js';
+import {preloadClient} from '#lostcity/server/PreloadedPacks.js';
+import {Position} from '#lostcity/entity/Position.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -78,116 +81,26 @@ class World {
     lastCycleStats: number[] = [];
     lastCycleBandwidth: number[] = [0, 0];
 
-    gameMap = new GameMap();
-    invs: Inventory[] = []; // shared inventories (shops)
+    readonly gameMap = new GameMap();
+    readonly invs: Inventory[] = []; // shared inventories (shops)
     vars: Int32Array = new Int32Array(); // var shared
     varsString: string[] = [];
 
-    newPlayers: Player[] = []; // players joining at the end of this tick
-    players: PlayerList = new PlayerList(2048);
-    npcs: NpcList = new NpcList(8192);
+    // entities
+    readonly newPlayers: Player[] = []; // players joining at the end of this tick
+    readonly players: PlayerList = new PlayerList(2048);
+    readonly npcs: NpcList = new NpcList(8192);
 
-    trackedZones: number[] = [];
-    zoneBuffers: Map<number, Packet> = new Map();
-    futureUpdates: Map<number, number[]> = new Map();
-    queue: LinkList<EntityQueueState> = new LinkList();
-
-    friendThread: Worker = createWorker('./src/lostcity/server/FriendThread.ts');
+    // zones
+    readonly zonesTracking: Map<number, Set<Zone>> = new Map();
+    readonly queue: LinkList<EntityQueueState> = new LinkList();
 
     devWatcher: Watcher | null = null;
     devThread: Worker | null = null;
     devRebuilding: boolean = false;
     devMTime: Map<string, number> = new Map();
 
-    constructor() {
-        this.friendThread.on('message', data => {
-            try {
-                this.onFriendMessage(data);
-            } catch (err) {
-                console.error('Friend Thread:', err);
-            }
-        });
-    }
-
     // ----
-
-    onFriendMessage(msg: any) {
-        switch (msg.type) {
-            default:
-                throw new Error('Unknown message type: ' + msg.type);
-        }
-    }
-
-    socialAddFriend(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'addfriend',
-            player: player,
-            other: other
-        });
-    }
-
-    socialRemoveFriend(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'delfriend',
-            player: player,
-            other: other
-        });
-    }
-
-    socialAddIgnore(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'addignore',
-            player: player,
-            other: other
-        });
-    }
-
-    socialRemoveIgnore(player: bigint, other: bigint) {
-        this.friendThread.postMessage({
-            type: 'delignore',
-            player: player,
-            other: other
-        });
-    }
-
-    socialLogin(username: bigint) {
-        this.friendThread.postMessage({
-            type: 'login',
-            world: this.id,
-            username
-        });
-    }
-
-    socialLogout(username: bigint) {
-        this.friendThread.postMessage({
-            type: 'logout',
-            world: this.id,
-            username
-        });
-    }
-
-    socialPrivateMessage(from: bigint, to: bigint, text: string) {
-        this.friendThread.postMessage({
-            type: 'private_message',
-            from,
-            to,
-            text
-        });
-    }
-
-    socialPublicMessage(from: bigint, text: string) {
-        this.friendThread.postMessage({
-            type: 'public_message',
-            from,
-            text
-        });
-    }
-
-    // ----
-
-    get collisionManager(): CollisionManager {
-        return this.gameMap.collisionManager;
-    }
 
     shouldReload(type: string, client: boolean = false): boolean {
         const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
@@ -204,9 +117,12 @@ class World {
         return changed;
     }
 
-    reload() {
+    reload(): void {
+        let transmitted = false;
+
         if (this.shouldReload('varp', true)) {
             VarPlayerType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('param')) {
@@ -215,18 +131,22 @@ class World {
 
         if (this.shouldReload('obj', true)) {
             ObjType.load('data/pack', this.members);
+            transmitted = true;
         }
 
         if (this.shouldReload('loc', true)) {
             LocType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('npc', true)) {
             NpcType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('idk', true)) {
             IdkType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('frame_del')) {
@@ -235,10 +155,12 @@ class World {
 
         if (this.shouldReload('seq', true)) {
             SeqType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('spotanim', true)) {
             SpotanimType.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('category')) {
@@ -305,6 +227,7 @@ class World {
 
         if (this.shouldReload('interface')) {
             Component.load('data/pack');
+            transmitted = true;
         }
 
         if (this.shouldReload('script')) {
@@ -316,16 +239,26 @@ class World {
             }
         }
 
+        // todo: check if any jag files changed (transmitted) then reload crcs
+        // if (transmitted) {
+        //     makeCrcs();
+        // }
+
+        makeCrcs();
+
+        // todo: detect and reload static data (like maps)
+        preloadClient();
+
         this.allLastModified = getLatestModified('data/pack', '.dat');
     }
 
-    broadcastMes(message: string) {
+    broadcastMes(message: string): void {
         for (const player of this.players) {
             player.messageGame(message);
         }
     }
 
-    async start(skipMaps = false, startCycle = true) {
+    async start(skipMaps = false, startCycle = true): Promise<void> {
         console.log('Starting world...');
 
         FontType.load('data/pack');
@@ -341,27 +274,32 @@ class World {
             type: 'reset'
         });
 
-        this.friendThread.postMessage({
-            type: 'reset'
-        });
-
         if (Environment.LOCAL_DEV) {
             this.startDevWatcher();
 
-            // this.devThread!.postMessage({
-            //     type: 'pack'
-            // });
+            // console.time('checker');
+            // todo: this check takes me 300ms on startup! but it saves double building fresh setups
+            if (Environment.BUILD_ON_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
+                this.devThread!.postMessage({
+                    type: 'pack'
+                });
+            }
+            // console.timeEnd('checker');
         }
 
-        console.log('World ready!');
+        if (Environment.WEB_PORT === 80) {
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP));
+        } else {
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT));
+        }
 
         if (startCycle) {
             await this.cycle();
         }
     }
 
-    startDevWatcher() {
-        this.devThread = createWorker('./src/lostcity/tools/pack/server.ts');
+    startDevWatcher(): void {
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -377,16 +315,24 @@ class World {
             this.startDevWatcher();
         });
 
-        this.devWatcher = new Watcher('./data/src/scripts', {
+        this.devWatcher = new Watcher('./data/src', {
             recursive: true
         });
 
         this.devWatcher.on('add', (targetPath: string) => {
+            if (targetPath.endsWith('.pack')) {
+                return;
+            }
+
             const stat = fs.statSync(targetPath);
             this.devMTime.set(targetPath, stat.mtimeMs);
         });
 
         this.devWatcher.on('change', (targetPath: string) => {
+            if (targetPath.endsWith('.pack')) {
+                return;
+            }
+
             const stat = fs.statSync(targetPath);
             const known = this.devMTime.get(targetPath);
 
@@ -404,7 +350,7 @@ class World {
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/tools/pack/server.ts');
+                this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
             }
 
             this.devThread.postMessage({
@@ -413,7 +359,7 @@ class World {
         });
     }
 
-    stopDevWatcher() {
+    stopDevWatcher(): void {
         if (this.devWatcher) {
             this.devWatcher.close();
         }
@@ -424,7 +370,7 @@ class World {
         }
     }
 
-    rebootTimer(duration: number) {
+    rebootTimer(duration: number): void {
         this.shutdownTick = this.currentTick + duration;
         this.stopDevWatcher();
 
@@ -433,7 +379,7 @@ class World {
         }
     }
 
-    async cycle(continueCycle = true) {
+    async cycle(continueCycle = true): Promise<void> {
         const start = Date.now();
 
         // world processing
@@ -478,15 +424,18 @@ class World {
         }
 
         for (const npc of this.npcs) {
-            if (npc.respawn !== this.currentTick) {
+            if (!npc.updateLifeCycle(this.currentTick)) {
                 continue;
             }
-
-            this.addNpc(npc);
+            if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+                this.addNpc(npc, -1);
+            } else if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
+                this.removeNpc(npc, -1);
+            }
         }
 
         for (const npc of this.npcs) {
-            if (npc.despawn !== -1 || npc.delayed()) {
+            if (!npc.checkLifeCycle(this.currentTick) || npc.delayed()) {
                 continue;
             }
 
@@ -514,6 +463,39 @@ class World {
         }
         clientInput = Date.now() - clientInput;
 
+        for (const player of this.players) {
+            if (!isNetworkPlayer(player)) {
+                continue;
+            }
+
+            if (player.userPath.length > 0 || player.opcalled) {
+                if (player.delayed()) {
+                    player.unsetMapFlag();
+                    continue;
+                }
+
+                if ((!player.target || player.target instanceof Loc || player.target instanceof Obj) && player.faceEntity !== -1) {
+                    player.faceEntity = -1;
+                    player.mask |= Player.FACE_ENTITY;
+                }
+
+                if (player.opcalled && (player.userPath.length === 0 || !Environment.CLIENT_PATHFINDER)) {
+                    player.pathToTarget();
+                    continue;
+                }
+
+                player.pathToMoveClick(player.userPath, !Environment.CLIENT_PATHFINDER);
+            }
+
+            if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
+                if (Position.distanceToSW(player, player.target) <= 25) {
+                    player.pathToPathingTarget();
+                } else {
+                    player.clearWaypoints();
+                }
+            }
+        }
+
         // npc processing (if npc is not busy)
         // - resume suspended script
         // - stat regen
@@ -523,7 +505,7 @@ class World {
         // - modes
         let npcProcessing = Date.now();
         for (const npc of this.npcs) {
-            if (npc.despawn !== -1) {
+            if (!npc.checkLifeCycle(this.currentTick)) {
                 continue;
             }
 
@@ -540,7 +522,7 @@ class World {
                     npc.executeScript(npc.activeScript);
                 }
 
-                if (npc.despawn !== -1) {
+                if (!npc.checkLifeCycle(this.currentTick)) {
                     // if the npc just despawned then don't do anything else.
                     continue;
                 }
@@ -552,7 +534,7 @@ class World {
                 npc.validateDistanceWalked();
             } catch (err) {
                 console.error(err);
-                this.removeNpc(npc);
+                this.removeNpc(npc, -1);
             }
         }
         npcProcessing = Date.now() - npcProcessing;
@@ -620,7 +602,7 @@ class World {
                 player.closeModal();
                 player.unsetMapFlag();
                 player.logoutRequested = true;
-                player.setVar(VarPlayerType.getId('lastcombat'), 0); // temp fix for logging out in combat, since logout trigger conditions still run...
+                player.setVar(VarPlayerType.LASTCOMBAT, 0); // temp fix for logging out in combat, since logout trigger conditions still run...
             }
 
             if (!player.logoutRequested) {
@@ -656,16 +638,18 @@ class World {
         let playerLogin = Date.now();
         for (let i = 0; i < this.newPlayers.length; i++) {
             const player = this.newPlayers[i];
+            this.newPlayers.splice(i--, 1);
 
-            const pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
-            if (pid === -1) {
+            let pid: number;
+            try {
+                // if it throws then there was no available pid. otherwise guaranteed to not be -1.
+                pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
+            } catch (e) {
                 if (player instanceof NetworkPlayer && player.client) {
                     // world full
                     player.client.send(LoginResponse.WORLD_FULL);
                     player.client.close();
                 }
-
-                this.newPlayers.splice(i--, 1);
                 continue;
             }
 
@@ -673,6 +657,7 @@ class World {
             this.players.set(pid, player);
             player.pid = pid;
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
+            player.tele = true;
 
             this.getZone(player.x, player.z, player.level).enter(player);
 
@@ -680,8 +665,6 @@ class World {
                 // todo: check response from login script?
                 player.onLogin();
             }
-
-            this.newPlayers.splice(i--, 1);
 
             if (this.shutdownTick > -1) {
                 // todo: confirm if reboot timer is low or high priority
@@ -696,8 +679,6 @@ class World {
                     player.client.send(LoginResponse.SUCCESSFUL);
                 }
             }
-
-            this.socialLogin(player.username37);
         }
         playerLogin = Date.now() - playerLogin;
 
@@ -706,73 +687,19 @@ class World {
         // - loc/obj despawn/respawn
         // - compute shared buffer
         let zoneProcessing = Date.now();
-        const future = this.futureUpdates.get(this.currentTick);
-        if (future) {
-            // despawn dynamic
-            for (let i = 0; i < future.length; i++) {
-                const zoneIndex = future[i];
-                const zone = this.getZoneIndex(zoneIndex);
-
-                for (let i = 0; i < zone.locs.length; i++) {
-                    const loc = zone.locs[i];
-                    if (!loc || loc.despawn === -1) {
-                        continue;
-                    }
-
-                    if (loc.despawn === this.currentTick) {
-                        this.removeLoc(loc, -1);
-                        i--;
-                    }
-                }
-
-                for (let i = 0; i < zone.objs.length; i++) {
-                    const obj = zone.objs[i];
-                    if (!obj || obj.despawn === -1) {
-                        continue;
-                    }
-
-                    if (obj.despawn === this.currentTick) {
-                        this.removeObj(obj, null);
-                        i--;
-                    }
-                }
-            }
-
-            // respawn static
-            for (let i = 0; i < future.length; i++) {
-                const zoneIndex = future[i];
-                const zone = this.getZoneIndex(zoneIndex);
-
-                for (let i = 0; i < zone.staticLocs.length; i++) {
-                    const loc = zone.staticLocs[i];
-                    if (!loc || loc.respawn === -1) {
-                        continue;
-                    }
-
-                    if (loc.respawn === this.currentTick) {
-                        loc.respawn = -1;
-                        this.addLoc(loc, -1);
-                    }
-                }
-
-                for (let i = 0; i < zone.staticObjs.length; i++) {
-                    const obj = zone.staticObjs[i];
-                    if (!obj || obj.respawn === -1) {
-                        continue;
-                    }
-
-                    if (obj.respawn === this.currentTick) {
-                        obj.respawn = -1;
-                        this.addObj(obj, null, -1);
-                    }
-                }
-            }
-
-            this.futureUpdates.delete(this.currentTick);
+        for (const zone of Array.from(this.zonesTracking.get(this.currentTick) ?? [])) {
+            zone.tick(this.currentTick);
         }
-
         this.computeSharedEvents();
         zoneProcessing = Date.now() - zoneProcessing;
+
+        for (const player of this.players) {
+            player.convertMovementDir();
+        }
+
+        for (const npc of this.npcs) {
+            npc.convertMovementDir();
+        }
 
         // client output
         // - map update
@@ -805,8 +732,14 @@ class World {
         }
         clientOutput = Date.now() - clientOutput;
 
-        // reset entity masks
         let cleanup = Date.now();
+        // cleanup zone updates
+        for (const zone of Array.from(this.zonesTracking.get(this.currentTick) ?? [])) {
+            zone.reset();
+        }
+        this.zonesTracking.delete(this.currentTick);
+
+        // reset entity masks
         for (const player of this.players) {
             player.resetEntity(false);
 
@@ -820,7 +753,7 @@ class World {
         }
 
         for (const npc of this.npcs) {
-            if (npc.despawn !== -1) {
+            if (!npc.checkLifeCycle(this.currentTick)) {
                 continue;
             }
 
@@ -880,11 +813,6 @@ class World {
                 type: 'heartbeat',
                 players
             });
-
-            this.friendThread.postMessage({
-                type: 'heartbeat',
-                players
-            });
         }
 
         // server shutdown
@@ -928,6 +856,14 @@ class World {
             }
         }
 
+        if (this.currentTick % 1500 === 0 && this.currentTick > 0) {
+            // auto-save players every 15 mins
+            for (const player of this.players) {
+                const sav = player.save();
+                sav.release();
+            }
+        }
+
         const end = Date.now();
         // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
         // console.log(`${worldProcessing} ms world | ${clientInput} ms client in | ${npcProcessing} ms npcs | ${playerProcessing} ms players | ${playerLogout} ms logout | ${playerLogin} ms login | ${zoneProcessing} ms zones | ${clientOutput} ms client out | ${cleanup} ms cleanup`);
@@ -939,18 +875,14 @@ class World {
         if (continueCycle) {
             const nextTick = this.tickRate - (end - start);
             setTimeout(this.cycle.bind(this), nextTick);
-
-            this.friendThread.postMessage({
-                type: 'latest'
-            });
         }
     }
 
-    enqueueScript(script: ScriptState, delay: number = 0) {
+    enqueueScript(script: ScriptState, delay: number = 0): void {
         this.queue.addTail(new EntityQueueState(script, delay + 1));
     }
 
-    getInventory(inv: number) {
+    getInventory(inv: number): Inventory | null {
         if (inv === -1) {
             return null;
         }
@@ -964,81 +896,34 @@ class World {
         return container;
     }
 
-    getZone(absoluteX: number, absoluteZ: number, level: number) {
+    getZone(absoluteX: number, absoluteZ: number, level: number): Zone {
         return this.gameMap.zoneManager.getZone(absoluteX, absoluteZ, level);
     }
 
-    getZoneIndex(zoneIndex: number) {
-        return this.gameMap.zoneManager.zones.get(zoneIndex)!;
+    getZoneIndex(zoneIndex: number): Zone | undefined {
+        return this.gameMap.zoneManager.zones.get(zoneIndex);
     }
 
-    computeSharedEvents() {
-        this.trackedZones = [];
-        this.zoneBuffers = new Map();
-
+    computeSharedEvents(): void {
+        const zones: Set<number> = new Set();
         for (const player of this.players) {
-            // TODO: optimize this
-            const zones = Object.keys(player.loadedZones);
-            for (let j = 0; j < zones.length; j++) {
-                const zoneIndex = parseInt(zones[j]);
-                if (!this.trackedZones.includes(zoneIndex)) {
-                    this.trackedZones.push(zoneIndex);
-                }
-            }
-        }
-
-        for (let i = 0; i < this.trackedZones.length; i++) {
-            const zoneIndex = this.trackedZones[i];
-            const zone = this.getZoneIndex(zoneIndex);
-
-            const updates = zone.updates;
-            if (!updates.length) {
+            if (!isNetworkPlayer(player)) {
                 continue;
             }
-
-            zone.updates = updates.filter((event: ZoneEvent): boolean => {
-                // filter transient updates
-                if ((event.type === ServerProt.LOC_MERGE.id || event.type === ServerProt.LOC_ANIM.id || event.type === ServerProt.MAP_ANIM.id || event.type === ServerProt.MAP_PROJANIM.id) && event.tick < this.currentTick) {
-                    return false;
-                }
-
-                return true;
-            });
+            for (const zone of player.loadedZones) {
+                zones.add(zone);
+            }
+        }
+        for (const zoneIndex of zones) {
+            const zone: Zone | undefined = this.getZoneIndex(zoneIndex);
+            if (!zone) {
+                continue;
+            }
+            zone.computeShared();
         }
     }
 
-    getSharedEvents(zoneIndex: number): Packet | undefined {
-        return this.zoneBuffers.get(zoneIndex);
-    }
-
-    getUpdates(zoneIndex: number) {
-        return this.gameMap.zoneManager.zones.get(zoneIndex)!.updates;
-    }
-
-    getReceiverUpdates(zoneIndex: number, receiverId: number) {
-        const updates = this.getUpdates(zoneIndex);
-        return updates.filter((event: ZoneEvent): boolean => {
-            if (event.type !== ServerProt.OBJ_ADD.id && event.type !== ServerProt.OBJ_DEL.id && event.type !== ServerProt.OBJ_COUNT.id && event.type !== ServerProt.OBJ_REVEAL.id) {
-                return false;
-            }
-
-            // if (event.type === ServerProt.OBJ_DEL && receiverId !== -1 && event.receiverId !== receiverId) {
-            //     return false;
-            // }
-
-            return true;
-        });
-    }
-
-    getZonePlayers(x: number, z: number, level: number) {
-        return this.getZone(x, z, level).players;
-    }
-
-    getZoneNpcs(x: number, z: number, level: number) {
-        return this.getZone(x, z, level).npcs;
-    }
-
-    addNpc(npc: Npc) {
+    addNpc(npc: Npc, duration: number): void {
         this.npcs.set(npc.nid, npc);
         npc.x = npc.startX;
         npc.z = npc.startZ;
@@ -1048,163 +933,172 @@ class World {
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
                 break;
             case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, true);
+                this.gameMap.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, true);
                 break;
         }
 
         npc.resetEntity(true);
         npc.playAnimation(-1, 0);
+
+        npc.setLifeCycle(this.currentTick + duration);
     }
 
-    removeNpc(npc: Npc) {
+    removeNpc(npc: Npc, duration: number): void {
         const zone = this.getZone(npc.x, npc.z, npc.level);
-        console.log('Removing npc', npc.nid, 'from zone', zone.index);
         zone.leave(npc);
 
         switch (npc.blockWalk) {
             case BlockWalk.NPC:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
                 break;
             case BlockWalk.ALL:
-                this.collisionManager.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
-                this.collisionManager.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.gameMap.changeNpcCollision(npc.width, npc.x, npc.z, npc.level, false);
+                this.gameMap.changePlayerCollision(npc.width, npc.x, npc.z, npc.level, false);
                 break;
         }
 
-        const type = NpcType.get(npc.type);
-        npc.despawn = this.currentTick;
-        npc.respawn = this.currentTick + type.respawnrate;
-
-        if (!npc.static) {
+        if (npc.lifecycle === EntityLifeCycle.DESPAWN) {
             this.npcs.remove(npc.nid);
+        } else if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
+            npc.setLifeCycle(this.currentTick + duration);
         }
     }
 
-    getLoc(x: number, z: number, level: number, locId: number) {
+    getLoc(x: number, z: number, level: number, locId: number): Loc | null {
         return this.getZone(x, z, level).getLoc(x, z, locId);
     }
 
-    getZoneLocs(x: number, z: number, level: number) {
-        return [...this.getZone(x, z, level).staticLocs.filter(l => l.respawn < this.currentTick), ...this.getZone(x, z, level).locs];
+    getObj(x: number, z: number, level: number, objId: number, receiverId: number): Obj | null {
+        return this.getZone(x, z, level).getObj(x, z, objId, receiverId);
     }
 
-    getDynObj(x: number, z: number, level: number, objId: number) {
-        return this.getZone(x, z, level).getDynObj(x, z, objId);
+    trackZone(tick: number, zone: Zone): void {
+        let zones: Set<Zone>;
+        const active: Set<Zone> | undefined = this.zonesTracking.get(tick);
+        if (!active) {
+            zones = new Set();
+        } else {
+            zones = active;
+        }
+        zones.add(zone);
+        this.zonesTracking.set(tick, zones);
     }
 
-    getObj(x: number, z: number, level: number, objId: number) {
-        return this.getZone(x, z, level).getObj(x, z, objId);
-    }
-
-    addLoc(loc: Loc, duration: number) {
-        const zone = this.getZone(loc.x, loc.z, loc.level);
-        zone.addLoc(loc, duration);
-
-        const type = LocType.get(loc.type);
+    addLoc(loc: Loc, duration: number): void {
+        // console.log(`[World] addLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
+        const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
+            this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
-        loc.despawn = this.currentTick + duration;
-        loc.respawn = -1;
-        if (duration !== -1) {
-            const endTick = this.currentTick + duration;
-            let future = this.futureUpdates.get(endTick);
-            if (!future) {
-                future = [];
-            }
-
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-
-            this.futureUpdates.set(endTick, future);
-        }
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.addLoc(loc);
+        loc.setLifeCycle(this.currentTick + duration);
+        this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
     }
 
-    removeLoc(loc: Loc, duration: number) {
-        const zone = this.getZone(loc.x, loc.z, loc.level);
-        zone.removeLoc(loc, duration);
+    mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
+        // console.log(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
+        this.trackZone(this.currentTick, zone);
+    }
 
-        const type = LocType.get(loc.type);
+    animLoc(loc: Loc, seq: number): void {
+        // console.log(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.animLoc(loc, seq);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    removeLoc(loc: Loc, duration: number): void {
+        // console.log(`[World] removeLoc => name: ${LocType.get(loc.type).name}, duration: ${duration}`);
+        const type: LocType = LocType.get(loc.type);
         if (type.blockwalk) {
-            this.collisionManager.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
+            this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
         }
 
-        loc.despawn = -1;
-        loc.respawn = this.currentTick + duration;
-        if (duration !== -1) {
-            const endTick = this.currentTick + duration;
-            let future = this.futureUpdates.get(endTick);
-            if (!future) {
-                future = [];
-            }
-
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-
-            this.futureUpdates.set(endTick, future);
-        }
+        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        zone.removeLoc(loc);
+        loc.setLifeCycle(this.currentTick + duration);
+        this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
     }
 
-    addObj(obj: Obj, receiver: Player | null, duration: number) {
-        const zone = this.getZone(obj.x, obj.z, obj.level);
-        const existing = this.getDynObj(obj.x, obj.z, obj.level, obj.id);
-        const global: boolean = zone.staticObjs.includes(obj);
-        if (!global && existing && existing.id == obj.id) {
-            const type = ObjType.get(obj.type);
+    addObj(obj: Obj, receiverId: number, duration: number): void {
+        // console.log(`[World] addObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, duration: ${duration}`);
+        const objType: ObjType = ObjType.get(obj.type);
+        // check if we need to changeobj first.
+        const existing = this.getObj(obj.x, obj.z, obj.level, obj.type, receiverId);
+        if (existing && existing.lifecycle === EntityLifeCycle.DESPAWN && obj.lifecycle === EntityLifeCycle.DESPAWN) {
             const nextCount = obj.count + existing.count;
-            if (type.stackable && nextCount <= Inventory.STACK_LIMIT) {
+            if (objType.stackable && nextCount <= Inventory.STACK_LIMIT) {
                 // if an obj of the same type exists and is stackable, then we merge them.
-                obj.count = nextCount;
-                zone.removeObj(existing, receiver);
+                this.changeObj(existing, receiverId, nextCount);
+                return;
             }
         }
-        zone.addObj(obj, receiver, duration);
-
-        obj.despawn = this.currentTick + duration;
-        obj.respawn = -1;
-        if (duration !== -1) {
-            const endTick = this.currentTick + duration;
-            let future = this.futureUpdates.get(endTick);
-            if (!future) {
-                future = [];
-            }
-
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-
-            this.futureUpdates.set(endTick, future);
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        zone.addObj(obj, receiverId);
+        if (receiverId !== -1 && objType.tradeable) {
+            obj.setLifeCycle(this.currentTick + 100);
+            this.trackZone(this.currentTick + 100, zone);
+            this.trackZone(this.currentTick, zone);
+            obj.receiverId = receiverId;
+            obj.reveal = duration;
+        } else {
+            obj.setLifeCycle(this.currentTick + duration);
+            this.trackZone(this.currentTick + duration, zone);
+            this.trackZone(this.currentTick, zone);
         }
     }
 
-    removeObj(obj: Obj, receiver: Player | null) {
-        // stackable objs when they overflow are created into another slot on the floor
-        const zone = this.getZone(obj.x, obj.z, obj.level);
-        zone.removeObj(obj, receiver);
-        obj.despawn = this.currentTick;
-        obj.respawn = this.currentTick + ObjType.get(obj.type).respawnrate;
-        if (zone.staticObjs.includes(obj)) {
-            let future = this.futureUpdates.get(obj.respawn);
-            if (!future) {
-                future = [];
-            }
-            if (!future.includes(zone.index)) {
-                future.push(zone.index);
-            }
-            this.futureUpdates.set(obj.respawn, future);
-        }
+    revealObj(obj: Obj): void {
+        // console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
+        const duration: number = obj.reveal;
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        zone.revealObj(obj, obj.receiverId);
+        obj.setLifeCycle(this.currentTick + duration);
+        this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    changeObj(obj: Obj, receiverId: number, newCount: number): void {
+        // console.log(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        zone.changeObj(obj, receiverId, obj.count, newCount);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    removeObj(obj: Obj, duration: number): void {
+        // console.log(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
+        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        zone.removeObj(obj);
+        obj.setLifeCycle(this.currentTick + duration);
+        this.trackZone(this.currentTick + duration, zone);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    animMap(level: number, x: number, z: number, spotanim: number, height: number, delay: number): void {
+        const zone: Zone = this.getZone(x, z, level);
+        zone.animMap(x, z, spotanim, height, delay);
+        this.trackZone(this.currentTick, zone);
+    }
+
+    mapProjAnim(level: number, x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
+        const zone: Zone = this.getZone(x, z, level);
+        zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
+        this.trackZone(this.currentTick, zone);
     }
 
     // ----
 
-    async readIn(socket: ClientSocket, stream: Packet) {
+    async readIn(socket: ClientSocket, stream: Packet): Promise<void> {
         this.lastCycleBandwidth[0] += stream.data.length;
 
         while (stream.available > 0) {
@@ -1251,11 +1145,11 @@ class World {
         }
     }
 
-    addPlayer(player: Player) {
+    addPlayer(player: Player): void {
         this.newPlayers.push(player);
     }
 
-    async removePlayer(player: Player) {
+    async removePlayer(player: Player): Promise<void> {
         if (player.pid === -1) {
             return;
         }
@@ -1269,14 +1163,13 @@ class World {
         }
 
         Login.logout(player);
-        this.socialLogout(player.username37);
     }
 
-    getPlayer(pid: number) {
+    getPlayer(pid: number): Player | null {
         return this.players.get(pid);
     }
 
-    getPlayerByUid(uid: number) {
+    getPlayerByUid(uid: number): Player | null {
         const pid = uid & 0x7ff;
         const name37 = (uid >> 11) & 0x1fffff;
 
@@ -1292,7 +1185,7 @@ class World {
         return player;
     }
 
-    getPlayerByUsername(username: string) {
+    getPlayerByUsername(username: string): Player | undefined {
         const username37: bigint = toBase37(username);
         for (const player of this.players) {
             if (player.username37 === username37) {
@@ -1307,19 +1200,19 @@ class World {
         return undefined;
     }
 
-    getTotalPlayers() {
+    getTotalPlayers(): number {
         return this.players.count;
     }
 
-    getTotalNpcs() {
+    getTotalNpcs(): number {
         return this.npcs.count;
     }
 
-    getNpc(nid: number) {
+    getNpc(nid: number): Npc | null {
         return this.npcs.get(nid);
     }
 
-    getNpcByUid(uid: number) {
+    getNpcByUid(uid: number): Npc | null {
         const slot = uid & 0xffff;
         const type = (uid >> 16) & 0xffff;
 
@@ -1331,11 +1224,11 @@ class World {
         return npc;
     }
 
-    getNextNid() {
+    getNextNid(): number {
         return this.npcs.next();
     }
 
-    getNextPid(client: ClientSocket | null = null) {
+    getNextPid(client: ClientSocket | null = null): number {
         // valid pid range is 1-2046
         if (client) {
             // pid = first available index starting from (low ip octet % 20) * 100

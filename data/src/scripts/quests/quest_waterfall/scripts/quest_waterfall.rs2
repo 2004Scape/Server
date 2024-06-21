@@ -76,6 +76,9 @@ if ((inv_totalcat(inv, armour_hands) > 0 | inv_totalcat(worn, armour_hands) > 0)
     | (inv_totalcat(inv, trail_clue_easy) > 0)
     | (inv_totalcat(inv, trail_clue_medium) > 0)
     | (inv_totalcat(inv, trail_clue_hard) > 0)
+    | (inv_totalcat(inv, trail_casket_easy) > 0)
+    | (inv_totalcat(inv, trail_casket_medium) > 0)
+    | (inv_totalcat(inv, trail_casket_hard) > 0)
     | (inv_totalcat(inv, cannon_parts) > 0)) {
     return(false);
 }
@@ -151,15 +154,15 @@ switch_int (%waterfall_progress) {
             npc_findallzone(movecoord(coord, -1, 0, 0));
             while (npc_findnext = true) {
                 if (npc_type = hudon) {
-                    ~chatplayer(neutral, "Hello son, are you okay? You need help?");
-                    ~chatnpc(neutral, "It looks like you need the help.");
-                    ~chatplayer(neutral, "Your mum sent me to find you.");
-                    ~chatnpc(neutral, "Don't play nice with me,|I know you're looking for the treasure.");
-                    ~chatplayer(neutral, "Where is this treasure you talk of?");
-                    ~chatnpc(neutral, "Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
-                    ~chatplayer(neutral, "Maybe I could help.");
+                    ~chatplayer("<p,neutral>Hello son, are you okay? You need help?");
+                    ~chatnpc("<p,neutral>It looks like you need the help.");
+                    ~chatplayer("<p,neutral>Your mum sent me to find you.");
+                    ~chatnpc("<p,neutral>Don't play nice with me,|I know you're looking for the treasure.");
+                    ~chatplayer("<p,neutral>Where is this treasure you talk of?");
+                    ~chatnpc("<p,neutral>Just because I'm small doesn't mean I'm dumb! If I told you, you would take it all for yourself.");
+                    ~chatplayer("<p,neutral>Maybe I could help.");
                     %waterfall_progress = ^waterfall_spoken_to_hudon;
-                    ~chatnpc(neutral, "I'm fine alone.");
+                    ~chatnpc("<p,neutral>I'm fine alone.");
                     mes("Hudon is refusing to leave the waterfall");
                     return;
                 }

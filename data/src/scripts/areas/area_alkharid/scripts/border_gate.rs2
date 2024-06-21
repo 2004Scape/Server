@@ -22,29 +22,29 @@ while (npc_findnext = true) {
 // osrs uses a different message. rsc uses this message.
 // https://youtu.be/gfWdQJH2Pmc?si=BKF8uqy1wLouzGCE&t=35
 // osrs using Pay-fare option on the gate gives different messages.
-~chatplayer(quiz, "Can I come through this gate?");
+~chatplayer("<p,quiz>Can I come through this gate?");
 
 if (%prince_progress >= ^prince_saved) {
-    ~chatnpc(quiz, "You may pass for free, you are a friend of Al-Kharid.");
+    ~chatnpc("<p,quiz>You may pass for free, you are a friend of Al-Kharid.");
     @pass_toll_gate($loc_coord);
 }
 
-~chatnpc(quiz, "You must pay a toll of 10 gold coins to pass.");
+~chatnpc("<p,quiz>You must pay a toll of 10 gold coins to pass.");
 
 def_int $choice = ~p_choice3("No thank you, I'll walk around.", 1, "Who does my money go to?", 2, "Yes, ok.", 3);
 if ($choice = 1) {
-    ~chatplayer(quiz, "No, thank you. I'll walk around.");
-    ~chatnpc(quiz, "Ok suit yourself.");
+    ~chatplayer("<p,quiz>No, thank you. I'll walk around.");
+    ~chatnpc("<p,quiz>Ok suit yourself.");
     return;
 } else if ($choice = 2) {
-    ~chatplayer(quiz, "Who does my money go to?");
-    ~chatnpc(quiz, "The money goes to the city of Al-Kharid.");
+    ~chatplayer("<p,quiz>Who does my money go to?");
+    ~chatnpc("<p,quiz>The money goes to the city of Al-Kharid.");
     return;
 }
 
-~chatplayer(quiz, "Yes, ok.");
+~chatplayer("<p,quiz>Yes, ok.");
 if (inv_total(inv, coins) < 10) {
-    ~chatplayer(quiz, "Oh dear, I don't actually seem to have enough money.");
+    ~chatplayer("<p,quiz>Oh dear, I don't actually seem to have enough money.");
     return;
 }
 
@@ -54,7 +54,7 @@ inv_del(inv, coins, 10);
 
 [label,pass_toll_gate](coord $loc_coord)
 // close the dialogue
-if_close;
+//if_close;
 
 def_coord $coord = 0_51_50_4_27;
 def_boolean $enter_east = false;
@@ -70,9 +70,11 @@ if (coordx(coord) < coordx($coord)) {
 if ($loc_coord ! null & distance(coord, $loc_coord) <= 1) {
     if ($enter_east = false & (coord ! 0_51_50_4_28 & coord ! 0_51_50_4_27)) {
         p_teleport($loc_coord);
+        p_stopaction;
         p_delay(2);
         @enter_through_border_gate_toll($enter_east, $loc_coord);
     } else {
+        p_stopaction;
         p_delay(1);
         @enter_through_border_gate_toll($enter_east, $loc_coord);
     }
@@ -81,6 +83,7 @@ if ($loc_coord ! null & distance(coord, $loc_coord) <= 1) {
 def_int $change_x = calc(coordx($coord) - coordx(coord));
 def_int $change_z = calc(coordz($coord) - coordz(coord));
 ~agility_walk($change_x, $change_z);
+p_stopaction;
 p_delay(0);
 // open the gates and teleport through
 @enter_through_border_gate_toll($enter_east, $loc_coord);
@@ -117,6 +120,7 @@ while (loc_findnext = true) {
 sound_synth(grate_open, 0, 0);
 facesquare($destination);
 p_teleport($destination);
+p_stopaction;
 p_delay(0);
 
 [proc,open_border_gate_toll_left_closed]()
@@ -165,6 +169,7 @@ while (loc_findnext = true) {
 
 [label,guard_scout_toll_fence]
 if (random(4) ! 0) return;
+if (npc_getmode = playerfaceclose) return;
 
 def_coord $next_coord = movecoord(npc_coord, ~random_range(-1, 1), 0, ~random_range(-1, 1));
 

@@ -168,7 +168,7 @@ if (%tutorial_progress = 2) {
     %tutorial_progress = ^brother_brace_after_friends_tab;
 } else if (%tutorial_progress = ^tutorial_open_magic_tab) {
     %tutorial_progress = ^tutorial_opened_magic_tab;
-    if (npc_finduid(~npc_within_distance(0_49_48_5_17, magic_instructor, 10)) = true) {
+    if (npc_find(0_49_48_5_17, magic_instructor, 10, 0) = true) {
         hint_npc(npc_uid);
         @magic_instructor_opened_tab;
     }
@@ -322,6 +322,9 @@ inv_add(inv, bodyrune, 2);
 inv_clear(worn);
 inv_clear(bank);
 inv_add(bank, coins, 25);
+
+~stat_reset_all;
+healenergy(10000);
 
 ~initalltabs;
 ~update_all(inv_getobj(worn, ^wearpos_rhand));

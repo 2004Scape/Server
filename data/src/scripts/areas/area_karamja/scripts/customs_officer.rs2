@@ -1,52 +1,52 @@
 [opnpc1,customs_officer]
-~chatnpc(neutral, "Can I help you?");
+~chatnpc("<p,neutral>Can I help you?");
 @multi2("Can I journey on this ship?", customs_journey, "Does Karamja have unusual customs then?", customs_unusual);
 
 [label,customs_unusual]
-~chatplayer(quiz, "Does Karamja have any unusual customs then?");
-~chatnpc(neutral, "I'm not that sort of customs officer.");
+~chatplayer("<p,quiz>Does Karamja have any unusual customs then?");
+~chatnpc("<p,neutral>I'm not that sort of customs officer.");
 
 [label,customs_journey]
-~chatplayer(quiz, "Can I journey on this ship?");
+~chatplayer("<p,quiz>Can I journey on this ship?");
 
 if (%hunt_progress >= 2) {
     if (inv_total(inv, karamja_rum) > 0) {
         @customs_spot_inspection;
     }
 
-    ~chatnpc(neutral, "Hey, I know you, you work at the plantation.");
-    ~chatnpc(neutral, "I don't think you'll try smuggling anything, you just need to pay a boarding charge of 30 coins.");
+    ~chatnpc("<p,neutral>Hey, I know you, you work at the plantation.");
+    ~chatnpc("<p,neutral>I don't think you'll try smuggling anything, you just need to pay a boarding charge of 30 coins.");
 
     @customs_pass_search;
 }
 
-~chatnpc(quiz, "You need to be searched before you can board.");
+~chatnpc("<p,quiz>You need to be searched before you can board.");
 @multi3("Why?", customs_why, "Search away, I have nothing to hide.", customs_search, "You're not putting your hands on my things!", customs_dont_touch);
 
 [label,customs_spot_inspection]
-~chatnpc(neutral, "Spot inspection. You don't mind do you?");
-~chatnpc(neutral, "Aha, trying to smuggle rum eh?");
+~chatnpc("<p,neutral>Spot inspection. You don't mind do you?");
+~chatnpc("<p,neutral>Aha, trying to smuggle rum eh?");
 
-~chatplayer(shifty, "Umm... it's for personal use?");
+~chatplayer("<p,shifty>Umm... it's for personal use?");
 
 inv_del(inv, karamja_rum, 28);
 mes("The customs officer confiscates your rum.");
 
 [label,customs_why]
-~chatplayer(quiz, "Why?");
-~chatnpc(neutral, "Because Asgarnia has banned the import of intoxicating|spirits.");
+~chatplayer("<p,quiz>Why?");
+~chatnpc("<p,neutral>Because Asgarnia has banned the import of intoxicating|spirits.");
 @multi2("Search away, I have nothing to hide.", customs_search, "You're not putting your hands on my things!", customs_dont_touch);
 
 [label,customs_dont_touch]
-~chatplayer(shock, "You're not putting your hands on my things!");
-~chatnpc(bored, "You're not getting on this ship then.");
+~chatplayer("<p,shock>You're not putting your hands on my things!");
+~chatnpc("<p,bored>You're not getting on this ship then.");
 
 [label,customs_search]
-~chatplayer(happy, "Search away, I have nothing to hide.");
+~chatplayer("<p,happy>Search away, I have nothing to hide.");
 
 if (inv_total(inv, karamja_rum) > 0) {
-    ~chatnpc(neutral, "Aha, trying to smuggle rum are we?");
-    ~chatplayer(shifty, "Umm... it's for personal use?");
+    ~chatnpc("<p,neutral>Aha, trying to smuggle rum are we?");
+    ~chatplayer("<p,shifty>Umm... it's for personal use?");
 
     inv_del(inv, karamja_rum, 28);
     mes("The customs officer confiscates your rum.");
@@ -55,7 +55,7 @@ if (inv_total(inv, karamja_rum) > 0) {
 }
 
 // interestingly this is said even if your inventory is empty
-~chatnpc(neutral, "Well you've got some odd stuff, but it's all legal. Now|you need to pay a boarding charge of 30 coins.");
+~chatnpc("<p,neutral>Well you've got some odd stuff, but it's all legal. Now|you need to pay a boarding charge of 30 coins.");
 @customs_pass_search;
 
 [label,customs_pass_search]
@@ -64,13 +64,13 @@ switch_int ($option) {
     case 1:
         @customs_pay;
     case 2:
-        ~chatplayer(neutral, "Oh, I'll not bother then.");
+        ~chatplayer("<p,neutral>Oh, I'll not bother then.");
 }
 
 [label,customs_pay]
-~chatplayer(neutral, "Ok.");
+~chatplayer("<p,neutral>Ok.");
 if (inv_total(inv, coins) < 30) {
-    ~chatplayer(sad, "Oh dear, I don't actually seem to have enough money.");
+    ~chatplayer("<p,sad>Oh dear, I don't actually seem to have enough money.");
     return;
 }
 

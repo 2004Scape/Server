@@ -1,13 +1,13 @@
 [opnpc1,sir_gawain]
-~chatnpc(happy, "Good day to you <text_gender("sir", "madam")>!");
+~chatnpc("<p,happy>Good day to you <text_gender("sir", "madam")>!");
 if(%grail_progress > ^grail_not_started & %grail_progress < ^grail_complete) {
-    ~chatplayer(neutral, "I seek the Grail in the name of Camelot!");
-    ~chatnpc(neutral, "The Grail? That is truly a noble quest indeed. None but Galahad have come close.");
-    ~chatplayer(quiz, "Galahad? Who is he?");
-    ~chatnpc(neutral, "He used to be one of the Knights of the Round Table, but he mysteriously disappeared many years ago.");
-    ~chatplayer(neutral, "Why would he quit being a Knight?");
-    ~chatnpc(sad, "|That is a good question.");
-    ~chatnpc(sad, "I'm afraid I don't have the answer.");
+    ~chatplayer("<p,neutral>I seek the Grail in the name of Camelot!");
+    ~chatnpc("<p,neutral>The Grail? That is truly a noble quest indeed. None but Galahad have come close.");
+    ~chatplayer("<p,quiz>Galahad? Who is he?");
+    ~chatnpc("<p,neutral>He used to be one of the Knights of the Round Table, but he mysteriously disappeared many years ago.");
+    ~chatplayer("<p,neutral>Why would he quit being a Knight?");
+    ~chatnpc("<p,sad>|That is a good question.");
+    ~chatnpc("<p,sad>I'm afraid I don't have the answer.");
     return;
 } 
 def_int $option;
@@ -16,38 +16,38 @@ switch_int (%arthur_progress) {
     case ^arthur_started: $option = ~p_choice3("Good day.", 1, "Any ideas on how to get Merlin out of that crystal?", 3, "Do you know how Merlin got trapped?", 4);
     case ^arthur_spoken_gawain, ^arthur_spoken_lancelot: $option = ~p_choice2("Any idea how to get into Morgan Le Faye's stronghold?", 5, "Hello again.", 6);
     case ^arthur_spoken_morgan_lefaye, ^arthur_excalibur_bound, ^arthur_freed_merlin:
-        ~chatplayer(quiz, "Any ideas on finding Excalibur?");
-        ~chatnpc(sad, "Unfortunately not, adventurer.");
+        ~chatplayer("<p,quiz>Any ideas on finding Excalibur?");
+        ~chatnpc("<p,sad>Unfortunately not, adventurer.");
 }
 switch_int ($option) {
     case 1:
-        ~chatplayer(neutral, "Good day.");
+        ~chatplayer("<p,neutral>Good day.");
     case 2:
-        ~chatplayer(neutral, "Know you of any quests sir knight?");
+        ~chatplayer("<p,neutral>Know you of any quests sir knight?");
         if(%arthur_progress  = ^arthur_complete) {
-            ~chatnpc(confused, "I think you've done the main quest we were on right now...");
+            ~chatnpc("<p,confused>I think you've done the main quest we were on right now...");
             return;
         }
-        ~chatnpc(neutral, "The king is the man to talk to if you want a quest.");
+        ~chatnpc("<p,neutral>The king is the man to talk to if you want a quest.");
     case 3:
-        ~chatplayer(neutral, "Any ideas on how to get Merlin out of that crystal?");
-        ~chatnpc(confused, "I'm a little stumped myself.|We've tried opening it with anything and everything!");    
+        ~chatplayer("<p,neutral>Any ideas on how to get Merlin out of that crystal?");
+        ~chatnpc("<p,confused>I'm a little stumped myself.|We've tried opening it with anything and everything!");    
     case 4:
-        ~chatplayer(quiz, "Do you know how Merlin got trapped?");
-        ~chatnpc(angry, "I would guess this is the work of the evil Morgan Le Faye!");
-        ~chatplayer(quiz, "And where could I find her?");
-        ~chatnpc(angry, "She lives in her stronghold to the south of here,|guarded by some renegade knights led by Sir Mordred.");
+        ~chatplayer("<p,quiz>Do you know how Merlin got trapped?");
+        ~chatnpc("<p,angry>I would guess this is the work of the evil Morgan Le Faye!");
+        ~chatplayer("<p,quiz>And where could I find her?");
+        ~chatnpc("<p,angry>She lives in her stronghold to the south of here,|guarded by some renegade knights led by Sir Mordred.");
         %arthur_progress = ^arthur_spoken_gawain;
         switch_int(~p_choice2("Any idea how to get into Morgan Le Faye's stronghold?", 1, "Thank you for the information.", 2)) {
             case 1: @sir_gawain_lefaye_stronghold;
             case 2:
-                ~chatplayer(neutral, "Thank you for the information.");
-                ~chatnpc(happy, "It is the least I can do.");
+                ~chatplayer("<p,neutral>Thank you for the information.");
+                ~chatnpc("<p,happy>It is the least I can do.");
         }
     case 5: @sir_gawain_lefaye_stronghold;
-    case 6: ~chatplayer(neutral, "Hello again.");
+    case 6: ~chatplayer("<p,neutral>Hello again.");
 }
 
 [label,sir_gawain_lefaye_stronghold]
-~chatplayer(quiz, "Any idea how to get into Morgan Le Faye's stronghold?");
-~chatnpc(confused, "No, you've got me stumped there...");
+~chatplayer("<p,quiz>Any idea how to get into Morgan Le Faye's stronghold?");
+~chatnpc("<p,confused>No, you've got me stumped there...");

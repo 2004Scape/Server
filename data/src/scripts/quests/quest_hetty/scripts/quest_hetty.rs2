@@ -3,7 +3,7 @@ if(%hetty_progress = ^hetty_objects_given) {
     ~mesbox("You drink from the cauldron, it tastes horrible! You feel yourself imbued with power.");
     queue(hetty_quest_complete, 0);
 } else {
-    ~chatplayer("neutral", "As nice as that looks I think I'll give it a miss for now.");
+    ~chatplayer("<p,neutral>As nice as that looks I think I'll give it a miss for now.");
 }
 
 [queue,hetty_quest_complete]

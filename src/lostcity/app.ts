@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import fs from 'fs';
 
 import { startWeb } from '#lostcity/web/app.js';
@@ -9,11 +8,18 @@ import TcpServer from '#lostcity/server/TcpServer.js';
 import WSServer from '#lostcity/server/WSServer.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import { packClient, packServer } from './cache/packall.js';
+import { updateCompiler } from '#lostcity/util/RuneScriptCompiler.js';
 
-if (!fs.existsSync('.env')) {
-    console.error('Missing .env file');
-    console.error("Please make sure you have a .env file in the main directory, copy and rename .env.example if you don't have one");
-    process.exit(1);
+if (Environment.UPDATE_ON_STARTUP) {
+    await updateCompiler();
+}
+
+if (!fs.existsSync('data/pack/client/config')) {
+    console.log('Packing cache for the first time, please wait until you see the world is ready.');
+    console.log('----');
+    await packServer();
+    await packClient();
 }
 
 fs.mkdirSync('data/players', { recursive: true });

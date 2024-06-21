@@ -83,6 +83,9 @@ if (~player_npc_hit_roll(^magic_style) = true) {
 [proc,pvm_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
 p_stopaction;
+if(npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_titan)) {
+    npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
+}
 if (npc_stat(hitpoints) = 0) {
     return(false); // this means the npc is not avail to fight i.e dead
 }
@@ -202,6 +205,16 @@ sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
 // roll 0-maxhit
 def_int $damage = randominc(min($maxhit, npc_param(max_dealt)));
 $damage = min($damage, npc_stat(hitpoints));
+if(npc_type = salarin_the_twisted) {
+    def_int $spell = db_getfield($spell_data, magic_spell_table:spell, 0);
+    // strike spells are the only way to damage salarin the twisted, the damage is fixed 9-12
+    switch_int ($spell) {
+        case ^wind_strike: $damage = 9;
+        case ^water_strike: $damage = 10;
+        case ^earth_strike: $damage = 11;
+        case ^fire_strike: $damage = 12;
+    }
+}
 // if maxhit is defined then damage npc
 if ($maxhit ! null) {
     // damage npc

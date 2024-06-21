@@ -1,35 +1,35 @@
 [opnpc1,grandpa_jack]
 def_string $gender = text_gender("man", "lady");
-~chatnpc(happy, "Hello young <$gender>!|Come to visit old Grandpa Jack?|I can tell ye stories for sure.|I used to be the best fisherman these parts have seen!");
+~chatnpc("<p,happy>Hello young <$gender>!|Come to visit old Grandpa Jack?|I can tell ye stories for sure.|I used to be the best fisherman these parts have seen!");
 def_int $option;
 switch_int (%fishingcompo_progress) {
     case ^fishingcompo_started,^fishingcompo_in_comp,^fishingcompo_garlic_comp: $option = ~p_choice3("Tell me a story then.", 1, "Are you entering the fishing competition?", 3, "Sorry, I don't have time now.", 2);
     case default: $option = ~p_choice2("Tell me a story then.", 1, "Sorry, I don't have time now.", 2);
 }
 if($option = 1) {
-    ~chatplayer(neutral, "Tell me a story then.");
-    ~chatnpc(happy, "Well, when I were a young man|we used to take fishing trips over to Catherby;|The fishing over there - now that was something!");
-    ~chatnpc(happy, "Anyway, we decided to do a bit of fishing with our nets,|I wasn't having the best of days|turning up nothing but old boots and bits of seaweed.|Then my net suddenly got really heavy!");
-    ~chatnpc(neutral, "I pulled it up...");
-    ~chatnpc(happy, "To my amazement I'd caught this little chest thing!");
-    ~chatnpc(happy, "Even more amazing was when I opened it|it contained a diamond the size of a radish!|That's the best catch I've ever had!");
+    ~chatplayer("<p,neutral>Tell me a story then.");
+    ~chatnpc("<p,happy>Well, when I were a young man|we used to take fishing trips over to Catherby;|The fishing over there - now that was something!");
+    ~chatnpc("<p,happy>Anyway, we decided to do a bit of fishing with our nets,|I wasn't having the best of days|turning up nothing but old boots and bits of seaweed.|Then my net suddenly got really heavy!");
+    ~chatnpc("<p,neutral>I pulled it up...");
+    ~chatnpc("<p,happy>To my amazement I'd caught this little chest thing!");
+    ~chatnpc("<p,happy>Even more amazing was when I opened it|it contained a diamond the size of a radish!|That's the best catch I've ever had!");
 } else if($option = 2) {
-    ~chatplayer(neutral, "Sorry, I don't have time now.");
-    ~chatnpc(sad, "Sigh...");
-    ~chatnpc(neutral, "Young people - always in such a rush.");
+    ~chatplayer("<p,neutral>Sorry, I don't have time now.");
+    ~chatnpc("<p,sad>Sigh...");
+    ~chatnpc("<p,neutral>Young people - always in such a rush.");
 } else if($option = 3) {
-    ~chatplayer(neutral, "Are you entering the fishing competition?");
-    ~chatnpc(happy, "Ah... the Hemenster fishing competition...");
-    ~chatnpc(happy, "I know all about that... I won that four years straight! I'm too old for that lark now though...");
+    ~chatplayer("<p,neutral>Are you entering the fishing competition?");
+    ~chatnpc("<p,happy>Ah... the Hemenster fishing competition...");
+    ~chatnpc("<p,happy>I know all about that... I won that four years straight! I'm too old for that lark now though...");
     $option = ~p_choice2("I don't suppose you could give me any hints?", 1, "That's less competition for me then.", 2);
     if($option = 1) {
-        ~chatplayer(confused, "I don't suppose you could give me any hints?");
-        ~chatnpc(happy, "Well, you sometimes get these really big fish|in the water just by the outflow pipes.");
-        ~chatnpc(neutral, "I think they're some kind of carp...");
-        ~chatnpc(happy, "Try to get a spot round there.|The best sort of bait for them is red vine worms.");
-        ~chatnpc(happy, "I used to get those from McGrubor's wood, north of here. Just dig around in the red vines up there.");
+        ~chatplayer("<p,confused>I don't suppose you could give me any hints?");
+        ~chatnpc("<p,happy>Well, you sometimes get these really big fish|in the water just by the outflow pipes.");
+        ~chatnpc("<p,neutral>I think they're some kind of carp...");
+        ~chatnpc("<p,happy>Try to get a spot round there.|The best sort of bait for them is red vine worms.");
+        ~chatnpc("<p,happy>I used to get those from McGrubor's wood, north of here. Just dig around in the red vines up there.");
         // no garlic advice here i'm assuming
     } else if($option = 2) {
-        ~chatplayer(confused, "That's less competition for me then.");
+        ~chatplayer("<p,confused>That's less competition for me then.");
     }
 }

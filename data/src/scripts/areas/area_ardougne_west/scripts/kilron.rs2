@@ -1,5 +1,5 @@
 [opnpc1,kilron]
-~chatplayer(happy, "Hello there.");
-~chatnpc(happy, "Hello.");
-~chatplayer(quiz, "How are you?");
-~chatnpc(neutral, "Busy.");
+~chatplayer("<p,happy>Hello there.");
+~chatnpc("<p,happy>Hello.");
+~chatplayer("<p,quiz>How are you?");
+~chatnpc("<p,neutral>Busy.");

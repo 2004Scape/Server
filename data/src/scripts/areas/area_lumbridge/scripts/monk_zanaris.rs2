@@ -1,19 +1,19 @@
 [opnpc1,monk_zanaris]
 if(map_members = false) { // From RS3
-    ~chatplayer(happy, "Top of the day to you!");
-    ~chatnpc(neutral, "Yes, Saradomin has certainly blessed us today!");
+    ~chatplayer("<p,happy>Top of the day to you!");
+    ~chatnpc("<p,neutral>Yes, Saradomin has certainly blessed us today!");
     return;
 }
 switch_int (%zanaris_progress) {
     case ^zanaris_not_started:
-        ~chatplayer(quiz, "Why are all of you standing around here?");
-        ~chatnpc(angry, "None of your business. Get lost.");
+        ~chatplayer("<p,quiz>Why are all of you standing around here?");
+        ~chatnpc("<p,angry>None of your business. Get lost.");
         return;
     case ^zanaris_started:
-        ~chatplayer(quiz, "Have you found the tree with the leprechaun yet?");
-        ~chatnpc(confused, "No, we've looked for ages but haven't... Hey!|Wait a minute! How did you know about that?");
-        ~chatplayer(happy, "Thanks for the information!");
-        ~chatnpc(angry, "...You tricked me. I'm not talking to you anymore.");
+        ~chatplayer("<p,quiz>Have you found the tree with the leprechaun yet?");
+        ~chatnpc("<p,confused>No, we've looked for ages but haven't... Hey!|Wait a minute! How did you know about that?");
+        ~chatplayer("<p,happy>Thanks for the information!");
+        ~chatnpc("<p,angry>...You tricked me. I'm not talking to you anymore.");
         return;
-    case default: ~chatnpc(neutral, "I already told you. I'm not talking to you anymore.");
+    case default: ~chatnpc("<p,neutral>I already told you. I'm not talking to you anymore.");
 }

@@ -33,14 +33,12 @@ if(coordz(coord) > coordz($loc_coord)) {
 // pass start x because these door locs are also on the sides (maybe to increase the hitbox)
 [label,open_tree_door](loc $open_door, int $start_x)
 sound_synth(door_open, 0, 0);
-loc_del(4);
-loc_add(loc_coord, loc_83, loc_angle, loc_shape, 4);
-loc_add(loc_coord, $open_door, loc_angle, loc_shape, 4);
+loc_change($open_door, 4);
 p_teleport(movecoord(coord, calc($start_x - coordx(coord)), 0, 0));
 p_delay(0);
 def_coord $end_pos = movecoord(coord, 0, 0, -2);
 if(coordz(coord) < coordz(loc_coord)) {
     $end_pos = movecoord(coord, 0, 0, 2);
 }
-p_teleport($end_pos);
-p_delay(2);
+~forcemove($end_pos);
+p_delay(0);

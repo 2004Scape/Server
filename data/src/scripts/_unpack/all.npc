@@ -268,6 +268,7 @@ attack=14
 strength=13
 defence=12
 wanderrange=7
+param=retreat,8
 huntmode=cowardly
 
 [guard_sword]
@@ -468,7 +469,6 @@ strength=8
 defence=5
 magic=10
 param=magicdefence,3
-huntmode=ranged
 
 [druid]
 name=Druid
@@ -582,52 +582,6 @@ param=attack_sound,staff_stab
 param=defend_sound,female_hit
 param=death_sound,female_death
 category=barbarian
-
-[alkharid_warrior]
-name=Al-Kharid warrior
-desc=Part of Al-Kharid's elite fighting force.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op3=Pickpocket
-op2=Attack
-vislevel=9
-recol1s=2340
-recol1d=4226
-recol2s=14724
-recol2d=13325
-recol3s=24075
-recol3d=18790
-recol4s=6273
-recol4d=4226
-recol5s=14801
-recol5d=18790
-model1=model_215_idk
-model2=model_490_obj_wear
-model3=model_251_idk
-model4=model_292_idk
-model5=model_151_idk
-model6=model_176_idk
-model7=model_254_idk
-model8=model_181_idk
-model9=model_541_obj_wear
-model10=model_191_npc
-respawnrate=25
-hitpoints=19
-attack=7
-strength=5
-defence=4
-param=attackbonus,10
-param=strengthbonus,10
-param=stabdefence,12
-param=slashdefence,15
-param=crushdefence,10
-param=magicdefence,-1
-param=rangedefence,12
-param=damagetype,^slash_style
-param=attack_anim,human_sword_slash
-param=defend_anim,human_sword_defend2
-param=attack_sound,hacksword_slash
-// param=defend_sound,brassclash2
 
 [white_knight]
 name=White Knight
@@ -1004,35 +958,6 @@ param=damagetype,^ranged_style
 param=attack_anim,human_bow
 param=rangeattack_sound,longbow
 
-[npc_28]
-name=Zoo keeper
-desc=Enjoys locking up animals in small pens.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=2340
-recol1d=25299
-recol2s=14724
-recol2d=16737
-recol3s=14801
-recol3d=24075
-recol4s=5299
-recol4d=25299
-model1=model_215_idk
-model2=model_292_idk
-model3=model_250_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_271_idk
-model7=model_185_obj_wear
-model8=model_194_npc
-model9=model_327_idk
-model10=model_495_npc
-head1=model_53_idk_head
-head2=model_82_idk_head
-head3=model_37_npc_head
-
 [npc_29]
 name=Chuck
 desc=He's a lumberjack, and he's ok.
@@ -1334,6 +1259,7 @@ param=death_anim,chicken_death
 param=attack_sound,chicken_attack
 param=defend_sound,chicken_hit
 param=death_sound,chicken_death
+param=retreat,1
 category=chicken
 
 [sheep_sheared]
@@ -2578,6 +2504,7 @@ param=defend_anim,unicorn_block
 param=death_anim,unicorn_death
 param=attack_sound,horse_hit
 param=defend_sound,horse_hit
+param=retreat,6
 category=unicorn
 
 [npc_90]
@@ -2836,7 +2763,7 @@ vislevel=hide
 model1=model_2935_npc
 param=death_anim,dog_death
 
-[npc_99]
+[guard_dog]
 name=Guard dog
 desc=Beware of the dog!
 walkanim=dog_walk
@@ -4069,6 +3996,7 @@ param=death_anim,souless_death
 // TODO param=attack_sound,
 // TODO param=defend_sound,
 // TODO param=death_sound,
+param=retreat,9
 huntmode=cowardly
 
 [npc_141]
@@ -4765,7 +4693,8 @@ model10=model_519_obj_wear
 head1=model_53_idk_head
 head2=model_76_obj_wear
 wanderrange=12
-attackrange=14
+maxrange=12
+attackrange=3
 hitpoints=13
 attack=2
 strength=2
@@ -5518,6 +5447,7 @@ attack=58
 strength=58
 defence=62
 param=damagetype,^slash_style
+param=max_dealt,0
 
 [npc_206]
 walkanim=dwarf_walk
@@ -5644,6 +5574,7 @@ attack=2
 strength=2
 defence=3
 param=damagetype,^crush_style
+param=retreat,7
 
 [npc_224]
 resizeh=64
@@ -5738,535 +5669,6 @@ param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
-
-[npc_253]
-name=Khazard Guard
-desc=It's one of General Khazard's guards.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=21
-recol1s=15855
-recol1d=5285
-recol2s=2340
-recol2d=3104
-model1=model_230_idk
-model2=model_252_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_550_obj_wear
-head1=model_63_idk_head
-head2=model_84_idk_head
-wanderrange=3
-attackrange=5
-respawnrate=50
-hitpoints=25
-attack=20
-strength=18
-defence=20
-param=attackbonus,10
-param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// param=defend_sound,blade3_mail
-
-[npc_254]
-name=Khazard Guard
-desc=It's one of General Khazard's guards.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=21
-recol1s=15855
-recol1d=5285
-recol2s=2340
-recol2d=3104
-model1=model_230_idk
-model2=model_253_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_550_obj_wear
-head1=model_63_idk_head
-head2=model_85_idk_head
-wanderrange=4
-attackrange=6
-respawnrate=50
-hitpoints=25
-attack=20
-strength=18
-defence=20
-param=attackbonus,10
-param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// param=defend_sound,blade3_mail
-
-[npc_255]
-name=Khazard Guard
-desc=It's one of General Khazard's guards.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=21
-recol1s=15855
-recol1d=5285
-recol2s=2340
-recol2d=3104
-model1=model_219_obj_wear
-model2=model_246_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_550_obj_wear
-head1=model_57_obj_wear
-wanderrange=4
-attackrange=6
-respawnrate=50
-hitpoints=25
-attack=20
-strength=18
-defence=20
-param=attackbonus,10
-param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// param=defend_sound,blade3_mail
-
-[npc_256]
-name=Khazard Guard
-desc=It's one of General Khazard's guards.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=21
-recol1s=15855
-recol1d=5285
-recol2s=2340
-recol2d=3104
-model1=model_219_obj_wear
-model2=model_253_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_550_obj_wear
-head1=model_57_obj_wear
-head2=model_85_idk_head
-wanderrange=4
-attackrange=6
-respawnrate=50
-hitpoints=25
-attack=20
-strength=18
-defence=20
-param=attackbonus,10
-param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// param=defend_sound,blade3_mail
-
-[npc_257]
-name=Khazard Guard
-desc=It's one of General Khazard's guards.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-vislevel=25
-recol1s=15855
-recol1d=5285
-recol2s=2340
-recol2d=3104
-model1=model_230_idk
-model2=model_252_idk
-model3=model_306_obj_wear
-model4=model_152_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_550_obj_wear
-head1=model_63_idk_head
-head2=model_84_idk_head
-respawnrate=50
-hitpoints=25
-attack=20
-strength=18
-defence=20
-param=attackbonus,10
-param=strengthbonus,14
-param=stabdefence,44
-param=slashdefence,38
-param=crushdefence,30
-param=damagetype,^slash_style
-param=attack_anim,human_baxe_slash
-param=defend_anim,human_baxe_defend2
-param=attack_sound,baxe_slash
-// param=defend_sound,blade3_mail
-
-[general_khazard]
-name=General Khazard
-desc=He looks really nasty. Smells bad too.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=112
-recol1s=15855
-recol1d=5285
-recol2s=14798
-recol2d=5285
-model1=model_209_npc
-model2=model_306_obj_wear
-model3=model_164_obj_wear
-model4=model_179_obj_wear
-model5=model_268_obj_wear
-model6=model_185_obj_wear
-model7=model_546_obj_wear
-model8=model_323_obj_wear
-head1=model_149_npc_head
-wanderrange=1
-hitpoints=170
-attack=75
-strength=78
-defence=80
-param=damagetype,^slash_style
-param=attack_anim,human_2h_slash
-param=defend_anim,human_2h_sword_defend
-// param=attack_sound,
-// param=defend_sound,
-// osrs use attack seq_406
-
-[npc_259]
-vislevel=hide
-name=Khazard barman
-desc=A tough looking barman.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=4226
-recol2s=14724
-recol2d=27481
-recol3s=14801
-recol3d=24075
-model1=model_230_idk
-model2=model_247_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-model8=model_326_idk
-head1=model_63_idk_head
-head2=model_79_idk_head
-wanderrange=4
-
-[npc_260]
-vislevel=hide
-name=Kelvin
-desc=A fightslave. He looks mistreated and weak.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=7298
-recol1d=24075
-recol2s=2340
-recol2d=7362
-recol3s=14724
-recol3d=16709
-model1=model_214_idk
-model2=model_246_idk
-model3=model_310_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_275_idk
-model7=model_181_idk
-head1=model_52_idk_head
-wanderrange=1
-
-[npc_261]
-vislevel=hide
-name=Joe
-desc=A fightslave. He looks mistreated and weak.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=7298
-recol1d=25166
-recol2s=2340
-recol2d=7362
-recol3s=6273
-recol3d=10401
-recol4s=14724
-recol4d=15686
-recol5s=24075
-recol5d=25166
-model1=model_206_idk
-model2=model_246_idk
-model3=model_310_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_275_idk
-model7=model_181_idk
-model8=model_326_idk
-head1=model_46_idk_head
-wanderrange=1
-
-[npc_262]
-vislevel=hide
-name=Fightslave
-desc=A fightslave. He looks mistreated and weak.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=7298
-recol1d=24075
-recol2s=2340
-recol2d=7298
-model1=model_214_idk
-model2=model_246_idk
-model3=model_310_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_275_idk
-model7=model_181_idk
-head1=model_52_idk_head
-wanderrange=1
-
-[npc_263]
-vislevel=hide
-name=Hengrad
-desc=He looks mistreated and weak.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=7298
-recol1d=24075
-recol2s=2340
-recol2d=7362
-recol3s=14724
-recol3d=14730
-model1=model_230_idk
-model2=model_246_idk
-model3=model_310_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_275_idk
-model7=model_181_idk
-head1=model_63_idk_head
-wanderrange=1
-
-[npc_264]
-vislevel=hide
-name=Lady Servil
-desc=She looks wealthy.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=2387
-recol2s=14724
-recol2d=6649
-recol3s=14724
-recol3d=27551
-model1=model_378_idk
-model2=model_456_idk
-model3=model_348_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_358_idk
-head1=model_103_idk_head
-param=death_sound,female_death
-
-[npc_265]
-vislevel=hide
-name=Jeremy Servil
-desc=A young squire. He looks worse for wear.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=13360
-recol2s=14724
-recol2d=13360
-model1=model_2918_npc
-model2=model_2910_npc
-model3=model_2906_npc
-head1=model_53_idk_head
-wanderrange=1
-param=death_anim,midget_death
-
-[npc_266]
-vislevel=hide
-name=Jeremy Servil
-desc=A young squire. He looks worse for wear.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=13360
-recol2s=14724
-recol2d=13360
-model1=model_2918_npc
-model2=model_2910_npc
-model3=model_2906_npc
-head1=model_53_idk_head
-wanderrange=1
-param=death_anim,midget_death
-
-[npc_267]
-vislevel=hide
-name=Justin Servil
-desc=Jeremy's father Sir Servil.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=7298
-recol1d=24075
-recol2s=2340
-recol2d=7298
-model1=model_230_idk
-model2=model_250_idk
-model3=model_310_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_275_idk
-model7=model_181_idk
-head1=model_63_idk_head
-head2=model_82_idk_head
-wanderrange=7
-
-[npc_268]
-vislevel=hide
-name=Local
-desc=A scruffy looking chap.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14724
-recol1d=8192
-recol2s=2340
-recol2d=8456
-model1=model_230_idk
-model2=model_249_idk
-model3=model_236_obj_wear
-model4=model_299_npc
-model5=model_167_idk
-model6=model_179_obj_wear
-model7=model_275_idk
-model8=model_185_obj_wear
-head1=model_63_idk_head
-head2=model_68_obj_wear
-
-[bouncer]
-size=2
-walkanim=hellhound_walk
-readyanim=hellhound_ready
-name=Bouncer
-desc=Nice doggy.
-op2=Attack
-vislevel=132
-model1=model_2997_npc
-respawnrate=50
-hitpoints=116
-attack=120
-strength=120
-defence=120
-param=damagetype,^stab_style
-param=attack_anim,hellhound_attack
-param=defend_anim,hellhound_block
-param=death_anim,hellhound_death
-// param=attack_sound,
-// param=defend_sound,
-// param=death_sound,
-
-[npc_270]
-name=Khazard Ogre
-desc=Khazard's strongest ogre warrior.
-size=2
-walkanim=ogre_walk
-readyanim=ogre_ready
-op2=Attack
-vislevel=55
-model1=model_2880_npc
-model2=model_2876_npc
-// TODO respawnrate
-hitpoints=60
-attack=54
-strength=53
-defence=53
-param=attackbonus,22
-param=strengthbonus,20
-param=attackrate,6
-param=damagetype,^crush_style
-param=attack_anim,ogre_attack
-param=defend_anim,ogre_block
-param=death_anim,ogre_death
-// param=attack_sound,
-// param=defend_sound,
-param=death_sound,giant_death
-param=death_drop,big_bones
-
-[npc_271]
-name=Khazard Scorpion
-desc=A large angry scorpion.
-size=2
-walkanim=scorpion_walk
-readyanim=scorpion_ready
-op2=Attack
-vislevel=44
-recol1s=16677
-recol1d=10570
-recol2s=11426
-recol2d=6342
-model1=model_2967_npc
-// TODO respawnrate
-hitpoints=40
-attack=40
-strength=39
-defence=34
-param=stabdefence,5
-param=slashdefence,15
-param=crushdefence,15
-param=damagetype,^stab_style
-param=attack_anim,scorpion_attack
-param=defend_anim,scorpion_parry
-param=death_anim,scorpion_death
-param=attack_sound,insect_attack
-param=defend_sound,insect_hit
-param=death_sound,insect_death
-param=death_drop,null
 
 [npc_272]
 name=Lucien
@@ -6549,6 +5951,7 @@ param=rangedefence,9
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
+param=retreat,8
 huntmode=cowardly
 
 [head_thief]
@@ -8442,7 +7845,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_635]
+[gnome_ball_referee]
 name=Gnome ball referee
 desc=Keeps the game fair.
 vislevel=hide
@@ -8542,7 +7945,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 
-[npc_669]
+[hazelmere]
 name=Hazelmere
 desc=An ancient looking gnome.
 walkanim=midget_walk
@@ -8776,6 +8179,7 @@ param=attack_sound,imp_attack
 param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
+param=retreat,4
 // https://oldschool.runescape.wiki/w/Demon_(attribute)
 
 [npc_726]
@@ -9371,24 +8775,6 @@ model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
 moverestrict=indoors
-param=death_anim,midget_death
-
-[npc_783]
-vislevel=hide
-name=Wilough
-desc=One of Gertrude's Sons.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=992
-recol2s=384
-recol2d=26425
-model1=model_2897_npc
-model2=model_2909_npc
-model3=model_2918_npc
-head1=model_139_npc_head
-wanderrange=2
 param=death_anim,midget_death
 
 [npc_784]
@@ -12304,7 +11690,7 @@ op1=Take
 model1=model_560_npc
 wanderrange=2
 
-[npc_1007]
+[zamorak_wizard]
 name=Zamorak Wizard
 desc=A servant of Zamorak.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

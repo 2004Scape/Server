@@ -1,30 +1,32 @@
 [opnpc1,hans]
 // Treasure Trail
-if(inv_total(inv, trail_clue_easy_simple_exp005) = 1) {
-    @trail_hans_exp001;
+if(map_members = true) {
+    if(inv_total(inv, trail_clue_hard_riddle_exp012) > 0) {
+        // https://www.youtube.com/watch?v=F5i3JqU6dkY
+        ~chatnpc("<p,happy>Well done, here you go.");
+        ~progress_clue_hard(trail_clue_hard_riddle_exp012, "Hans has given you another clue scroll!");
+        return;
+    }
+    if(inv_total(inv, trail_clue_easy_simple_exp005) > 0) {
+        // https://www.youtube.com/watch?v=PlwFfW45HWk
+        ~chatnpc("<p,happy>Well done, you've solved the clue!");
+        ~progress_clue_easy(trail_clue_easy_simple_exp005, "Hans has given you another clue!");
+        return;
+    }
 }
 
-~chatnpc(neutral, "Hello. What are you doing here?");
+~chatnpc("<p,neutral>Hello. What are you doing here?");
 def_int $option = ~p_choice3("I'm looking for whoever is in charge of this place.", 1, "I have come to kill everyone in this castle.", 2, "I don't know. I'm lost. Where am i?", 3);
 if ($option = 1) {
-    ~chatplayer(neutral, "I'm looking for whoever is in charge of this place.");
-    ~chatnpc(neutral, "Sorry, I don't know where he is right now.");
+    ~chatplayer("<p,neutral>I'm looking for whoever is in charge of this place.");
+    ~chatnpc("<p,neutral>Sorry, I don't know where he is right now.");
 } else if ($option = 2) {
-    ~chatplayer(angry, "I have come to kill everyone in this castle.");
-    npc_say("HELP HELP!");
+    ~chatplayer("<p,angry>I have come to kill everyone in this castle.");
     npc_setmode(playerescape);
+    if_close;
+    p_delay(0);
+    npc_say("HELP HELP!");
 } else if ($option = 3) {
-    ~chatplayer(confused, "I don't know. I'm lost. Where am I?");
-    ~chatnpc(neutral, "You are in Lumbridge Castle.");
-}
-
-[label,trail_hans_exp001]
-~chatnpc(quiz, "Well done, you've solved the clue!");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp007, 1);
-if(~trail_clue_easy_complete = true) {
-
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Hans has given you another clue.");
+    ~chatplayer("<p,confused>I don't know. I'm lost. Where am I?");
+    ~chatnpc("<p,neutral>You are in Lumbridge Castle.");
 }

@@ -31,7 +31,7 @@ param=shop_buy_multiplier,400
 param=shop_delta,30
 param=shop_title,oziach
 
-[npc_746]
+[oracle]
 vislevel=hide
 name=Oracle
 desc=A mystical fount of knowledge.

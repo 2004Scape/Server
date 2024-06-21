@@ -1,2 +1,76 @@
 [opnpc1,makeover_mage]
-@not_written_yet;
+// https://youtu.be/Jo7pLNCeS_Y?si=jePemLxbhlJYZRid&t=214, try to find a source for 2004 (probably something before Sept 2005)
+~chatnpc("<p,happy>Hello there! I am known as the make-over mage! I have spent many years researching magics that can change your physical appearance!");
+~chatnpc("<p,happy>I can alter your physical form for a small fee of only 3000 gold coins! Would you like me to perform my magics upon you?");
+@multi3("Tell me more about this 'make-over'.", makeover_mage_tell_more, "Sure. Do it.", makeover_mage_sure, "No thanks.", makeover_mage_no);
+
+[label,makeover_mage_tell_more]
+~chatplayer("<p,quiz>Tell me more about this 'make-over'.");
+~chatnpc("<p,happy>Why, of course! Basically, and I will try and explain this so that you will understand it correctly,");
+~chatnpc("<p,happy>I use my secret magical technique to melt your body down into a puddle of its elements.");
+~chatnpc("<p,happy>When I have broken down all trace of your body, I then rebuild it into the form I am thinking of!");
+~chatnpc("<p,confused>Or, you know, somewhere vaguely close enough anyway.");
+~chatplayer("<p,quiz>Uh... that doesn't sound particularly safe to me...");
+~chatnpc("<p,happy>It's as safe as houses! Why, I have only had thirty-six major accidents this month!");
+~chatnpc("<p,quiz>So what do you say? Feel like a change? It's only 3000 coins.");
+@multi2("Sure. Do it.", makeover_mage_sure, "No thanks.", makeover_mage_no);
+
+[label,makeover_mage_sure]
+~chatplayer("<p,happy>Sure. Do it.");
+if(inv_total(inv, coins) < 3000) {
+    ~chatnpc("<p,happy>Great. Come back with 3000 coins, and I'll get started.");
+    return;
+}
+~chatnpc("<p,happy>You of course agree that if by some accident you are turned into a frog you have no rights for compensation or refund.");
+if_openmainmodal(makeover_mage);
+
+[label,makeover_mage_no]
+~chatplayer("<p,angry>No thanks. I'm happy as Saradomin made me.");
+~chatnpc("<p,sad>Ehhh... suit yourself.");
+
+[if_button,makeover_mage:com_102] %option1 = 1;
+[if_button,makeover_mage:com_104] %option1 = 2;
+
+[if_button,makeover_mage:com_113] %option1 = 1;
+[if_button,makeover_mage:com_114] %option1 = 2;
+
+[if_button,makeover_mage:com_94] %option2 = 1;
+[if_button,makeover_mage:com_95] %option2 = 2;
+[if_button,makeover_mage:com_96] %option2 = 3;
+[if_button,makeover_mage:com_97] %option2 = 4;
+[if_button,makeover_mage:com_98] %option2 = 5;
+[if_button,makeover_mage:com_99] %option2 = 6;
+[if_button,makeover_mage:com_100] %option2 = 7;
+[if_button,makeover_mage:com_101] %option2 = 8;
+
+[if_button,makeover_mage:com_89]
+if (%option1 = 0 | %option2 = 0) {
+    mes("You must make a selection from both categories."); // guess based of thessalia
+    return;
+}
+
+if_close;
+setgender(calc(%option1 - 1));
+setskincolour(calc(%option2 - 1));
+
+buildappearance(worn);
+inv_del(inv, coins, 3000);
+if (npc_find(coord, makeover_mage, 5, 0) = false) {
+    return;
+}
+switch_int(random(4)) {
+    case 0:
+        ~chatnpc("<p,shock>Whew! That was lucky!");
+        ~chatplayer("<p,neutral>What was?");
+        ~chatnpc("<p,happy>Nothing! It's all fine! You seem alive anyway!");
+    case 1:
+        ~chatnpc("<p,shock>Woah!");
+        ~chatplayer("<p,quiz>What?");
+        ~chatnpc("<p,shock>You still look human!");
+    case 2:
+        ~chatnpc("<p,quiz>Hmm... you didn't feel any unexpected growths anywhere around your head just then did you?");
+        ~chatplayer("<p,quiz>Uh... no...?");
+        ~chatnpc("<p,happy>Good, good! I was worried for a second there!");
+    case 3: ~chatnpc("<p,happy>Two arms... two legs... one head... it seems that spell finally worked okay!");
+}
+~chatplayer("<p,confused>Uh... Thanks, I guess.");

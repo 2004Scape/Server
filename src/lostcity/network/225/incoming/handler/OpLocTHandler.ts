@@ -1,6 +1,6 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
-import Component from '#lostcity/cache/Component.js';
+import Component from '#lostcity/cache/config/Component.js';
 import OpLocT from '#lostcity/network/incoming/model/OpLocT.js';
 import World from '#lostcity/engine/World.js';
 import Interaction from '#lostcity/entity/Interaction.js';
@@ -10,8 +10,14 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
     handle(message: OpLocT, player: NetworkPlayer): boolean {
         const { x, z, loc: locId, spellComponent: spellComId } = message;
 
+        if (player.delayed()) {
+            player.unsetMapFlag();
+            return false;
+        }
+
         const spellCom = Component.get(spellComId);
         if (typeof spellCom === 'undefined' || !player.isComponentVisible(spellCom)) {
+            player.unsetMapFlag();
             return false;
         }
 
@@ -20,20 +26,17 @@ export default class OpLocTHandler extends MessageHandler<OpLocT> {
         const absTopZ = player.loadedZ + 52;
         const absBottomZ = player.loadedZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
+            player.unsetMapFlag();
             return false;
         }
 
         const loc = World.getLoc(x, z, player.level, locId);
         if (!loc) {
+            player.unsetMapFlag();
             return false;
         }
 
-        if (player.delayed()) {
-            return false;
-        }
-
-        player.clearInteraction();
-        player.closeModal();
+        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, loc, ServerTriggerType.APLOCT, { type: loc.type, com: spellComId });
         player.opcalled = true;
         return true;

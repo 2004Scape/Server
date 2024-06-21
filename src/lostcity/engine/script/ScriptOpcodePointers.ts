@@ -52,6 +52,10 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.BUSY2]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.CAM_LOOKAT]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -138,6 +142,16 @@ const ScriptOpcodePointers: {
         require2: ['find_player'],
         set: ['active_player'],
         set2: ['active_player2'],
+        conditional: true
+    },
+    [ScriptOpcode.NPC_HUNTALL]: {
+        set: ['find_npc']
+    },
+    [ScriptOpcode.NPC_HUNTNEXT]: {
+        require: ['find_npc'],
+        require2: ['find_npc'],
+        set: ['active_npc'],
+        set2: ['active_npc2'],
         conditional: true
     },
     [ScriptOpcode.IF_CLOSE]: {
@@ -380,6 +394,9 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.QUEUE2]: {
+        require: ['active_player2']
+    },
     [ScriptOpcode.SAY]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -391,12 +408,18 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.WALKTRIGGER2]: {
+        require: ['active_player2']
+    },
     [ScriptOpcode.GETWALKTRIGGER]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
     [ScriptOpcode.SETTIMER]: {
         require: ['active_player']
+    },
+    [ScriptOpcode.SETTIMER2]: {
+        require: ['active_player2']
     },
     [ScriptOpcode.SOFTTIMER]: {
         require: ['active_player']
@@ -439,7 +462,21 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.WEAKQUEUE]: {
         require: ['active_player']
     },
-
+    [ScriptOpcode.FINDHERO]: {
+        set: ['active_player2'],
+        set2: ['active_player'],
+        conditional: true
+    },
+    [ScriptOpcode.BOTH_HEROPOINTS]: {
+        require: ['active_player', 'active_player2'],
+        require2: ['active_player2', 'active_player']
+    },
+    [ScriptOpcode.SETGENDER]: {
+        require: ['p_active_player']
+    },
+    [ScriptOpcode.SETSKINCOLOUR]: {
+        require: ['p_active_player']
+    },
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {
         set: ['active_npc'],
@@ -491,6 +528,14 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.NPC_FACESQUARE]: {
         require: ['active_npc'],
         require2: ['active_npc2']
+    },
+    [ScriptOpcode.NPC_FIND]: {
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
+    [ScriptOpcode.NPC_FINDALLANY]: {
+        set: ['find_npc']
     },
     [ScriptOpcode.NPC_FINDALLZONE]: {
         set: ['find_npc']
@@ -705,6 +750,12 @@ const ScriptOpcodePointers: {
         require: ['active_obj'],
         require2: ['active_obj2']
     },
+    [ScriptOpcode.OBJ_ADDUNSAFE]: {
+        require: ['active_player'],
+        set: ['active_obj'],
+        require2: ['active_player'],
+        set2: ['active_obj2']
+    },
 
     // Inventory ops
     [ScriptOpcode.INV_ADD]: {
@@ -729,11 +780,15 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.INV_DROPITEM]: {
         require: ['active_player'],
-        require2: ['active_player2']
+        set: ['active_obj'],
+        require2: ['active_player2'],
+        set2: ['active_obj2']
     },
     [ScriptOpcode.INV_DROPSLOT]: {
         require: ['active_player'],
-        require2: ['active_player2']
+        set: ['active_obj'],
+        require2: ['active_player2'],
+        set2: ['active_obj2']
     },
     [ScriptOpcode.INV_FREESPACE]: {
         require: ['active_player'],
@@ -800,6 +855,14 @@ const ScriptOpcodePointers: {
         require2: ['active_player2', 'active_player']
     },
     [ScriptOpcode.INV_STOPTRANSMIT]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
+    [ScriptOpcode.BOTH_DROPSLOT]: {
+        require: ['active_player', 'active_player2'],
+        require2: ['active_player2', 'active_player']
+    },
+    [ScriptOpcode.INV_DROPALL]: {
         require: ['active_player'],
         require2: ['active_player2']
     },

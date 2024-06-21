@@ -1,9 +1,9 @@
 [opnpc1,fairy_queen]
 def_int $option = ~p_choice2("How do crops and such survive down here?", 1, "What's so good about this place?", 2);
 if($option = 1) {
-    ~chatplayer(quiz, "How do crops and such survive down here?|Surely they need a bit of sunlight?");
-    ~chatnpc(neutral, "Clearly you come from a plane dependent on sunlight.|Down here, the plants grow in the aura of faerie.");
+    ~chatplayer("<p,quiz>How do crops and such survive down here?|Surely they need a bit of sunlight?");
+    ~chatnpc("<p,neutral>Clearly you come from a plane dependent on sunlight.|Down here, the plants grow in the aura of faerie.");
 } else if($option = 2) {
-    ~chatplayer(neutral, "What's so good about this place?");
-    ~chatnpc(neutral, "Zanaris is a meeting point of cultures.|Those from many worlds converge here to exchange knowledge and goods.");
+    ~chatplayer("<p,neutral>What's so good about this place?");
+    ~chatnpc("<p,neutral>Zanaris is a meeting point of cultures.|Those from many worlds converge here to exchange knowledge and goods.");
 }

@@ -1,12 +1,12 @@
 [opnpc1,fernahei]
-~chatnpc(default, "Welcome to Fernahei's Fishing Shop Bwana!|Would you like to see my items?");
+~chatnpc("<p,default>Welcome to Fernahei's Fishing Shop Bwana!|Would you like to see my items?");
 def_int $option = ~p_choice2("Yes please!", 1, "No, but thanks for the offer.", 2);
 
 switch_int ($option) {
     case 1: 
-    ~chatplayer(happy, "Yes please!");
+    ~chatplayer("<p,happy>Yes please!");
     ~openshop_activenpc;
     case 2:
-    ~chatplayer(default, "No, but thanks for the offer.");
-    ~chatnpc(default, "That's fine and thanks for your interest.");
+    ~chatplayer("<p,default>No, but thanks for the offer.");
+    ~chatnpc("<p,default>That's fine and thanks for your interest.");
 }

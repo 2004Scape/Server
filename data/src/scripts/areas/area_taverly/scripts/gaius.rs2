@@ -2,23 +2,17 @@
 if(inv_total(inv, trail_clue_easy_simple_exp023) = 1) {
     @trail_gaius;
 }
-~chatnpc(happy, "Welcome to my two-handed sword shop.");
+~chatnpc("<p,happy>Welcome to my two-handed sword shop.");
 def_int $option = ~p_choice2("Let's trade.", 1, "Thanks, but not today.", 2);
 if($option = 1) {
-    ~chatplayer(neutral, "Let's trade.");
+    ~chatplayer("<p,neutral>Let's trade.");
     ~openshop_activenpc;
 } else if($option = 2) {
-    ~chatplayer(neutral, "Thanks, but not today.");
-    ~chatnpc(happy, "Very well, but do please call again.");
+    ~chatplayer("<p,neutral>Thanks, but not today.");
+    ~chatnpc("<p,happy>Very well, but do please call again.");
 }
 
 [label,trail_gaius]
-~chatnpc("default", "Here you go.");
-~trail_clue_progress;
-inv_del(inv, trail_clue_easy_simple_exp021, 1);
-if(~trail_clue_easy_complete = true) {
-    ~trail_clue_easy_reward;
-} else {
-    inv_add(inv, ~trail_clue_easy_getrandom, 1);
-    ~objbox(trail_clue_hard_map001, "Gaius has given you another clue!");
-}
+// https://www.youtube.com/watch?v=P7bBF43f9Jw
+~chatnpc("<p,neutral>Here you go.");
+~progress_clue_easy(trail_clue_easy_simple_exp023, "Gaius has given you another clue scroll!");

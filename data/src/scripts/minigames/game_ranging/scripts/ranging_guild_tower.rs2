@@ -1,0 +1,110 @@
+// Ranging Guild - Center Tower Ladder - Up
+[oploc1,loc_2511]
+p_arrivedelay;
+mes("You climb up the ladder.");
+~fill_towers;
+p_telejump(2_41_53_43_37);
+
+[proc,fill_towers]
+if(npc_find(2_41_53_44_49, tower_archer_north, 3, 0) = false) {
+    npc_add(2_41_53_43_49, tower_archer_north, 500);
+    npc_add(2_41_53_44_49, tower_archer_north, 500);
+    npc_add(2_41_53_45_49, tower_archer_north, 500);
+    if(npc_findexact(2_41_53_43_38, tower_advisor_north) = true) npc_say("The north tower has received reinforcements, kill them quickly!");
+} else if(npc_findexact(2_41_53_43_38, tower_advisor_north) = true) {
+    npc_say("The north tower is occupied, get them!");
+} 
+
+if(npc_find(2_41_53_57_36, tower_archer_east, 3, 0) = false) {
+    npc_add(2_41_53_57_37, tower_archer_east, 500);
+    npc_add(2_41_53_57_36, tower_archer_east, 500);
+    npc_add(2_41_53_57_35, tower_archer_east, 500);
+    if(npc_findexact(2_41_53_46_37, tower_advisor_east) = true) npc_say("The east tower has received reinforcements, kill them quickly!");
+} else if(npc_findexact(2_41_53_46_37, tower_advisor_east) = true) {
+    npc_say("The east tower is occupied, get them!");
+} 
+
+if(npc_find(2_41_53_44_23, tower_archer_south, 3, 0) = false) {
+    npc_add(2_41_53_43_23, tower_archer_south, 500);
+    npc_add(2_41_53_44_23, tower_archer_south, 500);
+    npc_add(2_41_53_45_23, tower_archer_south, 500);
+    if(npc_findexact(2_41_53_45_34, tower_advisor_south) = true) npc_say("The south tower has received reinforcements, kill them quickly!");
+} else if(npc_findexact(2_41_53_45_34, tower_advisor_south) = true) {
+    npc_say("The south tower is occupied, get them!");
+}
+
+if(npc_find(2_41_53_31_36, tower_archer_west, 3, 0) = false) {
+    npc_add(2_41_53_31_37, tower_archer_west, 500);
+    npc_add(2_41_53_31_36, tower_archer_west, 500);
+    npc_add(2_41_53_31_35, tower_archer_west, 500);
+    if(npc_findexact(2_41_53_42_35, tower_advisor_west) = true) npc_say("The west tower has received reinforcements, kill them quickly!");
+}
+else if(npc_findexact(2_41_53_42_35, tower_advisor_west) = true) { 
+    npc_say("The west tower is occupied, get them!");
+}
+
+// Ranging Guild - Center Tower Ladder - Down
+[oploc1,loc_2512]
+p_arrivedelay;
+mes("You climb down the ladder.");
+p_telejump(0_41_53_43_37);
+
+[ai_queue1,tower_archer_north](int $arg) ~npc_default_retaliate_ap;
+[ai_opplayer2,tower_archer_north] npc_setmode(applayer2);
+[ai_applayer2,tower_archer_north] ~npc_rangeattack;
+
+[ai_queue3,tower_archer_north](int $arg)
+~fill_towers; // attempt to fill any empty towers, this happens before npc_death, probably so it doesn't fill the same tower as the archer
+gosub(npc_death);
+if(npc_find(npc_coord, tower_archer_north, 2, 0) = false) {
+    if(npc_findexact(2_41_53_43_38, tower_advisor_north) = true) npc_say("The north tower is defeated! Hurray!");
+}
+
+[ai_queue1,tower_archer_east](int $arg) ~npc_default_retaliate_ap;
+[ai_opplayer2,tower_archer_east] npc_setmode(applayer2);
+[ai_applayer2,tower_archer_east] ~npc_rangeattack;
+
+[ai_queue3,tower_archer_east](int $arg)
+~fill_towers;
+gosub(npc_death);
+if(npc_find(npc_coord, tower_archer_east, 2, 0) = false) {
+    if(npc_findexact(2_41_53_46_37, tower_advisor_east) = true) npc_say("The east tower is defeated! Hurray!");
+}
+
+[ai_queue1,tower_archer_south](int $arg) ~npc_default_retaliate_ap;
+[ai_opplayer2,tower_archer_south] npc_setmode(applayer2);
+[ai_applayer2,tower_archer_south] ~npc_rangeattack;
+
+[ai_queue3,tower_archer_south](int $arg)
+~fill_towers;
+gosub(npc_death);
+if(npc_find(npc_coord, tower_archer_south, 2, 0) = false) {
+    if(npc_findexact(2_41_53_45_34, tower_advisor_south) = true) npc_say("The south tower is defeated! Hurray!");
+}
+
+[ai_queue1,tower_archer_west](int $arg) ~npc_default_retaliate_ap;
+[ai_opplayer2,tower_archer_west] npc_setmode(applayer2);
+[ai_applayer2,tower_archer_west] ~npc_rangeattack;
+
+[ai_queue3,tower_archer_west](int $arg)
+~fill_towers;
+gosub(npc_death);
+if(npc_find(npc_coord, tower_archer_south, 2, 0) = false) {
+    if(npc_findexact(2_41_53_42_35, tower_advisor_west) = true) npc_say("The west tower is defeated! Hurray!");
+}
+
+[opnpc1,_tower_advisor]
+~chatplayer("<p,happy>Hello there, what do you do here?");
+~chatnpc("<p,happy>Hi. We are in charge of this practice area.");
+~chatplayer("<p,confused>This is a practice area?");
+~chatnpc("<p,happy>Surrounding us are four towers. Each tower contains trained archers of a different level. You'll notice it's quite a distance, so you'll need a longbow.");
+// TODO: confirm mesanims on all but the last one
+if(stat_base(ranged) < 50) {
+    ~chatnpc("<p,happy>As you're not very skilled, so I advise you to practise on the north tower. That'll provide the best challenge for you.");
+} else if(stat_base(ranged) < 60) {
+    ~chatnpc("<p,happy>You seem to have some skill, so I advise you to practice on the east tower. That'll provide the best challenge for you.");
+} else if(stat_base(ranged) < 70) {
+    ~chatnpc("<p,happy>You appear to be fairly skilled with a bow, so I advise you to practice on the south tower. That'll provide the best challenge for you.");
+} else {
+    ~chatnpc("<p,happy>Looks like you're very skilled, so I advise you to practice on the west tower. That'll provide the best challenge for you.");
+}

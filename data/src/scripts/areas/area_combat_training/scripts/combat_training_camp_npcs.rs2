@@ -2,48 +2,48 @@
 // TODO - facial animations.
 // TODO - linebreaks.
 [opnpc1,npc_561]
-~chatplayer(neutral, "Hello.");
-~chatnpc(neutral, "So, are you looking to buy weapons? King Lathas keeps us very well stocked.");
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>So, are you looking to buy weapons? King Lathas keeps us very well stocked.");
 
 def_int $option = ~p_choice2("What do you have?", 0, "No thanks.", 1);
 
 switch_int ($option) {
     case 0: {
-        ~chatplayer(neutral, "What do you have?");
-        ~chatnpc(neutral, "Take a look.");
+        ~chatplayer("<p,neutral>What do you have?");
+        ~chatnpc("<p,neutral>Take a look.");
         ~openshop_activenpc;
     }
 
     case 1: {
-        ~chatplayer(neutral, "No thanks.");
+        ~chatplayer("<p,neutral>No thanks.");
     }
 }
 
 // Mace Guard
 // TODO - facial animations.
 [opnpc1,npc_344]
-~chatplayer(neutral, "Hello there.");
-~chatnpc(neutral, "What do you want - leave us be!");
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,neutral>What do you want - leave us be!");
 
 // Crossbow Guard
 // TODO - facial animations.
 // TODO - linebreaks.
 [opnpc1,npc_346]
-~chatplayer(neutral, "Hello.");
+~chatplayer("<p,neutral>Hello.");
 
 def_int $random = random(2);
 
 switch_int ($random) {
     case 0: {
-        ~chatnpc(neutral, "Hello soldier.");
-        ~chatplayer(neutral, "I'm more of an adventurer really.");
-        ~chatnpc(neutral, "In this day and age we're all soldiers. No time to waste gassing, Fight! Fight! Fight!");
+        ~chatnpc("<p,neutral>Hello soldier.");
+        ~chatplayer("<p,neutral>I'm more of an adventurer really.");
+        ~chatnpc("<p,neutral>In this day and age we're all soldiers. No time to waste gassing, Fight! Fight! Fight!");
     }
 
     case 1: {
-        ~chatnpc(neutral, "Well hello brave warrior. These ogres have been terrorising the area, they've eaten four of our children this week alone.");
-        ~chatplayer(neutral, "Brutes!");
-        ~chatnpc(neutral, "So we decided to use them for target practice. A fair punishment.");
-        ~chatplayer(neutral, "Indeed.");
+        ~chatnpc("<p,neutral>Well hello brave warrior. These ogres have been terrorising the area, they've eaten four of our children this week alone.");
+        ~chatplayer("<p,neutral>Brutes!");
+        ~chatnpc("<p,neutral>So we decided to use them for target practice. A fair punishment.");
+        ~chatplayer("<p,neutral>Indeed.");
     }
 }

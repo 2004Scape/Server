@@ -1,0 +1,82 @@
+// accuracy pulled from https://oldschool.runescape.wiki/w/Module:Chart_data/ranging_guild_target_region_chance
+[aploc1,loc_2513]
+if (%target1 = 0) {
+    if(npc_find(coord, competition_judge, 5, 0) = true) { // 5 tiles checked on osrs
+        ~chatnpc("<p,neutral>Sorry, you may only use the targets for the competition, not for practicing.");
+        return;
+    } 
+    mes("Maybe you should ask before using those.");
+} else if (%target1 >= 1 & %target1 < 11) {
+    if(inv_totalcat(worn, weapon_bow) = 0) {
+        if(npc_find(coord, competition_judge, 5, 0) = true) { // 5 tiles checked on osrs
+            ~chatnpc("<p,neutral>You need a bow to take part in the competition.");
+            return;
+        } 
+        mes("A bow might help here...");
+    }
+    if(inv_total(worn, bronze_arrow) = 0) {
+        if(npc_find(coord, competition_judge, 5, 0) = true) { // 5 tiles checked on osrs
+            ~chatnpc("<p,neutral>I suggest you use the 10 bronze arrows I gave you.");
+            return;
+        } 
+        mes("You'll be needing those bronze arrows...");
+    }
+    if(distance(coord, loc_coord) < 5) {
+        mes("You should probably be behind the <lowercase(lc_name(loc_299))>.");
+        return;
+    }
+    mes("You carefully aim at the target...");
+    anim(human_bow, 0);
+    sound_synth(arrowlaunch2, 0, 0);
+    spotanim_pl(oc_param(bronze_arrow, proj_launch), 96, 0);
+    inv_del(worn, bronze_arrow, 1);
+    ~coord_projectile(coord, loc_coord, bronze_arrow_travel, 40, 36, 41, 15, 5, 11, 5);
+    p_delay(2);
+    %target1 = calc(%target1 + 1);
+    // roll target
+    def_int $target = ~roll_rangeguild_target;
+    %target3 = $target;
+    // calc pts
+    def_int $points =  ~get_targetpts;
+    %target2 = calc(%target2 + $points);
+    givexp(ranged, calc(($points / 2) * 10));
+    if_settext(target:com_120, ~get_targetstr);
+    if_openmainmodal(target);
+} else if(%target1 = 11) {   
+    if(npc_find(coord, competition_judge, 5, 0) = true) {
+        @competition_judge_reward_pts;
+    } 
+    mes("You've fired all your arrows, maybe you should talk to the Judge.");
+}
+
+[proc,get_targetstr](string)
+switch_int(%target3) {
+    case 11: return ("Missed!");
+    case 9,10: return ("Hit Black!");
+    case 5,6,7,8: return ("Hit Blue!");
+    case 2,3,4: return ("Hit Red!");
+    case 1: return ("Hit Yellow!");
+    case 0: return ("Bulls-Eye!");
+}
+
+[proc,get_targetpts](int)
+switch_int(%target3) {
+    case 11: return (0);
+    case 9,10: return (10);
+    case 5,6,7,8: return (20);
+    case 2,3,4: return (30);
+    case 1: return (50);
+    case 0: return (100);
+}
+
+// def rolls source: https://discord.com/channels/177206626514632704/269673599554551808/1070094764797595729 (wiki)
+[proc,roll_rangeguild_target](int)
+def_int $value = 11;
+def_int $att_roll = random(%com_rangeattack);
+if(randominc($att_roll) > randominc(1000)) $value = (calc(random(1) + 9)); 
+if(randominc($att_roll) > randominc(2000)) $value = (calc(random(4) + 5));
+if(randominc($att_roll) > randominc(3000)) $value = (calc(random(3) + 2));
+if(randominc($att_roll) > randominc(4000)) $value = (1);
+if(randominc($att_roll) > randominc(7000)) $value = (0);
+return ($value);
+

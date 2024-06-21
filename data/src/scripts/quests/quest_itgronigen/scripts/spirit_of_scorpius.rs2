@@ -1,7 +1,7 @@
 [opnpc1,spirit_of_scorpius]
-~chatnpc(angry, "Who treads upon my grave?");
+~chatnpc("<p,angry>Who treads upon my grave?");
 if(%itgronigen_progress < ^itgronigen_complete) {
-    ~chatnpc(angry, "How dare you disturb me!");
+    ~chatnpc("<p,angry>How dare you disturb me!");
     return;
 }
 def_int $option;
@@ -12,42 +12,42 @@ if(%scorpius_given_symbol = 1) {
 }
 switch_int($option) {
     case 1:
-        ~chatplayer(neutral, "I seek your wisdom.");
-        ~chatnpc(neutral, "Indeed, I feel you have beheld the far places in the heavens.");
-        ~chatnpc(neutral, "My Lord instructs me to help you.");
-        ~chatnpc(neutral, "Here is a mould to make a token for our Lord;|a mould for the unholy symbol of Zamorak.");
+        ~chatplayer("<p,neutral>I seek your wisdom.");
+        ~chatnpc("<p,neutral>Indeed, I feel you have beheld the far places in the heavens.");
+        ~chatnpc("<p,neutral>My Lord instructs me to help you.");
+        ~chatnpc("<p,neutral>Here is a mould to make a token for our Lord;|a mould for the unholy symbol of Zamorak.");
         %scorpius_given_symbol = 1;
         inv_add(inv, unholy_mould, 1);
         mes("The ghost gives you a casting mould.");
     case 2:
-        ~chatplayer(neutral, "I have come to seek a blessing.");
+        ~chatplayer("<p,neutral>I have come to seek a blessing.");
         if(inv_total(inv, unpowered_symbol) > 0) {
-            ~chatnpc(happy, "I see you have the unholy symbol of our Lord.|I will bless it for you.");
+            ~chatnpc("<p,happy>I see you have the unholy symbol of our Lord.|I will bless it for you.");
             mes("The ghost mutters in a strange voice.");
             mes("The unholy symbol throbs with power.");
             if_close;
             inv_del(inv, unpowered_symbol, 1);
             inv_add(inv, unholy_symbol, 1);
             p_delay(5);
-            ~chatnpc(neutral, "The symbol of our Lord has been blessed with power!");
-            ~chatnpc(neutral, "My master calls.");
+            ~chatnpc("<p,neutral>The symbol of our Lord has been blessed with power!");
+            ~chatnpc("<p,neutral>My master calls.");
         } else if(inv_total(inv, unholy_symbol) > 0) {
-            ~chatnpc(happy, "I see you have the unholy symbol of our Lord.|It is blessed with the Lord Zamorak's power.");
-            ~chatnpc(happy, "Come to me when your faith weakens.");
+            ~chatnpc("<p,happy>I see you have the unholy symbol of our Lord.|It is blessed with the Lord Zamorak's power.");
+            ~chatnpc("<p,happy>Come to me when your faith weakens.");
         } else {
-            ~chatnpc(angry, "No blessings will be given to those|who have no symbol of our Lord's love.");
+            ~chatnpc("<p,angry>No blessings will be given to those|who have no symbol of our Lord's love.");
         }
     case 3:
-        ~chatplayer(neutral, "I need another mould for the unholy symbol.");
+        ~chatplayer("<p,neutral>I need another mould for the unholy symbol.");
         if(inv_total(inv, unholy_mould) > 0) {
-            ~chatnpc(neutral, "One you already have, another is not needed.");
-            ~chatplayer(happy, "Leave me be."); // this is npc dialogue in RSC, probably broken when converting over and never fixed
+            ~chatnpc("<p,neutral>One you already have, another is not needed.");
+            ~chatplayer("<p,happy>Leave me be."); // this is npc dialogue in RSC, probably broken when converting over and never fixed
             return;
         }
-        ~chatnpc(neutral, "To lose an object is easy to replace.|To lose the affections of our Lord is impossible to forgive.");
+        ~chatnpc("<p,neutral>To lose an object is easy to replace.|To lose the affections of our Lord is impossible to forgive.");
         inv_add(inv, unholy_mould, 1);
         mes("The ghost hands you another mould.");
     case 4:
-        ~chatplayer(angry, "I have come to kill you.");
-        ~chatnpc(neutral, "The might of mortals, to me, is as the dust to the sea.");
+        ~chatplayer("<p,angry>I have come to kill you.");
+        ~chatnpc("<p,neutral>The might of mortals, to me, is as the dust to the sea.");
 }

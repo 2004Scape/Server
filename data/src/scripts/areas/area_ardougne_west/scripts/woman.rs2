@@ -7,38 +7,38 @@
 [opnpc1,npc_363] @woman_bah_those_mourners; // woman needs slim fast
 
 [label,woman_life_is_tough]
-~chatplayer(happy, "Hello, how's it going?");
-~chatnpc(sad, "Life is tough.");
+~chatplayer("<p,happy>Hello, how's it going?");
+~chatnpc("<p,sad>Life is tough.");
 switch_int(%elena_progress) {
     case ^quest_elena_freed_elena, ^elena_complete: @multi2("Yes, living in a plague city must be hard.", woman_living_in_a_plague_city_must_be_hard, "I'm sorry to hear that.", woman_im_sorry_to_hear_that);
     case default: @multi3("Yes, living in a plague city must be hard.", woman_living_in_a_plague_city_must_be_hard, "I'm sorry to hear that.", woman_im_sorry_to_hear_that, "I'm looking for a lady called <nc_name(elena)>.", woman_im_looking_for_a_lady);
 }
 
 [label,woman_living_in_a_plague_city_must_be_hard]
-~chatplayer(sad, "Yes, living in a plague city must be hard.");
-~chatnpc(angry, "Plague? Pah, that's no excuse for the treatment we've received. It's obvious pretty quickly if someone has the plague.");
-~chatnpc(shifty, "I'm thinking about making a break for it. I'm perfectly healthy, not gonna infect anyone.");
+~chatplayer("<p,sad>Yes, living in a plague city must be hard.");
+~chatnpc("<p,angry>Plague? Pah, that's no excuse for the treatment we've received. It's obvious pretty quickly if someone has the plague.");
+~chatnpc("<p,shifty>I'm thinking about making a break for it. I'm perfectly healthy, not gonna infect anyone.");
 
 [label,woman_im_sorry_to_hear_that]
-~chatplayer(sad, "I'm sorry to hear that.");
-~chatnpc(sad, "Well, ain't much either you or me can do about it.");
+~chatplayer("<p,sad>I'm sorry to hear that.");
+~chatnpc("<p,sad>Well, ain't much either you or me can do about it.");
 
 [label,woman_im_looking_for_a_lady]
-~chatplayer(neutral, "I'm looking for a lady called <nc_name(elena)>.");
-~chatnpc(neutral, "I've not heard of her. Old <nc_name(jethick)> knows a lot of people, maybe he'll know where you can find her.");
+~chatplayer("<p,neutral>I'm looking for a lady called <nc_name(elena)>.");
+~chatnpc("<p,neutral>I've not heard of her. Old <nc_name(jethick)> knows a lot of people, maybe he'll know where you can find her.");
 
 [label,man_woman_help_me_out_of_this_hell_hole]
-~chatplayer(happy, "Good day.");
-~chatnpc(shock, "An outsider! Can you get me out of this hell hole?");
-~chatplayer(sad, "Sorry, that's not what I'm here to do.");
+~chatplayer("<p,happy>Good day.");
+~chatnpc("<p,shock>An outsider! Can you get me out of this hell hole?");
+~chatplayer("<p,sad>Sorry, that's not what I'm here to do.");
 
 [label,man_woman_go_away_outsider]
-~chatplayer(happy, "Hello there.");
-~chatnpc(angry, "Go away. People from the outside shut us in like animals. I have nothing to say to you.");
+~chatplayer("<p,happy>Hello there.");
+~chatnpc("<p,angry>Go away. People from the outside shut us in like animals. I have nothing to say to you.");
 
 [label,woman_bah_those_mourners]
-~chatplayer(happy, "Hello, how's it going?");
-~chatnpc(shock, "Bah, those mourners... they're meant to be helping us, but I think they're doing more harm than good. They won't even let me send a letter out to my family.");
+~chatplayer("<p,happy>Hello, how's it going?");
+~chatnpc("<p,shock>Bah, those mourners... they're meant to be helping us, but I think they're doing more harm than good. They won't even let me send a letter out to my family.");
 switch_int(%elena_progress) {
     case ^quest_elena_freed_elena: // nothing
     case ^elena_complete: // nothing
@@ -46,10 +46,10 @@ switch_int(%elena_progress) {
 }
 
 [label,woman_have_you_seen_a_lady_around_here]
-~chatplayer(quiz, "Have you seen a lady called <nc_name(elena)> around here?");
-~chatnpc(happy, "Yes, I've seen her. Very helpful person.");
-~chatnpc(sad, "Not for the last few days though... I thought maybe she'd gone home.");
+~chatplayer("<p,quiz>Have you seen a lady called <nc_name(elena)> around here?");
+~chatnpc("<p,happy>Yes, I've seen her. Very helpful person.");
+~chatnpc("<p,sad>Not for the last few days though... I thought maybe she'd gone home.");
 
 [label,woman_you_should_stand_up_to_them_more]
-~chatplayer(neutral, "You should stand up to them more.");
-~chatnpc(sad, "Oh I'm not one to cause a fuss.");
+~chatplayer("<p,neutral>You should stand up to them more.");
+~chatnpc("<p,sad>Oh I'm not one to cause a fuss.");

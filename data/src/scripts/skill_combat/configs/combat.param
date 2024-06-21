@@ -157,3 +157,7 @@ default=1000
 [magicattack_anim]
 type=seq
 default=null
+
+[npc_ammo]
+type=namedobj
+default=null

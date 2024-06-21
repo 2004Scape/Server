@@ -193,7 +193,7 @@ export class LoginServer {
         });
 
         this.server.listen({ port: Environment.LOGIN_PORT, host: '0.0.0.0' }, () => {
-            console.log(`[Login]: Listening on port ${Environment.LOGIN_PORT}`);
+            //console.log(`[Login]: Listening on port ${Environment.LOGIN_PORT}`);
         });
     }
 

@@ -1,17 +1,17 @@
 [opnpc1,gnome_trainer]
 def_int $rand_value = random(4);
 if($rand_value = 0) {
-    ~chatplayer(neutral, "Hello how are you?");
-    ~chatnpc(angry, "I'm amazed by how much humans chat. The sign over there says training area, not pointless conversation area.");
+    ~chatplayer("<p,neutral>Hello how are you?");
+    ~chatnpc("<p,angry>I'm amazed by how much humans chat. The sign over there says training area, not pointless conversation area.");
 } else if($rand_value = 1) {
-    ~chatplayer(neutral, "Hello, what is this place?");
-    ~chatnpc(happy, "This, my friend, is where we train. Here we improve our agility. It's an essential skill.");
-    ~chatplayer(neutral, "It looks easy enough.");
-    ~chatnpc(happy, "If you complete the course in order from the slippery log to the end, your agility will increase much faster than by repeating just one obstacle.");
+    ~chatplayer("<p,confused>Hello, what is this place?");
+    ~chatnpc("<p,happy>This, my friend, is where we train. Here we improve our agility. It's an essential skill.");
+    ~chatplayer("<p,neutral>It looks easy enough.");
+    ~chatnpc("<p,neutral>If you complete the course in order from the slippery log to the end, your agility will increase much faster than by repeating just one obstacle.");
 } else if($rand_value = 2) {
-    ~chatplayer(happy, "This is fun!");
-    ~chatnpc(angry, "This is training soldier. If you want fun go make some cocktails.");
+    ~chatplayer("<p,happy>This is fun!");
+    ~chatnpc("<p,angry>This is training soldier. If you want fun go make some cocktails.");
 } else if($rand_value = 3) {
-    ~chatplayer(happy, "Hello there.");
-    ~chatnpc(default, "This isn't a grannies' tea party, let's see some sweat human. Go! Go! Go!");
+    ~chatplayer("<p,happy>Hello there.");
+    ~chatnpc("<p,neutral>This isn't a grannies' tea party, let's see some sweat human. Go! Go! Go!");
 }
