@@ -169,7 +169,7 @@ if (%macro_event < add(~macro_event_general_count, 1)){
 if (finduid(%npc_attacking_uid) = false) {
     return(true);
 }
-if (%macro_event_uid ! npc_uid) {
+if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
     return(true);
 }
 
@@ -203,7 +203,7 @@ return(false);
 if (finduid(%npc_attacking_uid) = false) {
     return(true);
 }
-if (%macro_event_uid ! npc_uid) {
+if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
     return(true);
 }
 
