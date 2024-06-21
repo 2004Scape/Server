@@ -1,4 +1,4 @@
-// TODO: add all vine and wall_fungus spawns, move all these locs to areas/area_karamja if they're accessible pre-quest?
+// TODO: move all these locs to areas/area_karamja if they're accessible pre-quest?
 
 [oploc2,junglepotion_marshy_jungle_vine]
 anim(human_pickupfloor, 0); // TODO correct anim
