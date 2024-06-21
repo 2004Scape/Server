@@ -236,6 +236,7 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
+    interactWalkTrigger: boolean = false;
 
     highPriorityOut: Stack<Packet> = new Stack();
     lowPriorityOut: Stack<Packet> = new Stack();
@@ -950,11 +951,13 @@ export default class Player extends PathingEntity {
             }
         }
 
-        if (this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+        // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79, only called when clicking to interact?
+        if (!this.interactWalkTrigger && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
             const trigger = ScriptProvider.get(this.walktrigger);
             this.walktrigger = -1;
             if (trigger) {
                 const script = ScriptRunner.init(trigger, this);
+                this.interactWalkTrigger = true;
                 this.unsetMapFlag();
                 this.runScript(script, true);
             }
