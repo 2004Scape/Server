@@ -25,7 +25,11 @@ settimer(general_macro_events, 500);
 // chest macro gas 
 ~check_chest_macro_gas;
 // for logout out during a general macro event, they respawn when you log back in
-~macro_event_general_check;
+// queue: 
+// - https://youtu.be/T0ulsgorBkY?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+// - https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+// npc spawns only after interface is closed
+queue(macro_event_general_check, 0);
 // so pk skulls persist after logging back in
 ~set_pk_skull_login;
 // so antifire persists after logging back in

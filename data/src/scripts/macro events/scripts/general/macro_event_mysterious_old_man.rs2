@@ -1,12 +1,11 @@
-[ai_queue4,macro_event_mysterious_old_man_general](int $arg)
+[proc,macro_event_mysterious_old_man_general_spawn]
 spotanim_map(small_smokepuff, npc_coord, 124, 0);
-if (finduid(%npc_attacking_uid) = true) {
-    sound_synth(smokepuff, 0, 0);
-    npc_anim(emote_bow, 20);
-    npc_say("Greetings <displayname>!");
-    npc_delay(1);
-    npc_setmode(playerfollow);
-}
+sound_synth(smokepuff, 0, 0);
+npc_anim(emote_bow, 20);
+npc_say("Greetings <displayname>!");
+npc_delay(1);
+%npc_attacking_uid = uid;
+npc_setmode(playerfollow);
 
 [ai_queue5,macro_event_mysterious_old_man_general](int $arg) // despawn
 npc_anim(emote_cry, 20);

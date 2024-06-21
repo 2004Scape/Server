@@ -1,11 +1,10 @@
-[ai_queue4,macro_event_genie](int $arg)
+[proc,macro_event_genie_spawn]
 spotanim_map(small_smokepuff, npc_coord, 124, 0);
-if (finduid(%npc_attacking_uid) = true) {
-    sound_synth(genie_appear, 0, 0);
-    npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
-    npc_delay(1);
-    npc_setmode(playerfollow);
-}
+sound_synth(genie_appear, 0, 0);
+npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
+npc_delay(1);
+%npc_attacking_uid = uid;
+npc_setmode(playerfollow);
 
 [ai_queue5,macro_event_genie](int $arg)
 // only confirmed for mysterious old man
