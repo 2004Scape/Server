@@ -1,6 +1,18 @@
 [ai_queue3,count_draynor](int $arg) // do nothing
 [ai_queue4,count_draynor](int $arg) gosub(npc_death);
 [ai_opplayer2,count_draynor] @count_draynor_attack;
+[opnpc2,count_draynor]
+if (%quest_vampire = ^vampire_complete) {
+    mes("You've done enough vampire slaying.");
+    return;
+}
+@player_combat_start;
+[apnpc2,count_draynor]
+if (%quest_vampire = ^vampire_complete) {
+    mes("You've done enough vampire slaying.");
+    return;
+}
+@player_combat_start_ap;
 
 [ai_queue2,count_draynor](int $damage)
 ~npc_default_damage($damage);
