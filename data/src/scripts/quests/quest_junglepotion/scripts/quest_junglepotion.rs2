@@ -18,6 +18,9 @@ if (%junglepotion_progress = ^junglepotion_get_snake_weed) {
 ~pick_herb("rock", unidentified_volencia_moss, junglepotion_rock_empty);
 
 [oploc2,junglepotion_wall_fungus]
+if (%junglepotion_progress = ^junglepotion_get_rogues_purse) {
+	%junglepotion_progress = ^junglepotion_found_rogues_purse;
+}
 ~pick_herb("wall", unidentified_rogues_purse, null);
 
 [oploc2,junglepotion_rocks]

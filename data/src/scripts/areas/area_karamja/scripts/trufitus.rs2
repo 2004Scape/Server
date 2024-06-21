@@ -19,7 +19,7 @@ if (last_useitem = snake_weed | last_useitem = ardrigal | last_useitem = sito_fo
 			if (last_useitem = volencia_moss) {
 				@accept_herb(last_useitem);
 			}
-        case ^junglepotion_get_rogues_purse:
+        case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse:
 			if (last_useitem = rogues_purse) {
 				@accept_herb(last_useitem);
 			}
@@ -106,7 +106,7 @@ if(%junglepotion_progress = ^junglepotion_not_started) {
             ~give_herb(sito_foil, unidentified_sito_foil);
         case ^junglepotion_get_volencia_moss:
             ~give_herb(volencia_moss, unidentified_volencia_moss);
-        case ^junglepotion_get_rogues_purse:
+        case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse:
             ~give_herb(rogues_purse, unidentified_rogues_purse);
         case ^junglepotion_complete:
             @post_quest;
@@ -173,7 +173,7 @@ if($option6 = 1) {
         switch_int(%junglepotion_progress) {
             case ^junglepotion_get_volencia_moss:
                 ~chatnpc("<p,angry>Please don't try to deceive me! I really need that <oc_name(volencia_moss)> if I am to make this potion.");
-            case ^junglepotion_get_rogues_purse:
+            case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse:
                 ~chatnpc("<p,angry>Please don't try to deceive me, I really need that <oc_name(rogues_purse)> if I am to make this potion.");
             case default:
                 ~chatnpc("<p,angry>Please don't try to deceive me.");
@@ -197,7 +197,7 @@ if($option6 = 1) {
         case ^junglepotion_get_volencia_moss:
             ~chatnpc("<p,neutral>You are looking for <oc_name($herb)>. It clings to rocks for its existence. It is difficult to see, so you must search for it well.");
             ~chatnpc("<p,neutral>It prefers rocks of high metal content and a frequently disturbed environment. There is some, I believe to the south east of this village.");
-        case ^junglepotion_get_rogues_purse:
+        case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse:
             ~chatnpc("<p,neutral>You are looking for <oc_name($herb)>");
             ~chatnpc("<p,neutral>It inhabits the darkness of the underground, and grows in caverns to the north. A secret entrance to the caverns is set into the northern cliffs, be careful Bwana.");
     }
@@ -207,7 +207,7 @@ if($option6 = 1) {
 }
 
 [label,accept_herb](obj $herb)
-if(%junglepotion_progress = ^junglepotion_get_rogues_purse) {
+if(%junglepotion_progress = ^junglepotion_get_rogues_purse | %junglepotion_progress = ^junglepotion_found_rogues_purse) {
     ~objbox($herb, "You give the Rogue's Pursee to <npc_name>.");
 } else {
     ~objbox($herb, "You give the <oc_name($herb)> to <npc_name>.");
@@ -216,7 +216,7 @@ inv_del(inv, $herb, 1);
 
 switch_int(%junglepotion_progress) {
 case ^junglepotion_get_snake_weed:
-    ~chatnpc("<p,neutral>That's not fresh <lowercase(oc_name(snake_weed))>, did you pick it yourself? Go get me some fresh <lowercase(oc_name(snake_weed))> and remember to pick it yourself.");
+    @given_unid($herb);
 case ^junglepotion_found_snake_weed:
     %junglepotion_progress = ^junglepotion_get_ardrigal;
     ~chatnpc("<p,happy>Great, you have the <oc_name(snake_weed)>! Many thanks. Ok, the next herb is called <oc_name(ardrigal)>. It is related to the palm and grows to the east in its brother's shady profusion.");
@@ -236,14 +236,19 @@ case ^junglepotion_get_volencia_moss:
     ~chatnpc("<p,happy>caverns in the northern part of this island. A secret entrance to the caverns is set into the northern cliffs of this land. Take care Bwana as it may be dangerous.");
 case ^junglepotion_get_rogues_purse:
     // TODO: wiki says rogues purse from a drop, like snake weed, won't progress you in the quest but wiki doesn't show dialogue for it.
+    @given_unid($herb);
+case ^junglepotion_found_rogues_purse:
     queue(junglepotion_quest_complete, 0);
     ~chatnpc("<p,happy>Most excellent Bwana! You have returned all the herbs to me and, I can finish the preparations for the potion, and at last divine with the gods.");
     ~chatnpc("<p,happy>Many blessings on you! I must now prepare, please excuse me while I make the arrangements.");
     ~mesbox("<npc_name> shows you some techniques in Herblore. You gain some experience in Herblore.");
 }
 
+[label,given_unid](obj $herb)
+~chatnpc("<p,neutral>That's not fresh <lowercase(oc_name($herb))>, did you pick it yourself? Go get me some fresh <lowercase(oc_name($herb))> and remember to pick it yourself.");
+
 [label,decline_herb]
-if(%junglepotion_progress = ^junglepotion_get_rogues_purse) {
+if(%junglepotion_progress = ^junglepotion_get_rogues_purse | %junglepotion_progress = ^junglepotion_found_rogues_purse) {
     ~chatnpc("<p,neutral>Sorry Bwana, that herb is so dirty I can't even tell whether it is fresh. Please clean it first.");
 } else {
     ~chatnpc("<p,neutral>Sorry, Bwana, that herb is so dirty that I can't even tell whether it is fresh. Please clean it first.");
@@ -255,5 +260,4 @@ if(%junglepotion_progress = ^junglepotion_get_rogues_purse) {
 [label,post_quest]
 // TODO: this chatnpc is only supposed to show once after junglepotion_complete, but maybe that's only after tai bwo wannai was added with the timfraku chatnpc?
 ~chatnpc("<p,happy>My greatest respects, bwana. I have communed with my gods and the future looks good for my people. We are happy now that the gods are not angry with us. With some blessings, we will be safe here.");
-
 // ~chatnpc("<p,happy>You should deliver the good news to bwana Timfraku, chief of Tai Bwo Wannai. He lives in a raised hut not far from here.");
