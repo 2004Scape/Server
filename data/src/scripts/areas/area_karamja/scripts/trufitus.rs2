@@ -1,4 +1,5 @@
 // NOTE: rs classic dialogue is slightly different, so this may be the updated dialogue after more jungle vines, more wall fungus, and seqs with sounds were added: https://www.youtube.com/watch?v=qm8ZwROiW8s
+// TODO: mesanims are just guesses
 
 [opnpcu,trufitus]
 if (last_useitem = snake_weed | last_useitem = ardrigal | last_useitem = sito_foil | last_useitem = volencia_moss | last_useitem = rogues_purse) {
