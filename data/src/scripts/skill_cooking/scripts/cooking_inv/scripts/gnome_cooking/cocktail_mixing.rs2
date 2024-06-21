@@ -185,7 +185,9 @@ switch_int($step) {
         return;
 }
 inv_del(inv, $item, 1);
-inv_add(inv, oc_param($item, next_obj_stage), 1);
+if (oc_param($item, next_obj_stage) ! null) {
+    inv_add(inv, oc_param($item, next_obj_stage), 1);
+}
 mes("<$message> into your cocktail shaker...");
 
 
