@@ -1,5 +1,5 @@
 [opheld5,_]
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     mes("You cannot drop items here."); // osrs pvp arena
     return;
 }

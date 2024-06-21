@@ -6,6 +6,37 @@ npc_say("Greetings <displayname>!");
 npc_delay(1);
 %npc_attacking_uid = uid;
 npc_setmode(playerfollow);
+npc_queue(4, 0, 20);
+
+[ai_queue4,macro_event_mysterious_old_man_general](int $progress)
+// other videos:
+// https://youtu.be/_PPxvNjIgq4?t=63
+
+// warnings https://youtu.be/Ai89wqupYqA
+// https://youtu.be/HpmsgVshwxg?t=267
+if (finduid(%npc_attacking_uid) = true) {
+    if (%macro_event = ^no_macro_event) {
+        npc_queue(5, 0, 2); // just incase
+        return;
+    }
+    if ($progress = 0) {
+        npc_anim(emote_wave, 20);
+        npc_say("ehem... Hello <displayname>!");
+    } else if ($progress = 1) {
+        npc_anim(emote_think, 20);
+        npc_say("Hello, are you there <displayname>!");
+    } else if ($progress = 2) {
+        npc_anim(emote_angry, 20);
+        npc_say("It's really rude to ignore someone, <displayname>!");
+    } else if ($progress = 3) { // fail
+        // https://youtu.be/Ai89wqupYqA?t=45
+        ~macro_event_fail_teleport;
+        ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing
+        return;
+    }
+    npc_queue(4, add($progress, 1), 20);
+}
+
 
 [ai_queue5,macro_event_mysterious_old_man_general](int $arg) // despawn
 npc_anim(emote_cry, 20);
@@ -71,30 +102,4 @@ if (~macro_event_lost_and_follow = true) {
     // only confirmed for mysterious old man https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
     npc_queue(5, 0, 0);
     return;
-}
-// other videos:
-// https://youtu.be/_PPxvNjIgq4?t=63
-
-// warnings https://youtu.be/Ai89wqupYqA
-// https://youtu.be/HpmsgVshwxg?t=267
-if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event = ^no_macro_event) {
-        npc_queue(5, 0, 2); // just incase
-        return;
-    }
-    if (%npc_macro_event_status = 1) {
-        npc_anim(emote_wave, 20);
-        npc_say("ehem... Hello <displayname>!");
-    } else if (%npc_macro_event_status = 2) {
-        npc_anim(emote_think, 20);
-        npc_say("Hello, are you there <displayname>!");
-    } else if (%npc_macro_event_status = 3) {
-        npc_anim(emote_angry, 20);
-        npc_say("It's really rude to ignore someone, <displayname>!");
-    } else if (%npc_macro_event_status = 4) { // fail
-        // https://youtu.be/Ai89wqupYqA?t=45
-        ~macro_event_fail_teleport;
-        ~macro_event_fail_note_inv; // not sure if this existed but Sudden and a couple others remember it being a thing
-    }
-    %npc_macro_event_status = calc(%npc_macro_event_status + 1);
 }

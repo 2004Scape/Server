@@ -91,7 +91,7 @@ if (~check_spell_requirements($spell_data) = false) {
     return(false);
 }
 // these go after rune check
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     if (~duel_arena_checks = false) {
         return(false);
     }

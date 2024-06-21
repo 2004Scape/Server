@@ -29,12 +29,9 @@ if (%macro_event > 0) {
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
 // area check here, because stuff like bones and alching for example can spawn random events.
-if (~in_duel_arena = true) {
+if (~macro_event_area(coord) = false) {
     return;
 }
-// if (~macro_event_general_active = true) {
-//     return;
-// }
 def_coord $event_coord = ~macro_event_coord;
 if ($event_coord = null) {
     return;
@@ -50,6 +47,12 @@ switch_int ($event) {
     case ^macro_event_genie : ~macro_event_genie_spawn;
     case ^macro_event_mysterious_old_man_general : ~macro_event_mysterious_old_man_general_spawn;
 }
+
+[proc,macro_event_area](coord $coord)(boolean)
+if (~in_duel_arena($coord) = true) {
+    return(false);
+}
+return(true);
 
 // called when the player logs in
 [queue,macro_event_general_check]
@@ -194,6 +197,9 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
     //
     if (~npc_out_of_combat = true) {
         npc_tele(coord); // osrs
+        if (~macro_event_area(coord) = false) {
+            return(true);
+        }
     } else {
         return(true);
     }
