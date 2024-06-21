@@ -150,7 +150,7 @@ clearsofttimer(duel_arena_start_fight);
 
 [walktrigger,duel_arena_no_move]
 if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
-    p_stopaction;
+    p_walk(coord);
     walktrigger(duel_arena_no_move);
 }
 

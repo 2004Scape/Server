@@ -2,7 +2,7 @@
 if (~duel_arena_melee_check = false) {
     return;
 }
-if (%action_delay > map_clock) {
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opplayer(2); // it is guaranteed here that we are already within op distance
     return;
 }

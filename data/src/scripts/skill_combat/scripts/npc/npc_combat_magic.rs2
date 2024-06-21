@@ -14,7 +14,7 @@ return(~combat_stat($effective_magic, $magicattack));
 [walktrigger,frozen]
 if (map_clock < %stunned) {
     mes("A magical force stops you from moving.");
-    p_stopaction;
+    p_walk(coord);
     walktrigger(frozen);
 }
 

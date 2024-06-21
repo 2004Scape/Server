@@ -314,7 +314,7 @@ walktrigger(kbd_frozen);
 [walktrigger,kbd_frozen]
 if (map_clock < %stunned) {
     mes("You're frozen and can't move!"); // https://youtu.be/7nY0kuIooZk?list=PLn23LiLYLb1bYAFU3Vdk3N9niuHs-b-4-&t=218
-    p_stopaction;
+    p_walk(coord);
     walktrigger(kbd_frozen);
 }
 // ------------

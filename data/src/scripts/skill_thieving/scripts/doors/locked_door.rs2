@@ -40,11 +40,33 @@
 [oploc2,loc_2557]
 ~pick_locked_door(loc_type, loc_coord, ~check_axis_locactive(coord));
 
+[oplocu,loc_2557]
+if(last_useitem = lockpick) {
+    ~pick_locked_door(loc_type, loc_coord, ~not_bool(~check_axis_locactive(coord)));
+    return;
+}
+~displaymessage(^dm_default);
+
 [oploc2,loc_2558]
 ~pick_locked_door(loc_type, loc_coord, ~not_bool(~check_axis_locactive(coord)));
 
+[oplocu,loc_2558]
+if(last_useitem = lockpick) {
+    ~pick_locked_door(loc_type, loc_coord, ~not_bool(~check_axis_locactive(coord)));
+    return;
+}
+~displaymessage(^dm_default);
+
 [oploc2,loc_2559]
-~pick_locked_door(loc_type, loc_coord, ~check_axis_locactive(coord));
+~pick_locked_door(loc_type, loc_coord, ~not_bool(~check_axis_locactive(coord)));
+
+[oplocu,loc_2559]
+if(last_useitem = lockpick) {
+    ~pick_locked_door(loc_type, loc_coord, ~not_bool(~check_axis_locactive(coord)));
+    return;
+}
+~displaymessage(^dm_default);
+
 
 [proc,attempt_open_locked_door](loc $loc, boolean $entering)
 ~require_members_feature;

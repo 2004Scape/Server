@@ -15,9 +15,9 @@ clearqueue(pvp_damage);
 p_delay(1);
 p_stopaction;
 if_close;
-midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
 p_delay(3);
+midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
 
 // todo, check if a player has recieved kill credit for your death
