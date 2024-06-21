@@ -8,3 +8,5 @@ protect=no
 type=npc_uid
 
 [macro_whirlpool_counter]
+
+[macro_gas_counter]
