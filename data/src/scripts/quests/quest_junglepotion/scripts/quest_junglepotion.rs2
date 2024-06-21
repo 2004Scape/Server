@@ -1,5 +1,5 @@
-// TODO: pre-quest can u pick these herbs or access cave?
 // NOTE: seqs+sounds for vine/fungus probably added later (seq 2094-2097) assuming no p_delay if there's no animation (unless they re-used some anim)
+// TODO: pre-quest can u pick these herbs or access cave?
 
 [oploc2,junglepotion_marshy_jungle_vine]
 ~pick_herb("vine", unidentified_snake_weed, junglepotion_marshy_jungle_vine_empty);
