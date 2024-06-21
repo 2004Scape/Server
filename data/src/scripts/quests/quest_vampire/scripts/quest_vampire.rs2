@@ -1,12 +1,14 @@
 [oploc1,loc_2614] @quest_vampire_coffin_open;
+[oploc1,loc_2615] @quest_vampire_coffin_search;
+[oploc2,loc_2615] @quest_vampire_coffin_close;
 
 [proc,quest_vampire_set_progress](int $stage)
 %vampire_progress = $stage;
 ~send_quest_progress(questlist:vampire, %vampire_progress, ^vampire_complete);
 
 [label,quest_vampire_coffin_open]
+loc_change(loc_2615, 10);
 if (%vampire_progress = ^vampire_complete | %vampire_progress = ^quest_vampire_not_started) {
-    ~mesbox("The coffin is sealed shut.");
     return;
 }
 
@@ -21,10 +23,16 @@ if (%vampire_progress > ^quest_vampire_not_started) {
     }
 }
 
-loc_change(loc_2615, 10);
 p_delay(4);
 npc_add(0_48_152_6_46, count_draynor, 500);
 npc_setmode(opplayer2);
+
+[label,quest_vampire_coffin_close]
+loc_change(loc_2614, 10);
+
+[label,quest_vampire_coffin_search]
+p_delay(0);
+~mesbox("There's only a pillow in here..."); // https://youtu.be/LfUTWKG5Ey4?t=149, also similar to rsc
 
 [queue,quest_vampire_complete]
 givexp(attack, 48250);
