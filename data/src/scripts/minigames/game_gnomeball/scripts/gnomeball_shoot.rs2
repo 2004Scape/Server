@@ -1,10 +1,9 @@
 [if_button,gnomeball:com_6]
 if_close;
-if (p_finduid(uid) = false) {
-    return;
-}
-if (loc_find(^gnomeball_goal_coord, gnome_goal) = true) {
-    @gnomeball_shoot;
+if (p_finduid(uid) = true) {
+    if (loc_find(^gnomeball_goal_coord, gnome_goal) = true) {
+        @gnomeball_shoot;
+    }
 }
 
 [label,gnomeball_shoot]
@@ -32,7 +31,7 @@ p_stopaction;
 mes("You throw the ball at the goal...");
 cam_moveto(movecoord(loc_coord, 3, 0, 0), 300, 100, 100);
 cam_lookat(coord, 250, 100, 100);
-p_delay(0);
+p_delay(1);
 facesquare(loc_coord);
 anim(seq_783, 0);
 sound_synth(throw, 0, 10);
@@ -73,7 +72,21 @@ cam_reset;
 
 
 [proc,gnomeball_shoot_random](coord $coord)(coord)
-def_int $x = ~random_range(-1, 1);
-def_int $z = ~random_range(-1, 1);
-return($coord);
-// return(movecoord($coord, $x, coordy($coord), $z));
+// from 100 goals at 95 ranged:
+// - 95 goals, 5 misses
+// from 100 goals at 1 ranged:
+// - 9 goals, 91 misses
+if (stat_random(stat(ranged), 24, 240) = true) {
+    return($coord);
+}
+
+def_int $x = add(random(1), 1);
+def_int $z = add(random(1), 1);
+if (random(2) = 0) {
+    $x = multiply($x, -1);
+}
+if (random(2) = 0) {
+    $z = multiply($z, -1);
+}
+
+return(movecoord($coord, $x, 0, $z));

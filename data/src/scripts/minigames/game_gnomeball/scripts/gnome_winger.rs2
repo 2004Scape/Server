@@ -7,6 +7,10 @@ mes("The gnome is not interested in chatting."); // osrs
 [apnpct,gnomeball:com_7] @player_gnomeball_pass;
 
 [label,player_gnomeball_pass]
+if (inv_getobj(worn, ^wearpos_rhand) ! gnomeball) {
+    mes("You need a ball in your hand to throw."); // osrs
+    return;
+}
 if (npc_type = gnome_winger2) {
     mes("The gnome already has a ball."); // complete guess. Shouldnt happen anyway?
     return;
@@ -15,11 +19,7 @@ if (npc_type ! gnome_winger1) {
     mes("You can only pass the ball to the wingers."); // complete guess
     return;
 }
-if (inv_getobj(worn, ^wearpos_rhand) ! gnomeball) {
-    mes("You need a ball in your hand to throw."); // osrs
-    return;
-}
-if (%npc_attacking_uid ! null & add(%npc_lastcombat, 3) > map_clock) {
+if (%npc_attacking_uid ! null & add(%npc_lastcombat, 5) > map_clock) {
     mes("This gnome is helping someone else at the moment."); // osrs
     return;
 }
@@ -72,7 +72,6 @@ npc_settimer(20);
 [proc,npc_gnomeball_pass]
 if_close;
 if (p_finduid(%npc_attacking_uid) = true) {
-    %npc_attacking_uid = null;
     %npc_lastattack = map_clock;
     mes("The gnome passes the ball back.");
     anim(seq_782, 22);
@@ -89,4 +88,5 @@ if (p_finduid(%npc_attacking_uid) = true) {
     p_delay(1);
     inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
     ~update_all(gnomeball);
+    %npc_attacking_uid = null;
 }

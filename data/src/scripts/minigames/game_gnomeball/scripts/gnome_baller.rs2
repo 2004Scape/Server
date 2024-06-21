@@ -4,9 +4,10 @@
 
 [label,npc_gnomeball_tackle]
 npc_setmode(null);
+npc_delay(0);
 if_close;
 if (p_finduid(uid) = true) {
-    if (random(2) = 0 & inv_getobj(worn, ^wearpos_rhand) = gnomeball) { // 50% guess for now
+    if (stat_random(stat(agility), 20, 200) = true & inv_getobj(worn, ^wearpos_rhand) = gnomeball) { // 50% guess for now
         ~npc_gnomeball_tackle_success;
     } else {
         ~npc_gnomeball_tackle_fail;
@@ -38,6 +39,14 @@ npc_setmode(wander);
 [opnpc1,gnome_baller1] @player_gnomeball_tackle;
 [opnpc1,gnome_baller5] @player_gnomeball_tackle;
 [opnpc1,gnome_baller9] @player_gnomeball_tackle;
+[opnpct,gnomeball:com_5] 
+if (npc_type = gnome_baller1 | npc_type = gnome_baller5 | npc_type = gnome_baller9) {
+    @player_gnomeball_tackle;
+}
+mes("You can only tackle gnome ballers."); // complete guess
+
+[opplayert,gnomeball:com_5] 
+mes("You can only tackle gnome ballers."); // complete guess
 
 [label,player_gnomeball_tackle]
 if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
@@ -50,8 +59,13 @@ if (add(%npc_lastcombat, 2) > map_clock) {
 }
 %npc_aggressive_player = null;
 %npc_lastcombat = map_clock;
+%npc_stunned = add(map_clock, 3);
+npc_queue(8, 0, 0);
 p_delay(0);
-if (random(2) = 0) { // 50% guess for now
+npc_facesquare(coord);
+facesquare(npc_coord);
+p_delay(0);
+if (stat_random(stat(agility), 20, 200) = true) { // 50% guess for now
     ~player_gnomeball_tackle_success(npc_type);
 } else {
     ~player_gnomeball_tackle_fail;
@@ -61,6 +75,7 @@ if (random(2) = 0) { // 50% guess for now
 [proc,player_gnomeball_tackle_fail]
 anim(seq_780, 33);
 npc_anim(midget_seq_204, 33);
+npc_delay(0);
 // SoundEffect(name = "gnomeball_tackled_gnome_miss")
 
 [proc,player_gnomeball_tackle_success](npc $old)
@@ -68,7 +83,7 @@ anim(seq_778, 33);
 npc_anim(midget_seq_203, 30);
 // SoundEffect(name = "gnomeball_tackled_gnome")
 npc_setmode(none);
-p_delay(1);
+p_delay(0);
 ~update_all(gnomeball);
 npc_changetype(nc_param($old, gnome_tackled));
 npc_delay(9);
@@ -92,6 +107,10 @@ if (add(%npc_lastcombat, 2) > map_clock) {
     return;
 }
 %npc_lastcombat = map_clock;
+%npc_stunned = add(map_clock, 2);
+npc_queue(8, 0, 0);
+p_delay(0);
+npc_facesquare(coord);
 p_delay(0);
 if (random(2) = 0) { // 50% guess for now
     inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
