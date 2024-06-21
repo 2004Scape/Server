@@ -235,6 +235,7 @@ case ^junglepotion_get_volencia_moss:
     ~chatnpc("<p,happy>Ah <oc_name(volencia_moss)>, beautiful. One final herb and the potion will be complete. This is the most difficult to find as it inhabits the darkness of the underground. It is called <oc_name(rogues_purse)>, and is only to be found in");
     ~chatnpc("<p,happy>caverns in the northern part of this island. A secret entrance to the caverns is set into the northern cliffs of this land. Take care Bwana as it may be dangerous.");
 case ^junglepotion_get_rogues_purse:
+    // TODO: wiki says rogues purse from a drop, like snake weed, won't progress you in the quest but wiki doesn't show dialogue for it.
     queue(junglepotion_quest_complete, 0);
     ~chatnpc("<p,happy>Most excellent Bwana! You have returned all the herbs to me and, I can finish the preparations for the potion, and at last divine with the gods.");
     ~chatnpc("<p,happy>Many blessings on you! I must now prepare, please excuse me while I make the arrangements.");
