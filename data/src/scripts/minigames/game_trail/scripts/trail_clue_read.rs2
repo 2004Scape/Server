@@ -7,7 +7,12 @@ split_init($string, 340, 8, q8);
 def_int $pagetotal = split_pagecount;
 def_int $lines = split_linecount(0);
 
-if($lines = 2) {
+if($lines = 1) {
+    if_settext(trail_clue:com_2, "");
+    if_settext(trail_clue:com_3, split_get(0, 0));
+    if_settext(trail_clue:com_4, "");
+    if_settext(trail_clue:com_5, "");
+} else if($lines = 2) {
     if_settext(trail_clue:com_2, "");
     if_settext(trail_clue:com_3, split_get(0, 0));
     if_settext(trail_clue:com_4, split_get(0, 1));
