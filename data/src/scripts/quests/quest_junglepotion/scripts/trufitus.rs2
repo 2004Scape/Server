@@ -1,5 +1,4 @@
-// TODO: increase quest progress on finding snake weed, move trufitus to area_karamja/scripts dir? oploc1s with search anims,herb odds,sound_synth
-// TODO: could you use herbs on trufitus in 04, check mesanims, which herb on complete screen?
+// TODO: move trufitus to area_karamja/scripts dir, could you use herbs on trufitus in 04, check mesanims
 // TODO: After completing the quest, players can cash in additional cleaned herbs for a small amount of coins. https://oldschool.runescape.wiki/w/Jungle_Potion#Trivia
 
 [opnpc1,trufitus]
@@ -194,8 +193,3 @@ if($option6 = 1) {
 
 [proc,mention_herb](namedobj $herb)
 ~chatnpc("<p,neutral>I really need that <oc_name($herb)> if I am to make this potion.");
-
-[queue,junglepotion_quest_complete]
-%junglepotion_progress = ^junglepotion_complete;
-givexp(herblore, 7750);
-~send_quest_complete(questlist:junglepotion, ranarr_weed, 220, ^junglepotion_questpoints, "You have completed the\\nJungle Potion Quest!");
