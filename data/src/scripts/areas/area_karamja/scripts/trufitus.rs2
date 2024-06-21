@@ -24,12 +24,29 @@ if (last_useitem = snake_weed | last_useitem = ardrigal | last_useitem = sito_fo
 				@accept_herb(last_useitem);
 			}
 		case ^junglepotion_complete:
+            def_int $coins_amount = ~random_range(1, 4);
 			inv_del(inv, last_useitem, 1);
-			inv_add(inv, coins, ~random_range(1, 4)); // https://oldschool.runescape.wiki/w/Trufitus#Stock
-			// TODO: need buy dialogue
+			inv_add(inv, coins, $coins_amount);
+            if ($coins_amount = 1) {
+    			if (last_useitem = rogues_purse) {
+                    mes("Trufitus gives you a coin for the rogue's purse.");
+                } else {
+                    mes("Trufitus gives you a coin for the <lowercase(oc_name(last_useitem))>");
+                }
+            } else {
+    			if (last_useitem = rogues_purse) {
+                    mes("Trufitus gives you <tostring($coins_amount)> coins for the rogue's purse.");
+                } else {
+                    mes("Trufitus gives you <tostring($coins_amount)> coins for the <lowercase(oc_name(last_useitem))>.");
+                }
+            }
 	}
-} else if (last_useitem = unidentified_snake_weed | last_useitem = unidentified_ardrigal | last_useitem = unidentified_sito_foil | last_useitem = unidentified_volencia_moss | last_useitem = unidentified_rogues_purse) {
-	@decline_herb;
+// TODO: check if unid says something else
+// } else if (last_useitem = unidentified_snake_weed | last_useitem = unidentified_ardrigal | last_useitem = unidentified_sito_foil | last_useitem = unidentified_volencia_moss | last_useitem = unidentified_rogues_purse) {
+// 	@decline_herb;
+} else {
+    mes("You hand over the item.");
+    ~chatnpc("<p,neutral>I'm sorry Bwana but I just don't have a use for that!");
 }
 
 [opnpc1,trufitus]
@@ -91,6 +108,8 @@ if(%junglepotion_progress = ^junglepotion_not_started) {
             ~give_herb(volencia_moss, unidentified_volencia_moss);
         case ^junglepotion_get_rogues_purse:
             ~give_herb(rogues_purse, unidentified_rogues_purse);
+        case ^junglepotion_complete:
+            @post_quest;
     }
 }
 
@@ -199,27 +218,27 @@ switch_int(%junglepotion_progress) {
 case ^junglepotion_get_snake_weed:
     ~chatnpc("<p,neutral>That's not fresh <lowercase(oc_name(snake_weed))>, did you pick it yourself? Go get me some fresh <lowercase(oc_name(snake_weed))> and remember to pick it yourself.");
 case ^junglepotion_found_snake_weed:
+    %junglepotion_progress = ^junglepotion_get_ardrigal;
     ~chatnpc("<p,happy>Great, you have the <oc_name(snake_weed)>! Many thanks. Ok, the next herb is called <oc_name(ardrigal)>. It is related to the palm and grows to the east in its brother's shady profusion.");
     ~chatnpc("<p,happy>To the east you will find a small peninsula, it is just after the cliffs come down to meet the sands, here is where you should search for it.");
-    %junglepotion_progress = ^junglepotion_get_ardrigal;
 case ^junglepotion_get_ardrigal:
+    %junglepotion_progress = ^junglepotion_get_sito_foil;
     ~chatnpc("<p,happy>Great, you have the <oc_name(ardrigal)>! Many thanks.");
     ~chatnpc("<p,happy>You are doing well Bwana. The next herb is called <oc_name(sito_foil)>, and it grows best where the ground has been blackened by the living flame.");
-    %junglepotion_progress = ^junglepotion_get_sito_foil;
 case ^junglepotion_get_sito_foil:
+    %junglepotion_progress = ^junglepotion_get_volencia_moss;
     ~chatnpc("<p,happy>Well done Bwana, just two more herbs to collect.");
     ~chatnpc("<p,happy>The next herb is called <oc_name(volencia_moss)>. It clings to rocks for its existence. It is difficult to see, so you must search for it well.");
     ~chatnpc("<p,happy>It prefers rocks of high metal content and a frequently disturbed environment. There is some, I believe to the south east of this village.");
-    %junglepotion_progress = ^junglepotion_get_volencia_moss;
 case ^junglepotion_get_volencia_moss:
+    %junglepotion_progress = ^junglepotion_get_rogues_purse;
     ~chatnpc("<p,happy>Ah <oc_name(volencia_moss)>, beautiful. One final herb and the potion will be complete. This is the most difficult to find as it inhabits the darkness of the underground. It is called <oc_name(rogues_purse)>, and is only to be found in");
     ~chatnpc("<p,happy>caverns in the northern part of this island. A secret entrance to the caverns is set into the northern cliffs of this land. Take care Bwana as it may be dangerous.");
-    %junglepotion_progress = ^junglepotion_get_rogues_purse;
 case ^junglepotion_get_rogues_purse:
+    queue(junglepotion_quest_complete, 0);
     ~chatnpc("<p,happy>Most excellent Bwana! You have returned all the herbs to me and, I can finish the preparations for the potion, and at last divine with the gods.");
     ~chatnpc("<p,happy>Many blessings on you! I must now prepare, please excuse me while I make the arrangements.");
     ~mesbox("<npc_name> shows you some techniques in Herblore. You gain some experience in Herblore.");
-    queue(junglepotion_quest_complete, 0);
 }
 
 [label,decline_herb]
@@ -231,3 +250,9 @@ if(%junglepotion_progress = ^junglepotion_get_rogues_purse) {
 
 [proc,mention_herb](namedobj $herb)
 ~chatnpc("<p,neutral>I really need that <oc_name($herb)> if I am to make this potion.");
+
+[label,post_quest]
+// TODO: this chatnpc is only supposed to show once after junglepotion_complete, but maybe that's only after tai bwo wannai was added with the timfraku chatnpc?
+~chatnpc("<p,happy>My greatest respects, bwana. I have communed with my gods and the future looks good for my people. We are happy now that the gods are not angry with us. With some blessings, we will be safe here.");
+
+// ~chatnpc("<p,happy>You should deliver the good news to bwana Timfraku, chief of Tai Bwo Wannai. He lives in a raised hut not far from here.");

@@ -1,11 +1,12 @@
 // NOTE: seqs+sounds for vine/fungus probably added later (seq 2094-2097) assuming no p_delay if there's no animation (unless they re-used some anim)
-// TODO: pre-quest can u pick these herbs or access cave?
+// TODO: pre-quest can u pick these herbs or access cave? right now you can pick them out of order which is probably wrong but need dialogue, the quest still forces you to give them in order.
+// TODO: tribesmen (near marshy jungle vines) should be aggressive according to https://oldschool.runescape.wiki/w/Tribesman
 
 [oploc2,junglepotion_marshy_jungle_vine]
-~pick_herb("vine", unidentified_snake_weed, junglepotion_marshy_jungle_vine_empty);
 if (%junglepotion_progress = ^junglepotion_get_snake_weed) {
 	%junglepotion_progress = ^junglepotion_found_snake_weed;
 }
+~pick_herb("vine", unidentified_snake_weed, junglepotion_marshy_jungle_vine_empty);
 
 [oploc2,junglepotion_palm_tree]
 ~pick_herb("palm", unidentified_ardrigal, junglepotion_palm_tree_empty);
