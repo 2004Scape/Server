@@ -15,8 +15,8 @@ if (%junglepotion_progress = ^junglepotion_get_ardrigal) {
 ~pick_herb("palm", unidentified_ardrigal, junglepotion_palm_tree_empty);
 
 [oploc2,junglepotion_scorched_earth]
-if (%junglepotion_progress = ^junglepotion_get_scorched_earth) {
-	%junglepotion_progress = ^junglepotion_found_scorched_earth;
+if (%junglepotion_progress = ^junglepotion_get_sito_foil) {
+	%junglepotion_progress = ^junglepotion_found_sito_foil;
 }
 ~pick_herb("scorched earth", unidentified_sito_foil, junglepotion_scorched_earth_empty);
 

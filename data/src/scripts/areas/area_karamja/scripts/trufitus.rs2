@@ -122,13 +122,13 @@ if(%junglepotion_progress = ^junglepotion_not_started) {
 def_int $option5 = ~p_choice2_header("Yes.", 1, "No.", 2, "Start the Jungle Potion quest?");
 if($option5 = 1) {
     if (%druid_progress = ^druid_complete & stat(herblore) >= 3) { // TODO: is this right place to put it?
+        %junglepotion_progress = ^junglepotion_get_snake_weed;
+        ~send_quest_progress(questlist:junglepotion, %junglepotion_progress, ^junglepotion_complete);
         ~chatplayer("<p,confused>It sounds like just the challenge for me. And it would make a nice break from killing things!");
         ~chatnpc("<p,happy>That is excellent Bwana! The first herb that you need to gather is called");
         ~chatnpc("<p,happy>Snake Weed.");
         ~chatnpc("<p,neutral>It grows near the vines in an area to the south west where");
         ~chatnpc("<p,neutral>the ground turns soft and the water kisses your feet.");
-        %junglepotion_progress = ^junglepotion_get_snake_weed;
-        ~send_quest_progress(questlist:junglepotion, %junglepotion_progress, ^junglepotion_complete);
     } else {
         ~mesbox("You do not meet all of the requirements to start|the Jungle Potion quest."); // TODO: what happens originally?
     }
