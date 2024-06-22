@@ -8,15 +8,15 @@ if (last_useitem = snake_weed | last_useitem = ardrigal | last_useitem = sito_fo
 			if (last_useitem = snake_weed) {
 				@accept_herb(last_useitem);
 			}
-        case ^junglepotion_get_ardrigal:
+        case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal:
 			if (last_useitem = ardrigal) {
 				@accept_herb(last_useitem);
 			}
-        case ^junglepotion_get_sito_foil:
+        case ^junglepotion_get_sito_foil, ^junglepotion_found_sito_foil:
 			if (last_useitem = sito_foil) {
 				@accept_herb(last_useitem);
 			}
-        case ^junglepotion_get_volencia_moss:
+        case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss:
 			if (last_useitem = volencia_moss) {
 				@accept_herb(last_useitem);
 			}
@@ -101,11 +101,11 @@ if(%junglepotion_progress = ^junglepotion_not_started) {
     switch_int(%junglepotion_progress) {
         case ^junglepotion_get_snake_weed, ^junglepotion_found_snake_weed:
             ~give_herb(snake_weed, unidentified_snake_weed);
-        case ^junglepotion_get_ardrigal:
+        case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal:
             ~give_herb(ardrigal, unidentified_ardrigal);
-        case ^junglepotion_get_sito_foil:
+        case ^junglepotion_get_sito_foil, ^junglepotion_found_sito_foil:
             ~give_herb(sito_foil, unidentified_sito_foil);
-        case ^junglepotion_get_volencia_moss:
+        case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss:
             ~give_herb(volencia_moss, unidentified_volencia_moss);
         case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse:
             ~give_herb(rogues_purse, unidentified_rogues_purse);
@@ -158,7 +158,7 @@ if($option5 = 1) {
 switch_int(%junglepotion_progress) {
     case ^junglepotion_get_snake_weed, ^junglepotion_found_snake_weed:
         ~chatnpc("<p,happy>Hello Bwana, do you have the <oc_name(snake_weed)>?");
-    case ^junglepotion_get_ardrigal:
+    case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal:
         ~chatnpc("<p,happy>Hello Bwana, have you been able to get the <oc_name(ardrigal)>?");
     case default:
         ~chatnpc("<p,happy>Greetings Bwana, have you been successful in getting the <oc_name($herb)>?");
@@ -172,7 +172,7 @@ if($option6 = 1) {
 		@decline_herb;
     } else {
         switch_int(%junglepotion_progress) {
-            case ^junglepotion_get_volencia_moss:
+            case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss:
                 ~chatnpc("<p,angry>Please don't try to deceive me! I really need that <oc_name(volencia_moss)> if I am to make this potion.");
             case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse:
                 ~chatnpc("<p,angry>Please don't try to deceive me, I really need that <oc_name(rogues_purse)> if I am to make this potion.");
@@ -182,7 +182,7 @@ if($option6 = 1) {
         }
     }
 } else if($option6 = 2) {
-    if(%junglepotion_progress = ^junglepotion_get_ardrigal) {
+    if(%junglepotion_progress = ^junglepotion_get_ardrigal | %junglepotion_progress = ^junglepotion_found_ardrigal) {
         ~chatplayer("<p,neutral>Not yet, sorry, what's the clue again ?");
     } else {
         ~chatplayer("<p,neutral>Not yet, sorry, what's the clue again?");
@@ -190,19 +190,19 @@ if($option6 = 1) {
     switch_int(%junglepotion_progress) {
         case ^junglepotion_get_snake_weed, ^junglepotion_found_snake_weed:
             ~chatnpc("<p,neutral>It grows near vines in an area to the south west where the ground turns soft and the water kisses your feet.");
-        case ^junglepotion_get_ardrigal:
+        case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal:
             ~chatnpc("<p,neutral>You are looking for <oc_name($herb)>. It is related to the palm and grows in its brother's shady profusion.");
             ~chatnpc("<p,neutral>To the east you will find a small peninsula, it is just after the cliffs come down to meet the sands, here is where you should search for it.");
-        case ^junglepotion_get_sito_foil:
+        case ^junglepotion_get_sito_foil, ^junglepotion_found_sito_foil:
             ~chatnpc("<p,neutral>You are looking for <oc_name($herb)>, and it grows best where the ground has been blackened by living flame.");
-        case ^junglepotion_get_volencia_moss:
+        case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss:
             ~chatnpc("<p,neutral>You are looking for <oc_name($herb)>. It clings to rocks for its existence. It is difficult to see, so you must search for it well.");
             ~chatnpc("<p,neutral>It prefers rocks of high metal content and a frequently disturbed environment. There is some, I believe to the south east of this village.");
         case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse:
             ~chatnpc("<p,neutral>You are looking for <oc_name($herb)>");
             ~chatnpc("<p,neutral>It inhabits the darkness of the underground, and grows in caverns to the north. A secret entrance to the caverns is set into the northern cliffs, be careful Bwana.");
     }
-    if (%junglepotion_progress ! ^junglepotion_get_volencia_moss) {
+    if (%junglepotion_progress ! ^junglepotion_get_volencia_moss | %junglepotion_progress ! ^junglepotion_found_volencia_moss) {
         ~mention_herb($herb);
     }
 }
@@ -216,28 +216,25 @@ if(%junglepotion_progress = ^junglepotion_get_rogues_purse | %junglepotion_progr
 inv_del(inv, $herb, 1);
 
 switch_int(%junglepotion_progress) {
-case ^junglepotion_get_snake_weed:
-    @given_unid($herb);
+case ^junglepotion_get_snake_weed, ^junglepotion_get_ardrigal, ^junglepotion_get_sito_foil, ^junglepotion_get_volencia_moss, ^junglepotion_get_rogues_purse:
+    @given_unid($herb); // TODO: need to confirm dialogue for the different unid herbs.
 case ^junglepotion_found_snake_weed:
     %junglepotion_progress = ^junglepotion_get_ardrigal;
     ~chatnpc("<p,happy>Great, you have the <oc_name(snake_weed)>! Many thanks. Ok, the next herb is called <oc_name(ardrigal)>. It is related to the palm and grows to the east in its brother's shady profusion.");
     ~chatnpc("<p,happy>To the east you will find a small peninsula, it is just after the cliffs come down to meet the sands, here is where you should search for it.");
-case ^junglepotion_get_ardrigal:
+case ^junglepotion_found_ardrigal:
     %junglepotion_progress = ^junglepotion_get_sito_foil;
     ~chatnpc("<p,happy>Great, you have the <oc_name(ardrigal)>! Many thanks.");
     ~chatnpc("<p,happy>You are doing well Bwana. The next herb is called <oc_name(sito_foil)>, and it grows best where the ground has been blackened by the living flame.");
-case ^junglepotion_get_sito_foil:
+case ^junglepotion_found_sito_foil:
     %junglepotion_progress = ^junglepotion_get_volencia_moss;
     ~chatnpc("<p,happy>Well done Bwana, just two more herbs to collect.");
     ~chatnpc("<p,happy>The next herb is called <oc_name(volencia_moss)>. It clings to rocks for its existence. It is difficult to see, so you must search for it well.");
     ~chatnpc("<p,happy>It prefers rocks of high metal content and a frequently disturbed environment. There is some, I believe to the south east of this village.");
-case ^junglepotion_get_volencia_moss:
+case ^junglepotion_found_volencia_moss:
     %junglepotion_progress = ^junglepotion_get_rogues_purse;
     ~chatnpc("<p,happy>Ah <oc_name(volencia_moss)>, beautiful. One final herb and the potion will be complete. This is the most difficult to find as it inhabits the darkness of the underground. It is called <oc_name(rogues_purse)>, and is only to be found in");
     ~chatnpc("<p,happy>caverns in the northern part of this island. A secret entrance to the caverns is set into the northern cliffs of this land. Take care Bwana as it may be dangerous.");
-case ^junglepotion_get_rogues_purse:
-    // TODO: wiki says rogues purse from a drop, like snake weed, won't progress you in the quest but wiki doesn't show dialogue for it.
-    @given_unid($herb);
 case ^junglepotion_found_rogues_purse:
     queue(junglepotion_quest_complete, 0);
     ~chatnpc("<p,happy>Most excellent Bwana! You have returned all the herbs to me and, I can finish the preparations for the potion, and at last divine with the gods.");

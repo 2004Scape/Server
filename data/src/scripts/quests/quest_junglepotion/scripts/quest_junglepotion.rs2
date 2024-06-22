@@ -1,5 +1,5 @@
 // NOTE: seqs+sounds for vine/fungus probably added later (seq 2094-2097) assuming no p_delay if there's no animation (unless they re-used some anim)
-// TODO: pre-quest can u pick these herbs or access cave? right now you can pick them out of order which is probably wrong but need dialogue, the quest still forces you to give them in order.
+// TODO: pre-quest can u pick these herbs or access cave? If yes, confirm dialogue for giving those to trufitus in advance.
 // TODO: tribesmen (near marshy jungle vines) should be aggressive according to https://oldschool.runescape.wiki/w/Tribesman
 
 [oploc2,junglepotion_marshy_jungle_vine]
@@ -9,12 +9,21 @@ if (%junglepotion_progress = ^junglepotion_get_snake_weed) {
 ~pick_herb("vine", unidentified_snake_weed, junglepotion_marshy_jungle_vine_empty);
 
 [oploc2,junglepotion_palm_tree]
+if (%junglepotion_progress = ^junglepotion_get_ardrigal) {
+	%junglepotion_progress = ^junglepotion_found_ardrigal;
+}
 ~pick_herb("palm", unidentified_ardrigal, junglepotion_palm_tree_empty);
 
 [oploc2,junglepotion_scorched_earth]
+if (%junglepotion_progress = ^junglepotion_get_scorched_earth) {
+	%junglepotion_progress = ^junglepotion_found_scorched_earth;
+}
 ~pick_herb("scorched earth", unidentified_sito_foil, junglepotion_scorched_earth_empty);
 
 [oploc2,junglepotion_rock]
+if (%junglepotion_progress = ^junglepotion_get_volencia_moss) {
+	%junglepotion_progress = ^junglepotion_found_volencia_moss;
+}
 ~pick_herb("rock", unidentified_volencia_moss, junglepotion_rock_empty);
 
 [oploc2,junglepotion_wall_fungus]
