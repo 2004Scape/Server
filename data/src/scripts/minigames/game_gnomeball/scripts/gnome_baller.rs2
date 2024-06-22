@@ -7,7 +7,7 @@ npc_setmode(null);
 npc_delay(0);
 if_close;
 if (p_finduid(uid) = true) {
-    if (stat_random(stat(agility), 20, 200) = true & inv_getobj(worn, ^wearpos_rhand) = gnomeball) { // 50% guess for now
+    if (stat_random(stat(agility), 30, 200) = true & inv_getobj(worn, ^wearpos_rhand) = gnomeball) { // 50% guess for now
         ~npc_gnomeball_tackle_success;
     } else {
         ~npc_gnomeball_tackle_fail;
@@ -36,19 +36,21 @@ npc_setmode(wander);
 %npc_lastcombat = ^max_32bit_int;
 
 
-[opnpc1,gnome_baller1] @player_gnomeball_tackle;
-[opnpc1,gnome_baller5] @player_gnomeball_tackle;
-[opnpc1,gnome_baller9] @player_gnomeball_tackle;
+[opnpc1,gnome_baller1] @player_gnomeball_tackle(30, 200);
+[opnpc1,gnome_baller5] @player_gnomeball_tackle(30, 200);
+[opnpc1,gnome_baller9] @player_gnomeball_tackle(30, 220);
 [opnpct,gnomeball:com_5] 
-if (npc_type = gnome_baller1 | npc_type = gnome_baller5 | npc_type = gnome_baller9) {
-    @player_gnomeball_tackle;
+switch_npc (npc_type) {
+    case gnome_baller1, gnome_baller5 : @player_gnomeball_tackle(30, 200);
+    case gnome_baller9 : @player_gnomeball_tackle(30, 220);
+    case gnome_baller2, gnome_baller6, gnome_baller10 : @player_gnomeball_tackle_carrier;
+    case default : mes("You can only tackle gnome ballers."); // complete guess
 }
-mes("You can only tackle gnome ballers."); // complete guess
 
 [opplayert,gnomeball:com_5] 
 mes("You can only tackle gnome ballers."); // complete guess
 
-[label,player_gnomeball_tackle]
+[label,player_gnomeball_tackle](int $low, int $high)
 if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
     mes("You may not tackle when you have a ball.");
     return;
@@ -65,7 +67,7 @@ p_delay(0);
 npc_facesquare(coord);
 facesquare(npc_coord);
 p_delay(0);
-if (stat_random(stat(agility), 20, 200) = true) { // 50% guess for now
+if (stat_random(stat(agility), $low, $high) = true) { // 50% guess for now
     ~player_gnomeball_tackle_success(npc_type);
 } else {
     ~player_gnomeball_tackle_fail;
@@ -112,7 +114,7 @@ npc_queue(8, 0, 0);
 p_delay(0);
 npc_facesquare(coord);
 p_delay(0);
-if (random(2) = 0) { // 50% guess for now
+if (stat_random(stat(agility), 30, 220) = true) { // 50% guess for now
     inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
     npc_changetype(npc_param(gnome_original));
     ~player_gnomeball_tackle_success(npc_type);
