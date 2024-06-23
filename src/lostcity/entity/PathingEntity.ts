@@ -44,8 +44,8 @@ export default abstract class PathingEntity extends Entity {
     lastZ: number = -1;
     tele: boolean = false;
     jump: boolean = false;
-    previousX: number = -1;
-    previousZ: number = -1;
+    lastStepX: number = -1;
+    lastStepZ: number = -1;
     stepsTaken: number = 0;
 
     walktrigger: number = -1;
@@ -104,8 +104,8 @@ export default abstract class PathingEntity extends Entity {
         this.moveStrategy = moveStrategy;
         this.coordmask = coordmask;
         this.entitymask = entitymask;
-        this.previousX = x - 1;
-        this.previousZ = z;
+        this.lastStepX = x - 1;
+        this.lastStepZ = z;
     }
 
     /**
@@ -163,8 +163,8 @@ export default abstract class PathingEntity extends Entity {
                     World.gameMap.changePlayerCollision(this.width, this.x, this.z, this.level, true);
                     break;
             }
-            this.previousX = previousX;
-            this.previousZ = previousZ;
+            this.lastStepX = previousX;
+            this.lastStepZ = previousZ;
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
@@ -248,13 +248,15 @@ export default abstract class PathingEntity extends Entity {
         }
         level = Math.max(0, Math.min(level, 3));
 
-        const previousX = this.x;
-        const previousZ = this.z;
-        const previousLevel = this.level;
+        const previousX: number = this.x;
+        const previousZ: number = this.z;
+        const previousLevel: number = this.level;
         this.x = x;
         this.z = z;
         this.level = level;
         this.refreshZonePresence(previousX, previousZ, previousLevel);
+        this.lastStepX = this.x - 1;
+        this.lastStepZ = this.z;
 
         this.moveSpeed = MoveSpeed.INSTANT;
         if (previousLevel != level) {
@@ -385,7 +387,7 @@ export default abstract class PathingEntity extends Entity {
         }
 
         if (this.targetOp === ServerTriggerType.APPLAYER3 || this.targetOp === ServerTriggerType.OPPLAYER3) {
-            this.queueWaypoint(this.target.previousX, this.target.previousZ);
+            this.queueWaypoint(this.target.lastStepX, this.target.lastStepZ);
             return;
         }
 
