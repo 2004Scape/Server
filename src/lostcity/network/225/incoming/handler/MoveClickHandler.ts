@@ -24,7 +24,7 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
             const dest = message.path[message.path.length - 1];
             player.userPath = [Position.packCoord(player.level, dest.x, dest.z)];
         }
-
+        player.interactWalkTrigger = false;
         if (!message.opClick) {
             player.clearInteraction();
             player.closeModal();

@@ -236,6 +236,7 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
+    interactWalkTrigger: boolean = false;
 
     highPriorityOut: Stack<Packet> = new Stack();
     lowPriorityOut: Stack<Packet> = new Stack();
@@ -821,10 +822,10 @@ export default class Player extends PathingEntity {
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
-
+    
         // console.log('operable', opTrigger != null, 'trigger exists', this.inOperableDistance(this.target), 'in range');
         // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
-
+    
         if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             const target = this.target;
             this.target = null;
@@ -947,6 +948,18 @@ export default class Player extends PathingEntity {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
                 this.clearWaypoints();
+            }
+        }
+
+        // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79, only called when clicking to interact?
+        if (!this.interactWalkTrigger && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+            const trigger = ScriptProvider.get(this.walktrigger);
+            this.walktrigger = -1;
+            if (trigger) {
+                const script = ScriptRunner.init(trigger, this);
+                this.interactWalkTrigger = true;
+                this.unsetMapFlag();
+                this.runScript(script, true);
             }
         }
 

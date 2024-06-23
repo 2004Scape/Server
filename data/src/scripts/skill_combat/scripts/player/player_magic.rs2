@@ -89,7 +89,7 @@ if(npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_t
 if (npc_stat(hitpoints) = 0) {
     return(false); // this means the npc is not avail to fight i.e dead
 }
-if (map_clock < %action_delay) {
+if (map_clock < %action_delay | getwalktrigger() = stunned) {
     p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return(false);
 }

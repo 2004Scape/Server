@@ -94,6 +94,8 @@ scope=perm
 [waterfall_golrie_and_puzzle]
 scope=perm
 
+[varp_69]
+
 [boat_takeoff]
 transmit=yes
 

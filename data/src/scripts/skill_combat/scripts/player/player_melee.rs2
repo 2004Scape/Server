@@ -7,7 +7,7 @@ p_stopaction;
 // TODO this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
-if (%action_delay > map_clock) {
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opnpc(2); // it is guaranteed here that we are already within op distance
     return;
 }

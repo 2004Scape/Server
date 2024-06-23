@@ -115,6 +115,11 @@ if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
     return(false);
 }
 
+if (npc_type = zamorak_wizard & %npc_attacking_uid ! uid) {
+    mes("It's not after you...");
+    return(false);
+}
+
 if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
     mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
     return (false);

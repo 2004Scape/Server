@@ -83,7 +83,7 @@ p_stopaction;
 if (.stat(hitpoints) = 0) {
     return(false);
 }
-if (map_clock < %action_delay) {
+if (map_clock < %action_delay | getwalktrigger() = stunned) {
     p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return(false);
 }

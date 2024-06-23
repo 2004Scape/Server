@@ -13,15 +13,15 @@ if ($rhand = null) {
     ~update_all($rhand);
     return;
 }
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
+    p_opplayer(2);
+    return;
+}
 // this can be either the quiver or rhand.
 def_obj $ammo = ~player_ranged_check_ammo($rhand);
 if ($ammo = null) {
     p_stopaction;
     ~update_all($rhand);
-    return;
-}
-if (%action_delay > map_clock) {
-    p_opplayer(2);
     return;
 }
 
