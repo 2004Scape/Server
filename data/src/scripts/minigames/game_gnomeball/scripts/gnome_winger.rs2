@@ -19,7 +19,7 @@ if (npc_type ! gnome_winger1) {
     mes("You can only pass the ball to the wingers."); // complete guess
     return;
 }
-if (%npc_attacking_uid ! null & add(%npc_lastcombat, 5) > map_clock) {
+if (%npc_attacking_uid ! uid & add(%npc_lastcombat, 5) > map_clock) {
     mes("This gnome is helping someone else at the moment."); // osrs
     return;
 }

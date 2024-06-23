@@ -72,11 +72,12 @@ cam_reset;
 
 
 [proc,gnomeball_shoot_random](coord $coord)(coord)
-// from 100 goals at 95 ranged:
+// from 100 goals at 95 ranged, 10 tiles away:
 // - 95 goals, 5 misses
-// from 100 goals at 1 ranged:
+// from 100 goals at 1 ranged, 10 tiles away:
 // - 9 goals, 91 misses
-if (stat_random(stat(ranged), 24, 240) = true) {
+// ash says distance matters, but it doesnt seem like it matters a huge amount
+if (stat_random(stat(ranged), 25, sub(300, multiply(distance(coord, $coord), 5))) = true) {
     return($coord);
 }
 

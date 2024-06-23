@@ -65,17 +65,17 @@ if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
 npc_findallany(^gnomeball_centre_coord, 14, 0);
 while (npc_findnext = true) {
     // basically if gnome has ball, and ball was taken from player no longer in gnomeball game, then reset npc
-        if (.finduid(%npc_aggressive_player) = false) {
-            %npc_aggressive_player = null;
-            if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
-                npc_changetype(npc_param(gnome_original));
-            }
-        } else if (~.inzone_coord_pair_table(gnomeball_zones, .coord) = false) {
-            %npc_aggressive_player = null;
-            if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
-                npc_changetype(npc_param(gnome_original));
-            }  
+    if (.finduid(%npc_aggressive_player) = false) {
+        %npc_aggressive_player = null;
+        if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
+            npc_changetype(npc_param(gnome_original));
         }
+    } else if (~.inzone_coord_pair_table(gnomeball_zones, .coord) = false) {
+        %npc_aggressive_player = null;
+        if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
+            npc_changetype(npc_param(gnome_original));
+        }  
+    }
 }
 
 [proc,gnomeball_inplay](npc_uid $npc_uid)(boolean)
