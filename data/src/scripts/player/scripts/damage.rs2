@@ -23,7 +23,7 @@ mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleap
 // todo, check if a player has recieved kill credit for your death
 // if so use inv_dropall and ~pvp_death_message
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
-if (~in_duel_arena = true & ~.in_duel_arena = true & .finduid(%duelpartner) = true) {
+if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_arena(.coord) = true) {
     if_close;
     .if_close;
     %duelstatus = ^duelstatus_lost;

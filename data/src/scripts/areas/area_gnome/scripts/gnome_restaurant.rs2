@@ -151,7 +151,7 @@ if (inv_total(inv, toad_batta) < 1) {
 
 [label,gnome_restaurant_assign_toad_crunchies]
 ~chatplayer("<p,default>Hello again Aluft.");
-~chatnpc("<p,quiz>hello <displayname()>, how did you do?");
+~chatnpc("<p,quiz>Hello <displayname()>, how did you do?");
 if (inv_total(inv, worm_hole) > 0) {
     ~chatplayer("<p,happy>Here you go.");
     ~mesbox("You give Aluft the worm hole. He takes a bite...");

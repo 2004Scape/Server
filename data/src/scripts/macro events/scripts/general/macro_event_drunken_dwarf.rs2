@@ -1,18 +1,44 @@
-[ai_queue4,macro_event_drunken_dwarf](int $arg) // greet player
+[proc,macro_event_drunken_dwarf_spawn] // greet player
 // no smoke puff: https://youtu.be/R9eKmC7oLy0?t=122
+sound_synth(dwarf_whistle, 0, 0);
+npc_anim(dwarf_seq_105, 20);
+npc_say("'Ello der <displayname>! *hic*");
+%npc_attacking_uid = uid;
+npc_setmode(playerfollow);
+npc_queue(4, 0, 10);
+
+[ai_queue4,macro_event_drunken_dwarf](int $progress)
+// warnings: https://youtu.be/Ww-PkAr4vt4?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=96
+// todo: confirm these anims
 if (finduid(%npc_attacking_uid) = true) {
-    sound_synth(dwarf_whistle, 0, 0);
-    npc_anim(dwarf_seq_105, 20);
-    npc_say("'Ello der <displayname>! *hic*");
-    npc_setmode(playerfollow);
+    if ($progress = 0) {
+        npc_anim(dwarf_seq_103, 20);
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("Aww comeon, talk to ikle me <displayname>!");
+    } else if ($progress = 1) {
+        npc_anim(dwarf_seq_105, 20);
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("Oi, are you der <displayname>!");
+    } else if ($progress = 2) {
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("Dunt ignore your mate, <displayname>!");
+    } else if ($progress = 3) {
+        npc_anim(dwarf_seq_103, 20);
+        sound_synth(dwarf_whistle, 0, 0);
+        npc_say("I hates yoo <displayname>!");
+    } else if ($progress = 4) { // fail
+        // todo: figure out the message that goes here
+        %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
+        %macro_event = ^no_macro_event;
+        npc_setmode(opplayer2);
+        return;
+    }
+    npc_queue(4, add($progress, 1), 10);
 }
 
 [ai_queue5,macro_event_drunken_dwarf](int $arg) // despawn
 npc_say("Aww, me is all alone.");
 npc_delay(2); // osrs
-if (finduid(%npc_attacking_uid) = true) {
-    %macro_event = ^no_macro_event;
-}
 npc_del;
 
 [ai_queue6,macro_event_drunken_dwarf](int $arg) // say good bye
@@ -39,37 +65,17 @@ npc_queue(6, 0, 0); // say good bye
 if (~npc_out_of_combat = false) {
     return;
 }
-if (~macro_event_lost_and_follow = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
-   // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
-    npc_queue(5, 0, 0); // despawn
-    return;
-}
-
-// warnings: https://youtu.be/Ww-PkAr4vt4?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=96
-// todo: confirm these anims
 if (finduid(%npc_attacking_uid) = true) {
-    if (%npc_macro_event_status = 1) {
-        npc_anim(dwarf_seq_103, 20);
-        sound_synth(dwarf_whistle, 0, 0);
-        npc_say("Aww comeon, talk to ikle me <displayname>!");
-    } else if (%npc_macro_event_status = 2) {
-        npc_anim(dwarf_seq_105, 20);
-        sound_synth(dwarf_whistle, 0, 0);
-        npc_say("Oi, are you der <displayname>!");
-    } else if (%npc_macro_event_status = 3) {
-        sound_synth(dwarf_whistle, 0, 0);
-        npc_say("Dunt ignore your mate, <displayname>!");
-    } else if (%npc_macro_event_status = 4) {
-        npc_anim(dwarf_seq_103, 20);
-        sound_synth(dwarf_whistle, 0, 0);
-        npc_say("I hates yoo <displayname>!");
-    } else if (%npc_macro_event_status >= 5) { // fail
-        // todo: figure out the message that goes here
-        %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
-        npc_setmode(opplayer2);
+    if (%macro_event = ^no_macro_event) {
+        if (~macro_event_lost = true) {
+            npc_queue(5, 0, 0);
+        }
+    } else if (~macro_event_lost_and_follow = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+        // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
+        %macro_event = ^no_macro_event;
+        npc_queue(5, 0, 0); // despawn
+        return;
     }
-
-    %npc_macro_event_status = calc(%npc_macro_event_status + 1);
 }
 
 
