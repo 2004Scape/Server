@@ -30,7 +30,7 @@ if (%demon_progress = 0) {
         }
     } else {
         ~chatnpc("<p,neutral>How goes the quest?");
-        ~chatplayer("<p,happy>I have the sword now.|I Just need to kill the demon, I think.");
+        ~chatplayer("<p,happy>I have the sword now.|I just need to kill the demon, I think.");
         ~chatnpc("<p,happy>Yep, that's right.");
         def_int $option = ~p_choice3("What is the magical incantation?", 1, "Well I'd better press on with it.", 2, "Where can I find the demon?", 3);
         if ($option = 1) {
