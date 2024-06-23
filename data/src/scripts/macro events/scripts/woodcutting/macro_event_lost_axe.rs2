@@ -11,7 +11,7 @@ if (inv_total(worn, $axe) > 0) {
     inv_del(worn, $axe, 1);
     inv_setslot(worn, ^wearpos_rhand, axe_handle, 1);
     ~update_all($axe);
-} if (inv_total(inv, $axe) > 0) {
+} else if (inv_total(inv, $axe) > 0) {
     inv_del(inv, $axe, 1);
     inv_add(inv, axe_handle, 1);
 }

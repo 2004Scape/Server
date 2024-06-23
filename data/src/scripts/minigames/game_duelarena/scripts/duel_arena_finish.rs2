@@ -2,7 +2,7 @@
 if (getqueue(duel_arena_finish) > 0) {
     clearqueue(duel_arena_finish);
 }
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     %duelstatus = 0;
     %duelpartner = null;
     return;

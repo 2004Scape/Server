@@ -24,7 +24,7 @@ while ($i < $size) {
 // ----
 
 [opplayer4,_]
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     mes("You can't trade in a duel arena."); // https://youtu.be/nUwvlFkcsqA?t=19
     return; 
 }

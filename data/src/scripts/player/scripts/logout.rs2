@@ -9,7 +9,7 @@ if (busy = true) {
     return(false);
 }
 
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     mes("You can't log out during a duel."); //https://youtu.be/xLE8au7T50Q?t=227
     return(false);
 }

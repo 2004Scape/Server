@@ -106,7 +106,7 @@ while ($i < enum_getoutputcount($enum)) {
 }
 
 [proc,duel_arena_equip_check](obj $obj)(boolean)
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_weapons) = true & oc_wearpos($obj) = ^wearpos_rhand) {
@@ -137,7 +137,7 @@ return(true);
 
 
 [proc,duel_arena_prayer_check]()(boolean)
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_prayer) = true) {
@@ -148,7 +148,7 @@ return(true);
 
 
 [proc,duel_arena_consume_check](obj $obj)(boolean)
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (oc_category($obj) = category_69 & testbit(%duel_settings, ^no_potions) = true) {
@@ -171,7 +171,7 @@ return(testbit(%duel_settings, ^no_movement));
 
 
 [proc,duel_arena_forfeit_check]()(boolean)
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_forfeit) = true) {
@@ -199,7 +199,7 @@ if (oc_wearpos($obj) ! ^wearpos_rhand) {
 if (oc_category($obj) = flowers) {
     return(true);
 }
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^flower_power) = true) {
@@ -213,7 +213,7 @@ return(true);
 if ($slot ! ^wearpos_rhand) {
     return(true);
 }
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^flower_power) = true) {
@@ -225,7 +225,7 @@ return(true);
 
 
 [proc,duel_arena_ranged_check]()(boolean)
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_ranged) = true) {
@@ -236,7 +236,7 @@ return(true);
 
 
 [proc,duel_arena_melee_check]()(boolean)
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_melee) = true) {
@@ -247,7 +247,7 @@ return(true);
 
 
 [proc,duel_arena_magic_check]()(boolean)
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     return(true);
 }
 if (testbit(%duel_settings, ^no_magic) = true) {
