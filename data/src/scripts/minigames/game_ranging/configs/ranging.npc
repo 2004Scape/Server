@@ -20,7 +20,8 @@ head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
 wanderrange=1
-attackrange=20
+attackrange=19
+// 10
 respawnrate=25
 hitpoints=50
 attack=20
@@ -38,7 +39,10 @@ param=magicdefence,10
 param=rangedefence,19
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
-param=rangeattack_sound,longbow
+param=rangeattack_sound,arrowlaunch2
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+// TODO
 
 [ranging_guild_doorman]
 vislevel=hide

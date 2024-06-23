@@ -270,7 +270,7 @@ param=slashdefence,6
 param=crushdefence,8
 param=attack_anim,human_stafforb_pound
 param=defend_anim,human_stafforb_def
-// TODO param=attack_sound,
+param=attack_sound,staff_hit
 // TODO get real animation ids and sound osrs
 // https://www.youtube.com/watch?v=R5MdMtqvxaM&t=418s
 
@@ -310,6 +310,6 @@ param=slashdefence,6
 param=crushdefence,8
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
-// param=attack_sound,
-// try get real sound datas and wander/attack distances.
+param=attack_sound,staff_hit
+// TODO try to get information about the wanderrange/maxrange.
 // https://www.youtube.com/watch?v=tYXi3dBooB4
