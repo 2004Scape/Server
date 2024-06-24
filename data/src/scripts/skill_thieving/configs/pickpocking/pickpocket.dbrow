@@ -38,19 +38,9 @@ data=success_chance,150,240
 data=loot,coins,9,9,123
 data=pocket,farmer's pocket
 
-[pickpocket_warrior_woman]
+[pickpocket_warrior]
 table=pickpocket
 data=npc,warrior_woman
-data=level,25
-data=experience,260
-data=stun_ticks,8
-data=stun_damage,2
-data=success_chance,100,240
-data=loot,coins,18,18,128
-data=pocket,warrior's pocket
-
-[pickpocket_kharid_warrior]
-table=pickpocket
 data=npc,alkharid_warrior
 data=level,25
 data=experience,260

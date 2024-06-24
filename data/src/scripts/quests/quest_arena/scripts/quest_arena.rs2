@@ -86,6 +86,7 @@ if(last_useitem = khazard_cell_keys) {
     } else {
         mes("You've already rescued Jeremy from the fight arena.");
     }
+    return;
 }
 ~displaymessage(^dm_default);
 

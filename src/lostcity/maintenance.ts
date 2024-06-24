@@ -1,4 +1,4 @@
-import { startWeb } from '#lostcity/web/app.js';
+import { startWeb } from '#lostcity/web.js';
 
 startWeb();
 

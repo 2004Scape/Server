@@ -30,12 +30,17 @@ p_oploc(1);
 // - Probably 10 hp: https://web.archive.org/web/20040606142810/http://www.tip.it/runescape/index.php?page=rs2randon.htm
 
 // Video2 shows that the rock explodes after mining for 1 roll!
-
+if (%macro_gas_counter < 4) {
+    %macro_gas_counter = add(%macro_gas_counter, 1);
+    p_oploc(3);
+    return;
+}
 // Osrs wiki says: "Explosion of an exploding rock does not cease the smoke from puffing and therefore an exploding rock can explode again if it were mined again or mined by another player."
 anim(null, 0);
 sound_synth(gas_explosion, 0, 0);
 spotanim_map(firewave_impact, loc_coord, 92, 0);
 queue(damage_player, 0, 10);
+%macro_gas_counter = 0;
 
 def_obj $pickaxe = ~pickaxe_checker;
 def_namedobj $pickaxe_broken = oc_param($pickaxe, broken);
@@ -45,7 +50,7 @@ if (inv_total(worn, $pickaxe) > 0) {
     inv_del(worn, $pickaxe, 1);
     inv_setslot(worn, ^wearpos_rhand, $pickaxe_broken, 1);
     ~update_all($pickaxe);
-} if (inv_total(inv, $pickaxe) > 0) {
+} else if (inv_total(inv, $pickaxe) > 0) {
     inv_del(inv, $pickaxe, 1);
     inv_add(inv, $pickaxe_broken, 1);
 }

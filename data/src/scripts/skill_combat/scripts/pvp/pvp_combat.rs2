@@ -1,7 +1,7 @@
 [opplayer2,_] @pvp_combat_start;
 
 [applayer2,_]
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     if (~duel_arena_checks = false) {
         return;
     }
@@ -34,7 +34,7 @@ p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     if (~duel_arena_checks = false) {
         return;
     }

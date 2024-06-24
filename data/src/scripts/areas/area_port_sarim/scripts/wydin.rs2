@@ -1,5 +1,5 @@
 [opnpc1,wydin]
-if (%food_store_employed = 1) {
+if (testbit(%hunt_store_employed, 1) = true) {
     @wydin_employed_chat;
 }
 
@@ -41,7 +41,7 @@ if (inv_total(inv, white_apron) = 0 & inv_total(worn, white_apron) = 0) {
 }
 
 ~chatplayer("<p,happy>Yes, I have one right here.");
-%food_store_employed = 1;
+%hunt_store_employed = setbit(%hunt_store_employed, ^food_store);
 ~chatnpc("<p,happy>Wow - you are well prepared! You're hired. Go through to the back and tidy up for me, please.");
 
 [label,wydin_open_shop]

@@ -34,7 +34,7 @@ if (.busy = true) {
     return;
 }
 // prevent people from dueling in a duel or if you arent in the duel area
-if (~in_duel_arena = true | ~inzone_coord_pair_table(duel_arena_zones, coord) = false) {
+if (~in_duel_arena(coord) = true | ~inzone_coord_pair_table(duel_arena_zones, coord) = false) {
     mes("You can't do that here."); // https://youtu.be/nUwvlFkcsqA?t=17
     return;
 }
@@ -363,7 +363,7 @@ if (.finduid(%duelpartner) = true) {
 // ---
 
 [proc,duel_arena_checks]()(boolean)
-if (~inzone_coord_pair_table(duel_arena_zones, coord) = true & ~in_duel_arena = false) {
+if (~inzone_coord_pair_table(duel_arena_zones, coord) = true & ~in_duel_arena(coord) = false) {
     mes("You cannot attack players in the challenge area."); // https://youtu.be/r606q1TBTJ8?t=53 https://youtu.be/zcFLOWkTSIo?t=3
     return(false);
 }
@@ -377,20 +377,20 @@ if (%duelstatus < 5 & .%duelstatus < 5) {
 }
 return(true);
 
-[proc,in_duel_arena]()(boolean)
-if (~inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
+[proc,in_duel_arena](coord $coord)(boolean)
+if (~inzone_coord_pair_table(duel_arena_fight_zones, $coord) = true | ~inzone_coord_pair_table(duel_arena_obstacle_fight_zones, $coord) = true) {
     return(true);
 }
 return(false);
 
-[proc,.in_duel_arena]()(boolean)
-if (~.inzone_coord_pair_table(duel_arena_fight_zones, coord) = true | ~.inzone_coord_pair_table(duel_arena_obstacle_fight_zones, coord) = true) {
+[proc,.in_duel_arena](coord $coord)(boolean)
+if (~.inzone_coord_pair_table(duel_arena_fight_zones, $coord) = true | ~.inzone_coord_pair_table(duel_arena_obstacle_fight_zones, $coord) = true) {
     return(true);
 }
 return(false);
 
 [proc,duel_arena_login]
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     p_telejump(~duel_arena_finish_coord(coord));
 }
 

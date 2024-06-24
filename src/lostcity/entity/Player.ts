@@ -236,6 +236,7 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
+    interactWalkTrigger: boolean = false;
 
     highPriorityOut: Stack<Packet> = new Stack();
     lowPriorityOut: Stack<Packet> = new Stack();
@@ -370,13 +371,8 @@ export default class Player extends PathingEntity {
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
-
             if (type.transmit) {
-                if (value < 256) {
-                    this.writeHighPriority(ServerProt.VARP_SMALL, varp, value);
-                } else {
-                    this.writeHighPriority(ServerProt.VARP_LARGE, varp, value);
-                }
+                this.writeVarp(varp, value);
             }
         }
 
@@ -391,8 +387,8 @@ export default class Player extends PathingEntity {
             const script = ScriptRunner.init(moveTrigger, this);
             this.runScript(script, true);
         }
-        this.previousX = this.x - 1;
-        this.previousZ = this.z;
+        this.lastStepX = this.x - 1;
+        this.lastStepZ = this.z;
     }
 
     calculateRunWeight() {
@@ -821,10 +817,10 @@ export default class Player extends PathingEntity {
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
-
+    
         // console.log('operable', opTrigger != null, 'trigger exists', this.inOperableDistance(this.target), 'in range');
         // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
-
+    
         if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             const target = this.target;
             this.target = null;
@@ -947,6 +943,18 @@ export default class Player extends PathingEntity {
                 this.messageGame('Nothing interesting happens.');
                 this.interacted = true;
                 this.clearWaypoints();
+            }
+        }
+
+        // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79, only called when clicking to interact?
+        if (!this.interactWalkTrigger && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+            const trigger = ScriptProvider.get(this.walktrigger);
+            this.walktrigger = -1;
+            if (trigger) {
+                const script = ScriptRunner.init(trigger, this);
+                this.interactWalkTrigger = true;
+                this.unsetMapFlag();
+                this.runScript(script, true);
             }
         }
 
@@ -1538,13 +1546,14 @@ export default class Player extends PathingEntity {
             this.vars[varp.id] = value;
 
             if (varp.transmit) {
-                if (value >= 0x80) {
-                    this.writeHighPriority(ServerProt.VARP_LARGE, id, value);
-                } else {
-                    this.writeHighPriority(ServerProt.VARP_SMALL, id, value);
-                }
+                this.writeVarp(id, value);
             }
         }
+    }
+
+    private writeVarp(id: number, value: number): void {
+        const prot: ServerProt = value >= -128 && value <= 127 ? ServerProt.VARP_SMALL : ServerProt.VARP_LARGE;
+        this.writeHighPriority(prot, id, value);
     }
 
     addXp(stat: number, xp: number) {
@@ -1719,10 +1728,10 @@ export default class Player extends PathingEntity {
         this.mask |= Player.EXACT_MOVE;
 
         // todo: interpolate over time? instant teleport? verify with true tile on osrs
-        this.previousX = this.x;
-        this.previousZ = this.z;
         this.x = endX;
         this.z = endZ;
+        this.lastStepX = this.x - 1;
+        this.lastStepZ = this.z;
     }
 
     setTab(com: number, tab: number) {

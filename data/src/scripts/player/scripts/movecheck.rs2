@@ -1,6 +1,6 @@
 [walktrigger,stunned]
 if (map_clock < %stunned) {
     mes("You're stunned!");
-    p_stopaction;
+    p_walk(coord);
     walktrigger(stunned);
 }

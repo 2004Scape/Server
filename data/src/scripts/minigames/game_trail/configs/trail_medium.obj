@@ -13,6 +13,7 @@ category=trail_clue_medium
 param=trail_coord,0_48_50_21_27
 param=trail_casket,trail_casket_medium_map001
 
+// this clue is unobtainable!
 [trail_clue_medium_map002]
 name=Clue scroll
 desc=Part of the world map, but where?

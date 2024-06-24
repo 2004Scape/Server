@@ -57,7 +57,7 @@ if (%action_delay < map_clock) {
     if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
         def_coord $fire_coord = obj_coord;
-        if (~in_duel_arena = true) {
+        if (~in_duel_arena(coord) = true) {
             // https://youtu.be/L3OwjH-iXQU
             //  - could still fm in the duel arena. 
             //  - It just didnt move the player at all

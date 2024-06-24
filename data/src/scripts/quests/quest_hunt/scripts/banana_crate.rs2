@@ -22,7 +22,7 @@ if (last_useitem ! banana & last_useitem ! karamja_rum) {
     return;
 }
 
-if (%plantation_employed = 0) {
+if (testbit(%hunt_store_employed, ^plantation) = false) {
     mes("Why would I want to do that?");
     return;
 }

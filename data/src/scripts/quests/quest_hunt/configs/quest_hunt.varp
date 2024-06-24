@@ -1,10 +1,7 @@
 [hunt_progress]
 scope=perm
 
-[plantation_employed]
-scope=perm
-
-[food_store_employed]
+[hunt_store_employed]
 scope=perm
 
 // number of bananas in plantation crate

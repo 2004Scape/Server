@@ -25,6 +25,7 @@ if (%vampire_progress > ^quest_vampire_not_started) {
 
 p_delay(4);
 npc_add(0_48_152_6_46, count_draynor, 500);
+%npc_attacking_uid = uid;
 npc_setmode(opplayer2);
 
 [label,quest_vampire_coffin_close]

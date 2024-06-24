@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { startWeb } from '#lostcity/web/app.js';
+import { startWeb } from '#lostcity/web.js';
 
 import World from '#lostcity/engine/World.js';
 
