@@ -4,6 +4,10 @@
 [applayert,gnomeball:com_7] @pvp_gnomeball_pass;
 
 [label,pvp_gnomeball_pass]
+if (inv_total(worn, gnomeball) < 1) {
+    mes("You need a ball in your hand to throw.");
+    return;
+}
 if (.p_finduid(.uid) = false) {
     mes("<.displayname> is busy."); // osrs
     return;

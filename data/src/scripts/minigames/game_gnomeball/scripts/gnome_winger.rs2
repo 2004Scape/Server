@@ -19,8 +19,8 @@ if (npc_type ! gnome_winger1) {
     mes("You can only pass the ball to the wingers."); // complete guess
     return;
 }
-if (%npc_attacking_uid ! uid & add(%npc_lastcombat, 5) > map_clock) {
-    mes("This gnome is helping someone else at the moment."); // osrs
+if (add(%npc_lastcombat, 8) > map_clock) {
+    mes("This gnome is helping someone else at the moment."); // osrs if he passes back almost instantly you can see this message
     return;
 }
 
@@ -42,9 +42,10 @@ npc_changetype(gnome_winger2);
 
 // no idea if this is how they do it but if you pass before 10 ticks after u first 
 // passed to them, they will always pass 10 ticks later
-def_int $throw = add(random(10), 1);
-if (add(%npc_lastattack, 10) > map_clock) {
-    $throw = sub(add(%npc_lastattack, 10), map_clock);
+def_int $throw = add(random(10), 2);
+def_int $last = sub(add(%npc_lastattack, 10), map_clock);
+if ($last > 1) {
+    $throw = $last;
 }
 npc_settimer(add($throw, 1));
 
@@ -62,7 +63,8 @@ if (finduid(%npc_attacking_uid) = false | ~inzone_coord_pair_table(gnomeball_zon
     }
 }
 if (finduid(%npc_attacking_uid) = true) {
-    if (~inzone_coord_pair_table(gnomeball_zones, coord) = true & inv_getobj(worn, ^wearpos_rhand) = null) {
+    // yes it checks inv too, i checked with smuggling extra gnomeball in osrs with telegrab
+    if (~inzone_coord_pair_table(gnomeball_zones, coord) = true & inv_getobj(worn, ^wearpos_rhand) = null & inv_total(inv, gnomeball) < 1) {
         ~npc_gnomeball_pass;
         return;
     }
@@ -84,8 +86,9 @@ if (p_finduid(%npc_attacking_uid) = true) {
     ~player_projectile(npc_coord, coord, uid, spotanim_55, 36, 40, 34, 15, 15, 11, 2);
     p_delay(0);
     npc_facesquare(coord);
+    p_delay(0);
     npc_changetype(gnome_winger1);
-    p_delay(1);
+    p_delay(0);
     inv_setslot(worn, ^wearpos_rhand, gnomeball, 1);
     ~update_all(gnomeball);
     %npc_attacking_uid = null;
