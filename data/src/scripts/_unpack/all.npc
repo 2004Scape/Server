@@ -5107,7 +5107,7 @@ param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_def
 param=attack_sound,staff_stab
 param=poison_severity,55
-huntmode=aggressive_melee
+huntmode=cowardly // just a guess
 
 [dark_warrior]
 name=Dark warrior
