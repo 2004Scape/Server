@@ -371,13 +371,8 @@ export default class Player extends PathingEntity {
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
-
             if (type.transmit) {
-                if (value < 256) {
-                    this.writeHighPriority(ServerProt.VARP_SMALL, varp, value);
-                } else {
-                    this.writeHighPriority(ServerProt.VARP_LARGE, varp, value);
-                }
+                this.writeVarp(varp, value);
             }
         }
 
@@ -1551,13 +1546,14 @@ export default class Player extends PathingEntity {
             this.vars[varp.id] = value;
 
             if (varp.transmit) {
-                if (value >= 0x80) {
-                    this.writeHighPriority(ServerProt.VARP_LARGE, id, value);
-                } else {
-                    this.writeHighPriority(ServerProt.VARP_SMALL, id, value);
-                }
+                this.writeVarp(id, value);
             }
         }
+    }
+
+    private writeVarp(id: number, value: number): void {
+        const prot: ServerProt = value >= -128 && value <= 127 ? ServerProt.VARP_SMALL : ServerProt.VARP_LARGE;
+        this.writeHighPriority(prot, id, value);
     }
 
     addXp(stat: number, xp: number) {
