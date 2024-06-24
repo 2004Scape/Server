@@ -1552,7 +1552,7 @@ export default class Player extends PathingEntity {
     }
 
     private writeVarp(id: number, value: number): void {
-        const prot: ServerProt = value >= -128 && value <= 255 ? ServerProt.VARP_SMALL : ServerProt.VARP_LARGE;
+        const prot: ServerProt = value >= -128 && value <= 127 ? ServerProt.VARP_SMALL : ServerProt.VARP_LARGE;
         this.writeHighPriority(prot, id, value);
     }
 
