@@ -1,0 +1,25 @@
+[oploc1,game_trawler_gangplank1]
+def_int $dir_mod = ~gangplank_dir_mod;
+switch_int (loc_angle) {
+    case ^loc_west,^loc_east:
+        p_teleport(movecoord(coord, calc(-1 * $dir_mod), 0, 0));
+        p_delay(0);
+        p_telejump(movecoord(coord, calc(-2 * $dir_mod), 1, 0));
+    case ^loc_north,^loc_south:
+        p_teleport(movecoord(coord, 0, 0, $dir_mod));
+        p_delay(0);
+        p_telejump(movecoord(coord, 0, 1, calc(2 * $dir_mod)));
+}
+
+[oploc1,game_trawler_gangplank2]
+def_int $dir_mod = ~gangplank_dir_mod;
+switch_int (loc_angle) {
+    case ^loc_west,^loc_east:
+        p_teleport(movecoord(coord, calc(-1 * $dir_mod), 0, 0));
+        p_delay(0);
+        p_telejump(movecoord(coord, calc(-2 * $dir_mod), -1, 0));
+    case ^loc_north,^loc_south:
+        p_teleport(movecoord(coord, 0, 0, $dir_mod));
+        p_delay(0);
+        p_telejump(movecoord(coord, 0, -1, calc(2 * $dir_mod)));
+}
