@@ -8,15 +8,19 @@ mes(~coord_tostring(loc_coord));
 
 
 [oploc1,gnomeball_gate]
-def_obj $obj = inv_getobj(worn, ^wearpos_rhand);
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+def_obj $lhand = inv_getobj(worn, ^wearpos_lhand);
 def_boolean $exiting = ~check_axis(coord, loc_coord, loc_angle);
 if ($exiting = false) { 
-    if ($obj ! null) {
-        if (inv_itemspace(inv, $obj, inv_total(worn, $obj), inv_size(inv)) = false) {
-            mes("You do not have free inventory space for what you carry.");
-            return;
-        }
+    if (~inv_slotspace(worn, inv, worn_hands) = false) {
+        mes("You do not have free inventory space for what you carry.");
+        return;
+    }
+    if ($rhand ! null) {
         ~unequip(^wearpos_rhand);
+    }
+    if ($lhand ! null) {
+        ~unequip(^wearpos_lhand);
     }
     ~open_and_close_door(loc_param(next_loc_stage), $exiting, false);
     if (inv_total(worn, gnomeball) > 0 | inv_total(inv, gnomeball) > 0) {
@@ -48,7 +52,7 @@ if ($exiting = false) {
     }
     ~gnomeball_reset;
 }
-~update_all($obj);
+~update_all($rhand);
 
 [proc,gnomeball_reset]
 if (%gnomeball_progress > ^gnomeball_not_started) {
@@ -65,13 +69,13 @@ if (inv_getobj(worn, ^wearpos_rhand) = gnomeball) {
 npc_findallany(^gnomeball_centre_coord, 14, 0);
 while (npc_findnext = true) {
     // basically if gnome has ball, and ball was taken from player no longer in gnomeball game, then reset npc
-    if (.finduid(%npc_aggressive_player) = false) {
-        %npc_aggressive_player = null;
+    if (.finduid(%npc_attacking_uid) = false) {
+        %npc_attacking_uid = null;
         if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
             npc_changetype(npc_param(gnome_original));
         }
     } else if (~.inzone_coord_pair_table(gnomeball_zones, .coord) = false) {
-        %npc_aggressive_player = null;
+        %npc_attacking_uid = null;
         if (npc_param(gnome_original) ! null & nc_param(npc_param(gnome_original), gnome_hasball) = npc_type) {
             npc_changetype(npc_param(gnome_original));
         }  
