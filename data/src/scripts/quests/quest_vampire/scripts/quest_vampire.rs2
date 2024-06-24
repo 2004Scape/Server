@@ -11,13 +11,12 @@ loc_change(loc_2615, 10);
 if (%vampire_progress = ^vampire_complete | %vampire_progress = ^quest_vampire_not_started) {
     return;
 }
+// cant open during combat in osrs, but this might be after rework?
 
 if (%vampire_progress > ^quest_vampire_not_started) {
-    npc_findallzone(coord);
+    npc_findallany(0_48_152_6_46, 6, 0);
     while (npc_findnext = true) {
-        if (npc_type = count_draynor) {
-            // TODO check if in combat. can't open during combat.
-            ~displaymessage(^dm_default);
+        if (npc_type = count_draynor & %npc_attacking_uid = uid) {
             return;
         }
     }
@@ -26,7 +25,9 @@ if (%vampire_progress > ^quest_vampire_not_started) {
 p_delay(4);
 npc_add(0_48_152_6_46, count_draynor, 500);
 %npc_attacking_uid = uid;
-npc_setmode(opplayer2);
+
+npc_sethuntmode(aggressive_melee_extra);
+npc_sethunt(5);
 
 [label,quest_vampire_coffin_close]
 loc_change(loc_2614, 10);
