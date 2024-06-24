@@ -1,0 +1,4 @@
+[debugproc,fisht]
+if (p_finduid(uid) = true) {
+    p_telejump(0_41_49_52_34);
+}
