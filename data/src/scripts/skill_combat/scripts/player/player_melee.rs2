@@ -30,6 +30,9 @@ if (~npc_is_attackable(npc_type) = false) {
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
+    if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
+        %com_maxhit = add(%com_maxhit, 1);
+    }
     $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
     $damage = min($damage, npc_stat(hitpoints));
     ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
