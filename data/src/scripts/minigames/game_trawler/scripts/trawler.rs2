@@ -9,6 +9,12 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
     if (loc_find(enum(int, coord, trawler_hulls_flooded, $i), game_trawler_leak) = true) {
         loc_change(game_trawler_hull, 1);
     }
+    if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_repaired_leak) = true) {
+        loc_change(game_trawler_hull, 1);
+    }
+    if (loc_find(enum(int, coord, trawler_hulls_flooded, $i), game_trawler_repaired_leak) = true) {
+        loc_change(game_trawler_hull, 1);
+    }
     $i = add($i, 1);
 }
 
@@ -49,10 +55,12 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
 // three holes per player?
 $i = 0;
 while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < multiply($player_count, 3)) {
-    if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_hull) = true) {
+    def_coord $hull_coord = enum(int, coord, trawler_hulls, $i);
+    if (loc_find($hull_coord, game_trawler_hull) = true | loc_find($hull_coord, game_trawler_repaired_leak) = true) {
         if (random(30) < $player_count) { // complete guess
             loc_change(game_trawler_leak, 1000);
-            if (loc_find(movecoord(loc_coord, 128, 0, 0), game_trawler_hull) = true) {
+            def_coord $flood_coord = movecoord(loc_coord, 128, 0, 0);
+            if (loc_find($flood_coord, game_trawler_hull) = true | loc_find($flood_coord, game_trawler_repaired_leak) = true) {
                 loc_change(game_trawler_leak, 1000);
             }
             $leak_count = add($leak_count, 1);

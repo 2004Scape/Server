@@ -1,0 +1,47 @@
+[opheld1,bailing_bucket_empty]
+if (~inzone_coord_pair_table(trawler_flood_zones, coord) = false) {
+    mes("You don't really need to bail yet.");
+    return;
+}
+if (coordy(coord) ! 0) {
+    mes("You need to go down into the hold to bail.");
+    return;
+}
+
+anim(human_pickupfloor, 0);
+mes("You fill your bucket with water.");
+p_delay(1);
+inv_del(inv, bailing_bucket_empty, 1);
+inv_add(inv, bailing_bucket_full, 1);
+if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
+    %npc_trawler_flood_status = sub(%npc_trawler_flood_status, 1);
+}
+
+[opheld1,bailing_bucket_full]
+if (~inzone_coord_pair_table(trawler_flood_zones, coord) = false) {
+    inv_del(inv, bailing_bucket_full, 1);
+    inv_add(inv, bailing_bucket_empty, 1);
+    mes("You tip the water out of the bucket.");
+    return;
+}
+if (coordy(coord) ! 0) {
+    inv_del(inv, bailing_bucket_full, 1);
+    inv_add(inv, bailing_bucket_empty, 1);
+    mes("You tip the water out of the bucket.");
+    return;
+}
+
+if (coordz(coord) = coordz(^trawler_flood_center_under)) {
+    p_teleport(movecoord(coord, 0, 0, -1));
+    p_delay(2);
+}
+if (coordz(coord) > coordz(^trawler_flood_center_under)) {
+    facesquare(movecoord(coord, 0, 0, 1));
+} else {
+    facesquare(movecoord(coord, 0, 0, -1));
+}
+mes("You tip the water over the side.");
+anim(human_pickuptable, 0);
+p_delay(1);
+inv_del(inv, bailing_bucket_full, 1);
+inv_add(inv, bailing_bucket_empty, 1);

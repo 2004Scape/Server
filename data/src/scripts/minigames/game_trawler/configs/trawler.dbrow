@@ -11,3 +11,9 @@ data=coord_pair,2_31_75_0_0,2_31_75_63_63
 data=coord_pair,0_29_75_0_0,0_29_75_63_63
 data=coord_pair,1_29_75_0_0,1_29_75_63_63
 data=coord_pair,2_29_75_0_0,2_29_75_63_63
+
+[trawler_flood_zones]
+table=coord_pair_table
+data=coord_pair,0_31_75_0_0,0_31_75_63_63
+data=coord_pair,1_31_75_0_0,1_31_75_63_63
+data=coord_pair,2_31_75_0_0,2_31_75_63_63
