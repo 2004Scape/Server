@@ -27,3 +27,54 @@ if(~has_sextant_clue = true) {
         return;
     }
 }
+
+~chatplayer("<p,happy>Good day to you Sir.");
+~chatnpc("<p,happy>Well hello my brave adventurer.");
+~chatplayer("<p,quiz>What are you up to?");
+~chatnpc("<p,neutral>Getting ready to go fishing of course. There's no time to waste!");
+~chatnpc("<p,neutral>I've got all the supplies I need from the shop at the end of the pier. They sell good rope, hammers and axes although their bailing buckets aren't too effective.");
+@multi3("What fish do you catch?", murphy_fish_you_catch, "Your boat doesn't look too safe.", murphy_unsafe_boat, "Could I help?", murphy_could_i_help);
+
+
+[label,murphy_fish_you_catch]
+~chatplayer("<p,quiz>What fish do you catch?");
+~chatnpc("<p,happy>I get all sorts, anything that lies on the sea bed, you never know what you're going to get until you pull up the net!");
+@multi2("Your boat doesn't look too safe.", murphy_unsafe_boat, "Could I help?", murphy_could_i_help);
+
+[label,murphy_unsafe_boat]
+~chatplayer("<p,confused>Your boat doesn't look too safe.");
+~chatnpc("<p,bored>That's because it's not, the darn thing's full of holes.");
+~chatplayer("<p,quiz>Oh, so I suppose you can't go out for a while?");
+~chatnpc("<p,neutral>Oh no, I don't let a few holes stop an experienced sailor like me. I could sail these seas in a barrel, I'll be going out soon enough.");
+@multi2("What fish do you catch?", murphy_fish_you_catch, "Could I help?", murphy_could_i_help);
+
+[label,murphy_could_i_help]
+~chatplayer("<p,neutral>Could I help?");
+~chatnpc("<p,happy>Well of course you can! I'll warn you though, the seas are merciless and without fishing experience you won't catch much.");
+~chatnpc("<p,neutral>You need a fishing level of 15 or above to catch any fish on the trawler.");
+~chatnpc("<p,neutral>On occasions the net rips, so you'll need some rope to repair it.");
+~chatnpc("<p,neutral>Repairing the net is difficult in the harsh conditions so you'll find it easier with a higher crafting level.");
+~chatplayer("<p,quiz>Right...ok.");
+~chatnpc("<p,bored>There's also a slight problem with leaks.");
+~chatplayer("<p,shock>Leaks?!");
+~chatnpc("<p,happy>Nothing some swamp paste won't fix...");
+~chatplayer("<p,quiz>Swamp paste?");
+~chatnpc("<p,neutral>Also, there's the small matter of the Kraken.");
+~chatplayer("<p,shock>You have got to be kidding me?");
+~chatnpc("<p,neutral>Occupational hazard. I usually whack it with an axe a few time and fix the damage with hammer once it's gone.");
+~chatnpc("<p,neutral>Oh, and one more thing... I hope you're a good swimmer?");
+@multi3("Actually, I think I'll leave it.", murphy_ill_leave_it, "I'll be fine, let's go.", murphy_lets_go, "What's swamp paste?", murphy_whats_swamp_paste);
+
+[label,murphy_ill_leave_it]
+~chatplayer("<p,shifty>Actually, I think I'll leave it.");
+~chatnpc("<p,angry>Bloomin' land lovers!!!");
+
+[label,murphy_lets_go]
+~chatplayer("<p,happy>I'll be fine, let's go.");
+~chatnpc("<p,happy>Aye aye! Meet me on board the trawler. I just need to get a few things together.");
+
+[label,murphy_whats_swamp_paste]
+~chatplayer("<p,quiz>What's swamp paste?");
+~chatnpc("<p,neutral>Swamp tar mixed with flour which is then heated over a fire.");
+~chatplayer("<p,quiz>Where can I find swamp tar?");
+~chatnpc("<p,sad>Unfortunately the only supply of swamp tar is in the swamps below Lumbridge.");

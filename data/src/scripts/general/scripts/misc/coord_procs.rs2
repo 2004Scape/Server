@@ -261,3 +261,12 @@ def_int $dx = abs(sub($x2, $x1));
 def_int $dz = abs(sub($z2, $z1));
 
 return(add($dx, $dz));
+
+[proc,playercount_coord_pair_table](dbrow $data)(int)
+def_int $sum = 0;
+def_int $i = 0;
+while($i < db_getfieldcount($data, coord_pair_table:coord_pair)) {
+    $sum = add($sum, map_playercount(db_getfield($data, coord_pair_table:coord_pair, $i)));
+    $i = add($i, 1);
+}
+return($sum);

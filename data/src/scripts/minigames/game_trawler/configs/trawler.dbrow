@@ -1,0 +1,13 @@
+[trawler_lobby_zones]
+table=coord_pair_table
+data=coord_pair,1_41_49_45_30,1_41_49_49_46
+data=coord_pair,0_41_49_45_30,0_41_49_49_46
+
+[trawler_game_zones]
+table=coord_pair_table
+data=coord_pair,0_30_75_0_0,0_30_75_63_63
+data=coord_pair,1_30_75_0_0,1_30_75_63_63
+data=coord_pair,2_30_75_0_0,2_30_75_63_63
+data=coord_pair,0_27_75_0_0,0_27_75_63_63
+data=coord_pair,1_27_75_0_0,1_27_75_63_63
+data=coord_pair,2_27_75_0_0,2_27_75_63_63
