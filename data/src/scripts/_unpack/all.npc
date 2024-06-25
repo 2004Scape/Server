@@ -237,8 +237,8 @@ param=strengthbonus,6
 param=damagetype,^stab_style
 param=attack_anim,human_farmersfork_stab
 param=defend_anim,human_farmersfork_defend
-// param=attack_sound,farmersfork_stab
-// possible used earlier staff_stab
+param=attack_sound,staff_stab
+// osrs attack sound farmersfork_stab
 
 [thief]
 name=Thief
@@ -941,6 +941,7 @@ model7=model_262_obj_wear
 model8=model_563_obj_wear
 wanderrange=10
 attackrange=12
+// 10
 respawnrate=25
 hitpoints=50
 attack=0
@@ -956,7 +957,7 @@ param=magicdefence,18
 param=rangedefence,45
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
-param=rangeattack_sound,longbow
+param=rangeattack_sound,arrowlaunch2
 
 [npc_29]
 name=Chuck
@@ -1470,9 +1471,8 @@ param=damagetype,^stab_style
 param=attack_anim,hellhound_attack
 param=defend_anim,hellhound_block
 param=death_anim,hellhound_death
-// param=attack_sound,
-// param=defend_sound,
-// param=death_sound,
+param=attack_sound,growl6
+param=defend_sound,growl5
 huntmode=cowardly
 
 [baby_dragon]
@@ -1927,7 +1927,7 @@ param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,shortbow
+param=attack_sound,arrowlaunch2
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
@@ -1960,7 +1960,7 @@ param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,shortbow
+param=attack_sound,arrowlaunch2
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
@@ -1997,7 +1997,7 @@ param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,shortbow
+param=attack_sound,arrowlaunch2
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
@@ -2783,9 +2783,8 @@ param=damagetype,^crush_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-// TODO param=attack_sound,
-// TODO param=defend_sound,
-// TODO param=death_sound,
+param=attack_sound,wolf_attack2
+param=defend_sound,wolf_hit
 huntmode=cowardly
 
 [goblin_unarmed1]
@@ -10384,7 +10383,8 @@ param=strengthbonus,3
 param=rangebonus,7
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
-// param=attack_sound,staff_double
+param=attack_sound,staff_hit
+// osrs attack sound staff_double
 
 [npc_930]
 name=Ungadulu
@@ -10429,7 +10429,8 @@ param=strengthbonus,3
 param=rangebonus,7
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
-// osrs param=attack_sound,staff_double
+param=attack_sound,staff_hit
+// osrs attack sound staff_double
 // sound and animation data taken normal version ungadulu
 // wander distance attack distance missing.
 

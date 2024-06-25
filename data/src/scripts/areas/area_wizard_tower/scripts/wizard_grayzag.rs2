@@ -40,8 +40,8 @@ if ($imp_coord = npc_coord) {
     ~npc_spawn_imp_attack;
     return;
 }
-npc_anim(human_chaos_druid_cast_bind, 0);
-spotanim_npc(bind_casting, 92, 0);
+npc_anim(human_castcurse, 0);
+spotanim_npc(curse_casting, 92, 0);
 %npc_action_delay = calc(map_clock + 5);
 world_delay(2); // delay spawn by 2 ticks
 clearqueue(playerhit_n_retaliate);; // todo figure out if this is actually what happens. Could be npc delay? could be p_stopaction?
@@ -49,4 +49,7 @@ npc_add($imp_coord, imp_grayzag, 200); // complete guess!
 // new active npc
 npc_delay(1);
 npc_setmode(opplayer2);
+sound_synth(smokepuff, 0, 0);
 spotanim_map(small_smokepuff, $imp_coord, 124, 0);
+// Used animations similar to what can be seen in this love story quest cutscene.
+// https://youtu.be/NxhfLCz-1mU?si=kCvJtt8_Ji6WiPB6&t=71
