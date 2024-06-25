@@ -180,10 +180,11 @@ export default class Player extends PathingEntity {
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
 
+        sav.p1(this.afkZones.length);
         for (let index: number = 0; index < this.afkZones.length; index++) {
             sav.p4(this.afkZones[index]);
-            sav.p2(this.lastAfkZones[index]);
         }
+        sav.p2(this.lastAfkZone);
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const safeName = fromBase37(this.username37);
@@ -294,7 +295,7 @@ export default class Player extends PathingEntity {
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
 
     afkZones: Int32Array = new Int32Array(2);
-    lastAfkZones: Int16Array = new Int16Array(2);
+    lastAfkZone: number = 0;
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
@@ -1752,24 +1753,22 @@ export default class Player extends PathingEntity {
     }
 
     updateAfkZones(): void {
-        const ticks: number = 1000; // 10 minutes
-        for (let index: number = 0; index < this.afkZones.length; index++) {
-            this.lastAfkZones[index] = Math.min(this.lastAfkZones[index] + 1, ticks);
-        }
+        this.lastAfkZone = Math.min(1000, this.lastAfkZone + 1);
         if (this.withinAfkZone()) {
             return;
         }
         const coord: number = Position.packCoord(0, this.x - 10, this.z - 10); // level doesn't matter.
         if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
-            this.shiftAfkZone(1, coord, 0);
+            this.afkZones[1] = coord;
         } else {
-            this.shiftAfkZone(1, this.afkZones[0], this.lastAfkZones[0]);
+            this.afkZones[1] = this.afkZones[0];
         }
-        this.shiftAfkZone(0, coord, 0);
+        this.afkZones[0] = coord;
+        this.lastAfkZone = 0;
     }
 
     zonesAfk(): boolean {
-        return this.lastAfkZones[0] === 1000 || this.lastAfkZones[1] === 1000;
+        return this.lastAfkZone === 1000;
     }
 
     private withinAfkZone(): boolean {
@@ -1781,11 +1780,6 @@ export default class Player extends PathingEntity {
             }
         }
         return false;
-    }
-
-    private shiftAfkZone(index: number, coord: number, time: number): void {
-        this.afkZones[index] = coord;
-        this.lastAfkZones[index] = time;
     }
 
     // ----

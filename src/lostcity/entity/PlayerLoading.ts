@@ -131,10 +131,11 @@ export class PlayerLoading {
 
         // afk zones
         if (version >= 3) {
-            for (let index: number = 0; index < player.afkZones.length; index++) {
+            const afkZones: number = sav.g1();
+            for (let index: number = 0; index < afkZones; index++) {
                 player.afkZones[index] = sav.g4();
-                player.lastAfkZones[index] = sav.g2();
             }
+            player.lastAfkZone = sav.g2();
         }
 
         player.combatLevel = player.getCombatLevel();
