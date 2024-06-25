@@ -61,7 +61,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 2) {
+        if (version > 3) {
             throw new Error('Unsupported player save format');
         }
 
@@ -126,6 +126,14 @@ export class PlayerLoading {
                         count
                     });
                 }
+            }
+        }
+
+        // afk zones
+        if (version >= 3) {
+            for (let index: number = 0; index < player.afkZones.length; index++) {
+                player.afkZones[index] = sav.g4();
+                player.lastAfkZones[index] = sav.g2();
             }
         }
 

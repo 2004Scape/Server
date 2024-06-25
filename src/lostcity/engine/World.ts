@@ -723,6 +723,7 @@ class World {
                 player.updateZones();
                 player.updateInvs();
                 player.updateStats();
+                player.updateAfkZones();
 
                 player.encodeOut();
             } catch (err) {

@@ -119,7 +119,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
-        sav.p2(2); // version
+        sav.p2(3); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -179,6 +179,11 @@ export default class Player extends PathingEntity {
         }
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
+
+        for (let index: number = 0; index < this.afkZones.length; index++) {
+            sav.p4(this.afkZones[index]);
+            sav.p2(this.lastAfkZones[index]);
+        }
 
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const safeName = fromBase37(this.username37);
@@ -287,6 +292,9 @@ export default class Player extends PathingEntity {
         uid: number;
         points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
+
+    afkZones: Int32Array = new Int32Array(2);
+    lastAfkZones: Int16Array = new Int16Array(2);
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
@@ -1741,6 +1749,43 @@ export default class Player extends PathingEntity {
 
     isComponentVisible(com: Component) {
         return this.modalTop === com.rootLayer || this.modalBottom === com.rootLayer || this.modalSidebar === com.rootLayer || this.overlaySide.findIndex(l => l === com.rootLayer) !== -1 || this.modalSticky === com.rootLayer;
+    }
+
+    updateAfkZones(): void {
+        const ticks: number = 1000; // 10 minutes
+        for (let index: number = 0; index < this.afkZones.length; index++) {
+            this.lastAfkZones[index] = Math.min(this.lastAfkZones[index] + 1, ticks);
+        }
+        if (this.withinAfkZone()) {
+            return;
+        }
+        const coord: number = Position.packCoord(0, this.x - 10, this.z - 10); // level doesn't matter.
+        if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
+            this.shiftAfkZone(1, coord, 0);
+        } else {
+            this.shiftAfkZone(1, this.afkZones[0], this.lastAfkZones[0]);
+        }
+        this.shiftAfkZone(0, coord, 0);
+    }
+
+    zonesAfk(): boolean {
+        return this.lastAfkZones[0] === 1000 || this.lastAfkZones[1] === 1000;
+    }
+
+    private withinAfkZone(): boolean {
+        const size: number = 21;
+        for (let index: number = 0; index < this.afkZones.length; index++) {
+            const coord: Position = Position.unpackCoord(this.afkZones[index]);
+            if (Position.intersects(this.x, this.z, this.width, this.length, coord.x, coord.z, size, size)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private shiftAfkZone(index: number, coord: number, time: number): void {
+        this.afkZones[index] = coord;
+        this.lastAfkZones[index] = time;
     }
 
     // ----
