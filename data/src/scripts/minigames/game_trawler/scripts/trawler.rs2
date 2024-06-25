@@ -26,7 +26,6 @@ if (~playercount_coord_pair_table(trawler_game_zones) < 1) {
 }
 if (add(%npc_trawler_start, 1000) < map_clock) {
     ~trawler_reset;
-    npc_say("WE DID IT BOYS!!!");
     ~trawler_win;
     return;
 }
@@ -40,7 +39,6 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
         %npc_trawler_flood_status = add(%npc_trawler_flood_status, 1);
     }
     if (%npc_trawler_flood_status >= 100) {
-        npc_say("WE'RE ALL GOING TO DIIEEII!I!!!");
         ~trawler_reset;
         ~trawler_loss;
         return;
@@ -49,19 +47,30 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
     }
     $i = add($i, 1);
 }
-// three holes per player?
+// max leaks:
+// 1p = 3
+// 2p = 5
+def_int $max_leaks = min(add(multiply($player_count, 2), 1), 10);
+def_int $leak_chance = max(divide(16, $player_count), 2);
 $i = 0;
-while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < multiply($player_count, 3)) {
+while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < $max_leaks) {
     def_coord $hull_coord = enum(int, coord, trawler_hulls, $i);
     if (loc_find($hull_coord, game_trawler_hull) = true | loc_find($hull_coord, game_trawler_repaired_leak) = true) {
-        if (random(30) < $player_count) { // complete guess
+        if (random($leak_chance) = 0) { // complete guess
             loc_change(game_trawler_leak, 1000);
+            ~sound_synth_area(leak, 0, $hull_coord, 5);
+
             def_coord $flood_coord = movecoord(loc_coord, 128, 0, 0);
             if (loc_find($flood_coord, game_trawler_hull) = true | loc_find($flood_coord, game_trawler_repaired_leak) = true) {
                 loc_change(game_trawler_leak, 1000);
-                ~.sound_synth_area(leak, 0, $flood_coord, 5);
+                ~sound_synth_area(leak, 0, $flood_coord, 5);
             }
-            ~.sound_synth_area(leak, 0, $hull_coord, 5);
+            if (random(5) = 0) {
+                if (.npc_find(^trawler_flood_center_under, 0_31_75_murphy, 5, 0) = true) {
+                    .npc_queue(6, 0, 0);
+                }
+                npc_queue(6, 0, 0);
+            }
             $leak_count = add($leak_count, 1);
         }
     }
@@ -152,6 +161,7 @@ while (huntnext = true) {
 if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
     return;
 }
+mes("Murphy turns the boat towards shore.");
 %boat_takeoff = 12;
 midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 

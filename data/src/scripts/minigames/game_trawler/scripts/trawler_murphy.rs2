@@ -1,0 +1,27 @@
+[ai_queue4,0_29_75_murphy](int $arg) @murphy_start;
+[ai_queue4,0_31_75_murphy](int $arg) @murphy_start;
+
+[ai_queue5,0_29_75_murphy](int $arg) @murphy_fill_holes;
+[ai_queue5,0_31_75_murphy](int $arg) @murphy_fill_holes;
+
+[ai_queue6,0_29_75_murphy](int $arg) @murphy_cry;
+[ai_queue6,0_31_75_murphy](int $arg) @murphy_cry;
+
+[ai_queue7,0_29_75_murphy](int $arg) @murphy_cheer;
+[ai_queue7,0_31_75_murphy](int $arg) @murphy_cheer;
+
+[label,murphy_start]
+npc_say("Let's get this net full with fishies!");
+
+[label,murphy_fill_holes]
+npc_say("That's the stuff, fill those holes!");
+
+[label,murphy_cry]
+%npc_stunned = add(map_clock, 4);
+npc_walktrigger(8, 0);
+npc_anim(emote_cry, 0);
+
+[label,murphy_cheer]
+%npc_stunned = add(map_clock, 4);
+npc_walktrigger(8, 0);
+npc_anim(emote_cheer, 0);

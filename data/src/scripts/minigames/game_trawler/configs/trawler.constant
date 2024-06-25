@@ -5,3 +5,10 @@
 ^trawler_start_center = 1_29_75_33_25
 ^trawler_flood_center_under = 0_31_75_33_25
 ^trawler_flood_center = 1_31_75_33_25
+
+
+^trawler_start_patrol1 = 0_29_75_29_25
+^trawler_start_patrol2 = 0_29_75_36_25
+
+^trawler_flood_patrol1 = 0_31_75_29_25
+^trawler_flood_patrol2 = 0_31_75_36_25

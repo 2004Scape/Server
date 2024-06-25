@@ -40,5 +40,17 @@ if (loc_type = game_trawler_leak) {
             loc_change(game_trawler_repaired_leak, 1000);
         }
         inv_del(inv, swamp_paste, 1);
+        if (random(5) = 0) {
+            if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
+                if (%npc_trawler_flood_status < 5 & add(%npc_trawler_start, 40) > map_clock) { // complete guess
+                    npc_queue(5, 0, 0); // tells everyone to fill in the holes at the beginning of the match
+                } else {
+                    npc_queue(7, 5, 0);
+                }
+            }
+            if (.npc_find(^trawler_flood_center_under, 0_31_75_murphy, 5, 0) = true) {
+                .npc_queue(7, 5, 0);
+            }
+        }
     }
 }

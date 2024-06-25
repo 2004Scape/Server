@@ -22,6 +22,7 @@ if (~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
 if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
     ~trawler_reset;
     %npc_trawler_start = map_clock;
+    npc_queue(4, 35, 0);
     npc_settimer(30);
 }
 
@@ -36,7 +37,7 @@ while (.huntnext = true) {
             $player_count = add($player_count, 1);
         }
     }
-    if ($player_count > 15) {
+    if ($player_count > 32) {
         return;
     }
 }
@@ -49,7 +50,7 @@ while (.huntnext = true) {
             $player_count = add($player_count, 1);
         }
     }
-    if ($player_count > 15) {
+    if ($player_count > 32) {
         return;
     }
 }
