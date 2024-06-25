@@ -26,7 +26,7 @@ model7=model_553_npc
 head1=model_51_obj_wear
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
-// param=attack_sound,
+param=attack_sound,staff_hit
 // TODO
 
 [npc_348]
@@ -77,9 +77,8 @@ model5=model_185_obj_wear
 model6=model_323_obj_wear
 model7=model_555_npc
 head1=model_51_obj_wear
-param=attack_anim,human_spear_stab
-param=defend_anim,human_spear_def
-// param=attack_sound,
+param=attack_anim,human_staff_spike
+param=attack_sound,staff_stab
 // TODO
 
 [npc_369]

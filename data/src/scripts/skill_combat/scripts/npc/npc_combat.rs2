@@ -243,5 +243,7 @@ if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
 if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {
     return(false);
 }
-
+if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    return(false); // osrs
+}
 return(true);

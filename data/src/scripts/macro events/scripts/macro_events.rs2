@@ -49,7 +49,7 @@ switch_int ($event) {
 }
 
 [proc,macro_event_area](coord $coord)(boolean)
-if (~in_duel_arena($coord) = true) {
+if (~in_duel_arena($coord) = true | ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     return(false);
 }
 return(true);

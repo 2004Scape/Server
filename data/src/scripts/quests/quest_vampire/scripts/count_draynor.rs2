@@ -1,6 +1,49 @@
 [ai_queue3,count_draynor](int $arg) // do nothing
 [ai_queue4,count_draynor](int $arg) gosub(npc_death);
-[ai_opplayer2,count_draynor] @count_draynor_attack;
+
+[opnpc2,count_draynor]
+if (~player_in_combat_check = false) {
+    return;
+}
+if (%vampire_progress = ^vampire_complete) {
+    mes("You've done enough vampire slaying.");
+    return;
+}
+// osrs wiki says manually casting spells doesnt work but autocast does. So its probably here
+if (inv_total(inv, garlic) > 0) {
+    if (npc_stat(hitpoints) = npc_basestat(hitpoints)) { // osrs https://archive.is/djWKq
+        npc_statsub(hitpoints, 10, 0);
+        npc_statsub(attack, 10, 0);
+        npc_statsub(strength, 10, 0);
+        npc_statsub(defence, 40, 0);
+        mes("The vampyre seems to weaken.");
+    } else if (random(16) = 0) {
+        mes("The vampyre seems to weaken.");
+    }
+}
+
+@player_combat_start;
+[apnpc2,count_draynor]
+if (~player_in_combat_check = false) {
+    return;
+}
+if (%vampire_progress = ^vampire_complete) {
+    mes("You've done enough vampire slaying.");
+    return;
+}
+// osrs wiki says manually casting spells doesnt work but autocast does. So its probably here
+if (inv_total(inv, garlic) > 0) {
+    if (npc_stat(hitpoints) = npc_basestat(hitpoints)) { // osrs https://archive.is/djWKq
+        npc_statsub(hitpoints, 10, 0);
+        npc_statsub(attack, 10, 0);
+        npc_statsub(strength, 10, 0);
+        npc_statsub(defence, 40, 0);
+        mes("The vampyre seems to weaken.");
+    } else if (random(16) = 0) {
+        mes("The vampyre seems to weaken.");
+    }
+}
+@player_combat_start_ap;
 
 [ai_queue2,count_draynor](int $damage)
 ~npc_default_damage($damage);
@@ -11,13 +54,6 @@ if (npc_stat(hitpoints) = 0) {
         }
     }
     npc_statheal(hitpoints, 1, 0);
-}
-
-[label,count_draynor_attack]
-gosub(npc_default_attack);
-if (inv_total(inv, garlic) > 0 & random(16) = 0) {
-    // TODO garlic effects
-    mes("The vampire seems to weaken.");
 }
 
 [label,count_draynor_use_stake]

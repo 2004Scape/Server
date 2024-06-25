@@ -132,7 +132,7 @@ if ($option = 1) {
 ~chatnpc("<p,confused>Now you come to mention it, yes I do have a key. It's in my special closet of valuable stuff. Now how do I get into that?");
 ~chatnpc("<p,confused>I sealed it using one of my magic rituals. So it would make sense that another ritual would open it again.");
 ~chatplayer("<p,neutral>So do you know what ritual to use?");
-~chatnpc("<p,neutral>let me think a second.");
+~chatnpc("<p,neutral>Let me think a second.");
 ~chatnpc("<p,confused>Yes a simple drazier style ritual should suffice. Hmm, main problem with that is I'll need 25 sets of bones. Now where am I going to get hold of something like that?");
 
 def_int $option = ~p_choice2(" Hmm, that's too bad. I really need that key.", 1, "I'll get the bones for you.", 2);

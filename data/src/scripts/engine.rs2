@@ -61,6 +61,7 @@
 [command,displayname]()(string)
 [command,.displayname]()(string)
 [command,facesquare](coord $coord)
+[command,.facesquare](coord $coord)
 [command,healenergy](int $amount)
 [command,.healenergy](int $amount)
 [command,if_close]
