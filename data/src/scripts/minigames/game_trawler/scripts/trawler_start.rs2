@@ -7,31 +7,32 @@ if (p_finduid(uid) = true) {
 // CamShake(type = 4, shakeIntensity = 0, movementIntensity = 20, speed = 4)
 // CamShake(type = 1, shakeIntensity = 0, movementIntensity = 20, speed = 5)
 
-[queue,trawler_start]
-if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = false) {
-    return;
-}
-p_teleport(~coord_lineofwalk_radius(^trawler_start_center, 4));
-%boat_takeoff = 11;
-if_openmainmodal(ship_journey);
-midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
-
-p_delay(20);
-if_close;
-if_openmainmodal(trawler_help);
-
 [ai_timer,murphy]
 if (~playercount_coord_pair_table(trawler_game_zones) > 0 | ~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
     npc_settimer(0);
     return;
 }
+
+~trawler_game_start;
+
+if (~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
+    npc_settimer(0);
+}
+
+if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
+    ~trawler_reset;
+    %npc_trawler_start = map_clock;
+    npc_settimer(30);
+}
+
+[proc,trawler_game_start]
 def_int $player_count = 0;
 huntall(^trawler_lobby_center_under, 8, 0);
-while (huntnext = true) {
-    if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = true) {
-        if_close;
-        if (p_finduid(uid) = true) {
-            queue(trawler_start, 0);
+while (.huntnext = true) {
+    if (~.inzone_coord_pair_table(trawler_lobby_zones, .coord) = true) {
+        .if_close;
+        if (.p_finduid(.uid) = true) {
+            queue2(trawler_start, 0);
             $player_count = add($player_count, 1);
         }
     }
@@ -40,11 +41,11 @@ while (huntnext = true) {
     }
 }
 huntall(^trawler_lobby_center, 8, 0);
-while (huntnext = true) {
-    if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = true) {
-        if_close;
-        if (p_finduid(uid) = true) {
-            queue(trawler_start, 0);
+while (.huntnext = true) {
+    if (~.inzone_coord_pair_table(trawler_lobby_zones, .coord) = true) {
+        .if_close;
+        if (.p_finduid(.uid) = true) {
+            queue2(trawler_start, 0);
             $player_count = add($player_count, 1);
         }
     }
@@ -52,7 +53,17 @@ while (huntnext = true) {
         return;
     }
 }
-if (~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
-    npc_settimer(0);
+
+
+[queue,trawler_start]
+if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = false) {
     return;
 }
+p_teleport(~coord_lineofwalk_radius(^trawler_start_center_under, 4));
+%boat_takeoff = 11;
+if_openmainmodal(ship_journey);
+midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
+
+p_delay(20);
+if_close;
+if_openmainmodal(trawler_help);
