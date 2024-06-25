@@ -1,0 +1,15 @@
+[proc,sound_synth_area](synth $sound, int $delay, coord $coord, int $distance)
+huntall($coord, $distance, 0);
+if (huntnext = true) {
+    if (distance(coord, $coord) <= $distance) {
+        sound_synth($sound, 0, $delay);
+    }
+}
+
+[proc,.sound_synth_area](synth $sound, int $delay, coord $coord, int $distance)
+huntall($coord, $distance, 0);
+if (.huntnext = true) {
+    if (distance(.coord, $coord) <= $distance) {
+        .sound_synth($sound, 0, $delay);
+    }
+}

@@ -18,9 +18,6 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
     $i = add($i, 1);
 }
 
-[oplocu,game_trawler_hull]
-mes(~coord_tostring(loc_coord));
-
 [ai_timer,0_29_75_murphy]
 if (~playercount_coord_pair_table(trawler_game_zones) < 1) {
     ~trawler_reset;
@@ -62,11 +59,16 @@ while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < multiply($player_
             def_coord $flood_coord = movecoord(loc_coord, 128, 0, 0);
             if (loc_find($flood_coord, game_trawler_hull) = true | loc_find($flood_coord, game_trawler_repaired_leak) = true) {
                 loc_change(game_trawler_leak, 1000);
+                ~.sound_synth_area(leak, 0, $flood_coord, 5);
             }
+            ~.sound_synth_area(leak, 0, $hull_coord, 5);
             $leak_count = add($leak_count, 1);
         }
     }
     $i = add($i, 1);
+}
+if (%npc_trawler_flood_status < 30) {
+    ~trawler_unflood;
 }
 
 // npc_say(tostring($player_count));
@@ -82,6 +84,18 @@ huntall(^trawler_start_center, 8, 0);
 while (huntnext = true) {
     if_close;
     queue(trawler_player_teleport, 0, movecoord(coord, 128, 0, 0));
+}
+
+[proc,trawler_unflood]
+huntall(^trawler_flood_center_under, 8, 0);
+while (huntnext = true) {
+    if_close;
+    queue(trawler_player_teleport, 0, movecoord(coord, -128, 0, 0));
+}
+huntall(^trawler_flood_center, 8, 0);
+while (huntnext = true) {
+    if_close;
+    queue(trawler_player_teleport, 0, movecoord(coord, -128, 0, 0));
 }
 
 [proc,trawler_loss]

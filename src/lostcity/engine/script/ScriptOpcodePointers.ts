@@ -425,7 +425,8 @@ const ScriptOpcodePointers: {
         require: ['active_player']
     },
     [ScriptOpcode.SOUND_SYNTH]: {
-        require: ['active_player']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.SPOTANIM_PL]: {
         require: ['active_player'],
