@@ -418,8 +418,9 @@ class World {
 
         if (this.currentTick % 500 === 0) {
             for (const player of this.players) {
-                // 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
-                player.afkEventReady = Math.random() < 0.0833;
+                // (normal) 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
+                // (afk) double the chance?
+                player.afkEventReady = Math.random() < (player.zonesAfk() ? 0.1666 : 0.0833);
             }
         }
 
