@@ -20,6 +20,23 @@ import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import Player from '#lostcity/entity/Player.js';
 
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
+import CamShake from '#lostcity/network/outgoing/model/CamShake.js';
+import CamReset from '#lostcity/network/outgoing/model/CamReset.js';
+import PCountDialog from '#lostcity/network/outgoing/model/PCountDialog.js';
+import SynthSound from '#lostcity/network/outgoing/model/SynthSound.js';
+import IfSetColour from '#lostcity/network/outgoing/model/IfSetColour.js';
+import IfSetHide from '#lostcity/network/outgoing/model/IfSetHide.js';
+import IfSetObject from '#lostcity/network/outgoing/model/IfSetObject.js';
+import IfShowSide from '#lostcity/network/outgoing/model/IfShowSide.js';
+import IfSetModel from '#lostcity/network/outgoing/model/IfSetModel.js';
+import IfSetRecol from '#lostcity/network/outgoing/model/IfSetRecol.js';
+import TutorialFlashSide from '#lostcity/network/outgoing/model/TutorialFlashSide.js';
+import IfSetAnim from '#lostcity/network/outgoing/model/IfSetAnim.js';
+import IfSetPlayerHead from '#lostcity/network/outgoing/model/IfSetPlayerHead.js';
+import IfSetText from '#lostcity/network/outgoing/model/IfSetText.js';
+import IfSetNpcHead from '#lostcity/network/outgoing/model/IfSetNpcHead.js';
+import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
+import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
@@ -42,23 +59,6 @@ import {
     GenderValid,
     SkinColourValid
 } from '#lostcity/engine/script/ScriptValidators.js';
-import CamShake from '#lostcity/network/outgoing/model/CamShake.js';
-import CamReset from '#lostcity/network/outgoing/model/CamReset.js';
-import PCountDialog from '#lostcity/network/outgoing/model/PCountDialog.js';
-import SynthSound from '#lostcity/network/outgoing/model/SynthSound.js';
-import IfSetColour from '#lostcity/network/outgoing/model/IfSetColour.js';
-import IfSetHide from '#lostcity/network/outgoing/model/IfSetHide.js';
-import IfSetObject from '#lostcity/network/outgoing/model/IfSetObject.js';
-import IfShowSide from '#lostcity/network/outgoing/model/IfShowSide.js';
-import IfSetModel from '#lostcity/network/outgoing/model/IfSetModel.js';
-import IfSetRecol from '#lostcity/network/outgoing/model/IfSetRecol.js';
-import TutorialFlashSide from '#lostcity/network/outgoing/model/TutorialFlashSide.js';
-import IfSetAnim from '#lostcity/network/outgoing/model/IfSetAnim.js';
-import IfSetPlayerHead from '#lostcity/network/outgoing/model/IfSetPlayerHead.js';
-import IfSetText from '#lostcity/network/outgoing/model/IfSetText.js';
-import IfSetNpcHead from '#lostcity/network/outgoing/model/IfSetNpcHead.js';
-import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
-import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
 const PlayerOps: CommandHandlers = {
     [ScriptOpcode.FINDUID]: state => {
