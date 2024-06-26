@@ -6,7 +6,6 @@ import World from '#lostcity/engine/World.js';
 import {Position} from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
-import Zone from '#lostcity/engine/zone/Zone.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     prot = ServerProt.PLAYER_INFO;
@@ -156,12 +155,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         const nearby: Set<number> = new Set();
 
         for (const zoneIndex of player.activeZones) {
-            const zone: Zone | undefined = World.getZoneIndex(zoneIndex);
-            if (!zone) {
-                continue;
-            }
-
-            for (const other of zone.getAllPlayersSafe()) {
+            for (const other of World.getZoneIndex(zoneIndex).getAllPlayersSafe()) {
                 if (other.uid === player.uid || other.x <= absLeftX || other.x >= absRightX || other.z >= absTopZ || other.z <= absBottomZ) {
                     continue;
                 }

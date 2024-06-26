@@ -14,7 +14,7 @@ import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProt
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import { Position } from './Position.js';
 import MoveSpeed from './MoveSpeed.js';
-import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import Zone from '#lostcity/engine/zone/Zone.js';
 import InvType from '#lostcity/cache/config/InvType.js';
 import IfClose from '#lostcity/network/outgoing/model/IfClose.js';
@@ -247,7 +247,7 @@ export class NetworkPlayer extends Player {
                     continue;
                 }
 
-                this.activeZones.add(ZoneManager.zoneIndex(x << 3, z << 3, this.level));
+                this.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
             }
         }
     }
@@ -262,10 +262,7 @@ export class NetworkPlayer extends Player {
 
         // update active zones
         for (const zoneIndex of this.activeZones) {
-            const zone: Zone | undefined = World.getZoneIndex(zoneIndex);
-            if (!zone) {
-                continue;
-            }
+            const zone: Zone = World.getZoneIndex(zoneIndex);
             if (!this.loadedZones.has(zone.index)) {
                 zone.writeFullFollows(this);
             } else {

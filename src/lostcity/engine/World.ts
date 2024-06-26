@@ -67,6 +67,8 @@ import {Position} from '#lostcity/entity/Position.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
+import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
+import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -83,7 +85,8 @@ class World {
     lastCycleStats: number[] = [];
     lastCycleBandwidth: number[] = [0, 0];
 
-    readonly gameMap = new GameMap();
+    readonly gameMap: GameMap = new GameMap();
+    readonly zoneMap: ZoneMap = new ZoneMap();
     readonly invs: Inventory[] = []; // shared inventories (shops)
     vars: Int32Array = new Int32Array(); // var shared
     varsString: string[] = [];
@@ -269,7 +272,7 @@ class World {
         this.reload();
 
         if (!skipMaps) {
-            this.gameMap.init();
+            this.gameMap.init(this.zoneMap);
         }
 
         Login.loginThread.postMessage({
@@ -866,9 +869,9 @@ class World {
         }
 
         const end = Date.now();
-        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
-        // console.log(`${worldProcessing} ms world | ${clientInput} ms client in | ${npcProcessing} ms npcs | ${playerProcessing} ms players | ${playerLogout} ms logout | ${playerLogin} ms login | ${zoneProcessing} ms zones | ${clientOutput} ms client out | ${cleanup} ms cleanup`);
-        // console.log('----');
+        console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+        console.log(`${worldProcessing} ms world | ${clientInput} ms client in | ${npcProcessing} ms npcs | ${playerProcessing} ms players | ${playerLogout} ms logout | ${playerLogin} ms login | ${zoneProcessing} ms zones | ${clientOutput} ms client out | ${cleanup} ms cleanup`);
+        console.log('----');
 
         this.currentTick++;
         this.lastCycleStats = [end - start, worldProcessing, clientInput, npcProcessing, playerProcessing, playerLogout, playerLogin, zoneProcessing, clientOutput, cleanup];
@@ -897,12 +900,16 @@ class World {
         return container;
     }
 
-    getZone(absoluteX: number, absoluteZ: number, level: number): Zone {
-        return this.gameMap.zoneManager.getZone(absoluteX, absoluteZ, level);
+    getZone(x: number, z: number, level: number): Zone {
+        return this.zoneMap.zone(x, z, level);
     }
 
-    getZoneIndex(zoneIndex: number): Zone | undefined {
-        return this.gameMap.zoneManager.zones.get(zoneIndex);
+    getZoneIndex(zoneIndex: number): Zone {
+        return this.zoneMap.zoneByIndex(zoneIndex);
+    }
+
+    getZoneGrid(level: number): ZoneGrid {
+        return this.zoneMap.grid(level);
     }
 
     computeSharedEvents(): void {
@@ -916,11 +923,7 @@ class World {
             }
         }
         for (const zoneIndex of zones) {
-            const zone: Zone | undefined = this.getZoneIndex(zoneIndex);
-            if (!zone) {
-                continue;
-            }
-            zone.computeShared();
+            this.getZoneIndex(zoneIndex).computeShared();
         }
     }
 

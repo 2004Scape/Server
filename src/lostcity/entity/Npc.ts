@@ -34,8 +34,9 @@ import Interaction from '#lostcity/entity/Interaction.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 
-import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
+import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
+import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
 
 export default class Npc extends PathingEntity {
     static readonly ANIM = 0x2;
@@ -763,14 +764,17 @@ export default class Npc extends PathingEntity {
     }
 
     huntAll(): void {
+        if (this.nextHuntTick > World.currentTick) {
+            return;
+        }
         const hunt: HuntType = HuntType.get(this.huntMode);
         if (hunt.type === HuntModeType.OFF) {
             return;
         }
-        if (!hunt.findKeepHunting && this.target !== null) {
+        if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.getZoneGrid(this.level).isFlagged(Position.zone(this.x), Position.zone(this.z), 5)) {
             return;
         }
-        if (this.nextHuntTick > World.currentTick) {
+        if (!hunt.findKeepHunting && this.target !== null) {
             return;
         }
 

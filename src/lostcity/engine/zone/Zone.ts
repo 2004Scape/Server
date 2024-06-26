@@ -9,7 +9,7 @@ import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import {Position} from '#lostcity/entity/Position.js';
 
 import World from '#lostcity/engine/World.js';
-import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
+import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import ZoneEvent from '#lostcity/engine/zone/ZoneEvent.js';
 import ZoneEventType from '#lostcity/engine/zone/ZoneEventType.js';
 
@@ -46,7 +46,7 @@ export default class Zone {
 
     constructor(index: number) {
         this.index = index;
-        const coord: Position = ZoneManager.unpackIndex(index);
+        const coord: Position = ZoneMap.unpackIndex(index);
         this.x = coord.x >> 3;
         this.z = coord.z >> 3;
         this.level = coord.level;
@@ -55,6 +55,7 @@ export default class Zone {
     enter(entity: PathingEntity): void {
         if (entity instanceof Player) {
             this.players.add(entity.uid);
+            World.getZoneGrid(this.level).flag(this.x, this.z);
         } else if (entity instanceof Npc) {
             this.npcs.add(entity.nid);
         }
@@ -63,6 +64,9 @@ export default class Zone {
     leave(entity: PathingEntity): void {
         if (entity instanceof Player) {
             this.players.delete(entity.uid);
+            if (this.players.size === 0) {
+                World.getZoneGrid(this.level).unflag(this.x, this.z);
+            }
         } else if (entity instanceof Npc) {
             this.npcs.delete(entity.nid);
         }
@@ -106,6 +110,7 @@ export default class Zone {
     computeShared(): void {
         this.shared = null;
 
+        // todo: maybe not use streams
         const enclosed: (Uint8Array | null)[] = Array.from(this.events.values())
             .filter(event => event.type === ZoneEventType.ENCLOSED)
             .map(event => ServerProtRepository.getZoneEncoder(event.message)?.enclose(event.message).data ?? null);

@@ -126,12 +126,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         const nearby: Set<number> = new Set();
 
         for (const zoneIndex of player.activeZones) {
-            const zone = World.getZoneIndex(zoneIndex);
-            if (!zone) {
-                continue;
-            }
-
-            for (const npc of zone.getAllNpcsSafe()) {
+            for (const npc of World.getZoneIndex(zoneIndex).getAllNpcsSafe()) {
                 if (npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
                     continue;
                 }
