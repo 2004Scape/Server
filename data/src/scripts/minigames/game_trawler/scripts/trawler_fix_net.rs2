@@ -1,0 +1,55 @@
+[oploc1,game_trawler_fish_net1]
+mes("The net is not damaged.");
+[oploc1,game_trawler_fish_net2]
+mes("The net is not damaged.");
+
+[oplocu,game_trawler_fish_net1]
+if (last_useitem = rope) {
+    mes("The net is not damage.");
+} else {
+    ~displaymessage(^dm_default);
+}
+[oplocu,game_trawler_fish_net2]
+if (last_useitem = rope) {
+    mes("The net is not damage.");
+} else {
+    ~displaymessage(^dm_default);
+}
+
+
+[oploc1,game_trawler_fish_net_broken1] @trawler_fix_net;
+[oploc1,game_trawler_fish_net_broken2] @trawler_fix_net;
+[oplocu,game_trawler_fish_net_broken1]
+if (last_useitem = rope) {
+    @trawler_fix_net;
+} else {
+    ~displaymessage(^dm_default);
+}
+[oplocu,game_trawler_fish_net_broken2]
+if (last_useitem = rope) {
+    @trawler_fix_net;
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[label,trawler_fix_net]
+if (inv_total(inv, rope) < 1) {
+    mes("You'll need some rope to fix it."); // osrs
+    return;
+}
+if (loc_find(^trawler_start_net1, game_trawler_fish_net_broken1) = true) {
+    loc_change(game_trawler_fish_net1, 1);
+}
+if (loc_find(^trawler_start_net2, game_trawler_fish_net_broken2) = true) {
+    loc_change(game_trawler_fish_net2, 1); 
+}
+if (loc_find(^trawler_flood_net1, game_trawler_fish_net_broken1) = true) {
+    loc_change(game_trawler_fish_net1, 1);
+}
+if (loc_find(^trawler_flood_net2, game_trawler_fish_net_broken2) = true) {
+    loc_change(game_trawler_fish_net2, 1); 
+}
+anim(human_pickupfloor, 0);
+mes("You manage to fix the net."); // osrs
+p_delay(1);
+inv_del(inv, rope, 1);

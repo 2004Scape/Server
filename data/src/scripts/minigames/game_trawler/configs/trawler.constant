@@ -6,6 +6,13 @@
 ^trawler_flood_center_under = 0_31_75_33_25
 ^trawler_flood_center = 1_31_75_33_25
 
+^trawler_start_net1 = 1_29_75_24_26
+^trawler_start_net2 = 1_29_75_24_19
+
+^trawler_flood_net1 = 1_31_75_24_26
+^trawler_flood_net2 = 1_31_75_24_19
+
+^trawler_wreck_center = 0_30_75_33_25
 
 ^trawler_start_patrol1 = 0_29_75_29_25
 ^trawler_start_patrol2 = 0_29_75_36_25

@@ -19,3 +19,5 @@ type=player_uid
 [npc_trawler_start]
 
 [npc_trawler_flood_status]
+
+[npc_trawler_fish_caught]

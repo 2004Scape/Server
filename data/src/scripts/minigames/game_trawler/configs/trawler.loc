@@ -29,7 +29,7 @@ model=model_loc_2162
 length=2
 mirror=yes
 
-[game_trawler_net3]
+[game_trawler_fish_net1]
 name=Trawler net
 desc=Smells like fish.
 model=model_loc_2164
@@ -37,7 +37,7 @@ width=2
 length=6
 op1=Inspect
 
-[game_trawler_net4]
+[game_trawler_fish_net2]
 name=Trawler net
 desc=Smells like fish.
 model=model_loc_2164
@@ -46,7 +46,7 @@ length=6
 mirror=yes
 op1=Inspect
 
-[game_trawler_net5]
+[game_trawler_reward_net]
 name=Trawler net
 desc=Smells like fish.
 model=model_loc_2166
@@ -86,7 +86,7 @@ model=model_loc_362
 model=model_loc_1785
 active=no
 
-[game_trawler_big_net1]
+[game_trawler_fish_net_broken1]
 name=Trawler net
 desc=A huge net to catch little fish.
 model=model_loc_2172
@@ -94,7 +94,7 @@ width=2
 length=6
 op1=Inspect
 
-[game_trawler_big_net2]
+[game_trawler_fish_net_broken2]
 name=Trawler net
 desc=A huge net to catch little fish.
 model=model_loc_2172

@@ -1,0 +1,58 @@
+[oploc1,game_trawler_reward_net]
+inv_transmit(trawler_catch, trawler_catch:inv);
+if_openmainmodal(trawler_catch);
+
+[if_close,trawler_catch]
+def_int $i = 0;
+while ($i < inv_size(trawler_catch)) {
+    inv_dropslot(trawler_catch, coord, $i, 100); // drops in osrs
+    $i = add($i, 1);
+}
+
+[queue,trawler_player_win](int $rolls)
+if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
+    return;
+}
+mes("Murphy turns the boat towards shore.");
+%boat_takeoff = 12;
+midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
+if_openmainmodal(ship_journey);
+
+p_delay(20);
+if_close;
+p_teleport(~coord_lineofwalk_radius(^trawler_lobby_murphy_spawn, 4));
+
+def_int $level = stat_base(fishing);
+if ($level < 15) {
+    return;
+}
+def_int $i = 0;
+mes(tostring($rolls));
+while ($i < $rolls) {
+    ~trawler_reward($level);
+    $i = add($i, 1);
+}
+
+
+[proc,trawler_reward](int $level)
+if ($level >= 81 & stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_manta_ray, 1);
+} else if ($level >= 80 & stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_sea_turtle, 1);
+} else if ($level >= 76 & stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_shark, 1);
+} else if ($level >= 60 & stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_swordfish, 1);
+} else if ($level >= 40 & stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_lobster, 1);
+} else if ($level >= 35 & stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_tuna, 1);
+} else if ($level >= 16 & stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, oyster, 1);
+} else if (stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_anchovies, 1);
+} else if (stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_sardine, 1);
+} else if (stat_random($level, 150, 200) = true) {
+    inv_add(trawler_catch, raw_shrimps, 1);
+}

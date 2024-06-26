@@ -1,15 +1,28 @@
+[debugproc,t_win]
+if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
+    %npc_trawler_start = sub(map_clock, 1000);
+    %npc_trawler_fish_caught = 100;
+}
+
 [proc,trawler_reset]
 %npc_trawler_start = null;
 %npc_trawler_flood_status = 0;
+%npc_trawler_fish_caught = 0;
+npc_settimer(0);
 def_int $i = 0;
 while ($i < enum_getoutputcount(trawler_hulls)) {
     if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_leak) = true) {
         loc_change(game_trawler_hull, 1);
     }
-    if (loc_find(enum(int, coord, trawler_hulls_flooded, $i), game_trawler_leak) = true) {
+    if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_repaired_leak) = true) {
         loc_change(game_trawler_hull, 1);
     }
-    if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_repaired_leak) = true) {
+    $i = add($i, 1);
+}
+
+$i = 0;
+while ($i < enum_getoutputcount(trawler_hulls_flooded)) {
+    if (loc_find(enum(int, coord, trawler_hulls_flooded, $i), game_trawler_leak) = true) {
         loc_change(game_trawler_hull, 1);
     }
     if (loc_find(enum(int, coord, trawler_hulls_flooded, $i), game_trawler_repaired_leak) = true) {
@@ -17,21 +30,35 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
     }
     $i = add($i, 1);
 }
+// nets
+if (loc_find(^trawler_start_net1, game_trawler_fish_net_broken1) = true) {
+    loc_change(game_trawler_fish_net1, 1);
+}
+if (loc_find(^trawler_start_net2, game_trawler_fish_net_broken2) = true) {
+    loc_change(game_trawler_fish_net2, 1); 
+}
+if (loc_find(^trawler_flood_net1, game_trawler_fish_net_broken1) = true) {
+    loc_change(game_trawler_fish_net1, 1);
+}
+if (loc_find(^trawler_flood_net2, game_trawler_fish_net_broken2) = true) {
+    loc_change(game_trawler_fish_net2, 1); 
+}
 
 [ai_timer,0_29_75_murphy]
-if (~playercount_coord_pair_table(trawler_game_zones) < 1) {
+def_int $player_count = ~playercount_coord_pair_table(trawler_game_zones);
+if ($player_count < 1) {
     ~trawler_reset;
-    npc_settimer(0);
     return;
 }
 if (add(%npc_trawler_start, 1000) < map_clock) {
+    ~trawler_win(divide(%npc_trawler_fish_caught, $player_count));
     ~trawler_reset;
-    ~trawler_win;
     return;
 }
-def_int $player_count = ~playercount_coord_pair_table(trawler_game_zones);
+npc_settimer(5);
 def_int $leak_count = 0;
 
+// increase water
 def_int $i = 0;
 while ($i < enum_getoutputcount(trawler_hulls)) {
     if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_leak) = true) {
@@ -39,8 +66,8 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
         %npc_trawler_flood_status = add(%npc_trawler_flood_status, 1);
     }
     if (%npc_trawler_flood_status >= 100) {
-        ~trawler_reset;
         ~trawler_loss;
+        ~trawler_reset;
         return;
     } else if (%npc_trawler_flood_status = 30) {
         ~trawler_flood;
@@ -50,8 +77,9 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
 // max leaks:
 // 1p = 3
 // 2p = 5
-def_int $max_leaks = min(add(multiply($player_count, 2), 1), 10);
-def_int $leak_chance = max(divide(16, $player_count), 2);
+def_int $max_leaks = min(add(multiply($player_count, 2), 1), 9);
+def_int $leak_chance = max(divide(32, $player_count), 2);
+// add new ship leaks
 $i = 0;
 while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < $max_leaks) {
     def_coord $hull_coord = enum(int, coord, trawler_hulls, $i);
@@ -76,12 +104,61 @@ while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < $max_leaks) {
     }
     $i = add($i, 1);
 }
+// unflood if water is tossed out
 if (%npc_trawler_flood_status < 30) {
     ~trawler_unflood;
 }
+if (loc_find(^trawler_start_net1, game_trawler_fish_net_broken1) = true | loc_find(^trawler_start_net2, game_trawler_fish_net_broken2) = true) {
+    return;
+}
+if (random(16) = 0) {
+    ~trawler_rip_net; // intentional, old videos the fish count doesnt update if net is ripped
+}
 
-// npc_say(tostring($player_count));
-npc_settimer(5);
+// from 1697 caught, a player got an equal cut of 20 fish. theres 200 rolls in a trawler game on each player
+// https://youtu.be/Yzu2wp2hJOw?list=PLn23LiLYLb1b7Lj_u-lnuUOa40FGWslbp This game, each player got 20 fish
+// with a final caught of 1697. Means a 1/10 chance per roll for each player
+$i = 0;
+while ($i < $player_count) {
+    if (random(10) = 0) {
+        %npc_trawler_fish_caught = add(%npc_trawler_fish_caught, 1);
+    }
+    $i = add($i, 1);
+}
+
+[proc,trawler_rip_net]
+if (loc_find(^trawler_start_net1, game_trawler_fish_net1) = true) {
+    loc_change(game_trawler_fish_net_broken1, 1000);
+}
+if (loc_find(^trawler_start_net2, game_trawler_fish_net2) = true) {
+    loc_change(game_trawler_fish_net_broken2, 1000); 
+}
+if (loc_find(^trawler_flood_net1, game_trawler_fish_net1) = true) {
+    loc_change(game_trawler_fish_net_broken1, 1000);
+}
+if (loc_find(^trawler_flood_net2, game_trawler_fish_net2) = true) {
+    loc_change(game_trawler_fish_net_broken2, 1000); 
+}
+huntall(^trawler_start_center_under, 8, 0);
+while (huntnext = true) {
+    queue(trawler_rip_net, 0);
+}
+huntall(^trawler_start_center, 8, 0);
+while (huntnext = true) {
+    queue(trawler_rip_net, 0);
+}
+huntall(^trawler_flood_center_under, 8, 0);
+while (huntnext = true) {
+    queue(trawler_rip_net, 0);
+}
+huntall(^trawler_flood_center, 8, 0);
+while (huntnext = true) {
+    queue(trawler_rip_net, 0);
+}
+
+[queue,trawler_rip_net]
+mes("The net has ripped!");
+~mesbox("The net has ripped!|You can't catch anything whilst the net is ripped!"); // https://imgur.com/sIkyhcN
 
 [proc,trawler_flood]
 huntall(^trawler_start_center_under, 8, 0);
@@ -95,6 +172,7 @@ while (huntnext = true) {
     queue(trawler_player_teleport, 0, movecoord(coord, 128, 0, 0));
 }
 
+
 [proc,trawler_unflood]
 huntall(^trawler_flood_center_under, 8, 0);
 while (huntnext = true) {
@@ -107,6 +185,7 @@ while (huntnext = true) {
     queue(trawler_player_teleport, 0, movecoord(coord, -128, 0, 0));
 }
 
+
 [proc,trawler_loss]
 huntall(^trawler_start_center_under, 8, 0);
 while (huntnext = true) {
@@ -116,7 +195,7 @@ while (huntnext = true) {
 huntall(^trawler_start_center, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_teleport, 0, movecoord(coord, 64, 0, 0));
+    queue(trawler_player_teleport, 0, ~coord_lineofwalk_radius(^trawler_wreck_center, 4));
 }
 huntall(^trawler_flood_center_under, 8, 0);
 while (huntnext = true) {
@@ -126,7 +205,7 @@ while (huntnext = true) {
 huntall(^trawler_flood_center, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_teleport, 0, movecoord(coord, -64, 0, 0));
+    queue(trawler_player_teleport, 0, ~coord_lineofwalk_radius(^trawler_wreck_center, 4));
 }
 
 [queue,trawler_player_teleport](coord $coord)
@@ -134,38 +213,27 @@ if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
     return;
 }
 p_teleport($coord);
+p_stopaction;
 
-[proc,trawler_win]
+
+[proc,trawler_win](int $rolls)
 huntall(^trawler_start_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_win, 0);
+    queue(trawler_player_win, 0, $rolls);
 }
 huntall(^trawler_start_center, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_win, 0);
+    queue(trawler_player_win, 0, $rolls);
 }
 huntall(^trawler_flood_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_win, 0);
+    queue(trawler_player_win, 0, $rolls);
 }
 huntall(^trawler_flood_center, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_win, 0);
+    queue(trawler_player_win, 0, $rolls);
 }
-
-[queue,trawler_player_win]
-if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
-    return;
-}
-mes("Murphy turns the boat towards shore.");
-%boat_takeoff = 12;
-midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
-
-p_delay(20);
-if_close;
-
-p_teleport(~coord_lineofwalk_radius(^trawler_lobby_murphy_spawn, 4));
