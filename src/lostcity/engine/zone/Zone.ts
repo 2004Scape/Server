@@ -10,124 +10,30 @@ import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import {Position} from '#lostcity/entity/Position.js';
 
-import ServerProt from '#lostcity/server/ServerProt.js';
-
 import World from '#lostcity/engine/World.js';
 import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import ZoneEvent from '#lostcity/engine/zone/ZoneEvent.js';
 import ZoneEventType from '#lostcity/engine/zone/ZoneEventType.js';
 
+import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
+import UpdateZonePartialEnclosed from '#lostcity/network/outgoing/model/UpdateZonePartialEnclosed.js';
+import UpdateZoneFullFollows from '#lostcity/network/outgoing/model/UpdateZoneFullFollows.js';
+import UpdateZonePartialFollows from '#lostcity/network/outgoing/model/UpdateZonePartialFollows.js';
+import ObjAdd from '#lostcity/network/outgoing/model/ObjAdd.js';
+import LocAddChange from '#lostcity/network/outgoing/model/LocAddChange.js';
+import LocDel from '#lostcity/network/outgoing/model/LocDel.js';
+import MapProjAnim from '#lostcity/network/outgoing/model/MapProjAnim.js';
+import MapAnim from '#lostcity/network/outgoing/model/MapAnim.js';
+import ObjDel from '#lostcity/network/outgoing/model/ObjDel.js';
+import ObjCount from '#lostcity/network/outgoing/model/ObjCount.js';
+import ObjReveal from '#lostcity/network/outgoing/model/ObjReveal.js';
+import LocAnim from '#lostcity/network/outgoing/model/LocAnim.js';
+import LocMerge from '#lostcity/network/outgoing/model/LocMerge.js';
+import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
+import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
+import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';
+
 export default class Zone {
-    private static mapAnim(coord: number, spotanim: number, height: number, delay: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 1 + 2));
-        out.p1(ServerProt.MAP_ANIM.id);
-        out.p1(coord);
-        out.p2(spotanim);
-        out.p1(height);
-        out.p2(delay);
-        return out.data;
-    }
-
-    // variables fully broken out for now
-    //coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $startDelay, int $endDelay, int $peak, int $arc
-    private static mapProjAnim(srcX: number, srcZ: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 1 + 2 + 2 + 1 + 1 + 2 + 2 + 1 + 1));
-        out.p1(ServerProt.MAP_PROJANIM.id);
-        out.p1(Position.packZoneCoord(srcX, srcZ));
-        out.p1(dstX - srcX);
-        out.p1(dstZ - srcZ);
-        out.p2(target); // 0: coord, > 0: npc, < 0: player
-        out.p2(spotanim);
-        out.p1(srcHeight);
-        out.p1(dstHeight);
-        out.p2(startDelay);
-        out.p2(endDelay);
-        out.p1(peak);
-        out.p1(arc);
-        return out.data;
-    }
-
-    private static locAddChange(coord: number, loc: number, shape: number, angle: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 2));
-        out.p1(ServerProt.LOC_ADD_CHANGE.id);
-        out.p1(coord);
-        out.p1((shape << 2) | (angle & 3));
-        out.p2(loc);
-        return out.data;
-    }
-
-    private static locDel(coord: number, shape: number, angle: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 1));
-        out.p1(ServerProt.LOC_DEL.id);
-        out.p1(coord);
-        out.p1((shape << 2) | (angle & 3));
-        return out.data;
-    }
-
-    // merge player with loc, e.g. agility training through pipes
-    // useful due to draw prioritizes
-    private static locMerge(srcX: number, srcZ: number, shape: number, angle: number, locId: number, startCycle: number, endCycle: number, pid: number, east: number, south: number, west: number, north: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 2 + 2 + 2 + 2 + 1 + 1 + 1 + 1));
-        out.p1(ServerProt.LOC_MERGE.id);
-        out.p1(Position.packZoneCoord(srcX, srcZ));
-        out.p1((shape << 2) | (angle & 3));
-        out.p2(locId);
-        out.p2(startCycle);
-        out.p2(endCycle);
-        out.p2(pid);
-        out.p1(east - srcX);
-        out.p1(south - srcZ);
-        out.p1(west - srcX);
-        out.p1(north - srcZ);
-        return out.data;
-    }
-
-    private static locAnim(coord: number, shape: number, angle: number, id: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 1 + 2));
-        out.p1(ServerProt.LOC_ANIM.id);
-        out.p1(coord);
-        out.p1((shape << 2) | (angle & 3));
-        out.p2(id);
-        return out.data;
-    }
-
-    private static objAdd(coord: number, obj: number, count: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2));
-        out.p1(ServerProt.OBJ_ADD.id);
-        out.p1(coord);
-        out.p2(obj);
-        out.p2(Math.min(count, 65535));
-        return out.data;
-    }
-
-    private static objCount(coord: number, id: number, oldCount: number, newCount: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2 + 2));
-        out.p1(ServerProt.OBJ_COUNT.id);
-        out.p1(coord);
-        out.p2(id);
-        out.p2(Math.min(oldCount, 65535));
-        out.p2(Math.min(newCount, 65535));
-        return out.data;
-    }
-
-    private static objDel(coord: number, obj: number): Uint8Array {
-        const out = new Packet(new Uint8Array(1 + 1 + 2));
-        out.p1(ServerProt.OBJ_DEL.id);
-        out.p1(coord);
-        out.p2(obj);
-        return out.data;
-    }
-
-    private static objReveal(coord: number, id: number, count: number, receiverId: number): Uint8Array {
-        const out: Packet = new Packet(new Uint8Array(1 + 1 + 2 + 2 + 2));
-        out.p1(ServerProt.OBJ_REVEAL.id);
-        out.p1(coord);
-        out.p2(id);
-        out.p2(count);
-        out.p2(receiverId);
-        return out.data;
-    }
-
     readonly index: number; // packed coord
     readonly x: number;
     readonly z: number;
@@ -204,38 +110,46 @@ export default class Zone {
 
     computeShared(): void {
         this.shared = null;
-        const enclosed: Uint8Array[] = Array.from(this.events.values()).filter(x => x.type === ZoneEventType.ENCLOSED).map(x => x.buffer);
-        const length: number = enclosed.reduce((acc, curr) => acc + curr.length, 0);
-        if (length > 0) {
-            const shared: Uint8Array = new Uint8Array(length);
-            let ptr: number = 0;
-            for (const bytes of enclosed) {
-                shared.set(bytes, ptr);
-                ptr += bytes.length;
-            }
-            this.shared = shared;
+
+        const enclosed: (Uint8Array | null)[] = Array.from(this.events.values())
+            .filter(x => x.type === ZoneEventType.ENCLOSED)
+            .map(x => this.writeInner(x.message)?.data ?? null);
+
+        const length: number = enclosed.reduce((acc, curr) => acc + (curr?.length ?? 0), 0);
+        if (length === 0) {
+            return;
         }
+        const shared: Uint8Array = new Uint8Array(length);
+        let ptr: number = 0;
+        for (const bytes of enclosed) {
+            if (!bytes) {
+                continue;
+            }
+            shared.set(bytes, ptr);
+            ptr += bytes.length;
+        }
+        this.shared = shared;
     }
 
     writeFullFollows(player: Player): void {
         // full update necessary to clear client zone memory
-        player.writeHighPriority(ServerProt.UPDATE_ZONE_FULL_FOLLOWS, this.x, this.z, player.loadedX, player.loadedZ);
+        player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
         for (const obj of this.getAllObjsUnsafe(true)) {
             if (obj.receiverId !== -1 && obj.receiverId !== player.pid) {
                 continue;
             }
-            player.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, this.x, this.z, player.loadedX, player.loadedZ);
+            player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
             if (obj.lifecycle === EntityLifeCycle.DESPAWN && obj.checkLifeCycle(World.currentTick)) {
-                player.writeHighPriority(ServerProt.OBJ_ADD, Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count);
+                player.write(new ObjAdd(Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             } else if (obj.lifecycle === EntityLifeCycle.RESPAWN && obj.checkLifeCycle(World.currentTick)) {
-                player.writeHighPriority(ServerProt.OBJ_ADD, Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count);
+                player.write(new ObjAdd(Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
         for (const loc of this.getAllLocsUnsafe(true)) {
             if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(World.currentTick)) {
-                player.writeHighPriority(ServerProt.LOC_ADD_CHANGE, Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, loc.type);
+                player.write(new LocAddChange(Position.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
             } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(World.currentTick)) {
-                player.writeHighPriority(ServerProt.LOC_DEL, Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle);
+                player.write(new LocDel(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
         }
     }
@@ -244,14 +158,14 @@ export default class Zone {
         if (!this.shared) {
             return;
         }
-        player.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED, this.x, this.z, player.loadedX, player.loadedZ, this.shared);
+        player.write(new UpdateZonePartialEnclosed(this.x, this.z, player.originX, player.originZ, this.shared));
     }
 
     writePartialFollows(player: Player): void {
         if (this.events.size === 0) {
             return;
         }
-        player.writeHighPriority(ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS, this.x, this.z, player.loadedX, player.loadedZ);
+        player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
         for (const event of this.events) {
             if (event.type !== ZoneEventType.FOLLOWS) {
                 continue;
@@ -259,11 +173,19 @@ export default class Zone {
             if (event.receiverId !== -1 && event.receiverId !== player.pid) {
                 continue;
             }
-            const out: Packet = Packet.alloc(0);
-            out.pdata(event.buffer, 0, event.buffer.length);
-            // released elsewhere
-            player.highPriorityOut.push(out);
+            player.write(event.message);
         }
+    }
+
+    writeInner(message: OutgoingMessage): Packet | null {
+        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
+        if (!encoder) {
+            return null;
+        }
+        const buf: Packet = new Packet(new Uint8Array(1 + encoder.prot.length));
+        buf.p1(encoder.prot.id);
+        encoder.encode(buf, message);
+        return buf;
     }
 
     reset(): void {
@@ -309,7 +231,7 @@ export default class Zone {
             prot: ServerProt.LOC_ADD_CHANGE,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
-            buffer: Zone.locAddChange(coord, loc.type, loc.shape, loc.angle)
+            message: new LocAddChange(coord, loc.type, loc.shape, loc.angle)
         });
     }
 
@@ -332,7 +254,7 @@ export default class Zone {
             prot: ServerProt.LOC_DEL,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
-            buffer: Zone.locDel(coord, loc.shape, loc.angle)
+            message: new LocDel(coord, loc.shape, loc.angle)
         });
     }
 
@@ -350,7 +272,7 @@ export default class Zone {
             prot: ServerProt.LOC_MERGE,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
-            buffer: Zone.locMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
+            message: new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
         });
     }
 
@@ -359,7 +281,7 @@ export default class Zone {
             prot: ServerProt.LOC_ANIM,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
-            buffer: Zone.locAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)
+            message: new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)
         });
     }
 
@@ -381,14 +303,14 @@ export default class Zone {
                 prot: ServerProt.OBJ_ADD,
                 type: ZoneEventType.FOLLOWS,
                 receiverId: receiverId,
-                buffer: Zone.objAdd(coord, obj.type, obj.count)
+                message: new ObjAdd(coord, obj.type, obj.count)
             });
         } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
             this.events.add({
                 prot: ServerProt.OBJ_ADD,
                 type: ZoneEventType.ENCLOSED,
                 receiverId: receiverId,
-                buffer: Zone.objAdd(coord, obj.type, obj.count)
+                message: new ObjAdd(coord, obj.type, obj.count)
             });
         }
     }
@@ -403,7 +325,7 @@ export default class Zone {
             prot: ServerProt.OBJ_REVEAL,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
-            buffer: Zone.objReveal(coord, obj.type, obj.count, receiverId)
+            message: new ObjReveal(coord, obj.type, obj.count, receiverId)
         });
     }
 
@@ -416,7 +338,7 @@ export default class Zone {
             prot: ServerProt.OBJ_COUNT,
             type: ZoneEventType.FOLLOWS,
             receiverId: receiverId,
-            buffer: Zone.objCount(coord, obj.type, oldCount, newCount)
+            message: new ObjCount(coord, obj.type, oldCount, newCount)
         });
     }
 
@@ -440,14 +362,14 @@ export default class Zone {
                 prot: ServerProt.OBJ_DEL,
                 type: ZoneEventType.FOLLOWS,
                 receiverId: -1,
-                buffer: Zone.objDel(coord, obj.type)
+                message: new ObjDel(coord, obj.type)
             });
         } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
             this.events.add({
                 prot: ServerProt.OBJ_DEL,
                 type: ZoneEventType.ENCLOSED,
                 receiverId: -1,
-                buffer: Zone.objDel(coord, obj.type)
+                message: new ObjDel(coord, obj.type)
             });
         }
     }
@@ -459,7 +381,7 @@ export default class Zone {
             prot: ServerProt.MAP_ANIM,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
-            buffer: Zone.mapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)
+            message: new MapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)
         });
     }
 
@@ -468,7 +390,7 @@ export default class Zone {
             prot: ServerProt.MAP_PROJANIM,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
-            buffer: Zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)
+            message: new MapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)
         });
     }
 

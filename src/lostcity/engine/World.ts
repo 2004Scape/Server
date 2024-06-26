@@ -53,7 +53,6 @@ import {EntityQueueState} from '#lostcity/entity/EntityQueueRequest.js';
 import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
 
 import ClientSocket from '#lostcity/server/ClientSocket.js';
-import ServerProt from '#lostcity/server/ServerProt.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import {getLatestModified, getModified, shouldBuildFileAny} from '#lostcity/util/PackFile.js';
@@ -65,6 +64,9 @@ import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {makeCrcs} from '#lostcity/server/CrcTable.js';
 import {preloadClient} from '#lostcity/server/PreloadedPacks.js';
 import {Position} from '#lostcity/entity/Position.js';
+import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
+import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
+import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 
 class World {
     id = Environment.WORLD_ID as number;
@@ -375,7 +377,7 @@ class World {
         this.stopDevWatcher();
 
         for (const player of this.players) {
-            player.writeLowPriority(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
+            player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
         }
     }
 
@@ -667,8 +669,7 @@ class World {
             }
 
             if (this.shutdownTick > -1) {
-                // todo: confirm if reboot timer is low or high priority
-                player.writeLowPriority(ServerProt.UPDATE_REBOOT_TIMER, this.shutdownTick - this.currentTick);
+                player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
 
             if (player instanceof NetworkPlayer && player.client) {
@@ -718,8 +719,8 @@ class World {
 
             try {
                 player.updateMap();
-                player.updatePlayers();
-                player.updateNpcs();
+                player.write(new PlayerInfo(player));
+                player.write(new NpcInfo(player));
                 player.updateZones();
                 player.updateInvs();
                 player.updateStats();
@@ -865,9 +866,9 @@ class World {
         }
 
         const end = Date.now();
-        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
-        // console.log(`${worldProcessing} ms world | ${clientInput} ms client in | ${npcProcessing} ms npcs | ${playerProcessing} ms players | ${playerLogout} ms logout | ${playerLogin} ms login | ${zoneProcessing} ms zones | ${clientOutput} ms client out | ${cleanup} ms cleanup`);
-        // console.log('----');
+        console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
+        console.log(`${worldProcessing} ms world | ${clientInput} ms client in | ${npcProcessing} ms npcs | ${playerProcessing} ms players | ${playerLogout} ms logout | ${playerLogin} ms login | ${zoneProcessing} ms zones | ${clientOutput} ms client out | ${cleanup} ms cleanup`);
+        console.log('----');
 
         this.currentTick++;
         this.lastCycleStats = [end - start, worldProcessing, clientInput, npcProcessing, playerProcessing, playerLogout, playerLogin, zoneProcessing, clientOutput, cleanup];
