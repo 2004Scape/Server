@@ -12,21 +12,18 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     prot = ServerProt.NPC_INFO;
 
     encode(buf: Packet, message: NpcInfo): void {
-        const bitBlock: Packet = Packet.alloc(1);
         const byteBlock: Packet = Packet.alloc(1);
 
         const nearby: Set<number> = this.getNearbyNpcs(message.player);
-        this.writeNpcs(bitBlock, byteBlock, message.player, nearby);
-        this.writeNewNpcs(bitBlock, byteBlock, message.player, nearby);
+        this.writeNpcs(buf, byteBlock, message.player, nearby);
+        this.writeNewNpcs(buf, byteBlock, message.player, nearby);
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
         // debug.pdata(byteBlock);
         // debug.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
 
-        buf.pdata(bitBlock.data, 0, bitBlock.pos);
         buf.pdata(byteBlock.data, 0, byteBlock.pos);
-        bitBlock.release();
         byteBlock.release();
     }
 

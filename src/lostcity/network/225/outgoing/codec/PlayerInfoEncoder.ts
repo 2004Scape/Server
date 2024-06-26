@@ -12,22 +12,19 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     prot = ServerProt.PLAYER_INFO;
 
     encode(buf: Packet, message: PlayerInfo): void {
-        const bitBlock: Packet = Packet.alloc(1);
         const byteBlock: Packet = Packet.alloc(1);
 
-        this.writeLocalPlayer(bitBlock, byteBlock, message.player);
+        this.writeLocalPlayer(buf, byteBlock, message.player);
         const nearby: Set<number> = this.getNearbyPlayers(message.player);
-        this.writePlayers(bitBlock, byteBlock, message.player, nearby);
-        this.writeNewPlayers(bitBlock, byteBlock, message.player, nearby);
+        this.writePlayers(buf, byteBlock, message.player, nearby);
+        this.writeNewPlayers(buf, byteBlock, message.player, nearby);
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
         // debug.pdata(byteBlock);
         // debug.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
 
-        buf.pdata(bitBlock.data, 0, bitBlock.pos);
         buf.pdata(byteBlock.data, 0, byteBlock.pos);
-        bitBlock.release();
         byteBlock.release();
     }
 
