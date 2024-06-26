@@ -61,7 +61,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 3) {
+        if (version > 2) {
             throw new Error('Unsupported player save format');
         }
 
