@@ -17,3 +17,11 @@ table=coord_pair_table
 data=coord_pair,0_31_75_0_0,0_31_75_63_63
 data=coord_pair,1_31_75_0_0,1_31_75_63_63
 data=coord_pair,2_31_75_0_0,2_31_75_63_63
+
+[trawler_all_zones]
+table=coord_pair_table
+data=coord_pair,1_41_49_45_30,1_41_49_49_46
+data=coord_pair,0_41_49_45_30,0_41_49_49_46
+data=coord_pair,0_29_75_0_0,0_31_75_63_63
+data=coord_pair,1_29_75_0_0,1_31_75_63_63
+data=coord_pair,2_29_75_0_0,2_31_75_63_63

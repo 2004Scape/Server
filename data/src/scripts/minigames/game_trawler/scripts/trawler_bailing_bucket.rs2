@@ -29,11 +29,12 @@ if (~inzone_coord_pair_table(trawler_flood_zones, coord) = true & coordy(coord) 
         facesquare(movecoord(coord, 0, 0, -1));
     }
     mes("You tip the water over the side.");
+    anim(human_pickuptable, 0);
 } else {
     mes("You tip the water out of the bucket.");
+    anim(human_pickupfloor, 0);
 }
 
-anim(human_pickuptable, 0);
 p_delay(1);
 inv_del(inv, bailing_bucket_full, 1);
 inv_add(inv, bailing_bucket_empty, 1);

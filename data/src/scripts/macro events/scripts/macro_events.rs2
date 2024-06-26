@@ -52,6 +52,9 @@ switch_int ($event) {
 if (~in_duel_arena($coord) = true) {
     return(false);
 }
+if (~inzone_coord_pair_table(trawler_all_zones, $coord) = true) {
+    return(false);
+}
 return(true);
 
 // called when the player logs in
