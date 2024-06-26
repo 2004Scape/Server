@@ -13,6 +13,9 @@ switch_int (loc_angle) {
         return;
 }
 p_delay(0);
+if (~playercount_coord_pair_table(trawler_game_zones) > 0) {
+    mes("There is already someone on a fishing trip!"); //https://youtu.be/Yzu2wp2hJOw?list=PLn23LiLYLb1b7Lj_u-lnuUOa40FGWslbp&t=14
+}
 if (~playercount_coord_pair_table(trawler_lobby_zones) < 1 & ~playercount_coord_pair_table(trawler_game_zones) < 1) {
     if (npc_find(^trawler_lobby_murphy_spawn, murphy, 5, 0) = true) {
         npc_settimer(100);
