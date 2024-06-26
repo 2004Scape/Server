@@ -89,18 +89,6 @@ export default class ServerProt {
     static readonly UPDATE_ZONE_FULL_FOLLOWS = new ServerProt(135, 2); // NXT naming
     static readonly UPDATE_ZONE_PARTIAL_ENCLOSED = new ServerProt(162, -2); // NXT naming
 
-    // zone protocol
-    static readonly LOC_MERGE = new ServerProt(23, 14); // based on runescript command p_locmerge
-    static readonly LOC_ANIM = new ServerProt(42, 4); // NXT naming
-    static readonly OBJ_DEL = new ServerProt(49, 3); // NXT naming
-    static readonly OBJ_REVEAL = new ServerProt(50, 7); // NXT naming
-    static readonly LOC_ADD_CHANGE = new ServerProt(59, 4); // NXT naming
-    static readonly MAP_PROJANIM = new ServerProt(69, 15); // NXT naming
-    static readonly LOC_DEL = new ServerProt(76, 2); // NXT naming
-    static readonly OBJ_COUNT = new ServerProt(151, 7); // NXT naming
-    static readonly MAP_ANIM = new ServerProt(191, 6); // NXT naming
-    static readonly OBJ_ADD = new ServerProt(223, 5); // NXT naming
-
     constructor(readonly id: number, readonly length: number) {
         ServerProt.all.push(this); // no known index
         ServerProt.byId[id] = this;

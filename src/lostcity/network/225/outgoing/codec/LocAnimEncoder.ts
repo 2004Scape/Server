@@ -1,10 +1,10 @@
-import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Packet from '#jagex2/io/Packet.js';
-import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
+import ZoneProt from '#lostcity/network/225/outgoing/prot/ZoneProt.js';
 import LocAnim from '#lostcity/network/outgoing/model/LocAnim.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 
-export default class LocAnimEncoder extends MessageEncoder<LocAnim> {
-    prot = ServerProt.LOC_ANIM;
+export default class LocAnimEncoder extends ZoneMessageEncoder<LocAnim> {
+    prot = ZoneProt.LOC_ANIM;
 
     encode(buf: Packet, message: LocAnim): void {
         buf.p1(message.coord);

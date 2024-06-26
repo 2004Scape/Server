@@ -1,10 +1,10 @@
-import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Packet from '#jagex2/io/Packet.js';
-import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
+import ZoneProt from '#lostcity/network/225/outgoing/prot/ZoneProt.js';
 import MapProjAnim from '#lostcity/network/outgoing/model/MapProjAnim.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 
-export default class MapProjAnimEncoder extends MessageEncoder<MapProjAnim> {
-    prot = ServerProt.MAP_PROJANIM;
+export default class MapProjAnimEncoder extends ZoneMessageEncoder<MapProjAnim> {
+    prot = ZoneProt.MAP_PROJANIM;
 
     // variables fully broken out for now
     //coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $startDelay, int $endDelay, int $peak, int $arc

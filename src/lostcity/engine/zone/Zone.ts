@@ -1,7 +1,5 @@
 import ObjType from '#lostcity/cache/config/ObjType.js';
 
-import Packet from '#jagex2/io/Packet.js';
-
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -15,7 +13,6 @@ import ZoneManager from '#lostcity/engine/zone/ZoneManager.js';
 import ZoneEvent from '#lostcity/engine/zone/ZoneEvent.js';
 import ZoneEventType from '#lostcity/engine/zone/ZoneEventType.js';
 
-import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import UpdateZonePartialEnclosed from '#lostcity/network/outgoing/model/UpdateZonePartialEnclosed.js';
 import UpdateZoneFullFollows from '#lostcity/network/outgoing/model/UpdateZoneFullFollows.js';
 import UpdateZonePartialFollows from '#lostcity/network/outgoing/model/UpdateZonePartialFollows.js';
@@ -29,8 +26,6 @@ import ObjCount from '#lostcity/network/outgoing/model/ObjCount.js';
 import ObjReveal from '#lostcity/network/outgoing/model/ObjReveal.js';
 import LocAnim from '#lostcity/network/outgoing/model/LocAnim.js';
 import LocMerge from '#lostcity/network/outgoing/model/LocMerge.js';
-import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
-import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';
 
 export default class Zone {
@@ -112,8 +107,8 @@ export default class Zone {
         this.shared = null;
 
         const enclosed: (Uint8Array | null)[] = Array.from(this.events.values())
-            .filter(x => x.type === ZoneEventType.ENCLOSED)
-            .map(x => this.writeInner(x.message)?.data ?? null);
+            .filter(event => event.type === ZoneEventType.ENCLOSED)
+            .map(event => ServerProtRepository.getZoneEncoder(event.message)?.enclose(event.message).data ?? null);
 
         const length: number = enclosed.reduce((acc, curr) => acc + (curr?.length ?? 0), 0);
         if (length === 0) {
@@ -177,17 +172,6 @@ export default class Zone {
         }
     }
 
-    writeInner(message: OutgoingMessage): Packet | null {
-        const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
-        if (!encoder) {
-            return null;
-        }
-        const buf: Packet = new Packet(new Uint8Array(1 + encoder.prot.length));
-        buf.p1(encoder.prot.id);
-        encoder.encode(buf, message);
-        return buf;
-    }
-
     reset(): void {
         this.events.clear();
     }
@@ -228,7 +212,6 @@ export default class Zone {
         this.sortLocs(coord);
 
         this.events.add({
-            prot: ServerProt.LOC_ADD_CHANGE,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
             message: new LocAddChange(coord, loc.type, loc.shape, loc.angle)
@@ -251,7 +234,6 @@ export default class Zone {
         this.sortLocs(coord);
 
         this.events.add({
-            prot: ServerProt.LOC_DEL,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
             message: new LocDel(coord, loc.shape, loc.angle)
@@ -269,7 +251,6 @@ export default class Zone {
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
         this.events.add({
-            prot: ServerProt.LOC_MERGE,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
             message: new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
@@ -278,7 +259,6 @@ export default class Zone {
 
     animLoc(loc: Loc, seq: number): void {
         this.events.add({
-            prot: ServerProt.LOC_ANIM,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
             message: new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)
@@ -300,14 +280,12 @@ export default class Zone {
 
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                prot: ServerProt.OBJ_ADD,
                 type: ZoneEventType.FOLLOWS,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
             });
         } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
             this.events.add({
-                prot: ServerProt.OBJ_ADD,
                 type: ZoneEventType.ENCLOSED,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
@@ -322,7 +300,6 @@ export default class Zone {
         this.sortObjs(coord);
 
         this.events.add({
-            prot: ServerProt.OBJ_REVEAL,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
             message: new ObjReveal(coord, obj.type, obj.count, receiverId)
@@ -335,7 +312,6 @@ export default class Zone {
         this.sortObjs(coord);
 
         this.events.add({
-            prot: ServerProt.OBJ_COUNT,
             type: ZoneEventType.FOLLOWS,
             receiverId: receiverId,
             message: new ObjCount(coord, obj.type, oldCount, newCount)
@@ -359,14 +335,12 @@ export default class Zone {
 
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                prot: ServerProt.OBJ_DEL,
                 type: ZoneEventType.FOLLOWS,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
             });
         } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
             this.events.add({
-                prot: ServerProt.OBJ_DEL,
                 type: ZoneEventType.ENCLOSED,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
@@ -378,7 +352,6 @@ export default class Zone {
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
         this.events.add({
-            prot: ServerProt.MAP_ANIM,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
             message: new MapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)
@@ -387,7 +360,6 @@ export default class Zone {
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
         this.events.add({
-            prot: ServerProt.MAP_PROJANIM,
             type: ZoneEventType.ENCLOSED,
             receiverId: -1,
             message: new MapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)

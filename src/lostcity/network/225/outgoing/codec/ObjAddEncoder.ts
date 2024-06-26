@@ -1,10 +1,10 @@
-import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Packet from '#jagex2/io/Packet.js';
-import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
+import ZoneProt from '#lostcity/network/225/outgoing/prot/ZoneProt.js';
 import ObjAdd from '#lostcity/network/outgoing/model/ObjAdd.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 
-export default class ObjAddEncoder extends MessageEncoder<ObjAdd> {
-    prot = ServerProt.OBJ_ADD;
+export default class ObjAddEncoder extends ZoneMessageEncoder<ObjAdd> {
+    prot = ZoneProt.OBJ_ADD;
 
     encode(buf: Packet, message: ObjAdd): void {
         buf.p1(message.coord);

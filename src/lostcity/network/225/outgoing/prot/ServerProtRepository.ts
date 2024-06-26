@@ -140,6 +140,8 @@ import VarpSmall from '#lostcity/network/outgoing/model/VarpSmall.js';
 import VarpSmallEncoder from '#lostcity/network/225/outgoing/codec/VarpSmallEncoder.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import NpcInfoEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoEncoder.js';
+import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type GenericOutgoingMessage<T extends OutgoingMessage> = new (...args: any[]) => T;
@@ -227,8 +229,12 @@ class ServerProtRepository {
         this.bind(VarpSmall, new VarpSmallEncoder());
     }
 
-    getEncoder<T extends OutgoingMessage>(message: OutgoingMessage): MessageEncoder<T> | undefined {
-        return this.encoders.get(message.constructor as GenericOutgoingMessage<OutgoingMessage>);
+    getEncoder<T extends OutgoingMessage>(message: T): MessageEncoder<T> | undefined {
+        return this.encoders.get(message.constructor as GenericOutgoingMessage<T>);
+    }
+
+    getZoneEncoder<T extends ZoneMessage>(message: T): ZoneMessageEncoder<T> | undefined {
+        return this.encoders.get(message.constructor as GenericOutgoingMessage<T>) as ZoneMessageEncoder<T> | undefined;
     }
 }
 

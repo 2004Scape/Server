@@ -1,10 +1,10 @@
-import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Packet from '#jagex2/io/Packet.js';
-import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
+import ZoneProt from '#lostcity/network/225/outgoing/prot/ZoneProt.js';
 import LocMerge from '#lostcity/network/outgoing/model/LocMerge.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 
-export default class LocMergeEncoder extends MessageEncoder<LocMerge> {
-    prot = ServerProt.LOC_MERGE;
+export default class LocMergeEncoder extends ZoneMessageEncoder<LocMerge> {
+    prot = ZoneProt.LOC_MERGE;
 
     encode(buf: Packet, message: LocMerge): void {
         buf.p1(message.coord);

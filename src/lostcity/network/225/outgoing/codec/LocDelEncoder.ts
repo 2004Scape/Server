@@ -1,10 +1,10 @@
-import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Packet from '#jagex2/io/Packet.js';
-import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import LocDel from '#lostcity/network/outgoing/model/LocDel.js';
+import ZoneProt from '#lostcity/network/225/outgoing/prot/ZoneProt.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 
-export default class LocDelEncoder extends MessageEncoder<LocDel> {
-    prot = ServerProt.LOC_DEL;
+export default class LocDelEncoder extends ZoneMessageEncoder<LocDel> {
+    prot = ZoneProt.LOC_DEL;
 
     encode(buf: Packet, message: LocDel): void {
         buf.p1(message.coord);

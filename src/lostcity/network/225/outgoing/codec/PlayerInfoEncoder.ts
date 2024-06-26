@@ -176,7 +176,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         return nearby;
     }
 
-    private writeUpdate(player: Player, observer: Player, out: Packet, self: boolean = false, newlyObserved: boolean = false) {
+    private writeUpdate(player: Player, observer: Player, out: Packet, self: boolean = false, newlyObserved: boolean = false): void {
         let mask: number = player.mask;
         if (newlyObserved) {
             mask |= Player.APPEARANCE;

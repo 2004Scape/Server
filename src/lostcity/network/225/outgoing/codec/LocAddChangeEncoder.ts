@@ -1,10 +1,10 @@
-import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Packet from '#jagex2/io/Packet.js';
-import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
+import ZoneProt from '#lostcity/network/225/outgoing/prot/ZoneProt.js';
 import LocAddChange from '#lostcity/network/outgoing/model/LocAddChange.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 
-export default class LocAddChangeEncoder extends MessageEncoder<LocAddChange> {
-    prot = ServerProt.LOC_ADD_CHANGE;
+export default class LocAddChangeEncoder extends ZoneMessageEncoder<LocAddChange> {
+    prot = ZoneProt.LOC_ADD_CHANGE;
 
     encode(buf: Packet, message: LocAddChange): void {
         buf.p1(message.coord);
