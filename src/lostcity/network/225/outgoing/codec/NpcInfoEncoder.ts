@@ -80,7 +80,11 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
     private writeNewNpcs(bitBlock: Packet, byteBlock: Packet, player: Player, nearby: Set<number>): void {
         for (const nid of nearby) {
-            if (player.npcs.size >= 255 || player.npcs.has(nid)) {
+            if (player.npcs.size >= 255) {
+                break;
+            }
+
+            if (player.npcs.has(nid)) {
                 continue;
             }
 
@@ -132,6 +136,9 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
                 }
                 if (Position.isWithinDistance(player, npc, 16)) {
                     nearby.add(npc.nid);
+                }
+                if (nearby.size === 255) {
+                    break;
                 }
             }
         }

@@ -60,17 +60,15 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         bitBlock.pBit(8, player.otherPlayers.size);
 
         for (const uid of player.otherPlayers) {
-            const other: Player | null = World.getPlayerByUid(uid);
-
-            if (!other || !nearby.has(uid)) {
+            if (!nearby.has(uid)) {
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
                 player.otherPlayers.delete(uid);
                 continue;
             }
 
-            const { walkDir, runDir, tele } = other;
-            if (tele) {
+            const other: Player | null = World.getPlayerByUid(uid);
+            if (!other || other.tele) {
                 // player full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
@@ -85,6 +83,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
                 hasMaskUpdate = false;
             }
 
+            const {walkDir, runDir} = other;
             bitBlock.pBit(1, walkDir !== -1 || runDir !== -1 || hasMaskUpdate ? 1 : 0);
             if (runDir !== -1) {
                 bitBlock.pBit(2, 2);
@@ -107,13 +106,17 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
     private writeNewPlayers(bitBlock: Packet, byteBlock: Packet, player: Player, nearby: Set<number>): void {
         for (const uid of nearby) {
-            if (player.otherPlayers.size >= 255 || player.otherPlayers.has(uid)) {
+            if (player.otherPlayers.size >= 255) {
                 // todo: add based on distance radius that shrinks if too many players are visible?
+                break;
+            }
+
+            if (player.otherPlayers.has(uid)) {
                 continue;
             }
 
             const other: Player | null = World.getPlayerByUid(uid);
-            if (other === null) {
+            if (!other) {
                 continue;
             }
 
@@ -161,6 +164,9 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
                 }
                 if (Position.isWithinDistance(player, other, 16)) {
                     nearby.add(other.uid);
+                }
+                if (nearby.size === 255) {
+                    break;
                 }
             }
         }
