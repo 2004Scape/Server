@@ -30,9 +30,7 @@ if (stat(firemaking) < $level) {
     mes("You need a Firemaking level of <tostring($level)> to burn <oc_name($log)>.");
     return;
 }
-// check if the coord is already occupied by an interactable loc
-// unconfirmed
-if (map_locaddunsafe(obj_coord) = true | ~inzone_coord_pair_table(bank_zones, coord) = true) {
+if (~area_allow_loc_add(obj_coord) = false) {
     mes("You can't light a fire here.");
     return;
 }
@@ -123,11 +121,7 @@ if (stat(firemaking) < $level) {
     return;
 }
 // check if the coord is already occupied by an interactable loc
-if (map_locaddunsafe(coord) = true | map_blocked(coord) = true) {
-    mes("You can't light a fire here.");
-    return;
-}
-if (~inzone_coord_pair_table(bank_zones, coord) = true) {
+if (~area_allow_loc_add(coord) = false) {
     mes("You can't light a fire here.");
     return;
 }
@@ -157,3 +151,18 @@ def_int $delay = calc(100 + random(100)); // firemaking length: https://archive.
 loc_add($fire_coord, loc_2732, 1, centrepiece_straight, $delay);
 world_delay($delay);
 obj_add($fire_coord, ashes, 1, 100);
+
+[proc,area_allow_loc_add](coord $coord)(boolean)
+if (map_locaddunsafe($coord) = true) {
+    return(false);
+}
+if (map_blocked($coord) = true) {
+    return(false);
+}
+if (~inzone_coord_pair_table(bank_zones, $coord) = true) {
+    return(false);
+}
+if (~inzone_coord_pair_table(trawler_game_zones, $coord) = true & coordy($coord) = 0) {
+    return(false);
+}
+return(true);
