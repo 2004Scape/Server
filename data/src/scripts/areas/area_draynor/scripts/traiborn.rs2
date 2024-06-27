@@ -174,7 +174,7 @@ if ($option = 1) {
     if ($option_silverlight_or_insult = 1) {
         ~chatplayer("<p,neutral>It's the key to get a sword called Silverlight.");
         ~chatnpc("<p,confused>Silverlight? Never heard of that.|Sounds a good name for a ship. Are you sure it's not the name of a ship, rather than a sword?");
-        def_int $option_ship_or_keys = ~p_choice2("Yeah, pretty sure.", 1, "Are you sure it's not the name of a ship, rather than a sword?", 2);
+        def_int $option_ship_or_keys = ~p_choice2("Yeah, pretty sure.", 1, "Well, have you got any keys knocking around?", 2);
 
         if ($option_ship_or_keys = 1) {
             ~chatplayer("<p,neutral>Yeah, pretty sure.");
