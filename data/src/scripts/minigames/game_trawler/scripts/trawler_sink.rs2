@@ -29,4 +29,4 @@ while (huntnext = true) {
 p_teleport(^trawler_escape);
 ~update_all(null);
 queue(damage_player, 0, 2);
-~mesbox("You climb onto the floating barrel and begin to kick your way to the shore.|You make it to the shore tired and weary.");
+~mesbox("You climb onto the floating barrel and begin to kick your way to the|shore.|You make it to the shore tired and weary."); // osrs
