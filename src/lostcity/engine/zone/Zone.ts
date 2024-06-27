@@ -27,6 +27,8 @@ import ObjReveal from '#lostcity/network/outgoing/model/ObjReveal.js';
 import LocAnim from '#lostcity/network/outgoing/model/LocAnim.js';
 import LocMerge from '#lostcity/network/outgoing/model/LocMerge.js';
 import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';
+import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
+import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
 
 export default class Zone {
     readonly index: number; // packed coord
@@ -110,24 +112,32 @@ export default class Zone {
     computeShared(): void {
         this.shared = null;
 
-        // todo: maybe not use streams
-        const enclosed: (Uint8Array | null)[] = Array.from(this.events.values())
-            .filter(event => event.type === ZoneEventType.ENCLOSED)
-            .map(event => ServerProtRepository.getZoneEncoder(event.message)?.enclose(event.message).data ?? null);
+        let length: number = 0;
+        const enclosed: Uint8Array[] = [];
+        for (const event of this.events.values()) {
+            if (event.type !== ZoneEventType.ENCLOSED) {
+                continue;
+            }
+            const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
+            if (typeof encoder === 'undefined') {
+                continue;
+            }
+            const bytes: Uint8Array = encoder.enclose(event.message);
+            enclosed.push(bytes);
+            length += bytes.length;
+        }
 
-        const length: number = enclosed.reduce((acc, curr) => acc + (curr?.length ?? 0), 0);
-        if (length === 0) {
+        if (enclosed.length === 0 || length === 0) {
             return;
         }
+
         const shared: Uint8Array = new Uint8Array(length);
         let ptr: number = 0;
         for (const bytes of enclosed) {
-            if (!bytes) {
-                continue;
-            }
             shared.set(bytes, ptr);
             ptr += bytes.length;
         }
+
         this.shared = shared;
     }
 
