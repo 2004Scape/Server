@@ -109,9 +109,8 @@ p_delay(0);
 spotanim_map(small_smokepuff, coord, 124, 0);
 sound_synth(smokepuff2, 0, 0);
 //--
-p_telejump($teleport_coord);
-// TODO: Confirm this
-~teleport_anti_smuggle_checks;
+~p_telejump_safe($teleport_coord); // TODO: Confirm this
+
 
 [proc,macro_event_fail_scatter_inv]
 if (p_finduid(uid) = false) {

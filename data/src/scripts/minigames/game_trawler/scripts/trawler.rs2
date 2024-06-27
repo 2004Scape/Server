@@ -66,7 +66,7 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
         %npc_trawler_flood_status = add(%npc_trawler_flood_status, 1);
     }
     if (%npc_trawler_flood_status >= 100) {
-        ~trawler_loss;
+        ~trawler_sink;
         ~trawler_reset;
         return;
     } else if (%npc_trawler_flood_status = 30) {
@@ -185,32 +185,14 @@ while (huntnext = true) {
     queue(trawler_player_teleport, 0, movecoord(coord, -128, 0, 0));
 }
 
-
-[proc,trawler_loss]
-huntall(^trawler_start_center_under, 8, 0);
-while (huntnext = true) {
-    if_close;
-    queue(trawler_player_teleport, 0, movecoord(coord, 64, 0, 0));
-}
-huntall(^trawler_start_center, 8, 0);
-while (huntnext = true) {
-    if_close;
-    queue(trawler_player_teleport, 0, ~coord_lineofwalk_radius(^trawler_wreck_center, 4));
-}
-huntall(^trawler_flood_center_under, 8, 0);
-while (huntnext = true) {
-    if_close;
-    queue(trawler_player_teleport, 0, movecoord(coord, -64, 0, 0));
-}
-huntall(^trawler_flood_center, 8, 0);
-while (huntnext = true) {
-    if_close;
-    queue(trawler_player_teleport, 0, ~coord_lineofwalk_radius(^trawler_wreck_center, 4));
-}
-
 [queue,trawler_player_teleport](coord $coord)
 if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
     return;
+}
+if (~inzone_coord_pair_table(trawler_wreck_zones, $coord) = true) {
+    ~bas_set_all(human_swim);
+    bas_running(null); // disable running
+    cam_reset;
 }
 p_teleport($coord);
 p_stopaction;
