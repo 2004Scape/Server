@@ -220,3 +220,9 @@ while (huntnext = true) {
     if_close;
     queue(trawler_player_win, 0, $rolls);
 }
+
+
+[proc,trawler_login]
+if (~inzone_coord_pair_table(trawler_game_zones, coord) = true | ~inzone_coord_pair_table(trawler_wreck_zones, coord) = true) {
+    p_teleport(^trawler_escape);
+}
