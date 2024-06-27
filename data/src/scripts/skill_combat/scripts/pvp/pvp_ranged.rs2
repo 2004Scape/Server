@@ -77,13 +77,13 @@ if (~in_duel_arena(coord) = true) {
     }
 } else if ($random ! 0) {
     world_delay(calc($delay / 30 - 2));
-    if (map_blocked(.coord) = true) {
-        return;
-    }
-    if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
-        obj_addunsafe(.coord, $ammo, 1, 200);
+    if (map_blocked(.coord) = false) {
+        if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
+            inv_dropslot(ranged_quiver_inv, .coord, 0, 200);
+        }
     }
 }
+inv_clear(ranged_quiver_inv);
 
 
 [proc,pvp_ranged_use_weapon](obj $rhand, obj $ammo)(int)
@@ -91,7 +91,7 @@ spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
 if (~in_duel_arena(coord) = true) {
     inv_moveitem(worn, tempinv, $ammo, 1); // give rangers their arrows back from duels
 } else {
-    inv_del(worn, $ammo, 1);
+    inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
 }
 def_int $delay = 30;
 switch_category(oc_category($rhand)) {
