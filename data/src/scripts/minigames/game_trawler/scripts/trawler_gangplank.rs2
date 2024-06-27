@@ -1,4 +1,13 @@
 [oploc1,game_trawler_gangplank1]
+if (inv_freespace(trawler_catch) ! inv_size(trawler_catch)) {
+    ~mesbox("There is still fish in the net from a previous trawl that will be lost|unless collected before your next trawl. Are you sure you wish to|board the ship and lose the fish?");
+    def_int $choice = ~p_choice2_header("Yes", 1, "No", 2, "Board the ship");
+    if_close;
+    if ($choice = 2) {
+        return;
+    }
+    // inv doesnt clear here! it clears when the trawl actually starts
+}
 def_int $dir_mod = ~gangplank_dir_mod;
 def_coord $jump_coord = coord;
 switch_int (loc_angle) {

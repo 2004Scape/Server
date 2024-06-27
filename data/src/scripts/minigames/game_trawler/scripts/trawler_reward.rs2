@@ -1,13 +1,47 @@
 [oploc1,game_trawler_reward_net]
+if (inv_freespace(trawler_catch) = 40) {
+    ~chatplayer("<p,neutral>I'd better not steal other people's fish!"); // osrs
+    return;
+}
 inv_transmit(trawler_catch, trawler_catch:inv);
 if_openmainmodal(trawler_catch);
+// junk https://web.archive.org/web/20040812231222/http://www.tip.it/runescape/index.php?page=rs2trawler.htm
+// it says junk gives 1 xp each, except boots. Im guessing its like 1.1 or 1.2 xp each
+givexp(fishing, multiply(inv_total(trawler_catch, broken_arrow), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, broken_glass), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, broken_staff), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, buttons), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, damaged_armour), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, old_boot), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, pot_empty), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, rusty_sword), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, seaweed), 12));
+givexp(fishing, multiply(inv_total(trawler_catch, edible_seaweed), 12));
+// fish
+givexp(fishing, multiply(inv_total(trawler_catch, raw_manta_ray), 1150));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_shark), 1100));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_sea_turtle), 1050));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_swordfish), 1000));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_lobster), 900));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_tuna), 800));
+givexp(fishing, multiply(inv_total(trawler_catch, oyster), 100));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_anchovies), 400));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_sardine), 200));
+givexp(fishing, multiply(inv_total(trawler_catch, raw_shrimps), 100));
 
 [if_close,trawler_catch]
 def_int $i = 0;
 while ($i < inv_size(trawler_catch)) {
-    inv_dropslot(trawler_catch, coord, $i, 100); // drops in osrs
+    if (inv_getobj(trawler_catch, $i) ! null) {
+        inv_dropslot(trawler_catch, coord, $i, 100); // drops in osrs
+    }
     $i = add($i, 1);
 }
+inv_stoptransmit(trawler_catch:inv);
+
+// osrs drops on ground on full inv
+[inv_button1,trawler_catch:inv] inv_moveitem(trawler_catch, inv, last_item, 1);
+[inv_button2,trawler_catch:inv] inv_moveitem(trawler_catch, inv, last_item, inv_total(trawler_catch, last_item)); 
 
 [queue,trawler_player_win](int $rolls)
 if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
@@ -27,32 +61,50 @@ if ($level < 15) {
     return;
 }
 def_int $i = 0;
-mes(tostring($rolls));
 while ($i < $rolls) {
     ~trawler_reward($level);
     $i = add($i, 1);
 }
 
 
+// trawler reward was reworked early 2007. So its way different than osrs
+// - https://imgur.com/gBvOHZl
+// - https://imgur.com/0808GUW
+// Based on these two screenshots, junk was more common and actually apart of the fishing roll
+// low fish wasnt ultra rare at high fish levels
+// tldr: my theory is that instead of low: 150, high: 200 for each fish (osrs), it was fishes normal lows and highs
 [proc,trawler_reward](int $level)
-if ($level >= 81 & stat_random($level, 150, 200) = true) {
+if (stat_random($level, 150, 200) = false) {
+    inv_add(trawler_catch, ~randomjunk);
+    return;
+}
+if ($level >= 81 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_manta_ray, 1);
-} else if ($level >= 80 & stat_random($level, 150, 200) = true) {
+} else if ($level >= 80 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_sea_turtle, 1);
-} else if ($level >= 76 & stat_random($level, 150, 200) = true) {
+} else if ($level >= 76 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_shark, 1);
-} else if ($level >= 60 & stat_random($level, 150, 200) = true) {
+} else if ($level >= 60 & stat_random($level, 4, 48) = true) {
     inv_add(trawler_catch, raw_swordfish, 1);
-} else if ($level >= 40 & stat_random($level, 150, 200) = true) {
+} else if ($level >= 40 & stat_random($level, 6, 95) = true) {
     inv_add(trawler_catch, raw_lobster, 1);
-} else if ($level >= 35 & stat_random($level, 150, 200) = true) {
+} else if ($level >= 35 & stat_random($level, 8, 64) = true) {
     inv_add(trawler_catch, raw_tuna, 1);
-} else if ($level >= 16 & stat_random($level, 150, 200) = true) {
-    inv_add(trawler_catch, oyster, 1);
-} else if (stat_random($level, 150, 200) = true) {
+} else if ($level >= 16 & stat_random($level, 10, 80) = true) {
+    def_int $random = random(3);
+    if ($random = 0) {
+        inv_add(trawler_catch, oyster, 1);
+    } else if ($random = 1) {
+        inv_add(trawler_catch, seaweed, 1);
+    } else if ($random = 2) {
+        inv_add(trawler_catch, edible_seaweed, 1);
+    }
+} else if (stat_random($level, 24, 128) = true) {
     inv_add(trawler_catch, raw_anchovies, 1);
-} else if (stat_random($level, 150, 200) = true) {
+} else if (stat_random($level, 32, 192) = true) {
     inv_add(trawler_catch, raw_sardine, 1);
-} else if (stat_random($level, 150, 200) = true) {
+} else if (stat_random($level, 48, 200) = true) {
     inv_add(trawler_catch, raw_shrimps, 1);
+} else {
+    inv_add(trawler_catch, ~randomjunk);
 }

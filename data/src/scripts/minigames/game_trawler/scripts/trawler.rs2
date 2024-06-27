@@ -1,7 +1,7 @@
-[debugproc,t_win]
+[debugproc,t_win](int $rolls)
 if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
     %npc_trawler_start = sub(map_clock, 1000);
-    %npc_trawler_fish_caught = 100;
+    %npc_trawler_fish_caught = $rolls;
 }
 
 [proc,trawler_reset]
