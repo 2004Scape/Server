@@ -14,9 +14,8 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     encode(buf: Packet, message: NpcInfo): void {
         const byteBlock: Packet = Packet.alloc(1);
 
-        const nearby: Set<number> = this.getNearbyNpcs(message.player);
-        this.writeNpcs(buf, byteBlock, message.player, nearby);
-        this.writeNewNpcs(buf, byteBlock, message.player, nearby);
+        this.writeNpcs(buf, byteBlock, message.player);
+        this.writeNewNpcs(buf, byteBlock, message.player);
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
@@ -27,22 +26,14 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         byteBlock.release();
     }
 
-    private writeNpcs(bitBlock: Packet, byteBlock: Packet, player: Player, nearby: Set<number>): void {
+    private writeNpcs(bitBlock: Packet, byteBlock: Packet, player: Player): void {
         // update existing npcs (255 max - 8 bits)
         bitBlock.bits();
         bitBlock.pBit(8, player.npcs.size);
 
         for (const nid of player.npcs) {
-            if (!nearby.has(nid)) {
-                bitBlock.pBit(1, 1);
-                bitBlock.pBit(2, 3);
-                player.npcs.delete(nid);
-                continue;
-            }
-
-            // const { walkDir, runDir, tele } = npc;
             const npc: Npc | null = World.getNpc(nid);
-            if (!npc || npc.tele) {
+            if (!npc || npc.tele || !Position.isWithinDistance(player, npc, 16)) {
                 // npc full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
@@ -78,21 +69,8 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
     }
 
-    private writeNewNpcs(bitBlock: Packet, byteBlock: Packet, player: Player, nearby: Set<number>): void {
-        for (const nid of nearby) {
-            if (player.npcs.size >= 255) {
-                break;
-            }
-
-            if (player.npcs.has(nid)) {
-                continue;
-            }
-
-            const npc: Npc | null = World.getNpc(nid);
-            if (npc === null) {
-                continue;
-            }
-
+    private writeNewNpcs(bitBlock: Packet, byteBlock: Packet, player: Player): void {
+        for (const npc of this.getNearbyNpcs(player)) {
             const hasInitialUpdate: boolean = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
 
             const bitBlockSize: number = bitBlock.bitPos + 13 + 11 + 5 + 5 + 1;
@@ -121,28 +99,29 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         bitBlock.bytes();
     }
 
-    private getNearbyNpcs(player: Player): Set<number> {
+    private *getNearbyNpcs(player: Player): IterableIterator<Npc> {
         const absLeftX: number = player.originX - 48;
         const absRightX: number = player.originX + 48;
         const absTopZ: number = player.originZ + 48;
         const absBottomZ: number = player.originZ - 48;
 
-        const nearby: Set<number> = new Set();
-
         for (const zoneIndex of player.activeZones) {
             for (const npc of World.getZoneIndex(zoneIndex).getAllNpcsSafe()) {
+                if (player.npcs.size >= 255) {
+                    break;
+                }
                 if (npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
                     continue;
                 }
-                if (Position.isWithinDistance(player, npc, 16)) {
-                    nearby.add(npc.nid);
+                if (!Position.isWithinDistance(player, npc, 16)) {
+                    continue;
                 }
-                if (nearby.size === 255) {
-                    break;
+                if (player.npcs.has(npc.nid)) {
+                    continue;
                 }
+                yield npc;
             }
         }
-        return nearby;
     }
 
     private writeUpdate(npc: Npc, out: Packet, newlyObserved: boolean): void {

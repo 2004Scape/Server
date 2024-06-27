@@ -14,9 +14,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         const byteBlock: Packet = Packet.alloc(1);
 
         this.writeLocalPlayer(buf, byteBlock, message.player);
-        const nearby: Set<number> = this.getNearbyPlayers(message.player);
-        this.writePlayers(buf, byteBlock, message.player, nearby);
-        this.writeNewPlayers(buf, byteBlock, message.player, nearby);
+        this.writePlayers(buf, byteBlock, message.player);
+        this.writeNewPlayers(buf, byteBlock, message.player);
 
         // const debug = new Packet();
         // debug.pdata(bitBlock);
@@ -55,20 +54,13 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
     }
 
-    private writePlayers(bitBlock: Packet, byteBlock: Packet, player: Player, nearby: Set<number>): void {
+    private writePlayers(bitBlock: Packet, byteBlock: Packet, player: Player): void {
         // update other players (255 max - 8 bits)
         bitBlock.pBit(8, player.otherPlayers.size);
 
         for (const uid of player.otherPlayers) {
-            if (!nearby.has(uid)) {
-                bitBlock.pBit(1, 1);
-                bitBlock.pBit(2, 3);
-                player.otherPlayers.delete(uid);
-                continue;
-            }
-
             const other: Player | null = World.getPlayerByUid(uid);
-            if (!other || other.tele) {
+            if (!other || other.tele || !Position.isWithinDistance(player, other, 16)) {
                 // player full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
@@ -104,22 +96,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
     }
 
-    private writeNewPlayers(bitBlock: Packet, byteBlock: Packet, player: Player, nearby: Set<number>): void {
-        for (const uid of nearby) {
-            if (player.otherPlayers.size >= 255) {
-                // todo: add based on distance radius that shrinks if too many players are visible?
-                break;
-            }
-
-            if (player.otherPlayers.has(uid)) {
-                continue;
-            }
-
-            const other: Player | null = World.getPlayerByUid(uid);
-            if (!other) {
-                continue;
-            }
-
+    private writeNewPlayers(bitBlock: Packet, byteBlock: Packet, player: Player): void {
+        for (const other of this.getNearbyPlayers(player)) {
             // todo: tele optimization (not re-sending appearance block for recently observed players (they stay in memory))
             const hasInitialUpdate: boolean = true;
 
@@ -149,28 +127,30 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         bitBlock.bytes();
     }
 
-    private getNearbyPlayers(player: Player): Set<number> {
+    private *getNearbyPlayers(player: Player): IterableIterator<Player> {
         const absLeftX: number = player.originX - 48;
         const absRightX: number = player.originX + 48;
         const absTopZ: number = player.originZ + 48;
         const absBottomZ: number = player.originZ - 48;
 
-        const nearby: Set<number> = new Set();
-
         for (const zoneIndex of player.activeZones) {
             for (const other of World.getZoneIndex(zoneIndex).getAllPlayersSafe()) {
+                if (player.otherPlayers.size >= 255) {
+                    // todo: add based on distance radius that shrinks if too many players are visible?
+                    break;
+                }
                 if (other.uid === player.uid || other.x <= absLeftX || other.x >= absRightX || other.z >= absTopZ || other.z <= absBottomZ) {
                     continue;
                 }
-                if (Position.isWithinDistance(player, other, 16)) {
-                    nearby.add(other.uid);
+                if (!Position.isWithinDistance(player, other, 16)) {
+                    continue;
                 }
-                if (nearby.size === 255) {
-                    break;
+                if (player.otherPlayers.has(other.uid)) {
+                    continue;
                 }
+                yield other;
             }
         }
-        return nearby;
     }
 
     private writeUpdate(player: Player, observer: Player, out: Packet, self: boolean = false, newlyObserved: boolean = false): void {
