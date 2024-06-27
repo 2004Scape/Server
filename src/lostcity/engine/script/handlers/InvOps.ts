@@ -3,6 +3,7 @@ import ObjType from '#lostcity/cache/config/ObjType.js';
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
 
 import World from '#lostcity/engine/World.js';
+import {Inventory} from '#lostcity/engine/Inventory.js';
 
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
@@ -23,7 +24,6 @@ import {
     ObjStackValid,
     ObjTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
-import {Inventory} from '#lostcity/engine/Inventory.js';
 
 const InvOps: CommandHandlers = {
     // inv config

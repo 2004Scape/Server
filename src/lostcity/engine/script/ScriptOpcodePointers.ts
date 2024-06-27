@@ -750,12 +750,6 @@ const ScriptOpcodePointers: {
         require: ['active_obj'],
         require2: ['active_obj2']
     },
-    [ScriptOpcode.OBJ_ADDUNSAFE]: {
-        require: ['active_player'],
-        set: ['active_obj'],
-        require2: ['active_player'],
-        set2: ['active_obj2']
-    },
 
     // Inventory ops
     [ScriptOpcode.INV_ADD]: {

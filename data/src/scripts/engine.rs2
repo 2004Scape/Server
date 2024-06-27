@@ -314,7 +314,6 @@
 [command,obj_type]()(namedobj)
 [command,obj_takeitem](inv $inv)
 [command,obj_coord]()(coord)
-[command,obj_addunsafe](coord $coord, obj $obj, int $count, int $duration)
 
 // Npc config ops (4000-4099)
 [command,nc_name](npc $npc)(string)
