@@ -800,7 +800,13 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BAS_RUNNING]: state => {
-        state.activePlayer.basRunning = check(state.popInt(), SeqTypeValid).id;
+        const seq = state.popInt();
+        if (seq === -1) {
+            console.log(state.activePlayer.basReadyAnim);
+            state.activePlayer.basRunning = -1;
+            return;
+        }
+        state.activePlayer.basRunning = check(seq, SeqTypeValid).id;
     },
 
     [ScriptOpcode.GENDER]: state => {

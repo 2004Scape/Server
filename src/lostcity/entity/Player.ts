@@ -467,7 +467,9 @@ export default class Player extends PathingEntity {
 
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
-            if (this.getVar(VarPlayerType.TEMP_RUN)) {
+            if (this.basRunning === -1) {
+                this.moveSpeed = MoveSpeed.WALK;
+            } else if (this.getVar(VarPlayerType.TEMP_RUN)) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
@@ -1610,7 +1612,7 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(seq: number, delay: number) {
-        if (seq >= SeqType.count) {
+        if (seq >= SeqType.count || this.basReadyAnim === 772) { // prevent anims from playing during swimming
             return;
         }
 
