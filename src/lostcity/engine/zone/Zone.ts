@@ -425,6 +425,15 @@ export default class Zone {
         }
     }
 
+    *getObjsUnsafe(coord: number): IterableIterator<Obj> {
+        const objs: Obj[] | null = this.objs[coord];
+        if (objs) {
+            for (let i: number = 0; i < objs.length; i++) {
+                yield objs[i];
+            }
+        }
+    }
+
     *getAllObjsUnsafe(reverse: boolean = false): IterableIterator<Obj> {
         for (let index: number = 0; index < this.objs.length; index++) {
             const objs: Obj[] | null = this.objs[index];
@@ -464,6 +473,15 @@ export default class Zone {
                 if (loc.checkLifeCycle(World.currentTick)) {
                     yield loc;
                 }
+            }
+        }
+    }
+
+    *getLocsUnsafe(coord: number): IterableIterator<Loc> {
+        const locs: Loc[] | null = this.locs[coord];
+        if (locs) {
+            for (let i: number = 0; i < locs.length; i++) {
+                yield locs[i];
             }
         }
     }
