@@ -38,10 +38,6 @@ export class NetworkPlayer extends Player {
     userPath: number[] = [];
     opcalled: boolean = false;
 
-    // build area
-    loadedZones: Set<number> = new Set();
-    activeZones: Set<number> = new Set();
-
     constructor(username: string, username37: bigint, client: ClientSocket) {
         super(username, username37);
 
