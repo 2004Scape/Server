@@ -79,7 +79,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             let hasMaskUpdate: boolean = other.mask > 0;
 
             const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(other, false, false) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(other, false, false) > 5000 - (11 + 5 + 5 + 1 + 1)) {
                 hasMaskUpdate = false;
             }
 
@@ -125,7 +125,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
             const bitBlockSize: number = bitBlock.bitPos + 11 + 5 + 5 + 1 + 1;
             const bitBlockBytes: number = ((bitBlockSize + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(other, false, true) > 5000) {
+            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(other, false, true) > 5000 - (11 + 5 + 5 + 1 + 1)) {
                 // more players get added next tick
                 break;
             }

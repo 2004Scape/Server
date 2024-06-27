@@ -33,17 +33,16 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         bitBlock.pBit(8, player.npcs.size);
 
         for (const nid of player.npcs) {
-            const npc: Npc | null = World.getNpc(nid);
-
-            if (!npc || !nearby.has(nid)) {
+            if (!nearby.has(nid)) {
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
                 player.npcs.delete(nid);
                 continue;
             }
 
-            const { walkDir, runDir, tele } = npc;
-            if (tele) {
+            // const { walkDir, runDir, tele } = npc;
+            const npc: Npc | null = World.getNpc(nid);
+            if (!npc || npc.tele) {
                 // npc full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
@@ -58,6 +57,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
                 hasMaskUpdate = false;
             }
 
+            const {walkDir, runDir} = npc;
             bitBlock.pBit(1, runDir !== -1 || walkDir !== -1 || hasMaskUpdate ? 1 : 0);
             if (runDir !== -1) {
                 bitBlock.pBit(2, 2);
