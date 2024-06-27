@@ -215,6 +215,8 @@
 [command,both_heropoints](int $damage)
 [command,setgender](int $gender)
 [command,setskincolour](int $skin_colour)
+[command,p_animprotect](int $toggle)
+[command,.p_animprotect](int $toggle)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

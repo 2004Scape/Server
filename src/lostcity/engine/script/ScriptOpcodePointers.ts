@@ -478,6 +478,10 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.SETSKINCOLOUR]: {
         require: ['p_active_player']
     },
+    [ScriptOpcode.P_ANIMPROTECT]: {
+        require: ['p_active_player'],
+        require2: ['p_active_player2']
+    },
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {
         set: ['active_npc'],

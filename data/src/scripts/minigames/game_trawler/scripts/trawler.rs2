@@ -191,6 +191,7 @@ if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
 }
 if (~inzone_coord_pair_table(trawler_wreck_zones, $coord) = true) {
     ~bas_set_all(human_swim);
+    p_animprotect(^true); // disable anims
     bas_running(null); // disable running
     cam_reset;
 }

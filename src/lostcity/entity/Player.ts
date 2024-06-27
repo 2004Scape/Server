@@ -227,6 +227,7 @@ export default class Player extends PathingEntity {
     basWalkLeft: number = -1;
     basWalkRight: number = -1;
     basRunning: number = -1;
+    animProtect: number = 0;
     logoutRequested: boolean = false;
     invListeners: {
         type: number; // InvType
@@ -1612,7 +1613,7 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(seq: number, delay: number) {
-        if (seq >= SeqType.count || this.basReadyAnim === 772) { // prevent anims from playing during swimming
+        if (seq >= SeqType.count || this.animProtect) { // prevent anims from playing during swimming
             return;
         }
 

@@ -99,6 +99,9 @@ if (staffmodlevel >= 2 & inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
     stat_add(magic, calc(255 - stat(magic)), 0);
     stat_add(prayer, calc(255 - stat(prayer)), 0);
 }
+if (p_finduid(uid) = true) {
+    p_animprotect(^false);
+}
 ~update_bas; // update appearance
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight
@@ -117,6 +120,9 @@ if (.staffmodlevel >= 2 & .inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
     .stat_add(ranged, calc(255 - .stat(ranged)), 0);
     .stat_add(magic, calc(255 - .stat(magic)), 0);
     .stat_add(prayer, calc(255 - .stat(prayer)), 0);
+}
+if (.p_finduid(.uid) = true) {
+    .p_animprotect(^false);
 }
 ~.update_bas; // update appearance
 ~.update_bonuses; // update bonuses if

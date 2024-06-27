@@ -802,7 +802,6 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.BAS_RUNNING]: state => {
         const seq = state.popInt();
         if (seq === -1) {
-            console.log(state.activePlayer.basReadyAnim);
             state.activePlayer.basRunning = -1;
             return;
         }
@@ -1009,6 +1008,10 @@ const PlayerOps: CommandHandlers = {
         }
 
         toPlayer.addHero(fromPlayer.uid, damage);
+    }),
+
+    [ScriptOpcode.P_ANIMPROTECT]: checkedHandler(ProtectedActivePlayer, state => {
+        state.activePlayer.animProtect = check(state.popInt(), NumberNotNull);
     }),
 };
 
