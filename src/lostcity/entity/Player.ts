@@ -467,6 +467,7 @@ export default class Player extends PathingEntity {
 
     updateMovement(repathAllowed: boolean = true): boolean {
         if (this.containsModalInterface()) {
+            this.recoverEnergy(false);
             return false;
         }
 
@@ -504,33 +505,36 @@ export default class Player extends PathingEntity {
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
         if (moved) {
             const trigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-
             if (trigger) {
-                const script = ScriptRunner.init(trigger, this);
-                this.runScript(script, true);
-            }
-
-            // run energy drain
-            if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
-                const weightKg = Math.floor(this.runweight / 1000);
-                const clampWeight = Math.min(Math.max(weightKg, 0), 64);
-                const loss = 67 + (67 * clampWeight) / 64;
-
-                this.runenergy = Math.max(this.runenergy - loss, 0);
-                if (this.runenergy === 0) {
-                    this.setVar(VarPlayerType.PLAYER_RUN, 0);
-                    this.setVar(VarPlayerType.TEMP_RUN, 0);
-                }
+                this.runScript(ScriptRunner.init(trigger, this), true);
             }
         }
+        this.drainEnergy(moved);
+        this.recoverEnergy(moved);
+        if (this.runenergy === 0) {
+            this.setVar(VarPlayerType.PLAYER_RUN, 0);
+            this.setVar(VarPlayerType.TEMP_RUN, 0);
+        }
+        return moved;
+    }
 
+    private drainEnergy(moved: boolean): void {
+        if (!moved || this.stepsTaken === 0) {
+            return;
+        }
+        if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
+            const weightKg = Math.floor(this.runweight / 1000);
+            const clampWeight = Math.min(Math.max(weightKg, 0), 64);
+            const loss = (67 + (67 * clampWeight) / 64) | 0;
+            this.runenergy = Math.max(this.runenergy - loss, 0);
+        }
+    }
+
+    private recoverEnergy(moved: boolean): void {
         if (!this.delayed() && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
-            const recovered = this.baseLevels[PlayerStat.AGILITY] / 9 + 8;
-
+            const recovered = (this.baseLevels[PlayerStat.AGILITY] / 9 | 0) + 8;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
-
-        return moved;
     }
 
     blockWalkFlag(): CollisionFlag {
