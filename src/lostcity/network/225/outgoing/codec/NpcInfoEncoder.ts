@@ -33,7 +33,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
         for (const nid of player.npcs) {
             const npc: Npc | null = World.getNpc(nid);
-            if (!npc || npc.tele || !Position.isWithinDistance(player, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
+            if (!npc || npc.tele || npc.level !== player.level || !Position.isWithinDistance(player, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
                 // npc full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
