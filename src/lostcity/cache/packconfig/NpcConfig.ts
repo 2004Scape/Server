@@ -335,22 +335,22 @@ export function packNpcConfigs(configs: Map<string, ConfigLine[]>): { client: Pa
                 const index = parseInt(key.substring('op'.length)) - 1;
                 client.p1(30 + index);
                 client.pjstr(value as string);
-            } else if (key === 'hitpoints') {
+            } else if (key === 'attack') {
                 server.p1(74);
                 server.p2(value as number);
-            } else if (key === 'attack') {
+            } else if (key === 'defence') {
                 server.p1(75);
                 server.p2(value as number);
             } else if (key === 'strength') {
                 server.p1(76);
                 server.p2(value as number);
-            } else if (key === 'defence') {
+            } else if (key === 'hitpoints') {
                 server.p1(77);
                 server.p2(value as number);
-            } else if (key === 'magic') {
+            } else if (key === 'ranged') {
                 server.p1(78);
                 server.p2(value as number);
-            } else if (key === 'ranged') {
+            } else if (key === 'magic') {
                 server.p1(79);
                 server.p2(value as number);
             } else if (key === 'resizex') {

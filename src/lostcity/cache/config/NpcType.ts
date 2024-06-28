@@ -161,17 +161,17 @@ export default class NpcType extends ConfigType {
                 this.heads[i] = dat.g2();
             }
         } else if (code === 74) {
-            this.stats[NpcStat.HITPOINTS] = dat.g2();
-        } else if (code === 75) {
             this.stats[NpcStat.ATTACK] = dat.g2();
+        } else if (code === 75) {
+            this.stats[NpcStat.DEFENCE] = dat.g2();
         } else if (code === 76) {
             this.stats[NpcStat.STRENGTH] = dat.g2();
         } else if (code === 77) {
-            this.stats[NpcStat.DEFENCE] = dat.g2();
+            this.stats[NpcStat.HITPOINTS] = dat.g2();
         } else if (code === 78) {
-            this.stats[NpcStat.MAGIC] = dat.g2();
-        } else if (code === 79) {
             this.stats[NpcStat.RANGED] = dat.g2();
+        } else if (code === 79) {
+            this.stats[NpcStat.MAGIC] = dat.g2();
         } else if (code === 90) {
             this.resizex = dat.g2();
         } else if (code === 91) {
