@@ -806,7 +806,7 @@ export default class Npc extends PathingEntity {
                 throw new Error('[Npc] huntAll must be of type Player here.');
             }
 
-            if (player.zonesAfk()) {
+            if (hunt.checkAfk && player.zonesAfk()) {
                 continue;
             }
 

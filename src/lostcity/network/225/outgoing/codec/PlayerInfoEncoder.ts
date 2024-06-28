@@ -60,7 +60,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
         for (const uid of player.otherPlayers) {
             const other: Player | null = World.getPlayerByUid(uid);
-            if (!other || other.tele || !Position.isWithinDistance(player, other, 16)) {
+            if (!other || other.tele || !Position.isWithinDistance(player, other, 16) || !other.checkLifeCycle(World.currentTick)) {
                 // player full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);

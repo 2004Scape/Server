@@ -21,7 +21,8 @@ import {
     InvPack,
     LocPack,
     NpcPack,
-    ObjPack, ParamPack,
+    ObjPack,
+    ParamPack,
     VarnPack,
     VarpPack
 } from '#lostcity/util/PackFile.js';
@@ -451,7 +452,7 @@ export function packHuntConfigs(configs: Map<string, ConfigLine[]>): { client: P
                     server.p2(value as number);
                 }
             } else if (key === 'check_afk') {
-                if (value !== false) {
+                if (value !== true) {
                     server.p1(10);
                 }
             } else if (key === 'rate') {
