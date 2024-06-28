@@ -1446,6 +1446,10 @@ export default class Player extends PathingEntity {
         this.baseLevels[stat] = getLevelByExp(this.stats[stat]);
 
         if (this.baseLevels[stat] > before) {
+            if (this.levels[stat] < before) {
+                // replenish 1 of the stat upon levelup.
+                this.levels[stat] += 1;
+            }
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
 
             if (script) {
