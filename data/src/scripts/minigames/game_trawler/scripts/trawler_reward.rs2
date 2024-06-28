@@ -1,7 +1,10 @@
 [oploc1,game_trawler_reward_net]
 if (inv_freespace(trawler_catch) = 40) {
-    ~chatplayer("<p,neutral>I'd better not steal other people's fish!"); // osrs
+    ~chatplayer("<p,neutral>I'd better not steal other people's fish!"); // osrs and rs3
     return;
+}
+if (stat(fishing) < 15) { // osrs wiki says its unboostable but this is untrue.
+    mes("You need to have a Fishin level of 15 to find fish here."); // osrs and rs3
 }
 inv_transmit(trawler_catch, trawler_catch:inv);
 if_openmainmodal(trawler_catch);
@@ -56,10 +59,7 @@ p_delay(20);
 if_close;
 p_teleport(~coord_lineofwalk_radius(^trawler_lobby_murphy_spawn, 4));
 
-def_int $level = stat_base(fishing);
-if ($level < 15) {
-    return;
-}
+def_int $level = stat(fishing);
 def_int $i = 0;
 while ($i < $rolls) {
     ~trawler_reward($level);

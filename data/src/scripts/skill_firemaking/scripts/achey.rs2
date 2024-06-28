@@ -5,7 +5,9 @@ switch_obj(last_useitem) {
     case default : ~displaymessage(^dm_default);
 }
 
-// achey fm is slightly different so i just made it a whole new label
+// In osrs, achey logs are special. when you tinderbox -> log, it goes through a different firemaking script.
+// In this different script, the log drops before some of the inzone checks. And in the trawler minigame
+// you're actually able to firemake with achey logs when its flooding, but not with normal logs
 [label,light_achey_inv](int $slot)
 def_obj $log = inv_getobj(inv, $slot);
 def_int $level = oc_param($log, levelrequire);
@@ -19,9 +21,7 @@ if (map_locaddunsafe(coord) = true | map_blocked(coord) = true) {
     mes("You can't light a fire here.");
     return;
 }
-// osrs, achey logs drop on ground
-// but only if u tinderbox -> log, and doesnt work if map_blocked
-// add obj to ground
+
 inv_dropslot(inv, coord, $slot, ^lootdrop_duration);
 if (~inzone_coord_pair_table(bank_zones, coord) = true) {
     mes("You can't light a fire here.");
