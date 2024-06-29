@@ -287,6 +287,7 @@ export class NetworkPlayer extends Player {
     // todo: partial updates
     updateInvs() {
         let runWeightChanged = false;
+        let firstSeen = false;
 
         for (let i = 0; i < this.invListeners.length; i++) {
             const listener = this.invListeners[i];
@@ -319,6 +320,9 @@ export class NetworkPlayer extends Player {
 
                 if (inv.update || listener.firstSeen) {
                     this.write(new UpdateInvFull(listener.com, inv));
+                    if (listener.firstSeen) {
+                        firstSeen = true;
+                    }
                     listener.firstSeen = false;
 
                     const invType = InvType.get(listener.type);
@@ -335,7 +339,7 @@ export class NetworkPlayer extends Player {
             runWeightChanged = current !== this.runweight;
         }
 
-        if (runWeightChanged) {
+        if (runWeightChanged || firstSeen) {
             this.write(new UpdateRunWeight(Math.ceil(this.runweight / 1000)));
         }
     }
