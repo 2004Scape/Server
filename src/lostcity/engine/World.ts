@@ -580,8 +580,9 @@ class World {
                 }
 
                 if (this.shutdownTick < this.currentTick) {
-                    // request logout on socket idle after 30 seconds (this may be 16 *ticks* in osrs!)
-                    if (this.currentTick - player.lastResponse >= 50) {
+                    // request logout on socket idle after 45 seconds (this may be 16 *ticks* in osrs!)
+                    // increased timeout for compatibility with old PCs that take ages to load
+                    if (this.currentTick - player.lastResponse >= 75) {
                         player.logoutRequested = true;
                     }
                 }
