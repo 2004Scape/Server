@@ -1,36 +1,64 @@
+[proc,trawler_win](int $rolls)
+huntall(^trawler_start_center_under, 8, 0);
+while (huntnext = true) {
+    if_close;
+    %trawler_catch = $rolls;
+    queue(trawler_player_win, 0);
+}
+huntall(^trawler_start_center, 8, 0);
+while (huntnext = true) {
+    if_close;
+    %trawler_catch = $rolls;
+    queue(trawler_player_win, 0);
+}
+huntall(^trawler_flood_center_under, 8, 0);
+while (huntnext = true) {
+    if_close;
+    %trawler_catch = $rolls;
+    queue(trawler_player_win, 0);
+}
+huntall(^trawler_flood_center, 8, 0);
+while (huntnext = true) {
+    if_close;
+    %trawler_catch = $rolls;
+    queue(trawler_player_win, 0);
+}
+
+[queue,trawler_player_win]
+if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
+    return;
+}
+mes("Murphy turns the boat towards shore.");
+%boat_takeoff = 12;
+%trawler = ^trawler_finished;
+midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
+if_openmainmodal(ship_journey);
+
+p_delay(20);
+if_close;
+p_teleport(~coord_lineofwalk_radius(^trawler_lobby_murphy_spawn, 4));
+
 [oploc1,game_trawler_reward_net]
-if (inv_freespace(trawler_catch) = 40) {
+if (%trawler < 3 | %trawler_catch = 0) {
     ~chatplayer("<p,neutral>I'd better not steal other people's fish!"); // osrs and rs3
     return;
 }
-if (stat(fishing) < 15) { // osrs wiki says its unboostable but this is untrue.
+def_int $level = stat(fishing);
+if ($level < 15) { // osrs wiki says its unboostable but this is untrue.
     mes("You need to have a Fishin level of 15 to find fish here."); // osrs and rs3
 }
+
 inv_transmit(trawler_catch, trawler_catch:inv);
 if_openmainmodal(trawler_catch);
-// junk https://web.archive.org/web/20040812231222/http://www.tip.it/runescape/index.php?page=rs2trawler.htm
-// it says junk gives 1 xp each, except boots. Im guessing its like 1.1 or 1.2 xp each
-givexp(fishing, multiply(inv_total(trawler_catch, broken_arrow), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, broken_glass), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, broken_staff), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, buttons), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, damaged_armour), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, old_boot), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, pot_empty), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, rusty_sword), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, seaweed), 12));
-givexp(fishing, multiply(inv_total(trawler_catch, edible_seaweed), 12));
-// fish
-givexp(fishing, multiply(inv_total(trawler_catch, raw_manta_ray), 1150));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_shark), 1100));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_sea_turtle), 1050));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_swordfish), 1000));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_lobster), 900));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_tuna), 800));
-givexp(fishing, multiply(inv_total(trawler_catch, oyster), 100));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_anchovies), 400));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_sardine), 200));
-givexp(fishing, multiply(inv_total(trawler_catch, raw_shrimps), 100));
+
+def_int $i = 0;
+while ($i < %trawler_catch) {
+    ~trawler_reward($level);
+    $i = add($i, 1);
+}
+%trawler = ^trawler_sailed;
+%trawler_catch = 0;
+
 
 [if_close,trawler_catch]
 def_int $i = 0;
@@ -46,26 +74,6 @@ inv_stoptransmit(trawler_catch:inv);
 [inv_button1,trawler_catch:inv] inv_moveitem(trawler_catch, inv, last_item, 1);
 [inv_button2,trawler_catch:inv] inv_moveitem(trawler_catch, inv, last_item, inv_total(trawler_catch, last_item)); 
 
-[queue,trawler_player_win](int $rolls)
-if (~inzone_coord_pair_table(trawler_game_zones, coord) = false) {
-    return;
-}
-mes("Murphy turns the boat towards shore.");
-%boat_takeoff = 12;
-midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
-if_openmainmodal(ship_journey);
-
-p_delay(20);
-if_close;
-p_teleport(~coord_lineofwalk_radius(^trawler_lobby_murphy_spawn, 4));
-
-def_int $level = stat(fishing);
-def_int $i = 0;
-while ($i < $rolls) {
-    ~trawler_reward($level);
-    $i = add($i, 1);
-}
-
 
 // trawler reward was reworked early 2007. So its way different than osrs
 // - https://imgur.com/gBvOHZl
@@ -74,37 +82,51 @@ while ($i < $rolls) {
 // low fish wasnt ultra rare at high fish levels
 // tldr: my theory is that instead of low: 150, high: 200 for each fish (osrs), it was fishes normal lows and highs
 [proc,trawler_reward](int $level)
-if (stat_random($level, 150, 200) = false) {
+if (stat_random($level, 150, 200) = false) { // junk https://web.archive.org/web/20040812231222/http://www.tip.it/runescape/index.php?page=rs2trawler.htm
     inv_add(trawler_catch, ~randomjunk);
+    givexp(fishing, 12); // it says junk gives 1 xp each, except with boots giving 2. Im guessing its like 1.1 or 1.2 xp each
     return;
 }
 if ($level >= 81 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_manta_ray, 1);
+    givexp(fishing, 1150);
 } else if ($level >= 80 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_sea_turtle, 1);
+    givexp(fishing, 1050);
 } else if ($level >= 76 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_shark, 1);
+    givexp(fishing, 1100);
 } else if ($level >= 60 & stat_random($level, 4, 48) = true) {
     inv_add(trawler_catch, raw_swordfish, 1);
+    givexp(fishing, 1000);
 } else if ($level >= 40 & stat_random($level, 6, 95) = true) {
     inv_add(trawler_catch, raw_lobster, 1);
+    givexp(fishing, 900);
 } else if ($level >= 35 & stat_random($level, 8, 64) = true) {
     inv_add(trawler_catch, raw_tuna, 1);
+    givexp(fishing, 800);
 } else if ($level >= 16 & stat_random($level, 10, 80) = true) {
     def_int $random = random(3);
     if ($random = 0) {
         inv_add(trawler_catch, oyster, 1);
+        givexp(fishing, 100);
     } else if ($random = 1) {
         inv_add(trawler_catch, seaweed, 1);
+        givexp(fishing, 12);
     } else if ($random = 2) {
         inv_add(trawler_catch, edible_seaweed, 1);
+        givexp(fishing, 12);
     }
 } else if (stat_random($level, 24, 128) = true) {
     inv_add(trawler_catch, raw_anchovies, 1);
+    givexp(fishing, 400);
 } else if (stat_random($level, 32, 192) = true) {
     inv_add(trawler_catch, raw_sardine, 1);
+    givexp(fishing, 200);
 } else if (stat_random($level, 48, 200) = true) {
     inv_add(trawler_catch, raw_shrimps, 1);
+    givexp(fishing, 100);
 } else {
     inv_add(trawler_catch, ~randomjunk);
+    givexp(fishing, 12);
 }

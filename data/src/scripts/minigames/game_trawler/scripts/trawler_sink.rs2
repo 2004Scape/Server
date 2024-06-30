@@ -2,23 +2,55 @@
 huntall(^trawler_start_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_teleport, 0, movecoord(coord, 64, 0, 0));
+    queue(trawler_player_sink, 0);
 }
 huntall(^trawler_start_center, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_teleport, 0, ~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+    queue(trawler_player_sink, 0);
 }
 huntall(^trawler_flood_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_teleport, 0, movecoord(coord, -64, 0, 0));
+    queue(trawler_player_sink, 0);
 }
 huntall(^trawler_flood_center, 8, 0);
 while (huntnext = true) {
     if_close;
-    queue(trawler_player_teleport, 0, ~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+    queue(trawler_player_sink, 0);
 }
+if (npc_find(^trawler_wreck_murphy, 0_30_75_murphy, 2, 0) = true) {
+    switch_int (random(5)) {
+        case 0 : 
+            npc_say("You'll need all your strength!");
+            npc_delay(4);
+            npc_say("To make it back to shore."); // confirmed
+        case 1 : npc_say("No fishies for you today!");
+        case 2 : npc_say("Arrrgh! we've sunk!");
+        case 3 : npc_say("Keep your head above water shipmate.");
+        case 4 : npc_say("You'll be joining Davey Jones!");
+    }
+}
+
+[queue,trawler_player_sink]
+if (~inzone_coord_pair_table(trawler_flood_zones, coord) = true) {
+    if (coordy(coord) = 0) {
+        p_teleport(movecoord(coord, -64, 0, 0));
+    } else {
+        p_teleport(~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+    }
+} else if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = true) {
+    if (coordy(coord) = 0) {
+        p_teleport(movecoord(coord, 64, 0, 0));
+    } else {
+        p_teleport(~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+    }
+}
+p_walk(coord);
+~bas_set_all(human_swim);
+p_animprotect(^true); // disable anims
+bas_running(null); // disable running
+cam_reset;
 
 // in osrs only 1 barrel out of 3 work, but since theres only 2 types and no guides
 // mentions only 1 barrel working im guessing this was an osrs change of some sort

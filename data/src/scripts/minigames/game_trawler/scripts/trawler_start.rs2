@@ -1,9 +1,3 @@
-[debugproc,fisht]
-if (p_finduid(uid) = true) {
-    p_telejump(0_41_49_52_34);
-}
-
-
 // CamShake(type = 4, shakeIntensity = 0, movementIntensity = 20, speed = 4)
 // CamShake(type = 1, shakeIntensity = 0, movementIntensity = 20, speed = 5)
 
@@ -63,6 +57,7 @@ if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = false) {
 inv_clear(trawler_catch);
 p_teleport(~coord_lineofwalk_radius(^trawler_start_center_under, 4));
 %boat_takeoff = 11;
+%trawler = ^trawler_sailed;
 if_openmainmodal(ship_journey);
 midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 

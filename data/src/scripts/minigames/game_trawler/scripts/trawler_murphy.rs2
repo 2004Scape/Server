@@ -23,6 +23,7 @@ npc_delay(2);
 npc_setmode(patrol);
 
 [label,murphy_cheer]
+npc_delay(3);
 npc_anim(emote_cheer, 0);
 npc_setmode(none);
 npc_delay(3);

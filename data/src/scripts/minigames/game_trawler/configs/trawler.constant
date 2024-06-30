@@ -1,3 +1,7 @@
+^trawler_talked_to_murphy = 1
+^trawler_sailed = 2
+^trawler_finished = 3
+
 ^trawler_lobby_center_under = 0_41_49_47_38
 ^trawler_lobby_center = 1_41_49_47_48
 ^trawler_lobby_murphy_spawn = 0_41_49_44_26
@@ -13,6 +17,7 @@
 ^trawler_flood_net2 = 1_31_75_24_19
 
 ^trawler_wreck_center = 0_30_75_33_25
+^trawler_wreck_murphy = 0_30_75_26_26
 ^trawler_escape = 0_47_49_18_20
 
 ^trawler_start_patrol1 = 0_29_75_29_25
