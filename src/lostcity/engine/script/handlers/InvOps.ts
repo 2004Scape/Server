@@ -575,12 +575,14 @@ const InvOps: CommandHandlers = {
 
     [ScriptOpcode.INV_TOTALPARAM]: checkedHandler(ActivePlayer, state => {
         const [inv, param] = state.popInts(2);
-        return state.activePlayer.invTotalParam(inv, param);
+
+        state.pushInt(state.activePlayer.invTotalParam(inv, param));
     }),
 
     [ScriptOpcode.INV_TOTALPARAM_STACK]: checkedHandler(ActivePlayer, state => {
         const [inv, param] = state.popInts(2);
-        return state.activePlayer.invTotalParamStack(inv, param);
+
+        state.pushInt(state.activePlayer.invTotalParamStack(inv, param));
     })
 };
 

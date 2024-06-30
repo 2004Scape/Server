@@ -42,17 +42,18 @@ queue(macro_event_general_check, 0);
 ~gnomeball_login;
 
 if (%tutorial_progress < ^tutorial_complete) {
-    // This is a check to not bork every account that currently has a tutorial complete progress of 5.
      if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
+        // This is a check to not bork every account that currently has a tutorial complete progress of 5.
+        // Remove after alpha!
         %tutorial_progress = ^tutorial_complete;
         last_login_info;
         ~initalltabs;
-    // Checking if you're off tutorial island but it's not complete
-    } else if (~inzone_coord_pair_table(tutorial_island, coord) = false & %tutorial_progress < ^tutorial_complete) {
+    } else if (~in_tutorial_island(coord) = false & %tutorial_progress < ^tutorial_complete) {
+        // Checking if you're off tutorial island but it's not complete
         ~update_bas;
         @tutorial_complete;
-    // regular start tutorial
     } else {
+        // Starting tutorial regularly
         ~update_bas;
         @start_tutorial;
     }
