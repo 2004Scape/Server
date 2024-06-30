@@ -183,9 +183,6 @@ enum ScriptOpcode {
     P_CLEARPENDINGACTION, // official
     GETWALKTRIGGER, // official
     BUSY2, // official
-    QUEUE2, // workaround until .queue is supported in compiler
-    SETTIMER2, // workaround until .settimer is supported in compiler
-    WALKTRIGGER2, // workaround until .walktrigger is supported in compiler
     FINDHERO, // official
     BOTH_HEROPOINTS, // official
     SETGENDER,

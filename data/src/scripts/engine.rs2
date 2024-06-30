@@ -151,22 +151,25 @@
 [command,softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,.softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,clearsofttimer](softtimer $timer)
+[command,.clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
-[command,settimer2] // todo: will become .settimer later
+[command,.settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
+[command,.cleartimer](timer $timer)
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
 [command,.hint_stop]
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
-[command,queue](queue $queue, int $delay)
-[command,queue2](queue $queue, int $delay) // todo: will become .queue later
+[command,queue](queue $queue, int $delay) // , $arg)
+[command,.queue](queue $queue, int $delay) // , $arg)
 [command,busy]()(boolean)
 [command,.busy]()(boolean)
 [command,busy2]()(boolean)
 [command,.busy2]()(boolean)
 [command,getqueue](queue $queue)(int)
+[command,.getqueue](queue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]
 [command,p_teleport](coord $coord)
@@ -203,7 +206,7 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,walktrigger](walktrigger $trigger)
-[command,walktrigger2](walktrigger $trigger) // todo: will become .walktrigger later
+[command,.walktrigger](walktrigger $trigger)
 [command,getwalktrigger]()(walktrigger)
 [command,.getwalktrigger]()(walktrigger)
 [command,clearqueue](queue $queue)

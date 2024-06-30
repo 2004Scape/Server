@@ -132,22 +132,6 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.enqueueScript(script, PlayerQueueType.NORMAL, delay, args);
     }),
 
-    [ScriptOpcode.QUEUE2]: checkedHandler(ScriptPointer.ActivePlayer2, state => {
-        if (!state._activePlayer2) {
-            return;
-        }
-
-        const args = popScriptArgs(state);
-        const delay = check(state.popInt(), NumberNotNull);
-        const scriptId = state.popInt();
-
-        const script = ScriptProvider.get(scriptId);
-        if (!script) {
-            throw new Error(`Unable to find queue script: ${scriptId}`);
-        }
-        state._activePlayer2.enqueueScript(script, PlayerQueueType.NORMAL, delay, args);
-    }),
-
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, state => {
         const delay = check(state.popInt(), NumberNotNull);
         const seq = state.popInt();
@@ -719,22 +703,6 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.setTimer(PlayerTimerType.NORMAL, script, args, interval);
     }),
 
-    [ScriptOpcode.SETTIMER2]: checkedHandler(ScriptPointer.ActivePlayer2, state => {
-        if (!state._activePlayer2) {
-            return;
-        }
-
-        const args = popScriptArgs(state);
-        const interval = state.popInt();
-        const timerId = state.popInt();
-
-        const script = ScriptProvider.get(timerId);
-        if (!script) {
-            throw new Error(`Unable to find timer script: ${timerId}`);
-        }
-        state._activePlayer2.setTimer(PlayerTimerType.NORMAL, script, args, interval);
-    }),
-
     [ScriptOpcode.CLEARTIMER]: checkedHandler(ActivePlayer, state => {
         state.activePlayer.clearTimer(state.popInt());
     }),
@@ -904,14 +872,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.WALKTRIGGER]: state => {
         state.activePlayer.walktrigger = state.popInt();
-    },
-
-    [ScriptOpcode.WALKTRIGGER2]: state => {
-        if (!state._activePlayer2) {
-            return;
-        }
-
-        state._activePlayer2.walktrigger = state.popInt();
     },
 
     [ScriptOpcode.GETWALKTRIGGER]: state => {
