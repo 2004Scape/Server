@@ -299,7 +299,6 @@ export default class Player extends PathingEntity {
     lastUseItem: number = -1; // opheldu, opobju, oplocu, opnpcu, opplayeru
     lastUseSlot: number = -1; // opheldu, opobju, oplocu, opnpcu, opplayeru
     lastTargetSlot: number = -1; // inv_buttond
-    lastInt: number = -1; // resume_p_countdialog
     lastCom: number = -1; // if_button
 
     staffModLevel: number = 0;

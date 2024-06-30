@@ -211,7 +211,34 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LAST_INT]: state => {
-        state.pushInt(state.activePlayer.lastInt);
+        const aiTriggers = [
+            ServerTriggerType.AI_QUEUE1,
+            ServerTriggerType.AI_QUEUE2,
+            ServerTriggerType.AI_QUEUE3,
+            ServerTriggerType.AI_QUEUE4,
+            ServerTriggerType.AI_QUEUE5,
+            ServerTriggerType.AI_QUEUE6,
+            ServerTriggerType.AI_QUEUE7,
+            ServerTriggerType.AI_QUEUE8,
+            ServerTriggerType.AI_QUEUE9,
+            ServerTriggerType.AI_QUEUE10,
+            ServerTriggerType.AI_QUEUE11,
+            ServerTriggerType.AI_QUEUE12,
+            ServerTriggerType.AI_QUEUE13,
+            ServerTriggerType.AI_QUEUE14,
+            ServerTriggerType.AI_QUEUE15,
+            ServerTriggerType.AI_QUEUE16,
+            ServerTriggerType.AI_QUEUE17,
+            ServerTriggerType.AI_QUEUE18,
+            ServerTriggerType.AI_QUEUE19,
+            ServerTriggerType.AI_QUEUE20
+        ];
+
+        if (aiTriggers.includes(state.trigger)) {
+            state.pushInt(state.activeNpc.lastInt);
+        } else {
+            state.pushInt(state.activePlayer.lastInt);
+        }
     },
 
     [ScriptOpcode.LAST_ITEM]: state => {
