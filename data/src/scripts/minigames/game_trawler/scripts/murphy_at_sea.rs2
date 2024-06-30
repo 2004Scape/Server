@@ -1,0 +1,27 @@
+[opnpc1,0_29_75_murphy]
+//todo: confirm mesanims 
+def_int $choice = ~p_choice2("I've had enough, take me back.", 1, "How you doing murphy?", 2);
+if ($choice = 2) {
+    ~chatplayer("<p,neutral>How you doing Murphy?");
+    switch_int(random(3)) {
+        case 0 : ~chatnpc("<p,neutral>Get those fishies!");
+        case 1 : ~chatnpc("<p,neutral>I think i'm feeling a bit sea sick!"); // "i'm" is from osrs. intentional typo!
+        case 2 : ~chatnpc("<p,neutral>It's a fierce sea today traveller, you best hold on tight.");
+    }
+    return;
+}
+~chatplayer("<p,neutral>I've had enough, take me back.");
+~chatnpc("<p,laugh>Hah! .. the soft land lovers lost their sea legs have they?");
+~chatplayer("<p,neutral>...Something like that.");
+~chatnpc("<p,neutral>We're too far out now, It'd be dangerous"); // "It'd" is from osrs. intentional typo
+$choice =  ~p_choice2("I insist Murphy, take me back.", 1, "Okay then Murphy, just keep us afloat.", 2);
+if ($choice = 2) {
+    ~chatplayer("<p,neutral>Okay then Murphy, just keep us afloat.");
+    ~chatnpc("<p,neutral>That's the attitude sailor...Aaaaar!");
+    return;
+}
+~chatplayer("<p,neutral>I insist Murphy, take me back.");
+~chatnpc("<p,drunk>Ok, ok, I'll try, but don't say I didn't warn you...");
+~mesbox("Murphy attempts to sharply turn the large ship.");
+~chatnpc("<p,sad>Save yourself! We're going down!");
+queue(trawler_player_sink, 0);
