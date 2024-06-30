@@ -325,6 +325,8 @@ enum ScriptOpcode {
     INV_STOPTRANSMIT,
     BOTH_DROPSLOT,
     INV_DROPALL,
+    INV_TOTALPARAM, // official, see cs2
+    INV_TOTALPARAM_STACK, // official, see cs2
 
     // Enum ops (4400-4499)
     ENUM = 4400, // official

@@ -62,6 +62,8 @@ import HintArrow from '#lostcity/network/outgoing/model/HintArrow.js';
 import LastLoginInfo from '#lostcity/network/outgoing/model/LastLoginInfo.js';
 import MessageGame from '#lostcity/network/outgoing/model/MessageGame.js';
 import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriority.js';
+import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -1372,25 +1374,40 @@ export default class Player extends PathingEntity {
         return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
-    invTotalParam(inv: number, param: number): number {
+    private _invTotalParam(inv: number, param: number, stack: boolean): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invTotalParam: Invalid inventory type: ' + inv);
         }
 
-        return container.itemsFiltered.filter(obj => ObjType.get(obj.id).params.has(param)).reduce((count, obj) => count + obj.count, 0);
+        const paramType: ParamType = ParamType.get(param);
+
+        let total: number = 0;
+        for (let slot: number = 0; slot < container.capacity; slot++) {
+            const item = container.items[slot];
+            if (!item || item.id < 0 || item.id >= ObjType.count) {
+                continue;
+            }
+
+            const obj: ObjType = ObjType.get(item.id);
+            const value: number = ParamHelper.getIntParam(paramType.id, obj, paramType.defaultInt);
+
+            if (stack) {
+                total += item.count * value;
+            } else {
+                total += value;
+            }
+        }
+
+        return total;
+    }
+
+    invTotalParam(inv: number, param: number): number {
+        return this._invTotalParam(inv, param, false);
     }
 
     invTotalParamStack(inv: number, param: number): number {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invTotalParamStack: Invalid inventory type: ' + inv);
-        }
-
-        return container.itemsFiltered.filter(obj => {
-            const objType: ObjType = ObjType.get(obj.id);
-            return objType.params.has(param) && objType.stackable;
-        }).reduce((count, obj) => count + obj.count, 0);
+        return this._invTotalParam(inv, param, true);
     }
 
     // ----

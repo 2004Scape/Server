@@ -572,6 +572,16 @@ const InvOps: CommandHandlers = {
             World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, obj.count), -1, duration);
         }
     }),
+
+    [ScriptOpcode.INV_TOTALPARAM]: checkedHandler(ActivePlayer, state => {
+        const [inv, param] = state.popInts(2);
+        return state.activePlayer.invTotalParam(inv, param);
+    }),
+
+    [ScriptOpcode.INV_TOTALPARAM_STACK]: checkedHandler(ActivePlayer, state => {
+        const [inv, param] = state.popInts(2);
+        return state.activePlayer.invTotalParamStack(inv, param);
+    })
 };
 
 export default InvOps;

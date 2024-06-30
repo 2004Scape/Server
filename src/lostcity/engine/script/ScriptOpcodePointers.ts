@@ -857,6 +857,14 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.INV_TOTALPARAM]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
+    [ScriptOpcode.INV_TOTALPARAM_STACK]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
 
     // String ops
     [ScriptOpcode.TEXT_GENDER]: {
