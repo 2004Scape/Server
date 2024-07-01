@@ -31,14 +31,16 @@ export class EntityQueueRequest extends Linkable {
     /**
      * The arguments to execute the script with.
      */
-    args: ScriptArgument[] | null;
+    args: ScriptArgument[];
 
     /**
      * The number of ticks remaining until the queue executes.
      */
     delay: number;
 
-    constructor(type: QueueType, script: Script, args: ScriptArgument[] | null, delay: number) {
+    lastInt: number = 0;
+
+    constructor(type: QueueType, script: Script, args: ScriptArgument[], delay: number) {
         super();
         this.type = type;
         this.script = script;

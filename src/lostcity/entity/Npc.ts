@@ -11,7 +11,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
-import {EntityQueueRequest, NpcQueueType, ScriptArgument} from '#lostcity/entity/EntityQueueRequest.js';
+import {EntityQueueRequest, NpcQueueType} from '#lostcity/entity/EntityQueueRequest.js';
 import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
@@ -298,14 +298,17 @@ export default class Npc extends PathingEntity {
             }
 
             if (!this.delayed() && request.delay <= 0) {
-                this.executeScript(ScriptRunner.init(request.script, this, null, request.args));
+                const state = ScriptRunner.init(request.script, this, null, request.args);
+                state.lastInt = request.lastInt;
+                this.executeScript(state);
                 request.unlink();
             }
         }
     }
 
-    enqueueScript(script: Script, delay = 0, args: ScriptArgument[] = []) {
-        const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, args, delay);
+    enqueueScript(script: Script, delay = 0, arg: number = 0) {
+        const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, [], delay);
+        request.lastInt = arg;
         this.queue.addTail(request);
     }
 
@@ -810,8 +813,7 @@ export default class Npc extends PathingEntity {
                 continue;
             }
 
-            // TODO: probably zone check to see if they're in the wilderness as well?
-            if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
+            if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
 
