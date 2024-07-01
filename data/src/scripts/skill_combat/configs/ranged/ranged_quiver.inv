@@ -1,0 +1,5 @@
+[ranged_quiver_inv]
+size=1
+stackall=yes
+scope=temp
+protect=no

@@ -57,7 +57,7 @@ if (%action_delay < map_clock) {
     if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
         def_coord $fire_coord = obj_coord;
-        if (~in_duel_arena = true) {
+        if (~in_duel_arena(coord) = true) {
             // https://youtu.be/L3OwjH-iXQU
             //  - could still fm in the duel arena. 
             //  - It just didnt move the player at all
@@ -143,8 +143,7 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     return;
 }
 
-obj_add(coord, $log, 1, ^lootdrop_duration);
-inv_delslot(inv, $slot);
+inv_dropslot(inv, coord, $slot, ^lootdrop_duration);
 p_opobj(4); // interact with obj on the ground
 
 [proc,firemaking_success](coord $fire_coord, obj $log)

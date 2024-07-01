@@ -2,7 +2,7 @@
 if (~duel_arena_melee_check = false) {
     return;
 }
-if (%action_delay > map_clock) {
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opplayer(2); // it is guaranteed here that we are already within op distance
     return;
 }
@@ -34,8 +34,8 @@ anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 .sound_synth(.%com_attacksound, 0, 0);
 
-queue2(pvp_retaliate, 0, uid);
-queue2(pvp_damage, 0, $damage);
+.queue(pvp_retaliate, 0, uid);
+.queue(pvp_damage, 0, $damage);
 
 both_heropoints($damage);
 
@@ -50,6 +50,6 @@ if ($weapon = null) {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
     def_int $poison_severity = oc_param($weapon, poison_severity);
     if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
-        queue2(poison_player, 0, $poison_severity);
+        .queue(poison_player, 0, $poison_severity);
     }
 }

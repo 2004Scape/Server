@@ -1,0 +1,6 @@
+[gnomeball_zones]
+table=coord_pair_table
+data=coord_pair,0_37_54_19_25,0_37_54_26_40
+data=coord_pair,0_37_54_30_25,0_37_54_38_40
+data=coord_pair,0_37_54_16_28,0_37_54_39_36
+data=coord_pair,0_37_54_15_31,0_37_54_15_33

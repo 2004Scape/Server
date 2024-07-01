@@ -26,8 +26,7 @@
     "start": "npm i && npm run ts-loader src/lostcity/app.ts",
     "test": "vitest run ./src",
     "todo": "leasot src/ --skip-unsupported --exit-nicely",
-    "ts-loader": "node --import @swc-node/register/esm-register --enable-source-maps --no-warnings",
-    "web": "npm run ts-loader src/lostcity/web.ts"
+    "ts-loader": "node --import @swc-node/register/esm-register --enable-source-maps --no-warnings"
   },
   "lint-staged": {
     "package.json": "sort-package-json",
@@ -37,19 +36,10 @@
     ]
   },
   "dependencies": {
-    "@fastify/cookie": "^9.3.1",
-    "@fastify/cors": "^9.0.1",
-    "@fastify/formbody": "^7.4.0",
-    "@fastify/multipart": "^8.2.0",
-    "@fastify/session": "^10.8.0",
-    "@fastify/static": "^7.0.4",
-    "@fastify/view": "^9.1.0",
     "@jimp/png": "^0.22.12",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
-    "fastify": "^4.27.0",
     "jimp": "^0.22.12",
     "kleur": "^4.1.5",
     "kysely": "^0.27.3",
@@ -67,13 +57,11 @@
     "@swc/core": "1.5.7",
     "@swc/helpers": "^0.5.11",
     "@types/bcrypt": "^5.0.2",
-    "@types/ejs": "^3.1.5",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.12.12",
     "@types/node-forge": "^1.3.11",
     "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
-    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-plugin-unused-imports": "^3.2.0",
     "eslint-plugin-vitest": "^0.5.4",

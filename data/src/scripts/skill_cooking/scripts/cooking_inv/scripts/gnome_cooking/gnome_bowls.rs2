@@ -127,7 +127,9 @@ switch_int($step) {
 if ($item ! gnome_spice) {
     inv_del(inv, $item, 1);
 }
-inv_add(inv, oc_param($item, next_obj_stage), 1);
+if (oc_param($item, next_obj_stage) ! null) {
+    inv_add(inv, oc_param($item, next_obj_stage), 1);
+}
 if (string_length(oc_param($item, bowl_message)) < 1) {
     mes("You add the <lowercase(oc_name($item))> to the dough bowl.");
 } else {

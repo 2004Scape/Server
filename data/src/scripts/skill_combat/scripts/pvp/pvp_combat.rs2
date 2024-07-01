@@ -1,7 +1,7 @@
 [opplayer2,_] @pvp_combat_start;
 
 [applayer2,_]
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     if (~duel_arena_checks = false) {
         return;
     }
@@ -34,7 +34,7 @@ p_aprange($attackrange);
 @pvp_combat_start;
 
 [label,pvp_combat_start]
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     if (~duel_arena_checks = false) {
         return;
     }
@@ -159,7 +159,7 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & .finduid(%pk_predator1) =
     // - "Recoil damage will now always target the entity that caused the initial damage, rather than the most recent entity to deal damage."
     // Having it here instead of the opplayer2 trigger will allow this bug to occur
     def_int $recoil_damage = add(scale(10, 100, $damage), 1);
-    queue2(recoil_damage, 0, $recoil_damage);
+    .queue(recoil_damage, 0, $recoil_damage);
     ~ring_of_recoil_lose_charge($recoil_damage);
 }
 if (stat(hitpoints) = 0 & getqueue(player_death) < 1) {

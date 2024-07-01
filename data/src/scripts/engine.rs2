@@ -61,6 +61,7 @@
 [command,displayname]()(string)
 [command,.displayname]()(string)
 [command,facesquare](coord $coord)
+[command,.facesquare](coord $coord)
 [command,healenergy](int $amount)
 [command,.healenergy](int $amount)
 [command,if_close]
@@ -150,22 +151,25 @@
 [command,softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,.softtimer]/*(softtimer $timer, int $interval, ...)*/
 [command,clearsofttimer](softtimer $timer)
+[command,.clearsofttimer](softtimer $timer)
 [command,settimer]/*(timer $timer, int $interval, ...)*/
-[command,settimer2] // todo: will become .settimer later
+[command,.settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
+[command,.cleartimer](timer $timer)
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
 [command,.hint_stop]
 [command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
-[command,queue](queue $queue, int $delay)
-[command,queue2](queue $queue, int $delay) // todo: will become .queue later
+[command,queue](queue $queue, int $delay) // , $arg)
+[command,.queue](queue $queue, int $delay) // , $arg)
 [command,busy]()(boolean)
 [command,.busy]()(boolean)
 [command,busy2]()(boolean)
 [command,.busy2]()(boolean)
 [command,getqueue](queue $queue)(int)
+[command,.getqueue](queue $queue)(int)
 [command,p_locmerge](int $startCycle, int $endCycle, coord $southEast, coord $northWest);
 [command,last_login_info]
 [command,p_teleport](coord $coord)
@@ -202,7 +206,7 @@
 [command,allowdesign](boolean $allow)
 [command,last_targetslot]()(int)
 [command,walktrigger](walktrigger $trigger)
-[command,walktrigger2](walktrigger $trigger) // todo: will become .walktrigger later
+[command,.walktrigger](walktrigger $trigger)
 [command,getwalktrigger]()(walktrigger)
 [command,.getwalktrigger]()(walktrigger)
 [command,clearqueue](queue $queue)
@@ -303,9 +307,9 @@
 [command,.loc_shape]()(locshape)
 
 // Obj ops (3500-4000)
-[command,obj_add](coord $coord, obj $obj, int $count, int $duration)
-[command,.obj_add](coord $coord, obj $obj, int $count, int $duration)
-[command,obj_addall](coord $coord, obj $obj, int $count, int $duration)
+[command,obj_add](coord $coord, namedobj $obj, int $count, int $duration)
+[command,.obj_add](coord $coord, namedobj $obj, int $count, int $duration)
+[command,obj_addall](coord $coord, namedobj $obj, int $count, int $duration)
 [command,obj_param]/*(param $param)(dynamic)*/
 [command,obj_name]()(string)
 [command,obj_del]
@@ -401,6 +405,15 @@
 [command,.invother_transmit](player_uid $player, inv $inv, component $component)
 [command,inv_stoptransmit](component $component)
 [command,.inv_stoptransmit](component $component)
+[command,both_dropslot](inv $inv, coord $coord, int $slot, int $duration)
+[command,.both_dropslot](inv $inv, coord $coord, int $slot, int $duration)
+[command,inv_dropall](inv $inv, coord $coord, int $duration)
+[command,.inv_dropall](inv $inv, coord $coord, int $duration)
+// todo: compiler update
+// [command,inv_totalparam]/*(inv $inv, param $param)(int)*/
+// [command,.inv_totalparam]/*(inv $inv, param $param)(int)*/
+// [command,inv_totalparam_stack]/*(inv $inv, param $param)(int)*/
+// [command,.inv_totalparam_stack]/*(inv $inv, param $param)(int)*/
 
 // Enum ops (4400-4499)
 [command,enum] // (type $input, type $output, enum $enum, dynamic $key)(dynamic)

@@ -9,7 +9,7 @@ if (stat_base(attack) < $level) {
     mes("You need to have an attack level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_defence](int $level, int $slot)
 if (stat_base(defence) < $level) {
@@ -17,7 +17,7 @@ if (stat_base(defence) < $level) {
     mes("You need to have a defence level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_ranged](int $level, int $slot)
 if (stat_base(ranged) < $level) {
@@ -25,7 +25,7 @@ if (stat_base(ranged) < $level) {
     mes("You need to have a Ranged level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_magic_and_attack](int $magic_level, int $attack_level, int $slot)
 if (stat_base(magic) < $magic_level | stat_base(attack) < $attack_level) {
@@ -33,7 +33,7 @@ if (stat_base(magic) < $magic_level | stat_base(attack) < $attack_level) {
     mes("You need to have a Magic level of <tostring($magic_level)> and an Attack level of <tostring($attack_level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_ranged_and_defence](int $ranged_level, int $defence_level, int $slot)
 if (stat_base(ranged) < $ranged_level | stat_base(defence) < $defence_level) {
@@ -41,7 +41,7 @@ if (stat_base(ranged) < $ranged_level | stat_base(defence) < $defence_level) {
     mes("You need to have a ranged level of <tostring($ranged_level)> and a defence level of <tostring($defence_level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_dragon_slayer_quest_attack](int $level, int $slot)
 if (~levelrequire_dragon_slayer_quest = false) {
@@ -52,7 +52,7 @@ if (stat_base(attack) < $level) {
     mes("You need to have an Attack level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_dragon_slayer_quest_defence](int $level, int $slot)
 if (~levelrequire_dragon_slayer_quest = false) {
@@ -63,7 +63,7 @@ if (stat_base(defence) < $level) {
     mes("You need to have an Defence level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_dragon_slayer_quest_ranged_and_defence](int $ranged_level, int $defence_level, int $slot)
 if (~levelrequire_dragon_slayer_quest = false) {
@@ -80,7 +80,7 @@ if (stat_base(attack) < $level) {
     mes("You need to have an Attack level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_legends_quest_defence](int $level, int $slot)
 if (~levelrequire_legends_quest = false) {
@@ -91,7 +91,7 @@ if (stat_base(defence) < $level) {
     mes("You need to have an Defence level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [label,levelrequire_zanaris_quest_attack](int $level, int $slot)
 if (~levelrequire_zanaris_quest = false) {
@@ -102,7 +102,7 @@ if (stat_base(attack) < $level) {
     mes("You need to have an Attack level of <tostring($level)>.");
     return;
 }
-@equip($slot);
+~equip($slot);
 
 [proc,levelrequire_dragon_slayer_quest]()(boolean)
 if (%dragon_progress < ^dragon_complete) {
@@ -143,4 +143,4 @@ if (stat_base(magic) < 49 & stat_base(attack) < 49) {
     // todo: messages and additional quest requirements
     return;
 }
-@equip($slot);
+~equip($slot);

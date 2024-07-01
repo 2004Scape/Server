@@ -18,7 +18,7 @@ export default class TcpServer {
 
     start() {
         this.tcp.on('connection', (s: net.Socket) => {
-            s.setTimeout(30000);
+            s.setTimeout(60000);
             s.setNoDelay(true);
 
             const ip: string = s.remoteAddress ?? 'unknown';

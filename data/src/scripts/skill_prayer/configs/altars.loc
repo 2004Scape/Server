@@ -32,11 +32,3 @@ model=model_loc_61
 width=2
 op1=Pray-at
 category=prayer_altar
-
-[loc_412]
-name=Chaos altar
-desc=Shrine to the glory of Zamorak.
-model=model_loc_61
-width=2
-op1=Pray-at
-category=prayer_altar

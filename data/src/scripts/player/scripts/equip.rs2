@@ -1,16 +1,21 @@
-[opheld2,_] @equip(last_slot);
+[opheld2,_] ~equip(last_slot);
 
 [inv_button1,wornitems:wear]
 if_close;
-@unequip(last_slot);
+~unequip(last_slot);
 
-[label,equip](int $slot)
+[proc,equip](int $slot)
 if (p_finduid(uid) = true) {
     def_obj $obj = inv_getobj(inv, $slot);
     if (~duel_arena_equip_check($obj) = false) {
         return;
     }
     if (~duel_arena_flower_power_equip_check($obj) = false) {
+        return;
+    }
+    if ((oc_wearpos($obj) = ^wearpos_rhand | oc_wearpos($obj) = ^wearpos_lhand) & ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+        mes("You feel it would be cheating to hold anything other than a gnomeball on the");
+        mes("gnomeball pitch");
         return;
     }
     //// first: we remove the inventory item, so the slot can be filled with inv_add
@@ -43,10 +48,14 @@ if (p_finduid(uid) = true) {
     ~update_all($previous);
 }
 
-[label,unequip](int $slot)
+[proc,unequip](int $slot)
 if (p_finduid(uid) = true) {
     def_obj $obj = inv_getobj(worn, $slot);
     if (~duel_arena_flower_power_unequip_check($slot) = false) {
+        return;
+    }
+    if ($obj = gnomeball & ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+        mes("You feel it would be cheating to put the ball in your pack whilst on the pitch.");
         return;
     }
     def_int $count = inv_getnum(worn, $slot);

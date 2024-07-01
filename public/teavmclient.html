@@ -1,0 +1,165 @@
+<html>
+
+<head>
+    <title>2004Scape Game</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body, td, p {
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 12px;
+          color: white;
+        }
+
+        body {
+            margin: 0px 0px;
+            overflow: auto;
+            background-color: black;
+        }
+
+        canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 789px;
+            height: 532px;
+
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            outline: none;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+            z-index: -1;
+        }
+
+        html:-webkit-full-screen {
+            background-color: black !important;
+        }
+
+        .centered {
+            text-align: center;
+        }
+
+        .green {
+            text-decoration: none;
+            color: #04A800;
+        }
+    </style>
+
+    <script type="module" src="/js/teavm/midi.js"></script>
+
+    <script>
+        let waveGain;
+
+        async function playWave(data, vol) {
+            this.setWaveVolume(vol);
+
+            try {
+                const audioBuffer = await window.audioContext.decodeAudioData(Uint8Array.from(data).buffer);
+                let bufferSource = window.audioContext.createBufferSource();
+                bufferSource.buffer = audioBuffer;
+                bufferSource.connect(waveGain);
+                bufferSource.start();
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        function setWaveVolume(vol) {
+            if (!waveGain) {
+                waveGain = window.audioContext.createGain();
+                waveGain.connect(window.audioContext.destination);
+            }
+
+            waveGain.gain.value = vol / 256;
+        }
+
+        function playMidi(data, vol) {
+            if (window._tinyMidiPlay) {
+                window._tinyMidiPlay(data, vol / 256);
+            }
+        }
+
+        function setMidiVolume(vol) {
+            if (window._tinyMidiVolume) {
+                window._tinyMidiVolume(vol / 256);
+            }
+        }
+
+        function stopMidi() {
+            if (window._tinyMidiStop) {
+                window._tinyMidiStop();
+            }
+        }
+
+        function toggleFullscreen() {
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            } else {
+                let element = document.getElementById('game');
+
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            }
+        }
+
+        function toggleFiltering() {
+            let canvas = document.getElementById('game');
+            let filtering = canvas.style.imageRendering == 'pixelated';
+            canvas.style.imageRendering = filtering ? 'auto' : 'pixelated';
+
+            let element = document.getElementById('filtering');
+            element.textContent = filtering ? "Auto scaling" : "Pixel scaling";
+        }
+
+        function saveScreenshot() {
+            document.getElementById('screenshot').download = 'screenshot-' + Math.floor(Date.now() / 1000) + '.png';
+            document.getElementById('screenshot').href = document.getElementById('game').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+        }
+
+        window.onload = () => {
+            let canvas = document.getElementById('game');
+            canvas.style.imageRendering = 'auto';
+            main('10', '0', 'highmem', 'members');
+        }
+    </script>
+
+    <script type="text/javascript" charset="utf-8" type="module" src="/js/teavm/classes.js"></script>
+</head>
+
+<body>
+    <canvas id="game" width="789" height="532">
+        This browser is not capable of running the Modern Web Client. Please use one of the other playable options.
+    </canvas><br>
+
+    <div class="centered">
+        <a class="green" href="#" id="fullscreen" onclick="toggleFullscreen();">Go fullscreen</a> | 
+        <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
+        <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a>
+    </div>
+</body>
+
+</html>

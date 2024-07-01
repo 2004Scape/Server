@@ -20,7 +20,8 @@ head1=model_63_idk_head
 head2=model_85_idk_head
 head3=model_32_obj_wear
 wanderrange=1
-attackrange=20
+attackrange=19
+// 10
 respawnrate=25
 hitpoints=50
 attack=20
@@ -38,7 +39,10 @@ param=magicdefence,10
 param=rangedefence,19
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
-param=rangeattack_sound,longbow
+param=rangeattack_sound,arrowlaunch2
+param=proj_launch,iron_arrow_launch
+param=proj_travel,iron_arrow_travel
+// TODO
 
 [ranging_guild_doorman]
 vislevel=hide
@@ -139,6 +143,12 @@ model6=model_262_obj_wear
 model7=model_179_obj_wear
 head1=model_58_npc_head
 wanderrange=2
+category=shop_keeper
+param=owned_shop,aarons_archery_appendages
+param=shop_sell_multiplier,1000
+param=shop_buy_multiplier,500
+param=shop_delta,10
+param=shop_title,Aaron's Archery Appendages.
 
 [bow_and_arrow_salesman]
 vislevel=hide

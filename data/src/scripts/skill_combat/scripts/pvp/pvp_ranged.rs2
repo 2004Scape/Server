@@ -13,15 +13,15 @@ if ($rhand = null) {
     ~update_all($rhand);
     return;
 }
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
+    p_opplayer(2);
+    return;
+}
 // this can be either the quiver or rhand.
 def_obj $ammo = ~player_ranged_check_ammo($rhand);
 if ($ammo = null) {
     p_stopaction;
     ~update_all($rhand);
-    return;
-}
-if (%action_delay > map_clock) {
-    p_opplayer(2);
     return;
 }
 
@@ -48,8 +48,8 @@ anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
 .sound_synth(.%com_attacksound, 0, 0);
 
-queue2(pvp_retaliate, calc($delay / 30), uid);
-queue2(pvp_damage, calc($delay / 30), $damage);
+.queue(pvp_retaliate, calc($delay / 30), uid);
+.queue(pvp_damage, calc($delay / 30), $damage);
 
 both_heropoints($damage);
 
@@ -64,32 +64,34 @@ if ($weapon = null) {
     %action_delay = add(map_clock, oc_param($weapon, attackrate));
     def_int $poison_severity = oc_param($weapon, poison_severity);
     if ($damage > 0 & $poison_severity > 0 & random(4) = 0) { // 1/4 chance to poison
-        queue2(poison_player, 0, $poison_severity);
+        .queue(poison_player, 0, $poison_severity);
     }
 }
 if (%damagestyle = ^style_ranged_rapid) {
     %action_delay = sub(%action_delay, 1);
 }
 def_int $random = random(5);
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     if ($random = 0) {
         inv_del(tempinv, $ammo, 1);
     }
 } else if ($random ! 0) {
-    world_delay(calc($delay / 30));
-    if (map_blocked(.coord) = true) {
-        return;
+    world_delay(calc($delay / 30 - 2));
+    if (map_blocked(.coord) = false) {
+        if (p_finduid(uid) = true & .p_finduid(.uid) = true) {
+            inv_dropslot(ranged_quiver_inv, .coord, 0, 200);
+        }
     }
-    obj_add(.coord, $ammo, 1, 200);
 }
+inv_clear(ranged_quiver_inv);
 
 
 [proc,pvp_ranged_use_weapon](obj $rhand, obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     inv_moveitem(worn, tempinv, $ammo, 1); // give rangers their arrows back from duels
 } else {
-    inv_del(worn, $ammo, 1);
+    inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
 }
 def_int $delay = 30;
 switch_category(oc_category($rhand)) {

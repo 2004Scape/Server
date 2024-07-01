@@ -1,0 +1,8 @@
+^gnomeball_goal_coord = 0_37_54_36_32
+^gnomeball_not_started = 0
+^gnomeball_talked_to_ref = 1
+^gnomeball_game_started = 2
+^gnomeball_player_has_won = 3
+^gnomeball_centre_coord = 0_37_54_28_32
+^gnomeball_cheer_coord1 = 0_37_54_27_39
+^gnomeball_cheer_coord2 = 0_37_54_29_39

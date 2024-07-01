@@ -22,10 +22,10 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
             return false;
         }
 
-        const absLeftX = player.loadedX - 52;
-        const absRightX = player.loadedX + 52;
-        const absTopZ = player.loadedZ + 52;
-        const absBottomZ = player.loadedZ - 52;
+        const absLeftX = player.originX - 52;
+        const absRightX = player.originX + 52;
+        const absTopZ = player.originZ + 52;
+        const absBottomZ = player.originZ - 52;
         if (x < absLeftX || x > absRightX || z < absBottomZ || z > absTopZ) {
             player.unsetMapFlag();
             return false;
@@ -50,7 +50,7 @@ export default class OpLocUHandler extends MessageHandler<OpLocU> {
         }
 
         if (ObjType.get(item).members && !World.members) {
-            player.messageGame("To use player item please login to a members' server.");
+            player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
             return false;
         }

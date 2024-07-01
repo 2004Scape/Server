@@ -63,7 +63,7 @@ mes("The chest contains a poisonous spider.");
 npc_add(~coord_lineofwalk_radius(coord,1), poison_spider_observatory, 500);
 npc_setmode(opplayer2);
 ~npc_retaliate(0);
-queue(poison_player, 0, 12);
+queue(poison_player, 0, 15);
 loc_change(loc_2191, 300);
 
 [oploc2,loc_2195]

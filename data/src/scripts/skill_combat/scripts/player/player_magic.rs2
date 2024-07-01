@@ -73,7 +73,11 @@ if (~pvm_debuff_allowed($spell_data) = false) {
 def_int $duration = ~pvm_spell_cast($spell_data);
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
-    ~pvm_spell_success($spell_data, ~magic_spell_maxhit($spell_data), $duration);
+    def_int $maxhit = ~magic_spell_maxhit($spell_data);
+    if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
+        $maxhit = add($maxhit, 1);
+    }
+    ~pvm_spell_success($spell_data, $maxhit, $duration);
     ~pvm_stat_change_effect($spell_data);
     ~pvm_freeze_effect($spell_data);
 } else {
@@ -89,7 +93,7 @@ if(npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_t
 if (npc_stat(hitpoints) = 0) {
     return(false); // this means the npc is not avail to fight i.e dead
 }
-if (map_clock < %action_delay) {
+if (map_clock < %action_delay | getwalktrigger() = stunned) {
     p_opnpct(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return(false);
 }
@@ -205,6 +209,16 @@ sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
 // roll 0-maxhit
 def_int $damage = randominc(min($maxhit, npc_param(max_dealt)));
 $damage = min($damage, npc_stat(hitpoints));
+if(npc_type = salarin_the_twisted) {
+    def_int $spell = db_getfield($spell_data, magic_spell_table:spell, 0);
+    // strike spells are the only way to damage salarin the twisted, the damage is fixed 9-12
+    switch_int ($spell) {
+        case ^wind_strike: $damage = 9;
+        case ^water_strike: $damage = 10;
+        case ^earth_strike: $damage = 11;
+        case ^fire_strike: $damage = 12;
+    }
+}
 // if maxhit is defined then damage npc
 if ($maxhit ! null) {
     // damage npc
@@ -284,7 +298,7 @@ if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
 //     mes("Spell can continue by autocast");
 // }
 
-[ai_queue8,_](int $arg)
+[ai_queue8,_]
 if (map_clock < %npc_stunned) {
     npc_walk(npc_coord);
     npc_walktrigger(8, 0);

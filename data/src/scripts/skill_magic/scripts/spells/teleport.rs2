@@ -22,7 +22,7 @@ if (p_finduid(uid) = true) {
         mes("You can't use this teleport after level 20 wilderness.");
         return;
     }
-    if (~in_duel_arena = true) {
+    if (~in_duel_arena(coord) = true) {
         mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
         return;
     }
@@ -55,4 +55,17 @@ def_int $rum = inv_total(inv, karamja_rum);
 if ($rum > 0) {
     inv_del(inv, karamja_rum, $rum);
     mes("Your Karamjan rum gets broken and spilled.");
+}
+if (%gnomeball_progress = ^gnomeball_game_started) {
+    mes("You hear the ref call you out of the game as you leave.");
+    def_int $ball_inv = inv_total(inv, gnomeball);
+    def_int $ball_worn = inv_total(worn, gnomeball);
+    if ($ball_inv > 0) {
+        inv_del(inv, gnomeball, $ball_inv);
+    }
+    if ($ball_worn > 0) {
+        inv_del(worn, gnomeball, $ball_worn);
+    }
+    ~gnomeball_reset;
+    ~update_all(inv_getobj(worn, ^wearpos_rhand));
 }

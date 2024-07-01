@@ -38,6 +38,7 @@ switch_int(%arena_progress) {
                 ~chatnpc("<p,sad>He's been after me ever since I declined his hand in marriage.");
                 ~chatnpc("<p,sad>Now he's kidnapped my husband and son to fight in his battle arena to the south of here. I hate to think what he'll do to them. He's a sick and twisted man.");
                 %arena_progress = ^arena_started;
+                ~send_quest_progress(questlist:arena, %arena_progress, ^arena_complete);
                 ~chatplayer("<p,neutral>I'll try my best to return your family.");
                 ~chatnpc("<p,sad>Please do. My family is wealthy and can reward you handsomely. I'll be waiting here for you.");
         }

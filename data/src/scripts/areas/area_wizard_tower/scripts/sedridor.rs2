@@ -4,8 +4,7 @@
 if(%runemysteries_progress = 0) {
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "What are you doing down here?", 2);
     if ($option = 1) {
-        ~chatplayer("<p,neutral>Nothing thanks. I'm just looking around.");
-        return;
+        @sedridor_nothing;
     }
     if ($option = 2) {
         @sedridor_2;
@@ -78,23 +77,23 @@ if(%runemysteries_progress = 0) {
     
     def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "Can you teleport me to the Rune Essence?", 2);
     if ($option = 1) {
-        ~chatplayer("<p,neutral>Nothing thanks. I'm just looking around.");
+        @sedridor_nothing;
     }
     if ($option = 2) {
-        ~chatplayer("<p,neutral>Can you teleport me to the Rune Essence?");
+        ~chatplayer("<p,quiz>Can you teleport me to the Rune Essence?");
         @teleport_to_essence_mine(^essence_mine_to_sedridor);
     }
 }
 
 [label,rune_mysteries]
-def_int $option = ~p_choice3("Nothing thanks. I'm just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
+def_int $option = ~p_choice3("Nothing thanks, I'm just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
 if ($option = 1) {
-    ~chatplayer("<p,neutral>Nothing thanks. I'm just looking around.");
+    @sedridor_nothing;
 } else if ($option = 2) {
     @sedridor_2;
 } else if ($option = 3) {
-    ~chatplayer("<p,neutral>I'm looking for the head wizard.");
-    ~chatnpc("<p,neutral>Oh you are, are you?|And just why would you be doing that?");
+    ~chatplayer("<p,quiz>I'm looking for the head wizard.");
+    ~chatnpc("<p,quiz>Oh you are, are you?|And just why would you be doing that?");
     ~chatplayer("<p,neutral>The Duke of Lumbridge sent me to find him. I have this weird talisman he found. He said the head wizard would be very interested in it.");
     ~chatnpc("<p,neutral>Did he now? HmmmMMMMMmmmmm.|Well that IS interesting. Hand it over then adventurer,|let me see what all the hubbub about it is.|Just some amulet I'll wager.");
     $option = ~p_choice2("Ok, here you are.", 1, "No, I'll only give it to the head wizard.", 2);
@@ -135,8 +134,9 @@ if ($option = 1) {
 [label,seridor_3]
 ~chatplayer("<p,neutral>Ok here you are.");
 if (inv_total(inv, air_talisman) = 0) {
-    // unofficial text
-    ~mesbox("Ooops, look's like I've forgotten to bring the item in question.");
+    // from chisel, confirm mesanims
+    ~chatplayer("<p,sad>...except I don't have it with me...");
+    ~chatnpc("<p,confused>Hmmm? You are a very odd person. Come back again when you have found it.");
     return;
 }
 inv_del(inv, air_talisman, 1);
@@ -165,8 +165,9 @@ if ($option = 1) {
     ~chatnpc("<p,neutral>Best of luck with your quest, <displayname()>.");
 } else if ($option = 2) {
     ~chatplayer("<p,neutral>No, I'm busy.");
-    // TODO find out what happens here
-    inv_add(inv, air_talisman, 1);
-    ~mesbox("Sedridor hands you back the Talisman.");
-    ~chatnpc("<p,neutral>Perhaphs I will see you later <displayname()>.");
+    ~chatnpc("<p,neutral>As you wish adventurer. I will continue to study this talisman you have brought me. Return here if you find yourself with some spare time to help me.");
 }
+
+[label,sedridor_nothing]
+~chatplayer("<p,neutral>Nothing thanks, I'm just looking around.");
+~chatnpc("<p,confused>Well, take care adventurer. You stand on the ruins of the destroyed Wizards' Tower. Strange and powerful magicks lurk here.");

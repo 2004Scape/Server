@@ -1,3 +1,25 @@
 [proc,obj_gettotal](obj $obj)(int)
 def_int $total = calc(inv_total(inv, $obj) + inv_total(bank, $obj) + inv_total(worn, $obj));
 return($total);
+
+[proc,inv_slotspace](inv $from_inv, inv $to_inv, enum $slots)(boolean)
+def_int $i = 0;
+def_int $space_needed = 0;
+while ($i < enum_getoutputcount($slots)) {
+    def_int $slot = enum(int, int, $slots, $i);
+    def_obj $obj = inv_getobj($from_inv, $slot);
+    if ($obj ! null) {
+        if (inv_itemspace($to_inv, $obj, inv_getnum($from_inv, $slot), inv_size($to_inv)) = true) {
+            if (oc_stackable($obj) = false | (oc_stackable($obj) = true & inv_total($to_inv, $obj) < 1)) {
+                $space_needed = add($space_needed, 1);
+            }
+        } else {
+            return(false);
+        }
+        if (inv_freespace($to_inv) < $space_needed) {
+            return(false);
+        }
+    }
+    $i = add($i, 1);
+}
+return(true);

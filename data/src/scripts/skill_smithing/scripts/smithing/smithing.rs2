@@ -178,7 +178,7 @@ if ($data = null) {
 // }
 
 // This check comes after darts but before mems, confirmed.
-if (inzone(0_48_148_0_0, 0_48_148_63_63,coord) = true & last_item ! bronze_dagger) {
+if (~in_tutorial_island(coord) = true & last_item ! bronze_dagger) {
     ~mesbox("You cannot make this on Tutorial Island.");
     return;
 }

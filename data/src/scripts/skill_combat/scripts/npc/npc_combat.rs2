@@ -1,6 +1,6 @@
-[ai_queue1,_](int $arg) gosub(npc_default_retaliate);
-[ai_queue2,_](int $damage) ~npc_default_damage($damage);
-[ai_queue3,_](int $arg) gosub(npc_default_death);
+[ai_queue1,_] gosub(npc_default_retaliate);
+[ai_queue2,_] ~npc_default_damage(last_int);
+[ai_queue3,_] gosub(npc_default_death);
 [ai_opplayer2,_] gosub(npc_default_attack);
 
 // a default melee retaliate script.
@@ -80,7 +80,7 @@ npc_queue(3, 0, 0);
 // a default death script.
 [proc,npc_default_death]
 gosub(npc_death);
-def_obj $drop = npc_param(death_drop);
+def_namedobj $drop = npc_param(death_drop);
 if ($drop ! null & npc_findhero = true) {
     obj_add(npc_coord, $drop, 1, 200);
 }
@@ -112,6 +112,11 @@ if (npc_type = wormbrain & (~quest_dragon_getting_map_parts = false | inv_total(
 }
 if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
     mes("You are not ready to fight the battle mages.");
+    return(false);
+}
+
+if (npc_type = zamorak_wizard & %npc_attacking_uid ! uid) {
+    mes("It's not after you...");
     return(false);
 }
 
@@ -238,5 +243,7 @@ if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
 if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {
     return(false);
 }
-
+if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    return(false); // osrs
+}
 return(true);

@@ -28,6 +28,11 @@ if (~npc_is_attackable(npc_type) = false) {
     return;
 }
 
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
+    p_opnpc(2);
+    return;
+}
+
 // this can be either the quiver or rhand.
 def_obj $ammo = ~player_ranged_check_ammo($rhand);
 if ($ammo = null) {
@@ -36,16 +41,14 @@ if ($ammo = null) {
     return;
 }
 
-if (%action_delay > map_clock) {
-    p_opnpc(2);
-    return;
-}
-
 ~player_combat_stat; // update combat varps before swinging
 
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
+    if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
+        %com_maxhit = add(%com_maxhit, 1);
+    }
     $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
     $damage = min($damage, npc_stat(hitpoints));
     ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
@@ -89,11 +92,13 @@ if ($ammo = holy_water) {
 }
 if (random(5) ! 0) {
     world_delay(calc($delay / 30 - 2));
-    if (map_blocked(npc_coord) = true) {
-        return;
+    if (map_blocked(npc_coord) = false) {
+        if (p_finduid(uid) = true) {
+            inv_dropslot(ranged_quiver_inv, npc_coord, 0, 200);
+        }
     }
-    obj_add(npc_coord, $ammo, 1, 200);
 }
+inv_clear(ranged_quiver_inv);
 
 [proc,player_ranged_check_ammo](obj $rhand)(obj)
 def_category $weapon_cat = oc_category($rhand);
@@ -130,10 +135,10 @@ switch_category(oc_category($rhand)) {
 
 [proc,ranged_shoot_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
-inv_del(worn, $ammo, 1);
+inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
 [proc,ranged_throw_npc](obj $ammo)(int)
 spotanim_pl(oc_param($ammo, proj_launch), 96, 0);
-inv_del(worn, $ammo, 1);
+inv_moveitem(worn, ranged_quiver_inv, $ammo, 1);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 32, 15, 0, 11, 5));

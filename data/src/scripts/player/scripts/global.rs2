@@ -25,7 +25,11 @@ settimer(general_macro_events, 500);
 // chest macro gas 
 ~check_chest_macro_gas;
 // for logout out during a general macro event, they respawn when you log back in
-~macro_event_general_check;
+// queue: 
+// - https://youtu.be/T0ulsgorBkY?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+// - https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+// npc spawns only after interface is closed
+queue(macro_event_general_check, 0);
 // so pk skulls persist after logging back in
 ~set_pk_skull_login;
 // so antifire persists after logging back in
@@ -34,19 +38,22 @@ settimer(general_macro_events, 500);
 ~set_antipoison_login;
 // if player is in a duel, they are removed from the duel
 ~duel_arena_login;
+// if player is in a gnomeball game, they login outside of the arena
+~gnomeball_login;
 
 if (%tutorial_progress < ^tutorial_complete) {
-    // This is a check to not bork every account that currently has a tutorial complete progress of 5.
      if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
+        // This is a check to not bork every account that currently has a tutorial complete progress of 5.
+        // Remove after alpha!
         %tutorial_progress = ^tutorial_complete;
         last_login_info;
         ~initalltabs;
-    // Checking if you're off tutorial island but it's not complete
-    } else if (~inzone_coord_pair_table(tutorial_island, coord) = false & %tutorial_progress < ^tutorial_complete) {
+    } else if (~in_tutorial_island(coord) = false & %tutorial_progress < ^tutorial_complete) {
+        // Checking if you're off tutorial island but it's not complete
         ~update_bas;
         @tutorial_complete;
-    // regular start tutorial
     } else {
+        // Starting tutorial regularly
         ~update_bas;
         @start_tutorial;
     }

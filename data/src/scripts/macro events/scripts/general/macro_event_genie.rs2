@@ -1,13 +1,44 @@
-[ai_queue4,macro_event_genie](int $arg)
+[proc,macro_event_genie_spawn]
 spotanim_map(small_smokepuff, npc_coord, 124, 0);
+sound_synth(genie_appear, 0, 0);
+npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
+npc_delay(1);
+%npc_attacking_uid = uid;
+npc_setmode(playerfollow);
+npc_queue(4, 0, 20);
+
+[ai_queue4,macro_event_genie]
 if (finduid(%npc_attacking_uid) = true) {
-    sound_synth(genie_appear, 0, 0);
-    npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
-    npc_delay(1);
-    npc_setmode(playerfollow);
+    if (%macro_event = ^no_macro_event) {
+        npc_queue(5, 0, 2); // just incase
+        return;
+    }
+    // warning message https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=395
+    // this video goes 50t after respawn without warning message https://youtu.be/KkyVz0tSOQA?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=176
+    // 3 warning messages: https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
+    if (last_int = 0) {
+        npc_anim(emote_wave, 20);
+        npc_say("Ehem... master <displayname>?");
+    } else if (last_int = 1) {
+        npc_anim(emote_think, 20);
+        npc_say("Are you there, master <displayname>?");
+    } else if (last_int = 2) {
+        npc_anim(emote_angry, 20);
+        npc_say("You shouldn't ignore a Genie master <displayname>?");
+    } else if (last_int = 3) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
+        if (random(2) < 1 & inv_freespace(inv) < inv_size(inv)) { // 50% chance to teleport or scatter inv
+            ~macro_event_fail_scatter_inv;
+        } else {
+            ~macro_event_fail_teleport;
+        }
+        return;
+    }
+    npc_queue(4, add(last_int, 1), 20);
 }
 
-[ai_queue5,macro_event_genie](int $arg)
+
+
+[ai_queue5,macro_event_genie]
 // only confirmed for mysterious old man
 npc_delay(2);
 npc_anim(emote_cry, 20);
@@ -15,7 +46,7 @@ npc_say("I lose more friends that way.");
 npc_delay(2);
 ~macro_event_disappear;
 
-[ai_queue6,macro_event_genie](int $arg)
+[ai_queue6,macro_event_genie]
 npc_anim(emote_wave, 20);
 npc_delay(2);
 ~macro_event_disappear;
@@ -42,32 +73,3 @@ if (~macro_event_lost_and_follow = true) {
     npc_queue(5, 0, 0);
     return;
 }
-
-if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event = ^no_macro_event) {
-        npc_queue(5, 0, 2); // just incase
-        return;
-    }
-    // warning message https://youtu.be/TCQl_9PALag?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=395
-    // this video goes 50t after respawn without warning message https://youtu.be/KkyVz0tSOQA?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=176
-    // 3 warning messages: https://youtu.be/g5k3XuXxyYQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
-    if (%npc_macro_event_status = 1) {
-        npc_anim(emote_wave, 20);
-        npc_say("Ehem... master <displayname>?");
-    } else if (%npc_macro_event_status = 2) {
-        npc_anim(emote_think, 20);
-        npc_say("Are you there, master <displayname>?");
-    } else if (%npc_macro_event_status = 3) {
-        npc_anim(emote_angry, 20);
-        npc_say("You shouldn't ignore a Genie master <displayname>?");
-    } else if (%npc_macro_event_status = 4) { // failing genie: https://youtu.be/MS7ADB-hh18?t=6
-        if (random(2) < 1 & inv_freespace(inv) < inv_size(inv)) { // 50% chance to teleport or scatter inv
-            ~macro_event_fail_scatter_inv;
-        } else {
-            ~macro_event_fail_teleport;
-        }
-        return;
-    }
-    %npc_macro_event_status = calc(%npc_macro_event_status + 1);
-}
-

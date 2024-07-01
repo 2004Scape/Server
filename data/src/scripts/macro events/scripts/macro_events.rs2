@@ -1,5 +1,9 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
+if (~in_tutorial_island(coord) = true) {
+    // return before checking so random events are effectively "queued" for when the player leaves the tutorial
+    return;
+}
 // some general macro events use the %macro_event varp, so if multiple exist, it could cause issues
 if (afk_event = ^false | ~macro_event_general_active = true | %tutorial_progress < ^tutorial_complete) {
     return;
@@ -29,12 +33,9 @@ if (%macro_event > 0) {
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
 // area check here, because stuff like bones and alching for example can spawn random events.
-if (~in_duel_arena = true) {
+if (~macro_event_area(coord) = false) {
     return;
 }
-// if (~macro_event_general_active = true) {
-//     return;
-// }
 def_coord $event_coord = ~macro_event_coord;
 if ($event_coord = null) {
     return;
@@ -43,11 +44,22 @@ if ($event_coord = null) {
 def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
 %macro_event_uid = npc_uid;
-%npc_attacking_uid = uid;
-npc_queue(4, 0, 0); // greets the player
+switch_int ($event) {
+    case ^macro_event_swarm : ~macro_event_swarm_spawn;
+    case ^macro_event_triffid_friendly : ~macro_event_triffid_spawn;
+    case ^macro_event_drunken_dwarf : ~macro_event_drunken_dwarf_spawn;
+    case ^macro_event_genie : ~macro_event_genie_spawn;
+    case ^macro_event_mysterious_old_man_general : ~macro_event_mysterious_old_man_general_spawn;
+}
+
+[proc,macro_event_area](coord $coord)(boolean)
+if (~in_duel_arena($coord) = true | ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    return(false);
+}
+return(true);
 
 // called when the player logs in
-[proc,macro_event_general_check]
+[queue,macro_event_general_check]
 if (~macro_event_general_active = true & nc_param(~macro_event_npc(%macro_event), follow_player_on_logout) = ^true) {
     ~macro_event_general_spawn(%macro_event);
 }
@@ -169,7 +181,7 @@ if (%macro_event < add(~macro_event_general_count, 1)){
 if (finduid(%npc_attacking_uid) = false) {
     return(true);
 }
-if (%macro_event_uid ! npc_uid) {
+if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
     return(true);
 }
 
@@ -187,8 +199,11 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
     //         return(true);
     //     }
     //
-    if (npc_getmode = playerfollow | npc_getmode = playerfaceclose) {
+    if (~npc_out_of_combat = true) {
         npc_tele(coord); // osrs
+        if (~macro_event_area(coord) = false) {
+            return(true);
+        }
     } else {
         return(true);
     }
@@ -203,7 +218,7 @@ return(false);
 if (finduid(%npc_attacking_uid) = false) {
     return(true);
 }
-if (%macro_event_uid ! npc_uid) {
+if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
     return(true);
 }
 

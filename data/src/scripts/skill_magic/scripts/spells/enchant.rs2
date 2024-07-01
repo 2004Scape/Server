@@ -79,7 +79,7 @@ if (~wilderness_level(coord) > 30) {
     mes("You can't use this teleport after level 30 wilderness.");
     return;
 }
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
     return;
 }
@@ -102,7 +102,7 @@ if (~wilderness_level(coord) > 20) {
     mes("You can't use this teleport after level 20 wilderness.");
     return;
 }
-if (~in_duel_arena = true) {
+if (~in_duel_arena(coord) = true) {
     mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
     return;
 }
@@ -128,7 +128,7 @@ if (%ring_of_recoil >= 40) {
 
 [proc,ring_of_life_check]
 if (p_finduid(uid) = true) {
-    if (inv_getobj(worn, ^wearpos_ring) ! ring_of_life | ~wilderness_level(coord) > 30 | ~in_duel_arena = true) {
+    if (inv_getobj(worn, ^wearpos_ring) ! ring_of_life | ~wilderness_level(coord) > 30 | ~in_duel_arena(coord) = true) {
         return;
     }
     if (stat(hitpoints) <= scale(10, 100, stat_base(hitpoints))) {

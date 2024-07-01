@@ -237,8 +237,8 @@ param=strengthbonus,6
 param=damagetype,^stab_style
 param=attack_anim,human_farmersfork_stab
 param=defend_anim,human_farmersfork_defend
-// param=attack_sound,farmersfork_stab
-// possible used earlier staff_stab
+param=attack_sound,staff_stab
+// osrs attack sound farmersfork_stab
 
 [thief]
 name=Thief
@@ -941,6 +941,7 @@ model7=model_262_obj_wear
 model8=model_563_obj_wear
 wanderrange=10
 attackrange=12
+// 10
 respawnrate=25
 hitpoints=50
 attack=0
@@ -956,7 +957,7 @@ param=magicdefence,18
 param=rangedefence,45
 param=damagetype,^ranged_style
 param=attack_anim,human_bow
-param=rangeattack_sound,longbow
+param=rangeattack_sound,arrowlaunch2
 
 [npc_29]
 name=Chuck
@@ -1470,9 +1471,8 @@ param=damagetype,^stab_style
 param=attack_anim,hellhound_attack
 param=defend_anim,hellhound_block
 param=death_anim,hellhound_death
-// param=attack_sound,
-// param=defend_sound,
-// param=death_sound,
+param=attack_sound,growl6
+param=defend_sound,growl5
 huntmode=cowardly
 
 [baby_dragon]
@@ -1927,7 +1927,7 @@ param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,shortbow
+param=attack_sound,arrowlaunch2
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
@@ -1960,7 +1960,7 @@ param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,shortbow
+param=attack_sound,arrowlaunch2
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
@@ -1997,7 +1997,7 @@ param=damagetype,^crush_style
 param=attack_anim,midget_attackbow
 param=defend_anim,midget_block
 param=death_anim,midget_death
-param=attack_sound,shortbow
+param=attack_sound,arrowlaunch2
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
@@ -2783,9 +2783,8 @@ param=damagetype,^crush_style
 param=attack_anim,dog_attack
 param=defend_anim,dog_block
 param=death_anim,dog_death
-// TODO param=attack_sound,
-// TODO param=defend_sound,
-// TODO param=death_sound,
+param=attack_sound,wolf_attack2
+param=defend_sound,wolf_hit
 huntmode=cowardly
 
 [goblin_unarmed1]
@@ -5107,6 +5106,8 @@ param=attack_anim,human_spear_stab
 param=defend_anim,human_spear_def
 param=attack_sound,staff_stab
 param=poison_severity,55
+// huntmode is just a guess
+huntmode=cowardly
 
 [dark_warrior]
 name=Dark warrior
@@ -5447,6 +5448,7 @@ attack=58
 strength=58
 defence=62
 param=damagetype,^slash_style
+param=max_dealt,0
 
 [npc_206]
 walkanim=dwarf_walk
@@ -7623,266 +7625,6 @@ model8=model_185_obj_wear
 model9=model_326_idk
 head1=model_53_idk_head
 
-[npc_621]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Tackle
-recol1s=9513
-recol1d=25699
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-wanderrange=4
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_622]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Tackle
-recol1s=9513
-recol1d=25699
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2921_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_623]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_seq_205
-readyanim=midget_seq_205
-recol1s=9513
-recol1d=25699
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_624]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_seq_208
-readyanim=midget_seq_208
-recol1s=9513
-recol1d=25699
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_625]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Tackle
-recol1s=9513
-recol1d=28001
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-wanderrange=3
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_626]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Tackle
-recol1s=9513
-recol1d=28001
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2921_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_627]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_seq_205
-readyanim=midget_seq_205
-recol1s=9513
-recol1d=28001
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_628]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_seq_208
-readyanim=midget_seq_208
-recol1s=9513
-recol1d=28001
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_629]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Tackle
-recol1s=9513
-recol1d=26305
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-wanderrange=3
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_630]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Tackle
-recol1s=9513
-recol1d=26305
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2921_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_631]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_seq_205
-readyanim=midget_seq_205
-recol1s=9513
-recol1d=26305
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_632]
-name=Gnome baller
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_seq_208
-readyanim=midget_seq_208
-recol1s=9513
-recol1d=26305
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_633]
-name=Gnome winger
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=9513
-recol1d=704
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2924_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_634]
-name=Gnome winger
-desc=A professional gnome baller.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=9513
-recol1d=704
-model1=model_2914_npc
-model2=model_2905_npc
-model3=model_2921_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[gnome_ball_referee]
-name=Gnome ball referee
-desc=Keeps the game fair.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=2114
-recol2s=24075
-recol2d=13537
-recol3s=21961
-recol3d=13537
-recol4s=20904
-recol4d=13537
-model1=model_2909_npc
-model2=model_2900_npc
-model3=model_2915_npc
-head1=model_23_npc_head
-wanderrange=1
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_636]
-name=Cheerleader
-desc=Cheerleading is a real sport!
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2913_npc
-model2=model_2904_npc
-model3=model_2923_npc
-head1=model_21_npc_head
-wanderrange=0
-moverestrict=nomove
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
 [npc_663]
 vislevel=hide
 name=Man
@@ -8274,37 +8016,6 @@ model8=model_245_npc
 head1=model_67_idk_head
 head2=model_79_idk_head
 wanderrange=2
-
-[npc_740]
-vislevel=hide
-name=Trufitus
-desc=A wise old witch doctor.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=6273
-recol1d=21140
-recol2s=14801
-recol2d=14596
-recol3s=2340
-recol3d=12480
-recol4s=6144
-recol4d=12480
-recol5s=24075
-recol5d=14596
-recol6s=13603
-recol6d=21140
-model1=model_210_idk
-model2=model_250_idk
-model3=model_309_npc
-model4=model_173_npc
-model5=model_176_idk
-model6=model_265_obj_wear
-model7=model_181_idk
-model8=model_553_npc
-head1=model_49_idk_head
-head2=model_82_idk_head
-moverestrict=indoors
 
 [npc_759]
 vislevel=hide
@@ -10412,7 +10123,8 @@ param=strengthbonus,3
 param=rangebonus,7
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
-// param=attack_sound,staff_double
+param=attack_sound,staff_hit
+// osrs attack sound staff_double
 
 [npc_930]
 name=Ungadulu
@@ -10457,7 +10169,8 @@ param=strengthbonus,3
 param=rangebonus,7
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
-// osrs param=attack_sound,staff_double
+param=attack_sound,staff_hit
+// osrs attack sound staff_double
 // sound and animation data taken normal version ungadulu
 // wander distance attack distance missing.
 

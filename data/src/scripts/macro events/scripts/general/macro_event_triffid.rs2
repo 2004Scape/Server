@@ -1,11 +1,10 @@
-[ai_queue4,macro_event_triffid_friendly](int $arg)
+[proc,macro_event_triffid_spawn]
 npc_setmode(none);
 npc_anim(seq_348, 0);
 %npc_macro_event_status = ^triffid_growing;
-if (finduid(%npc_attacking_uid) = true) {
-    sound_synth(triffid_appear, 0, 0);
-    %macro_event = ^no_macro_event;
-}
+%npc_attacking_uid = uid;
+sound_synth(triffid_appear, 0, 0);
+%macro_event = ^no_macro_event;
 
 [opnpc1,macro_event_triffid_friendly]
 if (%npc_attacking_uid ! uid) {

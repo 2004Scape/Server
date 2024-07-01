@@ -113,7 +113,7 @@ return($random_coord);
 
 
 [softtimer,duel_arena_start_3]
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     clearsofttimer(duel_arena_start_3);
     return;
 }
@@ -122,7 +122,7 @@ softtimer(duel_arena_start_2, 3);
 clearsofttimer(duel_arena_start_3);
 
 [softtimer,duel_arena_start_2]
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     clearsofttimer(duel_arena_start_2);
     return;
 }
@@ -131,7 +131,7 @@ softtimer(duel_arena_start_1, 3);
 clearsofttimer(duel_arena_start_2);
 
 [softtimer,duel_arena_start_1]
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     clearsofttimer(duel_arena_start_1);
     return;
 }
@@ -140,7 +140,7 @@ softtimer(duel_arena_start_fight, 3);
 clearsofttimer(duel_arena_start_1);
 
 [softtimer,duel_arena_start_fight]
-if (~in_duel_arena = false) {
+if (~in_duel_arena(coord) = false) {
     clearsofttimer(duel_arena_start_fight);
     return;
 }
@@ -149,8 +149,8 @@ say("FIGHT!");
 clearsofttimer(duel_arena_start_fight);
 
 [walktrigger,duel_arena_no_move]
-if (~duel_arena_movement_check = true & ~in_duel_arena = true) {
-    p_stopaction;
+if (~duel_arena_movement_check = true & ~in_duel_arena(coord) = true) {
+    p_walk(coord);
     walktrigger(duel_arena_no_move);
 }
 

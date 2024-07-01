@@ -28,8 +28,6 @@ import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 
-import ServerProt, {ServerProtEncoders} from '#lostcity/server/ServerProt.js';
-
 import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
 
@@ -47,6 +45,25 @@ import Stack from '#jagex2/datastruct/Stack.js';
 
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import {PRELOADED, PRELOADED_CRC} from '#lostcity/server/PreloadedPacks.js';
+import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
+import IfClose from '#lostcity/network/outgoing/model/IfClose.js';
+import UpdateUid192 from '#lostcity/network/outgoing/model/UpdateUid192.js';
+import ResetAnims from '#lostcity/network/outgoing/model/ResetAnims.js';
+import ResetClientVarCache from '#lostcity/network/outgoing/model/ResetClientVarCache.js';
+import TutorialOpenChat from '#lostcity/network/outgoing/model/TutorialOpenChat.js';
+import UpdateInvStopTransmit from '#lostcity/network/outgoing/model/UpdateInvStopTransmit.js';
+import VarpSmall from '#lostcity/network/outgoing/model/VarpSmall.js';
+import VarpLarge from '#lostcity/network/outgoing/model/VarpLarge.js';
+import MidiSong from '#lostcity/network/outgoing/model/MidiSong.js';
+import MidiJingle from '#lostcity/network/outgoing/model/MidiJingle.js';
+import IfOpenSideOverlay from '#lostcity/network/outgoing/model/IfOpenSideOverlay.js';
+import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
+import HintArrow from '#lostcity/network/outgoing/model/HintArrow.js';
+import LastLoginInfo from '#lostcity/network/outgoing/model/LastLoginInfo.js';
+import MessageGame from '#lostcity/network/outgoing/model/MessageGame.js';
+import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriority.js';
+import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
+import ParamType from '#lostcity/cache/config/ParamType.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -119,7 +136,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
-        sav.p2(2); // version
+        sav.p2(3); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -180,6 +197,12 @@ export default class Player extends PathingEntity {
         // set the total saved inv count as the placeholder
         sav.data[invStartPos] = invCount;
 
+        sav.p1(this.afkZones.length);
+        for (let index: number = 0; index < this.afkZones.length; index++) {
+            sav.p4(this.afkZones[index]);
+        }
+        sav.p2(this.lastAfkZone);
+
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const safeName = fromBase37(this.username37);
         sav.save(`data/players/${safeName}.sav`);
@@ -215,8 +238,8 @@ export default class Player extends PathingEntity {
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
-    loadedX: number = -1;
-    loadedZ: number = -1;
+    originX: number = -1;
+    originZ: number = -1;
     npcs: Set<number> = new Set(); // observed npcs
     otherPlayers: Set<number> = new Set(); // observed players
     lastMovement: number = 0; // for p_arrivedelay
@@ -236,9 +259,10 @@ export default class Player extends PathingEntity {
     }[] = [];
     allowDesign: boolean = false;
     afkEventReady: boolean = false;
+    interactWalkTrigger: boolean = false;
 
-    highPriorityOut: Stack<Packet> = new Stack();
-    lowPriorityOut: Stack<Packet> = new Stack();
+    highPriorityOut: Stack<OutgoingMessage> = new Stack();
+    lowPriorityOut: Stack<OutgoingMessage> = new Stack();
     lastResponse = -1;
 
     messageColor: number | null = null;
@@ -277,7 +301,6 @@ export default class Player extends PathingEntity {
     lastUseItem: number = -1; // opheldu, opobju, oplocu, opnpcu, opplayeru
     lastUseSlot: number = -1; // opheldu, opobju, oplocu, opnpcu, opplayeru
     lastTargetSlot: number = -1; // inv_buttond
-    lastInt: number = -1; // resume_p_countdialog
     lastCom: number = -1; // if_button
 
     staffModLevel: number = 0;
@@ -286,6 +309,13 @@ export default class Player extends PathingEntity {
         uid: number;
         points: number;
     }[] = new Array(16); // be sure to reset when stats are recovered/reset
+
+    afkZones: Int32Array = new Int32Array(2);
+    lastAfkZone: number = 0;
+
+    // build area
+    loadedZones: Set<number> = new Set();
+    activeZones: Set<number> = new Set();
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
@@ -360,23 +390,18 @@ export default class Player extends PathingEntity {
         this.playerLog('Logging in');
 
         // normalize client between logins
-        this.writeLowPriority(ServerProt.IF_CLOSE);
-        this.writeHighPriority(ServerProt.UPDATE_UID192, this.pid); // todo: low or high priority
+        this.write(new IfClose());
+        this.write(new UpdateUid192(this.pid));
         this.unsetMapFlag();
-        this.writeHighPriority(ServerProt.RESET_ANIMS); // todo: low or high priority
+        this.write(new ResetAnims());
         this.resetHeroPoints();
 
-        this.writeHighPriority(ServerProt.RESET_CLIENT_VARCACHE);
+        this.write(new ResetClientVarCache());
         for (let varp = 0; varp < this.vars.length; varp++) {
             const type = VarPlayerType.get(varp);
             const value = this.vars[varp];
-
             if (type.transmit) {
-                if (value < 256) {
-                    this.writeHighPriority(ServerProt.VARP_SMALL, varp, value);
-                } else {
-                    this.writeHighPriority(ServerProt.VARP_LARGE, varp, value);
-                }
+                this.writeVarp(varp, value);
             }
         }
 
@@ -391,8 +416,8 @@ export default class Player extends PathingEntity {
             const script = ScriptRunner.init(moveTrigger, this);
             this.runScript(script, true);
         }
-        this.previousX = this.x - 1;
-        this.previousZ = this.z;
+        this.lastStepX = this.x - 1;
+        this.lastStepZ = this.z;
     }
 
     calculateRunWeight() {
@@ -447,6 +472,7 @@ export default class Player extends PathingEntity {
 
     updateMovement(repathAllowed: boolean = true): boolean {
         if (this.containsModalInterface()) {
+            this.recoverEnergy(false);
             return false;
         }
 
@@ -484,33 +510,36 @@ export default class Player extends PathingEntity {
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
         if (moved) {
             const trigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-
             if (trigger) {
-                const script = ScriptRunner.init(trigger, this);
-                this.runScript(script, true);
-            }
-
-            // run energy drain
-            if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
-                const weightKg = Math.floor(this.runweight / 1000);
-                const clampWeight = Math.min(Math.max(weightKg, 0), 64);
-                const loss = 67 + (67 * clampWeight) / 64;
-
-                this.runenergy = Math.max(this.runenergy - loss, 0);
-                if (this.runenergy === 0) {
-                    this.setVar(VarPlayerType.PLAYER_RUN, 0);
-                    this.setVar(VarPlayerType.TEMP_RUN, 0);
-                }
+                this.runScript(ScriptRunner.init(trigger, this), true);
             }
         }
+        this.drainEnergy(moved);
+        this.recoverEnergy(moved);
+        if (this.runenergy === 0) {
+            this.setVar(VarPlayerType.PLAYER_RUN, 0);
+            this.setVar(VarPlayerType.TEMP_RUN, 0);
+        }
+        return moved;
+    }
 
+    private drainEnergy(moved: boolean): void {
+        if (!moved || this.stepsTaken === 0) {
+            return;
+        }
+        if (!this.delayed() && this.moveSpeed === MoveSpeed.RUN && this.stepsTaken > 1) {
+            const weightKg = Math.floor(this.runweight / 1000);
+            const clampWeight = Math.min(Math.max(weightKg, 0), 64);
+            const loss = (67 + (67 * clampWeight) / 64) | 0;
+            this.runenergy = Math.max(this.runenergy - loss, 0);
+        }
+    }
+
+    private recoverEnergy(moved: boolean): void {
         if (!this.delayed() && (!moved || this.moveSpeed !== MoveSpeed.RUN) && this.runenergy < 10000) {
-            const recovered = this.baseLevels[PlayerStat.AGILITY] / 9 + 8;
-
+            const recovered = (this.baseLevels[PlayerStat.AGILITY] / 9 | 0) + 8;
             this.runenergy = Math.min(this.runenergy + recovered, 10000);
         }
-
-        return moved;
     }
 
     blockWalkFlag(): CollisionFlag {
@@ -531,7 +560,7 @@ export default class Player extends PathingEntity {
             }
 
             this.modalSticky = -1;
-            this.writeLowPriority(ServerProt.TUTORIAL_OPENCHAT, -1);
+            this.write(new TutorialOpenChat(-1));
         }
     }
 
@@ -821,10 +850,10 @@ export default class Player extends PathingEntity {
 
         const opTrigger = this.getOpTrigger();
         const apTrigger = this.getApTrigger();
-
+    
         // console.log('operable', opTrigger != null, 'trigger exists', this.inOperableDistance(this.target), 'in range');
         // console.log('approachable', apTrigger != null, 'trigger exists', this.inApproachDistance(this.apRange, this.target), 'in range');
-
+    
         if (opTrigger && this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
             const target = this.target;
             this.target = null;
@@ -950,6 +979,18 @@ export default class Player extends PathingEntity {
             }
         }
 
+        // https://youtu.be/_NmFftkMm0I?si=xSgb8GCydgUXUayR&t=79, only called when clicking to interact?
+        if (!this.interactWalkTrigger && this.walktrigger !== -1 && (!this.protect && !this.delayed())) {
+            const trigger = ScriptProvider.get(this.walktrigger);
+            this.walktrigger = -1;
+            if (trigger) {
+                const script = ScriptRunner.init(trigger, this);
+                this.interactWalkTrigger = true;
+                this.unsetMapFlag();
+                this.runScript(script, true);
+            }
+        }
+
         if (!this.interacted && !this.hasWaypoints() && !moved) {
             this.messageGame("I can't reach that!");
             this.clearInteraction();
@@ -1071,174 +1112,6 @@ export default class Player extends PathingEntity {
         stream.release();
     }
 
-    calculateUpdateSize(self = false, newlyObserved = false) {
-        let length = 0;
-        let mask = this.mask;
-        if (newlyObserved) {
-            mask |= Player.APPEARANCE;
-        }
-        if (newlyObserved && (this.orientation != -1 || this.faceX != -1 || this.faceZ != -1)) {
-            mask |= Player.FACE_COORD;
-        }
-        if (newlyObserved && this.faceEntity != -1) {
-            mask |= Player.FACE_ENTITY;
-        }
-
-        if (mask > 0xff) {
-            mask |= Player.BIG_UPDATE;
-        }
-
-        if (self && mask & Player.CHAT) {
-            // don't echo back local chat
-            mask &= ~Player.CHAT;
-        }
-
-        length += 1;
-        if (mask & Player.BIG_UPDATE) {
-            length += 1;
-        }
-
-        if (mask & Player.APPEARANCE) {
-            length += 1;
-            length += this.appearance?.length ?? 0;
-        }
-
-        if (mask & Player.ANIM) {
-            length += 3;
-        }
-
-        if (mask & Player.FACE_ENTITY) {
-            length += 2;
-        }
-
-        if (mask & Player.SAY) {
-            length += this.chat?.length ?? 0;
-        }
-
-        if (mask & Player.DAMAGE) {
-            length += 4;
-        }
-
-        if (mask & Player.FACE_COORD) {
-            length += 4;
-        }
-
-        if (mask & Player.CHAT) {
-            length += 4;
-            length += this.message?.length ?? 0;
-        }
-
-        if (mask & Player.SPOTANIM) {
-            length += 6;
-        }
-
-        if (mask & Player.EXACT_MOVE) {
-            length += 9;
-        }
-
-        return length;
-    }
-
-    writeUpdate(observer: Player, out: Packet, self = false, newlyObserved = false) {
-        let mask = this.mask;
-        if (newlyObserved) {
-            mask |= Player.APPEARANCE;
-        }
-        if (newlyObserved && (this.orientation != -1 || this.faceX != -1 || this.faceZ != -1)) {
-            mask |= Player.FACE_COORD;
-        }
-        if (newlyObserved && this.faceEntity != -1) {
-            mask |= Player.FACE_ENTITY;
-        }
-
-        if (mask > 0xff) {
-            mask |= Player.BIG_UPDATE;
-        }
-
-        if (self && mask & Player.CHAT) {
-            // don't echo back local chat
-            mask &= ~Player.CHAT;
-        }
-
-        out.p1(mask & 0xff);
-        if (mask & Player.BIG_UPDATE) {
-            out.p1(mask >> 8);
-        }
-
-        if (mask & Player.APPEARANCE) {
-            out.p1(this.appearance!.length);
-            out.pdata(this.appearance!, 0, this.appearance!.length);
-        }
-
-        if (mask & Player.ANIM) {
-            out.p2(this.animId);
-            out.p1(this.animDelay);
-        }
-
-        if (mask & Player.FACE_ENTITY) {
-            if (this.faceEntity !== -1) {
-                this.alreadyFacedEntity = true;
-            }
-
-            out.p2(this.faceEntity);
-        }
-
-        if (mask & Player.SAY) {
-            out.pjstr(this.chat);
-        }
-
-        if (mask & Player.DAMAGE) {
-            out.p1(this.damageTaken);
-            out.p1(this.damageType);
-            out.p1(this.levels[PlayerStat.HITPOINTS]);
-            out.p1(this.baseLevels[PlayerStat.HITPOINTS]);
-        }
-
-        if (mask & Player.FACE_COORD) {
-            if (this.faceX !== -1) {
-                this.alreadyFacedCoord = true;
-            }
-
-            if (newlyObserved && this.faceX != -1) {
-                out.p2(this.faceX);
-                out.p2(this.faceZ);
-            } else if (newlyObserved && this.orientation != -1) {
-                const faceX = Position.moveX(this.x, this.orientation);
-                const faceZ = Position.moveZ(this.z, this.orientation);
-                out.p2(faceX * 2 + 1);
-                out.p2(faceZ * 2 + 1);
-            } else {
-                out.p2(this.faceX);
-                out.p2(this.faceZ);
-            }
-        }
-
-        if (mask & Player.CHAT) {
-            out.p1(this.messageColor!);
-            out.p1(this.messageEffect!);
-            out.p1(this.messageType!);
-
-            out.p1(this.message!.length);
-            out.pdata(this.message!, 0, this.message!.length);
-        }
-
-        if (mask & Player.SPOTANIM) {
-            out.p2(this.graphicId);
-            out.p2(this.graphicHeight);
-            out.p2(this.graphicDelay);
-        }
-
-        if (mask & Player.EXACT_MOVE) {
-            out.p1(this.exactStartX - Position.zoneOrigin(observer.loadedX));
-            out.p1(this.exactStartZ - Position.zoneOrigin(observer.loadedZ));
-            out.p1(this.exactEndX - Position.zoneOrigin(observer.loadedX));
-            out.p1(this.exactEndZ - Position.zoneOrigin(observer.loadedZ));
-            out.p2(this.exactMoveStart);
-            out.p2(this.exactMoveEnd);
-            out.p1(this.exactMoveDirection);
-        }
-    }
-
     // ----
 
     getInventoryFromListener(listener: any) {
@@ -1306,7 +1179,7 @@ export default class Player extends PathingEntity {
         }
 
         this.invListeners.splice(index, 1);
-        this.writeHighPriority(ServerProt.UPDATE_INV_STOP_TRANSMIT, com);
+        this.write(new UpdateInvStopTransmit(com));
     }
 
     invGetSlot(inv: number, slot: number) {
@@ -1501,25 +1374,40 @@ export default class Player extends PathingEntity {
         return container.itemsFiltered.filter(obj => ObjType.get(obj.id).category == category).reduce((count, obj) => count + obj.count, 0);
     }
 
-    invTotalParam(inv: number, param: number): number {
+    private _invTotalParam(inv: number, param: number, stack: boolean): number {
         const container = this.getInventory(inv);
         if (!container) {
             throw new Error('invTotalParam: Invalid inventory type: ' + inv);
         }
 
-        return container.itemsFiltered.filter(obj => ObjType.get(obj.id).params.has(param)).reduce((count, obj) => count + obj.count, 0);
+        const paramType: ParamType = ParamType.get(param);
+
+        let total: number = 0;
+        for (let slot: number = 0; slot < container.capacity; slot++) {
+            const item = container.items[slot];
+            if (!item || item.id < 0 || item.id >= ObjType.count) {
+                continue;
+            }
+
+            const obj: ObjType = ObjType.get(item.id);
+            const value: number = ParamHelper.getIntParam(paramType.id, obj, paramType.defaultInt);
+
+            if (stack) {
+                total += item.count * value;
+            } else {
+                total += value;
+            }
+        }
+
+        return total;
+    }
+
+    invTotalParam(inv: number, param: number): number {
+        return this._invTotalParam(inv, param, false);
     }
 
     invTotalParamStack(inv: number, param: number): number {
-        const container = this.getInventory(inv);
-        if (!container) {
-            throw new Error('invTotalParamStack: Invalid inventory type: ' + inv);
-        }
-
-        return container.itemsFiltered.filter(obj => {
-            const objType: ObjType = ObjType.get(obj.id);
-            return objType.params.has(param) && objType.stackable;
-        }).reduce((count, obj) => count + obj.count, 0);
+        return this._invTotalParam(inv, param, true);
     }
 
     // ----
@@ -1538,12 +1426,16 @@ export default class Player extends PathingEntity {
             this.vars[varp.id] = value;
 
             if (varp.transmit) {
-                if (value >= 0x80) {
-                    this.writeHighPriority(ServerProt.VARP_LARGE, id, value);
-                } else {
-                    this.writeHighPriority(ServerProt.VARP_SMALL, id, value);
-                }
+                this.writeVarp(id, value);
             }
+        }
+    }
+
+    private writeVarp(id: number, value: number): void {
+        if (value >= -128 && value <= 127) {
+            this.write(new VarpSmall(id, value));
+        } else {
+            this.write(new VarpLarge(id, value));
         }
     }
 
@@ -1574,6 +1466,10 @@ export default class Player extends PathingEntity {
         this.baseLevels[stat] = getLevelByExp(this.stats[stat]);
 
         if (this.baseLevels[stat] > before) {
+            if (this.levels[stat] < before) {
+                // replenish 1 of the stat upon levelup.
+                this.levels[stat] += 1;
+            }
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
 
             if (script) {
@@ -1654,8 +1550,7 @@ export default class Player extends PathingEntity {
         const crc = PRELOADED_CRC.get(name + '.mid');
         if (song && crc) {
             const length = song.length;
-
-            this.writeLowPriority(ServerProt.MIDI_SONG, name, crc, length);
+            this.write(new MidiSong(name, crc, length));
         }
     }
 
@@ -1666,13 +1561,13 @@ export default class Player extends PathingEntity {
         }
         const jingle = PRELOADED.get(name + '.mid');
         if (jingle) {
-            this.writeLowPriority(ServerProt.MIDI_JINGLE, delay, jingle);
+            this.write(new MidiJingle(delay, jingle));
         }
     }
 
     openMainModal(com: number) {
         if (this.modalState & 4) {
-            this.writeLowPriority(ServerProt.IF_CLOSE); // need to close sidemodal
+            this.write(new IfClose());
             this.modalState &= ~4;
             this.modalSidebar = -1;
         }
@@ -1695,7 +1590,7 @@ export default class Player extends PathingEntity {
     }
 
     openChatSticky(com: number) {
-        this.writeLowPriority(ServerProt.TUTORIAL_OPENCHAT, com);
+        this.write(new TutorialOpenChat(com));
         this.modalState |= 8;
         this.modalSticky = com;
     }
@@ -1719,19 +1614,49 @@ export default class Player extends PathingEntity {
         this.mask |= Player.EXACT_MOVE;
 
         // todo: interpolate over time? instant teleport? verify with true tile on osrs
-        this.previousX = this.x;
-        this.previousZ = this.z;
         this.x = endX;
         this.z = endZ;
+        this.lastStepX = this.x - 1;
+        this.lastStepZ = this.z;
     }
 
     setTab(com: number, tab: number) {
         this.overlaySide[tab] = com;
-        this.writeLowPriority(ServerProt.IF_OPENSIDEOVERLAY, com, tab);
+        this.write(new IfOpenSideOverlay(com, tab));
     }
 
     isComponentVisible(com: Component) {
         return this.modalTop === com.rootLayer || this.modalBottom === com.rootLayer || this.modalSidebar === com.rootLayer || this.overlaySide.findIndex(l => l === com.rootLayer) !== -1 || this.modalSticky === com.rootLayer;
+    }
+
+    updateAfkZones(): void {
+        this.lastAfkZone = Math.min(1000, this.lastAfkZone + 1);
+        if (this.withinAfkZone()) {
+            return;
+        }
+        const coord: number = Position.packCoord(0, this.x - 10, this.z - 10); // level doesn't matter.
+        if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
+            this.afkZones[1] = coord;
+        } else {
+            this.afkZones[1] = this.afkZones[0];
+        }
+        this.afkZones[0] = coord;
+        this.lastAfkZone = 0;
+    }
+
+    zonesAfk(): boolean {
+        return this.lastAfkZone === 1000;
+    }
+
+    private withinAfkZone(): boolean {
+        const size: number = 21;
+        for (let index: number = 0; index < this.afkZones.length; index++) {
+            const coord: Position = Position.unpackCoord(this.afkZones[index]);
+            if (Position.intersects(this.x, this.z, this.width, this.length, coord.x, coord.z, size, size)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // ----
@@ -1804,85 +1729,39 @@ export default class Player extends PathingEntity {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private writeInner(packetType: ServerProt, ...args: any[]): Packet | null {
-        if (!ServerProtEncoders[packetType.id]) {
-            return null;
-        }
-
-        let buf: Packet;
-        if (packetType.length === -1) {
-            buf = Packet.alloc(0);
-        } else if (packetType.length === -2) {
-            buf = Packet.alloc(2); // maybe this can be a type 1.
+    write(message: OutgoingMessage) {
+        if (message.priority === ServerProtPriority.HIGH) {
+            this.highPriorityOut.push(message);
         } else {
-            buf = new Packet(new Uint8Array(1 + packetType.length));
+            this.lowPriorityOut.push(message);
         }
-
-        buf.p1(packetType.id);
-
-        if (packetType.length === -1) {
-            buf.p1(0);
-        } else if (packetType.length === -2) {
-            buf.p2(0);
-        }
-        const start = buf.pos;
-
-        ServerProtEncoders[packetType.id](buf, ...args);
-
-        if (packetType.length === -1) {
-            buf.psize1(buf.pos - start);
-        } else if (packetType.length === -2) {
-            buf.psize2(buf.pos - start);
-        }
-
-        return buf;
-    }
-
-    writeHighPriority(packetType: ServerProt, ...args: any[]) {
-        const buf = this.writeInner(packetType, ...args);
-        if (buf === null) {
-            return;
-        }
-
-        this.highPriorityOut.push(buf);
-    }
-
-    writeLowPriority(packetType: ServerProt, ...args: any[]) {
-        const buf = this.writeInner(packetType, ...args);
-        if (buf === null) {
-            return;
-        }
-
-        this.lowPriorityOut.push(buf);
     }
 
     unsetMapFlag() {
         this.clearWaypoints();
         // in OSRS, SET_MAP_FLAG is high priority
-        this.writeHighPriority(ServerProt.UNSET_MAP_FLAG);
+        this.write(new UnsetMapFlag());
     }
 
     hintNpc(nid: number) {
-        // todo: is HINT_ARROW low or high priority?
-        this.writeLowPriority(ServerProt.HINT_ARROW, 1, nid, 0, 0, 0, 0);
+        this.write(new HintArrow(1, nid, 0, 0, 0, 0));
     }
 
     hintTile(offset: number, x: number, z: number, height: number) {
-        this.writeLowPriority(ServerProt.HINT_ARROW, offset, 0, 0, x, z, height);
+        this.write(new HintArrow(offset, 0, 0, x, z, height));
     }
 
     hintPlayer(pid: number) {
-        this.writeLowPriority(ServerProt.HINT_ARROW, 10, 0, pid, 0, 0, 0);
+        this.write(new HintArrow(10, 0, pid, 0, 0, 0));
     }
 
     stopHint() {
-        this.writeLowPriority(ServerProt.HINT_ARROW, -1, 0, 0, 0, 0, 0);
+        this.write(new HintArrow(-1, 0, 0, 0, 0, 0));
     }
 
     lastLoginInfo(lastLoginIp: number, daysSinceLogin: number, daysSinceRecoveryChange: number, unreadMessageCount: number) {
         // this is like an interface packet so assume low priority
-        this.writeLowPriority(ServerProt.LAST_LOGIN_INFO, lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount);
+        this.write(new LastLoginInfo(lastLoginIp, daysSinceLogin, daysSinceRecoveryChange, unreadMessageCount));
         this.modalState |= 16;
     }
 
@@ -1895,42 +1774,6 @@ export default class Player extends PathingEntity {
     }
 
     messageGame(msg: string) {
-        this.writeHighPriority(ServerProt.MESSAGE_GAME, msg);
-    }
-
-    rebuildNormal(zoneX: number, zoneZ: number) {
-        const out = Packet.alloc(2);
-        out.p1(ServerProt.REBUILD_NORMAL.id);
-        out.p2(0);
-        const start = out.pos;
-
-        out.p2(zoneX);
-        out.p2(zoneZ);
-
-        // build area is 13x13 zones (8*13 = 104 tiles), so we need to load 6 zones in each direction
-        const areas: { mapsquareX: number; mapsquareZ: number }[] = [];
-        for (let x = zoneX - 6; x <= zoneX + 6; x++) {
-            for (let z = zoneZ - 6; z <= zoneZ + 6; z++) {
-                const mapsquareX = Position.mapsquare(x << 3);
-                const mapsquareZ = Position.mapsquare(z << 3);
-
-                if (areas.findIndex(a => a.mapsquareX === mapsquareX && a.mapsquareZ === mapsquareZ) === -1) {
-                    areas.push({ mapsquareX, mapsquareZ });
-                }
-            }
-        }
-
-        for (let i = 0; i < areas.length; i++) {
-            const { mapsquareX, mapsquareZ } = areas[i];
-            out.p1(mapsquareX);
-            out.p1(mapsquareZ);
-            out.p4(PRELOADED_CRC.get(`m${mapsquareX}_${mapsquareZ}`) ?? 0);
-            out.p4(PRELOADED_CRC.get(`l${mapsquareX}_${mapsquareZ}`) ?? 0);
-        }
-
-        out.psize2(out.pos - start);
-
-        // the packet is released elsewhere.
-        this.highPriorityOut.push(out);
+        this.write(new MessageGame(msg));
     }
 }

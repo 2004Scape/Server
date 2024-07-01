@@ -107,6 +107,21 @@ if ($current_level < $thieving_level) {
     return;
 }
 
+if (add(%lastcombat, 8) > map_clock) {
+    mes("You can't pickpocket during combat.");
+    return;
+}
+
+if(getwalktrigger() = stunned) {
+    return;
+}
+
+if (%action_delay > map_clock) {
+    p_opnpc(3);
+    return;
+}
+
 // inv full check happens on the engine level for pick pocketing.
+// https://oldschool.runescape.wiki/w/Update:Halloween_2016, when check was added for preventing attacking when an npc is being pickpocketed
 
 ~pick_pocket($data);

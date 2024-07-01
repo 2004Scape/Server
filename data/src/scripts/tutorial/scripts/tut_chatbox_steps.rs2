@@ -257,7 +257,7 @@ hint_stop();
 
 [proc,tutorial_step_rat_ranging]
 ~set_hint_icon_giant_rat;
-~tutorialstep("Rat ranging.", "Now you have a bow and some arrows. before you can use|them you'll need to equip them. Once equipped with the|ranging gear try killing another rat. Remember, to atack right click on the monster and select attack.");
+~tutorialstep("Rat ranging.", "Now you have a bow and some arrows. Before you can use|them you'll need to equip them. Once equipped with the|ranging gear try killing another rat. Remember, to attack right click on the monster and select attack.");
 
 [proc,tutorial_step_combat_moving_on]
 hint_coord(^hint_center, 0_48_148_39_54, 125);

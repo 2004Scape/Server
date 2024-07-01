@@ -15,15 +15,15 @@ clearqueue(pvp_damage);
 p_delay(1);
 p_stopaction;
 if_close;
-midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 anim(human_death, 0);
 p_delay(3);
+midi_jingle(^death_jingle_2, ^death_jingle_2_millis);
 mes("Oh dear you are dead!"); // no comma in early rs2. https://storage.googleapis.com/tannerdino/images/6543.jpg
 
 // todo, check if a player has recieved kill credit for your death
 // if so use inv_dropall and ~pvp_death_message
 def_obj $prev_wep = inv_getobj(worn, ^wearpos_rhand);
-if (~in_duel_arena = true & ~.in_duel_arena = true & .finduid(%duelpartner) = true) {
+if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_arena(.coord) = true) {
     if_close;
     .if_close;
     %duelstatus = ^duelstatus_lost;
@@ -31,7 +31,7 @@ if (~in_duel_arena = true & ~.in_duel_arena = true & .finduid(%duelpartner) = tr
     if (getqueue(duel_arena_finish) < 1) {
         queue(duel_arena_finish, 0);
     }
-    queue2(duel_arena_finish, 0);
+    .queue(duel_arena_finish, 0);
     // player2 can move freely whilst player 1 is in death anim: https://youtu.be/BBYbpuquiZw?t=412 (vid he equips dragon sword)
     return;
 } else if (findhero = true) {
@@ -77,9 +77,6 @@ while ($i < $size) {
     if (inv_getnum(inv, $i) > 0) {
         if (oc_category(inv_getobj(inv, $i)) = armour_godcape) {
             mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
-            inv_delslot(inv, $i);
-        } else {
-            inv_dropslot(inv, coord, $i, 200); // todo: inv_dropall (visible to all instantly)
         }
     }
     $i = calc($i + 1);
@@ -91,15 +88,14 @@ while ($i < $size) {
     if (inv_getnum(worn, $i) > 0) {
         if (oc_category(inv_getobj(worn, $i)) = armour_godcape) {
             mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
-            inv_delslot(worn, $i);
-        } else {
-            inv_dropslot(worn, coord, $i, 200); // todo: inv_dropall (visible to all instantly)
         }
     }
     $i = calc($i + 1);
 }
 
-obj_add(coord, bones, 1, 200); // todo: obj_addall
+inv_dropall(inv, coord, 200);
+inv_dropall(worn, coord, 200);
+obj_addall(coord, bones, 1, 200);
 ~moveallinv(death, inv);
 inv_clear(death);
 
@@ -129,7 +125,7 @@ while ($i < $size) {
             mes(oc_param(inv_getobj(inv, $i), lose_cape_message));
             inv_delslot(inv, $i);
         } else {
-            inv_dropslot(inv, coord, $i, 200);
+            both_dropslot(inv, coord, $i, 200);
         }
     }
     $i = calc($i + 1);
@@ -143,7 +139,7 @@ while ($i < $size) {
             mes(oc_param(inv_getobj(worn, $i), lose_cape_message));
             inv_delslot(worn, $i);
         } else {
-            inv_dropslot(worn, coord, $i, 200);
+            both_dropslot(worn, coord, $i, 200);
         }
     }
     $i = calc($i + 1);

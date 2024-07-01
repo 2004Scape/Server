@@ -7,7 +7,7 @@ p_stopaction;
 // TODO this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
-if (%action_delay > map_clock) {
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opnpc(2); // it is guaranteed here that we are already within op distance
     return;
 }
@@ -30,6 +30,9 @@ if (~npc_is_attackable(npc_type) = false) {
 // check hit, give combat xp
 def_int $damage = 0;
 if (~player_npc_hit_roll(%damagetype) = true) {
+    if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
+        %com_maxhit = add(%com_maxhit, 1);
+    }
     $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
     $damage = min($damage, npc_stat(hitpoints));
     ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));

@@ -2,8 +2,13 @@
 def_string $pocket = db_getfield($data, pickpocket:pocket, 0);
 // https://www.youtube.com/watch?v=O2n9Hc719YE
 mes("You attempt to pick the <$pocket>.");
-
 p_delay(0);
+
+if(npc_stat(hitpoints) = 0) {
+    // https://youtu.be/L9dyUj1fiko?si=mK8K0u8o9_d1EVSd&t=70
+    mes("Too late, they're dead.");
+    return;
+}
 if (~check_if_success_pick_pocket($data) = false) {
     def_int $stun_ticks = db_getfield($data, pickpocket:stun_ticks, 0);
     def_int $stun_damage = db_getfield($data, pickpocket:stun_damage, 0);
@@ -17,7 +22,6 @@ anim(human_pickpocket, 0);
 givexp(thieving, $experience);
 sound_synth(pick, 0, 0);
 mes("You pick the <$pocket>.");
-p_delay(0);
 
 [proc,check_if_success_pick_pocket](dbrow $data)(boolean)
 def_int $current_level = stat(thieving);
@@ -45,7 +49,7 @@ p_delay(0);
 npc_setmode(null);
 
 mes("You've been stunned!");
-%stunned = calc(map_clock + ~random_range(5, 10));
+%stunned = calc(map_clock + $stun_ticks);
 walktrigger(stunned);
 
 [proc,steal_from_stall](dbrow $data, coord $loc_coord, int $loc_angle, locshape $loc_shape)
