@@ -12,6 +12,7 @@ import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 import { createWorker } from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import { CrcBuffer32 } from '#lostcity/server/CrcTable.js';
+import Environment from '#lostcity/util/Environment.js';
 
 class Login {
     loginThread: Worker = createWorker('./src/lostcity/server/LoginThread.ts');
@@ -115,6 +116,16 @@ class Login {
                     client.writeImmediate(LoginResponse.SERVER_UPDATING);
                     client.close();
                     return;
+                }
+
+                if (Environment.LOCAL_DEV) {
+                    for (const player of World.players) {
+                        if (player.username === username) {
+                            client.writeImmediate(LoginResponse.LOGGED_IN);
+                            client.close();
+                            return;
+                        }
+                    }
                 }
 
                 client.decryptor = new Isaac(seed);

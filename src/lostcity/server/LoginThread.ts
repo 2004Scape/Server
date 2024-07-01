@@ -75,7 +75,7 @@ parentPort.on('message', async msg => {
                 }
 
                 const uid = stream.g4();
-                const username = toSafeName(stream.gjstr());
+                const username = stream.gjstr();
                 const password = stream.gjstr();
 
                 if (username.length < 1 || username.length > 12) {
@@ -98,7 +98,7 @@ parentPort.on('message', async msg => {
                     }
 
                     const login = new LoginClient();
-                    const request = await login.load(toBase37(username), password, uid);
+                    const request = await login.load(toBase37(toSafeName(username)), password, uid);
 
                     if (request.reply === 1 && request.data) {
                         parentPort.postMessage({
