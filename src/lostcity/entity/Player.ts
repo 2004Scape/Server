@@ -1659,6 +1659,17 @@ export default class Player extends PathingEntity {
         return false;
     }
 
+    // copied from client
+    isInWilderness(): boolean {
+        if (this.x >= 2944 && this.x < 3392 && this.z >= 3520 && this.z < 6400) {
+            return true;
+        } else if (this.x >= 2944 && this.x < 3392 && this.z >= 9920 && this.z < 12800) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // ----
 
     runScript(script: ScriptState, protect: boolean = false, force: boolean = false) {

@@ -813,8 +813,7 @@ export default class Npc extends PathingEntity {
                 continue;
             }
 
-            // TODO: probably zone check to see if they're in the wilderness as well?
-            if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && player.combatLevel > type.vislevel * 2) {
+            if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
 
