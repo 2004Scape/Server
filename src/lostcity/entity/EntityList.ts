@@ -7,7 +7,6 @@ abstract class EntityList<T extends Entity> {
     // constructor
     private readonly entities: (T | null)[];
     private readonly free: Set<number>;
-    private readonly taken: Set<number>;
     protected readonly indexPadding: number;
     protected readonly ids: Int32Array;
 
@@ -18,7 +17,6 @@ abstract class EntityList<T extends Entity> {
         this.entities = new Array(size).fill(null);
         this.ids = new Int32Array(size).fill(-1);
         this.free = new Set<number>(Array.from({ length: size }, (_, index) => index));
-        this.taken = new Set();
         this.indexPadding = indexPadding;
     }
 
@@ -38,9 +36,9 @@ abstract class EntityList<T extends Entity> {
     }
 
     *[Symbol.iterator](): IterableIterator<T> {
-        for (const index of this.taken) {
+        for (const index of this.ids) {
             if (index === -1) {
-                throw new Error('[EntityList] index should not be -1 here');
+                continue;
             }
             const entity: T | null = this.entities[index];
             if (!entity) {
@@ -51,7 +49,11 @@ abstract class EntityList<T extends Entity> {
     }
 
     get count(): number {
-        return this.taken.size;
+        let count: number = 0;
+        for (const _ of this[Symbol.iterator]()) {
+            count++;
+        }
+        return count;
     }
 
     get(id: number): T | null {
@@ -65,7 +67,6 @@ abstract class EntityList<T extends Entity> {
         }
         const index = this.free.values().next().value;
         this.free.delete(index);
-        this.taken.add(index);
         this.ids[id] = index;
         this.entities[index] = entity;
         this.lastUsedIndex = id;
@@ -77,7 +78,6 @@ abstract class EntityList<T extends Entity> {
             this.entities[index] = null;
             this.ids[id] = -1;
             this.free.add(index);
-            this.taken.delete(index);
         }
     }
 
@@ -88,7 +88,6 @@ abstract class EntityList<T extends Entity> {
         for (let i: number = 0; i < this.ids.length; i++) {
             this.free.add(i);
         }
-        this.taken.clear();
     }
 }
 
