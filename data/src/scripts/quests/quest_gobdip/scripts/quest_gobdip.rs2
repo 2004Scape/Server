@@ -43,7 +43,8 @@ inv_del(inv, goblin_mail_blue, 1);
 ~chatnpc_specific("General Wartface", general_wartface, "<p,goblinchat>Doesn't seem quite right.");
 ~chatnpc_specific("General Bentnoze", general_bentnoze, "<p,goblinchat>Maybe if it was a bit lighter.");
 ~chatnpc_specific("General Wartface", general_wartface, "<p,goblinchat>Yeah try brown.");
-~chatplayer("<p,goblinchat>I thought that was the armour you were changing from? But never mind, anything is worth a try.");
+// todo: get the proper mesanim
+~chatplayer("<p,quiz>I thought that was the armour you were changing from? But never mind, anything is worth a try.");
 
 [label,goblin_diplomacy_finish]
 ~chatplayer("<p,quiz>Ok I've got brown armour.");
