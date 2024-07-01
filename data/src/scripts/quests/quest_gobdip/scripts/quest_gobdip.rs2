@@ -97,7 +97,7 @@ if (inv_total(inv, goblin_mail_orange) = 0) {
 
 [label,goblin_diplomacy_greet_player_reply_stage_3]
 if (inv_total(inv, goblin_mail_blue) = 0) {
-    ~chatnpc("<p,goblinchat>Have you got some brown goblin armour yet?");
+    ~chatnpc("<p,goblinchat>Have you got some blue goblin armour yet?");
     ~chatplayer("<p,bored>Err, no.");
     ~chatnpc("<p,goblinchat>Come back when you have some.");
     return;
