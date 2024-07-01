@@ -6,27 +6,38 @@ import World from '#lostcity/engine/World.js';
 import {Position} from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
+import BuildArea from '#lostcity/entity/BuildArea.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
+    private static readonly BITS_NEW: number = 11 + 5 + 5 + 1 + 1 + 11;
+    private static readonly BITS_RUN: number = 2 + 3 + 3 + 1 + 1;
+    private static readonly BITS_WALK: number = 2 + 3 + 1 + 1;
+    private static readonly BITS_EXTENDED: number = 2 + 1;
+    private static readonly INFO_LIMIT: number = 5000;
+
     prot = ServerProt.PLAYER_INFO;
 
     encode(buf: Packet, message: PlayerInfo): void {
-        const byteBlock: Packet = Packet.alloc(1);
+        const player: Player = message.player;
+        const buildArea: BuildArea = player.buildArea;
+        buildArea.resize();
+        this.writeLocalPlayer(buf, player);
+        this.writePlayers(buf, player);
+        this.writeNewPlayers(buf, player);
 
-        this.writeLocalPlayer(buf, byteBlock, message.player);
-        this.writePlayers(buf, byteBlock, message.player);
-        this.writeNewPlayers(buf, byteBlock, message.player);
-
-        // const debug = new Packet();
-        // debug.pdata(bitBlock);
-        // debug.pdata(byteBlock);
-        // debug.save('dump/' + World.currentTick + '.' + this.username + '.player.bin');
-
-        buf.pdata(byteBlock.data, 0, byteBlock.pos);
-        byteBlock.release();
+        if (buildArea.extendedInfo.size > 0) {
+            for (const {id, added} of buildArea.extendedInfo) {
+                const other: Player | null = World.getPlayerByUid(id);
+                if (!other) {
+                    continue;
+                }
+                this.writeUpdate(other, player, buf, id === player.uid, added);
+            }
+        }
+        buildArea.extendedInfo.clear();
     }
 
-    private writeLocalPlayer(bitBlock: Packet, byteBlock: Packet, player: Player): void {
+    private writeLocalPlayer(bitBlock: Packet, player: Player): void {
         bitBlock.bits();
         bitBlock.pBit(1, player.tele || player.walkDir !== -1 || player.runDir !== -1 || player.mask > 0 ? 1 : 0);
         if (player.tele) {
@@ -50,60 +61,67 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (player.mask > 0) {
-            this.writeUpdate(player, player, byteBlock, true);
+            player.buildArea.extendedInfo.add({id: player.uid, added: false});
         }
     }
 
-    private writePlayers(bitBlock: Packet, byteBlock: Packet, player: Player): void {
+    private writePlayers(bitBlock: Packet, player: Player): void {
+        const buildArea: BuildArea = player.buildArea;
         // update other players (255 max - 8 bits)
-        bitBlock.pBit(8, player.otherPlayers.size);
+        bitBlock.pBit(8, buildArea.players.size);
 
-        for (const uid of player.otherPlayers) {
+        let accumulator: number = 0;
+        for (const uid of buildArea.players) {
             const other: Player | null = World.getPlayerByUid(uid);
-            if (!other || other.tele || other.level !== player.level || !Position.isWithinDistance(player, other, 16) || !other.checkLifeCycle(World.currentTick)) {
+            if (!other || other.tele || other.level !== player.level || !Position.isWithinDistanceSW(player, other, buildArea.viewDistance) || !other.checkLifeCycle(World.currentTick)) {
                 // player full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
-                player.otherPlayers.delete(uid);
+                buildArea.players.delete(uid);
                 continue;
             }
 
-            let hasMaskUpdate: boolean = other.mask > 0;
-
-            const bitBlockBytes = ((bitBlock.bitPos + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(other, false, false) > 5000 - (11 + 5 + 5 + 1 + 1)) {
-                hasMaskUpdate = false;
+            let extendedInfo: boolean = other.mask > 0;
+            const {walkDir, runDir} = other;
+            let bits: number = 0;
+            if (runDir !== -1) {
+                bits = PlayerInfoEncoder.BITS_RUN;
+            } else if (walkDir !== -1) {
+                bits = PlayerInfoEncoder.BITS_WALK;
+            } else if (extendedInfo) {
+                bits = PlayerInfoEncoder.BITS_EXTENDED;
+            }
+            if ((bitBlock.bitPos + bits + 7 >>> 3) + bitBlock.pos + (accumulator += this.calculateUpdateSize(other, false, false)) > PlayerInfoEncoder.INFO_LIMIT) {
+                extendedInfo = false;
             }
 
-            const {walkDir, runDir} = other;
-            bitBlock.pBit(1, walkDir !== -1 || runDir !== -1 || hasMaskUpdate ? 1 : 0);
+            bitBlock.pBit(1, walkDir !== -1 || runDir !== -1 || extendedInfo ? 1 : 0);
             if (runDir !== -1) {
                 bitBlock.pBit(2, 2);
                 bitBlock.pBit(3, walkDir);
                 bitBlock.pBit(3, runDir);
-                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
+                bitBlock.pBit(1, extendedInfo ? 1 : 0);
             } else if (walkDir !== -1) {
                 bitBlock.pBit(2, 1);
                 bitBlock.pBit(3, walkDir);
-                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
-            } else if (hasMaskUpdate) {
+                bitBlock.pBit(1, extendedInfo ? 1 : 0);
+            } else if (extendedInfo) {
                 bitBlock.pBit(2, 0);
             }
 
-            if (hasMaskUpdate) {
-                this.writeUpdate(other, player, byteBlock);
+            if (extendedInfo) {
+                player.buildArea.extendedInfo.add({id: uid, added: false});
             }
         }
     }
 
-    private writeNewPlayers(bitBlock: Packet, byteBlock: Packet, player: Player): void {
-        for (const other of this.getNearbyPlayers(player)) {
+    private writeNewPlayers(bitBlock: Packet, player: Player): void {
+        const buildArea: BuildArea = player.buildArea;
+        let accumulator: number = 0;
+        for (const other of buildArea.getNearbyPlayers(player)) {
             // todo: tele optimization (not re-sending appearance block for recently observed players (they stay in memory))
-            const hasInitialUpdate: boolean = true;
 
-            const bitBlockSize: number = bitBlock.bitPos + 11 + 5 + 5 + 1 + 1;
-            const bitBlockBytes: number = ((bitBlockSize + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(other, false, true) > 5000 - (11 + 5 + 5 + 1 + 1)) {
+            if ((bitBlock.bitPos + PlayerInfoEncoder.BITS_NEW + 7 >>> 3) + bitBlock.pos + (accumulator += this.calculateUpdateSize(other, false, true)) > PlayerInfoEncoder.INFO_LIMIT) {
                 // more players get added next tick
                 break;
             }
@@ -112,45 +130,16 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             bitBlock.pBit(5, other.x - player.x);
             bitBlock.pBit(5, other.z - player.z);
             bitBlock.pBit(1, other.jump ? 1 : 0);
-            bitBlock.pBit(1, hasInitialUpdate ? 1 : 0);
+            bitBlock.pBit(1, 1/*hasInitialUpdate ? 1 : 0*/);
 
-            if (hasInitialUpdate) {
-                this.writeUpdate(other, player, byteBlock, false, true);
-            }
-
-            player.otherPlayers.add(other.uid);
+            player.buildArea.extendedInfo.add({id: other.uid, added: true});
+            buildArea.players.add(other.uid);
         }
 
-        if (byteBlock.pos > 0) {
+        if (player.buildArea.extendedInfo.size > 0) {
             bitBlock.pBit(11, 2047);
         }
         bitBlock.bytes();
-    }
-
-    private *getNearbyPlayers(player: Player): IterableIterator<Player> {
-        const absLeftX: number = player.originX - 48;
-        const absRightX: number = player.originX + 48;
-        const absTopZ: number = player.originZ + 48;
-        const absBottomZ: number = player.originZ - 48;
-
-        for (const zoneIndex of player.activeZones) {
-            for (const other of World.getZoneIndex(zoneIndex).getAllPlayersSafe()) {
-                if (player.otherPlayers.size >= 255) {
-                    // todo: add based on distance radius that shrinks if too many players are visible?
-                    break;
-                }
-                if (other.uid === player.uid || other.x <= absLeftX || other.x >= absRightX || other.z >= absTopZ || other.z <= absBottomZ) {
-                    continue;
-                }
-                if (!Position.isWithinDistance(player, other, 16)) {
-                    continue;
-                }
-                if (player.otherPlayers.has(other.uid)) {
-                    continue;
-                }
-                yield other;
-            }
-        }
     }
 
     private writeUpdate(player: Player, observer: Player, out: Packet, self: boolean = false, newlyObserved: boolean = false): void {

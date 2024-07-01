@@ -921,7 +921,7 @@ class World {
             if (!isNetworkPlayer(player)) {
                 continue;
             }
-            for (const zone of player.loadedZones) {
+            for (const zone of player.buildArea.loadedZones) {
                 zones.add(zone);
             }
         }
