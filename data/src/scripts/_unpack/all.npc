@@ -1571,6 +1571,7 @@ param=attack_sound,dragon_attack
 param=defend_sound,dragon_hit
 param=death_sound,dragon_death
 param=death_drop,dragon_bones
+huntmode=cowardly
 
 [black_dragon]
 size=4
