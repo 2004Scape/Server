@@ -10420,7 +10420,7 @@ frame9=anim_1667
 frame10=anim_1165
 
 [seq_783]
-lefthand=obj_751
+lefthand=gnomeball
 priority=6
 frame1=anim_1506
 frame2=anim_1803

@@ -17,6 +17,10 @@ MIME_TYPES.set('.sf2', 'application/octet-stream');
 
 // we don't need/want a full blown website or API on the game server
 const web = http.createServer(async (req, res) => {
+    if (!Environment.SKIP_CORS) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+
     if (req.method !== 'GET') {
         res.writeHead(405);
         res.end();

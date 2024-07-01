@@ -1,6 +1,5 @@
 // NOTE: seqs+sounds for vine/fungus probably added later (seq 2094-2097) assuming no p_delay if there's no animation (unless they re-used some anim)
 // TODO: pre-quest can u pick these herbs or access cave? If yes, confirm dialogue for giving those to trufitus in advance.
-// TODO: tribesmen (near marshy jungle vines) should be aggressive according to https://oldschool.runescape.wiki/w/Tribesman
 
 [oploc2,junglepotion_marshy_jungle_vine]
 if (%junglepotion_progress = ^junglepotion_get_snake_weed) {

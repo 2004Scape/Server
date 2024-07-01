@@ -76,10 +76,12 @@ const ScriptOpcodePointers: {
         require: ['active_player']
     },
     [ScriptOpcode.CLEARSOFTTIMER]: {
-        require: ['active_player']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.CLEARTIMER]: {
-        require: ['active_player']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.COORD]: {
         require: ['active_player'],
@@ -251,7 +253,8 @@ const ScriptOpcodePointers: {
         require: ['last_useslot']
     },
     [ScriptOpcode.LONGQUEUE]: {
-        require: ['active_player']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.LOWMEMORY]: {
         require: ['active_player']
@@ -394,9 +397,6 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.QUEUE2]: {
-        require: ['active_player2']
-    },
     [ScriptOpcode.SAY]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -408,21 +408,17 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.WALKTRIGGER2]: {
-        require: ['active_player2']
-    },
     [ScriptOpcode.GETWALKTRIGGER]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
     [ScriptOpcode.SETTIMER]: {
-        require: ['active_player']
-    },
-    [ScriptOpcode.SETTIMER2]: {
-        require: ['active_player2']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.SOFTTIMER]: {
-        require: ['active_player']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.SOUND_SYNTH]: {
         require: ['active_player'],
@@ -461,7 +457,8 @@ const ScriptOpcodePointers: {
         require2: ['active_player2']
     },
     [ScriptOpcode.WEAKQUEUE]: {
-        require: ['active_player']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.FINDHERO]: {
         set: ['active_player2'],
@@ -755,12 +752,6 @@ const ScriptOpcodePointers: {
         require: ['active_obj'],
         require2: ['active_obj2']
     },
-    [ScriptOpcode.OBJ_ADDUNSAFE]: {
-        require: ['active_player'],
-        set: ['active_obj'],
-        require2: ['active_player'],
-        set2: ['active_obj2']
-    },
 
     // Inventory ops
     [ScriptOpcode.INV_ADD]: {
@@ -868,6 +859,14 @@ const ScriptOpcodePointers: {
         require2: ['active_player2', 'active_player']
     },
     [ScriptOpcode.INV_DROPALL]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
+    [ScriptOpcode.INV_TOTALPARAM]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
+    [ScriptOpcode.INV_TOTALPARAM_STACK]: {
         require: ['active_player'],
         require2: ['active_player2']
     },

@@ -49,13 +49,25 @@ p_delay(3);
 [proc,p_telejump_safe](coord $coord)
 p_telejump($coord);
 anim(null, 0);
-~update_all(null);
 // TODO: ensure this proc is used for other teleports too
 def_int $rum = inv_total(inv, karamja_rum);
 if ($rum > 0) {
     inv_del(inv, karamja_rum, $rum);
     mes("Your Karamjan rum gets broken and spilled.");
 }
+if (%gnomeball_progress = ^gnomeball_game_started) {
+    mes("You hear the ref call you out of the game as you leave.");
+    def_int $ball_inv = inv_total(inv, gnomeball);
+    def_int $ball_worn = inv_total(worn, gnomeball);
+    if ($ball_inv > 0) {
+        inv_del(inv, gnomeball, $ball_inv);
+    }
+    if ($ball_worn > 0) {
+        inv_del(worn, gnomeball, $ball_worn);
+    }
+    ~gnomeball_reset;
+}
+~update_all(null);
 
 [proc,pre_tele_checks](coord $coord)(boolean)
 if (~inzone_coord_pair_table(trawler_wreck_zones, $coord) = true) {

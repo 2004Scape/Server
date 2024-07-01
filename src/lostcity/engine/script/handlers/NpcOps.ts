@@ -173,8 +173,9 @@ const NpcOps: CommandHandlers = {
 
         const npcType: NpcType = check(state.activeNpc.type, NpcTypeValid);
         const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId - 1, npcType.id, npcType.category);
+
         if (script) {
-            state.activeNpc.enqueueScript(script, delay, [arg]);
+            state.activeNpc.enqueueScript(script, delay, arg);
         }
     }),
 

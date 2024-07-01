@@ -1,0 +1,14 @@
+[gnome_goal]
+name=Gnome goal
+desc=Aim for the goal!
+model=model_loc_2393
+active=yes
+
+[gnomeball_gate]
+name=Gate
+desc=A gate to the Gnomeball pitch.
+model=model_loc_193
+op1=Open
+active=yes
+blockrange=no
+param=next_loc_stage,loc_2395

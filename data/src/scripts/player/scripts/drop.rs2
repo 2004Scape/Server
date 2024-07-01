@@ -1,7 +1,9 @@
-[opheld5,_]
+[opheld5,_] ~dropslot(last_slot);
+
+[proc,dropslot](int $last)
 if (~in_duel_arena(coord) = true) {
     mes("You cannot drop items here."); // osrs pvp arena
     return;
 }
-inv_dropslot(inv, coord, last_slot, 200);
+inv_dropslot(inv, coord, $last, 200);
 sound_synth(put_down, 0, 0);

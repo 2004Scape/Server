@@ -183,9 +183,6 @@ enum ScriptOpcode {
     P_CLEARPENDINGACTION, // official
     GETWALKTRIGGER, // official
     BUSY2, // official
-    QUEUE2, // workaround until .queue is supported in compiler
-    SETTIMER2, // workaround until .settimer is supported in compiler
-    WALKTRIGGER2, // workaround until .walktrigger is supported in compiler
     FINDHERO, // official
     BOTH_HEROPOINTS, // official
     SETGENDER,
@@ -261,7 +258,6 @@ enum ScriptOpcode {
     OBJ_PARAM,
     OBJ_TAKEITEM,
     OBJ_TYPE,
-    OBJ_ADDUNSAFE,
 
     // Npc config ops (4000-4099)
     NC_CATEGORY = 4000,
@@ -330,6 +326,8 @@ enum ScriptOpcode {
     INV_STOPTRANSMIT,
     BOTH_DROPSLOT,
     INV_DROPALL,
+    INV_TOTALPARAM, // official, see cs2
+    INV_TOTALPARAM_STACK, // official, see cs2
 
     // Enum ops (4400-4499)
     ENUM = 4400, // official

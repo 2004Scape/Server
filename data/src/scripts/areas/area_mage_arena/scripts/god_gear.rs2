@@ -1,10 +1,10 @@
-[opheld2,saradomincape] if (~check_conflicting_god_staff(zamorakstaff, guthixstaff) = true) @equip(last_slot);
-[opheld2,zamorakcape] if (~check_conflicting_god_staff(saradominstaff, guthixstaff) = true) @equip(last_slot);
-[opheld2,guthixcape] if (~check_conflicting_god_staff(saradominstaff, zamorakstaff) = true) @equip(last_slot);
+[opheld2,saradomincape] if (~check_conflicting_god_staff(zamorakstaff, guthixstaff) = true) ~equip(last_slot);
+[opheld2,zamorakcape] if (~check_conflicting_god_staff(saradominstaff, guthixstaff) = true) ~equip(last_slot);
+[opheld2,guthixcape] if (~check_conflicting_god_staff(saradominstaff, zamorakstaff) = true) ~equip(last_slot);
 
-[opheld2,saradominstaff] if (~check_conflicting_god_cape(zamorakcape, guthixcape) = true) @equip(last_slot);
-[opheld2,zamorakstaff] if (~check_conflicting_god_cape(saradomincape, guthixcape) = true) @equip(last_slot);
-[opheld2,guthixstaff] if (~check_conflicting_god_cape(saradomincape, zamorakcape) = true) @equip(last_slot);
+[opheld2,saradominstaff] if (~check_conflicting_god_cape(zamorakcape, guthixcape) = true) ~equip(last_slot);
+[opheld2,zamorakstaff] if (~check_conflicting_god_cape(saradomincape, guthixcape) = true) ~equip(last_slot);
+[opheld2,guthixstaff] if (~check_conflicting_god_cape(saradomincape, zamorakcape) = true) ~equip(last_slot);
 
 
 [proc,check_conflicting_god_cape](namedobj $item1, namedobj $item2)(boolean)

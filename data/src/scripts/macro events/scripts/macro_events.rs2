@@ -1,5 +1,9 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
+if (~in_tutorial_island(coord) = true) {
+    // return before checking so random events are effectively "queued" for when the player leaves the tutorial
+    return;
+}
 // some general macro events use the %macro_event varp, so if multiple exist, it could cause issues
 if (afk_event = ^false | ~macro_event_general_active = true | %tutorial_progress < ^tutorial_complete) {
     return;
@@ -49,7 +53,7 @@ switch_int ($event) {
 }
 
 [proc,macro_event_area](coord $coord)(boolean)
-if (~in_duel_arena($coord) = true) {
+if (~in_duel_arena($coord) = true | ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     return(false);
 }
 if (~inzone_coord_pair_table(trawler_all_zones, $coord) = true) {

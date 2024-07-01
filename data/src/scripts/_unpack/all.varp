@@ -204,7 +204,8 @@ transmit=yes
 [open_book]
 type=obj
 
-[varp_151]
+[gnomeball_progress]
+scope=perm
 
 [varp_152]
 

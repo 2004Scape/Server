@@ -14,6 +14,7 @@ switch_obj (last_useitem)
     case red_dye : @craft_dyes(purple_dye);
     case yellow_dye : @craft_dyes(green_dye);
     case black_cape, red_cape, yellow_cape, green_cape, purple_cape, orange_cape : @craft_capes(last_useitem, blue_dye);
+    case goblin_mail : ~dye_goblin_mail_armour(blue_dye, goblin_mail_blue, "blue");
     case default : ~displaymessage(^dm_default);
 };
 
@@ -45,6 +46,7 @@ switch_obj (last_useitem)
 switch_obj (last_useitem) 
 {
     case black_cape, red_cape, blue_cape, yellow_cape, green_cape, purple_cape : @craft_capes(last_useitem, orange_dye);
+    case goblin_mail : ~dye_goblin_mail_armour(orange_dye, goblin_mail_orange, "orange");
     case default : ~displaymessage(^dm_default);
 };
 //----------------------

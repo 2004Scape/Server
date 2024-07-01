@@ -458,6 +458,8 @@ desc=Nice doggy.
 op2=Attack
 vislevel=132
 model1=model_2997_npc
+// wanderrange=TODO
+// maxrange=TODO
 respawnrate=50
 hitpoints=116
 attack=120
@@ -467,9 +469,8 @@ param=damagetype,^stab_style
 param=attack_anim,hellhound_attack
 param=defend_anim,hellhound_block
 param=death_anim,hellhound_death
-// param=attack_sound,
-// param=defend_sound,
-// param=death_sound,
+param=attack_sound,growl6
+param=defend_sound,growl5
 huntmode=aggressive_melee
 
 [khazard_ogre]
@@ -482,6 +483,8 @@ op2=Attack
 vislevel=55
 model1=model_2880_npc
 model2=model_2876_npc
+// wanderrange=TODO
+// maxrange=TODO
 // TODO respawnrate might be wrong, copying bouncers
 respawnrate=50
 hitpoints=60
@@ -513,6 +516,8 @@ recol1d=10570
 recol2s=11426
 recol2d=6342
 model1=model_2967_npc
+// wanderrange=TODO
+// maxrange=TODO
 // TODO respawnrate might be wrong, copying bouncers
 respawnrate=50
 hitpoints=40

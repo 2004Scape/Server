@@ -1,11 +1,11 @@
 // Can kill delrith with magic as long as Silverlight is equipped, otherwise no message is sent when trying to attack
 // https://runescape.salmoneus.net/forums/topic/366965-cant-get-past-demon-slayer/
 
-[ai_queue3,delrith](int $arg)
-[ai_queue4,delrith](int $arg) gosub(npc_death);
+[ai_queue3,delrith]
+[ai_queue4,delrith] gosub(npc_death);
 
-[ai_queue2,delrith](int $damage)
-~npc_default_damage($damage);
+[ai_queue2,delrith]
+~npc_default_damage(last_int);
 if (npc_stat(hitpoints) = 0) {
     if (npc_findhero = true) {
         queue(delrith_death, 1);
@@ -43,14 +43,8 @@ if (%demon_progress < ^demon_complete) {
 
 [queue,delrith_death]
 if_close;
-npc_findallzone(0_50_52_25_38);
-while (npc_findnext = true) {
-    if (npc_type = delrith) npc_changetype(weakened_delrith);
-}
-
-npc_findallzone(0_50_52_30_44);
-while (npc_findnext = true) {
-    if (npc_type = delrith) npc_changetype(weakened_delrith);
+if (npc_find(coord, delrith, 8, 0) = true) {
+    npc_changetype(weakened_delrith);
 }
 
 p_stopaction;
@@ -79,20 +73,9 @@ p_delay(1);
 mes("Suddenly, the vortex closes!");
 p_delay(1);
 
-npc_findallzone(0_50_52_25_38);
-while (npc_findnext = true) {
-    if (npc_type = weakened_delrith) {
-        @restore_delrith;
-        return;
-    }
-}
-
-npc_findallzone(0_50_52_30_44);
-while (npc_findnext = true) {
-    if (npc_type = weakened_delrith) {
-        @restore_delrith;
-        return;
-    }
+if (npc_find(coord, weakened_delrith, 8, 0) = true) {
+    @restore_delrith;
+    return;
 }
 
 [label,restore_delrith]
@@ -105,28 +88,15 @@ mes("That was the wrong incantation");
 ~mesbox("As you chant, Delrith is sucked towards the vortex...|Back to the dark dimension from which he came...");
 if_close;
 
-npc_findallzone(0_50_52_25_38);
-while (npc_findnext = true) {
-    if (npc_type = weakened_delrith) {
-        gosub(npc_death);
-        queue(demon_slayer_complete, 1);
-        return;
-    }
-}
-
-npc_findallzone(0_50_52_30_44);
-while (npc_findnext = true) {
-    if (npc_type = weakened_delrith) {
-        gosub(npc_death);
-        queue(demon_slayer_complete, 1);
-        return;
-    }
+if (npc_find(coord, weakened_delrith, 8, 0) = true) {
+    gosub(npc_death);
+    queue(demon_slayer_complete, 1);
+    return;
 }
 
 // Everything below here is a guess. This is set up so if a player doesn't kill weakened delrith he becomes
 // Regular delrith again after a minute.
 [ai_timer,weakened_delrith]
-npc_settimer(100); // We'll set it to 1 minute to swap back
 npc_changetype(delrith);
 npc_statheal(hitpoints, npc_basestat(hitpoints), 0);
 npc_setmode(none);

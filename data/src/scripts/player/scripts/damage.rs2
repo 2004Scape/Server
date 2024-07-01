@@ -31,7 +31,7 @@ if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_are
     if (getqueue(duel_arena_finish) < 1) {
         queue(duel_arena_finish, 0);
     }
-    queue2(duel_arena_finish, 0);
+    .queue(duel_arena_finish, 0);
     // player2 can move freely whilst player 1 is in death anim: https://youtu.be/BBYbpuquiZw?t=412 (vid he equips dragon sword)
     return;
 } else if (findhero = true) {

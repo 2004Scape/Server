@@ -67,10 +67,10 @@ export default class HuntType extends ConfigType {
     checkNotBusy: boolean = false;
     findKeepHunting: boolean = false;
     findNewMode: NpcMode = NpcMode.NONE;
-    nobodyNear: HuntNobodyNear = HuntNobodyNear.OFF;
+    nobodyNear: HuntNobodyNear = HuntNobodyNear.PAUSEHUNT;
     checkNotCombat: number = -1;
     checkNotCombatSelf: number = -1;
-    checkAfk: boolean = false;
+    checkAfk: boolean = true;
     rate: number = 1;
     checkCategory: number = -1;
     checkNpc: number = -1;
@@ -101,7 +101,7 @@ export default class HuntType extends ConfigType {
         } else if (code === 9) {
             this.checkNotCombatSelf = dat.g2();
         } else if (code === 10) {
-            this.checkAfk = true;
+            this.checkAfk = false;
         } else if (code === 11) {
             this.rate = dat.g2();
         } else if (code === 12) {

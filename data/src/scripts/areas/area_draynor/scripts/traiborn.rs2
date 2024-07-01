@@ -132,7 +132,7 @@ if ($option = 1) {
 ~chatnpc("<p,confused>Now you come to mention it, yes I do have a key. It's in my special closet of valuable stuff. Now how do I get into that?");
 ~chatnpc("<p,confused>I sealed it using one of my magic rituals. So it would make sense that another ritual would open it again.");
 ~chatplayer("<p,neutral>So do you know what ritual to use?");
-~chatnpc("<p,neutral>let me think a second.");
+~chatnpc("<p,neutral>Let me think a second.");
 ~chatnpc("<p,confused>Yes a simple drazier style ritual should suffice. Hmm, main problem with that is I'll need 25 sets of bones. Now where am I going to get hold of something like that?");
 
 def_int $option = ~p_choice2(" Hmm, that's too bad. I really need that key.", 1, "I'll get the bones for you.", 2);
@@ -174,7 +174,7 @@ if ($option = 1) {
     if ($option_silverlight_or_insult = 1) {
         ~chatplayer("<p,neutral>It's the key to get a sword called Silverlight.");
         ~chatnpc("<p,confused>Silverlight? Never heard of that.|Sounds a good name for a ship. Are you sure it's not the name of a ship, rather than a sword?");
-        def_int $option_ship_or_keys = ~p_choice2("Yeah, pretty sure.", 1, "Are you sure it's not the name of a ship, rather than a sword?", 2);
+        def_int $option_ship_or_keys = ~p_choice2("Yeah, pretty sure.", 1, "Well, have you got any keys knocking around?", 2);
 
         if ($option_ship_or_keys = 1) {
             ~chatplayer("<p,neutral>Yeah, pretty sure.");

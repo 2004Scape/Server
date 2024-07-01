@@ -73,7 +73,11 @@ if (~pvm_debuff_allowed($spell_data) = false) {
 def_int $duration = ~pvm_spell_cast($spell_data);
 // if player DOESNT splash:
 if (~player_npc_hit_roll(^magic_style) = true) {
-    ~pvm_spell_success($spell_data, ~magic_spell_maxhit($spell_data), $duration);
+    def_int $maxhit = ~magic_spell_maxhit($spell_data);
+    if (npc_type = count_draynor & inv_total(inv, garlic) > 0) {
+        $maxhit = add($maxhit, 1);
+    }
+    ~pvm_spell_success($spell_data, $maxhit, $duration);
     ~pvm_stat_change_effect($spell_data);
     ~pvm_freeze_effect($spell_data);
 } else {
@@ -294,7 +298,7 @@ if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
 //     mes("Spell can continue by autocast");
 // }
 
-[ai_queue8,_](int $arg)
+[ai_queue8,_]
 if (map_clock < %npc_stunned) {
     npc_walk(npc_coord);
     npc_walktrigger(8, 0);
