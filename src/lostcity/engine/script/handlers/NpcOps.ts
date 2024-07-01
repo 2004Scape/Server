@@ -175,8 +175,7 @@ const NpcOps: CommandHandlers = {
         const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + queueId - 1, npcType.id, npcType.category);
 
         if (script) {
-            state.activeNpc.lastInt = arg;
-            state.activeNpc.enqueueScript(script, delay);
+            state.activeNpc.enqueueScript(script, delay, arg);
         }
     }),
 

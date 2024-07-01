@@ -124,6 +124,8 @@ export default class ScriptState {
     npcIterator: IterableIterator<Npc> | null = null;
     locIterator: IterableIterator<Loc> | null = null;
 
+    lastInt: number = 0;
+
     constructor(script: Script, args: ScriptArgument[] | null = []) {
         this.script = script;
         this.trigger = script.info.lookupKey & 0xff;
