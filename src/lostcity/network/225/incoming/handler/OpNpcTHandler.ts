@@ -27,7 +27,7 @@ export default class OpNpcTHandler extends MessageHandler<OpNpcT> {
             return false;
         }
 
-        if (!player.npcs.has(npc.nid)) {
+        if (!player.buildArea.npcs.has(npc.nid)) {
             player.unsetMapFlag();
             return false;
         }
