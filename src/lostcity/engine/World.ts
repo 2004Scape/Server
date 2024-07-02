@@ -1106,8 +1106,6 @@ class World {
     // ----
 
     async readIn(socket: ClientSocket, stream: Packet): Promise<void> {
-        this.lastCycleBandwidth[0] += stream.data.length;
-
         while (stream.available > 0) {
             const start = stream.pos;
             let opcode = stream.g1();

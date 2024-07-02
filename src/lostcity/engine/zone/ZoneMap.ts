@@ -49,4 +49,24 @@ export default class ZoneMap {
         }
         return grid;
     }
+
+    zoneCount(): number {
+        return this.zones.size;
+    }
+
+    locCount(): number {
+        let total: number = 0;
+        for (const zone of this.zones.values()) {
+            total += zone.totalLocs;
+        }
+        return total;
+    }
+
+    objCount(): number {
+        let total: number = 0;
+        for (const zone of this.zones.values()) {
+            total += zone.totalObjs;
+        }
+        return total;
+    }
 }
