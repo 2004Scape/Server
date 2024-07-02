@@ -60,7 +60,9 @@ parentPort.on('message', async msg => {
 
                 stream.rsadec(priv);
 
-                if (stream.g1() !== 10) {
+                // Had to do this because the value of g1 here is used more than once
+                const g1Value = stream.g1();
+                if (g1Value !== 10 && g1Value !== 11) {
                     parentPort.postMessage({
                         type: 'loginreply',
                         status: LoginResponse.LOGIN_REJECTED,
@@ -98,8 +100,13 @@ parentPort.on('message', async msg => {
                     }
 
                     const login = new LoginClient();
-                    const request = await login.load(toBase37(toSafeName(username)), password, uid);
-
+                    let request = null;
+                    if (g1Value === 10) {
+                        request = await login.load(toBase37(toSafeName(username)), password, uid);
+                    } else {
+                        request = await login.signUp(toBase37(toSafeName(username)), password, uid);
+                    }
+                    
                     if (request.reply === 1 && request.data) {
                         parentPort.postMessage({
                             type: 'loginreply',
@@ -144,6 +151,18 @@ parentPort.on('message', async msg => {
                             socket
                         });
                         return;
+                    } else if (request.reply === 6) { 
+                        parentPort.postMessage({
+                            type: 'loginreply',
+                            status: LoginResponse.SIGN_UP_SUCCESSFUL,
+                            socket
+                        });
+                    } else if (request.reply === 7) {
+                        parentPort.postMessage({
+                            type: 'loginreply',
+                            status: LoginResponse.SIGN_UP_FAILED,
+                            socket
+                        });
                     } else if (request.reply === -1) {
                         // login server connection error
                         parentPort.postMessage({

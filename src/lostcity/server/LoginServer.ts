@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import { fromBase37 } from '#jagex2/jstring/JString.js';
+import { fromBase37, toSafeName } from '#jagex2/jstring/JString.js';
 
 import { db } from '#lostcity/db/query.js';
 
@@ -31,6 +31,8 @@ export class LoginResponse {
     static readonly LOGIN_ATTEMPTS_EXCEEDED: Uint8Array = Uint8Array.from([16]); // Login attempts exceeded.
     static readonly STANDING_IN_MEMBERS: Uint8Array = Uint8Array.from([17]); // You are standing in a members-only area.
     static readonly STAFF_MOD_LEVEL: Uint8Array = Uint8Array.from([18]);
+    static readonly SIGN_UP_SUCCESSFUL: Uint8Array = Uint8Array.from([19]);
+    static readonly SIGN_UP_FAILED: Uint8Array = Uint8Array.from([20]);
 }
 
 export class LoginServer {
@@ -72,7 +74,7 @@ export class LoginServer {
                     const world = data.g2();
                     const username37 = data.g8();
                     const password = data.gjstr();
-                    const uid = data.g4();
+                    // const uid = data.g4();
 
                     if (!this.players[world]) {
                         this.players[world] = [];
@@ -183,6 +185,39 @@ export class LoginServer {
                         const username37 = data.g8();
                         this.players[world].push(username37);
                     }
+                } else if (opcode === 6) {
+                    // sign-up player
+                    // const world = data.g2();
+                    const username37 = data.g8();
+                    const password = data.gjstr();
+                    const username = fromBase37(username37);
+
+                    // check if player already exists
+                    const account = await db.selectFrom('account').where('username', '=', username).selectAll().executeTakeFirst();
+                    if (account) {
+                        const reply = new Packet(new Uint8Array(1));
+                        reply.p1(7);
+                        await this.write(socket, reply.data);
+                        data.release();
+                        return;
+                    }
+
+                    // create new player
+                    const ip = socket.remoteAddress;
+                    const hash = await bcrypt.hash(password.toLowerCase(), 10);
+                    await db.insertInto('account')
+                        .values({
+                            username: toSafeName(username),
+                            password: hash,
+                            registration_ip: ip
+                        })
+                        .execute();
+
+                    const reply = new Packet(new Uint8Array(1));
+                    reply.p1(6);
+                    await this.write(socket, reply.data);
+                    data.release();
+                    return;
                 }
 
                 data.release();
@@ -402,5 +437,37 @@ export class LoginClient {
         await this.write(this.socket, 5, request.data);
 
         this.disconnect();
+    }
+
+    async signUp(username37: bigint, password: string, uid: number): Promise<{ reply: number; data: Packet | null }> {
+        await this.connect();
+
+        if (this.socket === null) {
+            return { reply: -1, data: null };
+        }
+
+        const request = new Packet(new Uint8Array(2 + 8 + password.length + 1 + 4));
+        request.p2(Environment.WORLD_ID as number);
+        request.p8(username37);
+        request.pjstr(password);
+        request.p4(uid);
+        await this.write(this.socket, 6, request.data);
+
+        const reply = await this.stream.readByte(this.socket);
+
+        if (reply !== 1) {
+            this.disconnect();
+            return { reply, data: null };
+        }
+
+        const data = new Packet(new Uint8Array(2));
+        await this.stream.readBytes(this.socket, data, 0, 2);
+
+        const length = data.g2();
+        const data2 = new Packet(new Uint8Array(length));
+        await this.stream.readBytes(this.socket, data2, 0, length);
+
+        this.disconnect();
+        return { reply, data: data2 };
     }
 }
