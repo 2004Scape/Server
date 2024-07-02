@@ -1493,7 +1493,7 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(anim: number, delay: number) {
-        if (anim < 0 || anim >= SeqType.count) {
+        if (anim >= SeqType.count) {
             // client would hard crash
             return;
         }
