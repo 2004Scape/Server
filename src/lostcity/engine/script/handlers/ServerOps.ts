@@ -374,6 +374,70 @@ const ServerOps: CommandHandlers = {
             }
         }
         state.pushInt(0);
+    },
+
+    [ScriptOpcode.NPCCOUNT]: state => {
+        state.pushInt(World.getTotalNpcs());
+    },
+
+    [ScriptOpcode.MAP_LASTCLOCK]: state => {
+        state.pushInt(World.lastCycleStats[0]);
+    },
+
+    [ScriptOpcode.MAP_LASTWORLD]: state => {
+        state.pushInt(World.lastCycleStats[1]);
+    },
+
+    [ScriptOpcode.MAP_LASTCLIENTIN]: state => {
+        state.pushInt(World.lastCycleStats[2]);
+    },
+
+    [ScriptOpcode.MAP_LASTNPC]: state => {
+        state.pushInt(World.lastCycleStats[3]);
+    },
+
+    [ScriptOpcode.MAP_LASTPLAYER]: state => {
+        state.pushInt(World.lastCycleStats[4]);
+    },
+
+    [ScriptOpcode.MAP_LASTLOGOUT]: state => {
+        state.pushInt(World.lastCycleStats[5]);
+    },
+
+    [ScriptOpcode.MAP_LASTLOGIN]: state => {
+        state.pushInt(World.lastCycleStats[6]);
+    },
+
+    [ScriptOpcode.MAP_LASTZONE]: state => {
+        state.pushInt(World.lastCycleStats[7]);
+    },
+
+    [ScriptOpcode.MAP_LASTCLIENTOUT]: state => {
+        state.pushInt(World.lastCycleStats[8]);
+    },
+
+    [ScriptOpcode.MAP_LASTCLEANUP]: state => {
+        state.pushInt(World.lastCycleStats[9]);
+    },
+
+    [ScriptOpcode.MAP_LASTBANDWIDTHIN]: state => {
+        state.pushInt(World.lastCycleBandwidth[0]);
+    },
+
+    [ScriptOpcode.MAP_LASTBANDWIDTHOUT]: state => {
+        state.pushInt(World.lastCycleBandwidth[1]);
+    },
+
+    [ScriptOpcode.ZONECOUNT]: state => {
+        state.pushInt(World.zoneMap.zoneCount());
+    },
+
+    [ScriptOpcode.LOCCOUNT]: state => {
+        state.pushInt(World.zoneMap.locCount());
+    },
+
+    [ScriptOpcode.OBJCOUNT]: state => {
+        state.pushInt(World.zoneMap.objCount());
     }
 };
 

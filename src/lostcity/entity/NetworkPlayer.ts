@@ -57,6 +57,8 @@ export class NetworkPlayer extends Player {
         this.userPath = [];
         this.opcalled = false;
 
+        World.lastCycleBandwidth[0] += this.client.inOffset;
+
         while (this.client.inOffset > offset) {
             const packetType = ClientProt.byId[this.client.in[offset++]];
             let length = packetType.length;
