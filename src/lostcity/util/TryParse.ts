@@ -1,4 +1,4 @@
-export function tryParseBoolean(value: string | boolean | undefined, defaultValue: boolean): boolean {
+export function tryParseBoolean(value: string | boolean | undefined | null, defaultValue: boolean): boolean {
     if (value === 'true' || value === true) {
         return true;
     } else if (value === 'false' || value === false) {
@@ -8,7 +8,7 @@ export function tryParseBoolean(value: string | boolean | undefined, defaultValu
     }
 }
 
-export function tryParseInt(value: string | number | undefined, defaultValue: number): number {
+export function tryParseInt(value: string | number | undefined | null, defaultValue: number): number {
     if (typeof value === 'number') {
         return value;
     }
@@ -25,7 +25,7 @@ export function tryParseInt(value: string | number | undefined, defaultValue: nu
     return defaultValue;
 }
 
-export function tryParseString(value: string | undefined, defaultValue: string): string {
+export function tryParseString(value: string | undefined | null, defaultValue: string): string {
     if (typeof value !== 'string') {
         return defaultValue;
     }
@@ -33,7 +33,7 @@ export function tryParseString(value: string | undefined, defaultValue: string):
     return value;
 }
 
-export function tryParseArray<T>(value: T[] | undefined, defaultValue: T[]): T[] {
+export function tryParseArray<T>(value: T[] | undefined | null, defaultValue: T[]): T[] {
     if (!Array.isArray(value)) {
         return defaultValue;
     }

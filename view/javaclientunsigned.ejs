@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <title>2004Scape Game</title>
+    <style>
+        body {
+            margin: 0px;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body topmargin=0 leftmargin=0 bgcolor=black>
+    <center>
+        <applet name=app width=789 height=532 archive=runescape.jar code=client.class mayscript>
+            <param name=portoff value=<%= portoff %>>
+            <param name=nodeid value=<%= nodeid %>>
+            <% if (lowmem) { %><param name=lowmem value=1><% } %>
+            <% if (!members) { %><param name=free value=1><% } %>
+        </applet>
+    </center>
+</body>
+
+</html>
