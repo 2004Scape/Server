@@ -22,6 +22,16 @@ while (huntnext = true) {
     queue(trawler_player_unflood, 0);
 }
 
+[proc,trawler_leak] // requires active loc
+loc_change(game_trawler_leak, 1000);
+~sound_synth_area(leak, 0, loc_coord, 5);
+
+def_coord $flood_coord = movecoord(loc_coord, 128, 0, 0);
+if (loc_find($flood_coord, game_trawler_hull) = true | loc_find($flood_coord, game_trawler_repaired_leak) = true) {
+    loc_change(game_trawler_leak, 1000);
+    ~sound_synth_area(leak, 0, $flood_coord, 5);
+}
+
 [queue,trawler_player_flood]
 if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = false) {
     return;
@@ -80,12 +90,7 @@ if (loc_type = game_trawler_leak) {
         }
         inv_del(inv, swamp_paste, 1);
         if (random(5) = 0) {
-            if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
-                npc_queue(7, 0, 0);
-            }
-            if (npc_find(^trawler_flood_center_under, 0_31_75_murphy, 5, 0) = true) {
-                npc_queue(7, 0, 0);
-            }
+            ~trawler_npc_queue(7);
         }
     }
 }
