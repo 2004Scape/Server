@@ -16,7 +16,6 @@ recol3d=20971
 cost=16
 weight=500g
 tradeable=yes
-param=cooking_range_only,1
 
 //guess
 [uncooked_meat_pie]
@@ -36,7 +35,6 @@ recol3d=20971
 cost=8
 weight=500g
 tradeable=yes
-param=cooking_range_only,1
 
 //guess
 [uncooked_redberry_pie]
@@ -56,4 +54,3 @@ recol3d=20971
 cost=6
 weight=500g
 tradeable=yes
-param=cooking_range_only,1
