@@ -1,6 +1,3 @@
-// CamShake(type = 4, shakeIntensity = 0, movementIntensity = 20, speed = 4)
-// CamShake(type = 1, shakeIntensity = 0, movementIntensity = 20, speed = 5)
-
 [ai_timer,murphy]
 if (~playercount_coord_pair_table(trawler_game_zones) > 0 | ~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
     npc_settimer(0);
@@ -64,3 +61,7 @@ midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 p_delay(20);
 if_close;
 if_openmainmodal(trawler_help);
+// CamShake(type = 4, shakeIntensity = 0, movementIntensity = 20, speed = 4)
+// CamShake(type = 1, shakeIntensity = 0, movementIntensity = 20, speed = 5)
+cam_shake(4, 0, 20, 4);
+cam_shake(1, 0, 20, 5);

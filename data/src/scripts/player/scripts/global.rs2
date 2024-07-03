@@ -107,6 +107,7 @@ if (staffmodlevel >= 2 & inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
 if (p_finduid(uid) = true) {
     p_animprotect(^false);
 }
+cam_reset;
 ~update_bas; // update appearance
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight
@@ -129,6 +130,7 @@ if (.staffmodlevel >= 2 & .inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
 if (.p_finduid(.uid) = true) {
     .p_animprotect(^false);
 }
+.cam_reset;
 ~.update_bas; // update appearance
 ~.update_bonuses; // update bonuses if
 ~.update_weight; // update weight

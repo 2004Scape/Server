@@ -56,6 +56,7 @@
 [command,cam_lookat](coord $destCoord, int $destHeight, int $rotationSpeed, int $rotationMultiplier)
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
 [command,cam_reset]
+[command,.cam_reset]
 [command,coord]()(coord)
 [command,.coord]()(coord)
 [command,displayname]()(string)
