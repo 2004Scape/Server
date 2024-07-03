@@ -83,8 +83,8 @@ if (loc_type = game_trawler_leak) {
             if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
                 npc_queue(7, 0, 0);
             }
-            if (.npc_find(^trawler_flood_center_under, 0_31_75_murphy, 5, 0) = true) {
-                .npc_queue(7, 0, 0);
+            if (npc_find(^trawler_flood_center_under, 0_31_75_murphy, 5, 0) = true) {
+                npc_queue(7, 0, 0);
             }
         }
     }

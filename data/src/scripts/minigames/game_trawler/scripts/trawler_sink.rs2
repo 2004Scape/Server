@@ -20,16 +20,7 @@ while (huntnext = true) {
     queue(trawler_player_sink, 0);
 }
 if (npc_find(^trawler_wreck_murphy, 0_30_75_murphy, 2, 0) = true) {
-    switch_int (random(5)) {
-        case 0 : 
-            npc_say("You'll need all your strength!");
-            npc_delay(4);
-            npc_say("To make it back to shore."); // confirmed
-        case 1 : npc_say("No fishies for you today!");
-        case 2 : npc_say("Arrrgh! we've sunk!");
-        case 3 : npc_say("Keep your head above water shipmate.");
-        case 4 : npc_say("You'll be joining Davey Jones!");
-    }
+    npc_settimer(5);
 }
 
 [queue,trawler_player_sink]
@@ -62,3 +53,22 @@ p_teleport(^trawler_escape);
 ~update_all(null);
 queue(damage_player, 0, 2);
 ~mesbox("You climb onto the floating barrel and begin to kick your way to the|shore.|You make it to the shore tired and weary."); // osrs
+
+
+[ai_timer,0_30_75_murphy]
+if (~playercount_coord_pair_table(trawler_wreck_zones) < 1) {
+    npc_settimer(0);
+    return;
+}
+if (random(5) = 0) {
+    switch_int (random(5)) {
+        case 0 : 
+            npc_say("You'll need all your strength!");
+            npc_delay(1);
+            npc_say("To make it back to shore."); // confirmed
+        case 1 : npc_say("No fishies for you today!");
+        case 2 : npc_say("Arrrgh! we've sunk!");
+        case 3 : npc_say("Keep your head above water shipmate.");
+        case 4 : npc_say("You'll be joining Davey Jones!");
+    }
+}

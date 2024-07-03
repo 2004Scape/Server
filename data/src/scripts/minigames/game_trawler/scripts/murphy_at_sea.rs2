@@ -1,4 +1,8 @@
-[opnpc1,0_29_75_murphy]
+[opnpc1,0_29_75_murphy] @murphy_at_sea;
+[opnpc1,0_31_75_murphy] @murphy_at_sea; 
+
+[label,murphy_at_sea]
+~chatnpc("<p,neutral>Whoooahh sailor!");
 //todo: confirm mesanims 
 def_int $choice = ~p_choice2("I've had enough, take me back.", 1, "How you doing murphy?", 2);
 if ($choice = 2) {
@@ -24,4 +28,27 @@ if ($choice = 2) {
 ~chatnpc("<p,drunk>Ok, ok, I'll try, but don't say I didn't warn you...");
 ~mesbox("Murphy attempts to sharply turn the large ship.");
 ~chatnpc("<p,sad>Save yourself! We're going down!");
+if (npc_find(^trawler_wreck_murphy, 0_30_75_murphy, 2, 0) = true) {
+    npc_settimer(5);
+}
 queue(trawler_player_sink, 0);
+
+[ai_queue6,0_29_75_murphy] @murphy_cry;
+[ai_queue6,0_31_75_murphy] @murphy_cry;
+
+[ai_queue7,0_29_75_murphy] @murphy_cheer;
+[ai_queue7,0_31_75_murphy] @murphy_cheer;
+
+[label,murphy_cry]
+npc_setmode(none);
+npc_delay(0);
+npc_anim(emote_cry, 0);
+npc_delay(1);
+npc_setmode(patrol);
+
+[label,murphy_cheer]
+npc_setmode(none);
+npc_delay(0);
+npc_anim(emote_cheer, 0);
+npc_delay(2);
+npc_setmode(patrol);
