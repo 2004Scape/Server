@@ -366,24 +366,23 @@ export default class Packet extends Hashable {
     }
 
     pBit(n: number, value: number): void {
-        let bytePos: number = this.bitPos >>> 3;
-        let remaining: number = 8 - (this.bitPos & 7);
+        const pos: number = this.bitPos;
         this.bitPos += n;
+        let bytePos: number = pos >>> 3;
+        let remaining: number = 8 - (pos & 7);
+        const view: DataView = this.#view;
 
         for (; n > remaining; remaining = 8) {
-            this.#view.setUint8(bytePos, this.#view.getUint8(bytePos) & ~((1 << remaining) - 1));
-            this.#view.setUint8(bytePos, this.#view.getUint8(bytePos) | ((value >>> (n - remaining)) & ((1 << remaining) - 1)));
-            bytePos++;
+            const shift: number = (1 << remaining) - 1;
+            const byte: number = view.getUint8(bytePos);
+            view.setUint8(bytePos++, (byte & ~shift) | ((value >>> (n - remaining)) & shift));
             n -= remaining;
         }
 
-        if (n == remaining) {
-            this.#view.setUint8(bytePos, this.#view.getUint8(bytePos) & ~((1 << remaining) - 1));
-            this.#view.setUint8(bytePos, this.#view.getUint8(bytePos) | value & ((1 << remaining) - 1));
-        } else {
-            this.#view.setUint8(bytePos, this.#view.getUint8(bytePos) & (~((1 << n) - 1) << (remaining - n)));
-            this.#view.setUint8(bytePos, this.#view.getUint8(bytePos) | ((value & ((1 << n) - 1)) << (remaining - n)));
-        }
+        const r: number = remaining - n;
+        const shift: number = (1 << n) - 1;
+        const byte: number = view.getUint8(bytePos);
+        view.setUint8(bytePos, (byte & (~shift << r)) | ((value & shift) << r));
     }
 
     rsaenc(pem: PrivateKey): void {
