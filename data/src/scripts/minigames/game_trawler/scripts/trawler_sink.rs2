@@ -2,21 +2,25 @@
 huntall(^trawler_start_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
+    clearqueue(trawler_player_rip_net);
     queue(trawler_player_sink, 0);
 }
 huntall(^trawler_start_center, 8, 0);
 while (huntnext = true) {
     if_close;
+    clearqueue(trawler_player_rip_net);
     queue(trawler_player_sink, 0);
 }
 huntall(^trawler_flood_center_under, 8, 0);
 while (huntnext = true) {
     if_close;
+    clearqueue(trawler_player_rip_net);
     queue(trawler_player_sink, 0);
 }
 huntall(^trawler_flood_center, 8, 0);
 while (huntnext = true) {
     if_close;
+    clearqueue(trawler_player_rip_net);
     queue(trawler_player_sink, 0);
 }
 if (npc_find(^trawler_wreck_murphy, 0_30_75_murphy, 2, 0) = true) {
