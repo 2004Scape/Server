@@ -4,32 +4,13 @@ if (~playercount_coord_pair_table(trawler_game_zones) > 0 | ~playercount_coord_p
     return;
 }
 
-~trawler_game_start;
-
-if (~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
-    npc_settimer(0);
-}
-
-if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
-    //~trawler_reset;
-    %npc_trawler_start = map_clock;
-    npc_settimer(30);
-
-}
-
-[proc,trawler_game_start]
-def_int $player_count = 0;
 huntall(^trawler_lobby_center_under, 8, 0);
 while (huntnext = true) {
     if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = true) {
         if_close;
         if (p_finduid(uid) = true) {
             queue(trawler_start, 0);
-            $player_count = add($player_count, 1);
         }
-    }
-    if ($player_count > 32) {
-        return;
     }
 }
 huntall(^trawler_lobby_center, 8, 0);
@@ -38,14 +19,22 @@ while (huntnext = true) {
         if_close;
         if (p_finduid(uid) = true) {
             queue(trawler_start, 0);
-            $player_count = add($player_count, 1);
         }
-    }
-    if ($player_count > 32) {
-        return;
     }
 }
 
+if (~playercount_coord_pair_table(trawler_lobby_zones) < 1) {
+    npc_settimer(0);
+}
+
+~trawler_reset;
+
+if (npc_find(^trawler_start_center_under, murphy_nonflood, 5, 0) = true) {
+    //~trawler_reset;
+    %npc_trawler_start = map_clock;
+    npc_settimer(30);
+
+}
 
 [queue,trawler_start]
 if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = false) {

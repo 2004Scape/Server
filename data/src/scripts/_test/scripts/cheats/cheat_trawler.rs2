@@ -1,7 +1,14 @@
 [debugproc,trawler_win](int $rolls)
-if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
-    %npc_trawler_start = sub(map_clock, 1000);
-    %npc_trawler_fish_caught = $rolls;
+if (~inzone_coord_pair_table(trawler_flood_zones, coord) = true) {
+    if (npc_find(^trawler_flood_center_under, murphy_flood, 5, 0) = true) {
+        %npc_trawler_start = sub(map_clock, 1000);
+        %npc_trawler_fish_caught = $rolls;
+    }
+} else {
+    if (npc_find(^trawler_start_center_under, murphy_nonflood, 5, 0) = true) {
+        %npc_trawler_start = sub(map_clock, 1000);
+        %npc_trawler_fish_caught = $rolls;
+    }
 }
 
 [debugproc,trawler_loot](int $rolls)

@@ -54,8 +54,11 @@ if (%trawler < 3 | %trawler_catch = 0) {
 }
 def_int $level = stat(fishing);
 if ($level < 15) { // osrs wiki says its unboostable but this is untrue.
-    mes("You need to have a Fishin level of 15 to find fish here."); // osrs and rs3
+    mes("You need to have a Fishing level of 15 to find fish here."); // osrs and rs3
+    return;
 }
+anim(human_pickupfloor, 0);
+p_delay(0);
 
 inv_transmit(trawler_catch, trawler_catch:inv);
 if_openmainmodal(trawler_catch);
@@ -80,9 +83,16 @@ while ($i < inv_size(trawler_catch)) {
 inv_stoptransmit(trawler_catch:inv);
 
 // osrs drops on ground on full inv
-[inv_button1,trawler_catch:inv] inv_moveitem(trawler_catch, inv, last_item, 1);
-[inv_button2,trawler_catch:inv] inv_moveitem(trawler_catch, inv, last_item, inv_total(trawler_catch, last_item)); 
-
+[inv_button1,trawler_catch:inv] 
+inv_moveitem(trawler_catch, inv, last_item, 1);
+if (inv_freespace(trawler_catch) = inv_size(trawler_catch)) {
+    if_close; // osrs
+}
+[inv_button2,trawler_catch:inv] 
+inv_moveitem(trawler_catch, inv, last_item, inv_total(trawler_catch, last_item)); 
+if (inv_freespace(trawler_catch) = inv_size(trawler_catch)) {
+    if_close; // osrs
+}
 
 // trawler reward was reworked early 2007. So its way different than osrs
 // - https://imgur.com/gBvOHZl

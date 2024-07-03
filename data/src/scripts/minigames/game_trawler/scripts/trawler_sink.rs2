@@ -23,7 +23,7 @@ while (huntnext = true) {
     clearqueue(trawler_player_rip_net);
     queue(trawler_player_sink, 0);
 }
-if (npc_find(^trawler_wreck_murphy, 0_30_75_murphy, 2, 0) = true) {
+if (npc_find(^trawler_wreck_murphy, murphy_sunk, 2, 0) = true) {
     npc_settimer(5);
 }
 
@@ -53,14 +53,15 @@ cam_reset;
 [oploc1,game_trawler_barrel2] @trawler_escape;
 
 [label,trawler_escape]
-~mesbox("You climb onto the floating barrel and begin to kick your way to the|shore."); // based on osrs
+~mesbox("You climb onto the floating barrel and begin to kick your way to the|shore.");
+if_close;
 p_teleport(^trawler_escape);
 ~update_all(null);
 queue(damage_player, 0, 2);
 mes("You make it to the shore tired and weary."); // rs3 is mes. Also https://youtu.be/sl6i7lK_re0?t=78
 
 
-[ai_timer,0_30_75_murphy]
+[ai_timer,murphy_sunk]
 if (~playercount_coord_pair_table(trawler_wreck_zones) < 1) {
     npc_settimer(0);
     return;

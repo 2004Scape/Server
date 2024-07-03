@@ -1,4 +1,8 @@
-[ai_timer,0_29_75_murphy]
+[ai_timer,murphy_nonflood] @trawler_controller;
+[ai_timer,murphy_flood] @trawler_controller;
+
+
+[label,trawler_controller]
 def_int $player_count = ~playercount_coord_pair_table(trawler_game_zones);
 if ($player_count < 1) {
     ~trawler_reset;
@@ -16,9 +20,10 @@ npc_settimer(5);
 // He will say things such as "My mother can bail better than you", "Nooooooo", or "Fix that net". 
 // One useful thing he will say is how much time is left, but don?t pay attention to this but only to your tasks at hand."
 // - https://web.archive.org/web/20041127044153/https://runescapecommunity.com/index.php%3fshowtopic%3d101380
+def_int $minutes = sub(10, divide(sub(map_clock, %npc_trawler_start), 100));
 def_int $ticks_near_minute = modulo(sub(map_clock, %npc_trawler_start), 100);
-if ($ticks_near_minute > -3 & $ticks_near_minute < 3) {
-    ~trawler_npc_say("<~pluralise(sub(10, divide(sub(map_clock, %npc_trawler_start), 100)), "minute")> left!");
+if ($minutes > 0 & $ticks_near_minute > -3 & $ticks_near_minute < 3) {
+    npc_say("<~pluralise($minutes, "minute")> left!");
 }
 
 // increase water
@@ -32,9 +37,9 @@ while ($i < enum_getoutputcount(trawler_hulls)) {
     $i = add($i, 1);
 }
 // max leaks:
-// 1p = 3
-// 2p = 5
-def_int $max_leaks = min(add(multiply($player_count, 2), 1), 9);
+// 1p = 4
+// 2p = 7
+def_int $max_leaks = min(add(multiply($player_count, 3), 1), 9);
 def_int $leak_chance = max(divide(32, $player_count), 2);
 // add new ship leaks
 $i = 0;
@@ -43,7 +48,7 @@ while ($i < enum_getoutputcount(trawler_hulls) & $leak_count < $max_leaks) {
         if (random($leak_chance) = 0) { // complete guess
             ~trawler_leak;
             if (random(5) = 0) {
-                ~trawler_npc_queue(6);
+                npc_queue(6, 0, 0);
             }
             $leak_count = add($leak_count, 1);
         }
@@ -55,43 +60,59 @@ if (%npc_trawler_flood_status >= 100) {
     ~trawler_sink;
     ~trawler_reset;
     return;
-} else if (%npc_trawler_flood_status < 30) {
+} else if (%npc_trawler_flood_status = 0 & npc_type = murphy_flood) {
     ~trawler_unflood;
-} else if (%npc_trawler_flood_status >= 30) {
+    if (.npc_find(^trawler_start_center_under, murphy_nonflood, 5, 0) = true) {
+        .%npc_trawler_fish_caught = %npc_trawler_fish_caught;
+        .%npc_trawler_flood_status = %npc_trawler_flood_status;
+        .%npc_trawler_start = %npc_trawler_start;
+        .npc_settimer(5);
+        npc_settimer(0);
+        return;
+    }
+} else if (%npc_trawler_flood_status >= 30 & npc_type = murphy_nonflood) {
     ~trawler_flood;
+    if (.npc_find(^trawler_flood_center_under, murphy_flood, 5, 0) = true) {
+        .%npc_trawler_fish_caught = %npc_trawler_fish_caught;
+        .%npc_trawler_flood_status = %npc_trawler_flood_status;
+        .%npc_trawler_start = %npc_trawler_start;
+        .npc_settimer(5);
+        npc_settimer(0);
+        return;
+    }
 }
 
 if (random(5) = 0) { // handle murphy's sayings
     if (loc_find(^trawler_start_net1, game_trawler_fish_net_broken1) = true | loc_find(^trawler_start_net2, game_trawler_fish_net_broken2) = true) {
-        ~trawler_npc_say("Arrh! Check that net!");
+        npc_say("Arrh! Check that net!");
         return;
     }
     if (%npc_trawler_flood_status < 5) { //https://youtu.be/scKmu6QETRw?t=298
-        ~trawler_npc_say("Let's get this net full with fishies!");
+        npc_say("Let's get this net full with fishies!");
     } else if (%npc_trawler_flood_status < 15) { 
-        ~trawler_npc_say("Blistering barnacles!");
+        npc_say("Blistering barnacles!");
     } else if (%npc_trawler_flood_status < 20) {
-        ~trawler_npc_say("That's the stuff, fill those holes!");
+        npc_say("That's the stuff, fill those holes!");
     } else if (%npc_trawler_flood_status < 25) {
-        ~trawler_npc_say("The water is coming in matey!");
+        npc_say("The water is coming in matey!");
     } else if (%npc_trawler_flood_status < 30) {
-        ~trawler_npc_say("You'll need to start bailing soon!");
+        npc_say("You'll need to start bailing soon!");
     } else if (%npc_trawler_flood_status < 40) {
-        ~trawler_npc_say("My mother could bail better than that!");
+        npc_say("My mother could bail better than that!");
     } else if (%npc_trawler_flood_status < 45) { 
-        ~trawler_npc_say("Land lubbers!");
+        npc_say("Land lubbers!");
     } else if (%npc_trawler_flood_status < 50) {
-        ~trawler_npc_say("It's a fierce sea today traveller.");
+        npc_say("It's a fierce sea today traveller.");
     } else if (%npc_trawler_flood_status < 60) {
-        ~trawler_npc_say("We'll all end up in a watery grave!");
+        npc_say("We'll all end up in a watery grave!");
     } else if (%npc_trawler_flood_status < 70) {
-        ~trawler_npc_say("Noooooo!");
+        npc_say("Noooooo!");
     } else if (%npc_trawler_flood_status < 80) {
-        ~trawler_npc_say("We're all doomed!");
+        npc_say("We're all doomed!");
     } else if (%npc_trawler_flood_status < 90) {
-        ~trawler_npc_say("We're going under!");
+        npc_say("We're going under!");
     } else {
-        ~trawler_npc_say("Mummy!");
+        npc_say("Mummy!");
     }
 }
 if (random(16) = 0) {
@@ -111,27 +132,19 @@ while ($i < $player_count) {
     $i = add($i, 1);
 }
 
-[proc,trawler_npc_queue](int $queue)
-if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
-    npc_queue($queue, 0, 0);
-}
-if (.npc_find(^trawler_flood_center_under, 0_31_75_murphy, 5, 0) = true) {
-    .npc_queue($queue, 0, 0);
-}
-
-[proc,trawler_npc_say](string $string) 
-if (npc_find(^trawler_start_center_under, 0_29_75_murphy, 5, 0) = true) {
-    npc_say($string);
-}
-if (.npc_find(^trawler_flood_center_under, 0_31_75_murphy, 5, 0) = true) {
-    .npc_say($string);
-}
-
 [proc,trawler_reset]
-%npc_trawler_start = null;
-%npc_trawler_flood_status = 0;
-%npc_trawler_fish_caught = 0;
-npc_settimer(0);
+if (npc_find(^trawler_flood_center_under, murphy_flood, 5, 0) = true) {
+    %npc_trawler_start = null;
+    %npc_trawler_flood_status = 0;
+    %npc_trawler_fish_caught = 0;
+    npc_settimer(0);
+}
+if (npc_find(^trawler_start_center_under, murphy_nonflood, 5, 0) = true) {
+    %npc_trawler_start = null;
+    %npc_trawler_flood_status = 0;
+    %npc_trawler_fish_caught = 0;
+    npc_settimer(0);
+}
 def_int $i = 0;
 while ($i < enum_getoutputcount(trawler_hulls)) {
     if (loc_find(enum(int, coord, trawler_hulls, $i), game_trawler_leak) = true) {

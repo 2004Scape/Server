@@ -1,5 +1,5 @@
-[opnpc1,0_29_75_murphy] @murphy_at_sea;
-[opnpc1,0_31_75_murphy] @murphy_at_sea; 
+[opnpc1,murphy_nonflood] @murphy_at_sea;
+[opnpc1,murphy_flood] @murphy_at_sea; 
 
 [label,murphy_at_sea]
 ~chatnpc("<p,neutral>Whoooahh sailor!");
@@ -28,16 +28,16 @@ if ($choice = 2) {
 ~chatnpc("<p,drunk>Ok, ok, I'll try, but don't say I didn't warn you...");
 ~mesbox("Murphy attempts to sharply turn the large ship.");
 ~chatnpc("<p,sad>Save yourself! We're going down!");
-if (npc_find(^trawler_wreck_murphy, 0_30_75_murphy, 2, 0) = true) {
+if (npc_find(^trawler_wreck_murphy, murphy_sunk, 2, 0) = true) {
     npc_settimer(5);
 }
 queue(trawler_player_sink, 0);
 
-[ai_queue6,0_29_75_murphy] @murphy_cry;
-[ai_queue6,0_31_75_murphy] @murphy_cry;
+[ai_queue6,murphy_nonflood] @murphy_cry;
+[ai_queue6,murphy_flood] @murphy_cry;
 
-[ai_queue7,0_29_75_murphy] @murphy_cheer;
-[ai_queue7,0_31_75_murphy] @murphy_cheer;
+[ai_queue7,murphy_nonflood] @murphy_cheer;
+[ai_queue7,murphy_flood] @murphy_cheer;
 
 [label,murphy_cry]
 npc_setmode(none);
