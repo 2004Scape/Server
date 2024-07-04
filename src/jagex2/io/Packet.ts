@@ -215,11 +215,7 @@ export default class Packet extends Hashable {
         this.p1(value ? 1 : 0);
     }
 
-    pjstr(str: string | null, terminator: number = 10): void {
-        if (str === null) {
-            str = 'null';
-        }
-
+    pjstr(str: string, terminator: number = 10): void {
         const length: number = str.length;
         for (let i: number = 0; i < length; i++) {
             this.#view.setUint8(this.pos++, str.charCodeAt(i));
@@ -228,8 +224,11 @@ export default class Packet extends Hashable {
     }
 
     pdata(src: Uint8Array, offset: number, length: number): void {
-        this.data.set(src.subarray(offset, offset + length), this.pos);
-        this.pos += length - offset;
+        const view: DataView = this.#view;
+        const total: number = offset + length;
+        for (let i: number = offset; i < total; i++) {
+            view.setUint8(this.pos++, src[i]);
+        }
     }
 
     psize4(size: number): void {
@@ -325,8 +324,11 @@ export default class Packet extends Hashable {
     }
 
     gdata(dest: Uint8Array, offset: number, length: number): void {
-        dest.set(this.data.subarray(this.pos, this.pos + length), offset);
-        this.pos += length;
+        const view: DataView = this.#view;
+        const total: number = offset + length;
+        for (let i: number = offset; i < total; i++) {
+            dest[i] = view.getUint8(this.pos++);
+        }
     }
 
     gsmarts(): number {

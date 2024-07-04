@@ -12,4 +12,8 @@ export default class UpdateZonePartialEnclosedEncoder extends MessageEncoder<Upd
         buf.p1((message.zoneZ << 3) - Position.zoneOrigin(message.originZ));
         buf.pdata(message.data, 0, message.data.length);
     }
+
+    test(message: UpdateZonePartialEnclosed): number {
+        return 1 + 1 + message.data.length;
+    }
 }
