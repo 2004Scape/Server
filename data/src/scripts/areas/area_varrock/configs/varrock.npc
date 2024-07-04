@@ -928,4 +928,5 @@ model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
 wanderrange=2
+members=yes
 param=death_anim,midget_death
