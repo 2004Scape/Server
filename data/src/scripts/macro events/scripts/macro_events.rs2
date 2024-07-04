@@ -56,7 +56,7 @@ switch_int ($event) {
 if (~in_duel_arena($coord) = true | ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     return(false);
 }
-if (~inzone_coord_pair_table(trawler_game_zones, $coord) = true) { // allowed on boat in pre-game https://youtu.be/7-gUR40Nr8M
+if (~inzone_coord_pair_table(trawler_game_zones, coord) = true | ~inzone_coord_pair_table(trawler_wreck_zones, coord) = true) { // allowed on boat in pre-game https://youtu.be/7-gUR40Nr8M
     return(false);
 }
 return(true);
