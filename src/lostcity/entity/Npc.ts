@@ -380,8 +380,8 @@ export default class Npc extends PathingEntity {
         if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
-        if(!(this.x === dest.x && this.z === dest.z) && World.currentTick > this.nextPatrolTick) {
-            this.teleJump(dest.x, dest.z, dest.level);
+        if(!(this.x === dest.x && this.z === dest.z) && World.currentTick >= this.nextPatrolTick) {
+            this.teleport(dest.x, dest.z, dest.level);
         }
         if ((this.x === dest.x && this.z === dest.z) && !this.delayedPatrol) {
             this.nextPatrolTick = World.currentTick + patrolDelay;
