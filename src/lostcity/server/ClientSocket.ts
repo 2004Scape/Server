@@ -30,8 +30,9 @@ export default class ClientSocket {
     inCount = new Uint8Array(256);
 
     // packets are flushed in up to 5KB chunks
-    out = new Uint8Array(5000);
-    outOffset = 0;
+    // out = new Uint8Array(5000);
+    // outOffset = 0;
+    out: Packet = new Packet(new Uint8Array(5000));
 
     player: NetworkPlayer | null = null;
 
@@ -96,54 +97,16 @@ export default class ClientSocket {
         this.inCount.fill(0);
     }
 
-    get untilNextFlush() {
-        return this.out.length - this.outOffset;
-    }
-
-    write(data: Packet) {
-        const dataArray = data.data;
-
-        let offset = 0;
-        let remaining = data.pos;
-
-        // pack as much data as we can into a single 5kb chunk, then flush and repeat
-        while (remaining > 0) {
-            const untilNextFlush = this.out.length - this.outOffset;
-
-            if (remaining > untilNextFlush) {
-                this.out.set(dataArray.subarray(offset, offset + untilNextFlush), this.outOffset);
-                this.outOffset += untilNextFlush;
-                this.flush();
-                offset += untilNextFlush;
-                remaining -= untilNextFlush;
-            } else {
-                this.out.set(dataArray.subarray(offset, offset + remaining), this.outOffset);
-                this.outOffset += remaining;
-                offset += remaining;
-                remaining = 0;
-            }
-        }
-        data.release();
-    }
-
-    writeNaive(data: Uint8Array) {
-        if (this.outOffset + data.length > this.out.length) {
-            this.flush();
-        }
-
-        this.out.set(data, this.outOffset);
-        this.outOffset += data.length;
-    }
-
     writeImmediate(data: Uint8Array) {
         this.send(data);
     }
 
     flush() {
-        if (!this.outOffset) {
+        const out = this.out;
+        if (out.pos === 0) {
             return;
         }
-        this.send(this.out.subarray(0, this.outOffset));
-        this.outOffset = 0;
+        this.send(out.data.subarray(0, out.pos));
+        out.pos = 0;
     }
 }

@@ -4,48 +4,50 @@ import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import World from '#lostcity/engine/World.js';
 import {Position} from '#lostcity/entity/Position.js';
-import Player from '#lostcity/entity/Player.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import Npc from '#lostcity/entity/Npc.js';
-import BuildArea from '#lostcity/entity/BuildArea.js';
+import BuildArea, {ExtendedInfo} from '#lostcity/entity/BuildArea.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;
     private static readonly BITS_RUN: number = 2 + 3 + 3 + 1 + 1;
     private static readonly BITS_WALK: number = 2 + 3 + 1 + 1;
     private static readonly BITS_EXTENDED: number = 2 + 1;
-    private static readonly INFO_LIMIT: number = 5000;
+    private static readonly BYTES_LIMIT: number = 4997;
 
     prot = ServerProt.NPC_INFO;
 
     encode(buf: Packet, message: NpcInfo): void {
-        const player: Player = message.player;
-        const buildArea: BuildArea = player.buildArea;
-        this.writeNpcs(buf, player);
-        this.writeNewNpcs(buf, player);
+        const buildArea: BuildArea = message.buildArea;
+        this.writeNpcs(buf, message);
+        this.writeNewNpcs(buf, message);
 
-        if (buildArea.extendedInfo.size > 0) {
-            for (const {id, added} of buildArea.extendedInfo) {
-                const other: Npc | null = World.getNpc(id);
-                if (!other) {
+        const extended: Set<ExtendedInfo> = buildArea.extendedInfo;
+        if (extended.size > 0) {
+            for (const info of extended) {
+                const npc: Npc | null = World.getNpc(info.id);
+                if (!npc) {
                     continue;
                 }
-                this.writeUpdate(other, buf, added);
+                this.writeUpdate(npc, buf, info.added);
             }
         }
-        buildArea.extendedInfo.clear();
+        buildArea.reset();
     }
 
-    private writeNpcs(bitBlock: Packet, player: Player): void {
-        const buildArea: BuildArea = player.buildArea;
+    test(_: NpcInfo): number {
+        return NpcInfoEncoder.BYTES_LIMIT;
+    }
+
+    private writeNpcs(bitBlock: Packet, message: NpcInfo): void {
+        const buildArea: BuildArea = message.buildArea;
         // update existing npcs (255 max - 8 bits)
         bitBlock.bits();
         bitBlock.pBit(8, buildArea.npcs.size);
 
-        let accumulator: number = 0;
         for (const nid of buildArea.npcs) {
             const npc: Npc | null = World.getNpc(nid);
-            if (!npc || npc.tele || npc.level !== player.level || !Position.isWithinDistanceSW(player, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
+            if (!npc || npc.tele || npc.level !== message.level || !Position.isWithinDistanceSW(message, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
                 // npc full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
@@ -63,7 +65,8 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             } else if (extendedInfo) {
                 bits = NpcInfoEncoder.BITS_EXTENDED;
             }
-            if ((bitBlock.bitPos + bits + 7 >>> 3) + bitBlock.pos + (accumulator += this.calculateUpdateSize(npc, false)) > NpcInfoEncoder.INFO_LIMIT) {
+            const updateSize: number = extendedInfo ? this.calculateUpdateSize(npc, false) : 0;
+            if ((bitBlock.bitPos + bits + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
                 extendedInfo = false;
             }
 
@@ -82,36 +85,36 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             }
 
             if (extendedInfo) {
-                player.buildArea.extendedInfo.add({id: nid, added: false});
+                buildArea.extendedInfo.add({id: nid, added: false});
             }
         }
     }
 
-    private writeNewNpcs(bitBlock: Packet, player: Player): void {
-        const buildArea: BuildArea = player.buildArea;
-        let accumulator: number = 0;
-        for (const npc of buildArea.getNearbyNpcs(player)) {
-            const hasInitialUpdate: boolean = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
+    private writeNewNpcs(bitBlock: Packet, message: NpcInfo): void {
+        const buildArea: BuildArea = message.buildArea;
+        for (const npc of buildArea.getNearbyNpcs(message.x, message.z, message.originX, message.originZ)) {
+            const extendedInfo: boolean = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
 
-            if ((bitBlock.bitPos + NpcInfoEncoder.BITS_NEW + 7 >>> 3) + bitBlock.pos + (accumulator += this.calculateUpdateSize(npc, true)) > NpcInfoEncoder.INFO_LIMIT) {
+            const updateSize: number = extendedInfo ? this.calculateUpdateSize(npc, true) : 0;
+            if ((bitBlock.bitPos + NpcInfoEncoder.BITS_NEW + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
                 // more npcs get added next tick
                 break;
             }
 
             bitBlock.pBit(13, npc.nid);
             bitBlock.pBit(11, npc.type);
-            bitBlock.pBit(5, npc.x - player.x);
-            bitBlock.pBit(5, npc.z - player.z);
-            bitBlock.pBit(1, hasInitialUpdate ? 1 : 0);
+            bitBlock.pBit(5, npc.x - message.x);
+            bitBlock.pBit(5, npc.z - message.z);
+            bitBlock.pBit(1, extendedInfo ? 1 : 0);
 
             buildArea.npcs.add(npc.nid);
 
-            if (hasInitialUpdate) {
-                player.buildArea.extendedInfo.add({id: npc.nid, added: true});
+            if (extendedInfo) {
+                buildArea.extendedInfo.add({id: npc.nid, added: true});
             }
         }
 
-        if (player.buildArea.extendedInfo.size > 0) {
+        if (buildArea.extendedInfo.size > 0) {
             bitBlock.pBit(13, 8191);
         }
         bitBlock.bytes();
@@ -141,7 +144,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.SAY) {
-            out.pjstr(npc.chat);
+            out.pjstr(npc.chat ?? '');
         }
 
         if (mask & Npc.DAMAGE) {
@@ -201,7 +204,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.SAY) {
-            length += npc.chat?.length ?? 0;
+            length += (npc.chat?.length ?? 0) + 1;
         }
 
         if (mask & Npc.DAMAGE) {
