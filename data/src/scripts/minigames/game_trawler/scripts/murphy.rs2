@@ -35,15 +35,15 @@ if (%trawler = 0) {
     ~chatnpc("<p,neutral>I've got all the supplies I need from the shop at the end of the pier. They sell good rope, hammers and axes although their bailing buckets aren't too effective.");
     @multi3("What fish do you catch?", murphy_fish_you_catch, "Your boat doesn't look too safe.", murphy_unsafe_boat, "Could I help?", murphy_could_i_help);
 }
-~chatplayer("<p,neutral>Hello again Murphy.");
+~chatplayer("<p,happy>Hello again Murphy.");
 ~chatnpc("<p,happy>Good day to you land lover. Fancy hitting the high seas again?");
 def_int $choice = ~p_choice2("No thanks, I still feel ill from last time.", 1, "Yes, let's do it!", 2);
 if ($choice = 1) {
     ~chatplayer("<p,neutral>No thanks, I still feel ill from last time.");
-    ~chatnpc("<p,drunk>Hah! ...Softy."); // todo: confirm
+    ~chatnpc("<p,bored>Hah! ...Softy.");
     return;
 }
-~chatplayer("<p,neutral>Yes, let's do it!");
+~chatplayer("<p,happy>Yes, let's do it!");
 %trawler = ^trawler_talked_to_murphy;
 ~chatnpc("<p,happy>Aye aye! Meet me on board the trawler. I just need to get a few things together.");
 
