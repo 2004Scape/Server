@@ -1261,7 +1261,7 @@ desc=This figure brings luck to those who sail.
 model=model_loc_254
 width=2
 
-[loc_255]
+[winch]
 name=Winch
 desc=Used for pulling things up.
 model=model_loc_255

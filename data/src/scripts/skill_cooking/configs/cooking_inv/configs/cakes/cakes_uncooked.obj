@@ -9,5 +9,4 @@ model=model_2465_obj
 cost=20
 weight=500g
 tradeable=yes
-param=cooking_range_only,1
 param=next_obj_stage,cake_tin

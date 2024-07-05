@@ -191,6 +191,7 @@ enum ScriptOpcode {
     BOTH_HEROPOINTS, // official
     SETGENDER,
     SETSKINCOLOUR,
+    P_ANIMPROTECT,
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official

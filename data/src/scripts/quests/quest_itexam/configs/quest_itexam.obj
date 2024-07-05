@@ -188,7 +188,7 @@ desc=Used to hold up trousers!
 weight=1kg
 members=yes
 
-[obj_685]
+[old_boot]
 name=Old boot
 desc=Phew!
 model=model_2683_obj
@@ -223,7 +223,7 @@ model=model_2512_obj
 weight=15g
 members=yes
 
-[obj_688]
+[buttons]
 name=Buttons
 desc=Not Dick Whittingtons' helper at all!
 model=model_2549_obj
@@ -247,7 +247,7 @@ desc=I pity the poor person beaten with this!
 weight=4lb
 members=yes
 
-[obj_690]
+[broken_glass]
 name=Broken glass
 desc=Watch those feet!
 model=model_2676_obj
@@ -335,7 +335,7 @@ members=yes
 iop2=Read
 weight=20g
 
-[obj_697]
+[damaged_armour]
 name=Damaged armour
 desc=Beyond repair.
 model=model_loc_825_0

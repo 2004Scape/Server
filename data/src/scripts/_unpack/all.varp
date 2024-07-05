@@ -130,9 +130,12 @@ transmit=yes
 [attackstyle_magic]
 transmit=yes
 
-[varp_109]
+[trawler]
+scope=perm
 
-[varp_110]
+[trawler_catch]
+scope=perm
+protect=no
 
 [bank_noted]
 transmit=yes

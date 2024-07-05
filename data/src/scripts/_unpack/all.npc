@@ -4227,7 +4227,6 @@ recol1d=21140
 recol2s=31649
 recol2d=4428
 model1=model_2850_npc
-moverestrict=blocked+normal
 param=death_anim,bird_death
 param=death_sound,bird_death
 
@@ -4240,7 +4239,6 @@ readyanim=bird_ready
 vislevel=hide
 minimap=no
 model1=model_2850_npc
-moverestrict=blocked+normal
 param=death_anim,bird_death
 param=death_sound,bird_death
 

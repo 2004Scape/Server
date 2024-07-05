@@ -421,7 +421,8 @@ const ScriptOpcodePointers: {
         require2: ['active_player2']
     },
     [ScriptOpcode.SOUND_SYNTH]: {
-        require: ['active_player']
+        require: ['active_player'],
+        require2: ['active_player2']
     },
     [ScriptOpcode.SPOTANIM_PL]: {
         require: ['active_player'],
@@ -473,6 +474,10 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.SETSKINCOLOUR]: {
         require: ['p_active_player']
+    },
+    [ScriptOpcode.P_ANIMPROTECT]: {
+        require: ['p_active_player'],
+        require2: ['p_active_player2']
     },
     // Npc ops
     [ScriptOpcode.NPC_ADD]: {

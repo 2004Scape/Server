@@ -40,6 +40,8 @@ queue(macro_event_general_check, 0);
 ~duel_arena_login;
 // if player is in a gnomeball game, they login outside of the arena
 ~gnomeball_login;
+// if player is on a trawler ship, they login at port sarim
+~trawler_login;
 
 if (%tutorial_progress < ^tutorial_complete) {
      if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {

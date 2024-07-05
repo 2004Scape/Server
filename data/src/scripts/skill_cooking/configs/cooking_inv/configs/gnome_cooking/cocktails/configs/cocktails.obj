@@ -497,7 +497,6 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
-param=cooking_range_only,1
 param=gnome_cooking_type,0
 
 [unfinished_chocolate_saturday3]
@@ -704,7 +703,6 @@ weight=400g
 category=category_15
 tradeable=yes
 param=next_obj_stage,cocktail_glass
-param=cooking_range_only,1
 param=gnome_cooking_type,0
 
 [drunk_dragon]

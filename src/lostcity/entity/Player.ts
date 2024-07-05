@@ -251,6 +251,7 @@ export default class Player extends PathingEntity {
     basWalkLeft: number = -1;
     basWalkRight: number = -1;
     basRunning: number = -1;
+    animProtect: number = 0;
     logoutRequested: boolean = false;
     invListeners: {
         type: number; // InvType
@@ -494,7 +495,9 @@ export default class Player extends PathingEntity {
 
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
-            if (this.getVar(VarPlayerType.TEMP_RUN)) {
+            if (this.basRunning === -1) {
+                this.moveSpeed = MoveSpeed.WALK;
+            } else if (this.getVar(VarPlayerType.TEMP_RUN)) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
@@ -1519,7 +1522,7 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(anim: number, delay: number) {
-        if (anim >= SeqType.count) {
+        if (anim >= SeqType.count || this.animProtect) {
             // client would hard crash
             return;
         }

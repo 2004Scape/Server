@@ -79,8 +79,7 @@ if (~wilderness_level(coord) > 30) {
     mes("You can't use this teleport after level 30 wilderness.");
     return;
 }
-if (~in_duel_arena(coord) = true) {
-    mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
+if (~pre_tele_checks(coord) = false) {
     return;
 }
 mes($message);
@@ -96,18 +95,17 @@ inv_setslot(inv, $slot, oc_param($item, next_obj_stage), 1);
 [opheld4,_category_136]
 // https://youtu.be/vGH1Nyp4IBU
 mes("You rub the ring...");
+def_obj $item = last_item;
+def_int $slot = last_slot;
 if (~wilderness_level(coord) > 20) {
     // yes it actually says this in osrs
     mes("A mysterious force blocks your teleport spell!");
     mes("You can't use this teleport after level 20 wilderness.");
     return;
 }
-if (~in_duel_arena(coord) = true) {
-    mes("You can't teleport during a duel."); // guess based on: https://youtu.be/xLE8au7T50Q?t=227
+if (~pre_tele_checks(coord) = false) {
     return;
 }
-def_obj $item = last_item;
-def_int $slot = last_slot;
 ~player_teleport_normal(~coord_lineofwalk_radius(0_51_50_51_35, 2));
 def_namedobj $new_ring = oc_param($item, next_obj_stage);
 if ($new_ring = null) {
@@ -128,7 +126,7 @@ if (%ring_of_recoil >= 40) {
 
 [proc,ring_of_life_check]
 if (p_finduid(uid) = true) {
-    if (inv_getobj(worn, ^wearpos_ring) ! ring_of_life | ~wilderness_level(coord) > 30 | ~in_duel_arena(coord) = true) {
+    if (inv_getobj(worn, ^wearpos_ring) ! ring_of_life | ~wilderness_level(coord) > 30 | ~pre_tele_checks(coord) = false) {
         return;
     }
     if (stat(hitpoints) <= scale(10, 100, stat_base(hitpoints))) {
