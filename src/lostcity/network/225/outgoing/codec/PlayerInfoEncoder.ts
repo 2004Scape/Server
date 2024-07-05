@@ -259,7 +259,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
     }
 
-    private calculateUpdateSize(player: Player, info: PlayerInfo, self: boolean = false, newlyObserved: boolean = false): number {
+    private calculateUpdateSize(player: Player, message: PlayerInfo, self: boolean = false, newlyObserved: boolean = false): number {
         let length: number = 0;
         let mask: number = player.mask;
         if (newlyObserved) {
@@ -281,7 +281,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             mask &= ~Player.CHAT;
         }
 
-        if (info.buildArea.hasAppearance(player.pid, player.appearanceHashCode)) {
+        if (message.buildArea.hasAppearance(player.pid, player.appearanceHashCode)) {
             mask &= ~Player.APPEARANCE;
         }
 
