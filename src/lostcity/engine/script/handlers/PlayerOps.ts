@@ -133,7 +133,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, state => {
-        const delay = check(state.popInt(), NumberNotNull);
+        const delay = state.popInt();
         const seq = state.popInt();
 
         state.activePlayer.playAnimation(seq, delay);
