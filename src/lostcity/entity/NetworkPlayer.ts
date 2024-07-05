@@ -32,6 +32,9 @@ import CamLookAt from '#lostcity/network/outgoing/model/CamLookAt.js';
 import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
 import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';
 import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
+import Logout from '#lostcity/network/outgoing/model/Logout.js';
+import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
+import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -46,7 +49,6 @@ export class NetworkPlayer extends Player {
     }
 
     decodeIn() {
-        // this.lastResponse = World.currentTick; // use to keep headless players in the world
         if (this.client === null || this.client.inOffset < 1) {
             return;
         }
@@ -56,6 +58,8 @@ export class NetworkPlayer extends Player {
 
         this.userPath = [];
         this.opcalled = false;
+
+        World.lastCycleBandwidth[0] += this.client.inOffset;
 
         while (this.client.inOffset > offset) {
             const packetType = ClientProt.byId[this.client.in[offset++]];
@@ -126,7 +130,8 @@ export class NetworkPlayer extends Player {
     }
 
     writeInner(message: OutgoingMessage): void {
-        if (!this.client) {
+        const client = this.client;
+        if (!client) {
             return;
         }
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
@@ -134,19 +139,17 @@ export class NetworkPlayer extends Player {
             return;
         }
         const prot: ServerProt = encoder.prot;
-        let buf: Packet;
-        if (prot.length === -1) {
-            buf = Packet.alloc(0);
-        } else if (prot.length === -2) {
-            buf = Packet.alloc(2); // maybe this can be a type 1.
-        } else {
-            buf = new Packet(new Uint8Array(1 + encoder.prot.length));
+        const buf = client.out;
+        const test = (1 + prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0) + encoder.test(message);
+        if (buf.pos + test >= buf.length) {
+            client.flush();
         }
+        const pos: number = buf.pos;
         buf.p1(prot.id);
         if (prot.length === -1) {
-            buf.p1(0);
+            buf.pos += 1;
         } else if (prot.length === -2) {
-            buf.p2(0);
+            buf.pos += 2;
         }
         const start: number = buf.pos;
         encoder.encode(buf, message);
@@ -155,31 +158,15 @@ export class NetworkPlayer extends Player {
         } else if (prot.length === -2) {
             buf.psize2(buf.pos - start);
         }
-        if (this.client.encryptor) {
-            buf.data[0] = (buf.data[0] + this.client.encryptor.nextInt()) & 0xff;
+        if (client.encryptor) {
+            buf.data[pos] = (buf.data[pos] + client.encryptor.nextInt()) & 0xff;
         }
-        World.lastCycleBandwidth[1] += buf.pos;
-        this.client.write(buf);
-    }
-
-    writeImmediately(packet: Packet) {
-        if (!this.client) {
-            return;
-        }
-
-        if (this.client.encryptor) {
-            packet.data[0] = (packet.data[0] + this.client.encryptor.nextInt()) & 0xff;
-        }
-
-        this.client.write(packet);
-        this.client.flush();
+        World.lastCycleBandwidth[1] += buf.pos - pos;
     }
 
     override logout() {
-        const out = new Packet(new Uint8Array(1));
-        out.p1(ServerProt.LOGOUT.id);
-
-        this.writeImmediately(out);
+        this.writeInner(new Logout());
+        this.client?.flush();
     }
 
     override terminate() {
@@ -196,6 +183,9 @@ export class NetworkPlayer extends Player {
     }
 
     updateMap() {
+        const loadedZones: Set<number> = this.buildArea.loadedZones;
+        const activeZones: Set<number> = this.buildArea.activeZones;
+
         const reloadLeftX = (Position.zone(this.originX) - 4) << 3;
         const reloadRightX = (Position.zone(this.originX) + 5) << 3;
         const reloadTopZ = (Position.zone(this.originZ) + 5) << 3;
@@ -207,7 +197,7 @@ export class NetworkPlayer extends Player {
 
             this.originX = this.x;
             this.originZ = this.z;
-            this.loadedZones.clear();
+            loadedZones.clear();
         }
 
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
@@ -222,11 +212,11 @@ export class NetworkPlayer extends Player {
         }
 
         if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
-            this.loadedZones.clear();
+            loadedZones.clear();
         }
 
         // update any newly tracked zones
-        this.activeZones.clear();
+        activeZones.clear();
 
         const centerX = Position.zone(this.x);
         const centerZ = Position.zone(this.z);
@@ -243,29 +233,39 @@ export class NetworkPlayer extends Player {
                     continue;
                 }
 
-                this.activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
+                activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
             }
         }
     }
 
+    updatePlayers() {
+        this.write(new PlayerInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, this.uid, this.mask, this.tele, this.jump, this.walkDir, this.runDir));
+    }
+
+    updateNpcs() {
+        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ));
+    }
+
     updateZones() {
+        const loadedZones: Set<number> = this.buildArea.loadedZones;
+        const activeZones: Set<number> = this.buildArea.activeZones;
         // unload any zones that are no longer active
-        for (const zoneIndex of this.loadedZones) {
-            if (!this.activeZones.has(zoneIndex)) {
-                this.loadedZones.delete(zoneIndex);
+        for (const zoneIndex of loadedZones) {
+            if (!activeZones.has(zoneIndex)) {
+                loadedZones.delete(zoneIndex);
             }
         }
 
         // update active zones
-        for (const zoneIndex of this.activeZones) {
+        for (const zoneIndex of activeZones) {
             const zone: Zone = World.getZoneIndex(zoneIndex);
-            if (!this.loadedZones.has(zone.index)) {
+            if (!loadedZones.has(zone.index)) {
                 zone.writeFullFollows(this);
             } else {
                 zone.writePartialEncloses(this);
                 zone.writePartialFollows(this);
             }
-            this.loadedZones.add(zone.index);
+            loadedZones.add(zone.index);
         }
     }
 

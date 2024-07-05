@@ -11,4 +11,8 @@ export default class MidiSongEncoder extends MessageEncoder<MidiSong> {
         buf.p4(message.crc);
         buf.p4(message.length);
     }
+
+    test(message: MidiSong): number {
+        return 1 + message.name.length + 4 + 4;
+    }
 }

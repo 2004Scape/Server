@@ -67,6 +67,10 @@ enum ScriptOpcode {
     STAT_RANDOM,
     STRUCT_PARAM,
     WORLD_DELAY, // official
+    NPCCOUNT,
+    ZONECOUNT,
+    LOCCOUNT,
+    OBJCOUNT,
 
     // Player ops (2000-2499)
     ALLOWDESIGN = 2000,
@@ -407,7 +411,19 @@ enum ScriptOpcode {
 
     // Debug ops (10000-11000)
     ERROR = 10000,
-    MAP_LOCALDEV
+    MAP_LOCALDEV,
+    MAP_LASTCLOCK,
+    MAP_LASTWORLD,
+    MAP_LASTCLIENTIN,
+    MAP_LASTNPC,
+    MAP_LASTPLAYER,
+    MAP_LASTLOGOUT,
+    MAP_LASTLOGIN,
+    MAP_LASTZONE,
+    MAP_LASTCLIENTOUT,
+    MAP_LASTCLEANUP,
+    MAP_LASTBANDWIDTHIN,
+    MAP_LASTBANDWIDTHOUT,
 }
 
 export default ScriptOpcode;

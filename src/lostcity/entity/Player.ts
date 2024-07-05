@@ -64,6 +64,7 @@ import MessageGame from '#lostcity/network/outgoing/model/MessageGame.js';
 import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriority.js';
 import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
 import ParamType from '#lostcity/cache/config/ParamType.js';
+import BuildArea from '#lostcity/entity/BuildArea.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -235,13 +236,13 @@ export default class Player extends PathingEntity {
     combatLevel: number = 3;
     headicons: number = 0;
     appearance: Uint8Array | null = null; // cached appearance
+    appearanceHashCode: bigint = 0n;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
     originX: number = -1;
     originZ: number = -1;
-    npcs: Set<number> = new Set(); // observed npcs
-    otherPlayers: Set<number> = new Set(); // observed players
+    buildArea: BuildArea = new BuildArea();
     lastMovement: number = 0; // for p_arrivedelay
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
@@ -313,10 +314,6 @@ export default class Player extends PathingEntity {
 
     afkZones: Int32Array = new Int32Array(2);
     lastAfkZone: number = 0;
-
-    // build area
-    loadedZones: Set<number> = new Set();
-    activeZones: Set<number> = new Set();
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
@@ -1073,9 +1070,11 @@ export default class Player extends PathingEntity {
             }
         }
 
+        const parts: bigint[] = [];
         for (let slot = 0; slot < 12; slot++) {
             if (skippedSlots.indexOf(slot) !== -1) {
                 stream.p1(0);
+                parts[slot] = 0n;
                 continue;
             }
 
@@ -1084,11 +1083,14 @@ export default class Player extends PathingEntity {
                 const appearanceValue = this.getAppearanceInSlot(slot);
                 if (appearanceValue < 1) {
                     stream.p1(0);
+                    parts[slot] = 0n;
                 } else {
                     stream.p2(appearanceValue);
+                    parts[slot] = BigInt(appearanceValue);
                 }
             } else {
                 stream.p2(0x200 + equip.id);
+                parts[slot] = BigInt(0x200 + equip.id);
             }
         }
 
@@ -1113,6 +1115,26 @@ export default class Player extends PathingEntity {
         stream.pos = 0;
         stream.gdata(this.appearance, 0, this.appearance.length);
         stream.release();
+
+        this.appearanceHashCode = 0n;
+        for (let part: number = 0; part < 12; part++) {
+            this.appearanceHashCode <<= 0x4n;
+            if (parts[part] >= 256) {
+                this.appearanceHashCode += parts[part] - 256n;
+            }
+        }
+        if (parts[0] >= 256) {
+            this.appearanceHashCode += (parts[0] - 256n) >> 4n;
+        }
+        if (parts[1] >= 256) {
+            this.appearanceHashCode += (parts[1] - 256n) >> 8n;
+        }
+        for (let part: number = 0; part < 5; part++) {
+            this.appearanceHashCode <<= 0x3n;
+            this.appearanceHashCode += BigInt(this.colors[part]);
+        }
+        this.appearanceHashCode <<= 0x1n;
+        this.appearanceHashCode += BigInt(this.gender);
     }
 
     // ----
@@ -1499,14 +1521,17 @@ export default class Player extends PathingEntity {
         }
     }
 
-    playAnimation(seq: number, delay: number) {
-        if (seq >= SeqType.count || this.animProtect) { // prevent anims from playing during swimming
+    playAnimation(anim: number, delay: number) {
+        if (anim >= SeqType.count || this.animProtect) {
+            // client would hard crash
             return;
         }
 
-        this.animId = seq;
-        this.animDelay = delay;
-        this.mask |= Player.ANIM;
+        if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority >= SeqType.get(this.animId).priority) {
+            this.animId = anim;
+            this.animDelay = delay;
+            this.mask |= Player.ANIM;
+        }
     }
 
     spotanim(spotanim: number, height: number, delay: number) {

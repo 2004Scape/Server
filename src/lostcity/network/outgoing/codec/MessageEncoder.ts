@@ -5,4 +5,7 @@ import Packet from '#jagex2/io/Packet.js';
 export default abstract class MessageEncoder<T extends OutgoingMessage> {
     abstract prot: ServerProt;
     abstract encode(buf: Packet, message: T): void;
+    test(_: T): number {
+        return this.prot.length;
+    }
 }

@@ -81,7 +81,7 @@ export const Position = {
         return Math.max(deltaX, deltaZ);
     },
 
-    isWithinDistance(pos: { x: number, z: number }, other: { x: number, z: number }, distance: number) {
+    isWithinDistanceSW(pos: { x: number, z: number }, other: { x: number, z: number }, distance: number) {
         const dx = Math.abs(pos.x - other.x);
         const dz = Math.abs(pos.z - other.z);
         return dz < distance && dx < distance;

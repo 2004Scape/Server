@@ -4,124 +4,120 @@ import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import World from '#lostcity/engine/World.js';
 import {Position} from '#lostcity/entity/Position.js';
-import Player from '#lostcity/entity/Player.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import Npc from '#lostcity/entity/Npc.js';
+import BuildArea, {ExtendedInfo} from '#lostcity/entity/BuildArea.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
+    private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;
+    private static readonly BITS_RUN: number = 2 + 3 + 3 + 1 + 1;
+    private static readonly BITS_WALK: number = 2 + 3 + 1 + 1;
+    private static readonly BITS_EXTENDED: number = 2 + 1;
+    private static readonly BYTES_LIMIT: number = 4997;
+
     prot = ServerProt.NPC_INFO;
 
     encode(buf: Packet, message: NpcInfo): void {
-        const byteBlock: Packet = Packet.alloc(1);
+        const buildArea: BuildArea = message.buildArea;
+        this.writeNpcs(buf, message);
+        this.writeNewNpcs(buf, message);
 
-        this.writeNpcs(buf, byteBlock, message.player);
-        this.writeNewNpcs(buf, byteBlock, message.player);
-
-        // const debug = new Packet();
-        // debug.pdata(bitBlock);
-        // debug.pdata(byteBlock);
-        // debug.save('dump/' + World.currentTick + '.' + this.username + '.npc.bin');
-
-        buf.pdata(byteBlock.data, 0, byteBlock.pos);
-        byteBlock.release();
+        const extended: Set<ExtendedInfo> = buildArea.extendedInfo;
+        if (extended.size > 0) {
+            for (const info of extended) {
+                const npc: Npc | null = World.getNpc(info.id);
+                if (!npc) {
+                    continue;
+                }
+                this.writeUpdate(npc, buf, info.added);
+            }
+        }
+        buildArea.reset();
     }
 
-    private writeNpcs(bitBlock: Packet, byteBlock: Packet, player: Player): void {
+    test(_: NpcInfo): number {
+        return NpcInfoEncoder.BYTES_LIMIT;
+    }
+
+    private writeNpcs(bitBlock: Packet, message: NpcInfo): void {
+        const buildArea: BuildArea = message.buildArea;
         // update existing npcs (255 max - 8 bits)
         bitBlock.bits();
-        bitBlock.pBit(8, player.npcs.size);
+        bitBlock.pBit(8, buildArea.npcs.size);
 
-        for (const nid of player.npcs) {
+        for (const nid of buildArea.npcs) {
             const npc: Npc | null = World.getNpc(nid);
-            if (!npc || npc.tele || npc.level !== player.level || !Position.isWithinDistance(player, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
+            if (!npc || npc.tele || npc.level !== message.level || !Position.isWithinDistanceSW(message, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
                 // npc full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);
                 bitBlock.pBit(2, 3);
-                player.npcs.delete(nid);
+                buildArea.npcs.delete(nid);
                 continue;
             }
 
-            let hasMaskUpdate: boolean = npc.mask > 0;
-
-            const bitBlockBytes: number = ((bitBlock.bitPos + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(npc, false) > 5000) {
-                hasMaskUpdate = false;
+            let extendedInfo: boolean = npc.mask > 0;
+            const {walkDir, runDir} = npc;
+            let bits: number = 0;
+            if (runDir !== -1) {
+                bits = NpcInfoEncoder.BITS_RUN;
+            } else if (walkDir !== -1) {
+                bits = NpcInfoEncoder.BITS_WALK;
+            } else if (extendedInfo) {
+                bits = NpcInfoEncoder.BITS_EXTENDED;
+            }
+            const updateSize: number = extendedInfo ? this.calculateUpdateSize(npc, false) : 0;
+            if ((bitBlock.bitPos + bits + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
+                extendedInfo = false;
             }
 
-            const {walkDir, runDir} = npc;
-            bitBlock.pBit(1, runDir !== -1 || walkDir !== -1 || hasMaskUpdate ? 1 : 0);
+            bitBlock.pBit(1, runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
             if (runDir !== -1) {
                 bitBlock.pBit(2, 2);
                 bitBlock.pBit(3, walkDir);
                 bitBlock.pBit(3, runDir);
-                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
+                bitBlock.pBit(1, extendedInfo ? 1 : 0);
             } else if (walkDir !== -1) {
                 bitBlock.pBit(2, 1);
                 bitBlock.pBit(3, walkDir);
-                bitBlock.pBit(1, hasMaskUpdate ? 1 : 0);
-            } else if (hasMaskUpdate) {
+                bitBlock.pBit(1, extendedInfo ? 1 : 0);
+            } else if (extendedInfo) {
                 bitBlock.pBit(2, 0);
             }
 
-            if (hasMaskUpdate) {
-                this.writeUpdate(npc, byteBlock, false);
+            if (extendedInfo) {
+                buildArea.extendedInfo.add({id: nid, added: false});
             }
         }
     }
 
-    private writeNewNpcs(bitBlock: Packet, byteBlock: Packet, player: Player): void {
-        for (const npc of this.getNearbyNpcs(player)) {
-            const hasInitialUpdate: boolean = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
+    private writeNewNpcs(bitBlock: Packet, message: NpcInfo): void {
+        const buildArea: BuildArea = message.buildArea;
+        for (const npc of buildArea.getNearbyNpcs(message.x, message.z, message.originX, message.originZ)) {
+            const extendedInfo: boolean = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
 
-            const bitBlockSize: number = bitBlock.bitPos + 13 + 11 + 5 + 5 + 1;
-            const bitBlockBytes: number = ((bitBlockSize + 7) / 8) >>> 0;
-            if (bitBlockBytes + byteBlock.pos + this.calculateUpdateSize(npc, true) > 5000) {
+            const updateSize: number = extendedInfo ? this.calculateUpdateSize(npc, true) : 0;
+            if ((bitBlock.bitPos + NpcInfoEncoder.BITS_NEW + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
                 // more npcs get added next tick
                 break;
             }
 
             bitBlock.pBit(13, npc.nid);
             bitBlock.pBit(11, npc.type);
-            bitBlock.pBit(5, npc.x - player.x);
-            bitBlock.pBit(5, npc.z - player.z);
-            bitBlock.pBit(1, hasInitialUpdate ? 1 : 0);
+            bitBlock.pBit(5, npc.x - message.x);
+            bitBlock.pBit(5, npc.z - message.z);
+            bitBlock.pBit(1, extendedInfo ? 1 : 0);
 
-            player.npcs.add(npc.nid);
+            buildArea.npcs.add(npc.nid);
 
-            if (hasInitialUpdate) {
-                this.writeUpdate(npc, byteBlock, true);
+            if (extendedInfo) {
+                buildArea.extendedInfo.add({id: npc.nid, added: true});
             }
         }
 
-        if (byteBlock.pos > 0) {
+        if (buildArea.extendedInfo.size > 0) {
             bitBlock.pBit(13, 8191);
         }
         bitBlock.bytes();
-    }
-
-    private *getNearbyNpcs(player: Player): IterableIterator<Npc> {
-        const absLeftX: number = player.originX - 48;
-        const absRightX: number = player.originX + 48;
-        const absTopZ: number = player.originZ + 48;
-        const absBottomZ: number = player.originZ - 48;
-
-        for (const zoneIndex of player.activeZones) {
-            for (const npc of World.getZoneIndex(zoneIndex).getAllNpcsSafe()) {
-                if (player.npcs.size >= 255) {
-                    break;
-                }
-                if (npc.x <= absLeftX || npc.x >= absRightX || npc.z >= absTopZ || npc.z <= absBottomZ) {
-                    continue;
-                }
-                if (!Position.isWithinDistance(player, npc, 16)) {
-                    continue;
-                }
-                if (player.npcs.has(npc.nid)) {
-                    continue;
-                }
-                yield npc;
-            }
-        }
     }
 
     private writeUpdate(npc: Npc, out: Packet, newlyObserved: boolean): void {
@@ -148,7 +144,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.SAY) {
-            out.pjstr(npc.chat);
+            out.pjstr(npc.chat ?? '');
         }
 
         if (mask & Npc.DAMAGE) {
@@ -208,7 +204,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.SAY) {
-            length += npc.chat?.length ?? 0;
+            length += (npc.chat?.length ?? 0) + 1;
         }
 
         if (mask & Npc.DAMAGE) {

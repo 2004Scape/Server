@@ -65,8 +65,6 @@ import {makeCrcs} from '#lostcity/server/CrcTable.js';
 import {preloadClient} from '#lostcity/server/PreloadedPacks.js';
 import {Position} from '#lostcity/entity/Position.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
-import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
-import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 
@@ -582,7 +580,7 @@ class World {
                 if (this.shutdownTick < this.currentTick) {
                     // request logout on socket idle after 45 seconds (this may be 16 *ticks* in osrs!)
                     // increased timeout for compatibility with old PCs that take ages to load
-                    if (this.currentTick - player.lastResponse >= 75) {
+                    if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= 75) {
                         player.logoutRequested = true;
                     }
                 }
@@ -600,7 +598,7 @@ class World {
         // player logout
         let playerLogout = Date.now();
         for (const player of this.players) {
-            if (this.currentTick - player.lastResponse >= 100) {
+            if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= 100) {
                 // remove after 60 seconds
                 player.queue.clear();
                 player.weakQueue.clear();
@@ -724,8 +722,8 @@ class World {
 
             try {
                 player.updateMap();
-                player.write(new PlayerInfo(player));
-                player.write(new NpcInfo(player));
+                player.updatePlayers();
+                player.updateNpcs();
                 player.updateZones();
                 player.updateInvs();
                 player.updateStats();
@@ -921,7 +919,7 @@ class World {
             if (!isNetworkPlayer(player)) {
                 continue;
             }
-            for (const zone of player.loadedZones) {
+            for (const zone of player.buildArea.loadedZones) {
                 zones.add(zone);
             }
         }
@@ -1106,8 +1104,6 @@ class World {
     // ----
 
     async readIn(socket: ClientSocket, stream: Packet): Promise<void> {
-        this.lastCycleBandwidth[0] += stream.data.length;
-
         while (stream.available > 0) {
             const start = stream.pos;
             let opcode = stream.g1();
