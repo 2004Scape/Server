@@ -147,6 +147,7 @@ vislevel=hide
 walkanim=shark_walk
 readyanim=shark_walk
 model1=model_2848_npc
+timer=30
 
 [game_trawler_shark2]
 name=Shark
@@ -155,3 +156,4 @@ vislevel=hide
 walkanim=shark_walk
 readyanim=shark_walk
 model1=model_2848_npc
+timer=30
