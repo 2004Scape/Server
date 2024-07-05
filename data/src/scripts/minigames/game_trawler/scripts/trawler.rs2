@@ -87,37 +87,38 @@ if (random(5) = 0) { // handle murphy's sayings
         npc_say("Arrh! Check that net!");
         return;
     }
-    if (%npc_trawler_flood_status < 5) { //https://youtu.be/scKmu6QETRw?t=298
-        npc_say("Let's get this net full with fishies!");
-    } else if (%npc_trawler_flood_status < 15) { 
-        npc_say("Blistering barnacles!");
-    } else if (%npc_trawler_flood_status < 20) {
-        npc_say("That's the stuff, fill those holes!");
-    } else if (%npc_trawler_flood_status < 25) {
-        npc_say("The water is coming in matey!");
-    } else if (%npc_trawler_flood_status < 30) {
-        npc_say("You'll need to start bailing soon!");
-    } else if (%npc_trawler_flood_status < 40) {
-        npc_say("My mother could bail better than that!");
-    } else if (%npc_trawler_flood_status < 45) { 
-        npc_say("Land lubbers!");
-    } else if (%npc_trawler_flood_status < 50) {
-        npc_say("It's a fierce sea today traveller.");
-    } else if (%npc_trawler_flood_status < 60) {
-        npc_say("We'll all end up in a watery grave!");
-    } else if (%npc_trawler_flood_status < 70) {
-        npc_say("Noooooo!");
+    if (%npc_trawler_flood_status = 0 & npc_type = murphy_nonflood) {
+        npc_say("Let's get this net full with fishies!"); //https://youtu.be/scKmu6QETRw?t=298
+    } else if (%npc_trawler_flood_status < 20 & npc_type = murphy_nonflood) {
+        switch_int (random(3)) {
+            case 0 : npc_say("Let's get this net full with fishies!");
+            case 1 : npc_say("Blistering barnacles!");
+            case 2 : npc_say("That's the stuff, fill those holes!");
+        }
+    } else if (%npc_trawler_flood_status < 30 & npc_type = murphy_nonflood) {
+        switch_int (random(2)) {
+            case 0 : npc_say("The water is coming in matey!");
+            case 1 : npc_say("You'll need to start bailing soon!");
+        }
     } else if (%npc_trawler_flood_status < 80) {
-        npc_say("We're all doomed!");
-    } else if (%npc_trawler_flood_status < 90) {
-        npc_say("We're going under!");
-    } else {
-        npc_say("Mummy!");
+        switch_int (random(4)) {
+            case 0 : npc_say("It's a fierce sea today traveller.");
+            case 1 : npc_say("Land lubbers!");
+            case 2 : npc_say("My mother could bail better than that!");
+            case 3 : npc_say("We'll all end up in a watery grave!");
+        }
+    } else if (%npc_trawler_flood_status < 100) {
+        switch_int (random(4)) {
+            case 0 : npc_say("Noooooo!");
+            case 1 : npc_say("We're all doomed!");
+            case 2 : npc_say("We're going under!");
+            case 3 : npc_say("Mummy!");
+        }
     }
 }
 if (random(16) = 0) {
     if (loc_find(^trawler_start_net1, game_trawler_fish_net_broken1) = false & loc_find(^trawler_start_net2, game_trawler_fish_net_broken2) = false) {    
-        ~trawler_rip_net; // intentional, old videos the fish count doesnt update if net is ripped
+        ~trawler_rip_net;
     }
 }
 

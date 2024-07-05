@@ -36,50 +36,35 @@ mes("The net has ripped!");
 anim(human_pickupfloor, 0);
 p_delay(0);
 mes("The net is not damaged.");
+
 [oploc1,game_trawler_fish_net2]
 anim(human_pickupfloor, 0);
 p_delay(0);
 mes("The net is not damaged.");
 
-[oplocu,game_trawler_fish_net1]
-if (last_useitem = rope) {
-    anim(human_pickupfloor, 0);
-    p_delay(0);
-    mes("The net is not damaged.");
-} else {
-    ~displaymessage(^dm_default);
-}
-[oplocu,game_trawler_fish_net2]
-if (last_useitem = rope) {
-    anim(human_pickupfloor, 0);
-    p_delay(0);
-    mes("The net is not damaged.");
-} else {
-    ~displaymessage(^dm_default);
-}
-
+[oplocu,game_trawler_fish_net1] @trawler_net_use;
+[oplocu,game_trawler_fish_net2] @trawler_net_use;
 
 [oploc1,game_trawler_fish_net_broken1] @trawler_fix_net;
 [oploc1,game_trawler_fish_net_broken2] @trawler_fix_net;
-[oplocu,game_trawler_fish_net_broken1]
+[oplocu,game_trawler_fish_net_broken1] @trawler_net_use;
+[oplocu,game_trawler_fish_net_broken2] @trawler_net_use;
+
+[label,trawler_net_use]
 if (last_useitem = rope) {
-    @trawler_fix_net;
-} else {
-    ~displaymessage(^dm_default);
-}
-[oplocu,game_trawler_fish_net_broken2]
-if (last_useitem = rope) {
-    @trawler_fix_net;
+    ~chatplayer("<p,neutral>I need to inspect it first, I'll fix it if it needs doing."); // rs3
 } else {
     ~displaymessage(^dm_default);
 }
 
 [label,trawler_fix_net]
 if (inv_total(inv, rope) < 1) {
+    anim(human_pickupfloor, 0);
+    p_delay(0);
     mes("You'll need some rope to fix it."); // osrs
     return;
 }
-if (stat_random(stat(crafting), 30, 300) = false) {
+if (stat_random(stat(crafting), 30, 300) = false) { // stat random is mostly guessed, i think osrs adjusted theirs at some point. I used 30 or so attempts from rs3
     anim(human_pickupfloor, 0);
     p_delay(0);
     mes("You fail to repair the net in the harsh conditions."); // https://youtu.be/scKmu6QETRw?t=347
