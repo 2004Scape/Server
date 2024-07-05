@@ -147,6 +147,7 @@ vislevel=hide
 walkanim=shark_walk
 readyanim=shark_walk
 model1=model_2848_npc
+moverestrict=nomove
 timer=30
 
 [game_trawler_shark2]
@@ -156,4 +157,5 @@ vislevel=hide
 walkanim=shark_walk
 readyanim=shark_walk
 model1=model_2848_npc
+moverestrict=nomove
 timer=30

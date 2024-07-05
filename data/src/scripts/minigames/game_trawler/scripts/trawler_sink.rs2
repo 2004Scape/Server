@@ -80,6 +80,8 @@ npc_settimer(~random_range(9, 21)); // osrs
 
 [ai_timer,game_trawler_shark1]
 npc_settimer(0);
+npc_tele(movecoord(npc_coord, 0, 0, 2));
+npc_delay(29);
 npc_tele(movecoord(npc_coord, 1, 0, 1));
 npc_delay(29);
 npc_tele(movecoord(npc_coord, 2, 0, 0));
@@ -93,8 +95,6 @@ npc_delay(29);
 npc_tele(movecoord(npc_coord, -2, 0, 0));
 npc_delay(29);
 npc_tele(movecoord(npc_coord, -1, 0, 1));
-npc_delay(29);
-npc_tele(movecoord(npc_coord, 0, 0, 2));
 npc_settimer(30);
 
 [ai_timer,game_trawler_shark2]
