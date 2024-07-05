@@ -8,7 +8,7 @@ if ($player_count < 1) {
     ~trawler_reset;
     return;
 }
-if (add(%npc_trawler_start, 1000) < map_clock) {
+if (add(%npc_trawler_start, 1030) < map_clock) {
     ~trawler_win(divide(%npc_trawler_fish_caught, $player_count));
     ~trawler_reset;
     return;
