@@ -15,9 +15,10 @@ import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Loc from '#lostcity/entity/Loc.js';
 import {Position} from '#lostcity/entity/Position.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 import {LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
-import Environment from '#lostcity/util/Environment.js';
 
 export default class GameMap {
     init(zoneMap: ZoneMap): void {
