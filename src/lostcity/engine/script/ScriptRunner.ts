@@ -148,7 +148,7 @@ export default class ScriptRunner {
                 ScriptRunner.executeInner(state, state.script.opcodes[++state.pc]);
             }
             const time: number = ((performance.now() * 1000) - start) | 0;
-            if (Environment.LOCAL_DEV && time > 1000) {
+            if (Environment.PROFILE_SCRIPTS && time > 1000) {
                 const message: string = `Warning [cpu time]: Script: ${state.script.info.scriptName}, time: ${time}us`;
                 if (state.self instanceof Player) {
                     state.self.wrappedMessageGame(message);
