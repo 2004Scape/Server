@@ -24,7 +24,7 @@ if (%dragon_wall = ^false) {
         return;
     }
 }
-~open_and_close_door(loc_param(next_loc_stage), $entering, false);
+~open_and_close_door2(loc_param(next_loc_stage), $entering, coffin_open);
 
 
 // only one gate opened at a time. https://youtu.be/T0k1xEGK73A?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0

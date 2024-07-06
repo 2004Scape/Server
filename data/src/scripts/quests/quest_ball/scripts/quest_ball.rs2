@@ -28,7 +28,7 @@ if($leaving ! true & (%ball_progress < ^ball_started | %ball_progress = ^ball_co
 }
 // angles on these doors don't visually match osrs, but they actually do have the same loc_angle
 // prob just something weird with the new models?
-~open_and_close_door2(loc_1535, $leaving, false);
+~open_and_close_door2(loc_1535, $leaving, door_open);
 
 [oploc1,_ball_irongate]
 if(inv_total(worn, leather_gloves) = 0) {
@@ -123,11 +123,11 @@ if(%ball_progress < ^ball_unlocked_mousedoor) {
     ~chatplayer("<p,confused>Strange... I can't see any kind of lock or handle to open this door...");
     return;
 }
-~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), door_open);
 
 [oploc1,loc_2863]
 if(%ball_progress >= ^ball_defeated_experiment) {
-    ~open_and_close_door2(loc_1532, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door2(loc_1532, ~check_axis(coord, loc_coord, loc_angle), door_open);
     return;
 }
 mes("The shed door is locked.");
@@ -155,7 +155,7 @@ if(last_useitem = ball_shedkey) {
         }
         npc_add(^ball_experiment_spawn_coord, witches_experiment_p1, 500);
     }
-    ~open_and_close_door2(loc_1532, $entering, false);
+    ~open_and_close_door2(loc_1532, $entering, door_open);
     return;
 }
 mes("The shed door is locked.");
