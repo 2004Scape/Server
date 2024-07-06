@@ -1,4 +1,7 @@
 [debugproc,addobj]
+if (map_localdev = true) {
+    return;
+}
 if_close;
 if (p_finduid(uid) = true) {
     obj_add(movecoord(coord, 0, 0, 5), logs, 1, ^lootdrop_duration);
@@ -8,6 +11,9 @@ if (p_finduid(uid) = true) {
 }
 
 [debugproc,addobj2](int $size)
+if (map_localdev = true) {
+    return;
+}
 if (p_finduid(uid) = false) {
     @please_finish;
 }
