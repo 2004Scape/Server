@@ -114,23 +114,28 @@ if (%action_delay < map_clock) {
 }
 if (%action_delay = map_clock) { // break axe
     // https://youtu.be/1vo3B5DEgIQ
-    def_namedobj $axe_broken = oc_param($axe, broken);
-    // todo: use inv_changeslot?
-    if (inv_total(worn, $axe) > 0) {
-        inv_del(worn, $axe, 1);
-        inv_setslot(worn, ^wearpos_rhand, $axe_broken, 1);
-        ~update_all($axe);
-    } if (inv_total(inv, $axe) > 0) {
-        inv_del(inv, $axe, 1);
-        inv_add(inv, $axe_broken, 1);
+    // https://youtu.be/-0z2OZKdIM8?t=684
+    if (%macro_ent_counter = 6) {
+        %macro_ent_counter = 0;
+        def_namedobj $axe_broken = oc_param($axe, broken);
+        // todo: use inv_changeslot?
+        if (inv_total(worn, $axe) > 0) {
+            inv_del(worn, $axe, 1);
+            inv_setslot(worn, ^wearpos_rhand, $axe_broken, 1);
+            ~update_all($axe);
+        } else if (inv_total(inv, $axe) > 0) {
+            inv_del(inv, $axe, 1);
+            inv_add(inv, $axe_broken, 1);
+        }
+        mes("That's not a tree, it's an Ent!");
+        mes("The Ent damages your axe!");
+        npc_anim(seq_335, 0); // todo: need a video of this
+        npc_facesquare(coord);
+        anim(null, 0);
+        sound_synth(staff_stab, 0, 0); // osrs used spear sound
+        return;
     }
-    mes("That's not a tree, it's an Ent!");
-    mes("The Ent damages your axe!");
-    npc_anim(seq_335, 0); // todo: need a video of this
-    npc_facesquare(coord);
-    anim(null, 0);
-    sound_synth(axe_break, 0, 0); // not sure if its 363 or not
-    return;
+    %macro_ent_counter = add(%macro_ent_counter, 1);
 }
 // this is for the very first chop
 if (%skill_sound = calc(map_clock + 4)) {
