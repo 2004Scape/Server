@@ -206,7 +206,7 @@
 205=macro_event_uid
 206=macro_whirlpool_counter
 207=macro_gas_counter
-208=varp_208
+208=macro_ent_counter
 209=varp_209
 210=smithing_bars
 211=smithing_level

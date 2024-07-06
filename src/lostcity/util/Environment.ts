@@ -45,4 +45,5 @@ export default {
     CLIENT_PATHFINDER: tryParseBoolean(process.env.CLIENT_PATHFINDER, true),
 
     NO_SOCKET_TIMEOUT: tryParseBoolean(process.env.NO_SOCKET_TIMEOUT, false),
+    PROFILE_SCRIPTS: tryParseBoolean(process.env.PROFILE_SCRIPTS, false),
 };
