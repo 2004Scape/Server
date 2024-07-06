@@ -120,10 +120,6 @@ scope=perm
 [multiway]
 type=boolean
 
-[chest_macro_gas_coord]
-type=coord
-scope=perm
-
 [newcomers_pos]
 transmit=yes
 
@@ -249,8 +245,6 @@ scope=perm
 
 [mill_flour]
 scope=perm
-
-[varp_208]
 
 [varp_209]
 
