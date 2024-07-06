@@ -128,7 +128,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private writeNewPlayers(bitBlock: Packet, message: PlayerInfo): void {
         const buildArea: BuildArea = message.buildArea;
         for (const other of buildArea.getNearbyPlayers(message.uid, message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfo: boolean = !message.buildArea.hasAppearance(other.pid, other.appearanceHashCode);
+            const extendedInfo: boolean = !buildArea.hasAppearance(other.pid, other.appearanceHashCode);
 
             const updateSize: number = extendedInfo ? this.calculateUpdateSize(other, message, false, true) : 0;
             if ((bitBlock.bitPos + PlayerInfoEncoder.BITS_NEW + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
@@ -175,12 +175,16 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             mask &= ~Player.CHAT;
         }
 
+        if (message.buildArea.hasAppearance(player.pid, player.appearanceHashCode)) {
+            mask &= ~Player.APPEARANCE;
+        }
+
         out.p1(mask & 0xff);
         if (mask & Player.BIG_UPDATE) {
             out.p1(mask >> 8);
         }
 
-        if (!message.buildArea.hasAppearance(player.pid, player.appearanceHashCode) && mask & Player.APPEARANCE) {
+        if (mask & Player.APPEARANCE) {
             out.p1(player.appearance!.length);
             out.pdata(player.appearance!, 0, player.appearance!.length);
             message.buildArea.saveAppearance(player.pid, player.appearanceHashCode);
@@ -255,7 +259,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
     }
 
-    private calculateUpdateSize(player: Player, info: PlayerInfo, self: boolean = false, newlyObserved: boolean = false): number {
+    private calculateUpdateSize(player: Player, message: PlayerInfo, self: boolean = false, newlyObserved: boolean = false): number {
         let length: number = 0;
         let mask: number = player.mask;
         if (newlyObserved) {
@@ -277,12 +281,16 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             mask &= ~Player.CHAT;
         }
 
+        if (message.buildArea.hasAppearance(player.pid, player.appearanceHashCode)) {
+            mask &= ~Player.APPEARANCE;
+        }
+
         length += 1;
         if (mask & Player.BIG_UPDATE) {
             length += 1;
         }
 
-        if (!info.buildArea.hasAppearance(player.pid, player.appearanceHashCode) && mask & Player.APPEARANCE) {
+        if (mask & Player.APPEARANCE) {
             length += 1;
             length += player.appearance?.length ?? 0;
         }
