@@ -5,15 +5,16 @@ if (%mcannon_coord ! null) {
 }
 
 // todo: check locs that might be overridden as well
+// todo: check party room?
 def_coord $center = coord;
-if (map_blocked($center) = true | // center
-    map_blocked(movecoord($center, 0, 0, 1)) = true | // north
-    map_blocked(movecoord($center, 1, 0, 1)) = true | // north-east
-    map_blocked(movecoord($center, 1, 0, 0)) = true | // east
-    map_blocked(movecoord($center, 1, 0, -1)) = true | // south-east
-    map_blocked(movecoord($center, 0, 0, -1)) = true | // south
-    map_blocked(movecoord($center, -1, 0, -1)) = true | // south-west
-    map_blocked(movecoord($center, -1, 0, 0)) = true) // west
+if (~area_allow_loc_add($center) = false | // center
+    ~area_allow_loc_add(movecoord($center, 0, 0, 1)) = false | // north
+    ~area_allow_loc_add(movecoord($center, 1, 0, 1)) = false | // north-east
+    ~area_allow_loc_add(movecoord($center, 1, 0, 0)) = false | // east
+    ~area_allow_loc_add(movecoord($center, 1, 0, -1)) = false | // south-east
+    ~area_allow_loc_add(movecoord($center, 0, 0, -1)) = false | // south
+    ~area_allow_loc_add(movecoord($center, -1, 0, -1)) = false | // south-west
+    ~area_allow_loc_add(movecoord($center, -1, 0, 0)) = false) // west
 {
     // todo: real message
     mes("You cannot place your cannon here.");

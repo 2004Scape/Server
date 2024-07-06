@@ -786,7 +786,12 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BAS_RUNNING]: state => {
-        state.activePlayer.basRunning = check(state.popInt(), SeqTypeValid).id;
+        const seq = state.popInt();
+        if (seq === -1) {
+            state.activePlayer.basRunning = -1;
+            return;
+        }
+        state.activePlayer.basRunning = check(seq, SeqTypeValid).id;
     },
 
     [ScriptOpcode.GENDER]: state => {
@@ -981,6 +986,10 @@ const PlayerOps: CommandHandlers = {
         }
 
         toPlayer.addHero(fromPlayer.uid, damage);
+    }),
+
+    [ScriptOpcode.P_ANIMPROTECT]: checkedHandler(ProtectedActivePlayer, state => {
+        state.activePlayer.animProtect = check(state.popInt(), NumberNotNull);
     }),
 };
 

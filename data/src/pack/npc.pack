@@ -462,11 +462,11 @@
 461=magic_store_owner
 462=wizard_disentor
 463=murphy
-464=0_29_75_murphy
-465=0_31_75_murphy
-466=0_30_75_murphy
-467=npc_467
-468=npc_468
+464=murphy_nonflood
+465=murphy_flood
+466=murphy_sunk
+467=game_trawler_shark1
+468=game_trawler_shark2
 469=king_bolren
 470=commander_montai
 471=bolkoy

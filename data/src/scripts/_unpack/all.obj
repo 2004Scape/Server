@@ -817,7 +817,7 @@ recol1d=5251
 iop1=Rub-together
 weight=2oz
 
-[broken_glass]
+[broken_glass2]
 members=yes
 name=Broken glass
 desc=Smashed glass.

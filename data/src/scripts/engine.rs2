@@ -60,6 +60,7 @@
 [command,cam_lookat](coord $destCoord, int $destHeight, int $rotationSpeed, int $rotationMultiplier)
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
 [command,cam_reset]
+[command,.cam_reset]
 [command,coord]()(coord)
 [command,.coord]()(coord)
 [command,displayname]()(string)
@@ -223,6 +224,8 @@
 [command,both_heropoints](int $damage)
 [command,setgender](int $gender)
 [command,setskincolour](int $skin_colour)
+[command,p_animprotect](int $toggle)
+[command,.p_animprotect](int $toggle)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

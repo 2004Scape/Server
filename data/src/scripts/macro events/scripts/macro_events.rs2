@@ -56,6 +56,9 @@ switch_int ($event) {
 if (~in_duel_arena($coord) = true | ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     return(false);
 }
+if (~inzone_coord_pair_table(trawler_game_zones, coord) = true | ~inzone_coord_pair_table(trawler_wreck_zones, coord) = true) { // allowed on boat in pre-game https://youtu.be/7-gUR40Nr8M
+    return(false);
+}
 return(true);
 
 // called when the player logs in
@@ -110,9 +113,8 @@ p_delay(0);
 spotanim_map(small_smokepuff, coord, 124, 0);
 sound_synth(smokepuff2, 0, 0);
 //--
-p_telejump($teleport_coord);
-// TODO: Confirm this
-~teleport_anti_smuggle_checks;
+~p_telejump_safe($teleport_coord); // TODO: Confirm this
+
 
 [proc,macro_event_fail_scatter_inv]
 if (p_finduid(uid) = false) {

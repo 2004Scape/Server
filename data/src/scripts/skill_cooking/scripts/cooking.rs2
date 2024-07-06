@@ -16,16 +16,16 @@ if ($data = null) {
     ~mesbox("You can't cook that.");
     return;
 }
-def_namedobj $cooked_item = db_getfield($data,cooking_generic:cooked,0);
-if (oc_param($uncooked_item, cooking_range_only) = ^true & lc_category(loc_type) ! cooking_oven) {
-    ~mesbox("You need a proper oven to cook that.");
+if (string_length(db_getfield($data, cooking_generic:cantcookmessage_range, 0)) > 0 & lc_category(loc_type) = cooking_oven) {
+    ~mesbox(db_getfield($data, cooking_generic:cantcookmessage_range, 0));
     return;
 }
-if ($uncooked_item = raw_oomlie) {
-    ~mesbox("The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.");
+if (string_length(db_getfield($data, cooking_generic:cantcookmessage_fire, 0)) > 0 & lc_category(loc_type) = cooking_fire) {
+    ~mesbox(db_getfield($data, cooking_generic:cantcookmessage_fire, 0));
     return;
 }
 // check if mems obj
+def_namedobj $cooked_item = db_getfield($data,cooking_generic:cooked,0);
 if (oc_members($cooked_item) = true | oc_members($uncooked_item) = true) {
     // complete guess btw, i have no idea what sorta message they'd use here. Perhaps theres early osrs footage of this but ive not found any.
     if (map_members = false) {

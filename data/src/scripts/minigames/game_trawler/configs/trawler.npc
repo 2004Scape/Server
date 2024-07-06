@@ -32,7 +32,7 @@ head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=2
 
-[0_29_75_murphy]
+[murphy_nonflood]
 vislevel=hide
 name=Murphy
 desc=Salty old sea dog.
@@ -65,8 +65,11 @@ head1=model_55_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=7
+defaultmode=patrol
+patrol1=^trawler_start_patrol1
+patrol2=^trawler_start_patrol2
 
-[0_31_75_murphy]
+[murphy_flood]
 vislevel=hide
 name=Murphy
 desc=Salty old sea dog.
@@ -99,8 +102,11 @@ head1=model_55_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=7
+defaultmode=patrol
+patrol1=^trawler_flood_patrol1
+patrol2=^trawler_flood_patrol2
 
-[0_30_75_murphy]
+[murphy_sunk]
 name=Murphy
 desc=Salty old sea dog.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -134,20 +140,22 @@ head2=model_81_idk_head
 head3=model_37_npc_head
 wanderrange=1
 
-[npc_467]
+[game_trawler_shark1]
 name=Shark
 desc=Let's not go skinny dipping eh?
 vislevel=hide
 walkanim=shark_walk
 readyanim=shark_walk
 model1=model_2848_npc
-moverestrict=blocked
+moverestrict=nomove
+timer=30
 
-[npc_468]
+[game_trawler_shark2]
 name=Shark
 desc=Let's not go skinny dipping eh?
 vislevel=hide
 walkanim=shark_walk
 readyanim=shark_walk
 model1=model_2848_npc
-moverestrict=blocked
+moverestrict=nomove
+timer=30

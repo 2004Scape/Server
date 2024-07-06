@@ -1,4 +1,8 @@
 [proc,update_bas]
+if (~inzone_coord_pair_table(trawler_wreck_zones, coord) = true) {
+    buildappearance(worn);
+    return;
+}
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
     bas_readyanim(human_ready);
@@ -20,6 +24,10 @@ if ($weapon = null) {
 buildappearance(worn);
 
 [proc,.update_bas]
+if (~.inzone_coord_pair_table(trawler_wreck_zones, .coord) = true) {
+    .buildappearance(worn);
+    return;
+}
 def_obj $weapon = .inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
     .bas_readyanim(human_ready);
@@ -95,6 +103,10 @@ if (staffmodlevel >= 2 & inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
     stat_add(magic, calc(255 - stat(magic)), 0);
     stat_add(prayer, calc(255 - stat(prayer)), 0);
 }
+if (p_finduid(uid) = true) {
+    p_animprotect(^false);
+}
+cam_reset;
 ~update_bas; // update appearance
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight
@@ -114,6 +126,10 @@ if (.staffmodlevel >= 2 & .inv_getobj(worn, ^wearpos_rhand) = poisoned_dagger) {
     .stat_add(magic, calc(255 - .stat(magic)), 0);
     .stat_add(prayer, calc(255 - .stat(prayer)), 0);
 }
+if (.p_finduid(.uid) = true) {
+    .p_animprotect(^false);
+}
+.cam_reset;
 ~.update_bas; // update appearance
 ~.update_bonuses; // update bonuses if
 ~.update_weight; // update weight
