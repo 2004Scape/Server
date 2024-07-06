@@ -17,6 +17,7 @@ import {Position} from '#lostcity/entity/Position.js';
 
 import {LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
+import Environment from '#lostcity/util/Environment.js';
 
 export default class GameMap {
     init(zoneMap: ZoneMap): void {
@@ -124,7 +125,7 @@ export default class GameMap {
                 const npcType: NpcType = NpcType.get(packet.g2());
                 const size: number = npcType.size;
                 const npc: Npc = new Npc(level, absoluteX, absoluteZ, size, size, EntityLifeCycle.RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-                if (npcType.members && World.members) {
+                if (npcType.members && Environment.MEMBERS_WORLD) {
                     World.addNpc(npc, -1);
                 } else if (!npcType.members) {
                     World.addNpc(npc, -1);
@@ -142,7 +143,7 @@ export default class GameMap {
             for (let j: number = 0; j < count; j++) {
                 const objType: ObjType = ObjType.get(packet.g2());
                 const obj: Obj = new Obj(level, absoluteX, absoluteZ, EntityLifeCycle.RESPAWN, objType.id, packet.g1());
-                if (objType.members && World.members) {
+                if (objType.members && Environment.MEMBERS_WORLD) {
                     zoneMap.zone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 } else if (!objType.members) {
                     zoneMap.zone(obj.x, obj.z, obj.level).addStaticObj(obj);

@@ -6,12 +6,13 @@ import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import { ParamHelper, ParamMap } from '#lostcity/cache/config/ParamHelper.js';
 import ParamType from '#lostcity/cache/config/ParamType.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
+import Environment from '#lostcity/util/Environment.js';
 
 export default class ObjType extends ConfigType {
     static configNames: Map<string, number> = new Map();
     static configs: ObjType[] = [];
 
-    static load(dir: string, members: boolean) {
+    static load(dir: string) {
         ObjType.configNames = new Map();
         ObjType.configs = [];
 
@@ -46,7 +47,7 @@ export default class ObjType extends ConfigType {
                 config.toCertificate();
             }
 
-            if (!members && config.members) {
+            if (!Environment.MEMBERS_WORLD && config.members) {
                 config.tradeable = false;
                 config.op = null;
                 config.iop = null;

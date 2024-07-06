@@ -18,6 +18,8 @@ import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, LocLayer, LocAngle} from '@2004scape/rsmod-pathfinder';
 
@@ -41,7 +43,7 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_MEMBERS]: state => {
-        state.pushInt(World.members ? 1 : 0);
+        state.pushInt(Environment.MEMBERS_WORLD ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: state => {
@@ -380,64 +382,16 @@ const ServerOps: CommandHandlers = {
         state.pushInt(World.getTotalNpcs());
     },
 
-    [ScriptOpcode.MAP_LASTCLOCK]: state => {
-        state.pushInt(World.lastCycleStats[0]);
-    },
-
-    [ScriptOpcode.MAP_LASTWORLD]: state => {
-        state.pushInt(World.lastCycleStats[1]);
-    },
-
-    [ScriptOpcode.MAP_LASTCLIENTIN]: state => {
-        state.pushInt(World.lastCycleStats[2]);
-    },
-
-    [ScriptOpcode.MAP_LASTNPC]: state => {
-        state.pushInt(World.lastCycleStats[3]);
-    },
-
-    [ScriptOpcode.MAP_LASTPLAYER]: state => {
-        state.pushInt(World.lastCycleStats[4]);
-    },
-
-    [ScriptOpcode.MAP_LASTLOGOUT]: state => {
-        state.pushInt(World.lastCycleStats[5]);
-    },
-
-    [ScriptOpcode.MAP_LASTLOGIN]: state => {
-        state.pushInt(World.lastCycleStats[6]);
-    },
-
-    [ScriptOpcode.MAP_LASTZONE]: state => {
-        state.pushInt(World.lastCycleStats[7]);
-    },
-
-    [ScriptOpcode.MAP_LASTCLIENTOUT]: state => {
-        state.pushInt(World.lastCycleStats[8]);
-    },
-
-    [ScriptOpcode.MAP_LASTCLEANUP]: state => {
-        state.pushInt(World.lastCycleStats[9]);
-    },
-
-    [ScriptOpcode.MAP_LASTBANDWIDTHIN]: state => {
-        state.pushInt(World.lastCycleBandwidth[0]);
-    },
-
-    [ScriptOpcode.MAP_LASTBANDWIDTHOUT]: state => {
-        state.pushInt(World.lastCycleBandwidth[1]);
-    },
-
     [ScriptOpcode.ZONECOUNT]: state => {
-        state.pushInt(World.zoneMap.zoneCount());
+        state.pushInt(World.getTotalZones());
     },
 
     [ScriptOpcode.LOCCOUNT]: state => {
-        state.pushInt(World.zoneMap.locCount());
+        state.pushInt(World.getTotalLocs());
     },
 
     [ScriptOpcode.OBJCOUNT]: state => {
-        state.pushInt(World.zoneMap.objCount());
+        state.pushInt(World.getTotalObjs());
     }
 };
 

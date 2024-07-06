@@ -3,7 +3,6 @@ import Player from '#lostcity/entity/Player.js';
 import OpHeldU from '#lostcity/network/incoming/model/OpHeldU.js';
 import Component from '#lostcity/cache/config/Component.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
-import World from '#lostcity/engine/World.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
@@ -67,7 +66,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         const objType = ObjType.get(player.lastItem);
         const useObjType = ObjType.get(player.lastUseItem);
 
-        if ((objType.members || useObjType.members) && !World.members) {
+        if ((objType.members || useObjType.members) && !Environment.MEMBERS_WORLD) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
             return false;

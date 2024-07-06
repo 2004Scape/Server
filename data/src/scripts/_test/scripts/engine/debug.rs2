@@ -13,33 +13,3 @@ if (string_length($example2) > 0) {
 
 [label,please_finish]
 mes("Please finish what you are doing first.");
-
-[debugproc,test]
-if (p_finduid(uid) = false) {
-    @please_finish;
-}
-obj_add(coord, coins, 1000, 30);
-
-obj_add(movecoord(coord, 1, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, 2, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, 3, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, 4, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, 5, 0, 0), coins, 1000, 30);
-
-obj_add(movecoord(coord, -1, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, -2, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, -3, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, -4, 0, 0), coins, 1000, 30);
-obj_add(movecoord(coord, -5, 0, 0), coins, 1000, 30);
-
-obj_add(movecoord(coord, 0, 0, 1), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, 2), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, 3), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, 4), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, 5), coins, 1000, 30);
-
-obj_add(movecoord(coord, 0, 0, -1), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, -2), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, -3), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, -4), coins, 1000, 30);
-obj_add(movecoord(coord, 0, 0, -5), coins, 1000, 30);

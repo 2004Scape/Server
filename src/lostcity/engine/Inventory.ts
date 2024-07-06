@@ -54,8 +54,7 @@ export class Inventory {
             stackType = Inventory.ALWAYS_STACK;
         }
 
-        const container = new Inventory(type.size, stackType);
-        container.type = inv;
+        const container = new Inventory(inv, type.size, stackType);
 
         if (type.stockobj && type.stockcount && type.stockobj.length) {
             for (let i = 0; i < type.stockobj.length; i++) {
@@ -72,21 +71,18 @@ export class Inventory {
     // 0 - stack based on item
     // 1 - always stack
     // 2 - never stack
-    stackType = Inventory.NORMAL_STACK;
+    readonly stackType: number;
+    readonly capacity: number;
+    readonly type: number; // inv ID
+    readonly items: (Item | null)[];
 
-    capacity = 0;
-    items: (Item | null)[] = [];
     update = false;
 
-    type = -1; // inv ID
-
-    constructor(capacity: number, stackType = Inventory.NORMAL_STACK) {
+    constructor(type: number, capacity: number, stackType = Inventory.NORMAL_STACK) {
+        this.type = type;
         this.capacity = capacity;
         this.stackType = stackType;
-
-        for (let i = 0; i < capacity; i++) {
-            this.items.push(null);
-        }
+        this.items = new Array(capacity).fill(null);
     }
 
     contains(id: number) {
@@ -332,7 +328,7 @@ export class Inventory {
 
     // REVIEW: This method isn't used anywhere
     shift() {
-        this.items = this.items.sort((a: Item | null, b: Item | null) => {
+        this.items.sort((a: Item | null, b: Item | null) => {
             if (a === null || b === null) {
                 // null values go to the end of the array
                 return +(a === null) - +(b === null);

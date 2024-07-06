@@ -48,7 +48,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import {NpcList, PlayerList} from '#lostcity/entity/EntityList.js';
-import {isNetworkPlayer, NetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
+import {isNetworkPlayer} from '#lostcity/entity/NetworkPlayer.js';
 import {EntityQueueState} from '#lostcity/entity/EntityQueueRequest.js';
 import {PlayerTimerType} from '#lostcity/entity/EntityTimer.js';
 
@@ -67,41 +67,69 @@ import {Position} from '#lostcity/entity/Position.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
+import WorldStat from '#lostcity/engine/WorldStat.js';
 
 class World {
-    id = Environment.WORLD_ID as number;
-    members = Environment.MEMBERS_WORLD as boolean;
-    currentTick = 0;
-    tickRate = 600; // speeds up when we're processing server shutdown
-    shutdownTick = -1;
+    private static readonly PLAYERS: number = 2048;
+    private static readonly NPCS: number = 8192;
+
+    private static readonly NORMAL_TICKRATE: number = 600;
+    private static readonly SHUTDOWN_TICKRATE: number = 1;
+
+    private static readonly LOGIN_PINGRATE: number = 100;
+    private static readonly INV_STOCKRATE: number = 100;
+    private static readonly AFK_EVENTRATE: number = 500;
+    private static readonly PLAYER_SAVERATE: number = 1500;
+
+    private static readonly SHUTDOWN_TICKS: number = 24000;
+    private static readonly TIMEOUT_IDLE_TICKS: number = 75;
+    private static readonly TIMEOUT_LOGOUT_TICKS: number = 100;
+
+    readonly gameMap: GameMap;
+    readonly zoneMap: ZoneMap;
+    readonly invs: Set<Inventory>; // shared inventories (shops)
+
+    // entities
+    readonly newPlayers: Set<Player>; // players joining at the end of this tick
+    readonly players: PlayerList;
+    readonly npcs: NpcList;
+
+    // zones
+    readonly zonesTracking: Map<number, Set<Zone>>;
+    readonly queue: LinkList<EntityQueueState>;
+
+    // debug data
+    readonly lastCycleStats: number[];
+    readonly cycleStats: number[];
+
+    tickRate: number = World.NORMAL_TICKRATE; // speeds up when we're processing server shutdown
+    currentTick: number = 0;
+    shutdownTick: number = -1;
 
     // packed data timestamps
     allLastModified: number = 0;
     datLastModified: Map<string, number> = new Map();
 
-    // debug data
-    lastCycleStats: number[] = [];
-    lastCycleBandwidth: number[] = [0, 0];
-
-    readonly gameMap: GameMap = new GameMap();
-    readonly zoneMap: ZoneMap = new ZoneMap();
-    readonly invs: Inventory[] = []; // shared inventories (shops)
     vars: Int32Array = new Int32Array(); // var shared
     varsString: string[] = [];
-
-    // entities
-    readonly newPlayers: Player[] = []; // players joining at the end of this tick
-    readonly players: PlayerList = new PlayerList(2048);
-    readonly npcs: NpcList = new NpcList(8192);
-
-    // zones
-    readonly zonesTracking: Map<number, Set<Zone>> = new Map();
-    readonly queue: LinkList<EntityQueueState> = new LinkList();
 
     devWatcher: Watcher | null = null;
     devThread: Worker | null = null;
     devRebuilding: boolean = false;
     devMTime: Map<string, number> = new Map();
+
+    constructor() {
+        this.gameMap = new GameMap();
+        this.zoneMap = new ZoneMap();
+        this.invs = new Set();
+        this.newPlayers = new Set();
+        this.players = new PlayerList(World.PLAYERS);
+        this.npcs = new NpcList(World.NPCS);
+        this.zonesTracking = new Map();
+        this.queue = new LinkList();
+        this.lastCycleStats = new Array(12).fill(0);
+        this.cycleStats = new Array(12).fill(0);
+    }
 
     // ----
 
@@ -133,7 +161,7 @@ class World {
         }
 
         if (this.shouldReload('obj', true)) {
-            ObjType.load('data/pack', this.members);
+            ObjType.load('data/pack');
             transmitted = true;
         }
 
@@ -181,11 +209,12 @@ class World {
         if (this.shouldReload('inv')) {
             InvType.load('data/pack');
 
+            this.invs.clear();
             for (let i = 0; i < InvType.count; i++) {
                 const inv = InvType.get(i);
     
                 if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                    this.invs[i] = Inventory.fromType(i);
+                    this.invs.add(Inventory.fromType(i));
                 }
             }
         }
@@ -382,24 +411,139 @@ class World {
         }
     }
 
-    async cycle(continueCycle = true): Promise<void> {
-        const start = Date.now();
+    async cycle(continueCycle: boolean = true): Promise<void> {
+        const start: number = Date.now();
 
         // world processing
         // - world queue
         // - calculate afk event readiness
         // - npc spawn scripts
         // - npc hunt
-        let worldProcessing = Date.now();
-        for (let request = this.queue.head(); request !== null; request = this.queue.next()) {
+        this.processWorld();
+
+        // client input
+        // - decode packets
+        // - process pathfinding/following
+        await this.processClientsIn();
+
+        // npc processing (if npc is not busy)
+        // - resume suspended script
+        // - stat regen
+        // - timer
+        // - queue
+        // - movement
+        // - modes
+        this.processNpcs();
+
+        // player processing
+        // - resume suspended script
+        // - primary queue
+        // - weak queue
+        // - timers
+        // - soft timers
+        // - engine queue
+        // - interactions
+        // - movement
+        // - close interface if attempting to logout
+        await this.processPlayers();
+
+        // player logout
+        await this.processLogouts();
+
+        // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
+        await this.processLogins();
+
+        // process zones
+        // - build list of active zones around players
+        // - loc/obj despawn/respawn
+        // - compute shared buffer
+        this.processZones();
+
+        // process movement directions
+        // - convert player movements
+        // - convert npc movements
+        this.processMovementDirections();
+
+        // client output
+        // - map update
+        // - player info
+        // - npc info
+        // - zone updates
+        // - inv changes
+        // - stat changes
+        // - afk zones changes
+        // - flush packets
+        await this.processClientsOut();
+
+        // cleanup
+        // - reset zones
+        // - reset players
+        // - reset npcs
+        // - reset invs
+        this.processCleanup();
+
+        // ----
+
+        const tick: number = this.currentTick;
+
+        if (tick % World.LOGIN_PINGRATE === 0) {
+            this.heartbeat();
+        }
+
+        // server shutdown
+        if (this.shutdownTick > -1 && tick >= this.shutdownTick) {
+            await this.processShutdown();
+        }
+
+        if (tick % World.PLAYER_SAVERATE === 0 && tick > 0) {
+            // auto-save players every 15 mins
+            this.savePlayers();
+        }
+
+        this.currentTick++;
+        this.cycleStats[WorldStat.CYCLE] = Date.now() - start;
+
+        this.lastCycleStats[WorldStat.CYCLE] = this.cycleStats[WorldStat.CYCLE];
+        this.lastCycleStats[WorldStat.WORLD] = this.cycleStats[WorldStat.WORLD];
+        this.lastCycleStats[WorldStat.CLIENT_IN] = this.cycleStats[WorldStat.CLIENT_IN];
+        this.lastCycleStats[WorldStat.NPC] = this.cycleStats[WorldStat.NPC];
+        this.lastCycleStats[WorldStat.PLAYER] = this.cycleStats[WorldStat.PLAYER];
+        this.lastCycleStats[WorldStat.LOGOUT] = this.cycleStats[WorldStat.LOGOUT];
+        this.lastCycleStats[WorldStat.LOGIN] = this.cycleStats[WorldStat.LOGIN];
+        this.lastCycleStats[WorldStat.ZONE] = this.cycleStats[WorldStat.ZONE];
+        this.lastCycleStats[WorldStat.CLIENT_OUT] = this.cycleStats[WorldStat.CLIENT_OUT];
+        this.lastCycleStats[WorldStat.CLEANUP] = this.cycleStats[WorldStat.CLEANUP];
+        this.lastCycleStats[WorldStat.BANDWIDTH_IN] = this.cycleStats[WorldStat.BANDWIDTH_IN];
+        this.lastCycleStats[WorldStat.BANDWIDTH_OUT] = this.cycleStats[WorldStat.BANDWIDTH_OUT];
+
+        if (continueCycle) {
+            setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
+        }
+
+        // console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
+        // console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
+        // console.log('----');
+    }
+
+    // - world queue
+    // - calculate afk event readiness
+    // - npc spawn scripts
+    // - npc hunt
+    private processWorld(): void {
+        const start: number = Date.now();
+
+        const tick: number = this.currentTick;
+
+        // - world queue
+        for (let request: EntityQueueState | null = this.queue.head(); request; request = this.queue.next()) {
             const delay = request.delay--;
             if (delay > 0) {
                 continue;
             }
 
-            const script = request.script;
+            const script: ScriptState = request.script;
             try {
-                const state = ScriptRunner.execute(script);
+                const state: number = ScriptRunner.execute(script);
 
                 // remove from queue no matter what, re-adds if necessary
                 request.unlink();
@@ -419,7 +563,8 @@ class World {
             }
         }
 
-        if (this.currentTick % 500 === 0) {
+        // - calculate afk event readiness
+        if (tick % World.AFK_EVENTRATE === 0) {
             for (const player of this.players) {
                 // (normal) 1/12 chance every 5 minutes of setting an afk event state (even distrubution 60/5)
                 // (afk) double the chance?
@@ -427,8 +572,9 @@ class World {
             }
         }
 
+        // - npc spawn scripts
         for (const npc of this.npcs) {
-            if (!npc.updateLifeCycle(this.currentTick)) {
+            if (!npc.updateLifeCycle(tick)) {
                 continue;
             }
             if (npc.lifecycle === EntityLifeCycle.RESPAWN) {
@@ -438,8 +584,9 @@ class World {
             }
         }
 
+        // - npc hunt
         for (const npc of this.npcs) {
-            if (!npc.checkLifeCycle(this.currentTick) || npc.delayed()) {
+            if (!npc.checkLifeCycle(tick) || npc.delayed()) {
                 continue;
             }
 
@@ -447,12 +594,17 @@ class World {
                 npc.huntAll();
             }
         }
-        worldProcessing = Date.now() - worldProcessing;
+        this.cycleStats[WorldStat.WORLD] = Date.now() - start;
+    }
 
-        // client input
+    // - decode packets
+    // - process pathfinding/following
+    private async processClientsIn(): Promise<void> {
+        const start: number = Date.now();
+
+        this.cycleStats[WorldStat.BANDWIDTH_IN] = 0; // reset bandwidth counter
+
         // - decode packets
-        this.lastCycleBandwidth[0] = 0; // reset bandwidth counter
-        let clientInput = Date.now();
         for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
                 continue;
@@ -465,8 +617,8 @@ class World {
                 await this.removePlayer(player);
             }
         }
-        clientInput = Date.now() - clientInput;
 
+        // - process pathfinding/following
         for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
                 continue;
@@ -499,15 +651,17 @@ class World {
                 }
             }
         }
+        this.cycleStats[WorldStat.CLIENT_IN] = Date.now() - start;
+    }
 
-        // npc processing (if npc is not busy)
-        // - resume suspended script
-        // - stat regen
-        // - timer
-        // - queue
-        // - movement
-        // - modes
-        let npcProcessing = Date.now();
+    // - resume suspended script
+    // - stat regen
+    // - timer
+    // - queue
+    // - movement
+    // - modes
+    private processNpcs(): void {
+        const start: number = Date.now();
         for (const npc of this.npcs) {
             if (!npc.checkLifeCycle(this.currentTick)) {
                 continue;
@@ -522,6 +676,7 @@ class World {
                     continue;
                 }
 
+                // - resume suspended script
                 if (npc.activeScript) {
                     npc.executeScript(npc.activeScript);
                 }
@@ -531,8 +686,13 @@ class World {
                     continue;
                 }
 
+                // - stat regen
+                // - timer
                 npc.processTimers();
+                // - queue
                 npc.processQueue();
+                // - movement
+                // - modes
                 npc.processNpcModes();
 
                 npc.validateDistanceWalked();
@@ -541,20 +701,20 @@ class World {
                 this.removeNpc(npc, -1);
             }
         }
-        npcProcessing = Date.now() - npcProcessing;
+        this.cycleStats[WorldStat.NPC] = Date.now() - start;
+    }
 
-        // player processing
-        // - resume suspended script
-        // - primary queue
-        // - weak queue
-        // - timers
-        // - soft timers
-        // - engine queue
-        // - loc/obj interactions
-        // - movement
-        // - player/npc interactions
-        // - close interface if attempting to logout
-        let playerProcessing = Date.now();
+    // - resume suspended script
+    // - primary queue
+    // - weak queue
+    // - timers
+    // - soft timers
+    // - engine queue
+    // - interactions
+    // - movement
+    // - close interface if attempting to logout
+    private async processPlayers(): Promise<void> {
+        const start: number = Date.now();
         for (const player of this.players) {
             try {
                 player.playtime++;
@@ -563,14 +723,22 @@ class World {
                     player.delay--;
                 }
 
+                // - resume suspended script
                 if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
                     player.executeScript(player.activeScript, true);
                 }
 
+                // - primary queue
+                // - weak queue
                 player.processQueues();
+                // - timers
                 player.processTimers(PlayerTimerType.NORMAL);
+                // - soft timers
                 player.processTimers(PlayerTimerType.SOFT);
+                // - engine queue
                 player.processEngineQueue();
+                // - interactions
+                // - movement
                 player.processInteraction();
 
                 if ((player.mask & Player.EXACT_MOVE) == 0) {
@@ -580,11 +748,12 @@ class World {
                 if (this.shutdownTick < this.currentTick) {
                     // request logout on socket idle after 45 seconds (this may be 16 *ticks* in osrs!)
                     // increased timeout for compatibility with old PCs that take ages to load
-                    if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= 75) {
+                    if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_IDLE_TICKS) {
                         player.logoutRequested = true;
                     }
                 }
 
+                // - close interface if attempting to logout
                 if (player.logoutRequested) {
                     player.closeModal();
                 }
@@ -593,12 +762,13 @@ class World {
                 await this.removePlayer(player);
             }
         }
-        playerProcessing = Date.now() - playerProcessing;
+        this.cycleStats[WorldStat.PLAYER] = Date.now() - start;
+    }
 
-        // player logout
-        let playerLogout = Date.now();
+    private async processLogouts(): Promise<void> {
+        const start: number = Date.now();
         for (const player of this.players) {
-            if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= 100) {
+            if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_LOGOUT_TICKS) {
                 // remove after 60 seconds
                 player.queue.clear();
                 player.weakQueue.clear();
@@ -637,24 +807,33 @@ class World {
                 player.messageGame('[DEBUG]: Waiting for queue to empty before logging out.');
             }
         }
-        playerLogout = Date.now() - playerLogout;
+        this.cycleStats[WorldStat.LOGOUT] = Date.now() - start;
+    }
 
-        // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
-        let playerLogin = Date.now();
-        for (let i = 0; i < this.newPlayers.length; i++) {
-            const player = this.newPlayers[i];
-            this.newPlayers.splice(i--, 1);
+    private async processLogins(): Promise<void> {
+        const start: number = Date.now();
+        player: for (const player of this.newPlayers) {
+            if (!isNetworkPlayer(player)) {
+                continue;
+            }
+
+            for (const other of this.players) {
+                if (player.username !== other.username) {
+                    continue;
+                }
+                player.client?.send(LoginResponse.LOGGED_IN);
+                player.client?.close();
+                continue player;
+            }
 
             let pid: number;
             try {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
-                pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
+                pid = this.getNextPid(player.client);
             } catch (e) {
-                if (player instanceof NetworkPlayer && player.client) {
-                    // world full
-                    player.client.send(LoginResponse.WORLD_FULL);
-                    player.client.close();
-                }
+                // world full
+                player.client?.send(LoginResponse.WORLD_FULL);
+                player.client?.close();
                 continue;
             }
 
@@ -675,7 +854,7 @@ class World {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
 
-            if (player instanceof NetworkPlayer && player.client) {
+            if (player.client) {
                 player.client.state = 1;
                 if (player.staffModLevel >= 2) {
                     player.client.send(LoginResponse.STAFF_MOD_LEVEL);
@@ -684,19 +863,33 @@ class World {
                 }
             }
         }
-        playerLogin = Date.now() - playerLogin;
+        this.newPlayers.clear();
+        this.cycleStats[WorldStat.LOGIN] = Date.now() - start;
+    }
 
-        // process zones
-        // - build list of active zones around players
-        // - loc/obj despawn/respawn
-        // - compute shared buffer
-        let zoneProcessing = Date.now();
-        for (const zone of Array.from(this.zonesTracking.get(this.currentTick) ?? [])) {
-            zone.tick(this.currentTick);
+    // - build list of active zones around players
+    // - loc/obj despawn/respawn
+    // - compute shared buffer
+    private processZones(): void {
+        const start: number = Date.now();
+        const tick: number = this.currentTick;
+        const zones: Set<Zone> | undefined = this.zonesTracking.get(tick);
+        if (typeof zones !== 'undefined') {
+            // - loc/obj despawn/respawn
+            for (const zone of zones) {
+                zone.tick(tick);
+            }
         }
+        // - build list of active zones around players
+        // - compute shared buffer
         this.computeSharedEvents();
-        zoneProcessing = Date.now() - zoneProcessing;
+        this.cycleStats[WorldStat.ZONE] = Date.now() - start;
+    }
 
+    // - convert player movements
+    // - convert npc movements
+    private processMovementDirections(): void {
+        // TODO: benchmark this?
         for (const player of this.players) {
             player.convertMovementDir();
         }
@@ -704,50 +897,75 @@ class World {
         for (const npc of this.npcs) {
             npc.convertMovementDir();
         }
+    }
 
-        // client output
-        // - map update
-        // - player info
-        // - npc info
-        // - zone updates
-        // - inv changes
-        // - stat changes
-        // - flush packets
-        this.lastCycleBandwidth[1] = 0; // reset bandwidth counter
-        let clientOutput = Date.now();
+    // - map update
+    // - player info
+    // - npc info
+    // - zone updates
+    // - inv changes
+    // - stat changes
+    // - afk zones changes
+    // - flush packets
+    private async processClientsOut(): Promise<void> {
+        const start: number = Date.now();
+
+        this.cycleStats[WorldStat.BANDWIDTH_OUT] = 0; // reset bandwidth counter
+
         for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
                 continue;
             }
 
             try {
+                // - map update
                 player.updateMap();
+                // - player info
                 player.updatePlayers();
+                // - npc info
                 player.updateNpcs();
+                // - zone updates
                 player.updateZones();
+                // - inv changes
                 player.updateInvs();
+                // - stat changes
                 player.updateStats();
+                // - afk zones changes
                 player.updateAfkZones();
 
+                // - flush packets
                 player.encodeOut();
             } catch (err) {
                 console.error(err);
                 await this.removePlayer(player);
             }
         }
-        clientOutput = Date.now() - clientOutput;
+        this.cycleStats[WorldStat.CLIENT_OUT] = Date.now() - start;
+    }
 
-        let cleanup = Date.now();
-        // cleanup zone updates
-        for (const zone of Array.from(this.zonesTracking.get(this.currentTick) ?? [])) {
-            zone.reset();
+    // - reset zones
+    // - reset players
+    // - reset npcs
+    // - reset invs
+    private processCleanup(): void {
+        const start: number = Date.now();
+
+        const tick: number = this.currentTick;
+
+        // - reset zones
+        const zones: Set<Zone> | undefined = this.zonesTracking.get(tick);
+        if (typeof zones !== 'undefined') {
+            for (const zone of zones) {
+                zone.reset();
+            }
         }
-        this.zonesTracking.delete(this.currentTick);
+        this.zonesTracking.delete(tick);
 
-        // reset entity masks
+        // - reset players
         for (const player of this.players) {
             player.resetEntity(false);
 
+            // - reset invs (players)
             for (const inv of player.invs.values()) {
                 if (!inv) {
                     continue;
@@ -757,20 +975,17 @@ class World {
             }
         }
 
+        // - reset npcs
         for (const npc of this.npcs) {
-            if (!npc.checkLifeCycle(this.currentTick)) {
+            if (!npc.checkLifeCycle(tick)) {
                 continue;
             }
 
             npc.resetEntity(false);
         }
 
-        for (let i = 0; i < this.invs.length; i++) {
-            const inv = this.invs[i];
-            if (!inv) {
-                continue;
-            }
-
+        // - reset invs (world)
+        for (const inv of this.invs) {
             inv.update = false;
 
             // Increase or Decrease shop stock
@@ -786,13 +1001,13 @@ class World {
                     continue;
                 }
                 // Item stock is under min
-                if (item.count < invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                if (item.count < invType.stockcount[index] && tick % invType.stockrate[index] === 0) {
                     inv.add(item?.id, 1, index, true, false, false);
                     inv.update = true;
                     continue;
                 }
                 // Item stock is over min
-                if (item.count > invType.stockcount[index] && this.currentTick % invType.stockrate[index] === 0) {
+                if (item.count > invType.stockcount[index] && tick % invType.stockrate[index] === 0) {
                     inv.remove(item?.id, 1, index, true);
                     inv.update = true;
                     continue;
@@ -800,86 +1015,70 @@ class World {
 
                 // Item stock is not listed, such as general stores
                 // Tested on low and high player count worlds, ever 1 minute stock decreases.
-                if (invType.allstock && !invType.stockcount[index] && this.currentTick % 100 === 0) {
+                if (invType.allstock && !invType.stockcount[index] && tick % World.INV_STOCKRATE === 0) {
                     inv.remove(item?.id, 1, index, true);
                     inv.update = true;
                 }
             }
         }
-        cleanup = Date.now() - cleanup;
+        this.cycleStats[WorldStat.CLEANUP] = Date.now() - start;
+    }
 
-        if (this.currentTick % 100 === 0) {
-            const players: bigint[] = [];
-            for (const player of this.players) {
-                players.push(player.username37);
-            }
-
-            Login.loginThread.postMessage({
-                type: 'heartbeat',
-                players
-            });
+    private heartbeat(): void {
+        const players: bigint[] = [];
+        for (const player of this.players) {
+            players.push(player.username37);
         }
 
-        // server shutdown
-        if (this.shutdownTick > -1 && this.currentTick >= this.shutdownTick) {
-            const duration = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
-            const online = this.getTotalPlayers();
+        Login.loginThread.postMessage({
+            type: 'heartbeat',
+            players
+        });
+    }
 
-            if (online) {
-                for (const player of this.players) {
-                    player.logoutRequested = true;
+    private async processShutdown(): Promise<void> {
+        const duration: number = this.currentTick - this.shutdownTick; // how long have we been trying to shutdown
+        const online: number = this.getTotalPlayers();
 
-                    if (isNetworkPlayer(player)) {
-                        player.logout(); // visually log out
+        if (online) {
+            for (const player of this.players) {
+                player.logoutRequested = true;
 
-                        // if it's been more than a few ticks and the client just won't leave us alone, close the socket
-                        if (player.client && duration > 2) {
-                            player.client.close();
-                        }
+                if (isNetworkPlayer(player)) {
+                    player.logout(); // visually log out
+
+                    // if it's been more than a few ticks and the client just won't leave us alone, close the socket
+                    if (player.client && duration > 2) {
+                        player.client.close();
                     }
                 }
+            }
 
-                this.npcs.reset();
+            this.npcs.reset();
 
-                if (duration > 2) {
-                    // we've already attempted to shutdown, now we speed things up
-                    if (this.tickRate > 1) {
-                        this.tickRate = 1;
-                    }
-
-                    // if we've exceeded 24000 ticks then we *really* need to shut down now
-                    if (duration > 24000) {
-                        for (const player of this.players) {
-                            await this.removePlayer(player);
-                        }
-
-                        this.tickRate = 600;
-                    }
+            if (duration > 2) {
+                // we've already attempted to shutdown, now we speed things up
+                if (this.tickRate > World.SHUTDOWN_TICKRATE) {
+                    this.tickRate = World.SHUTDOWN_TICKRATE;
                 }
-            } else {
-                process.exit(0);
+
+                // if we've exceeded 24000 ticks then we *really* need to shut down now
+                if (duration > World.SHUTDOWN_TICKS) {
+                    for (const player of this.players) {
+                        await this.removePlayer(player);
+                    }
+
+                    this.tickRate = World.NORMAL_TICKRATE;
+                }
             }
+        } else {
+            process.exit(0);
         }
+    }
 
-        if (this.currentTick % 1500 === 0 && this.currentTick > 0) {
-            // auto-save players every 15 mins
-            for (const player of this.players) {
-                const sav = player.save();
-                sav.release();
-            }
-        }
-
-        const end = Date.now();
-        // console.log(`tick ${this.currentTick} took ${end - start}ms: ${this.getTotalPlayers()} players`);
-        // console.log(`${worldProcessing} ms world | ${clientInput} ms client in | ${npcProcessing} ms npcs | ${playerProcessing} ms players | ${playerLogout} ms logout | ${playerLogin} ms login | ${zoneProcessing} ms zones | ${clientOutput} ms client out | ${cleanup} ms cleanup`);
-        // console.log('----');
-
-        this.currentTick++;
-        this.lastCycleStats = [end - start, worldProcessing, clientInput, npcProcessing, playerProcessing, playerLogout, playerLogin, zoneProcessing, clientOutput, cleanup];
-
-        if (continueCycle) {
-            const nextTick = this.tickRate - (end - start);
-            setTimeout(this.cycle.bind(this), nextTick);
+    private savePlayers(): void {
+        for (const player of this.players) {
+            player.save().release();
         }
     }
 
@@ -892,13 +1091,15 @@ class World {
             return null;
         }
 
-        let container = this.invs.find(x => x && x.type == inv);
-        if (!container) {
-            container = Inventory.fromType(inv);
-            this.invs.push(container);
+        for (const inventory of this.invs) {
+            if (inventory.type === inv) {
+                return inventory;
+            }
         }
 
-        return container;
+        const inventory: Inventory = Inventory.fromType(inv);
+        this.invs.add(inventory);
+        return inventory;
     }
 
     getZone(x: number, z: number, level: number): Zone {
@@ -1149,7 +1350,7 @@ class World {
     }
 
     addPlayer(player: Player): void {
-        this.newPlayers.push(player);
+        this.newPlayers.add(player);
     }
 
     async removePlayer(player: Player): Promise<void> {
@@ -1209,6 +1410,18 @@ class World {
 
     getTotalNpcs(): number {
         return this.npcs.count;
+    }
+
+    getTotalZones(): number {
+        return this.zoneMap.zoneCount();
+    }
+
+    getTotalLocs(): number {
+        return this.zoneMap.locCount();
+    }
+
+    getTotalObjs(): number {
+        return this.zoneMap.objCount();
     }
 
     getNpc(nid: number): Npc | null {
