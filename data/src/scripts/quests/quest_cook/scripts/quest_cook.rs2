@@ -32,7 +32,8 @@ if($option = 1) {
     %cook_progress = 1;
     ~send_quest_progress(questlist:cook, %cook_progress, ^cook_complete);
     ~chatplayer("<p,happy>Yes, I'll help you.");
-    ~chatnpc("<p,happy>Oh thank you, thank you.|I need milk, eggs and flour.|I'd be very grateful if you can get them to me.");
+    // https://storage.googleapis.com/tannerdino/images/cook2.jpg
+    ~chatnpc("<p,happy>Oh thank you, thank you. I need milk, an egg and flour.|I'd be very grateful if you can get them to me."); // auto break will break the line early
 } else if($option = 2) {
     ~chatplayer("<p,neutral>No, I don't feel like it. Maybe later.");
     ~chatnpc("<p,sad>OK, suit yourself!");
