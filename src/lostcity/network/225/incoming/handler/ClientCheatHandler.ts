@@ -260,6 +260,53 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 player.moveStrategy = MoveStrategy.NAIVE;
             }
             player.messageGame(`Naive is on? ${player.moveStrategy === MoveStrategy.NAIVE}`);
+        } else if (cmd === 'teleto' && player.staffModLevel >= 3) {
+            if (args.length < 1) {
+                return false;
+            }
+
+            // ::teleto <username>
+            const other = World.getPlayerByUsername(args[0]);
+            if (!other) {
+                player.messageGame(`${args[0]} is not logged in.`);
+                return false;
+            }
+
+            player.teleJump(other.x, other.z, other.level);
+        } else if (cmd === 'teleother' && player.staffModLevel >= 3) {
+            if (args.length < 1) {
+                return false;
+            }
+
+            // ::teleother <username>
+            const other = World.getPlayerByUsername(args[0]);
+            if (!other) {
+                player.messageGame(`${args[0]} is not logged in.`);
+                return false;
+            }
+
+            other.teleJump(player.x, player.z, player.level);
+        } else if (cmd === 'setvarother' && player.staffModLevel >= 3) {
+            if (args.length < 3) {
+                return false;
+            }
+
+            // ::setvarother <username> <name> <value>
+            const other = World.getPlayerByUsername(args[0]);
+            if (!other) {
+                player.messageGame(`${args[0]} is not logged in.`);
+                return false;
+            }
+
+            const varp = VarPlayerType.getId(args[1]);
+            const value = Math.max(-0x80000000, Math.min(tryParseInt(args[2], 0), 0x7fffffff));
+
+            if (varp === -1) {
+                return false;
+            }
+
+            player.setVar(varp, value);
+            player.messageGame('set ' + args[1] + ': to ' + value + ' on ' + args[0]);
         }
 
         // lookup debugproc with the name and execute it
