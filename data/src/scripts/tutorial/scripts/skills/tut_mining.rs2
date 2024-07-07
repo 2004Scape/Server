@@ -44,7 +44,7 @@ if (%tutorial_progress < ^mining_instructor_mining_start) {
 def_int $is_empty = loc_param(mining_rock_empty);
 if ($is_empty = ^true) {
     anim(null, 0);
-    mes("There is currently no ore available in this rock.");
+    mes("There is no ore currently available in this rock.");
     sound_synth(prospect, 0, 0);
     return(false);
 }

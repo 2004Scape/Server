@@ -14550,65 +14550,6 @@ length=3
 op1=Climb-up
 op2=Investigate
 
-[hopper_full]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_lumbridge]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_varrock]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_zanaris]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_ardougne]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hoppercontrol_lumbridge]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_varrock]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_zanaris]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_ardougne]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_inuse]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_2722
-
 [loc_2723]
 name=Kebab
 desc=A Spicy meat kebab is cooking here.

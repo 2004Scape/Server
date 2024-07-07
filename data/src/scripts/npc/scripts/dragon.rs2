@@ -94,6 +94,7 @@ def_int $defence_roll = ~player_defence_roll_specific(npc_param(damagetype));
 def_int $maxhit = 30;
 if (inv_total(worn, dragonfire_shield) > 0) {
     $maxhit = 5;
+    mes("Your shield absorbs most of the dragon fire!"); // late 2004
 } else if (%prayer_protectfrommagic = ^true) {
     $maxhit = 10;
 } else if (randominc($attack_roll) > randominc($defence_roll)) {
