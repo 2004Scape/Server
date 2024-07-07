@@ -1,0 +1,78 @@
+[hopper_full]
+name=Hopper
+desc=Grain goes in here.
+model=model_loc_1783
+width=2
+
+[hopper_lumbridge]
+name=Hopper
+desc=Grain goes in here.
+model=model_loc_1783
+width=2
+category=hopper_nonfull
+
+[hopper_varrock]
+name=Hopper
+desc=Grain goes in here.
+model=model_loc_1783
+width=2
+category=hopper_nonfull
+
+[hopper_zanaris]
+name=Hopper
+desc=Grain goes in here.
+model=model_loc_1783
+width=2
+category=hopper_nonfull
+
+[hopper_ardougne]
+name=Hopper
+desc=Grain goes in here.
+model=model_loc_1783
+width=2
+category=hopper_nonfull
+
+[hoppercontrol_lumbridge]
+name=Hopper controls
+desc=These control the flow of grain from the hopper to the millstones.
+model=model_loc_1785
+op1=Operate
+category=hoppercontrol
+param=next_loc_stage,hopper_lumbridge
+param=millbase_coord,0_49_51_30_43
+param=hopper_coord,2_49_51_30_43
+
+[hoppercontrol_varrock]
+name=Hopper controls
+desc=These control the flow of grain from the hopper to the millstones.
+model=model_loc_1785
+op1=Operate
+category=hoppercontrol
+param=next_loc_stage,hopper_varrock
+param=millbase_coord,0_49_53_3_58
+param=hopper_coord,2_49_53_4_58
+
+[hoppercontrol_zanaris]
+name=Hopper controls
+desc=These control the flow of grain from the hopper to the millstones.
+model=model_loc_1785
+op1=Operate
+category=hoppercontrol
+param=next_loc_stage,hopper_zanaris
+param=millbase_coord,0_49_149_37_41
+param=hopper_coord,1_49_149_37_41
+
+[hoppercontrol_ardougne]
+name=Hopper controls
+desc=These control the flow of grain from the hopper to the millstones.
+model=model_loc_1785
+op1=Operate
+category=hoppercontrol
+param=next_loc_stage,hopper_ardougne
+param=millbase_coord,0_41_52_8_57
+param=hopper_coord,2_41_52_8_58
+
+[hoppercontrol_inuse]
+name=Hopper controls
+desc=These control the flow of grain from the hopper to the millstones.
+model=model_loc_2722
