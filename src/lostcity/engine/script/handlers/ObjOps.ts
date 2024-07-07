@@ -14,8 +14,6 @@ import Obj from '#lostcity/entity/Obj.js';
 import {Position} from '#lostcity/entity/Position.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
-import Environment from '#lostcity/util/Environment.js';
-
 import {
     check,
     CoordValid,
@@ -47,10 +45,6 @@ const ObjOps: CommandHandlers = {
         World.addObj(obj, state.activePlayer.pid, duration);
         state.activeObj = obj;
         state.pointerAdd(ActiveObj[state.intOperand]);
-
-        if (Environment.CLIRUNNER) {
-            state.activePlayer.invAdd(InvType.getByName('bank')!.id, objId, count);
-        }
     },
 
     [ScriptOpcode.OBJ_ADDALL]: state => {

@@ -47,7 +47,7 @@ export default class ObjType extends ConfigType {
                 config.toCertificate();
             }
 
-            if (!Environment.MEMBERS_WORLD && config.members) {
+            if (!Environment.NODE_MEMBERS && config.members) {
                 config.tradeable = false;
                 config.op = null;
                 config.iop = null;

@@ -310,7 +310,7 @@ export class LoginClient {
         }
 
         const request = new Packet(new Uint8Array(2 + 8 + password.length + 1 + 4));
-        request.p2(Environment.WORLD_ID as number);
+        request.p2(Environment.NODE_ID as number);
         request.p8(username37);
         request.pjstr(password);
         request.p4(uid);
@@ -341,7 +341,7 @@ export class LoginClient {
         }
 
         const request = new Packet(new Uint8Array(2 + 8 + 2 + save.length));
-        request.p2(Environment.WORLD_ID as number);
+        request.p2(Environment.NODE_ID as number);
         request.p8(username37);
         request.p2(save.length);
         request.pdata(save, 0, save.length);
@@ -360,7 +360,7 @@ export class LoginClient {
         }
 
         const request = new Packet(new Uint8Array(2));
-        request.p2(Environment.WORLD_ID as number);
+        request.p2(Environment.NODE_ID as number);
         await this.write(this.socket, 3, request.data);
 
         this.disconnect();
@@ -394,7 +394,7 @@ export class LoginClient {
         }
 
         const request = new Packet(new Uint8Array(2 + 2 + (players.length * 8)));
-        request.p2(Environment.WORLD_ID as number);
+        request.p2(Environment.NODE_ID as number);
         request.p2(players.length);
         for (const player of players) {
             request.p8(player);

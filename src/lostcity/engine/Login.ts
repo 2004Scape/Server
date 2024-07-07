@@ -118,7 +118,7 @@ class Login {
                     return;
                 }
 
-                if (Environment.LOCAL_DEV) {
+                if (!Environment.NODE_PRODUCTION) {
                     for (const player of World.players) {
                         if (player.username === username) {
                             client.writeImmediate(LoginResponse.LOGGED_IN);

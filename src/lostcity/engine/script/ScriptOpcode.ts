@@ -411,7 +411,7 @@ enum ScriptOpcode {
 
     // Debug ops (10000-11000)
     ERROR = 10000,
-    MAP_LOCALDEV,
+    MAP_PRODUCTION,
     MAP_LASTCLOCK,
     MAP_LASTWORLD,
     MAP_LASTCLIENTIN,

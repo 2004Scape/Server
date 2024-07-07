@@ -1,5 +1,5 @@
 [debugproc,addobj]
-if (map_localdev = true) {
+if (map_production = true) {
     return;
 }
 if_close;
@@ -11,7 +11,7 @@ if (p_finduid(uid) = true) {
 }
 
 [debugproc,addobj2](int $size)
-if (map_localdev = true) {
+if (map_production = true) {
     return;
 }
 if (p_finduid(uid) = false) {

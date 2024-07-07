@@ -162,13 +162,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             }
         }
         // custom
-        else if (cmd === 'reload' && Environment.LOCAL_DEV) {
+        else if (cmd === 'reload' && !Environment.NODE_PRODUCTION) {
             World.reload();
 
             // todo: we're probably reloading twice now, just to get count?
             const count = ScriptProvider.load('data/pack');
             player.messageGame(`Reloaded ${count} scripts.`);
-        } else if (cmd === 'rebuild' && Environment.LOCAL_DEV) {
+        } else if (cmd === 'rebuild' && !Environment.NODE_PRODUCTION) {
             World.devThread!.postMessage({
                 type: 'pack'
             });
@@ -309,94 +309,97 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             player.messageGame('set ' + args[1] + ': to ' + value + ' on ' + args[0]);
         }
 
-        // lookup debugproc with the name and execute it
-        const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
-        if (!script) {
-            return false;
-        }
-
-        const params = new Array(script.info.parameterTypes.length).fill(-1);
-
-        for (let i = 0; i < script.info.parameterTypes.length; i++) {
-            const type = script.info.parameterTypes[i];
-
-            try {
-                switch (type) {
-                    case ScriptVarType.STRING: {
-                        const value = args.shift();
-                        params[i] = value ?? '';
-                        break;
-                    }
-                    case ScriptVarType.INT: {
-                        const value = args.shift();
-                        params[i] = parseInt(value ?? '0', 10) | 0;
-                        break;
-                    }
-                    case ScriptVarType.OBJ:
-                    case ScriptVarType.NAMEDOBJ: {
-                        const name = args.shift();
-                        params[i] = ObjType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.NPC: {
-                        const name = args.shift();
-                        params[i] = NpcType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.LOC: {
-                        const name = args.shift();
-                        params[i] = LocType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.SEQ: {
-                        const name = args.shift();
-                        params[i] = SeqType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.STAT: {
-                        const name = args.shift();
-                        params[i] = Player.SKILLS.indexOf(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.INV: {
-                        const name = args.shift();
-                        params[i] = InvType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.COORD: {
-                        const args2 = cheat.split('_');
-
-                        const level = parseInt(args2[0].slice(6));
-                        const mx = parseInt(args2[1]);
-                        const mz = parseInt(args2[2]);
-                        const lx = parseInt(args2[3]);
-                        const lz = parseInt(args2[4]);
-
-                        params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
-                        break;
-                    }
-                    case ScriptVarType.INTERFACE: {
-                        const name = args.shift();
-                        params[i] = Component.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.SPOTANIM: {
-                        const name = args.shift();
-                        params[i] = SpotanimType.getId(name ?? '');
-                        break;
-                    }
-                    case ScriptVarType.IDKIT: {
-                        const name = args.shift();
-                        params[i] = IdkType.getId(name ?? '');
-                        break;
-                    }
-                }
-            } catch (err) {
+        if (Environment.NODE_ALLOW_CHEATS || player.staffModLevel >= 2) {
+            // lookup debugproc by the name and execute it
+            const script = ScriptProvider.getByName(`[debugproc,${cmd}]`);
+            if (!script) {
                 return false;
             }
+
+            const params = new Array(script.info.parameterTypes.length).fill(-1);
+
+            for (let i = 0; i < script.info.parameterTypes.length; i++) {
+                const type = script.info.parameterTypes[i];
+
+                try {
+                    switch (type) {
+                        case ScriptVarType.STRING: {
+                            const value = args.shift();
+                            params[i] = value ?? '';
+                            break;
+                        }
+                        case ScriptVarType.INT: {
+                            const value = args.shift();
+                            params[i] = parseInt(value ?? '0', 10) | 0;
+                            break;
+                        }
+                        case ScriptVarType.OBJ:
+                        case ScriptVarType.NAMEDOBJ: {
+                            const name = args.shift();
+                            params[i] = ObjType.getId(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.NPC: {
+                            const name = args.shift();
+                            params[i] = NpcType.getId(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.LOC: {
+                            const name = args.shift();
+                            params[i] = LocType.getId(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.SEQ: {
+                            const name = args.shift();
+                            params[i] = SeqType.getId(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.STAT: {
+                            const name = args.shift();
+                            params[i] = Player.SKILLS.indexOf(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.INV: {
+                            const name = args.shift();
+                            params[i] = InvType.getId(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.COORD: {
+                            const args2 = cheat.split('_');
+
+                            const level = parseInt(args2[0].slice(6));
+                            const mx = parseInt(args2[1]);
+                            const mz = parseInt(args2[2]);
+                            const lx = parseInt(args2[3]);
+                            const lz = parseInt(args2[4]);
+
+                            params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
+                            break;
+                        }
+                        case ScriptVarType.INTERFACE: {
+                            const name = args.shift();
+                            params[i] = Component.getId(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.SPOTANIM: {
+                            const name = args.shift();
+                            params[i] = SpotanimType.getId(name ?? '');
+                            break;
+                        }
+                        case ScriptVarType.IDKIT: {
+                            const name = args.shift();
+                            params[i] = IdkType.getId(name ?? '');
+                            break;
+                        }
+                    }
+                } catch (err) {
+                    return false;
+                }
+            }
+
+            player.executeScript(ScriptRunner.init(script, player, null, params), false);
         }
 
-        player.executeScript(ScriptRunner.init(script, player, null, params), false);
         return true;
     }
 }

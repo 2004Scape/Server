@@ -1,6 +1,6 @@
 [login,_]
 mes("Welcome to RuneScape.");
-if (map_localdev = false) {
+if (map_production = true) {
     mes("The server is currently in the Alpha testing phase.");
     mes("Character progression will reset when Beta testing begins.");
     mes("Available commands during this phase can be found by running ::help.");

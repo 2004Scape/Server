@@ -38,7 +38,6 @@ import IfSetNpcHead from '#lostcity/network/outgoing/model/IfSetNpcHead.js';
 import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
 import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
-import Environment from '#lostcity/util/Environment.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
@@ -284,10 +283,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, state => {
         const message = state.popString();
-
-        if (Environment.CLIRUNNER) {
-            console.log(message);
-        }
 
         state.activePlayer.messageGame(message);
     }),

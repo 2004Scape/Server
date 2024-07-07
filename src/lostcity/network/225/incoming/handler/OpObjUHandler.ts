@@ -50,7 +50,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
             return false;
         }
 
-        if (ObjType.get(item).members && !Environment.MEMBERS_WORLD) {
+        if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
             return false;

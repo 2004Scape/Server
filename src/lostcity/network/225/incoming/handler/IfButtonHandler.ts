@@ -28,10 +28,8 @@ export default class IfButtonHandler extends MessageHandler<IfButton> {
             const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.IF_BUTTON, comId, -1);
             if (script) {
                 player.executeScript(ScriptRunner.init(script, player), root.overlay == false);
-            } else {
-                if (Environment.LOCAL_DEV) {
-                    player.messageGame(`No trigger for [if_button,${com.comName}]`);
-                }
+            } else if (Environment.NODE_DEBUG) {
+                player.messageGame(`No trigger for [if_button,${com.comName}]`);
             }
         }
 
