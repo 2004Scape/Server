@@ -13,7 +13,7 @@ if($option = 1) {
     if($option = 1) {
         @cooks_assistant_whats_wrong;
     } else if($option = 2) {
-        ~chatplayer("<p,neutral>I'd take the rest of the day of if I were you.");
+        ~chatplayer("<p,neutral>I'd take the rest of the day off if I were you.");
         ~chatnpc("<p,sad>No, that's the worst thing I could do - I'd get in terrible trouble.");
         @cooks_assistant_whats_wrong;
     }
@@ -89,15 +89,11 @@ givexp(cooking, 3000);
 ~send_quest_complete(questlist:cook, cake, 250, ^cook_questpoints, "You have completed the Cooks' Quest!");
 
 [oplocu,cook_range]
-def_coord $cook_kitchen_centre = 0_50_50_9_15;
-if (%cook_progress = 0) {
-    npc_findallzone($cook_kitchen_centre);
-    while(npc_findnext = true) {
-        if(npc_type = cook) {
-            ~chatnpc("<p,angry>Hey, who said you could use that?");
-            return;
-        }
+if (%cook_progress < ^cook_complete) {
+    if(npc_find(coord, cook, 5, 0) = true) {
+        ~chatnpc("<p,angry>Hey! Who said you could use that?");
     }
+    return;
 } else {
     @attempt_cook_item(last_useitem);
 }
