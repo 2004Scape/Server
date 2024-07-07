@@ -25,11 +25,10 @@ if (inv_total(inv, brass_key) > 0) {
     def_coord $dest = $loc_coord;
     if ($entering = true) {
         if (coord ! $loc_coord) {
+            p_delay(0);
             p_teleport($loc_coord);
-            // initially thought p_delay(0); was the right speed.
-            // but it seems to have buggy clipping; you move through too early
-            p_delay(2);
             sound_synth(door_open, 0, 0);
+            p_delay(1);
         } else {
             p_delay(0);
             sound_synth(door_open, 0, 0);
