@@ -99,7 +99,7 @@ bas_walk_f($walk_seq);
 bas_walk_b($walk_seq);
 bas_walk_l($walk_seq);
 bas_walk_r($walk_seq);
-bas_running($walk_seq);
+bas_running(null);
 buildappearance(worn);
 
 // Finds an identical loc on the $merge_pos coord to switch active_loc to
