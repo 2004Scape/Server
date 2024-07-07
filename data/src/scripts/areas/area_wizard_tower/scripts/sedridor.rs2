@@ -1,36 +1,34 @@
 [opnpc1,sedridor]
 ~chatnpc("<p,neutral>Welcome adventurer, to the world renowned|Wizards' Tower. How may I help you?");
 // we don't support teleporting until the quest is complete
-if(%runemysteries_progress = 0) {
-    def_int $option = ~p_choice2("Nothing thanks, I'm just looking around.", 1, "What are you doing down here?", 2);
-    if ($option = 1) {
-        @sedridor_nothing;
-    }
-    if ($option = 2) {
-        @sedridor_2;
-    }
-} else if(%runemysteries_progress = 1) {
+if(%runemysteries_progress = ^runemysteries_not_started) {
+    @multi2("Nothing thanks, I'm just looking around.", @sedridor_nothing, "What are you doing down here?", @sedridor_2);
+} else if(%runemysteries_progress = ^runemysteries_started) {
     @rune_mysteries;
-} else if(%runemysteries_progress = 2) {
+} else if(%runemysteries_progress = ^runemysteries_given_talisman) {
+    @sedridor_incredible;
+} else if(%runemysteries_progress = ^runemysteries_received_package) {
     if(~obj_gettotal(research_package) = 0) {
-        ~chatplayer("<p,neutral>...I lost the package you gave me.");
-        ~chatnpc("<p,neutral>You WHAT?");
+        ~chatplayer("<p,sad>...I lost the package you gave me.");
+        ~chatnpc("<p,shock>You WHAT?");
         ~chatnpc("<p,neutral>Tch, that was really very careless of you. Luckily as head wizard I have great powers, and will be able to teleport it back here without too much effort.");
+        // TODO: wiki mentions an animation and graphic "that looks like a teleport" here, try to figure out what it's supposed to look like (removed in the 2021-2022 rework)
         ~chatnpc("<p,neutral>Ok, I have retrieved it. Luckily it doesn't appear to have been damaged. Now please take it to Aubury, and try not to lose it again.");
-        if (inv_freespace(inv) = 0) {
-            ~objbox(research_package, "Sedridor tries to hand you the Research Package, but you don't have enough room to take them.");
-            return;
-        }
         inv_add(inv, research_package, 1);
     } else {
-        ~chatnpc("<p,neutral>How goes your quest? Have you delivered the research notes to my friend Aubury yet?");
+        ~chatnpc("<p,neutral>Ah, <displayname()>. How goes your quest? Have you delivered the research notes to my friend Aubury yet?");
         ~chatplayer("<p,neutral>Not yet...");
         ~chatnpc("<p,neutral>Well, please do so as soon as possible. Remember: to get to Varrock, head due North, through Draynor Village, around Draynor Manor, and then head East when");
         ~chatnpc("<p,neutral>you get to the Barbarian village. The man you seek is named Aubury, and he owns the rune shop there. It is vital he receives this package.");
     }
-} else if (%runemysteries_progress = 4) {
-    
-    ~chatnpc("<p,neutral>Ah, <displayname()>. How goes our quest? Have you delivered the research notes to my friend Aubury yet?");
+} else if(%runemysteries_progress = ^runemysteries_given_package) {
+    ~chatnpc("<p,neutral>Ah, <displayname()>. How goes your quest? Have you delivered the research notes to my friend Aubury yet?");
+    ~chatplayer("<p,neutral>Yes, I have.");
+    ~chatnpc("<p,quiz>And did he give you anything in return?");
+    ~chatplayer("<p,confused>No... he told me to go back after he'd had a quick look at the research you sent him.");
+    ~chatnpc("<p,confused>I think perhaps you should go and speak to him again then, adventurer.");
+} else if(%runemysteries_progress = ^runemysteries_received_notes) {
+    ~chatnpc("<p,neutral>Ah, <displayname()>. How goes your quest? Have you delivered the research notes to my friend Aubury yet?");
     ~chatplayer("<p,neutral>Yes, I have. He gave me some research notes to pass on to you.");
     ~chatnpc("<p,neutral>May I have his notes then?");
     if(~obj_gettotal(notes) = 0) {
@@ -66,11 +64,9 @@ if(%runemysteries_progress = 0) {
     ~chatplayer("<p,neutral>So only you and Aubury know the teleport|spell to the Rune Essence?");
     ~chatnpc("<p,neutral>No... there are others... whom I will tell of your|authorisation to visit that place. When you speak|to them, they will know you, and grant you|access to that place when asked.");
     ~chatnpc("<p,neutral>Use the Air Talisman to locate the air temple,|and use any further talismans you find to locate|the other missing elemental temples.|Now... my research notes please?");
-
+    ~mesbox("You hand the head wizard the research notes.|He hands you back the Air Talisman.");
     inv_del(inv, notes, 1);
     inv_add(inv, air_talisman, 1);
-    ~mesbox("You hand the head wizard the research notes.|He hands you back the Air Talisman.");
-
     queue(rune_mysteries_complete, 0);
 
 } else if(%runemysteries_progress = ^runemysteries_complete) {
@@ -84,6 +80,10 @@ if(%runemysteries_progress = 0) {
         @teleport_to_essence_mine(^essence_mine_to_sedridor);
     }
 }
+
+[opnpcu,sedridor]
+if(last_useitem = notes & %runemysteries_progress = ^runemysteries_received_notes) @aubury_package;
+~displaymessage(^dm_default);
 
 [label,rune_mysteries]
 def_int $option = ~p_choice3("Nothing thanks, I'm just looking around.", 1, "What are you doing down here?", 2, "I'm looking for the head wizard.", 3);
@@ -101,9 +101,9 @@ if ($option = 1) {
         @seridor_3;
     } else if ($option = 2) {
         ~chatplayer("<p,neutral>No, I'll only give it to the head wizard.");
-        ~chatnpc("<p,neutral>Hmmm. Well, I admire your caution adventurer, perhaps I can prove myself? I will use my mental powers to discover...");
+        ~chatnpc("<p,quiz>Hmmm. Well, I admire your caution adventurer, perhaps I can prove myself? I will use my mental powers to discover...");
         ~chatnpc("<p,neutral>Your name is... <displayname()>!");
-        ~chatplayer("<p,neutral>You're right!");
+        ~chatplayer("<p,shock>You're right!");
         ~chatnpc("<p,neutral>Well I am head wizard you know! You don't get to my position without learning a few tricks along the way!");
         ~chatnpc("<p,neutral>So now I have proved myself to you why don't you hand over that talisman, hmm?");
         @seridor_3;
@@ -132,15 +132,19 @@ if ($option = 1) {
 }
 
 [label,seridor_3]
-~chatplayer("<p,neutral>Ok here you are.");
+~chatplayer("<p,neutral>Ok, here you are.");
 if (inv_total(inv, air_talisman) = 0) {
     // from chisel, confirm mesanims
-    ~chatplayer("<p,sad>...except I don't have it with me...");
+    ~chatplayer("<p,confused>...except I don't have it with me...");
     ~chatnpc("<p,confused>Hmmm? You are a very odd person. Come back again when you have found it.");
     return;
 }
 inv_del(inv, air_talisman, 1);
+%runemysteries_progress = ^runemysteries_given_talisman;
 ~mesbox("You hand the Talisman to the wizard.");
+@sedridor_incredible;
+
+[label,sedridor_incredible]
 ~chatnpc("<p,shock>Wow! This is... incredible!");
 ~chatnpc("<p,shock>Th-this talisman you brought me...! It is the last piece|of the puzzle, I think! Finally! The legacy of our|ancestors... it will return to us once more!");
 ~chatnpc("<p,neutral>I need time to study this, <displayname()>. Can you please do me this task while I study this talisman you have brought me? In the mighty town of Varrock, which");
@@ -153,15 +157,12 @@ def_int $option = ~p_choice2("Yes, certainly.", 1, "No, I'm busy.", 2);
 if ($option = 1) {
     ~chatplayer("<p,neutral>Yes, certainly.");
     ~chatnpc("<p,neutral>Take this package, and head directly North|from here, through Draynor village, until you reach|the Barbarian Village. Then head East from there|until you reach Varrock.");
-    ~chatnpc("<p,neutral>Once in Varrock, take this package to the owner of the rune shop. His name is Aubury. You may find it|helpful to ask one of Varrock's citizens for directions.");
+    ~chatnpc("<p,neutral>Once in Varrock, take this package to the owner of the rune shop. His name is Aubury. You may find it helpful to ask one of Varrock's citizens for directions,");
     ~chatnpc("<p,neutral>as Varrock can be a confusing place for the first time visitor. He will give you a special item - bring it back to me, and I shall show you the mystery of the runes...");
-    if (inv_freespace(inv) = 0) {
-        ~mesbox("The head wizard tries to hand you the Research Package, but you don't have enough room to take it.");
-        return;
-    }
-    inv_add(inv, research_package, 1);
-    %runemysteries_progress = 2;
+    // inv check seems to be added with OSRS rework
     ~mesbox("The head wizard gives you a package.");
+    inv_add(inv, research_package, 1);
+    %runemysteries_progress = ^runemysteries_received_package;
     ~chatnpc("<p,neutral>Best of luck with your quest, <displayname()>.");
 } else if ($option = 2) {
     ~chatplayer("<p,neutral>No, I'm busy.");
