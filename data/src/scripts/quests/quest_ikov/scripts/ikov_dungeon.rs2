@@ -1,0 +1,1 @@
+[oploc1,loc_1586] ~open_and_close_door2(loc_1588, ~check_axis_locactive(coord), coffin_open);

@@ -40,7 +40,7 @@ loc_add(movecoord($loc_coord, $x, 0, $z), $replacement, modulo(add($angle, 1), 4
 sound_synth(door_open, 0, 0);
 
 // same as the other proc but plays the sound instantly
-[proc,open_and_close_door2](loc $replacement, boolean $entering, boolean $play_locked_synth)
+[proc,open_and_close_door2](loc $replacement, boolean $entering, synth $sound)
 def_int $x;
 def_int $z;
 def_int $angle = loc_angle;
@@ -48,7 +48,7 @@ def_locshape $shape = loc_shape;
 def_coord $loc_coord = loc_coord;
 $x, $z = ~door_open($angle, loc_shape);
 def_coord $dest = $loc_coord;
-sound_synth(door_open, 0, 0);
+sound_synth($sound, 0, 0);
 if ($entering = true) {
     if (coord ! $loc_coord) {
         p_teleport($loc_coord);

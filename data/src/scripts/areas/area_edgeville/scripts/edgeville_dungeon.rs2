@@ -48,3 +48,6 @@ if (inv_total(inv, brass_key) > 0) {
 } else {
     mes("The door is locked.");
 }
+
+[oploc1,loc_3209] ~open_and_close_double_door2(~check_axis_locactive(coord), ^right, coffin_open);
+[oploc1,loc_3211] ~open_and_close_double_door2(~check_axis_locactive(coord), ^left, coffin_open);

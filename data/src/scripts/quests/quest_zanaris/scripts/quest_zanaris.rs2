@@ -90,7 +90,7 @@ inv_add(inv, dramenstaff, 1);
 
 [oploc1,loc_2406]
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-~open_and_close_door2(loc_1532, $entering, false);
+~open_and_close_door2(loc_1532, $entering, door_open);
 if($entering = false) {
     if(inv_total(worn, dramenstaff) > 0 & map_members = true) {
         mes("The world starts to shimmer..."); // not sure what seq/spotanim would've been played here, just going to assume it was like a normal tele

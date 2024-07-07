@@ -17697,7 +17697,6 @@ recol3s=5285
 recol3d=5216
 category=double_door_open_and_close_right
 param=next_loc_stage,loc_3210
-param=open_sound,coffin_open
 
 [loc_3210]
 name=Odd looking wall
@@ -17725,7 +17724,6 @@ recol3s=5285
 recol3d=5216
 category=double_door_open_and_close_left
 param=next_loc_stage,loc_3212
-param=open_sound,coffin_open
 
 [loc_3212]
 name=Odd looking wall
