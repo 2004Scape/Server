@@ -28,7 +28,7 @@ if (distance(loc_coord, coord) > 10) {
 }
 // pos: 2404 3488
 p_stopaction;
-mes("You throw the ball at the goal...");
+mes("You throw the ball at the goal.");
 cam_moveto(movecoord(loc_coord, 3, 0, 0), 300, 100, 100);
 cam_lookat(coord, 250, 100, 100);
 p_delay(1);
@@ -42,7 +42,7 @@ inv_delslot(worn, ^wearpos_rhand);
 ~update_all(gnomeball);
 p_delay(divide($duration, 30));
 if ($land_coord = loc_coord) {
-    mes("... and score!"); // guess
+    mes("and score!"); // aug 2004
     %gnomeball = min(add(max(%gnomeball, 0), 1), 5);
     if (%gnomeball = 5) {
         mes("You win!");
@@ -63,7 +63,7 @@ if ($land_coord = loc_coord) {
         npc_say("GOAL");
     }  
 } else {
-    mes("... and miss.");
+    mes("and miss.");
 }
 p_delay(3);
 // cam_lookat(movecoord(loc_coord, -68, 0, -40), 0, 0, 0);

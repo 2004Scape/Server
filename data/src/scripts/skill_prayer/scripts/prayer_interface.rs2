@@ -26,7 +26,7 @@ return ($data);
 if (stat(prayer) < 1) {
     // osrs
     if (stat_base(prayer) >= db_getfield($data, prayers:level, 0)) {
-        mes("You need to recharge your Prayer at an altar.");
+        mes("You need to recharge your prayer at an altar."); // p in prayer isnt capitalized until late 2005?
     }
     sound_synth(prayer_off, 0, 0);
     return(false);
