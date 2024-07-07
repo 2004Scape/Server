@@ -1,0 +1,9 @@
+[opnpc1,goblin_armed_green]
+~chatnpc("<p,goblinchat>Green armour best!");
+switch_int(~p_choice2("Err ok.", 1, "Why is green best?", 2)) {
+    case 1:
+        ~chatplayer("<p,confused>Err ok.");
+    case 2:
+        ~chatplayer("<p,confused>Why is green best?");
+        ~chatnpc("<p,goblinchat>I forgot now,|but General Wartface says it is.|So it must be.");
+}

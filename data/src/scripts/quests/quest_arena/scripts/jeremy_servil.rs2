@@ -14,7 +14,8 @@ switch_int(%arena_progress) {
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,sad>Please Sir, don't hurt me.");
         if(~wearing_khazard_armour = true) {
-            ~chatplayer("<p,neutral>Sshh. This uniform is a disguise, I'm here to help. Where do they keep the keys?");
+            // https://web.archive.org/web/20050307020420/http://runevillage.com/quest2FightArena.php
+            ~chatplayer("<p,neutral>Sshh. This uniform is a disguise, I'm here|to help. Where do they keep the keys?");
         } else {
             ~chatplayer("<p,neutral>Sshh. I'm here to help. Where do they keep the keys?");
         }
