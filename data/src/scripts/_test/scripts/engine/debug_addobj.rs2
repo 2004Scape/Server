@@ -1,4 +1,7 @@
 [debugproc,addobj]
+if (map_localdev = true) {
+    return;
+}
 if_close;
 if (p_finduid(uid) = true) {
     obj_add(movecoord(coord, 0, 0, 5), logs, 1, ^lootdrop_duration);
@@ -6,3 +9,28 @@ if (p_finduid(uid) = true) {
 } else {
     @please_finish;
 }
+
+[debugproc,addobj2](int $size)
+if (map_localdev = true) {
+    return;
+}
+if (p_finduid(uid) = false) {
+    @please_finish;
+}
+
+def_int $half = calc(($size / 2) * -1);
+
+def_int $x = 0;
+while ($x < $size) {
+    def_int $z = 0;
+    while ($z < $size) {
+        if (random(2) = 0) {
+            obj_add(movecoord(coord, calc($half + $x), 0, calc($half + $z)), ~cracker_partyhat, 1, 30);
+        } else {
+            obj_add(movecoord(coord, calc($half + $x), 0, calc($half + $z)), ~cracker_other, 30);
+        }
+        $z = calc($z + 1);
+    }
+    $x = calc($x + 1);
+}
+

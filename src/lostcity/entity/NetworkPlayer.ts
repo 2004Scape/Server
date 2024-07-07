@@ -35,6 +35,7 @@ import MessageEncoder from '#lostcity/network/outgoing/codec/MessageEncoder.js';
 import Logout from '#lostcity/network/outgoing/model/Logout.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
+import WorldStat from '#lostcity/engine/WorldStat.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -59,7 +60,7 @@ export class NetworkPlayer extends Player {
         this.userPath = [];
         this.opcalled = false;
 
-        World.lastCycleBandwidth[0] += this.client.inOffset;
+        World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
 
         while (this.client.inOffset > offset) {
             const packetType = ClientProt.byId[this.client.in[offset++]];
@@ -161,7 +162,7 @@ export class NetworkPlayer extends Player {
         if (client.encryptor) {
             buf.data[pos] = (buf.data[pos] + client.encryptor.nextInt()) & 0xff;
         }
-        World.lastCycleBandwidth[1] += buf.pos - pos;
+        World.cycleStats[WorldStat.BANDWIDTH_OUT] += buf.pos - pos;
     }
 
     override logout() {

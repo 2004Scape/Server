@@ -6,6 +6,7 @@ import ObjType from '#lostcity/cache/config/ObjType.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
+import Environment from '#lostcity/util/Environment.js';
 
 export default class OpObjUHandler extends MessageHandler<OpObjU> {
     handle(message: OpObjU, player: NetworkPlayer): boolean {
@@ -49,7 +50,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
             return false;
         }
 
-        if (ObjType.get(item).members && !World.members) {
+        if (ObjType.get(item).members && !Environment.MEMBERS_WORLD) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
             return false;

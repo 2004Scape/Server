@@ -1046,7 +1046,7 @@ export default class Player extends PathingEntity {
 
         let worn = this.getInventory(inv);
         if (!worn) {
-            worn = new Inventory(0);
+            worn = new Inventory(InvType.WORN, 0);
         }
 
         for (let i = 0; i < worn.capacity; i++) {
