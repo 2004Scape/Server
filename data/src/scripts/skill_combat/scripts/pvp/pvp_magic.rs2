@@ -74,8 +74,6 @@ if (~pvp_hit_roll(^magic_style) = true) {
 } else {
     ~pvp_spell_fail($spell_data, $duration);
 }
-// todo: heropoints
-
 
 [proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
@@ -202,9 +200,7 @@ if ($maxhit ! null) {
 
 both_heropoints($damage);
 
-// spell visual
 .spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
-// auto retal
 .queue(pvp_retaliate, calc($duration / 30 + 1), uid);
 
 [proc,pvp_spell_fail](dbrow $spell_data, int $duration)
@@ -222,7 +218,6 @@ sound_synth($sound, 0, 0);
 .sound_synth($sound, 0, 0);
 // no splash sound?
 .spotanim_pl(failedspell_impact, 92, $duration);
-// auto retal
 .queue(pvp_retaliate, 0, uid);
 
 [proc,pvp_spell_cast](dbrow $spell_data)(int)
@@ -239,11 +234,8 @@ if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpo
     %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
 }
 
-// spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
-// player spell visual effect
 spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
-// shoot projectile
 %action_delay = add(map_clock, 5);
 def_int $duration = 0;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
@@ -259,13 +251,3 @@ return($duration);
 [proc,magic_spell_maxhit](dbrow $spell_data)(int)
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 return($maxhit);
-
-// todo: .walktrigger
-// [walktrigger,.frozen]()(boolean)
-// if (map_clock < .%stunned) {
-//     .mes("A magical force stops you from moving.");
-//      p_stopaction;
-//     return(false);
-// }
-
-// return(true);
