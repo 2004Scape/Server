@@ -181,11 +181,7 @@ if ($freeze_time > 0) {
     if (~.check_protect_prayer(^magic_style) = true) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
-    //.queue(.freeze_player, 0, $freeze_time);
-    if (.p_finduid(.uid) = true) { // todo: queue this
-        .%stunned = calc(map_clock + $freeze_time + 1);
-        //.walktrigger(.frozen);
-    }
+    .queue(freeze_player, 0, $freeze_time);
 }
 
 [proc,pvp_spell_success](dbrow $spell_data, int $maxhit, int $duration)
