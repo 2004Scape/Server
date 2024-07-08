@@ -1135,6 +1135,10 @@ export default class Player extends PathingEntity {
         }
         this.appearanceHashCode <<= 0x1n;
         this.appearanceHashCode += BigInt(this.gender);
+        this.appearanceHashCode <<= 0x1n;
+        this.appearanceHashCode += BigInt(this.headicons);
+        this.appearanceHashCode <<= 0x1n;
+        this.appearanceHashCode += BigInt(this.combatLevel);
     }
 
     // ----
