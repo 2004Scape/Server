@@ -72,8 +72,14 @@ export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
         if (typeof top === 'undefined') {
             return;
         }
-        this.remove(coord, top);
-        this.addFirst(coord, top, unchecked);
+        const items: T[] | undefined = this[coord];
+        if (typeof items === 'undefined') {
+            return;
+        }
+        if (items[0] !== top) {
+            this.remove(coord, top);
+            this.addFirst(coord, top, unchecked);
+        }
     }
 
     remove(coord: number, item: T): void {
