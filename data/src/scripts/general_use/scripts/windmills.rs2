@@ -80,9 +80,7 @@ if (last_useitem = grain) {
     ~displaymessage(^dm_default);
 }
 
-// ---- Lumbridge ----
-
-[oplocu,hopper_lumbridge]
+[oplocu,_hopper_nonfull]
 if (last_useitem = grain) {
     anim(human_pickuptable, 0);
     // sound?
@@ -93,12 +91,15 @@ if (last_useitem = grain) {
     ~displaymessage(^dm_default);
 }
 
-[oploc1,hoppercontrol_lumbridge]
+[oploc1,_hoppercontrol]
+def_coord $hopper_coord = loc_param(hopper_coord);
+def_coord $millbase_coord = loc_param(millbase_coord);
+def_loc $hopper = loc_param(next_loc_stage);
 sound_synth(hopperlever, 0, 0);
 loc_change(hoppercontrol_inuse, 2);
 anim(human_pickuptable, 0);
 
-if (loc_find(2_49_51_30_43, hopper_full) = true) {
+if (loc_find($hopper_coord, hopper_full) = true) {
     if (%mill_flour > 29) {
         mes("The flour bin downstairs is full, I should empty it first.");
         return;
@@ -114,9 +115,9 @@ if (loc_find(2_49_51_30_43, hopper_full) = true) {
 
     // reverting the state means multiple people trying at the same time will have issues
     // but it's necessary to prevent infinite flour!
-    loc_change(hopper_lumbridge, 500);
+    loc_change($hopper, 500);
 
-    if (loc_find(0_49_51_30_43, millbase) = true) {
+    if (loc_find($millbase_coord, millbase) = true) {
         loc_change(millbase_full, 500);
     }
 } else {

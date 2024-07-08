@@ -1,0 +1,117 @@
+[proc,trawler_sink]
+huntall(^trawler_start_center_under, 8, 0);
+while (huntnext = true) {
+    if_close;
+    clearqueue(trawler_player_rip_net);
+    queue(trawler_player_sink, 0);
+}
+huntall(^trawler_start_center, 8, 0);
+while (huntnext = true) {
+    if_close;
+    clearqueue(trawler_player_rip_net);
+    queue(trawler_player_sink, 0);
+}
+huntall(^trawler_flood_center_under, 8, 0);
+while (huntnext = true) {
+    if_close;
+    clearqueue(trawler_player_rip_net);
+    queue(trawler_player_sink, 0);
+}
+huntall(^trawler_flood_center, 8, 0);
+while (huntnext = true) {
+    if_close;
+    clearqueue(trawler_player_rip_net);
+    queue(trawler_player_sink, 0);
+}
+if (npc_find(^trawler_wreck_murphy, murphy_sunk, 2, 0) = true) {
+    npc_settimer(1);
+}
+
+[queue,trawler_player_sink]
+if (~inzone_coord_pair_table(trawler_flood_zones, coord) = true) {
+    if (coordy(coord) = 0) {
+        p_teleport(movecoord(coord, -64, 0, 0));
+    } else {
+        p_teleport(~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+    }
+} else if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = true) {
+    if (coordy(coord) = 0) {
+        p_teleport(movecoord(coord, 64, 0, 0));
+    } else {
+        p_teleport(~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+    }
+}
+p_walk(coord);
+~bas_set_all(human_swim);
+p_animprotect(^true); // disable anims
+bas_running(null); // disable running
+cam_reset;
+
+// in osrs only 1 barrel out of 3 work, but since theres only 2 types and no guides
+// mentions only 1 barrel working im guessing this was an osrs change of some sort
+[oploc1,game_trawler_barrel1] @trawler_escape;
+[oploc1,game_trawler_barrel2] @trawler_escape;
+
+[label,trawler_escape]
+~mesbox("You climb onto the floating barrel and begin to kick your way to the|shore.");
+if_close;
+p_teleport(^trawler_escape);
+~update_all(null);
+queue(damage_player, 0, 2);
+mes("You make it to the shore tired and weary."); // rs3 is mes. Also https://youtu.be/sl6i7lK_re0?t=78
+
+
+[ai_timer,murphy_sunk]
+if (~playercount_coord_pair_table(trawler_wreck_zones) < 1) {
+    npc_settimer(0);
+    return;
+}
+switch_int (random(5)) {
+    case 0 : 
+        npc_say("You'll need all your strength!");
+        npc_delay(1);
+        npc_say("To make it back to shore."); // confirmed
+    case 1 : npc_say("No fishies for you today!");
+    case 2 : npc_say("Arrrgh! we've sunk!");
+    case 3 : npc_say("Keep your head above water shipmate.");
+    case 4 : npc_say("You'll be joining Davey Jones!");
+}
+npc_settimer(~random_range(9, 21)); // osrs
+
+[ai_timer,game_trawler_shark1]
+npc_settimer(0);
+npc_tele(movecoord(npc_coord, 0, 0, 2));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 1, 0, 1));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 2, 0, 0));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 1, 0, -1));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 0, 0, -2));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, -1, 0, -1));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, -2, 0, 0));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, -1, 0, 1));
+npc_settimer(30);
+
+[ai_timer,game_trawler_shark2]
+npc_settimer(0);
+npc_tele(movecoord(npc_coord, 2, 0, 2));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 2, 0, 0));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 2, 0, -2));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 0, 0, -2));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, -2, 0, -2));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, -2, 0, 0));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, -2, 0, 2));
+npc_delay(29);
+npc_tele(movecoord(npc_coord, 0, 0, 2));
+npc_settimer(30);

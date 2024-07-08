@@ -1,0 +1,23 @@
+[debugproc,trawler_win](int $rolls)
+if (~inzone_coord_pair_table(trawler_flood_zones, coord) = true) {
+    if (npc_find(^trawler_flood_center_under, murphy_flood, 5, 0) = true) {
+        %npc_trawler_start = sub(map_clock, 1000);
+        %npc_trawler_fish_caught = $rolls;
+    }
+} else {
+    if (npc_find(^trawler_start_center_under, murphy_nonflood, 5, 0) = true) {
+        %npc_trawler_start = sub(map_clock, 1000);
+        %npc_trawler_fish_caught = $rolls;
+    }
+}
+
+[debugproc,trawler_loot](int $rolls)
+if (p_finduid(uid) = true) {
+    %trawler = 3;
+    %trawler_catch = $rolls;
+}
+
+[debugproc,trawler]
+if (p_finduid(uid) = true) {
+    p_telejump(0_41_49_52_34);
+}

@@ -46,6 +46,9 @@ export default class Zone {
     private readonly events: Set<ZoneEvent> = new Set();
     private shared: Uint8Array | null = null;
 
+    totalLocs: number = 0;
+    totalObjs: number = 0;
+
     constructor(index: number) {
         this.index = index;
         const coord: Position = ZoneMap.unpackIndex(index);
@@ -200,6 +203,7 @@ export default class Zone {
             this.locs[coord] = [];
         }
         this.locs[coord]?.push(loc);
+        this.totalLocs++;
         this.sortLocs(coord);
     }
 
@@ -210,6 +214,7 @@ export default class Zone {
             this.objs[coord] = [];
         }
         this.objs[coord]?.push(obj);
+        this.totalObjs++;
         this.sortObjs(coord);
     }
 
@@ -223,6 +228,7 @@ export default class Zone {
                 this.locs[coord] = [];
             }
             this.locs[coord]?.push(loc);
+            this.totalLocs++;
         }
         this.sortLocs(coord);
 
@@ -241,6 +247,7 @@ export default class Zone {
                 for (let index: number = 0; index < locs.length; index++) {
                     if (loc === locs[index]) {
                         locs.splice(index, 1);
+                        this.totalLocs--;
                         break;
                     }
                 }
@@ -290,18 +297,19 @@ export default class Zone {
                 this.objs[coord] = [];
             }
             this.objs[coord]?.push(obj);
+            this.totalObjs++;
         }
         this.sortObjs(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
             this.events.add({
-                type: ZoneEventType.FOLLOWS,
+                type: ZoneEventType.ENCLOSED,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
             });
-        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                type: ZoneEventType.ENCLOSED,
+                type: ZoneEventType.FOLLOWS,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
             });
@@ -341,6 +349,7 @@ export default class Zone {
                 for (let index: number = 0; index < objs.length; index++) {
                     if (obj === objs[index]) {
                         objs.splice(index, 1);
+                        this.totalObjs--;
                         break;
                     }
                 }
@@ -348,15 +357,15 @@ export default class Zone {
         }
         this.sortObjs(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
             this.events.add({
-                type: ZoneEventType.FOLLOWS,
+                type: ZoneEventType.ENCLOSED,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
             });
-        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                type: ZoneEventType.ENCLOSED,
+                type: ZoneEventType.FOLLOWS,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
             });

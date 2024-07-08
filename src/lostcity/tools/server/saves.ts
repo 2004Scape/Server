@@ -7,8 +7,12 @@ const saves = fs.readdirSync('data/players');
 const sorted = [];
 for (let i = 0; i < saves.length; i++) {
     const username = saves[i].split('.')[0];
-    const player = PlayerLoading.loadFromFile(username);
-    sorted.push(player);
+    try {
+        const player = PlayerLoading.loadFromFile(username);
+        sorted.push(player);
+    } catch (e) {
+        console.log('Failed to load', username);
+    }
 }
 sorted.sort((a, b) => b.playtime - a.playtime);
 

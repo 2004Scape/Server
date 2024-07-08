@@ -510,7 +510,7 @@ export function packConfigs() {
         //console.log('Packing .seq');
         //console.time('Packed .seq');
         readConfigs('.seq', [], parseSeqConfig, packSeqConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1638136604) || !Packet.checkcrc(idx.data, 0, idx.pos, 969051566))) {
                 console.error('.seq CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -533,7 +533,7 @@ export function packConfigs() {
         //console.log('Packing .loc');
         //console.time('Packed .loc');
         readConfigs('.loc', [], parseLocConfig, packLocConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 891497087) || !Packet.checkcrc(idx.data, 0, idx.pos, -941401128))) {
                 console.error('.loc CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -556,7 +556,7 @@ export function packConfigs() {
         //console.log('Packing .flo');
         //console.time('Packed .flo');
         readConfigs('.flo', [], parseFloConfig, packFloConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 1976597026) || !Packet.checkcrc(idx.data, 0, idx.pos, 561308705))) {
                 console.error('.flo CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -579,7 +579,7 @@ export function packConfigs() {
         //console.log('Packing .spotanim');
         //console.time('Packed .spotanim');
         readConfigs('.spotanim', [], parseSpotAnimConfig, packSpotAnimConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -1279835623) || !Packet.checkcrc(idx.data, 0, idx.pos, -1696140322))) {
                 console.error('.spotanim CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -602,7 +602,7 @@ export function packConfigs() {
         //console.log('Packing .npc');
         //console.time('Packed .npc');
         readConfigs('.npc', [], parseNpcConfig, packNpcConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -2140681882) || !Packet.checkcrc(idx.data, 0, idx.pos, -1986014643))) {
                 console.error('.npc CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -625,7 +625,7 @@ export function packConfigs() {
         //console.log('Packing .obj');
         //console.time('Packed .obj');
         readConfigs('.obj', [], parseObjConfig, packObjConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -840233510) || !Packet.checkcrc(idx.data, 0, idx.pos, 669212954))) {
                 console.error('.obj CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -648,7 +648,7 @@ export function packConfigs() {
         //console.log('Packing .idk');
         //console.time('Packed .idk');
         readConfigs('.idk', [], parseIdkConfig, packIdkConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, -359342366) || !Packet.checkcrc(idx.data, 0, idx.pos, 667216411))) {
                 console.error('.idk CRC check failed! Custom data detected.');
                 process.exit(1);
             }
@@ -671,7 +671,7 @@ export function packConfigs() {
         //console.log('Packing .varp');
         //console.time('Packed .varp');
         readConfigs('.varp', [], parseVarpConfig, packVarpConfigs, (dat: Packet, idx: Packet) => {
-            if (!Environment.SKIP_CRC && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
+            if (Environment.BUILD_VERIFY && (!Packet.checkcrc(dat.data, 0, dat.pos, 705633567) || !Packet.checkcrc(idx.data, 0, idx.pos, -1843167599))) {
                 console.error('.varp CRC check failed! Custom data detected.');
                 process.exit(1);
             }

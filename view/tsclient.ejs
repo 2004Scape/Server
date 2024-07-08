@@ -95,8 +95,6 @@
             document.getElementById('screenshot').href = document.getElementById('canvas').toDataURL('image/png').replace(/^data:image\/[^;]/, 'data:application/octet-stream');
         }
     </script>
-
-    <script defer="defer" src="/js/client.js"></script>
 </head>
 
 <body>
@@ -109,6 +107,13 @@
         <a class="green" href="#" id="filtering" onclick="toggleFiltering();">Auto scaling</a> |
         <a class="green" href="#" id="screenshot" onclick="saveScreenshot();">Take screenshot</a>
     </div>
+
+    <script type="text/javascript" charset="utf-8" src="/js/client.js"></script>
+    <script>
+        window.onload = async () => {
+            new Game(<%= nodeid %>, <%= portoff %>, <%= lowmem %>, <%= members %>);
+        }
+    </script>
 </body>
 
 </html>

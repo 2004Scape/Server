@@ -1,5 +1,5 @@
 [debugproc,delay](int $delay)
-if (map_localdev = false) {
+if (map_production = true) {
     return;
 }
 

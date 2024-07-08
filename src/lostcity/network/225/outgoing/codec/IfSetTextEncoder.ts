@@ -10,4 +10,8 @@ export default class IfSetTextEncoder extends MessageEncoder<IfSetText> {
         buf.p2(message.component);
         buf.pjstr(message.text);
     }
+
+    test(message: IfSetText): number {
+        return 2 + 1 + message.text.length;
+    }
 }

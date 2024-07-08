@@ -34,4 +34,29 @@ export default class UpdateInvFullEncoder extends MessageEncoder<UpdateInvFull> 
             }
         }
     }
+
+    test(message: UpdateInvFull): number {
+        const {component, inv} = message;
+
+        const comType = Component.get(component);
+        const size = Math.min(inv.capacity, comType.width * comType.height);
+
+        let length: number = 0;
+        length += 3;
+        for (let slot = 0; slot < size; slot++) {
+            const obj = inv.get(slot);
+            if (obj) {
+                length += 2;
+
+                if (obj.count >= 255) {
+                    length += 5;
+                } else {
+                    length += 1;
+                }
+            } else {
+                length += 3;
+            }
+        }
+        return length;
+    }
 }

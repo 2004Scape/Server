@@ -19,4 +19,8 @@ export default class RebuildNormalEncoder extends MessageEncoder<RebuildNormal> 
             buf.p4(PRELOADED_CRC.get(`l${x}_${z}`) ?? 0);
         }
     }
+
+    test(message: RebuildNormal): number {
+        return 2 + 2 + (message.mapsquares.size * (1 + 1 + 4 + 4));
+    }
 }

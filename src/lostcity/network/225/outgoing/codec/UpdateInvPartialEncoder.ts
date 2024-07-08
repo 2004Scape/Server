@@ -29,4 +29,28 @@ export default class UpdateInvPartialEncoder extends MessageEncoder<UpdateInvPar
             }
         }
     }
+
+    test(message: UpdateInvPartial): number {
+        const {inv} = message;
+
+        let length: number = 0;
+        length += 2;
+        for (const slot of message.slots) {
+            const obj = inv.get(slot);
+
+            length += 1;
+            if (obj) {
+                length += 2;
+
+                if (obj.count >= 255) {
+                    length += 5;
+                } else {
+                    length += 1;
+                }
+            } else {
+                length += 3;
+            }
+        }
+        return length;
+    }
 }

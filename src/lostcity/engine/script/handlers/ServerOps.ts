@@ -18,6 +18,8 @@ import Player from '#lostcity/entity/Player.js';
 import Npc from '#lostcity/entity/Npc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 
+import Environment from '#lostcity/util/Environment.js';
+
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, LocLayer, LocAngle} from '@2004scape/rsmod-pathfinder';
 
@@ -41,7 +43,7 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_MEMBERS]: state => {
-        state.pushInt(World.members ? 1 : 0);
+        state.pushInt(Environment.NODE_MEMBERS ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: state => {
@@ -374,6 +376,22 @@ const ServerOps: CommandHandlers = {
             }
         }
         state.pushInt(0);
+    },
+
+    [ScriptOpcode.NPCCOUNT]: state => {
+        state.pushInt(World.getTotalNpcs());
+    },
+
+    [ScriptOpcode.ZONECOUNT]: state => {
+        state.pushInt(World.getTotalZones());
+    },
+
+    [ScriptOpcode.LOCCOUNT]: state => {
+        state.pushInt(World.getTotalLocs());
+    },
+
+    [ScriptOpcode.OBJCOUNT]: state => {
+        state.pushInt(World.getTotalObjs());
     }
 };
 

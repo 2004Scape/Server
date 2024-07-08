@@ -73,7 +73,7 @@ if(loc_type = loc_2846) {
 if(%hazeelcult_progress >= ^hazeelcult_finished_side_task & %hazeelcult_progress < ^hazeelcult_complete & %hazeelcult_side = ^hazeelcult_evilside) {
     mes("There is something odd about the wall here.");
     mes("You find a secret passageway.");
-    ~open_and_close_door2(loc_2855, ~check_axis(coord, loc_coord, loc_angle), false);
+    ~open_and_close_door2(loc_2855, ~check_axis(coord, loc_coord, loc_angle), door_open);
     return;
 }
 mes("You can hear there is a hollow behind this wall."); // from rs3

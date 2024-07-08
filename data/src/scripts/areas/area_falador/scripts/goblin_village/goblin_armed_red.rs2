@@ -1,0 +1,9 @@
+[opnpc1,goblin_armed_red]
+~chatnpc("<p,goblinchat>Red armour best!");
+switch_int(~p_choice2("Err ok.", 1, "Why is red best?", 2)) {
+    case 1:
+        ~chatplayer("<p,confused>Err ok.");
+    case 2:
+        ~chatplayer("<p,confused>Why is red best?");
+        ~chatnpc("<p,goblinchat>Cos General Bentnoze says so,|and he bigger than me.");
+}

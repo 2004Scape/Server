@@ -10,3 +10,9 @@ type=npc_uid
 [macro_whirlpool_counter]
 
 [macro_gas_counter]
+
+[macro_ent_counter]
+
+[chest_macro_gas_coord]
+type=coord
+scope=perm

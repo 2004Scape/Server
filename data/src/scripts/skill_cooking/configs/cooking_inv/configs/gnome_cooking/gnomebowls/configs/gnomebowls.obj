@@ -172,7 +172,6 @@ model=model_2797_obj
 2dyan=1888
 2dxan=192
 weight=275g
-param=cooking_range_only,1
 
 [raw_gnomebowl]
 name=Raw gnomebowl
@@ -189,7 +188,6 @@ recol2d=26315
 2dyan=1888
 2dxan=192
 weight=300g
-param=cooking_range_only,1
 
 [unfinished_chocolate_bomb1]
 name=Unfinished bowl

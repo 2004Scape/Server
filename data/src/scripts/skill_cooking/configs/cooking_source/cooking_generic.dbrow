@@ -119,17 +119,11 @@ data=experience,300
 data=successchance,106,450
 data=successchance_range,112,476
 
-[cooking_generic_oomlie]
+[cooking_generic_raw_oomlie]
 table=cooking_generic
 data=uncooked,raw_oomlie
-data=cooked,burnt_oomlie
-data=burnt,burnt_oomlie
-data=levelrequired,50
-data=experience,0
-data=successchance,106,450
-data=successchance_range,112,476
-data=cookmessage_fire,You cook the Ommlie Meat on the fire...
-data=cookmessage_range,You cook the Ommlie Meat on the stove...
+data=cantcookmessage_fire,The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.
+data=cantcookmessage_range,The meat is far too delicate to cook like this. Perhaps you should wrap it up to protect it from the heat.
 
 [cooking_generic_pitta_bread]
 table=cooking_generic
@@ -139,6 +133,7 @@ data=burnt,burnt_pitta_bread
 data=levelrequired,58
 data=experience,400
 data=successchance,118,492
+data=cantcookmessage_fire,You need a proper oven to cook that.
 
 [cooking_generic_cake]
 table=cooking_generic
@@ -150,6 +145,7 @@ data=levelrequired,40
 data=experience,1200
 data=successchance,38,332
 data=cookmessage_range,You cook the cake in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You remove the cake from the oven.
 
 [cooking_generic_pizza]
@@ -161,6 +157,7 @@ data=levelrequired,35
 data=experience,1100
 data=successchance,48,352
 data=cookmessage_range,You cook the pizza in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You remove the pizza from the oven.
 
 [cooking_generic_bread]
@@ -171,6 +168,7 @@ data=burnt,burnt_bread
 data=levelrequired,1
 data=experience,400
 data=successchance,118,492
+data=cantcookmessage_fire,You need a proper oven to cook that.
 
 [cooking_generic_apple_pie]
 table=cooking_generic
@@ -181,6 +179,7 @@ data=levelrequired,30
 data=experience,1000
 data=successchance,58,372
 data=cookmessage_range,You cook the apple pie in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You remove the apple pie from the oven.
 
 [cooking_generic_meat_pie]
@@ -193,6 +192,7 @@ data=experience,800
 data=successchance,78,412
 data=successchance_cookomatic,88,432
 data=cookmessage_range,You cook the meat pie in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You remove the meat pie from the oven.
 
 [cooking_generic_redberry_pie]
@@ -205,6 +205,7 @@ data=experience,600
 data=successchance,98,452
 data=successchance_cookomatic,108,462
 data=cookmessage_range,You cook the redberry pie in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You remove the redberry pie from the oven.
 
 [cooking_generic_shrimp]
@@ -403,6 +404,7 @@ data=levelrequired,1
 data=experience,30
 data=successchance,118,492
 data=cookmessage_range,You put the gnome bowl in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You half-cook the gnome bowl.
 data=burnmessage,You accidentally burn the gnome bowl.
 
@@ -416,6 +418,7 @@ data=levelrequired,1
 data=experience,30
 data=successchance,118,492
 data=cookmessage_range,You put the crunchies in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You half-cook the crunchies.
 data=burnmessage,You accidentally burn the crunchies.
 
@@ -429,6 +432,7 @@ data=levelrequired,1
 data=experience,30
 data=successchance,118,492
 data=cookmessage_range,You put the batta in the oven...
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,You half-cook the batta.
 data=burnmessage,You accidentally burn the batta.
 
@@ -441,6 +445,7 @@ data=levelrequired,1
 data=experience,0
 data=successchance,1,1
 data=cookmessage_range,You briefly warm the drink in the oven.
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,0
 
 [cooking_generic_drunk_dragon]
@@ -452,6 +457,7 @@ data=levelrequired,1
 data=experience,600
 data=successchance,1,1
 data=cookmessage_range,You briefly warm the drink in the oven.
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,0
 
 [cooking_generic_unfinished_gnome_batta]
@@ -464,6 +470,7 @@ data=levelrequired,1
 data=experience,0
 data=successchance,1,1
 data=cookmessage_range,You bake the batta.
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,0
 
 [cooking_generic_unfinished_gnome_crunchies]
@@ -476,6 +483,7 @@ data=levelrequired,1
 data=experience,0
 data=successchance,1,1
 data=cookmessage_range,You bake the crunchies.
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,0
 
 [cooking_generic_unfinished_gnomebowl]
@@ -488,4 +496,17 @@ data=levelrequired,1
 data=experience,0
 data=successchance,1,1
 data=cookmessage_range,You bake the gnome bowl.
+data=cantcookmessage_fire,You need a proper oven to cook that.
 data=successmessage,0
+
+[cooking_generic_raw_swamp_paste]
+table=cooking_generic
+data=uncooked,raw_swamp_paste
+data=cooked,swamp_paste
+data=burnt,swamp_paste
+data=levelrequired,1
+data=experience,20
+data=successchance,500,500
+data=cantcookmessage_range,You need to warm that over a fire.
+data=cookmessage_fire,You warm the paste over the fire.
+data=successmessage,It thickens into a sticky goo.

@@ -1,0 +1,6 @@
+^runemysteries_not_started = 0
+^runemysteries_started = 1
+^runemysteries_given_talisman = 2
+^runemysteries_received_package = 3
+^runemysteries_given_package = 4
+^runemysteries_received_notes = 5

@@ -24,7 +24,7 @@ export class PackFile {
         if (validator !== null) {
             validator(this, ...validatorArgs);
         } else {
-            this.load(`${Environment.DATA_SRC_DIR}/pack/${type}.pack`);
+            this.load(`${Environment.BUILD_SRC_DIR}/pack/${type}.pack`);
         }
     }
 
@@ -63,7 +63,7 @@ export class PackFile {
     }
 
     save() {
-        fs.writeFileSync(`${Environment.DATA_SRC_DIR}/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
+        fs.writeFileSync(`${Environment.BUILD_SRC_DIR}/pack/${this.type}.pack`, Array.from(this.pack.entries()).sort((a, b) => a[0] - b[0]).map(([id, name]) => `${id}=${name}`).join('\n') + '\n');
     }
 
     getById(id: number): string {
@@ -86,7 +86,7 @@ export class PackFile {
 }
 
 function validateFilesPack(pack: PackFile, path: string, ext: string): void {
-    pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+    pack.load(`${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
 
     const files = listFilesExt(path, ext);
 
@@ -101,15 +101,15 @@ function validateFilesPack(pack: PackFile, path: string, ext: string): void {
         const name = files[i];
 
         if (!pack.names.has(name)) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
 
-    if (Environment.VALIDATE_PACK) {
+    if (Environment.BUILD_VERIFY_PACK) {
         for (const name of pack.names) {
             if (!fileNames.has(name)) {
-                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
                 process.exit(1);
             }
         }
@@ -119,7 +119,7 @@ function validateFilesPack(pack: PackFile, path: string, ext: string): void {
 }
 
 function validateImagePack(pack: PackFile, path: string, ext: string): void {
-    pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+    pack.load(`${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
 
     const files = listFilesExt(path, ext);
 
@@ -135,15 +135,15 @@ function validateImagePack(pack: PackFile, path: string, ext: string): void {
 
         const name = files[i];
         if (!pack.names.has(name)) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
 
-    if (Environment.VALIDATE_PACK) {
+    if (Environment.BUILD_VERIFY_PACK) {
         for (const name of pack.names) {
             if (!fileNames.has(name)) {
-                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+                console.error(`${pack.type}: ${name} was not found on your disk, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
                 process.exit(1);
             }
         }
@@ -166,7 +166,7 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
             // completely scorched earth (resets ids)
         } else {
             // just add new ids to the end
-            pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+            pack.load(`${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
         }
 
         for (let i = 0; i < names.length; i++) {
@@ -176,21 +176,21 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
         }
         pack.refreshNames();
     } else {
-        pack.load(`${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+        pack.load(`${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
     }
 
     for (let i = 0; i < names.length; i++) {
         const name = names[i];
 
         if (!pack.names.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} is missing an ID line, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
 
     for (const name of pack.names) {
         if (!configNames.has(name) && !name.startsWith('cert_')) {
-            console.error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit ${Environment.DATA_SRC_DIR}/pack/${pack.type}.pack`);
+            console.error(`${pack.type}: ${name} was not found in any ${ext} files, you may need to edit ${Environment.BUILD_SRC_DIR}/pack/${pack.type}.pack`);
             process.exit(1);
         }
     }
@@ -201,9 +201,9 @@ function validateConfigPack(pack: PackFile, ext: string, regen: boolean = false,
 }
 
 function validateCategoryPack(pack: PackFile) {
-    if (shouldBuild(`${Environment.DATA_SRC_DIR}/scripts`, '.loc', `${Environment.DATA_SRC_DIR}/pack/category.pack`) ||
-        shouldBuild(`${Environment.DATA_SRC_DIR}/scripts`, '.npc', `${Environment.DATA_SRC_DIR}/pack/category.pack`) ||
-        shouldBuild(`${Environment.DATA_SRC_DIR}/scripts`, '.obj', `${Environment.DATA_SRC_DIR}/pack/category.pack`)) {
+    if (shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.loc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
+        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.npc', `${Environment.BUILD_SRC_DIR}/pack/category.pack`) ||
+        shouldBuild(`${Environment.BUILD_SRC_DIR}/scripts`, '.obj', `${Environment.BUILD_SRC_DIR}/pack/category.pack`)) {
         const categories = crawlConfigCategories();
         for (let i = 0; i < categories.length; i++) {
             pack.register(i, categories[i]);
@@ -211,15 +211,15 @@ function validateCategoryPack(pack: PackFile) {
         pack.refreshNames();
         pack.save();
     } else {
-        pack.load(`${Environment.DATA_SRC_DIR}/pack/category.pack`);
+        pack.load(`${Environment.BUILD_SRC_DIR}/pack/category.pack`);
     }
 }
 
 function validateInterfacePack(pack: PackFile) {
-    pack.load(`${Environment.DATA_SRC_DIR}/pack/interface.pack`);
+    pack.load(`${Environment.BUILD_SRC_DIR}/pack/interface.pack`);
 
-    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.if', (lines: string[], file: string) => {
-        if (Environment.STRICT_FOLDERS) {
+    loadDirExtFull(`${Environment.BUILD_SRC_DIR}/scripts`, '.if', (lines: string[], file: string) => {
+        if (Environment.BUILD_VERIFY_FOLDER) {
             const parent = basename(dirname(dirname(file)));
             const dir = basename(dirname(file));
             if (dir !== 'interfaces' && parent !== 'interfaces') {
@@ -230,7 +230,7 @@ function validateInterfacePack(pack: PackFile) {
 
         const inter = basename(file, '.if');
         if (!pack.names.has(inter)) {
-            console.error(`${Environment.DATA_SRC_DIR}/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
+            console.error(`${Environment.BUILD_SRC_DIR}/pack/interface.pack is missing ID for interface ${inter} from ${file}`);
             process.exit(1);
         }
 
@@ -242,7 +242,7 @@ function validateInterfacePack(pack: PackFile) {
                 const name = `${inter}:${com}`;
 
                 if (!pack.names.has(name)) {
-                    console.error(`${Environment.DATA_SRC_DIR}/pack/interface.pack is missing ID for component ${name} from ${file}`);
+                    console.error(`${Environment.BUILD_SRC_DIR}/pack/interface.pack is missing ID for component ${name} from ${file}`);
                     process.exit(1);
                 }
             }
@@ -252,7 +252,7 @@ function validateInterfacePack(pack: PackFile) {
 
 // todo: validate triggers, names, and/or reuse IDs?
 function regenScriptPack(pack: PackFile) {
-    pack.load(`${Environment.DATA_SRC_DIR}/pack/script.pack`);
+    pack.load(`${Environment.BUILD_SRC_DIR}/pack/script.pack`);
 
     const names = crawlConfigNames('.rs2', true);
     for (let i = 0; i < names.length; i++) {
@@ -264,8 +264,8 @@ function regenScriptPack(pack: PackFile) {
     pack.save();
 }
 
-export let AnimPack = new PackFile('anim', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.frame');
-export let BasePack = new PackFile('base', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.base');
+export let AnimPack = new PackFile('anim', validateFilesPack, `${Environment.BUILD_SRC_DIR}/models`, '.frame');
+export let BasePack = new PackFile('base', validateFilesPack, `${Environment.BUILD_SRC_DIR}/models`, '.base');
 export let CategoryPack = new PackFile('category', validateCategoryPack);
 export let DbRowPack = new PackFile('dbrow', validateConfigPack, '.dbrow', true, false, false, true);
 export let DbTablePack = new PackFile('dbtable', validateConfigPack, '.dbtable', true, false, false, true);
@@ -277,23 +277,23 @@ export let InterfacePack = new PackFile('interface', validateInterfacePack);
 export let InvPack = new PackFile('inv', validateConfigPack, '.inv', true);
 export let LocPack = new PackFile('loc', validateConfigPack, '.loc');
 export let MesAnimPack = new PackFile('mesanim', validateConfigPack, '.mesanim', true, false, false, true);
-export let ModelPack = new PackFile('model', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.ob2');
+export let ModelPack = new PackFile('model', validateFilesPack, `${Environment.BUILD_SRC_DIR}/models`, '.ob2');
 export let NpcPack = new PackFile('npc', validateConfigPack, '.npc');
 export let ObjPack = new PackFile('obj', validateConfigPack, '.obj');
 export let ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
 export let ScriptPack = new PackFile('script', regenScriptPack);
 export let SeqPack = new PackFile('seq', validateConfigPack, '.seq');
-export let SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
+export let SoundPack = new PackFile('sound', validateFilesPack, `${Environment.BUILD_SRC_DIR}/sounds`, '.synth');
 export let SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
 export let StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
-export let TexturePack = new PackFile('texture', validateImagePack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
+export let TexturePack = new PackFile('texture', validateImagePack, `${Environment.BUILD_SRC_DIR}/textures`, '.png');
 export let VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
 export let VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
 export let VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);
 
 export function revalidatePack() {
-    AnimPack = new PackFile('anim', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.frame');
-    BasePack = new PackFile('base', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.base');
+    AnimPack = new PackFile('anim', validateFilesPack, `${Environment.BUILD_SRC_DIR}/models`, '.frame');
+    BasePack = new PackFile('base', validateFilesPack, `${Environment.BUILD_SRC_DIR}/models`, '.base');
     CategoryPack = new PackFile('category', validateCategoryPack);
     DbRowPack = new PackFile('dbrow', validateConfigPack, '.dbrow', true, false, false, true);
     DbTablePack = new PackFile('dbtable', validateConfigPack, '.dbtable', true, false, false, true);
@@ -305,16 +305,16 @@ export function revalidatePack() {
     InvPack = new PackFile('inv', validateConfigPack, '.inv', true);
     LocPack = new PackFile('loc', validateConfigPack, '.loc');
     MesAnimPack = new PackFile('mesanim', validateConfigPack, '.mesanim', true, false, false, true);
-    ModelPack = new PackFile('model', validateFilesPack, `${Environment.DATA_SRC_DIR}/models`, '.ob2');
+    ModelPack = new PackFile('model', validateFilesPack, `${Environment.BUILD_SRC_DIR}/models`, '.ob2');
     NpcPack = new PackFile('npc', validateConfigPack, '.npc');
     ObjPack = new PackFile('obj', validateConfigPack, '.obj');
     ParamPack = new PackFile('param', validateConfigPack, '.param', true, false, false, true);
     ScriptPack = new PackFile('script', regenScriptPack);
     SeqPack = new PackFile('seq', validateConfigPack, '.seq');
-    SoundPack = new PackFile('sound', validateFilesPack, `${Environment.DATA_SRC_DIR}/sounds`, '.synth');
+    SoundPack = new PackFile('sound', validateFilesPack, `${Environment.BUILD_SRC_DIR}/sounds`, '.synth');
     SpotAnimPack = new PackFile('spotanim', validateConfigPack, '.spotanim');
     StructPack = new PackFile('struct', validateConfigPack, '.struct', true, false, false, true);
-    TexturePack = new PackFile('texture', validateImagePack, `${Environment.DATA_SRC_DIR}/textures`, '.png');
+    TexturePack = new PackFile('texture', validateImagePack, `${Environment.BUILD_SRC_DIR}/textures`, '.png');
     VarpPack = new PackFile('varp', validateConfigPack, '.varp', true);
     VarnPack = new PackFile('varn', validateConfigPack, '.varn', true, false, false, true);
     VarsPack = new PackFile('vars', validateConfigPack, '.vars', true, false, false, true);
@@ -323,8 +323,8 @@ export function revalidatePack() {
 export function crawlConfigNames(ext: string, includeBrackets = false) {
     const names: string[] = [];
 
-    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, ext, (lines: string[], file: string) => {
-        if (file === `${Environment.DATA_SRC_DIR}/scripts/engine.rs2`) {
+    loadDirExtFull(`${Environment.BUILD_SRC_DIR}/scripts`, ext, (lines: string[], file: string) => {
+        if (file === `${Environment.BUILD_SRC_DIR}/scripts/engine.rs2`) {
             // these command signatures are specifically for the compiler to have type information
             return;
         }
@@ -338,7 +338,7 @@ export function crawlConfigNames(ext: string, includeBrackets = false) {
                     name = name.substring(1, name.length - 1);
                 }
 
-                if (Environment.STRICT_FOLDERS) {
+                if (Environment.BUILD_VERIFY_FOLDER) {
                     const parent = basename(dirname(dirname(file)));
                     const dir = basename(dirname(file));
                     if (dir !== '_unpack' && ext !== '.flo') {
@@ -363,7 +363,7 @@ export function crawlConfigNames(ext: string, includeBrackets = false) {
 function crawlConfigCategories() {
     const names: string[] = [];
 
-    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.loc', (lines: string[]) => {
+    loadDirExtFull(`${Environment.BUILD_SRC_DIR}/scripts`, '.loc', (lines: string[]) => {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
 
@@ -377,7 +377,7 @@ function crawlConfigCategories() {
         }
     });
 
-    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.npc', (lines: string[]) => {
+    loadDirExtFull(`${Environment.BUILD_SRC_DIR}/scripts`, '.npc', (lines: string[]) => {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
 
@@ -391,7 +391,7 @@ function crawlConfigCategories() {
         }
     });
 
-    loadDirExtFull(`${Environment.DATA_SRC_DIR}/scripts`, '.obj', (lines: string[]) => {
+    loadDirExtFull(`${Environment.BUILD_SRC_DIR}/scripts`, '.obj', (lines: string[]) => {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
 

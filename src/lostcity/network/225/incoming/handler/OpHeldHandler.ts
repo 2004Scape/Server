@@ -58,10 +58,8 @@ export default class OpHeldHandler extends MessageHandler<OpHeld> {
         const script = ScriptProvider.getByTrigger(trigger, type.id, type.category);
         if (script) {
             player.executeScript(ScriptRunner.init(script, player), true);
-        } else {
-            if (Environment.LOCAL_DEV) {
-                player.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${type.debugname}]`);
-            }
+        } else if (Environment.NODE_DEBUG) {
+            player.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${type.debugname}]`);
         }
 
         return true;

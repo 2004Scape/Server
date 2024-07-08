@@ -1261,7 +1261,7 @@ desc=This figure brings luck to those who sail.
 model=model_loc_254
 width=2
 
-[loc_255]
+[winch]
 name=Winch
 desc=Used for pulling things up.
 model=model_loc_255
@@ -14550,65 +14550,6 @@ length=3
 op1=Climb-up
 op2=Investigate
 
-[hopper_full]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_lumbridge]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_varrock]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_zanaris]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hopper_ardougne]
-name=Hopper
-desc=Grain goes in here.
-model=model_loc_1783
-width=2
-
-[hoppercontrol_lumbridge]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_varrock]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_zanaris]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_ardougne]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_1785
-op1=Operate
-
-[hoppercontrol_inuse]
-name=Hopper controls
-desc=These control the flow of grain from the hopper to the millstones.
-model=model_loc_2722
-
 [loc_2723]
 name=Kebab
 desc=A Spicy meat kebab is cooking here.
@@ -17697,7 +17638,6 @@ recol3s=5285
 recol3d=5216
 category=double_door_open_and_close_right
 param=next_loc_stage,loc_3210
-param=open_sound,coffin_open
 
 [loc_3210]
 name=Odd looking wall
@@ -17725,7 +17665,6 @@ recol3s=5285
 recol3d=5216
 category=double_door_open_and_close_left
 param=next_loc_stage,loc_3212
-param=open_sound,coffin_open
 
 [loc_3212]
 name=Odd looking wall

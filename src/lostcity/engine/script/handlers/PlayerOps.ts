@@ -38,7 +38,6 @@ import IfSetNpcHead from '#lostcity/network/outgoing/model/IfSetNpcHead.js';
 import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
 import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
-import Environment from '#lostcity/util/Environment.js';
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
@@ -133,7 +132,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.ANIM]: checkedHandler(ActivePlayer, state => {
-        const delay = check(state.popInt(), NumberNotNull);
+        const delay = state.popInt();
         const seq = state.popInt();
 
         state.activePlayer.playAnimation(seq, delay);
@@ -284,10 +283,6 @@ const PlayerOps: CommandHandlers = {
 
     [ScriptOpcode.MES]: checkedHandler(ActivePlayer, state => {
         const message = state.popString();
-
-        if (Environment.CLIRUNNER) {
-            console.log(message);
-        }
 
         state.activePlayer.messageGame(message);
     }),
@@ -786,7 +781,12 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.BAS_RUNNING]: state => {
-        state.activePlayer.basRunning = check(state.popInt(), SeqTypeValid).id;
+        const seq = state.popInt();
+        if (seq === -1) {
+            state.activePlayer.basRunning = -1;
+            return;
+        }
+        state.activePlayer.basRunning = check(seq, SeqTypeValid).id;
     },
 
     [ScriptOpcode.GENDER]: state => {
@@ -981,6 +981,10 @@ const PlayerOps: CommandHandlers = {
         }
 
         toPlayer.addHero(fromPlayer.uid, damage);
+    }),
+
+    [ScriptOpcode.P_ANIMPROTECT]: checkedHandler(ProtectedActivePlayer, state => {
+        state.activePlayer.animProtect = check(state.popInt(), NumberNotNull);
     }),
 };
 

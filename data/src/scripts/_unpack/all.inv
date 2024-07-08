@@ -1,5 +1,6 @@
-[inv_0]
+[trawler_catch]
 size=40
+stackall=yes
 
 [inv_55]
 size=1

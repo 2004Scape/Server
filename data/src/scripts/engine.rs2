@@ -39,6 +39,10 @@
 [command,projanim_npc](coord $from, npc_uid $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc)
 [command,projanim_map](coord $from, coord $to, spotanim $spotanim, int $fromHeight, int $toHeight, int $delay, int $duration, int $peak, int $arc)
 [command,map_locaddunsafe](coord $coord)(boolean)
+[command,npccount]()(int)
+[command,zonecount]()(int)
+[command,loccount]()(int)
+[command,objcount]()(int)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
@@ -56,6 +60,7 @@
 [command,cam_lookat](coord $destCoord, int $destHeight, int $rotationSpeed, int $rotationMultiplier)
 [command,cam_shake](int $type, int $jitter, int $amplitude, int $frequency)
 [command,cam_reset]
+[command,.cam_reset]
 [command,coord]()(coord)
 [command,.coord]()(coord)
 [command,displayname]()(string)
@@ -219,6 +224,8 @@
 [command,both_heropoints](int $damage)
 [command,setgender](int $gender)
 [command,setskincolour](int $skin_colour)
+[command,p_animprotect](int $toggle)
+[command,.p_animprotect](int $toggle)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
@@ -478,7 +485,19 @@
 
 // Debug ops (10000-11000)
 [command,error](string $text)
-[command,map_localdev]()(boolean)
+[command,map_production]()(boolean)
+[command,map_lastclock]()(int)
+[command,map_lastworld]()(int)
+[command,map_lastclientin]()(int)
+[command,map_lastnpc]()(int)
+[command,map_lastplayer]()(int)
+[command,map_lastlogin]()(int)
+[command,map_lastlogout]()(int)
+[command,map_lastzone]()(int)
+[command,map_lastclientout]()(int)
+[command,map_lastcleanup]()(int)
+[command,map_lastbandwidthin]()(int)
+[command,map_lastbandwidthout]()(int)
 
 // [command,inv_setvar](inv $inv, int $slot, obj $obj, int $value)
 // [command,inv_getvar](inv $inv, int $slot, obj $obj)(int)

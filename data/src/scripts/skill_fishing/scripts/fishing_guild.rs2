@@ -29,7 +29,8 @@ while (npc_findnext = true) {
 if (stat(fishing) < 68) {
     ~chatnpc("<p,happy>Hello, I'm afraid only the top fishers are allowed to use our premier fishing facilities.");
 } else {
-    ~chatnpc("<p,happy>Hello, welcome to the fishing guild. Please feel free to make use of any of our facilities.");
+    // https://storage.googleapis.com/tannerdino/images/rshemenster2.gif
+    ~chatnpc("<p,happy>Hello, welcome to the fishing guild.  Please|feel free to make use of any of our facilities.");
 }
 
 

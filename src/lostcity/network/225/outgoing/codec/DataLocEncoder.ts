@@ -13,4 +13,8 @@ export default class DataLocEncoder extends MessageEncoder<DataLoc> {
         buf.p2(message.length);
         buf.pdata(message.data, 0, message.data.length);
     }
+
+    test(message: DataLoc): number {
+        return 1 + 1 + 2 + 2 + message.data.length;
+    }
 }

@@ -1,11 +1,5 @@
-[debugproc,gb]
-if (p_finduid(uid) = true) {
-    p_teleport(0_37_54_14_32);
-}
-
 [oplocu,gnome_goal]
 mes(~coord_tostring(loc_coord));
-
 
 [oploc1,gnomeball_gate]
 def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
@@ -111,12 +105,6 @@ if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
     return;
 }
 ~dropslot(last_slot);
-
-
-[debugproc,gg]
-if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
-    mes("TRUE");
-}
 
 [proc,gnomeball_login]
 if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {

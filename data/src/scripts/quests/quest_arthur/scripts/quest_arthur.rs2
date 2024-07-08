@@ -219,7 +219,7 @@ if(testbit(%excalibur_components_progress, ^excalibur_rewarded) = false) {
         @beggar_dialogue;
     } 
 }
-~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);
+~open_and_close_door2(loc_1535, ~check_axis(coord, loc_coord, loc_angle), door_open);
 
 [oploc1,loc_60]
 p_arrivedelay;
