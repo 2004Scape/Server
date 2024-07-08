@@ -301,15 +301,15 @@ export default class Zone {
         }
         this.sortObjs(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
             this.events.add({
-                type: ZoneEventType.FOLLOWS,
+                type: ZoneEventType.ENCLOSED,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
             });
-        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                type: ZoneEventType.ENCLOSED,
+                type: ZoneEventType.FOLLOWS,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
             });
@@ -357,15 +357,15 @@ export default class Zone {
         }
         this.sortObjs(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
             this.events.add({
-                type: ZoneEventType.FOLLOWS,
+                type: ZoneEventType.ENCLOSED,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
             });
-        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                type: ZoneEventType.ENCLOSED,
+                type: ZoneEventType.FOLLOWS,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
             });
