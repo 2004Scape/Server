@@ -1,6 +1,7 @@
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
+import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
     private readonly capacity: number;
@@ -155,6 +156,11 @@ export class LocList extends ZoneEntityList<Loc> {
                 if (bottomCost === 0) {
                     break;
                 }
+
+                if (loc.lifecycle !== EntityLifeCycle.DESPAWN) {
+                    continue;
+                }
+
                 const cost: number = loc.lifecycle;
                 if (cost < bottomCost) {
                     bottomCost = cost;
@@ -207,6 +213,10 @@ export class ObjList extends ZoneEntityList<Obj> {
             for (const obj of objs) {
                 if (bottomCost === 0) {
                     break;
+                }
+
+                if (obj.lifecycle !== EntityLifeCycle.DESPAWN) {
+                    continue;
                 }
 
                 const type: ObjType = ObjType.get(obj.type);
