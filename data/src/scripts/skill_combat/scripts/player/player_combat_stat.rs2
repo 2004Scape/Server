@@ -98,7 +98,7 @@ switch_int(%damagetype) {
 }
 
 // weapon related varps
-%com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
+%com_attackanim, %com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype, %damagestyle, %attackstyle);
 %com_defendanim = ~combat_defend_anim($weapon);
 
 [proc,.player_combat_stat]
@@ -201,7 +201,7 @@ switch_int(.%damagetype) {
 }
 
 // weapon related varps
-.%com_attackanim, .%com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype);
+.%com_attackanim, .%com_attacksound = ~combat_swing_anim_and_synth($weapon, $damagetype, .%damagestyle, .%attackstyle);
 .%com_defendanim = ~combat_defend_anim($weapon);
 
 [proc,check_attack_prayer]()(int)

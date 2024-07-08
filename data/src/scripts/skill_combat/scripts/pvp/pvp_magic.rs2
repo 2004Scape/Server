@@ -25,32 +25,32 @@
 [opplayert,magic:stun] ~pvp_default_spell(^stun);
 [opplayert,magic:crumble_undead] ~pvp_default_spell(^crumble_undead);
 
-// [applayert,magic:wind_strike] ~pvp_default_spell(^wind_strike);
-// [applayert,magic:water_strike] ~pvp_default_spell(^water_strike);
-// [applayert,magic:earth_strike] ~pvp_default_spell(^earth_strike);
-// [applayert,magic:fire_strike] ~pvp_default_spell(^fire_strike);
-// [applayert,magic:wind_bolt] ~pvp_default_spell(^wind_bolt);
-// [applayert,magic:water_bolt] ~pvp_default_spell(^water_bolt);
-// [applayert,magic:earth_bolt] ~pvp_default_spell(^earth_bolt);
-// [applayert,magic:fire_bolt] ~pvp_default_spell(^fire_bolt);
-// [applayert,magic:wind_blast] ~pvp_default_spell(^wind_blast);
-// [applayert,magic:water_blast] ~pvp_default_spell(^water_blast);
-// [applayert,magic:earth_blast] ~pvp_default_spell(^earth_blast);
-// [applayert,magic:fire_blast] ~pvp_default_spell(^fire_blast);
-// [applayert,magic:wind_wave] ~pvp_default_spell(^wind_wave);
-// [applayert,magic:water_wave] ~pvp_default_spell(^water_wave);
-// [applayert,magic:earth_wave] ~pvp_default_spell(^earth_wave);
-// [applayert,magic:fire_wave] ~pvp_default_spell(^fire_wave);
-// [applayert,magic:curse] ~pvp_default_spell(^curse);
-// [applayert,magic:weaken] ~pvp_default_spell(^weaken);
-// [applayert,magic:confuse] ~pvp_default_spell(^confuse);
-// [applayert,magic:bind] ~pvp_default_spell(^bind);
-// [applayert,magic:snare] ~pvp_default_spell(^snare);
-// [applayert,magic:entangle] ~pvp_default_spell(^entangle);
-// [applayert,magic:vulnerability] ~pvp_default_spell(^vulnerability);
-// [applayert,magic:enfeeble] ~pvp_default_spell(^enfeeble);
-// [applayert,magic:stun] ~pvp_default_spell(^stun);
-// [applayert,magic:crumble_undead] ~pvp_default_spell(^crumble_undead);
+[applayert,magic:wind_strike] ~pvp_default_spell(^wind_strike);
+[applayert,magic:water_strike] ~pvp_default_spell(^water_strike);
+[applayert,magic:earth_strike] ~pvp_default_spell(^earth_strike);
+[applayert,magic:fire_strike] ~pvp_default_spell(^fire_strike);
+[applayert,magic:wind_bolt] ~pvp_default_spell(^wind_bolt);
+[applayert,magic:water_bolt] ~pvp_default_spell(^water_bolt);
+[applayert,magic:earth_bolt] ~pvp_default_spell(^earth_bolt);
+[applayert,magic:fire_bolt] ~pvp_default_spell(^fire_bolt);
+[applayert,magic:wind_blast] ~pvp_default_spell(^wind_blast);
+[applayert,magic:water_blast] ~pvp_default_spell(^water_blast);
+[applayert,magic:earth_blast] ~pvp_default_spell(^earth_blast);
+[applayert,magic:fire_blast] ~pvp_default_spell(^fire_blast);
+[applayert,magic:wind_wave] ~pvp_default_spell(^wind_wave);
+[applayert,magic:water_wave] ~pvp_default_spell(^water_wave);
+[applayert,magic:earth_wave] ~pvp_default_spell(^earth_wave);
+[applayert,magic:fire_wave] ~pvp_default_spell(^fire_wave);
+[applayert,magic:curse] ~pvp_default_spell(^curse);
+[applayert,magic:weaken] ~pvp_default_spell(^weaken);
+[applayert,magic:confuse] ~pvp_default_spell(^confuse);
+[applayert,magic:bind] ~pvp_default_spell(^bind);
+[applayert,magic:snare] ~pvp_default_spell(^snare);
+[applayert,magic:entangle] ~pvp_default_spell(^entangle);
+[applayert,magic:vulnerability] ~pvp_default_spell(^vulnerability);
+[applayert,magic:enfeeble] ~pvp_default_spell(^enfeeble);
+[applayert,magic:stun] ~pvp_default_spell(^stun);
+[applayert,magic:crumble_undead] ~pvp_default_spell(^crumble_undead);
 
 [proc,pvp_default_spell](int $spell)
 def_dbrow $spell_data = ~get_spell_data($spell);
@@ -74,8 +74,6 @@ if (~pvp_hit_roll(^magic_style) = true) {
 } else {
     ~pvp_spell_fail($spell_data, $duration);
 }
-// todo: heropoints
-
 
 [proc,pvp_combat_spell_checks](dbrow $spell_data)(boolean)
 if_close;
@@ -181,16 +179,13 @@ if ($freeze_time > 0) {
     if (~.check_protect_prayer(^magic_style) = true) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
-    //.queue(.freeze_player, 0, $freeze_time);
-    if (.p_finduid(.uid) = true) { // todo: queue this
-        .%stunned = calc(map_clock + $freeze_time + 1);
-        //.walktrigger(.frozen);
-    }
+    .queue(freeze_player, 0, $freeze_time);
 }
 
 [proc,pvp_spell_success](dbrow $spell_data, int $maxhit, int $duration)
-sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-.sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+def_synth $sound = db_getfield($spell_data, magic_spell_table:sound_success, 0);
+sound_synth($sound, 0, 0);
+.sound_synth($sound, 0, 0);
 
 if (~.check_protect_prayer(^magic_style) = true) {
     $maxhit = scale(6, 10, $maxhit); // reduction of 40%
@@ -205,25 +200,24 @@ if ($maxhit ! null) {
 
 both_heropoints($damage);
 
-// spell visual
 .spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
-// auto retal
 .queue(pvp_retaliate, calc($duration / 30 + 1), uid);
 
 [proc,pvp_spell_fail](dbrow $spell_data, int $duration)
 // splash
+def_synth $sound;
 if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
-    .sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
+    $sound = db_getfield($spell_data, magic_spell_table:sound_fail, 0);
 } else {
     // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
     // every time?
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    .sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+    $sound = db_getfield($spell_data, magic_spell_table:sound_success, 0);
 }
+
+sound_synth($sound, 0, 0);
+.sound_synth($sound, 0, 0);
 // no splash sound?
 .spotanim_pl(failedspell_impact, 92, $duration);
-// auto retal
 .queue(pvp_retaliate, 0, uid);
 
 [proc,pvp_spell_cast](dbrow $spell_data)(int)
@@ -240,11 +234,8 @@ if (%damagestyle = ^style_melee_defensive & oc_category(inv_getobj(worn, ^wearpo
     %damagestyle = ^style_magic_normal; // if this script is running they have to be using a spell, so assume magic style
 }
 
-// spell anim
 anim(db_getfield($spell_data, magic_spell_table:anim, 0), 0);
-// player spell visual effect
 spotanim_pl(db_getfield($spell_data, magic_spell_table:spotanim_origin, 0), 92, 0);
-// shoot projectile
 %action_delay = add(map_clock, 5);
 def_int $duration = 0;
 if (db_getfieldcount($spell_data, magic_spell_table:spotanim_proj) > 0) {
@@ -260,13 +251,3 @@ return($duration);
 [proc,magic_spell_maxhit](dbrow $spell_data)(int)
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 return($maxhit);
-
-// todo: .walktrigger
-// [walktrigger,.frozen]()(boolean)
-// if (map_clock < .%stunned) {
-//     .mes("A magical force stops you from moving.");
-//      p_stopaction;
-//     return(false);
-// }
-
-// return(true);

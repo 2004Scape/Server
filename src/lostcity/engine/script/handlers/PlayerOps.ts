@@ -798,7 +798,12 @@ const PlayerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.HINT_PLAYER]: state => {
-        state.activePlayer.hintPlayer(check(state.popInt(), NumberNotNull));
+        const uid = check(state.popInt(), NumberNotNull);
+        const player = World.getPlayerByUid(uid);
+        if (!player) {
+            return;
+        }
+        state.activePlayer.hintPlayer(player.pid);
     },
 
     [ScriptOpcode.HEADICONS_GET]: state => {
