@@ -185,8 +185,9 @@ if ($freeze_time > 0) {
 }
 
 [proc,pvp_spell_success](dbrow $spell_data, int $maxhit, int $duration)
-sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-.sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+def_synth $sound = db_getfield($spell_data, magic_spell_table:sound_success, 0);
+sound_synth($sound, 0, 0);
+.sound_synth($sound, 0, 0);
 
 if (~.check_protect_prayer(^magic_style) = true) {
     $maxhit = scale(6, 10, $maxhit); // reduction of 40%
@@ -208,15 +209,17 @@ both_heropoints($damage);
 
 [proc,pvp_spell_fail](dbrow $spell_data, int $duration)
 // splash
+def_synth $sound;
 if (db_getfieldcount($spell_data, magic_spell_table:sound_fail) > 0) {
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
-    .sound_synth(db_getfield($spell_data, magic_spell_table:sound_fail, 0), 0, 0);
+    $sound = db_getfield($spell_data, magic_spell_table:sound_fail, 0);
 } else {
     // reduce stat, and freeze spells dont have fail sounds, so i assume they just play their normal sound
     // every time?
-    sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
-    .sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 0, 0);
+    $sound = db_getfield($spell_data, magic_spell_table:sound_success, 0);
 }
+
+sound_synth($sound, 0, 0);
+.sound_synth($sound, 0, 0);
 // no splash sound?
 .spotanim_pl(failedspell_impact, 92, $duration);
 // auto retal
