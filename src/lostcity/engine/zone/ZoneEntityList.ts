@@ -26,6 +26,36 @@ export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
 
     // ----
 
+    *stack(coord: number): IterableIterator<T> {
+        const items: T[] | undefined = this[coord];
+        if (typeof items === 'undefined') {
+            return;
+        }
+        for (let index: number = 0; index < items.length; index++) {
+            yield items[index];
+        }
+    }
+
+    *all(reverse: boolean = false): IterableIterator<T> {
+        for (let index: number = 0; index < this.length; index++) {
+            const items: T[] | undefined = this[index];
+            if (typeof items === 'undefined') {
+                continue;
+            }
+            if (reverse) {
+                for (let i: number = 0; i < items.length; i++) {
+                    yield items[i];
+                }
+            } else {
+                for (let i: number = 0; i < items.length; i++) {
+                    yield items[i];
+                }
+            }
+        }
+    }
+
+    // ----
+
     addLast(coord: number, item: T, unchecked: boolean = false): void {
         this.check(coord, unchecked);
         this[coord]?.push(item);

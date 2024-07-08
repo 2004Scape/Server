@@ -397,106 +397,50 @@ export default class Zone {
     }
 
     *getAllObjsSafe(): IterableIterator<Obj> {
-        for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Obj[] | undefined = this.objs[index];
-            if (objs) {
-                for (let i: number = 0; i < objs.length; i++) {
-                    const obj: Obj = objs[i];
-                    if (obj.checkLifeCycle(World.currentTick)) {
-                        yield obj;
-                    }
-                }
+        for (const obj of this.objs.all()) {
+            if (obj.checkLifeCycle(World.currentTick)) {
+                yield obj;
             }
         }
     }
 
     *getObjsSafe(coord: number): IterableIterator<Obj> {
-        const objs: Obj[] | undefined = this.objs[coord];
-        if (objs) {
-            for (let i: number = 0; i < objs.length; i++) {
-                const obj: Obj = objs[i];
-                if (obj.checkLifeCycle(World.currentTick)) {
-                    yield obj;
-                }
+        for (const obj of this.objs.stack(coord)) {
+            if (obj.checkLifeCycle(World.currentTick)) {
+                yield obj;
             }
         }
     }
 
     *getObjsUnsafe(coord: number): IterableIterator<Obj> {
-        const objs: Obj[] | undefined = this.objs[coord];
-        if (objs) {
-            for (let i: number = 0; i < objs.length; i++) {
-                yield objs[i];
-            }
-        }
+        yield *this.objs.stack(coord);
     }
 
     *getAllObjsUnsafe(reverse: boolean = false): IterableIterator<Obj> {
-        for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Obj[] | undefined = this.objs[index];
-            if (objs) {
-                if (reverse) {
-                    for (let i: number = objs.length - 1; i >= 0; i--) {
-                        yield objs[i];
-                    }
-                } else {
-                    for (let i: number = 0; i < objs.length; i++) {
-                        yield objs[i];
-                    }
-                }
-            }
-        }
+        yield *this.objs.all(reverse);
     }
 
     *getAllLocsSafe(): IterableIterator<Loc> {
-        for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Loc[] | undefined = this.locs[index];
-            if (locs) {
-                for (let i: number = 0; i < locs.length; i++) {
-                    const loc: Loc = locs[i];
-                    if (loc.checkLifeCycle(World.currentTick)) {
-                        yield loc;
-                    }
-                }
+        for (const loc of this.locs.all()) {
+            if (loc.checkLifeCycle(World.currentTick)) {
+                yield loc;
             }
         }
     }
 
     *getLocsSafe(coord: number): IterableIterator<Loc> {
-        const locs: Loc[] | undefined = this.locs[coord];
-        if (locs) {
-            for (let i: number = 0; i < locs.length; i++) {
-                const loc: Loc = locs[i];
-                if (loc.checkLifeCycle(World.currentTick)) {
-                    yield loc;
-                }
+        for (const loc of this.locs.stack(coord)) {
+            if (loc.checkLifeCycle(World.currentTick)) {
+                yield loc;
             }
         }
     }
 
     *getLocsUnsafe(coord: number): IterableIterator<Loc> {
-        const locs: Loc[] | undefined = this.locs[coord];
-        if (locs) {
-            for (let i: number = 0; i < locs.length; i++) {
-                yield locs[i];
-            }
-        }
+        yield *this.locs.stack(coord);
     }
 
     *getAllLocsUnsafe(reverse: boolean = false): IterableIterator<Loc> {
-        for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Loc[] | undefined = this.locs[index];
-            if (locs) {
-                if (reverse) {
-                    for (let i: number = locs.length - 1; i >= 0; i--) {
-                        yield locs[i];
-                    }
-                } else {
-                    for (let i: number = 0; i < locs.length; i++) {
-                        yield locs[i];
-                    }
-                }
-            }
-        }
+        yield *this.locs.all(reverse);
     }
 }
