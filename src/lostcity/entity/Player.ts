@@ -806,7 +806,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
