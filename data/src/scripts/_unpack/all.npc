@@ -5672,7 +5672,7 @@ param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
 
-[npc_272]
+[lucien_edge]
 name=Lucien
 desc=He walks with a slight limp.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5716,7 +5716,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
 // I used Thug npc sound and animation data with this npc
 
-[npc_273]
+[lucien_ardougne]
 name=Lucien
 desc=He walks with a slight limp.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r

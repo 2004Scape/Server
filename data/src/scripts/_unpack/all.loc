@@ -490,6 +490,8 @@ model=model_loc_52
 op1=Open
 active=yes
 blockrange=no
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
 
 [loc_95]
 name=Gate
@@ -499,6 +501,8 @@ op1=Open
 mirror=yes
 active=yes
 blockrange=no
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
 
 [loc_96]
 name=Stairs

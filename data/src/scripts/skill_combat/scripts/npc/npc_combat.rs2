@@ -125,6 +125,10 @@ if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
     return (false);
 }
 
+if(npc_type = lucien_edge) {
+    return (~lucien_attack);
+} 
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -152,6 +156,9 @@ if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
     mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
     return (false);
 }
+if(npc_type = lucien_edge) {
+    return (~lucien_attack);
+} 
 if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progress) ! npc_type) {
     if (%magearena_progress > ^mage_arena_complete) {
         mes("You have already proven yourself against Kolodion.");

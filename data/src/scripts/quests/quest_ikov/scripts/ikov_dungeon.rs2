@@ -1,1 +1,73 @@
 [oploc1,loc_1586] ~open_and_close_door2(loc_1588, ~check_axis_locactive(coord), coffin_open);
+
+[oploc1,loc_98]
+if(inv_totalcat(inv, light_source_lit) > 0) {
+    p_teleport(0_41_152_17_36);
+    return;    
+}
+p_teleport(0_41_152_17_13);
+p_delay(0);
+~mesbox("It's a bit dark down here!|You decide not to venture far.");
+
+[oploc1,loc_94] @open_ikov_northgate(^left);
+[oploc1,loc_95] @open_ikov_northgate(^right);
+
+[label,open_ikov_northgate](int $side)
+def_boolean $entering = ~check_axis_locactive(coord);
+if($entering = true | inv_total(worn, obj_86) > 0) {
+    ~open_and_close_double_door2($entering, $side, grate_open);
+    return;
+}
+mes("As you reach to open the door a great terror overcomes you!");
+anim(seq_846, 30);
+p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
+
+[oploc1,loc_89] @open_ikov_southgate;
+[oploc1,loc_90] @open_ikov_southgate;
+
+[label,open_ikov_southgate]
+~mesbox("The door won't open!");
+
+[proc,move_ikovtrigger](coord $coord)
+if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = true) {
+    mes("testing");
+    if (coordx(coord) = coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
+        if(coordx(last_coord) <= coordx(^ikovbridge_zone_lower)) {
+            p_teleport(movecoord(coord, -1, 0, 0));
+        } else {
+            p_teleport(movecoord(coord, 1, 0, 0));
+        }
+    }
+    p_stopaction;
+    queue(ikov_movebridge, 0);
+}
+
+[queue,ikov_movebridge]
+if(coordx(coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
+    ~forcemove(movecoord(coord, 3, 0, 0));
+} else {
+    ~forcemove(movecoord(coord, -3, 0, 0));
+}
+
+[oploc1,loc_96]
+p_teleport(0_41_153_30_17); // OSRS area here is a bit different, changed in late 2004 I believe
+
+[oplocu,loc_86]
+if(last_useitem = obj_83) {
+    ~mesbox("You fit the lever into the bracket.");
+    inv_del(inv, obj_83, 1);
+    loc_change(loc_87, 200); // 200t OSRS
+}
+
+[oploc1,loc_87]
+anim(human_leverdown, 0); 
+sound_synth(lever, 0, 0);
+loc_change(loc_88, 20);
+p_delay(0);
+sound_synth(locked, 0, 0);
+p_delay(0);
+sound_synth(locked, 0, 0);
+p_delay(0);
+sound_synth(locked, 0, 0);
+p_delay(0);
+~mesbox("You hear the clunking of some hidden machinery.");

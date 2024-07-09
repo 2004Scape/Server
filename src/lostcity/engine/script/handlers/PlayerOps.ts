@@ -991,6 +991,14 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_ANIMPROTECT]: checkedHandler(ProtectedActivePlayer, state => {
         state.activePlayer.animProtect = check(state.popInt(), NumberNotNull);
     }),
+
+    [ScriptOpcode.P_WEIGHT]: checkedHandler(ProtectedActivePlayer, state => {
+        state.pushInt(state.activePlayer.runweight);
+    }),
+
+    [ScriptOpcode.LAST_COORD]: checkedHandler(ActivePlayer, state => {
+        state.pushInt(Position.packCoord(state.activePlayer.level, state.activePlayer.lastX, state.activePlayer.lastZ));
+    }),
 };
 
 /**
