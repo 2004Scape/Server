@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { Socket } from 'net';
 import { WebSocket } from 'ws';
 
@@ -17,7 +16,7 @@ export default class ClientSocket {
     remoteAddress: string;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId = randomUUID();
+    uniqueId: string;
 
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;
@@ -36,7 +35,8 @@ export default class ClientSocket {
 
     player: NetworkPlayer | null = null;
 
-    constructor(socket: Socket | WebSocket | null, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
+    constructor(uniqueId: string, socket: Socket | WebSocket | null, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
+        this.uniqueId = uniqueId;
         this.socket = socket;
         this.remoteAddress = remoteAddress;
         this.type = type;
@@ -52,43 +52,58 @@ export default class ClientSocket {
     }
 
     send(data: Uint8Array) {
-        if (!this.socket) {
-            return;
-        }
+        if (typeof self !== 'undefined') {
+            this.totalBytesWritten += data.length;
+            self.postMessage(data);
+        } else {
+            if (!this.socket) {
+                return;
+            }
 
-        this.totalBytesWritten += data.length;
-        if (this.isTCP()) {
-            (this.socket as Socket).write(data);
-        } else if (this.isWebSocket()) {
-            (this.socket as WebSocket).send(data);
+            this.totalBytesWritten += data.length;
+            if (this.isTCP()) {
+                (this.socket as Socket).write(data);
+            } else if (this.isWebSocket()) {
+                (this.socket as WebSocket).send(data);
+            }
         }
     }
 
     // close the connection gracefully
     close() {
-        if (!this.socket) {
-            return;
-        }
-
-        setTimeout(() => {
-            if (this.isTCP()) {
-                (this.socket as Socket).end();
-            } else if (this.isWebSocket()) {
-                (this.socket as WebSocket).close();
+        if (typeof self !== 'undefined') {
+            setTimeout(() => {
+                self.close();
+            }, 100);
+        } else {
+            if (!this.socket) {
+                return;
             }
-        }, 100);
+
+            setTimeout(() => {
+                if (this.isTCP()) {
+                    (this.socket as Socket).end();
+                } else if (this.isWebSocket()) {
+                    (this.socket as WebSocket).close();
+                }
+            }, 100);
+        }
     }
 
     // terminate the connection immediately
     terminate() {
-        if (!this.socket) {
-            return;
-        }
+        if (typeof self !== 'undefined') {
+            self.close();
+        } else {
+            if (!this.socket) {
+                return;
+            }
 
-        if (this.isTCP()) {
-            (this.socket as Socket).destroy();
-        } else if (this.isWebSocket()) {
-            (this.socket as WebSocket).terminate();
+            if (this.isTCP()) {
+                (this.socket as Socket).destroy();
+            } else if (this.isWebSocket()) {
+                (this.socket as WebSocket).terminate();
+            }
         }
     }
 

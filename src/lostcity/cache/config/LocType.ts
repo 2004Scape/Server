@@ -11,18 +11,33 @@ export default class LocType extends ConfigType {
     static configs: LocType[] = [];
 
     static load(dir: string) {
-        LocType.configNames = new Map();
-        LocType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/loc.dat`)) {
             console.log('Warning: No loc.dat found.');
             return;
         }
 
         const server = Packet.load(`${dir}/server/loc.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+        
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/loc.dat`)).ok) {
+            console.log('Warning: No loc.dat found.');
+            return;
+        }
+        const server = await Packet.loadAsync(`${dir}/server/loc.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        LocType.configNames = new Map();
+        LocType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('loc.dat')!;
         client.pos = 2;
 

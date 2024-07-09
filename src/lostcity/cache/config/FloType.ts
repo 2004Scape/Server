@@ -10,18 +10,32 @@ export default class FloType extends ConfigType {
     static configs: FloType[] = [];
 
     static load(dir: string) {
-        FloType.configNames = new Map();
-        FloType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/flo.dat`)) {
             console.log('Warning: No flo.dat found.');
             return;
         }
 
         const server = Packet.load(`${dir}/server/flo.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/flo.dat`)).ok) {
+            console.log('Warning: No flo.dat found.');
+            return;
+        }
+        const server = await Packet.loadAsync(`${dir}/server/flo.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        FloType.configNames = new Map();
+        FloType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('flo.dat')!;
         client.pos = 2;
 

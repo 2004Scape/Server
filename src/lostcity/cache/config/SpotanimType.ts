@@ -10,18 +10,33 @@ export default class SpotanimType extends ConfigType {
     private static configs: SpotanimType[] = [];
 
     static load(dir: string) {
-        SpotanimType.configNames = new Map();
-        SpotanimType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/spotanim.dat`)) {
             console.log('Warning: No spotanim.dat found.');
             return;
         }
 
         const server = Packet.load(`${dir}/server/spotanim.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/spotanim.dat`)).ok) {
+            console.log('Warning: No spotanim.dat found.');
+            return;
+        }
+
+        const server = await Packet.loadAsync(`${dir}/server/spotanim.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        SpotanimType.configNames = new Map();
+        SpotanimType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('spotanim.dat')!;
         client.pos = 2;
 
