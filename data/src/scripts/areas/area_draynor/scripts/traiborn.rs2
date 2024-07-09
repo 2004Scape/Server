@@ -49,7 +49,7 @@ if ($option = 1) {
     ~chatplayer("<p,neutral>Teach me to be a mighty and powerful wizard.");
     @traiborn_teach_me;
 } else {
-    ~chatplayer("<p,neutral>I need to get a key given to you by Sir Prysin");
+    ~chatplayer("<p,neutral>I need to get a key given to you by Sir Prysin.");
     ~chatnpc("<p,confused>Sir Prysin? Who's that? What would I want his key for?");
     def_int $option_key = ~p_choice3("He told me you were looking after it for him.", 1, "He's one of the King's knights.", 2, "Well, have you got any keys knocking around?", 3);
 
@@ -125,7 +125,7 @@ if ($option = 1) {
 
 [label,traiborn_mad]
 ~chatplayer("<p,happy>They're right, you are mad.");
-~chatnpc("<p,sad>That's a pity. I thought maybe there were winding me up.");
+~chatnpc("<p,sad>That's a pity. I thought maybe they were winding me up.");
 
 [label,demon_slayer_traiborn_keys_around]
 ~chatplayer("<p,neutral>Well, have you got any keys knocking around?");
@@ -137,7 +137,7 @@ if ($option = 1) {
 
 def_int $option = ~p_choice2(" Hmm, that's too bad. I really need that key.", 1, "I'll get the bones for you.", 2);
 if ($option = 1) {
-    ~chatplayer("<p,sad>Hmm, that's too bad. I really need that key");
+    ~chatplayer("<p,sad>Hmm, that's too bad. I really need that key.");
     ~chatnpc("<p,neutral>Ahh well, sorry I couldn't be any more help.");
 } else {
     ~chatplayer("<p,neutral>I'll help get the bones for you.");
