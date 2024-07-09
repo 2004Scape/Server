@@ -1,5 +1,5 @@
 [debugproc,addobj]
-if (map_localdev = true) {
+if (map_production = true) {
     return;
 }
 if_close;
@@ -11,11 +11,8 @@ if (p_finduid(uid) = true) {
 }
 
 [debugproc,addobj2](int $size)
-if (map_localdev = true) {
+if (map_production = true) {
     return;
-}
-if (p_finduid(uid) = false) {
-    @please_finish;
 }
 
 def_int $half = calc(($size / 2) * -1);
@@ -25,9 +22,9 @@ while ($x < $size) {
     def_int $z = 0;
     while ($z < $size) {
         if (random(2) = 0) {
-            obj_add(movecoord(coord, calc($half + $x), 0, calc($half + $z)), ~cracker_partyhat, 1, 30);
+            obj_addall(movecoord(coord, calc($half + $x), 0, calc($half + $z)), ~cracker_partyhat, 1, 30);
         } else {
-            obj_add(movecoord(coord, calc($half + $x), 0, calc($half + $z)), ~cracker_other, 30);
+            obj_addall(movecoord(coord, calc($half + $x), 0, calc($half + $z)), ~cracker_other, 30);
         }
         $z = calc($z + 1);
     }

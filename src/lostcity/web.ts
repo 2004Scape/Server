@@ -20,7 +20,7 @@ MIME_TYPES.set('.sf2', 'application/octet-stream');
 // we don't need/want a full blown website or API on the game server
 const web = http.createServer(async (req, res) => {
     try {
-        if (!Environment.SKIP_CORS) {
+        if (Environment.WEB_CORS) {
             res.setHeader('Access-Control-Allow-Origin', '*');
         }
 
@@ -69,11 +69,11 @@ const web = http.createServer(async (req, res) => {
             res.writeHead(200);
             res.end(await fsp.readFile('data/pack/client/sounds'));
         } else if (url.pathname === '/') {
-            if (Environment.LOCAL_DEV) {
-                res.writeHead(302, { Location: '/rs2.cgi?lowmem=0&plugin=0' });
+            if (Environment.NODE_PRODUCTION) {
+                res.writeHead(404);
                 res.end();
             } else {
-                res.writeHead(404);
+                res.writeHead(302, { Location: '/rs2.cgi?lowmem=0&plugin=0' });
                 res.end();
             }
         } else if (url.pathname === '/rs2.cgi') {
@@ -87,10 +87,10 @@ const web = http.createServer(async (req, res) => {
                 res.writeHead(200);
                 res.end(await ejs.renderFile('view/teavmclient.ejs', {
                     plugin,
-                    nodeid: Environment.WORLD_ID + 9,
-                    portoff: Environment.GAME_PORT - 43594,
+                    nodeid: Environment.NODE_ID,
+                    portoff: Environment.NODE_PORT - 43594,
                     lowmem: lowmem ? 'lowmem' : 'highmem',
-                    members: Environment.MEMBERS_WORLD ? 'members' : 'free'
+                    members: Environment.NODE_MEMBERS ? 'members' : 'free'
                 }));
             } else if (plugin === 2) {
                 // plugin 2 - java applet
@@ -98,10 +98,10 @@ const web = http.createServer(async (req, res) => {
                 res.writeHead(200);
                 res.end(await ejs.renderFile('view/javaclient.ejs', {
                     plugin,
-                    nodeid: Environment.WORLD_ID + 9,
-                    portoff: Environment.GAME_PORT - 43594,
+                    nodeid: Environment.NODE_ID,
+                    portoff: Environment.NODE_PORT - 43594,
                     lowmem,
-                    members: Environment.MEMBERS_WORLD
+                    members: Environment.NODE_MEMBERS
                 }));
             } else if (plugin === 3) {
                 // plugin 3 - unsigned java applet
@@ -109,10 +109,10 @@ const web = http.createServer(async (req, res) => {
                 res.writeHead(200);
                 res.end(await ejs.renderFile('view/javaclientunsigned.ejs', {
                     plugin,
-                    nodeid: Environment.WORLD_ID + 9,
-                    portoff: Environment.GAME_PORT - 43594,
+                    nodeid: Environment.NODE_ID,
+                    portoff: Environment.NODE_PORT - 43594,
                     lowmem,
-                    members: Environment.MEMBERS_WORLD
+                    members: Environment.NODE_MEMBERS
                 }));
             } else {
                 // plugin 0 / default - typescript webclient
@@ -120,10 +120,10 @@ const web = http.createServer(async (req, res) => {
                 res.writeHead(200);
                 res.end(await ejs.renderFile('view/tsclient.ejs', {
                     plugin,
-                    nodeid: Environment.WORLD_ID + 9,
-                    portoff: Environment.GAME_PORT - 43594,
+                    nodeid: Environment.NODE_ID,
+                    portoff: Environment.NODE_PORT - 43594,
                     lowmem,
-                    members: Environment.MEMBERS_WORLD
+                    members: Environment.NODE_MEMBERS
                 }));
             }
         } else if (fs.existsSync('public' + url.pathname)) {

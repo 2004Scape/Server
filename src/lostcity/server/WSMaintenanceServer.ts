@@ -27,7 +27,7 @@ export default class WSServer {
     wss: WebSocketServer | null = null;
 
     start() {
-        const port = (Environment.GAME_PORT as number) + 1;
+        const port = (Environment.NODE_PORT as number) + 1;
 
         this.wss = new WebSocketServer({ port, host: '0.0.0.0' }, () => {
             //console.log(`[WSMaintenance]: Listening on port ${port}`);

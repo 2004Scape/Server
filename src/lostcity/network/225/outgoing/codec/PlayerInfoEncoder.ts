@@ -128,7 +128,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private writeNewPlayers(bitBlock: Packet, message: PlayerInfo): void {
         const buildArea: BuildArea = message.buildArea;
         for (const other of buildArea.getNearbyPlayers(message.uid, message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfo: boolean = !buildArea.hasAppearance(other.pid, other.appearanceHashCode);
+            const extendedInfo: boolean = !buildArea.hasAppearance(other.pid, other.lastAppearance);
 
             const updateSize: number = extendedInfo ? this.calculateUpdateSize(other, message, false, true) : 0;
             if ((bitBlock.bitPos + PlayerInfoEncoder.BITS_NEW + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
@@ -175,7 +175,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             mask &= ~Player.CHAT;
         }
 
-        if (message.buildArea.hasAppearance(player.pid, player.appearanceHashCode)) {
+        if (message.buildArea.hasAppearance(player.pid, player.lastAppearance)) {
             mask &= ~Player.APPEARANCE;
         }
 
@@ -187,7 +187,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         if (mask & Player.APPEARANCE) {
             out.p1(player.appearance!.length);
             out.pdata(player.appearance!, 0, player.appearance!.length);
-            message.buildArea.saveAppearance(player.pid, player.appearanceHashCode);
+            message.buildArea.saveAppearance(player.pid, player.lastAppearance);
         }
 
         if (mask & Player.ANIM) {
@@ -281,7 +281,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             mask &= ~Player.CHAT;
         }
 
-        if (message.buildArea.hasAppearance(player.pid, player.appearanceHashCode)) {
+        if (message.buildArea.hasAppearance(player.pid, player.lastAppearance)) {
             mask &= ~Player.APPEARANCE;
         }
 

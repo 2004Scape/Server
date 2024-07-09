@@ -306,12 +306,12 @@ class World {
             type: 'reset'
         });
 
-        if (Environment.LOCAL_DEV) {
+        if (!Environment.NODE_PRODUCTION) {
             this.startDevWatcher();
 
             // console.time('checker');
             // todo: this check takes me 300ms on startup! but it saves double building fresh setups
-            if (Environment.BUILD_ON_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
+            if (Environment.BUILD_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
                 this.devThread!.postMessage({
                     type: 'pack'
                 });
@@ -320,9 +320,9 @@ class World {
         }
 
         if (Environment.WEB_PORT === 80) {
-            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP));
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
         } else {
-            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://' + Environment.PUBLIC_IP + ':' + Environment.WEB_PORT));
+            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
         }
 
         if (startCycle) {
@@ -635,12 +635,12 @@ class World {
                     player.mask |= Player.FACE_ENTITY;
                 }
 
-                if (player.opcalled && (player.userPath.length === 0 || !Environment.CLIENT_PATHFINDER)) {
+                if (player.opcalled && (player.userPath.length === 0 || !Environment.NODE_CLIENT_ROUTEFINDER)) {
                     player.pathToTarget();
                     continue;
                 }
 
-                player.pathToMoveClick(player.userPath, !Environment.CLIENT_PATHFINDER);
+                player.pathToMoveClick(player.userPath, !Environment.NODE_CLIENT_ROUTEFINDER);
             }
 
             if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
@@ -748,7 +748,7 @@ class World {
                 if (this.shutdownTick < this.currentTick) {
                     // request logout on socket idle after 45 seconds (this may be 16 *ticks* in osrs!)
                     // increased timeout for compatibility with old PCs that take ages to load
-                    if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_IDLE_TICKS) {
+                    if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_IDLE_TICKS) {
                         player.logoutRequested = true;
                     }
                 }
@@ -768,7 +768,7 @@ class World {
     private async processLogouts(): Promise<void> {
         const start: number = Date.now();
         for (const player of this.players) {
-            if (!Environment.NO_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_LOGOUT_TICKS) {
+            if (Environment.NODE_SOCKET_TIMEOUT && this.currentTick - player.lastResponse >= World.TIMEOUT_LOGOUT_TICKS) {
                 // remove after 60 seconds
                 player.queue.clear();
                 player.weakQueue.clear();
@@ -844,11 +844,7 @@ class World {
             player.tele = true;
 
             this.getZone(player.x, player.z, player.level).enter(player);
-
-            if (!Environment.CLIRUNNER) {
-                // todo: check response from login script?
-                player.onLogin();
-            }
+            player.onLogin(); // todo: check response from login script?
 
             if (this.shutdownTick > -1) {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));

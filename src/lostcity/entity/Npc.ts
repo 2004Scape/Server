@@ -247,6 +247,7 @@ export default class Npc extends PathingEntity {
 
     setTimer(interval: number) {
         this.timerInterval = interval;
+        this.timerClock = 0;
     }
 
     executeScript(script: ScriptState) {
@@ -906,5 +907,8 @@ export default class Npc extends PathingEntity {
         this.type = type;
         this.mask |= Npc.CHANGE_TYPE;
         this.uid = (type << 16) | this.nid;
+
+        const npcType: NpcType = NpcType.get(type);
+        this.setTimer(npcType.timer);
     }
 }

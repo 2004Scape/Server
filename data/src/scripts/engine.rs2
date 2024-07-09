@@ -487,7 +487,7 @@
 
 // Debug ops (10000-11000)
 [command,error](string $text)
-[command,map_localdev]()(boolean)
+[command,map_production]()(boolean)
 [command,map_lastclock]()(int)
 [command,map_lastworld]()(int)
 [command,map_lastclientin]()(int)

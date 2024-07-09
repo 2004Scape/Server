@@ -14,7 +14,7 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
             return false;
         }
 
-        if (Environment.CLIENT_PATHFINDER) {
+        if (Environment.NODE_CLIENT_ROUTEFINDER) {
             player.userPath = [];
 
             for (let i = 0; i < message.path.length; i++) {

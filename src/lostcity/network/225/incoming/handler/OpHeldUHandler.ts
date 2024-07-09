@@ -66,7 +66,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         const objType = ObjType.get(player.lastItem);
         const useObjType = ObjType.get(player.lastUseItem);
 
-        if ((objType.members || useObjType.members) && !Environment.MEMBERS_WORLD) {
+        if ((objType.members || useObjType.members) && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
             return false;
@@ -102,7 +102,7 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         if (script) {
             player.executeScript(ScriptRunner.init(script, player), true);
         } else {
-            if (Environment.LOCAL_DEV) {
+            if (Environment.NODE_DEBUG) {
                 player.messageGame(`No trigger for [opheldu,${objType.debugname}]`);
             }
 

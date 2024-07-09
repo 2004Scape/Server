@@ -43,7 +43,7 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.MAP_MEMBERS]: state => {
-        state.pushInt(Environment.MEMBERS_WORLD ? 1 : 0);
+        state.pushInt(Environment.NODE_MEMBERS ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_PLAYERCOUNT]: state => {

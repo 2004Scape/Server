@@ -46,7 +46,7 @@ if (~pvp_hit_roll(%damagetype) = true) {
 def_int $delay = ~pvp_ranged_use_weapon($rhand, $ammo);
 anim(%com_attackanim, 0);
 sound_synth(%com_attacksound, 0, 0);
-.sound_synth(.%com_attacksound, 0, 0);
+.sound_synth(%com_attacksound, 0, 0);
 
 .queue(pvp_retaliate, calc($delay / 30), uid);
 .queue(pvp_damage, calc($delay / 30), $damage);

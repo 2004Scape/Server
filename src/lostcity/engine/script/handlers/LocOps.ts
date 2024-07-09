@@ -76,21 +76,16 @@ const LocOps: CommandHandlers = {
         // World.addLoc(loc, duration);
 
         const {level, x, z, angle, shape} = state.activeLoc;
+        const created: Loc = new Loc(level, x, z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, shape, angle);
         const locs: IterableIterator<Loc> = World.getZone(x, z, level).getLocsUnsafe(Position.packZoneCoord(x, z));
-        let found: Loc | null = null;
         for (const loc of locs) {
-            if (loc.type === locType.id && loc.angle === angle && loc.shape === shape && loc.lifecycle === EntityLifeCycle.RESPAWN) {
-                found = loc;
-                World.addLoc(loc, 0);
+            if (loc !== created && loc.angle === angle && loc.shape === shape) {
+                World.removeLoc(loc, duration);
                 break;
             }
         }
-        if (!found) {
-            found = new Loc(level, x, z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, shape, angle);
-            World.addLoc(found, duration);
-        }
-
-        state.activeLoc = found;
+        World.addLoc(created, duration);
+        state.activeLoc = created;
         state.pointerAdd(ActiveLoc[state.intOperand]);
     }),
 

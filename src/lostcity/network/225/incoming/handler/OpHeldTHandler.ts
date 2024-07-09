@@ -50,7 +50,7 @@ export default class OpHeldTHandler extends MessageHandler<OpHeldT> {
         if (script) {
             player.executeScript(ScriptRunner.init(script, player), true);
         } else {
-            if (Environment.LOCAL_DEV) {
+            if (Environment.NODE_DEBUG) {
                 player.messageGame(`No trigger for [opheldt,${spellCom.comName}]`);
             }
 

@@ -58,6 +58,8 @@ if (.finduid(%duelpartner) = true) {
     }
 
     softtimer(duel_arena_start_3, 3); // todo: confirm these timings
+
+    midi_jingle(^duel_start_jingle, ^duel_start_jingle_millis);
 }
 
 

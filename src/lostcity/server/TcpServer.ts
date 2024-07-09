@@ -66,8 +66,8 @@ export default class TcpServer {
             });
         });
 
-        this.tcp.listen(Environment.GAME_PORT as number, '0.0.0.0', () => {
-            //console.log(`[World]: Listening on port ${Environment.GAME_PORT}`);
+        this.tcp.listen(Environment.NODE_PORT as number, '0.0.0.0', () => {
+            //console.log(`[World]: Listening on port ${Environment.NODE_PORT}`);
         });
     }
 }

@@ -56,10 +56,8 @@ export default class InvButtonHandler extends MessageHandler<InvButton> {
             const root = Component.get(com.rootLayer);
 
             player.executeScript(ScriptRunner.init(script, player), root.overlay == false);
-        } else {
-            if (Environment.LOCAL_DEV) {
-                player.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${com.comName}]`);
-            }
+        } else if (Environment.NODE_DEBUG) {
+            player.messageGame(`No trigger for [${ServerTriggerType.toString(trigger)},${com.comName}]`);
         }
 
         return true;

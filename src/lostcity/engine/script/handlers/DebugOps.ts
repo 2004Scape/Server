@@ -10,8 +10,8 @@ const DebugOps: CommandHandlers = {
         throw new Error(state.popString());
     },
 
-    [ScriptOpcode.MAP_LOCALDEV]: state => {
-        state.pushInt(Environment.LOCAL_DEV ? 1 : 0);
+    [ScriptOpcode.MAP_PRODUCTION]: state => {
+        state.pushInt(Environment.NODE_PRODUCTION ? 1 : 0);
     },
 
     [ScriptOpcode.MAP_LASTCLOCK]: state => {

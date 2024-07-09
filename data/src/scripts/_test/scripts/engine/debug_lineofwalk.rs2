@@ -1,5 +1,5 @@
 [debugproc,lineofwalk]
-if (map_localdev = false) {
+if (map_production = true) {
     return;
 }
 
