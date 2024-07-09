@@ -226,6 +226,7 @@
 [command,setskincolour](int $skin_colour)
 [command,p_animprotect](int $toggle)
 [command,.p_animprotect](int $toggle)
+[command,runenergy]()(int)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)
