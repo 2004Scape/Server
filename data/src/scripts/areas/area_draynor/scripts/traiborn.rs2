@@ -76,7 +76,7 @@ if ($option = 1) {
 
 [label,demon_slayer_traiborn_lost_key]
 ~chatplayer("<p,sad>I've lost the key you gave to me.");
-~chatnpc("<p,confused>Yes I know, it was returned to me. If you want it back you're going to have to collect another 25 sets of bones");
+~chatnpc("<p,confused>Yes I know, it was returned to me. If you want it back you're going to have to collect another 25 sets of bones.");
 ~set_demon_progress(3);
 
 [label,traiborn_teach_me]
