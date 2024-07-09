@@ -236,7 +236,7 @@ export default class Player extends PathingEntity {
     combatLevel: number = 3;
     headicons: number = 0;
     appearance: Uint8Array | null = null; // cached appearance
-    appearanceHashCode: bigint = 0n;
+    lastAppearance: number = 0;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -1070,11 +1070,9 @@ export default class Player extends PathingEntity {
             }
         }
 
-        const parts: bigint[] = [];
         for (let slot = 0; slot < 12; slot++) {
             if (skippedSlots.indexOf(slot) !== -1) {
                 stream.p1(0);
-                parts[slot] = 0n;
                 continue;
             }
 
@@ -1083,14 +1081,11 @@ export default class Player extends PathingEntity {
                 const appearanceValue = this.getAppearanceInSlot(slot);
                 if (appearanceValue < 1) {
                     stream.p1(0);
-                    parts[slot] = 0n;
                 } else {
                     stream.p2(appearanceValue);
-                    parts[slot] = BigInt(appearanceValue);
                 }
             } else {
                 stream.p2(0x200 + equip.id);
-                parts[slot] = BigInt(0x200 + equip.id);
             }
         }
 
@@ -1116,29 +1111,7 @@ export default class Player extends PathingEntity {
         stream.gdata(this.appearance, 0, this.appearance.length);
         stream.release();
 
-        this.appearanceHashCode = 0n;
-        for (let part: number = 0; part < 12; part++) {
-            this.appearanceHashCode <<= 0x4n;
-            if (parts[part] >= 256) {
-                this.appearanceHashCode += parts[part] - 256n;
-            }
-        }
-        if (parts[0] >= 256) {
-            this.appearanceHashCode += (parts[0] - 256n) >> 4n;
-        }
-        if (parts[1] >= 256) {
-            this.appearanceHashCode += (parts[1] - 256n) >> 8n;
-        }
-        for (let part: number = 0; part < 5; part++) {
-            this.appearanceHashCode <<= 0x3n;
-            this.appearanceHashCode += BigInt(this.colors[part]);
-        }
-        this.appearanceHashCode <<= 0x1n;
-        this.appearanceHashCode += BigInt(this.gender);
-        this.appearanceHashCode <<= 0x1n;
-        this.appearanceHashCode += BigInt(this.headicons);
-        this.appearanceHashCode <<= 0x1n;
-        this.appearanceHashCode += BigInt(this.combatLevel);
+        this.lastAppearance = World.currentTick;
     }
 
     // ----

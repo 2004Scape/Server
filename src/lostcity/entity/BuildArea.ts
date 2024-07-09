@@ -22,7 +22,7 @@ export default class BuildArea {
     readonly loadedZones: Set<number>;
     readonly activeZones: Set<number>;
     readonly extendedInfo: Set<ExtendedInfo>;
-    readonly appearances: Map<number, bigint>;
+    readonly appearances: Map<number, number>;
 
     // runtime
     forceViewDistance: boolean = false;
@@ -63,6 +63,18 @@ export default class BuildArea {
         this.extendedInfo.clear();
     }
 
+    hasAppearance(pid: number, tick: number): boolean {
+        const appearance: number | undefined = this.appearances.get(pid);
+        if (typeof appearance === 'undefined') {
+            return false;
+        }
+        return appearance === tick;
+    }
+
+    saveAppearance(pid: number, tick: number): void {
+        this.appearances.set(pid, tick);
+    }
+
     *getNearbyPlayers(uid: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Player> {
         players: for (const zoneIndex of this.proximitySort(x, z, this.activeZones)) {
             for (const other of this.getNearby(World.getZoneIndex(zoneIndex).getAllPlayersSafe(), x, z, originX, originZ, this.viewDistance)) {
@@ -92,18 +104,6 @@ export default class BuildArea {
                 yield npc;
             }
         }
-    }
-
-    hasAppearance(pid: number, hashCode: bigint): boolean {
-        const appearance: bigint | undefined = this.appearances.get(pid);
-        if (typeof appearance === 'undefined') {
-            return false;
-        }
-        return appearance === hashCode;
-    }
-
-    saveAppearance(pid: number, hashCode: bigint): void {
-        this.appearances.set(pid, hashCode);
     }
 
     private *getNearby<T extends Entity>(entities: IterableIterator<T>, x: number, z: number, originX: number, originZ: number, distance: number): IterableIterator<T> {
