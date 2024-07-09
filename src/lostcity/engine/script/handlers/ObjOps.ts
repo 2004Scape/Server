@@ -23,6 +23,7 @@ import {
     ObjTypeValid,
     ParamTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
+import Environment from '#lostcity/util/Environment.js';
 
 const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: state => {
@@ -39,6 +40,10 @@ const ObjOps: CommandHandlers = {
 
         if (objType.dummyitem !== 0) {
             throw new Error(`attempted to add dummy item: ${objType.debugname}`);
+        }
+
+        if (objType.members && !Environment.NODE_MEMBERS) {
+            return;
         }
 
         if (!objType.stackable || count === 1) {
@@ -72,6 +77,10 @@ const ObjOps: CommandHandlers = {
 
         if (objType.dummyitem !== 0) {
             throw new Error(`attempted to add dummy item: ${objType.debugname}`);
+        }
+
+        if (objType.members && !Environment.NODE_MEMBERS) {
+            return;
         }
 
         if (!objType.stackable || count === 1) {
