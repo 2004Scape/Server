@@ -107,8 +107,8 @@
 106=newcomers_pos
 107=priest_progress
 108=attackstyle_magic
-109=varp_109
-110=varp_110
+109=trawler
+110=trawler_catch
 111=tree_progress
 112=itgronigen_progress
 113=keepdoor_unlocked
@@ -206,7 +206,7 @@
 205=macro_event_uid
 206=macro_whirlpool_counter
 207=macro_gas_counter
-208=varp_208
+208=macro_ent_counter
 209=varp_209
 210=smithing_bars
 211=smithing_level

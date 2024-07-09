@@ -59,10 +59,10 @@ switch_int($damagestyle) {
 }
 
 // returns the swing anim to use for this weapon and selected style.
-[proc,combat_swing_anim_and_synth](obj $weapon, int $damagetype)(seq, synth)
+[proc,combat_swing_anim_and_synth](obj $weapon, int $damagetype, int $damagestyle, int $attackstyle)(seq, synth)
 // unarmed
-if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
-    switch_int (%attackstyle) {
+if ($weapon = null | (map_members = false & oc_members($weapon) = true) | oc_category($weapon) = null) {
+    switch_int ($attackstyle) {
         case 0: return(human_unarmedpunch, unarmed_punch);
         case 1: return(human_unarmedkick, unarmed_kick);
         case 2: return(human_unarmedpunch, unarmed_punch);
@@ -70,7 +70,7 @@ if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
 }
 // manually handle scythe defensive
 if (oc_category($weapon) = weapon_scythe) {
-    if (%damagestyle = ^style_melee_defensive & $damagetype = ^slash_style) {
+    if ($damagestyle = ^style_melee_defensive & $damagetype = ^slash_style) {
         return(human_scythe_spin, oc_param($weapon, slash_sound));
     }
 }

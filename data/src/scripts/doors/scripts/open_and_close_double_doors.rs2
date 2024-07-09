@@ -13,14 +13,20 @@ def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
 
-$x, $z = ~door_open($angle, loc_shape);
+def_coord $opposite_coord = loc_coord;
+if ($side = ^left) {
+    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+} else if ($side = ^right) {
+    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+}
 
 // walk through door, but if entering, walk next to door and then through
+$x, $z = ~door_open($angle, loc_shape);
 def_coord $dest = $loc_coord;
 if ($entering = true) {
     // mes(~coord_tostring($loc_coord));
     // mes(~coord_tostring(coord));
-    if (coord ! $loc_coord) {
+    if (coord ! $loc_coord & coord ! $opposite_coord) {
         p_teleport($loc_coord);
         // initially thought p_delay(0); was the right speed.
         // but it seems to have buggy clipping; you move through too early
@@ -30,14 +36,12 @@ if ($entering = true) {
 }
 p_teleport($dest);
 
-def_coord $opposite_coord = loc_coord;
 if ($side = ^left) {
-    ~open_double_doors_left(2, double_door_open_and_close_right);
-    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+    ~open_double_doors_left(2, double_door_open_and_close_right, loc_param(open_sound));
 } else if ($side = ^right) {
-    ~open_double_doors_right(2, double_door_open_and_close_left);
-    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+    ~open_double_doors_right(2, double_door_open_and_close_left, loc_param(open_sound));
 }
+
 loc_add($opposite_coord, loc_83, $angle, $shape, 2);
 loc_add($loc_coord, loc_83, $angle, $shape, 2);
 // mes(~coord_tostring($opposite_coord));
@@ -46,49 +50,42 @@ loc_add($loc_coord, loc_83, $angle, $shape, 2);
 [proc,open_and_close_double_door2](boolean $entering, int $side, synth $sound)
 def_int $x;
 def_int $z;
+
 def_coord $loc_coord = loc_coord;
 def_int $angle = loc_angle;
 def_locshape $shape = loc_shape;
+
+def_coord $opposite_coord = loc_coord;
+if ($side = ^left) {
+    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
+} else if ($side = ^right) {
+    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
+}
+
+// walk through door, but if entering, walk next to door and then through
 $x, $z = ~door_open($angle, loc_shape);
-sound_synth($sound, 0, 0);
-def_coord $dest = loc_coord;
-if(~check_axis_locactive(coord) = true) {
-    if (~between_double_doors($side) = false) {
+if ($sound ! null) {
+    sound_synth($sound, 0, 0);
+}
+def_coord $dest = $loc_coord;
+if ($entering = true) {
+    // mes(~coord_tostring($loc_coord));
+    // mes(~coord_tostring(coord));
+    if (coord ! $loc_coord & coord ! $opposite_coord) {
         p_teleport($loc_coord);
+        // initially thought p_delay(0); was the right speed.
+        // but it seems to have buggy clipping; you move through too early
         p_delay(1);
     }
     $dest = movecoord($loc_coord, $x, 0, $z);
 }
 p_teleport($dest);
 
-def_coord $opposite_coord = loc_coord;
 if ($side = ^left) {
-    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
-    ~open_double_doors_left(2, double_door_open_and_close_right);
+    ~open_double_doors_left(2, double_door_open_and_close_right, null);
 } else if ($side = ^right) {
-    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
-    ~open_double_doors_right(2, double_door_open_and_close_left);
+    ~open_double_doors_right(2, double_door_open_and_close_left, null);
 }
-mes(~coord_tostring($opposite_coord));
+
 loc_add($opposite_coord, loc_83, $angle, $shape, 2);
 loc_add($loc_coord, loc_83, $angle, $shape, 2);
-
-[proc,between_double_doors](int $side)(boolean)
-def_coord $opposite_coord = loc_coord;
-if ($side = ^left) {
-    $opposite_coord = ~movecoord_loc_return(~door_close(loc_angle, loc_shape));
-} else if ($side = ^right) {
-    $opposite_coord = ~movecoord_loc_return(~multiply2(~door_close(loc_angle, loc_shape), -1));
-}
-if(loc_angle = ^loc_east | loc_angle = ^loc_west) {
-    if(coordz(coord) > min(coordz(loc_coord), coordz($opposite_coord))
-        | coordz(coord) < max(coordz(loc_coord), coordz($opposite_coord))) {
-            return (true);
-    }
-} else if(loc_angle = ^loc_east | loc_angle = ^loc_west) {
-    if(coordx(coord) > min(coordx(loc_coord), coordx($opposite_coord))
-    | coordx(coord) < max(coordx(loc_coord), coordx($opposite_coord))) {
-        return (true);
-    }
-}
-return (false);

@@ -1,46 +1,59 @@
 import 'dotenv/config';
-import {tryParseArray, tryParseBoolean, tryParseInt, tryParseString} from './TryParse.js';
+import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from './TryParse.js';
 
 export default {
-    PUBLIC_IP: tryParseString(process.env.PUBLIC_IP, 'localhost'),
-    WEB_PORT: tryParseInt(process.env.WEB_PORT, 80),
-    GAME_PORT: tryParseInt(process.env.GAME_PORT, 43594),
+    /// web server
+    WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' ? 80 : 8888),
+    WEB_CORS: tryParseBoolean(process.env.WEB_CORS, true),
 
+    /// game server
+    // world id - offset by 9, so 1 = 10, 2 = 11, etc
+    NODE_ID: tryParseInt(process.env.NODE_ID, 10),
+    NODE_PORT: tryParseInt(process.env.NODE_PORT, 43594),
+    // members content
+    NODE_MEMBERS: tryParseBoolean(process.env.NODE_MEMBERS, true),
+    // addxp multiplier
+    NODE_XPRATE: tryParseInt(process.env.NODE_XPRATE, 1),
+    // production mode!
+    NODE_PRODUCTION: tryParseBoolean(process.env.NODE_PRODUCTION, false),
+    // automatic shutdown time for production mode on sigint
+    NODE_KILLTIMER: tryParseInt(process.env.NODE_KILLTIMER, 50),
+    NODE_ALLOW_CHEATS: tryParseBoolean(process.env.NODE_ALLOW_CHEATS, true),
+    // development mode!
+    NODE_DEBUG: tryParseBoolean(process.env.NODE_DEBUG, true),
+    // measuring script execution
+    NODE_DEBUG_PROFILE: tryParseBoolean(process.env.NODE_DEBUG_PROFILE, false),
+    // *only* if no login server is running to authenticate accounts, this provides admin accs by username :)
+    NODE_STAFF: tryParseArray(process.env.NODE_STAFF?.split(','), ['pazaz']), // todo: add staffmodlevel to database
+    // no server routefinding until 2009
+    NODE_CLIENT_ROUTEFINDER: tryParseBoolean(process.env.NODE_CLIENT_ROUTEFINDER, true),
+    // controllable for bot testing
+    NODE_SOCKET_TIMEOUT: tryParseBoolean(process.env.NODE_SOCKET_TIMEOUT, true),
+
+    /// login server
     LOGIN_HOST: tryParseString(process.env.LOGIN_HOST, 'localhost'),
     LOGIN_PORT: tryParseInt(process.env.LOGIN_PORT, 43500),
     LOGIN_KEY: tryParseString(process.env.LOGIN_KEY, ''),
 
-    FRIEND_HOST: tryParseString(process.env.FRIEND_HOST, 'localhost'),
-    FRIEND_PORT: tryParseInt(process.env.FRIEND_PORT, 43501),
-    FRIEND_KEY: tryParseString(process.env.FRIEND_KEY, ''),
+    /// database
+    DB_HOST: tryParseString(process.env.DB_HOST, 'localhost'),
+    DB_USER: tryParseString(process.env.DB_USER, 'root'),
+    DB_PASS: tryParseString(process.env.DB_PASS, 'password'),
+    DB_NAME: tryParseString(process.env.DB_NAME, 'lostcity'),
 
-    WORLD_ID: tryParseInt(process.env.WORLD_ID, 0),
-    LOCAL_DEV: tryParseBoolean(process.env.LOCAL_DEV, true),
-    MEMBERS_WORLD: tryParseBoolean(process.env.MEMBERS_WORLD, true),
-    XP_MULTIPLIER: tryParseInt(process.env.XP_MULTIPLIER, 1),
-    SHUTDOWN_TIMER: tryParseInt(process.env.SHUTDOWN_TIMER, 50),
-
-    HTTPS_ENABLED: tryParseBoolean(process.env.HTTPS_ENABLED, false),
-    ADDRESS_SHOWPORT: tryParseBoolean(process.env.ADDRESS_SHOWPORT, true),
-    CLIRUNNER: tryParseBoolean(process.env.CLIRUNNER, false),
-    CI_MODE: tryParseBoolean(process.env.CI_MODE, false),
-    SKIP_CORS: tryParseBoolean(process.env.SKIP_CORS, false),
-
-    DB_HOST: tryParseString(process.env.DB_HOST, ''),
-    DB_USER: tryParseString(process.env.DB_USER, ''),
-    DB_PASS: tryParseString(process.env.DB_PASS, ''),
-    DB_NAME: tryParseString(process.env.DB_NAME, ''),
-
-    ADMIN_IP: tryParseString(process.env.ADMIN_IP, 'localhost'),
-
-    SKIP_CRC: tryParseBoolean(process.env.SKIP_CRC, false),
-    JAVA_PATH: tryParseString(process.env.JAVA_PATH, 'java'),
-    DATA_SRC_DIR: tryParseString(process.env.DATA_SRC_DIR, 'data/src'),
-    VALIDATE_PACK: tryParseBoolean(process.env.VALIDATE_PACK, true),
-    STRICT_FOLDERS: tryParseBoolean(process.env.STRICT_FOLDERS, true),
-    BUILD_ON_STARTUP: tryParseBoolean(process.env.BUILD_ON_STARTUP, true),
-    UPDATE_ON_STARTUP: tryParseBoolean(process.env.UPDATE_ON_STARTUP, true),
-
-    JMODS: tryParseArray(process.env.JMODS?.split(','), ['pazaz']),
-    CLIENT_PATHFINDER: tryParseBoolean(process.env.CLIENT_PATHFINDER, true),
+    /// development
+    // some users may not be able to change their system PATH for this project
+    BUILD_JAVA_PATH: tryParseString(process.env.BUILD_JAVA_PATH, 'java'),
+    // auto-build on startup
+    BUILD_STARTUP: tryParseBoolean(process.env.BUILD_STARTUP, true),
+    // auto-update compiler on startup
+    BUILD_STARTUP_UPDATE: tryParseBoolean(process.env.BUILD_STARTUP_UPDATE, true),
+    // used to check if we're producing the original cache without edits
+    BUILD_VERIFY: tryParseBoolean(process.env.BUILD_VERIFY, true),
+    // used to keep some semblance of sanity in our folder structure
+    BUILD_VERIFY_FOLDER: tryParseBoolean(process.env.BUILD_VERIFY_FOLDER, true),
+    // used for unpacking/custom development
+    BUILD_VERIFY_PACK: tryParseBoolean(process.env.BUILD_VERIFY_PACK, true),
+    // used for unpacking/custom development
+    BUILD_SRC_DIR: tryParseString(process.env.BUILD_SRC_DIR, 'data/src'),
 };

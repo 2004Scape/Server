@@ -1,24 +1,26 @@
 // timer is initiated on login, in scripts\player\scripts\global.rs2
 [timer,general_macro_events]
-if (~in_tutorial_island(coord) = true) {
-    // return before checking so random events are effectively "queued" for when the player leaves the tutorial
-    return;
-}
 // some general macro events use the %macro_event varp, so if multiple exist, it could cause issues
-if (afk_event = ^false | ~macro_event_general_active = true | %tutorial_progress < ^tutorial_complete) {
+if (~macro_event_general_active = true) {
     return;
 }
-// macro_event varp resets when a random event is due to spawn?
-// Just so the player isnt permanantly stuck at a certain %macro_event value
-if (%macro_event > 0) {
-    %macro_event = ^no_macro_event;
+if (~macro_event_area(coord) = false) { // return before checking so random events are effectively "queued" for when the player leaves a no macro event area
+    return;
 }
-// random events arent restricted in wildy?
-// https://youtu.be/uPKaH7yg4To?t=421
+if (afk_event = ^true) {
+    // macro_event varp resets when a random event is due to spawn?
+    // Just so the player isnt permanantly stuck at a certain %macro_event value
+    if (%macro_event > 0) {
+        %macro_event = ^no_macro_event;
+    }
+    // random events arent restricted in wildy?
+    // https://youtu.be/uPKaH7yg4To?t=421
 
-// Not restricted in banks: https://youtu.be/1Rz9Eg4ZHhA
+    // Not restricted in banks: https://youtu.be/1Rz9Eg4ZHhA
 
-~macro_event_general_spawn(~macro_event_set_random);
+    ~macro_event_general_spawn(~macro_event_set_random);
+}
+
 
 // this is called during:
 // - alching. Confirmed: https://youtu.be/2nqpZoHUjSc?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
@@ -32,7 +34,7 @@ if (%macro_event > 0) {
 // - smithing at furnace. Confirmed? https://youtu.be/a6NobmSGBYw
 // - crafting at furnace. Confirmed: https://youtu.be/7pS6s5rvvEY
 [proc,macro_event_general_spawn](int $event)
-// area check here, because stuff like bones and alching for example can spawn random events.
+// double check area here, because stuff like bones and alching for example can spawn random events.
 if (~macro_event_area(coord) = false) {
     return;
 }
@@ -53,7 +55,16 @@ switch_int ($event) {
 }
 
 [proc,macro_event_area](coord $coord)(boolean)
-if (~in_duel_arena($coord) = true | ~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+if (~in_duel_arena($coord) = true) {
+    return(false);
+}
+if (~inzone_coord_pair_table(gnomeball_zones, coord) = true) {
+    return(false);
+}
+if (~inzone_coord_pair_table(trawler_game_zones, $coord) = true | ~inzone_coord_pair_table(trawler_wreck_zones, $coord) = true) { // allowed on boat in pre-game https://youtu.be/7-gUR40Nr8M
+    return(false);
+}
+if (~in_tutorial_island($coord) = true) {
     return(false);
 }
 return(true);
@@ -110,9 +121,8 @@ p_delay(0);
 spotanim_map(small_smokepuff, coord, 124, 0);
 sound_synth(smokepuff2, 0, 0);
 //--
-p_telejump($teleport_coord);
-// TODO: Confirm this
-~teleport_anti_smuggle_checks;
+~p_telejump_safe($teleport_coord); // TODO: Confirm this
+
 
 [proc,macro_event_fail_scatter_inv]
 if (p_finduid(uid) = false) {

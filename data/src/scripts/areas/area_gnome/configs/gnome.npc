@@ -395,6 +395,7 @@ model2=model_2908_npc
 model3=model_2922_npc
 head1=model_19_npc_head
 wanderrange=1
+members=yes
 param=death_anim,midget_death
 param=death_sound,gnome_death
 

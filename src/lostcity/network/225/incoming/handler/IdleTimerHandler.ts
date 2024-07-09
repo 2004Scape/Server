@@ -5,7 +5,7 @@ import IdleTimer from '#lostcity/network/incoming/model/IdleTimer.js';
 
 export default class IdleTimerHandler extends MessageHandler<IdleTimer> {
     handle(_message: IdleTimer, player: Player): boolean {
-        if (!Environment.LOCAL_DEV) {
+        if (Environment.NODE_PRODUCTION) {
             player.logout();
             player.logoutRequested = true;
         }

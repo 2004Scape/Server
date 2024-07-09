@@ -10,7 +10,7 @@ import Player from '#lostcity/entity/Player.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
-import { Direction, Position } from '#lostcity/entity/Position.js';
+import {Direction, Position} from '#lostcity/entity/Position.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 
@@ -48,6 +48,7 @@ export default abstract class PathingEntity extends Entity {
     lastStepZ: number = -1;
     stepsTaken: number = 0;
     lastInt: number = -1; // resume_p_countdialog, ai_queue
+    lastCrawl: boolean = false;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
@@ -128,12 +129,22 @@ export default abstract class PathingEntity extends Entity {
      * Returns true if a step was taken and movement processed.
      */
     processMovement(): boolean {
-        if (!this.hasWaypoints()) {
+        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY || this.moveSpeed === MoveSpeed.INSTANT) {
             return false;
         }
-        if (this.moveSpeed !== MoveSpeed.STATIONARY && this.walkDir === -1) {
+
+        if (this.moveSpeed === MoveSpeed.CRAWL) {
+            this.lastCrawl = !this.lastCrawl;
+            if (this.lastCrawl && this.walkDir === -1) {
+                this.walkDir = this.validateAndAdvanceStep();
+            }
+            return true;
+        }
+
+        // either walk or run speed here.
+        if (this.walkDir === -1) {
             this.walkDir = this.validateAndAdvanceStep();
-            if (this.moveSpeed !== MoveSpeed.WALK && this.walkDir !== -1 && this.runDir === -1) {
+            if (this.moveSpeed === MoveSpeed.RUN && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
             }
         }

@@ -24,8 +24,6 @@ import Interaction from '#lostcity/entity/Interaction.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
-import Environment from '#lostcity/util/Environment.js';
-
 import {
     check,
     CoordValid,
@@ -95,18 +93,10 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, state => {
-        if (Environment.CLIRUNNER) {
-            return;
-        }
-
         World.removeNpc(state.activeNpc, check(state.activeNpc.type, NpcTypeValid).respawnrate);
     }),
 
     [ScriptOpcode.NPC_DELAY]: checkedHandler(ActiveNpc, state => {
-        if (Environment.CLIRUNNER) {
-            return;
-        }
-
         state.activeNpc.delay = state.popInt() + 1;
         state.execution = ScriptState.NPC_SUSPENDED;
     }),

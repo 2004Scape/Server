@@ -11,7 +11,6 @@ recol1d=29595
 weight=120g
 members=yes
 tradeable=yes
-param=cooking_range_only,1
 
 [bread_dough]
 name=Bread dough
@@ -25,7 +24,6 @@ model=model_2756_obj
 cost=4
 weight=600g
 tradeable=yes
-param=cooking_range_only,1
 
 [pitta_bread]
 name=Pitta bread

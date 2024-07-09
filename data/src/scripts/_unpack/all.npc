@@ -1128,8 +1128,10 @@ param=magicdefence,-4
 param=rangedefence,16
 param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
-// param=defend_anim,human_sword_defend2
+param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+// param=defend_sound,
+// osrs defend sound blade3_mail
 
 [wyson]
 name=Wyson the gardener
@@ -1160,7 +1162,7 @@ param=damagetype,^stab_style
 param=attack_anim,human_farmersfork_stab
 param=defend_anim,human_farmersfork_defend
 param=attack_sound,staff_stab
-// param=attack_sound,farmersfork_stab      original?
+// osrs attack sound farmersfork_stab
 
 [npc_38]
 name=Shipyard worker
@@ -4225,7 +4227,6 @@ recol1d=21140
 recol2s=31649
 recol2d=4428
 model1=model_2850_npc
-moverestrict=blocked+normal
 param=death_anim,bird_death
 param=death_sound,bird_death
 
@@ -4238,7 +4239,6 @@ readyanim=bird_ready
 vislevel=hide
 minimap=no
 model1=model_2850_npc
-moverestrict=blocked+normal
 param=death_anim,bird_death
 param=death_sound,bird_death
 
@@ -8030,6 +8030,8 @@ resizeh=80
 resizev=80
 model1=model_3010_npc
 model2=model_3006_obj
+members=yes
+param=attack_anim,cat_attack
 param=death_anim,cat_death
 
 [npc_760]
@@ -8174,6 +8176,7 @@ op1=Search
 minimap=no
 model1=model_loc_0_8
 wanderrange=0
+members=yes
 moverestrict=nomove
 blockwalk=all
 
@@ -8446,6 +8449,7 @@ model5=model_428_idk
 model6=model_358_idk
 model7=model_444_obj_wear
 head1=model_113_idk_head
+members=yes
 param=death_sound,female_death
 
 [npc_781]
@@ -8468,6 +8472,7 @@ model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
 wanderrange=2
+members=yes
 param=death_anim,midget_death
 
 [npc_782]
@@ -8486,6 +8491,7 @@ model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
 moverestrict=indoors
+members=yes
 param=death_anim,midget_death
 
 [npc_784]
@@ -8504,6 +8510,7 @@ model2=model_2909_npc
 model3=model_2918_npc
 head1=model_139_npc_head
 moverestrict=indoors
+members=yes
 param=death_anim,midget_death
 
 [npc_788]
@@ -9140,7 +9147,6 @@ vislevel=1
 model1=model_2936_npc
 timer=1
 param=death_anim,dog_death
-// TODO sound
 
 [npc_822]
 vislevel=hide

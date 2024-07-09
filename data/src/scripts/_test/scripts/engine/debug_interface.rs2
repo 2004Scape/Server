@@ -1,12 +1,12 @@
 [debugproc,open](interface $interface)
-if (map_localdev = false | $interface = null) {
+if (map_production = true | $interface = null) {
     return;
 }
 
 if_openmainmodal($interface);
 
 [debugproc,close]
-if (map_localdev = false) {
+if (map_production = true) {
     return;
 }
 

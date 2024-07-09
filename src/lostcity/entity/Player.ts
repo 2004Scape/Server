@@ -236,6 +236,7 @@ export default class Player extends PathingEntity {
     combatLevel: number = 3;
     headicons: number = 0;
     appearance: Uint8Array | null = null; // cached appearance
+    lastAppearance: number = 0;
     baseLevels = new Uint8Array(21);
     lastStats: Int32Array = new Int32Array(21); // we track this so we know to flush stats only once a tick on changes
     lastLevels: Uint8Array = new Uint8Array(21); // we track this so we know to flush stats only once a tick on changes
@@ -250,6 +251,7 @@ export default class Player extends PathingEntity {
     basWalkLeft: number = -1;
     basWalkRight: number = -1;
     basRunning: number = -1;
+    animProtect: number = 0;
     logoutRequested: boolean = false;
     invListeners: {
         type: number; // InvType
@@ -485,15 +487,11 @@ export default class Player extends PathingEntity {
                 this.runScript(script, true);
             }
         }
-
-        if (this.runenergy < 100) {
-            this.setVar(VarPlayerType.PLAYER_RUN, 0);
-            this.setVar(VarPlayerType.TEMP_RUN, 0);
-        }
-
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
-            if (this.getVar(VarPlayerType.TEMP_RUN)) {
+            if (this.basRunning === -1) {
+                this.moveSpeed = MoveSpeed.WALK;
+            } else if (this.getVar(VarPlayerType.TEMP_RUN)) {
                 this.moveSpeed = MoveSpeed.RUN;
             }
         }
@@ -802,7 +800,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;
@@ -880,7 +878,7 @@ export default class Player extends PathingEntity {
                 this.unsetMapFlag();
             }
         } else if (this.target instanceof PathingEntity && this.inOperableDistance(this.target)) {
-            if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
+            if (Environment.NODE_DEBUG && !opTrigger && !apTrigger) {
                 let debugname = '_';
                 if (this.target instanceof Npc) {
                     if (this.targetSubject.com !== -1 && this.targetOp === ServerTriggerType.APNPCT || this.targetOp === ServerTriggerType.OPNPCT) {
@@ -951,7 +949,7 @@ export default class Player extends PathingEntity {
                     this.unsetMapFlag();
                 }
             } else if ((this.target instanceof PathingEntity || !moved) && this.inOperableDistance(this.target)) {
-                if (Environment.LOCAL_DEV && !opTrigger && !apTrigger) {
+                if (!Environment.NODE_PRODUCTION && !opTrigger && !apTrigger) {
                     let debugname = '_';
                     if (this.target instanceof Npc) {
                         debugname = NpcType.get(this.target.type)?.debugname ?? this.target.type.toString();
@@ -1042,7 +1040,7 @@ export default class Player extends PathingEntity {
 
         let worn = this.getInventory(inv);
         if (!worn) {
-            worn = new Inventory(0);
+            worn = new Inventory(InvType.WORN, 0);
         }
 
         for (let i = 0; i < worn.capacity; i++) {
@@ -1106,6 +1104,8 @@ export default class Player extends PathingEntity {
         stream.pos = 0;
         stream.gdata(this.appearance, 0, this.appearance.length);
         stream.release();
+
+        this.lastAppearance = World.currentTick;
     }
 
     // ----
@@ -1446,7 +1446,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        const multi = Number(Environment.XP_MULTIPLIER) || 1;
+        const multi = Number(Environment.NODE_XPRATE) || 1;
         this.stats[stat] += xp * multi;
 
         // cap to 200m, this is represented as "2 billion" because we use 32-bit signed integers and divide by 10 to give us a decimal point
@@ -1493,12 +1493,12 @@ export default class Player extends PathingEntity {
     }
 
     playAnimation(anim: number, delay: number) {
-        if (anim >= SeqType.count) {
+        if (anim >= SeqType.count || this.animProtect) {
             // client would hard crash
             return;
         }
 
-        if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority >= SeqType.get(this.animId).priority) {
+        if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
             this.animId = anim;
             this.animDelay = delay;
             this.mask |= Player.ANIM;

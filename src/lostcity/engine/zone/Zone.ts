@@ -1,5 +1,3 @@
-import ObjType from '#lostcity/cache/config/ObjType.js';
-
 import Loc from '#lostcity/entity/Loc.js';
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -29,22 +27,30 @@ import LocMerge from '#lostcity/network/outgoing/model/LocMerge.js';
 import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProtRepository.js';
 import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
+import ZoneEntityList, {LocList, ObjList} from '#lostcity/engine/zone/ZoneEntityList.js';
 
 export default class Zone {
+    private static readonly SIZE: number = 8 * 8;
+    private static readonly LOCS: number = this.SIZE << 2;
+    private static readonly OBJS: number = (this.SIZE << 1) + 1;
+
     readonly index: number; // packed coord
     readonly x: number;
     readonly z: number;
     readonly level: number;
 
     // zone entities
-    private readonly players: Set<number> = new Set(); // list of player uids
-    private readonly npcs: Set<number> = new Set(); // list of npc nids (not uid because type may change)
-    private readonly locs: (Loc[] | null)[] = [];
-    private readonly objs: (Obj[] | null)[] = [];
+    private readonly players: Set<number>; // list of player uids
+    private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
+    private readonly locs: ZoneEntityList<Loc>;
+    private readonly objs: ZoneEntityList<Obj>;
 
     // zone events
-    private readonly events: Set<ZoneEvent> = new Set();
+    private readonly events: Set<ZoneEvent>;
     private shared: Uint8Array | null = null;
+
+    totalLocs: number = 0;
+    totalObjs: number = 0;
 
     constructor(index: number) {
         this.index = index;
@@ -52,6 +58,11 @@ export default class Zone {
         this.x = coord.x >> 3;
         this.z = coord.z >> 3;
         this.level = coord.level;
+        this.events = new Set();
+        this.players = new Set();
+        this.npcs = new Set();
+        this.locs = new LocList(Zone.LOCS, (loc: Loc) => World.removeLoc(loc, 100));
+        this.objs = new ObjList(Zone.OBJS, (obj: Obj) => World.removeObj(obj, 100));
     }
 
     enter(entity: PathingEntity): void {
@@ -195,22 +206,16 @@ export default class Zone {
 
     addStaticLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
-        const locs: Loc[] | null = this.locs[coord];
-        if (!locs) {
-            this.locs[coord] = [];
-        }
-        this.locs[coord]?.push(loc);
-        this.sortLocs(coord);
+        this.locs.addLast(coord, loc, true);
+        this.totalLocs++;
+        this.locs.sortStack(coord, true);
     }
 
     addStaticObj(obj: Obj): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
-        const objs: Obj[] | null = this.objs[coord];
-        if (!objs) {
-            this.objs[coord] = [];
-        }
-        this.objs[coord]?.push(obj);
-        this.sortObjs(coord);
+        this.objs.addLast(coord, obj, true);
+        this.totalObjs++;
+        this.objs.sortStack(coord, true);
     }
 
     // ----
@@ -218,13 +223,10 @@ export default class Zone {
     addLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            const locs: Loc[] | null = this.locs[coord];
-            if (!locs) {
-                this.locs[coord] = [];
-            }
-            this.locs[coord]?.push(loc);
+            this.locs.addLast(coord, loc);
+            this.totalLocs++;
         }
-        this.sortLocs(coord);
+        this.locs.sortStack(coord);
 
         this.events.add({
             type: ZoneEventType.ENCLOSED,
@@ -236,17 +238,10 @@ export default class Zone {
     removeLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
-            const locs: Loc[] | null = this.locs[coord];
-            if (locs) {
-                for (let index: number = 0; index < locs.length; index++) {
-                    if (loc === locs[index]) {
-                        locs.splice(index, 1);
-                        break;
-                    }
-                }
-            }
+            this.locs.remove(coord, loc);
+            this.totalLocs--;
         }
-        this.sortLocs(coord);
+        this.locs.sortStack(coord);
 
         this.events.add({
             type: ZoneEventType.ENCLOSED,
@@ -285,23 +280,20 @@ export default class Zone {
     addObj(obj: Obj, receiverId: number): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const objs: Obj[] | null = this.objs[coord];
-            if (!objs) {
-                this.objs[coord] = [];
-            }
-            this.objs[coord]?.push(obj);
+            this.objs.addLast(coord, obj);
+            this.totalObjs++;
         }
-        this.sortObjs(coord);
+        this.objs.sortStack(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
             this.events.add({
-                type: ZoneEventType.FOLLOWS,
+                type: ZoneEventType.ENCLOSED,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
             });
-        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                type: ZoneEventType.ENCLOSED,
+                type: ZoneEventType.FOLLOWS,
                 receiverId: receiverId,
                 message: new ObjAdd(coord, obj.type, obj.count)
             });
@@ -309,10 +301,11 @@ export default class Zone {
     }
 
     revealObj(obj: Obj, receiverId: number): void {
-        const coord: number = Position.packZoneCoord(obj.x, obj.z);
         obj.receiverId = -1;
         obj.reveal = -1;
-        this.sortObjs(coord);
+
+        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        this.objs.sortStack(coord);
 
         this.events.add({
             type: ZoneEventType.ENCLOSED,
@@ -322,9 +315,10 @@ export default class Zone {
     }
 
     changeObj(obj: Obj, receiverId: number, oldCount: number, newCount: number): void {
-        const coord: number = Position.packZoneCoord(obj.x, obj.z);
         obj.count = newCount;
-        this.sortObjs(coord);
+
+        const coord: number = Position.packZoneCoord(obj.x, obj.z);
+        this.objs.sortStack(coord);
 
         this.events.add({
             type: ZoneEventType.FOLLOWS,
@@ -336,27 +330,20 @@ export default class Zone {
     removeObj(obj: Obj): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            const objs: Obj[] | null = this.objs[coord];
-            if (objs) {
-                for (let index: number = 0; index < objs.length; index++) {
-                    if (obj === objs[index]) {
-                        objs.splice(index, 1);
-                        break;
-                    }
-                }
-            }
+            this.objs.remove(coord, obj);
+            this.totalObjs--;
         }
-        this.sortObjs(coord);
+        this.objs.sortStack(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
             this.events.add({
-                type: ZoneEventType.FOLLOWS,
+                type: ZoneEventType.ENCLOSED,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
             });
-        } else if (obj.lifecycle === EntityLifeCycle.RESPAWN) {
+        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.events.add({
-                type: ZoneEventType.ENCLOSED,
+                type: ZoneEventType.FOLLOWS,
                 receiverId: -1,
                 message: new ObjDel(coord, obj.type)
             });
@@ -402,7 +389,7 @@ export default class Zone {
 
     *getAllNpcsSafe(): IterableIterator<Npc> {
         for (const nid of this.npcs) {
-            const npc: Npc | null = World.getNpc(nid);
+            const npc: Npc | undefined = World.getNpc(nid);
             if (npc && npc.checkLifeCycle(World.currentTick)) {
                 yield npc;
             }
@@ -410,168 +397,50 @@ export default class Zone {
     }
 
     *getAllObjsSafe(): IterableIterator<Obj> {
-        for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Obj[] | null = this.objs[index];
-            if (objs) {
-                for (let i: number = 0; i < objs.length; i++) {
-                    const obj: Obj = objs[i];
-                    if (obj.checkLifeCycle(World.currentTick)) {
-                        yield obj;
-                    }
-                }
+        for (const obj of this.objs.all()) {
+            if (obj.checkLifeCycle(World.currentTick)) {
+                yield obj;
             }
         }
     }
 
     *getObjsSafe(coord: number): IterableIterator<Obj> {
-        const objs: Obj[] | null = this.objs[coord];
-        if (objs) {
-            for (let i: number = 0; i < objs.length; i++) {
-                const obj: Obj = objs[i];
-                if (obj.checkLifeCycle(World.currentTick)) {
-                    yield obj;
-                }
+        for (const obj of this.objs.stack(coord)) {
+            if (obj.checkLifeCycle(World.currentTick)) {
+                yield obj;
             }
         }
     }
 
     *getObjsUnsafe(coord: number): IterableIterator<Obj> {
-        const objs: Obj[] | null = this.objs[coord];
-        if (objs) {
-            for (let i: number = 0; i < objs.length; i++) {
-                yield objs[i];
-            }
-        }
+        yield *this.objs.stack(coord);
     }
 
     *getAllObjsUnsafe(reverse: boolean = false): IterableIterator<Obj> {
-        for (let index: number = 0; index < this.objs.length; index++) {
-            const objs: Obj[] | null = this.objs[index];
-            if (objs) {
-                if (reverse) {
-                    for (let i: number = objs.length - 1; i >= 0; i--) {
-                        yield objs[i];
-                    }
-                } else {
-                    for (let i: number = 0; i < objs.length; i++) {
-                        yield objs[i];
-                    }
-                }
-            }
-        }
+        yield *this.objs.all(reverse);
     }
 
     *getAllLocsSafe(): IterableIterator<Loc> {
-        for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Loc[] | null = this.locs[index];
-            if (locs) {
-                for (let i: number = 0; i < locs.length; i++) {
-                    const loc: Loc = locs[i];
-                    if (loc.checkLifeCycle(World.currentTick)) {
-                        yield loc;
-                    }
-                }
+        for (const loc of this.locs.all()) {
+            if (loc.checkLifeCycle(World.currentTick)) {
+                yield loc;
             }
         }
     }
 
     *getLocsSafe(coord: number): IterableIterator<Loc> {
-        const locs: Loc[] | null = this.locs[coord];
-        if (locs) {
-            for (let i: number = 0; i < locs.length; i++) {
-                const loc: Loc = locs[i];
-                if (loc.checkLifeCycle(World.currentTick)) {
-                    yield loc;
-                }
+        for (const loc of this.locs.stack(coord)) {
+            if (loc.checkLifeCycle(World.currentTick)) {
+                yield loc;
             }
         }
     }
 
     *getLocsUnsafe(coord: number): IterableIterator<Loc> {
-        const locs: Loc[] | null = this.locs[coord];
-        if (locs) {
-            for (let i: number = 0; i < locs.length; i++) {
-                yield locs[i];
-            }
-        }
+        yield *this.locs.stack(coord);
     }
 
     *getAllLocsUnsafe(reverse: boolean = false): IterableIterator<Loc> {
-        for (let index: number = 0; index < this.locs.length; index++) {
-            const locs: Loc[] | null = this.locs[index];
-            if (locs) {
-                if (reverse) {
-                    for (let i: number = locs.length - 1; i >= 0; i--) {
-                        yield locs[i];
-                    }
-                } else {
-                    for (let i: number = 0; i < locs.length; i++) {
-                        yield locs[i];
-                    }
-                }
-            }
-        }
-    }
-
-    private sortObjs(coord: number): void {
-        const objs: Obj[] | null = this.objs[coord];
-        if (!objs) {
-            return;
-        }
-
-        let topCost: number = -99999999;
-        let topObj: Obj | null = null;
-
-        for (const obj of objs) {
-            const type: ObjType = ObjType.get(obj.type);
-            let cost: number = type.cost;
-
-            if (type.stackable) {
-                cost *= obj.count + 1;
-            }
-
-            cost += obj.lifecycle;
-
-            if (cost > topCost) {
-                topCost = cost;
-                topObj = obj;
-            }
-        }
-
-        if (!topObj) {
-            return;
-        }
-
-        if (objs[0] !== topObj) {
-            objs.splice(objs.indexOf(topObj), 1);
-            objs.unshift(topObj);
-        }
-    }
-
-    private sortLocs(coord: number): void {
-        const locs: Loc[] | null = this.locs[coord];
-        if (!locs) {
-            return;
-        }
-
-        let topCost: number = -99999999;
-        let topLoc: Loc | null = null;
-
-        for (const loc of locs) {
-            const cost: number = loc.lifecycle;
-            if (cost > topCost) {
-                topCost = cost;
-                topLoc = loc;
-            }
-        }
-
-        if (!topLoc) {
-            return;
-        }
-
-        if (locs[0] !== topLoc) {
-            locs.splice(locs.indexOf(topLoc), 1);
-            locs.unshift(topLoc);
-        }
+        yield *this.locs.all(reverse);
     }
 }

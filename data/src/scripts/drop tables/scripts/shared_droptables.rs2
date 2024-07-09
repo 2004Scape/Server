@@ -139,3 +139,16 @@ if ($random < 8) {
 } else if ($random < 15) {
     return (dragon_spear, 1);
 }
+
+[proc,randomjunk]()(namedobj, int) // guess
+switch_int (random(8)) {
+    case 0 : return(broken_arrow, 1);
+    case 1 : return(broken_glass, 1);
+    case 2 : return(broken_staff, 1);
+    case 3 : return(buttons, 1);
+    case 4 : return(damaged_armour, 1);
+    case 5 : return(old_boot, 1);
+    case 6 : return(pot_empty, 1);
+    case 7 : return(rusty_sword, 1);
+    case default : return(pot_empty, 1);
+}

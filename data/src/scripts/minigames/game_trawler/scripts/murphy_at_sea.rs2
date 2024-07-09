@@ -1,0 +1,54 @@
+[opnpc1,murphy_nonflood] @murphy_at_sea;
+[opnpc1,murphy_flood] @murphy_at_sea; 
+
+[label,murphy_at_sea]
+~chatnpc("<p,neutral>Whoooahh sailor!");
+//todo: confirm mesanims 
+def_int $choice = ~p_choice2("I've had enough, take me back.", 1, "How you doing murphy?", 2);
+if ($choice = 2) {
+    ~chatplayer("<p,quiz>How you doing Murphy?");
+    switch_int(random(3)) {
+        case 0 : ~chatnpc("<p,happy>Get those fishies!");
+        case 1 : ~chatnpc("<p,sad>I think i'm feeling a bit sea sick!"); // "i'm" is from osrs. intentional typo!
+        case 2 : ~chatnpc("<p,neutral>It's a fierce sea today traveller, you best hold on tight.");
+    }
+    return;
+}
+~chatplayer("<p,bored>I've had enough, take me back.");
+~chatnpc("<p,happy>Hah! .. the soft land lovers lost their sea legs have they?");
+~chatplayer("<p,shifty>...Something like that.");
+~chatnpc("<p,neutral>We're too far out now, It'd be dangerous"); // "It'd" is from osrs. intentional typo
+$choice =  ~p_choice2("I insist Murphy, take me back.", 1, "Okay then Murphy, just keep us afloat.", 2);
+if ($choice = 2) {
+    ~chatplayer("<p,neutral>Okay then Murphy, just keep us afloat.");
+    ~chatnpc("<p,happy>That's the attitude sailor...Aaaaar!");
+    return;
+}
+~chatplayer("<p,angry>I insist Murphy, take me back.");
+~chatnpc("<p,bored>Ok, ok, I'll try, but don't say I didn't warn you...");
+~mesbox("Murphy attempts to sharply turn the large ship.");
+~chatnpc("<p,sad>Save yourself! We're going down!");
+if (npc_find(^trawler_wreck_murphy, murphy_sunk, 2, 0) = true) {
+    npc_settimer(1);
+}
+queue(trawler_player_sink, 0);
+
+[ai_queue6,murphy_nonflood] @murphy_cry;
+[ai_queue6,murphy_flood] @murphy_cry;
+
+[ai_queue7,murphy_nonflood] @murphy_cheer;
+[ai_queue7,murphy_flood] @murphy_cheer;
+
+[label,murphy_cry]
+npc_setmode(none);
+npc_delay(0);
+npc_anim(emote_cry, 0);
+npc_delay(1);
+npc_setmode(patrol);
+
+[label,murphy_cheer]
+npc_setmode(none);
+npc_delay(0);
+npc_anim(emote_cheer, 0);
+npc_delay(2);
+npc_setmode(patrol);

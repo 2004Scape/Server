@@ -1,5 +1,5 @@
 [debugproc,seq](seq $seq)
-if (map_localdev = false) {
+if (map_production = true) {
     return;
 }
 
@@ -11,7 +11,7 @@ if ($seq = null) {
 anim($seq, 0);
 
 [debugproc,anim](seq $seq)
-if (map_localdev = false) {
+if (map_production = true) {
     return;
 }
 

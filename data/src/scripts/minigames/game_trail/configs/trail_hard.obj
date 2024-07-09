@@ -442,7 +442,8 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_hard
-param=trail_desc,'A bag belt only?',|he asked his balding brothers.
+// https://youtu.be/LWfcA_C2bJY?si=YqJBRZYBy1JFXOO_&t=124
+param=trail_desc,@or2@'A bag belt only?'|He asked his balding brothers.
 
 [trail_clue_hard_riddle_exp014]
 name=Clue scroll

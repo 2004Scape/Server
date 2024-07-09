@@ -1,0 +1,22 @@
+[debugproc,server]
+if (p_finduid(uid) = false) {
+    clearsofttimer(server);
+    if_close;
+    return;
+}
+if_openmainmodal(scroll);
+softtimer(server, 1);
+
+[softtimer,server]
+if_settext(scroll:com_2, "Clock: @bla@<tostring(map_clock)>");
+if_settext(scroll:com_3, "Players: @bla@<tostring(playercount)>");
+if_settext(scroll:com_4, "Npcs: @bla@<tostring(npccount)>");
+if_settext(scroll:com_5, "Cycle Time: @bla@<tostring(map_lastclock)>/600ms");
+if_settext(scroll:com_6, "Bandwidth: @bla@In:<tostring(map_lastbandwidthin)> Out:<tostring(map_lastbandwidthout)> @yel@(bytes)");
+if_settext(scroll:com_7, "----");
+if_settext(scroll:com_8, "Npc Time: @bla@<tostring(map_lastnpc)>ms @yel@Player Time: @bla@<tostring(map_lastplayer)>ms");
+if_settext(scroll:com_9, "Logout Time: @bla@<tostring(map_lastlogout)>ms @yel@Login Time: @bla@<tostring(map_lastlogin)>ms");
+if_settext(scroll:com_10, "Zone Time: @bla@<tostring(map_lastzone)>ms @yel@World Time: @bla@<tostring(map_lastworld)>ms");
+if_settext(scroll:com_11, "Client-In Time: @bla@<tostring(map_lastclientin)>ms @yel@Client-Out Time: @bla@<tostring(map_lastclientout)>ms");
+if_settext(scroll:com_12, "----");
+if_settext(scroll:com_13, "Zones: @bla@<tostring(zonecount)> @yel@Locs: @bla@<tostring(loccount)> @yel@ Objs: @bla@<tostring(objcount)>");

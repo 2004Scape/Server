@@ -1,5 +1,6 @@
 [opnpc1,redbeard_frank]
-~chatnpc("<p,laugh>Arr, Matey!");
+// https://storage.googleapis.com/tannerdino/images/RedbeardFrank.jpg
+~chatnpc("<p,laugh>Arrrh Matey!");
 
 if (%hunt_progress = 1) {
     @redboard_progress;

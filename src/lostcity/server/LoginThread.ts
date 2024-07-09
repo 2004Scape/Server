@@ -181,8 +181,9 @@ parentPort.on('message', async msg => {
                     }
                 } else {
                     let save = new Uint8Array();
-                    if (fs.existsSync(`data/players/${username}.sav`)) {
-                        save = await fsp.readFile(`data/players/${username}.sav`);
+                    const safeName = toSafeName(username);
+                    if (fs.existsSync(`data/players/${safeName}.sav`)) {
+                        save = await fsp.readFile(`data/players/${safeName}.sav`);
                     }
 
                     parentPort.postMessage({
@@ -191,7 +192,7 @@ parentPort.on('message', async msg => {
                         socket,
                         info,
                         seed,
-                        username: toSafeName(username),
+                        username: safeName,
                         save
                     });
                 }

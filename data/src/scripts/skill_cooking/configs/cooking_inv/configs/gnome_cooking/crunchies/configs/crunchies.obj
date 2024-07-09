@@ -106,7 +106,6 @@ recol1d=18820
 2dyan=1664
 2dxan=252
 weight=350g
-param=cooking_range_only,1
 
 [raw_crunchies]
 name=Raw crunchies
@@ -120,7 +119,6 @@ model=model_2723_obj
 2dyan=1664
 2dxan=252
 weight=400g
-param=cooking_range_only,1
 
 [unfinished_worm_crunchies1]
 name=Unfinished crunchy

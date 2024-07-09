@@ -1,0 +1,40 @@
+[oploc1,game_trawler_gangplank1]
+// osrs has a warning for if u have items in a trawler catch, but rs3 doesnt.
+// I think the warning was added to osrs at some point. Rs3 fishing trawler is largely unchanged
+def_int $dir_mod = ~gangplank_dir_mod;
+def_coord $jump_coord = coord;
+switch_int (loc_angle) {
+    case ^loc_west,^loc_east:
+        p_teleport(movecoord(coord, calc(-1 * $dir_mod), 0, 0));
+        $jump_coord = movecoord(coord, calc(-2 * $dir_mod), 1, 0);
+    case ^loc_north,^loc_south:
+        p_teleport(movecoord(coord, 0, 0, $dir_mod));
+        $jump_coord = movecoord(coord, 0, 1, calc(2 * $dir_mod));
+    case default : 
+        ~displaymessage(^dm_default);
+        return;
+}
+p_delay(0);
+if (~playercount_coord_pair_table(trawler_game_zones) > 0) {
+    mes("There is already someone on a fishing trip!"); //https://youtu.be/Yzu2wp2hJOw?list=PLn23LiLYLb1b7Lj_u-lnuUOa40FGWslbp&t=14
+}
+if (~playercount_coord_pair_table(trawler_lobby_zones) < 1 & ~playercount_coord_pair_table(trawler_game_zones) < 1) {
+    if (npc_find(^trawler_lobby_murphy_spawn, murphy, 5, 0) = true) {
+        npc_settimer(100);
+    }
+}
+p_telejump($jump_coord);
+
+
+[oploc1,game_trawler_gangplank2]
+def_int $dir_mod = ~gangplank_dir_mod;
+switch_int (loc_angle) {
+    case ^loc_west,^loc_east:
+        p_teleport(loc_coord);
+        p_delay(0);
+        p_telejump(movecoord(coord, calc(-2 * $dir_mod), -1, 0));
+    case ^loc_north,^loc_south:
+        p_teleport(loc_coord);
+        p_delay(0);
+        p_telejump(movecoord(coord, 0, -1, calc(2 * $dir_mod)));
+}

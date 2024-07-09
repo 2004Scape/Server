@@ -247,6 +247,7 @@ export default class Npc extends PathingEntity {
 
     setTimer(interval: number) {
         this.timerInterval = interval;
+        this.timerClock = 0;
     }
 
     executeScript(script: ScriptState) {
@@ -381,8 +382,8 @@ export default class Npc extends PathingEntity {
         if (!this.hasWaypoints() && !this.target) { // requeue waypoints in cases where an npc was interacting and the interaction has been cleared
             this.queueWaypoint(dest.x, dest.z);
         }
-        if(!(this.x === dest.x && this.z === dest.z) && World.currentTick > this.nextPatrolTick) {
-            this.teleJump(dest.x, dest.z, dest.level);
+        if(!(this.x === dest.x && this.z === dest.z) && World.currentTick >= this.nextPatrolTick) {
+            this.teleport(dest.x, dest.z, dest.level);
         }
         if ((this.x === dest.x && this.z === dest.z) && !this.delayedPatrol) {
             this.nextPatrolTick = World.currentTick + patrolDelay;
@@ -555,7 +556,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
             this.defaultMode();
             return;
         }
@@ -906,5 +907,8 @@ export default class Npc extends PathingEntity {
         this.type = type;
         this.mask |= Npc.CHANGE_TYPE;
         this.uid = (type << 16) | this.nid;
+
+        const npcType: NpcType = NpcType.get(type);
+        this.setTimer(npcType.timer);
     }
 }
