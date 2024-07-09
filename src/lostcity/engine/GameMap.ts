@@ -21,6 +21,19 @@ import {LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 export default class GameMap {
+    private static readonly OPEN: number = 0x0;
+    private static readonly BLOCKED: number = 0x1;
+    private static readonly BRIDGE: number = 0x2;
+    private static readonly ROOF: number = 0x4;
+    private static readonly WALL: number = 0x8;
+    private static readonly LOWMEMORY: number = 0x10;
+
+    private static readonly Y: number = 4;
+    private static readonly X: number = 64;
+    private static readonly Z: number = 64;
+
+    private static readonly MAPSQUARE: number = GameMap.X * GameMap.Y * GameMap.Z;
+
     init(zoneMap: ZoneMap): void {
         console.time('Loading game map');
         const path: string = 'data/pack/server/maps/';
@@ -33,7 +46,7 @@ export default class GameMap {
             this.decodeNpcs(Packet.load(`${path}n${mx}_${mz}`), mapsquareX, mapsquareZ);
             this.decodeObjs(Packet.load(`${path}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
             // collision
-            const lands: Int8Array = new Int8Array(4 * 64 * 64); // 4 * 64 * 64 size is guaranteed for lands
+            const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
             this.decodeLands(lands, Packet.load(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
             this.decodeLocs(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
         }
@@ -126,9 +139,7 @@ export default class GameMap {
                 const npcType: NpcType = NpcType.get(packet.g2());
                 const size: number = npcType.size;
                 const npc: Npc = new Npc(level, absoluteX, absoluteZ, size, size, EntityLifeCycle.RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-                if (npcType.members && Environment.NODE_MEMBERS) {
-                    World.addNpc(npc, -1);
-                } else if (!npcType.members) {
+                if (npcType.members && Environment.NODE_MEMBERS || !npcType.members) {
                     World.addNpc(npc, -1);
                 }
             }
@@ -144,9 +155,7 @@ export default class GameMap {
             for (let j: number = 0; j < count; j++) {
                 const objType: ObjType = ObjType.get(packet.g2());
                 const obj: Obj = new Obj(level, absoluteX, absoluteZ, EntityLifeCycle.RESPAWN, objType.id, packet.g1());
-                if (objType.members && Environment.NODE_MEMBERS) {
-                    zoneMap.zone(obj.x, obj.z, obj.level).addStaticObj(obj);
-                } else if (!objType.members) {
+                if (objType.members && Environment.NODE_MEMBERS || !objType.members) {
                     zoneMap.zone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 }
             }
@@ -154,20 +163,20 @@ export default class GameMap {
     }
 
     private decodeLands(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {
-        for (let level: number = 0; level < 4; level++) {
-            for (let x: number = 0; x < 64; x++) {
-                for (let z: number = 0; z < 64; z++) {
+        for (let level: number = 0; level < GameMap.Y; level++) {
+            for (let x: number = 0; x < GameMap.X; x++) {
+                for (let z: number = 0; z < GameMap.Z; z++) {
                     while (true) {
                         const opcode: number = packet.g1();
                         if (opcode === 0) {
                             break;
                         } else if (opcode === 1) {
-                            packet.g1();
+                            packet.pos++;
                             break;
                         }
 
                         if (opcode <= 49) {
-                            packet.g1b();
+                            packet.pos++;
                         } else if (opcode <= 81) {
                             lands[this.packCoord(x, z, level)] = opcode - 49;
                         }
@@ -175,15 +184,11 @@ export default class GameMap {
                 }
             }
         }
-        this.applyLandCollision(mapsquareX, mapsquareZ, lands);
-    }
-
-    private applyLandCollision(mapsquareX: number, mapsquareZ: number, lands: Int8Array): void {
-        for (let level: number = 0; level < 4; level++) {
-            for (let x: number = 0; x < 64; x++) {
+        for (let level: number = 0; level < GameMap.Y; level++) {
+            for (let x: number = 0; x < GameMap.X; x++) {
                 const absoluteX: number = x + mapsquareX;
 
-                for (let z: number = 0; z < 64; z++) {
+                for (let z: number = 0; z < GameMap.Z; z++) {
                     const absoluteZ: number = z + mapsquareZ;
 
                     if (x % 7 === 0 && z % 7 === 0) { // allocate per zone
@@ -191,14 +196,16 @@ export default class GameMap {
                     }
 
                     const land: number = lands[this.packCoord(x, z, level)];
-                    if ((land & 0x4) !== 0) {
+
+                    if ((land & GameMap.ROOF) !== GameMap.OPEN) {
                         this.changeRoofCollision(absoluteX, absoluteZ, level, true);
                     }
-                    if ((land & 0x1) !== 1) {
+
+                    if ((land & GameMap.BLOCKED) !== GameMap.BLOCKED) {
                         continue;
                     }
 
-                    const bridged: boolean = (level === 1 ? land & 0x2 : lands[this.packCoord(x, z, 1)] & 0x2) === 2;
+                    const bridged: boolean = (level === 1 ? land & GameMap.BRIDGE : lands[this.packCoord(x, z, 1)] & GameMap.BRIDGE) === GameMap.BRIDGE;
                     const actualLevel: number = bridged ? level - 1 : level;
                     if (actualLevel < 0) {
                         continue;
@@ -225,7 +232,7 @@ export default class GameMap {
                 const info: number = packet.g1();
                 coordOffset = packet.gsmart();
 
-                const bridged: boolean = (level === 1 ? lands[coord] & 0x2 : lands[this.packCoord(x, z, 1)] & 0x2) === 2;
+                const bridged: boolean = (level === 1 ? lands[coord] & GameMap.BRIDGE : lands[this.packCoord(x, z, 1)] & GameMap.BRIDGE) === GameMap.BRIDGE;
                 const actualLevel: number = bridged ? level - 1 : level;
                 if (actualLevel < 0) {
                     continue;

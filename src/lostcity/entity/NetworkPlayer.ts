@@ -141,7 +141,7 @@ export class NetworkPlayer extends Player {
         }
         const prot: ServerProt = encoder.prot;
         const buf = client.out;
-        const test = (1 + prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0) + encoder.test(message);
+        const test = (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
         if (buf.pos + test >= buf.length) {
             client.flush();
         }
