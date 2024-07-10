@@ -174,26 +174,6 @@ export default class Npc extends PathingEntity {
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
         }
-
-        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW) {
-            const distanceToEscape = Position.distanceTo(this, {
-                x: this.startX,
-                z: this.startZ,
-                width: this.width,
-                length: this.length
-            });
-            const targetDistanceFromStart = Position.distanceTo(this.target, {
-                x: this.startX,
-                z: this.startZ,
-                width: this.target.width,
-                length: this.target.length
-            });
-
-            if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
-                return false;
-            }
-        }
-
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
         }
@@ -581,10 +561,8 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
         const type: NpcType = NpcType.get(this.type);
-
-        if (Position.distanceTo(this, this.target) > type.attackrange) {
+        if (Position.distanceToSW({x: this.startX, z: this.startZ}, this.target) > type.maxrange + type.attackrange) {
             this.defaultMode();
             return;
         }
