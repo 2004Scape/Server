@@ -177,10 +177,14 @@ export default class Npc extends PathingEntity {
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
         }
-        if (this.target) {
-            const nextX = this.x + Math.max(Math.min(this.target.x - this.x, 1), -1);
-            const nextZ = this.z + Math.max(Math.min(this.target.z - this.z, 1), -1);
-            if (Position.distanceToSW({x: nextX, z: nextZ}, {x: this.startX, z: this.startZ}) > type.maxrange) {
+        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW) {
+            let moveX = Math.max(Math.min(this.target.x - this.x, 1), -1);
+            let moveZ = Math.max(Math.min(this.target.z - this.z, 1), -1);
+            if (this.targetOp === NpcMode.PLAYERESCAPE) {
+                moveX = moveX * -1;
+                moveZ = moveZ * -1;
+            }
+            if (Position.distanceToSW({x: this.x + moveX, z: this.z + moveZ}, {x: this.startX, z: this.startZ}) > type.maxrange) {
                 return false;
             }
         }
