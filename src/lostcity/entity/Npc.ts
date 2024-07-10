@@ -177,7 +177,13 @@ export default class Npc extends PathingEntity {
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
         }
-
+        if (this.target) {
+            const nextX = this.x + Math.max(Math.min(this.target.x - this.x, 1), -1);
+            const nextZ = this.z + Math.max(Math.min(this.target.z - this.z, 1), -1);
+            if (Position.distanceToSW({x: nextX, z: nextZ}, {x: this.startX, z: this.startZ}) > type.maxrange) {
+                return false;
+            }
+        }
         if (this.walktrigger !== -1) {
             const type = NpcType.get(this.type);
             const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + this.walktrigger, type.id, type.category);
@@ -562,11 +568,6 @@ export default class Npc extends PathingEntity {
             return;
         }
         const type: NpcType = NpcType.get(this.type);
-        if (Position.distanceToSW({x: this.startX, z: this.startZ}, this.target) > type.maxrange + type.attackrange) {
-            this.defaultMode();
-            return;
-        }
-
         const apTrigger: boolean =
             (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
             (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
