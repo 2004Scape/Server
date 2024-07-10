@@ -12,7 +12,6 @@ op1=Pick
 model1=model_3371_npc
 wanderrange=3
 maxrange=3
-attackrange=5
 timer=45
 // stats are completely guessed
 attack=50
@@ -32,7 +31,6 @@ model1=model_3371_npc
 // https://youtu.be/94bDnUMTMXQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 wanderrange=3
 maxrange=3
-attackrange=1
 timer=20
 param=attack_anim,seq_353
 param=defend_anim,seq_354
