@@ -34,6 +34,8 @@ export default class GameMap {
 
     private static readonly MAPSQUARE: number = GameMap.X * GameMap.Y * GameMap.Z;
 
+    private static readonly SURFACE: number = 4159;
+
     init(zoneMap: ZoneMap): void {
         console.time('Loading game map');
         const path: string = 'data/pack/server/maps/';
@@ -247,7 +249,9 @@ export default class GameMap {
                 const absoluteX: number = x + mapsquareX;
                 const absoluteZ: number = z + mapsquareZ;
 
-                zoneMap.zone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
+                if (absoluteZ > GameMap.SURFACE || type.active === 1) {
+                    zoneMap.zone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
+                }
 
                 if (type.blockwalk) {
                     this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);
