@@ -25,12 +25,12 @@ inv_add(inv, coins, max(scale(6, 10, oc_cost($item)), 1));
 // delay by 5 ticks
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
-    return;
 }
 // https://oldschool.runescape.wiki/w/Update:Patch_Notes_(11_April_2013), in osrs it weakqueues the spell. Early osrs it was delay'd
 // https://www.neoseeker.com/forums/2410/t960058-useless-rs-facts/2.htm
 // > When you high alch while your cannon is spinning, it stops spinning until you finish alching
 // Also this video: https://www.youtube.com/watch?v=P_o3Cxg73Tg&t=91s
+if_settabactive(^tab_magic);
 p_delay(4);
 
 
@@ -55,13 +55,12 @@ spotanim_pl(lowlvlalchemy_casting, 92, 0);
 // give 0.4x of item's value and delete item
 inv_del(inv, $item, 1);
 inv_add(inv, coins, max(scale(4, 10, oc_cost($item)), 1));
-// delay by 3 ticks
+if_settabactive(^tab_magic);
 if (afk_event = ^true) {
     ~macro_event_general_spawn(~macro_event_set_random);
-    return;
 }
+// delay by 3 ticks
 p_delay(2);
-
 
 [proc,is_alchable](obj $item)(boolean)
 switch_obj($item) {
