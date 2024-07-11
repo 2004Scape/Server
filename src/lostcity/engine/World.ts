@@ -1056,6 +1056,8 @@ class World {
             this.npcs.reset();
 
             if (duration > 2) {
+                console.log('Super fast shutdown initiated...');
+
                 // we've already attempted to shutdown, now we speed things up
                 if (this.tickRate > World.SHUTDOWN_TICKRATE) {
                     this.tickRate = World.SHUTDOWN_TICKRATE;
@@ -1069,12 +1071,12 @@ class World {
 
                     this.tickRate = World.NORMAL_TICKRATE;
                 }
+
+                if (!Environment.NODE_PRODUCTION) {
+                    process.exit(0);
+                }
             }
         } else {
-            process.exit(0);
-        }
-
-        if (!Environment.NODE_PRODUCTION) {
             process.exit(0);
         }
     }
