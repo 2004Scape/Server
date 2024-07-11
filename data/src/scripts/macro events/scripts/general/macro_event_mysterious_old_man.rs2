@@ -52,7 +52,9 @@ npc_delay(2);
 [opnpc1,macro_event_mysterious_old_man_general]
 if (uid ! %npc_attacking_uid) {
     // https://youtu.be/U_TRFGTfIY0?t=276
-    ~chatnpc("<p,neutral>Sorry, but I'm trying to talk to <displayname>. However he appears to be ignoring me...");
+    if (.finduid(%npc_attacking_uid) = true) {
+        ~chatnpc("<p,neutral>Sorry, but I'm trying to talk to <.displayname>. However he appears to be ignoring me...");
+    }
     return;
 }
 if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
