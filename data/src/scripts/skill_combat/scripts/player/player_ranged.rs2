@@ -32,7 +32,16 @@ if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opnpc(2);
     return;
 }
-
+// set the skill clock depending on the weapon attack rate
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+if ($weapon = null) {
+    %action_delay = add(map_clock, 4);
+} else {
+    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+}
+if (%damagestyle = ^style_ranged_rapid) {
+    %action_delay = sub(%action_delay, 1);
+}
 // this can be either the quiver or rhand.
 def_obj $ammo = ~player_ranged_check_ammo($rhand);
 if ($ammo = null) {
@@ -70,17 +79,9 @@ npc_anim(npc_param(defend_anim), sub($delay, 30)); // delay npc this tick
 if (npc_param(defend_sound) ! null) {
     sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
 }
+
 npc_heropoints($damage);
-// set the skill clock depending on the weapon attack rate
-def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-if ($weapon = null) {
-    %action_delay = add(map_clock, 4);
-} else {
-    %action_delay = add(map_clock, oc_param($weapon, attackrate));
-}
-if (%damagestyle = ^style_ranged_rapid) {
-    %action_delay = sub(%action_delay, 1);
-}
+
 p_opnpc(2);
 if ($ammo = holy_water) {
     world_delay(calc($delay / 30 - 2));

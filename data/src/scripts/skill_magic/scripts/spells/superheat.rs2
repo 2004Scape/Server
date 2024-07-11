@@ -50,6 +50,7 @@ if ($ore2 ! null) {
     inv_del(inv, $ore2, struct_param($bar_struct, ingredient_secondary_count));
 }
 inv_add(inv, $bar, 1);
+if_settabactive(^tab_magic);
 p_delay(2);
 
 if (afk_event = ^true) {

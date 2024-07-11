@@ -196,19 +196,6 @@ if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
 }
 
 if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
-    // def_coord $event_coord = ~coord_lineofwalk_radius(coord, 1);
-    // def_int $i = 0;
-    // while ($event_coord = coord) {
-    //     $event_coord = ~coord_lineofwalk_radius(coord, 1);
-    //     $i = calc($i + 1);
-    //     if ($i = 25) {
-    //         // after 25 tries, just disappear
-    //         npc_anim(emote_cry, 20);
-    //         npc_say("I lose more friends that way.");
-    //         ~macro_event_disappear;
-    //         return(true);
-    //     }
-    //
     if (~npc_out_of_combat = true) {
         npc_tele(coord); // osrs
         if (~macro_event_area(coord) = false) {
