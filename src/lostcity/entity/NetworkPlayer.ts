@@ -50,15 +50,15 @@ export class NetworkPlayer extends Player {
     }
 
     decodeIn() {
-        if (this.client === null || this.client.inOffset < 1) {
+        this.userPath = [];
+        this.opcalled = false;
+
+        if (this.client === null) {
             return;
         }
 
         let offset = 0;
         this.lastResponse = World.currentTick;
-
-        this.userPath = [];
-        this.opcalled = false;
 
         World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
 
