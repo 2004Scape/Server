@@ -4,6 +4,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import BlockWalk from '#lostcity/entity/BlockWalk.js';
 import Entity from '#lostcity/entity/Entity.js';
 import Npc from '#lostcity/entity/Npc.js';
+import NpcType from '#lostcity/cache/config/NpcType.js';
 import Loc from '#lostcity/entity/Loc.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import Player from '#lostcity/entity/Player.js';
@@ -609,6 +610,12 @@ export default abstract class PathingEntity extends Entity {
             return -1;
         }
 
+        if (this instanceof Npc && this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
+            // npc can walk past maxrange if player walks under
+            if (!(srcX === this.target.x && srcZ === this.target.z) && Position.distanceToSW({x: dx + srcX, z: dz + srcZ}, {x: this.startX, z: this.startZ}) > NpcType.get(this.type).maxrange) {
+                return -1;
+            }
+        }
         if (this.moveStrategy === MoveStrategy.FLY) {
             return dir;
         }
