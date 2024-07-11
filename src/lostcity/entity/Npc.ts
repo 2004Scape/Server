@@ -200,7 +200,7 @@ export default class Npc extends PathingEntity {
                 attackRange = type.attackrange;
             }
             if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
-                // this.defaultMode();
+                this.defaultMode();
                 return false;
             }
         }
