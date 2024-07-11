@@ -174,10 +174,7 @@ export default class Npc extends PathingEntity {
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
         }
-        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
-            this.pathToPathingTarget();
-        }
-        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW) {
+        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
             let moveX = Math.max(Math.min(this.target.x - this.x, 1), -1);
             let moveZ = Math.max(Math.min(this.target.z - this.z, 1), -1);
             if (this.targetOp === NpcMode.PLAYERESCAPE) {
@@ -187,6 +184,9 @@ export default class Npc extends PathingEntity {
             if (Position.distanceToSW({x: this.x + moveX, z: this.z + moveZ}, {x: this.startX, z: this.startZ}) > type.maxrange) {
                 return false;
             }
+        }
+        if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
+            this.pathToPathingTarget();
         }
         if (this.walktrigger !== -1) {
             const type = NpcType.get(this.type);
