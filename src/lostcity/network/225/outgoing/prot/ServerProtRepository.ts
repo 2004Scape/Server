@@ -142,6 +142,8 @@ import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import NpcInfoEncoder from '#lostcity/network/225/outgoing/codec/NpcInfoEncoder.js';
 import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
 import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
+import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
+import UpdateRebootTimerEncoder from '#lostcity/network/225/outgoing/codec/UpdateRebootTimerEncoder.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type GenericOutgoingMessage<T extends OutgoingMessage> = new (...args: any[]) => T;
@@ -220,6 +222,7 @@ class ServerProtRepository {
         this.bind(UpdateInvStopTransmit, new UpdateInvStopTransmitEncoder());
         this.bind(UpdateRunEnergy, new UpdateRunEnergyEncoder());
         this.bind(UpdateRunWeight, new UpdateRunWeightEncoder());
+        this.bind(UpdateRebootTimer, new UpdateRebootTimerEncoder());
         this.bind(UpdateStat, new UpdateStatEncoder());
         this.bind(UpdateUid192, new UpdateUid192Encoder());
         this.bind(UpdateZoneFullFollows, new UpdateZoneFullFollowsEncoder());

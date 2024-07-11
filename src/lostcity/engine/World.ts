@@ -342,9 +342,12 @@ class World {
 
         this.devThread.on('exit', () => {
             this.devRebuilding = false;
-            this.broadcastMes('Error while rebuilding - see console for more info.');
             this.stopDevWatcher();
-            this.startDevWatcher();
+
+            if (this.shutdownTick === -1) {
+                this.broadcastMes('Error while rebuilding - see console for more info.');
+                this.startDevWatcher();
+            }
         });
 
         this.devWatcher = new Watcher('./data/src', {
@@ -1068,6 +1071,10 @@ class World {
                 }
             }
         } else {
+            process.exit(0);
+        }
+
+        if (!Environment.NODE_PRODUCTION) {
             process.exit(0);
         }
     }

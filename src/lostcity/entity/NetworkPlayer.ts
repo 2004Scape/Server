@@ -137,6 +137,7 @@ export class NetworkPlayer extends Player {
         }
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
+            console.error('No encoder for message', message);
             return;
         }
         const prot: ServerProt = encoder.prot;
