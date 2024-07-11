@@ -902,43 +902,6 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,blade5
 
-[npc_27]
-name=Archer
-desc=Good with arrows.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=42
-recol1s=6273
-recol1d=23009
-model1=model_220_obj_wear
-model2=model_185_obj_wear
-model3=model_253_idk
-model4=model_296_obj_wear
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_262_obj_wear
-model8=model_563_obj_wear
-wanderrange=10
-maxrange=12
-// 10
-respawnrate=25
-hitpoints=50
-attack=0
-strength=0
-defence=40
-ranged=40
-param=attackrate,6
-param=attackbonus,34
-param=stabdefence,39
-param=slashdefence,50
-param=crushdefence,49
-param=magicdefence,18
-param=rangedefence,45
-param=damagetype,^ranged_style
-param=attack_anim,human_bow
-param=rangeattack_sound,arrowlaunch2
-
 [npc_29]
 name=Chuck
 desc=He's a lumberjack, and he's ok.
