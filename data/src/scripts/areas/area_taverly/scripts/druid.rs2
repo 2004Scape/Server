@@ -1,12 +1,15 @@
 [ai_queue1,druid] ~npc_default_retaliate_ap;
 
-[ai_applayer2,druid]
 // from 100 ap hits:
-// snare: 45
+// entangle: 45
 // punch: 55
+[ai_applayer2,druid]
+if (~npc_combat_spell_checks = false) {
+    return;
+}
 if (random(2) = 0) {
     ~npc_druid_entangle;
-    // from 100 ap hits, he continued ap only 4 times after snaring
+    // from 100 ap hits, he continued ap only 4 times after entangling
     if (random(5) ! 0) {
         npc_setmode(opplayer2);
     }
@@ -15,9 +18,12 @@ if (random(2) = 0) {
 }
 
 // from 150 op hits:
-// snare: 27
+// entangle: 27
 // punch: 123
 [ai_opplayer2,druid]
+if (~npc_combat_spell_checks = false) {
+    return;
+}
 if (random(5) = 0) {
     ~npc_druid_entangle;
 } else {
@@ -26,10 +32,6 @@ if (random(5) = 0) {
 
 
 [proc,npc_druid_entangle]
-if (~npc_combat_spell_checks = false) {
-    return;
-}
-
 def_dbrow $spell_data = ~get_spell_data(^entangle);
 def_int $duration = ~npc_spell_cast($spell_data, 4);
 
