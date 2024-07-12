@@ -184,7 +184,7 @@ if (%junglepotion_progress = ^junglepotion_complete) {
     $questpoints = add($questpoints, ^junglepotion_questpoints);
 }
 
-if (%ikov_progress = ^ikov_completed_armadyl) {
+if (%ikov_progress >= ^ikov_completed_armadyl) { // 80 = armadyl completion, 90 = lucien completion
     $questpoints = add($questpoints, ^ikov_questpoints);
 }
 
