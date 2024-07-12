@@ -74,7 +74,6 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
     remove(id: number): void {
         const index: number = this.ids[id];
         if (index !== -1) {
-            this.splice(index, 1);
             this.ids[id] = -1;
             this.free.add(index);
         }
