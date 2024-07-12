@@ -29,7 +29,7 @@ def_int $maxhit = ~npc_ranged_maxhit;
 
 npc_anim(npc_param(attack_anim), 0);
 sound_synth(npc_param(rangeattack_sound), 0, 0);
-spotanim_npc(npc_param(proj_launch), 96, 0);
+spotanim_npc(npc_param(proj_launch), npc_param(proj_height), 0);
 
 %npc_action_delay = add(map_clock, npc_param(attackrate));
 def_int $duration = 64;
