@@ -14,7 +14,7 @@ export default class BuildArea {
     private static readonly INTERVAL: number = 10;
     private static readonly PREFERRED_PLAYERS: number = 250;
     private static readonly PREFERRED_NPCS: number = 255;
-    private static readonly PREFERRED_VIEW_DISTANCE: number = 16;
+    private static readonly PREFERRED_VIEW_DISTANCE: number = 15;
 
     // constructor
     readonly npcs: Set<number>; // observed npcs
@@ -94,7 +94,7 @@ export default class BuildArea {
 
     *getNearbyNpcs(x: number, z: number, originX: number, originZ: number): IterableIterator<Npc> {
         npcs: for (const zoneIndex of this.proximitySort(x, z, this.activeZones)) {
-            for (const npc of this.getNearby(World.getZoneIndex(zoneIndex).getAllNpcsSafe(), x, z, originX, originZ, 16)) {
+            for (const npc of this.getNearby(World.getZoneIndex(zoneIndex).getAllNpcsSafe(), x, z, originX, originZ, 15)) {
                 if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
                     break npcs;
                 }
