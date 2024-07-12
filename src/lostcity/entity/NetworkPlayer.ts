@@ -50,15 +50,15 @@ export class NetworkPlayer extends Player {
     }
 
     decodeIn() {
-        if (this.client === null || this.client.inOffset < 1) {
+        this.userPath = [];
+        this.opcalled = false;
+
+        if (this.client === null) {
             return;
         }
 
         let offset = 0;
         this.lastResponse = World.currentTick;
-
-        this.userPath = [];
-        this.opcalled = false;
 
         World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
 
@@ -137,11 +137,12 @@ export class NetworkPlayer extends Player {
         }
         const encoder: MessageEncoder<OutgoingMessage> | undefined = ServerProtRepository.getEncoder(message);
         if (!encoder) {
+            console.error('No encoder for message', message);
             return;
         }
         const prot: ServerProt = encoder.prot;
         const buf = client.out;
-        const test = (1 + prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0) + encoder.test(message);
+        const test = (1 + (prot.length === -1 ? 1 : prot.length === -2 ? 2 : 0)) + encoder.test(message);
         if (buf.pos + test >= buf.length) {
             client.flush();
         }
@@ -193,7 +194,7 @@ export class NetworkPlayer extends Player {
         const reloadBottomZ = (Position.zone(this.originZ) - 4) << 3;
 
         // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || (this.tele && (Position.zone(this.x) !== Position.zone(this.originX) || Position.zone(this.z) !== Position.zone(this.originZ)))) {
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
             this.write(new RebuildNormal(Position.zone(this.x), Position.zone(this.z)));
 
             this.originX = this.x;

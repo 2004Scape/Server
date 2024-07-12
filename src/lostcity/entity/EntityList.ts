@@ -3,9 +3,8 @@ import Player from '#lostcity/entity/Player.js';
 import Entity from '#lostcity/entity/Entity.js';
 
 // inspired by https://github.com/rsmod/rsmod/blob/master/game/src/main/kotlin/org/rsmod/game/model/mob/list/MobList.kt
-abstract class EntityList<T extends Entity> {
+abstract class EntityList<T extends Entity> extends Array<T | undefined> {
     // constructor
-    private readonly entities: (T | null)[];
     private readonly free: Set<number>;
     protected readonly indexPadding: number;
     protected readonly ids: Int32Array;
@@ -14,7 +13,7 @@ abstract class EntityList<T extends Entity> {
     protected lastUsedIndex: number = 0;
 
     protected constructor(size: number, indexPadding: number) {
-        this.entities = new Array(size).fill(null);
+        super(size);
         this.ids = new Int32Array(size).fill(-1);
         this.free = new Set<number>(Array.from({ length: size }, (_, index) => index));
         this.indexPadding = indexPadding;
@@ -32,7 +31,7 @@ abstract class EntityList<T extends Entity> {
                 return index;
             }
         }
-        throw new Error('[EntityList] cannot find next id');
+        throw new Error('[EntityList] no space for new entities');
     }
 
     *[Symbol.iterator](): IterableIterator<T> {
@@ -40,8 +39,8 @@ abstract class EntityList<T extends Entity> {
             if (index === -1) {
                 continue;
             }
-            const entity: T | null = this.entities[index];
-            if (!entity) {
+            const entity: T | undefined = this[index];
+            if (typeof entity === 'undefined') {
                 continue;
             }
             yield entity;
@@ -56,9 +55,9 @@ abstract class EntityList<T extends Entity> {
         return count;
     }
 
-    get(id: number): T | null {
+    get(id: number): T | undefined {
         const index: number = this.ids[id];
-        return index !== -1 ? this.entities[index] : null;
+        return index !== -1 ? this[index] : undefined;
     }
 
     set(id: number, entity: T): void {
@@ -68,21 +67,20 @@ abstract class EntityList<T extends Entity> {
         const index = this.free.values().next().value;
         this.free.delete(index);
         this.ids[id] = index;
-        this.entities[index] = entity;
+        this[index] = entity;
         this.lastUsedIndex = id;
     }
 
     remove(id: number): void {
         const index: number = this.ids[id];
         if (index !== -1) {
-            this.entities[index] = null;
             this.ids[id] = -1;
             this.free.add(index);
         }
     }
 
     reset(): void {
-        this.entities.fill(null);
+        this.length = 0;
         this.ids.fill(-1);
         this.free.clear();
         for (let i: number = 0; i < this.ids.length; i++) {

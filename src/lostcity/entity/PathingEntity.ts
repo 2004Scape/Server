@@ -608,7 +608,6 @@ export default abstract class PathingEntity extends Entity {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
         }
-
         if (this.moveStrategy === MoveStrategy.FLY) {
             return dir;
         }

@@ -342,9 +342,12 @@ class World {
 
         this.devThread.on('exit', () => {
             this.devRebuilding = false;
-            this.broadcastMes('Error while rebuilding - see console for more info.');
             this.stopDevWatcher();
-            this.startDevWatcher();
+
+            if (this.shutdownTick === -1) {
+                this.broadcastMes('Error while rebuilding - see console for more info.');
+                this.startDevWatcher();
+            }
         });
 
         this.devWatcher = new Watcher('./data/src', {
@@ -521,7 +524,7 @@ class World {
         }
 
         // console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
-        // console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
+        // console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
         // console.log('----');
     }
 
@@ -1053,6 +1056,8 @@ class World {
             this.npcs.reset();
 
             if (duration > 2) {
+                console.log('Super fast shutdown initiated...');
+
                 // we've already attempted to shutdown, now we speed things up
                 if (this.tickRate > World.SHUTDOWN_TICKRATE) {
                     this.tickRate = World.SHUTDOWN_TICKRATE;
@@ -1065,6 +1070,10 @@ class World {
                     }
 
                     this.tickRate = World.NORMAL_TICKRATE;
+                }
+
+                if (!Environment.NODE_PRODUCTION) {
+                    process.exit(0);
                 }
             }
         } else {
@@ -1365,7 +1374,7 @@ class World {
         Login.logout(player);
     }
 
-    getPlayer(pid: number): Player | null {
+    getPlayer(pid: number): Player | undefined {
         return this.players.get(pid);
     }
 
@@ -1420,7 +1429,7 @@ class World {
         return this.zoneMap.objCount();
     }
 
-    getNpc(nid: number): Npc | null {
+    getNpc(nid: number): Npc | undefined {
         return this.npcs.get(nid);
     }
 

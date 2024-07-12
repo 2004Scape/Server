@@ -1,0 +1,61 @@
+// sources:
+// https://oldschool.runescape.wiki/w/Jogre#Drops
+
+// todo: RS3 drop table has differences, OSRS one has some logical errors
+
+[ai_queue3,jogre]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Normal drop
+obj_add(npc_coord, npc_param(death_drop), 1, 200);
+
+// Treasure trail
+~trail_mediumcluedrop(128, npc_coord);
+
+def_int $dropint = randominc(128);
+if ($dropint < 30) {
+    // 30/129
+    obj_add(npc_coord, bronze_spear, 1, 200);
+} else if ($dropint < 34) {
+    // 4/129
+    obj_add(npc_coord, iron_spear, 1, 200);
+} else if ($dropint < 44) {
+    // 10/129
+    obj_add(npc_coord, naturerune, 2, 200);
+} else if ($dropint < 46) {
+    // 2/129
+    obj_add(npc_coord, naturerune, 10, 200);
+} else if ($dropint < 48) {
+    // 2/129
+    obj_add(npc_coord, naturerune, 5, 200);
+} else if ($dropint < 50) {
+    // 2/129
+    obj_add(npc_coord, steel_javelin, 5, 200);
+} else if ($dropint < 56) {
+    // 6/129
+    obj_add(npc_coord, ~randomherb, 200);
+} else if ($dropint < 64) {
+    // 8/129
+    obj_add(npc_coord, pineapple, 2, 200);
+} else if ($dropint < 69) {
+    // 5/129
+    obj_add(npc_coord, knife, 1, 200);
+} else if ($dropint < 72) {
+    // 3/129
+    obj_add(npc_coord, bones, 1, 200);
+} else if ($dropint < 75) {
+    // 3/129
+    obj_add(npc_coord, big_bones, 1, 200);
+} else if ($dropint < 77) {
+    // 2/129
+    obj_add(npc_coord, big_bones, 3, 200);
+} else if ($dropint < 79) {
+    // 2/129
+    obj_add(npc_coord, bones, 1, 200);
+} else if ($dropint < 80) {
+    // 1/129
+    obj_add(npc_coord, ~randomjewel, 200);
+}

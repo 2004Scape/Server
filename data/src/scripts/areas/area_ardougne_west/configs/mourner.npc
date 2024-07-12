@@ -132,7 +132,7 @@ model5=model_185_obj_wear
 model6=model_323_obj_wear
 head1=model_51_obj_wear
 wanderrange=1
-attackrange=3
+maxrange=3
 // TODO
 
 [npc_371]

@@ -10,3 +10,15 @@ switch_int(random(3)) {
         ~chatplayer("<p,neutral>Hello.");
         ~chatnpc("<p,angry>I can't talk now,|can't you see we're trying|to win a battle here.");
 }
+
+[ai_queue1,_gnome_troop] ~npc_default_retaliate_ap;
+[ai_opplayer2,_gnome_troop] npc_setmode(applayer2);
+[ai_applayer2,_gnome_troop] ~npc_rangeattack;
+
+[ai_queue1,gnome_woman_white] ~npc_default_retaliate_ap;
+[ai_opplayer2,gnome_woman_white] npc_setmode(applayer2);
+[ai_applayer2,gnome_woman_white] ~npc_rangeattack;
+
+[ai_queue1,gnome_woman_black] ~npc_default_retaliate_ap;
+[ai_opplayer2,gnome_woman_black] npc_setmode(applayer2);
+[ai_applayer2,gnome_woman_black] ~npc_rangeattack;

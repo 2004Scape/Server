@@ -8,6 +8,5 @@ if (random(5) = 0) {
     }
     npc_anim(chicken_block, 0);
     npc_say("squawk!");
-    // todo: implement obj_addall
-    // obj_addall(npc_coord, egg, 1, 100);
+    obj_addall(npc_coord, egg, 1, 100);
 }

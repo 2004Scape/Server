@@ -19,9 +19,7 @@ export const Position = {
     zoneCenter: (pos: number) => Position.zone(pos) - 6,
     zoneOrigin: (pos: number) => Position.zoneCenter(pos) << 3,
     mapsquare: (pos: number) => pos >> 6,
-    local: (pos: number) => pos - (Position.zoneCenter(pos) << 3),
-    localOrigin: (pos: number) => pos - (Position.mapsquare(pos) << 6),
-    zoneUpdate: (pos: number) => pos - ((pos >> 3) << 3),
+    local: (pos: number, origin: number) => pos - (Position.zoneCenter(origin) << 3),
 
     face: (srcX: number, srcZ: number, dstX: number, dstZ: number) => {
         if (srcX == dstX) {
@@ -82,9 +80,10 @@ export const Position = {
     },
 
     isWithinDistanceSW(pos: { x: number, z: number }, other: { x: number, z: number }, distance: number) {
-        const dx = Math.abs(pos.x - other.x);
-        const dz = Math.abs(pos.z - other.z);
-        return dz < distance && dx < distance;
+        if (Math.abs(pos.x - other.x) > distance || Math.abs(pos.z - other.z) > distance) {
+            return false;
+        }
+        return true;
     },
 
     deltaX(dir: Direction): number {

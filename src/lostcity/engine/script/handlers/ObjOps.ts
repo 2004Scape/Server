@@ -23,6 +23,7 @@ import {
     ObjTypeValid,
     ParamTypeValid
 } from '#lostcity/engine/script/ScriptValidators.js';
+import Environment from '#lostcity/util/Environment.js';
 
 const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_ADD]: state => {
@@ -41,10 +42,25 @@ const ObjOps: CommandHandlers = {
             throw new Error(`attempted to add dummy item: ${objType.debugname}`);
         }
 
-        const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
-        World.addObj(obj, state.activePlayer.pid, duration);
-        state.activeObj = obj;
-        state.pointerAdd(ActiveObj[state.intOperand]);
+        if (objType.members && !Environment.NODE_MEMBERS) {
+            return;
+        }
+
+        if (!objType.stackable || count === 1) {
+            for (let i = 0; i < count; i++) {
+                const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, 1);
+                World.addObj(obj, state.activePlayer.pid, duration);
+
+                state.activeObj = obj;
+                state.pointerAdd(ActiveObj[state.intOperand]);
+            }
+        } else {
+            const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
+            World.addObj(obj, state.activePlayer.pid, duration);
+
+            state.activeObj = obj;
+            state.pointerAdd(ActiveObj[state.intOperand]);
+        }
     },
 
     [ScriptOpcode.OBJ_ADDALL]: state => {
@@ -63,10 +79,25 @@ const ObjOps: CommandHandlers = {
             throw new Error(`attempted to add dummy item: ${objType.debugname}`);
         }
 
-        const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
-        World.addObj(obj, -1, duration);
-        state.activeObj = obj;
-        state.pointerAdd(ActiveObj[state.intOperand]);
+        if (objType.members && !Environment.NODE_MEMBERS) {
+            return;
+        }
+
+        if (!objType.stackable || count === 1) {
+            for (let i = 0; i < count; i++) {
+                const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, 1);
+                World.addObj(obj, -1, duration);
+    
+                state.activeObj = obj;
+                state.pointerAdd(ActiveObj[state.intOperand]);
+            }
+        } else {
+            const obj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, objId, count);
+            World.addObj(obj, -1, duration);
+
+            state.activeObj = obj;
+            state.pointerAdd(ActiveObj[state.intOperand]);
+        }
     },
 
     [ScriptOpcode.OBJ_PARAM]: state => {

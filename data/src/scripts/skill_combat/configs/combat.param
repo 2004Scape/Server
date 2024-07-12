@@ -131,6 +131,10 @@ default=null
 type=spotanim
 default=null
 
+[proj_height]
+type=int
+default=96
+
 [undead]
 type=int
 default=0

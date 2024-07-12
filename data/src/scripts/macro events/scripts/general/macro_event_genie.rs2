@@ -2,8 +2,8 @@
 spotanim_map(small_smokepuff, npc_coord, 124, 0);
 sound_synth(genie_appear, 0, 0);
 npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
-npc_delay(1);
 %npc_attacking_uid = uid;
+npc_delay(1);
 npc_setmode(playerfollow);
 npc_queue(4, 0, 20);
 
@@ -53,7 +53,9 @@ npc_delay(2);
 
 [opnpc1,macro_event_genie]
 if (uid ! %npc_attacking_uid) {
-    ~chatnpc("<p,sad>Sorry, I'm trying to talk to <text_gender("Master", "Mistress")> <displayname>, but <text_gender("he", "she")> seems to be ignoring me."); // osrs
+    if (.finduid(%npc_attacking_uid) = true) {
+        ~chatnpc("<p,sad>Sorry, I'm trying to talk to <.text_gender("Master", "Mistress")> <.displayname>, but <.text_gender("he", "she")> seems to be ignoring me."); // osrs
+    }
     return;
 }
 if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
