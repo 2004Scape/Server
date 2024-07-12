@@ -125,6 +125,15 @@ if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
     return (false);
 }
 
+if(npc_type = lucien_edge) {
+    return (~lucien_attack);
+} 
+
+if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %damagetype ! ^ranged_style)) {
+    ~chatnpc("<p,angry>Your puny weapons do nothing against me human! Come back when you can give me a real fight!");
+    return (false);
+}
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -150,6 +159,13 @@ if (npc_category = battle_mage & %magearena_progress < ^mage_arena_complete) {
 }
 if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
     mes("I don't have time. I'm here to rescue Sir Servil and Jeremy.");
+    return (false);
+}
+if(npc_type = lucien_edge) {
+    return (~lucien_attack);
+} 
+if(npc_type = fire_warrior_of_lesarkus) { // can't attack with magic
+    ~chatnpc("<p,angry>Your puny weapons do nothing against me human! Come back when you can give me a real fight!");
     return (false);
 }
 if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progress) ! npc_type) {

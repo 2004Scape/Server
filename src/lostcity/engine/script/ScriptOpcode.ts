@@ -193,6 +193,8 @@ enum ScriptOpcode {
     SETSKINCOLOUR,
     P_ANIMPROTECT,
     RUNENERGY,
+    WEIGHT,
+    LAST_COORD,
 
     // Npc ops (2500-2999)
     NPC_ADD = 2500, // official

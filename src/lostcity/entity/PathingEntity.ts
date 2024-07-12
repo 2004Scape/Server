@@ -42,6 +42,7 @@ export default abstract class PathingEntity extends Entity {
     waypoints: Int32Array = new Int32Array(25);
     lastX: number = -1;
     lastZ: number = -1;
+    lastLevel: number = -1;
     tele: boolean = false;
     jump: boolean = false;
     lastStepX: number = -1;
@@ -536,6 +537,7 @@ export default abstract class PathingEntity extends Entity {
         this.tele = false;
         this.lastX = this.x;
         this.lastZ = this.z;
+        this.lastLevel = this.level;
         this.stepsTaken = 0;
         this.interacted = false;
         this.apRangeCalled = false;

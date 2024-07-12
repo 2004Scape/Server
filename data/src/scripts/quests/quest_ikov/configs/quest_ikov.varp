@@ -1,2 +1,9 @@
 [ikov_progress]
 scope=perm
+
+[ikov_lever]
+scope=perm
+
+[ikov_icearrowchest_coord]
+type=coord
+scope=perm
