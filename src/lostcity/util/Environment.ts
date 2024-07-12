@@ -3,7 +3,7 @@ import { tryParseArray, tryParseBoolean, tryParseInt, tryParseString } from './T
 
 export default {
     /// web server
-    WEB_PORT: tryParseInt(process.env.WEB_PORT, 80),
+    WEB_PORT: tryParseInt(process.env.WEB_PORT, process.platform === 'win32' ? 80 : 8888),
     WEB_CORS: tryParseBoolean(process.env.WEB_CORS, true),
 
     /// game server

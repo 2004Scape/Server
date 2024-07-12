@@ -355,7 +355,7 @@ model3=model_2955_npc
 model4=model_2956_npc
 head1=model_144_npc_head
 wanderrange=2
-attackrange=4
+maxrange=4
 // TODO respawnrate
 hitpoints=5
 param=damagetype,2

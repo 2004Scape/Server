@@ -174,30 +174,39 @@ export default class Npc extends PathingEntity {
         if (type.moverestrict === MoveRestrict.NOMOVE) {
             return false;
         }
-
-        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW) {
-            const distanceToEscape = Position.distanceTo(this, {
-                x: this.startX,
-                z: this.startZ,
-                width: this.width,
-                length: this.length
-            });
-            const targetDistanceFromStart = Position.distanceTo(this.target, {
-                x: this.startX,
-                z: this.startZ,
-                width: this.target.width,
-                length: this.target.length
-            });
-
-            if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
+        if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
+            if (this.targetOp === NpcMode.PLAYERESCAPE) {
+                const distanceToEscape = Position.distanceTo(this, {
+                    x: this.startX,
+                    z: this.startZ,
+                    width: this.width,
+                    length: this.length
+                });
+                const targetDistanceFromStart = Position.distanceTo(this.target, {
+                    x: this.startX,
+                    z: this.startZ,
+                    width: this.target.width,
+                    length: this.target.length
+                });
+    
+                if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
+                    return false;
+                }
+            }
+            let attackRange = 0;
+            if (this.targetOp === NpcMode.OPPLAYER2) {
+                attackRange = 1;
+            } else if (this.targetOp === NpcMode.APPLAYER2) {
+                attackRange = type.attackrange;
+            }
+            if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
+                this.defaultMode();
                 return false;
             }
         }
-
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
         }
-
         if (this.walktrigger !== -1) {
             const type = NpcType.get(this.type);
             const script = ScriptProvider.getByTrigger(ServerTriggerType.AI_QUEUE1 + this.walktrigger, type.id, type.category);
@@ -556,7 +565,7 @@ export default class Npc extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
             this.defaultMode();
             return;
         }
@@ -581,14 +590,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
         const type: NpcType = NpcType.get(this.type);
-
-        if (Position.distanceTo(this, this.target) > type.attackrange) {
-            this.defaultMode();
-            return;
-        }
-
         const apTrigger: boolean =
             (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
             (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||

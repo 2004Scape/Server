@@ -104,6 +104,7 @@ if (%skill_anim < calc(map_clock + 1)) {
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + $mining_rate);
 } else if (%action_delay = map_clock) {
+    %skill_sound = null;
     jump($get_ore);
 }
 ~mining_sound;

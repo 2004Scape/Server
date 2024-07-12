@@ -149,6 +149,7 @@
 [command,.damage](player_uid $uid, int $type, int $amount)
 [command,if_setresumebuttons](component $component1, component $component2, component $component3, component $component4, component $component5)
 [command,text_gender](string $male_text, string $female_text)(string)
+[command,.text_gender](string $male_text, string $female_text)(string)
 [command,midi_song](string $song)
 [command,midi_jingle](string $jingle, int $length)
 [command,.midi_jingle](string $jingle, int $length)
@@ -228,6 +229,7 @@
 [command,.p_animprotect](int $toggle)
 [command,weight]()(int)
 [command,last_coord]()(coord)
+[command,runenergy]()(int)
 
 // Npc ops (2500-2999)
 [command,npc_finduid](npc_uid $uid)(boolean)

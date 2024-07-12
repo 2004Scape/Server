@@ -479,6 +479,10 @@ const ScriptOpcodePointers: {
         require: ['p_active_player'],
         require2: ['p_active_player2']
     },
+    [ScriptOpcode.RUNENERGY]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.WEIGHT]: {
         require: ['p_active_player'],
         require2: ['p_active_player2']

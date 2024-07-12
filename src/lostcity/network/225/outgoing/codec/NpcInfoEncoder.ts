@@ -25,7 +25,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         const extended: Set<ExtendedInfo> = buildArea.extendedInfo;
         if (extended.size > 0) {
             for (const info of extended) {
-                const npc: Npc | null = World.getNpc(info.id);
+                const npc: Npc | undefined = World.getNpc(info.id);
                 if (!npc) {
                     continue;
                 }
@@ -46,7 +46,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         bitBlock.pBit(8, buildArea.npcs.size);
 
         for (const nid of buildArea.npcs) {
-            const npc: Npc | null = World.getNpc(nid);
+            const npc: Npc | undefined = World.getNpc(nid);
             if (!npc || npc.tele || npc.level !== message.level || !Position.isWithinDistanceSW(message, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
                 // npc full teleported, so needs to be removed and re-added
                 bitBlock.pBit(1, 1);

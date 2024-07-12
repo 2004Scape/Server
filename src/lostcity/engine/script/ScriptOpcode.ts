@@ -192,6 +192,7 @@ enum ScriptOpcode {
     SETGENDER,
     SETSKINCOLOUR,
     P_ANIMPROTECT,
+    RUNENERGY,
     WEIGHT,
     LAST_COORD,
 

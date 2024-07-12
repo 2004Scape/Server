@@ -1,0 +1,45 @@
+[ai_queue1,druid] ~npc_default_retaliate_ap;
+
+// from 100 ap hits:
+// entangle: 45
+// punch: 55
+[ai_applayer2,druid]
+if (~npc_combat_spell_checks = false) {
+    return;
+}
+if (random(2) = 0) {
+    ~npc_druid_entangle;
+    // from 100 ap hits, he continued ap only 4 times after entangling
+    if (random(5) ! 0) {
+        npc_setmode(opplayer2);
+    }
+} else {
+    npc_setmode(opplayer2);
+}
+
+// from 150 op hits:
+// entangle: 27
+// punch: 123
+[ai_opplayer2,druid]
+if (~npc_combat_spell_checks = false) {
+    return;
+}
+if (random(5) = 0) {
+    ~npc_druid_entangle;
+} else {
+    ~npc_default_attack;
+}
+
+
+[proc,npc_druid_entangle]
+def_dbrow $spell_data = ~get_spell_data(^entangle);
+def_int $duration = ~npc_spell_cast($spell_data, 4);
+
+if (~npc_player_hit_roll(^magic_style) = true) {
+    ~npc_spell_success($spell_data, 4, $duration);
+    // osrs queues a "The holding effect is beginning to fade." after 6 ticks
+    // but this video shows no message. https://youtu.be/fxCXNO-46pc
+} else {
+    ~npc_spell_fail($spell_data, $duration);
+}
+~npc_set_attack_vars;

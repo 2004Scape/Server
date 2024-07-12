@@ -19,9 +19,7 @@ export const Position = {
     zoneCenter: (pos: number) => Position.zone(pos) - 6,
     zoneOrigin: (pos: number) => Position.zoneCenter(pos) << 3,
     mapsquare: (pos: number) => pos >> 6,
-    local: (pos: number) => pos - (Position.zoneCenter(pos) << 3),
-    localOrigin: (pos: number) => pos - (Position.mapsquare(pos) << 6),
-    zoneUpdate: (pos: number) => pos - ((pos >> 3) << 3),
+    local: (pos: number, origin: number) => pos - (Position.zoneCenter(origin) << 3),
 
     face: (srcX: number, srcZ: number, dstX: number, dstZ: number) => {
         if (srcX == dstX) {

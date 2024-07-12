@@ -47,13 +47,14 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         if (!player) {
             return;
         }
+
         bitBlock.bits();
         bitBlock.pBit(1, tele || walkDir !== -1 || runDir !== -1 || mask > 0 ? 1 : 0);
         if (tele) {
             bitBlock.pBit(2, 3);
             bitBlock.pBit(2, level);
-            bitBlock.pBit(7, Position.local(x));
-            bitBlock.pBit(7, Position.local(z));
+            bitBlock.pBit(7, Position.local(x, player.originX));
+            bitBlock.pBit(7, Position.local(z, player.originZ));
             bitBlock.pBit(1, jump ? 1 : 0);
             bitBlock.pBit(1, mask > 0 ? 1 : 0);
         } else if (runDir !== -1) {

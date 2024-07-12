@@ -179,7 +179,7 @@ if ($freeze_time > 0) {
     if (~.check_protect_prayer(^magic_style) = true) {
         $freeze_time = divide($freeze_time, 2); // 50% reduction https://oldschool.runescape.wiki/w/Update:RS2_bugfixes_-_part_4
     }
-    .queue(freeze_player, 0, $freeze_time);
+    .queue(pvp_freeze_player, 0, $freeze_time);
 }
 
 [proc,pvp_spell_success](dbrow $spell_data, int $maxhit, int $duration)
@@ -251,3 +251,8 @@ return($duration);
 [proc,magic_spell_maxhit](dbrow $spell_data)(int)
 def_int $maxhit = db_getfield($spell_data, magic_spell_table:maxhit, 0);
 return($maxhit);
+
+[queue,pvp_freeze_player](int $duration)
+mes("You've been frozen!");
+%stunned = calc(map_clock + $duration + 1);
+walktrigger(frozen);

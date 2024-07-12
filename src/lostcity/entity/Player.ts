@@ -487,12 +487,6 @@ export default class Player extends PathingEntity {
                 this.runScript(script, true);
             }
         }
-
-        if (this.runenergy < 100) {
-            this.setVar(VarPlayerType.PLAYER_RUN, 0);
-            this.setVar(VarPlayerType.TEMP_RUN, 0);
-        }
-
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
             if (this.basRunning === -1) {
@@ -806,7 +800,7 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.target instanceof Npc && (World.getNpc(this.target.nid) === null || this.target.delayed())) {
+        if (this.target instanceof Npc && (typeof World.getNpc(this.target.nid) === 'undefined' || this.target.delayed())) {
             this.clearInteraction();
             this.unsetMapFlag();
             return;

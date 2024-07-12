@@ -33,6 +33,7 @@ if (%npc_macro_event_status = ^triffid_ready_to_attack) { // turn hostile
 
     npc_changetype(macro_event_triffid_hostile);
     npc_delay(1);
+    npc_settimer(1);
     if (finduid(%npc_attacking_uid) = true) {
         %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
         npc_setmode(opplayer2);
@@ -41,13 +42,30 @@ if (%npc_macro_event_status = ^triffid_ready_to_attack) { // turn hostile
 %npc_macro_event_status = ^triffid_ready_to_attack;
 
 
+// deletes if its not in opplayer2 mode
+// https://youtu.be/94bDnUMTMXQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=466
+// https://youtu.be/t7iOUMQv6Ws?t=148
 [ai_timer,macro_event_triffid_hostile]
 if (npc_getmode = opplayer2) {
     return;
 }
-// deletes if its not in opplayer2 mode
-// https://youtu.be/94bDnUMTMXQ?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT&t=466
-// https://youtu.be/t7iOUMQv6Ws?t=148
-npc_anim(seq_355, 0);
-npc_delay(1);
-npc_del;
+if (finduid(%npc_attacking_uid) = true) {
+    huntall(npc_coord, 2, 0);
+    while (huntnext = true) {
+        if (uid = %npc_attacking_uid) {
+            if (~npc_can_attack_player = true) {
+                // not sure if it should force attack the player. Probably not
+                npc_setmode(opplayer2);
+                return;
+            }
+        }
+    }
+}
+if (%npc_lastattack = 0) { // npc hasnt attacked anyone yet
+    return;
+}
+if (add(%npc_lastattack, 8) < map_clock) {
+    npc_anim(seq_355, 0);
+    npc_delay(1);
+    npc_del;
+}
