@@ -53,12 +53,12 @@
 [proc,attempt_identify_herb](namedobj $identified_herb, int $slot)
 ~require_members_feature;
 
-if (%druid_progress < ^druid_complete) {
-    @fail_identifying_herb;
-}
+// early osrs had no druidic ritual check. This is how level 2 herblore accounts were possible
 def_int $current_level = stat(herblore);
 def_int $herb_level = oc_param($identified_herb, identified_herb_level);
 if ($current_level < $herb_level) {
-    @fail_identifying_herb;
+    mes("You cannot identify this herb."); // https://youtu.be/_CEkzXSdnh4?t=86
+    mes("You need a higher Herblore level.");
+    return;
 }
 ~identify_herb($identified_herb, $slot);
