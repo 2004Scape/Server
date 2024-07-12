@@ -1,23 +1,22 @@
 [opnpc1,lucien_ardougne]
 switch_int (%ikov_progress) {
-    case ^ikov_started:
+    case ^ikov_started, ^ikov_disabled_trap, ^ikov_pulled_lever :
         ~chatnpc("<p,angry>I told you not to meet me here again!");
-        if(inv_total(inv, obj_86) = 0) {
-            ~chatplayer("<p,sad>I've lost the pendant you gave me.");
-            ~chatnpc("<p,angry>Imbecile!");
-            inv_add(inv, obj_86, 1);
-            ~objbox(obj_86, "Lucien has given you another pendant!");
-            return;
-        }
-        ~chatplayer("<p,confused>Sorry! Can you remind me of my mission?");
-        ~chatnpc("<p,angry>My patience grows thin hero!");
-        ~chatnpc("<p,neutral>I need the Staff of Armadyl. It's in the Temple of Ikov, near Hemenster, north east of here.");
-        ~chatplayer("<p,happy>I'm up for it!");
+        @lucien_mission;
     case ^ikov_not_started :
         // https://youtu.be/sCl0GprumNE?si=pzg_lmiunV4RJNxn&t=27
         ~chatnpc("<p,neutral>I seek a hero to go on an important mission!");
         @multi2("I'm a mighty hero!", lucien_mightyhero, "Yep, lots of heros about these days.", lucien_heros);
 }
+
+[opnpc1,lucien_edge]
+if(map_members = false) { // RS3
+    ~chatnpc("<p,angry>Leave me alone, I have much to ponder on!");
+    return;
+}
+// varp = 70, different on osrs: https://youtu.be/cePHhIOqsqg?si=PiP6lepYRxiJUmTB&t=1128
+~chatnpc("<p,neutral>Have you got the Staff of Armadyl yet?");
+~chatplayer("<p,neutral>No, not yet.");
 
 [label,lucien_mightyhero]
 ~chatplayer("<p,angry>I am a mighty hero!");
@@ -38,8 +37,8 @@ switch_int (%ikov_progress) {
 ~chatplayer("<p,happy>I'm up for it!");
 ~chatnpc("<p,neutral>Take this pendant. Without it you will not be able to enter the Chamber of Fear.");
 %ikov_progress = ^ikov_started;
-inv_add(inv, obj_86, 1);
-~objbox(obj_86, "Lucien has given you a pendant!");
+inv_add(inv, pendant_of_lucien, 1);
+~objbox(pendant_of_lucien, "Lucien has given you a pendant!");
 ~chatnpc("<p,sad>I cannot stay here much longer.");
 ~chatnpc("<p,neutral>I will be in the forest north of Varrock.|I have a small holding up there.");
 
@@ -57,6 +56,18 @@ inv_add(inv, obj_86, 1);
 [label,lucien_pass]
 ~chatplayer("<p,neutral>I'll pass this time.");
 ~chatnpc("<p,sad>Hmph.");
+
+[label,lucien_mission]
+if(inv_total(inv, pendant_of_lucien) = 0) {
+    ~chatplayer("<p,sad>I've lost the pendant you gave me.");
+    ~chatnpc("<p,angry>Imbecile!");
+    inv_add(inv, pendant_of_lucien, 1);
+    ~objbox(pendant_of_lucien, "Lucien has given you another pendant!");
+    return;
+}
+~chatplayer("<p,confused>Sorry! Can you remind me of my mission?");
+~chatnpc("<p,angry>My patience grows thin hero!");
+~chatnpc("<p,neutral>I need the Staff of Armadyl. It's in the Temple of Ikov, near Hemenster, north east of here.");
 
 [label,lucien_heros]
 ~chatplayer("<p,neutral>Yep, lots of heros about these days.");

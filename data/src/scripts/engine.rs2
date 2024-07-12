@@ -226,7 +226,7 @@
 [command,setskincolour](int $skin_colour)
 [command,p_animprotect](int $toggle)
 [command,.p_animprotect](int $toggle)
-[command,p_weight]
+[command,weight]()(int)
 [command,last_coord]()(coord)
 
 // Npc ops (2500-2999)

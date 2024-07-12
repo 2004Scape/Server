@@ -192,7 +192,7 @@ enum ScriptOpcode {
     SETGENDER,
     SETSKINCOLOUR,
     P_ANIMPROTECT,
-    P_WEIGHT,
+    WEIGHT,
     LAST_COORD,
 
     // Npc ops (2500-2999)

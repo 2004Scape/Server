@@ -992,7 +992,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.animProtect = check(state.popInt(), NumberNotNull);
     }),
 
-    [ScriptOpcode.P_WEIGHT]: checkedHandler(ProtectedActivePlayer, state => {
+    [ScriptOpcode.WEIGHT]: checkedHandler(ProtectedActivePlayer, state => {
         state.pushInt(state.activePlayer.runweight);
     }),
 

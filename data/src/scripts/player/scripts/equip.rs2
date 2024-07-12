@@ -65,6 +65,9 @@ if (p_finduid(uid) = true) {
         return;
     }
     inv_moveitem(worn, inv, $obj, sub($count, $overflow));
+    if($obj = boots_of_lightness_worn) {
+
+    }
     ~update_all($obj);
 }
 
@@ -459,3 +462,19 @@ if ($secondary_count > 0 & oc_stackable($secondary_obj) = false) {
     }
 }
 return(true, $swapped);
+
+
+[proc,update_weight_equipment] // can change to use categories and param when more weight reduction equipment exists
+if(inv_total(worn, boots_of_lightness_inv) > 0 & map_members = true) { // convert inv boots to worn boots if in p2p
+    inv_del(worn, boots_of_lightness_inv, 1);
+    inv_setslot(worn, ^wearpos_feet, boots_of_lightness_worn, 1);
+} else if(inv_total(worn, boots_of_lightness_worn) > 0 & map_members = false) { // convert worn boots to inv boots (in worn inv) if in f2p 
+    inv_del(worn, boots_of_lightness_worn, 1);
+    inv_setslot(worn, ^wearpos_feet, boots_of_lightness_inv, 1);
+}
+
+if(inv_total(inv, boots_of_lightness_worn) > 0) {
+    def_int $count = inv_total(inv, boots_of_lightness_worn); // shouldnt ever be above 1?
+    inv_del(inv, boots_of_lightness_worn, $count); // should use inv_changeslot probably
+    inv_add(inv, boots_of_lightness_inv, $count);
+}

@@ -1,0 +1,32 @@
+[opnpc1,npc_277]
+~chatnpc("<p,angry>Who dares to enter the Temple of Ikov!");
+switch_int (~p_choice2("A mighty hero!", 1, "A humble pilgrim.", 2)) {
+    case 1:
+        ~chatplayer("<p,angry>A mighty hero!");
+        ~chatnpc("<p,angry>Pathetic fool! Prepare to die!");
+        ~npc_retaliate(0);
+    case 2:
+        ~chatplayer("<p,confused>A humble pilgrim.");
+        ~chatnpc("<p,happy>I haven't seen a pilgrim for thousands of years!");
+        ~chatnpc("<p,angry>Temple is closed!");
+}
+
+[ai_applayer2,npc_277]
+~npc_cast_spell_with_forced_max_hit(^fire_blast, 4, 8);
+
+[ai_opplayer2,npc_277]
+~npc_cast_spell_with_forced_max_hit(^fire_blast, 4, 8);
+
+[ai_queue1,npc_277] gosub(npc_default_retaliate_ap);
+
+[ai_queue3,npc_277]
+gosub(npc_death);
+if(npc_findhero = true) {
+    if_close;
+    queue(queue_defeat_fire_warrior, 0);
+}
+
+[queue,queue_defeat_fire_warrior] 
+if(%ikov_progress = ^ikov_pulled_lever) {
+    %ikov_progress = ^ikov_defeated_fire_warrior;
+}

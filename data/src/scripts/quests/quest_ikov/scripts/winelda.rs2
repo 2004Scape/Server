@@ -1,0 +1,77 @@
+[opnpc1,winelda]
+switch_int (%ikov_progress) {
+    case ^ikov_spoken_winelda:
+        if(inv_total(inv, limpwurt_root) >= 20) {
+            ~chatplayer("<p,happy>I've got you the limpwurt roots!");
+            ~chatnpc("<p,happy>Good! Good! My potion is nearly ready! Bubble, bubble, toil and trouble!");
+            ~chatnpc("<p,happy>Now we shows them ours magic! Hold on tight!");
+            %ikov_progress = ^ikov_paid_winelda;
+            inv_del(inv, limpwurt_root, 20);
+            @winelda_teleport;
+            return;
+        }
+        ~chatnpc("<p,neutral>Have you got roots for poor Winelda?");
+        if(inv_total(inv, limpwurt_root) > 0) {
+            ~chatplayer("<p,happy>I've got some limpwurt roots!"); // always plural
+            ~chatnpc("<p,sad>We needs 20 rooteses!");
+        } else {
+            ~chatplayer("<p,neutral>How many did you need again?");
+            ~chatnpc("<p,neutral>We needs 20 Limpwurt roots for pot.");
+        }
+    case ^ikov_defeated_fire_warrior :
+        ~chatnpc("<p,happy>Hehe! We see you're in a pickle!");
+        ~chatnpc("<p,neutral>Wants to be getting over the nasty lava do we?");
+        switch_int(~p_choice3("Nah, not bothered!", 1, "Yes we do!", 2, "Yes I do!", 3)) {
+            case 1:
+                ~chatplayer("<p,neutral>Nah, not bothered!");
+                ~chatnpc("<p,happy>Hehe! Ye'll come back! They always come back!");
+            case 2:
+                ~chatplayer("<p,neutral>Yes we do!");
+                ~chatnpc("<p,sad>Mocking us are we? Clever one aren't we?");
+                @winelda_explain;
+            case 3:
+                ~chatplayer("<p,neutral>Yes I do!");
+                @winelda_explain;
+        }
+    case default:
+        ~chatplayer("<p,neutral>Hi again. Could you do the honours again please?");
+        ~chatnpc("<p,happy>Certainly! We helps those that helps poor Winelda!");
+        @winelda_teleport;
+}
+
+[debugproc,win]
+if(p_finduid(uid) = false | npc_find(coord, winelda, 5, 0) = false) {
+    return;
+}
+@winelda_teleport;
+
+[label,winelda_teleport]
+if_close;
+spotanim_npc(teleport_casting, 92, 0);
+cam_moveto(0_41_154_35_24, 1500, 100, 232);
+cam_lookat(coord, 50, 100, 232);
+p_delay(0);
+anim(seq_804, 0);
+spotanim_map(small_smokepuff, coord, 0, 0);
+sound_synth(teleport_all, 0, 0);
+p_delay(2);
+cam_lookat(0_41_154_40_20, 50, 3, 10);
+p_delay(3);
+anim(seq_803, 0);
+p_teleport(0_41_154_40_20);
+spotanim_map(small_smokepuff, 0_41_154_40_20, 0, 0);
+p_delay(2);
+//cam_lookat(0_40_153_56_0, 0, 0, 0);
+//cam_moveto(0_41_154_35_24, 1500, 100, 0);
+cam_reset;
+
+[label,winelda_explain]
+~chatnpc("<p,happy>I'm knowing some magic trickesses! I could get over easy as that!");
+~chatnpc("<p,sad>Don't tell them! They always come! They pester poor Winelda!");
+~chatplayer("<p,angry>If you're such a great witch, get me over!");
+~chatnpc("<p,angry>See! They pester Winelda!");
+~chatplayer("<p,neutral>I can do something for you!");
+~chatnpc("<p,happy>Good! Don't pester! Help!");
+~chatnpc("<p,neutral>Get Winelda 20 limpwurt roots for my pot.");
+~chatnpc("<p,happy>Then we shows them some magic!");
+%ikov_progress = ^ikov_spoken_winelda;

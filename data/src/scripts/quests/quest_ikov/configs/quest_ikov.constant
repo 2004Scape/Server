@@ -1,5 +1,13 @@
 ^ikov_not_started = 0
 ^ikov_started = 10
+^ikov_disabled_trap = 20
+^ikov_pulled_lever = 30
+^ikov_defeated_fire_warrior = 40
+^ikov_spoken_winelda = 50
+^ikov_paid_winelda = 60
+^ikov_helping_armadyl = 70
+^ikov_completed_armadyl = 80
+^ikov_completed_lucien = 90
 
 ^ikovbridge_zone_lower = 0_41_153_24_36
 ^ikovbridge_zone_upper = 0_41_153_26_37
