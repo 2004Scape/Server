@@ -42,7 +42,7 @@ export default abstract class PathingEntity extends Entity {
     waypoints: Int32Array = new Int32Array(25);
     lastX: number = -1;
     lastZ: number = -1;
-    lastLevel: nubmer = -1;
+    lastLevel: number = -1;
     tele: boolean = false;
     jump: boolean = false;
     lastStepX: number = -1;
