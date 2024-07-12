@@ -37,6 +37,7 @@ import NpcStat from '#lostcity/entity/NpcStat.js';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag} from '@2004scape/rsmod-pathfinder';
 import HuntNobodyNear from '#lostcity/entity/hunt/HuntNobodyNear.js';
+import SeqType from '#lostcity/cache/config/SeqType.js';
 
 export default class Npc extends PathingEntity {
     static readonly ANIM = 0x2;
@@ -861,10 +862,16 @@ export default class Npc extends PathingEntity {
 
     // ----
 
-    playAnimation(seq: number, delay: number) {
-        this.animId = seq;
-        this.animDelay = delay;
-        this.mask |= Npc.ANIM;
+    playAnimation(anim: number, delay: number) {
+        if (anim >= SeqType.count) {
+            return;
+        }
+
+        if (anim == -1 || this.animId == -1 || SeqType.get(anim).priority > SeqType.get(this.animId).priority || SeqType.get(this.animId).priority === 0) {
+            this.animId = anim;
+            this.animDelay = delay;
+            this.mask |= Npc.ANIM;
+        }
     }
 
     spotanim(spotanim: number, height: number, delay: number) {

@@ -41,7 +41,9 @@ if ($next_gnome_food = null) {
 inv_del(inv, $gnome_food, 1);
 inv_del(inv, $ingredient, 1);
 inv_add(inv, $next_gnome_food, 1);
-inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+if (oc_param($ingredient, next_obj_stage) ! null) {
+    inv_add(inv, oc_param($ingredient, next_obj_stage), 1);
+}
 
 // if finished cocktail, give xp
 if (oc_category($next_gnome_food) = category_83) {

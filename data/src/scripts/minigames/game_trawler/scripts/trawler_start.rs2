@@ -8,18 +8,14 @@ huntall(^trawler_lobby_center_under, 8, 0);
 while (huntnext = true) {
     if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = true) {
         if_close;
-        if (p_finduid(uid) = true) {
-            queue(trawler_start, 0);
-        }
+        queue(trawler_start, 0);
     }
 }
 huntall(^trawler_lobby_center, 8, 0);
 while (huntnext = true) {
     if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = true) {
         if_close;
-        if (p_finduid(uid) = true) {
-            queue(trawler_start, 0);
-        }
+        queue(trawler_start, 0);
     }
 }
 

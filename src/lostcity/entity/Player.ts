@@ -1494,7 +1494,6 @@ export default class Player extends PathingEntity {
 
     playAnimation(anim: number, delay: number) {
         if (anim >= SeqType.count || this.animProtect) {
-            // client would hard crash
             return;
         }
 

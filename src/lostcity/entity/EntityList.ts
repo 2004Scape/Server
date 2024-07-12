@@ -31,7 +31,7 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
                 return index;
             }
         }
-        throw new Error('[EntityList] cannot find next id');
+        throw new Error('[EntityList] no space for new entities');
     }
 
     *[Symbol.iterator](): IterableIterator<T> {
@@ -74,7 +74,6 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
     remove(id: number): void {
         const index: number = this.ids[id];
         if (index !== -1) {
-            this.splice(index, 1);
             this.ids[id] = -1;
             this.free.add(index);
         }
