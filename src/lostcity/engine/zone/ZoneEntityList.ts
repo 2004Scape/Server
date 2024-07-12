@@ -44,7 +44,7 @@ export default abstract class ZoneEntityList<T> extends Array<T[] | undefined> {
                 continue;
             }
             if (reverse) {
-                for (let i: number = 0; i < items.length; i++) {
+                for (let i: number = items.length - 1; i >= 0; i--) {
                     yield items[i];
                 }
             } else {
