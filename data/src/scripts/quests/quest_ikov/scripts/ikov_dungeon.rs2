@@ -80,6 +80,7 @@ if(last_useitem = ikov_lever) {
     inv_del(inv, ikov_lever, 1);
     loc_change(loc_87, 200); // 200t OSRS
 }
+~displaymessage(^dm_default);
 
 [oploc1,loc_87]
 p_arrivedelay;
@@ -122,11 +123,11 @@ if(%ikov_progress = ^ikov_disabled_trap) %ikov_progress = ^ikov_pulled_lever;
 p_arrivedelay;
 anim(human_leverdown, 0);
 p_delay(0);
+loc_change(loc_88, 5);
+sound_synth(lever, 0, 0);
 if(%ikov_progress >= ^ikov_disabled_trap) {
     return;
 }
-loc_change(loc_88, 5);
-sound_synth(lever, 0, 0);
 p_delay(0);
 // stumble_loop sound
 anim(seq_768, 0);
@@ -141,7 +142,7 @@ p_delay(2);
 [oploc2,loc_91]
 p_arrivedelay;
 anim(human_leverdown, 0);
-if(stat(thieving) >= 42) {
+if(stat(thieving) >= 42 & %ikov_progress < ^ikov_defeated_fire_warrior) {
     if(%ikov_progress = ^ikov_started) {
         %ikov_progress = ^ikov_disabled_trap;
     }
@@ -165,6 +166,7 @@ if(%ikov_progress >= ^ikov_defeated_fire_warrior) {
     ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
     return;
 }
+p_arrivedelay; // https://youtu.be/cePHhIOqsqg?si=-8QJd7t7ZIBz4K7y&t=667
 cam_moveto(0_41_154_17_12, 1000, 100, 232);
 cam_lookat(0_41_154_22_14, 50, 100, 232);
 cam_lookat(0_41_154_22_10, 50, 3, 10);

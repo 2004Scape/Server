@@ -16,6 +16,15 @@ switch_int(random(6)) {
 }
 
 [proc,lucien_attack](boolean)
+if(%ikov_progress >= ^ikov_completed_armadyl) { // TODO: map_members here?
+    // RS3, OSRS wiki also mentions: "If you try to attack Lucien before the end of the Temple of Ikov quest without wearing the Armadyl pendant, he says "You do not want to attack me. I am your friend."
+    // so likely was in OSRS as well
+    mes("You have completed the Temple of Ikov quest.");
+    return (false);
+}
+if(map_members = true & %ikov_progress = ^ikov_helping_armadyl & inv_total(worn, armadyl_pendant) > 0) {
+    return (true);
+}
 ~chatnpc("<p,neutral>You don't want to attack me. I am your friend.");
 if_close;
 p_delay(0);
@@ -37,7 +46,7 @@ if(~obj_gettotal(staff_of_armadyl) > 0) {
     mes("I already have the staff.");
     return;
 }
-npc_huntall(coord, 5, 1); // requires los
+npc_huntall(coord, 5, 1); // requires los, might need to recheck dist?
 while (npc_huntnext = true) {
     if (npc_category = guardian_of_armadyl) {
         npc_say("That is not thine to take!");
@@ -46,3 +55,18 @@ while (npc_huntnext = true) {
     }
 }
 @pickup_obj(obj_coord, obj_type, obj_count);
+
+[queue,ikov_armadyl_quest_complete](npc_uid $npc)
+%ikov_progress = ^ikov_completed_armadyl;
+givexp(ranged, 105000);
+givexp(fletching, 80000);
+~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Armadyl!");
+if (npc_finduid($npc) = true) {
+    gosub(npc_death);
+}
+
+[queue,ikov_lucien_quest_complete]
+%ikov_progress = ^ikov_completed_lucien;
+givexp(ranged, 105000);
+givexp(fletching, 80000);
+~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Lucien!");

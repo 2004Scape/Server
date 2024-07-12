@@ -2,6 +2,10 @@
 if(%ikov_progress = ^ikov_helping_armadyl) {
     ~chatnpc("<p,neutral>Have you killed Lucien?");
     if(~obj_gettotal(armadyl_pendant) = 0) {
+        ~chatplayer("<p,sad>Not yet, I've lost the pendant you gave me!");
+        ~chatnpc("<p,sad>Hurry friend! Time is against us!");
+        inv_add(inv, armadyl_pendant, 1);
+        ~objboxt(armadyl_pendant, "The guardian has given you a pendant.");
         return;
     }
     ~chatplayer("<p,neutral>Not yet.");
@@ -56,7 +60,8 @@ switch_int(~p_choice3("Why not?!", 1, "Then you must die!", 2, "Wow! You must be
 
 [label,armadyl_what_kind]
 ~chatplayer("<p,neutral>What are your kind and what are you doing here?");
-~chatnpc("<p,neutral>We are the Guardians of Armadyl. We have kept the temple safe for many ages. The evil in the dungeons seek what lies here. The Mahjarrat are the worst.");
+// https://youtu.be/cePHhIOqsqg?si=LCDaj5cUP5-nvtxH&t=926
+~chatnpc("<p,neutral>We are the Guardians of Armadyl. We have kept the temple safe for many ages. The evil in the dungeons seek what lies here. The Mahjarrat are the worse.");
 switch_int(~p_choice3("What is the Armadyl?", 1, "Who are the Mahjarrat?", 2, "Wow! You must be really old!", 3)) {
     case 1:
         ~chatplayer("<p,confused>What is the Armadyl?");
@@ -111,7 +116,7 @@ switch_int(~p_choice3("Ok! I'll help!", 1, "No! I shall not turn against my empl
         ~chatplayer("<p,happy>Yes!");
         ~chatnpc("<p,sad>He must be gaining in power again. If you can defeat him he will be banished from this plane for a while. You will need this pendant to attack him.");
         inv_add(inv, armadyl_pendant, 1);
-        ~objbox(armadyl_pendant, "The guardian has given you a pendant.");
+        ~objboxt(armadyl_pendant, "The guardian has given you a pendant.");
     case 2:
         ~chatplayer("<p,angry>No! I shall not turn against my employer!");
         ~chatnpc("<p,angry>Fool! You will die for your sins!");

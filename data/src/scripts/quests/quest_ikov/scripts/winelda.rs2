@@ -39,12 +39,6 @@ switch_int (%ikov_progress) {
         @winelda_teleport;
 }
 
-[debugproc,win]
-if(p_finduid(uid) = false | npc_find(coord, winelda, 5, 0) = false) {
-    return;
-}
-@winelda_teleport;
-
 [label,winelda_teleport]
 if_close;
 spotanim_npc(teleport_casting, 92, 0);
@@ -59,7 +53,7 @@ cam_lookat(0_41_154_40_20, 50, 3, 10);
 p_delay(3);
 anim(seq_803, 0);
 p_teleport(0_41_154_40_20);
-spotanim_map(small_smokepuff, 0_41_154_40_20, 0, 0);
+spotanim_map(small_smokepuff, coord, 0, 0); // doesn't seem to show up visually? something to do with the seq being played
 p_delay(2);
 //cam_lookat(0_40_153_56_0, 0, 0, 0);
 //cam_moveto(0_41_154_35_24, 1500, 100, 0);
