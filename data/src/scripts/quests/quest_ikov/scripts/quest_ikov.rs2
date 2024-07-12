@@ -16,7 +16,7 @@ switch_int(random(6)) {
 }
 
 [proc,lucien_attack](boolean)
-if(%ikov_progress >= ^ikov_completed_armadyl) { // TODO: map_members here?
+if(map_members = true & %ikov_progress >= ^ikov_completed_armadyl) { // RS3 wiki implies map_members check here, seems to make sense
     // RS3, OSRS wiki also mentions: "If you try to attack Lucien before the end of the Temple of Ikov quest without wearing the Armadyl pendant, he says "You do not want to attack me. I am your friend."
     // so likely was in OSRS as well
     mes("You have completed the Temple of Ikov quest.");
