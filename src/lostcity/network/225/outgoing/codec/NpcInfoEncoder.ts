@@ -28,10 +28,13 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             for (const info of extended) {
                 const npc: Npc | undefined = World.getNpc(info.id);
                 if (!npc) {
-                    // if this case gets hit... probably expect a disconnect
+                    // safeguard against a potential crash point
+                    // things WILL act weird if this happens
+                    buf.p1(0);
                     continue;
                 }
-                this.writeUpdate(npc, buf, info.added);
+
+                this.writeExtendedInfo(npc, buf, info.added);
             }
         }
 
@@ -50,8 +53,8 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
         for (const nid of buildArea.npcs) {
             const npc: Npc | undefined = World.getNpc(nid);
-            if (!npc || npc.tele || npc.level !== message.level || !Position.isWithinDistanceSW(message, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
-                // npc full teleported, so needs to be removed and re-added
+            if (!npc || npc.tele || npc.level !== message.level || !Position.isWithinDistanceSW(message, npc, 15) || !npc.checkLifeCycle(World.currentTick)) {
+                // if the npc was teleported, it needs to be removed and re-added
                 buf.pBit(1, 1);
                 buf.pBit(2, 3);
                 buildArea.npcs.delete(nid);
@@ -125,7 +128,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         buf.bytes();
     }
 
-    private writeUpdate(npc: Npc, buf: Packet, newlyObserved: boolean): void {
+    private writeExtendedInfo(npc: Npc, buf: Packet, newlyObserved: boolean): void {
         let mask: number = npc.mask;
         if (newlyObserved && (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1)) {
             mask |= Npc.FACE_COORD;

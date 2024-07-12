@@ -30,10 +30,13 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             for (const info of extended) {
                 const other: Player | null = World.getPlayerByUid(info.id);
                 if (!other) {
-                    // if this case gets hit... probably expect a disconnect
+                    // safeguard against a potential crash point
+                    // things WILL act weird if this happens
+                    buf.p1(0);
                     continue;
                 }
-                this.writeUpdate(other, message, buf, info.id === message.uid, info.added);
+
+                this.writeExtendedInfo(other, message, buf, info.id === message.uid, info.added);
             }
         }
 
@@ -89,7 +92,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         for (const uid of buildArea.players) {
             const other: Player | null = World.getPlayerByUid(uid);
             if (!other || other.tele || other.level !== message.level || !Position.isWithinDistanceSW(message, other, buildArea.viewDistance) || !other.checkLifeCycle(World.currentTick)) {
-                // player full teleported, so needs to be removed and re-added
+                // if the player was teleported, they need to be removed and re-added
                 buf.pBit(1, 1);
                 buf.pBit(2, 3);
                 buildArea.players.delete(uid);
@@ -163,7 +166,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         buf.bytes();
     }
 
-    private writeUpdate(player: Player, message: PlayerInfo, buf: Packet, self: boolean = false, newlyObserved: boolean = false): void {
+    private writeExtendedInfo(player: Player, message: PlayerInfo, buf: Packet, self: boolean = false, newlyObserved: boolean = false): void {
         let mask: number = player.mask;
         if (newlyObserved) {
             mask |= Player.APPEARANCE;

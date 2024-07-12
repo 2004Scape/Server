@@ -80,9 +80,10 @@ export const Position = {
     },
 
     isWithinDistanceSW(pos: { x: number, z: number }, other: { x: number, z: number }, distance: number) {
-        const dx = Math.abs(pos.x - other.x);
-        const dz = Math.abs(pos.z - other.z);
-        return dz < distance && dx < distance;
+        if (Math.abs(pos.x - other.x) > distance || Math.abs(pos.z - other.z) > distance) {
+            return false;
+        }
+        return true;
     },
 
     deltaX(dir: Direction): number {
