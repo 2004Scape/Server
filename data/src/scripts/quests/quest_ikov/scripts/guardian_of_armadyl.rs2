@@ -30,7 +30,7 @@ if(%ikov_progress = ^ikov_paid_winelda) {
 [label,armadyl_staffofarma]
 ~chatplayer("<p,neutral>I seek the Staff of Armadyl.");
 ~chatnpc("<p,neutral>We are the guardians of the staff, our fathers were guardians and our fathers' fathers before that. Why dost thou seek it?");
-switch_int(~p_choice3("Lucien will give me a grand reward for it!", 1, "Give it to me!", 2, "Wow! You must be really old!", 3)) {
+switch_int(~p_choice3("Lucien will give me a grand reward for it!", 1, "Give it to me!", 2, "I collect rare and powerful artefacts.", 3)) {
     case 1:
         ~chatplayer("<p,neutral>Lucien will give me a grand reward for it!");
         ~chatnpc("<p,angry>Thou art working for that spawn of evil?! Fool! You must be cleansed to save your soul!");
@@ -46,7 +46,7 @@ switch_int(~p_choice3("Lucien will give me a grand reward for it!", 1, "Give it 
 [label,armadyl_fool]
 ~chatplayer("<p,angry>Out of my way fool!");
 ~chatnpc("<p,angry>I may be a fool but I will not step aside!");
-switch_int(~p_choice3("Why not?!", 1, "Then you must die!", 2, "Wow! You must be really old!", 3)) {
+switch_int(~p_choice3("Why not?!", 1, "Then you must die!", 2, "You're right, I will go now.", 3)) {
     case 1:
         ~chatplayer("<p,angry>Why not?!");
         ~chatnpc("<p,neutral>Only members of our order are allowed to handle the staff.");
@@ -78,7 +78,7 @@ switch_int(~p_choice3("What is the Armadyl?", 1, "Who are the Mahjarrat?", 2, "W
         ~chatplayer("<p,confused>Who are the Mahjarrat?");
         ~chatnpc("<p,angry>They are ancient and powerful beings! They are very evil! It is said that they once dominated this plane of existence, Zamorak was supposedly of their blood. They are far fewer in number now.");
         ~chatnpc("<p,angry>Some still have presence in this world in their liche forms. Mahjarrat such as Lucien and Azzanadra would become very powerful if they came into possession of the Staff of Armadyl.");
-        switch_int(~p_choice2("Did you say Lucien?", 2, "I hope you're doing a good job then!", 2)) {
+        switch_int(~p_choice2("Did you say Lucien?", 1, "I hope you're doing a good job then!", 2)) {
             case 1:
                 ~chatplayer("<p,confused>Did you say Lucien? It was Lucien that asked me to get the staff!");
                 ~chatnpc("<p,angry>You are a fool to be working for Lucien! Your soul must be cleansed to save you!");

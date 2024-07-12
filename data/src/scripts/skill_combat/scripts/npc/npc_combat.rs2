@@ -129,7 +129,7 @@ if(npc_type = lucien_edge) {
     return (~lucien_attack);
 } 
 
-if(npc_type = npc_277 & (inv_total(worn, ice_arrow) = 0 | %damagetype ! ^ranged_style)) {
+if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %damagetype ! ^ranged_style)) {
     ~chatnpc("<p,angry>Your puny weapons do nothing against me human! Come back when you can give me a real fight!");
     return (false);
 }
@@ -164,7 +164,7 @@ if(npc_type = general_khazard & %arena_progress < ^arena_freed_servils) {
 if(npc_type = lucien_edge) {
     return (~lucien_attack);
 } 
-if(npc_type = npc_277) { // can't attack with magic
+if(npc_type = fire_warrior_of_lesarkus) { // can't attack with magic
     ~chatnpc("<p,angry>Your puny weapons do nothing against me human! Come back when you can give me a real fight!");
     return (false);
 }

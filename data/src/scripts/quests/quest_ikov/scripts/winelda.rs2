@@ -60,7 +60,7 @@ p_delay(2);
 cam_reset;
 
 [label,winelda_explain]
-~chatnpc("<p,happy>I'm knowing some magic trickesses! I could get over easy as that!");
+~chatnpc("<p,happy>I'm knowing some magic trickesses!|I could get over easy as that!");
 ~chatnpc("<p,sad>Don't tell them! They always come! They pester poor Winelda!");
 ~chatplayer("<p,angry>If you're such a great witch, get me over!");
 ~chatnpc("<p,angry>See! They pester Winelda!");

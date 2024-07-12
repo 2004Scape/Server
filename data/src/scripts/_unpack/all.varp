@@ -1,18 +1,6 @@
-[ikov_lever]
-scope=perm
+[varp_7]
 
-[ikov_icearrowchest_coord]
-type=coord
-scope=perm
-
-[gnome_course_progress]
-scope=perm
-
-[barbarian_course_progress]
-scope=perm
-
-[wilderness_course_progress]
-scope=perm
+[varp_8]
 
 [damagetype]
 protect=no
@@ -22,6 +10,8 @@ protect=no
 
 [lastcombat]
 protect=no
+
+[varp_35]
 
 [varp_39]
 
@@ -376,12 +366,6 @@ transmit=yes
 
 [option3]
 transmit=yes
-
-[varp_264]
-
-[varp_265]
-
-[varp_266]
 
 [magearena_progress]
 protect=no
