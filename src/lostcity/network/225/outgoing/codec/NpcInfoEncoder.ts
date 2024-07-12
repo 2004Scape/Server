@@ -10,15 +10,16 @@ import BuildArea, {ExtendedInfo} from '#lostcity/entity/BuildArea.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;
-    private static readonly BITS_RUN: number = 2 + 3 + 3 + 1 + 1;
-    private static readonly BITS_WALK: number = 2 + 3 + 1 + 1;
-    private static readonly BITS_EXTENDED: number = 2 + 1;
+    private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
+    private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
+    private static readonly BITS_EXTENDED: number = 1 + 2;
     private static readonly BYTES_LIMIT: number = 4997;
 
     prot = ServerProt.NPC_INFO;
 
     encode(buf: Packet, message: NpcInfo): void {
         const buildArea: BuildArea = message.buildArea;
+
         this.writeNpcs(buf, message);
         this.writeNewNpcs(buf, message);
 
@@ -27,30 +28,32 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             for (const info of extended) {
                 const npc: Npc | undefined = World.getNpc(info.id);
                 if (!npc) {
+                    // if this case gets hit... probably expect a disconnect
                     continue;
                 }
                 this.writeUpdate(npc, buf, info.added);
             }
         }
-        buildArea.reset();
+
+        buildArea.clearExtended();
     }
 
     test(_: NpcInfo): number {
         return NpcInfoEncoder.BYTES_LIMIT;
     }
 
-    private writeNpcs(bitBlock: Packet, message: NpcInfo): void {
+    private writeNpcs(buf: Packet, message: NpcInfo): void {
         const buildArea: BuildArea = message.buildArea;
         // update existing npcs (255 max - 8 bits)
-        bitBlock.bits();
-        bitBlock.pBit(8, buildArea.npcs.size);
+        buf.bits();
+        buf.pBit(8, buildArea.npcs.size);
 
         for (const nid of buildArea.npcs) {
             const npc: Npc | undefined = World.getNpc(nid);
             if (!npc || npc.tele || npc.level !== message.level || !Position.isWithinDistanceSW(message, npc, 16) || !npc.checkLifeCycle(World.currentTick)) {
                 // npc full teleported, so needs to be removed and re-added
-                bitBlock.pBit(1, 1);
-                bitBlock.pBit(2, 3);
+                buf.pBit(1, 1);
+                buf.pBit(2, 3);
                 buildArea.npcs.delete(nid);
                 continue;
             }
@@ -65,23 +68,24 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             } else if (extendedInfo) {
                 bits = NpcInfoEncoder.BITS_EXTENDED;
             }
-            const updateSize: number = extendedInfo ? this.calculateUpdateSize(npc, false) : 0;
-            if ((bitBlock.bitPos + bits + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
+
+            const updateSize: number = extendedInfo ? this.calculateExtendedInfo(npc, false) : 0;
+            if (((buf.bitPos + bits) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
                 extendedInfo = false;
             }
 
-            bitBlock.pBit(1, runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
+            buf.pBit(1, runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
             if (runDir !== -1) {
-                bitBlock.pBit(2, 2);
-                bitBlock.pBit(3, walkDir);
-                bitBlock.pBit(3, runDir);
-                bitBlock.pBit(1, extendedInfo ? 1 : 0);
+                buf.pBit(2, 2);
+                buf.pBit(3, walkDir);
+                buf.pBit(3, runDir);
+                buf.pBit(1, extendedInfo ? 1 : 0);
             } else if (walkDir !== -1) {
-                bitBlock.pBit(2, 1);
-                bitBlock.pBit(3, walkDir);
-                bitBlock.pBit(1, extendedInfo ? 1 : 0);
+                buf.pBit(2, 1);
+                buf.pBit(3, walkDir);
+                buf.pBit(1, extendedInfo ? 1 : 0);
             } else if (extendedInfo) {
-                bitBlock.pBit(2, 0);
+                buf.pBit(2, 0);
             }
 
             if (extendedInfo) {
@@ -90,37 +94,38 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
     }
 
-    private writeNewNpcs(bitBlock: Packet, message: NpcInfo): void {
+    private writeNewNpcs(buf: Packet, message: NpcInfo): void {
         const buildArea: BuildArea = message.buildArea;
         for (const npc of buildArea.getNearbyNpcs(message.x, message.z, message.originX, message.originZ)) {
             const extendedInfo: boolean = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
 
-            const updateSize: number = extendedInfo ? this.calculateUpdateSize(npc, true) : 0;
-            if ((bitBlock.bitPos + NpcInfoEncoder.BITS_NEW + 7 + 24 >>> 3) + bitBlock.pos + (message.accumulator += updateSize) > this.test(message)) {
+            const updateSize: number = extendedInfo ? this.calculateExtendedInfo(npc, true) : 0;
+            if (((buf.bitPos + NpcInfoEncoder.BITS_NEW + 13) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
                 // more npcs get added next tick
                 break;
             }
 
-            bitBlock.pBit(13, npc.nid);
-            bitBlock.pBit(11, npc.type);
-            bitBlock.pBit(5, npc.x - message.x);
-            bitBlock.pBit(5, npc.z - message.z);
-            bitBlock.pBit(1, extendedInfo ? 1 : 0);
-
-            buildArea.npcs.add(npc.nid);
+            buf.pBit(13, npc.nid);
+            buf.pBit(11, npc.type);
+            buf.pBit(5, npc.x - message.x);
+            buf.pBit(5, npc.z - message.z);
+            buf.pBit(1, extendedInfo ? 1 : 0);
 
             if (extendedInfo) {
                 buildArea.extendedInfo.add({id: npc.nid, added: true});
             }
+
+            buildArea.npcs.add(npc.nid);
         }
 
         if (buildArea.extendedInfo.size > 0) {
-            bitBlock.pBit(13, 8191);
+            buf.pBit(13, 8191);
         }
-        bitBlock.bytes();
+
+        buf.bytes();
     }
 
-    private writeUpdate(npc: Npc, out: Packet, newlyObserved: boolean): void {
+    private writeUpdate(npc: Npc, buf: Packet, newlyObserved: boolean): void {
         let mask: number = npc.mask;
         if (newlyObserved && (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1)) {
             mask |= Npc.FACE_COORD;
@@ -128,11 +133,11 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         if (newlyObserved && npc.faceEntity !== -1) {
             mask |= Npc.FACE_ENTITY;
         }
-        out.p1(mask);
+        buf.p1(mask);
 
         if (mask & Npc.ANIM) {
-            out.p2(npc.animId);
-            out.p1(npc.animDelay);
+            buf.p2(npc.animId);
+            buf.p1(npc.animDelay);
         }
 
         if (mask & Npc.FACE_ENTITY) {
@@ -140,28 +145,28 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
                 npc.alreadyFacedEntity = true;
             }
 
-            out.p2(npc.faceEntity);
+            buf.p2(npc.faceEntity);
         }
 
         if (mask & Npc.SAY) {
-            out.pjstr(npc.chat ?? '');
+            buf.pjstr(npc.chat ?? '');
         }
 
         if (mask & Npc.DAMAGE) {
-            out.p1(npc.damageTaken);
-            out.p1(npc.damageType);
-            out.p1(npc.levels[NpcStat.HITPOINTS]);
-            out.p1(npc.baseLevels[NpcStat.HITPOINTS]);
+            buf.p1(npc.damageTaken);
+            buf.p1(npc.damageType);
+            buf.p1(npc.levels[NpcStat.HITPOINTS]);
+            buf.p1(npc.baseLevels[NpcStat.HITPOINTS]);
         }
 
         if (mask & Npc.CHANGE_TYPE) {
-            out.p2(npc.type);
+            buf.p2(npc.type);
         }
 
         if (mask & Npc.SPOTANIM) {
-            out.p2(npc.graphicId);
-            out.p2(npc.graphicHeight);
-            out.p2(npc.graphicDelay);
+            buf.p2(npc.graphicId);
+            buf.p2(npc.graphicHeight);
+            buf.p2(npc.graphicDelay);
         }
 
         if (mask & Npc.FACE_COORD) {
@@ -170,21 +175,21 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             }
 
             if (newlyObserved && npc.faceX != -1) {
-                out.p2(npc.faceX);
-                out.p2(npc.faceZ);
+                buf.p2(npc.faceX);
+                buf.p2(npc.faceZ);
             } else if (newlyObserved && npc.orientation != -1) {
                 const faceX: number = Position.moveX(npc.x, npc.orientation);
                 const faceZ: number = Position.moveZ(npc.z, npc.orientation);
-                out.p2(faceX * 2 + 1);
-                out.p2(faceZ * 2 + 1);
+                buf.p2(faceX * 2 + 1);
+                buf.p2(faceZ * 2 + 1);
             } else {
-                out.p2(npc.faceX);
-                out.p2(npc.faceZ);
+                buf.p2(npc.faceX);
+                buf.p2(npc.faceZ);
             }
         }
     }
 
-    private calculateUpdateSize(npc: Npc, newlyObserved: boolean): number {
+    private calculateExtendedInfo(npc: Npc, newlyObserved: boolean): number {
         let length: number = 0;
         let mask: number = npc.mask;
         if (newlyObserved && (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1)) {
@@ -204,7 +209,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.SAY) {
-            length += (npc.chat?.length ?? 0) + 1;
+            length += npc.chat ? npc.chat.length + 1 : 1;
         }
 
         if (mask & Npc.DAMAGE) {

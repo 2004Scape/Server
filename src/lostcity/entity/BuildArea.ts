@@ -59,7 +59,7 @@ export default class BuildArea {
         }
     }
 
-    reset(): void {
+    clearExtended(): void {
         this.extendedInfo.clear();
     }
 

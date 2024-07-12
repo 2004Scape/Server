@@ -31,7 +31,7 @@ abstract class EntityList<T extends Entity> extends Array<T | undefined> {
                 return index;
             }
         }
-        throw new Error('[EntityList] cannot find next id');
+        throw new Error('[EntityList] no space for new entities');
     }
 
     *[Symbol.iterator](): IterableIterator<T> {
