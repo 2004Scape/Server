@@ -194,7 +194,7 @@ export class NetworkPlayer extends Player {
         const reloadBottomZ = (Position.zone(this.originZ) - 4) << 3;
 
         // if the build area should be regenerated, do so now
-        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1 || (this.tele && (Position.zone(this.x) !== Position.zone(this.originX) || Position.zone(this.z) !== Position.zone(this.originZ)))) {
+        if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
             this.write(new RebuildNormal(Position.zone(this.x), Position.zone(this.z)));
 
             this.originX = this.x;
