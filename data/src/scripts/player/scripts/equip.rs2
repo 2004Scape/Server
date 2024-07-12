@@ -65,9 +65,6 @@ if (p_finduid(uid) = true) {
         return;
     }
     inv_moveitem(worn, inv, $obj, sub($count, $overflow));
-    if($obj = boots_of_lightness_worn) {
-
-    }
     ~update_all($obj);
 }
 
