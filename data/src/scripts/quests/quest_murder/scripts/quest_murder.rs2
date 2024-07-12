@@ -157,7 +157,7 @@ if(%murder_progress ! ^murder_started) {
     return;
 }
 if(~obj_gettotal(murder_needle) > 0) {
-    mes("I already have Frank's pot.");
+    mes("I already have Elizabeth's needle.");
     return;
 }
 ~mesbox("There's something shiny hidden at the bottom.|You take Frank's silver pot.");
@@ -169,7 +169,7 @@ if(%murder_progress ! ^murder_started) {
     return;
 }
 if(~obj_gettotal(murder_pot) > 0) {
-    mes("I already have Elizabeth's needle.");
+    mes("I already have Frank's pot.");
     return;
 }
 ~mesbox("There's something shiny hidden at the bottom.|You take Elizabeth's silver needle.");
