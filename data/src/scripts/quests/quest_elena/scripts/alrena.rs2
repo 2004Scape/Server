@@ -18,9 +18,9 @@ switch_int(%elena_progress) {
             if_close;
             mes("<nc_name(alrena)> crushes the berries into a smooth paste.");
             npc_anim(human_herbing_grind, 0);
-            p_delay(3);
+            p_delay(2); // 3t rsc
             mes("She then smears the paste over a strange mask.");
-            p_delay(3);
+            p_delay(2);
             ~quest_elena_set_progress(^quest_elena_gasmask);
             inv_del(inv, dwellberry, 1);
             inv_add(inv, gasmask, 1);

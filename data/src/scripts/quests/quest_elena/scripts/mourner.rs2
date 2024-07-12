@@ -1,18 +1,16 @@
 [opnpc1,npc_718] // mourner at quest start location
 switch_int(%elena_progress) {
     case ^quest_elena_not_started: {
-        // TODO i missed this part of the dialogue so partial guessed (emotions). -jordan
         ~chatplayer("<p,happy>Hello there.");
         ~chatnpc("<p,quiz>Do you have a problem traveller?");
-        ~chatplayer("<p,confused>No, I just wondered why you're wearing that outfit... Is it fancy dress?");
-        ~chatnpc("<p,neutral>No! It's for protection.");
-        ~chatplayer("<p,confused>Protection from what?");
+        ~chatplayer("<p,happy>No, I just wondered why you're wearing that outfit... Is it fancy dress?");
+        ~chatnpc("<p,shock>No! It's for protection.");
+        ~chatplayer("<p,quiz>Protection from what?");
         ~chatnpc("<p,neutral>The plague of course...");
     }
     case ^quest_elena_started: {
-        // TODO i missed this part of the dialogue so partial guessed (emotions). -jordan
         ~chatplayer("<p,happy>Hello.");
-        ~chatnpc("<p,quiz>What do you want?");
+        ~chatnpc("<p,angry>What do you want?");
         @multi2("Who are you?", mourner_who_are_you, "Nothing, just being polite.", mourner_nothing_just_being_polite);
     }
     case ^quest_elena_gasmask: {
@@ -68,7 +66,7 @@ switch_int(%elena_progress) {
 
 [label,mourner_nothing_just_being_polite]
 ~chatplayer("<p,neutral>Nothing, just being polite.");
-~chatnpc("<p,neutral>Hmmm, ok then. Be on your way.");
+~chatnpc("<p,confused>Hmmm, ok then. Be on your way.");
 
 [label,mourner_what_are_the_symptoms]
 ~chatplayer("<p,quiz>What are the symptoms?");

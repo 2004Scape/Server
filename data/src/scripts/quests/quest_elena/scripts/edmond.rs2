@@ -4,7 +4,7 @@ switch_int(%elena_progress) {
         ~chatplayer("<p,happy>Hello old man.");
         ~mesbox("The man looks upset.");
         ~chatplayer("<p,quiz>What's wrong?");
-        ~chatnpc("<p,sad>I've got to find my daughter. I pray that she is still alive.");
+        ~chatnpc("<p,sad>I've got to find my daughter. I pray that she is still alive...");
         @multi2("What's happened to her?", edmond_what_happened_to_elena, "Well, good luck finding her.", edmond_goodluck_finding_elena);
     }
     case ^quest_elena_started: {
@@ -56,7 +56,7 @@ switch_int(%elena_progress) {
 ~chatplayer("<p,quiz>What's happened to her?");
 ~chatnpc("<p,sad><nc_name(elena)>'s a missionary and a healer.|Three weeks ago she managed to cross the Ardougne wall.");
 ~chatnpc("<p,sad>No one's allowed to cross the wall in case they spread the plague, but after hearing the screams of suffering, she felt she had to help.");
-~chatnpc("<p,sad>She said she'd be gone for a few days, but we've heard nothing since");
+~chatnpc("<p,sad>She said she'd be gone for a few days, but we've heard nothing since.");
 @multi3("Tell me more about the plague.", edmond_tell_me_more, "Can I help find her?", edmond_can_i_help_find_elena, "I'm sorry, I have to go.", edmond_sorry_i_have_to_go);
 
 [label,edmond_tell_me_more]
