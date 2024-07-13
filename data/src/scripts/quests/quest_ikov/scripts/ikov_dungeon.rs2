@@ -64,12 +64,14 @@ if(coordx(coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
 [label,ikov_bridgefail]
 mes("The bridge gives way under your weight!");
 sound_synth(lava_bridge, 32, 0);
-~agility_exactmove(human_sidestep_fall, 0, 1, coord, 0_41_153_25_35, 44, 56, ^exact_north, false);
+spotanim_map(lavasplash, 0_41_153_25_35, 0, 46);
+~agility_exactmove(human_sidestep_fall, 0, 0, coord, 0_41_153_25_35, 44, 56, ^exact_west, false);
 say("Ow! Hot! Hot!");
+~damage_self(20); // https://youtu.be/sCl0GprumNE?si=dLJV4idmreMQGHfI&t=188, moved to end in OSRS
+p_delay(0);
 p_teleport(movecoord(coord, -1, 0, -1));
 p_delay(0);
 mes("Good thing that lava was shallow!");
-~damage_self(20);
 
 [oploc1,loc_96]
 p_teleport(0_41_153_30_17); // OSRS area here is a bit different, changed in late 2004 I believe
