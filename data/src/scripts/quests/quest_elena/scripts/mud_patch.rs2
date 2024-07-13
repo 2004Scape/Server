@@ -26,9 +26,8 @@ if (%elena_progress < ^quest_elena_opened_tunnel) {
 
 [label,elena_bucket_mud_patch](int $slot)
 switch_int(%elena_progress) {
-    case ^quest_elena_not_started: ~mesbox("You see no reason to do that at the moment.");
-    case ^quest_elena_started: ~mesbox("You see no reason to do that at the moment.");
-    case ^quest_elena_gasmask: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch1);
+    case ^quest_elena_not_started, ^quest_elena_started, ^quest_elena_gasmask: ~mesbox("You see no reason to do that at the moment.");
+    case ^quest_elena_started_mud_patch: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch1);
     case ^quest_elena_mud_patch1: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch2);
     case ^quest_elena_mud_patch2: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch3);
     case ^quest_elena_mud_patch3: @elena_soften_mud_patch($slot, ^quest_elena_mud_patch4);

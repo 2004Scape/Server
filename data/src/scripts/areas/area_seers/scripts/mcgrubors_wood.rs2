@@ -7,6 +7,8 @@ if(coordz(coord) > coordz(loc_coord)) {
 ~chatnpc_specific("Forester", forester_mcgrubor, "<p,angry>Hey! You can't come through here!|This is private land!");
 ~mesbox("You will need to find another way in.");
 
+[opnpc1,forester_mcgrubor] mes("He doesn't seem interested in talking to you.");
+
 [oploc1,loc_51]
 p_delay(0);
 def_coord $start = movecoord(coord, 0, 0, calc(coordz(loc_coord) - coordz(coord))); 

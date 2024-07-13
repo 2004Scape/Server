@@ -35,9 +35,10 @@ switch_int(%murder_progress) {
                 ~chatnpc("<p,confused>It's some thread. You're not very good at this whole investigation thing are you?");
             case 4:
                 ~chatplayer("<p,neutral>Why'd you buy poison the other day?");
-                ~chatnpc("<p,confused>I don't see what on earth it has to do with you, but the drain outside was");
-                ~chatnpc("<p,angry>blocked, and as nobody else here has the intelligence to even unblock a simple drain I felt I had to do it myself.");
-                if(%murder_murderer_id = ^murderer_carol & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
+                ~chatnpc("<p,neutral>There was a nest of mosquitos under the fountain|in the garden, which I killed with poison the other day.|You can see for yourself if you're capable|of managing that, which I somehow doubt.");
+                ~chatplayer("<p,angry>I hate mosquitos!");
+                ~chatnpc("<p,neutral>Doesn't everyone?");
+                if(%murder_murderer_id = ^murderer_elizabeth & %murder_poisonproof_progress = ^poisonproof_spoken_salesman) { // TODO: figure out exactly when these would get set for each murderer
                     %murder_poisonproof_progress = ^poisonproof_spoken_murderer;
                 }
         }

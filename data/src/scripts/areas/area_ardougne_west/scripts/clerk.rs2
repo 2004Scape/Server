@@ -20,7 +20,7 @@ switch_int(%elena_progress) {
         ~chatnpc("<p,neutral>He has asked not to be disturbed.");
         @multi2("This is urgent though!", clerk_this_is_urgent_though, "Ok I will leave him alone.", clerk_ok_i_will_leave_him_alone);
     }
-    case ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena, ^elena_complete: ~chatnpc("<p,neutral>I suppose so.");
+    case ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek, ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: ~chatnpc("<p,neutral>I suppose so.");
     case default: ~chatnpc("<p,neutral>He has asked not to be disturbed.");
 }
 
@@ -51,9 +51,9 @@ switch_int(%elena_progress) {
 [label,clerk_this_is_urgent_though]
 ~chatplayer("<p,angry>This is urgent though!");
 ~chatnpc("<p,neutral>I'll see what I can do I suppose.");
-~quest_elena_set_progress(^quest_elena_spoke_to_clerk);
 ~chatnpc("<p,neutral>Mr <nc_name(bravek)> there's a <text_gender("man", "lady")> here who really needs to speak to you.");
 if (.npc_find(coord, bravek, 7, 0) = true) { // yes its possible this doesnt pop off if hes too far
+    ~quest_elena_set_progress(^quest_elena_spoke_to_clerk);
     ~.chatnpc("<p,confused>I suppose they can come in then. If they keep it short.");
 }
 
