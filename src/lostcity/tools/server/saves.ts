@@ -1,8 +1,12 @@
 import fs from 'fs';
 
+import InvType from '#lostcity/cache/config/InvType.js';
+
 import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
 
-const saves = fs.readdirSync('data/players');
+InvType.load('data/pack');
+
+const saves = fs.readdirSync('data/players').filter(f => f.endsWith('.sav'));
 
 const sorted = [];
 for (let i = 0; i < saves.length; i++) {
@@ -25,10 +29,10 @@ for (let i = 0; i < sorted.length; i++) {
     const hours = Math.round((minutes / 60) * 100) / 100;
 
     if (hours > 1) {
-        console.log(player.username, 'played for:', hours, 'hours');
+        console.log(player.username, 'played for:', hours, 'hours', player.baseLevels);
     } else if (minutes > 1) {
-        console.log(player.username, 'played for:', minutes, 'minutes');
+        console.log(player.username, 'played for:', minutes, 'minutes', player.baseLevels);
     } else {
-        console.log(player.username, 'played for:', seconds, 'seconds');
+        console.log(player.username, 'played for:', seconds, 'seconds', player.baseLevels);
     }
 }

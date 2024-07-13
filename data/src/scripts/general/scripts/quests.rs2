@@ -184,6 +184,10 @@ if (%junglepotion_progress = ^junglepotion_complete) {
     $questpoints = add($questpoints, ^junglepotion_questpoints);
 }
 
+if (%ikov_progress >= ^ikov_completed_armadyl) { // 80 = armadyl completion, 90 = lucien completion
+    $questpoints = add($questpoints, ^ikov_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -226,6 +230,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:itgronigen, %itgronigen_progress, ^itgronigen_complete);
 ~send_quest_progress_colour(questlist:arena, %arena_progress, ^arena_complete);
 ~send_quest_progress_colour(questlist:junglepotion, %junglepotion_progress, ^junglepotion_complete);
+~send_quest_progress_colour(questlist:ikov, %ikov_progress, ^ikov_completed_armadyl);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

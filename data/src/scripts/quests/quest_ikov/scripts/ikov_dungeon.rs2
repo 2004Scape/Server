@@ -1,1 +1,218 @@
 [oploc1,loc_1586] ~open_and_close_door2(loc_1588, ~check_axis_locactive(coord), coffin_open);
+
+[oploc1,loc_98]
+if(inv_totalcat(inv, light_source_lit) > 0) {
+    p_teleport(0_41_152_17_36);
+    return;    
+}
+p_teleport(0_41_152_17_13);
+p_delay(0);
+~mesbox("It's a bit dark down here!|You decide not to venture far.");
+
+[oploc1,loc_94] @open_ikov_northgate(^left);
+[oploc1,loc_95] @open_ikov_northgate(^right);
+
+[label,open_ikov_northgate](int $side)
+def_boolean $entering = ~check_axis_locactive(coord);
+if($entering = true | inv_total(worn, pendant_of_lucien) > 0) {
+    ~open_and_close_double_door2($entering, $side, grate_open);
+    return;
+}
+mes("As you reach to open the door a great terror overcomes you!");
+anim(seq_846, 30);
+p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
+
+[oploc1,loc_89] @open_ikov_southgate(^left);
+[oploc1,loc_90] @open_ikov_southgate(^right);
+
+[label,open_ikov_southgate](int $side)
+def_boolean $entering = ~check_axis_locactive(coord);
+if($entering = false | %ikov_lever = 1) {
+    ~open_and_close_double_door2($entering, $side, grate_open);
+    return;
+}
+~mesbox("The door won't open!");
+
+[proc,move_ikovtrigger](coord $coord)
+if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = true) {
+    if (coordx(coord) = coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
+        if(coordx(last_coord) <= coordx(^ikovbridge_zone_lower)) {
+            p_teleport(movecoord(coord, -1, 0, 0));
+        } else {
+            p_teleport(movecoord(coord, 1, 0, 0));
+        }
+    }
+    p_stopaction;
+    queue(ikov_movebridge, 0);
+}
+
+[queue,ikov_movebridge]
+if(coordx(coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
+    ~forcemove(movecoord(coord, 1, 0, 0));
+    if(weight >= 0) {
+        @ikov_bridgefail;
+    }
+    ~forcemove(movecoord(coord, 2, 0, 0));
+} else {
+    ~forcemove(movecoord(coord, -1, 0, 0));
+    if(weight >= 0) {
+        @ikov_bridgefail;
+    }
+    ~forcemove(movecoord(coord, -2, 0, 0));
+}
+
+[label,ikov_bridgefail]
+mes("The bridge gives way under your weight!");
+sound_synth(lava_bridge, 32, 0);
+~agility_exactmove(human_sidestep_fall, 0, 1, coord, 0_41_153_25_35, 44, 56, ^exact_north, false);
+say("Ow! Hot! Hot!");
+p_teleport(movecoord(coord, -1, 0, -1));
+p_delay(0);
+mes("Good thing that lava was shallow!");
+~damage_self(20);
+
+[oploc1,loc_96]
+p_teleport(0_41_153_30_17); // OSRS area here is a bit different, changed in late 2004 I believe
+
+[oplocu,loc_86]
+if(last_useitem = ikov_lever) {
+    ~mesbox("You fit the lever into the bracket.");
+    inv_del(inv, ikov_lever, 1);
+    loc_change(loc_87, 200); // 200t OSRS
+}
+~displaymessage(^dm_default);
+
+[oploc1,loc_87]
+p_arrivedelay;
+anim(human_leverdown, 0); 
+sound_synth(lever, 0, 0);
+loc_change(loc_88, 20);
+p_delay(0);
+sound_synth(locked, 0, 0);
+p_delay(0);
+sound_synth(locked, 0, 0);
+p_delay(0);
+sound_synth(locked, 0, 0);
+p_delay(0);
+%ikov_lever = 1;
+~mesbox("You hear the clunking of some hidden machinery.");
+
+[oploc1,loc_103] ~open_chest(loc_104);
+[oploc2,loc_104] ~close_chest(loc_103);
+
+[oploc1,loc_104]
+if(%ikov_icearrowchest_coord = 0_0_0_0_0) {
+    ~randomize_ice_arrow_chest;
+}
+if(%ikov_icearrowchest_coord = loc_coord) {
+    def_int $count = calc(random(5) + 1);
+    inv_add(inv, ice_arrow, $count); // 1 - 5 arrows
+    sound_synth(found_ice_arrows, 0, 0);
+    ~randomize_ice_arrow_chest;
+    def_string $arrow_mes = "You found an ice arrow!";
+    if($count > 1) {
+        $arrow_mes = "You found some ice arrows!";
+    }
+    ~objbox(ice_arrow, $arrow_mes);
+    return;
+}
+mes("You search the chest, but find nothing.");
+
+[oploc1,loc_91]
+if(%ikov_progress = ^ikov_disabled_trap) %ikov_progress = ^ikov_pulled_lever;
+p_arrivedelay;
+anim(human_leverdown, 0);
+p_delay(0);
+loc_change(loc_88, 5);
+sound_synth(lever, 0, 0);
+if(%ikov_progress >= ^ikov_disabled_trap) {
+    return;
+}
+p_delay(0);
+// stumble_loop sound
+anim(seq_768, 0);
+p_delay(0);
+p_teleport(0_41_153_58_63);
+p_delay(1);
+say("Ouch!");
+p_teleport(movecoord(coord, 0, 0, -1));
+p_delay(2);
+~damage_self(20);
+
+[oploc2,loc_91]
+p_arrivedelay;
+anim(human_leverdown, 0);
+if(stat(thieving) >= 42 & %ikov_progress < ^ikov_defeated_fire_warrior) {
+    if(%ikov_progress = ^ikov_started) {
+        %ikov_progress = ^ikov_disabled_trap;
+    }
+    ~mesbox("You find a trap on the lever! You disable the trap.");
+    return;
+}
+~mesbox("You find nothing.");
+
+[oploc1,loc_101]
+p_teleport(0_41_153_41_57);
+
+[oploc1,loc_92]
+if(%ikov_progress >= ^ikov_pulled_lever) {
+    ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
+    return;
+}
+mes("The door won't open.");
+
+[oploc1,loc_93]
+if(%ikov_progress >= ^ikov_defeated_fire_warrior) {
+    ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
+    return;
+}
+p_arrivedelay; // https://youtu.be/cePHhIOqsqg?si=-8QJd7t7ZIBz4K7y&t=667
+cam_moveto(0_41_154_17_12, 1000, 100, 232);
+cam_lookat(0_41_154_22_14, 50, 100, 232);
+cam_lookat(0_41_154_22_10, 50, 3, 10);
+if(npc_find(coord, fire_warrior_of_lesarkus, 5, 0) = false) { // will spawn another if 6 or more away
+    spotanim_map(small_smokepuff, 0_41_154_22_10, 0, 0);
+    sound_synth(smokepuff, 0, 0);
+    p_delay(0);
+    sound_synth(fire_teleport, 0, 0);
+    npc_add(0_41_154_22_10, fire_warrior_of_lesarkus, 500);
+    npc_setmode(none);
+    npc_anim(seq_803, 0);
+    p_delay(1);
+}
+npc_setmode(none);
+npc_say("You will not pass!");
+p_delay(0);
+npc_say("Amitus! Setitii!");
+npc_setmode(playerface);
+npc_setmode(none);
+npc_anim(human_caststrike, 0);
+spotanim_npc(fireblast_casting, 92, 0);
+sound_synth(fire_blast_all, 0, 0); // area sound in osrs, uses fireblast_cast_and_fire
+~coord_projectile(npc_coord, 0_41_154_22_14, fireblast_travel, 31, 31, 76, 32, 54, 128, 0);
+spotanim_map(fireblast_impact, 0_41_154_22_14, 124, 130);
+p_delay(0);
+cam_lookat(0_41_154_22_14, 50, 3, 10);
+p_delay(1);
+anim(seq_846, 30);
+p_exactmove(coord, movecoord(coord, 0, 0, -1), 30, 56, ^exact_north);
+p_delay(2);
+//cam_lookat(0_40_153_56_0, 0, 0, 0);
+//cam_moveto(0_41_154_17_12, 1000, 100, 0);
+cam_reset;
+npc_setmode(null);
+
+[oploc1,loc_99]
+if(inv_total(inv, shiny_key) = 0) {
+    mes("The door is locked.");
+    sound_synth(locked, 0, 0);
+    return;
+}
+~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
+
+[oplocu,loc_99]
+if(last_useitem = shiny_key) {
+    ~open_and_close_door2(loc_1532, ~check_axis_locactive(coord), door_open);
+    return;
+}
+~displaymessage(^dm_default);

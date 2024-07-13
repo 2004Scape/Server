@@ -1,8 +1,8 @@
+[haunted_progress]
+scope=perm
+
 [haunted_lever]
 scope=perm
 
-[manor_fountain_poisoned]
-scope=perm
-
-[haunted_progress]
+[haunted_manor_fountain_poisoned]
 scope=perm

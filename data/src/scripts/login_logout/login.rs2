@@ -42,6 +42,8 @@ queue(macro_event_general_check, 0);
 ~gnomeball_login;
 // if player is on a trawler ship, they login at port sarim
 ~trawler_login;
+// update weight-reduction equipment (in the case where you switch from f2p <-> p2p)
+~update_weight_equipment;
 
 if (%tutorial_progress < ^tutorial_complete) {
      if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
