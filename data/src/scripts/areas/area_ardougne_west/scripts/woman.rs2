@@ -10,7 +10,7 @@
 ~chatplayer("<p,happy>Hello, how's it going?");
 ~chatnpc("<p,sad>Life is tough.");
 switch_int(%elena_progress) {
-    case ^quest_elena_freed_elena, ^elena_complete: @multi2("Yes, living in a plague city must be hard.", woman_living_in_a_plague_city_must_be_hard, "I'm sorry to hear that.", woman_im_sorry_to_hear_that);
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: @multi2("Yes, living in a plague city must be hard.", woman_living_in_a_plague_city_must_be_hard, "I'm sorry to hear that.", woman_im_sorry_to_hear_that);
     case default: @multi3("Yes, living in a plague city must be hard.", woman_living_in_a_plague_city_must_be_hard, "I'm sorry to hear that.", woman_im_sorry_to_hear_that, "I'm looking for a lady called <nc_name(elena)>.", woman_im_looking_for_a_lady);
 }
 
@@ -41,7 +41,7 @@ switch_int(%elena_progress) {
 ~chatnpc("<p,shock>Bah, those mourners... they're meant to be helping us, but I think they're doing more harm than good. They won't even let me send a letter out to my family.");
 switch_int(%elena_progress) {
     case ^quest_elena_freed_elena: // nothing
-    case ^elena_complete: // nothing
+    case ^elena_complete, ^elena_complete_read_scroll: // nothing
     case default: @multi2("Have you seen a lady called <nc_name(elena)> around here?", woman_have_you_seen_a_lady_around_here, "You should stand up to them more.", woman_you_should_stand_up_to_them_more);
 }
 

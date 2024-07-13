@@ -25,6 +25,10 @@ if (p_finduid(uid) = true) {
         mes("You can't use this teleport after level 20 wilderness.");
         return;
     }
+    if(%elena_progress < ^elena_complete_read_scroll) {
+        mes("You must have completed Plague City to use this spell.");
+        return;
+    }
     if (afk_event = ^true) {
         ~macro_event_general_spawn(~macro_event_set_random);
         return;

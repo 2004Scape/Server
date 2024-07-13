@@ -3,7 +3,7 @@ switch_int(%elena_progress) {
     case ^quest_elena_spoke_to_clerk: @bravek_my_head_hurts;
     case ^quest_elena_spoke_to_bravek: @bravek_give_hangover_cure;
     case ^quest_elena_spoke_cured_bravek: @bravek_thanks_again_for_the_hangover_cure;
-    case ^quest_elena_freed_elena, ^elena_complete: @bravek_thanks_again_for_the_hangover_cure;
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: @bravek_thanks_again_for_the_hangover_cure;
 }
 
 [opnpcu,bravek]
@@ -18,7 +18,7 @@ switch_obj(last_useitem) {
 [label,bravek_this_is_really_important_though]
 ~chatplayer("<p,angry>This is really important though!");
 ~chatnpc("<p,confused>I can't possibly speak to you with my head spinning like this... I went a bit heavy on the drink again last night. Curse my herbalist, she made the best hang over cures. Darn inconvenient of her catching the plague.");
-@multi3("Ok, goodbye", bravek_okay_goodbye, "You shouldn't drink so much then!", bravek_you_shouldnt_drink_so_much_then, "Do you know what is in the cure?", bravek_do_you_know_what_is_in_the_cure);
+@multi3("Ok, goodbye.", bravek_okay_goodbye, "You shouldn't drink so much then!", bravek_you_shouldnt_drink_so_much_then, "Do you know what is in the cure?", bravek_do_you_know_what_is_in_the_cure);
 
 [label,bravek_thanks_again_for_the_hangover_cure]
 ~chatnpc("<p,happy>Thanks again for the hangover cure.");
@@ -49,13 +49,14 @@ switch_int(%elena_progress) {
 
 [label,bravek_do_you_know_what_is_in_the_cure]
 ~chatplayer("<p,quiz>Do you know what is in the cure?");
-~chatnpc("<p,confused>Hmmm let me think... Ouch! Thinking not clever. Ah here, she did scribble it down for me.");
+~chatnpc("<p,confused>Hmmm let me think... Ouch! Thinking isn't clever. Ah here, she did scribble it down for me.");
 ~quest_elena_set_progress(^quest_elena_spoke_to_bravek);
 inv_add(inv, elena_scruffy_note, 1);
 ~objbox(elena_scruffy_note, "<nc_name(bravek)> hands you a tatty piece of paper.");
 
 [label,bravek_give_hangover_cure]
 if (%elena_progress ! ^quest_elena_spoke_to_bravek) {
+    ~displaymessage(^dm_default);
     return; // sanity check
 }
 ~chatnpc("<p,sad>*uurgh*|My head still hurts too much to think straight.|Oh for one of Trudi's hangover cures...");
@@ -63,7 +64,7 @@ if (inv_total(inv, hangover_cure) > 0) {
     ~chatplayer("<p,happy>Try this.");
     inv_del(inv, hangover_cure, 1);
     npc_say("Grruurgh!");
-    // TODO i fuckin lost the animation here that he does... -jordan
+    // does a temporary transform to an npc not in this version, likely added w/rework
     ~quest_elena_set_progress(^quest_elena_spoke_cured_bravek);
     ~objbox(hangover_cure, "You give <nc_name(bravek)> the <lowercase(oc_name(hangover_cure))>. <nc_name(bravek)> gulps down the foul-looking liquid.");
     ~chatnpc("<p,happy>Ooh that's much better!|Thanks, that's the clearest my head has felt in a month. Ah now, what was it you wanted me to do for you?");

@@ -132,7 +132,7 @@ if (%blackarmgang_progress = ^blackarmgang_complete | %phoenixgang_progress = ^p
     $questpoints = add($questpoints, ^blackarmgang_questpoints);
 }
 
-if (%elena_progress = ^elena_complete) {
+if (%elena_progress >= ^elena_complete) {
     $questpoints = add($questpoints, ^elena_questpoints);
 }
 
