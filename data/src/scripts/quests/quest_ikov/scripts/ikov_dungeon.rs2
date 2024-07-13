@@ -115,7 +115,7 @@ if(%ikov_icearrowchest_coord = loc_coord) {
     if($count > 1) {
         $arrow_mes = "You found some ice arrows!";
     }
-    ~objbox(ice_arrow, $arrow_mes);
+    ~objboxt(ice_arrow, $arrow_mes);
     return;
 }
 mes("You search the chest, but find nothing.");
