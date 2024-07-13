@@ -1,0 +1,118 @@
+[opnpc1,lucien_ardougne]
+switch_int (%ikov_progress) {
+    case ^ikov_completed_armadyl:
+        ~chatplayer("<p,angry>I thought I killed you?!");
+        ~chatnpc("<p,madlaugh>Ha! Ha! Ha!");
+        ~chatnpc("<p,angry>You can not kill me human!");
+        if(~obj_gettotal(pendant_of_lucien) = 0) {
+            ~chatplayer("<p,sad>I've lost the pendant you gave me.");
+            ~chatnpc("<p,angry>Have another, it will remind you of my power!");
+            inv_add(inv, pendant_of_lucien, 1);
+            ~objboxt(pendant_of_lucien, "Lucien has given you another pendant!");
+            return;
+        }
+    case ^ikov_not_started :
+        // https://youtu.be/sCl0GprumNE?si=pzg_lmiunV4RJNxn&t=27
+        ~chatnpc("<p,neutral>I seek a hero to go on an important mission!");
+        @multi2("I'm a mighty hero!", lucien_mightyhero, "Yep, lots of heros about these days.", lucien_heros);
+    case default:
+        ~chatnpc("<p,angry>I told you not to meet me here again!");
+        @lucien_mission;
+}
+
+[opnpc1,lucien_edge]
+if(map_members = false) { // RS3
+    ~chatnpc("<p,angry>Leave me alone, I have much to ponder on!");
+    return;
+}
+if(%ikov_progress >= ^ikov_completed_armadyl) {
+    mes("You have completed the Temple of Ikov quest."); // RS3, also mentioned here: https://forum.tip.it/topic/195563-temple-of-ikov-armadyl/ (aug 2008)
+    return;
+}
+// varp = 70, different on osrs: https://youtu.be/cePHhIOqsqg?si=PiP6lepYRxiJUmTB&t=1128
+~chatnpc("<p,neutral>Have you got the Staff of Armadyl yet?");
+if(%ikov_progress = ^ikov_paid_winelda & inv_total(inv, staff_of_armadyl) > 0) {
+    // https://youtu.be/sCl0GprumNE?si=4WQbtK0D4xielNmx&t=578
+    def_int $choice = ~p_choice2("Yes! Here it is.", 1, "No, not yet.", 2);
+    if($choice = 1) {
+        ~chatplayer("<p,happy>Yes! Here it is.");
+        ~objboxt(staff_of_armadyl, "You give Lucien the Staff of Armadyl.");
+        ~chatnpc("<p,angry>Muhahahhahahaha!");
+        ~chatnpc("<p,angry>I can feel the power of the staff running through me! I will be more powerful and they shall bow down to me!");
+        ~chatnpc("<p,happy>I suppose you want your reward? I shall grant you much power!");
+        queue(ikov_lucien_quest_complete, 0);
+        return;
+    }
+}
+~chatplayer("<p,neutral>No, not yet.");
+
+[label,lucien_mightyhero]
+~chatplayer("<p,angry>I am a mighty hero!");
+~chatnpc("<p,neutral>I require the Staff of Armadyl. It is in the deserted Temple of Ikov, near Hemenster, north east of here.");
+~chatnpc("<p,angry>Take care hero! There is a dangerous monster somewhere in the temple!");
+@multi4("Why can't you get it yourself?", lucien_why_yourself, "That sounds like a laugh!", lucien_laugh, "Oh no! Sounds far too dangerous!", lucien_no, "What's the reward?!", lucien_reward);
+
+[label,lucien_why_yourself]
+~chatplayer("<p,confused>Why can't you get it yourself?");
+~chatnpc("<p,angry>The guardians of the Staff of Armadyl fear me!");
+~chatnpc("<p,sad>They have set up a magical barrier which even my power cannot overcome!");
+@multi3("That sounds like a laugh!", lucien_laugh, "Oh no! Sounds far too dangerous!", lucien_no, "What's the reward?", lucien_reward);
+
+[label,lucien_laugh]
+// https://youtu.be/cePHhIOqsqg?si=lJX8ygtjkYXnXWag&t=18
+~chatplayer("<p,happy>That sounds like a laugh!");
+~chatnpc("<p,sad>It's not as easy as it sounds.|The monster can only be killed with a weapon of ice.|There are many other dangers.");
+~chatplayer("<p,happy>I'm up for it!");
+~chatnpc("<p,neutral>Take this pendant. Without it you will not be able to enter the Chamber of Fear.");
+%ikov_progress = ^ikov_started;
+~send_quest_progress(questlist:ikov, %ikov_progress, ^ikov_completed_armadyl);
+inv_add(inv, pendant_of_lucien, 1);
+~objboxt(pendant_of_lucien, "Lucien has given you a pendant!");
+~chatnpc("<p,sad>I cannot stay here much longer.");
+~chatnpc("<p,neutral>I will be in the forest north of Varrock.|I have a small holding up there.");
+
+[label,lucien_no]
+~chatplayer("<p,sad>Oh no! Sounds far too dangerous!");
+~chatnpc("<p,angry>Wimp! Call yourself a hero?! My daughter is more of a hero than you!");
+
+[label,lucien_reward]
+~chatplayer("<p,happy>What's the reward?");
+~chatnpc("<p,neutral>I see you are the mercenary type.");
+~chatplayer("<p,neutral>It's a living.");
+~chatnpc("<p,happy>I will reward you well if you bring me the staff.");
+@multi2("That sounds like a laugh!", lucien_laugh, "I'll pass this time.", lucien_pass);
+
+[label,lucien_pass]
+~chatplayer("<p,neutral>I'll pass this time.");
+~chatnpc("<p,sad>Hmph.");
+
+[label,lucien_mission]
+if(~obj_gettotal(pendant_of_lucien) = 0) {
+    ~chatplayer("<p,sad>I've lost the pendant you gave me.");
+    ~chatnpc("<p,angry>Imbecile!");
+    inv_add(inv, pendant_of_lucien, 1);
+    ~objboxt(pendant_of_lucien, "Lucien has given you another pendant!");
+    return;
+}
+if(%ikov_progress <= ^ikov_helping_armadyl) { // guessing...
+    ~chatplayer("<p,confused>Sorry! Can you remind me of my mission?");
+    ~chatnpc("<p,angry>My patience grows thin hero!");
+    // https://web.archive.org/web/20051025135143im_/http://www.runeweb.net/fireball/Temple%20of%20Ikov%20Images/Temple2.PNG
+    ~chatnpc("<p,neutral>I need the Staff of Armadyl. It's in the Temple of Ikov, near Hemenster, north east of here.");
+}
+
+[label,lucien_heros]
+~chatplayer("<p,neutral>Yep, lots of heros about these days.");
+~chatnpc("<p,neutral>Well if you see any be sure to point them in my direction.");
+
+[ai_queue3,lucien_edge]
+if(npc_findhero = true) {
+    if_close;
+    queue(queue_defeat_lucien, 0, npc_uid);
+}
+
+[queue,queue_defeat_lucien](npc_uid $npc)
+if (npc_finduid($npc) = true) {
+    queue(ikov_armadyl_quest_complete, 0, npc_uid);
+    ~chatnpc("<p,angry>You have defeated me for now! I shall reappear in the North!");
+}

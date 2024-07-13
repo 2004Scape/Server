@@ -1,0 +1,8 @@
+[gnome_course_progress]
+scope=perm
+
+[barbarian_course_progress]
+scope=perm
+
+[wilderness_course_progress]
+scope=perm

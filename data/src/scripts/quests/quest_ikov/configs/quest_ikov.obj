@@ -1,4 +1,4 @@
-[obj_78]
+[ice_arrow]
 name=Ice arrows
 desc=Can only be fired with yew or magic bows.
 members=yes
@@ -30,6 +30,8 @@ count4=ice_arrow_5,5
 category=arrows
 param=rangebonus,16
 param=levelrequire,40
+param=proj_launch,ice_arrow_launch
+param=proj_travel,ice_arrow_travel
 
 [ice_arrow_4]
 stackable=yes
@@ -111,7 +113,7 @@ recol5d=15135
 2dxan=216
 dummyitem=inv_only
 
-[obj_83]
+[ikov_lever]
 name=Lever
 desc=A lever to open something perhaps?
 members=yes
@@ -123,7 +125,7 @@ model=model_2615_obj
 2dxan=264
 weight=2oz
 
-[obj_84]
+[staff_of_armadyl]
 name=Staff of armadyl
 desc=The power in this staff causes it to vibrate gently.
 members=yes
@@ -138,7 +140,7 @@ recol1d=21933
 2dxan=148
 weight=4lb
 
-[obj_85]
+[shiny_key]
 name=Shiny key
 desc=It catches the light!
 members=yes
@@ -151,7 +153,7 @@ model=model_2372_obj
 2dxan=328
 weight=10g
 
-[obj_86]
+[pendant_of_lucien]
 name=Pendant of lucien
 desc=The amulet that Lucien gave you.
 model=model_2508_obj
@@ -170,7 +172,7 @@ cost=12
 iop2=Wear
 weight=10g
 
-[obj_87]
+[armadyl_pendant]
 name=Armadyl pendant
 desc=Yet another amulet.
 model=model_2508_obj
@@ -189,7 +191,7 @@ womanwear=model_446_obj_wear,0
 iop2=Wear
 weight=10g
 
-[obj_88]
+[boots_of_lightness_inv]
 wearpos=feet
 members=yes
 name=Boots of lightness
@@ -211,7 +213,7 @@ param=stabdefence,1
 param=slashdefence,1
 param=crushdefence,1
 
-[obj_89]
+[boots_of_lightness_worn]
 wearpos=feet
 members=yes
 name=Boots of lightness

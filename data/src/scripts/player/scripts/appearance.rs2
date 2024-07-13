@@ -107,6 +107,7 @@ if (p_finduid(uid) = true) {
     p_animprotect(^false);
 }
 cam_reset;
+~update_weight_equipment; // replace weight-reducing equipment
 ~update_bas; // update appearance
 ~update_bonuses; // update bonuses if
 ~update_weight; // update weight

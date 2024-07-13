@@ -1,0 +1,192 @@
+[loc_86]
+name=Lever bracket
+desc=Seems very old...
+model=model_loc_86
+active=yes
+
+[loc_87]
+name=Lever
+desc=I guess you pull it...
+model=model_loc_34
+active=yes
+op1=Pull
+
+[loc_88]
+model=model_loc_33
+active=no
+
+[loc_89]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+active=yes
+blockrange=no
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
+
+[loc_90]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+mirror=yes
+active=yes
+blockrange=no
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
+
+[loc_91]
+name=Lever
+desc=I don't like the look of this!
+model=model_loc_34
+active=yes
+op1=Pull
+op2=Search for traps
+
+[loc_92]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+active=yes
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
+
+[loc_93]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+active=yes
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
+
+[loc_94]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+active=yes
+blockrange=no
+category=double_door_open_and_close_left
+param=next_loc_stage,loc_1562
+
+[loc_95]
+name=Gate
+desc=A wrought iron gate.
+model=model_loc_52
+op1=Open
+mirror=yes
+active=yes
+blockrange=no
+category=double_door_open_and_close_right
+param=next_loc_stage,loc_1563
+
+[loc_96]
+name=Stairs
+desc=A dark flight of stairs.
+model=model_loc_54
+width=2
+length=3
+op1=Climb-up
+active=yes
+recol1s=12684
+recol1d=2114
+recol2s=9513
+recol2d=6342
+recol3s=12512
+recol3d=5216
+
+[loc_97]
+model=model_loc_55
+width=2
+length=2
+active=no
+recol1s=12684
+recol1d=2114
+recol2s=9513
+recol2d=6342
+recol3s=12512
+recol3d=5216
+
+[loc_98]
+name=Stairs
+model=model_loc_98
+width=2
+length=3
+op1=Climb-down
+active=yes
+recol1s=12684
+recol1d=2114
+recol2s=9513
+recol2d=6342
+recol3s=12512
+recol3d=5216
+
+[loc_99]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+active=yes
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
+
+[loc_100]
+model=model_loc_100
+
+[loc_101]
+name=Ladder
+desc=I can climb this.
+model=model_loc_11
+active=yes
+op1=Climb-up
+mapscene=7
+
+[loc_102]
+name=Door
+desc=A sturdy door.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=elfdoor
+recol2s=6342
+recol2d=11458
+
+[loc_103]
+name=Closed chest
+desc=I wonder what's inside.
+model=wooden_chest
+op1=Open
+forceapproach=north
+
+[loc_104]
+name=Open chest
+desc=Perhaps I should search it.
+model=model_loc_76
+op1=Search
+op2=Shut
+forceapproach=north
+
+[loc_105]
+name=Trapdoor
+desc=I wonder what that's there for...
+model=model_loc_105
+blockwalk=no
+blockrange=no
+
+[hiddentrapdoor_open]
+model=model_loc_106
+blockwalk=no
+blockrange=no
