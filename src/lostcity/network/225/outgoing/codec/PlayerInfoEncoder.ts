@@ -10,6 +10,7 @@ import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private static readonly BITS_NEW: number = 11 + 5 + 5 + 1 + 1;
+    private static readonly BITS_IDLE: number = 1;
     private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
     private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
     private static readonly BITS_EXTENDED: number = 1 + 2;
@@ -56,6 +57,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     }
 
     willFit(message: PlayerInfo, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
+        // 7 aligns to the next byte
         return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= PlayerInfoEncoder.BYTES_LIMIT;
     }
 
@@ -116,7 +118,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             let extendedInfo: boolean = extendedInfoSize > 0;
 
             const { walkDir, runDir } = other;
-            let bits: number = 0;
+            let bits: number = PlayerInfoEncoder.BITS_IDLE;
             if (runDir !== -1) {
                 bits = PlayerInfoEncoder.BITS_RUN;
             } else if (walkDir !== -1) {
@@ -158,7 +160,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
             // bits to add player + extended info size + bits to break loop (11)
             if (!this.willFit(message, buf, PlayerInfoEncoder.BITS_NEW + 11, extendedInfoSize)) {
-                // more players get added next tick, we don't want to add someone without an appearance for example
+                // more players get added next tick
                 break;
             }
 

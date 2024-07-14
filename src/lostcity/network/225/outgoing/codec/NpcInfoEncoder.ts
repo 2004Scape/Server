@@ -10,6 +10,7 @@ import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;
+    private static readonly BITS_IDLE: number = 1;
     private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
     private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
     private static readonly BITS_EXTENDED: number = 1 + 2;
@@ -51,6 +52,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     }
 
     willFit(message: NpcInfo, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
+        // 7 aligns to the next byte
         return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= NpcInfoEncoder.BYTES_LIMIT;
     }
 
@@ -74,7 +76,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             let extendedInfo: boolean = extendedInfoSize > 0;
 
             const { walkDir, runDir } = npc;
-            let bits: number = 0;
+            let bits: number = NpcInfoEncoder.BITS_IDLE;
             if (runDir !== -1) {
                 bits = NpcInfoEncoder.BITS_RUN;
             } else if (walkDir !== -1) {
@@ -114,7 +116,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             const extendedInfoSize: number = this.calculateExtendedInfo(npc, true);
             const extendedInfo: boolean = extendedInfoSize > 0;
 
-            // bits to add npc + extended info size + bits to break loop (11)
+            // bits to add npc + extended info size + bits to break loop (13)
             if (!this.willFit(message, buf, NpcInfoEncoder.BITS_NEW + 13, extendedInfoSize)) {
                 // more npcs get added next tick
                 break;
