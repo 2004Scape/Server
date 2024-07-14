@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const modules: string[] = ['module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
+const modules: string[] = ['buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
     'process.env.WEB_PORT': '',

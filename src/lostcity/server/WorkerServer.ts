@@ -6,7 +6,7 @@ import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
 
 export default class WorkerServer {
-    socket: ClientSocket = new ClientSocket(self.crypto.randomUUID(), null, '127.0.0.1');
+    socket: ClientSocket = new ClientSocket(self.location.host.startsWith('https') ? self.crypto.randomUUID() : '0', null, '127.0.0.1');
 
     constructor() {}
 
