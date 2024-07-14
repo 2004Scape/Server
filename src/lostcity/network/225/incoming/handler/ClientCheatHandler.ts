@@ -63,7 +63,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 console.log(`took = ${end - start} ms`);
             } else if (cmd === 'bots') {
                 player.messageGame('Adding bots');
-                for (let i = 0; i < 2000; i++) {
+                for (let i = 0; i < 1999; i++) {
                     const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
                     bot.onLogin();
                     World.addPlayer(bot);
@@ -77,7 +77,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                         const x = Math.floor(Math.random() * 64) + 3200;
                         const z = Math.floor(Math.random() * 64) + 3200;
     
-                        player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
+                        player.teleJump(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
                     } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
                 }
             } else if (cmd === 'moveall') {

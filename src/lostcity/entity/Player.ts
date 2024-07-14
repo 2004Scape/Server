@@ -836,7 +836,6 @@ export default class Player extends PathingEntity {
             if (moved) {
                 // we need to keep the mask if the player had to move.
                 this.alreadyFacedEntity = false;
-                this.alreadyFacedCoord = false;
                 this.lastMovement = World.currentTick + 1;
             }
             return;
@@ -909,7 +908,6 @@ export default class Player extends PathingEntity {
         if (moved) {
             // we need to keep the mask if the player had to move.
             this.alreadyFacedEntity = false;
-            this.alreadyFacedCoord = false;
             this.lastMovement = World.currentTick + 1;
         }
 

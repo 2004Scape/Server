@@ -14,7 +14,10 @@ export default class NpcInfo extends OutgoingMessage {
         readonly x: number,
         readonly z: number,
         readonly originX: number,
-        readonly originZ: number
+        readonly originZ: number,
+        readonly deltaX: number,
+        readonly deltaZ: number,
+        readonly changedLevel: boolean
     ) {
         super();
     }

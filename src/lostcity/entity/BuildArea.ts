@@ -11,10 +11,10 @@ export type ExtendedInfo = {
 }
 
 export default class BuildArea {
-    private static readonly INTERVAL: number = 10;
-    private static readonly PREFERRED_PLAYERS: number = 250;
-    private static readonly PREFERRED_NPCS: number = 255;
-    private static readonly PREFERRED_VIEW_DISTANCE: number = 15;
+    public static readonly INTERVAL: number = 10;
+    public static readonly PREFERRED_PLAYERS: number = 250;
+    public static readonly PREFERRED_NPCS: number = 255;
+    public static readonly PREFERRED_VIEW_DISTANCE: number = 15;
 
     // constructor
     readonly npcs: Set<number>; // observed npcs
@@ -28,7 +28,7 @@ export default class BuildArea {
     forceViewDistance: boolean = false;
     viewDistance: number = BuildArea.PREFERRED_VIEW_DISTANCE;
 
-    private lastResize: number = 0;
+    lastResize: number = 0;
 
     constructor() {
         this.npcs = new Set();

@@ -3,15 +3,15 @@ import Packet from '#jagex2/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import World from '#lostcity/engine/World.js';
-import {Position} from '#lostcity/entity/Position.js';
+import { Position } from '#lostcity/entity/Position.js';
 import Player from '#lostcity/entity/Player.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
-import BuildArea, {ExtendedInfo} from '#lostcity/entity/BuildArea.js';
+import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
 
 export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private static readonly BITS_NEW: number = 11 + 5 + 5 + 1 + 1;
-    private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1 + 1;
-    private static readonly BITS_WALK: number = 1 + 2 + 3 + 1 + 1;
+    private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
+    private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
     private static readonly BITS_EXTENDED: number = 1 + 2;
     private static readonly BYTES_LIMIT: number = 4997;
 
@@ -19,7 +19,15 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
     encode(buf: Packet, message: PlayerInfo): void {
         const buildArea: BuildArea = message.buildArea;
-        buildArea.resize();
+
+        if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
+            // optimization to avoid sending 3 bits * observed players when everything has to be removed anyways
+            buildArea.players.clear();
+            buildArea.lastResize = 0;
+            buildArea.viewDistance = BuildArea.PREFERRED_VIEW_DISTANCE;
+        } else {
+            buildArea.resize();
+        }
 
         this.writeLocalPlayer(buf, message);
         this.writePlayers(buf, message);
@@ -47,14 +55,19 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         return PlayerInfoEncoder.BYTES_LIMIT;
     }
 
+    willFit(message: PlayerInfo, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
+        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= PlayerInfoEncoder.BYTES_LIMIT;
+    }
+
     private writeLocalPlayer(buf: Packet, message: PlayerInfo): void {
-        const {buildArea, uid, level, x, z, mask, tele, jump, walkDir, runDir} = message;
+        const { buildArea, uid, level, x, z, tele, jump, walkDir, runDir } = message;
         const player: Player | null = World.getPlayerByUid(uid);
         if (!player) {
             return;
         }
 
-        const extendedInfo: boolean = mask > 0;
+        const extendedInfoSize: number = this.calculateExtendedInfo(player, message, true, false);
+        const extendedInfo: boolean = extendedInfoSize > 0;
 
         buf.bits();
         buf.pBit(1, tele || runDir !== -1 || walkDir !== -1 || extendedInfo ? 1 : 0);
@@ -79,8 +92,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (extendedInfo) {
-            buildArea.extendedInfo.add({id: uid, added: false});
-            message.accumulator += this.calculateExtendedInfo(player, message, true, true);
+            buildArea.extendedInfo.add({ id: uid, added: false });
+            message.accumulator += extendedInfoSize;
         }
     }
 
@@ -99,8 +112,10 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
                 continue;
             }
 
-            let extendedInfo: boolean = other.mask > 0;
-            const {walkDir, runDir} = other;
+            const extendedInfoSize: number = this.calculateExtendedInfo(other, message, false, false);
+            let extendedInfo: boolean = extendedInfoSize > 0;
+
+            const { walkDir, runDir } = other;
             let bits: number = 0;
             if (runDir !== -1) {
                 bits = PlayerInfoEncoder.BITS_RUN;
@@ -110,8 +125,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
                 bits = PlayerInfoEncoder.BITS_EXTENDED;
             }
 
-            const updateSize: number = extendedInfo ? this.calculateExtendedInfo(other, message, false, false) : 0;
-            if (((buf.bitPos + bits) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
+            if (!this.willFit(message, buf, bits, extendedInfoSize)) {
                 extendedInfo = false;
             }
 
@@ -130,7 +144,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             }
 
             if (extendedInfo) {
-                buildArea.extendedInfo.add({id: uid, added: false});
+                buildArea.extendedInfo.add({ id: uid, added: false });
+                message.accumulator += extendedInfoSize;
             }
         }
     }
@@ -138,11 +153,12 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private writeNewPlayers(buf: Packet, message: PlayerInfo): void {
         const buildArea: BuildArea = message.buildArea;
         for (const other of buildArea.getNearbyPlayers(message.uid, message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfo: boolean = !buildArea.hasAppearance(other.pid, other.lastAppearance);
+            const extendedInfoSize: number = this.calculateExtendedInfo(other, message, false, true);
+            const extendedInfo: boolean = extendedInfoSize > 0;
 
-            const updateSize: number = extendedInfo ? this.calculateExtendedInfo(other, message, false, true) : 0;
-            if (((buf.bitPos + PlayerInfoEncoder.BITS_NEW + 11) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
-                // more players get added next tick
+            // bits to add player + extended info size + bits to break loop (11)
+            if (!this.willFit(message, buf, PlayerInfoEncoder.BITS_NEW + 11, extendedInfoSize)) {
+                // more players get added next tick, we don't want to add someone without an appearance for example
                 break;
             }
 
@@ -153,7 +169,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
             buf.pBit(1, extendedInfo ? 1 : 0);
 
             if (extendedInfo) {
-                buildArea.extendedInfo.add({id: other.uid, added: true});
+                buildArea.extendedInfo.add({ id: other.uid, added: true });
+                message.accumulator += extendedInfoSize;
             }
 
             buildArea.players.add(other.uid);
@@ -168,27 +185,30 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
     private writeExtendedInfo(player: Player, message: PlayerInfo, buf: Packet, self: boolean = false, newlyObserved: boolean = false): void {
         let mask: number = player.mask;
+
         if (newlyObserved) {
-            mask |= Player.APPEARANCE;
-        }
-        if (newlyObserved && (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1)) {
-            mask |= Player.FACE_COORD;
-        }
-        if (newlyObserved && player.faceEntity !== -1) {
-            mask |= Player.FACE_ENTITY;
+            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+                mask |= Player.FACE_COORD;
+            }
+
+            if (player.faceEntity !== -1) {
+                mask |= Player.FACE_ENTITY;
+            }
         }
 
-        if (mask > 0xff) {
-            mask |= Player.BIG_UPDATE;
-        }
-
-        if (self && mask & Player.CHAT) {
+        if (self && (mask & Player.CHAT) != 0) {
             // don't echo back local chat
             mask &= ~Player.CHAT;
         }
 
-        if (message.buildArea.hasAppearance(player.pid, player.lastAppearance)) {
+        if (message.buildArea.hasAppearance(player.uid, player.lastAppearance) || !player.appearance) {
             mask &= ~Player.APPEARANCE;
+        } else {
+            mask |= Player.APPEARANCE;
+        }
+
+        if (mask > 0xff) {
+            mask |= Player.BIG_UPDATE;
         }
 
         buf.p1(mask & 0xff);
@@ -199,7 +219,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         if (mask & Player.APPEARANCE) {
             buf.p1(player.appearance!.length);
             buf.pdata(player.appearance!, 0, player.appearance!.length);
-            message.buildArea.saveAppearance(player.pid, player.lastAppearance);
+            message.buildArea.saveAppearance(player.uid, player.lastAppearance);
         }
 
         if (mask & Player.ANIM) {
@@ -208,6 +228,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (mask & Player.FACE_ENTITY) {
+            // todo: get rid of alreadyFacedEntity
             if (player.faceEntity !== -1) {
                 player.alreadyFacedEntity = true;
             }
@@ -227,14 +248,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (mask & Player.FACE_COORD) {
-            if (player.faceX !== -1) {
-                player.alreadyFacedCoord = true;
-            }
-
-            if (newlyObserved && player.faceX !== -1) {
-                buf.p2(player.faceX);
-                buf.p2(player.faceZ);
-            } else if (newlyObserved && player.orientation !== -1) {
+            if (newlyObserved && player.orientation !== -1) {
                 const faceX: number = Position.moveX(player.x, player.orientation);
                 const faceZ: number = Position.moveZ(player.z, player.orientation);
                 buf.p2(faceX * 2 + 1);
@@ -274,27 +288,34 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
     private calculateExtendedInfo(player: Player, message: PlayerInfo, self: boolean = false, newlyObserved: boolean = false): number {
         let length: number = 0;
         let mask: number = player.mask;
+
         if (newlyObserved) {
+            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+                mask |= Player.FACE_COORD;
+            }
+
+            if (player.faceEntity !== -1) {
+                mask |= Player.FACE_ENTITY;
+            }
+        }
+
+        if (self && (mask & Player.CHAT) != 0) {
+            // don't echo back local chat
+            mask &= ~Player.CHAT;
+        }
+
+        if (message.buildArea.hasAppearance(player.uid, player.lastAppearance) || !player.appearance) {
+            mask &= ~Player.APPEARANCE;
+        } else {
             mask |= Player.APPEARANCE;
-        }
-        if (newlyObserved && (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1)) {
-            mask |= Player.FACE_COORD;
-        }
-        if (newlyObserved && player.faceEntity !== -1) {
-            mask |= Player.FACE_ENTITY;
         }
 
         if (mask > 0xff) {
             mask |= Player.BIG_UPDATE;
         }
 
-        if (self && mask & Player.CHAT) {
-            // don't echo back local chat
-            mask &= ~Player.CHAT;
-        }
-
-        if (message.buildArea.hasAppearance(player.pid, player.lastAppearance)) {
-            mask &= ~Player.APPEARANCE;
+        if (mask === 0) {
+            return 0;
         }
 
         length += 1;
@@ -303,8 +324,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (mask & Player.APPEARANCE) {
-            length += 1;
-            length += player.appearance?.length ?? 0;
+            length += 1 + player.appearance!.length;
         }
 
         if (mask & Player.ANIM) {
@@ -316,7 +336,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (mask & Player.SAY) {
-            length += (player.chat?.length ?? 0) + 1;
+            length += 1 + player.chat!.length;
         }
 
         if (mask & Player.DAMAGE) {
@@ -328,8 +348,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (mask & Player.CHAT) {
-            length += 4;
-            length += player.message?.length ?? 0;
+            length += 4 + player.message!.length;
         }
 
         if (mask & Player.SPOTANIM) {

@@ -65,7 +65,6 @@ export default abstract class PathingEntity extends Entity {
     targetZ: number = -1;
     apRange: number = 10;
     apRangeCalled: boolean = false;
-    alreadyFacedCoord: boolean = false;
     alreadyFacedEntity: boolean = false;
 
     mask: number = 0;
@@ -506,7 +505,6 @@ export default abstract class PathingEntity extends Entity {
         this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
-        this.alreadyFacedCoord = true;
         this.alreadyFacedEntity = true;
     }
 
@@ -567,11 +565,10 @@ export default abstract class PathingEntity extends Entity {
             this.orientation = Position.face(this.x, this.z, this.target.x, this.target.z);
         }
 
-        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
+        this.faceX = -1;
+        this.faceZ = -1;
+
+        if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
             this.mask |= this.entitymask;
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;

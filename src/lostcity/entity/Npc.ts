@@ -617,7 +617,6 @@ export default class Npc extends PathingEntity {
         const moved: boolean = this.updateMovement();
         if (moved) {
             this.alreadyFacedEntity = false;
-            this.alreadyFacedCoord = false;
         }
 
         if (this.target && !this.interacted) {
