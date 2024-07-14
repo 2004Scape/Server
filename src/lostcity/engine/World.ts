@@ -123,8 +123,8 @@ class World {
         this.zoneMap = new ZoneMap();
         this.invs = new Set();
         this.newPlayers = new Set();
-        this.players = new PlayerList(World.PLAYERS);
-        this.npcs = new NpcList(World.NPCS);
+        this.players = new PlayerList(World.PLAYERS - 1);
+        this.npcs = new NpcList(World.NPCS - 1);
         this.zonesTracking = new Map();
         this.queue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
