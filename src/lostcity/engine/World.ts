@@ -816,27 +816,27 @@ class World {
     private async processLogins(): Promise<void> {
         const start: number = Date.now();
         player: for (const player of this.newPlayers) {
-            if (!isNetworkPlayer(player)) {
-                continue;
-            }
-
             for (const other of this.players) {
                 if (player.username !== other.username) {
                     continue;
                 }
-                player.client?.send(LoginResponse.LOGGED_IN);
-                player.client?.close();
+                if (isNetworkPlayer(player) && player.client) {
+                    player.client.send(LoginResponse.LOGGED_IN);
+                    player.client.close();
+                }
                 continue player;
             }
 
             let pid: number;
             try {
                 // if it throws then there was no available pid. otherwise guaranteed to not be -1.
-                pid = this.getNextPid(player.client);
+                pid = this.getNextPid(isNetworkPlayer(player) ? player.client : null);
             } catch (e) {
                 // world full
-                player.client?.send(LoginResponse.WORLD_FULL);
-                player.client?.close();
+                if (isNetworkPlayer(player)) {
+                    player.client?.send(LoginResponse.WORLD_FULL);
+                    player.client?.close();
+                }
                 continue;
             }
 
@@ -853,7 +853,7 @@ class World {
                 player.write(new UpdateRebootTimer(this.shutdownTick - this.currentTick));
             }
 
-            if (player.client) {
+            if (isNetworkPlayer(player) && player.client) {
                 player.client.state = 1;
                 if (player.staffModLevel >= 2) {
                     player.client.send(LoginResponse.STAFF_MOD_LEVEL);
@@ -913,6 +913,8 @@ class World {
 
         for (const player of this.players) {
             if (!isNetworkPlayer(player)) {
+                player.highPriorityOut.clear();
+                player.lowPriorityOut.clear();
                 continue;
             }
 

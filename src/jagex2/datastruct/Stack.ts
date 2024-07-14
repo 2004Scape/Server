@@ -51,4 +51,16 @@ export default class Stack<T extends Hashable> {
         this.cursor = node?.nextHashable || null;
         return node;
     }
+
+    clear(): void {
+        while (true) {
+            const node = this.sentinel.next;
+            if (node == this.sentinel) {
+                return;
+            }
+            if (node) {
+                node.unlink();
+            }
+        }
+    }
 }

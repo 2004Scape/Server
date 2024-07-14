@@ -14,8 +14,6 @@ import SeqType from '#lostcity/cache/config/SeqType.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder';
-import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
-import { toBase37 } from '#jagex2/jstring/JString.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
@@ -23,6 +21,8 @@ import { Position } from '#lostcity/entity/Position.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
+import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -64,8 +64,13 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             } else if (cmd === 'bots') {
                 player.messageGame('Adding bots');
                 for (let i = 0; i < 1999; i++) {
-                    const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
-                    bot.onLogin();
+                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), new NullClientSocket());
+                    World.addPlayer(bot);
+                }
+            } else if (cmd === 'lightbots') {
+                player.messageGame('Adding lightweight bots');
+                for (let i = 0; i < 1999; i++) {
+                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), null);
                     World.addPlayer(bot);
                 }
             } else if (cmd === 'teleall') {
