@@ -311,9 +311,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
+        state.activePlayer.delay = World.currentTick + check(state.popInt(), NumberNotNull) + 1;
         state.execution = ScriptState.SUSPENDED;
-        // TODO should this wipe any pointers?
     }),
 
     [ScriptOpcode.P_OPHELD]: checkedHandler(ProtectedActivePlayer, state => {
