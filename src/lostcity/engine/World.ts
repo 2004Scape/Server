@@ -672,10 +672,6 @@ class World {
 
             try {
                 if (npc.delayed()) {
-                    npc.delay--;
-                }
-
-                if (npc.delayed()) {
                     continue;
                 }
 
@@ -721,10 +717,6 @@ class World {
         for (const player of this.players) {
             try {
                 player.playtime++;
-
-                if (player.delayed()) {
-                    player.delay--;
-                }
 
                 // - resume suspended script
                 if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
