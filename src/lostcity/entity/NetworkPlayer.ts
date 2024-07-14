@@ -241,11 +241,11 @@ export class NetworkPlayer extends Player {
     }
 
     updatePlayers() {
-        this.write(new PlayerInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, this.uid, this.mask, this.tele, this.jump, this.walkDir, this.runDir));
+        this.write(new PlayerInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, this.uid, this.mask, this.tele, this.jump, this.walkDir, this.runDir, Math.abs(this.lastX - this.x), Math.abs(this.lastZ - this.z), this.lastLevel !== this.level));
     }
 
     updateNpcs() {
-        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ));
+        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, Math.abs(this.lastX - this.x), Math.abs(this.lastZ - this.z), this.lastLevel !== this.level));
     }
 
     updateZones() {

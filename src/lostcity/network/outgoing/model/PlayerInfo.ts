@@ -20,7 +20,10 @@ export default class PlayerInfo extends OutgoingMessage {
         readonly tele: boolean,
         readonly jump: boolean,
         readonly walkDir: number,
-        readonly runDir: number
+        readonly runDir: number,
+        readonly deltaX: number,
+        readonly deltaZ: number,
+        readonly changedLevel: boolean
     ) {
         super();
     }
