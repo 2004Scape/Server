@@ -1,0 +1,73 @@
+[oploc1,loc_2032]
+mes("Guidor's wife refuses to let you enter.");
+//~chatnpc("<p,neutral>That's someone's bedroom.|I'm not going in there without a reason.");
+
+[oploc1,loc_2067]
+if(npc_find(coord, npc_372, 5, 0) = true) {
+    // https://youtu.be/_ZNalEQB70o?si=0Dlqc2ZXalgpWD7H&t=270
+    ~chatnpc("<p,neutral>Keep away civilian.");
+    ~chatplayer("<p,neutral>What's it to you?");
+    ~chatnpc("<p,neutral>This tower's here for your protection.");
+}
+
+[oplocu,loc_2067]
+if(%biohazard_progress = ^biohazard_spoken_jerico & last_useitem = bird_feed) {
+    // https://web.archive.org/web/20060111205550im_/http://www.runeweb.net/fireball/Biohazard%20Images/biohazard8.PNG
+    inv_del(inv, bird_feed, 1);
+    mes("You throw a hand full of seeds onto the watch tower");
+    p_delay(2);
+    mes("The mourners do not seem to notice");
+    return;
+} 
+~displaymessage(^dm_default);
+
+[oploc1,loc_2056]
+// https://youtu.be/_ZNalEQB70o?si=aEyFbzV255lYgoNI&t=208
+~objboxt(bird_feed, "The cupboard is full of birdfeed.");
+if(%biohazard_progress < ^biohazard_spoken_jerico) {
+    ~chatplayer("<p,neutral>I guess pigeons really love this stuff.");
+    return;
+}
+if(inv_total(inv, bird_feed) > 0 | %biohazard_progress >= ^biohazard_used_birdfeed) {
+    ~chatplayer("<p,neutral>I don't need any more birdfeed.");
+    return;
+}
+if(inv_total(bank, bird_feed) > 0) {
+    ~chatplayer("<p,neutral>I shouldn't take any more of Jerico's birdfeed. I've already got enough in the bank.");
+    return;
+}
+~chatplayer("<p,neutral>Mmm, birdfeed! Now what could I do with that?");
+inv_add(inv, bird_feed, 1);
+
+
+[opheld1,pigeon_cage]
+if(%biohazard_progress = ^biohazard_used_birdfeed & inzone(0_39_51_63_35, 0_40_51_5_43, coord) = true) {
+    mes("The pigeons fly towards the watch tower");
+    %biohazard_progress = ^biohazard_released_pigeons;
+    ~coord_projectile(coord, 0_39_51_63_39, spotanim_72, 16, 130, 25, 20, 21, 10, 20);
+    ~coord_projectile(coord, 0_40_51_0_40, spotanim_72, 16, 125, 15, 20, 31, 10, 20);
+    ~coord_projectile(coord, 0_40_51_1_41, spotanim_72, 16, 120, 5, 20, 41, 10, 20);
+    p_delay(4); // https://youtu.be/_ZNalEQB70o?si=VpjVRgRPfQ0D0GUu&t=273, 5t (not 6t like rsc would be if you combine mes)
+    mes("The mourners frantically try to scare them away");
+    return;
+}
+mes("You open the cage");
+mes("The pigeons don't want to leave");
+
+[label,biohazard_climb_ladder](coord $dest)
+if_close;
+mes("You climb up the rope ladder... <tostring(map_clock)>");
+loc_add(0_39_51_61_3, loc_2065, 3, centrepiece_straight, 4);
+loc_add(0_39_51_62_3, loc_2065, 1, centrepiece_straight, 4);
+if(%biohazard_progress = ^biohazard_released_pigeons) %biohazard_progress = ^biohazard_climbed_ladder;
+p_delay(3); // 4t
+p_teleport($dest);
+mes("and drop down on the other side. <tostring(map_clock)>");
+
+[debugproc,delaytest]
+if(p_finduid(uid) = false) {
+    return;
+}
+mes("before delay <tostring(map_clock)>");
+p_delay(5);
+mes("after delay <tostring(map_clock)>");

@@ -1,0 +1,27 @@
+[opnpc1,npc_368]
+~chatnpc("<p,neutral>Please don't disturb me, I've got to keep any eye out for suspicious individuals.");
+
+[oploc1,_varrock_gate]
+if(map_members = false) {
+    @you_need_to_be_on_a_members_server_to_use_this_gate;
+}
+loc_findallzone(movecoord(coord, 1, 0, 0));
+if(coordx(coord) < coordx(loc_coord)) { 
+    p_teleport(loc_coord);
+} else {
+    p_teleport(movecoord(loc_coord, -1, 0, 0));
+}
+while(loc_findnext = true) {
+     if(loc_category = varrock_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            def_loc $type = loc_type;
+            loc_change(loc_83, 2);
+            if($type = loc_2050) {
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_2052, 3, loc_shape, 2);
+                loc_add(movecoord($central_coord, -2, 0, 0), loc_2053, 3, loc_shape, 2); 
+            }
+     }
+}
+sound_synth(door_open, 0, 0); // gate_open
+p_delay(0);

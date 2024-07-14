@@ -11648,6 +11648,7 @@ desc=A wooden gate.
 model=model_loc_47
 op1=Open
 op2=hidden
+category=varrock_gate
 
 [loc_2051]
 name=Gate
@@ -11655,6 +11656,7 @@ desc=A wooden gate.
 model=model_loc_47
 op1=Open
 mirror=yes
+category=varrock_gate
 
 [loc_2052]
 model=model_loc_47
@@ -11670,6 +11672,8 @@ model=model_loc_367
 length=2
 op1=Open
 forceapproach=east
+category=cupboard_closed
+param=cupboard_other,loc_2057
 
 [loc_2057]
 name=Cupboard
@@ -11679,6 +11683,8 @@ length=2
 op1=Search
 op2=Close
 forceapproach=east
+category=cupboard_opened
+param=cupboard_other,loc_2056
 
 [loc_2058]
 name=Gate

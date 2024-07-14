@@ -1,0 +1,7 @@
+[opnpc1,npc_338]
+if(map_members = false) { // OSRS and RSC, rs3 mentions p2p directly
+    ~chatplayer("<p,happy>Hello!|Playing solitaire?");
+    ~chatnpc("<p,angry>Hush - I'm trying to perfect the art of dealing off the bottom of the deck. Whatever you want, come back later and I'll speak to you then.");
+    return;
+}
+mes("He isn't in a fit state to talk."); 

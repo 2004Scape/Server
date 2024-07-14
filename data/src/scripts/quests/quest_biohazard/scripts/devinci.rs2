@@ -1,0 +1,6 @@
+[opnpc1,npc_336] // https://runescape.wiki/images/Runescript.png?e2d41, rs3(?) version of the script
+if(map_members = false) {
+    ~chatnpc("<p,angry>Bah!|A great artist such as myself should not have to|suffer the HUMILIATION of spending time where the|likes of you wander everywhere!");
+    return;
+}
+mes("<nc_name(npc_336)> does not feel sufficiently moved to talk.");

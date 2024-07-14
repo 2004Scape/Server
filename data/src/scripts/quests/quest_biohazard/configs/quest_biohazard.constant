@@ -1,0 +1,6 @@
+^biohazard_not_started = 0
+^biohazard_started = 1
+^biohazard_spoken_jerico = 2
+^biohazard_used_birdfeed = 3
+^biohazard_released_pigeons = 4
+^biohazard_climbed_ladder = 5

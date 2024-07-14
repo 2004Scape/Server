@@ -99,7 +99,7 @@ manwear=model_282_obj_wear,0
 womanwear=model_446_obj_wear,0
 weight=10g
 
-[obj_422]
+[bird_feed]
 name=Bird feed
 desc=Birds love this stuff!
 cost=1
@@ -127,7 +127,7 @@ weight=10g
 members=yes
 param=no_alchemy,1
 
-[obj_424]
+[pigeon_cage]
 cost=1
 name=Pigeon cage
 desc=It's full of pigeons.
@@ -142,7 +142,7 @@ weight=2kg
 members=yes
 param=no_alchemy,1
 
-[obj_425]
+[pigeon_cage_empty]
 cost=1
 name=Pigeon cage
 desc=It's empty...

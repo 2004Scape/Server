@@ -1,0 +1,6 @@
+[opnpc1,chemist]
+if(map_members = false) { // OSRS and RSC, rs3 mentions p2p directly
+    ~chatnpc("<p,neutral>It's very nice that you've come|all the way down here,|but I really don't have time to talk at the moment.|Maybe if you come back later I'll be able to help.");
+    return;
+}
+mes("The chemist is busy at the moment."); // RSC, unsure what dialogue would have been pre march 2005 (if not the same as this mes)

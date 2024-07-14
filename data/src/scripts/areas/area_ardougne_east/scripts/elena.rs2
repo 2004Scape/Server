@@ -1,10 +1,38 @@
 [opnpc1,elena]
-~chatplayer("<p,happy>Good day to you <nc_name(elena)>.");
-~chatnpc("<p,happy>You too, thanks for freeing me.");
-~chatnpc("<p,sad>It's just a shame the mourners confiscated my equipment.");
-~chatplayer("<p,quiz>What did they take?");
-~chatnpc("<p,neutral>My distillator. I can't test any plague samples without it. They're holding it in the Mourners Headquarters in West Ardougne.");
-~chatnpc("<p,quiz>I must somehow retrieve that distillator if I am to find a cure for this awful affliction. Do you think you could help me?");
-// TODO Biohazard quest impl.
-~chatplayer("<p,neutral>I'm busy at the moment, I'm afraid.");
-~chatnpc("<p,neutral>Fair enough.");
+switch_int(%biohazard_progress) { // ^biohazard_used_birdfeed intentionally has no dialogue!
+    case ^biohazard_released_pigeons:
+        ~chatplayer("<p,happy>Elena, I've distracted the guards at the watchtower.");
+        ~chatnpc("<p,neutral>Yes, I saw.|Quickly meet with Jerico's friends and cross the wall|before the pigeons fly off.");
+    case ^biohazard_spoken_jerico:
+        ~chatplayer("<p,happy>Hello Elena, I've spoken to Jerico.");
+        ~chatnpc("<p,quiz>Was he able to help?");
+        ~chatplayer("<p,neutral>He has two friends who will help me cross the wall,|but first I need to distract the watch tower.");
+        ~chatnpc("<p,confused>Hmm, could be tricky.");
+    case ^biohazard_started:
+        ~chatplayer("<p,happy>Hello Elena.");
+        ~chatnpc("<p,happy>Hello brave adventurer.|Any luck finding my distillator?");
+        ~chatplayer("<p,sad>No, I'm afraid not.");
+        ~chatnpc("<p,neutral>Speak to Jerico, he will help you to cross the wall.|He lives next to the chapel.");
+    case ^biohazard_not_started:
+        ~chatplayer("<p,happy>Good day to you <nc_name(elena)>.");
+        ~chatnpc("<p,happy>You too, thanks for freeing me.");
+        ~chatnpc("<p,sad>It's just a shame the mourners confiscated my equipment.");
+        ~chatplayer("<p,quiz>What did they take?");
+        // https://web.archive.org/web/20050515184744im_/http://www.runeweb.net/fireball/Biohazard%20Images/biohazard2.PNG
+        ~chatnpc("<p,neutral>My distillator. I can't test any plague samples without it.|They're holding it in the mourner quarters|in West Ardougne.");
+        ~chatnpc("<p,neutral>I must somehow retrieve that distillator|if I am to find a cure for this awful affliction.");
+        // TODO Biohazard quest impl.
+        switch_int(~p_choice2("I'll try to retrieve it for you.", 1, "Well, good luck.", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>I'll try to retrieve it for you.");
+                // https://web.archive.org/web/20050515184744im_/http://www.runeweb.net/fireball/Biohazard%20Images/biohazard3.PNG
+                ~chatnpc("<p,neutral>I was hoping you would say that.|Unfortunately they discovered the tunnel and filled it in.|We need another way over the wall.");
+                ~chatplayer("<p,quiz>Any ideas?");
+                %biohazard_progress = ^biohazard_started;
+                ~send_quest_progress(questlist:biohazard, %biohazard_progress, ^biohazard_complete);
+                ~chatnpc("<p,neutral>My father's friend Jerico is in communication with West Ardougne. He might be able to help us, he lives next to the chapel.");
+            case 2:
+                ~chatplayer("<p,neutral>Well, good luck.");
+                ~chatnpc("<p,confused>Thanks traveller.");
+        }
+}

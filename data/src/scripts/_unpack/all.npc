@@ -6135,7 +6135,7 @@ head2=model_80_idk_head
 wanderrange=3
 moverestrict=indoors
 
-[npc_342]
+[guidors_wife]
 vislevel=hide
 name=Guidor's wife
 desc=She looks rather concerned.
@@ -6391,7 +6391,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,blade3
 
-[npc_366]
+[jerico]
 vislevel=hide
 name=Jerico
 desc=He looks friendly enough.
@@ -6416,7 +6416,7 @@ head1=model_52_idk_head
 head2=model_82_idk_head
 moverestrict=indoors
 
-[npc_367]
+[chemist]
 vislevel=hide
 name=Chemist
 desc=Smells very chemically...

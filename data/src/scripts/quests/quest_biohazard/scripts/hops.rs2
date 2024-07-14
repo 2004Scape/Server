@@ -1,0 +1,6 @@
+[opnpc1,npc_340]
+if(map_members = false) { // OSRS and RSC, rs3 mentions p2p directly
+    ~chatnpc("<p,drunk>Hops don't wanna talk now.");
+    return;
+}
+mes("He isn't in a fit state to talk."); 
