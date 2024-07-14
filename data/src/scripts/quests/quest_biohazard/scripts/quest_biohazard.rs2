@@ -57,17 +57,13 @@ mes("The pigeons don't want to leave");
 [label,biohazard_climb_ladder](coord $dest)
 if_close;
 mes("You climb up the rope ladder... <tostring(map_clock)>");
-loc_add(0_39_51_61_3, loc_2065, 3, centrepiece_straight, 4);
-loc_add(0_39_51_62_3, loc_2065, 1, centrepiece_straight, 4);
+if (loc_find(0_39_51_61_3, loc_2066) = true) {
+    loc_change(loc_2065, 4);
+}
+if (loc_find(0_39_51_62_3, loc_2066) = true) {
+    loc_change(loc_2065, 4);
+}
 if(%biohazard_progress = ^biohazard_released_pigeons) %biohazard_progress = ^biohazard_climbed_ladder;
 p_delay(3); // 4t
 p_teleport($dest);
 mes("and drop down on the other side. <tostring(map_clock)>");
-
-[debugproc,delaytest]
-if(p_finduid(uid) = false) {
-    return;
-}
-mes("before delay <tostring(map_clock)>");
-p_delay(5);
-mes("after delay <tostring(map_clock)>");
