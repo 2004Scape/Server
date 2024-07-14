@@ -25,7 +25,7 @@ if (p_finduid(uid) = true) {
         mes("You can't use this teleport after level 20 wilderness.");
         return;
     }
-    if(%elena_progress < ^elena_complete_read_scroll) {
+    if($spell = ^ardougne_teleport & %elena_progress < ^elena_complete_read_scroll) {
         mes("You must have completed Plague City to use this spell.");
         return;
     }
