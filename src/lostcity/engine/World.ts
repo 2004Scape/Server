@@ -136,20 +136,20 @@ class World {
     shouldReload(type: string, client: boolean = false): boolean {
         if (typeof self !== 'undefined') {
             return true;
-        } else {
-            const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
-
-            if (!this.datLastModified.has(type)) {
-                this.datLastModified.set(type, current);
-                return true;
-            }
-
-            const changed = this.datLastModified.get(type) !== current;
-            if (changed) {
-                this.datLastModified.set(type, current);
-            }
-            return changed;
         }
+
+        const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
+
+        if (!this.datLastModified.has(type)) {
+            this.datLastModified.set(type, current);
+            return true;
+        }
+
+        const changed = this.datLastModified.get(type) !== current;
+        if (changed) {
+            this.datLastModified.set(type, current);
+        }
+        return changed;
     }
 
     reload(): void {
