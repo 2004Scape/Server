@@ -294,7 +294,7 @@ export default class Zone {
         }
         this.objs.sortStack(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
+        if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiverId === -1) {
             this.appendEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
             this.appendEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjAdd(coord, obj.type, obj.count)));

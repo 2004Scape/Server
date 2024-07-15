@@ -88,8 +88,8 @@ inv_moveitem(trawler_catch, inv, last_item, 1);
 if (inv_freespace(trawler_catch) = inv_size(trawler_catch)) {
     if_close; // osrs
 }
-[inv_button2,trawler_catch:inv] 
-inv_moveitem(trawler_catch, inv, last_item, inv_total(trawler_catch, last_item)); 
+[inv_button2,trawler_catch:inv]
+inv_movefromslot(trawler_catch, inv, last_slot);
 if (inv_freespace(trawler_catch) = inv_size(trawler_catch)) {
     if_close; // osrs
 }

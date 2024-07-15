@@ -73,9 +73,15 @@ const InvOps: CommandHandlers = {
         }
 
         const player = state.activePlayer;
-        const overflow = count - player.invAdd(invType.id, objType.id, count);
+        const overflow = count - player.invAdd(invType.id, objType.id, count, false);
         if (overflow > 0) {
-            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
+            if (!objType.stackable || overflow === 1) {
+                for (let i = 0; i < overflow; i++) {
+                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, 1), player.pid, 200);
+                }
+            } else {
+                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
+            }
         }
     }),
 
@@ -267,7 +273,14 @@ const InvOps: CommandHandlers = {
         const player = state.activePlayer;
         const { overflow, fromObj } = player.invMoveFromSlot(fromInvType.id, toInvType.id, fromSlot);
         if (overflow > 0) {
-            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow), player.pid, 200);
+            const objType: ObjType = ObjType.get(fromObj);
+            if (!objType.stackable || overflow === 1) {
+                for (let i = 0; i < overflow; i++) {
+                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, 1), player.pid, 200);
+                }
+            } else {
+                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, fromObj, overflow), player.pid, 200);
+            }
         }
     }),
 
@@ -363,9 +376,15 @@ const InvOps: CommandHandlers = {
             return;
         }
 
-        const overflow = count - player.invAdd(toInvType.id, objType.id, completed);
+        const overflow = count - player.invAdd(toInvType.id, objType.id, completed, false);
         if (overflow > 0) {
-            World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
+            if (!objType.stackable || overflow === 1) {
+                for (let i = 0; i < overflow; i++) {
+                    World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, 1), player.pid, 200);
+                }
+            } else {
+                World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, objType.id, overflow), player.pid, 200);
+            }
         }
     }),
 
@@ -396,8 +415,9 @@ const InvOps: CommandHandlers = {
         if (objType.certtemplate === -1 && objType.certlink >= 0) {
             finalObj = objType.certlink;
         }
-        const overflow = count - player.invAdd(toInvType.id, finalObj, completed);
+        const overflow = count - player.invAdd(toInvType.id, finalObj, completed, false);
         if (overflow > 0) {
+            // should be a stackable cert already!
             World.addObj(new Obj(player.level, player.x, player.z, EntityLifeCycle.DESPAWN, finalObj, overflow), player.pid, 200);
         }
     
