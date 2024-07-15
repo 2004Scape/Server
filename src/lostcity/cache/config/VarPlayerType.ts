@@ -19,18 +19,33 @@ export default class VarPlayerType extends ConfigType {
     static LASTCOMBAT = -1;
 
     static load(dir: string) {
-        VarPlayerType.configNames = new Map();
-        VarPlayerType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/varp.dat`)) {
             console.log('Warning: No varp.dat found.');
             return;
         }
 
         const server = Packet.load(`${dir}/server/varp.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/varp.dat`)).ok) {
+            console.log('Warning: No varp.dat found.');
+            return;
+        }
+
+        const server = await Packet.loadAsync(`${dir}/server/varp.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        VarPlayerType.configNames = new Map();
+        VarPlayerType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('varp.dat')!;
         client.pos = 2;
 

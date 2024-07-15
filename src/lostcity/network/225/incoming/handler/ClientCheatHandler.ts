@@ -42,7 +42,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
         if (player.staffModLevel >= 3) {
             // developer commands
-            if (cmd === 'reload' && !Environment.NODE_PRODUCTION) {
+            if (cmd === 'reload' && typeof self === 'undefined' && !Environment.NODE_PRODUCTION) {
                 World.reload();
     
                 // todo: we're probably reloading twice now, just to get count?

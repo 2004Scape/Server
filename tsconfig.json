@@ -3,7 +3,7 @@
     "rootDir": "src",
     "outDir": "out",
     "target": "ESNext",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "WebWorker"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
@@ -12,7 +12,7 @@
       "#jagex2/*": ["src/jagex2/*"],
       "#lostcity/*": ["src/lostcity/*"]
     },
-    "types": ["node", "vitest/globals"],
+    "types": ["node", "bun-types", "vitest/globals"],
     "sourceMap": true,
     "allowJs": true,
     "checkJs": false,

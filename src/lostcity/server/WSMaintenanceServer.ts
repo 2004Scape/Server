@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { WebSocketServer } from 'ws';
 import { IncomingMessage } from 'http';
 
@@ -37,7 +38,7 @@ export default class WSServer {
             const ip: string = getIp(req) ?? 'unknown';
             //console.log(`[WSMaintenance]: Connection from ${ip}`);
 
-            const socket = new ClientSocket(ws, ip, ClientSocket.WEBSOCKET);
+            const socket = new ClientSocket(randomUUID(), ws, ip, ClientSocket.WEBSOCKET);
 
             const seed = new Packet(new Uint8Array(4 + 4));
             seed.p4(Math.floor(Math.random() * 0xffffffff));

@@ -11,15 +11,27 @@ export default class DbRowType extends ConfigType {
     private static configs: DbRowType[] = [];
 
     static load(dir: string) {
-        DbRowType.configNames = new Map();
-        DbRowType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/dbrow.dat`)) {
             console.log('Warning: No dbrow.dat found.');
             return;
         }
-
         const dat = Packet.load(`${dir}/server/dbrow.dat`);
+        this.parse(dat);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/dbrow.dat`)).ok) {
+            console.log('Warning: No dbrow.dat found.');
+            return;
+        }
+        const dat = await Packet.loadAsync(`${dir}/server/dbrow.dat`);
+        this.parse(dat);
+    }
+
+    static parse(dat: Packet) {
+        DbRowType.configNames = new Map();
+        DbRowType.configs = [];
+
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

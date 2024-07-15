@@ -1,4 +1,4 @@
-import { Worker } from 'worker_threads';
+import { Worker as NodeWorker } from 'worker_threads';
 
 import Isaac from '#jagex2/io/Isaac.js';
 import Packet from '#jagex2/io/Packet.js';
@@ -15,18 +15,28 @@ import { CrcBuffer32 } from '#lostcity/server/CrcTable.js';
 import Environment from '#lostcity/util/Environment.js';
 
 class Login {
-    loginThread: Worker = createWorker('./src/lostcity/server/LoginThread.ts');
+    loginThread: Worker | NodeWorker = createWorker(typeof self !== 'undefined' ? 'LoginThread.js' : './src/lostcity/server/LoginThread.ts');
     loginRequests: Map<string, ClientSocket> = new Map();
     logoutRequests: Set<bigint> = new Set();
 
     constructor() {
-        this.loginThread.on('message', msg => {
+        const onMsg = (msg: any) => {
             try {
                 this.onMessage(msg);
             } catch (err) {
                 console.error('Login Thread:', err);
             }
-        });
+        };
+
+        if (typeof self !== 'undefined') {
+            if (this.loginThread instanceof Worker) {
+                this.loginThread.onmessage = onMsg;
+            }
+        } else {
+            if (this.loginThread instanceof NodeWorker) {
+                this.loginThread.on('message', onMsg);
+            }
+        }
     }
 
     async readIn(socket: ClientSocket, data: Packet) {
@@ -54,9 +64,11 @@ class Login {
 
             const crcs = new Uint8Array(9 * 4);
             data.gdata(crcs, 0, crcs.length);
-            if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
-                socket.writeImmediate(LoginResponse.SERVER_UPDATED);
-                return;
+            if (typeof self === 'undefined') {
+                if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
+                    socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                    return;
+                }
             }
 
             this.loginThread.postMessage({
@@ -87,77 +99,152 @@ class Login {
     }
 
     private onMessage(msg: any) {
-        switch (msg.type) {
-            case 'loginreply': {
-                const { status, socket } = msg;
+        if (typeof self === 'undefined') {
+            switch (msg.type) {
+                case 'loginreply': {
+                    const { status, socket } = msg;
 
-                const client = this.loginRequests.get(socket);
-                if (!client) {
-                    return;
-                }
+                    const client = this.loginRequests.get(socket);
+                    if (!client) {
+                        return;
+                    }
 
-                this.loginRequests.delete(socket);
+                    this.loginRequests.delete(socket);
 
-                if (status[0] !== 2) {
-                    client.writeImmediate(status);
-                    client.close();
-                    return;
-                }
+                    if (status[0] !== 2) {
+                        client.writeImmediate(status);
+                        client.close();
+                        return;
+                    }
 
-                const { info, seed, username, save } = msg;
+                    const { info, seed, username, save } = msg;
 
-                if (World.getTotalPlayers() >= 2000) {
-                    client.writeImmediate(LoginResponse.WORLD_FULL);
-                    client.close();
-                    return;
-                }
+                    if (World.getTotalPlayers() >= 2000) {
+                        client.writeImmediate(LoginResponse.WORLD_FULL);
+                        client.close();
+                        return;
+                    }
 
-                if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
-                    client.writeImmediate(LoginResponse.SERVER_UPDATING);
-                    client.close();
-                    return;
-                }
+                    if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
+                        client.writeImmediate(LoginResponse.SERVER_UPDATING);
+                        client.close();
+                        return;
+                    }
 
-                if (!Environment.LOGIN_KEY) {
-                    // running without a login server
-                    for (const player of World.players) {
-                        if (player.username === username) {
-                            client.writeImmediate(LoginResponse.LOGGED_IN);
-                            client.close();
-                            return;
+                    if (!Environment.LOGIN_KEY) {
+                        // running without a login server
+                        for (const player of World.players) {
+                            if (player.username === username) {
+                                client.writeImmediate(LoginResponse.LOGGED_IN);
+                                client.close();
+                                return;
+                            }
                         }
                     }
+
+                    client.decryptor = new Isaac(seed);
+                    for (let i = 0; i < 4; i++) {
+                        seed[i] += 50;
+                    }
+                    client.encryptor = new Isaac(seed);
+
+                    const player = PlayerLoading.load(username, new Packet(save), client);
+                    player.lowMemory = (info & 0x1) !== 0;
+                    player.webClient = client.isWebSocket();
+
+                    World.addPlayer(player);
+                    break;
                 }
+                case 'logoutreply': {
+                    const { username } = msg;
 
-                client.decryptor = new Isaac(seed);
-                for (let i = 0; i < 4; i++) {
-                    seed[i] += 50;
+                    const player = World.getPlayerByUsername(username);
+                    if (player) {
+                        World.getZone(player.x, player.z, player.level).leave(player);
+                        World.players.remove(player.pid);
+                        player.pid = -1;
+                        player.terminate();
+
+                        this.logoutRequests.delete(player.username37);
+                    }
+                    break;
                 }
-                client.encryptor = new Isaac(seed);
-
-                const player = PlayerLoading.load(username, new Packet(save), client);
-                player.lowMemory = (info & 0x1) !== 0;
-                player.webClient = client.isWebSocket();
-
-                World.addPlayer(player);
-                break;
+                default:
+                    throw new Error('Unknown message type: ' + msg.type);
             }
-            case 'logoutreply': {
-                const { username } = msg;
+        } else {
+            switch (msg.data.type) {
+                case 'loginreply': {
+                    const { status, socket } = msg.data;
 
-                const player = World.getPlayerByUsername(username);
-                if (player) {
-                    World.getZone(player.x, player.z, player.level).leave(player);
-                    World.players.remove(player.pid);
-                    player.pid = -1;
-                    player.terminate();
+                    const client = this.loginRequests.get(socket);
+                    if (!client) {
+                        return;
+                    }
 
-                    this.logoutRequests.delete(player.username37);
+                    this.loginRequests.delete(socket);
+
+                    if (status[0] !== 2) {
+                        client.writeImmediate(status);
+                        client.close();
+                        return;
+                    }
+
+                    const { info, seed, username, save } = msg.data;
+
+                    if (World.getTotalPlayers() >= 2000) {
+                        client.writeImmediate(LoginResponse.WORLD_FULL);
+                        client.close();
+                        return;
+                    }
+
+                    if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
+                        client.writeImmediate(LoginResponse.SERVER_UPDATING);
+                        client.close();
+                        return;
+                    }
+
+                    if (!Environment.LOGIN_KEY) {
+                        // running without a login server
+                        for (const player of World.players) {
+                            if (player.username === username) {
+                                client.writeImmediate(LoginResponse.LOGGED_IN);
+                                client.close();
+                                return;
+                            }
+                        }
+                    }
+
+                    client.decryptor = new Isaac(seed);
+                    for (let i = 0; i < 4; i++) {
+                        seed[i] += 50;
+                    }
+                    client.encryptor = new Isaac(seed);
+
+                    const player = PlayerLoading.load(username, new Packet(save), client);
+                    player.lowMemory = (info & 0x1) !== 0;
+                    player.webClient = true;
+
+                    World.addPlayer(player);
+                    break;
                 }
-                break;
+                case 'logoutreply': {
+                    const { username } = msg.data;
+
+                    const player = World.getPlayerByUsername(username);
+                    if (player) {
+                        World.getZone(player.x, player.z, player.level).leave(player);
+                        World.players.remove(player.pid);
+                        player.pid = -1;
+                        player.terminate();
+
+                        this.logoutRequests.delete(player.username37);
+                    }
+                    break;
+                }
+                default:
+                    throw new Error('Unknown message type: ' + msg.data.type);
             }
-            default:
-                throw new Error('Unknown message type: ' + msg.type);
         }
     }
 }

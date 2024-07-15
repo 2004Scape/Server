@@ -13,18 +13,32 @@ export default class ObjType extends ConfigType {
     static configs: ObjType[] = [];
 
     static load(dir: string) {
-        ObjType.configNames = new Map();
-        ObjType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/obj.dat`)) {
             console.log('Warning: No obj.dat found.');
             return;
         }
 
         const server = Packet.load(`${dir}/server/obj.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/obj.dat`)).ok) {
+            console.log('Warning: No obj.dat found.');
+            return;
+        }
+        const server = await Packet.loadAsync(`${dir}/server/obj.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        ObjType.configNames = new Map();
+        ObjType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('obj.dat')!;
         client.pos = 2;
 

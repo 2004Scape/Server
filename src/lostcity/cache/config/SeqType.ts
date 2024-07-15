@@ -11,18 +11,33 @@ export default class SeqType extends ConfigType {
     private static configs: SeqType[] = [];
 
     static load(dir: string) {
-        SeqType.configNames = new Map();
-        SeqType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/seq.dat`)) {
             console.log('Warning: No seq.dat found.');
             return;
         }
 
         const server = Packet.load(`${dir}/server/seq.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/seq.dat`)).ok) {
+            console.log('Warning: No seq.dat found.');
+            return;
+        }
+
+        const server = await Packet.loadAsync(`${dir}/server/seq.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        SeqType.configNames = new Map();
+        SeqType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('seq.dat')!;
         client.pos = 2;
 

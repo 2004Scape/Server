@@ -34,6 +34,8 @@ export function makeCrcs() {
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
 
-if (fs.existsSync('data/pack/client/')) {
-    makeCrcs();
+if (typeof self === 'undefined') {
+    if (fs.existsSync('data/pack/client/')) {
+        makeCrcs();
+    }
 }
