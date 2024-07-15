@@ -193,7 +193,7 @@ weight=4lb
 tradeable=yes
 param=prayerbonus,3
 
-[obj_430]
+[doctors_gown]
 name=Doctors' gown
 desc=Medical looking.
 cost=40

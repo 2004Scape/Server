@@ -1,0 +1,2 @@
+[opnpc1,king_lathas]
+mes("The king is too busy to talk.");

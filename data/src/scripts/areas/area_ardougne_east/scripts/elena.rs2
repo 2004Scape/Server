@@ -1,5 +1,10 @@
 [opnpc1,elena]
 switch_int(%biohazard_progress) { // ^biohazard_used_birdfeed intentionally has no dialogue!
+    case ^biohazard_climbed_ladder, ^biohazard_poisoned_stew:
+        ~chatplayer("<p,happy>Hello again.");
+        ~chatnpc("<p,quiz>You're back, did you find the distillator?");
+        ~chatplayer("<p,sad>I'm afraid not.");
+        ~chatnpc("<p,sad>I can't test the samples without the distillator.|Please don't give up until you find it.");
     case ^biohazard_released_pigeons:
         ~chatplayer("<p,happy>Elena, I've distracted the guards at the watchtower.");
         ~chatnpc("<p,neutral>Yes, I saw.|Quickly meet with Jerico's friends and cross the wall|before the pigeons fly off.");

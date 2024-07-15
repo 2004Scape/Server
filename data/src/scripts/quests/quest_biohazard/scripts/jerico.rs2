@@ -1,5 +1,13 @@
 [opnpc1,jerico]
+if(%biohazard_progress >= ^biohazard_poisoned_stew) {
+    mes("jerico is busy looking for his bird feed");
+}
 switch_int(%biohazard_progress) { // ^biohazard_used_birdfeed intentionally has no dialogue!
+    case ^biohazard_climbed_ladder:
+        ~chatplayer("<p,happy>Hello again Jerico.");
+        ~chatnpc("<p,neutral>So you've returned traveller.|Did you get what you wanted?");
+        ~chatplayer("<p,neutral>Not yet.");
+        ~chatnpc("<p,neutral>Omart will be waiting by the wall,|in case you need to cross again.");
     case ^biohazard_released_pigeons:
         ~chatplayer("<p,happy>Hello there.");
         ~chatnpc("<p,neutral>The guards are distracted by the birds,|you must go now,|quickly traveller.");

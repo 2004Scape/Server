@@ -11553,27 +11553,6 @@ retex1d=door
 recol2s=6342
 recol2d=11458
 
-[loc_2034]
-name=Door
-desc=It's closed.
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door
-recol2s=6342
-recol2d=11458
-
-[loc_2035]
-name=Door
-desc=It's open.
-model=model_loc_3
-active=yes
-retex1s=wall
-retex1d=door
-recol2s=6342
-recol2d=11458
-
 [loc_2038]
 name=Dummy
 desc=I've met less intelligent conversationalists.
@@ -11714,6 +11693,8 @@ model=model_loc_367
 length=2
 op1=Open
 forceapproach=east
+category=cupboard_closed
+param=cupboard_other,loc_2063
 
 [loc_2063]
 name=Cupboard
@@ -11723,6 +11704,8 @@ length=2
 op1=Search
 op2=Close
 forceapproach=east
+category=cupboard_opened
+param=cupboard_other,loc_2062
 
 [loc_2064]
 name=Crate

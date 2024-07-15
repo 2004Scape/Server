@@ -56,7 +56,7 @@ mes("The pigeons don't want to leave");
 
 [label,biohazard_climb_ladder](coord $dest)
 if_close;
-mes("You climb up the rope ladder... <tostring(map_clock)>");
+mes("You climb up the rope ladder...");
 if (loc_find(0_39_51_61_3, loc_2066) = true) {
     loc_change(loc_2065, 4);
 }
@@ -66,4 +66,36 @@ if (loc_find(0_39_51_62_3, loc_2066) = true) {
 if(%biohazard_progress = ^biohazard_released_pigeons) %biohazard_progress = ^biohazard_climbed_ladder;
 p_delay(3); // 4t
 p_teleport($dest);
-mes("and drop down on the other side. <tostring(map_clock)>");
+mes("and drop down on the other side.");
+
+[oplocu,loc_2043]
+if(last_useitem = rotten_apples) {
+    mes("You place the rotten apple in the pot...");
+    p_delay(3);
+    if(%biohazard_progress = ^biohazard_climbed_ladder) {
+        %biohazard_progress = ^biohazard_poisoned_stew;
+        mes("and it quickly dissolves into the stew.");
+        p_delay(3);
+    }
+    mes("That wasn't very nice.");
+}
+// no nothing interesting happens (rs3)
+
+[oploc1,loc_2063]
+mes("You search the cupboard...");
+if(~obj_gettotal(doctors_gown) = 0 & %biohazard_progress >= ^biohazard_poisoned_stew) {
+    mes("and find a <lowercase(oc_name(doctors_gown))>.");
+    return;
+}
+mes("but you find nothing of interest.");
+
+[oploc1,loc_2058] @open_mournerhq_gate(^left);
+[oploc1,loc_2060] @open_mournerhq_gate(^right);
+
+[label,open_mournerhq_gate](int $side)
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+if($entering = true & inv_total(inv, obj_423) = 0) {
+    mes("The gate is locked.");
+    return;
+}
+~open_and_close_double_door2($entering, $side, grate_open);

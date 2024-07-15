@@ -1,6 +1,6 @@
 [opnpc1,omart]
 switch_int(%biohazard_progress) {
-    case ^biohazard_climbed_ladder:
+    case ^biohazard_climbed_ladder, ^biohazard_poisoned_stew:
         ~chatplayer("<p,happy>Hello Omart.");
         ~chatnpc("<p,happy>Hello traveller. The guards are still distracted if you wish to cross the wall.");
         @multi2("Ok, lets do it.", omart_letsdo, "I'll be back soon.", omart_backsoon);
