@@ -23,16 +23,6 @@ export default class Component {
     private static componentNames: Map<string, number> = new Map();
     private static components: Component[] = [];
 
-    static async loadAsync(dir: string): Promise<void> {
-        if (!(await fetch(`${dir}/server/interface.dat`)).ok) {
-            console.log('Warning: No interface.dat found.');
-            return;
-        }
-
-        const dat = await Packet.loadAsync(`${dir}/server/interface.dat`);
-        this.parse(dat);
-    }
-
     static load(dir: string): void {
         if (!fs.existsSync(`${dir}/server/interface.dat`)) {
             console.log('Warning: No interface.dat found.');
@@ -40,6 +30,16 @@ export default class Component {
         }
 
         const dat = Packet.load(`${dir}/server/interface.dat`);
+        this.parse(dat);
+    }
+
+    static async loadAsync(dir: string): Promise<void> {
+        if (!(await fetch(`${dir}/server/interface.dat`)).ok) {
+            console.log('Warning: No interface.dat found.');
+            return;
+        }
+
+        const dat = await Packet.loadAsync(`${dir}/server/interface.dat`);
         this.parse(dat);
     }
 
