@@ -28,6 +28,7 @@ import ServerProtRepository from '#lostcity/network/225/outgoing/prot/ServerProt
 import ZoneMessageEncoder from '#lostcity/network/outgoing/codec/ZoneMessageEncoder.js';
 import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
 import ZoneEntityList, {LocList, ObjList} from '#lostcity/engine/zone/ZoneEntityList.js';
+import NonPathingEntity from '#lostcity/entity/NonPathingEntity.js';
 
 export default class Zone {
     private static readonly SIZE: number = 8 * 8;
@@ -44,6 +45,7 @@ export default class Zone {
     private readonly npcs: Set<number>; // list of npc nids (not uid because type may change)
     private readonly locs: ZoneEntityList<Loc>;
     private readonly objs: ZoneEntityList<Obj>;
+    private readonly entityEvents: Map<NonPathingEntity, ZoneEvent[]>;
 
     // zone events
     private readonly events: Set<ZoneEvent>;
@@ -63,6 +65,7 @@ export default class Zone {
         this.npcs = new Set();
         this.locs = new LocList(Zone.LOCS, (loc: Loc) => World.removeLoc(loc, 100));
         this.objs = new ObjList(Zone.OBJS, (obj: Obj) => World.removeObj(obj, 100));
+        this.entityEvents = new Map();
     }
 
     enter(entity: PathingEntity): void {
@@ -200,6 +203,7 @@ export default class Zone {
 
     reset(): void {
         this.events.clear();
+        this.entityEvents.clear();
     }
 
     // ---- static locs/objs are added during world init ----
@@ -220,6 +224,16 @@ export default class Zone {
 
     // ----
 
+    appendEvent(entity: NonPathingEntity, event: ZoneEvent): void {
+        this.events.add(event);
+        const exist: ZoneEvent[] | undefined = this.entityEvents.get(entity);
+        if (typeof exist === 'undefined') {
+            this.entityEvents.set(entity, [event]);
+            return;
+        }
+        this.entityEvents.set(entity, exist.concat(event));
+    }
+
     addLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
         if (loc.lifecycle === EntityLifeCycle.DESPAWN) {
@@ -228,11 +242,7 @@ export default class Zone {
         }
         this.locs.sortStack(coord);
 
-        this.events.add({
-            type: ZoneEventType.ENCLOSED,
-            receiverId: -1,
-            message: new LocAddChange(coord, loc.type, loc.shape, loc.angle)
-        });
+        this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     removeLoc(loc: Loc): void {
@@ -243,11 +253,18 @@ export default class Zone {
         }
         this.locs.sortStack(coord);
 
-        this.events.add({
-            type: ZoneEventType.ENCLOSED,
-            receiverId: -1,
-            message: new LocDel(coord, loc.shape, loc.angle)
-        });
+        const events: ZoneEvent[] | undefined = this.entityEvents.get(loc);
+        if (typeof events !== 'undefined') {
+            for (let index: number = 0; index < events.length; index++) {
+                this.events.delete(events[index]);
+            }
+
+            this.entityEvents.delete(loc);
+        }
+
+        if (loc.lastLifecycleTick !== World.currentTick) {
+            this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocDel(coord, loc.shape, loc.angle)));
+        }
     }
 
     getLoc(x: number, z: number, type: number): Loc | null {
@@ -260,19 +277,11 @@ export default class Zone {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
-        this.events.add({
-            type: ZoneEventType.ENCLOSED,
-            receiverId: -1,
-            message: new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)
-        });
+        this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)));
     }
 
     animLoc(loc: Loc, seq: number): void {
-        this.events.add({
-            type: ZoneEventType.ENCLOSED,
-            receiverId: -1,
-            message: new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)
-        });
+        this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
     }
 
     // ----
@@ -286,17 +295,9 @@ export default class Zone {
         this.objs.sortStack(coord);
 
         if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
-            this.events.add({
-                type: ZoneEventType.ENCLOSED,
-                receiverId: receiverId,
-                message: new ObjAdd(coord, obj.type, obj.count)
-            });
+            this.appendEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.events.add({
-                type: ZoneEventType.FOLLOWS,
-                receiverId: receiverId,
-                message: new ObjAdd(coord, obj.type, obj.count)
-            });
+            this.appendEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjAdd(coord, obj.type, obj.count)));
         }
     }
 
@@ -307,11 +308,7 @@ export default class Zone {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.events.add({
-            type: ZoneEventType.ENCLOSED,
-            receiverId: -1,
-            message: new ObjReveal(coord, obj.type, obj.count, receiverId)
-        });
+        this.appendEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjReveal(coord, obj.type, obj.count, receiverId)));
     }
 
     changeObj(obj: Obj, receiverId: number, oldCount: number, newCount: number): void {
@@ -320,11 +317,7 @@ export default class Zone {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.events.add({
-            type: ZoneEventType.FOLLOWS,
-            receiverId: receiverId,
-            message: new ObjCount(coord, obj.type, oldCount, newCount)
-        });
+        this.appendEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
 
     removeObj(obj: Obj): void {
@@ -335,18 +328,21 @@ export default class Zone {
         }
         this.objs.sortStack(coord);
 
-        if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
-            this.events.add({
-                type: ZoneEventType.ENCLOSED,
-                receiverId: -1,
-                message: new ObjDel(coord, obj.type)
-            });
-        } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.events.add({
-                type: ZoneEventType.FOLLOWS,
-                receiverId: -1,
-                message: new ObjDel(coord, obj.type)
-            });
+        const exist: ZoneEvent[] | undefined = this.entityEvents.get(obj);
+        if (typeof exist !== 'undefined') {
+            for (let index: number = 0; index < exist.length; index++) {
+                this.events.delete(exist[index]);
+            }
+
+            this.entityEvents.delete(obj);
+        }
+
+        if (obj.lastLifecycleTick !== World.currentTick) {
+            if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
+                this.appendEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new ObjDel(coord, obj.type)));
+            } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
+                this.appendEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, -1, new ObjDel(coord, obj.type)));
+            }
         }
     }
 

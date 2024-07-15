@@ -185,7 +185,7 @@ const InvOps: CommandHandlers = {
 
         if (!objType.stackable || completed === 1) {
             for (let i = 0; i < completed; i++) {
-                const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
+                const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, 1);
                 World.addObj(floorObj, player.pid, duration);
     
                 state.activeObj = floorObj;
