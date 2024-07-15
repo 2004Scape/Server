@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import net, { Server } from 'net';
 
 import Packet from '#jagex2/io/Packet.js';
@@ -25,7 +24,7 @@ export default class TcpServer {
             const ip: string = s.remoteAddress ?? 'unknown';
             //console.log(`[World]: Connection from ${ip}`);
 
-            const socket = new ClientSocket(randomUUID(), s, ip, ClientSocket.TCP);
+            const socket = new ClientSocket(s, ip, ClientSocket.TCP);
 
             const seed = new Packet(new Uint8Array(4 + 4));
             seed.p4(Math.floor(Math.random() * 0xffffffff));

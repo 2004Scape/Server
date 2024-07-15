@@ -3,34 +3,34 @@ import fs from 'fs';
 const modules: string[] = ['buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
-    'process.env.WEB_PORT': '',
-    'process.env.WEB_CORS': '',
-    'process.env.NODE_ID': '',
-    'process.env.NODE_PORT': '',
-    'process.env.NODE_MEMBERS': '',
-    'process.env.NODE_XPRATE': '',
-    'process.env.NODE_PRODUCTION': '',
-    'process.env.NODE_KILLTIMER': '',
-    'process.env.NODE_ALLOW_CHEATS': '',
-    'process.env.NODE_DEBUG': '',
-    'process.env.NODE_DEBUG_PROFILE': '',
-    'process.env.NODE_STAFF': '',
-    'process.env.NODE_CLIENT_ROUTEFINDER': '',
-    'process.env.NODE_SOCKET_TIMEOUT': '',
-    'process.env.LOGIN_HOST': '',
-    'process.env.LOGIN_PORT': '',
-    'process.env.LOGIN_KEY': '',
-    'process.env.DB_HOST': '',
-    'process.env.DB_USER': '',
-    'process.env.DB_PASS': '',
-    'process.env.DB_NAME': '',
-    'process.env.BUILD_JAVA_PATH': '',
-    'process.env.BUILD_STARTUP': '',
-    'process.env.BUILD_STARTUP_UPDATE': '',
-    'process.env.BUILD_VERIFY': '',
-    'process.env.BUILD_VERIFY_FOLDER': '',
-    'process.env.BUILD_VERIFY_PACK': '',
-    'process.env.BUILD_SRC_DIR': '',
+    'process.env.WEB_PORT': 'undefined',
+    'process.env.WEB_CORS': 'undefined',
+    'process.env.NODE_ID': 'undefined',
+    'process.env.NODE_PORT': 'undefined',
+    'process.env.NODE_MEMBERS': 'undefined',
+    'process.env.NODE_XPRATE': 'undefined',
+    'process.env.NODE_PRODUCTION': 'undefined',
+    'process.env.NODE_KILLTIMER': 'undefined',
+    'process.env.NODE_ALLOW_CHEATS': 'undefined',
+    'process.env.NODE_DEBUG': 'undefined',
+    'process.env.NODE_DEBUG_PROFILE': 'undefined',
+    'process.env.NODE_STAFF': 'undefined',
+    'process.env.NODE_CLIENT_ROUTEFINDER': 'undefined',
+    'process.env.NODE_SOCKET_TIMEOUT': 'undefined',
+    'process.env.LOGIN_HOST': 'undefined',
+    'process.env.LOGIN_PORT': 'undefined',
+    'process.env.LOGIN_KEY': 'undefined',
+    'process.env.DB_HOST': 'undefined',
+    'process.env.DB_USER': 'undefined',
+    'process.env.DB_PASS': 'undefined',
+    'process.env.DB_NAME': 'undefined',
+    'process.env.BUILD_JAVA_PATH': 'undefined',
+    'process.env.BUILD_STARTUP': 'undefined',
+    'process.env.BUILD_STARTUP_UPDATE': 'undefined',
+    'process.env.BUILD_VERIFY': 'undefined',
+    'process.env.BUILD_VERIFY_FOLDER': 'undefined',
+    'process.env.BUILD_VERIFY_PACK': 'undefined',
+    'process.env.BUILD_SRC_DIR': 'undefined',
 };
 
 try {
@@ -64,6 +64,7 @@ function removeImports(bundle: string, path: string) {
     try {
         bundle = bundle.split('\n')
             .filter(line => !line.startsWith('import'))
+            .filter(line => !line.startsWith('init_crypto'))
             .join('\n');
 
         fs.writeFileSync(path, bundle);

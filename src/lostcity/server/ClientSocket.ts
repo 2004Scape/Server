@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { Socket } from 'net';
 import { WebSocket } from 'ws';
 
@@ -16,7 +17,7 @@ export default class ClientSocket {
     remoteAddress: string;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId: string;
+    uniqueId = typeof self !== 'undefined' ? (self.location.host.startsWith('https') ? self.crypto.randomUUID() : '0') : randomUUID();
 
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;
@@ -35,8 +36,7 @@ export default class ClientSocket {
 
     player: NetworkPlayer | null = null;
 
-    constructor(uniqueId: string, socket: Socket | WebSocket | null, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
-        this.uniqueId = uniqueId;
+    constructor(socket: Socket | WebSocket | null, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
         this.socket = socket;
         this.remoteAddress = remoteAddress;
         this.type = type;
