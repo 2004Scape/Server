@@ -42,6 +42,13 @@ export class PlayerLoading {
             ? new NetworkPlayer(safeName, name37, client)
             : new Player(safeName, name37);
 
+        if (!Environment.NODE_PRODUCTION) {
+            player.staffModLevel = 3;
+        } else if (Environment.NODE_STAFF.find(name => name === safeName) !== undefined) {
+            // player.staffModLevel = 2;
+            player.staffModLevel = 3; // todo: revert this back to `= 2` after launch
+        }
+
         if (sav.data.length < 2) {
             for (let i = 0; i < 21; i++) {
                 player.stats[i] = 0;
@@ -141,12 +148,6 @@ export class PlayerLoading {
         player.combatLevel = player.getCombatLevel();
         player.lastResponse = World.currentTick;
 
-        if (!Environment.NODE_PRODUCTION) {
-            player.staffModLevel = 3;
-        } else if (Environment.NODE_STAFF.find(name => name === safeName) !== undefined) {
-            // player.staffModLevel = 2;
-            player.staffModLevel = 3; // todo: revert this back to `= 2` after launch
-        }
         return player;
     }
 }

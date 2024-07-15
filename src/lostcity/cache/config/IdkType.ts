@@ -10,18 +10,33 @@ export default class IdkType extends ConfigType {
     private static configs: IdkType[] = [];
 
     static load(dir: string) {
-        IdkType.configNames = new Map();
-        IdkType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/idk.dat`)) {
             console.log('Warning: No idk.dat found.');
             return;
         }
 
         const server = Packet.load(`${dir}/server/idk.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/idk.dat`)).ok) {
+            console.log('Warning: No idk.dat found.');
+            return;
+        }
+
+        const server = await Packet.loadAsync(`${dir}/server/idk.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        IdkType.configNames = new Map();
+        IdkType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('idk.dat')!;
         client.pos = 2;
 

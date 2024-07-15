@@ -1,7 +1,7 @@
 import {Worker} from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
-import {basename} from 'path';
+import path from 'path';
 import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
@@ -62,7 +62,7 @@ import {createWorker} from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {makeCrcs} from '#lostcity/server/CrcTable.js';
-import {preloadClient} from '#lostcity/server/PreloadedPacks.js';
+import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
 import {Position} from '#lostcity/entity/Position.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
@@ -123,8 +123,8 @@ class World {
         this.zoneMap = new ZoneMap();
         this.invs = new Set();
         this.newPlayers = new Set();
-        this.players = new PlayerList(World.PLAYERS);
-        this.npcs = new NpcList(World.NPCS);
+        this.players = new PlayerList(World.PLAYERS - 1);
+        this.npcs = new NpcList(World.NPCS - 1);
         this.zonesTracking = new Map();
         this.queue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
@@ -134,6 +134,10 @@ class World {
     // ----
 
     shouldReload(type: string, client: boolean = false): boolean {
+        if (typeof self !== 'undefined') {
+            return true;
+        }
+
         const current = Math.max(getModified(`data/pack/server/${type}.dat`), client ? getModified('data/pack/client/config') : 0);
 
         if (!this.datLastModified.has(type)) {
@@ -284,6 +288,133 @@ class World {
         this.allLastModified = getLatestModified('data/pack', '.dat');
     }
 
+    async reloadAsync(): Promise<void> {
+        let transmitted = false;
+
+        if (this.shouldReload('varp', true)) {
+            await VarPlayerType.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('param')) {
+            await ParamType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('obj', true)) {
+            await ObjType.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('loc', true)) {
+            await LocType.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('npc', true)) {
+            await NpcType.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('idk', true)) {
+            await IdkType.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('frame_del')) {
+            await SeqFrame.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('seq', true)) {
+            await SeqType.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('spotanim', true)) {
+            await SpotanimType.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('category')) {
+            await CategoryType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('enum')) {
+            await EnumType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('struct')) {
+            await StructType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('inv')) {
+            await InvType.loadAsync('data/pack');
+
+            this.invs.clear();
+            for (let i = 0; i < InvType.count; i++) {
+                const inv = InvType.get(i);
+    
+                if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                    this.invs.add(Inventory.fromType(i));
+                }
+            }
+        }
+
+        if (this.shouldReload('mesanim')) {
+            await MesanimType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('dbtable')) {
+            await DbTableType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('dbrow')) {
+            await DbRowType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('hunt')) {
+            await HuntType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('varn')) {
+            await VarNpcType.loadAsync('data/pack');
+        }
+
+        if (this.shouldReload('vars')) {
+            await VarSharedType.loadAsync('data/pack');
+
+            if (this.vars.length !== VarSharedType.count) {
+                const old = this.vars;
+                this.vars = new Int32Array(VarSharedType.count);
+                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                    this.vars[i] = old[i];
+                }
+
+                const oldString = this.varsString;
+                this.varsString = new Array(VarSharedType.count);
+                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                    this.varsString[i] = oldString[i];
+                }
+            }
+        }
+
+        if (this.shouldReload('interface')) {
+            await Component.loadAsync('data/pack');
+            transmitted = true;
+        }
+
+        if (this.shouldReload('script')) {
+            const count = await ScriptProvider.loadAsync('data/pack');
+            if (count === -1) {
+                this.broadcastMes('There was an issue while reloading scripts.');
+            } else {
+                this.broadcastMes(`Reloaded ${count} scripts.`);
+            }
+        }
+
+        // todo: detect and reload static data (like maps)
+        await preloadClientAsync();
+    }
+
     broadcastMes(message: string): void {
         for (const player of this.players) {
             player.messageGame(message);
@@ -293,20 +424,31 @@ class World {
     async start(skipMaps = false, startCycle = true): Promise<void> {
         console.log('Starting world...');
 
-        FontType.load('data/pack');
-        WordEnc.load('data/pack');
+        if (typeof self === 'undefined') {
+            FontType.load('data/pack');
+            WordEnc.load('data/pack');
 
-        this.reload();
+            this.reload();
 
-        if (!skipMaps) {
-            this.gameMap.init(this.zoneMap);
+            if (!skipMaps) {
+                this.gameMap.init(this.zoneMap);
+            }
+        } else {
+            await FontType.loadAsync('data/pack');
+            await WordEnc.loadAsync('data/pack');
+
+            await this.reloadAsync();
+
+            if (!skipMaps) {
+                await this.gameMap.initAsync(this.zoneMap);
+            }
         }
 
         Login.loginThread.postMessage({
             type: 'reset'
         });
 
-        if (!Environment.NODE_PRODUCTION) {
+        if (typeof self === 'undefined' && !Environment.NODE_PRODUCTION) {
             this.startDevWatcher();
 
             // console.time('checker');
@@ -331,7 +473,7 @@ class World {
     }
 
     startDevWatcher(): void {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -380,12 +522,12 @@ class World {
                 return;
             }
 
-            console.log('dev:', basename(targetPath), 'was edited');
+            console.log('dev:', path.basename(targetPath), 'was edited');
             this.devRebuilding = true;
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/server/DevThread.ts');
+                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
             }
 
             this.devThread.postMessage({
@@ -523,9 +665,11 @@ class World {
             setTimeout(this.cycle.bind(this), this.tickRate - this.cycleStats[WorldStat.CYCLE]);
         }
 
-        // console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
-        // console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
-        // console.log('----');
+        if (Environment.NODE_DEBUG_PROFILE) {
+            console.log(`tick ${this.currentTick} took ${this.cycleStats[WorldStat.CYCLE]}ms: ${this.getTotalPlayers()} players`);
+            console.log(`${this.cycleStats[WorldStat.WORLD]} ms world | ${this.cycleStats[WorldStat.CLIENT_IN]} ms client in | ${this.cycleStats[WorldStat.NPC]} ms npcs | ${this.cycleStats[WorldStat.PLAYER]} ms players | ${this.cycleStats[WorldStat.LOGOUT]} ms logout | ${this.cycleStats[WorldStat.LOGIN]} ms login | ${this.cycleStats[WorldStat.ZONE]} ms zones | ${this.cycleStats[WorldStat.CLIENT_OUT]} ms client out | ${this.cycleStats[WorldStat.CLEANUP]} ms cleanup`);
+            console.log('----');
+        }
     }
 
     // - world queue
@@ -1076,8 +1220,11 @@ class World {
     }
 
     private savePlayers(): void {
-        for (const player of this.players) {
-            player.save().release();
+        // would cause excessive save dialogs on webworker
+        if (typeof self === 'undefined') {
+            for (const player of this.players) {
+                player.save().release();
+            }
         }
     }
 

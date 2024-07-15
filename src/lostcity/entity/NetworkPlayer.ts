@@ -177,6 +177,11 @@ export class NetworkPlayer extends Player {
     }
 
     override playerLog(message: string, ...args: string[]): void {
+        // would cause excessive save dialogs on webworker
+        if (typeof self !== 'undefined') {
+            return;
+        }
+
         if (args.length > 0) {
             fs.appendFileSync(`data/players/${this.username}.log`, `[${new Date().toISOString().split('T')[0]} ${this.client?.remoteAddress}]: ${message} ${args.join(' ')}\n`);
         } else {

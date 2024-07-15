@@ -183,10 +183,21 @@ const InvOps: CommandHandlers = {
         const objType = ObjType.get(obj.id);
         player.playerLog('Dropped item from', invType.debugname as string, objType.debugname as string);
 
-        const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
-        World.addObj(floorObj, player.pid, duration);
-        state.activeObj = floorObj;
-        state.pointerAdd(ActiveObj[state.intOperand]);
+        if (!objType.stackable || completed === 1) {
+            for (let i = 0; i < completed; i++) {
+                const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, 1);
+                World.addObj(floorObj, player.pid, duration);
+    
+                state.activeObj = floorObj;
+                state.pointerAdd(ActiveObj[state.intOperand]);
+            }
+        } else {
+            const floorObj: Obj = new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed);
+            World.addObj(floorObj, player.pid, duration);
+
+            state.activeObj = floorObj;
+            state.pointerAdd(ActiveObj[state.intOperand]);
+        }
     }),
 
     // inv read

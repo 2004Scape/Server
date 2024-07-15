@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {dirname} from 'path';
+import path from 'path';
 import forge from 'node-forge';
 import PrivateKey = forge.pki.rsa.PrivateKey;
 import BigInteger = forge.jsbn.BigInteger;
@@ -106,6 +106,14 @@ export default class Packet extends Hashable {
         return packet;
     }
 
+    static async loadAsync(path: string, seekToEnd: boolean = false): Promise<Packet> {
+        const packet = new Packet(new Uint8Array(await (await fetch(path)).arrayBuffer()));
+        if (seekToEnd) {
+            packet.pos = packet.data.length;
+        }
+        return packet;
+    }
+
     private static cacheMinCount: number = 0;
     private static cacheMidCount: number = 0;
     private static cacheMaxCount: number = 0;
@@ -167,13 +175,19 @@ export default class Packet extends Hashable {
         }
     }
 
-    save(path: string, length: number = this.pos, start: number = 0): void {
-        const dir: string = dirname(path);
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
+    save(filePath: string, length: number = this.pos, start: number = 0): void {
+        if (typeof self !== 'undefined') {
+            const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            self.postMessage( { type: 'save', value: url, path: filePath });
+        } else {
+            const dir: string = path.dirname(filePath);
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir, { recursive: true });
+            }
 
-        fs.writeFileSync(path, this.data.subarray(start, start + length));
+            fs.writeFileSync(filePath, this.data.subarray(start, start + length));
+        }
     }
 
     p1(value: number): void {

@@ -26,6 +26,15 @@ export default class FontType {
         FontType.instances[3] = new FontType(title, 'q8');
     }
 
+    static async loadAsync(dir: string) {
+        const title = await Jagfile.loadAsync(`${dir}/client/title`);
+
+        FontType.instances[0] = new FontType(title, 'p11');
+        FontType.instances[1] = new FontType(title, 'p12');
+        FontType.instances[2] = new FontType(title, 'b12');
+        FontType.instances[3] = new FontType(title, 'q8');
+    }
+
     static get(id: number) {
         return FontType.instances[id];
     }

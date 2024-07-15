@@ -36,6 +36,16 @@ export default class ScriptProvider {
     static load(dir: string): number {
         const dat = Packet.load(`${dir}/server/script.dat`);
         const idx = Packet.load(`${dir}/server/script.idx`);
+        return this.parse(dat, idx);
+    }
+
+    static async loadAsync(dir: string): Promise<number> {
+        const dat = await Packet.loadAsync(`${dir}/server/script.dat`);
+        const idx = await Packet.loadAsync(`${dir}/server/script.idx`);
+        return this.parse(dat, idx);
+    }
+
+    static parse(dat: Packet, idx: Packet): number {
         if (!dat.data.length || !idx.data.length) {
             console.log('\nFatal: No script.dat or script.idx found. Please run the server:build script.');
             process.exit(1);
