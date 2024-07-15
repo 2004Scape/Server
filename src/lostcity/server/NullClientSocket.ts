@@ -1,8 +1,9 @@
+import { randomUUID } from 'node:crypto';
 import ClientSocket from './ClientSocket.js';
 
 export default class NullClientSocket extends ClientSocket {
     constructor() {
-        super(null, '');
+        super(randomUUID(), null, '');
     }
 
     isTCP() {
