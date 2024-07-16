@@ -1,7 +1,7 @@
 import fs from 'fs';
 import fsp from 'fs/promises';
 import http from 'http';
-import { extname } from 'path';
+import { basename, extname } from 'path';
 import ejs from 'ejs';
 
 import { CrcBuffer } from '#lostcity/server/CrcTable.js';
@@ -68,6 +68,10 @@ const web = http.createServer(async (req, res) => {
             res.setHeader('Content-Type', 'application/octet-stream');
             res.writeHead(200);
             res.end(await fsp.readFile('data/pack/client/sounds'));
+        } else if (url.pathname.startsWith('/server/') && fs.existsSync('data/pack/server/' + basename(url.pathname))) {
+            res.setHeader('Content-Type', MIME_TYPES.get(extname(url.pathname ?? '')) ?? 'text/plain');
+            res.writeHead(200);
+            res.end(await fsp.readFile('data/pack/server/' + basename(url.pathname)));
         } else if (url.pathname === '/') {
             if (Environment.NODE_PRODUCTION) {
                 res.writeHead(404);
