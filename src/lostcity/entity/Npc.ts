@@ -808,16 +808,13 @@ export default class Npc extends PathingEntity {
         const type: NpcType = NpcType.get(this.type);
         const players: Entity[] = [];
         const hunted: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType.PLAYER);
+        let attackRange = 1;
+        if (hunt.findNewMode >= NpcMode.APPLAYER1 && hunt.findNewMode <= NpcMode.APPLAYER5) {
+            attackRange = type.attackrange;
+        }
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
-            }
-
-            let attackRange = 0;
-            if (hunt.findNewMode === NpcMode.OPPLAYER2) {
-                attackRange = 1;
-            } else if (hunt.findNewMode === NpcMode.APPLAYER2) {
-                attackRange = type.attackrange;
             }
             if (Position.distanceToSW(player, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
                 continue;
