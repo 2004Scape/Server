@@ -813,6 +813,16 @@ export default class Npc extends PathingEntity {
                 throw new Error('[Npc] huntAll must be of type Player here.');
             }
 
+            let attackRange = 0;
+            if (hunt.findNewMode === NpcMode.OPPLAYER2) {
+                attackRange = 1;
+            } else if (hunt.findNewMode === NpcMode.APPLAYER2) {
+                attackRange = type.attackrange;
+            }
+            if (Position.distanceToSW(player, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
+                continue;
+            }
+
             if (hunt.checkAfk && player.zonesAfk()) {
                 continue;
             }
