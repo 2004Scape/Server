@@ -372,7 +372,7 @@ const PlayerOps: CommandHandlers = {
         const pos: Position = check(state.popInt(), CoordValid);
 
         const player = state.activePlayer;
-        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
+        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length));
         player.updateMovement(false); // try to walk immediately
     }),
 

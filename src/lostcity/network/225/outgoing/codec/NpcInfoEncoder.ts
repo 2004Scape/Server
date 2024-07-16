@@ -147,7 +147,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         let mask: number = npc.mask;
 
         if (newlyObserved) {
-            if (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1) {
+            if (npc.orientationX !== -1 || npc.faceX !== -1) {
                 mask |= Npc.FACE_COORD;
             }
 
@@ -194,11 +194,9 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.FACE_COORD) {
-            if (newlyObserved && npc.orientation != -1) {
-                const faceX: number = Position.moveX(npc.x, npc.orientation);
-                const faceZ: number = Position.moveZ(npc.z, npc.orientation);
-                buf.p2(faceX * 2 + 1);
-                buf.p2(faceZ * 2 + 1);
+            if (newlyObserved && npc.orientationX != -1) {
+                buf.p2(npc.orientationX);
+                buf.p2(npc.orientationZ);
             } else {
                 buf.p2(npc.faceX);
                 buf.p2(npc.faceZ);
@@ -211,7 +209,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         let mask: number = npc.mask;
 
         if (newlyObserved) {
-            if (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1) {
+            if (npc.orientationX !== -1 || npc.faceX !== -1) {
                 mask |= Npc.FACE_COORD;
             }
 
