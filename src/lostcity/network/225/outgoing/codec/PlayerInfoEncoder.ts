@@ -189,7 +189,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         let mask: number = player.mask;
 
         if (newlyObserved) {
-            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+            if (player.orientationX !== -1 || player.faceX !== -1) {
                 mask |= Player.FACE_COORD;
             }
 
@@ -250,11 +250,9 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (mask & Player.FACE_COORD) {
-            if (newlyObserved && player.orientation !== -1) {
-                const faceX: number = Position.moveX(player.x, player.orientation);
-                const faceZ: number = Position.moveZ(player.z, player.orientation);
-                buf.p2(faceX * 2 + 1);
-                buf.p2(faceZ * 2 + 1);
+            if (newlyObserved && player.orientationX !== -1) {
+                buf.p2(player.orientationX);
+                buf.p2(player.orientationZ);
             } else {
                 buf.p2(player.faceX);
                 buf.p2(player.faceZ);
@@ -292,7 +290,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         let mask: number = player.mask;
 
         if (newlyObserved) {
-            if (player.orientation !== -1 || player.faceX !== -1 || player.faceZ !== -1) {
+            if (player.orientationX !== -1 || player.faceX !== -1) {
                 mask |= Player.FACE_COORD;
             }
 

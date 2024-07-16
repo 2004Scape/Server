@@ -371,7 +371,10 @@ export default class Player extends PathingEntity {
 
     resetEntity(respawn: boolean) {
         if (respawn) {
-            // if needed for respawning
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.orientationX = -1;
+            this.orientationZ = -1;
         }
         super.resetPathingEntity();
         this.repathed = false;
@@ -1534,7 +1537,8 @@ export default class Player extends PathingEntity {
     faceSquare(x: number, z: number) {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
-        this.orientation = Position.face(this.x, this.z, x, z);
+        this.orientationX = this.faceX;
+        this.orientationZ = this.faceZ;
         this.mask |= Player.FACE_COORD;
     }
 
