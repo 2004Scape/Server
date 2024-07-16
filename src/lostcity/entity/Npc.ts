@@ -195,9 +195,9 @@ export default class Npc extends PathingEntity {
                 }
             }
             let attackRange = 0;
-            if (this.targetOp === NpcMode.OPPLAYER2) {
+            if (this.targetOp >= NpcMode.OPPLAYER1 && this.targetOp <= NpcMode.OPPLAYER5) {
                 attackRange = 1;
-            } else if (this.targetOp === NpcMode.APPLAYER2) {
+            } else if (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) {
                 attackRange = type.attackrange;
             }
             if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
