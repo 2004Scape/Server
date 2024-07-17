@@ -1,7 +1,7 @@
 enum MapFindSqaureType {
-    NONE,
     LINEOFWALK,
-    LINEOFSIGHT
+    LINEOFSIGHT,
+    NONE
 }
 
 export default MapFindSqaureType;
