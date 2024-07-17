@@ -33,6 +33,7 @@ node_modules/
 bz2.dll
 JagCompress.jar
 RuneScriptCompiler.jar
+PreloadedDirs.ts
 
 *.bz2
 

@@ -34,6 +34,8 @@ const defines = {
 };
 
 try {
+    preloadDirs();
+
     const loginThread = await Bun.build({
         entrypoints: ['src/lostcity/server/LoginThread.ts'],
         external: modules,
@@ -58,6 +60,17 @@ try {
     }
 } catch (e) {
     console.error(e);
+}
+
+function preloadDirs() {
+    const allMaps: string[] = fs.readdirSync('data/pack/client/maps');
+    const allSongs: string[] = fs.readdirSync('data/pack/client/songs');
+    const allJingles: string[] = fs.readdirSync('data/pack/client/jingles');
+    const serverMaps: string[] = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
+    fs.writeFileSync('src/lostcity/server/PreloadedDirs.ts', `export const maps: string[] = \n${JSON.stringify(allMaps)};\n\n`);
+    fs.appendFileSync('src/lostcity/server/PreloadedDirs.ts', `export const songs: string[] = \n${JSON.stringify(allSongs)};\n\n`);
+    fs.appendFileSync('src/lostcity/server/PreloadedDirs.ts', `export const jingles: string[] = \n${JSON.stringify(allJingles)};\n\n`);
+    fs.appendFileSync('src/lostcity/server/PreloadedDirs.ts', `export const serverMaps: string[] = \n${JSON.stringify(serverMaps)};\n\n`);
 }
 
 function removeImports(bundle: string, path: string) {
