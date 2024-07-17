@@ -37,7 +37,7 @@ if (~inzone_coord_pair_table(trawler_lobby_zones, coord) = false) {
     return;
 }
 inv_clear(trawler_catch);
-p_teleport(~coord_lineofwalk_radius(^trawler_start_center_under, 4));
+p_teleport(map_findsquare(^trawler_start_center_under, 0, 4, ^map_findsquare_lineofwalk));
 %boat_takeoff = 11;
 %trawler = ^trawler_sailed;
 if_openmainmodal(ship_journey);

@@ -27,5 +27,5 @@ p_delay(1);
 if (%exit_essence_mine_coord = null) {
     %exit_essence_mine_coord = ^essence_mine_to_sedridor;
 }
-def_coord $coord = ~coord_lineofwalk_radius(%exit_essence_mine_coord, 2);
+def_coord $coord = map_findsquare(%exit_essence_mine_coord, 0, 2, ^map_findsquare_lineofwalk);
 p_telejump($coord);

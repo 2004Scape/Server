@@ -106,7 +106,7 @@ if (~wilderness_level(coord) > 20) {
 if (~pre_tele_checks(coord) = false) {
     return;
 }
-~player_teleport_normal(~coord_lineofwalk_radius(0_51_50_51_35, 2));
+~player_teleport_normal(map_findsquare(0_51_50_51_35, 0, 2, ^map_findsquare_lineofwalk));
 def_namedobj $new_ring = oc_param($item, next_obj_stage);
 if ($new_ring = null) {
     inv_delslot(inv, $slot);
@@ -132,6 +132,6 @@ if (p_finduid(uid) = true) {
     if (stat(hitpoints) <= scale(10, 100, stat_base(hitpoints))) {
         mes("Your Ring of Life saves you and is destroyed in the process.");
         inv_delslot(worn, ^wearpos_ring);
-        ~player_teleport_normal(~coord_lineofwalk_radius(0_50_50_21_18, 2));
+        ~player_teleport_normal(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
     }
 }

@@ -1,37 +1,3 @@
-[proc,coord_lineofwalk_radius](coord $coord, int $radius)(coord)
-def_int $x = $radius;
-def_int $z = $radius;
-def_int $i;
-def_coord $rand_coord = $coord;
-while ($i < 50) {
-    $x = ~random_range(calc(0 - $radius), $radius);
-    $z = ~random_range(calc(0 - $radius), $radius);
-    $rand_coord = movecoord($coord, $x, 0, $z);
-    if (lineofwalk($rand_coord, $coord) = true & map_blocked($rand_coord) = false) {
-        return($rand_coord);
-    }
-    $i = calc($i + 1);
-}
-// center coord
-return($coord);
-
-// doesnt allow the random coordinate to be the same as the arg coordinate
-[proc,coord_lineofwalk_radius2](coord $coord, int $radius)(coord)
-def_int $x = $radius;
-def_int $z = $radius;
-def_int $i;
-def_coord $rand_coord = $coord;
-while ($i < 50) {
-    $x = ~random_range(calc(0 - $radius), $radius);
-    $z = ~random_range(calc(0 - $radius), $radius);
-    $rand_coord = movecoord($coord, $x, 0, $z);
-    if (lineofwalk($rand_coord, $coord) = true & map_blocked($rand_coord) = false & $rand_coord ! $coord) {
-        return($rand_coord);
-    }
-    $i = calc($i + 1);
-}
-return($coord);
-
 [proc,inmap](coord $coord1, coord $coord2)(boolean)
 def_int $mapx1 = divide(coordx($coord1), 64);
 def_int $mapz1 = divide(coordz($coord1), 64);

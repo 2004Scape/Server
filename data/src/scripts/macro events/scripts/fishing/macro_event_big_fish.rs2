@@ -27,7 +27,7 @@ npc_tele(~fishing_spot_random_coord($old)); // move fishing spot.
 // https://youtu.be/9z5XLWq4lZU?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=88
 // https://www.youtube.com/watch?v=c_LXJDSTKPA
 
-def_coord $random_coord = ~coord_lineofwalk_radius2(coord, 7);
+def_coord $random_coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
 // todo: confirm the delay on this
 sound_synth(water_strike_all, 0, 0); // complete guess
 def_int $duration = ~coord_projectile(coord, $random_coord, waterstrike_travel, 0, 0, 20, 16, -5, 64, 10);

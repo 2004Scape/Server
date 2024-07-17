@@ -17,6 +17,6 @@ spotanim_map(small_smokepuff, npc_coord, 124, 0);
 if (finduid(%npc_aggressive_player) = true & npc_getmode = opplayer2) {
     sound_synth(smokepuff, 0, 0);
 }
-npc_tele(map_findsquare(npc_coord, 0, 20, 0));
+npc_tele(map_findsquare(npc_coord, 0, 20, ^map_findsquare_none));
 spotanim_map(small_smokepuff, npc_coord, 124, 0);
 npc_setmode(null);
