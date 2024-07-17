@@ -1,9 +1,6 @@
 import fs from 'fs';
 
 import Packet from '#jagex2/io/Packet.js';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { jingles, maps, songs } from './PreloadedDirs.js';
 
 export const PRELOADED = new Map<string, Uint8Array>();
 export const PRELOADED_CRC = new Map<string, number>();
@@ -50,6 +47,10 @@ export function preloadClient() {
 export async function preloadClientAsync() {
     //console.log('Preloading client data');
     //console.time('Preloaded client data');
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const { jingles, maps, songs } = await import('./PreloadedDirs.js');
     const allMaps = maps;
     for (let i = 0; i < allMaps.length; i++) {
         const name = allMaps[i];
