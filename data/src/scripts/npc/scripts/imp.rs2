@@ -1,25 +1,26 @@
 [ai_timer,imp]
 def_int $random = random(3);
 if ($random = 0) { // teleport
-    spotanim_map(small_smokepuff, npc_coord, 124, 0);
-    if (finduid(%npc_attacking_uid) = true) {
-        sound_synth(smokepuff, 0, 0);
-    }
-    if (random(2) = 0) {
-        npc_tele(movecoord(npc_coord, 19, 0, ~random_range(-19, 19)));
-    } else {
-        npc_tele(movecoord(npc_coord, -19, 0, ~random_range(-19, 19)));
-    }
-    spotanim_map(small_smokepuff, npc_coord, 124, 0);
-    npc_setmode(null);
-} else if ($random = 1) { // deagro
-    def_int $random_seq = random(4);
-    if ($random_seq = 0) {
-        npc_anim(imp_seq_173, 0);
-    } else if ($random_seq = 1) {
-        npc_anim(imp_seq_174, 0);
-    } else if ($random_seq = 2) {
-        npc_anim(imp_seq_175, 0);
-    }
+    ~npc_imp_teleport;
+} else if ($random = 1) { // deagro? Does this in osrs
     npc_setmode(null);
 }
+
+[ai_queue2,imp]
+if (random(10) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
+    ~npc_imp_teleport;
+}
+~npc_default_damage(last_int);
+
+[proc,npc_imp_teleport]
+spotanim_map(small_smokepuff, npc_coord, 124, 0);
+if (finduid(%npc_aggressive_player) = true & npc_getmode = opplayer2) {
+    sound_synth(smokepuff, 0, 0);
+}
+if (random(2) = 0) {
+    npc_tele(movecoord(npc_coord, 19, 0, ~random_range(-19, 19)));
+} else {
+    npc_tele(movecoord(npc_coord, -19, 0, ~random_range(-19, 19)));
+}
+spotanim_map(small_smokepuff, npc_coord, 124, 0);
+npc_setmode(null);
