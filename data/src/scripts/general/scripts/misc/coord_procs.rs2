@@ -18,23 +18,6 @@ def_int $coord_x = calc($x * 64);
 def_int $coord_z = calc($z * 64);
 return(movecoord(0_0_0_0_0, $coord_x, 0, $coord_z));
 
-[proc,coord_lineofsight_radius](coord $coord, int $radius)(coord)
-def_int $x = $radius;
-def_int $z = $radius;
-def_int $i;
-def_coord $rand_coord = $coord;
-while ($i < 50) {
-    $x = ~random_range(calc(0 - $radius), $radius);
-    $z = ~random_range(calc(0 - $radius), $radius);
-    $rand_coord = movecoord($coord, $x, 0, $z);
-    if (lineofsight($rand_coord, $coord) = true & map_blocked($rand_coord) = false) {
-        return($rand_coord);
-    }
-    $i = calc($i + 1);
-}
-// center coord
-return($coord);
-
 // 0_50_50_22_22 --> 0, 50, 50, 22, 22
 [proc,coord_unpack](coord $coord)(int, int, int, int, int)
 def_int $x = coordx($coord);

@@ -16,7 +16,6 @@ obj_add(npc_coord, dragonhide_black, 1, ^lootdrop_duration);
 // - https://web.archive.org/web/20040817192737/http://www.runescapecommunity.com/index.php?showtopic=106758
 // - https://web.archive.org/web/20050221193145/http://www.runecrypt.com/index.php?pid=118
 
-
 // clue scroll. Osrs only has elite scrolls for kbd, not sure what the rate would be for hard clues.
 // Im guessing its 1/128 like most high level monsters
 ~trail_hardcluedrop(128, npc_coord);
@@ -73,8 +72,6 @@ if ($random < 10) { // osrs
 }
 
 
-
-
 [ai_applayer2,king_black_dragon]
 if (%npc_action_delay > map_clock) {
     return;
@@ -91,11 +88,6 @@ if (random(3) = 0 & npc_range(coord) < 2) {
     ~kbd_dragonfire_far;
 }
 
-// todo: Use huntall
-// if (finduid(~random_player_within_distance(npc_coord, 16)) = true) {
-//     npc_setmode(applayer2);
-// }
-
 
 [ai_opplayer2,king_black_dragon]
 //mes("<tostring(map_clock)>: Op");
@@ -107,11 +99,6 @@ if (~npc_can_attack_player = false) {
     return;
 }
 ~kbd_random_attack;
-
-// todo: Use huntall
-// if (finduid(~random_player_within_distance(npc_coord, 16)) = true) {
-//     npc_setmode(applayer2);
-// }
 
 
 [proc,kbd_random_attack]
