@@ -52,6 +52,7 @@ enum ScriptOpcode {
     MAP_LOCADDUNSAFE, // official
     MAP_MEMBERS, // official
     MAP_PLAYERCOUNT, // official, see giant dwarf cutscene
+    MAP_FINDSQUARE, // official
     MOVECOORD, // official
     PLAYERCOUNT,
     PROJANIM_MAP,

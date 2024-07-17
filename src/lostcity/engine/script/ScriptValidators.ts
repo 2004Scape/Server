@@ -26,6 +26,7 @@ import DbTableType from '#lostcity/cache/config/DbTableType.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import HitType from '#lostcity/entity/HitType.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
+import MapFindSqaureType from '#lostcity/entity/MapFindSquareType.js';
 
 interface ScriptValidator<T, R> {
     validate(input: T): R;
@@ -113,6 +114,7 @@ export const InvTypeValid: ScriptValidator<number, InvType> = new ScriptInputCon
 export const CategoryTypeValid: ScriptValidator<number, CategoryType> = new ScriptInputConfigTypeValidator(CategoryType.get, (input: number) => input >= 0 && input < CategoryType.count, 'Cat');
 export const IDKTypeValid: ScriptValidator<number, IdkType> = new ScriptInputConfigTypeValidator(IdkType.get, (input: number) => input >= 0 && input < IdkType.count, 'Idk');
 export const HuntVisValid: ScriptValidator<number, HuntVis> = new ScriptInputRangeValidator(HuntVis.OFF, HuntVis.LINEOFWALK, 'HuntVis');
+export const FindSquareValid: ScriptValidator<number, MapFindSqaureType> = new ScriptInputRangeValidator(MapFindSqaureType.NONE, MapFindSqaureType.LINEOFSIGHT, 'FindSquare');
 export const SeqTypeValid: ScriptValidator<number, SeqType> = new ScriptInputConfigTypeValidator(SeqType.get, (input: number) => input >= 0 && input < SeqType.count, 'Seq');
 export const VarPlayerValid: ScriptValidator<number, VarPlayerType> = new ScriptInputConfigTypeValidator(VarPlayerType.get, (input: number) => input >= 0 && input < VarPlayerType.count, 'Varp');
 export const VarNpcValid: ScriptValidator<number, VarNpcType> = new ScriptInputConfigTypeValidator(VarNpcType.get, (input: number) => input >= 0 && input < VarNpcType.count, 'Varn');

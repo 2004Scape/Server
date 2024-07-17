@@ -43,6 +43,7 @@
 [command,zonecount]()(int)
 [command,loccount]()(int)
 [command,objcount]()(int)
+[command,map_findsquare](coord $coord, int $minradius, int $maxradius, int $type)(coord)
 
 // Player ops (2000-2499)
 [command,finduid](player_uid $player)(boolean)
