@@ -411,6 +411,13 @@ class World {
             }
         }
 
+        // todo: check if any jag files changed (transmitted) then reload crcs
+        // if (transmitted) {
+        //     await makeCrcsAsync();
+        // }
+
+        // await makeCrcsAsync();
+
         // todo: detect and reload static data (like maps)
         await preloadClientAsync();
     }
