@@ -38,12 +38,12 @@ const defines = {
 
 try {
     preloadDirs();
-    process.argv0 === 'bun' ? await bun(entryPoints) : await esb(entryPoints);
+    process.argv0 === 'bun' ? await bun() : await esb();
 } catch (e) {
     console.error(e);
 }
 
-async function esb(entryPoints) {
+async function esb() {
     const bundle = await esbuild.build({
         bundle: true,
         format: 'esm',
@@ -101,5 +101,5 @@ function removeImports(output, file) {
 
     fs.writeFileSync(path, output);
 
-    console.log(`${file} size: ${(fs.statSync(path).size / (1024 * 1024)).toFixed(2)} MB`);
+    console.log(`${path} size: ${(fs.statSync(path).size / (1024 * 1024)).toFixed(2)} MB`);
 }
