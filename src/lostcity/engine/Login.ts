@@ -15,7 +15,7 @@ import { CrcBuffer32 } from '#lostcity/server/CrcTable.js';
 import Environment from '#lostcity/util/Environment.js';
 
 class Login {
-    loginThread: Worker | NodeWorker = createWorker(typeof self !== 'undefined' ? 'LoginThread.js' : './src/lostcity/server/LoginThread.ts');
+    loginThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/LoginThread.ts' : 'LoginThread.js');
     loginRequests: Map<string, ClientSocket> = new Map();
     logoutRequests: Set<bigint> = new Set();
 
@@ -28,13 +28,13 @@ class Login {
             }
         };
 
-        if (typeof self !== 'undefined') {
-            if (this.loginThread instanceof Worker) {
-                this.loginThread.onmessage = onMsg;
-            }
-        } else {
+        if (typeof self === 'undefined') {
             if (this.loginThread instanceof NodeWorker) {
                 this.loginThread.on('message', onMsg);
+            }
+        } else {
+            if (this.loginThread instanceof Worker) {
+                this.loginThread.onmessage = onMsg;
             }
         }
     }

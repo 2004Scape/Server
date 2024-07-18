@@ -1228,10 +1228,12 @@ class World {
 
     private savePlayers(): void {
         // would cause excessive save dialogs on webworker
-        if (typeof self === 'undefined') {
-            for (const player of this.players) {
-                player.save().release();
-            }
+        if (typeof self !== 'undefined') {
+            return;
+        }
+
+        for (const player of this.players) {
+            player.save().release();
         }
     }
 

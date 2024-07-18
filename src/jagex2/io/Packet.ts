@@ -176,17 +176,17 @@ export default class Packet extends Hashable {
     }
 
     save(filePath: string, length: number = this.pos, start: number = 0): void {
-        if (typeof self !== 'undefined') {
-            const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
-            const url = URL.createObjectURL(blob);
-            self.postMessage( { type: 'save', value: url, path: filePath });
-        } else {
+        if (typeof self === 'undefined') {
             const dir: string = path.dirname(filePath);
             if (!fs.existsSync(dir)) {
                 fs.mkdirSync(dir, { recursive: true });
             }
 
             fs.writeFileSync(filePath, this.data.subarray(start, start + length));
+        } else {
+            const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            self.postMessage( { type: 'save', value: url, path: filePath });
         }
     }
 

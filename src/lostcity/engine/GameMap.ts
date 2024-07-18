@@ -19,9 +19,6 @@ import Environment from '#lostcity/util/Environment.js';
 
 import {LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { serverMaps } from '#lostcity/server/PreloadedDirs.js';
 
 export default class GameMap {
     private static readonly OPEN: number = 0x0;
@@ -59,6 +56,9 @@ export default class GameMap {
     async initAsync(zoneMap: ZoneMap): Promise<void> {
         console.time('Loading game map');
         const path: string = 'data/pack/server/maps/';
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const { serverMaps } = await import('#lostcity/server/PreloadedDirs.js');
         const maps: string[] = serverMaps;
         for (let index: number = 0; index < maps.length; index++) {
             console.log('init ', maps[index]);

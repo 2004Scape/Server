@@ -17,7 +17,7 @@ export default class ClientSocket {
     remoteAddress: string;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId = typeof self !== 'undefined' ? (self.location.protocol === 'https:' ? self.crypto.randomUUID() : '0') : randomUUID();
+    uniqueId = typeof self === 'undefined' ? randomUUID() : (self.location.protocol === 'https:' ? self.crypto.randomUUID() : '0');
 
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;
@@ -52,10 +52,7 @@ export default class ClientSocket {
     }
 
     send(data: Uint8Array) {
-        if (typeof self !== 'undefined') {
-            this.totalBytesWritten += data.length;
-            self.postMessage(data);
-        } else {
+        if (typeof self === 'undefined') {
             if (!this.socket) {
                 return;
             }
@@ -66,16 +63,15 @@ export default class ClientSocket {
             } else if (this.isWebSocket()) {
                 (this.socket as WebSocket).send(data);
             }
+        } else {
+            this.totalBytesWritten += data.length;
+            self.postMessage(data);
         }
     }
 
     // close the connection gracefully
     close() {
-        if (typeof self !== 'undefined') {
-            setTimeout(() => {
-                self.close();
-            }, 100);
-        } else {
+        if (typeof self === 'undefined') {
             if (!this.socket) {
                 return;
             }
@@ -87,14 +83,16 @@ export default class ClientSocket {
                     (this.socket as WebSocket).close();
                 }
             }, 100);
+        } else {
+            setTimeout(() => {
+                self.close();
+            }, 100);
         }
     }
 
     // terminate the connection immediately
     terminate() {
-        if (typeof self !== 'undefined') {
-            self.close();
-        } else {
+        if (typeof self === 'undefined') {
             if (!this.socket) {
                 return;
             }
@@ -104,6 +102,8 @@ export default class ClientSocket {
             } else if (this.isWebSocket()) {
                 (this.socket as WebSocket).terminate();
             }
+        } else {
+            self.close();
         }
     }
 
