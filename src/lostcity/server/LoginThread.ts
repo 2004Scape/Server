@@ -13,11 +13,11 @@ import Environment from '#lostcity/util/Environment.js';
 
 let priv;
 
-if (typeof self !== 'undefined') {
-    priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text());
-} else {
+if (typeof self === 'undefined') {
     if (!parentPort) throw new Error('This file must be run as a worker thread.');
     priv = forge.pki.privateKeyFromPem(fs.readFileSync('data/config/private.pem', 'ascii'));
+} else {
+    priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text());
 }
 
 if (typeof self === 'undefined' && parentPort) {
