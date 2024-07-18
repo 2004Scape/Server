@@ -1,5 +1,5 @@
 [ai_timer,imp]
-if (random(3) = 0) {
+if (random(3) = 0 & add(%npc_lastcombat, 8) < map_clock) { // ash says a few seconds, but i assume its 8 ticks?
     ~npc_imp_teleport;
 }
 npc_setmode(null); // deagros after 70 ticks
