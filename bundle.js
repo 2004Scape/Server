@@ -79,10 +79,12 @@ async function bun(entryPoints) {
 function preloadDirs() {
     const path = 'src/lostcity/server/PreloadedDirs.ts';
 
+    // readdirSync is not really sync in bun
     const allMaps = fs.readdirSync('data/pack/client/maps');
     const allSongs = fs.readdirSync('data/pack/client/songs');
     const allJingles = fs.readdirSync('data/pack/client/jingles');
     const serverMaps = fs.readdirSync('data/pack/server/maps').filter(x => x[0] === 'm');
+
     fs.writeFileSync(path, `export const maps: string[] = \n${JSON.stringify(allMaps)};\n\n`);
     fs.appendFileSync(path, `export const songs: string[] = \n${JSON.stringify(allSongs)};\n\n`);
     fs.appendFileSync(path, `export const jingles: string[] = \n${JSON.stringify(allJingles)};\n\n`);
