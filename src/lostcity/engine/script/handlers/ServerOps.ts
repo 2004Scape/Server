@@ -32,6 +32,7 @@ import {
     LocTypeValid,
     MesanimValid,
     NumberNotNull,
+    NumberPositive,
     ParamTypeValid,
     SeqTypeValid,
     SpotAnimTypeValid,
@@ -398,14 +399,10 @@ const ServerOps: CommandHandlers = {
 
     [ScriptOpcode.MAP_FINDSQUARE]: state => {
         const [coord, minRadius, maxRadius, type] = state.popInts(4);
-        check(coord, CoordValid);
-        check(minRadius, NumberNotNull);
-        check(maxRadius, NumberNotNull);
+        check(minRadius, NumberPositive);
+        check(maxRadius, NumberPositive);
         check(type, FindSquareValid);
-        if (minRadius < 0 || maxRadius < 0) {
-            throw new Error('attempted to use negative radius for map_findsquare');
-        }
-        const origin = Position.unpackCoord(coord);
+        const origin: Position = check(coord, CoordValid);
         if (maxRadius < 10) {
             if (type === MapFindSqaureType.NONE) {
                 for (let i = 0; i < 50; i++) {

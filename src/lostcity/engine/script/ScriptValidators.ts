@@ -39,6 +39,13 @@ class ScriptInputNumberNotNullValidator implements ScriptValidator<number, numbe
     }
 }
 
+class ScriptInputNumberPositiveValidator implements ScriptValidator<number, number> {
+    validate(input: number): number {
+        if (input >= 0) return input;
+        throw Error('An input number was negative.');
+    }
+}
+
 class ScriptInputStringNotNullValidator implements ScriptValidator<string, string> {
     validate(input: string): string {
         if (input.length > 0) return input;
@@ -92,6 +99,7 @@ class ScriptInputCoordValidator extends ScriptInputRangeValidator<Position> {
 }
 
 export const NumberNotNull: ScriptValidator<number, number> = new ScriptInputNumberNotNullValidator();
+export const NumberPositive: ScriptValidator<number, number> = new ScriptInputNumberPositiveValidator();
 export const StringNotNull: ScriptValidator<string, string> = new ScriptInputStringNotNullValidator();
 export const LocTypeValid: ScriptValidator<number, LocType> = new ScriptInputConfigTypeValidator(LocType.get, (input: number) => input >= 0 && input < LocType.count, 'Loc');
 export const LocAngleValid: ScriptValidator<number, LocAngle> = new ScriptInputRangeValidator(LocAngle.WEST, LocAngle.SOUTH, 'LocAngle');
