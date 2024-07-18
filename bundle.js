@@ -61,7 +61,7 @@ async function esb() {
     }
 }
 
-async function bun(entryPoints) {
+async function bun() {
     // eslint-disable-next-line no-undef
     const bundle = await Bun.build({
         entrypoints: entryPoints,
