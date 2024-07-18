@@ -8,7 +8,7 @@ if (p_finduid(uid) = true) {
 def_int $i = 0;
 def_coord $coord = coord;
 while ($i < $count) {
-    def_coord $new_coord = map_findsquare($coord, 0, 20, 0);
+    def_coord $new_coord = map_findsquare($coord, 0, 20, ^map_findsquare_none);
     mes("<tostring(sub(coordx($coord), coordx($new_coord)))>, <tostring(sub(coordz($coord), coordz($new_coord)))>");
     $i = add($i, 1);
 }

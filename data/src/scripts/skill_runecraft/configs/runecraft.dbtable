@@ -8,5 +8,5 @@ column=talisman,obj
 column=name,string
 column=multiplier,int
 column=altar_coord,coord
-column=enter_coord,coord,int
-column=exit_coord,coord,int
+column=enter_coord,coord,int,int,int
+column=exit_coord,coord,int,int,int
