@@ -1,8 +1,9 @@
 ^macro_event_swarm = 1
-^macro_event_triffid_friendly = 2
-^macro_event_genie = 3
-^macro_event_drunken_dwarf = 4
-^macro_event_mysterious_old_man_general = 5
+^macro_event_genie = 2
+^macro_event_drunken_dwarf = 3
+^macro_event_mysterious_old_man_general = 4
+
+^macro_event_triffid_friendly = 5
 
 ^macro_event_big_fish = 6
 
