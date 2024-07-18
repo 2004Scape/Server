@@ -3,7 +3,7 @@
 [proc,macro_event_shade_spawn]
 def_npc $shade = enum(int, npc, macro_event_shade_levels, ~macro_event_combat_level);
 
-def_coord $shade_coord = ~macro_event_coord;
+def_coord $shade_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 if ($shade_coord = null) {
     return;
 }

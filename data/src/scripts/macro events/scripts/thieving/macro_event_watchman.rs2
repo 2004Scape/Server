@@ -6,7 +6,7 @@
 // - https://web.archive.org/web/20040606142810/http://www.tip.it/runescape/index.php?page=rs2randon.htm
 def_npc $event = enum(int, npc, macro_event_watchman_levels, ~macro_event_combat_level);
 
-def_coord $event_coord = ~macro_event_coord;
+def_coord $event_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 if ($event_coord = null) {
     return;
 }

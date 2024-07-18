@@ -38,7 +38,7 @@ if (afk_event = ^true) {
 if (~macro_event_area(coord) = false) {
     return;
 }
-def_coord $event_coord = ~macro_event_coord;
+def_coord $event_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 if ($event_coord = null) {
     return;
 }
@@ -245,9 +245,6 @@ if ($combat_level < 91) {
 }
 
 return(^macro_event_cmb_159);
-
-[proc,macro_event_coord]()(coord)
-return(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
 
 // for 2x2 npcs
 [proc,macro_event_coord_2x2]()(coord)
