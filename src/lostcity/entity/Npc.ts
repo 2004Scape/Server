@@ -197,15 +197,23 @@ export default class Npc extends PathingEntity {
                     return false;
                 }
             }
-            let attackRange = 0;
             if (this.targetOp >= NpcMode.OPPLAYER1 && this.targetOp <= NpcMode.OPPLAYER5) {
-                attackRange = 1;
+                const distanceToX = Math.abs(this.target.x - this.startX);
+                const distanceToZ = Math.abs(this.target.z - this.startZ);
+                if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
+                    this.defaultMode();
+                    return false;
+                }
+                // remove corner
+                if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
+                    this.defaultMode();
+                    return false; 
+                }
             } else if (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) {
-                attackRange = type.attackrange;
-            }
-            if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
-                this.defaultMode();
-                return false;
+                if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                    this.defaultMode();
+                    return false;   
+                }
             }
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
@@ -811,16 +819,27 @@ export default class Npc extends PathingEntity {
         const type: NpcType = NpcType.get(this.type);
         const players: Entity[] = [];
         const hunted: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType.PLAYER);
-        let attackRange = 1;
-        if (hunt.findNewMode >= NpcMode.APPLAYER1 && hunt.findNewMode <= NpcMode.APPLAYER5) {
-            attackRange = type.attackrange;
-        }
+        const opTrigger: boolean = (hunt.findNewMode >= NpcMode.OPPLAYER1 && hunt.findNewMode <= NpcMode.OPPLAYER5);
+
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
             }
-            if (Position.distanceToSW(player, {x: this.startX, z: this.startZ}) > type.maxrange + attackRange) {
-                continue;
+
+            if (opTrigger) {
+                const distanceToX = Math.abs(player.x - this.startX);
+                const distanceToZ = Math.abs(player.z - this.startZ);
+                if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
+                    continue;
+                }
+                // remove maxrange corners
+                if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
+                    continue;
+                }
+            } else {
+                if (Position.distanceToSW(player, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange)  {
+                    continue;
+                }
             }
 
             if (hunt.checkAfk && player.zonesAfk()) {

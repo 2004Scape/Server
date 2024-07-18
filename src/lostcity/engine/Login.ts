@@ -64,11 +64,9 @@ class Login {
 
             const crcs = new Uint8Array(9 * 4);
             data.gdata(crcs, 0, crcs.length);
-            if (typeof self === 'undefined') {
-                if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
-                    socket.writeImmediate(LoginResponse.SERVER_UPDATED);
-                    return;
-                }
+            if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
+                socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                return;
             }
 
             this.loginThread.postMessage({
