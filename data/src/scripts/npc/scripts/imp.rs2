@@ -1,10 +1,8 @@
 [ai_timer,imp]
-def_int $random = random(3);
-if ($random = 0) { // teleport
+if (random(3) = 0) {
     ~npc_imp_teleport;
-} else if ($random = 1) { // deagro? Does this in osrs
-    npc_setmode(null);
 }
+npc_setmode(null); // deagros after 70 ticks
 
 [ai_queue2,imp]
 if (random(10) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
