@@ -120,7 +120,7 @@ if(%junglepotion_progress = ^junglepotion_not_started) {
 ~chatnpc("<p,happy>I can only guide you so far as the herbs are not easy to find. With some luck, you will find each herb in turn and bring to me. I will give you details of where to find the next herb.");
 ~chatnpc("<p,happy>In return for this great favour I will give you training in Herblore.");
 def_int $option5 = ~p_choice2("Hmmm, sounds difficult, I don't know if I am ready for the challenge.", 1, "It sounds like just the challenge for me.", 2);
-if($option5 = 1) {
+if($option5 = 2) {
     if (%druid_progress = ^druid_complete & stat(herblore) >= 3) { // does the quest start before or after this dialogue?
         %junglepotion_progress = ^junglepotion_get_snake_weed;
         ~send_quest_progress(questlist:junglepotion, %junglepotion_progress, ^junglepotion_complete);
@@ -132,7 +132,7 @@ if($option5 = 1) {
     } else {
         ~mesbox("You do not meet all of the requirements to start|the Jungle Potion quest."); // TODO: what happens originally?
     }
-} else if($option5 = 2) {
+} else if($option5 = 1) {
     ~chatplayer("<p,neutral>Hmmm, sounds difficult, I don't know if I am ready for the challenge.");
     ~chatnpc("<p,neutral>Very well then Bwana, maybe you will return to me invigorated and ready to take up the challenge one day?");
 }
