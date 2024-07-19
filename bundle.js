@@ -1,4 +1,5 @@
 import fs from 'fs';
+import {basename} from 'path';
 import * as esbuild from 'esbuild';
 
 const entryPoints = ['src/lostcity/worker.ts', 'src/lostcity/server/LoginThread.ts'];
@@ -92,7 +93,7 @@ function preloadDirs() {
 }
 
 function removeImports(output, file) {
-    const path = '../Client2/src/public/' + file.split('/').pop().replace('.ts', '.js');
+    const path = '../Client2/src/public/' + basename(file).replace('.ts', '.js');
 
     output = output.split('\n')
         .filter(line => !line.startsWith('import'))

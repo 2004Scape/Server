@@ -54,7 +54,7 @@ export default class WordEnc {
         const wordenc = await Jagfile.loadAsync(`${dir}/client/wordenc`);
         this.readAll(wordenc);
     }
-        
+
     static readAll(wordenc: Jagfile): void {
         const fragmentsenc = wordenc.read('fragmentsenc.txt');
         if (!fragmentsenc) {

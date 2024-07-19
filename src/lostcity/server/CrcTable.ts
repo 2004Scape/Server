@@ -67,7 +67,8 @@ if (typeof self === 'undefined') {
         makeCrcs();
     }
 } else {
-    if ((await fetch('data/pack/client')).ok) {
+    // fetching directory works on local http servers but not github pages
+    if ((await fetch('data/pack/client/crc')).ok) {
         await makeCrcsAsync();
     }
 }

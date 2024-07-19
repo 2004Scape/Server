@@ -300,20 +300,20 @@ class World {
             await ParamType.loadAsync('data/pack');
         }
 
-        if (this.shouldReload('obj', true)) {
-            await ObjType.loadAsync('data/pack');
-            transmitted = true;
-        }
+        // if (this.shouldReload('obj', true)) {
+        //     await ObjType.loadAsync('data/pack');
+        //     transmitted = true;
+        // }
 
-        if (this.shouldReload('loc', true)) {
-            await LocType.loadAsync('data/pack');
-            transmitted = true;
-        }
+        // if (this.shouldReload('loc', true)) {
+        //     await LocType.loadAsync('data/pack');
+        //     transmitted = true;
+        // }
 
-        if (this.shouldReload('npc', true)) {
-            await NpcType.loadAsync('data/pack');
-            transmitted = true;
-        }
+        // if (this.shouldReload('npc', true)) {
+        //     await NpcType.loadAsync('data/pack');
+        //     transmitted = true;
+        // }
 
         if (this.shouldReload('idk', true)) {
             await IdkType.loadAsync('data/pack');
@@ -419,6 +419,7 @@ class World {
         // await makeCrcsAsync();
 
         // todo: detect and reload static data (like maps)
+
         await preloadClientAsync();
     }
 
@@ -441,14 +442,16 @@ class World {
                 this.gameMap.init(this.zoneMap);
             }
         } else {
-            await FontType.loadAsync('data/pack');
-            await WordEnc.loadAsync('data/pack');
+            // need to load these prior to gamemap
+            await Promise.all([await ObjType.loadAsync('data/pack'), await LocType.loadAsync('data/pack'), await NpcType.loadAsync('data/pack')]);
 
-            await this.reloadAsync();
-
+            console.time('out of');
             if (!skipMaps) {
-                await this.gameMap.initAsync(this.zoneMap);
+                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync(), await this.gameMap.initAsync(this.zoneMap)]);
+            } else {
+                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync()]);
             }
+            console.timeEnd('out of');
         }
 
         Login.loginThread.postMessage({
