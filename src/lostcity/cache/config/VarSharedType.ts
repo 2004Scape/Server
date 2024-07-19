@@ -1,4 +1,5 @@
 import fs from 'fs';
+
 import Packet from '#jagex2/io/Packet.js';
 import { ConfigType } from '#lostcity/cache/config/ConfigType.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
@@ -8,15 +9,29 @@ export default class VarSharedType extends ConfigType {
     private static configs: VarSharedType[] = [];
 
     static load(dir: string) {
-        VarSharedType.configNames = new Map();
-        VarSharedType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/vars.dat`)) {
             console.log('Warning: No vars.dat found.');
             return;
         }
 
         const dat = Packet.load(`${dir}/server/vars.dat`);
+        this.parse(dat);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/vars.dat`)).ok) {
+            console.log('Warning: No vars.dat found.');
+            return;
+        }
+
+        const dat = await Packet.loadAsync(`${dir}/server/vars.dat`);
+        this.parse(dat);
+    }
+
+    static parse(dat: Packet) {
+        VarSharedType.configNames = new Map();
+        VarSharedType.configs = [];
+
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

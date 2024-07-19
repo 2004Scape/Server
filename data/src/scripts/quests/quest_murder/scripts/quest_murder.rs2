@@ -93,7 +93,6 @@ if(%murder_progress ! ^murder_started) {
 }
 if(%murder_poisonproof_progress >= ^poisonproof_spoken_murderer) {
     if(%murder_murderer_id = ^murderer_frank) {
-        // https://youtu.be/P1IDGCA2f9o?si=6aKZAUVbGoVmUF8t&t=327
         %murder_poisonproof_progress = ^poisonproof_searched_loc;
         ~mesbox("It looks like the Sinclair family crest|but it is very dirty.|You can barely make it out under all of the grime.|It's certainly clear nobody's cleaned it recently.");
     } else {

@@ -4,55 +4,7 @@
 [opnpc1,head_mourner] @head_mourner_talk_to_player;
 
 [opnpc1,npc_719] // plague house mourners
-switch_int(%elena_progress) {
-    // fuck this im not touching engine to make this work.......
-//    case ^quest_elena_spoke_cured_bravek: {
-//        if (inv_total(inv, elena_warrant) > 0) {
-//            if (coord ! 0_39_51_44_9) {
-//                p_stopaction;
-//                p_walk(0_39_51_44_9);
-//                p_delay(distance(coord, 0_39_51_44_9));
-//            }
-//            // search again to get the closest one just in case
-//            // npc_finduid(~npc_within_distance(coord, npc_719, 14));
-//            ~chatplayer("<p,neutral>I have a warrant from <nc_name(bravek)> to enter here.");
-//            loc_findallzone(coord);
-//            while (loc_findnext = true) {
-//                if (loc_type = loc_2534 & loc_coord = 0_39_51_45_9) {
-//                    ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
-//                    return;
-//                }
-//            }
-//        }
-//    }
-    case default: @mourner_talk_to_player;
-}
-
-[opnpcu,npc_719] // plague house mourners
-// same shit as above
-//switch_obj(last_useitem) {
-//    case elena_warrant: {
-//        switch_int(%elena_progress) {
-//            case ^quest_elena_spoke_cured_bravek: {
-//                if (coord ! 0_39_51_44_9) {
-//                    p_stopaction;
-//                    p_walk(movecoord(coord, 5, 0, 0));
-//                    p_delay(distance(coord, movecoord(coord, 5, 0, 0)));
-//                }
-//                // search again to get the closest one just in case
-//                // npc_finduid(~npc_within_distance(coord, npc_719, 14));
-//                ~chatplayer("<p,neutral>I have a warrant from <nc_name(bravek)> to enter here.");
-//                loc_findallzone(coord);
-//                while (loc_findnext = true) {
-//                    if (loc_type = loc_2534 & loc_coord = 0_39_51_45_9) {
-//                        ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
-//                        return;
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+@mourner_talk_to_player;
 
 [label,mourner_stand_back_citizen]
 ~chatnpc("<p,neutral>Stand back citizen, do not approach me.");
@@ -86,7 +38,7 @@ switch_int(%elena_progress) {
     case ^quest_elena_spoke_to_plague_house, ^quest_elena_spoke_to_clerk, ^quest_elena_spoke_to_bravek, ^quest_elena_spoke_cured_bravek: {
         @multi4("I need clearance to enter a plague house.", head_mourner_i_need_clearance, "So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
     }
-    case ^quest_elena_freed_elena, ^elena_complete: @multi2("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though);
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: @multi2("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though);
     case default: @multi3("So what's a mourner?", mourner_so_whats_a_mourner, "I haven't got the plague though...", mourner_i_havent_got_the_plague_though, "I'm looking for a woman named <nc_name(elena)>.", mourner_im_looking_for_a_woman);
 }
 

@@ -12,7 +12,7 @@ sound_synth(thrown, 0, 0);
 spotanim_pl(rotten_tomato_launch, 96, 0);
 %rotten_tomato_delay = calc(map_clock + 5);
 
-def_coord $random_coord = ~coord_lineofwalk_radius2(.coord, 2);
+def_coord $random_coord = map_findsquare(.coord, 1, 2, ^map_findsquare_lineofwalk);
 def_int $duration = ~coord_projectile(coord, $random_coord, rotten_tomato_travel, 40, 0, 28, 15, 18, 32, 5);
 //sound_synth todo: find sound?
 spotanim_map(rotten_splash, $random_coord, 96, calc($duration/30));

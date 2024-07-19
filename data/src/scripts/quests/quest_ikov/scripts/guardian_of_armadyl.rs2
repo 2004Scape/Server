@@ -1,0 +1,127 @@
+[opnpc1,_guardian_of_armadyl]
+if(%ikov_progress = ^ikov_helping_armadyl) {
+    ~chatnpc("<p,neutral>Have you killed Lucien?");
+    if(~obj_gettotal(armadyl_pendant) = 0) {
+        ~chatplayer("<p,sad>Not yet, I've lost the pendant you gave me!");
+        ~chatnpc("<p,sad>Hurry friend! Time is against us!");
+        inv_add(inv, armadyl_pendant, 1);
+        ~objboxt(armadyl_pendant, "The guardian has given you a pendant.");
+        return;
+    }
+    ~chatplayer("<p,neutral>Not yet.");
+    ~chatnpc("<p,sad>Hurry friend! Time is against us!");
+    return;
+}
+if(inv_total(inv, staff_of_armadyl) > 0) { 
+    ~chatnpc("<p,angry>Halt! You will not leave here with the Staff of Armadyl!");
+    npc_setmode(opplayer2);
+    return;
+}
+if(%ikov_progress = ^ikov_completed_lucien | inv_total(worn, pendant_of_lucien) > 0 | ~obj_gettotal(staff_of_armadyl) > 0) {
+    ~chatnpc("<p,angry>Thou is a foul agent of Lucien! Such an agent must die!");
+    npc_setmode(opplayer2);
+    return;
+}
+if(%ikov_progress = ^ikov_paid_winelda) {
+    ~chatnpc("<p,neutral>Thou hast ventured deep into the tunnels, you have reached the temple of our master. It is many ages since a pilgrim has come here.");
+    @multi3("I seek the Staff of Armadyl.", armadyl_staffofarma, "Out of my way fool!", armadyl_fool, "What are your kind and what are you doing here?", armadyl_what_kind);
+}
+
+[label,armadyl_staffofarma]
+~chatplayer("<p,neutral>I seek the Staff of Armadyl.");
+~chatnpc("<p,neutral>We are the guardians of the staff, our fathers were guardians and our fathers' fathers before that. Why dost thou seek it?");
+switch_int(~p_choice3("Lucien will give me a grand reward for it!", 1, "Give it to me!", 2, "I collect rare and powerful artefacts.", 3)) {
+    case 1:
+        ~chatplayer("<p,neutral>Lucien will give me a grand reward for it!");
+        ~chatnpc("<p,angry>Thou art working for that spawn of evil?! Fool! You must be cleansed to save your soul!");
+        @multi3("How dare you call me a fool!", armadyl_howdare, "I just thought of something I must do!", armadyl_thought, "You're right, it's time for my yearly bath.", armadyl_bath);
+    case 2:
+        ~chatplayer("<p,angry>Give it to me!");
+        ~chatnpc("<p,angry>The staff is sacred! You will not have it!");
+    case 3:
+        ~chatplayer("<p,neutral>I collect rare and powerful artefacts.");
+        ~chatnpc("<p,angry>Your worldly greed has darkened your soul!");
+}
+
+[label,armadyl_fool]
+~chatplayer("<p,angry>Out of my way fool!");
+~chatnpc("<p,angry>I may be a fool but I will not step aside!");
+switch_int(~p_choice3("Why not?!", 1, "Then you must die!", 2, "You're right, I will go now.", 3)) {
+    case 1:
+        ~chatplayer("<p,angry>Why not?!");
+        ~chatnpc("<p,neutral>Only members of our order are allowed to handle the staff.");
+    case 2:
+        ~chatplayer("<p,angry>Then you must die!");
+        npc_setmode(opplayer2);
+    case 3:
+        ~chatplayer("<p,sad>You're right, I will go now.");
+        ~chatnpc("<p,neutral>That is a wise decision. Stay a  while and let your soul be cleansed!"); // space intentional
+}
+
+[label,armadyl_what_kind]
+~chatplayer("<p,neutral>What are your kind and what are you doing here?");
+// https://youtu.be/cePHhIOqsqg?si=LCDaj5cUP5-nvtxH&t=926
+~chatnpc("<p,neutral>We are the Guardians of Armadyl. We have kept the temple safe for many ages. The evil in the dungeons seek what lies here. The Mahjarrat are the worse.");
+switch_int(~p_choice3("What is the Armadyl?", 1, "Who are the Mahjarrat?", 2, "Wow! You must be really old!", 3)) {
+    case 1:
+        ~chatplayer("<p,confused>What is the Armadyl?");
+        ~chatnpc("<p,happy>Armadyl is the god we serve. We have been charged with guarding his sacred arctifacts until he requires them.");
+        switch_int(~p_choice2("Ah ok, thanks.", 2, "Someone told me there were only three gods.", 2)) {
+            case 1:
+                ~chatplayer("<p,confused>Ah ok, thanks.");
+                ~chatnpc("<p,happy>Go in peace.");
+            case 2:
+                ~chatplayer("<p,confused>Someone told me there were only three gods. Saradomin, Zamorak and Guthix.");
+                ~chatnpc("<p,angry>Saradominists. Bleh. They only acknowledge those three. There are at least twenty gods!");
+        }
+    case 2:
+        ~chatplayer("<p,confused>Who are the Mahjarrat?");
+        ~chatnpc("<p,angry>They are ancient and powerful beings! They are very evil! It is said that they once dominated this plane of existence, Zamorak was supposedly of their blood. They are far fewer in number now.");
+        ~chatnpc("<p,angry>Some still have presence in this world in their liche forms. Mahjarrat such as Lucien and Azzanadra would become very powerful if they came into possession of the Staff of Armadyl.");
+        switch_int(~p_choice2("Did you say Lucien?", 1, "I hope you're doing a good job then!", 2)) {
+            case 1:
+                ~chatplayer("<p,confused>Did you say Lucien? It was Lucien that asked me to get the staff!");
+                ~chatnpc("<p,angry>You are a fool to be working for Lucien! Your soul must be cleansed to save you!");
+                @multi3("How dare you call me a fool!", armadyl_howdare, "I just thought of something I must do!", armadyl_thought, "You're right, it's time for my yearly bath.", armadyl_bath);
+            case 2:
+                ~chatplayer("<p,neutral>I hope you're doing a good job then!");
+                ~chatnpc("<p,happy>Do not fear! We are devoted to our charge!");
+        }
+    case 3:
+        ~chatplayer("<p,happy>Wow! You must be really old!");
+        ~chatnpc("<p,neutral>No! I am not old! My family has guarded the staff for many generations.");
+}
+
+[label,armadyl_howdare]
+~chatplayer("<p,angry>How dare you call me a fool! I will work for whom I want!");
+~chatnpc("<p,angry>We must cleanse the temple!");
+npc_setmode(opplayer2);
+
+[label,armadyl_thought]
+~chatplayer("<p,confused>I just thought of something I must do!");
+~chatnpc("<p,angry>An agent of evil cannot be allowed to leave!");
+npc_setmode(opplayer2);
+
+[label,armadyl_bath]
+~chatplayer("<p,confused>You're right, it's time for my yearly bath.");
+~mesbox("The guardian splashes holy water over you.");
+~chatnpc("<p,happy>You have been cleansed!");
+~chatnpc("<p,angry>Lucien must not get hold of the staff! He would become too powerful!");
+~chatnpc("<p,neutral>Hast thou come across the undead necromancer? It was he that raised an army of the undead against Varrock a generation ago. If you know where he is you can help us defeat him.");
+switch_int(~p_choice3("Ok! I'll help!", 1, "No! I shall not turn against my employer!", 2, "I need time to think.", 3)) {
+    case 1:
+        %ikov_progress = ^ikov_helping_armadyl;
+        ~chatplayer("<p,happy>Ok! I'll help!");
+        ~chatnpc("<p,happy>So he is close by?");
+        ~chatplayer("<p,happy>Yes!");
+        ~chatnpc("<p,sad>He must be gaining in power again. If you can defeat him he will be banished from this plane for a while. You will need this pendant to attack him.");
+        inv_add(inv, armadyl_pendant, 1);
+        ~objboxt(armadyl_pendant, "The guardian has given you a pendant.");
+    case 2:
+        ~chatplayer("<p,angry>No! I shall not turn against my employer!");
+        ~chatnpc("<p,angry>Fool! You will die for your sins!");
+        npc_setmode(opplayer2);
+    case 3:
+        ~chatplayer("<p,confused>I need time to think.");
+        ~chatnpc("<p,neutral>Linger a while and be at peace."); 
+}

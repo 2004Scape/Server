@@ -1,0 +1,13 @@
+[debugproc,map_findsquare](int $min, int $max)
+if (p_finduid(uid) = true) {
+    p_telejump(map_findsquare(coord, $min, $max, 0));
+}
+
+[debugproc,imp](int $count, int $min, int $max)
+def_int $i = 0;
+def_coord $coord = coord;
+while ($i < $count) {
+    def_coord $new_coord = map_findsquare($coord, $min, $max, 2);
+    mes("<tostring(sub(coordx($coord), coordx($new_coord)))>, <tostring(sub(coordz($coord), coordz($new_coord)))>");
+    $i = add($i, 1);
+}

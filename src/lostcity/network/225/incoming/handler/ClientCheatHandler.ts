@@ -14,8 +14,6 @@ import SeqType from '#lostcity/cache/config/SeqType.js';
 import SpotanimType from '#lostcity/cache/config/SpotanimType.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder';
-import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
-import { toBase37 } from '#jagex2/jstring/JString.js';
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
@@ -23,6 +21,8 @@ import { Position } from '#lostcity/entity/Position.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
+import { PlayerLoading } from '#lostcity/entity/PlayerLoading.js';
+import Packet from '#jagex2/io/Packet.js';
 
 export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
     handle(message: ClientCheat, player: Player): boolean {
@@ -42,7 +42,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
 
         if (player.staffModLevel >= 3) {
             // developer commands
-            if (cmd === 'reload' && !Environment.NODE_PRODUCTION) {
+            if (cmd === 'reload' && typeof self === 'undefined' && !Environment.NODE_PRODUCTION) {
                 World.reload();
     
                 // todo: we're probably reloading twice now, just to get count?
@@ -63,9 +63,14 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 console.log(`took = ${end - start} ms`);
             } else if (cmd === 'bots') {
                 player.messageGame('Adding bots');
-                for (let i = 0; i < 2000; i++) {
-                    const bot = new NetworkPlayer(`bot${i}`, toBase37(`bot${i}`), new NullClientSocket());
-                    bot.onLogin();
+                for (let i = 0; i < 1999; i++) {
+                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), new NullClientSocket());
+                    World.addPlayer(bot);
+                }
+            } else if (cmd === 'lightbots') {
+                player.messageGame('Adding lightweight bots');
+                for (let i = 0; i < 1999; i++) {
+                    const bot: Player = PlayerLoading.load(`bot${i}`, new Packet(new Uint8Array()), null);
                     World.addPlayer(bot);
                 }
             } else if (cmd === 'teleall') {
@@ -77,7 +82,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                         const x = Math.floor(Math.random() * 64) + 3200;
                         const z = Math.floor(Math.random() * 64) + 3200;
     
-                        player.teleport(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
+                        player.teleJump(x + Math.floor(Math.random() * 64) - 32, z + Math.floor(Math.random() * 64) - 32, 0);
                     } while (isFlagged(player.x, player.z, player.level, CollisionFlag.WALK_BLOCKED));
                 }
             } else if (cmd === 'moveall') {

@@ -30,7 +30,7 @@ if (~check_axis(coord, loc_coord, loc_angle) = false) {
     return;
 }
 switch_int(%elena_progress) {
-    case ^quest_elena_freed_elena, ^elena_complete: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: ~open_and_close_door(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), false);
     case default: {
         if (inv_total(inv, elena_key) > 0) {
             ~mesbox("You unlock the door.");

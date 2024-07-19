@@ -10,15 +10,29 @@ export default class StructType extends ConfigType implements ParamHolder {
     private static configs: StructType[] = [];
 
     static load(dir: string) {
-        StructType.configNames = new Map();
-        StructType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/struct.dat`)) {
             console.log('Warning: No struct.dat found.');
             return;
         }
 
         const dat = Packet.load(`${dir}/server/struct.dat`);
+        this.parse(dat);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/struct.dat`)).ok) {
+            console.log('Warning: No struct.dat found.');
+            return;
+        }
+
+        const dat = await Packet.loadAsync(`${dir}/server/struct.dat`);
+        this.parse(dat);
+    }
+
+    static parse(dat: Packet) {
+        StructType.configNames = new Map();
+        StructType.configs = [];
+
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

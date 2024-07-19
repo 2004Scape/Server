@@ -38,7 +38,7 @@ if (afk_event = ^true) {
 if (~macro_event_area(coord) = false) {
     return;
 }
-def_coord $event_coord = ~macro_event_coord;
+def_coord $event_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 if ($event_coord = null) {
     return;
 }
@@ -136,7 +136,7 @@ npc_del;
 p_delay(0);
 def_int $i = 0;
 while ($i < inv_size(inv)) {
-    def_coord $coord = ~coord_lineofwalk_radius(coord, 5); // 11x11 for now. todo: confirm how scattering works
+    def_coord $coord = map_findsquare(coord, 0, 5, ^map_findsquare_lineofwalk); // 11x11 for now. todo: confirm how scattering works
     if (inv_getobj(inv, $i) ! null) {
         inv_dropslot(inv, $coord, $i, 200);
     }
@@ -245,9 +245,6 @@ if ($combat_level < 91) {
 }
 
 return(^macro_event_cmb_159);
-
-[proc,macro_event_coord]()(coord)
-return(~coord_lineofwalk_radius2(coord, 1));
 
 // for 2x2 npcs
 [proc,macro_event_coord_2x2]()(coord)

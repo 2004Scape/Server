@@ -16,18 +16,32 @@ export default class NpcType extends ConfigType {
     static configs: NpcType[] = [];
 
     static load(dir: string) {
-        NpcType.configNames = new Map();
-        NpcType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/npc.dat`)) {
             console.log('Warning: No npc.dat found.');
             return;
         }
-
         const server = Packet.load(`${dir}/server/npc.dat`);
+        const jag = Jagfile.load(`${dir}/client/config`);
+        this.parse(server, jag);
+        
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/npc.dat`)).ok) {
+            console.log('Warning: No npc.dat found.');
+            return;
+        }
+        const server = await Packet.loadAsync(`${dir}/server/npc.dat`);
+        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
+        this.parse(server, jag);
+    }
+
+    static parse(server: Packet, jag: Jagfile) {
+        NpcType.configNames = new Map();
+        NpcType.configs = [];
+
         const count = server.g2();
 
-        const jag = Jagfile.load(`${dir}/client/config`);
         const client = jag.read('npc.dat')!;
         client.pos = 2;
 

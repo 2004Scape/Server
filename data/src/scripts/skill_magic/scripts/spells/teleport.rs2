@@ -25,6 +25,10 @@ if (p_finduid(uid) = true) {
         mes("You can't use this teleport after level 20 wilderness.");
         return;
     }
+    if($spell = ^ardougne_teleport & %elena_progress < ^elena_complete_read_scroll) {
+        mes("You must have completed Plague City to use this spell.");
+        return;
+    }
     if (afk_event = ^true) {
         ~macro_event_general_spawn(~macro_event_set_random);
         return;
@@ -34,7 +38,7 @@ if (p_finduid(uid) = true) {
     ~give_spell_xp($spell_data);
     // give additional affects
     // teleport player. Always a radius of 2
-    ~player_teleport_normal(~coord_lineofwalk_radius(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 2));
+    ~player_teleport_normal(map_findsquare(db_getfield($spell_data, magic_spell_table:tele_coord, 0), 0, 2, ^map_findsquare_lineofwalk));
 }
 
 [proc,player_teleport_normal](coord $coord)

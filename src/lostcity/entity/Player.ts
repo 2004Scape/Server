@@ -371,7 +371,10 @@ export default class Player extends PathingEntity {
 
     resetEntity(respawn: boolean) {
         if (respawn) {
-            // if needed for respawning
+            this.faceX = -1;
+            this.faceZ = -1;
+            this.orientationX = -1;
+            this.orientationZ = -1;
         }
         super.resetPathingEntity();
         this.repathed = false;
@@ -607,7 +610,7 @@ export default class Player extends PathingEntity {
     }
 
     delayed() {
-        return this.delay > 0;
+        return this.delay > World.currentTick;
     }
 
     containsModalInterface() {
@@ -836,7 +839,6 @@ export default class Player extends PathingEntity {
             if (moved) {
                 // we need to keep the mask if the player had to move.
                 this.alreadyFacedEntity = false;
-                this.alreadyFacedCoord = false;
                 this.lastMovement = World.currentTick + 1;
             }
             return;
@@ -909,7 +911,6 @@ export default class Player extends PathingEntity {
         if (moved) {
             // we need to keep the mask if the player had to move.
             this.alreadyFacedEntity = false;
-            this.alreadyFacedCoord = false;
             this.lastMovement = World.currentTick + 1;
         }
 
@@ -1355,8 +1356,10 @@ export default class Player extends PathingEntity {
             throw new Error(`invMoveFromSlot: Invalid from obj was null. This means the obj does not exist at this slot: ${fromSlot}`);
         }
 
+        this.invDelSlot(fromInv, fromSlot);
+
         return {
-            overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count),
+            overflow: fromObj.count - this.invAdd(toInv, fromObj.id, fromObj.count, false),
             fromObj: fromObj.id
         };
     }
@@ -1534,7 +1537,8 @@ export default class Player extends PathingEntity {
     faceSquare(x: number, z: number) {
         this.faceX = x * 2 + 1;
         this.faceZ = z * 2 + 1;
-        this.orientation = Position.face(this.x, this.z, x, z);
+        this.orientationX = this.faceX;
+        this.orientationZ = this.faceZ;
         this.mask |= Player.FACE_COORD;
     }
 

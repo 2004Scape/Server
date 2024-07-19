@@ -45,7 +45,7 @@ if_openmainmodal(ship_journey);
 p_delay(20);
 if_close;
 ~update_all(null);
-p_teleport(~coord_lineofwalk_radius(^trawler_lobby_murphy_spawn, 4));
+p_teleport(map_findsquare(^trawler_lobby_murphy_spawn, 0, 4, ^map_findsquare_lineofwalk));
 
 [oploc1,game_trawler_reward_net]
 if (%trawler < 3 | %trawler_catch = 0) {
@@ -88,8 +88,8 @@ inv_moveitem(trawler_catch, inv, last_item, 1);
 if (inv_freespace(trawler_catch) = inv_size(trawler_catch)) {
     if_close; // osrs
 }
-[inv_button2,trawler_catch:inv] 
-inv_moveitem(trawler_catch, inv, last_item, inv_total(trawler_catch, last_item)); 
+[inv_button2,trawler_catch:inv]
+inv_movefromslot(trawler_catch, inv, last_slot);
 if (inv_freespace(trawler_catch) = inv_size(trawler_catch)) {
     if_close; // osrs
 }

@@ -18,6 +18,7 @@ import { packClientWordenc } from '#lostcity/cache/packchat/pack.js';
 import { packClientTitle } from '#lostcity/cache/packsprite/title/pack.js';
 import { packClientTexture } from '#lostcity/cache/packsprite/textures/pack.js';
 import { packClientMedia } from '#lostcity/cache/packsprite/media/pack.js';
+import { CrcBuffer } from '#lostcity/server/CrcTable.js';
 
 export async function packServer() {
     if (!fs.existsSync('RuneScriptCompiler.jar')) {
@@ -64,5 +65,6 @@ export async function packClient() {
     packClientMusic();
     console.timeEnd('Packing client cache (2/2)');
 
+    fs.writeFileSync('data/pack/client/crc', CrcBuffer.data);
     fs.writeFileSync('data/pack/client/lastbuild.pack', '');
 }

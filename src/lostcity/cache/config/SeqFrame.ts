@@ -7,18 +7,32 @@ export default class SeqFrame {
     static instances: SeqFrame[] = [];
 
     static load(dir: string) {
-        SeqFrame.instances = [];
-
         if (!fs.existsSync(`${dir}/server/frame_del.dat`)) {
             console.log('Warning: No frame_del.dat found.');
             return;
         }
 
-        const frame_del = Packet.load(`${dir}/server/frame_del.dat`);
-        for (let i = 0; i < frame_del.data.length; i++) {
+        const dat = Packet.load(`${dir}/server/frame_del.dat`);
+        this.parse(dat);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/frame_del.dat`)).ok) {
+            console.log('Warning: No frame_del.dat found.');
+            return;
+        }
+
+        const dat = await Packet.loadAsync(`${dir}/server/frame_del.dat`);
+        this.parse(dat);
+    }
+
+    static parse(dat: Packet) {
+        SeqFrame.instances = [];
+
+        for (let i = 0; i < dat.data.length; i++) {
             const frame = new SeqFrame();
 
-            frame.delay = frame_del.g1();
+            frame.delay = dat.g1();
 
             SeqFrame.instances[i] = frame;
         }

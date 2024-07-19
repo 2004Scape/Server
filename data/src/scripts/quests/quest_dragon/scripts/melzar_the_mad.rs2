@@ -60,11 +60,7 @@ if ($random_attack < 20 & stat(strength) >= stat_base(strength)) { // dont cast 
 [proc,npc_cabbage_attack]
 if_close;
 // not sure if its line of sight or line of walk
-def_coord $cabbage_coord = ~coord_lineofwalk_radius(npc_coord, 7);
-if ($cabbage_coord = npc_coord) { // cant spawn cabbage on top of melzar. Unsure if they do it this way or ~coord_lineofwalk_radius should skip npc_coord's
-    ~npc_cabbage_attack;
-    return;
-}
+def_coord $cabbage_coord = map_findsquare(npc_coord, 1, 7, ^map_findsquare_lineofwalk);
 npc_anim(human_chaos_druid_cast_bind, 0);
 spotanim_npc(bind_casting, 92, 0);
 %npc_action_delay = calc(map_clock + 5);

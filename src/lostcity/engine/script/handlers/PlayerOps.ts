@@ -301,7 +301,7 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.delay = 1;
+        state.activePlayer.delay = World.currentTick + 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -311,9 +311,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
+        state.activePlayer.delay = World.currentTick + check(state.popInt(), NumberNotNull) + 1;
         state.execution = ScriptState.SUSPENDED;
-        // TODO should this wipe any pointers?
     }),
 
     [ScriptOpcode.P_OPHELD]: checkedHandler(ProtectedActivePlayer, state => {
@@ -373,7 +372,7 @@ const PlayerOps: CommandHandlers = {
         const pos: Position = check(state.popInt(), CoordValid);
 
         const player = state.activePlayer;
-        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length, player.orientation));
+        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length));
         player.updateMovement(false); // try to walk immediately
     }),
 
@@ -995,6 +994,14 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.RUNENERGY]: checkedHandler(ActivePlayer, state => {
         const player = state.activePlayer;
         state.pushInt(player.runenergy);
+    }),
+
+    [ScriptOpcode.WEIGHT]: checkedHandler(ProtectedActivePlayer, state => {
+        state.pushInt(state.activePlayer.runweight);
+    }),
+
+    [ScriptOpcode.LAST_COORD]: checkedHandler(ActivePlayer, state => {
+        state.pushInt(Position.packCoord(state.activePlayer.level, state.activePlayer.lastX, state.activePlayer.lastZ));
     }),
 };
 

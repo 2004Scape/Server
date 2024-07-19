@@ -9,8 +9,8 @@ data=name,Air
 data=talisman,air_talisman
 data=multiplier,11
 data=altar_coord,0_46_51_41_28
-data=enter_coord,0_44_75_25_30,0
-data=exit_coord,0_46_51_39_24,0
+data=enter_coord,0_44_75_25_30,0,0,0
+data=exit_coord,0_46_51_39_24,0,0,0
 
 [runecraft_mind]
 table=runecraft_table
@@ -23,8 +23,8 @@ data=name,Mind
 data=talisman,mind_talisman
 data=multiplier,14
 data=altar_coord,0_46_54_38_58
-data=enter_coord,0_43_75_41_29,0
-data=exit_coord,0_46_54_36_55,0
+data=enter_coord,0_43_75_41_29,0,0,0
+data=exit_coord,0_46_54_36_55,0,0,0
 
 [runecraft_water]
 table=runecraft_table
@@ -37,8 +37,8 @@ data=name,Water
 data=talisman,water_talisman
 data=multiplier,19
 data=altar_coord,0_49_49_49_29
-data=enter_coord,0_42_75_37_32,0
-data=exit_coord,0_49_49_46_26,0
+data=enter_coord,0_42_75_37_32,0,0,0
+data=exit_coord,0_49_49_46_26,0,0,0
 
 [runecraft_earth]
 table=runecraft_table
@@ -51,8 +51,8 @@ data=name,Earth
 data=talisman,earth_talisman
 data=multiplier,26
 data=altar_coord,0_51_54_42_18
-data=enter_coord,0_41_75_33_30,0
-data=exit_coord,0_51_54_39_21,0
+data=enter_coord,0_41_75_33_30,0,0,0
+data=exit_coord,0_51_54_39_21,0,0,0
 
 [runecraft_fire]
 table=runecraft_table
@@ -65,8 +65,8 @@ data=name,Fire
 data=talisman,fire_talisman
 data=multiplier,35
 data=altar_coord,0_51_50_49_55
-data=enter_coord,0_40_75_16_48,0
-data=exit_coord,0_51_50_46_52,0
+data=enter_coord,0_40_75_16_48,0,0,0
+data=exit_coord,0_51_50_46_52,0,0,0
 
 [runecraft_body]
 table=runecraft_table
@@ -79,8 +79,8 @@ data=name,Body
 data=talisman,body_talisman
 data=multiplier,46
 data=altar_coord,0_47_53_45_53
-data=enter_coord,0_39_75_27_38,2
-data=exit_coord,0_47_53_42_50,0
+data=enter_coord,0_39_75_27_38,0,2,0
+data=exit_coord,0_47_53_42_50,0,2,0
 
 [runecraft_cosmic]
 table=runecraft_table
@@ -93,11 +93,11 @@ data=name,Cosmic
 data=talisman,cosmic_talisman
 data=multiplier,59
 data=altar_coord,0_49_148_40_25
-data=enter_coord,0_33_75_30_13,0
-data=enter_coord,0_33_75_50_33,0
-data=enter_coord,0_33_75_30_53,0
-data=enter_coord,0_33_75_10_33,0
-data=exit_coord,0_49_148_37_29,0
+data=enter_coord,0_33_75_30_13,0,0,0
+data=enter_coord,0_33_75_50_33,0,0,0
+data=enter_coord,0_33_75_30_53,0,0,0
+data=enter_coord,0_33_75_10_33,0,0,0
+data=exit_coord,0_49_148_37_29,0,0,0
 
 [runecraft_chaos]
 table=runecraft_table
@@ -110,16 +110,16 @@ data=name,Chaos
 data=talisman,chaos_talisman
 data=multiplier,74
 data=altar_coord,0_47_56_52_7
-data=enter_coord,3_35_75_35_47,0
-data=exit_coord,0_47_56_52_1,0
-data=exit_coord,0_47_56_52_1,0
-data=exit_coord,0_47_56_55_3,0
-data=exit_coord,0_47_56_58_7,0
-data=exit_coord,0_47_56_55_12,0
-data=exit_coord,0_47_56_52_13,0
-data=exit_coord,0_47_56_48_10,0
-data=exit_coord,0_47_56_47_7,0
-data=exit_coord,0_47_56_47_4,0
+data=enter_coord,3_35_75_35_47,0,0,0
+data=exit_coord,0_47_56_52_1,0,0,0
+data=exit_coord,0_47_56_52_1,0,0,0
+data=exit_coord,0_47_56_55_3,0,0,0
+data=exit_coord,0_47_56_58_7,0,0,0
+data=exit_coord,0_47_56_55_12,0,0,0
+data=exit_coord,0_47_56_52_13,0,0,0
+data=exit_coord,0_47_56_48_10,0,0,0
+data=exit_coord,0_47_56_47_7,0,0,0
+data=exit_coord,0_47_56_47_4,0,0,0
 
 [runecraft_nature]
 table=runecraft_table
@@ -132,8 +132,8 @@ data=name,Nature
 data=talisman,nature_talisman
 data=multiplier,91
 data=altar_coord,0_44_47_53_11
-data=enter_coord,0_37_75_32_35,0
-data=exit_coord,0_44_47_49_14,0
+data=enter_coord,0_37_75_32_35,0,0,0
+data=exit_coord,0_44_47_49_14,0,0,0
 
 [runecraft_law]
 table=runecraft_table
@@ -146,8 +146,8 @@ data=name,Law
 data=talisman,law_talisman
 //data=multiplier,95 https://oldschool.runescape.wiki/w/Update:Imbue_Your_Sceptre,_Double_Your_Deaths,_and_get_3_for_2_on_membership
 data=altar_coord,0_50_50_21_18
-data=enter_coord,0_50_50_21_18,2
-data=exit_coord,0_50_50_21_18,2
+data=enter_coord,0_50_50_21_18,0,2,0
+data=exit_coord,0_50_50_21_18,0,2,0
 
 [runecraft_death]
 table=runecraft_table
@@ -160,5 +160,5 @@ data=name,Death
 data=talisman,death_talisman
 // data=multiplier,99 https://oldschool.runescape.wiki/w/Update:Imbue_Your_Sceptre,_Double_Your_Deaths,_and_get_3_for_2_on_membership
 data=altar_coord,0_50_50_21_18
-data=enter_coord,0_50_50_21_18,2
-data=exit_coord,0_50_50_21_18,2
+data=enter_coord,0_50_50_21_18,0,2,0
+data=exit_coord,0_50_50_21_18,0,2,0

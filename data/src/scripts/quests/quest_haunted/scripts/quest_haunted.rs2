@@ -75,7 +75,7 @@ if($dist > 0) {
 ~open_and_close_door(loc_1532, $locked, true);
 
 [oploc1,loc_153]
-if(%manor_fountain_poisoned = 1) {
+if(%haunted_manor_fountain_poisoned = 1) {
     if(inv_total(inv, pressure_gauge) = 0 & %haunted_progress < ^haunted_complete) {
         ~chatplayer("<p,quiz>There seems to be a pressure gauge in here.|There are also some dead fish.");
         ~mesbox("You get the pressure gauge from the fountain.");
@@ -111,7 +111,7 @@ p_delay(3);
 mes("You see the pirhanas eating the food.");
 p_delay(1);
 mes("The pirhanas drop dead and float to the surface.");
-%manor_fountain_poisoned = 1;
+%haunted_manor_fountain_poisoned = 1;
 
 [oploc1,_manor_bookcase]
 if(coordx(coord) < coordx(loc_coord)) {

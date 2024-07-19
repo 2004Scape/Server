@@ -9,15 +9,27 @@ export default class MesanimType extends ConfigType {
     private static configs: MesanimType[] = [];
 
     static load(dir: string) {
-        MesanimType.configNames = new Map();
-        MesanimType.configs = [];
-
         if (!fs.existsSync(`${dir}/server/mesanim.dat`)) {
             console.log('Warning: No mesanim.dat found.');
             return;
         }
-
         const dat = Packet.load(`${dir}/server/mesanim.dat`);
+        this.parse(dat);
+    }
+
+    static async loadAsync(dir: string) {
+        if (!(await fetch(`${dir}/server/mesanim.dat`)).ok) {
+            console.log('Warning: No mesanim.dat found.');
+            return;
+        }
+        const dat = await Packet.loadAsync(`${dir}/server/mesanim.dat`);
+        this.parse(dat);
+    }
+
+    static parse(dat: Packet) {
+        MesanimType.configNames = new Map();
+        MesanimType.configs = [];
+
         const count = dat.g2();
 
         for (let id = 0; id < count; id++) {

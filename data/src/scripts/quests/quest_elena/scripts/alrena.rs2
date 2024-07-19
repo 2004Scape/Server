@@ -18,9 +18,9 @@ switch_int(%elena_progress) {
             if_close;
             mes("<nc_name(alrena)> crushes the berries into a smooth paste.");
             npc_anim(human_herbing_grind, 0);
-            p_delay(3);
+            p_delay(2); // 3t rsc
             mes("She then smears the paste over a strange mask.");
-            p_delay(3);
+            p_delay(2);
             ~quest_elena_set_progress(^quest_elena_gasmask);
             inv_del(inv, dwellberry, 1);
             inv_add(inv, gasmask, 1);
@@ -29,13 +29,13 @@ switch_int(%elena_progress) {
             ~chatnpc("<p,neutral>While you two are digging, I'll make a spare mask.|I'll hide it in the cupboard incase the mourners come in.");
         }
     }
-    case ^quest_elena_gasmask, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3: {
+    case ^quest_elena_started_mud_patch, ^quest_elena_mud_patch1, ^quest_elena_mud_patch2, ^quest_elena_mud_patch3: {
         ~chatplayer("<p,happy>Hello <nc_name(alrena)>.");
-        ~chatnpc("<p,happy>Hello darling, how's that tunnel coming along?");
-        ~chatplayer("<p,happy>We're getting there...");
-        ~chatnpc("<p,happy>Well I'm sure you're quicker than <nc_name(edmond)>.");
-        ~chatplayer("<p,happy>I just need to soften the soil and then we'll start digging.");
-        ~chatnpc("<p,happy>If you lose your protective clothing, I've made a spare set. They're hidden in the cupboard incase the mourners come in.");
+        ~chatnpc("<p,happy>Hello darling,|how's that tunnel coming along?");
+        ~chatplayer("<p,neutral>We're getting there...");
+        ~chatnpc("<p,neutral>Well I'm sure you're quicker than <nc_name(edmond)>.");
+        ~chatplayer("<p,neutral>I just need to soften the soil and then we'll start digging.");
+        ~chatnpc("<p,neutral>If you lose your protective clothing, I've made a spare set. They're hidden in the cupboard incase the mourners come in.");
     }
     case ^quest_elena_mud_patch4: {
         ~chatplayer("<p,happy>Hello again <nc_name(alrena)>.");
@@ -55,5 +55,5 @@ switch_int(%elena_progress) {
         ~chatnpc("<p,confused>Hello, any word on <nc_name(elena)>?");
         ~chatplayer("<p,sad>Not yet I'm afraid.");
     }
-    case ^quest_elena_freed_elena, ^elena_complete: ~chatnpc("<p,happy>Thank you for rescuing my daughter! <nc_name(elena)> has told me of your bravery entering a house that could have been plague infected. I can't thank you enough!");
+    case ^quest_elena_freed_elena, ^elena_complete, ^elena_complete_read_scroll: ~chatnpc("<p,happy>Thank you for rescuing my daughter! <nc_name(elena)> has told me of your bravery entering a house that could have been plague infected. I can't thank you enough!");
 }

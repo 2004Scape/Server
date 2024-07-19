@@ -2,7 +2,7 @@
 // no smoke puff https://youtu.be/X1KjOMAmJ_g?list=PLn23LiLYLb1am4weMQzkWn5m9b3m9fXv9&t=122
 def_npc $event = enum(int, npc, macro_event_river_troll_levels, ~macro_event_combat_level);
 
-def_coord $event_coord = ~macro_event_coord;
+def_coord $event_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 if ($event_coord = null) {
     return;
 }

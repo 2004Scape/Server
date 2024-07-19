@@ -24,15 +24,29 @@ export default class Component {
     private static components: Component[] = [];
 
     static load(dir: string): void {
-        this.componentNames = new Map();
-        this.components = [];
-
         if (!fs.existsSync(`${dir}/server/interface.dat`)) {
             console.log('Warning: No interface.dat found.');
             return;
         }
 
         const dat = Packet.load(`${dir}/server/interface.dat`);
+        this.parse(dat);
+    }
+
+    static async loadAsync(dir: string): Promise<void> {
+        if (!(await fetch(`${dir}/server/interface.dat`)).ok) {
+            console.log('Warning: No interface.dat found.');
+            return;
+        }
+
+        const dat = await Packet.loadAsync(`${dir}/server/interface.dat`);
+        this.parse(dat);
+    }
+
+    static parse(dat: Packet) {
+        this.componentNames = new Map();
+        this.components = [];
+
         dat.g2(); // count
 
         let rootLayer = -1;

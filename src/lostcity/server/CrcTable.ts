@@ -34,6 +34,40 @@ export function makeCrcs() {
     CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
 }
 
-if (fs.existsSync('data/pack/client/')) {
-    makeCrcs();
+async function makeCrcAsync(path: string) {
+    if (!(await fetch(path)).ok) {
+        return;
+    }
+
+    const packet = await Packet.loadAsync(path);
+    const crc = Packet.getcrc(packet.data, 0, packet.data.length);
+    CrcTable.push(crc);
+    CrcBuffer.p4(crc);
+}
+
+export async function makeCrcsAsync() {
+    CrcTable = [];
+
+    CrcBuffer.pos = 0;
+    CrcBuffer.p4(0);
+    await makeCrcAsync('data/pack/client/title');
+    await makeCrcAsync('data/pack/client/config');
+    await makeCrcAsync('data/pack/client/interface');
+    await makeCrcAsync('data/pack/client/media');
+    await makeCrcAsync('data/pack/client/models');
+    await makeCrcAsync('data/pack/client/textures');
+    await makeCrcAsync('data/pack/client/wordenc');
+    await makeCrcAsync('data/pack/client/sounds');
+
+    CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.length);
+}
+
+if (typeof self === 'undefined') {
+    if (fs.existsSync('data/pack/client/')) {
+        makeCrcs();
+    }
+} else {
+    if ((await fetch('data/pack/client')).ok) {
+        await makeCrcsAsync();
+    }
 }

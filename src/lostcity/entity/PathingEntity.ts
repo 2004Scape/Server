@@ -10,7 +10,7 @@ import Player from '#lostcity/entity/Player.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
-import {Direction, Position} from '#lostcity/entity/Position.js';
+import {Position} from '#lostcity/entity/Position.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 
@@ -42,6 +42,7 @@ export default abstract class PathingEntity extends Entity {
     waypoints: Int32Array = new Int32Array(25);
     lastX: number = -1;
     lastZ: number = -1;
+    lastLevel: number = -1;
     tele: boolean = false;
     jump: boolean = false;
     lastStepX: number = -1;
@@ -53,8 +54,6 @@ export default abstract class PathingEntity extends Entity {
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
 
-    orientation: number = Direction.SOUTH;
-
     interacted: boolean = false;
     repathed: boolean = false;
     target: Entity | null = null;
@@ -64,7 +63,6 @@ export default abstract class PathingEntity extends Entity {
     targetZ: number = -1;
     apRange: number = 10;
     apRangeCalled: boolean = false;
-    alreadyFacedCoord: boolean = false;
     alreadyFacedEntity: boolean = false;
 
     mask: number = 0;
@@ -77,6 +75,8 @@ export default abstract class PathingEntity extends Entity {
     exactMoveDirection: number = -1;
     faceX: number = -1;
     faceZ: number = -1;
+    orientationX: number = -1;
+    orientationZ: number = -1;
     faceEntity: number = -1;
     damageTaken: number = -1;
     damageType: number = -1;
@@ -216,7 +216,8 @@ export default abstract class PathingEntity extends Entity {
         const previousZ: number = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
-        this.orientation = dir; // important for like when you login you see all entities correct dir.
+        this.orientationX = Position.moveX(this.x, dir) * 2 + 1;
+        this.orientationZ = Position.moveZ(this.z, dir) * 2 + 1;
         this.stepsTaken++;
         this.refreshZonePresence(previousX, previousZ, this.level);
         return dir;
@@ -345,7 +346,7 @@ export default abstract class PathingEntity extends Entity {
             return false;
         }
         if (target instanceof PathingEntity) {
-            return rsmod.reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.orientation, -2);
+            return rsmod.reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, -1, -2);
         } else if (target instanceof Loc) {
             const forceapproach = LocType.get(target.type).forceapproach;
             return rsmod.reached(this.level, this.x, this.z, target.x, target.z, target.width, target.length, this.width, target.angle, target.shape, forceapproach);
@@ -418,9 +419,14 @@ export default abstract class PathingEntity extends Entity {
         this.targetX = this.target.x;
         this.targetZ = this.target.z;
 
+        const faceX: number = this.target.x * 2 + this.target.width;
+        const faceZ: number = this.target.z * 2 + this.target.length;
+        this.orientationX = faceX;
+        this.orientationZ = faceZ;
+
         if (this.moveStrategy === MoveStrategy.SMART) {
             if (this.target instanceof PathingEntity) {
-                this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.orientation, -2));
+                this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, 0, -2));
             } else if (this.target instanceof Loc) {
                 const forceapproach = LocType.get(this.target.type).forceapproach;
                 this.queueWaypoints(rsmod.findPath(this.level, this.x, this.z, this.target.x, this.target.z, this.width, this.target.width, this.target.length, this.target.angle, this.target.shape, true, forceapproach));
@@ -469,6 +475,11 @@ export default abstract class PathingEntity extends Entity {
         this.apRange = 10;
         this.apRangeCalled = false;
 
+        const faceX: number = target.x * 2 + target.width;
+        const faceZ: number = target.z * 2 + target.length;
+        this.orientationX = faceX;
+        this.orientationZ = faceZ;
+
         // less packets out thanks to me :-)
         if (target instanceof Player) {
             const pid: number = target.pid + 32768;
@@ -482,14 +493,10 @@ export default abstract class PathingEntity extends Entity {
                 this.faceEntity = nid;
                 this.mask |= this.entitymask;
             }
-        } else {
-            const faceX: number = target.x * 2 + target.width;
-            const faceZ: number = target.z * 2 + target.length;
-            if (this.faceX !== faceX || this.faceZ !== faceZ) {
-                this.faceX = faceX;
-                this.faceZ = faceZ;
-                this.mask |= this.coordmask;
-            }
+        } else if (this.faceX !== faceX || this.faceZ !== faceZ) {
+            this.faceX = faceX;
+            this.faceZ = faceZ;
+            this.mask |= this.coordmask;
         }
 
         if (interaction === Interaction.SCRIPT) {
@@ -505,7 +512,6 @@ export default abstract class PathingEntity extends Entity {
         this.targetZ = -1;
         this.apRange = 10;
         this.apRangeCalled = false;
-        this.alreadyFacedCoord = true;
         this.alreadyFacedEntity = true;
     }
 
@@ -536,6 +542,7 @@ export default abstract class PathingEntity extends Entity {
         this.tele = false;
         this.lastX = this.x;
         this.lastZ = this.z;
+        this.lastLevel = this.level;
         this.stepsTaken = 0;
         this.interacted = false;
         this.apRangeCalled = false;
@@ -559,17 +566,7 @@ export default abstract class PathingEntity extends Entity {
         this.graphicHeight = -1;
         this.graphicDelay = -1;
 
-        if (this.faceX !== -1) {
-            this.orientation = Position.face(this.x, this.z, this.faceX, this.faceZ);
-        } else if (this.target) {
-            this.orientation = Position.face(this.x, this.z, this.target.x, this.target.z);
-        }
-
-        if (this.alreadyFacedCoord && this.faceX !== -1 && !this.hasWaypoints()) {
-            this.faceX = -1;
-            this.faceZ = -1;
-            this.alreadyFacedCoord = false;
-        } else if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
+        if (this.alreadyFacedEntity && !this.target && this.faceEntity !== -1) {
             this.mask |= this.entitymask;
             this.faceEntity = -1;
             this.alreadyFacedEntity = false;

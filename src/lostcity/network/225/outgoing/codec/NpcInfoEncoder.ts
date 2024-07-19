@@ -3,13 +3,14 @@ import Packet from '#jagex2/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import World from '#lostcity/engine/World.js';
-import {Position} from '#lostcity/entity/Position.js';
+import { Position } from '#lostcity/entity/Position.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import Npc from '#lostcity/entity/Npc.js';
-import BuildArea, {ExtendedInfo} from '#lostcity/entity/BuildArea.js';
+import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
 
 export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private static readonly BITS_NEW: number = 13 + 11 + 5 + 5 + 1;
+    private static readonly BITS_IDLE: number = 1;
     private static readonly BITS_RUN: number = 1 + 2 + 3 + 3 + 1;
     private static readonly BITS_WALK: number = 1 + 2 + 3 + 1;
     private static readonly BITS_EXTENDED: number = 1 + 2;
@@ -19,6 +20,11 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
     encode(buf: Packet, message: NpcInfo): void {
         const buildArea: BuildArea = message.buildArea;
+
+        if (message.changedLevel || message.deltaX > buildArea.viewDistance || message.deltaZ > buildArea.viewDistance) {
+            // optimization to avoid sending 3 bits * observed npcs when everything has to be removed anyways
+            buildArea.npcs.clear();
+        }
 
         this.writeNpcs(buf, message);
         this.writeNewNpcs(buf, message);
@@ -45,6 +51,11 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         return NpcInfoEncoder.BYTES_LIMIT;
     }
 
+    willFit(message: NpcInfo, buf: Packet, bitsToAdd: number, bytesToAdd: number): boolean {
+        // 7 aligns to the next byte
+        return ((buf.bitPos + bitsToAdd + 7) >>> 3) + (message.accumulator + bytesToAdd) <= NpcInfoEncoder.BYTES_LIMIT;
+    }
+
     private writeNpcs(buf: Packet, message: NpcInfo): void {
         const buildArea: BuildArea = message.buildArea;
         // update existing npcs (255 max - 8 bits)
@@ -61,9 +72,11 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
                 continue;
             }
 
-            let extendedInfo: boolean = npc.mask > 0;
-            const {walkDir, runDir} = npc;
-            let bits: number = 0;
+            const extendedInfoSize: number = this.calculateExtendedInfo(npc, false);
+            let extendedInfo: boolean = extendedInfoSize > 0;
+
+            const { walkDir, runDir } = npc;
+            let bits: number = NpcInfoEncoder.BITS_IDLE;
             if (runDir !== -1) {
                 bits = NpcInfoEncoder.BITS_RUN;
             } else if (walkDir !== -1) {
@@ -72,8 +85,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
                 bits = NpcInfoEncoder.BITS_EXTENDED;
             }
 
-            const updateSize: number = extendedInfo ? this.calculateExtendedInfo(npc, false) : 0;
-            if (((buf.bitPos + bits) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
+            if (!this.willFit(message, buf, bits, extendedInfoSize)) {
                 extendedInfo = false;
             }
 
@@ -92,7 +104,8 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             }
 
             if (extendedInfo) {
-                buildArea.extendedInfo.add({id: nid, added: false});
+                buildArea.extendedInfo.add({ id: nid, added: false });
+                message.accumulator += extendedInfoSize;
             }
         }
     }
@@ -100,10 +113,11 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private writeNewNpcs(buf: Packet, message: NpcInfo): void {
         const buildArea: BuildArea = message.buildArea;
         for (const npc of buildArea.getNearbyNpcs(message.x, message.z, message.originX, message.originZ)) {
-            const extendedInfo: boolean = npc.mask > 0 || npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ !== -1 || npc.faceEntity !== -1;
+            const extendedInfoSize: number = this.calculateExtendedInfo(npc, true);
+            const extendedInfo: boolean = extendedInfoSize > 0;
 
-            const updateSize: number = extendedInfo ? this.calculateExtendedInfo(npc, true) : 0;
-            if (((buf.bitPos + NpcInfoEncoder.BITS_NEW + 13) >>> 3) + (message.accumulator += updateSize) > this.test(message)) {
+            // bits to add npc + extended info size + bits to break loop (13)
+            if (!this.willFit(message, buf, NpcInfoEncoder.BITS_NEW + 13, extendedInfoSize)) {
                 // more npcs get added next tick
                 break;
             }
@@ -115,7 +129,8 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
             buf.pBit(1, extendedInfo ? 1 : 0);
 
             if (extendedInfo) {
-                buildArea.extendedInfo.add({id: npc.nid, added: true});
+                buildArea.extendedInfo.add({ id: npc.nid, added: true });
+                message.accumulator += extendedInfoSize;
             }
 
             buildArea.npcs.add(npc.nid);
@@ -130,12 +145,17 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
     private writeExtendedInfo(npc: Npc, buf: Packet, newlyObserved: boolean): void {
         let mask: number = npc.mask;
-        if (newlyObserved && (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1)) {
-            mask |= Npc.FACE_COORD;
+
+        if (newlyObserved) {
+            if (npc.orientationX !== -1 || npc.faceX !== -1) {
+                mask |= Npc.FACE_COORD;
+            }
+
+            if (npc.faceEntity !== -1) {
+                mask |= Npc.FACE_ENTITY;
+            }
         }
-        if (newlyObserved && npc.faceEntity !== -1) {
-            mask |= Npc.FACE_ENTITY;
-        }
+
         buf.p1(mask);
 
         if (mask & Npc.ANIM) {
@@ -144,6 +164,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.FACE_ENTITY) {
+            // todo: get rid of alreadyFacedEntity
             if (npc.faceEntity !== -1) {
                 npc.alreadyFacedEntity = true;
             }
@@ -173,18 +194,9 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.FACE_COORD) {
-            if (npc.faceX !== -1) {
-                npc.alreadyFacedCoord = true;
-            }
-
-            if (newlyObserved && npc.faceX != -1) {
-                buf.p2(npc.faceX);
-                buf.p2(npc.faceZ);
-            } else if (newlyObserved && npc.orientation != -1) {
-                const faceX: number = Position.moveX(npc.x, npc.orientation);
-                const faceZ: number = Position.moveZ(npc.z, npc.orientation);
-                buf.p2(faceX * 2 + 1);
-                buf.p2(faceZ * 2 + 1);
+            if (newlyObserved && npc.orientationX != -1) {
+                buf.p2(npc.orientationX);
+                buf.p2(npc.orientationZ);
             } else {
                 buf.p2(npc.faceX);
                 buf.p2(npc.faceZ);
@@ -195,12 +207,21 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
     private calculateExtendedInfo(npc: Npc, newlyObserved: boolean): number {
         let length: number = 0;
         let mask: number = npc.mask;
-        if (newlyObserved && (npc.orientation !== -1 || npc.faceX !== -1 || npc.faceZ != -1)) {
-            mask |= Npc.FACE_COORD;
+
+        if (newlyObserved) {
+            if (npc.orientationX !== -1 || npc.faceX !== -1) {
+                mask |= Npc.FACE_COORD;
+            }
+
+            if (npc.faceEntity !== -1) {
+                mask |= Npc.FACE_ENTITY;
+            }
         }
-        if (newlyObserved && npc.faceEntity !== -1) {
-            mask |= Npc.FACE_ENTITY;
+
+        if (mask === 0) {
+            return 0;
         }
+
         length += 1;
 
         if (mask & Npc.ANIM) {
@@ -212,7 +233,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
         }
 
         if (mask & Npc.SAY) {
-            length += npc.chat ? npc.chat.length + 1 : 1;
+            length += 1 + npc.chat!.length;
         }
 
         if (mask & Npc.DAMAGE) {

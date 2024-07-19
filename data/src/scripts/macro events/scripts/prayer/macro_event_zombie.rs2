@@ -3,7 +3,7 @@
 [proc,macro_event_zombie_spawn]
 def_npc $zombie = enum(int, npc, macro_event_zombie_levels, ~macro_event_combat_level);
 
-def_coord $zombie_coord = ~macro_event_coord;
+def_coord $zombie_coord = map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk);
 if ($zombie_coord = null) {
     return;
 }

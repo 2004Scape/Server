@@ -1,0 +1,3 @@
+^map_findsquare_lineofwalk = 0
+^map_findsquare_lineofsight = 1
+^map_findsquare_none = 2

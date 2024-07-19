@@ -32,13 +32,13 @@ if (~inzone_coord_pair_table(trawler_flood_zones, coord) = true) {
     if (coordy(coord) = 0) {
         p_teleport(movecoord(coord, -64, 0, 0));
     } else {
-        p_teleport(~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+        p_teleport(map_findsquare(^trawler_wreck_center, 0, 4, ^map_findsquare_lineofwalk));
     }
 } else if (~inzone_coord_pair_table(trawler_nonflood_zones, coord) = true) {
     if (coordy(coord) = 0) {
         p_teleport(movecoord(coord, 64, 0, 0));
     } else {
-        p_teleport(~coord_lineofwalk_radius(^trawler_wreck_center, 4));
+        p_teleport(map_findsquare(^trawler_wreck_center, 0, 4, ^map_findsquare_lineofwalk));
     }
 }
 p_walk(coord);

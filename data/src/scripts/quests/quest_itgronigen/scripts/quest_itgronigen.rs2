@@ -60,7 +60,7 @@ mes("You close the chest.");
 [oploc2,loc_2194]
 mes("You search the chest.");
 mes("The chest contains a poisonous spider.");
-npc_add(~coord_lineofwalk_radius(coord,1), poison_spider_observatory, 500);
+npc_add(map_findsquare(coord, 0, 1, ^map_findsquare_lineofwalk), poison_spider_observatory, 500);
 npc_setmode(opplayer2);
 ~npc_retaliate(0);
 queue(poison_player, 0, 15);

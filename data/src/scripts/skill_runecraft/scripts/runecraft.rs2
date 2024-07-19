@@ -6,7 +6,7 @@ if ($data = null) {
 }
 sound_synth(teleport_all, 0, 0);
 mes("You step through the portal...");
-p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:exit_coord, random(db_getfieldcount($data, runecraft_table:exit_coord)))));
+p_telejump(map_findsquare(db_getfield($data, runecraft_table:exit_coord, random(db_getfieldcount($data, runecraft_table:exit_coord)))));
 
 [oplocu,_rc_altar]
 switch_obj(last_useitem) {
@@ -38,7 +38,7 @@ sound_synth(teleport_all, 0, 0);
 mes("You hold the <oc_name(last_useitem)> towards the mysterious ruins.");
 mes("You feel a powerful force take hold of you...");
 p_delay(1);
-p_telejump(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, random(db_getfieldcount($data, runecraft_table:enter_coord)))));
+p_telejump(map_findsquare(db_getfield($data, runecraft_table:enter_coord, random(db_getfieldcount($data, runecraft_table:enter_coord)))));
 
 
 [label,runecraft_runes]
@@ -100,7 +100,7 @@ if ($data = null) {
 }
 // if they're already in the temple
 if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
-    if (~inmap(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
+    if (~inmap(map_findsquare(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
         mes("You are standing in the <db_getfield($data, runecraft_table:name, 0)> temple.");
         return;
     }
@@ -120,7 +120,7 @@ if ($data = null) {
 }
 // if they're already in the temple
 if ($last_item = db_getfield($data, runecraft_table:talisman, 0)) {
-    if (~inmap(~coord_lineofwalk_radius(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
+    if (~inmap(map_findsquare(db_getfield($data, runecraft_table:enter_coord, 0)), coord) = true) {
         mes("You are standing in the <db_getfield($data, runecraft_table:name, 0)> temple.");
         return;
     }
