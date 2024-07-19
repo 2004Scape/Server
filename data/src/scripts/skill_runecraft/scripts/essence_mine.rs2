@@ -14,7 +14,7 @@ p_delay(4);
 // select random coord
 def_coord $coord = enum(int, coord, essence_mine_teleports, random(enum_getoutputcount(essence_mine_teleports)));
 // select random coord at a radius of 1
-$coord = ~coord_lineofsight_radius($coord, 1);
+$coord = map_findsquare($coord, 0, 1, ^map_findsquare_lineofsight);
 p_telejump($coord);
 
 // portal
@@ -27,5 +27,5 @@ p_delay(1);
 if (%exit_essence_mine_coord = null) {
     %exit_essence_mine_coord = ^essence_mine_to_sedridor;
 }
-def_coord $coord = ~coord_lineofwalk_radius(%exit_essence_mine_coord, 2);
+def_coord $coord = map_findsquare(%exit_essence_mine_coord, 0, 2, ^map_findsquare_lineofwalk);
 p_telejump($coord);

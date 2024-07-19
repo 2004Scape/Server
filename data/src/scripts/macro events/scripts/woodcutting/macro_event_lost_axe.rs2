@@ -15,7 +15,7 @@ if (inv_total(worn, $axe) > 0) {
     inv_del(inv, $axe, 1);
     inv_add(inv, axe_handle, 1);
 }
-def_coord $axe_coord = ~coord_lineofwalk_radius2(coord, 7);
+def_coord $axe_coord = map_findsquare(coord, 1, 7, ^map_findsquare_lineofwalk);
 anim(human_woodcutting_axe_handle, 0);
 // not sure what sound to use
 sound_synth(lost_pickaxe, 0, 0);

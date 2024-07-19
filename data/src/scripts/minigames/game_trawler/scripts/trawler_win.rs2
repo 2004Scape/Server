@@ -45,7 +45,7 @@ if_openmainmodal(ship_journey);
 p_delay(20);
 if_close;
 ~update_all(null);
-p_teleport(~coord_lineofwalk_radius(^trawler_lobby_murphy_spawn, 4));
+p_teleport(map_findsquare(^trawler_lobby_murphy_spawn, 0, 4, ^map_findsquare_lineofwalk));
 
 [oploc1,game_trawler_reward_net]
 if (%trawler < 3 | %trawler_catch = 0) {
