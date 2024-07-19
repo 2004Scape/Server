@@ -2,10 +2,10 @@
 inputtype=int
 outputtype=npc
 val=1,macro_event_swarm
-val=2,macro_event_triffid_friendly
-val=3,macro_event_genie
-val=4,macro_event_drunken_dwarf
-val=5,macro_event_mysterious_old_man_general
+val=2,macro_event_genie
+val=3,macro_event_drunken_dwarf
+val=4,macro_event_mysterious_old_man_general
+val=5,macro_event_triffid_friendly
 
 [general_macro_events_free]
 inputtype=int
