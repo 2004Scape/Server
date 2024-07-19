@@ -46,7 +46,7 @@ export function preloadClient() {
 
 export async function preloadClientAsync() {
     //console.log('Preloading client data');
-    console.time('Preloaded client data');
+    //console.time('Preloaded client data');
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -69,5 +69,5 @@ export async function preloadClientAsync() {
         ...jingles.map(name => fetchAll('jingles', name))
     ];
     await Promise.all(allPacks);
-    console.timeEnd('Preloaded client data');
+    //console.timeEnd('Preloaded client data');
 }

@@ -57,6 +57,7 @@ class Login {
             const revision = data.g1();
             if (revision !== 225) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                socket.close();
                 return;
             }
 
@@ -66,6 +67,7 @@ class Login {
             data.gdata(crcs, 0, crcs.length);
             if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                socket.close();
                 return;
             }
 

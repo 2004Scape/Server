@@ -61,7 +61,7 @@ import LinkList from '#jagex2/datastruct/LinkList.js';
 import {createWorker} from '#lostcity/util/WorkerFactory.js';
 import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import {makeCrcs} from '#lostcity/server/CrcTable.js';
+import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
 import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
 import {Position} from '#lostcity/entity/Position.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
@@ -288,139 +288,65 @@ class World {
         this.allLastModified = getLatestModified('data/pack', '.dat');
     }
 
-    async reloadAsync(): Promise<void> {
-        let transmitted = false;
+    async loadAsync(): Promise<void> {
+        console.time('Loading packs');
+        const count = (await Promise.all([
+            NpcType.loadAsync('data/pack'),
+            ObjType.loadAsync('data/pack'),
+            LocType.loadAsync('data/pack'),
+            FontType.loadAsync('data/pack'),
+            WordEnc.loadAsync('data/pack'),
+            VarPlayerType.loadAsync('data/pack'),
+            ParamType.loadAsync('data/pack'),
+            IdkType.loadAsync('data/pack'),
+            SeqFrame.loadAsync('data/pack'),
+            SeqType.loadAsync('data/pack'),
+            SpotanimType.loadAsync('data/pack'),
+            CategoryType.loadAsync('data/pack'),
+            EnumType.loadAsync('data/pack'),
+            StructType.loadAsync('data/pack'),
+            InvType.loadAsync('data/pack'),
+            MesanimType.loadAsync('data/pack'),
+            DbTableType.loadAsync('data/pack'),
+            DbRowType.loadAsync('data/pack'),
+            HuntType.loadAsync('data/pack'),
+            VarNpcType.loadAsync('data/pack'),
+            VarSharedType.loadAsync('data/pack'),
+            Component.loadAsync('data/pack'),
+            makeCrcsAsync(),
+            preloadClientAsync(),
+            ScriptProvider.loadAsync('data/pack'),
+        ])).at(-1);
 
-        if (this.shouldReload('varp', true)) {
-            await VarPlayerType.loadAsync('data/pack');
-            transmitted = true;
-        }
+        this.invs.clear();
+        for (let i = 0; i < InvType.count; i++) {
+            const inv = InvType.get(i);
 
-        if (this.shouldReload('param')) {
-            await ParamType.loadAsync('data/pack');
-        }
-
-        // if (this.shouldReload('obj', true)) {
-        //     await ObjType.loadAsync('data/pack');
-        //     transmitted = true;
-        // }
-
-        // if (this.shouldReload('loc', true)) {
-        //     await LocType.loadAsync('data/pack');
-        //     transmitted = true;
-        // }
-
-        // if (this.shouldReload('npc', true)) {
-        //     await NpcType.loadAsync('data/pack');
-        //     transmitted = true;
-        // }
-
-        if (this.shouldReload('idk', true)) {
-            await IdkType.loadAsync('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('frame_del')) {
-            await SeqFrame.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('seq', true)) {
-            await SeqType.loadAsync('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('spotanim', true)) {
-            await SpotanimType.loadAsync('data/pack');
-            transmitted = true;
-        }
-
-        if (this.shouldReload('category')) {
-            await CategoryType.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('enum')) {
-            await EnumType.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('struct')) {
-            await StructType.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('inv')) {
-            await InvType.loadAsync('data/pack');
-
-            this.invs.clear();
-            for (let i = 0; i < InvType.count; i++) {
-                const inv = InvType.get(i);
-    
-                if (inv && inv.scope === InvType.SCOPE_SHARED) {
-                    this.invs.add(Inventory.fromType(i));
-                }
+            if (inv && inv.scope === InvType.SCOPE_SHARED) {
+                this.invs.add(Inventory.fromType(i));
             }
         }
 
-        if (this.shouldReload('mesanim')) {
-            await MesanimType.loadAsync('data/pack');
-        }
+        if (this.vars.length !== VarSharedType.count) {
+            const old = this.vars;
+            this.vars = new Int32Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.vars[i] = old[i];
+            }
 
-        if (this.shouldReload('dbtable')) {
-            await DbTableType.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('dbrow')) {
-            await DbRowType.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('hunt')) {
-            await HuntType.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('varn')) {
-            await VarNpcType.loadAsync('data/pack');
-        }
-
-        if (this.shouldReload('vars')) {
-            await VarSharedType.loadAsync('data/pack');
-
-            if (this.vars.length !== VarSharedType.count) {
-                const old = this.vars;
-                this.vars = new Int32Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.vars[i] = old[i];
-                }
-
-                const oldString = this.varsString;
-                this.varsString = new Array(VarSharedType.count);
-                for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
-                    this.varsString[i] = oldString[i];
-                }
+            const oldString = this.varsString;
+            this.varsString = new Array(VarSharedType.count);
+            for (let i = 0; i < VarSharedType.count && i < old.length; i++) {
+                this.varsString[i] = oldString[i];
             }
         }
 
-        if (this.shouldReload('interface')) {
-            await Component.loadAsync('data/pack');
-            transmitted = true;
+        if (count === -1) {
+            this.broadcastMes('There was an issue while reloading scripts.');
+        } else {
+            this.broadcastMes(`Reloaded ${count} scripts.`);
         }
-
-        if (this.shouldReload('script')) {
-            const count = await ScriptProvider.loadAsync('data/pack');
-            if (count === -1) {
-                this.broadcastMes('There was an issue while reloading scripts.');
-            } else {
-                this.broadcastMes(`Reloaded ${count} scripts.`);
-            }
-        }
-
-        // todo: check if any jag files changed (transmitted) then reload crcs
-        // if (transmitted) {
-        //     await makeCrcsAsync();
-        // }
-
-        // await makeCrcsAsync();
-
-        // todo: detect and reload static data (like maps)
-
-        await preloadClientAsync();
+        console.timeEnd('Loading packs');
     }
 
     broadcastMes(message: string): void {
@@ -442,16 +368,13 @@ class World {
                 this.gameMap.init(this.zoneMap);
             }
         } else {
-            // need to load these prior to gamemap
-            await Promise.all([await ObjType.loadAsync('data/pack'), await LocType.loadAsync('data/pack'), await NpcType.loadAsync('data/pack')]);
+            console.time('Loaded in');
+            await this.loadAsync();
 
-            console.time('out of');
             if (!skipMaps) {
-                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync(), await this.gameMap.initAsync(this.zoneMap)]);
-            } else {
-                await Promise.all([await FontType.loadAsync('data/pack'), await WordEnc.loadAsync('data/pack'), await this.reloadAsync()]);
+                await this.gameMap.initAsync(this.zoneMap);
             }
-            console.timeEnd('out of');
+            console.timeEnd('Loaded in');
         }
 
         Login.loginThread.postMessage({

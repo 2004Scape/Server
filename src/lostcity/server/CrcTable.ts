@@ -66,9 +66,9 @@ if (typeof self === 'undefined') {
     if (fs.existsSync('data/pack/client/')) {
         makeCrcs();
     }
-} else {
-    // fetching directory works on local http servers but not github pages
-    if ((await fetch('data/pack/client/crc')).ok) {
-        await makeCrcsAsync();
-    }
+// } else {
+    // fetching directory works on local http servers but not github pages, also not needed rn
+    // if ((await fetch('data/pack/client/crc')).ok) {
+    //     await makeCrcsAsync();
+    // }
 }
