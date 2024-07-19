@@ -137,9 +137,7 @@ export default class Script {
         if (typeof self === 'undefined') {
             return path.basename(this.info.sourceFilePath);
         } else {
-            return this.info.sourceFilePath;
-            // TODOS change after checking this
-            // return this.info.sourceFilePath.split('/').pop();
+            return this.info.sourceFilePath.split('/').pop()?.split('\\').pop();
         }
     }
 

@@ -6,7 +6,7 @@ import Login from '#lostcity/engine/Login.js';
 import World from '#lostcity/engine/World.js';
 
 export default class WorkerServer {
-    socket: ClientSocket = new ClientSocket(null, 'localhost');
+    socket: ClientSocket = new ClientSocket(null, '127.0.0.1');
 
     constructor() {}
 
