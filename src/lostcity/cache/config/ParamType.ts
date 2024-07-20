@@ -20,11 +20,13 @@ export default class ParamType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/param.dat`)).ok) {
+        const file = await fetch(`${dir}/server/param.dat`);
+        if (!file.ok) {
             console.log('Warning: No param.dat found.');
+            return;
         }
 
-        const dat = await Packet.loadAsync(`${dir}/server/param.dat`);
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 

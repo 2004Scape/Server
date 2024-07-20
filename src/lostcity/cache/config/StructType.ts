@@ -20,12 +20,13 @@ export default class StructType extends ConfigType implements ParamHolder {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/struct.dat`)).ok) {
+        const file = await fetch(`${dir}/server/struct.dat`);
+        if (!file.ok) {
             console.log('Warning: No struct.dat found.');
             return;
         }
 
-        const dat = await Packet.loadAsync(`${dir}/server/struct.dat`);
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 

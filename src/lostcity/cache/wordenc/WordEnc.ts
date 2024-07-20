@@ -46,12 +46,13 @@ export default class WordEnc {
     }
 
     static async loadAsync(dir: string): Promise<void> {
-        if (!(await fetch(`${dir}/client/wordenc`)).ok) {
-            console.log('Warning: No wordenc found.');
+        const file = await fetch(`${dir}/client/wordenc`);
+        if (!file.ok) {
+            console.log('Warning: No wordenc.dat found.');
             return;
         }
 
-        const wordenc = await Jagfile.loadAsync(`${dir}/client/wordenc`);
+        const wordenc = new Jagfile(new Packet(new Uint8Array(await file.arrayBuffer())));
         this.readAll(wordenc);
     }
 

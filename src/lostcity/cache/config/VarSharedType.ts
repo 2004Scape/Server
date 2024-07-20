@@ -19,12 +19,13 @@ export default class VarSharedType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/vars.dat`)).ok) {
+        const file = await fetch(`${dir}/server/vars.dat`);
+        if (!file.ok) {
             console.log('Warning: No vars.dat found.');
             return;
         }
 
-        const dat = await Packet.loadAsync(`${dir}/server/vars.dat`);
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 

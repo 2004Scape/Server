@@ -53,8 +53,8 @@ async function esb() {
         entryPoints: entryPoints,
         external: modules.concat(esbuildModules),
         define: defines,
-        // sourcemap: 'inline',
         // minify: true,
+        // sourcemap: 'linked',
     }).catch((e) => { throw new Error(e); });
 
     for (let index = 0; index < bundle.outputFiles.length; index++) {
@@ -68,8 +68,8 @@ async function bun() {
         entrypoints: entryPoints,
         external: modules,
         define: defines,
-        // sourcemap: 'inline',
         // minify: true,
+        // sourcemap: 'linked',
     }).catch((e) => { throw new Error(e); });
 
     for (let index = 0; index < bundle.outputs.length; index++) {
@@ -93,6 +93,7 @@ function preloadDirs() {
 }
 
 function removeImports(output, file) {
+    // turn into plugin for minify/sourcemaps
     const path = '../Client2/src/public/' + basename(file).replace('.ts', '.js');
 
     output = output.split('\n')

@@ -19,11 +19,13 @@ export default class DbTableType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/dbtable.dat`)).ok) {
+        const file = await fetch(`${dir}/server/dbtable.dat`);
+        if (!file.ok) {
             console.log('Warning: No dbtable.dat found.');
             return;
         }
-        const dat = await Packet.loadAsync(`${dir}/server/dbtable.dat`);
+
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 
