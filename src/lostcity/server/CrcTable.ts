@@ -35,11 +35,12 @@ export function makeCrcs() {
 }
 
 async function makeCrcAsync(path: string) {
-    if (!(await fetch(path)).ok) {
+    const file = await fetch(path);
+    if (!file.ok) {
         return;
     }
 
-    const packet = await Packet.loadAsync(path);
+    const packet = new Packet(new Uint8Array(await file.arrayBuffer()));
     const crc = Packet.getcrc(packet.data, 0, packet.data.length);
     CrcTable.push(crc);
     CrcBuffer.p4(crc);
