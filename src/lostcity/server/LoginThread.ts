@@ -361,10 +361,9 @@ if (typeof self === 'undefined' && parentPort) {
                     } else {
                         let save = new Uint8Array();
                         const safeName = toSafeName(username);
-                        // TODO(config): Github pages adds /Client2 to pathname, and can't use pathname as worker adds its own file to it.
-                        const url = new URL(`data/players/${safeName}.sav`, self.location.origin);
-                        if ((await fetch(url)).ok) {
-                            save = new Uint8Array(await (await fetch(url)).arrayBuffer());
+                        const saveFile = await fetch(`data/players/${safeName}.sav`);
+                        if (saveFile.ok) {
+                            save = new Uint8Array(await saveFile.arrayBuffer());
                         }
 
                         self.postMessage({
