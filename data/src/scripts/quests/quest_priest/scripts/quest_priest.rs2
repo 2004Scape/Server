@@ -54,6 +54,7 @@ if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {
     }
     queue(priest_quest_complete, 0);
     ~mesbox("The ghost vanishes.");
+    // https://youtu.be/QX-ieoyDXh4?t=978 - missing space after `wind...` is accurate.
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
     return;
 }
