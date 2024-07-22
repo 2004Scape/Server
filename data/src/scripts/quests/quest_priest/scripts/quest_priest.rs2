@@ -54,6 +54,7 @@ if (last_useitem = ghost_skull & %priest_progress = ^priest_obtained_skull) {
     }
     queue(priest_quest_complete, 0);
     ~mesbox("The ghost vanishes.");
+    // https://youtu.be/QX-ieoyDXh4?t=978 - missing space after `wind...` is accurate.
     ~mesbox("You think you hear a faint voice on the wind...Thank... you...");
     return;
 }
@@ -72,7 +73,8 @@ if (%priest_progress = ^priest_spoken_ghost | %priest_progress = ^priest_obtaine
     mes("Out of nowhere a skeleton appears!");
     @pickup_obj(obj_coord, obj_type, obj_count);
 } else {
-    ~mesbox("That skull looks scary.|I've got no reason to take it,|I think I'll leave it alone.");
+    // https://youtu.be/QX-ieoyDXh4?t=370
+    ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave|it alone.");
 }
 
 [opheld5,ghost_skull]

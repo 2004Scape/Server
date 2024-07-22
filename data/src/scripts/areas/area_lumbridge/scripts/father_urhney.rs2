@@ -52,7 +52,8 @@ inv_add(inv, amulet_of_ghostspeak, 1);
 ~mesbox("Father Urhney hands you an amulet.");
 ~chatnpc("<p,neutral>It is an Amulet of Ghostspeak.");
 ~chatnpc("<p,neutral>So called, because when you wear it you can speak to ghosts. A lot of ghosts are doomed to be ghosts because they have left some important task uncompleted.");
-~chatnpc("<p,neutral>Maybe if you know what this task is,|you can get rid of the ghost.|I'm not making any guarantees mind you,|but it is the best I can do right now.");
+// https://youtu.be/QX-ieoyDXh4?t=212
+~chatnpc("<p,neutral>Maybe if you know what this task is, you can get rid of|the ghost. I'm not making any guarantees mind you,|but it is the best I can do right now.");
 ~chatplayer("<p,neutral>Thank you. I'll give it a try!");
 
 [label,father_urhney_priest_lost_amulet]

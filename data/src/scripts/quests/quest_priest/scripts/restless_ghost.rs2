@@ -57,7 +57,8 @@ switch_int (%priest_progress) {
     case ^priest_obtained_skull:
         ~chatnpc("<p,neutral>How are you doing finding my skull?");
         ~chatplayer("<p,happy>I have found it!");
-        ~chatnpc("<p,neutral>Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, and I will be free!");
+        // https://youtu.be/QX-ieoyDXh4?t=963 - capital A is correct.
+        ~chatnpc("<p,neutral>Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, And I will be free!");
 }
 
 [opnpcu,restless_ghost]
@@ -128,7 +129,8 @@ switch_int ($option) {
 
 [label,priest_ghost_certain_task]
 ~chatplayer("<p,neutral>I've been told a certain task may need to be completed so you can rest in peace.");
-~chatnpc("<p,neutral>I should think it is probably because|a warlock has come along and stolen my skull.|If you look inside my coffin there,|you'll find my corpse without a head on it.");
+// https://youtu.be/QX-ieoyDXh4?t=583
+~chatnpc("<p,neutral>I should think it is probably because a warlock has come along and stolen my skull. If you look inside my coffin there, you'll find my corpse without a head on it.");
 ~chatplayer("<p,neutral>Do you know where this warlock might be now?");
 ~chatnpc("<p,neutral>I think it was one of the warlocks who lives in the big tower by the sea southwest from here.");
 ~chatplayer("<p,neutral>Ok. I will try and get the skull back for you, so you can rest in peace.");
