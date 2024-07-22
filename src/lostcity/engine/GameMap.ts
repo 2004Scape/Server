@@ -59,20 +59,25 @@ export default class GameMap {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const { serverMaps } = await import('#lostcity/server/PreloadedDirs.js');
-        const maps: string[] = serverMaps;
-        for (let index: number = 0; index < maps.length; index++) {
-            console.log('init ', maps[index]);
-            const [mx, mz] = maps[index].substring(1).split('_').map(Number);
+        const maps = serverMaps.map(async (map: string) => {
+            const [mx, mz] = map.substring(1).split('_').map(Number);
             const mapsquareX: number = mx << 6;
             const mapsquareZ: number = mz << 6;
 
-            this.decodeNpcs(await Packet.loadAsync(`${path}n${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeObjs(await Packet.loadAsync(`${path}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            const [npcData, objData, landData, locData] = await Promise.all([
+                await Packet.loadAsync(`${path}n${mx}_${mz}`),
+                await Packet.loadAsync(`${path}o${mx}_${mz}`),
+                await Packet.loadAsync(`${path}m${mx}_${mz}`),
+                await Packet.loadAsync(`${path}l${mx}_${mz}`)]);
+
+            this.decodeNpcs(npcData, mapsquareX, mapsquareZ);
+            this.decodeObjs(objData, mapsquareX, mapsquareZ, zoneMap);
             // collision
             const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
-            this.decodeLands(lands, await Packet.loadAsync(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeLocs(lands, await Packet.loadAsync(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
-        }
+            this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
+            this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
+        });
+        // await Promise.all(maps); // this bottlenecks login time
         console.timeEnd('Loading game map');
     }
 

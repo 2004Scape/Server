@@ -16,10 +16,22 @@ export default class WorkerServer {
         seed.p4(Math.floor(Math.random() * 0xffffffff));
         this.socket.send(seed.data);
 
+        // TODO: figure this out
+        self.onerror = async (e: Event) => {
+            console.log(e);
+            self.close();
+            // this.socket.close();
+        };
+
+        self.onmessageerror = async (e: MessageEvent) => {
+            console.log(e);
+            self.close();
+            // this.socket.close();
+        };
+
         self.onmessage = async (e: MessageEvent) => {
             const packet = new Packet(new Uint8Array(e.data));
             switch (e.data.type) {
-                // TODO: are these needed later?
                 // case 'close':
                 //     if (this.socket.player) {
                 //         this.socket.player.client = null;

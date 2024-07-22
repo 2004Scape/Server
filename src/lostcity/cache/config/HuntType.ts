@@ -25,11 +25,13 @@ export default class HuntType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/hunt.dat`)).ok) {
+        const file = await fetch(`${dir}/server/hunt.dat`);
+        if (!file.ok) {
             console.log('Warning: No hunt.dat found.');
             return;
         }
-        const dat = await Packet.loadAsync(`${dir}/server/hunt.dat`);
+
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 

@@ -17,7 +17,7 @@ export default class ClientSocket {
     remoteAddress: string;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId = typeof self === 'undefined' ? randomUUID() : (self.location.protocol === 'https:' ? self.crypto.randomUUID() : '0');
+    uniqueId = typeof self === 'undefined' ? randomUUID() : (self.isSecureContext ? self.crypto.randomUUID() : '0');
 
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;

@@ -134,7 +134,11 @@ export default class Script {
     }
 
     get fileName() {
-        return path.basename(this.info.sourceFilePath);
+        if (typeof self === 'undefined') {
+            return path.basename(this.info.sourceFilePath);
+        } else {
+            return this.info.sourceFilePath.split('/').pop()?.split('\\').pop();
+        }
     }
 
     lineNumber(pc: number) {

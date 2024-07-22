@@ -361,9 +361,9 @@ if (typeof self === 'undefined' && parentPort) {
                     } else {
                         let save = new Uint8Array();
                         const safeName = toSafeName(username);
-                        const url = new URL(`data/players/${safeName}.sav`, self.location.origin);
-                        if ((await fetch(url)).ok) {
-                            save = new Uint8Array(await (await fetch(url)).arrayBuffer());
+                        const saveFile = await fetch(`data/players/${safeName}.sav`);
+                        if (saveFile.ok) {
+                            save = new Uint8Array(await saveFile.arrayBuffer());
                         }
 
                         self.postMessage({

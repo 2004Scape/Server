@@ -21,13 +21,14 @@ export default class FloType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/flo.dat`)).ok) {
+        const file = await fetch(`${dir}/server/flo.dat`);
+        if (!file.ok) {
             console.log('Warning: No flo.dat found.');
             return;
         }
-        const server = await Packet.loadAsync(`${dir}/server/flo.dat`);
-        const jag = await Jagfile.loadAsync(`${dir}/client/config`);
-        this.parse(server, jag);
+
+        const [server, jag] = await Promise.all([file.arrayBuffer(), Jagfile.loadAsync(`${dir}/client/config`)]);
+        this.parse(new Packet(new Uint8Array(server)), jag);
     }
 
     static parse(server: Packet, jag: Jagfile) {

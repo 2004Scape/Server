@@ -1,5 +1,3 @@
-import path from 'path';
-
 import Script from '#lostcity/engine/script/Script.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
@@ -178,7 +176,7 @@ export default class ScriptRunner {
 
             if (state.self instanceof Player) {
                 state.self.wrappedMessageGame(`script error: ${err.message}`);
-                state.self.wrappedMessageGame(`file: ${path.basename(state.script.info.sourceFilePath)}`);
+                state.self.wrappedMessageGame(`file: ${state.script.fileName}`);
                 state.self.wrappedMessageGame('');
 
                 state.self.wrappedMessageGame('stack backtrace:');
@@ -202,7 +200,7 @@ export default class ScriptRunner {
             }
 
             console.error(`script error: ${err.message}`);
-            console.error(`file: ${path.basename(state.script.info.sourceFilePath)}`);
+            console.error(`file: ${state.script.fileName}`);
             console.error('');
 
             console.error('stack backtrace:');

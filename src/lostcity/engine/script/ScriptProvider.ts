@@ -40,8 +40,7 @@ export default class ScriptProvider {
     }
 
     static async loadAsync(dir: string): Promise<number> {
-        const dat = await Packet.loadAsync(`${dir}/server/script.dat`);
-        const idx = await Packet.loadAsync(`${dir}/server/script.idx`);
+        const [dat, idx] = await Promise.all([Packet.loadAsync(`${dir}/server/script.dat`), Packet.loadAsync(`${dir}/server/script.idx`)]);
         return this.parse(dat, idx);
     }
 
