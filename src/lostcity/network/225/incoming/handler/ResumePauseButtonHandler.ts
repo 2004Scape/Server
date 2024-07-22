@@ -9,7 +9,7 @@ export default class ResumePauseButtonHandler extends MessageHandler<ResumePause
             return false;
         }
 
-        player.executeScript(player.activeScript, true);
+        player.executeScript(player.activeScript, true, true);
         return true;
     }
 }

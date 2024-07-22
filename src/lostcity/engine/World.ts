@@ -796,8 +796,8 @@ class World {
                 player.playtime++;
 
                 // - resume suspended script
-                if (player.activeScript && !player.delayed() && player.activeScript.execution === ScriptState.SUSPENDED) {
-                    player.executeScript(player.activeScript, true);
+                if (player.activeScript && player.delay <= this.currentTick && player.activeScript.execution === ScriptState.SUSPENDED) {
+                    player.executeScript(player.activeScript, true, true);
                 }
 
                 // - primary queue

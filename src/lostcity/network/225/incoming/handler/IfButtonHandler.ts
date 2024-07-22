@@ -6,6 +6,7 @@ import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import Environment from '#lostcity/util/Environment.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 export default class IfButtonHandler extends MessageHandler<IfButton> {
     handle(message: IfButton, player: Player): boolean {
@@ -19,8 +20,8 @@ export default class IfButtonHandler extends MessageHandler<IfButton> {
         player.lastCom = comId;
 
         if (player.resumeButtons.indexOf(player.lastCom) !== -1) {
-            if (player.activeScript) {
-                player.executeScript(player.activeScript, true);
+            if (player.activeScript && (player.activeScript.execution === ScriptState.PAUSEBUTTON || player.activeScript.execution === ScriptState.COUNTDIALOG)) {
+                player.executeScript(player.activeScript, true, true);
             }
         } else {
             const root = Component.get(com.rootLayer);

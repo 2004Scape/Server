@@ -12,7 +12,7 @@ export default class ResumePCountDialogHandler extends MessageHandler<ResumePCou
         }
 
         player.activeScript.lastInt = input;
-        player.executeScript(player.activeScript, true);
+        player.executeScript(player.activeScript, true, true);
         return true;
     }
 }

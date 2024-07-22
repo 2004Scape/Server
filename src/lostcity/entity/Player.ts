@@ -610,7 +610,7 @@ export default class Player extends PathingEntity {
     }
 
     delayed() {
-        return this.delay > World.currentTick;
+        return this.delay > World.currentTick || this.activeScript;
     }
 
     containsModalInterface() {
