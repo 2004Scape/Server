@@ -72,7 +72,8 @@ if (%priest_progress = ^priest_spoken_ghost | %priest_progress = ^priest_obtaine
     mes("Out of nowhere a skeleton appears!");
     @pickup_obj(obj_coord, obj_type, obj_count);
 } else {
-    ~mesbox("That skull looks scary.|I've got no reason to take it,|I think I'll leave it alone.");
+    // https://youtu.be/QX-ieoyDXh4?t=370
+    ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave| it alone.");
 }
 
 [opheld5,ghost_skull]
