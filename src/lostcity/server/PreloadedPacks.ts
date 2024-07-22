@@ -48,8 +48,6 @@ export async function preloadClientAsync() {
     //console.log('Preloading client data');
     //console.time('Preloaded client data');
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const fetchAll = async (type: string, name: string) => {
         let data = new Uint8Array(await (await fetch(`data/pack/client/${type}/${name}`)).arrayBuffer());
         if (type === 'jingles') {
@@ -62,11 +60,13 @@ export async function preloadClientAsync() {
         PRELOADED_CRC.set(name, crc);
     };
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { jingles, maps, songs } = await import('./PreloadedDirs.js');
     const allPacks = [
-        ...maps.map(name => fetchAll('maps', name)),
-        ...songs.map(name => fetchAll('songs', name)),
-        ...jingles.map(name => fetchAll('jingles', name))
+        ...maps.map((name: string) => fetchAll('maps', name)),
+        ...songs.map((name: string) => fetchAll('songs', name)),
+        ...jingles.map((name: string) => fetchAll('jingles', name))
     ];
     await Promise.all(allPacks);
     //console.timeEnd('Preloaded client data');
