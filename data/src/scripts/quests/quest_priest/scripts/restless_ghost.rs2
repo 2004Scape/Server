@@ -57,7 +57,8 @@ switch_int (%priest_progress) {
     case ^priest_obtained_skull:
         ~chatnpc("<p,neutral>How are you doing finding my skull?");
         ~chatplayer("<p,happy>I have found it!");
-        ~chatnpc("<p,neutral>Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, and I will be free!");
+        // https://youtu.be/QX-ieoyDXh4?t=963 - capital A is correct.
+        ~chatnpc("<p,neutral>Hurrah! Now I can stop being a ghost! You just need to put it in my coffin there, And I will be free!");
 }
 
 [opnpcu,restless_ghost]
