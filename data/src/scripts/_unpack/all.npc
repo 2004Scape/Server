@@ -5992,7 +5992,7 @@ model1=model_loc_42_8
 wanderrange=0
 moverestrict=nomove
 
-[npc_336]
+[Artist1]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -6012,7 +6012,7 @@ head2=model_85_idk_head
 head3=model_40_obj_wear
 wanderrange=3
 
-[npc_337]
+[Artist2]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -6033,7 +6033,7 @@ head3=model_40_obj_wear
 wanderrange=3
 moverestrict=indoors
 
-[npc_338]
+[chancy1]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -6057,7 +6057,7 @@ model8=model_320_idk
 head1=model_46_idk_head
 wanderrange=3
 
-[npc_339]
+[chancy2]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -6082,7 +6082,7 @@ head1=model_46_idk_head
 wanderrange=3
 moverestrict=indoors
 
-[npc_340]
+[hops1]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -6108,7 +6108,7 @@ head1=model_55_idk_head
 head2=model_80_idk_head
 wanderrange=3
 
-[npc_341]
+[hops2]
 vislevel=hide
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
@@ -6160,7 +6160,7 @@ head1=model_103_idk_head
 moverestrict=indoors
 param=death_sound,female_death
 
-[npc_343]
+[guidor]
 vislevel=hide
 name=Guidor
 desc=He's not that ill.

@@ -1,6 +1,6 @@
 [opnpc1,jerico]
 if(%biohazard_progress >= ^biohazard_poisoned_stew) {
-    mes("jerico is busy looking for his bird feed");
+    mes("Jerico is busy looking for his bird feed.");
 }
 switch_int(%biohazard_progress) { // ^biohazard_used_birdfeed intentionally has no dialogue!
     case ^biohazard_climbed_ladder:

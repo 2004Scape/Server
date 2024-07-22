@@ -1,6 +1,9 @@
 [opnpc1,omart]
 switch_int(%biohazard_progress) {
-    case ^biohazard_climbed_ladder, ^biohazard_poisoned_stew:
+    case default:
+        ~chatplayer("<p,happy>Hello Omart.");
+        ~chatnpc("<p,neutral>Hello adventurer.|I'm afraid it's too risky to use the ladder again,|but I believe that Edmond's working on another tunnel.");
+    case ^biohazard_found_distillator, ^biohazard_climbed_ladder, ^biohazard_poisoned_stew:
         ~chatplayer("<p,happy>Hello Omart.");
         ~chatnpc("<p,happy>Hello traveller. The guards are still distracted if you wish to cross the wall.");
         @multi2("Ok, lets do it.", omart_letsdo, "I'll be back soon.", omart_backsoon);
@@ -22,7 +25,7 @@ switch_int(%biohazard_progress) {
         ~chatnpc("<p,sad>Unfortunately we can't risk it with the watch tower so close. So first we need to distract the guards in the tower.");
         ~chatplayer("<p,quiz>How?");
         ~chatnpc("<p,neutral>Try asking Jerico, if he's not too busy with his pigeons. I'll be waiting here for you.");
-    case default:
+    case ^biohazard_not_started, ^biohazard_started:
         ~chatplayer("<p,happy>Hello there.");
         ~chatnpc("<p,happy>Hello.");
         ~chatplayer("<p,quiz>How are you?");

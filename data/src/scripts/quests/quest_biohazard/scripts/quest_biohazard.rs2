@@ -1,6 +1,25 @@
 [oploc1,loc_2032]
+def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
+if($entering = false) {
+    ~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+    return;
+}
+if(map_members = false | %biohazard_progress < ^biohazard_spoken_chemist) {
+    ~chatplayer("<p,neutral>That's someone's bedroom.|I'm not going in there without a reason.");
+    return;
+}
+if(inv_total(worn, priest_gown_top) > 0 & inv_total(worn, priest_gown_bottom) > 0) {
+    mes("Guidor's wife allows you to go in.");
+    ~open_and_close_door2(loc_param(next_loc_stage), ~check_axis(coord, loc_coord, loc_angle), door_open);
+    return;
+}
 mes("Guidor's wife refuses to let you enter.");
-//~chatnpc("<p,neutral>That's someone's bedroom.|I'm not going in there without a reason.");
+if(npc_find(coord, guidors_wife, 5, 0) = true) {
+    ~chatnpc("<p,sad>Please leave my husband alone. He's very sick, and I don't want anyone bothering him.");
+    ~chatplayer("<p,quiz>I'm sorry to hear that.|Is there anything I can do?");
+    ~chatnpc("<p,sad>Thank you, but I just want him to see a priest.");
+    ~chatplayer("<p,neutral>A priest? Hmmm...");
+}
 
 [oploc1,loc_2067]
 if(npc_find(coord, npc_372, 5, 0) = true) {
@@ -16,14 +35,15 @@ if(%biohazard_progress = ^biohazard_spoken_jerico & last_useitem = bird_feed) {
     inv_del(inv, bird_feed, 1);
     mes("You throw a hand full of seeds onto the watch tower");
     p_delay(2);
+    %biohazard_progress = ^biohazard_used_birdfeed;
     mes("The mourners do not seem to notice");
     return;
 } 
 ~displaymessage(^dm_default);
 
-[oploc1,loc_2056]
+[oploc1,loc_2057]
 // https://youtu.be/_ZNalEQB70o?si=aEyFbzV255lYgoNI&t=208
-~objboxt(bird_feed, "The cupboard is full of birdfeed.");
+~objbox(bird_feed, "The cupboard is full of birdfeed.");
 if(%biohazard_progress < ^biohazard_spoken_jerico) {
     ~chatplayer("<p,neutral>I guess pigeons really love this stuff.");
     return;
@@ -71,11 +91,12 @@ mes("and drop down on the other side.");
 [oplocu,loc_2043]
 if(last_useitem = rotten_apples) {
     mes("You place the rotten apple in the pot...");
+    inv_del(inv, rotten_apples, 1);
     p_delay(3);
     if(%biohazard_progress = ^biohazard_climbed_ladder) {
         %biohazard_progress = ^biohazard_poisoned_stew;
         mes("and it quickly dissolves into the stew.");
-        p_delay(3);
+        p_delay(2);
     }
     mes("That wasn't very nice.");
 }
@@ -85,17 +106,48 @@ if(last_useitem = rotten_apples) {
 mes("You search the cupboard...");
 if(~obj_gettotal(doctors_gown) = 0 & %biohazard_progress >= ^biohazard_poisoned_stew) {
     mes("and find a <lowercase(oc_name(doctors_gown))>.");
+    inv_add(inv, doctors_gown, 1);
     return;
 }
 mes("but you find nothing of interest.");
 
-[oploc1,loc_2058] @open_mournerhq_gate(^left);
-[oploc1,loc_2060] @open_mournerhq_gate(^right);
+[oploc1,loc_2058] @open_mournerhq_gate(^left, false);
+[oploc1,loc_2060] @open_mournerhq_gate(^right, false);
 
-[label,open_mournerhq_gate](int $side)
+[oplocu,loc_2058] 
+if(last_useitem = biohazard_key) @open_mournerhq_gate(^left, true);
+~displaymessage(^dm_default);
+
+[oplocu,loc_2060]
+if(last_useitem = biohazard_key) @open_mournerhq_gate(^right, true);
+~displaymessage(^dm_default);
+
+[label,open_mournerhq_gate](int $side, boolean $used_key)
 def_boolean $entering = ~check_axis(coord, loc_coord, loc_angle);
-if($entering = true & inv_total(inv, obj_423) = 0) {
+if($entering = true & inv_total(inv, biohazard_key) = 0 & $used_key = false) { // cant enter with oploc1
     mes("The gate is locked.");
+    p_delay(3);
+    mes("You need a key.");
     return;
 }
+if($used_key = true) {
+    mes("The key fits the gate.");
+    p_delay(3);
+}
 ~open_and_close_double_door2($entering, $side, grate_open);
+
+[oploc1,loc_2064]
+mes("You search the crate.");
+p_delay(3);
+if(~obj_gettotal(distillator) > 0 | %biohazard_progress > ^biohazard_found_distillator) {
+    mes("It's empty.");
+    return;
+}
+if(%biohazard_progress = ^biohazard_poisoned_stew) %biohazard_progress = ^biohazard_found_distillator;
+inv_add(inv, distillator, 1);
+mes("and find Elena's distillator.");
+
+[queue,quest_biohazard_complete]
+givexp(thieving, 12500);
+%biohazard_progress = ^biohazard_complete;
+~send_quest_complete(questlist:biohazard, distillator, 250, ^biohazard_questpoints, "You have completed the\\nBiohazard Quest!");
