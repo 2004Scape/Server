@@ -31,5 +31,6 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatplayer("<p,angry>I've wasted enough of my time here.");
             ~chatnpc("<p,neutral>No time is ever wasted, thanks for all you've done.");
     }
+} else {
+    mes("The king is too busy to talk.");
 }
-mes("The king is too busy to talk.");
