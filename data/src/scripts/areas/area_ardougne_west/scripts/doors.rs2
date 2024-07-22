@@ -22,24 +22,25 @@ switch_int(%elena_progress) {
 }
 
 [label,west_ardougne_open_city_doors]
+mes("You pull on the large wooden doors...");
 if(%biohazard_progress = ^biohazard_complete) {
     def_coord $loc_coord = loc_coord;
-    mes("You try to open the large wooden doors...");
+    mes("...You open them and walk through.");
     if(loc_find(0_39_51_62_36, loc_2049) = true) {
-        loc_del(3);
-        loc_add(loc_coord, loc_2048, 2, loc_shape, 3);
+        loc_del(4);
+        loc_add(loc_coord, loc_2048, 2, loc_shape, 4);
     }
     if(loc_find(0_39_51_61_36, loc_2048) = true) {
-        loc_del(3);
-        loc_add(loc_coord, loc_2049, 0, loc_shape, 3);
+        loc_del(4);
+        loc_add(loc_coord, loc_2049, 0, loc_shape, 4);
     }
     if(loc_find(0_39_51_62_35, loc_2048) = true) {
-        loc_del(3);
-        loc_add(loc_coord, loc_2049, 2, loc_shape, 3);
+        loc_del(4);
+        loc_add(loc_coord, loc_2049, 2, loc_shape, 4);
     }
     if(loc_find(0_39_51_61_35, loc_2049) = true) {
-        loc_del(3);
-        loc_add(loc_coord, loc_2048, 0, loc_shape, 3);
+        loc_del(4);
+        loc_add(loc_coord, loc_2048, 0, loc_shape, 4);
     }
     sound_synth(coffin_open, 0, 0);
     if(coordx(coord) < coordx(loc_coord)) {
@@ -47,10 +48,8 @@ if(%biohazard_progress = ^biohazard_complete) {
     } else {
         ~forcemove(movecoord($loc_coord, -2, 0, 0));
     }
-    mes("You open them and walk through.");
     return;
 }
-mes("You pull on the large wooden doors...");
 p_delay(1);
 mes("...But they will not open.");
 
