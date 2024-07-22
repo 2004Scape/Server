@@ -73,7 +73,7 @@ if (%priest_progress = ^priest_spoken_ghost | %priest_progress = ^priest_obtaine
     @pickup_obj(obj_coord, obj_type, obj_count);
 } else {
     // https://youtu.be/QX-ieoyDXh4?t=370
-    ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave| it alone.");
+    ~mesbox("That skull looks scary. I've got no reason to take it, I think I'll leave|it alone.");
 }
 
 [opheld5,ghost_skull]
