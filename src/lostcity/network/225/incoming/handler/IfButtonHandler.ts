@@ -20,7 +20,7 @@ export default class IfButtonHandler extends MessageHandler<IfButton> {
         player.lastCom = comId;
 
         if (player.resumeButtons.indexOf(player.lastCom) !== -1) {
-            if (player.activeScript && (player.activeScript.execution === ScriptState.PAUSEBUTTON || player.activeScript.execution === ScriptState.COUNTDIALOG)) {
+            if (player.activeScript && player.activeScript.execution === ScriptState.PAUSEBUTTON) {
                 player.executeScript(player.activeScript, true, true);
             }
         } else {
