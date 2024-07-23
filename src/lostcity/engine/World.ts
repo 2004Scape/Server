@@ -750,6 +750,8 @@ class World {
             }
 
             try {
+                npc.processed = true;
+
                 if (npc.delayed()) {
                     continue;
                 }
@@ -796,9 +798,10 @@ class World {
         for (const player of this.players) {
             try {
                 player.playtime++;
+                player.processed = true;
 
                 // - resume suspended script
-                if (player.activeScript && player.delay <= this.currentTick && player.activeScript.execution === ScriptState.SUSPENDED) {
+                if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {
                     player.executeScript(player.activeScript, true, true);
                 }
 
