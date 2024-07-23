@@ -117,7 +117,7 @@ if (%action_delay = map_clock) {
     if (stat_random(stat(woodcutting), $tree_chance_low, $tree_chance_high) = true) {
         mes("You get some <lowercase(oc_name($product))>.");
         //mes("Old: <lc_debugname(loc_type)>. New: <lc_debugname(loc_param(next_loc_stage))>");
-        givexp(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));
+        stat_advance(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));
         inv_add(inv, $product, 1);
         if (randominc($deplete_chance) = $deplete_chance) {
             //TODO: depletion sound?

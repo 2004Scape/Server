@@ -72,7 +72,7 @@ if ($bar = iron_bar) {
     }
 }
 
-givexp(smithing, struct_param($struct, productexp));
+stat_advance(smithing, struct_param($struct, productexp));
 
 // add bar
 inv_add(inv, $bar, 1);
@@ -172,6 +172,6 @@ if (%ring_of_forging >= 140) {
 // // add product
 // inv_add(inv, $product, 1);
 // // add exp
-// givexp(smithing, $xp);
+// stat_advance(smithing, $xp);
 // //----------------------------
 //************* WEAKQUEUES DIDNT EXIST UNTIL SEPT 2004 *************

@@ -27,7 +27,7 @@ queue(finish_bury, 1, $last_item);
 
 [queue,finish_bury](obj $last_item)
 if_close;
-givexp(prayer, oc_param($last_item, bone_exp));
+stat_advance(prayer, oc_param($last_item, bone_exp));
 mes("You bury the bones.");
 
 if (afk_event = ^false | ~macro_event_general_active = true) {

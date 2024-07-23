@@ -2,5 +2,5 @@
 %sheep_progress = ^sheep_complete;
 inv_del(inv, ball_of_wool, 1);
 inv_add(inv, coins, 60);
-givexp(crafting, 1500);
+stat_advance(crafting, 1500);
 ~send_quest_complete(questlist:sheep, coins, 250, ^sheep_questpoints, "You have completed the\\nSheep Shearer Quest!");

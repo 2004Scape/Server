@@ -98,7 +98,7 @@ if ($rune_count3 > 0) {
 }
 
 [proc,give_spell_xp](dbrow $spell_data)
-givexp(magic, db_getfield($spell_data, magic_spell_table:experience, 0));
+stat_advance(magic, db_getfield($spell_data, magic_spell_table:experience, 0));
 
 // spells that convert one item into another are generalized
 // spell dbrows with the convertobj field are spells that convertobj

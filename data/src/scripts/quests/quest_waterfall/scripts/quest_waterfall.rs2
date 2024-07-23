@@ -468,6 +468,6 @@ if(last_useitem = glarials_urn_full) {
 inv_add(inv, diamond, 2);
 inv_add(inv, gold_bar, 2);
 inv_add(inv, mithril_seeds, 40);
-givexp(attack, 137500);
-givexp(strength, 137500);
+stat_advance(attack, 137500);
+stat_advance(strength, 137500);
 ~send_quest_complete(questlist:waterfall, diamond, 250, 1, "You have completed the Waterfall Quest!");

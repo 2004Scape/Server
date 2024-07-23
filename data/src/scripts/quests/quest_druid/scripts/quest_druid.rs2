@@ -86,7 +86,7 @@ queue(druid_quest_complete, 0);
 
 [queue,druid_quest_complete]
 %druid_progress = ^druid_complete;
-givexp(herblore, 2500);
+stat_advance(herblore, 2500);
 ~send_quest_complete(questlist:druid, marentill, 220, ^druid_questpoints, "You have completed the\\nDruidic Ritual Quest!");
 
 [oplocu,druid_cauldron]

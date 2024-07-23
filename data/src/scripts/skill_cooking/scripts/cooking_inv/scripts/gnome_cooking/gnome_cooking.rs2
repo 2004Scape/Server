@@ -64,7 +64,7 @@ inv_add(inv, $next_gnome_food, 1);
 
 // if finished, give xp
 if (oc_param($next_gnome_food, gnome_cooking_type) = null) {
-    givexp(cooking, 300);
+    stat_advance(cooking, 300);
 }
 def_string $name;
 def_string $message;

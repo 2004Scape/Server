@@ -55,7 +55,7 @@ inv_del(inv, ball_of_wool, 1);
 inv_add(inv, struct_param($struct, strung), 1);
 
 // always 4 crafting xp
-givexp(crafting, 40);
+stat_advance(crafting, 40);
 
 // display game message
 def_string $name = struct_param($struct, name);

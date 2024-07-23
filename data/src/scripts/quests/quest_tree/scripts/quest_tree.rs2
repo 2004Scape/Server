@@ -95,5 +95,5 @@ if(npc_find(coord, khazard_commander, 5, 0) = true) {
 [queue,tree_quest_complete]
 %tree_progress = ^tree_complete;
 inv_add(inv, gnome_amulet, 1);
-givexp(attack, 114500);
+stat_advance(attack, 114500);
 ~send_quest_complete(questlist:tree, gnome_amulet, 260, ^tree_questpoints, "You have completed the\\nTree Gnome Village Quest!");

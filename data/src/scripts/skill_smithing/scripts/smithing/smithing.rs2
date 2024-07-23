@@ -229,7 +229,7 @@ inv_del(inv, $bar, $bar_amount);
 inv_add(inv, $product, $product_amount);
 // add smithing xp
 def_struct $struct = oc_param($bar, smithing_anvil_struct);
-givexp(smithing, calc($bar_amount * struct_param($struct, xpperbar)));
+stat_advance(smithing, calc($bar_amount * struct_param($struct, xpperbar)));
 // display message
 mes("You hammer the <struct_param($struct, name)> and make <db_getfield($data,smithing:end_message,0)>.");
 // end smithing if count is less than 1

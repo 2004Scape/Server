@@ -129,7 +129,7 @@ if ($entering = true) {
     mes("You manage to pick the lock.");
 
     def_int $experience = db_getfield($data, locked_door:experience, 0);
-    givexp(thieving, $experience);
+    stat_advance(thieving, $experience);
 
     ~open_and_close_door($replacement, ~check_axis_locactive(coord), true);
     p_delay(0);

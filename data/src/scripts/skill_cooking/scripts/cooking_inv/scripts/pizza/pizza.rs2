@@ -127,6 +127,6 @@ inv_del(inv, plain_pizza, 1);
 //add pizza with topping
 inv_add(inv, struct_param($struct, product), 1);
 //give xp
-givexp(crafting, struct_param($struct, productexp));
+stat_advance(crafting, struct_param($struct, productexp));
 //display message
 mes("You add the <struct_param($struct, productmessage)> to the pizza");

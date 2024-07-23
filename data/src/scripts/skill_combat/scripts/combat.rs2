@@ -90,28 +90,28 @@ def_int $base = multiply($damage, 10);
 if(npc_type = black_knight_titan) { 
     switch_int($damagestyle) {
         case ^style_melee_accurate : 
-            givexp(attack, $base);
+            stat_advance(attack, $base);
         case ^style_melee_aggressive : 
-            givexp(strength, $base);
+            stat_advance(strength, $base);
         case ^style_melee_defensive : 
-            givexp(defence, $base);
+            stat_advance(defence, $base);
         case ^style_melee_controlled : 
-            givexp(attack, $base);
-            givexp(strength, $base);
-            givexp(defence, $base);
+            stat_advance(attack, $base);
+            stat_advance(strength, $base);
+            stat_advance(defence, $base);
         case ^style_ranged_accurate, ^style_ranged_rapid : 
-            givexp(ranged, $base);
+            stat_advance(ranged, $base);
         case ^style_ranged_longrange : 
-            givexp(ranged, $base);
-            givexp(defence, $base);
+            stat_advance(ranged, $base);
+            stat_advance(defence, $base);
         case ^style_magic_normal :
-            givexp(magic, $base);
+            stat_advance(magic, $base);
         case ^style_magic_defensive : 
-            givexp(magic, $base);
-            givexp(defence, $base);
+            stat_advance(magic, $base);
+            stat_advance(defence, $base);
         case default : return;
     }
-    givexp(hitpoints, scale(133, 100, $base));
+    stat_advance(hitpoints, scale(133, 100, $base));
     return;
 }
 if (%tutorial_progress < ^tutorial_complete) {
@@ -142,28 +142,28 @@ if (%tutorial_progress < ^tutorial_complete) {
 } else {
     switch_int($damagestyle) {
         case ^style_melee_accurate :
-            givexp(attack, scale($multiplier, 1000, scale(400, 100, $base)));
+            stat_advance(attack, scale($multiplier, 1000, scale(400, 100, $base)));
         case ^style_melee_aggressive :
-            givexp(strength, scale($multiplier, 1000, scale(400, 100, $base)));
+            stat_advance(strength, scale($multiplier, 1000, scale(400, 100, $base)));
         case ^style_melee_defensive :
-            givexp(defence, scale($multiplier, 1000, scale(400, 100, $base)));
+            stat_advance(defence, scale($multiplier, 1000, scale(400, 100, $base)));
         case ^style_melee_controlled :
-            givexp(attack, scale($multiplier, 1000, scale(133, 100, $base)));
-            givexp(strength, scale($multiplier, 1000, scale(133, 100, $base)));
-            givexp(defence, scale($multiplier, 1000, scale(133, 100, $base)));
+            stat_advance(attack, scale($multiplier, 1000, scale(133, 100, $base)));
+            stat_advance(strength, scale($multiplier, 1000, scale(133, 100, $base)));
+            stat_advance(defence, scale($multiplier, 1000, scale(133, 100, $base)));
         case ^style_ranged_accurate, ^style_ranged_rapid :
-            givexp(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
+            stat_advance(ranged, scale($multiplier, 1000, scale(400, 100, $base)));
         case ^style_ranged_longrange :
-            givexp(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
-            givexp(defence, scale($multiplier, 1000, scale(200, 100, $base)));
+            stat_advance(ranged, scale($multiplier, 1000, scale(200, 100, $base)));
+            stat_advance(defence, scale($multiplier, 1000, scale(200, 100, $base)));
         case ^style_magic_normal :
-            givexp(magic, scale($multiplier, 1000, scale(200, 100, $base)));
+            stat_advance(magic, scale($multiplier, 1000, scale(200, 100, $base)));
         case ^style_magic_defensive :
-            givexp(magic, scale($multiplier, 1000, scale(133, 100, $base)));
-            givexp(defence, scale($multiplier, 1000, scale(100, 100, $base)));
+            stat_advance(magic, scale($multiplier, 1000, scale(133, 100, $base)));
+            stat_advance(defence, scale($multiplier, 1000, scale(100, 100, $base)));
         case default : return;
     }
-    givexp(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
+    stat_advance(hitpoints, scale($multiplier, 1000, scale(133, 100, $base)));
 }
 
 

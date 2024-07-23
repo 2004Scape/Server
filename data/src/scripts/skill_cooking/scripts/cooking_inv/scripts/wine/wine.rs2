@@ -32,7 +32,7 @@ while ($i < 15 & $wines_per_batch > 0) {
     // if skiling roll is passed
     if (stat_random(stat(cooking), 48, 352) = true) {
         inv_add(bank, jug_wine, $wines_per_batch);
-        givexp(cooking, calc(1100 * $wines_per_batch));
+        stat_advance(cooking, calc(1100 * $wines_per_batch));
     } else {
         // if skilling roll is failed
         inv_add(bank, jug_of_bad_wine, $wines_per_batch);
@@ -46,7 +46,7 @@ while ($i < calc($bank_total % 15)) {
     // if skiling roll is passed
     if (stat_random(stat(cooking), 48, 352) = true) {
         inv_add(bank, jug_wine, 1);
-        givexp(cooking, 1100);
+        stat_advance(cooking, 1100);
     } else {
         // if skilling roll is failed
         inv_add(bank, jug_of_bad_wine, 1);
@@ -60,7 +60,7 @@ while ($i < $inv_total) {
     // if skiling roll is passed
     if (stat_random(stat(cooking), 48, 352) = true) {
         inv_add(inv, jug_wine, 1);
-        givexp(cooking, 1100);
+        stat_advance(cooking, 1100);
     } else {
         // if skilling roll is failed
         inv_add(inv, jug_of_bad_wine, 1);

@@ -133,7 +133,7 @@ if ($passes_roll = true) {
     if (compare($succesmessage, "0") ! 0) {
         mes($succesmessage);
     }
-    givexp(cooking, $experience);
+    stat_advance(cooking, $experience);
     // these dont give additional items
     if ($cooked_item = half_baked_batta | $cooked_item = half_baked_gnomebowl | $cooked_item = half_baked_crunchies) {
         return;

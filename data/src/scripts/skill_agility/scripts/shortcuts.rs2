@@ -18,7 +18,7 @@ if(coordx(coord) > coordx(loc_coord)) {
 }
 p_delay(0);
 ~agility_exactmove(human_walk_crumbledwall, 30, 2, coord, $end, 30, 100, $dir, true);
-givexp(agility, 5);
+stat_advance(agility, 5);
 
 [oploc1,loc_2298]
 if(stat(agility) < 5) {
@@ -26,7 +26,7 @@ if(stat(agility) < 5) {
     return;
 }
 p_telejump(movecoord(loc_coord, 0, 0, 3));
-givexp(agility, 250);
+stat_advance(agility, 250);
 mes("You climb over the wall.");
 
 [oploc1,loc_2296]
@@ -120,7 +120,7 @@ p_delay($dist);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, coord, loc_param(end_coord), 45, 70, loc_param(dir), false);
 mes("You skillfully swing across.");
-givexp(agility, 30);
+stat_advance(agility, 30);
 
 [oploc1,_monkeybars]
 if(stat(agility) < loc_param(agil_level_req) & coordz(loc_coord) ! 9489 & coordz(loc_coord) ! 9969) {
@@ -220,8 +220,8 @@ if(stat_random(stat(agility), 140, 250) = false) {
     mes("You get washed up on the side of the river.");
     mes("After being nearly half drowned.");
     ~damage_self(calc($damage_bound + random($damage_bound) + 1)); // 10 - 20%?
-    givexp(agility, 10);
+    stat_advance(agility, 10);
     return;
 }
-givexp(agility, 30);
+stat_advance(agility, 30);
 mes("You manage to make the jump.");

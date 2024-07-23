@@ -148,6 +148,6 @@ inv_add(inv, distillator, 1);
 mes("and find Elena's distillator.");
 
 [queue,quest_biohazard_complete]
-givexp(thieving, 12500);
+stat_advance(thieving, 12500);
 %biohazard_progress = ^biohazard_complete;
 ~send_quest_complete(questlist:biohazard, distillator, 250, ^biohazard_questpoints, "You have completed the\\nBiohazard Quest!");

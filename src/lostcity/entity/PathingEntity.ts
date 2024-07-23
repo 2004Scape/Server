@@ -54,7 +54,7 @@ export default abstract class PathingEntity extends Entity {
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
 
-    processed: boolean = false;
+    delay: number = -1;
     interacted: boolean = false;
     repathed: boolean = false;
     target: Entity | null = null;
@@ -478,8 +478,6 @@ export default abstract class PathingEntity extends Entity {
 
         const faceX: number = target.x * 2 + target.width;
         const faceZ: number = target.z * 2 + target.length;
-        this.orientationX = faceX;
-        this.orientationZ = faceZ;
 
         // less packets out thanks to me :-)
         if (target instanceof Player) {
@@ -494,7 +492,11 @@ export default abstract class PathingEntity extends Entity {
                 this.faceEntity = nid;
                 this.mask |= this.entitymask;
             }
-        } else if (this.faceX !== faceX || this.faceZ !== faceZ) {
+        } else if (this.orientationX !== faceX || this.orientationZ !== faceZ) {
+            // direction when the player is first observed (updates on movement)
+            this.orientationX = faceX;
+            this.orientationZ = faceZ;
+            // direction update (only updates from facesquare or interactions)
             this.faceX = faceX;
             this.faceZ = faceZ;
             this.mask |= this.coordmask;
@@ -545,7 +547,6 @@ export default abstract class PathingEntity extends Entity {
         this.lastZ = this.z;
         this.lastLevel = this.level;
         this.stepsTaken = 0;
-        this.processed = false;
         this.interacted = false;
         this.apRangeCalled = false;
 

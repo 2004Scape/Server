@@ -19,7 +19,7 @@ if (~check_if_success_pick_pocket($data) = false) {
 def_int $experience = db_getfield($data, pickpocket:experience, 0);
 ~pick_pocket_check_for_reward($data);
 anim(human_pickpocket, 0);
-givexp(thieving, $experience);
+stat_advance(thieving, $experience);
 sound_synth(pick, 0, 0);
 mes("You pick the <$pocket>.");
 
@@ -81,7 +81,7 @@ switch_loc (loc_type) {
     case gem_stall_stealing : %last_stolen_from_stall_gem = calc(map_clock + ^gem_stall_timer);
 }
 ~stealing_check_for_reward($data);
-givexp(thieving, $experience);
+stat_advance(thieving, $experience);
 loc_change(market_stall, $respawn_ticks);
 
 [label,activate_trapped_chest]
@@ -113,7 +113,7 @@ mes("You find treasure inside!");
 anim(human_openchest, 0);
 ~trapped_chest_check_for_reward($data);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
-givexp(thieving, $experience);
+stat_advance(thieving, $experience);
 def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
 
 loc_change(loc_2574, $respawn_ticks);

@@ -301,7 +301,7 @@ const PlayerOps: CommandHandlers = {
             return;
         }
 
-        state.activePlayer.delay = World.currentTick + 1;
+        state.activePlayer.delay = 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -311,7 +311,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.P_DELAY]: checkedHandler(ProtectedActivePlayer, state => {
-        state.activePlayer.delay = World.currentTick + check(state.popInt(), NumberNotNull) + 1;
+        state.activePlayer.delay = check(state.popInt(), NumberNotNull) + 1;
         state.execution = ScriptState.SUSPENDED;
     }),
 
@@ -596,7 +596,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.write(new SetMultiway(check(state.popInt(), NumberNotNull) === 1));
     }),
 
-    [ScriptOpcode.GIVEXP]: checkedHandler(ProtectedActivePlayer, state => {
+    [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ProtectedActivePlayer, state => {
         const [stat, xp] = state.popInts(2);
 
         check(stat, NumberNotNull);

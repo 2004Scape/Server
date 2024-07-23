@@ -266,7 +266,7 @@ if(p_finduid(uid) = false) {
 [queue,arena_quest_complete]
 %arena_progress = calc(%arena_progress + 2); // 14 if you're on 12 or 15 on if you're on 13 
 inv_add(inv, coins, 1000);
-givexp(attack, 121750);
-givexp(thieving, 21750);
+stat_advance(attack, 121750);
+stat_advance(thieving, 21750);
 // TODO: can't find an image of this so might need to confirm obj zoom + text breaking
 ~send_quest_complete(questlist:arena, coins, 250, ^arena_questpoints, "You have completed the\\nFight Arena Quest!");

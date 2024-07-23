@@ -64,10 +64,10 @@ if (stat_random(stat(woodcutting), 30, 252) = true) {
     } else {
         mes("You have no empty waterskins to put the water in.");
     }
-    givexp(woodcutting, 100);
+    stat_advance(woodcutting, 100);
 } else {
     mes("You fail to cut the cactus correctly and it gives no water this time.");
-    givexp(woodcutting, 4);
+    stat_advance(woodcutting, 4);
 }
 
 loc_change(loc_param(next_loc_stage), 100);

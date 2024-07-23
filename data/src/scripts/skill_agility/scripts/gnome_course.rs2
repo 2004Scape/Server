@@ -67,7 +67,7 @@ p_teleport(movecoord(loc_coord, -3, 0, 3));
 p_delay(0);
 ~change_merged_loc(movecoord(coord, 0, 0, 1));
 ~agility_exactmove(human_pipesqueeze, 30, 4, coord, movecoord(coord, 0, 0, 3), 30, 126, ^exact_north, true);
-givexp(agility, 75);
+stat_advance(agility, 75);
 ~update_gnome_varp(7);
 
 [proc,gnome_trainer_say](string $line)
@@ -84,6 +84,6 @@ if(calc(%gnome_course_progress + 1) >= $completed) {
     %gnome_course_progress = $completed;
 }
 if(%gnome_course_progress = 7) {
-    givexp(agility, 390);
+    stat_advance(agility, 390);
     %gnome_course_progress = 0;
 }

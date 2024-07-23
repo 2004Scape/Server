@@ -58,8 +58,8 @@ while (npc_huntnext = true) {
 
 [queue,ikov_armadyl_quest_complete](npc_uid $npc)
 %ikov_progress = ^ikov_completed_armadyl;
-givexp(ranged, 105000);
-givexp(fletching, 80000);
+stat_advance(ranged, 105000);
+stat_advance(fletching, 80000);
 ~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Armadyl!");
 if (npc_finduid($npc) = true) {
     gosub(npc_death);
@@ -67,8 +67,8 @@ if (npc_finduid($npc) = true) {
 
 [queue,ikov_lucien_quest_complete]
 %ikov_progress = ^ikov_completed_lucien;
-givexp(ranged, 105000);
-givexp(fletching, 80000);
+stat_advance(ranged, 105000);
+stat_advance(fletching, 80000);
 ~send_quest_complete(questlist:ikov, yew_longbow, 250, ^ikov_questpoints, "You have completed the\\nTemple of Ikov Quest for Lucien!");
 
 [debugproc,ikov_reset]

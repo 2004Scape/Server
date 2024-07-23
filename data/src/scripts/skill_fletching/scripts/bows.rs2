@@ -35,5 +35,5 @@ inv_del(inv, bow_string, 1);
 // 2005-osrs, rsc
 mes("You add a string to the bow.");
 
-givexp(fletching, db_getfield($data, fletching_table:experience, 0));
+stat_advance(fletching, db_getfield($data, fletching_table:experience, 0));
 inv_add(inv, db_getfield($data, fletching_table:product, 0));

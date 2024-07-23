@@ -291,7 +291,7 @@ if (inv_total(inv, $obj) > 0 | inv_total(worn, $obj) > 0) {
 if (stat_base($skill) >= 3) {
     return;
 }
-givexp($skill, $xp);
+stat_advance($skill, $xp);
 
 [label,tutorial_complete]
 if_closesticky();

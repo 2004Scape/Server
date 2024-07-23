@@ -68,7 +68,7 @@ anim(human_cooking, 0);
 p_delay(2);
 inv_del(inv, soft_clay, 1);
 inv_add(inv, $item, 1);
-givexp(crafting, struct_param($struct, processexp));
+stat_advance(crafting, struct_param($struct, processexp));
 mes("You make the clay into a <substring($name, 8, string_length($name))>.");
 
 // No level req for some reason (does have a success chance though)
@@ -91,7 +91,7 @@ inv_del(inv, $last_obj, 1);
 // add fired item. success rate is the same for all unfired items
 if (stat_random(stat(crafting), 180, 800) = true) {
     inv_add(inv, $product, 1);
-    givexp(crafting, struct_param($struct, productexp));
+    stat_advance(crafting, struct_param($struct, productexp));
     mes("You remove the <oc_name($product)> from the oven.");
 } else {
     mes("The <oc_name($product)> cracks in the oven.");
@@ -139,4 +139,4 @@ if (stat_random(stat(crafting), 180, 800) = true) {
 // // add fired item
 // inv_add(inv, $product, 1);
 // mes("You remove the <oc_name($product)> from the oven.");
-// givexp(crafting, struct_param($struct, productexp));
+// stat_advance(crafting, struct_param($struct, productexp));

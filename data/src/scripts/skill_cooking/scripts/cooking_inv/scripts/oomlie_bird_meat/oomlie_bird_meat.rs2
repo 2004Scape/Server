@@ -27,4 +27,4 @@ inv_add(inv, wrapped_oomlie, 1);
 mes("You carefully construct a small parcel out of the palm leaf.");
 mes("The palm leaf should protect the meat from being burnt.");
 
-givexp(cooking, 100);
+stat_advance(cooking, 100);

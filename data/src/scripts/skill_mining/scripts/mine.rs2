@@ -142,7 +142,7 @@ if (random($chance) = ^true) {
     sound_synth(sound_230, 0, 0);
     anim(null, 0);
     inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
-    givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
+    stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
     mes("You manage to mine some <db_getfield($data, mining_table:ore_name, 0)>.");
     return;
 }
@@ -180,7 +180,7 @@ if (random($chance) = ^true) {
     sound_synth(sound_230, 0, 0);
     anim(null, 0);
     inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
-    givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
+    stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
     mes("You manage to mine some <db_getfield($data, mining_table:ore_name, 0)>.");
     return;
 }
@@ -196,7 +196,7 @@ if ($data = null) {
     return;
 }
 inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
-givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
+stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
 mes("You manage to mine an unbound rune stone.");
 ~mining_sound;
 p_oploc(3);
@@ -230,7 +230,7 @@ if (stat_random(stat(mining), $low, $high) = true) {
     def_int $count;
     $gem, $count = ~roll_on_drop_table(gem_rock_table);
     inv_add(inv, $gem, 1);
-    givexp(mining, db_getfield($data, mining_table:rock_exp, 0));
+    stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
 
     db_find(gem_cutting_table:uncut_gem, $gem);
     $data = db_findnext;
