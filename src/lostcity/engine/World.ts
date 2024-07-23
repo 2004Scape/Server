@@ -368,36 +368,38 @@ class World {
                 this.gameMap.init(this.zoneMap);
             }
         } else {
-            console.time('Loaded in');
+            console.time('World ready');
             await this.loadAsync();
 
             if (!skipMaps) {
                 await this.gameMap.initAsync(this.zoneMap);
             }
-            console.timeEnd('Loaded in');
+            console.timeEnd('World ready');
         }
 
         Login.loginThread.postMessage({
             type: 'reset'
         });
 
-        if (typeof self === 'undefined' && !Environment.NODE_PRODUCTION) {
-            this.startDevWatcher();
+        if (typeof self === 'undefined') {
+            if (!Environment.NODE_PRODUCTION) {
+                this.startDevWatcher();
 
-            // console.time('checker');
-            // todo: this check takes me 300ms on startup! but it saves double building fresh setups
-            if (Environment.BUILD_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
-                this.devThread!.postMessage({
-                    type: 'pack'
-                });
+                // console.time('checker');
+                // todo: this check takes me 300ms on startup! but it saves double building fresh setups
+                if (Environment.BUILD_STARTUP && (shouldBuildFileAny('data/pack/client', 'data/pack/client/lastbuild.pack') || shouldBuildFileAny('data/pack/server', 'data/pack/server/lastbuild.pack'))) {
+                    this.devThread!.postMessage({
+                        type: 'pack'
+                    });
+                }
+                // console.timeEnd('checker');
             }
-            // console.timeEnd('checker');
-        }
 
-        if (Environment.WEB_PORT === 80) {
-            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
-        } else {
-            console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
+            if (Environment.WEB_PORT === 80) {
+                console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost'));
+            } else {
+                console.log(kleur.green().bold('World ready') + kleur.white().bold(': http://localhost:' + Environment.WEB_PORT));
+            }
         }
 
         if (startCycle) {
