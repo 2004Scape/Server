@@ -1,9 +1,10 @@
 import fs from 'fs';
+import {basename} from 'path';
 import * as esbuild from 'esbuild';
 
 const entryPoints = ['src/lostcity/worker.ts', 'src/lostcity/server/LoginThread.ts'];
 const esbuildModules = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
-const modules = ['buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
+const modules = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
     'process.env.WEB_PORT': 'undefined',
@@ -38,12 +39,12 @@ const defines = {
 
 try {
     preloadDirs();
-    process.argv0 === 'bun' ? await bun(entryPoints) : await esb(entryPoints);
+    process.argv0 === 'bun' ? await bun() : await esb();
 } catch (e) {
     console.error(e);
 }
 
-async function esb(entryPoints) {
+async function esb() {
     const bundle = await esbuild.build({
         bundle: true,
         format: 'esm',
@@ -52,8 +53,8 @@ async function esb(entryPoints) {
         entryPoints: entryPoints,
         external: modules.concat(esbuildModules),
         define: defines,
-        // sourcemap: 'inline',
         // minify: true,
+        // sourcemap: 'linked',
     }).catch((e) => { throw new Error(e); });
 
     for (let index = 0; index < bundle.outputFiles.length; index++) {
@@ -61,14 +62,14 @@ async function esb(entryPoints) {
     }
 }
 
-async function bun(entryPoints) {
+async function bun() {
     // eslint-disable-next-line no-undef
     const bundle = await Bun.build({
         entrypoints: entryPoints,
         external: modules,
         define: defines,
-        // sourcemap: 'inline',
         // minify: true,
+        // sourcemap: 'linked',
     }).catch((e) => { throw new Error(e); });
 
     for (let index = 0; index < bundle.outputs.length; index++) {
@@ -92,7 +93,8 @@ function preloadDirs() {
 }
 
 function removeImports(output, file) {
-    const path = '../Client2/src/public/' + file.split('/').pop().replace('.ts', '.js');
+    // turn into plugin for minify/sourcemaps
+    const path = '../Client2/src/public/' + basename(file).replace('.ts', '.js');
 
     output = output.split('\n')
         .filter(line => !line.startsWith('import'))
@@ -101,5 +103,5 @@ function removeImports(output, file) {
 
     fs.writeFileSync(path, output);
 
-    console.log(`${file} size: ${(fs.statSync(path).size / (1024 * 1024)).toFixed(2)} MB`);
+    console.log(`${path} size: ${(fs.statSync(path).size / (1024 * 1024)).toFixed(2)} MB`);
 }

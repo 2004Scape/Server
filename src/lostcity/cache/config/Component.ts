@@ -34,12 +34,13 @@ export default class Component {
     }
 
     static async loadAsync(dir: string): Promise<void> {
-        if (!(await fetch(`${dir}/server/interface.dat`)).ok) {
+        const file = await fetch(`${dir}/server/interface.dat`);
+        if (!file.ok) {
             console.log('Warning: No interface.dat found.');
             return;
         }
 
-        const dat = await Packet.loadAsync(`${dir}/server/interface.dat`);
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 

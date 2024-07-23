@@ -20,22 +20,22 @@ class Login {
     logoutRequests: Set<bigint> = new Set();
 
     constructor() {
-        const onMsg = (msg: any) => {
-            try {
-                this.onMessage(msg);
-            } catch (err) {
-                console.error('Login Thread:', err);
+        try {
+            if (typeof self === 'undefined') {
+                if (this.loginThread instanceof NodeWorker) {
+                    this.loginThread.on('message', msg => {
+                        this.onMessage(msg);
+                    });
+                }
+            } else {
+                if (this.loginThread instanceof Worker) {
+                    this.loginThread.onmessage = msg => {
+                        this.onMessage(msg.data);
+                    };
+                }
             }
-        };
-
-        if (typeof self === 'undefined') {
-            if (this.loginThread instanceof NodeWorker) {
-                this.loginThread.on('message', onMsg);
-            }
-        } else {
-            if (this.loginThread instanceof Worker) {
-                this.loginThread.onmessage = onMsg;
-            }
+        } catch (err) {
+            console.error('Login Thread:', err);
         }
     }
 
@@ -57,6 +57,7 @@ class Login {
             const revision = data.g1();
             if (revision !== 225) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                socket.close();
                 return;
             }
 
@@ -66,6 +67,7 @@ class Login {
             data.gdata(crcs, 0, crcs.length);
             if (!Packet.checkcrc(crcs, 0, crcs.length, CrcBuffer32)) {
                 socket.writeImmediate(LoginResponse.SERVER_UPDATED);
+                socket.close();
                 return;
             }
 
@@ -97,152 +99,77 @@ class Login {
     }
 
     private onMessage(msg: any) {
-        if (typeof self === 'undefined') {
-            switch (msg.type) {
-                case 'loginreply': {
-                    const { status, socket } = msg;
+        switch (msg.type) {
+            case 'loginreply': {
+                const { status, socket } = msg;
 
-                    const client = this.loginRequests.get(socket);
-                    if (!client) {
-                        return;
-                    }
+                const client = this.loginRequests.get(socket);
+                if (!client) {
+                    return;
+                }
 
-                    this.loginRequests.delete(socket);
+                this.loginRequests.delete(socket);
 
-                    if (status[0] !== 2) {
-                        client.writeImmediate(status);
-                        client.close();
-                        return;
-                    }
+                if (status[0] !== 2) {
+                    client.writeImmediate(status);
+                    client.close();
+                    return;
+                }
 
-                    const { info, seed, username, save } = msg;
+                const { info, seed, username, save } = msg;
 
-                    if (World.getTotalPlayers() >= 2000) {
-                        client.writeImmediate(LoginResponse.WORLD_FULL);
-                        client.close();
-                        return;
-                    }
+                if (World.getTotalPlayers() >= 2000) {
+                    client.writeImmediate(LoginResponse.WORLD_FULL);
+                    client.close();
+                    return;
+                }
 
-                    if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
-                        client.writeImmediate(LoginResponse.SERVER_UPDATING);
-                        client.close();
-                        return;
-                    }
+                if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
+                    client.writeImmediate(LoginResponse.SERVER_UPDATING);
+                    client.close();
+                    return;
+                }
 
-                    if (!Environment.LOGIN_KEY) {
-                        // running without a login server
-                        for (const player of World.players) {
-                            if (player.username === username) {
-                                client.writeImmediate(LoginResponse.LOGGED_IN);
-                                client.close();
-                                return;
-                            }
+                if (!Environment.LOGIN_KEY) {
+                    // running without a login server
+                    for (const player of World.players) {
+                        if (player.username === username) {
+                            client.writeImmediate(LoginResponse.LOGGED_IN);
+                            client.close();
+                            return;
                         }
                     }
-
-                    client.decryptor = new Isaac(seed);
-                    for (let i = 0; i < 4; i++) {
-                        seed[i] += 50;
-                    }
-                    client.encryptor = new Isaac(seed);
-
-                    const player = PlayerLoading.load(username, new Packet(save), client);
-                    player.lowMemory = (info & 0x1) !== 0;
-                    player.webClient = client.isWebSocket();
-
-                    World.addPlayer(player);
-                    break;
                 }
-                case 'logoutreply': {
-                    const { username } = msg;
 
-                    const player = World.getPlayerByUsername(username);
-                    if (player) {
-                        World.getZone(player.x, player.z, player.level).leave(player);
-                        World.players.remove(player.pid);
-                        player.pid = -1;
-                        player.terminate();
-
-                        this.logoutRequests.delete(player.username37);
-                    }
-                    break;
+                client.decryptor = new Isaac(seed);
+                for (let i = 0; i < 4; i++) {
+                    seed[i] += 50;
                 }
-                default:
-                    throw new Error('Unknown message type: ' + msg.type);
+                client.encryptor = new Isaac(seed);
+
+                const player = PlayerLoading.load(username, new Packet(save), client);
+                player.lowMemory = (info & 0x1) !== 0;
+                player.webClient = client.isWebSocket();
+
+                World.addPlayer(player);
+                break;
             }
-        } else {
-            switch (msg.data.type) {
-                case 'loginreply': {
-                    const { status, socket } = msg.data;
+            case 'logoutreply': {
+                const { username } = msg;
 
-                    const client = this.loginRequests.get(socket);
-                    if (!client) {
-                        return;
-                    }
+                const player = World.getPlayerByUsername(username);
+                if (player) {
+                    World.getZone(player.x, player.z, player.level).leave(player);
+                    World.players.remove(player.pid);
+                    player.pid = -1;
+                    player.terminate();
 
-                    this.loginRequests.delete(socket);
-
-                    if (status[0] !== 2) {
-                        client.writeImmediate(status);
-                        client.close();
-                        return;
-                    }
-
-                    const { info, seed, username, save } = msg.data;
-
-                    if (World.getTotalPlayers() >= 2000) {
-                        client.writeImmediate(LoginResponse.WORLD_FULL);
-                        client.close();
-                        return;
-                    }
-
-                    if (World.shutdownTick > -1 && World.currentTick - World.shutdownTick > 0) {
-                        client.writeImmediate(LoginResponse.SERVER_UPDATING);
-                        client.close();
-                        return;
-                    }
-
-                    if (!Environment.LOGIN_KEY) {
-                        // running without a login server
-                        for (const player of World.players) {
-                            if (player.username === username) {
-                                client.writeImmediate(LoginResponse.LOGGED_IN);
-                                client.close();
-                                return;
-                            }
-                        }
-                    }
-
-                    client.decryptor = new Isaac(seed);
-                    for (let i = 0; i < 4; i++) {
-                        seed[i] += 50;
-                    }
-                    client.encryptor = new Isaac(seed);
-
-                    const player = PlayerLoading.load(username, new Packet(save), client);
-                    player.lowMemory = (info & 0x1) !== 0;
-                    player.webClient = true;
-
-                    World.addPlayer(player);
-                    break;
+                    this.logoutRequests.delete(player.username37);
                 }
-                case 'logoutreply': {
-                    const { username } = msg.data;
-
-                    const player = World.getPlayerByUsername(username);
-                    if (player) {
-                        World.getZone(player.x, player.z, player.level).leave(player);
-                        World.players.remove(player.pid);
-                        player.pid = -1;
-                        player.terminate();
-
-                        this.logoutRequests.delete(player.username37);
-                    }
-                    break;
-                }
-                default:
-                    throw new Error('Unknown message type: ' + msg.data.type);
+                break;
             }
+            default:
+                throw new Error('Unknown message type: ' + msg.type);
         }
     }
 }

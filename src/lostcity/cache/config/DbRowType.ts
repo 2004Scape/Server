@@ -20,11 +20,13 @@ export default class DbRowType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/dbrow.dat`)).ok) {
+        const file = await fetch(`${dir}/server/dbrow.dat`);
+        if (!file.ok) {
             console.log('Warning: No dbrow.dat found.');
             return;
         }
-        const dat = await Packet.loadAsync(`${dir}/server/dbrow.dat`);
+
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 

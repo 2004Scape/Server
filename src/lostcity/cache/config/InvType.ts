@@ -27,11 +27,13 @@ export default class InvType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/inv.dat`)).ok) {
+        const file = await fetch(`${dir}/server/inv.dat`);
+        if (!file.ok) {
             console.log('Warning: No inv.dat found.');
             return;
         }
-        const dat = await Packet.loadAsync(`${dir}/server/inv.dat`);
+
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 

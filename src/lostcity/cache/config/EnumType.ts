@@ -20,12 +20,13 @@ export default class EnumType extends ConfigType {
     }
 
     static async loadAsync(dir: string) {
-        if (!(await fetch(`${dir}/server/enum.dat`)).ok) {
+        const file = await fetch(`${dir}/server/enum.dat`);
+        if (!file.ok) {
             console.log('Warning: No enum.dat found.');
             return;
         }
 
-        const dat = await Packet.loadAsync(`${dir}/server/enum.dat`);
+        const dat = new Packet(new Uint8Array(await file.arrayBuffer()));
         this.parse(dat);
     }
 
