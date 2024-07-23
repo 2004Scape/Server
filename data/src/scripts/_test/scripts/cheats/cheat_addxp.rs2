@@ -6,7 +6,7 @@ if ($stat = null | $amount < 1) {
 
 if_close;
 if (p_finduid(uid) = true) {
-    givexp($stat, calc($amount * 10));
+    stat_advance($stat, calc($amount * 10));
 } else {
     @please_finish;
 }

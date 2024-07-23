@@ -55,5 +55,5 @@ if ($loc ! null) {
 
 [queue,junglepotion_quest_complete]
 %junglepotion_progress = ^junglepotion_complete;
-givexp(herblore, 7750);
+stat_advance(herblore, 7750);
 ~send_quest_complete(questlist:junglepotion, ranarr_weed, 220, ^junglepotion_questpoints, "You have completed the\\nJungle Potion Quest!"); // TODO which herb on complete screen?

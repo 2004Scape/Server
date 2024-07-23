@@ -100,7 +100,7 @@ enum ScriptOpcode {
     FINDUID, // official
     GENDER,
     GETQUEUE, // official
-    GIVEXP,
+    STAT_ADVANCE,
     HEADICONS_GET,
     HEADICONS_SET,
     HEALENERGY, // official

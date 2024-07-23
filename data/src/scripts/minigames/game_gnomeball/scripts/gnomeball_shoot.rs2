@@ -49,10 +49,10 @@ if ($land_coord = loc_coord) {
         mes("You win!");
         inv_add(gnomeball, gnomeball, 1);
         %gnomeball = 0;
-        givexp(ranged, 300);
-        givexp(agility, 300);
+        stat_advance(ranged, 300);
+        stat_advance(agility, 300);
     } else {
-        givexp(ranged, multiply(add(%gnomeball, 3), 10));
+        stat_advance(ranged, multiply(add(%gnomeball, 3), 10));
     }
     cam_moveto(movecoord(loc_coord, -5, 0, 2), 300, 10, 20);
     cam_lookat(movecoord(loc_coord, -7, 0, 5), 250, 10, 20);

@@ -113,7 +113,7 @@ if(abs($delta_x) > 5 & abs($delta_z) > 5) {
 [queue,grail_quest_complete]
 %grail_progress = ^grail_complete;
 inv_del(inv, holy_grail, 1);
-givexp(prayer, 110000);
-givexp(defence, 153000);
+stat_advance(prayer, 110000);
+stat_advance(defence, 153000);
 ~send_quest_complete(questlist:grail, holy_grail, 220, ^grail_questpoints, "You have completed the\\nHoly Grail Quest!");
 

@@ -34,7 +34,7 @@ inv_add(inv, obj_2864, $shaft_count);
 
 mes("You carefully cut the wood into <tostring($shaft_count)> arrow shafts.");
 
-givexp(fletching, multiply($shaft_count, 18));
+stat_advance(fletching, multiply($shaft_count, 18));
 
 
 [label,make_wolf_bone_tips]
@@ -58,8 +58,8 @@ inv_add(inv, wolfbone_arrowheads, $tip_count);
 
 mes("You chisel <tostring($tip_count)> wolf bone arrow tips.");
 
-givexp(fletching, multiply($tip_count, 25));
-givexp(crafting, multiply($tip_count, 25));
+stat_advance(fletching, multiply($tip_count, 25));
+stat_advance(crafting, multiply($tip_count, 25));
 
 
 [label,make_ogre_headless_arrows]
@@ -87,7 +87,7 @@ inv_del(inv, obj_2864, $arrow_count);
 
 inv_add(inv, obj_2865, $arrow_count);
 
-givexp(fletching, multiply($arrow_count, 15));
+stat_advance(fletching, multiply($arrow_count, 15));
 
 
 [label,make_ogre_arrows]
@@ -116,4 +116,4 @@ inv_del(inv, wolfbone_arrowheads, $arrow_count);
 
 inv_add(inv, ogre_arrow, $arrow_count);
 
-givexp(fletching, multiply($arrow_count, 10));
+stat_advance(fletching, multiply($arrow_count, 10));

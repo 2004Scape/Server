@@ -103,49 +103,49 @@ if (inv_freespace(trawler_catch) = inv_size(trawler_catch)) {
 [proc,trawler_reward](int $level)
 if (stat_random($level, 150, 200) = false) { // junk https://web.archive.org/web/20040812231222/http://www.tip.it/runescape/index.php?page=rs2trawler.htm
     inv_add(trawler_catch, ~randomjunk);
-    givexp(fishing, 12); // it says junk gives 1 xp each, except with boots giving 2. Im guessing its like 1.1 or 1.2 xp each
+    stat_advance(fishing, 12); // it says junk gives 1 xp each, except with boots giving 2. Im guessing its like 1.1 or 1.2 xp each
     return;
 }
 if ($level >= 81 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_manta_ray, 1);
-    givexp(fishing, 1150);
+    stat_advance(fishing, 1150);
 } else if ($level >= 80 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_sea_turtle, 1);
-    givexp(fishing, 1050);
+    stat_advance(fishing, 1050);
 } else if ($level >= 76 & stat_random($level, 3, 40) = true) {
     inv_add(trawler_catch, raw_shark, 1);
-    givexp(fishing, 1100);
+    stat_advance(fishing, 1100);
 } else if ($level >= 60 & stat_random($level, 4, 48) = true) {
     inv_add(trawler_catch, raw_swordfish, 1);
-    givexp(fishing, 1000);
+    stat_advance(fishing, 1000);
 } else if ($level >= 40 & stat_random($level, 6, 95) = true) {
     inv_add(trawler_catch, raw_lobster, 1);
-    givexp(fishing, 900);
+    stat_advance(fishing, 900);
 } else if ($level >= 35 & stat_random($level, 8, 64) = true) {
     inv_add(trawler_catch, raw_tuna, 1);
-    givexp(fishing, 800);
+    stat_advance(fishing, 800);
 } else if ($level >= 16 & stat_random($level, 10, 80) = true) {
     def_int $random = random(3);
     if ($random = 0) {
         inv_add(trawler_catch, oyster, 1);
-        givexp(fishing, 100);
+        stat_advance(fishing, 100);
     } else if ($random = 1) {
         inv_add(trawler_catch, seaweed, 1);
-        givexp(fishing, 12);
+        stat_advance(fishing, 12);
     } else if ($random = 2) {
         inv_add(trawler_catch, edible_seaweed, 1);
-        givexp(fishing, 12);
+        stat_advance(fishing, 12);
     }
 } else if (stat_random($level, 24, 128) = true) {
     inv_add(trawler_catch, raw_anchovies, 1);
-    givexp(fishing, 400);
+    stat_advance(fishing, 400);
 } else if (stat_random($level, 32, 192) = true) {
     inv_add(trawler_catch, raw_sardine, 1);
-    givexp(fishing, 200);
+    stat_advance(fishing, 200);
 } else if (stat_random($level, 48, 200) = true) {
     inv_add(trawler_catch, raw_shrimps, 1);
-    givexp(fishing, 100);
+    stat_advance(fishing, 100);
 } else {
     inv_add(trawler_catch, ~randomjunk);
-    givexp(fishing, 12);
+    stat_advance(fishing, 12);
 }

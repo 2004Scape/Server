@@ -112,7 +112,7 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.GIVEXP]: {
+    [ScriptOpcode.STAT_ADVANCE]: {
         require: ['active_player']
     },
     [ScriptOpcode.HEADICONS_GET]: {

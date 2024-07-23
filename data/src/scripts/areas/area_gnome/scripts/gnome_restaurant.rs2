@@ -398,7 +398,7 @@ if (inv_total(inv, $dish1) >= $count1 & inv_total(inv, $dish2) >= $count2 & inv_
     inv_del(inv, $dish5, $count5);
     // gives 60 xp for each dish. This doesnt apply to cocktails it seems
     // https://web.archive.org/web/20040621000515/http://runehq.com/viewguidedb.php?id=00315
-    givexp(cooking, calc(($count1 + $count2 + $count3 + $count4 + $count5) * 600));
+    stat_advance(cooking, calc(($count1 + $count2 + $count3 + $count4 + $count5) * 600));
     %gnome_restaurant_progress = 17;
     ~mesbox("You give Aluft <$order>.");
     ~chatnpc("<p,default>They look great, well done. Here's your share of the profit.");

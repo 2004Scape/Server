@@ -43,7 +43,7 @@ anim(human_castsuperheatitem, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
-givexp(smithing, struct_param($bar_struct, productexp));
+stat_advance(smithing, struct_param($bar_struct, productexp));
 // delete ores and give bar
 inv_del(inv, $ore1, 1);
 if ($ore2 ! null) {

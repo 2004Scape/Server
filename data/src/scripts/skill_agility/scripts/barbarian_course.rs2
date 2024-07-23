@@ -22,7 +22,7 @@ p_delay($delay);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_south, false);
 mes("You skillfully swing across.");
-givexp(agility, 220);
+stat_advance(agility, 220);
 ~update_barbarian_varp(1);
 
 [oploc1,barbarian_log_balance]
@@ -81,7 +81,7 @@ if(stat_random(stat(agility), 210, 260) = false) {
 p_teleport(movecoord(coord, 0, 0, -1));
 mes("You skillfully edge across the gap.");
 p_delay(0);
-givexp(agility, 220);
+stat_advance(agility, 220);
 ~update_barbarian_varp(4);
 
 [oploc1,barbarian_crumblingwall]
@@ -93,7 +93,7 @@ mes("You climb the low wall...");
 def_coord $start = movecoord(loc_coord, -1, 0, 0);
 ~forcewalk($start);
 ~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord($start, 2, 0, 0), 30, 100, ^exact_east, true);
-givexp(agility, 137);
+stat_advance(agility, 137);
 if(loc_coord = 0_39_55_46_33) {
     ~update_barbarian_varp(5);
 }
@@ -124,6 +124,6 @@ if(calc(%barbarian_course_progress + 1) >= $completed) {
     %barbarian_course_progress = $completed;
 }
 if(%barbarian_course_progress = 5) {
-    givexp(agility, 463);
+    stat_advance(agility, 463);
     %barbarian_course_progress = 0;
 }

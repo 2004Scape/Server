@@ -63,5 +63,5 @@ if (stat(fletching) < $level) {
 // make one bow at a time
 inv_del(inv, $log, 1);
 mes($message);
-givexp(fletching, $fletching_experience);
+stat_advance(fletching, $fletching_experience);
 inv_add(inv, $product, $count);

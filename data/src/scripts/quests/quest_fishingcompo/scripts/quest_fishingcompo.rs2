@@ -106,4 +106,4 @@ if(npc_find(coord, sinister_stranger, 8, 0) = true) {
 [queue,fishingcompo_quest_complete]
 %fishingcompo_progress = ^fishingcompo_complete;
 ~send_quest_complete(questlist:fishingcompo, fishing_trophy, 180, ^fishingcompo_questpoints, "You have completed the\\nFishing Competition Quest!");
-givexp(fishing, 24370);
+stat_advance(fishing, 24370);

@@ -165,43 +165,43 @@ def_int $level = stat(fishing);
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, leather_boots, 1);
     mes("You catch some boots.");
-    givexp(fishing, 10);
+    stat_advance(fishing, 10);
 }
 // seaweed
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, seaweed, 1);
     mes("You catch some seaweed.");
-    givexp(fishing, 1);
+    stat_advance(fishing, 1);
 }
 // leather gloves
 if (stat_random($level, 5, 5) = true) {
     inv_add(inv, leather_gloves, 1);
     mes("You catch some gloves.");
-    givexp(fishing, 10);
+    stat_advance(fishing, 10);
 }
 // mackerel
 if (stat_random($level, 5, 65) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
-    givexp(fishing, 200);
+    stat_advance(fishing, 200);
 }
 // another mackerel
 if (stat_random($level, 10, 10) = true) {
     inv_add(inv, raw_mackerel, 1);
     mes("You catch a mackerel.");
-    givexp(fishing, 200);
+    stat_advance(fishing, 200);
 }
 // oyster
 if (stat_random($level, 3, 7) = true) {
     inv_add(inv, oyster, 1);
     mes("You catch an oyster shell.");
-    givexp(fishing, 100);
+    stat_advance(fishing, 100);
 }
 // casket
 if (stat_random($level, 1, 2) = true) {
     inv_add(inv, casket, 1);
     mes("You catch a casket.");
-    givexp(fishing, 100);
+    stat_advance(fishing, 100);
 }
 // cod
 if ($level < 23) {
@@ -210,7 +210,7 @@ if ($level < 23) {
 if (stat_random($level, 4, 55) = true) {
     inv_add(inv, raw_cod, 1);
     mes("You catch a cod.");
-    givexp(fishing, 450);
+    stat_advance(fishing, 450);
 }
 // bass
 if ($level < 46) {
@@ -219,7 +219,7 @@ if ($level < 46) {
 if (stat_random($level, 3, 40) = true) {
     inv_add(inv, raw_bass, 1);
     mes("You catch a bass.");
-    givexp(fishing, 1000);
+    stat_advance(fishing, 1000);
 }
 
 // oysters and casket ops

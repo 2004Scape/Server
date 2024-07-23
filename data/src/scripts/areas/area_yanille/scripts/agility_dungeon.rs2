@@ -24,7 +24,7 @@ p_delay(0);
 ~change_merged_loc($end_pipe_coord);
 ~agility_exactmove(human_pipesqueeze, 30, 3, 0_40_148_15_34, movecoord(0_40_148_15_34, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
 p_delay(0);
-givexp(agility, 75);
+stat_advance(agility, 75);
 
 [oploc1,loc_2303]
 // this runs the first 2 tiles when using the north side, but walks the entire thing 

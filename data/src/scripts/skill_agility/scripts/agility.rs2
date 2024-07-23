@@ -3,7 +3,7 @@
 [proc,agility_climb_up](int $xp, coord $coord)
 anim(human_reachforladdertop, 0);
 p_delay(0);
-givexp(agility, $xp);
+stat_advance(agility, $xp);
 p_telejump($coord);
 
 // force walk to a specific location, this isn't the 
@@ -13,7 +13,7 @@ p_telejump($coord);
 def_int $change_x = calc(coordx($dest) - coordx(coord));
 def_int $change_z = calc(coordz($dest) - coordz(coord));
 ~agility_walk($change_x, $change_z);
-givexp(agility, $xp);
+stat_advance(agility, $xp);
 
 [proc,agility_walk](int $change_x, int $change_z)
 if($change_x = 0 & $change_z = 0) {

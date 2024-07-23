@@ -53,7 +53,7 @@ if (%damagestyle = ^style_ranged_accurate | %damagestyle = ^style_ranged_longran
 }
 if (%biodummy < 6) {
     %biodummy = add(%biodummy, 1);
-    givexp(attack, 500);
+    stat_advance(attack, 500);
 } else {
     mes("There's no more to learn from hitting this dummy.");
     return;

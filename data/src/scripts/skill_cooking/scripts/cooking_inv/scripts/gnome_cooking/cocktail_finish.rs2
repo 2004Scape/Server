@@ -47,7 +47,7 @@ if (oc_param($ingredient, next_obj_stage) ! null) {
 
 // if finished cocktail, give xp
 if (oc_category($next_gnome_food) = category_83) {
-    givexp(cooking, 600);
+    stat_advance(cooking, 600);
 }
 
 if (string_length(oc_param($ingredient, cocktail_message)) < 1) {

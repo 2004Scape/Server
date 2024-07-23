@@ -37,6 +37,6 @@ p_delay(0);
 ~mesbox("There's only a pillow in here..."); // https://youtu.be/LfUTWKG5Ey4?t=149, also similar to rsc
 
 [queue,quest_vampire_complete]
-givexp(attack, 48250);
+stat_advance(attack, 48250);
 ~quest_vampire_set_progress(^vampire_complete);
 ~send_quest_complete(questlist:vampire, stake, 250, ^vampire_questpoints, "You have completed the\\nVampire Slayer Quest!");

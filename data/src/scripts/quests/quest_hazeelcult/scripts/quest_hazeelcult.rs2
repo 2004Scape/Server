@@ -180,6 +180,6 @@ if_openmainmodal(questscroll);
 [queue,hazeelcult_quest_complete]
 %hazeelcult_progress = ^hazeelcult_complete;
 inv_del(inv, scroll_of_hazeel, 1);
-givexp(thieving, 15000);
+stat_advance(thieving, 15000);
 inv_add(inv, coins, 2000);
 ~send_quest_complete(questlist:hazeelcult, coins, 250, ^hazeelcult_questpoints, "You have completed the\\nHazeel Cult Quest!");

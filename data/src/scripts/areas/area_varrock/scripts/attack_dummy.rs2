@@ -9,7 +9,7 @@ sound_synth(%com_attacksound, 0, 0);
 mes("You hit the dummy.");
 p_delay(0);
 if (stat_base(attack) < 8) {
-    givexp(attack, 50);
+    stat_advance(attack, 50);
 } else {
     mes("There is nothing more you can learn from hitting a dummy.");
 }

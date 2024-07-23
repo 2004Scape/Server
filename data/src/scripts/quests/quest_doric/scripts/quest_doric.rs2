@@ -111,7 +111,7 @@ if (inv_total(inv, clay) > 5 & inv_total(inv, copper_ore) > 3 & inv_total(inv, i
 // Reward Scroll
 [queue,doric_quest_complete]
 %doric_progress = ^doric_complete;
-givexp(mining, 13000);
+stat_advance(mining, 13000);
 ~send_quest_complete(questlist:doric, steel_pickaxe, 250, ^doric_questpoints, "You have completed\\nDoric's Quest!");
 
 [label,trail_doric]

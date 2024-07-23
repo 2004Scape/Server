@@ -85,5 +85,5 @@ if (loc_find(^trawler_flood_net2, game_trawler_fish_net_broken2) = true) {
 anim(human_pickupfloor, 0);
 p_delay(0);
 mes("You manage to fix the net."); // osrs
-givexp(crafting, 50);
+stat_advance(crafting, 50);
 inv_del(inv, rope, 1);

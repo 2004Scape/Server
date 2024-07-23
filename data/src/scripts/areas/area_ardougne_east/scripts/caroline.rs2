@@ -42,7 +42,7 @@ switch_int(~p_choice2("I suppose so, how do I get there?", 1, "I'm sorry, I'm to
 %seaslug_progress = ^seaslug_complete;
 %questpoints = add(%questpoints, 1);
 inv_add(inv, oyster_perls, 1);
-givexp(fishing, 71750);
+stat_advance(fishing, 71750);
 queue(seaslug_quest_complete, 0);
 ~chatplayer("<p,happy>Thanks!");
 ~chatnpc("<p,happy>Thank you.|Take care of yourself traveller.");

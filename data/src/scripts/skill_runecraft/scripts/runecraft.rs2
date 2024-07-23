@@ -84,7 +84,7 @@ def_int $craft_count = calc($total_ess * $rune_count_per_ess);
 $total_ess = calc($craft_count / $rune_count_per_ess);
 
 inv_del(inv, blankrune, $total_ess);
-givexp(runecraft, calc($total_ess * db_getfield($data, runecraft_table:experience, 0)));
+stat_advance(runecraft, calc($total_ess * db_getfield($data, runecraft_table:experience, 0)));
 // later revs they just use oc_name($rune), i think after 2007 or so
 mes("You bind the temple's power into <db_getfield($data, runecraft_table:name, 0)> Runes.");
 inv_add(inv, $rune, calc($total_ess * $rune_count_per_ess));
