@@ -4,7 +4,7 @@ import * as esbuild from 'esbuild';
 
 const entryPoints = ['src/lostcity/worker.ts', 'src/lostcity/server/LoginThread.ts'];
 const esbuildModules = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
-const modules = ['buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
+const modules = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
     'process.env.WEB_PORT': 'undefined',
