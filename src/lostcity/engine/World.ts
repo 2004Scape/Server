@@ -750,14 +750,16 @@ class World {
             }
 
             try {
-                npc.processed = true;
+                if (npc.delayed()) {
+                    npc.delay--;
+                }
 
                 if (npc.delayed()) {
                     continue;
                 }
 
                 // - resume suspended script
-                if (npc.activeScript) {
+                if (npc.activeScript && npc.activeScript.execution === ScriptState.NPC_SUSPENDED) {
                     npc.executeScript(npc.activeScript);
                 }
 
@@ -798,7 +800,10 @@ class World {
         for (const player of this.players) {
             try {
                 player.playtime++;
-                player.processed = true;
+
+                if (player.delayed()) {
+                    player.delay--;
+                }
 
                 // - resume suspended script
                 if (player.activeScript && player.activeScript.execution === ScriptState.SUSPENDED && !player.delayed()) {

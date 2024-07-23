@@ -54,7 +54,7 @@ export default abstract class PathingEntity extends Entity {
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs
 
-    processed: boolean = false;
+    delay: number = -1;
     interacted: boolean = false;
     repathed: boolean = false;
     target: Entity | null = null;
@@ -545,7 +545,6 @@ export default abstract class PathingEntity extends Entity {
         this.lastZ = this.z;
         this.lastLevel = this.level;
         this.stepsTaken = 0;
-        this.processed = false;
         this.interacted = false;
         this.apRangeCalled = false;
 

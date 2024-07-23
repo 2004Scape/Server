@@ -263,7 +263,7 @@ export default class Npc extends PathingEntity {
     // ----
 
     delayed() {
-        return this.delay > World.currentTick && !this.processed;
+        return this.delay > 0;
     }
 
     setTimer(interval: number) {
