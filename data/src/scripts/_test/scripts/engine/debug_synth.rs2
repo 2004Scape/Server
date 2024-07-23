@@ -1,2 +1,0 @@
-[debugproc,synth]
-sound_synth(grate_open, 0, 0);
