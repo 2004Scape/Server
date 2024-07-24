@@ -425,7 +425,7 @@ head2=model_84_idk_head
 head3=model_75_npc_head
 wanderrange=10
 maxrange=12
-// TODO level 7 barbarian not in osrs
+// TODO level 7 barbarian not in osrs possible original wander/max is 5/7?
 respawnrate=25
 hitpoints=14
 attack=6
@@ -542,8 +542,7 @@ model8=model_540_obj_wear
 model9=model_414_npc
 head1=model_113_idk_head
 head2=model_101_obj_wear
-wanderrange=10
-maxrange=12
+// osrs In the varrock bar there is still an 8lv Barbarian woman on the osrs side whose movement distances are 5/7
 respawnrate=25
 hitpoints=14
 attack=6
@@ -561,53 +560,6 @@ param=attack_sound,staff_stab
 param=defend_sound,female_hit
 param=death_sound,female_death
 category=barbarian
-
-[white_knight]
-name=White Knight
-desc=Nice armour!
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-vislevel=36
-recol1s=17969
-recol1d=25368
-recol2s=10468
-recol2d=21140
-recol3s=10570
-recol3d=21140
-recol4s=15855
-recol4d=25368
-recol5s=14798
-recol5d=25368
-model1=model_218_obj_wear
-model2=model_306_obj_wear
-model3=model_164_obj_wear
-model4=model_179_obj_wear
-model5=model_268_obj_wear
-model6=model_185_obj_wear
-model7=model_546_obj_wear
-respawnrate=50
-hitpoints=52
-attack=27
-strength=29
-defence=21
-param=attackrate,7
-param=attackbonus,30
-param=strengthbonus,31
-param=stabdefence,83
-param=slashdefence,76
-param=crushdefence,70
-param=magicdefence,-11
-param=rangedefence,74
-param=damagetype,^slash_style
-param=attack_anim,human_2h_slash
-param=defend_anim,human_sword_defend2
-param=attack_sound,2H_crush
-param=defend_sound,sound_218
-// Despite the slash attack style they still use the crush anim today
-// osrs attack anim Seq_406 attack 2h sword crush.
-// osrs defend anim seq_410 defend 2h sword after 2h after update xxxx.
-// osrs use sounds attack - 2H_crush & defend - blade3
 
 [paladin]
 name=Paladin
@@ -635,7 +587,7 @@ model7=model_185_obj_wear
 model8=model_518_obj_wear
 model9=model_541_obj_wear
 model10=model_3330_obj_wear
-// osrs
+// osrs (ardougne castle)
 wanderrange=2
 maxrange=4
 respawnrate=50
@@ -902,109 +854,6 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,blade5
 
-[npc_29]
-name=Chuck
-desc=He's a lumberjack, and he's ok.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-vislevel=1
-recol1s=2340
-recol1d=8416
-model1=model_210_idk
-model2=model_250_idk
-model3=model_315_npc
-model4=model_173_npc
-model5=model_179_obj_wear
-model6=model_271_idk
-model7=model_185_obj_wear
-model8=model_196_npc
-model9=model_510_obj_wear
-model10=model_280_obj_wear
-
-[npc_30]
-vislevel=hide
-name=Barman
-desc=Doesn't water down the beer too much.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-recol1s=2340
-recol1d=6342
-recol2s=14724
-recol2d=3170
-recol3s=14801
-recol3d=24075
-model1=model_230_idk
-model2=model_247_idk
-model3=model_299_npc
-model4=model_159_npc
-model5=model_176_idk
-model6=model_254_idk
-model7=model_185_obj_wear
-model8=model_321_npc
-
-[npc_31]
-vislevel=hide
-name=Priest
-desc=A holy man.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-recol1s=2340
-recol1d=3176
-recol2s=14724
-recol2d=1061
-recol3s=7328
-recol3d=24315
-model1=model_223_idk
-model2=model_249_idk
-model3=model_292_idk
-model4=model_162_idk
-model5=model_176_idk
-model6=model_265_obj_wear
-model7=model_185_obj_wear
-model8=model_325_npc
-moverestrict=indoors
-
-[guard_ardougne]
-name=Guard
-desc=Keeps the peace... kind of.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op2=Attack
-op3=Pickpocket
-vislevel=20
-recol1s=2340
-recol1d=19522
-recol2s=14724
-recol2d=17
-model1=model_225_npc
-model2=model_301_obj_wear
-model3=model_162_idk
-model4=model_179_obj_wear
-model5=model_274_idk
-model6=model_185_obj_wear
-model7=model_502_obj_wear
-respawnrate=50
-hitpoints=22
-attack=17
-strength=18
-defence=13
-param=attackrate,5
-param=attackbonus,9
-param=strengthbonus,7
-param=stabdefence,24
-param=slashdefence,14
-param=crushdefence,19
-param=magicdefence,4
-param=rangedefence,16
-param=damagetype,^crush_style
-param=attack_anim,human_blunt_crush
-param=defend_anim,human_blunt_defend2
-param=attack_sound,mace_crush
-// param=defend_sound,blade2_mail
-category=guard
-// osrs defend anim seq_403
-// osrs use attack sound warhammer_crush
-
 [watchman]
 name=Watchman
 desc=Watches stuff. But who watches him?
@@ -1076,38 +925,7 @@ param=attack_sound,hacksword_slash
 // param=defend_sound,
 // osrs defend sound blade3_mail
 
-[wyson]
-name=Wyson the gardener
-desc=An old gardener.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=3
-recol1s=15648
-recol1d=16705
-model1=model_230_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_327_idk
-model5=model_151_idk
-model6=model_179_obj_wear
-model7=model_274_idk
-model8=model_185_obj_wear
-model9=model_495_npc
-head1=model_63_idk_head
-respawnrate=25
-hitpoints=5
-attack=2
-strength=3
-defence=2
-param=damagetype,^stab_style
-param=attack_anim,human_farmersfork_stab
-param=defend_anim,human_farmersfork_defend
-param=attack_sound,staff_stab
-// osrs attack sound farmersfork_stab
-
-[npc_38]
+[shipyard_worker1]
 name=Shipyard worker
 desc=Builds ships for a living.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -1139,7 +957,7 @@ param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
 
-[npc_39]
+[shipyard_worker2]
 name=Shipyard worker
 desc=Builds ships for a living.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -1173,7 +991,7 @@ param=attack_sound,baxe_slash
 // osrs defend seq_403
 // osrs attack sound warhammer_crush
 
-[npc_40]
+[shark_Shipyard]
 name=Shark
 desc=Let's not go skinny dipping eh?
 walkanim=shark_walk
@@ -1397,7 +1215,7 @@ param=defend_sound,chicken_hit
 param=death_sound,chicken_death
 huntmode=cowardly
 
-[npc_49]
+[hellhound]
 size=2
 walkanim=hellhound_walk
 readyanim=hellhound_ready
@@ -1588,7 +1406,7 @@ param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
 
-[npc_56]
+[dryad]
 name=Dryad
 desc=A wood nymph.
 walkanim=dryhad_walk
@@ -1599,7 +1417,7 @@ param=attack_anim,dryhad_attack
 param=defend_anim,dryhad_block
 param=death_anim,dryhad_death
 
-[npc_57]
+[fairy]
 vislevel=hide
 name=Fairy
 desc=A delicate creature from this strange realm.
@@ -1608,7 +1426,7 @@ readyanim=fairy_ready
 model1=model_2857_npc
 param=death_anim,fairy_death
 
-[npc_58]
+[shadow_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 minimap=no
@@ -1641,7 +1459,7 @@ param=death_drop,null
 huntmode=cowardly
 // TODO spider prayer drain attack
 
-[npc_59]
+[giant_spider1]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Giant spider
@@ -1672,7 +1490,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 
-[npc_60]
+[giant_spider2]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Giant spider
@@ -1726,7 +1544,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 
-[npc_62]
+[jungle_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 minimap=no
@@ -1759,7 +1577,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 
-[npc_63]
+[deadly_red_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 name=Deadly red spider
@@ -1791,7 +1609,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 
-[npc_64]
+[ice_spider]
 walkanim=giantspider_walk
 readyanim=giantspider_ready
 minimap=no
@@ -1822,7 +1640,7 @@ param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
 
-[npc_65]
+[leprechaun]
 walkanim=midget_walk
 readyanim=midget_ready
 name=Leprechaun
@@ -1997,7 +1815,7 @@ param=defend_sound,orc_hit
 param=death_sound,orc_death
 huntmode=cowardly
 
-[npc_72]
+[troll]
 name=Troll
 desc=A hideously deformed creature.
 walkanim=troll_walk
@@ -2010,7 +1828,7 @@ param=defend_anim,troll_block
 param=death_anim,troll_death
 huntmode=cowardly
 
-[npc_73]
+[zombie1]
 name=Zombie
 desc=Dead man walking.
 walkanim=zombie_walk
@@ -2038,7 +1856,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 
-[npc_74]
+[zombie2]
 name=Zombie
 desc=Dead man walking.
 walkanim=zombie_walk
@@ -2065,7 +1883,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 
-[npc_75]
+[zombie3]
 name=Zombie
 desc=The walking dead.
 walkanim=zombie_walk
@@ -2124,7 +1942,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=aggressive_melee
 
-[npc_77]
+[summoned_zombie]
 name=Summoned Zombie
 desc=The living dead.
 walkanim=zombie_walk
@@ -2146,7 +1964,7 @@ param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
 
-[npc_78]
+[giant_bat]
 name=Giant bat
 desc=Annoying flappy thing.
 size=2
@@ -2302,7 +2120,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 
-[npc_84]
+[black_demon]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready
@@ -2354,7 +2172,7 @@ param=defend_sound,golem_hit
 param=death_sound,golem_death
 param=death_drop,null
 
-[npc_86]
+[giant_rat1]
 size=2
 walkanim=giantrat_walk
 readyanim=giantrat_ready
@@ -2380,7 +2198,7 @@ param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
 
-[npc_87]
+[giant_rat2]
 size=2
 walkanim=giantrat_walk
 readyanim=giantrat_ready
@@ -2406,7 +2224,7 @@ param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
 
-[npc_88]
+[dungeon_rat]
 size=2
 walkanim=giantrat_walk
 readyanim=giantrat_ready
@@ -2460,7 +2278,7 @@ param=defend_sound,horse_hit
 param=retreat,6
 category=unicorn
 
-[npc_90]
+[skeleton1]
 name=Skeleton
 desc=Could do with gaining a few pounds.
 walkanim=skeleton_walk
@@ -2487,7 +2305,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 
-[npc_91]
+[skeleton2]
 name=Skeleton
 desc=Could do with gaining a few pounds.
 walkanim=skeleton_walk
@@ -2515,7 +2333,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 
-[npc_92]
+[skeleton3]
 name=Skeleton
 desc=Could do with gaining a few pounds.
 walkanim=skeleton_walk
@@ -2550,7 +2368,7 @@ huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=1
 
-[npc_93]
+[skeleton4]
 name=Skeleton
 desc=Could do with gaining a few pounds.
 walkanim=skeleton_walk
@@ -2587,7 +2405,7 @@ huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=1
 
-[npc_94]
+[skeleton_mage]
 name=Skeleton Mage
 desc=An undead worker of dark magic.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -2829,7 +2647,7 @@ param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 
-[npc_103]
+[ghost]
 name=Ghost
 desc=Eeek! A ghost!
 hasalpha=yes
@@ -2864,7 +2682,7 @@ param=death_drop,null
 param=undead,^true
 huntmode=cowardly
 
-[npc_104]
+[ghost_draynor_manor]
 name=Ghost
 desc=Eeek! A ghost!
 hasalpha=yes
@@ -2896,7 +2714,7 @@ param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
 
-[npc_105]
+[bear_brown]
 size=2
 walkanim=bear_walk
 readyanim=bear_ready
@@ -2922,7 +2740,7 @@ param=death_sound,bear_death
 category=bear
 huntmode=cowardly
 
-[npc_106]
+[bear_black]
 size=2
 walkanim=bear_walk
 readyanim=bear_ready
@@ -3478,7 +3296,7 @@ param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 huntmode=cowardly
 
-[npc_124]
+[earth_warrior]
 hasalpha=yes
 walkanim=earthwarrior_walk
 readyanim=earthwarrior_ready
@@ -5855,72 +5673,6 @@ recol2d=28563
 model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
-
-[goblin_armed_green]
-name=Goblin
-desc=An ugly green creature.
-walkanim=goblin_walk
-readyanim=goblin_ready
-op2=Attack
-op1=Talk-to
-vislevel=5
-recol1s=10240
-recol1d=672
-model1=model_2951_npc
-model2=model_2953_npc
-model3=model_2955_npc
-model4=model_2956_npc
-model5=model_2957_npc
-head1=model_142_npc_head
-wanderrange=15
-maxrange=17
-respawnrate=35
-hitpoints=12
-attack=3
-defence=4
-param=attackbonus,12
-param=strengthbonus,12
-param=attackrate,6
-param=damagetype,^crush_style
-param=attack_anim,goblin_attack_armed
-param=defend_anim,goblin_block
-param=death_anim,goblin_death
-param=attack_sound,goblin_attack
-param=defend_sound,goblin_hit
-param=death_sound,goblin_death
-
-[goblin_armed_red]
-name=Goblin
-desc=An ugly green creature.
-walkanim=goblin_walk
-readyanim=goblin_ready
-op2=Attack
-op1=Talk-to
-vislevel=5
-recol1s=10240
-recol1d=17441
-model1=model_2951_npc
-model2=model_2953_npc
-model3=model_2955_npc
-model4=model_2956_npc
-model5=model_2957_npc
-head1=model_144_npc_head
-wanderrange=15
-maxrange=17
-respawnrate=35
-hitpoints=12
-attack=3
-defence=4
-param=attackbonus,12
-param=strengthbonus,12
-param=attackrate,6
-param=damagetype,^crush_style
-param=attack_anim,goblin_attack_armed
-param=defend_anim,goblin_block
-param=death_anim,goblin_death
-param=attack_sound,goblin_attack
-param=defend_sound,goblin_hit
-param=death_sound,goblin_death
 
 [npc_301]
 vislevel=hide

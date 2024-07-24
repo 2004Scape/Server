@@ -36,8 +36,9 @@ param=defend_anim,seq_354
 param=death_anim,seq_355
 param=death_drop,null
 param=attack_sound,triffid_attack
+param=defend_sound,null
 // npc has no defend sound at all? or it uses the attack sound also as the defend sound.
-// I'm not sure, try to find out the information. TODO
+// I'm not sure, try to find out the information. temporary change defendsound -> null
 param=max_dealt,3
 param=combat_xp_multiplier,25
 // https://youtu.be/mah2N7nznSk?list=PLn23LiLYLb1aLE-R7X4IV6D0Jl-m2el9i for poison and hit points (estimated)

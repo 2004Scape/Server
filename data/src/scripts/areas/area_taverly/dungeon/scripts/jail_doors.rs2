@@ -39,7 +39,7 @@ def_locshape $shape = loc_shape;
 def_coord $loc_coord = loc_coord;
 $x, $z = ~door_open($angle, loc_shape);
 def_coord $dest = $loc_coord;
-sound_synth(door_open, 0, 0); // iron_gate_open in OSRS 
+sound_synth(grate_open, 0, 0); // iron_gate_open in OSRS 
 if ($entering = true) {
     if (coord ! $loc_coord) {
         p_teleport($loc_coord);

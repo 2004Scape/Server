@@ -382,3 +382,81 @@ head2=model_44_obj_wear
 head3=model_82_idk_head
 wanderrange=4
 moverestrict=indoors
+
+[white_knight]
+name=White Knight
+desc=Nice armour!
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op2=Attack
+vislevel=36
+recol1s=17969
+recol1d=25368
+recol2s=10468
+recol2d=21140
+recol3s=10570
+recol3d=21140
+recol4s=15855
+recol4d=25368
+recol5s=14798
+recol5d=25368
+model1=model_218_obj_wear
+model2=model_306_obj_wear
+model3=model_164_obj_wear
+model4=model_179_obj_wear
+model5=model_268_obj_wear
+model6=model_185_obj_wear
+model7=model_546_obj_wear
+respawnrate=50
+hitpoints=52
+attack=27
+strength=29
+defence=21
+param=attackrate,7
+param=attackbonus,30
+param=strengthbonus,31
+param=stabdefence,83
+param=slashdefence,76
+param=crushdefence,70
+param=magicdefence,-11
+param=rangedefence,74
+param=damagetype,^slash_style
+param=attack_anim,human_2h_slash
+param=defend_anim,human_sword_defend2
+param=attack_sound,2H_crush
+param=defend_sound,sound_218
+// Despite the slash attack style they still use the crush anim today
+// osrs attack anim Seq_406 attack 2h sword crush.
+// osrs defend anim seq_410 defend 2h sword after 2h after update xxxx.
+// osrs use sounds attack - 2H_crush & defend - blade3
+
+[wyson]
+name=Wyson the gardener
+desc=An old gardener.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op2=Attack
+vislevel=3
+recol1s=15648
+recol1d=16705
+model1=model_230_idk
+model2=model_246_idk
+model3=model_292_idk
+model4=model_327_idk
+model5=model_151_idk
+model6=model_179_obj_wear
+model7=model_274_idk
+model8=model_185_obj_wear
+model9=model_495_npc
+head1=model_63_idk_head
+respawnrate=25
+hitpoints=5
+attack=2
+strength=3
+defence=2
+param=damagetype,^stab_style
+param=attack_anim,human_farmersfork_stab
+param=defend_anim,human_farmersfork_defend
+param=attack_sound,staff_stab
+// osrs attack sound farmersfork_stab
