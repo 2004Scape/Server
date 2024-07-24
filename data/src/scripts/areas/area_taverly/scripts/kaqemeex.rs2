@@ -1,48 +1,39 @@
 [opnpc1,kaqemeex]
 ~chatplayer("<p,neutral>Hello there.");
-if(%druid_progress = 0) {
-    ~chatnpc("<p,quiz>What bring you to our holy monument?");
+if(%druid_progress = ^druid_not_started) {
+    ~chatnpc("<p,quiz>What brings you to our holy monument?");
     @multi3("Who are you?", kaqemeex_who_are_you, "I'm in search of a quest.", druidic_ritual_start_1, "Did you build this?", kaqemeex_did_you_build);
-} else if(%druid_progress = 3) {
+} else if(%druid_progress >= ^druid_started & %druid_progress < ^druid_given_ingredients) {
+    ~chatnpc("<p,neutral>Hello again, adventurer. You will need to speak to my fellow druid Sanfew in the village south of here to continue in your quest.");
+    ~chatplayer("<p,happy>Ok, thanks.");
+} else if(%druid_progress = ^druid_given_ingredients) {
     @druid_completion;
 } else if(%druid_progress = ^druid_complete) { // TODO - dialogue from RSC, haven't been able to find any dialogue from RS2, before release of skillcapes.
     ~chatnpc("<p,neutral>Hello again. How is the Herblore going?");
     def_int $option = ~p_choice3("Very well, thank you.", 1, "I need more practice at it.", 2, "Can you explain the fundamentals again?", 3);
-
     if($option = 1) {
-        ~chatplayer("<p,quiz>Very well thank you.");
-        ~chatnpc("<p,quiz>That is good to hear.");
+        ~chatplayer("<p,neutral>Very well, thank you.");
+        ~chatnpc("<p,neutral>That is good to hear.");
     } else if($option = 2) {
         ~chatplayer("<p,neutral>I need more practice at it...");
         ~chatnpc("<p,neutral>Persistence is key to success.");
     } else if($option = 3) {
-        ~chatplayer("<p,neutral>Can you explain the fundamentals again?");
+        ~chatplayer("<p,confused>Can you explain the fundamentals again?");
         ~chatnpc("<p,neutral>Indeed I will...");
-        ~chatnpc("<p,neutral>Herblore is the skill of working with herbs and other|ingredients, to make useful potions and poison.");
-        ~chatnpc("<p,neutral>First you will need a vial, which can be found or made|with the crafting skill.");
-        ~chatnpc("<p,neutral>Then you must gather the herbs needed to make the|potion you want.");
-        ~chatnpc("<p,neutral>You must fill your vial with water and add the|ingredients you need. There are normally 2 ingredients|to each type of potion.");
-        ~chatnpc("<p,neutral>Bear in mind, you must first clean each herb before|you can use it.");
-        ~chatnpc("<p,neutral>You may also have to grind some ingredients before|you can use them. You will need a pestle and mortar|in order to do this.");
-        ~chatnpc("<p,neutral>Herbs can be found on the ground, and are also|dropped by some monsters when you kill them.");
-        ~chatnpc("<p,neutral>Let's try an example Attack potion: The first ingredient|is Guam leaf; the next is Eye of Newt.");
-        ~chatnpc("<p,neutral>Mix these in your water-filled vial, and you will produce|an Attack potion. Drink this potion to increase your|Attack level.");
-        ~chatnpc("<p,neutral>Different potions also require different Herblore levels|before you can make them.");
-        ~chatnpc("<p,neutral>Good luck with your Herblore practices, and a good day to you.");
-        ~chatplayer("<p,neutral>Thanks for your help.");
+        @kaqemeex_herblore_fundamentals;
     }
 }
 
 [label,kaqemeex_who_are_you]
 ~chatplayer("<p,quiz>Who are you?");
-~chatnpc("<p,neutral>We are the druids of Guthix. We worship our got at|our famous stone circles.");
+~chatnpc("<p,neutral>We are the druids of Guthix.|We worship our god at our famous stone circles.|You will find them located throughout these lands.");
 @multi3("What about the stone circle full of dark wizards?", druidic_ritual_start_2, "So what's so good about Guthix?", kaqemeex_about_guthix, "Well, I'll be on my way now.", kaqemeex_leaving_now);
 
 [label,kaqemeex_did_you_build]
 ~chatplayer("<p,quiz>Did you build this?");
-~chatnpc("<p,default>What, personally? No, of course I didn't. However, out|forefathers did. The first Druids of Guthix built many|stone circles across these lands over eight hundred|years ago.");
-~chatnpc("<p,sad>Unfortunately we only know of two remaining, and of|those only one is usable by us anymore.");
-@multi3("What about the stone circle full of dark wizards?", druidic_ritual_start_2, "I'm in search of a quest.", druidic_ritual_start_1, "Well, I'll be on my way now.", kaqemeex_leaving_now);
+~chatnpc("<p,neutral>What, personally? No, of course I didn't. However, our forefathers did. The first Druids of Guthix built many stone circles across these lands over eight hundred years ago.");
+~chatnpc("<p,sad>Unfortunately we only know of two remaining, and of those only one is usable by us anymore.");
+@multi3("What about the stone circle full of dark wizards?", druidic_ritual_start_2, "I'm in search of a quest", druidic_ritual_start_1, "Well, I'll be on my way now.", kaqemeex_leaving_now); // no period intended
 
 [label,kaqemeex_leaving_now]
 ~chatplayer("<p,neutral>Well, I'll be on my way now.");
@@ -50,7 +41,65 @@ if(%druid_progress = 0) {
 
 [label,kaqemeex_about_guthix]
 ~chatplayer("<p,quiz>So what's so good about Guthix?");
-~chatnpc("<p,neutral>Guthix is the oldest and most powerful god in Gielinor.|His existence is vital to this world. He is the god of|balande, and nature; he is also a very part of this world.");
-~chatnpc("<p,default>He exists in the tree, and the flowers, the water and|the rocks. He is everywhere. His purpose is to ensure|balande in everything in this world, and as such we|worship him.");
+~chatnpc("<p,neutral>Guthix is the oldest and most powerful god in RuneScape. His existence is vital to this world. He is the god of balance, and nature; he is also a very part of this world.");
+~chatnpc("<p,neutral>He exists in the trees, and the flowers, the water and the rocks. He is everywhere. His purpose is to ensure balance in everything in this world, and as such we worship him.");
 ~chatplayer("<p,confused>He sounds kind of boring...");
-~chatnpc("<p,neutral>Some day when your mind achieve enlightenment you|will see the true beauty of his power.");
+~chatnpc("<p,neutral>Some day when your mind achieves enlightenment you will see the true beauty of his power.");
+
+[label,druidic_ritual_start_1]
+~chatplayer("<p,neutral>I'm in search of a quest.");
+~chatnpc("<p,neutral>Hmm. I think I may have a worthwhile quest for you actually. I don't know if you are familiar with the stone circle south of Varrock or not, but...");
+@kaqemeex_our_circle;
+
+[label,druidic_ritual_start_2]
+~chatplayer("<p,quiz>What about the stone circle full of dark wizards?");
+@kaqemeex_our_circle;
+
+[label,kaqemeex_our_circle]
+~chatnpc("<p,neutral>That used to be OUR stone circle. Unfortunately, many many years ago, dark wizards cast a wicked spell upon it so that they could corrupt its power for their own evil ends.");
+~chatnpc("<p,neutral>When they cursed the rocks for their rituals they made them useless to us and our magics. We require a brave adventurer to go on a quest for us to help purify the circle of Varrock.");
+def_int $option = ~p_choice3("Ok, I will try and help.", 1, "No, that doesn't sound very interesting.", 2, "So... is there anything in this for me?", 3);
+if($option = 1) {
+    @druid_agree_to_help;
+} else if($option = 2) {
+    @druid_not_interested;
+} else if($option = 3) {
+    // guessed mesanims, dialogue from chisel
+    ~chatplayer("<p,quiz>So... is there anything in this for me?");
+    ~chatnpc("<p,neutral>We druids value wisdom over wealth, so if you expect material gain, you will be disappointed. We are, however, very skilled in the art of Herblore, which we will share with you");
+    ~chatnpc("<p,neutral>if you can assist us with this task. You may find such wisdom a greater reward than mere money.");
+}
+
+[label,druid_agree_to_help]
+~chatplayer("<p,neutral>Ok, I will try to help.");
+%druid_progress = ^druid_started;
+~send_quest_progress(questlist:druid, %druid_progress, ^druid_complete);
+~chatnpc("<p,neutral>Excellent. Go to the village south of this place and speak to my fellow Sanfew who is working on the purification ritual. He knows better than I what is required to complete it.");
+~chatplayer("<p,neutral>Will do.");
+
+[label,druid_not_interested]
+~chatplayer("<p,confused>No, that doesn't sound very interesting.");
+~chatnpc("<p,neutral>I will not try and change your mind adventurer. Some day when you have matured you may reconsider your position. We will wait until then.");
+
+[label,druid_completion]
+~chatnpc("<p,neutral>I have word from Sanfew that you have been very helpful in assisting him with his preparations for the purification ritual. As promised I will now teach you the ancient arts of Herblore.");
+queue(druid_quest_complete, 0, npc_uid);
+
+// https://youtu.be/uWhSsATZubQ?si=Kxu-Wb796lTCOUv3&t=717
+[label,kaqemeex_herblore_fundamentals]
+~chatnpc("<p,neutral>Herblore is the skill of working with herbs and other ingredients, to make useful potions and poison.");
+~chatnpc("<p,neutral>First you will need a vial, which can be found or made with the crafting skill.");
+~chatnpc("<p,neutral>Then you must gather the herbs needed to make the potion you want.");
+~chatnpc("<p,neutral>Refer to the Council's instructions in the Skills section of the website for the items needed to make a particular kind of potion.");
+~chatnpc("<p,neutral>You must fill your vial with water and add the ingredients you need. There are normally 2 ingredients to each type of potion.");
+~chatnpc("<p,neutral>Bear in mind, you must first identify each herb, to see what it is.");
+~chatnpc("<p,neutral>You may also have to grind some herbs before you can use them. You will need a pestle and mortar in order to do this.");
+~chatnpc("<p,neutral>Herbs can be found on the ground, and are also dropped by some monsters when you kill them.");
+~chatnpc("<p,neutral>Let's try an example Attack potion: The first ingredient is Guam leaf; the next is Eye of Newt.");
+~chatnpc("<p,neutral>Mix these in your water-filled vial, and you will produce an Attack potion.");
+~chatnpc("<p,neutral>Drink this potion to increase your Attack level.");
+~chatnpc("<p,neutral>Different potions also require different Herblore levels before you can make them.");
+~chatnpc("<p,neutral>Once again, check the instructions found on the Council's website for the levels needed to make a particular potion.");
+~chatnpc("<p,happy>Good luck with your Herblore practices, Good day adventurer.");
+~chatplayer("<p,happy>Thanks for your help.");
+

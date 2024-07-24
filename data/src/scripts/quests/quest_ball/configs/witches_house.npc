@@ -23,11 +23,15 @@ model6=model_361_obj_wear
 model7=model_377_obj_wear
 head1=model_122_npc_head
 head2=model_102_obj_wear
+maxrange=50
 defaultmode=patrol
 patrol1=0_45_54_50_7,0
-patrol2=0_45_54_24_7,0
-huntmode=ball_caught
-huntrange=3
+patrol2=0_45_54_41_7,0
+patrol3=0_45_54_32_7,0
+patrol4=0_45_54_24_7,0
+patrol5=0_45_54_32_7,0
+patrol6=0_45_54_41_7,0
+timer=1
 
 [witches_experiment_p1]
 name=Witches experiment
