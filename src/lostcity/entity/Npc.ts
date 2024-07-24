@@ -523,7 +523,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
+        this.clearWaypoints();
         this.updateMovement(false);
     }
 
@@ -551,7 +551,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
+        this.clearWaypoints();
         this.updateMovement(false);
     }
 
