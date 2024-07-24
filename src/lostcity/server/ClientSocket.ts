@@ -11,13 +11,13 @@ export default class ClientSocket {
     static TCP = 0;
     static WEBSOCKET = 1;
 
-    socket: Socket | WebSocket | null = null;
+    socket: Socket | WebSocket | DedicatedWorkerGlobalScope | null = null;
     type = -1;
     state = -1;
     remoteAddress: string;
     totalBytesRead = 0;
     totalBytesWritten = 0;
-    uniqueId = typeof self === 'undefined' ? randomUUID() : (self.isSecureContext ? self.crypto.randomUUID() : '0');
+    uniqueId: string;
 
     encryptor: Isaac | null = null;
     decryptor: Isaac | null = null;
@@ -36,11 +36,12 @@ export default class ClientSocket {
 
     player: NetworkPlayer | null = null;
 
-    constructor(socket: Socket | WebSocket | null, remoteAddress: string, type = ClientSocket.TCP, state = -1) {
+    constructor(socket: Socket | WebSocket | DedicatedWorkerGlobalScope | null, remoteAddress: string, type = ClientSocket.TCP, state = -1, uniqueId: string = randomUUID()) {
         this.socket = socket;
         this.remoteAddress = remoteAddress;
         this.type = type;
         this.state = state;
+        this.uniqueId = uniqueId;
     }
 
     isTCP() {
@@ -52,58 +53,49 @@ export default class ClientSocket {
     }
 
     send(data: Uint8Array) {
-        if (typeof self === 'undefined') {
-            if (!this.socket) {
-                return;
-            }
+        if (!this.socket) {
+            return;
+        }
 
-            this.totalBytesWritten += data.length;
-            if (this.isTCP()) {
-                (this.socket as Socket).write(data);
-            } else if (this.isWebSocket()) {
-                (this.socket as WebSocket).send(data);
-            }
-        } else {
-            this.totalBytesWritten += data.length;
-            self.postMessage(data);
+        this.totalBytesWritten += data.length;
+        if (this.isTCP()) {
+            (this.socket as Socket).write(data);
+        } else if (this.isWebSocket()) {
+            (this.socket as WebSocket).send(data);
+        } else if (typeof self !== 'undefined') {
+            (this.socket as DedicatedWorkerGlobalScope).postMessage({ type: 'data', data: data, id: this.uniqueId });
         }
     }
 
     // close the connection gracefully
     close() {
-        if (typeof self === 'undefined') {
-            if (!this.socket) {
-                return;
-            }
-
-            setTimeout(() => {
-                if (this.isTCP()) {
-                    (this.socket as Socket).end();
-                } else if (this.isWebSocket()) {
-                    (this.socket as WebSocket).close();
-                }
-            }, 100);
-        } else {
-            setTimeout(() => {
-                self.close();
-            }, 100);
+        if (!this.socket) {
+            return;
         }
+
+        setTimeout(() => {
+            if (this.isTCP()) {
+                (this.socket as Socket).end();
+            } else if (this.isWebSocket()) {
+                (this.socket as WebSocket).close();
+            } else if (typeof self !== 'undefined') {
+                (this.socket as DedicatedWorkerGlobalScope).postMessage({ type: 'close', id: this.uniqueId });
+            }
+        }, 100);
     }
 
     // terminate the connection immediately
     terminate() {
-        if (typeof self === 'undefined') {
-            if (!this.socket) {
-                return;
-            }
+        if (!this.socket) {
+            return;
+        }
 
-            if (this.isTCP()) {
-                (this.socket as Socket).destroy();
-            } else if (this.isWebSocket()) {
-                (this.socket as WebSocket).terminate();
-            }
-        } else {
-            self.close();
+        if (this.isTCP()) {
+            (this.socket as Socket).destroy();
+        } else if (this.isWebSocket()) {
+            (this.socket as WebSocket).terminate();
+        } else if (typeof self !== 'undefined') {
+            (this.socket as DedicatedWorkerGlobalScope).postMessage({ type: 'close', id: this.uniqueId });
         }
     }
 
