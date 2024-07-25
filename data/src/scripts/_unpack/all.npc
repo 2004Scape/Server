@@ -7121,7 +7121,7 @@ head1=model_17_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_670]
+[king_narnode]
 name=King Narnode Shareen
 desc=An important looking gnome.
 vislevel=hide
@@ -7250,7 +7250,7 @@ head1=model_53_idk_head
 head2=model_79_idk_head
 wanderrange=2
 
-[npc_676]
+[femi]
 name=Femi
 desc=A gnome trader.
 walkanim=midget_walk

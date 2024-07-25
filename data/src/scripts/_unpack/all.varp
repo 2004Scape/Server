@@ -192,7 +192,7 @@ type=obj
 [gnomeball_progress]
 scope=perm
 
-[varp_152]
+[femi_help]
 
 [glider_takeoff]
 transmit=yes

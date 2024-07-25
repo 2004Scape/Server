@@ -1,5 +1,8 @@
 // Gnome stronghold entrance gate
 [oploc1,loc_190]
+if(%femi_help = 0 & coordz(coord) < coordz(loc_coord) & npc_find(coord, femi, 6, 0) = true) {
+    @femi_boxes;
+}
 // walk to start
 def_coord $loc_coord = loc_coord;
 def_coord $north_entrance = movecoord($loc_coord, 2, 0, 2);

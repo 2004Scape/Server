@@ -1,0 +1,39 @@
+[opnpc1,femi]
+mes("The little gnome is too busy to talk.");
+
+[label,femi_boxes]
+if(loc_find(0_38_52_28_52, loc_83) = true) {
+    loc_change(loc_361, 200);
+}
+~chatnpc("<p,happy>Hello there.");
+~chatplayer("<p,happy>Hi!");
+~chatnpc("<p,quiz>Could you help me lift these boxes?|They are really heavy!");
+switch_int(~p_choice2("Sorry, I'm a bit busy.", 1, "Okay then.", 2)) {
+    case 1:
+        %femi_help = 1;
+        ~chatplayer("<p,neutral>Sorry, I'm a bit busy.");
+        ~chatnpc("<p,sad>Oh, okay, I'll do it myself.");
+    case 2:
+        ~chatplayer("<p,happy>Okay then.");
+        ~chatnpc("<p,happy>Thanks traveller!");
+        if_close;
+        ~forcewalk(0_38_52_29_52);
+        p_delay(0);
+        if(loc_find(movecoord(coord, -1, 0, 0), loc_361) = true) {
+            facesquare(loc_coord);
+            p_delay(0);
+            anim(human_pickupfloor, 0);
+            p_delay(0);
+            loc_change(loc_83, 200);
+        }
+        facesquare(loc_coord);
+        p_delay(0);
+        anim(human_pickupfloor, 0);
+        p_delay(0);
+        if(loc_find(0_38_52_26_50, loc_307) = true) {
+            loc_change(loc_308, 200);
+        }
+        p_delay(0);
+        %femi_help = 2;
+        ~chatnpc("<p,happy>Thanks again friend!");
+}
