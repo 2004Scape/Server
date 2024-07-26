@@ -481,23 +481,23 @@ export default class Npc extends PathingEntity {
     }
 
     playerFollowMode(): void {
-        if (!this.target) {
+        const player = this.target;
+        if (!player) {
             this.defaultMode();
             return;
         }
 
-        if (!(this.target instanceof Player)) {
+        if (!(player instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerfollow mode.');
         }
-
-        if (World.getPlayerByUid(this.target.uid) === null) {
+        if (World.getPlayerByUid(player.uid) === null) {
             this.defaultMode();
             return;
         }
-
-        if (this.level !== this.target.level) {
-            this.defaultMode();
-            return;
+        if (player.level !== this.level || !Position.isWithinDistanceSW(this, player, 15)) {
+            this.teleport(player.x, player.z, player.level);
+            this.startX = player.x;
+            this.startZ = player.z;
         }
 
         this.pathToTarget();

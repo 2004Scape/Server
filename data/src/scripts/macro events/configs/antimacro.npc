@@ -80,7 +80,7 @@ model8=model_270_npc
 head1=model_64_npc_head
 head2=model_73_npc_head
 head3=model_84_idk_head
-timer=1
+timer=10
 param=follow_player_on_logout,^true
 
 [macro_event_mysterious_old_man_general]
@@ -113,7 +113,7 @@ model8=model_267_idk
 model9=model_185_obj_wear
 head1=model_48_npc_head
 head2=model_82_idk_head
-timer=1
+timer=10
 param=follow_player_on_logout,^true
 
 [macro_event_swarm]
@@ -1435,15 +1435,15 @@ head2=model_6_npc_head
 // https://youtu.be/Ww-PkAr4vt4?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
 wanderrange=10
 maxrange=10
-timer=1
+timer=10
+attack=50
+strength=1
 param=attack_anim,dwarf_seq_928
 param=defend_anim,dwarf_block
 param=death_anim,dwarf_death
 param=attackrate,4
 param=attack_sound,thrown
 // stats are completely guessed
-attack=50
-strength=1
 
 [macro_event_big_fish]
 name=Big fish

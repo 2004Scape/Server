@@ -210,20 +210,19 @@ if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
 npc_setmode(playerfollow); // other players can interact with the npc, so setmode to follow after teleporting.
 return(false);
 
-
 [proc,macro_event_lost]()(boolean)
-if (finduid(%npc_attacking_uid) = false) {
-    return(true);
+if (finduid(%npc_attacking_uid) = true) {
+    if (%macro_event_uid ! npc_uid) {
+        return(true);
+    }
+    if (~macro_event_area(coord) = false) {
+        return(true);
+    }
+    // i think osrs added a distance check from spawn point after random event rework in 2014
+    // so going up ladders for example would make the random event despawn
+    return(false);
 }
-if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
-    return(true);
-}
-
-if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
-    return(true);
-}
-
-return(false);
+return(true);
 
 // based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
 [proc,macro_event_combat_level]()(int)

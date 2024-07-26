@@ -100,7 +100,7 @@ if ($random < 16) { // 16/150 kebab?
 }
 
 [ai_timer,macro_event_mysterious_old_man_general]
-if (~macro_event_lost_and_follow = true) {
+if (~macro_event_lost = true) {
     // only confirmed for mysterious old man https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
     npc_queue(5, 0, 0);
     return;
