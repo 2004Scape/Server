@@ -7136,7 +7136,7 @@ wanderrange=2
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_671]
+[glough]
 name=Glough
 desc=A rough looking gnome.
 vislevel=hide
@@ -7152,7 +7152,7 @@ head1=model_22_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_672]
+[anita]
 name=Anita
 desc=Glough's girlfriend.
 vislevel=hide
@@ -7168,7 +7168,7 @@ head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_673]
+[grandtree_charlie]
 name=Charlie
 desc=Poor guy, he looks frightened.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -7192,7 +7192,7 @@ head1=model_53_idk_head
 wanderrange=0
 moverestrict=nomove
 
-[npc_674]
+[foreman]
 name=Foreman
 desc=The boss!
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -7226,7 +7226,7 @@ param=crushdefence,1
 param=damagetype,^crush_style
 // trivia npc sounds - https://oldschool.runescape.wiki/w/Foreman
 
-[npc_675]
+[shipyard_worker]
 name=Shipyard worker
 desc=Builds ships for a living.
 vislevel=hide
@@ -7271,7 +7271,7 @@ wanderrange=1
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_677]
+[grandtree_black_demon]
 size=3
 walkanim=demon_walk
 readyanim=demon_ready

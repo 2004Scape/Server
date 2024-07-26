@@ -1,0 +1,5 @@
+[opnpc1,anita]
+switch_int(%grandtree_progress) {
+    case default:
+        ~mesbox("Anita is busy cleaning.");
+}

@@ -144,16 +144,7 @@ if(inzone(movecoord(^camelot_magic_symbol, -1, 0, -1), movecoord(^camelot_magic_
             ~mesbox("I think I'd better learn the words of binding before summoning a mighty spirit...");
             return;
         }
-        def_int $dx = calc(coordx(^camelot_magic_symbol) - coordx(coord));
-        if($dx >= 0) {
-            $dx = calc($dx - 1);
-        }
-        // pathing this way intentionally 
-        if($dx ! 0) {
-            p_teleport(movecoord(coord, $dx, 0, calc(coordz(^camelot_magic_symbol) - coordz(coord))));
-            p_delay(0);
-        }
-        ~agility_force_move(0, human_walk_f, movecoord(^camelot_magic_symbol, -2, 0, 0));
+        ~forcemove2(movecoord(^camelot_magic_symbol, -2, 0, 0));
         // 3t delay
         sound_synth(smokepuff, 0, 0);
         npc_add(^camelot_magic_symbol, thrantax_the_mighty, 100);

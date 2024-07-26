@@ -1,0 +1,11 @@
+[opnpc1,glough]
+switch_int(%grandtree_progress) {
+    case default:
+        ~chatplayer("<p,happy>Hello there!");
+        ~chatnpc("<p,angry>You shouldn't be here human!");
+        ~chatplayer("<p,sad>What do you mean?");
+        ~chatnpc("<p,angry>The Gnome Stronghold is for gnomes alone!");
+        ~chatplayer("<p,angry>Surely not!");
+        ~chatnpc("<p,angry>We don't need your sort round here!");
+        ~mesbox("He doesn't seem very nice!");
+}

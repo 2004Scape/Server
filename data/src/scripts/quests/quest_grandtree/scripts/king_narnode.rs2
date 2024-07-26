@@ -1,0 +1,28 @@
+[opnpc1,king_narnode]
+switch_int(%grandtree_progress) {
+    case ^grandtree_not_started:
+        ~chatnpc("<p,happy>Welcome Traveller. I am King Narnode.|It's nice to see an outsider.");
+        ~chatplayer("<p,happy>Hi! It seems to be a busy settlement.");
+        ~chatnpc("<p,worried>For now.");
+        switch_int(~p_choice2("You seem worried, what's up?", 1, "I'll be off now.", 2)) {
+            case 1:
+                ~chatplayer("<p,quiz>You seem worried, what's up?");
+                ~chatnpc("<p,sad>Traveller, Can I speak to you in strictest confidence?");
+                ~chatplayer("<p,neutral>Of course sire.");
+                npc_setmode(none);
+                ~chatnpcnoturn("<p,shifty>Not here, follow me.");
+                if_close;
+                def_int $npc_dist = distance(npc_coord, 0_38_54_32_42);
+                npc_walk(0_38_54_32_42);
+                p_delay(calc($npc_dist + 1)); // TODO: + 1 until delay change is fix
+                npc_facesquare(movecoord(npc_coord, -1, 0, -1));
+                if(loc_find(movecoord(coord, -1, 0, 0), loc_2446) = true) {
+                    loc_change(loc_2445, 10);
+                }
+                npc_say("down here");
+                ~forcemove2(0_38_54_32_41);
+            case 2:
+                ~chatplayer("<p,neutral>I'll be off now.");
+                ~chatnpc("<p,neutral>Enjoy your stay with us.|There are many things to see in my kingdom.");
+        }
+}

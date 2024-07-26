@@ -1,0 +1,9 @@
+[apnpc1,anita]
+if (npc_range(coord) > 1) {
+    p_aprange(1);
+    return;
+}
+switch_int(%grandtree_progress) {
+    case default:
+        mes("The prisoner is in no mood to talk.");
+}

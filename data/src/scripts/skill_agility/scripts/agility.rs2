@@ -42,6 +42,54 @@ p_delay(0);
 // recursive call
 ~agility_walk($change_x, $change_z);
 
+// "clipped" teleport walk that OSRS seems to use, probably since p_walk isn't reliable
+// and you wont want players visibly clipping much!
+[proc,clipped_telewalk](int $change_x, int $change_z)
+if($change_x = 0 & $change_z = 0) {
+    return;
+}
+def_int $move_x = 0;
+def_int $move_z = 0;
+if ($change_x >= 1) {
+    $move_x = 1;
+} else if ($change_x <= -1) {
+    $move_x = -1;
+}
+if ($change_z >= 1) {
+    $move_z = 1;
+} else if ($change_z <= -1) {
+    $move_z = -1;
+}
+// if diagonal isn't blocked but adj's are blocked, this will prevent a diagonal movement
+if (map_blocked(movecoord(coord, 0, 0, $move_z)) = true) { // z block
+    $move_z = 0;
+}
+if (map_blocked(movecoord(coord, $move_x, 0, 0)) = true) { // x block
+    $move_x = 0;
+} 
+if (map_blocked(movecoord(coord, $move_x, 0, $move_z)) = true) { // diagonal blocked, convert to horiz/vert movement
+    if (map_blocked(movecoord(coord, 0, 0, $move_z)) = false) { // try horiz
+        $move_x = 0;
+    } else if (map_blocked(movecoord(coord, $move_x, 0, 0)) = false) { // try vert
+        $move_z = 0;
+    } else {
+        $move_x = 0;
+        $move_z = 0;
+    }
+}
+if($move_x = 0 & $move_z = 0) { // no possible movement
+    return;
+}
+// Perform movement and re-calc
+def_coord $movement_coord = movecoord(coord, $move_x, 0, $move_z);
+p_teleport(movecoord(coord, $move_x, 0, $move_z));
+$change_x = calc($change_x - $move_x);
+$change_z = calc($change_z - $move_z);
+p_stopaction;
+p_delay(0);
+// recursive call
+~clipped_telewalk($change_x, $change_z);
+
 // Proc for combining all general parts of an exactmove used in the agility skill (animation, delay, locmerge)
 [proc,agility_exactmove](seq $anim, int $anim_delay, int $movement_delay, coord $start_coord, coord $end_coord, int $start_cycle, int $end_cycle, int $direction, boolean $merge_with_loc)
 anim($anim, $anim_delay);
@@ -85,6 +133,11 @@ p_delay($delay);
 // doesnt respect clipping
 [proc,forcemove](coord $dest_coord)
 ~agility_force_move(0, human_walk_f, $dest_coord);
+
+[proc,forcemove2](coord $dest_coord)
+def_int $change_x = calc(coordx($dest_coord) - coordx(coord));
+def_int $change_z = calc(coordz($dest_coord) - coordz(coord));
+~clipped_telewalk($change_x, $change_z);
 
 // Instant fail, not used as often
 [proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)
