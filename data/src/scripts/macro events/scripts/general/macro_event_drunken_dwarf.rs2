@@ -66,11 +66,7 @@ if (~npc_out_of_combat = false) {
     return;
 }
 if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event = ^no_macro_event) {
-        if (~macro_event_lost = true) {
-            npc_queue(5, 0, 0);
-        }
-    } else if (~macro_event_lost_and_follow = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+    if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
         // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
         %macro_event = ^no_macro_event;
         npc_queue(5, 0, 0); // despawn

@@ -187,29 +187,6 @@ if (%macro_event < add(~macro_event_general_count, 1)){
     return(true);
 }
 
-[proc,macro_event_lost_and_follow]()(boolean)
-if (finduid(%npc_attacking_uid) = false) {
-    return(true);
-}
-if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
-    return(true);
-}
-
-if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
-    if (~npc_out_of_combat = true) {
-        npc_tele(coord); // osrs
-        if (~macro_event_area(coord) = false) {
-            return(true);
-        }
-    } else {
-        return(true);
-    }
-}
-
-// https://youtu.be/HpmsgVshwxg?t=303
-npc_setmode(playerfollow); // other players can interact with the npc, so setmode to follow after teleporting.
-return(false);
-
 [proc,macro_event_lost]()(boolean)
 if (finduid(%npc_attacking_uid) = true) {
     if (%macro_event_uid ! npc_uid) {

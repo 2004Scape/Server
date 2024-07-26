@@ -70,7 +70,7 @@ npc_queue(6, 0, 2);
 ~chatnpc("<p,neutral>Ah, so you are there <text_gender("master", "mistress")>. I'm so glad you|summoned me. Please take this lamp, and make your|wish!");
 
 [ai_timer,macro_event_genie]
-if (~macro_event_lost_and_follow = true) {
+if (~macro_event_lost = true) {
     // only confirmed for mysterious old man
     npc_queue(5, 0, 0);
     return;
