@@ -105,3 +105,6 @@ if (~macro_event_lost = true) {
     npc_queue(5, 0, 0);
     return;
 }
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(playerfollow);
+}

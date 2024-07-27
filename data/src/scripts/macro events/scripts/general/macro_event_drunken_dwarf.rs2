@@ -65,15 +65,16 @@ npc_queue(6, 0, 0); // say good bye
 if (~npc_out_of_combat = false) {
     return;
 }
+if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+    // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
+    npc_queue(5, 0, 0); // despawn
+    return;
+}
 if (finduid(%npc_attacking_uid) = true) {
-    if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
-        // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
-        %macro_event = ^no_macro_event;
-        npc_queue(5, 0, 0); // despawn
-        return;
+    if (%macro_event ! ^no_macro_event) {
+        npc_setmode(playerfollow);
     }
 }
-
 
 // https://youtu.be/8wJZmDwcBKs?t=108
 [ai_opplayer2,macro_event_drunken_dwarf]
