@@ -7,7 +7,7 @@ npc_setmode(opplayer2);
 %macro_event = ^no_macro_event;
 
 [ai_timer,macro_event_swarm]
-if (~macro_event_lost = true) {
+if (~macro_event_lost_hostile = true) {
     npc_del;
     return;
 }

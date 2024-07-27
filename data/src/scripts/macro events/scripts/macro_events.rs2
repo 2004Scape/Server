@@ -45,7 +45,6 @@ if ($event_coord = null) {
 %macro_event = $event;
 def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
-%macro_event_uid = npc_uid;
 switch_int ($event) {
     case ^macro_event_swarm : ~macro_event_swarm_spawn;
     case ^macro_event_triffid_friendly : ~macro_event_triffid_spawn;
@@ -70,7 +69,7 @@ if (~in_tutorial_island($coord) = true) {
 return(true);
 
 // called when the player logs in
-[queue,macro_event_general_check]
+[queue,macro_event_login]
 if (~macro_event_general_active = true & nc_param(~macro_event_npc(%macro_event), follow_player_on_logout) = ^true) {
     ~macro_event_general_spawn(%macro_event);
 }
@@ -187,44 +186,37 @@ if (%macro_event < add(~macro_event_general_count, 1)){
     return(true);
 }
 
-[proc,macro_event_lost_and_follow]()(boolean)
-if (finduid(%npc_attacking_uid) = false) {
-    return(true);
-}
-if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
-    return(true);
-}
-
-if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
-    if (~npc_out_of_combat = true) {
-        npc_tele(coord); // osrs
-        if (~macro_event_area(coord) = false) {
-            return(true);
-        }
-    } else {
+[proc,macro_event_lost]()(boolean)
+if (finduid(%npc_attacking_uid) = true) {
+    if (getqueue(macro_event_login) > 0) {
         return(true);
     }
+    if (%macro_event_uid ! npc_uid) {
+        return(true);
+    }
+    if (~macro_event_general_active = false) {
+        return(true);
+    }
+    if (~macro_event_area(coord) = false) {
+        return(true);
+    }
+    // i think osrs added a distance check from spawn point after random event rework in 2014
+    // so going up ladders for example would make the random event despawn
+    return(false);
 }
+return(true);
 
-// https://youtu.be/HpmsgVshwxg?t=303
-npc_setmode(playerfollow); // other players can interact with the npc, so setmode to follow after teleporting.
-return(false);
-
-
-[proc,macro_event_lost]()(boolean)
-if (finduid(%npc_attacking_uid) = false) {
-    return(true);
+[proc,macro_event_lost_hostile]()(boolean)
+if (npc_getmode = opplayer2) {
+    return(false);
 }
-if (%macro_event_uid ! npc_uid & npc_param(follow_player_on_logout) = ^true) {
-    return(true);
+if (finduid(%npc_attacking_uid) = true) {
+    if (npc_range(coord) < 3 & ~npc_can_attack_player = true) {
+        npc_setmode(opplayer2);
+        return(false);
+    }
 }
-
-if ((npc_range(coord) > 10 | coordy(coord) ! coordy(npc_coord))) {
-    return(true);
-}
-
-return(false);
-
+return(true);
 // based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
 [proc,macro_event_combat_level]()(int)
 def_int $combat_level = ~player_combat_level;
