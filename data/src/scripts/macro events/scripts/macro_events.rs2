@@ -45,7 +45,6 @@ if ($event_coord = null) {
 %macro_event = $event;
 def_npc $event_npc = ~macro_event_npc($event);
 npc_add($event_coord, $event_npc, 1000);
-%macro_event_uid = npc_uid;
 switch_int ($event) {
     case ^macro_event_swarm : ~macro_event_swarm_spawn;
     case ^macro_event_triffid_friendly : ~macro_event_triffid_spawn;
@@ -189,7 +188,7 @@ if (%macro_event < add(~macro_event_general_count, 1)){
 
 [proc,macro_event_lost]()(boolean)
 if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event_uid ! npc_uid) {
+    if (~macro_event_general_active = false) {
         return(true);
     }
     if (~macro_event_area(coord) = false) {

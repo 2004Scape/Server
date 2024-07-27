@@ -109,6 +109,8 @@ scope=perm
 [multiway]
 type=boolean
 
+[varp_105]
+
 [newcomers_pos]
 transmit=yes
 
