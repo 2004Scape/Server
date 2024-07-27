@@ -75,6 +75,9 @@ if (finduid(%npc_attacking_uid) = true) {
         npc_setmode(playerfollow);
     }
 }
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(playerfollow);
+}
 
 // https://youtu.be/8wJZmDwcBKs?t=108
 [ai_opplayer2,macro_event_drunken_dwarf]

@@ -75,9 +75,6 @@ if (~macro_event_lost = true) {
     npc_queue(5, 0, 0);
     return;
 }
-// https://youtu.be/HpmsgVshwxg?t=309
-// npc will change modes if other people interact with it, so set it back to playerfollow
-
 if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(playerfollow);
 }

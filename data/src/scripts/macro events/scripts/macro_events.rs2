@@ -69,7 +69,7 @@ if (~in_tutorial_island($coord) = true) {
 return(true);
 
 // called when the player logs in
-[queue,macro_event_general_check]
+[queue,macro_event_login]
 if (~macro_event_general_active = true & nc_param(~macro_event_npc(%macro_event), follow_player_on_logout) = ^true) {
     ~macro_event_general_spawn(%macro_event);
 }
@@ -188,6 +188,12 @@ if (%macro_event < add(~macro_event_general_count, 1)){
 
 [proc,macro_event_lost]()(boolean)
 if (finduid(%npc_attacking_uid) = true) {
+    if (getqueue(macro_event_login) > 0) {
+        return(true);
+    }
+    if (%macro_event_uid ! npc_uid) {
+        return(true);
+    }
     if (~macro_event_general_active = false) {
         return(true);
     }
