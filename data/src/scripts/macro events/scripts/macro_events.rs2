@@ -201,6 +201,17 @@ if (finduid(%npc_attacking_uid) = true) {
 }
 return(true);
 
+[proc,macro_event_lost_hostile]()(boolean)
+if (npc_getmode = opplayer2) {
+    return(false);
+}
+if (finduid(%npc_attacking_uid) = true) {
+    if (npc_range(coord) < 3 & ~npc_can_attack_player = true) {
+        npc_setmode(opplayer2);
+        return(false);
+    }
+}
+return(true);
 // based off https://web.archive.org/web/20060814111255/http://www.zybez.net/misc.php?id=11
 [proc,macro_event_combat_level]()(int)
 def_int $combat_level = ~player_combat_level;
