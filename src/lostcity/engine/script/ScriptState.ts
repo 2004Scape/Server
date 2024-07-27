@@ -1,6 +1,6 @@
 import DbTableType from '#lostcity/cache/config/DbTableType.js';
 
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
@@ -14,7 +14,7 @@ import Player from '#lostcity/entity/Player.js';
 import { toInt32 } from '#lostcity/util/Numbers.js';
 
 export interface GosubStackFrame {
-    script: Script;
+    script: ScriptFile;
     pc: number;
     intLocals: number[];
     stringLocals: string[];
@@ -22,7 +22,7 @@ export interface GosubStackFrame {
 
 // for debugging stack traces
 export interface JumpStackFrame {
-    script: Script;
+    script: ScriptFile;
     pc: number;
 }
 
@@ -37,7 +37,7 @@ export default class ScriptState {
     static WORLD_SUSPENDED = 6; // suspended to move to world
 
     // interpreter
-    script: Script;
+    script: ScriptFile;
     trigger: ServerTriggerType;
     execution = ScriptState.RUNNING;
     executionHistory: number[] = [];
@@ -126,7 +126,7 @@ export default class ScriptState {
 
     lastInt: number = 0;
 
-    constructor(script: Script, args: ScriptArgument[] | null = []) {
+    constructor(script: ScriptFile, args: ScriptArgument[] | null = []) {
         this.script = script;
         this.trigger = script.info.lookupKey & 0xff;
 

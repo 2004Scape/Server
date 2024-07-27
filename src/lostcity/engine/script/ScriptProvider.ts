@@ -1,6 +1,6 @@
 import Packet from '#jagex2/io/Packet.js';
 
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 
 import {TargetOp} from '#lostcity/entity/PathingEntity.js';
@@ -15,12 +15,12 @@ export default class ScriptProvider {
     /**
      * Array of loaded scripts.
      */
-    private static scripts: Script[] = [];
+    private static scripts: ScriptFile[] = [];
 
     /**
      * Mapping of unique trigger + type/category/global key to script.
      */
-    private static scriptLookup = new Map<number, Script>();
+    private static scriptLookup = new Map<number, ScriptFile>();
 
     /**
      * Mapping of script names to its id.
@@ -59,9 +59,9 @@ export default class ScriptProvider {
             process.exit(1);
         }
 
-        const scripts = new Array<Script>(entries);
+        const scripts = new Array<ScriptFile>(entries);
         const scriptNames = new Map<string, number>();
-        const scriptLookup = new Map<number, Script>();
+        const scriptLookup = new Map<number, ScriptFile>();
 
         let loaded = 0;
         for (let id = 0; id < entries; id++) {
@@ -73,7 +73,7 @@ export default class ScriptProvider {
             try {
                 const data: Uint8Array = new Uint8Array(size);
                 dat.gdata(data, 0, data.length);
-                const script = Script.decode(id, new Packet(data));
+                const script = ScriptFile.decode(id, new Packet(data));
                 scripts[id] = script;
                 scriptNames.set(script.name, id);
 
@@ -101,7 +101,7 @@ export default class ScriptProvider {
      * @param id The script id to find.
      * @returns The script.
      */
-    static get(id: number): Script | undefined {
+    static get(id: number): ScriptFile | undefined {
         return this.scripts[id];
     }
 
@@ -110,7 +110,7 @@ export default class ScriptProvider {
      * @param name The script name to find.
      * @returns The script.
      */
-    static getByName(name: string): Script | undefined {
+    static getByName(name: string): ScriptFile | undefined {
         const id = ScriptProvider.scriptNames.get(name);
         if (id === undefined) {
             return undefined;
@@ -129,7 +129,7 @@ export default class ScriptProvider {
      * @param type The script subject type id.
      * @param category The script subject category id.
      */
-    static getByTrigger(trigger: TargetOp, type: number = -1, category: number = -1): Script | undefined {
+    static getByTrigger(trigger: TargetOp, type: number = -1, category: number = -1): ScriptFile | undefined {
         let script = ScriptProvider.scriptLookup.get(trigger | (0x2 << 8) | (type << 10));
         if (script) {
             return script;
@@ -152,7 +152,7 @@ export default class ScriptProvider {
      * @param type The script subject type id.
      * @param category The script subject category id.
      */
-    static getByTriggerSpecific(trigger: ServerTriggerType, type: number = -1, category: number = -1): Script | undefined {
+    static getByTriggerSpecific(trigger: ServerTriggerType, type: number = -1, category: number = -1): ScriptFile | undefined {
         if (type !== -1) {
             return ScriptProvider.scriptLookup.get(trigger | (0x2 << 8) | (type << 10));
         } else if (category !== -1) {

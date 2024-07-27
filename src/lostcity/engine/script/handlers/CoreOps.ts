@@ -5,7 +5,7 @@ import VarSharedType from '#lostcity/cache/config/VarSharedType.js';
 
 import World from '#lostcity/engine/World.js';
 
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
@@ -50,7 +50,7 @@ function jump(state: ScriptState, id: number) {
     state.frames = [];
 }
 
-function setupNewScript(state: ScriptState, script: Script) {
+function setupNewScript(state: ScriptState, script: ScriptFile) {
     state.script = script;
     state.pc = -1;
     state.intLocals = state.popInts(script.intArgCount);

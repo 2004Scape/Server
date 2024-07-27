@@ -1,4 +1,4 @@
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -61,7 +61,7 @@ export default class ScriptRunner {
      * @param on
      * @param args
      */
-    static init(script: Script, self: Entity | null = null, target: Entity | null = null, args: ScriptArgument[] | null = []) {
+    static init(script: ScriptFile, self: Entity | null = null, target: Entity | null = null, args: ScriptArgument[] | null = []) {
         const state = new ScriptState(script, args);
         state.self = self;
 

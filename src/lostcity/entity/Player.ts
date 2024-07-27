@@ -31,7 +31,7 @@ import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
 
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -632,7 +632,7 @@ export default class Player extends PathingEntity {
      * @param delay
      * @param args
      */
-    enqueueScript(script: Script, type: QueueType = PlayerQueueType.NORMAL, delay = 0, args: ScriptArgument[] = []) {
+    enqueueScript(script: ScriptFile, type: QueueType = PlayerQueueType.NORMAL, delay = 0, args: ScriptArgument[] = []) {
         const request = new EntityQueueRequest(type, script, args, delay);
         if (type === PlayerQueueType.ENGINE) {
             request.delay = 0;
@@ -692,7 +692,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    setTimer(type: PlayerTimerType, script: Script, args: ScriptArgument[] = [], interval: number) {
+    setTimer(type: PlayerTimerType, script: ScriptFile, args: ScriptArgument[] = [], interval: number) {
         const timerId = script.id;
         const timer = {
             type,
