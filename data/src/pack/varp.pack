@@ -103,7 +103,7 @@
 102=poison
 103=stunned
 104=multiway
-105=chest_macro_gas_coord
+105=varp_105
 106=newcomers_pos
 107=priest_progress
 108=attackstyle_magic
@@ -207,7 +207,7 @@
 206=macro_whirlpool_counter
 207=macro_gas_counter
 208=macro_ent_counter
-209=varp_209
+209=macro_chest_gas_coord
 210=smithing_bars
 211=smithing_level
 212=itwatchtower_progress

@@ -1,52 +1,26 @@
-[oploc1,_taverly_dungeon_prison_door]
+[label,taverly_dungeon_open_doors](int $side)
 def_coord $southern_position = 0_45_153_7_37;
 def_coord $northern_position = 0_45_153_7_40;
-
-if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Eastern side of the doors.
-    loc_findallzone($southern_position);
-    while(loc_findnext = true) {
-        if(loc_type = loc_818) {
-            def_coord $spawncoord = loc_coord;
-            loc_del(500);
-            mes("Suddenly the suit of armour comes to life!");
-            npc_add($spawncoord, suit_of_armour, 500);
-            return;
-        }
+def_boolean $inside = ~check_axis(coord, loc_coord, loc_angle);
+if($inside = false) { 
+    if(.loc_find($northern_position, loc_818) = true) {
+        .loc_del(500);
+        mes("Suddenly the suit of armour comes to life!");
+        npc_add($northern_position, suit_of_armour, 500);
+        ~npc_retaliate(0);
+        return;
     }
-
-    loc_findallzone($northern_position);
-    while(loc_findnext = true) {
-        if(loc_type = loc_818) {
-            def_coord $spawncoord = loc_coord;
-            loc_del(500);
-            mes("Suddenly the suit of armour comes to life!");
-            npc_add($spawncoord, suit_of_armour, 500);
-            return;
-        }
+    if(.loc_find($southern_position, loc_818) = true) {
+        .loc_del(500);
+        mes("Suddenly the suit of armour comes to life!");
+        npc_add($southern_position, suit_of_armour, 500);
+        ~npc_retaliate(0);
+        return;
     }
-    @taverly_dungeon_open_doors;
+    ~open_and_close_double_door2($inside, $side, grate_open); // iron_door_open 
+    return;
 }
-@taverly_dungeon_open_doors;
+~open_and_close_double_door2($inside, $side, grate_open);
 
-[label,taverly_dungeon_open_doors]
-def_coord $central_position = 0_45_153_8_38;
-
-loc_findallzone($central_position);
-sound_synth(grate_open, 0, 0);
-while(loc_findnext = true) {
-     if(loc_category = taverly_dungeon_prison_door) {
-            def_coord $central_coord = loc_coord;
-            def_int $orig_angle = loc_angle;
-            loc_del(2);
-            if(loc_type = loc_2144) {
-                loc_add(movecoord($central_coord, -1, 0, 0), loc_1546, 3, loc_shape, 2); // Southern Door
-                loc_add(movecoord($central_coord, -1, 0, 1), loc_1541, 1, loc_shape, 2); // Northern Door
-            }
-            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
-     }
-}
-if(coord ! 0_45_153_9_38 & coord ! 0_45_153_9_39) { // Easter Side of doors
-    p_teleport(movecoord(coord, 1, 0, 0));
-} else {
-    p_teleport(movecoord(coord, -1, 0, 0));
-}
+[oploc1,loc_2143] @taverly_dungeon_open_doors(^right);
+[oploc1,loc_2144] @taverly_dungeon_open_doors(^left);

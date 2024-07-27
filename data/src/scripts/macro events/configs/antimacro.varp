@@ -13,6 +13,6 @@ type=npc_uid
 
 [macro_ent_counter]
 
-[chest_macro_gas_coord]
+[macro_chest_gas_coord]
 type=coord
 scope=perm

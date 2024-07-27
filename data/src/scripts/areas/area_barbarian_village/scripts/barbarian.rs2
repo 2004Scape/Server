@@ -10,7 +10,7 @@ switch_int(random(11)) {
     case 2: 
     ~chatnpc("<p,happy>Good day, my dear fellow.");
     case 3: 
-    ~chatnpc("<p,angry>Ug");
+    ~chatnpc("<p,angry>Ugh!");
     case 4: 
     ~mesbox("The barbarian ignores you.");
     case 5: 

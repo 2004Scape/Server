@@ -1,0 +1,4 @@
+^druid_not_started = 0
+^druid_started = 1
+^druid_spoken_sanfew = 2
+^druid_given_ingredients = 3
