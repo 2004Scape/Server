@@ -12531,6 +12531,7 @@ retex1s=wall
 retex1d=mossybricks
 category=door_open_and_close
 param=next_loc_stage,loc_1588
+param=open_sound,coffin_open
 param=game_message,You push against the wall. You find a secret passage.
 
 [blackknight_grate]
