@@ -189,6 +189,9 @@ if (%macro_event < add(~macro_event_general_count, 1)){
 
 [proc,macro_event_lost]()(boolean)
 if (finduid(%npc_attacking_uid) = true) {
+    if (getqueue(macro_event_general_check) > 0) {
+        return(true);
+    }
     if (%macro_event_uid ! npc_uid) {
         return(true);
     }
