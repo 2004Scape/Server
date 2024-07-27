@@ -58,7 +58,7 @@ if (uid ! %npc_attacking_uid) {
     }
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
     ~chatnpc("<p,neutral>Have a nice day, <text_gender("master", "mistress")>.");
     return;
 }

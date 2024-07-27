@@ -2,6 +2,11 @@
 scope=perm
 protect=no
 
+[macro_event_uid]
+scope=perm
+protect=no
+type=npc_uid
+
 [macro_whirlpool_counter]
 
 [macro_gas_counter]

@@ -50,7 +50,7 @@ if (uid ! %npc_attacking_uid) {
     ~chatnpc("<p,drunk>You're not my matey!"); // osrs
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
     ~chatnpc("<p,drunk>'Ave a good 'un buddy!"); // osrs
     return;
 }
@@ -65,10 +65,13 @@ npc_queue(6, 0, 0); // say good bye
 if (~npc_out_of_combat = false) {
     return;
 }
-if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
-    // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
-    npc_queue(5, 0, 0); // despawn
-    return;
+if (finduid(%npc_attacking_uid) = true) {
+    if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=79
+        // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=81
+        %macro_event = ^no_macro_event;
+        npc_queue(5, 0, 0); // despawn
+        return;
+    }
 }
 if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(playerfollow);
