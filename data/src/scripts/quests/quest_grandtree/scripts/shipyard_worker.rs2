@@ -1,0 +1,63 @@
+[opnpc1,_shipyard_worker]
+~chatplayer("<p,neutral>Hello.");
+switch_int(random(15)) {
+    case 0:
+        ~chatplayer("<p,neutral>You look busy!");
+        ~chatnpc("<p,sad>We need double the men to get|this order out on time!");
+    case 1:
+        ~chatnpc("<p,neutral>What do you want?");
+        ~chatplayer("<p,angry>Is that any way to talk to your new superior?");
+        ~chatnpc("<p,shock>Oh, I'm sorry, I didn't realise!");
+    case 2:
+        ~chatplayer("<p,neutral>Quite an impressive set up!");
+        ~chatnpc("<p,neutral>It needs to be.|There's no other way to build a fleet of this size!");
+    case 3:
+        ~chatnpc("<p,angry>Ouch!");
+        ~chatplayer("<p,confused>What's wrong?!");
+        ~chatnpc("<p,sad>I cut my finger!");
+        ~chatnpc("<p,sad>Do you have a bandage?");
+        ~chatplayer("<p,sad>I'm afraid not.");
+        ~chatnpc("<p,neutral>That's ok, I'll use my shirt.");
+    case 4:
+        ~chatnpc("<p,neutral>Hello there. I haven't seen you before?");
+        ~chatplayer("<p,happy>I'm new!");
+        ~chatnpc("<p,neutral>Well it's hard work, but the pay is good.");
+    case 5:
+        ~chatplayer("<p,neutral>Looks like hard work?");
+        ~chatnpc("<p,neutral>I like to keep busy.");
+    case 6:
+        ~chatplayer("<p,happy>Quite a few ships you're building!");
+        ~chatnpc("<p,happy>This is just the start!|The completed fleet will be awesome!");
+    case 7:
+        ~chatnpc("<p,happy>Hello matey!");
+        ~chatplayer("<p,neutral>How are you?");
+        ~chatnpc("<p,sad>Tired!");
+        ~chatplayer("<p,neutral>You shouldn't work so hard!");
+    case 8:
+        ~chatplayer("<p,neutral>What are you building?");
+        ~chatnpc("<p,laugh>Are you serious?");
+        ~chatplayer("<p,laugh>Of course not!|You're obviously building a boat.");
+    case 9:
+        ~chatplayer("<p,neutral>How are you?");
+        ~chatnpc("<p,angry>Too busy to waste time gossiping!");
+        ~chatplayer("<p,shock>Touchy!");
+    case 10:
+        ~chatnpc("<p,angry>I've had enough of this!");
+        ~chatplayer("<p,shock>What?");
+        ~chatnpc("<p,angry>Breaking my back for pennies! It's just not on!");
+    case 11:
+        ~chatnpc("<p,neutral>Hello there,|are you too lazy to work as well?");
+        ~chatplayer("<p,confused>Something like that.");
+        ~chatnpc("<p,happy>I'm just sun bathing!");
+    case 12:
+        ~chatnpc("<p,neutral>No time to talk|we've a fleet to build!");
+    case 13:
+        ~chatnpc("<p,neutral>Can I help you?");
+        ~chatplayer("<p,neutral>I'm just looking around.");
+    case 14:
+        ~chatplayer("<p,neutral>So where are you sailing?");
+        ~chatnpc("<p,neutral>What do you mean?");
+        ~chatplayer("<p,laugh>Don't worry, just kidding!");
+        ~chatnpc("<p,neutral>Well there's plenty of work to be done,|so if you don't mind...");
+        ~chatplayer("<p,neutral>Of course. Sorry to have disturbed you.");
+}

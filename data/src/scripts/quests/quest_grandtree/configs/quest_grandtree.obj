@@ -1,4 +1,4 @@
-[obj_783]
+[bark_sample]
 name=Bark sample
 desc=A sample of the bark from the Grand Tree.
 members=yes
@@ -13,7 +13,7 @@ recol1d=6240
 2dxan=264
 weight=15g
 
-[obj_784]
+[translation_book]
 name=Translation book
 desc=A book to translate the ancient gnome language into English.
 members=yes

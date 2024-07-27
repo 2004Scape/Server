@@ -168,7 +168,7 @@
 167=npc_167
 168=gnome_woman_white
 169=gnome_woman_black
-170=npc_170
+170=gnome_pilot
 171=npc_171
 172=dark_wizard_earth
 173=npc_173
@@ -673,7 +673,7 @@
 672=anita
 673=grandtree_charlie
 674=foreman
-675=shipyard_worker
+675=grandtree_shipyard_worker
 676=femi
 677=grandtree_black_demon
 678=ranging_guild_guard

@@ -1,2 +1,22 @@
 [oploc1,loc_2446]
 mes("The trapdoor won't open!");
+
+[oploc1,loc_2447]
+if(stat(agility) < 25) {
+    ~mesbox("You need at least 25 Agility to climb the tree.");
+    return;
+}
+
+[oploc1,loc_2436]
+~mesbox("The chest is locked.");
+
+[oploc2,loc_2434] @open_cupboard(false);
+
+[oploc2,loc_2435]
+mes("You search the cupboard but you find nothing.");
+
+[oploc3,loc_2435] 
+@close_cupboard(false);
+
+[oploc1,loc_2438]
+~mesbox("The gate is locked.");

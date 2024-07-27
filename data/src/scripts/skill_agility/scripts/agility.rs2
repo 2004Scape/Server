@@ -134,7 +134,7 @@ p_delay($delay);
 [proc,forcemove](coord $dest_coord)
 ~agility_force_move(0, human_walk_f, $dest_coord);
 
-[proc,forcemove2](coord $dest_coord)
+[proc,forcemove2](coord $dest_coord)(int)
 def_int $change_x = calc(coordx($dest_coord) - coordx(coord));
 def_int $change_z = calc(coordz($dest_coord) - coordz(coord));
 ~clipped_telewalk($change_x, $change_z);

@@ -24,7 +24,7 @@ switch_int(~p_choice2("Sorry, I'm a bit busy.", 1, "OK then.", 2)) {
         anim(human_pickupfloor, 0);
         p_delay(0);
         if(loc_find(movecoord(coord, -1, 0, 0), loc_361) = true) {
-            loc_change(loc_83, 200); // rs3 removes loc here instead, this can get you stuck, not sure which is correct cause the cart is changed on RS3 as well
+            loc_change(loc_83, 200); // rs3 removes loc here instead, this can get you stuck, not sure which is correct cause the cart doesn't change on RS3 as well
         }
         facesquare(0_38_52_26_50);
         p_delay(0);

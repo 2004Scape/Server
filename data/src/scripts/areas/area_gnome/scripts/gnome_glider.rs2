@@ -1,0 +1,35 @@
+[opnpc1,gnome_pilot]
+if(inzone(0_45_47_35_42, 0_45_47_45_53, npc_coord) = true) {
+    @gnome_pilot_crashkaramja;
+}
+~chatnpc("<p,neutral>Welcome to Gnome Air!");
+@multi4("What's Gnome Air?", gnome_pilot_what, "Where can you take me?", gnome_pilot_where, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+
+[label,gnome_pilot_what]
+~chatplayer("<p,quiz>What's Gnome Air?");
+~chatnpc("<p,happy>Gnome Air is the finest airline in RuneScape!");
+@multi3("Where can you take me?", gnome_pilot_where, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+[label,gnome_pilot_where]
+~chatplayer("<p,quiz>Where can you take me?");
+~chatnpc("<p,sad>Glough has ordered that I only take gnomes on Gnome Air.");
+@multi3("What's Gnome Air?", gnome_pilot_what, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+[label,gnome_pilot_how]
+~chatplayer("<p,quiz>How much for one-way to Varrock?");
+~chatnpc("<p,sad>I can't take you anywhere.");
+~chatplayer("<p,sad>How come?");
+~chatnpc("<p,sad>I would, but Glough has told me not to take humans on Gnome Air.");
+@multi3("What's Gnome Air?", gnome_pilot_what, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+[label,gnome_pilot_leave]
+~chatplayer("<p,confused>I'll leave you to it.");
+
+[label,gnome_pilot_crashkaramja]
+if(%grandtree_progress >= 80) {
+    ~chatnpc("<p,sad>I don't think I can fix this.|Looks like I'll be heading back by foot.");
+    return;
+}
+~chatplayer("<p,quiz>What happened here?");
+~chatnpc("<p,shifty>Call it 'creative landing'.");
