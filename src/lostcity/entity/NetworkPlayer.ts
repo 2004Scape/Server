@@ -276,8 +276,8 @@ export class NetworkPlayer extends Player {
                 const { level, x, z } = Position.unpackCoord(this.lastZone);
                 const mx = x >> 6;
                 const mz = z >> 6;
-                const lx = (this.x & 0x3f) >> 3 << 3;
-                const lz = (this.z & 0x3f) >> 3 << 3;
+                const lx = (x & 0x3f) >> 3 << 3;
+                const lz = (z & 0x3f) >> 3 << 3;
                 const oldTrigger = ScriptProvider.getByName(`[zoneexit,${level}_${mx}_${mz}_${lx}_${lz}]`);
 
                 // todo: getByTrigger doesn't have enough bits to store packed coords
