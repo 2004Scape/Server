@@ -192,6 +192,9 @@ if (finduid(%npc_attacking_uid) = true) {
     if (%macro_event_uid ! npc_uid) {
         return(true);
     }
+    if (~macro_event_general_active = false) {
+        return(true);
+    }
     if (~macro_event_area(coord) = false) {
         return(true);
     }
