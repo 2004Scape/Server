@@ -1,25 +1,25 @@
 // https://www.youtube.com/watch?v=cz0FGYbfzzk
 // https://www.youtube.com/watch?v=IC2n8t76DDY
 
-[levelup,attack] queue(levelup, 0, enum(int, stat, stats, ^attack));
-[levelup,strength] queue(levelup, 0, enum(int, stat, stats, ^strength));
-[levelup,ranged] queue(levelup, 0, enum(int, stat, stats, ^ranged));
-[levelup,magic] queue(levelup, 0, enum(int, stat, stats, ^magic));
-[levelup,defence] queue(levelup, 0, enum(int, stat, stats, ^defence));
-[levelup,hitpoints] queue(levelup, 0, enum(int, stat, stats, ^hitpoints));
-[levelup,prayer] queue(levelup, 0, enum(int, stat, stats, ^prayer));
-[levelup,agility] queue(levelup, 0, enum(int, stat, stats, ^agility));
-[levelup,herblore] queue(levelup, 0, enum(int, stat, stats, ^herblore));
-[levelup,thieving] queue(levelup, 0, enum(int, stat, stats, ^thieving));
-[levelup,crafting] queue(levelup, 0, enum(int, stat, stats, ^crafting));
-[levelup,runecraft] queue(levelup, 0, enum(int, stat, stats, ^runecraft));
-[levelup,mining] queue(levelup, 0, enum(int, stat, stats, ^mining));
-[levelup,smithing] queue(levelup, 0, enum(int, stat, stats, ^smithing));
-[levelup,fishing] queue(levelup, 0, enum(int, stat, stats, ^fishing));
-[levelup,cooking] queue(levelup, 0, enum(int, stat, stats, ^cooking));
-[levelup,firemaking] queue(levelup, 0, enum(int, stat, stats, ^firemaking));
-[levelup,woodcutting] queue(levelup, 0, enum(int, stat, stats, ^woodcutting));
-[levelup,fletching] queue(levelup, 0, enum(int, stat, stats, ^fletching));
+[advancestat,attack] queue(levelup, 0, enum(int, stat, stats, ^attack));
+[advancestat,strength] queue(levelup, 0, enum(int, stat, stats, ^strength));
+[advancestat,ranged] queue(levelup, 0, enum(int, stat, stats, ^ranged));
+[advancestat,magic] queue(levelup, 0, enum(int, stat, stats, ^magic));
+[advancestat,defence] queue(levelup, 0, enum(int, stat, stats, ^defence));
+[advancestat,hitpoints] queue(levelup, 0, enum(int, stat, stats, ^hitpoints));
+[advancestat,prayer] queue(levelup, 0, enum(int, stat, stats, ^prayer));
+[advancestat,agility] queue(levelup, 0, enum(int, stat, stats, ^agility));
+[advancestat,herblore] queue(levelup, 0, enum(int, stat, stats, ^herblore));
+[advancestat,thieving] queue(levelup, 0, enum(int, stat, stats, ^thieving));
+[advancestat,crafting] queue(levelup, 0, enum(int, stat, stats, ^crafting));
+[advancestat,runecraft] queue(levelup, 0, enum(int, stat, stats, ^runecraft));
+[advancestat,mining] queue(levelup, 0, enum(int, stat, stats, ^mining));
+[advancestat,smithing] queue(levelup, 0, enum(int, stat, stats, ^smithing));
+[advancestat,fishing] queue(levelup, 0, enum(int, stat, stats, ^fishing));
+[advancestat,cooking] queue(levelup, 0, enum(int, stat, stats, ^cooking));
+[advancestat,firemaking] queue(levelup, 0, enum(int, stat, stats, ^firemaking));
+[advancestat,woodcutting] queue(levelup, 0, enum(int, stat, stats, ^woodcutting));
+[advancestat,fletching] queue(levelup, 0, enum(int, stat, stats, ^fletching));
 
 [queue,levelup](stat $stat)
 db_find(levelup:stat, $stat);

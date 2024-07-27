@@ -138,25 +138,25 @@ enum ServerTriggerType {
     OPHELDT = 146,
 
     IF_BUTTON = 147,
-    INV_BUTTON1 = 148,
-    INV_BUTTON2 = 149,
-    INV_BUTTON3 = 150,
-    INV_BUTTON4 = 151,
-    INV_BUTTON5 = 152,
-    INV_BUTTOND = 153,
-    IF_CLOSE = 154,
+    IF_CLOSE = 148,
+    INV_BUTTON1 = 149,
+    INV_BUTTON2 = 150,
+    INV_BUTTON3 = 151,
+    INV_BUTTON4 = 152,
+    INV_BUTTON5 = 153,
+    INV_BUTTOND = 154,
 
-    LOGIN = 155,
-    LOGOUT = 156,
-    TUTORIAL_CLICKSIDE = 157,
+    WALKTRIGGER = 155,
+    AI_WALKTRIGGER = 156,
 
-    // todo: this probably doesn't exist as-is in 2004
-    MOVE = 158,
-
-    WALKTRIGGER = 159,
-    AI_WALKTRIGGER = 160,
-
-    LEVELUP = 161
+    LOGIN = 157,
+    LOGOUT = 158,
+    TUTORIAL = 159,
+    ADVANCESTAT = 160,
+    MAPZONE = 161,
+    MAPZONEEXIT = 162,
+    ZONE = 163,
+    ZONEEXIT = 164
 }
 
 namespace ServerTriggerType {

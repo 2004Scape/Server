@@ -292,7 +292,7 @@ export default class Player extends PathingEntity {
     refreshModal = false;
     modalSticky = -1;
     overlaySide: number[] = new Array(14).fill(-1);
-    receivedFirstClose = false; // workaround to not close welcome screen on login
+    receivedFirstClose = true; // workaround to not close welcome screen on login
 
     protect: boolean = false; // whether protected access is available
     activeScript: ScriptState | null = null;
@@ -314,6 +314,10 @@ export default class Player extends PathingEntity {
 
     afkZones: Int32Array = new Int32Array(2);
     lastAfkZone: number = 0;
+
+    // movement triggers
+    lastMapZone: number = -1;
+    lastZone: number = -1;
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.

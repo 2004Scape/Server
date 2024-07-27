@@ -1,7 +1,0 @@
-[proc,move_multiwaytrigger](coord $coord)
-def_boolean $inmulti = ~inzone_coord_pair_table(multiway_zones, $coord);
-
-if (%multiway ! $inmulti) {
-    if_multizone($inmulti);
-    %multiway = $inmulti;
-}

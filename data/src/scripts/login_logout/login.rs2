@@ -50,7 +50,6 @@ if (%tutorial_progress < ^tutorial_complete) {
         // This is a check to not bork every account that currently has a tutorial complete progress of 5.
         // Remove after alpha!
         %tutorial_progress = ^tutorial_complete;
-        last_login_info;
         ~initalltabs;
     } else if (~in_tutorial_island(coord) = false & %tutorial_progress < ^tutorial_complete) {
         // Checking if you're off tutorial island but it's not complete
@@ -62,7 +61,9 @@ if (%tutorial_progress < ^tutorial_complete) {
         @start_tutorial;
     }
 } else {
-    last_login_info;
+    if (map_production = true) {
+        // last_login_info; // todo: engine queue this or make it run after zone triggers
+    }
     ~initalltabs;
 }
 // after init tabs

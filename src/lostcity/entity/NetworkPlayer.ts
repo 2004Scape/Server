@@ -36,6 +36,9 @@ import Logout from '#lostcity/network/outgoing/model/Logout.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
+import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
+import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
+import { PlayerQueueType } from './EntityQueueRequest.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -242,6 +245,40 @@ export class NetworkPlayer extends Player {
 
                 activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
             }
+        }
+
+        const mapZone = Position.packCoord(0, this.x >> 6 << 6, this.z >> 6 << 6);
+        if (this.lastMapZone !== mapZone) {
+            if (this.lastMapZone !== -1) {
+                const oldTrigger = ScriptProvider.getByTrigger(ServerTriggerType.MAPZONEEXIT, this.lastMapZone, -1);
+                if (oldTrigger) {
+                    this.enqueueScript(oldTrigger, PlayerQueueType.ENGINE);
+                }
+            }
+
+            const newTrigger = ScriptProvider.getByTrigger(ServerTriggerType.MAPZONE, mapZone, -1);
+            if (newTrigger) {
+                this.enqueueScript(newTrigger, PlayerQueueType.ENGINE);
+            }
+
+            this.lastMapZone = mapZone;
+        }
+
+        const zone = Position.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+        if (this.lastZone !== zone) {
+            if (this.lastZone !== -1) {
+                const oldTrigger = ScriptProvider.getByTrigger(ServerTriggerType.ZONEEXIT, this.lastZone, -1);
+                if (oldTrigger) {
+                    this.enqueueScript(oldTrigger, PlayerQueueType.ENGINE);
+                }
+            }
+
+            const newTrigger = ScriptProvider.getByTrigger(ServerTriggerType.ZONE, zone, -1);
+            if (newTrigger) {
+                this.enqueueScript(newTrigger, PlayerQueueType.ENGINE);
+            }
+
+            this.lastZone = zone;
         }
     }
 

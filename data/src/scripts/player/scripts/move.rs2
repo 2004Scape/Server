@@ -1,4 +1,0 @@
-[move,_]
-~move_musictrigger(coord);
-~move_multiwaytrigger(coord);
-~move_ikovtrigger(coord);
