@@ -70,6 +70,9 @@ if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb
     npc_queue(5, 0, 0); // despawn
     return;
 }
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(playerfollow);
+}
 
 
 // https://youtu.be/8wJZmDwcBKs?t=108
