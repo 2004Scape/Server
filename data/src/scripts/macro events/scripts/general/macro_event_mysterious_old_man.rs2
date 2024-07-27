@@ -57,7 +57,7 @@ if (uid ! %npc_attacking_uid) {
     }
     return;
 }
-if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
+if (%macro_event = ^no_macro_event) {
     ~chatnpc("<p,neutral>Goodbye.");
     return;
 }

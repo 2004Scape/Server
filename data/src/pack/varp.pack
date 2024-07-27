@@ -203,11 +203,11 @@
 202=varp_202
 203=mill_flour
 204=macro_event
-205=macro_event_uid
+205=macro_chest_gas_coord
 206=macro_whirlpool_counter
 207=macro_gas_counter
 208=macro_ent_counter
-209=macro_chest_gas_coord
+209=varp_209
 210=smithing_bars
 211=smithing_level
 212=itwatchtower_progress
