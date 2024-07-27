@@ -203,7 +203,7 @@
 202=varp_202
 203=mill_flour
 204=macro_event
-205=macro_chest_gas_coord
+205=macro_event_uid
 206=macro_whirlpool_counter
 207=macro_gas_counter
 208=macro_ent_counter
