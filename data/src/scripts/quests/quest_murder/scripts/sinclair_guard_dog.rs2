@@ -1,4 +1,3 @@
 [ai_timer,sinclair_guard_dog]
-if(random(40) = 0) { // approximation
-    npc_say("BARK");
-}
+npc_say("BARK");
+npc_settimer(~random_range(1, 40));

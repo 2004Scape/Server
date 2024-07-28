@@ -8312,7 +8312,7 @@ walkanim=dog_walk
 readyanim=dog_ready
 vislevel=1
 model1=model_2936_npc
-timer=1
+timer=40
 param=death_anim,dog_death
 
 [npc_822]

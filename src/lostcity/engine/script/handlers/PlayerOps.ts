@@ -1001,7 +1001,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_COORD]: checkedHandler(ActivePlayer, state => {
-        state.pushInt(Position.packCoord(state.activePlayer.level, state.activePlayer.lastX, state.activePlayer.lastZ));
+        state.pushInt(Position.packCoord(state.activePlayer.level, state.activePlayer.lastStepX, state.activePlayer.lastStepZ));
     }),
 };
 
