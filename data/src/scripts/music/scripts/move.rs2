@@ -166,7 +166,9 @@ if (%music_mapsquare ! $mapsquare) {
 
 [mapzone,0_41_152] ~move_musictrigger(coord);
 
-[mapzone,0_41_153] ~move_musictrigger(coord);
+[mapzone,0_41_153]
+~move_musictrigger(coord);
+settimer(move_ikovtrigger, 1);
 
 [mapzone,0_41_154] ~move_musictrigger(coord);
 

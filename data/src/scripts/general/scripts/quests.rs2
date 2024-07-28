@@ -239,5 +239,5 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {
-    softtimer(blanket_ladder, 1);
+    settimer(blanket_ladder, 1);
 }

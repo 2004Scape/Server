@@ -33,28 +33,25 @@ if($entering = false | %ikov_lever = 1) {
 }
 ~mesbox("The door won't open!");
 
-[proc,move_ikovtrigger](coord $coord)
+[mapzoneexit,0_41_153] cleartimer(move_ikovtrigger);
+
+[timer,move_ikovtrigger]
 if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = true) {
-    if (coordx(coord) = coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
-        if(coordx(last_coord) <= coordx(^ikovbridge_zone_lower)) {
-            p_teleport(movecoord(coord, -1, 0, 0));
-        } else {
-            p_teleport(movecoord(coord, 1, 0, 0));
-        }
-    }
-    p_stopaction;
     queue(ikov_movebridge, 0);
 }
 
 [queue,ikov_movebridge]
-if(coordx(coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
-    ~forcemove(movecoord(coord, 1, 0, 0));
+if(inzone(^ikovbridge_zone_lower, ^ikovbridge_zone_upper, coord) = false) {
+    return;
+}
+if(coordx(last_coord) <= coordx(movecoord(^ikovbridge_zone_lower, 1, 0, 0))) {
+    ~forcemove(movecoord(^ikovbridge_zone_lower, 1, 0, abs(calc(coordz(^ikovbridge_zone_lower) - coordz(coord)))));
     if(weight >= 0) {
         @ikov_bridgefail;
     }
     ~forcemove(movecoord(coord, 2, 0, 0));
 } else {
-    ~forcemove(movecoord(coord, -1, 0, 0));
+    ~forcemove(movecoord(^ikovbridge_zone_lower, 1, 0, abs(calc(coordz(^ikovbridge_zone_lower) - coordz(coord)))));
     if(weight >= 0) {
         @ikov_bridgefail;
     }
