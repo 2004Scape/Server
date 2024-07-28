@@ -36,8 +36,6 @@ import Logout from '#lostcity/network/outgoing/model/Logout.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
-import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
-import { PlayerQueueType } from './EntityQueueRequest.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -250,23 +248,10 @@ export class NetworkPlayer extends Player {
         if (this.lastMapZone !== mapZone) {
             if (this.lastMapZone !== -1) {
                 const { x, z } = Position.unpackCoord(this.lastMapZone);
-                const oldTrigger = ScriptProvider.getByName(`[mapzoneexit,0_${x >> 6}_${z >> 6}]`);
-
-                // todo: getByTrigger doesn't have enough bits to store packed coords
-                // const oldTrigger = ScriptProvider.getByTrigger(ServerTriggerType.MAPZONEEXIT, this.lastMapZone, -1);
-                if (oldTrigger) {
-                    this.enqueueScript(oldTrigger, PlayerQueueType.ENGINE);
-                }
+                this.triggerMapzoneExit(x, z);
             }
 
-            const newTrigger = ScriptProvider.getByName(`[mapzone,0_${this.x >> 6}_${this.z >> 6}]`);
-
-            // todo: getByTrigger doesn't have enough bits to store packed coords
-            // const newTrigger = ScriptProvider.getByTrigger(ServerTriggerType.MAPZONE, mapZone, -1);
-            if (newTrigger) {
-                this.enqueueScript(newTrigger, PlayerQueueType.ENGINE);
-            }
-
+            this.triggerMapzone(this.x >> 6 << 6, this.z >> 6 << 6);
             this.lastMapZone = mapZone;
         }
 
@@ -274,31 +259,10 @@ export class NetworkPlayer extends Player {
         if (this.lastZone !== zone) {
             if (this.lastZone !== -1) {
                 const { level, x, z } = Position.unpackCoord(this.lastZone);
-                const mx = x >> 6;
-                const mz = z >> 6;
-                const lx = (x & 0x3f) >> 3 << 3;
-                const lz = (z & 0x3f) >> 3 << 3;
-                const oldTrigger = ScriptProvider.getByName(`[zoneexit,${level}_${mx}_${mz}_${lx}_${lz}]`);
-
-                // todo: getByTrigger doesn't have enough bits to store packed coords
-                // const oldTrigger = ScriptProvider.getByTrigger(ServerTriggerType.ZONEEXIT, this.lastZone, -1);
-                if (oldTrigger) {
-                    this.enqueueScript(oldTrigger, PlayerQueueType.ENGINE);
-                }
+                this.triggerZoneExit(level, x, z);
             }
 
-            const mx = this.x >> 6;
-            const mz = this.z >> 6;
-            const lx = (this.x & 0x3f) >> 3 << 3;
-            const lz = (this.z & 0x3f) >> 3 << 3;
-            const newTrigger = ScriptProvider.getByName(`[zone,${this.level}_${mx}_${mz}_${lx}_${lz}]`);
-
-            // todo: getByTrigger doesn't have enough bits to store packed coords
-            // const newTrigger = ScriptProvider.getByTrigger(ServerTriggerType.ZONE, zone, -1);
-            if (newTrigger) {
-                this.enqueueScript(newTrigger, PlayerQueueType.ENGINE);
-            }
-
+            this.triggerZone(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
             this.lastZone = zone;
         }
     }

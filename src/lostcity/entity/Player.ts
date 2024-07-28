@@ -415,14 +415,45 @@ export default class Player extends PathingEntity {
             this.executeScript(ScriptRunner.init(loginTrigger, this), true);
         }
 
-        // play music, multiway, etc
-        const moveTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-        if (moveTrigger) {
-            const script = ScriptRunner.init(moveTrigger, this);
-            this.runScript(script, true);
-        }
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+    }
+
+    triggerMapzone(x: number, z: number) {
+        // todo: getByTrigger needs more bits to lookup by coord
+        const trigger = ScriptProvider.getByName(`[mapzone,0_${x >> 6}_${z >> 6}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
+    }
+
+    triggerMapzoneExit(x: number, z: number) {
+        const trigger = ScriptProvider.getByName(`[mapzoneexit,0_${x >> 6}_${z >> 6}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
+    }
+
+    triggerZone(level: number, x: number, z: number) {
+        const mx = x >> 6;
+        const mz = z >> 6;
+        const lx = (x & 0x3f) >> 3 << 3;
+        const lz = (z & 0x3f) >> 3 << 3;
+        const trigger = ScriptProvider.getByName(`[zone,${level}_${mx}_${mz}_${lx}_${lz}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
+    }
+
+    triggerZoneExit(level: number, x: number, z: number) {
+        const mx = x >> 6;
+        const mz = z >> 6;
+        const lx = (x & 0x3f) >> 3 << 3;
+        const lz = (z & 0x3f) >> 3 << 3;
+        const trigger = ScriptProvider.getByName(`[zoneexit,${level}_${mx}_${mz}_${lx}_${lz}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
     }
 
     calculateRunWeight() {
@@ -509,12 +540,6 @@ export default class Player extends PathingEntity {
         }
 
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
-        if (moved) {
-            const trigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-            if (trigger) {
-                this.runScript(ScriptRunner.init(trigger, this), true);
-            }
-        }
         this.drainEnergy(moved);
         this.recoverEnergy(moved);
         if (this.runenergy === 0) {
@@ -1473,7 +1498,7 @@ export default class Player extends PathingEntity {
                 // replenish 1 of the stat upon levelup.
                 this.levels[stat] += 1;
             }
-            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
 
             if (script) {
                 this.enqueueScript(script, PlayerQueueType.ENGINE);
