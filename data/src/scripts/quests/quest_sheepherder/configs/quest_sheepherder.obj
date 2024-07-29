@@ -1,4 +1,4 @@
-[obj_278]
+[cattle_prod]
 name=Prod
 desc=An old cattle prod.
 members=yes
@@ -26,7 +26,7 @@ param=defend_anim,human_sword_defend2
 param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 
-[obj_279]
+[poisoned_feed]
 name=Feed
 desc=This looks nasty.
 cost=3
@@ -82,7 +82,7 @@ model=model_2674_obj
 2dxan=400
 weight=3lb
 
-[obj_284]
+[plague_jacket]
 name=Plague jacket
 desc=A thick heavy leather top.
 members=yes
@@ -103,7 +103,7 @@ womanwear=model_459_obj_wear,0
 womanwear2=model_331_obj_wear
 weight=6lb
 
-[obj_285]
+[plague_trousers]
 name=Plague trousers
 desc=A thick pair of leather trousers.
 members=yes

@@ -10771,7 +10771,7 @@ frame15=anim_1543
 
 [seq_799]
 righthand=hide
-lefthand=obj_278
+lefthand=cattle_prod
 stretches=yes
 frame1=anim_597
 frame2=anim_894
