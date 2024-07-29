@@ -67,10 +67,9 @@ if ($choice = 1) {
     p_delay(2);
 
     mes("You attempt to replace the missing railing...");
-    // TODO: Redo the railings to be based off of levels
-    def_int $rand = randominc(100);
 
-    if ($rand > 75) {
+    // Pulled numbers from: https://oldschool.runescape.wiki/w/Railing
+    if (stat_random(stat(crafting), 60, 150) = true) {
         mes("You replace the railing with no problems.");
         p_delay(2);
         %mcannon_railings = setbit(%mcannon_railings, $railing_num);
@@ -78,8 +77,11 @@ if ($choice = 1) {
     } else {
         mes("but fail and cut yourself trying.");
         // BerryPi gets hit for 2 damage multiple times - 29 HP
-        // 1E_Luis gets hit for 3 damage multiple times - HP
-        def_int $damage = calc(randominc(2) + 1);
+        // 1E_Luis gets hit for 3 damage multiple times - 46 HP
+        def_int $damage = calc(stat_base(hitpoints) / 10);
+        if ($damage > 3) {
+            $damage = 3;
+        }
         ~damage_self($damage);
     }
 }
