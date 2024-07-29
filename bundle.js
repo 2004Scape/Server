@@ -2,9 +2,10 @@ import fs from 'fs';
 import {basename} from 'path';
 import * as esbuild from 'esbuild';
 
-const entryPoints = ['src/lostcity/worker.ts', 'src/lostcity/server/LoginThread.ts'];
-const esbuildModules = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
-const modules = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
+const dir = '../Client2/public/';
+const entrypoints = ['src/lostcity/worker.ts', 'src/lostcity/server/LoginThread.ts'];
+const esbuildIgnores = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
+const ignores = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
     'process.env.WEB_PORT': 'undefined',
@@ -39,6 +40,9 @@ const defines = {
 
 try {
     preloadDirs();
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
     process.argv0 === 'bun' ? await bun() : await esb();
 } catch (e) {
     console.error(e);
@@ -50,30 +54,30 @@ async function esb() {
         format: 'esm',
         write: false,
         outdir: 'placeholder', // unused but required by esbuild
-        entryPoints: entryPoints,
-        external: modules.concat(esbuildModules),
+        entryPoints: entrypoints,
+        external: ignores.concat(esbuildIgnores),
         define: defines,
         // minify: true,
         // sourcemap: 'linked',
     }).catch((e) => { throw new Error(e); });
 
     for (let index = 0; index < bundle.outputFiles.length; index++) {
-        removeImports(bundle.outputFiles[index].text, entryPoints[index]);
+        removeImports(bundle.outputFiles[index].text, entrypoints[index]);
     }
 }
 
 async function bun() {
     // eslint-disable-next-line no-undef
     const bundle = await Bun.build({
-        entrypoints: entryPoints,
-        external: modules,
+        entrypoints: entrypoints,
+        external: ignores,
         define: defines,
         // minify: true,
         // sourcemap: 'linked',
     }).catch((e) => { throw new Error(e); });
 
     for (let index = 0; index < bundle.outputs.length; index++) {
-        removeImports(await bundle.outputs[index].text(), entryPoints[index]);
+        removeImports(await bundle.outputs[index].text(), entrypoints[index]);
     }
 }
 
@@ -94,7 +98,7 @@ function preloadDirs() {
 
 function removeImports(output, file) {
     // turn into plugin for minify/sourcemaps
-    const path = '../Client2/src/public/' + basename(file).replace('.ts', '.js');
+    const path = dir + basename(file).replace('.ts', '.js');
 
     output = output.split('\n')
         .filter(line => !line.startsWith('import'))
