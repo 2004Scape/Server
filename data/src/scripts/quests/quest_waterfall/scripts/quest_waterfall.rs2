@@ -102,7 +102,7 @@ if (~waterfall_can_enter_glarials_tomb() = false) {
     mes("The stone slab slides back revealing a ladder down.");
     p_delay(2);
     p_teleport(0_39_153_58_52);
-    %waterfall_progress = ^waterfall_entered_glarial_tomb;
+    if(%waterfall_progress = ^waterfall_opened_book_on_baxtorian) %waterfall_progress = ^waterfall_entered_glarial_tomb;
     mes("You climb down to an undergound passage.");
 }
 
