@@ -1,0 +1,23 @@
+[opnpc1,farmer_brumty]
+switch_int(%sheepherder_progress) {
+    case ^sheepherder_not_started: @farmer_brumty_before_sheep_herder;
+    case ^sheepherder_tasked_with_talking_to_dr_orbon,
+        ^sheepherder_tasked_with_disposing_of_sheep: @farmer_brumty_during_sheep_herder;
+    case ^sheepherder_complete: @farmer_brumty_after_sheep_herder;
+}
+
+[label,farmer_brumty_before_sheep_herder]
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,sad>I have all the bad luck.|My sheep all run off somewhere,|and then those mourners tell me they're infected!");
+~chatplayer("<p,neutral>Well, I hope things start to look up for you.");
+
+[label,farmer_brumty_during_sheep_herder]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Hello adventurer.|Be careful rounding up those sheep.|I don't think they've wandered far,|but if you touch them you'll become infected as well.");
+~chatnpc("<p,neutral>There should be a cattle prod in the barn,|you can use it to herd up the sheep.");
+
+[label,farmer_brumty_after_sheep_herder]
+~chatplayer("<p,neutral>Hello there.|I'm sorry about your sheep.");
+~chatnpc("<p,sad>That's ok, it had to be done.|I just hope none of my other livestock becomes infected.");
+
+

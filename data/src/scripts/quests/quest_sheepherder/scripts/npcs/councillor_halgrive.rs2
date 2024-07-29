@@ -1,0 +1,61 @@
+[opnpc1,councillor_halgrive]
+switch_int(%sheepherder_progress) {
+    case ^sheepherder_not_started: @halgrive_before_sheep_herder;
+    case ^sheepherder_tasked_with_talking_to_dr_orbon: @halgrive_before_obtaining_plague_gear;
+    case ^sheepherder_tasked_with_disposing_of_sheep: @halgrive_before_incinerating_sheep;
+    case ^sheepherder_complete: @halgrive_after_sheep_herder;
+}
+
+[label,halgrive_before_sheep_herder]
+~chatplayer("<p,neutral>How are you?");
+~chatnpc("<p,sad>I've been better.");
+~chatplayer("<p,neutral>What's wrong?");
+~chatnpc("<p,sad>A plague has spread over West Ardougne.|Apparently, it's reasonably contained,|but four infected sheep have escaped.|They're roaming free in and around East Ardougne.");
+~chatnpc("<p,neutral>I need someone to gather the sheep,|herd them into a safe enclosure, then kill them.|Their remains will also need to be disposed of safely in a furnace.");
+@multi2(
+    "I can do that for you.", halgrive_i_can_do_that_for_you,
+    "That's not a job for me.", halgrive_thats_not_a_job_for_me
+);
+
+[label,halgrive_i_can_do_that_for_you]
+~chatplayer("<p,neutral>I can do that for you.");
+~chatnpc("<p,happy>Good, the enclosure is to the North of the city|on Farmer Brumty's farm.");
+~chatnpc("<p,happy>The four sheep should still be close to it,|before you go into the enclosure|make sure you have protective clothing on,|otherwise you'll catch the plague.");
+~chatplayer("<p,quiz>Where do I get protective clothing?");
+~chatnpc("<p,neutral>Doctor Orbon wears it when trying to save the infected|you'll find him in the chapel.");
+~chatnpc("<p,neutral>Take this poisoned animal feed,|give it to the four sheep and they'll peacefully fall asleep.");
+mes("The councillor gives you some sheep poison.");
+inv_add(inv, poisoned_feed, 1);
+if (%sheepherder_progress = ^sheepherder_not_started) {
+    %sheepherder_progress = ^sheepherder_tasked_with_talking_to_dr_orbon;
+    ~send_quest_progress(questlist:sheepherder, %sheepherder_progress, ^sheepherder_complete);
+}
+
+[label,halgrive_before_obtaining_plague_gear]
+~chatnpc("<p,neutral>Please find those four sheep as soon as you can,|every second counts.");
+if (inv_total(inv, poisoned_feed) < 1) {
+    @halgrive_need_more_poisoned_feed;
+}
+
+[label,halgrive_before_incinerating_sheep]
+~chatnpc("<p,quiz>Have you managed to dispose of those four sheep?");
+// test bit here
+~chatplayer("<p,neutral>Erm... not quite.");
+~chatnpc("<p,angry>Not quite's not good enough.|All four sheep must be captured, slain and their remains burnt.");
+~chatplayer("<p,neutral>Ok, I'll get to it.");
+
+
+[label,halgrive_need_more_poisoned_feed]
+~chatplayer("<p,neutral>Some more sheep poison might be useful.");
+mes("The councillor gives you some more sheep poison.");
+inv_add(inv, poisoned_feed, 1);
+
+[label,halgrive_thats_not_a_job_for_me]
+~chatplayer("<p,neutral>That's not a job for me.");
+~chatnpc("<p,sad>Fair enough, it's not nice work.");
+
+[label,halgrive_after_sheep_herder]
+~chatplayer("<p,neutral>Hello again, Halgrive.");
+~chatnpc("<p,happy>Well hello again traveller!|How are you?");
+~chatplayer("<p,neutral>Good thanks and yourself?");
+~chatnpc("<p,happy>Much better now I don't have to worry about those sheep.");
