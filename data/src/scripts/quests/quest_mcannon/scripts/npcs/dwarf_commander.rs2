@@ -32,6 +32,7 @@ switch_int(%mcannon_progress) {
 ~chatplayer("<p,happy>Yeah, I'd love to help.");
 if (%mcannon_progress = ^mcannon_not_started) {
     %mcannon_progress = ^mcannon_tasked_with_fixing_railings;
+    ~send_quest_progress_colour(questlist:mcannon, %mcannon_progress, ^mcannon_complete);
 }
 ~chatnpc("<p,default>Thank you, we have no time to waste.|The Goblins are attacking from the forests to the south,|they managed to get through the broken railings,|could you please replace them with these new ones?");
 ~chatplayer("<p,default>Sounds easy enough...");
