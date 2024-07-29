@@ -57,7 +57,7 @@ if (uid ! %npc_attacking_uid) {
     }
     return;
 }
-if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
+if (%macro_event = ^no_macro_event) {
     ~chatnpc("<p,neutral>Goodbye.");
     return;
 }
@@ -65,7 +65,7 @@ if (%macro_event = ^no_macro_event | %macro_event_uid ! npc_uid) {
 inv_add(inv, ~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
 npc_queue(6, 0, 2); // say goodbye to player
-~chatnpc("<p,neutral>Ah, so you are there. I hoped you would talk to me, I get so lonely. Here, have a present! I must be going now though.");
+~chatnpc("<p,neutral>Ah, so you are there. I hoped you would talk to me, I get so lonely. Here, have a present! I must be going now though."); // https://youtu.be/HpmsgVshwxg?t=305 uses chatnpc
 // delays are taken from this video: https://youtu.be/JeQUY1m1wRo?list=PLn23LiLYLb1bQ7Hwp77KoNBjKvpZQTfJT&t=137
 
 [proc,macro_event_mysterious_old_man_general_reward]()(namedobj, int)
@@ -100,8 +100,11 @@ if ($random < 16) { // 16/150 kebab?
 }
 
 [ai_timer,macro_event_mysterious_old_man_general]
-if (~macro_event_lost_and_follow = true) {
+if (~macro_event_lost = true) {
     // only confirmed for mysterious old man https://youtu.be/HwGAzcmvF9k?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
     npc_queue(5, 0, 0);
     return;
+}
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
 }

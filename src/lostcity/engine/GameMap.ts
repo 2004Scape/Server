@@ -13,11 +13,11 @@ import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Loc from '#lostcity/entity/Loc.js';
-import {Position} from '#lostcity/entity/Position.js';
+import { Position } from '#lostcity/entity/Position.js';
 
 import Environment from '#lostcity/util/Environment.js';
 
-import {LocAngle, LocLayer} from '@2004scape/rsmod-pathfinder';
+import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 
 export default class GameMap {
@@ -33,6 +33,7 @@ export default class GameMap {
     private static readonly Z: number = 64;
 
     private static readonly MAPSQUARE: number = GameMap.X * GameMap.Y * GameMap.Z;
+    public multimap: Set<number> = new Set();
 
     init(zoneMap: ZoneMap): void {
         console.time('Loading game map');
@@ -43,12 +44,45 @@ export default class GameMap {
             const mapsquareX: number = mx << 6;
             const mapsquareZ: number = mz << 6;
 
-            this.decodeNpcs(Packet.load(`${path}n${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeObjs(Packet.load(`${path}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            this.loadNpcs(Packet.load(`${path}n${mx}_${mz}`), mapsquareX, mapsquareZ);
+            this.loadObjs(Packet.load(`${path}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
             // collision
             const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
-            this.decodeLands(lands, Packet.load(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.decodeLocs(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            this.loadGround(lands, Packet.load(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
+            this.loadLocations(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+        }
+
+        // easiest solution for the time being
+        const multiway = fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n');
+        for (let i = 0; i < multiway.length; i++) {
+            if (multiway[i].startsWith('//') || !multiway[i].indexOf(',')) {
+                continue;
+            }
+
+            const parts = multiway[i].split(',');
+            if (parts.length !== 2) {
+                continue;
+            }
+
+            const [from, to] = parts;
+            const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
+            const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
+
+            if (fromLx % 8 !== 0 || fromLz % 8 !== 0) {
+                console.warn('Multiway map not aligned to a zone', multiway[i]);
+            }
+
+            for (let level = fromLevel; level <= toLevel; level++) {
+                for (let mx = fromMx; mx <= toMx; mx++) {
+                    for (let mz = fromMz; mz <= toMz; mz++) {
+                        for (let lx = fromLx; lx <= toLx; lx++) {
+                            for (let lz = fromLz; lz <= toLz; lz++) {
+                                this.multimap.add(Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz));
+                            }
+                        }
+                    }
+                }
+            }
         }
         console.timeEnd('Loading game map');
     }
@@ -70,12 +104,12 @@ export default class GameMap {
                 await Packet.loadAsync(`${path}m${mx}_${mz}`),
                 await Packet.loadAsync(`${path}l${mx}_${mz}`)]);
 
-            this.decodeNpcs(npcData, mapsquareX, mapsquareZ);
-            this.decodeObjs(objData, mapsquareX, mapsquareZ, zoneMap);
+            this.loadNpcs(npcData, mapsquareX, mapsquareZ);
+            this.loadObjs(objData, mapsquareX, mapsquareZ, zoneMap);
             // collision
             const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
-            this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
-            this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
+            this.loadGround(lands, landData, mapsquareX, mapsquareZ);
+            this.loadLocations(lands, locData, mapsquareX, mapsquareZ, zoneMap);
         });
         // await Promise.all(maps); // this bottlenecks login time
         console.timeEnd('Loading game map');
@@ -157,9 +191,9 @@ export default class GameMap {
         rsmod.changeRoof(x, z, level, add);
     }
 
-    private decodeNpcs(packet: Packet, mapsquareX: number, mapsquareZ: number): void {
+    private loadNpcs(packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         while (packet.available > 0) {
-            const {x, z, level} = this.unpackCoord(packet.g2());
+            const { x, z, level } = this.unpackCoord(packet.g2());
             const absoluteX: number = mapsquareX + x;
             const absoluteZ: number = mapsquareZ + z;
             const count: number = packet.g1();
@@ -174,9 +208,9 @@ export default class GameMap {
         }
     }
 
-    private decodeObjs(packet: Packet, mapsquareX: number, mapsquareZ: number, zoneMap: ZoneMap): void {
+    private loadObjs(packet: Packet, mapsquareX: number, mapsquareZ: number, zoneMap: ZoneMap): void {
         while (packet.available > 0) {
-            const {x, z, level} = this.unpackCoord(packet.g2());
+            const { x, z, level } = this.unpackCoord(packet.g2());
             const absoluteX: number = mapsquareX + x;
             const absoluteZ: number = mapsquareZ + z;
             const count: number = packet.g1();
@@ -190,7 +224,7 @@ export default class GameMap {
         }
     }
 
-    private decodeLands(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {
+    private loadGround(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         for (let level: number = 0; level < GameMap.Y; level++) {
             for (let x: number = 0; x < GameMap.X; x++) {
                 for (let z: number = 0; z < GameMap.Z; z++) {
@@ -245,7 +279,7 @@ export default class GameMap {
         }
     }
 
-    private decodeLocs(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number, zoneMap: ZoneMap): void {
+    private loadLocations(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number, zoneMap: ZoneMap): void {
         let locId: number = -1;
         let locIdOffset: number = packet.gsmart();
         while (locIdOffset !== 0) {
@@ -255,7 +289,7 @@ export default class GameMap {
             let coordOffset: number = packet.gsmart();
 
             while (coordOffset !== 0) {
-                const {x, z, level} = this.unpackCoord(coord += coordOffset - 1);
+                const { x, z, level } = this.unpackCoord(coord += coordOffset - 1);
 
                 const info: number = packet.g1();
                 coordOffset = packet.gsmart();

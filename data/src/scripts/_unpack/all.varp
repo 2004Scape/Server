@@ -109,6 +109,8 @@ scope=perm
 [multiway]
 type=boolean
 
+[varp_105]
+
 [newcomers_pos]
 transmit=yes
 
@@ -234,8 +236,6 @@ scope=perm
 
 [mill_flour]
 scope=perm
-
-[varp_209]
 
 [smithing_bars]
 transmit=yes

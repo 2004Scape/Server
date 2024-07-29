@@ -36,6 +36,7 @@ import Logout from '#lostcity/network/outgoing/model/Logout.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
+import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -242,6 +243,34 @@ export class NetworkPlayer extends Player {
 
                 activeZones.add(ZoneMap.zoneIndex(x << 3, z << 3, this.level));
             }
+        }
+
+        const mapZone = Position.packCoord(0, this.x >> 6 << 6, this.z >> 6 << 6);
+        if (this.lastMapZone !== mapZone) {
+            if (this.lastMapZone !== -1) {
+                const { x, z } = Position.unpackCoord(this.lastMapZone);
+                this.triggerMapzoneExit(x, z);
+            }
+
+            this.triggerMapzone(this.x >> 6 << 6, this.z >> 6 << 6);
+            this.lastMapZone = mapZone;
+        }
+
+        const zone = Position.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+        if (this.lastZone !== zone) {
+            const lastWasMulti = World.gameMap.multimap.has(this.lastZone);
+            const nowIsMulti = World.gameMap.multimap.has(zone);
+            if (lastWasMulti != nowIsMulti) {
+                this.write(new SetMultiway(nowIsMulti));
+            }
+
+            if (this.lastZone !== -1) {
+                const { level, x, z } = Position.unpackCoord(this.lastZone);
+                this.triggerZoneExit(level, x, z);
+            }
+
+            this.triggerZone(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+            this.lastZone = zone;
         }
     }
 

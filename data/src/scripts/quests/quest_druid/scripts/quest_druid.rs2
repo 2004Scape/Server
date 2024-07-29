@@ -1,93 +1,14 @@
-[label,druidic_ritual_start_1]
-~chatplayer("<p,neutral>I'm in search of a quest.");
-~chatnpc("<p,neutral>Hmm. I think I may have a worthwhile quest for you|actually. I don't know if you are familiar with the stone|circle south of Varrock or not, but...");
-~chatnpc("<p,default>That used to be OUR stone circle. Unfortunately,|many many years ago, dark wizards cast a wicked spell|upon it so that they could corrupt its power for their|own evil ends.");
-~chatnpc("<p,default>When they cursed the rocks for their rituals they made|them uselss for us and our magics. We require a brave|adventurer to go on a quest for us to help purify the|circle of Varrock.");
-def_int $option = ~p_choice3("Ok, I will try and help.", 1, "No, that doesn't sound very interesting.", 2, "So... is there anything in this for me?", 3);
-
-if($option = 1) {
-    @druid_agree_to_help;
-} else if($option = 2) {
-    @druid_not_interested;
-} else if($option = 3) {
-    ~chatplayer("<p,default>So... is there anything in this for me?");
-    ~chatnpc("<p,default>We druids value wisdom over wealth, so if you expect material gain, you will be disappointed.");
-    ~chatnpc("<p,default>We are, however, very skilled in the art of Herblore, which we will share with you if you can assist us with this task. You may find such wisdom a greater reward than mere money.");
-}
-
-[label,druidic_ritual_start_2]
-~chatplayer("<p,quiz>What about the stone circle full of dark wizards?");
-~chatnpc("<p,default>That used to be OUR stone circle. Unfortunately,|many many years ago, dark wizards cast a wicked spell|upon it so that they could corrupt its power for their|own evil ends.");
-~chatnpc("<p,default>When they cursed the rocks for their rituals they made|them uselss for us and our magics. We require a brave|adventurer to go on a quest for us to help purify the|circle of Varrock.");
-@multi2("Ok, I will try and help.", druid_agree_to_help, "No, that doesn't sound very interesting.", druid_not_interested);
-
-[label,druid_agree_to_help]
-~chatplayer("<p,neutral>Ok, I will try to help.");
-%druid_progress = 1;
-~chatnpc("<p,default>Excellent. Go to the village south of this place and speak|to my fellow druid, Sanfew, who is working on the|purification ritual. He knows what is required to|complete it.");
-~chatplayer("<p,neutral>Will do.");
-~send_quest_progress(questlist:druid, %druid_progress, ^druid_complete);
-
-[label,druid_not_interested]
-~chatplayer("<p,confused>No, that doesn't sound very interesting.");
-~chatnpc("<p,neutral>I will not try and change your mind adventurer. Some|day when you have matured you may reconsider your|position. We will wait until then");
-
-[label,druid_sanfew_information]
-~chatplayer("<p,neutral>I've been sent to assist you with the ritual to puriy the|Varrockian stone circle.");
-~chatnpc("<p,default>Well, what I'm struggling with right now is the meats|needed for the potion to honor Guthix. I need the raw|meat of four different animals for it, but not just any|old meats will do.");
-~chatnpc("<p,neutral>Each meat has to be dipped individually into the|Cauldron of thunder for it to work correctly.");
-@druid_sanfew_questions;
-
-[label,druid_sanfew_questions]
-def_int $option = ~p_choice2("Where can I find this cauldron?", 1, "Ok, I'll do that then.", 2);
-
-if($option = 1) {
-    ~chatplayer("<p,quiz>Where can I find this cauldron?");
-    ~chatnpc("<p,default>It is located somewhere in the mysterious underground|halls which are located somewhere in the woods just|South of here. They are too dangerous for me to go|myself however.");
-    @druid_sanfew_questions;
-} else if($option = 2) {
-    %druid_progress = 2;
-    ~chatplayer("<p,default>Ok, I'll do that then.");
-    ~chatnpc("<p,default>Well thank you very much!");
-}
-
-[label,druid_sanfew_give_ingredients]
-~chatnpc("<p,quiz>Did you bring me the required ingredients for the|potion?");
-
-if(inv_total(inv, druid_enchanted_beef) > 0 & inv_total(inv, druid_enchanted_rat) > 0 & inv_total(inv, druid_enchanted_bear) > 0& inv_total(inv, druid_enchanted_chicken) > 0) {
-    ~chatplayer("<p,happy>Yes, I have all four now!");
-    ~chatnpc(text_gender("<p,happy>Well hand'em over then lad!", "<p,happy>Well hand'em over then lass!"));
-    inv_del(inv, druid_enchanted_beef, 1);
-    inv_del(inv, druid_enchanted_rat, 1);
-    inv_del(inv, druid_enchanted_bear, 1);
-    inv_del(inv, druid_enchanted_chicken, 1);
-    %druid_progress = 3;
-    ~chatnpc("<p,happy>Thank you so much adventurer! These meats will allow|our potion to honour Guthix to be completed, and bring|one step closer to reclaiming our stone circle!");
-    ~chatnpc("<p,neutral>Now go and talk to Kaqemeex and he will introduce|you to the wonderful world of herblor and potion|making!");
-} else {
-    ~chatplayer("<p,sad>No, not yet...");
-    ~chatnpc("<p,neutral>Well let me know when you do young 'un.");
-    def_int $option = ~p_choice2("What was I meant to be doing again?", 1, "I'll get on with it.", 2);
-
-    if($option = 1) {
-        ~chatplayer("<p,neutral>What was I meant to be doing again?");
-        ~chatnpc("<p,neutral>Trouble with your memory eh young'un? I need the raw meats of four different animals that have been dipped into the Cauldron of Thunder so I can make my potion to honour Guthix.");
-        ~chatplayer("<p,neutral>Ooooh yeah, I remember.");
-        @druid_sanfew_questions;
-    } else if($option = 2) {
-        ~chatplayer("<p,happy>I'll get on with it.");
-    }
-}
-
-[label,druid_completion]
-~chatnpc("<p,neutral>I have word from Sanfew that you have been very helpful in assisting him with his preparations for the purification ritual. As promised I will now teach you the ancient arts of Herblore.");
-// additional dialogue here added after osrs: https://www.youtube.com/watch?v=n8RIbXtW5V4
-queue(druid_quest_complete, 0);
-
-[queue,druid_quest_complete]
+[queue,druid_quest_complete](npc_uid $uid)
 %druid_progress = ^druid_complete;
 stat_advance(herblore, 2500);
 ~send_quest_complete(questlist:druid, marentill, 220, ^druid_questpoints, "You have completed the\\nDruidic Ritual Quest!");
+queue(druid_fundamentals, 0, $uid);
+
+[queue,druid_fundamentals](npc_uid $uid)
+if(npc_finduid($uid) = true) {
+    ~chatnpc("<p,happy>I will now explain the fundamentals of Herblore:");
+    @kaqemeex_herblore_fundamentals;
+}
 
 [oplocu,druid_cauldron]
 def_obj $useitem = last_useitem;
