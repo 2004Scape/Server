@@ -11,9 +11,12 @@
 
 // Undamaged Railing
 [oploc1,railing_sturdy]
-switch_int(%mcannon_progress) {
-    case ^mcannon_not_started: mes("Nothing interesting happens.");
-    case ^mcannon_tasked_with_fixing_railings: @mcannon_fix_regular_railing;
+if (%mcannon_progress = ^mcannon_not_started) {
+    mes("Nothing interesting happens.");
+} else if (%mcannon_progress = ^mcannon_tasked_with_fixing_railings) {
+    @mcannon_fix_regular_railing;
+} else {
+    ~chatplayer("<p,neutral>I've fixed all these railings now.");
 }
 
 // Used bits 5-10 since it matches weird gloop
@@ -37,9 +40,12 @@ switch_int(%mcannon_progress) {
 @damaged_railings(10);
 
 [label,damaged_railings](int $railing_num)
-switch_int(%mcannon_progress) {
-    case ^mcannon_not_started: mes("Nothing interesting happens.");
-    case ^mcannon_tasked_with_fixing_railings: @mcannon_fix_broken_railing($railing_num);
+if (%mcannon_progress = ^mcannon_not_started) {
+    mes("Nothing interesting happens.");
+} else if (%mcannon_progress = ^mcannon_tasked_with_fixing_railings) {
+    @mcannon_fix_broken_railing($railing_num);
+} else {
+    ~chatplayer("<p,neutral>I've fixed all these railings now.");
 }
 
 [label,mcannon_fix_regular_railing]
