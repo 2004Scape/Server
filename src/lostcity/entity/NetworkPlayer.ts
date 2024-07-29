@@ -36,6 +36,7 @@ import Logout from '#lostcity/network/outgoing/model/Logout.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
+import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
 export class NetworkPlayer extends Player {
     client: ClientSocket | null = null;
@@ -257,6 +258,12 @@ export class NetworkPlayer extends Player {
 
         const zone = Position.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
         if (this.lastZone !== zone) {
+            const lastWasMulti = World.gameMap.multimap.has(this.lastZone);
+            const nowIsMulti = World.gameMap.multimap.has(zone);
+            if (lastWasMulti != nowIsMulti) {
+                this.write(new SetMultiway(nowIsMulti));
+            }
+
             if (this.lastZone !== -1) {
                 const { level, x, z } = Position.unpackCoord(this.lastZone);
                 this.triggerZoneExit(level, x, z);
