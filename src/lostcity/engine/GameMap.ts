@@ -77,7 +77,7 @@ export default class GameMap {
             this.decodeLands(lands, landData, mapsquareX, mapsquareZ);
             this.decodeLocs(lands, locData, mapsquareX, mapsquareZ, zoneMap);
         });
-        // await Promise.all(maps); // this bottlenecks login time
+        await Promise.all(maps);
         console.timeEnd('Loading game map');
     }
 
