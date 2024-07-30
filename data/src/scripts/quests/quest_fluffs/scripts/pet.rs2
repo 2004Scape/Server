@@ -91,21 +91,9 @@ if(getbit_range(%cat_growth, 11, 19) < 120) {
     }
 }
 
-[opheld5,_followerobj]
-if (npc_finduid(%follower_uid) = true) {
-    mes("You already have a follower."); //osrs
-    return;
-}
-inv_delslot(inv, last_slot);
-sound_synth(put_down, 0, 0);
-npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
-%follower_obj = nc_param(npc_type, pet_item_id);
-%follower_uid = npc_uid;
-%npc_attacking_uid = uid;
-npc_setmode(playerfollow);
-npc_say("Miaow!");
-npc_settimer(150);
-return;
+[opheld5,_category_31] ~cat_drop; //kitten
+[opheld5,_category_30] ~cat_drop; //cat
+[opheld5,_category_29] ~cat_drop; //overgrown
 
 [opnpcu,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
@@ -234,6 +222,22 @@ if (.npc_find(coord, rat, 10, 1) = true) {
 } else {
     mes("There aren't any vermin around.");
 }
+
+[proc,cat_drop]
+if (npc_finduid(%follower_uid) = true) {
+    mes("You already have a follower."); //osrs
+    return;
+}
+inv_delslot(inv, last_slot);
+sound_synth(put_down, 0, 0);
+npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
+%follower_obj = nc_param(npc_type, pet_item_id);
+%follower_uid = npc_uid;
+%npc_attacking_uid = uid;
+npc_setmode(playerfollow);
+npc_say("Miaow!");
+npc_settimer(150);
+return;
 
 [proc,pet_next_stage](npc $type)(npc)
 def_npc $new;

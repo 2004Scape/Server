@@ -78,7 +78,7 @@ model=model_3009_obj
 2dxan=32
 members=yes
 weight=750g
-category=followerobj
+category=category_31
 param=follower_id,npc_761
 //https://chisel.weirdgloop.org/structs_rs3/index.html?type=items&id=1555
 
@@ -102,7 +102,7 @@ recol4d=0
 2dxan=32
 members=yes
 weight=750g
-category=followerobj
+category=category_31
 param=follower_id,npc_762
 
 [obj_1557]
@@ -123,7 +123,7 @@ recol3d=15685
 2dxan=32
 members=yes
 weight=750g
-category=followerobj
+category=category_31
 param=follower_id,npc_763
 
 [obj_1558]
@@ -144,7 +144,7 @@ recol3d=8456
 2dxan=32
 members=yes
 weight=750g
-category=followerobj
+category=category_31
 param=follower_id,npc_764
 
 [obj_1559]
@@ -165,7 +165,7 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=750g
-category=followerobj
+category=category_31
 param=follower_id,npc_765
 
 [obj_1560]
@@ -186,7 +186,7 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=750g
-category=followerobj
+category=category_31
 param=follower_id,npc_766
 
 [obj_1561]
@@ -201,7 +201,7 @@ model=model_3006_obj
 2dxan=32
 members=yes
 weight=1500g
-category=followerobj
+category=category_30
 param=follower_id,npc_768
 
 [obj_1562]
@@ -224,7 +224,7 @@ recol4d=0
 2dxan=32
 members=yes
 weight=1500g
-category=followerobj
+category=category_30
 param=follower_id,npc_769
 
 [obj_1563]
@@ -245,7 +245,7 @@ recol3d=15685
 2dxan=32
 members=yes
 weight=1500g
-category=followerobj
+category=category_30
 param=follower_id,npc_770
 
 [obj_1564]
@@ -266,7 +266,7 @@ recol3d=8456
 2dxan=32
 members=yes
 weight=1500g
-category=followerobj
+category=category_30
 param=follower_id,npc_771
 
 [obj_1565]
@@ -287,7 +287,7 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=1500g
-category=followerobj
+category=category_30
 param=follower_id,npc_772
 
 [obj_1566]
@@ -308,7 +308,7 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=1500g
-category=followerobj
+category=category_30
 param=follower_id,npc_773
 
 [obj_1567]
@@ -323,7 +323,7 @@ model=model_3007_obj
 2dxan=32
 members=yes
 weight=2500g
-category=followerobj
+category=category_29
 param=follower_id,npc_774
 
 [obj_1568]
@@ -346,7 +346,7 @@ recol4d=0
 2dxan=32
 members=yes
 weight=2500g
-category=followerobj
+category=category_29
 param=follower_id,npc_775
 
 [obj_1569]
@@ -367,7 +367,7 @@ recol3d=15685
 2dxan=32
 members=yes
 weight=2500g
-category=followerobj
+category=category_29
 param=follower_id,npc_776
 
 [obj_1570]
@@ -388,7 +388,7 @@ recol3d=8456
 2dxan=32
 members=yes
 weight=2500g
-category=followerobj
+category=category_29
 param=follower_id,npc_777
 
 [obj_1571]
@@ -409,7 +409,7 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=2500g
-category=followerobj
+category=category_29
 param=follower_id,npc_778
 
 [obj_1572]
@@ -430,5 +430,5 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=2500g
-category=followerobj
+category=category_29
 param=follower_id,npc_779
