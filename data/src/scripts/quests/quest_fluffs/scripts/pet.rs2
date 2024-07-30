@@ -1,5 +1,3 @@
-//do pets die?
-//cat raising medal
 [debugproc,cat]
 if_close;
 if (p_finduid(uid) = true) {
@@ -43,7 +41,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! category_29) {
     switch_int (getbit_range(%cat_growth, 11, 19)) {
         case 120:
             if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
-                npc_changetype(~pet_next_stage(npc_type));
+                npc_changetype(nc_param(npc_type, cat_next_id));
                 %follower_obj = nc_param(npc_type, pet_item_id);
                 %follower_uid = npc_uid;
                 npc_say("Meeeooowww!");
@@ -52,7 +50,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! category_29) {
             }
         case 320:
             if(oc_category(nc_param(npc_type, pet_item_id)) = category_30) {
-                npc_changetype(~pet_next_stage(npc_type));
+                npc_changetype(nc_param(npc_type, cat_next_id));
                 %follower_obj = nc_param(npc_type, pet_item_id);
                 %follower_uid = npc_uid;
                 npc_say("Meeeooowww!");
@@ -185,7 +183,7 @@ p_delay(4); //guessed delay
 mes("The cat has run away."); //after or before delay?
 npc_del;
 
-[opnpc5,_petcat]
+[opnpc5,_petcat] //TODO: add cat raising medal after gertrude's cat
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
     ~displaymessage(^dm_default);
     return;
@@ -243,30 +241,6 @@ npc_setmode(playerfollow);
 npc_say("Miaow!");
 npc_settimer(150);
 return;
-
-[proc,pet_next_stage](npc $type)(npc)
-def_npc $new;
-switch_npc ($type) {
-    //grey and black//
-    case npc_761: $new = npc_768;
-    case npc_768: $new = npc_774;
-    //white//
-    case npc_762: $new = npc_769;
-    case npc_769: $new = npc_775;
-    //brown//
-    case npc_763: $new = npc_770;
-    case npc_770: $new = npc_776;
-    //black//
-    case npc_764: $new = npc_771;
-    case npc_771: $new = npc_777;
-    //grey and brown//
-    case npc_765: $new = npc_772;
-    case npc_772: $new = npc_778;
-    //grey and blue//
-    case npc_766: $new = npc_773;
-    case npc_773: $new = npc_779;
-}
-return ($new);
 
 [proc,follower_death]
 if (npc_finduid(%follower_uid) = true) {

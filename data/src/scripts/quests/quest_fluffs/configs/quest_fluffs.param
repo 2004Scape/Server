@@ -5,3 +5,7 @@ default=null
 [pet_item_id]
 type=namedobj
 default=null
+
+[cat_next_id]
+type=npc
+default=null

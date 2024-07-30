@@ -144,6 +144,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1555
+param=cat_next_id,npc_768
 
 [npc_762]
 vislevel=hide
@@ -168,6 +169,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1556
+param=cat_next_id,npc_769
 
 [npc_763]
 vislevel=hide
@@ -192,6 +194,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1557
+param=cat_next_id,npc_770
 
 [npc_764]
 vislevel=hide
@@ -216,6 +219,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1558
+param=cat_next_id,npc_771
 
 [npc_765]
 vislevel=hide
@@ -238,6 +242,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1559
+param=cat_next_id,npc_772
 
 [npc_766]
 vislevel=hide
@@ -260,6 +265,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1560
+param=cat_next_id,npc_773
 
 [npc_768]
 vislevel=hide
@@ -278,6 +284,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1561
+param=cat_next_id,npc_774
 
 [npc_769]
 vislevel=hide
@@ -302,6 +309,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1562
+param=cat_next_id,npc_775
 
 [npc_770]
 vislevel=hide
@@ -326,6 +334,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1563
+param=cat_next_id,npc_776
 
 [npc_771]
 vislevel=hide
@@ -350,6 +359,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1564
+param=cat_next_id,npc_777
 
 [npc_772]
 vislevel=hide
@@ -372,6 +382,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1565
+param=cat_next_id,npc_778
 
 [npc_773]
 vislevel=hide
@@ -394,6 +405,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,obj_1566
+param=cat_next_id,npc_779
 
 [npc_774]
 vislevel=hide
