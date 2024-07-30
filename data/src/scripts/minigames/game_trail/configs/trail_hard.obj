@@ -152,7 +152,7 @@ category=trail_clue_hard
 param=trail_desc,21 degrees 24 minutes north|17 degrees 54 minutes east
 param=trail_sextant,yes
 param=trail_casket,trail_casket_hard_sextant_exp008
-param=trail_coord,0_46_60_5_6
+param=trail_coord,0_47_60_5_6
 param=trail_guardian,zamorak_wizard
 
 [trail_clue_hard_sextant_exp009]
