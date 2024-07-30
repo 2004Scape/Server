@@ -3,9 +3,10 @@ import {basename} from 'path';
 import * as esbuild from 'esbuild';
 
 const dir = '../Client2/public/';
+const deps = ['./src/3rdparty/bzip2-wasm/bzip2-1.0.8/bzip2.wasm', 'node_modules/@2004scape/rsmod-pathfinder/dist/rsmod-pathfinder.wasm'];
 const entrypoints = ['src/lostcity/worker.ts', 'src/lostcity/server/LoginThread.ts'];
-const esbuildIgnores = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
-const ignores = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
+const esbuildExternals = ['node:fs/promises', 'path', 'net', 'crypto', 'fs'];
+const externals = ['kleur', 'buffer', 'module', 'watcher', 'worker_threads', 'dotenv/config', 'bcrypt', '#lostcity/db/query.js', '#lostcity/util/PackFile.js'];
 const defines = {
     'process.platform': JSON.stringify('webworker'),
     'process.env.WEB_PORT': 'undefined',
@@ -44,6 +45,7 @@ try {
         fs.mkdirSync(dir, { recursive: true });
     }
     process.argv0 === 'bun' ? await bun() : await esb();
+    copyDeps();
 } catch (e) {
     console.error(e);
 }
@@ -55,7 +57,7 @@ async function esb() {
         write: false,
         outdir: 'placeholder', // unused but required by esbuild
         entryPoints: entrypoints,
-        external: ignores.concat(esbuildIgnores),
+        external: externals.concat(esbuildExternals),
         define: defines,
         // minify: true,
         // sourcemap: 'linked',
@@ -70,7 +72,7 @@ async function bun() {
     // eslint-disable-next-line no-undef
     const bundle = await Bun.build({
         entrypoints: entrypoints,
-        external: ignores,
+        external: externals,
         define: defines,
         // minify: true,
         // sourcemap: 'linked',
@@ -106,6 +108,17 @@ function removeImports(output, file) {
         .join('\n');
 
     fs.writeFileSync(path, output);
+    logOutput(path);
+}
 
+function copyDeps() {
+    for (const file of deps) {
+        const path = dir + basename(file);
+        fs.copyFileSync(file, path);
+        logOutput(path);
+    }
+}
+
+function logOutput(path) {
     console.log(`${path} size: ${(fs.statSync(path).size / (1024 * 1024)).toFixed(2)} MB`);
 }
