@@ -35,27 +35,33 @@ def_int $vermin = getbit_range(%cat_growth, 20,26); //rats caught  (0-100)
 if($attent = 0) { 
     $attent = 28;
 }
-if($growth < 320) { 
-    if($growth < 120) {
+if(oc_category(nc_param(npc_type, pet_item_id)) ! category_29) {
+    if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
         npc_say("Meow!"); //seems to be done every 90s, no random chance
     }
     %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
     switch_int (getbit_range(%cat_growth, 11, 19)) {
         case 120:
-            npc_changetype(~pet_next_stage(npc_type));
-            %follower_obj = nc_param(npc_type, pet_item_id);
-            %follower_uid = npc_uid;
-            npc_say("Meeeooowww!");
-            ~mesbox("Your kitten has grown into a healthy cat that can hunt for itself.");
-        case 320: 
-            npc_changetype(~pet_next_stage(npc_type));
-            %follower_obj = nc_param(npc_type, pet_item_id);
-            %follower_uid = npc_uid;
-            npc_say("Meeeooowww!");
-            //TODO: check if there's a message for this
+            if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
+                npc_changetype(~pet_next_stage(npc_type));
+                %follower_obj = nc_param(npc_type, pet_item_id);
+                %follower_uid = npc_uid;
+                npc_say("Meeeooowww!");
+                npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
+                ~mesbox("Your kitten has grown into a healthy cat that can hunt for itself.");
+            }
+        case 320:
+            if(oc_category(nc_param(npc_type, pet_item_id)) = category_30) {
+                npc_changetype(~pet_next_stage(npc_type));
+                %follower_obj = nc_param(npc_type, pet_item_id);
+                %follower_uid = npc_uid;
+                npc_say("Meeeooowww!");
+                npc_settimer(150);
+                //TODO: check if there's a message for this
+            }
     } 
 }
-if(getbit_range(%cat_growth, 11, 19) < 120) { 
+if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) { //only for kittens
     %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
     switch_int (getbit_range(%cat_growth, 0, 4)) {
         case 16:
@@ -97,7 +103,7 @@ if(getbit_range(%cat_growth, 11, 19) < 120) {
 
 [opnpcu,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    ~displaymessage(^dm_default); //unsure if there was a message
+    ~displaymessage(^dm_default);
     return;
 }
 switch_obj(last_useitem) {
@@ -185,9 +191,8 @@ if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
     return;
 }
 def_int $chance = random(2); //50%
-def_int $growth = getbit_range(%cat_growth, 11, 19);
 def_int $vermin = getbit_range(%cat_growth, 20, 26);
-if($growth = 320) {
+if (oc_category(nc_param(npc_type, pet_item_id)) = category_29) {
     mes("The cat is just too big to catch vermin.");
     return;
 }
@@ -208,7 +213,7 @@ if (.npc_find(coord, rat, 10, 1) = true) {
     npc_anim(cat_pounce, 0);
     p_delay(1);
     npc_setmode(playerfollow);
-    if($growth < 120) {
+    if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
         $chance = random(10); //10% if not grown
     }
     if($chance ! 0) {
