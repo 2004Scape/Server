@@ -179,8 +179,8 @@
 178=vampire_progress
 179=sheep_progress
 180=fluffs_progress
-181=varp_181
-182=varp_182
+181=follower_obj
+182=follower_uid
 183=dragon_ned_hired
 184=dragon_oracle
 185=dragon_wall
@@ -194,7 +194,7 @@
 193=murder_poisonproof_progress
 194=murder_evidence
 195=murder_murderer_id
-196=varp_196
+196=cat_growth
 197=desertrescue_progress
 198=varp_198
 199=varp_199

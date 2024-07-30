@@ -1,2 +1,13 @@
 [fluffs_progress]
 scope=perm
+
+[follower_obj]
+type=namedobj
+scope=perm
+
+[follower_uid]
+type=npc_uid
+scope=temp
+
+[cat_growth]
+scope=perm

@@ -42,6 +42,7 @@ if (~in_duel_arena(coord) = true & .finduid(%duelpartner) = true & ~.in_duel_are
 
 buildappearance(worn);
 ~deactivate_prayers;
+~follower_death;
 p_telejump(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
 anim(null, 0);
 
