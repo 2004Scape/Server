@@ -1,0 +1,6 @@
+[sheep_table]
+column=sheep_type,npc
+column=sheep_in_pen_coord,coord
+column=sheep_face_coord,coord
+column=sheep_start_bit,int
+column=sheep_bones,namedobj
