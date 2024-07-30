@@ -38,7 +38,7 @@ members=yes
 2dxan=120
 weight=5lb
 
-[obj_280]
+[red_sheep_bones]
 name=Bones
 desc=These sheep remains are infected.
 members=yes
@@ -49,7 +49,7 @@ model=model_2674_obj
 2dxan=400
 weight=3lb
 
-[obj_281]
+[green_sheep_bones]
 name=Bones
 desc=These sheep remains are infected.
 members=yes
@@ -60,7 +60,7 @@ model=model_2674_obj
 2dxan=400
 weight=3lb
 
-[obj_282]
+[blue_sheep_bones]
 name=Bones
 desc=These sheep remains are infected.
 members=yes
@@ -71,7 +71,7 @@ model=model_2674_obj
 2dxan=400
 weight=3lb
 
-[obj_283]
+[yellow_sheep_bones]
 name=Bones
 desc=These sheep remains are infected.
 members=yes

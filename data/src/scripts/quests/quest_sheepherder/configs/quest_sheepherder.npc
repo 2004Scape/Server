@@ -98,6 +98,7 @@ recol2d=28563
 model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
+timer=25
 
 [green_sheep]
 vislevel=hide
@@ -113,6 +114,7 @@ recol2d=28563
 model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
+timer=25
 
 [blue_sheep]
 vislevel=hide
@@ -128,6 +130,7 @@ recol2d=28563
 model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
+timer=25
 
 [yellow_sheep]
 vislevel=hide
@@ -143,3 +146,4 @@ recol2d=28563
 model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
+timer=25

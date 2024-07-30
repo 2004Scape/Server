@@ -5,7 +5,6 @@ model=model_loc_165
 width=3
 length=3
 forceapproach=east
-category=smithing_furnace
 
 [sheepherder_gate_left]
 name=Gate
