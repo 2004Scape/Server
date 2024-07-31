@@ -5517,6 +5517,7 @@ name=Doric
 desc=A dwarf smith, quite handy with a hammer.
 recol1s=10434
 recol1d=15552
+recol2s=15426
 recol2d=14728
 model1=model_2974_npc
 model2=model_2981_npc
