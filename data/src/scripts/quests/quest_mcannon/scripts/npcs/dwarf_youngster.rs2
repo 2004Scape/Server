@@ -1,0 +1,28 @@
+[opnpc1,dwarf_youngster]
+@dwarf_youngster_dialogue;
+
+[label,dwarf_youngster_dialogue]
+~chatnpc("<p,happy>Thank the heavens, you saved me!|I thought I'd be goblin lunch for sure!");
+~chatplayer("<p,quiz>Are you okay?");
+~chatnpc("<p,neutral>I think so, I'd better run off home.");
+~chatplayer("<p,neutral>That's right, you get going. I'll catch up.");
+~chatnpc("<p,happy>Thanks again, brave adventurer.");
+
+if_close;
+p_delay(0);
+mes("The dwarf child runs off into the caverns.");
+if (%mcannon_progress = ^mcannon_tasked_with_finding_gilobs_son) {
+    %mcannon_progress = ^mcannon_return_to_dwarf_commander;
+}
+npc_setmode(none);
+p_delay(0);
+npc_facesquare(0_40_153_7_56);
+npc_queue(10, 0, 0);
+p_delay(3);
+
+[ai_queue10,dwarf_youngster]
+npc_walk(0_40_153_7_56);
+npc_queue(11, 0, 4);
+
+[ai_queue11,dwarf_youngster]
+npc_del;

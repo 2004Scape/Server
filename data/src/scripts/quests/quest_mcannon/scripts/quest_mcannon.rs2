@@ -1,0 +1,26 @@
+// The Dwarf Cannon quest was reworked June 13, 2006 from RSC.
+// Our version of the maps and NPCs closer resembles RSC so I used RSC replays to piece together the quest.
+// https://github.com/Open-RSC/rscplus-replays/tree/master/BerryPi/Dwarf%20Cannon
+// https://github.com/Open-RSC/rscplus-replays/tree/master/1e_Luis/Quests/Dwarf%20Cannon
+// https://github.com/Open-RSC/rscplus-replays/tree/master/Revisionism/07-20-2018%2013.05.03%20dwarf%20cannon%20quest%20pt1
+// https://github.com/Open-RSC/rscplus-replays/tree/master/Revisionism/07-20-2018%2011.29.05%20bank%20cleaning%2C%20then%20get%20magic%20whistle%20post%20holy-grail%2C%20searching%20crates%20pre-dwarf%20cannon%2C%20can't%20go%20up%20ladder%20pre-dwarf%20cannon
+// https://github.com/Open-RSC/rscplus-replays/tree/master/Revisionism/07-20-2018%2016.43.56%20dwarf%20cannon%20quest%20pt2
+// https://github.com/Open-RSC/rscplus-replays/tree/master/Revisionism/07-20-2018%2020.01.24%20post%20dwarf%20cannon%20checks
+// https://github.com/Open-RSC/rscplus-replays/tree/master/Revisionism/07-20-2018%2013.03.20%20still%20can't%20go%20up%20ladder%20pre-dwarf%20cannon
+
+// Cannon Reclaim
+// https://github.com/Open-RSC/rscplus-replays/tree/master/Revisionism/07-31-2018%2012.40.47%20reclaim%20lost%20cannon
+
+// There doesn't seem to be a dwarf remains spawn for the player if the quest hasn't begun in OSRS
+// Probably updated in the rework?
+
+// Other sources:
+// Runeweb: https://web.archive.org/web/20051025134501/http://www.runeweb.net/index.php?page=rs2-quest-dwarfcannon
+// RuneHq: https://web.archive.org/web/20050206193011/http://runehq.com/cacheguides/viewquestguide00184.htm
+// Sal's Realm: https://web.archive.org/web/20041210172257/http://runescape.salmoneus.net/quests/DwarfCannon.html
+// Rune Village: https://web.archive.org/web/20041125231430/http://runevillage.com/quest2DwarfCannon.php
+
+[queue,mcannon_complete]
+%mcannon_progress = ^mcannon_complete;
+stat_advance(crafting, 7500);
+~send_quest_complete(questlist:mcannon, mcannonball, 200, ^mcannon_questpoints, "You have finished the Dwarf Cannon Quest.");

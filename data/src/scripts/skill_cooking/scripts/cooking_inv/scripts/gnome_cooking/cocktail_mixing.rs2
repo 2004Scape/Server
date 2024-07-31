@@ -88,7 +88,7 @@ switch_obj(last_useitem) {
 }
 
 [label,pour_cocktail_shaker]
-def_int $null_count = calc(~get_cocktail_ingredient_count(null) + ~get_cocktail_ingredient_count(obj_0));
+def_int $null_count = calc(~get_cocktail_ingredient_count(null) + ~get_cocktail_ingredient_count(dwarf_remains));
 // if very few ingredients then give odd cocktail
 if ($null_count = 7) {
     mes("There's nothing to pour from the cocktail shaker.");
@@ -192,13 +192,13 @@ mes("<$message> into your cocktail shaker...");
 
 
 [proc,get_cocktail_ingredient_step]()(int)
-if (%gnome_drink_ingredient1 = null | %gnome_drink_ingredient1 = obj_0) return(0);
-if (%gnome_drink_ingredient2 = null | %gnome_drink_ingredient2 = obj_0) return(1);
-if (%gnome_drink_ingredient3 = null | %gnome_drink_ingredient3 = obj_0) return(2);
-if (%gnome_drink_ingredient4 = null | %gnome_drink_ingredient4 = obj_0) return(3);
-if (%gnome_drink_ingredient5 = null | %gnome_drink_ingredient5 = obj_0) return(4);
-if (%gnome_drink_ingredient6 = null | %gnome_drink_ingredient6 = obj_0) return(5);
-if (%gnome_drink_ingredient7 = null | %gnome_drink_ingredient7 = obj_0) return(6);
+if (%gnome_drink_ingredient1 = null | %gnome_drink_ingredient1 = dwarf_remains) return(0);
+if (%gnome_drink_ingredient2 = null | %gnome_drink_ingredient2 = dwarf_remains) return(1);
+if (%gnome_drink_ingredient3 = null | %gnome_drink_ingredient3 = dwarf_remains) return(2);
+if (%gnome_drink_ingredient4 = null | %gnome_drink_ingredient4 = dwarf_remains) return(3);
+if (%gnome_drink_ingredient5 = null | %gnome_drink_ingredient5 = dwarf_remains) return(4);
+if (%gnome_drink_ingredient6 = null | %gnome_drink_ingredient6 = dwarf_remains) return(5);
+if (%gnome_drink_ingredient7 = null | %gnome_drink_ingredient7 = dwarf_remains) return(6);
 return(7);
 
 [proc,get_cocktail_ingredient_name](obj $ingredient)(string, int)
