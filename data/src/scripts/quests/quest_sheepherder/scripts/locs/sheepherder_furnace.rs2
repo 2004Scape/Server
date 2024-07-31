@@ -7,6 +7,8 @@ if (last_useitem = red_sheep_bones) {
     @incinerate_bones(7);
 } else if (last_useitem = yellow_sheep_bones) {
     @incinerate_bones(10);
+} else if (oc_category(last_useitem) = category_91) {
+    ~mesbox("This is a special incinerator for hazardous waste.|It is not suitable for crafting or smithing.");
 } else {
     mes("Nothing interesting happens.");
 }
