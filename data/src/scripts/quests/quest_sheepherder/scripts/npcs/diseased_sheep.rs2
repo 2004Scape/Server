@@ -75,11 +75,9 @@ if (~inzone_coord_pair_table(sheepherder_pen_gate, npc_coord) = true) {
 
 
 [label,diseased_sheep_baa]
-npc_settimer(calc(15 + random(20)));
-if (random(4) = 0) {
-    npc_say("Baa");
-    npc_setmode(null);
-} 
+npc_settimer(calc(10 + random(20)));
+npc_say("Baa");
+npc_setmode(null);
 
 [opnpcu,green_sheep]
 switch_obj(last_useitem) {
