@@ -111,7 +111,7 @@ export default class GameMap {
             this.loadGround(lands, landData, mapsquareX, mapsquareZ);
             this.loadLocations(lands, locData, mapsquareX, mapsquareZ, zoneMap);
         });
-        // await Promise.all(maps); // this bottlenecks login time
+        await Promise.all(maps);
         console.timeEnd('Loading game map');
     }
 
