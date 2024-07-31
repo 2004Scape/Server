@@ -5,3 +5,4 @@ await World.start();
 
 const workerServer = new WorkerServer();
 workerServer.start();
+self.postMessage({ type: 'ready' });
