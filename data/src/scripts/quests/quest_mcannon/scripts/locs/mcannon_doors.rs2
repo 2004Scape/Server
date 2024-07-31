@@ -1,0 +1,19 @@
+// Door to Nulodion
+[oploc1,mcannon_nulodion_door]
+if (%mcannon_progress < ^mcannon_tasked_with_speaking_to_nulodion) {
+    mes("The door is locked.");
+} else {
+    @open_dwarf_cannon_door;
+}
+
+// Door to Dwarf Cannon near Dwarf Commander
+[oploc1,mcannon_cannon_door]
+if (%mcannon_progress >= ^mcannon_tasked_with_fixing_cannon) {
+    @open_dwarf_cannon_door;
+} else {
+    mes("The door is locked.");
+}
+
+[label,open_dwarf_cannon_door]
+def_boolean $is_outside = ~check_axis(coord, loc_coord, loc_angle);
+~open_and_close_door(loc_param(next_loc_stage), $is_outside, false);

@@ -1,0 +1,93 @@
+// Sources:
+// OSRS Feb 27, 2013 - https://youtu.be/KnOztD3Mua0?t=21
+// OSRS Mar 23, 2013 - https://youtu.be/xEHAD-FvRhY?t=76
+// OSRS Apr 11, 2016 - https://youtu.be/e1eqwW5hHoU?t=68
+// OSRS Nov 10, 2018 - https://youtu.be/pROFg5jcCR0?t=66
+
+// RS Jan 09, 2009 - https://youtu.be/YgfAZMEsPjM?t=68
+// RS Feb 12, 2009 - https://youtu.be/xq6aVMnWsjw?t=37
+// RS May 10, 2009 - https://youtu.be/c87jmdbr1fY?t=37
+// RS Sep 16, 2009 - https://youtu.be/wExtrdFXPQg?t=39
+
+// Undamaged Railing
+[oploc1,railing_sturdy]
+if (%mcannon_progress = ^mcannon_not_started) {
+    mes("Nothing interesting happens.");
+} else if (%mcannon_progress = ^mcannon_tasked_with_fixing_railings) {
+    @mcannon_fix_regular_railing;
+} else {
+    ~chatplayer("<p,neutral>I've fixed all these railings now.");
+}
+
+// Used bits 5-10 since it matches weird gloop
+// https://chisel.weirdgloop.org/varbs/display?varplayer=1
+[oploc1,railing_broken_1]
+@damaged_railings(5);
+
+[oploc1,railing_broken_2]
+@damaged_railings(6);
+
+[oploc1,railing_broken_3]
+@damaged_railings(7);
+
+[oploc1,railing_broken_4]
+@damaged_railings(8);
+
+[oploc1,railing_broken_5]
+@damaged_railings(9);
+
+[oploc1,railing_broken_6]
+@damaged_railings(10);
+
+[label,damaged_railings](int $railing_num)
+if (%mcannon_progress = ^mcannon_not_started) {
+    mes("Nothing interesting happens.");
+} else if (%mcannon_progress = ^mcannon_tasked_with_fixing_railings) {
+    @mcannon_fix_broken_railing($railing_num);
+} else {
+    ~chatplayer("<p,neutral>I've fixed all these railings now.");
+}
+
+[label,mcannon_fix_regular_railing]
+mes("You search the railing...");
+p_delay(2);
+mes("but find nothing of interest.");
+p_delay(2);
+
+[label,mcannon_fix_broken_railing](int $railing_num)
+// If the railing has been replaced.
+if (testbit(%mcannon_railings, $railing_num) = true) {
+    mes("You have already fixed this railing.");
+    return;
+}
+
+// based on crafting level, steal formula from OSRS wiki page
+mes("You search the railing...");
+p_delay(2);
+mes("One railing is broken and needs to be replaced.");
+p_delay(2);
+
+def_int $choice = ~p_choice2("Try to replace the railing.", 1, "Leave it be.", 2);
+if ($choice = 1) {
+    if_close;
+    p_delay(2);
+
+    mes("You attempt to replace the missing railing...");
+
+    // Pulled numbers from: https://oldschool.runescape.wiki/w/Railing
+    if (stat_random(stat(crafting), 60, 150) = true) {
+        mes("You replace the railing with no problems.");
+        p_delay(2);
+        %mcannon_railings = setbit(%mcannon_railings, $railing_num);
+        inv_del(inv, mcannon_railing, 1);
+    } else {
+        mes("but fail and cut yourself trying.");
+        // BerryPi gets hit for 2 damage multiple times - 29 HP
+        // 1E_Luis gets hit for 3 damage multiple times - 46 HP
+        def_int $damage = calc(stat_base(hitpoints) / 10);
+        if ($damage > 3) {
+            $damage = 3;
+        }
+        ~damage_self($damage);
+    }
+}

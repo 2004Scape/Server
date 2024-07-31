@@ -1,0 +1,145 @@
+[opnpc3,nulodion]
+if (%mcannon_progress < ^mcannon_complete) {
+    mes("The dwarf doesn't seem interested in trading.");
+    return;
+}
+~openshop_activenpc;
+
+[opnpc1,nulodion]
+switch_int(%mcannon_progress) {
+    case ^mcannon_tasked_with_speaking_to_nulodion: @mcannon_speak_with_nulodion_first_time;
+    case ^mcannon_return_to_dwarf_commander_with_notes: @mcannon_speak_with_nulodion_should_return_to_dwarf_commander;
+    case ^mcannon_complete: @nulodion_post_quest;
+}
+
+[label,mcannon_speak_with_nulodion_first_time]
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,neutral>Can I help you?");
+~chatplayer("<p,neutral>Thee Dwarf Commander sent me, he's having trouble with his cannon.");
+~chatnpc("<p,neutral>Of course, we forgot to send the ammo mould.");
+~chatplayer("<p,quiz>It fires a mould?");
+~chatnpc("<p,neutral>Don't be silly, the ammo's made by using a mould.|Here, take these to him, the instructions explain everything.");
+inv_add(inv, nulodions_notes, 1);
+inv_add(inv, ammo_mould, 1);
+if (%mcannon_progress = ^mcannon_tasked_with_speaking_to_nulodion) {
+    %mcannon_progress = ^mcannon_return_to_dwarf_commander_with_notes;
+}
+mes("The Cannon Engineer gives you some notes and a mould.");
+~chatplayer("<p,neutral>That's great, thanks.");
+~chatnpc("<p,neutral>Thank you, adventurer. The Dwarf Black Guard will remember this.");
+
+[label,mcannon_speak_with_nulodion_should_return_to_dwarf_commander]
+~chatplayer("<p,neutral>Hello again.");
+if (inv_total(inv, nulodions_notes) = 0) {
+    @mcannon_lost_notes;
+}
+
+if (inv_total(inv, ammo_mould) = 0) {
+    @mcannon_lost_mould;
+}
+~chatnpc("<p,neutral>So has the commander figured out how to work the cannon?");
+~chatplayer("<p,neutral>Not yet, but I'm sure he will.");
+~chatnpc("<p,neutral>If you can get those items to him it'll help.");
+
+[label,mcannon_lost_notes]
+~chatplayer("<p,sad>I've lost the notes...");
+~chatnpc("<p,neutral>Here take these.");
+mes("The Cannon Engineer gives you some more notes.");
+inv_add(inv, nulodions_notes, 1);
+
+[label,mcannon_lost_mould]
+~chatplayer("<p,sad>I've lost the cannon ball mould...");
+~chatnpc("<p,neutral>Deary me, you are in trouble.|Here, take this one.");
+mes("The Cannon Engineer gives you another mould.");
+inv_add(inv, ammo_mould, 1);
+
+[label,nulodion_post_quest]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,happy>Hello traveller, how's things?");
+~chatplayer("<p,neutral>Not bad thanks, yourself?");
+~chatnpc("<p,neutral>I'm good, just working hard as usual...");
+@multi4(
+    "I was hoping you might sell me a cannon?", sell_me_a_cannon,
+    "Well, take care of yourself then.", take_care_then,
+    "I want to know more about the cannon.", more_about_cannon,
+    "I've lost my cannon.", lost_my_cannon
+);
+
+[label,sell_me_a_cannon]
+~chatplayer("<p,neutral>I was hoping you might sell me a cannon.");
+~chatnpc("<p,confused>Hmmmmmm...");
+~chatnpc("<p,neutral>I shouldn't really, but as you helped us so much,|well, I could sort something out.|I'll warn you though, they don't come cheap.");
+~chatplayer("<p,quiz>How much?");
+~chatnpc("<p,neutral>For the full set up... 750,000 coins.|Or I can sell you the separate parts for 200,000 each.");
+~chatplayer("<p,shock>That's not cheap!");
+@multi4(
+    "Ok, I'll take a cannon please.", ill_take_a_cannon,
+    "Can I look at the separate parts please?", separate_parts_please,
+    "Sorry, that's too much fo rme.", too_much_for_me,
+    "Have you any ammo or instructions to sell?", ammo_or_instructions
+);
+
+[label,take_care_then]
+~chatplayer("<p,neutral>Well, take care of yourself then.");
+
+[label,more_about_cannon]
+~chatplayer("<p,neutral>I want to know more about the cannon.");
+~chatnpc("<p,neutral>There's only so much I can tell you adventurer.|We've been working on this little beauty for some time now.");
+~chatplayer("<p,quiz>Is it effective?");
+~chatnpc("<p,neutral>In short bursts it's very effective, the most destructive weapon to date. The cannon automatically targets monsters close by. You just have to make the ammo and let it rip.");
+
+[label,lost_my_cannon]
+~chatplayer("<p,sad>I've lost my cannon...");
+~chatnpc("<p,neutral>That's unfortunate... but don't worry, I can sort you out.");
+
+def_boolean $has_decayed = false;
+if ($has_decayed = true) {
+    mes("The dwarf gives you a new cannon.");
+    ~chatnpc("<p,neutral>Keep that quiet or I'll be in real trouble!");
+    ~chatplayer("<p,neutral>Of course.");
+    inv_add(inv, cannon_base, 1);
+    inv_add(inv, cannon_stand, 1);
+    inv_add(inv, cannon_barrels, 1);
+    inv_add(inv, cannon_furnace, 1);
+} else {
+    ~chatnpc("<p,sad>Oh dear, I'm only allowed to replace cannons|that were stolen in action.|I'm sorry but you'll have to buy a new set.");
+}
+
+[label,ill_take_a_cannon]
+~chatplayer("<p,neutral>Ok, I'll take a cannon please.");
+~chatnpc("<p,shifty>Ok then, but keep it quiet...|This thing is top secret!");
+if (inv_total(inv, coins) < 750000) {
+    ~chatplayer("<p,sad>Oops, I don't have enough money.");
+    ~chatnpc("<p,neutral>Sorry, I can't go any lower than that.");
+} else {
+    inv_del(inv, coins, 750000);
+    inv_add(inv, cannon_base, 1);
+    inv_add(inv, cannon_stand, 1);
+    inv_add(inv, cannon_barrels, 1);
+    inv_add(inv, cannon_furnace, 1);
+    inv_add(inv, ammo_mould, 1);
+    inv_add(inv, instruction_manual, 1);
+    ~mesbox("You give the Cannon Engineer 750,000 coins...");
+    ~mesbox("He gives you the four parts that make the cannon, plus an ammo mould and an instruction manual.");
+    ~chatnpc("<p,neutral>There you go, you be careful with that thing.");
+    ~chatplayer("<p,happy>Will do, take care mate.");
+    ~chatnpc("<p,happy>Take care adventurer.");
+}
+
+[label,separate_parts_please]
+~chatplayer("<p,quiz>Can I look at the separate parts please?");
+~chatnpc("<p,happy>Of course!");
+~openshop_activenpc;
+
+[label,too_much_for_me]
+~chatplayer("<p,sad>Sorry, that's too much for me.");
+~chatnpc("<p,neutral>Fair enough, it's too much for most of us.");
+
+[label,ammo_or_instructions]
+~chatplayer("<p,quiz>Have you any ammo or instructions to sell?");
+~chatnpc("<p,happy>Yes, of course.");
+~openshop_activenpc;
+
+
+
+

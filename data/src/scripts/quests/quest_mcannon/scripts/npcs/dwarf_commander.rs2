@@ -1,0 +1,214 @@
+[opnpc1,dwarf_commander]
+switch_int(%mcannon_progress) {
+    case ^mcannon_not_started: @dwarf_commander_start_quest;
+    case ^mcannon_tasked_with_fixing_railings: @dwarf_commander_how_goes_fixing_those_fences;
+    case ^mcannon_tasked_with_checking_guard_tower: @dwarf_commander_how_goes_finding_the_guard;
+    case ^mcannon_tasked_with_finding_goblin_cave: @dwarf_commander_how_goes_finding_the_goblin_cave;
+    case ^mcannon_tasked_with_finding_gilobs_son: @dwarf_commander_how_goes_finding_gilobs_son;
+    case ^mcannon_return_to_dwarf_commander: @dwarf_commander_found_gilobs_son;
+    case ^mcannon_tasked_with_fixing_cannon,
+        ^mcannon_inspected_cannon_first_time: @dwarf_commander_still_fixing_cannon;
+    case ^mcannon_has_repaired_cannon: @dwarf_commander_repaired_cannon;
+    case ^mcannon_tasked_with_speaking_to_nulodion: @dwarf_commander_havent_spoken_to_nulodion;
+    case ^mcannon_return_to_dwarf_commander_with_notes: @dwarf_commander_spoken_to_nulodion;
+    case ^mcannon_complete: @dwarf_commander_post_quest;
+}
+
+[label,dwarf_commander_start_quest]
+~chatplayer("<p,default>Hello.");
+~chatnpc("<p,happy>Hello traveller, I'm pleased to see you.|We were hoping to find an extra pair of hands.|That's if you don't mind helping?");;
+~chatplayer("<p,quiz>Why, what's wrong?");
+~chatnpc("<p,sad>As part of the Dwarven Black Guard,|it is our duty to protect these mines,|but we just don't have the man power.|Could you help?");
+@multi2(
+    "I'm sorry, I'm too busy mining.", im_too_busy_mining,
+    "Yeah, I'd love to help.", id_love_to_help
+);
+
+[label,im_too_busy_mining]
+~chatplayer("<p,default>I'm sorry, I'm too busy mining.");
+~chatnpc("<p,sad>Ok then, we'll have to find someone else.");
+
+[label,id_love_to_help]
+~chatplayer("<p,happy>Yeah, I'd love to help.");
+if (%mcannon_progress = ^mcannon_not_started) {
+    %mcannon_progress = ^mcannon_tasked_with_fixing_railings;
+    ~send_quest_progress_colour(questlist:mcannon, %mcannon_progress, ^mcannon_complete);
+}
+~chatnpc("<p,default>Thank you, we have no time to waste.|The Goblins are attacking from the forests to the south,|they managed to get through the broken railings,|could you please replace them with these new ones?");
+~chatplayer("<p,default>Sounds easy enough...");
+~mesbox("The Dwarf Commander gives you six railings.");
+inv_add(inv, mcannon_railing, 6);
+~chatnpc("<p,default>Let me know once you've fixed the railings.");    
+~chatplayer("<p,default>Ok, commander.");
+
+[label,dwarf_commander_how_goes_fixing_those_fences]
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,happy>Hello again traveller.|How are you doing with those railings?");
+~chatplayer("<p,neutral>I'm getting there.");
+
+if (getbit_range(%mcannon_railings, 5, 10) = 63) {
+    ~chatnpc("<p,neutral>The goblins seemed to have stopped getting in,|I think you've done the job.");
+    ~chatplayer("<p,neutral>Good stuff.");
+    ~chatnpc("<p,neutral>Could you do me one more favour?|I need you to go check up on a guard,|he should be in the Black Guard watch tower|just to the South of here.");
+    ~chatnpc("<p,neutral>He should have reported in by now.");
+    ~chatplayer("<p,neutral>Ok, I'll see what I can find out.");
+    ~chatnpc("<p,happy>Thanks traveller.");
+    if (%mcannon_progress = ^mcannon_tasked_with_fixing_railings) {
+        %mcannon_progress = ^mcannon_tasked_with_checking_guard_tower;
+    }
+} else {
+    ~chatnpc("<p,neutral>The goblins are still getting in,|so there must still be some broken railings.");
+    ~chatplayer("<p,neutral>Don't worry I'll find them soon enough.");
+
+    if (inv_total(inv, mcannon_railing) < 1) {
+        ~chatplayer("<p,sad>But I'm out of railings...");
+        ~chatnpc("<p,happy>Ok, we've got plenty.");
+        ~mesbox("The Dwarf Commander gives you another railing.");
+        inv_add(inv, mcannon_railing, 1);
+    }
+}
+
+[label,dwarf_commander_how_goes_finding_the_guard]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,quiz>Have you been to the watch tower yet?");
+~chatplayer("<p,neutral>Yes, I went up but there was no one.");
+if (inv_total(inv, dwarf_remains) < 1) {
+    ~chatnpc("<p,quiz>That's strange, Gilob never leaves his post.|His son was also with him, it's too strange.|Can you return and look for clues?");
+    ~chatplayer("<p,neutral>Ok then.");
+} else {
+    ~chatnpc("<p,quiz>That's strange, Gilob never leaves his post.");
+    ~chatplayer("<p,sad>I may have some bad new for you commander.");
+    ~mesbox("You show the Dwarf Commander the remains.");
+    if (%mcannon_progress = ^mcannon_tasked_with_checking_guard_tower) {
+        %mcannon_progress = ^mcannon_tasked_with_finding_goblin_cave;
+        inv_del(inv, dwarf_remains, 1);
+    }
+    ~chatnpc("<p,sad>What's this? Oh no, it can't be!");
+    ~chatplayer("<p,neutral>Sorry, it looks like the goblins got him.");
+    ~chatnpc("<p,sad>Noooo... Those... those animals.|But where is Gilob's son? He was also there.");
+    ~chatplayer("<p,neutral>The goblins must have taken him.");
+    ~chatnpc("<p,angry>Please traveller, seek out the Goblins base|and return the lad to us.|They must sleep somewhere!");
+    ~chatplayer("<p,neutral>Ok, I'll see if I can find their hide out.");
+}
+
+[label,dwarf_commander_how_goes_finding_the_goblin_cave]
+~chatplayer("<p,happy>Hello again.");
+~chatnpc("<p,quiz>Traveller have you managed to find the Goblin's base?");
+~chatplayer("<p,sad>Not yet I'm afraid, but I'll keep looking...");
+
+// This is made up lies and shenanigans
+[label,dwarf_commander_how_goes_finding_gilobs_son]
+~chatplayer("<p,happy>Hello again.");
+~chatnpc("<p,quiz>Traveller have you managed to find the Goblin's base?");
+~chatplayer("<p,happy>I have, but I haven't managed to find Gilob's son yet.");
+~chatnpc("<p,sad>You must keep looking!");
+
+[label,dwarf_commander_found_gilobs_son]
+~chatplayer("<p,quiz>Hello, has Lollk returned yet?");
+~chatnpc("<p,happy>He has, and I thank you from the bottom of my heart|- without you he'd be goblin barbecue!");
+~chatplayer("<p,neutral>Always a pleasure to help.");
+~chatnpc("<p,neutral>In that case I have one more favour to ask you...");
+~chatnpc("<p,neutral>As you've seen, our defences are too weak against |those goblins. The Black Guard have sent us a cannon to help the situation.");
+~chatplayer("<p,neutral>Sounds good.");
+~chatnpc("<p,neutral>Unfortunately we're having trouble fixing the thing.|The cannon is stored in our shed.|If you could fix it, it would be a great help.");
+@multi2(
+    "Ok, I'll see what I can do.", mcannon_ill_see_what_i_can_do,
+    "Sorry, I've done enough for today.", mcannon_ive_done_enough_for_today
+);
+
+[label,mcannon_ill_see_what_i_can_do]
+~chatplayer("<p,neutral>Ok, I'll see what I can do.");
+inv_add(inv, tool_kit, 1);
+if (%mcannon_progress = ^mcannon_return_to_dwarf_commander) {
+    %mcannon_progress = ^mcannon_tasked_with_fixing_cannon;
+}
+mes("The Dwarf Commander gives you a tool kit.");
+~chatnpc("<p,happy>Let me know how you get on.");
+
+[label,mcannon_ive_done_enough_for_today]
+~chatplayer("<p,default>Sorry, I've done enough for today.");
+~chatnpc("<p,neutral>Fair enough, take care traveller.");
+
+[label,dwarf_commander_still_fixing_cannon]
+~chatnpc("<p,happy>How are you doing in there bold adventurer?|We've been trying our best with that thing,|but I just haven't got the patience.");
+~chatplayer("<p,neutral>It's not an easy job, but I'm getting there.");
+~chatnpc("<p,happy>Good stuff, let me know if you have any luck.|If we manage to get that thing working...|those goblins will be no trouble at all.");
+if (inv_total(inv, tool_kit) < 1) {
+    ~chatplayer("<p,sad>I'm afraid I lost the toolkit...");
+    ~chatnpc("<p,neutral>That was silly...|never mind, here you go.");
+    inv_add(inv, tool_kit, 1);
+    mes("The Dwarf Commander gives you another toolkit.");
+}
+[label,dwarf_commander_repaired_cannon]
+~chatplayer("<p,neutral>Hello again.");
+~chatnpc("<p,happy>Hello there traveller, how's things?");
+~chatplayer("<p,neutral>Well, I think I've done it, take a look...");
+~chatnpc("<p,happy>Really?");
+if_close;
+p_delay(1);
+mes("The Dwarf Commander pops into the shed to take a closer look.");
+p_delay(1);
+~chatnpc("<p,happy>Well I don't believe it, it seems to be in working order.");
+~chatplayer("<p,happy>Not bad for an adventurer, eh?");
+~chatnpc("<p,happy>Not bad at all, your effort is appreciated my friend.|Now, if I could only figure out what thing uses as ammo....");
+~chatnpc("<p,happy>The Black Guard forgot to send instructions.|I know I said that was the last favour... but...");
+~chatplayer("<p,bored>What now?");
+~chatnpc("<p,neutral>I can't leave this post, could you go to the Black Guard|base and find out what this thing actually shoots?");
+@multi2(
+    "Sorry, I've really done enough.", mcannon_sorry_ive_really_done_enough,
+    "Ok then, just for you!", mcannon_ok_then_just_for_you
+);
+
+[label,mcannon_sorry_ive_really_done_enough]
+~chatplayer("<p,bored>Sorry, I'vee really done enough.");
+~chatnpc("<p,neutral>Fair enough.");
+
+[label,mcannon_ok_then_just_for_you]
+~chatplayer("<p,happy>Ok then, just for you!");
+~chatnpc("<p,happy>You're a good adventurer, we were lucky to find you.|The base is located just South of the Ice Mountain.");
+~chatnpc("<p,neutral>You'll need to speak to the Nulodion, Dwarf Cannon| Engineer. He's the Weapons Development Chief for the Black Guard, so if anyone knows how to fire that thing, it'll be him.");
+~chatplayer("<p,neutral>Ok, I'll see what I can do.");
+if (%mcannon_progress = ^mcannon_has_repaired_cannon) {
+    %mcannon_progress = ^mcannon_tasked_with_speaking_to_nulodion;
+}
+
+[label,dwarf_commander_havent_spoken_to_nulodion]
+~chatplayer("<p,neutral>Hi again.");
+~chatnpc("<p,happy>Hello traveller,|any word from the Cannon Engineer?");
+~chatplayer("<p,neutral>Not yet.");
+~chatnpc("<p,neutral>The Black Guard camp is South of the Ice Mountain,|the quicker we can some ammo for this thing|the quicker those goblins will leave us be.");
+~chatplayer("<p,neutral>I'll get to it.");
+
+[label,dwarf_commander_spoken_to_nulodion]
+~chatplayer("<p,neutral>Hi.");
+~chatnpc("<p,happy>Hello traveller, any word from the Cannon Engineer?");
+~chatplayer("<p,neutral>Yes, I have spoken to him.");
+
+if (inv_total(inv, ammo_mould) < 1 | inv_total(inv, nulodions_notes) < 1) {
+    @mcannon_missing_nulodion_items;
+}
+
+~chatplayer("<p,neutral>He gave me these to give you...");
+mes("You hand the Dwarf Commander the mould and the notes.");
+~chatnpc("<p,happy>Aah, of course, we have to make the ammo!|This is great, now we will bee able to defend ourselves.|I don't know how to thank you.");
+~chatplayer("<p,neutral>You could give me a cannon...");
+~chatnpc("<p,neutral>Hah! You'd be lucky, those things are worth a fortune.");
+~chatnpc("<p,neutral>Hmmm, now I think about it the Cannon Engineer may be able to help.|He controls the production of the cannons.");
+~chatnpc("<p,neutral>He won't be able to give you one,|but for the right price, I'm sure he'll sell one to you.");
+~chatplayer("<p,neutral>Hmmm... sounds interesting.");
+~chatnpc("<p,neutral>Take care of your self traveller, and thanks again.");
+~chatplayer("<p,neutral>You take care too.");
+inv_del(inv, ammo_mould, 1);
+inv_del(inv, nulodions_notes, 1);
+queue(mcannon_complete, 0);
+
+[label,mcannon_missing_nulodion_items]
+~chatplayer("<p,neutral>He gave me some items to give to you... but I seem to have lost something.");
+~chatnpc("<p,neutral>If you could go back and get another, I'd appreciate it.");
+~chatplayer("<p,neutral>Oh, okay then.");
+
+[label,dwarf_commander_post_quest]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Well, hello there, how you doing?"); // not a typo
+~chatplayer("<p,neutral>Not bad, yourself?");
+~chatnpc("<p,happy>I'm great now, those goblins can't get close with this cannon blasting at them!"); // This also reads poorly... but it's correct.
