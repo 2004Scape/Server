@@ -16,7 +16,7 @@ if (last_useitem = red_sheep_bones) {
     sound_synth(furnace, 0, 0);
     mes("You put the remains into the furnace.");
     inv_del(inv, last_useitem, 1);
-    p_delay(0);
+    p_delay(3);
     mes("The remains burn to dust.");
     %sheepherder_disposal = setbit_range_toint(%sheepherder_disposal, 6, $starting_bit, calc($starting_bit + 2));
 }
