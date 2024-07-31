@@ -99,6 +99,7 @@ model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
 timer=25
+category=diseased_sheep
 
 [green_sheep]
 vislevel=hide
@@ -115,6 +116,7 @@ model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
 timer=25
+category=diseased_sheep
 
 [blue_sheep]
 vislevel=hide
@@ -131,6 +133,7 @@ model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
 timer=25
+category=diseased_sheep
 
 [yellow_sheep]
 vislevel=hide
@@ -147,3 +150,4 @@ model1=model_2929_npc
 wanderrange=3
 param=death_anim,sheep_death
 timer=25
+category=diseased_sheep
