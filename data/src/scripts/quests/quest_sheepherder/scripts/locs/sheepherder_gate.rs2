@@ -1,10 +1,15 @@
 [oploc1,_sheepherder_gate]
-switch_int(%sheepherder_progress) {
-    case ^sheepherder_not_started: ~mesbox("This is a restricted area.|You cannot enter without protective clothing.");
-    case default: @attempt_opening_gate;
+if (%sheepherder_progress = ^sheepherder_not_started) {
+    ~mesbox("This is a restricted area.|You cannot enter without protective clothing.");
+    return;
 }
 
-[label,attempt_opening_gate]
+if (%sheepherder_progress > ^sheepherder_not_started 
+    & (inv_total(worn, plague_jacket) < 1 | inv_total(worn, plague_trousers) < 1)) {
+    ~chatplayer("<p,neutral>It doesn't look very safe in there. I'm not going in without decent protective clothing.");
+    return;
+}
+
 if(coordx(coord) <= coordx(loc_coord)) {
     p_teleport(movecoord(loc_coord, 1, 0, 0));
 } else {
