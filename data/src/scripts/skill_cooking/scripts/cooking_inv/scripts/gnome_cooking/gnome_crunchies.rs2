@@ -41,7 +41,7 @@ switch_obj(last_useitem) {
 }
 
 [proc,get_gnome_crunchies_product]()(namedobj)
-def_int $null_count = calc(~get_crunchies_ingredient_count(null) + ~get_crunchies_ingredient_count(obj_0));
+def_int $null_count = calc(~get_crunchies_ingredient_count(null) + ~get_crunchies_ingredient_count(dwarf_remains));
 if ($null_count = 5) {
     ~mesbox("You can't cook that.");
     @exit;
@@ -111,11 +111,11 @@ if (string_length(oc_param($item, crunchies_message)) < 1) {
 
 
 [proc,get_crunchies_ingredient_step]()(int)
-if (%gnome_crunchies_ingredient1 = null | %gnome_crunchies_ingredient1 = obj_0) return(0);
-if (%gnome_crunchies_ingredient2 = null | %gnome_crunchies_ingredient2 = obj_0) return(1);
-if (%gnome_crunchies_ingredient3 = null | %gnome_crunchies_ingredient3 = obj_0) return(2);
-if (%gnome_crunchies_ingredient4 = null | %gnome_crunchies_ingredient4 = obj_0) return(3);
-if (%gnome_crunchies_ingredient5 = null | %gnome_crunchies_ingredient5 = obj_0) return(4);
+if (%gnome_crunchies_ingredient1 = null | %gnome_crunchies_ingredient1 = dwarf_remains) return(0);
+if (%gnome_crunchies_ingredient2 = null | %gnome_crunchies_ingredient2 = dwarf_remains) return(1);
+if (%gnome_crunchies_ingredient3 = null | %gnome_crunchies_ingredient3 = dwarf_remains) return(2);
+if (%gnome_crunchies_ingredient4 = null | %gnome_crunchies_ingredient4 = dwarf_remains) return(3);
+if (%gnome_crunchies_ingredient5 = null | %gnome_crunchies_ingredient5 = dwarf_remains) return(4);
 return(5);
 
 [proc,get_crunchies_ingredient_name](obj $ingredient)(string, int)

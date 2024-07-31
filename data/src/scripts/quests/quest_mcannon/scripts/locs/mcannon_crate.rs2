@@ -1,0 +1,60 @@
+// Crate containing Lolk
+[oploc1,loc_1]
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (npc_type = rat 
+        | npc_type = chicken 
+        | npc_type = spider 
+        | npc_type = goblin_unarmed1
+        | npc_type = goblin_unarmed2
+        ) {
+        npc_setmode(opplayer2);
+    }
+}
+
+if (%mcannon_progress = ^mcannon_tasked_with_finding_gilobs_son) {
+    if (npc_find(coord, dwarf_youngster, 14, 0) = true) {
+        mes("You search the crate but find nothing.");        
+    } else {
+        mes("You search the crate...");
+        p_delay(0);
+        mes("Inside you see a dwarf child, tied up!");
+        p_delay(0);
+        mes("You untie the child.");
+        p_delay(0);
+        npc_add(0_40_153_11_59, dwarf_youngster, 120);
+        npc_say("Hooray!");
+        npc_setmode(playerface);
+
+        if (npc_find(coord, dwarf_youngster, 14, 0) = true) {
+            @dwarf_youngster_dialogue;
+        }
+    }
+} else {
+    mes("You search the crate...");
+    p_delay(0);
+    mes("but it's empty.");
+    p_delay(0);
+    // This was probably added during the quest Rework in 2006
+    // anim(human_pickupfloor, 0);
+    // mes("You search the crate...");
+    // def_int $rand = random(22);
+
+    // if ($rand < 13) {
+    //     mes("You search the crate but find nothing.");
+    // } else if ($rand < 16) {
+    //     mes("You don't find anything interesting.");
+    // } else if ($rand < 18) {
+    //     mes("The crate contains a rat!");
+    //     npc_add(coord, rat, 50);
+    //     npc_setmode(playerescape);
+    // } else if ($rand < 20) {
+    //     mes("A spider jumps out the crate and runs away.");  // No typos here, just weird.
+    //     npc_add(coord, spider, 50);
+    //     npc_setmode(playerescape);
+    // } else if ($rand <= 21) {
+    //     mes("A started chicken escapes from the crate.");
+    //     npc_add(coord, chicken, 50);
+    //     npc_setmode(playerescape);
+    // }
+}

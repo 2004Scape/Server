@@ -1,0 +1,12 @@
+^mcannon_not_started = 0
+^mcannon_tasked_with_fixing_railings = 1
+^mcannon_tasked_with_checking_guard_tower = 2
+^mcannon_tasked_with_finding_goblin_cave = 3
+^mcannon_tasked_with_finding_gilobs_son = 4
+^mcannon_return_to_dwarf_commander = 5
+^mcannon_tasked_with_fixing_cannon = 6
+^mcannon_inspected_cannon_first_time = 7
+^mcannon_has_repaired_cannon = 8
+^mcannon_tasked_with_speaking_to_nulodion = 9
+^mcannon_return_to_dwarf_commander_with_notes = 10
+^mcannon_complete = 11

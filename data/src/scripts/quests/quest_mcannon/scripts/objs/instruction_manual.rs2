@@ -1,0 +1,16 @@
+[opheld1,instruction_manual]
+%book_page = 0;
+%open_book = instruction_manual;
+@open_cannon_instructions;
+
+[label,open_cannon_instructions]
+@book_flip_page(0, 0, 3, cannon_instructions);
+
+// This is a best guess that uses the RSC text.
+[proc,cannon_instructions]
+switch_int (%book_page) {
+    case 0: ~book("Dwarven Multi Cannon", "@red@Constructing the cannon@bla@||To construct the cannon, firstly set down Dwarf cannon base on the ground.||Next add the Dwarf cannon stand to the Dwarf cannon base.||Then add the Dwarf cannon barrels (this can be tiring work).||Last of all add the Dwarf cannon furnace which powers the cannon.||You should now have a fully set up dwarf multi cannon ready to splat some nasty creatures.");
+    case 1: ~book("Dwarven Multi Cannon", "@red@Making ammo@bla@||The ammo for the cannon is made from steel bars.||Firstly you must heat up a steel bar in a furnace then pour the molten steel into a cannon ammo ||mould.||You should now have a ready to fire multi cannon ball.");
+    case 2: ~book("Dwarven Multi Cannon", "@red@Firing the cannon@bla@||The cannon will only fire when monsters are available to target.||If you  carrying enough ammo the multi cannon will fire up to 30 rounds before stopping.||The cannon will automatically target non friendly creatures.");
+    case 3: ~book("Dwarven Multi Cannon", "@red@Dwarf cannon warranty@bla@||if your cannon is stolen or lost, after or during being set up, the Dwarf engineer will happily replace the parts.||However cannon parts that were given away or dropped will not be replaced for free.||It is only possible to operate one cannon at a |time.|||||by order of the Dwarven Black Guard");
+}

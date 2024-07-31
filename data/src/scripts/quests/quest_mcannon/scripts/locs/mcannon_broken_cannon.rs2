@@ -1,0 +1,99 @@
+[oploc1,broken_cannon]
+if (%mcannon_progress = ^mcannon_tasked_with_fixing_cannon) {
+    ~chatplayer("<p,default>I guess I'd better fix it with the toolkit I was given.");
+    %mcannon_progress = ^mcannon_inspected_cannon_first_time;
+}else if (%mcannon_progress = ^mcannon_inspected_cannon_first_time) {
+    mes("You inspect the multi cannon.");
+    if (getbit_range(%mcannon_railings, 0, 3) = 15) {
+        if (%mcannon_progress = ^mcannon_tasked_with_fixing_cannon) {
+            %mcannon_progress = ^mcannon_has_repaired_cannon;
+        }
+        p_delay(2);
+        ~chatplayer("<p,happy>The Cannon seems to be in working order.|Lawgof will be pleased.");
+    } else {
+        @inspect_cannon_and_repair;
+    }
+} else {
+    mes("It's a strange dwarf contraption.");
+}
+
+[label,inspect_cannon_and_repair]
+if (~multi_cannon_fail_to_fix_or_find_problem() = true) {
+    mes("You see that there are some damaged components.");
+    p_delay(0);
+    mes("A pipe, a gun, a barrel, an axle and a shaft seem to be damaged.");
+    p_delay(3);
+    @multi5_header(
+        "Pipe", fix_cannon_pipe,
+        "Barrel", fix_cannon_barrel,
+        "Axle", fix_cannon_axle,
+        "Shaft", fix_cannon_shaft,
+        "None", fix_cannon_none,
+        "Which part of the cannon will you attempt to fix?"
+    );
+} else {
+    mes("You try, but can't quite find the problem.");
+    mes("Maybe you should inspect it again.");
+}
+
+[label,fix_cannon_pipe]
+@attempt_repair("pipe", 0);
+
+[label,fix_cannon_barrel]
+@attempt_repair("barrel", 1);
+
+[label,fix_cannon_axle]
+@attempt_repair("axle", 2);
+
+[label,fix_cannon_shaft]
+@attempt_repair("shaft", 3);
+
+[label,fix_cannon_none]
+
+[label,attempt_repair](string $part_name, int $bit)
+if (testbit(%mcannon_railings, $bit) = true) {
+    mes("You've already fixed this part of the cannon.");
+    return;
+}
+
+if (inv_total(inv, tool_kit) < 1) {
+    // Made up message.
+    mes("You need a tool kit to repair the cannon.");
+    return;
+}
+
+if_close;
+mes("You use your tool kit and attempt to fix the <$part_name>...");
+p_delay(2);
+
+if (~multi_cannon_fail_to_fix_or_find_problem() = true) {
+    mes("After some tinkering you manage to fix it.");
+    %mcannon_railings = setbit(%mcannon_railings, $bit);
+    stat_advance(crafting, 12); // 1.2xp gave 1.25 on classic
+    p_delay(2);
+} else {
+    mes("It's too hard you fail to fix it.");
+    p_delay(0);
+    mes("Maybe you should try again.");
+}
+
+
+// The fail to find problem and fail to fix cannon are
+// going to be using some real guess work.
+// Sal's realm and RuneWeb confirm you could still fail to fix the cannon parts in RS2
+// as well as fail to inspect the cannon.
+// The RSC wiki says you stop failing to fix the parts around 74 crafting and 67 smithing.
+// The recording of RSC I watched the guy fails each repair twice, and only has a 10 crafting and 30 smithing.
+// He failed to find the problem with the cannon 4 times out of 12.
+
+// https://web.archive.org/web/20051025134501/http://www.runeweb.net/index.php?page=rs2-quest-dwarfcannon
+// https://web.archive.org/web/20041210172257/http://runescape.salmoneus.net/quests/DwarfCannon.html
+// https://classic.runescape.wiki/w/Dwarf_Cannon#The_Cannon
+[proc,multi_cannon_fail_to_fix_or_find_problem]()(boolean)
+def_boolean $smithing = stat_random(stat(smithing), 80, 300);
+def_boolean $crafting = stat_random(stat(crafting), 80, 350);
+
+if ($smithing = true | $crafting = true) {
+    return(true);
+}
+return(false);
