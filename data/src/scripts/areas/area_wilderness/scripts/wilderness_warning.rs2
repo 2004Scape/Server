@@ -1,6 +1,7 @@
 // https://youtu.be/CI7BfqmDeWk?t=101
 // https://youtu.be/OTeZs6SIyx4?t=61
 // https://youtu.be/dpOJn0HyTx4?t=52
+// https://youtu.be/jdcT9ogpMwE?t=104 underground
 // all on the same z axis
 [label,wilderness_warning]
 if (coordz(last_coord) < coordz(coord)) { // if player is comin from the south
@@ -69,3 +70,4 @@ if_openmainmodal(wilderness_warning);
 [zone,0_52_54_40_56] @wilderness_warning;
 [zone,0_52_54_48_56] @wilderness_warning;
 [zone,0_52_54_56_56] @wilderness_warning;
+[zone,0_48_154_56_56] @wilderness_warning;
