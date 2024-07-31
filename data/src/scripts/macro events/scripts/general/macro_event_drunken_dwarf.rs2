@@ -71,12 +71,9 @@ if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb
     return;
 }
 if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event ! ^no_macro_event) {
-        npc_setmode(playerfollow);
+    if (%macro_event_uid = npc_uid) {
+        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
     }
-}
-if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(playerfollow);
 }
 
 // https://youtu.be/8wJZmDwcBKs?t=108

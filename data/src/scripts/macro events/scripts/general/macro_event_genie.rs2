@@ -76,5 +76,7 @@ if (~macro_event_lost = true) {
     return;
 }
 if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(playerfollow);
+    if (%macro_event_uid = npc_uid) {
+        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
+    }
 }
