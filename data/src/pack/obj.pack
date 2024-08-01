@@ -1,7 +1,7 @@
-0=obj_0
-1=obj_1
+0=dwarf_remains
+1=tool_kit
 2=mcannonball
-3=obj_3
+3=nulodions_notes
 4=ammo_mould
 5=instruction_manual
 6=cannon_base
@@ -12,7 +12,7 @@
 11=cert_cannon_barrels
 12=cannon_furnace
 13=cert_cannon_furnace
-14=obj_14
+14=mcannon_railing
 15=holy_table_napkin
 16=magic_whistle
 17=grail_bell
@@ -1550,8 +1550,8 @@
 1549=stake
 1550=garlic
 1551=cert_garlic
-1552=obj_1552
-1553=cert_obj_1552
+1552=seasoned_sardine
+1553=cert_seasoned_sardine
 1554=obj_1554
 1555=obj_1555
 1556=obj_1556
@@ -1571,10 +1571,10 @@
 1570=obj_1570
 1571=obj_1571
 1572=obj_1572
-1573=obj_1573
-1574=cert_obj_1573
-1575=obj_1575
-1576=cert_obj_1575
+1573=doogle_leaves
+1574=cert_doogle_leaves
+1575=cat_training_medal
+1576=cert_cat_training_medal
 1577=obj_1577
 1578=cert_obj_1577
 1579=obj_1579

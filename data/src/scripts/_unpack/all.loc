@@ -10,36 +10,6 @@ desc=I wonder what's inside.
 model=model_loc_0
 op1=Search
 
-[loc_2]
-name=Cave Entrance
-desc=The entrance to the Dwarf's cave.
-model=model_loc_2
-width=4
-length=2
-op1=Enter
-
-[loc_3]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door
-recol2s=6342
-recol2d=11458
-
-[loc_4]
-name=Door
-desc=The door is closed.
-model=model_loc_3
-active=yes
-op1=Open
-retex1s=wall
-retex1d=door
-recol2s=6342
-recol2d=11458
-
 [loc_10]
 name=Ladder
 desc=I can climb down this.
@@ -63,79 +33,6 @@ model=model_loc_12
 op1=Climb-over
 recol1s=6342
 recol1d=15749
-
-[loc_13]
-name=Mud pile
-desc=Mud caved in from above.
-model=model_loc_13
-length=2
-shadow=no
-blockrange=no
-hillskew=yes
-op1=Climb-over
-
-[loc_14]
-name=Railing
-desc=Solid bars of iron.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-blockrange=no
-op1=Inspect
-
-[loc_15]
-name=Railing
-desc=There is a hole in this section of the railing.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-blockrange=no
-op1=Inspect
-
-[loc_16]
-name=Railing
-desc=There is a hole in this section of the railing.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-blockrange=no
-op1=Inspect
-
-[loc_17]
-name=Railing
-desc=There is a hole in this section of the railing.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-blockrange=no
-op1=Inspect
-
-[loc_18]
-name=Railing
-desc=There is a hole in this section of the railing.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-blockrange=no
-op1=Inspect
-
-[loc_19]
-name=Railing
-desc=There is a hole in this section of the railing.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-blockrange=no
-op1=Inspect
-
-[loc_20]
-name=Railing
-desc=There is a hole in this section of the railing.
-model=model_loc_14
-sharelight=yes
-hillskew=yes
-blockrange=no
-op1=Inspect
 
 [loc_21]
 name=Mysterious statue

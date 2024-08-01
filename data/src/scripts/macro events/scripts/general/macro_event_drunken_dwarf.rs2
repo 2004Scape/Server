@@ -29,7 +29,6 @@ if (finduid(%npc_attacking_uid) = true) {
     } else if (last_int = 4) { // fail
         // todo: figure out the message that goes here
         %aggressive_npc = npc_uid; // interupt the player if they're in combat https://youtu.be/tw66JWQzpD0?t=32
-        %macro_event = ^no_macro_event;
         npc_setmode(opplayer2);
         return;
     }
@@ -50,13 +49,13 @@ if (uid ! %npc_attacking_uid) {
     ~chatnpc("<p,drunk>You're not my matey!"); // osrs
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event_uid ! npc_uid) {
     ~chatnpc("<p,drunk>'Ave a good 'un buddy!"); // osrs
     return;
 }
 inv_add(inv, kebab, 1);
 inv_add(inv, beer, 1);
-%macro_event = ^no_macro_event;
+%macro_event_uid = null;
 
 npc_queue(6, 0, 0); // say good bye
 ~chatnpc("<p,drunk>I 'new it were you matey! 'Ere, have some ob the good stuff!"); // osrs
@@ -71,12 +70,9 @@ if (~macro_event_lost = true) { // https://youtu.be/PhAjUCWSoOI?list=PLn23LiLYLb
     return;
 }
 if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event ! ^no_macro_event) {
-        npc_setmode(playerfollow);
+    if (%macro_event_uid = npc_uid) {
+        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
     }
-}
-if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(playerfollow);
 }
 
 // https://youtu.be/8wJZmDwcBKs?t=108

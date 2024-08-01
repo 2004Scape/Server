@@ -62,7 +62,7 @@ switch_obj(last_useitem) {
 }
 
 [proc,get_gnome_bowl_product]()(namedobj)
-def_int $null_count = calc(~get_bowl_ingredient_count(null) + ~get_bowl_ingredient_count(obj_0));
+def_int $null_count = calc(~get_bowl_ingredient_count(null) + ~get_bowl_ingredient_count(dwarf_remains));
 if ($null_count = 11) {
     ~mesbox("You can't cook that.");
     @exit;
@@ -138,17 +138,17 @@ if (string_length(oc_param($item, bowl_message)) < 1) {
 
 
 [proc,get_bowl_ingredient_step]()(int)
-if (%gnome_bowl_ingredient1 = null | %gnome_bowl_ingredient1 = obj_0) return(0);
-if (%gnome_bowl_ingredient2 = null | %gnome_bowl_ingredient2 = obj_0) return(1);
-if (%gnome_bowl_ingredient3 = null | %gnome_bowl_ingredient3 = obj_0) return(2);
-if (%gnome_bowl_ingredient4 = null | %gnome_bowl_ingredient4 = obj_0) return(3);
-if (%gnome_bowl_ingredient5 = null | %gnome_bowl_ingredient5 = obj_0) return(4);
-if (%gnome_bowl_ingredient6 = null | %gnome_bowl_ingredient6 = obj_0) return(5);
-if (%gnome_bowl_ingredient7 = null | %gnome_bowl_ingredient7 = obj_0) return(6);
-if (%gnome_bowl_ingredient8 = null | %gnome_bowl_ingredient8 = obj_0) return(7);
-if (%gnome_bowl_ingredient9 = null | %gnome_bowl_ingredient9 = obj_0) return(8);
-if (%gnome_bowl_ingredient10 = null | %gnome_bowl_ingredient10 = obj_0) return(9);
-if (%gnome_bowl_ingredient11 = null | %gnome_bowl_ingredient11 = obj_0) return(10);
+if (%gnome_bowl_ingredient1 = null | %gnome_bowl_ingredient1 = dwarf_remains) return(0);
+if (%gnome_bowl_ingredient2 = null | %gnome_bowl_ingredient2 = dwarf_remains) return(1);
+if (%gnome_bowl_ingredient3 = null | %gnome_bowl_ingredient3 = dwarf_remains) return(2);
+if (%gnome_bowl_ingredient4 = null | %gnome_bowl_ingredient4 = dwarf_remains) return(3);
+if (%gnome_bowl_ingredient5 = null | %gnome_bowl_ingredient5 = dwarf_remains) return(4);
+if (%gnome_bowl_ingredient6 = null | %gnome_bowl_ingredient6 = dwarf_remains) return(5);
+if (%gnome_bowl_ingredient7 = null | %gnome_bowl_ingredient7 = dwarf_remains) return(6);
+if (%gnome_bowl_ingredient8 = null | %gnome_bowl_ingredient8 = dwarf_remains) return(7);
+if (%gnome_bowl_ingredient9 = null | %gnome_bowl_ingredient9 = dwarf_remains) return(8);
+if (%gnome_bowl_ingredient10 = null | %gnome_bowl_ingredient10 = dwarf_remains) return(9);
+if (%gnome_bowl_ingredient11 = null | %gnome_bowl_ingredient11 = dwarf_remains) return(10);
 return(11);
 
 [proc,get_bowl_ingredient_name](obj $ingredient)(string, int)
