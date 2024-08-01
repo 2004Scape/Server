@@ -10769,9 +10769,9 @@ frame13=anim_977
 frame14=anim_1262
 frame15=anim_1543
 
-[seq_799]
+[human_cattleprod]
 righthand=hide
-lefthand=obj_278
+lefthand=cattle_prod
 stretches=yes
 frame1=anim_597
 frame2=anim_894

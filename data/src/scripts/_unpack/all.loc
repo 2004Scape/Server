@@ -457,21 +457,6 @@ name=Strange machine
 desc=It's a strange machine.
 model=model_loc_164
 
-[loc_166]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-active=yes
-op1=Open
-
-[loc_167]
-name=Gate
-desc=A wooden gate.
-model=model_loc_47
-active=yes
-mirror=yes
-op1=Open
-
 [loc_168]
 model=model_loc_168
 hillskew=yes
