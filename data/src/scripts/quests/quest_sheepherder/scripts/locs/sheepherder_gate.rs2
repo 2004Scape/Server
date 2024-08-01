@@ -1,0 +1,35 @@
+[oploc1,_sheepherder_gate]
+if (%sheepherder_progress = ^sheepherder_not_started) {
+    ~mesbox("This is a restricted area.|You cannot enter without protective clothing.");
+    return;
+}
+
+if (%sheepherder_progress > ^sheepherder_not_started 
+    & (inv_total(worn, plague_jacket) < 1 | inv_total(worn, plague_trousers) < 1)) {
+    ~chatplayer("<p,neutral>It doesn't look very safe in there. I'm not going in without decent protective clothing.");
+    return;
+}
+
+if(coordx(coord) <= coordx(loc_coord)) {
+    p_teleport(movecoord(loc_coord, 1, 0, 0));
+} else {
+    p_teleport(movecoord(loc_coord, 0, 0, 0));
+}
+~open_sheepherder_gate;
+
+[proc,open_sheepherder_gate]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = sheepherder_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            def_loc $type = loc_type;
+            loc_change(loc_83, 2);
+            if($type = sheepherder_gate_left) {
+                loc_add(movecoord($central_coord, 1, 0, 0), loc_49, 1, loc_shape, 2);
+                loc_add(movecoord($central_coord, 2, 0, 0), loc_50, 1, loc_shape, 2); 
+            }
+     }
+}
+sound_synth(door_open, 0, 0);
+p_delay(0);

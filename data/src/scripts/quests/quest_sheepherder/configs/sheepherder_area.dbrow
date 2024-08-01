@@ -1,0 +1,7 @@
+[sheepherder_in_pen]
+table=coord_pair_table
+data=coord_pair,0_40_52_35_23,0_40_52_49_36
+
+[sheepherder_pen_gate]
+table=coord_pair_table
+data=coord_pair,0_40_52_32_32,0_40_52_34_35
