@@ -55,31 +55,36 @@ export default class GameMap {
         // easiest solution for the time being
         const multiway = fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n');
         for (let i = 0; i < multiway.length; i++) {
-            if (multiway[i].startsWith('//') || !multiway[i].indexOf(',')) {
+            if (multiway[i].startsWith('//') || !multiway[i].length) {
                 continue;
             }
 
             const parts = multiway[i].split(',');
-            if (parts.length !== 2) {
-                continue;
-            }
+            if (parts.length === 2) {
+                const [from, to] = parts;
+                const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
+                const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
 
-            const [from, to] = parts;
-            const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
-            const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
+                if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
+                    console.warn('Multiway map not aligned to a zone', multiway[i]);
+                }
 
-            if (fromLx % 8 !== 0 || fromLz % 8 !== 0) {
-                console.warn('Multiway map not aligned to a zone', multiway[i]);
-            }
+                const startX = (fromMx << 6) + fromLx;
+                const startZ = (fromMz << 6) + fromLz;
+                const endX = (toMx << 6) + toLx;
+                const endZ = (toMz << 6) + toLz;
 
-            for (let level = fromLevel; level <= toLevel; level++) {
-                for (let mx = fromMx; mx <= toMx; mx++) {
-                    for (let mz = fromMz; mz <= toMz; mz++) {
-                        for (let lx = fromLx; lx <= toLx; lx++) {
-                            for (let lz = fromLz; lz <= toLz; lz++) {
-                                this.multimap.add(Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz));
-                            }
-                        }
+                for (let x = startX; x <= endX; x++) {
+                    for (let z = startZ; z <= endZ; z++) {
+                        this.multimap.add(Position.packCoord(fromLevel, x, z));
+                    }
+                }
+            } else {
+                const [level, mx, mz, lx, lz] = multiway[i].split('_').map(x => parseInt(x));
+
+                for (let i = 0; i < 8; i++) {
+                    for (let j = 0; j < 8; j++) {
+                        this.multimap.add(Position.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
                     }
                 }
             }
