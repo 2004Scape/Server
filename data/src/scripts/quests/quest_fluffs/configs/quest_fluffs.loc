@@ -1,0 +1,7 @@
+[loc_2618]
+name=Broken fence
+desc=The fence is broken at this point.
+model=model_loc_1003
+sharelight=yes
+blockrange=no
+op1=Climb-over

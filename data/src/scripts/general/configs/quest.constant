@@ -9,6 +9,7 @@
 ^druid_complete = 4
 ^gobdip_complete = 6
 ^sheep_complete = 22
+^fluffs_complete = 6
 ^demon_complete = 30
 ^prince_complete = 110
 ^blackknight_complete = 4
@@ -62,6 +63,7 @@
 ^scorpcatcher_questpoints = 1
 ^seaslug_questpoints = 1
 ^sheep_questpoints = 1
+^fluffs_questpoints = 1
 ^squire_questpoints = 1
 ^totem_questpoints = 1
 ^vampire_questpoints = 3
