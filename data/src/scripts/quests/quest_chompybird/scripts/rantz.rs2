@@ -28,9 +28,17 @@ switch_int(%chompybird_progress) {
     case ^chompybird_given_arrows:
         ~chatnpc("<p,neutral>Hey you creature, you still here?");
         ~chatnpc("<p,neutral>Da chompy still not coming! We need da fatsy toady to get da chompy, do you got it? Do you got da fatsy toady? Then we can sneaky, sneaky stick da chompy.");
-        ~chatplayer("<p,neutral>No I haven't got the 'fatsy toady' yet!");
-        ~chatnpc("<p,neutral>Dat's a pidy... but maybe Rantz can help da creature?");
-        @toadies_questions;
+        
+        if (inv_total(inv, obj_2875) = 0) {        
+            ~chatplayer("<p,neutral>No I haven't got the 'fatsy toady' yet!");
+            ~chatnpc("<p,neutral>Dat's a pidy... but maybe Rantz can help da creature?");
+            @toadies_questions;
+        } else {
+            ~chatplayer("<p,neutral>Yes, I have a 'fatsy toady' for you, here look!");
+            @show_toad;
+        }
+    case ^chompybird_shown_toad:
+        @where_to_put_toadies;
 }
 
 [opnpcu,npc_1010]
@@ -64,6 +72,22 @@ switch_obj(last_useitem) {
         }
 
         @attempt_give_rantz_arrows;
+
+    case obj_2875:
+        if (%chompybird_progress = ^chompybird_not_started) {
+            // TODO TBC
+            mes("Nothing interesting happens.");
+            return;
+        }
+
+        ~objboxt(obj_2875,"You show the bloated toad to Rantz.");
+
+        if (%chompybird_progress = ^chompybird_shown_toad) {
+            ~chatnpc("<p,neutral>Hey creature got da fatsy toady Is you's gonna stick da chompy?");
+            return;
+        }
+
+        @show_toad;
 
     case default:
         // TODO TBC
@@ -137,6 +161,9 @@ switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy to
 
         // TODO "da south" sic?
         ~mesbox("The ogre points to a small clearing to da south.");
+
+        // TODO does camera move here? I think not
+
         ~chatnpc("<p,neutral>Ok creature? You got dat? Over dere by der no tree's place.");
         @toadies_questions;
     case 4:
@@ -146,3 +173,24 @@ switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy to
     case 5:
         ~chatplayer("<p,neutral>Ok, thanks.");
 }
+
+[label,where_to_put_toadies]
+~chatplayer("<p,neutral>Where should I put the 'fatsy toadies'?");
+~chatnpc("<p,neutral>Over 'dere creature, put da toadies over der!|@blu@~ The ogre points to a clearing to the south. ~");
+
+hint_coord(^hint_center, 0_41_46_12_21, 0);
+
+// TODO confirm cam params this was just a rough guess
+cam_lookat(0_41_46_12_21, 100, 100, 100);
+p_delay(3);
+cam_moveto(0_41_46_12_17, 450, 4, 2);
+p_delay(2);
+cam_reset;
+
+[label,show_toad]
+~objboxt(obj_2875,"You show the bloated toad to Rantz. He nods with approval.");
+
+~chatnpc("<p,neutral>Dat's a good fatsy toady, now we's need to put it for da chompy to come.");
+%chompybird_progress = ^chompybird_shown_toad;
+
+@where_to_put_toadies;

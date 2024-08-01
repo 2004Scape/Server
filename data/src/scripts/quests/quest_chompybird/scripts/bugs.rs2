@@ -1,1 +1,7 @@
 // TODO buying chisel and knife
+
+[opnpc1,npc_1012]
+switch_int(%chompybird_progress) {
+    case ^chompybird_shown_toad:
+        ~chatnpc("<p,neutral>You's better talk to Dad, he might have something for you to do.");
+}
