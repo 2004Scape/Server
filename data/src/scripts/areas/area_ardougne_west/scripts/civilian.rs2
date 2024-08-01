@@ -51,7 +51,7 @@ if (~civilian_player_has_cat = false) {
 ~chatnpc("<p,happy>Great! Hand over the cat and I'll give you the runes.");
 
 [proc,civilian_player_has_cat]()(boolean)
-if (inv_totalcat(inv, category_29) > 0 | inv_totalcat(inv, category_30) > 0 | inv_totalcat(inv, category_31) > 0) {
+if (inv_totalcat(inv, category_30) > 0  | inv_totalcat(inv, category_29) > 0) {
     return(true);
 }
 return(false);
