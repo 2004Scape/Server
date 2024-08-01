@@ -97,7 +97,7 @@ switch_int ($damagetype) {
 }
 
 [proc,player_in_combat_check]()(boolean)
-if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
+if (map_multi(npc_coord) = true) {
     return(true);
 }
 // player has been attacked in the last 8 ticks, and not by the current npc

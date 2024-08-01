@@ -140,7 +140,7 @@ if_close;
 %tutorial_progress = ^runescape_guide_designed_character;
 allowdesign(false);
 
-[tutorial_clickside,_]
+[tutorial,_]
 if (%tutorial_progress = 2) {
     %tutorial_progress = 3;
     ~tutorial_step_player_controls_left_click;

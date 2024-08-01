@@ -1,5 +1,5 @@
 import { ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 
 export enum NpcTimerType {
     NPC
@@ -21,7 +21,7 @@ export interface EntityTimer {
     /**
      * The script to execute.
      */
-    script: Script;
+    script: ScriptFile;
 
     /**
      * The arguments to execute the script with.

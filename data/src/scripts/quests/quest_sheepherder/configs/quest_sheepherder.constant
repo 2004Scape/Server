@@ -1,0 +1,4 @@
+^sheepherder_not_started = 0
+^sheepherder_tasked_with_talking_to_dr_orbon = 1
+^sheepherder_tasked_with_disposing_of_sheep = 2
+^sheepherder_complete = 3

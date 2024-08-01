@@ -1,5 +1,6 @@
 [opnpc1,gnome_green] @talk_to_gnome;
 [opnpc1,gnome_brown] @talk_to_gnome;
+[opnpc1,gnome_black] @talk_to_gnome;
 [opnpc1,gnome_woman_white] @talk_to_gnome_woman;
 [opnpc1,gnome_woman_black] @talk_to_gnome_woman;
 

@@ -76,8 +76,6 @@ protect=no
 [autocast_spell]
 scope=perm
 
-[varp_61]
-
 [gobdip_progress]
 scope=perm
 
@@ -108,6 +106,8 @@ scope=perm
 
 [multiway]
 type=boolean
+
+[varp_105]
 
 [newcomers_pos]
 transmit=yes
@@ -214,17 +214,11 @@ scope=perm
 [elena_progress]
 scope=perm
 
-[varp_181]
-
-[varp_182]
-
 [varp_189]
 
 [varp_190]
 
 [varp_191]
-
-[varp_196]
 
 [varp_198]
 
@@ -234,8 +228,6 @@ scope=perm
 
 [mill_flour]
 scope=perm
-
-[varp_209]
 
 [smithing_bars]
 transmit=yes

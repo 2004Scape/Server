@@ -1,5 +1,5 @@
 import Linkable from '#jagex2/datastruct/Linkable.js';
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 
 export enum NpcQueueType {
@@ -26,7 +26,7 @@ export class EntityQueueRequest extends Linkable {
     /**
      * The script to execute.
      */
-    script: Script;
+    script: ScriptFile;
 
     /**
      * The arguments to execute the script with.
@@ -40,7 +40,7 @@ export class EntityQueueRequest extends Linkable {
 
     lastInt: number = 0;
 
-    constructor(type: QueueType, script: Script, args: ScriptArgument[], delay: number) {
+    constructor(type: QueueType, script: ScriptFile, args: ScriptArgument[], delay: number) {
         super();
         this.type = type;
         this.script = script;

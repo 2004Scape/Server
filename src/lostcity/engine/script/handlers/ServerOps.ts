@@ -463,6 +463,12 @@ const ServerOps: CommandHandlers = {
         }
         
         state.pushInt(coord);
+    },
+
+    [ScriptOpcode.MAP_MULTI]: state => {
+        const coord = state.popInt();
+
+        state.pushInt(World.gameMap.multimap.has(coord) ? 1 : 0);
     }
 };
 

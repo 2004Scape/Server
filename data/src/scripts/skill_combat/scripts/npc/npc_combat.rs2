@@ -134,6 +134,11 @@ if(npc_type = fire_warrior_of_lesarkus & (inv_total(worn, ice_arrow) = 0 | %dama
     return (false);
 }
 
+if(npc_type = npc_374 & %damagetype <= ^crush_style & npc_range(coord) <= 1) {
+    mes("These ogres are for ranged combat only.");
+    return (false);
+}
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -183,6 +188,24 @@ if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progr
     }
     return(false);
 }
+
+if (npc_category = diseased_sheep) {
+    if (%sheepherder_progress = ^sheepherder_complete) {
+        ~mesbox("There's no need for you to do that.|You've already completed the Sheep Herder quest.");
+        return(false);
+    }
+
+    if (%sheepherder_progress > ^sheepherder_not_started & %sheepherder_progress < ^sheepherder_complete) {
+        ~chatplayer("<p,neutral>I don't want to attack the sheep.|I need to make it move!");
+        return(false);
+    }
+
+    if (%sheepherder_progress = ^sheepherder_not_started) {
+        ~mesbox("The sheep looks extremely ill and you|haven't any reason to interfere with it.");
+        return(false);
+    }
+}
+
 if (string_length(nc_op($npc, 2)) > 0) {
     return (true);
 }
@@ -240,7 +263,7 @@ if (inv_getobj(worn, ^wearpos_ring) = ring_of_recoil & npc_finduid(%aggressive_n
 [proc,npc_retaliate](int $queue_delay)
 npc_queue(1, 0, $queue_delay);
 // if in singles and attacking another player, then delay npc action by 8 ticks
-if (~inzone_coord_pair_table(multiway_zones, npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
+if (map_multi(npc_coord) = false & %npc_attacking_uid ! uid & %npc_attacking_uid ! null) {
     %npc_action_delay = add(map_clock, 8);
 }
 %npc_aggressive_player = uid;
@@ -253,7 +276,7 @@ if (~inzone_coord_pair_table(multiway_zones, npc_coord) = false & %npc_attacking
 %aggressive_npc = npc_uid;
 
 [proc,npc_can_attack_player]()(boolean)
-if (~inzone_coord_pair_table(multiway_zones, npc_coord) = true) {
+if (map_multi(npc_coord) = true) {
     return(true);
 }
 if (add(%lastcombat, 8) > map_clock & %aggressive_npc ! npc_uid) {

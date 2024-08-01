@@ -1,0 +1,275 @@
+[debugproc,cat]
+if_close;
+if (p_finduid(uid) = true) {
+    def_int $hunger = getbit_range(%cat_growth, 0, 4);
+    def_int $attent = getbit_range(%cat_growth, 5, 10);
+    def_int $growth = getbit_range(%cat_growth, 11, 19);
+    def_int $vermin = getbit_range(%cat_growth, 20, 26);
+    mes("Hunger: <tostring($hunger)> || Attent: <tostring($attent)> || Growth: <tostring($growth)> || Vermin: <tostring($vermin)>"); 
+}
+
+[debugproc,getcat]
+if_close;
+if (p_finduid(uid) = true) {
+    %cat_growth = 0;
+    switch_int (random(6)) {
+        case 0: inv_add(inv, obj_1555, 1);
+        case 1: inv_add(inv, obj_1556, 1);
+        case 2: inv_add(inv, obj_1557, 1);
+        case 3: inv_add(inv, obj_1558, 1);
+        case 4: inv_add(inv, obj_1559, 1);
+        case 5: inv_add(inv, obj_1560, 1);
+    } 
+}
+
+[ai_timer,_petcat]
+if (finduid(%npc_attacking_uid) = false | p_finduid(uid) = false) { //paused when player is busy
+    return; 
+}
+def_int $hunger = getbit_range(%cat_growth, 0,  4); //hunger       (0-16-18-20)
+def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
+def_int $growth = getbit_range(%cat_growth, 11,19); //growth       (0-120-320)
+def_int $vermin = getbit_range(%cat_growth, 20,26); //rats caught  (0-100)
+if($attent = 0) { 
+    $attent = 28;
+}
+if(oc_category(nc_param(npc_type, pet_item_id)) ! category_29) {
+    if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
+        npc_say("Meow!"); //seems to be done every 90s, no random chance
+    }
+    %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
+    switch_int (getbit_range(%cat_growth, 11, 19)) {
+        case 120:
+            if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
+                npc_changetype(nc_param(npc_type, cat_next_id));
+                %follower_obj = nc_param(npc_type, pet_item_id);
+                %follower_uid = npc_uid;
+                npc_say("Meeeooowww!");
+                npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
+                ~mesbox("Your kitten has grown into a healthy cat that can hunt for itself.");
+            }
+        case 320:
+            if(oc_category(nc_param(npc_type, pet_item_id)) = category_30) {
+                npc_changetype(nc_param(npc_type, cat_next_id));
+                %follower_obj = nc_param(npc_type, pet_item_id);
+                %follower_uid = npc_uid;
+                npc_say("Meeeooowww!");
+                npc_settimer(150);
+                //TODO: check if there's a message for this
+            }
+    } 
+}
+if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) { //only for kittens
+    %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
+    switch_int (getbit_range(%cat_growth, 0, 4)) {
+        case 16:
+            mes("Your kitten is hungry.");
+            npc_say("Meeeooowww!");
+        case 18: 
+            mes("Your kitten is really hungry."); //guess
+            npc_say("Meeeooowww!");
+        case 20:
+            mes("Your kitten has run away to look for food.");
+            %follower_obj = null;
+            %follower_uid = null;
+            %cat_growth = 0;
+            p_delay(0);
+            npc_del;
+    }
+
+    %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
+    switch_int (getbit_range(%cat_growth, 5, 10)) {
+        case 40:
+            mes("Your kitten wants attention.");
+            npc_say("Meeeooowww...");
+        case 45:
+            mes("Your kitten really wants attention.");
+            npc_say("Meeeooowww...");
+        case 50:
+            mes("Your kitten got lonely and ran off.");
+            %follower_obj = null;
+            %follower_uid = null;
+            %cat_growth = 0;
+            p_delay(0);
+            npc_del;
+    }
+}
+
+[opheld5,_category_31] ~cat_drop; //kitten
+[opheld5,_category_30] ~cat_drop; //cat
+[opheld5,_category_29] ~cat_drop; //overgrown
+
+[opnpcu,_petcat]
+if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+    ~displaymessage(^dm_default);
+    return;
+}
+switch_obj(last_useitem) {
+    case ball_of_wool: //timing and p_delay is guessed off videos
+        %cat_growth = setbit_range_toint(%cat_growth, 6, 5, 10); //51 minutes without warning (6 to 40)
+        anim(human_pickupfloor, 0);
+        npc_anim(cat_rollingover, 40); 
+        npc_say("Purr!");
+        p_delay(2);
+        ~chatplayer("<p,happy>That kitten loves to play with that ball of wool. I think it is its favourite.");
+    case bucket_milk:
+        %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
+        inv_del(inv, last_useitem, 1);
+        inv_add(inv, bucket_empty, 1);
+        anim(human_pickupfloor, 0); //https://youtu.be/RC0tSXdN3EA?t=117
+        mes("The kitten laps up the milk.");
+        npc_say("Purr!");
+    case raw_shrimps, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna:
+        %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
+        inv_del(inv, last_useitem, 1);
+        anim(human_pickupfloor, 0); //https://youtu.be/RC0tSXdN3EA?t=117
+        mes("The kitten gobbles up the fish.");
+        npc_say("Purr!");
+    case default: ~displaymessage(^dm_default);
+}
+
+[opnpc1,_petcat]
+if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+    ~displaymessage(^dm_default); //unsure if there was a message, putting this for every interaction
+    return;
+}
+if (inv_freespace(inv) = 0) {
+    mes("You don't have enough inventory space to pick up your cat."); //guess
+    return;
+}
+p_delay(0);
+%follower_obj = null;
+%follower_uid = null;
+inv_add(inv, npc_param(pet_item_id), 1);
+sound_synth(pick, 0, 0);
+npc_del;
+
+[opnpc3,_petcat]
+if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+    ~displaymessage(^dm_default);
+    return;
+}
+if(getbit_range(%cat_growth, 5, 10) = 28) { 
+    %cat_growth = setbit_range_toint(%cat_growth, 23, 5, 10); 
+} else {
+    %cat_growth = setbit_range_toint(%cat_growth, 28, 5, 10); 
+}
+mes("You softly stroke your cat.");
+anim(human_pickupfloor, 0);
+npc_anim(cat_rollingover, 0);
+p_delay(2);
+npc_say("Purr...purr...");
+~chatplayer("<p,happy>That cat sure loves to be stroked.");
+
+[opnpc4,_petcat]
+if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+    ~displaymessage(^dm_default);
+    return;
+}
+def_int $choice = ~p_choice2_header("Yes I am.", 1, "No I'm not.", 2, "Are you sure you want to shoo away the cat?");
+if ($choice = 2) {
+    mes("You choose not to shoo away the cat."); //osrs
+    return;
+}
+if_close;
+say("Shoo cat!");
+npc_say("Meeeooow!");
+%follower_obj = null;
+%follower_uid = null;
+%cat_growth = 0;
+%npc_attacking_uid = uid;
+npc_setmode(playerescape);
+p_delay(4); //guessed delay
+mes("The cat has run away."); //after or before delay?
+npc_del;
+
+[opnpc5,_petcat] //TODO: add cat raising medal after gertrude's cat
+if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+    ~displaymessage(^dm_default);
+    return;
+}
+def_int $chance = random(2); //50%
+def_int $vermin = getbit_range(%cat_growth, 20, 26);
+if (oc_category(nc_param(npc_type, pet_item_id)) = category_29) {
+    mes("The cat is just too big to catch vermin.");
+    return;
+}
+if (.npc_find(coord, rat, 10, 1) = true) {  
+    say("Go on puss...kill that rat!");
+    p_delay(0);
+    npc_say("Meeeeeoooowww!");
+    p_delay(0);
+    .npc_say("Eek!");
+    sound_synth(rat_hit, 0, 0);
+    if(lineofwalk(coord, .npc_coord) = false) {
+        mes("Your cat cannot get to its prey."); //osrs
+        return;
+    }
+    npc_setmode(none);
+    npc_walk(.npc_coord);
+    p_delay(1);
+    npc_anim(cat_pounce, 0);
+    p_delay(1);
+    npc_setmode(playerfollow);
+    if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
+        $chance = random(10); //10% if not grown
+    }
+    if($chance ! 0) {
+        mes("The rat manages to get away!");
+        return;
+    }
+    .npc_del;
+    npc_say("MeeeoooooW!");
+    say("Hey well done puss, you got it!");
+    %cat_growth = setbit_range_toint(%cat_growth, min(100,max(calc($vermin + 1),-1)), 20, 26);
+} else {
+    mes("There aren't any vermin around.");
+}
+
+[proc,cat_drop]
+if (npc_finduid(%follower_uid) = true) {
+    mes("You already have a follower."); //osrs
+    return;
+}
+inv_delslot(inv, last_slot);
+sound_synth(put_down, 0, 0);
+npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
+%follower_obj = nc_param(npc_type, pet_item_id);
+%follower_uid = npc_uid;
+%npc_attacking_uid = uid;
+npc_setmode(playerfollow);
+npc_say("Miaow!");
+npc_settimer(150);
+return;
+
+[proc,follower_death]
+if (npc_finduid(%follower_uid) = true) {
+    %follower_uid = null;
+    %follower_obj = null;
+    %cat_growth = 0;
+    npc_del;
+}
+
+[proc,follower_logout]
+if (npc_finduid(%follower_uid) = true) {
+    npc_del;
+    %follower_uid = null;
+}
+
+[queue,follower_login]
+if (%follower_obj ! null) {
+    if (oc_param(%follower_obj, follower_id) = null) { 
+        %follower_obj = null;
+        return;
+        //bug where %follower_obj was set to non-null at log-in and second check would run without any pet
+    }
+}
+
+if (%follower_obj ! null & npc_finduid(%follower_uid) = false) {
+    npc_add(coord, oc_param(%follower_obj, follower_id), ^max_32bit_int);
+    %npc_attacking_uid = uid;
+    %follower_uid = npc_uid;
+    npc_setmode(playerfollow);
+    npc_say("Meeeew!"); //https://youtu.be/6y_cOu5OQf4?t=110
+    npc_settimer(150);
+}

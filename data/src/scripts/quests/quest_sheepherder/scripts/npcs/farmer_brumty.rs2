@@ -1,0 +1,31 @@
+[opnpc1,farmer_brumty]
+switch_int(%sheepherder_progress) {
+    case ^sheepherder_not_started: @farmer_brumty_before_sheep_herder;
+    case ^sheepherder_tasked_with_talking_to_dr_orbon: @farmer_brumty_before_talking_to_orbon;
+    case ^sheepherder_tasked_with_disposing_of_sheep: @farmer_brumty_during_sheep_herder;
+    case ^sheepherder_complete: @farmer_brumty_after_sheep_herder;
+}
+
+// Should hypothetically never be seen since Brumty is in the pen on our Revision.
+//sheepherder_not_started
+[label,farmer_brumty_before_sheep_herder]
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,sad>I have all the bad luck.|My sheep all run off somewhere,|and then those mourners tell me they're infected!");
+~chatplayer("<p,neutral>Well, I hope things start to look up for you.");
+
+// Should also hypothetically never be seen since Brumty is in the pen on our Revision.
+// sheepherder_tasked_with_talking_to_dr_orbon
+[label,farmer_brumty_before_talking_to_orbon]
+~chatplayer("<p,default>Hello there. I've spoken to Councillor Halgrive. He has asked me to round up your sheep and slaughter them.");
+~chatnpc("<p,sad>Well, I always knew someone would have to. Make sure you're careful about it; there should be a cattleprod in the barn you can use to herd up the sheep.");
+
+[label,farmer_brumty_during_sheep_herder]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>Hello adventurer. Be careful herding|those sheep; I don't think they've wandered far,|but if you touch them you risk getting infected by the plague. I suggest");
+~chatnpc("<p,neutral>you use the cattle prod from the barn over there to herd them, that way you won't have to touch them directly and risk infection.");
+
+[label,farmer_brumty_after_sheep_herder]
+~chatplayer("<p,neutral>Hello there.|I'm sorry about your sheep...");
+~chatnpc("<p,neutral>That's ok, it had to be done for the sake of the town.");
+
+

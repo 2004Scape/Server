@@ -17,8 +17,25 @@ export type SwitchTable = {
     [key: number]: number | undefined;
 };
 
+function isLargeOperand(opcode: number): boolean {
+    if (opcode > 100) {
+        return false;
+    }
+
+    switch (opcode) {
+        case ScriptOpcode.RETURN:
+        case ScriptOpcode.POP_INT_DISCARD:
+        case ScriptOpcode.POP_STRING_DISCARD:
+        case ScriptOpcode.GOSUB:
+        case ScriptOpcode.JUMP:
+            return false;
+    }
+
+    return true;
+}
+
 // compiled bytecode representation
-export default class Script {
+export default class ScriptFile {
     info: ScriptInfo = {
         scriptName: '<unknown>',
         sourceFilePath: '<unknown>',
@@ -38,23 +55,8 @@ export default class Script {
     intOperands: number[] = [];
     stringOperands: string[] = [];
 
-    private static isLargeOperand(opcode: number): boolean {
-        if (opcode > 100) {
-            return false;
-        }
-        switch (opcode) {
-            case ScriptOpcode.RETURN:
-            case ScriptOpcode.POP_INT_DISCARD:
-            case ScriptOpcode.POP_STRING_DISCARD:
-            case ScriptOpcode.GOSUB:
-            case ScriptOpcode.JUMP:
-                return false;
-        }
-        return true;
-    }
-
     // decodes the same binary format as clientscript2
-    static decode(id: number, stream: Packet): Script {
+    static decode(id: number, stream: Packet): ScriptFile {
         const length: number = stream.data.length;
         if (length < 16) {
             throw new Error('Invalid script file (minimum length)');
@@ -71,7 +73,7 @@ export default class Script {
 
         stream.pos = trailerPos;
 
-        const script = new Script(id);
+        const script = new ScriptFile(id);
         const _instructions = stream.g4(); // we don't need to preallocate anything in JS, but still need to read it
         script.intLocalCount = stream.g2();
         script.stringLocalCount = stream.g2();
@@ -113,7 +115,7 @@ export default class Script {
 
             if (opcode === ScriptOpcode.PUSH_CONSTANT_STRING) {
                 script.stringOperands[instr] = stream.gjstr(0);
-            } else if (Script.isLargeOperand(opcode)) {
+            } else if (isLargeOperand(opcode)) {
                 script.intOperands[instr] = stream.g4();
             } else {
                 script.intOperands[instr] = stream.g1();

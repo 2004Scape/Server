@@ -1,4 +1,4 @@
-[softtimer,blanket_ladder] // This might be some form of move trigger instead?
+[timer,blanket_ladder]
 if(distance(^blanket_ladder_coord, coord) <= 2 & ~drunkmonk_ladder_active = false) {
     mes("A ladder mysteriously appears.");
     loc_add(^blanket_ladder_coord, loc_1765, 1, centrepiece_straight, 200);
