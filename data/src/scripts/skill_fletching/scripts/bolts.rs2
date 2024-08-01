@@ -2,6 +2,19 @@
 [opheldu,opal]
 switch_obj(last_useitem) {
     case chisel : @make_bolt_tips(last_item);
+    case hammer : mes("You can't think of any reason to do this.");
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,jade]
+switch_obj(last_useitem) {
+    case hammer : mes("You can't think of any reason to do this.");
+    case default : ~displaymessage(^dm_default);
+}
+
+[opheldu,red_topaz]
+switch_obj(last_useitem) {
+    case hammer : mes("You can't think of any reason to do this.");
     case default : ~displaymessage(^dm_default);
 }
 
