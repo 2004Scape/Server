@@ -92,7 +92,7 @@ stat_advance(fletching, multiply($arrow_count, 15));
 
 [label,make_ogre_arrows]
 ~require_members_fletching;
-if (%chompybird_progress < 1) {
+if (%chompybird_progress = ^chompybird_not_started) {
     // complete guess, i need to check this
     mes("You're not sure what you would make with these flighted arrows.");
     return;
