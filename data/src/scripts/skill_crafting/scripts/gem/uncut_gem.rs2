@@ -7,61 +7,6 @@ switch_obj (last_useitem)
     case default : ~displaymessage(^dm_default);
 };
 
-// free
-
-[opheldu,uncut_sapphire]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,uncut_emerald]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,uncut_ruby]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,uncut_diamond]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-// membs
-
-[opheldu,uncut_opal]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case hammer : mes("You can't think of any reason to do this.");
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,uncut_jade]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case hammer : mes("You can't think of any reason to do this.");
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,uncut_red_topaz]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case hammer : mes("You can't think of any reason to do this.");
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,uncut_dragonstone]
-switch_obj(last_useitem) {
-    case chisel : @crafting_gem(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
 //--- Label to craft a gem
 [label,crafting_gem](obj $uncut_gem)
 if (oc_members($uncut_gem) = true) {
