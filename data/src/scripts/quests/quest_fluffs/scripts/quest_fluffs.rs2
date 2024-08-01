@@ -143,7 +143,7 @@ if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
     inv_del(inv, fluffs_kitten, 1);
     anim(human_pickupfloor, 0);
     npc_setmode(none);
-    .npc_add(coord, npc_760, ^max_32bit_int);
+    .npc_add(coord, lost_kitten, ^max_32bit_int);
     .npc_setmode(none);
     p_delay(1);
     npc_say("Purr...");
@@ -180,7 +180,7 @@ mes("You find nothing.");
 
 [opheld5,fluffs_kitten] //TODO: All of this is guessed -- test this in OSRS.
 inv_delslot(inv, last_slot);
-npc_add(coord, npc_760, ^max_32bit_int);
+npc_add(coord, lost_kitten, ^max_32bit_int);
 mes("You drop Fluffs' kitten.");
 npc_setmode(none);
 npc_walk(%fluffs_crate);

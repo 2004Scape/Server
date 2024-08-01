@@ -27,7 +27,7 @@ members=yes
 param=attack_anim,cat_attack
 param=death_anim,cat_death
 
-[npc_760]
+[lost_kitten]
 vislevel=hide
 name=Kitten
 desc=It looks lost.
