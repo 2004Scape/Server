@@ -40,7 +40,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_easy
-param=trail_coord,0_47_35_35_6
+param=trail_coord,0_47_53_35_6
 param=trail_casket,trail_casket_easy_map003
 
 [trail_clue_easy_simple_exp001]

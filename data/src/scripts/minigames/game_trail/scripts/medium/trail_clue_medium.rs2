@@ -34,7 +34,7 @@ if(npc_type = black_heather & inv_total(inv, trail_clue_medium_riddle_exp001) > 
     obj_add(npc_coord, trail_clue_medium_key_exp003, 1, ^lootdrop_duration);
 } else if(npc_category = chicken & inv_total(inv, trail_clue_medium_riddle_exp004) > 0 & ~obj_gettotal(trail_clue_medium_key_exp004) = 0) {
     obj_add(npc_coord, trail_clue_medium_key_exp004, 1, ^lootdrop_duration);
-} else if(compare(npc_name, "Man") = ^true & inv_total(inv, trail_clue_medium_riddle_exp005) > 0 & ~obj_gettotal(trail_clue_medium_key_exp005) = 0) {
+} else if(compare(npc_name, "Man") = 0 & inv_total(inv, trail_clue_medium_riddle_exp005) > 0 & ~obj_gettotal(trail_clue_medium_key_exp005) = 0) {
     obj_add(npc_coord, trail_clue_medium_key_exp005, 1, ^lootdrop_duration);
 }
 
@@ -119,7 +119,7 @@ if(inv_total(inv, trail_clue_medium_riddle_exp005) > 0) {
         anim(human_openchest, 0);
         sound_synth(chest_open, 0, 0);
         p_delay(0);
-        loc_change(loc_3370, 4);
+        loc_change(loc_3368, 4);
         p_delay(0);
         inv_del(inv, trail_clue_medium_key_exp005, 1);
         ~progress_clue_medium(trail_clue_medium_riddle_exp005, "You've found another clue scroll!");
