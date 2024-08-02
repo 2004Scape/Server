@@ -70,7 +70,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
             ~chatplayer("<p,neutral>I think it wants some attention.");
             npc_say("Purr..."); //TODO: verify this, based off a video
         case 45:
-            ~chatplayer("<p,neutral>I think it wants some attention."); //TODO: verify this one
+            ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
             npc_say("Meeeooowww..."); //TODO: verify this, guessed
         case 50:
             mes("Your kitten got lonely and ran off.");
