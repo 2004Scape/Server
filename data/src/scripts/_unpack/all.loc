@@ -13158,6 +13158,7 @@ model=model_loc_47
 op1=Open
 active=yes
 blockrange=no
+category=shipyard_gate
 
 [loc_2439]
 name=Gate
@@ -13166,6 +13167,7 @@ model=model_loc_47
 mirror=yes
 op1=Open
 active=yes
+category=shipyard_gate
 
 [loc_2440]
 name=Pillar

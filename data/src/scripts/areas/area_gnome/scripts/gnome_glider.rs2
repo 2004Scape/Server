@@ -2,6 +2,36 @@
 if(inzone(0_45_47_35_42, 0_45_47_45_53, npc_coord) = true) {
     @gnome_pilot_crash_karamja;
 }
+if(%grandtree_progress = ^grandtree_released_prison & inzone(3_38_54_31_43, 3_38_54_35_47, npc_coord) = true) {
+    ~chatnpc("<p,neutral>Hi, the King said that you need to leave?");
+    ~chatplayer("<p,sad>Apparently humans are invading!");
+    ~chatnpc("<p,angry>I find that hard to believe!|I have lots of human friends.");
+    ~chatplayer("<p,sad>I don't understand it either!");
+    ~chatnpc("<p,neutral>So where to?");
+    switch_int(~p_choice2("Take me to Karamja please!", 1, "Not anywhere for now!", 2)) {
+        // https://youtu.be/LFvLBRCxFwk?si=LoGnAkbVhdKeQtU0&t=689
+        case 1:
+            ~chatplayer("<p,happy>Take me to Karamja please!");
+            ~chatnpc("<p,happy>OK! You're the boss!|Hold on tight, it'll be a rough ride!");
+            if_close;
+            p_teleport(0_45_47_37_50);
+            p_delay(3);
+            // https://youtu.be/-jfueZpRhzU?si=yYCGWkah1TccT9cL&t=621
+            ~chatnpc("<p,sad>Sorry about that.");
+            ~chatnpc("<p,angry>That turbulence over the Karamja Volcano was a bit unexpected, and the area round here isn't well suited for emergency landing. Still! we're still alive that's the main thing. Are you OK?");
+            ~chatplayer("<p,neutral>I'm fine, I can't say the same for your glider!");
+            // OSRS dialogue here mentions an npc added in aug 2006, so I think it must've been changed at some point after that
+            ~chatnpc("<p,sad>I don't think I can fix this.|Looks like we'll be heading back by foot.");
+            ~chatplayer("<p,neutral>Where's the shipyard from here?");
+            ~chatnpc("<p,neutral>I think I saw some buildings on the coast east of here while we were crashing. I'd have a look there.");
+            ~chatnpc("<p,neutral>Take care adventurer!");
+            ~chatplayer("<p,neutral>Take care little man.");
+        case 2:
+            ~chatplayer("<p,neutral>Not anywhere for now!");
+            ~chatnpc("<p,neutral>OK. I'll be here for when you're ready.");
+    }
+    return;
+}
 ~chatnpc("<p,neutral>Welcome to Gnome Air!");
 @multi4("What's Gnome Air?", gnome_pilot_what, "Where can you take me?", gnome_pilot_where, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
 
@@ -27,20 +57,25 @@ if(inzone(0_45_47_35_42, 0_45_47_45_53, npc_coord) = true) {
 ~chatplayer("<p,confused>I'll leave you to it.");
 
 [label,gnome_pilot_crash_karamja]
-if(%grandtree_progress >= 80) {
+if(%grandtree_progress >= 90) {
+    // from OSRS, I think this is where the original dialogue ends
     ~chatnpc("<p,sad>I don't think I can fix this.|Looks like I'll be heading back by foot.");
     return;
+} else if (%grandtree_progress = ^grandtree_released_prison) {
+    ~chatplayer("<p,neutral>Where's the shipyard from here?");
+    ~chatnpc("<p,neutral>It's east of here. I think I saw some buildings on the coast while we were crashing...");
+} else {
+    @gnome_pilot_creative;
 }
-@gnome_pilot_creative;
 
 [label,gnome_pilot_crash_varrock]
 if(%grandtree_progress = ^grandtree_complete) {
     ~chatnpc("<p,neutral>Ah, how embarrassing.");
     ~chatplayer("<p,quiz>What happened?");
     ~chatnpc("<p,neutral>A bit of a technical hitch with the landing gear. I won't be able to fly you anywhere, sorry.");
-    return;
+} else {
+    @gnome_pilot_creative;
 }
-@gnome_pilot_creative;
 
 [label,gnome_pilot_creative]
 ~chatplayer("<p,quiz>What happened here?");

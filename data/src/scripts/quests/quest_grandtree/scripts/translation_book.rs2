@@ -4,7 +4,7 @@
 @open_translation_book;
 
 [label,open_translation_book]
-@book_flip_page(0, 0, 3, translation_book);
+@book_flip_page(0, 0, 4, translation_book);
 
 [proc,translation_book]
 switch_int (%book_page) {
