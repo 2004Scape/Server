@@ -22,7 +22,7 @@ npc_setmode(opplayer2);
 
 
 [ai_timer,_macro_event_zombie]
-if (~macro_event_lost = true) {
+if (~macro_event_lost_hostile = true) {
     npc_del;
     return;
 }

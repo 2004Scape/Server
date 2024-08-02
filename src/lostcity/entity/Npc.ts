@@ -3,7 +3,7 @@ import VarNpcType from '#lostcity/cache/config/VarNpcType.js';
 
 import World from '#lostcity/engine/World.js';
 
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptPointer from '#lostcity/engine/script/ScriptPointer.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
@@ -201,16 +201,19 @@ export default class Npc extends PathingEntity {
                 const distanceToX = Math.abs(this.target.x - this.startX);
                 const distanceToZ = Math.abs(this.target.z - this.startZ);
                 if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
+                    this.clearWaypoints();
                     this.defaultMode();
                     return false;
                 }
                 // remove corner
                 if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
+                    this.clearWaypoints();
                     this.defaultMode();
                     return false; 
                 }
             } else if (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) {
                 if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                    this.clearWaypoints();
                     this.defaultMode();
                     return false;   
                 }
@@ -328,7 +331,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    enqueueScript(script: Script, delay = 0, arg: number = 0) {
+    enqueueScript(script: ScriptFile, delay = 0, arg: number = 0) {
         const request = new EntityQueueRequest(NpcQueueType.NORMAL, script, [], delay);
         request.lastInt = arg;
         this.queue.addTail(request);
@@ -481,23 +484,23 @@ export default class Npc extends PathingEntity {
     }
 
     playerFollowMode(): void {
-        if (!this.target) {
+        const player = this.target;
+        if (!player) {
             this.defaultMode();
             return;
         }
 
-        if (!(this.target instanceof Player)) {
+        if (!(player instanceof Player)) {
             throw new Error('[Npc] Target must be a Player for playerfollow mode.');
         }
-
-        if (World.getPlayerByUid(this.target.uid) === null) {
+        if (World.getPlayerByUid(player.uid) === null) {
             this.defaultMode();
             return;
         }
-
-        if (this.level !== this.target.level) {
-            this.defaultMode();
-            return;
+        if (player.level !== this.level || !Position.isWithinDistanceSW(this, player, 15)) {
+            this.teleport(player.x, player.z, player.level);
+            this.startX = player.x;
+            this.startZ = player.z;
         }
 
         this.pathToTarget();
@@ -530,7 +533,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
+        this.clearWaypoints();
         this.updateMovement(false);
     }
 
@@ -558,7 +561,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
             return;
         }
-
+        this.clearWaypoints();
         this.updateMovement(false);
     }
 
@@ -606,7 +609,7 @@ export default class Npc extends PathingEntity {
             (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
         const opTrigger: boolean = !apTrigger;
 
-        const script: Script | null = this.getTrigger();
+        const script: ScriptFile | null = this.getTrigger();
         if (script && opTrigger && this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
             this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
@@ -648,7 +651,7 @@ export default class Npc extends PathingEntity {
         }
     }
 
-    private getTrigger(): Script | null {
+    private getTrigger(): ScriptFile | null {
         const trigger: ServerTriggerType | null = this.getTriggerForMode(this.targetOp);
         if (trigger) {
             return ScriptProvider.getByTrigger(trigger, this.type, -1) ?? null;

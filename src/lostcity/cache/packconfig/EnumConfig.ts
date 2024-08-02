@@ -1,6 +1,6 @@
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
 
-import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean } from '#lostcity/cache/packconfig/PackShared.js';
+import { ConfigValue, ConfigLine, PackedData, isConfigBoolean, getConfigBoolean, packStepError } from '#lostcity/cache/packconfig/PackShared.js';
 import { lookupParamValue } from '#lostcity/cache/packconfig/ParamConfig.js';
 import { EnumPack } from '#lostcity/util/PackFile.js';
 
@@ -111,17 +111,34 @@ export function packEnumConfigs(configs: Map<string, ConfigLine[]>): { client: P
                 server.p4(i);
             } else {
                 const key = val[i].substring(0, val[i].indexOf(','));
-                server.p4(lookupParamValue(inputtype, key) as number);
+                const value = lookupParamValue(inputtype, key);
+
+                if (value === null) {
+                    throw packStepError(debugname, `Invalid value-key: ${val[i]}`);
+                }
+
+                server.p4(value as number);
             }
 
             if (outputtype === ScriptVarType.AUTOINT) {
-                server.p4(lookupParamValue(outputtype, val[i]) as number);
+                const value = lookupParamValue(outputtype, val[i]);
+
+                if (value === null) {
+                    throw packStepError(debugname, `Invalid value: ${val[i]}`);
+                }
+
+                server.p4(value as number);
             } else {
-                const value = val[i].substring(val[i].indexOf(',') + 1);
+                const value = lookupParamValue(outputtype, val[i].substring(val[i].indexOf(',') + 1));
+
+                if (value === null) {
+                    throw packStepError(debugname, `Invalid value: ${val[i]}`);
+                }
+
                 if (outputtype === ScriptVarType.STRING) {
-                    server.pjstr(lookupParamValue(outputtype, value) as string);
+                    server.pjstr(value as string);
                 } else {
-                    server.p4(lookupParamValue(outputtype, value) as number);
+                    server.p4(value as number);
                 }
             }
         }

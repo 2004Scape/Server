@@ -43,3 +43,109 @@ length=3
 width=3
 op1=Pick-up
 blockwalk=no
+
+[mcannon_nulodion_door]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
+param=next_loc_stage,loc_2527
+
+[mcannon_cannon_door]
+name=Door
+desc=The door is closed.
+model=model_loc_3
+active=yes
+op1=Open
+retex1s=wall
+retex1d=door
+recol2s=6342
+recol2d=11458
+param=next_loc_stage,loc_2527
+
+[railing_sturdy]
+name=Railing
+desc=Solid bars of iron.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+blockrange=no
+op1=Inspect
+
+[railing_broken_1]
+name=Railing
+desc=There is a hole in this section of the railing.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+blockrange=no
+op1=Inspect
+
+[railing_broken_2]
+name=Railing
+desc=There is a hole in this section of the railing.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+blockrange=no
+op1=Inspect
+
+[railing_broken_3]
+name=Railing
+desc=There is a hole in this section of the railing.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+blockrange=no
+op1=Inspect
+
+[railing_broken_4]
+name=Railing
+desc=There is a hole in this section of the railing.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+blockrange=no
+op1=Inspect
+
+[railing_broken_5]
+name=Railing
+desc=There is a hole in this section of the railing.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+blockrange=no
+op1=Inspect
+
+[railing_broken_6]
+name=Railing
+desc=There is a hole in this section of the railing.
+model=model_loc_14
+sharelight=yes
+hillskew=yes
+blockrange=no
+op1=Inspect
+
+[mcannon_goblin_cave_entrance]
+name=Cave Entrance
+desc=The entrance to the Dwarf's cave.
+model=model_loc_2
+width=4
+length=2
+op1=Enter
+
+
+[mcannon_goblin_cave_exit]
+name=Mud pile
+desc=Mud caved in from above.
+model=model_loc_13
+length=2
+shadow=no
+blockrange=no
+hillskew=yes
+op1=Climb-over

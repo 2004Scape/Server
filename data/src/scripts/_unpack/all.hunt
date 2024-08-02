@@ -55,7 +55,7 @@ check_nottoostrong=outside_wilderness
 check_notcombat=%lastcombat
 check_notcombat_self=%npc_lastcombat
 check_notbusy=off
-find_keephunting=on
+find_keephunting=off
 find_newmode=opplayer2
 
 // guessing that notbusy means notbusy=on
@@ -110,17 +110,6 @@ check_notcombat_self=%npc_lastcombat
 check_notbusy=off
 find_keephunting=off
 find_newmode=applayer2
-
-[ball_caught]
-type=player
-check_vis=lineofsight
-check_nottoostrong=off
-check_notcombat=%lastcombat
-check_notcombat_self=%npc_lastcombat
-check_notbusy=off
-find_keephunting=off
-find_newmode=applayer2
-rate=2
 
 [aggressive_ranged_extra]
 

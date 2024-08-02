@@ -1,13 +1,59 @@
 [opnpc1,sanfew]
 ~chatnpc("<p,quiz>What can I do for you young 'un?");
-if(%druid_progress = 1) {
+if(%druid_progress = ^druid_started) {
     @multi2("I've been sent to help purify the Varrock stone circle.", druid_sanfew_information, "Actually I don't need to speak to you.", sanfew_dont_need);
-} else if(%druid_progress = 2) {
+} else if(%druid_progress = ^druid_spoken_sanfew) {
     @druid_sanfew_give_ingredients;
-} else if(%druid_progress > 2) {
+} else if(%druid_progress >= ^druid_given_ingredients) {
     @multi2("Have you any more work for me, to help reclaim the circle?", sanfew_more_work, "Actually I don't need to speak to you.", sanfew_dont_need);
-} else if(%druid_progress = 0) {
+} else if(%druid_progress = ^druid_not_started) {
     @multi2("I've heard you druids might be able to teach me herblore.", sanfew_teach_herblore, "Actually I don't need to speak to you.", sanfew_dont_need);
+}
+
+[label,druid_sanfew_information]
+~chatplayer("<p,neutral>I've been sent to assist you with the ritual to purify the Varrockian stone circle.");
+~chatnpc("<p,neutral>Well, what I'm struggling with right now is the meats needed for the potion to honour Guthix. I need the raw meat of four different animals for it, but not just any old meats will do.");
+~chatnpc("<p,neutral>Each meat has to be dipped individually into the Cauldron of Thunder for it to work correctly.");
+%druid_progress = ^druid_spoken_sanfew;
+@druid_sanfew_questions;
+
+[label,druid_sanfew_questions]
+def_int $option = ~p_choice2("Where can I find this cauldron?", 1, "Ok, I'll do that then.", 2);
+if($option = 1) {
+    ~chatplayer("<p,quiz>Where can I find this cauldron?");
+    ~chatnpc("<p,neutral>It is located somewhere in the mysterious underground halls which are located somewhere in the woods just South of here. They are too dangerous for me to go myself however.");
+} else if($option = 2) {
+    ~chatplayer("<p,neutral>Ok, I'll do that then.");
+    ~chatnpc("<p,happy>Well thank you very much!");
+}
+
+[label,druid_sanfew_give_ingredients]
+~chatnpc("<p,quiz>Did you bring me the required ingredients for the potion?");
+
+if(inv_total(inv, druid_enchanted_beef) > 0 & inv_total(inv, druid_enchanted_rat) > 0 & inv_total(inv, druid_enchanted_bear) > 0& inv_total(inv, druid_enchanted_chicken) > 0) {
+    ~chatplayer("<p,happy>Yes, I have all four now!");
+    ~chatnpc("<p,happy>Well hand 'em over then <text_gender("lad", "lass")>!");
+    ~chatnpc("<p,happy>Thank you so much adventurer! These meats will allow our potion to honour Guthix to be completed, and bring one step closer to reclaiming our stone circle!");
+    inv_del(inv, druid_enchanted_beef, 1);
+    inv_del(inv, druid_enchanted_rat, 1);
+    inv_del(inv, druid_enchanted_bear, 1);
+    inv_del(inv, druid_enchanted_chicken, 1);
+    %druid_progress = ^druid_given_ingredients;
+    ~chatnpc("<p,neutral>Now go and talk to Kaqemeex and he will introduce you to the wonderful world of herblore and potion making!");
+    return;
+} 
+~chatplayer("<p,sad>No, not yet...");
+~chatnpc("<p,neutral>Well let me know when you do young 'un.");
+def_int $option = ~p_choice2("What was I meant to be doing again?", 1, "I'll get on with it.", 2);
+
+if($option = 1) {
+    ~chatplayer("<p,neutral>What was I meant to be doing again?");
+    ~chatnpc("<p,neutral>Trouble with your memory eh young'un? I need the raw meats of four different animals that have been dipped into the Cauldron of Thunder so I can make my potion to honour Guthix.");
+    ~chatplayer("<p,neutral>Ooooh yeah, I remember.");
+    @druid_sanfew_questions;
+} else if($option = 2) {
+    ~chatplayer("<p,neutral>I'll get on with it.");
+    ~chatnpc("<p,happy>Good, good.");
 }
 
 [label,sanfew_teach_herblore]
@@ -18,7 +64,7 @@ if(%druid_progress = 1) {
 [label,sanfew_dont_need]
 ~chatplayer("<p,confused>Actually, I don't need to speak to you.");
 ~chatnpc("<p,neutral>Well, we all make mistakes sometimes.");
-if(%druid_progress > 2) { // guess they made a label with the exact same dialogue?
+if(%druid_progress > ^druid_spoken_sanfew) { // guess they made a label with the exact same dialogue?
     mes("Sanfew grunts.");
 } else {
     mes("Sanfew grunts");

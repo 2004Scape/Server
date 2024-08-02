@@ -87,7 +87,7 @@ return(true);
 
 [proc,pvp_in_combat_check]()(boolean)
 // if multi, return true
-if (~inzone_coord_pair_table(multiway_zones, .coord) = true) {
+if (map_multi(.coord) = true) {
     return(true);
 }
 // if you have been attacked in the last 8 ticks, and the last person to attack you isnt your opponent

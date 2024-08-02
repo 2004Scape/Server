@@ -13,7 +13,7 @@ export default class TutorialClickSideHandler extends MessageHandler<TutorialCli
             return false;
         }
 
-        const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.TUTORIAL_CLICKSIDE, -1, -1);
+        const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.TUTORIAL, -1, -1);
         if (script) {
             player.executeScript(ScriptRunner.init(script, player), true);
         }

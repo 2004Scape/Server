@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import Packet2 from '#jagex2/io/Packet.ts';
-import { shouldBuildFile } from '#lostcity/util/PackFile.js';
+import { shouldBuild, shouldBuildFile } from '#lostcity/util/PackFile.js';
 
 function readMap(map) {
     let land = [];
@@ -105,14 +105,15 @@ export function packServerMap() {
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/m${x}_${z}`) &&
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/l${x}_${z}`) &&
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/n${x}_${z}`) &&
-            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`)
+            !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`) &&
+            !shouldBuild('src/lostcity/cache/packmap', '.js', `data/pack/server/maps/m${x}_${z}`)
         ) {
             return;
         }
 
         queue.push({ file, x, z });
     });
-    
+
     if (!queue.length) {
         return;
     }

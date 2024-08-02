@@ -186,7 +186,7 @@ export default class Packet extends Hashable {
         } else {
             const blob = new Blob([this.data.subarray(start, start + length)], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
-            self.postMessage( { type: 'save', value: url, path: filePath });
+            self.postMessage({ type: 'save', value: url, path: filePath });
         }
     }
 

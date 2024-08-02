@@ -7,6 +7,10 @@ p_stopaction;
 // TODO this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
+if (~npc_is_attackable(npc_type) = false) {
+    return;
+}
+
 if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opnpc(2); // it is guaranteed here that we are already within op distance
     return;
@@ -19,10 +23,6 @@ if(npc_stat(hitpoints) = 0 & (npc_type = sir_mordred | npc_type = black_knight_t
 if (npc_stat(hitpoints) = 0) {
     p_stopaction;
     return; // this means the npc is not avail to fight i.e dead
-}
-
-if (~npc_is_attackable(npc_type) = false) {
-    return;
 }
 
 ~player_combat_stat; // update combat varps before swinging

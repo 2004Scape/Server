@@ -31,7 +31,7 @@ import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import {Inventory} from '#lostcity/engine/Inventory.js';
 import World from '#lostcity/engine/World.js';
 
-import Script from '#lostcity/engine/script/Script.js';
+import ScriptFile from '#lostcity/engine/script/ScriptFile.js';
 import ScriptProvider from '#lostcity/engine/script/ScriptProvider.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
@@ -292,7 +292,7 @@ export default class Player extends PathingEntity {
     refreshModal = false;
     modalSticky = -1;
     overlaySide: number[] = new Array(14).fill(-1);
-    receivedFirstClose = false; // workaround to not close welcome screen on login
+    receivedFirstClose = true; // workaround to not close welcome screen on login
 
     protect: boolean = false; // whether protected access is available
     activeScript: ScriptState | null = null;
@@ -314,6 +314,10 @@ export default class Player extends PathingEntity {
 
     afkZones: Int32Array = new Int32Array(2);
     lastAfkZone: number = 0;
+
+    // movement triggers
+    lastMapZone: number = -1;
+    lastZone: number = -1;
 
     constructor(username: string, username37: bigint) {
         super(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, Player.FACE_COORD, Player.FACE_ENTITY); // tutorial island.
@@ -411,14 +415,45 @@ export default class Player extends PathingEntity {
             this.executeScript(ScriptRunner.init(loginTrigger, this), true);
         }
 
-        // play music, multiway, etc
-        const moveTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-        if (moveTrigger) {
-            const script = ScriptRunner.init(moveTrigger, this);
-            this.runScript(script, true);
-        }
         this.lastStepX = this.x - 1;
         this.lastStepZ = this.z;
+    }
+
+    triggerMapzone(x: number, z: number) {
+        // todo: getByTrigger needs more bits to lookup by coord
+        const trigger = ScriptProvider.getByName(`[mapzone,0_${x >> 6}_${z >> 6}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
+    }
+
+    triggerMapzoneExit(x: number, z: number) {
+        const trigger = ScriptProvider.getByName(`[mapzoneexit,0_${x >> 6}_${z >> 6}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
+    }
+
+    triggerZone(level: number, x: number, z: number) {
+        const mx = x >> 6;
+        const mz = z >> 6;
+        const lx = (x & 0x3f) >> 3 << 3;
+        const lz = (z & 0x3f) >> 3 << 3;
+        const trigger = ScriptProvider.getByName(`[zone,${level}_${mx}_${mz}_${lx}_${lz}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
+    }
+
+    triggerZoneExit(level: number, x: number, z: number) {
+        const mx = x >> 6;
+        const mz = z >> 6;
+        const lx = (x & 0x3f) >> 3 << 3;
+        const lz = (z & 0x3f) >> 3 << 3;
+        const trigger = ScriptProvider.getByName(`[zoneexit,${level}_${mx}_${mz}_${lx}_${lz}]`);
+        if (trigger) {
+            this.enqueueScript(trigger, PlayerQueueType.ENGINE);
+        }
     }
 
     calculateRunWeight() {
@@ -472,7 +507,8 @@ export default class Player extends PathingEntity {
     // ----
 
     updateMovement(repathAllowed: boolean = true): boolean {
-        if (this.containsModalInterface()) {
+        // players cannot walk if they have a modal open *and* something in their queue, confirmed as far back as 2005
+        if (this.containsModalInterface() && this.queue.head() != null) {
             this.recoverEnergy(false);
             return false;
         }
@@ -505,12 +541,6 @@ export default class Player extends PathingEntity {
         }
 
         const moved = this.lastX !== this.x || this.lastZ !== this.z;
-        if (moved) {
-            const trigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.MOVE, -1, -1);
-            if (trigger) {
-                this.runScript(ScriptRunner.init(trigger, this), true);
-            }
-        }
         this.drainEnergy(moved);
         this.recoverEnergy(moved);
         if (this.runenergy === 0) {
@@ -632,7 +662,7 @@ export default class Player extends PathingEntity {
      * @param delay
      * @param args
      */
-    enqueueScript(script: Script, type: QueueType = PlayerQueueType.NORMAL, delay = 0, args: ScriptArgument[] = []) {
+    enqueueScript(script: ScriptFile, type: QueueType = PlayerQueueType.NORMAL, delay = 0, args: ScriptArgument[] = []) {
         const request = new EntityQueueRequest(type, script, args, delay);
         if (type === PlayerQueueType.ENGINE) {
             request.delay = 0;
@@ -692,7 +722,7 @@ export default class Player extends PathingEntity {
         }
     }
 
-    setTimer(type: PlayerTimerType, script: Script, args: ScriptArgument[] = [], interval: number) {
+    setTimer(type: PlayerTimerType, script: ScriptFile, args: ScriptArgument[] = [], interval: number) {
         const timerId = script.id;
         const timer = {
             type,
@@ -1469,7 +1499,7 @@ export default class Player extends PathingEntity {
                 // replenish 1 of the stat upon levelup.
                 this.levels[stat] += 1;
             }
-            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LEVELUP, stat, -1);
+            const script = ScriptProvider.getByTriggerSpecific(ServerTriggerType.ADVANCESTAT, stat, -1);
 
             if (script) {
                 this.enqueueScript(script, PlayerQueueType.ENGINE);

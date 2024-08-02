@@ -1,0 +1,97 @@
+[opnpc1,doctor_orbon]
+switch_int(%sheepherder_progress) {
+    case ^sheepherder_not_started: @doctor_orbon_before_sheep_herder;
+    case ^sheepherder_tasked_with_talking_to_dr_orbon: @doctor_orbon_looking_for_protective_clothing;
+    case ^sheepherder_tasked_with_disposing_of_sheep: @doctor_orbon_post_clothing_purchase;
+    case ^sheepherder_complete: @doctor_orbon_after_sheep_herder;
+}
+
+[label,doctor_orbon_before_sheep_herder]
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,quiz>How do you feel?|No heavy flu, shivers, nausea or loss of appetite?");
+~chatplayer("<p,quiz>Uh... no... I feel fine...");
+~chatnpc("<p,quiz>How about nightmares then? Are you experiencing any problems with especially scary nightmares?");
+~chatplayer("<p,default>No... not since I was young.");
+~chatnpc("<p,happy>Good, good, I had to make sure.|This plague really has an incredible fast contagion rate. It spreads faster than the common cold!");
+@multi2(
+    "The plague? Tell me more.", doctor_orbon_more_about_plague,
+    "Ok, I'll be careful.", doctor_orbon_ill_be_more_careful
+);
+
+[label,doctor_orbon_more_about_plague]
+~chatplayer("<p,neutral>The plague? Tell me more.");
+~chatnpc("<p,angry>It came from the west somewhere.|It is extremely quick spreading, and utterly deadly.");
+~chatplayer("<p,neutral>What are the symptoms?");
+~chatnpc("<p,confused>It varies slightly from case to case,|but usually abnormal nightmares and flue-like symptoms,|progressing as you succumb more.");
+~chatnpc("<p,confused>Eventually it results in the presence of a thick black tar-like substance secreted from the nose and eyes.");
+~chatnpc("<p,sad>Unfortunately if you reach this stage of infection then no one can save you.");
+
+[label,doctor_orbon_ill_be_more_careful]
+~chatplayer("<p,neutral>Ok, I'll be careful.");
+~chatnpc("<p,happy>You do that traveller.|You do not want to become infected by the plague.");
+
+[label,doctor_orbon_looking_for_protective_clothing]
+~chatplayer("<p,neutral>Hi Doctor.");
+~chatplayer("<p,neutral>I need to acquire some protective clothing|so I can dispose of some diseased sheep.");
+~chatnpc("<p,neutral>Protective clothing? I'm afraid I only have the one suit which I made myself to prevent infection from any contaminated patients I treat.");
+~chatnpc("<p,neutral>I suppose I could sell you this one and make myself another, but it would cost you at least 100 gold so that I could afford a replacement.");
+@multi2(
+    "Ok, I'll take it.", doctor_orbon_ill_take_it,
+    "Sorry doc, that's too much.", doctor_orbon_sorry_doc_thats_too_much
+);
+
+[label,doctor_orbon_ill_take_it]
+~chatplayer("<p,happy>Ok, I'll take it.");
+@doctor_orbon_purchase_plague_outfit;
+
+[label,doctor_orbon_purchase_plague_outfit]
+if (inv_total(inv, coins) < 100) {
+    ~chatplayer("<p,neutral>Oops, sorry, I don't have enough money.");
+    ~chatnpc("<p,happy>That's ok. Just don't go near those sheep.|When you can find the money come back here.");
+} else {
+    inv_del(inv, coins, 100);
+    inv_add(inv, plague_jacket, 1);
+    inv_add(inv, plague_trousers, 1);
+    ~mesbox("You give Doctor Orbon 100 coins.|He hands over a protective suit.");
+    if (%sheepherder_progress = ^sheepherder_tasked_with_talking_to_dr_orbon) {
+        %sheepherder_progress = ^sheepherder_tasked_with_disposing_of_sheep;
+    }
+    ~chatnpc("<p,happy>These should protect you from infection.");
+}
+
+[label,doctor_orbon_sorry_doc_thats_too_much]
+~chatplayer("<p,confused>Sorry doc, that's too much.");
+~chatnpc("<p,neutral>I'm afraid it will cost me that much to replace.|I cannot possibly sell it for less.");
+
+[proc,has_plague_outfit]()(boolean)
+if ( 
+    ((inv_total(inv, plague_trousers) > 0) | (inv_total(worn, plague_trousers) > 0))
+    &  ((inv_total(inv, plague_jacket) > 0) | (inv_total(worn, plague_jacket) > 0))) {
+        return(true);
+    }
+    return(false);
+
+
+[label,doctor_orbon_post_clothing_purchase]
+~chatplayer("<p,neutral>Hello again.");
+~chatnpc("<p,neutral>Did you dispose of those infected sheep yet?");
+~chatplayer("<p,neutral>Not yet.");
+~chatnpc("<p,angry>You should hurry, they could infect the entire town in a matter of a few days!");
+
+def_boolean $has_plague_outfit = ~has_plague_outfit;
+    
+if ($has_plague_outfit = false) {
+    ~chatnpc("<p,neutral>I notice you do not appear to have your protective clothing with you. Would you care to buy some more? Same price as before.");
+    @multi2(
+        "Ok, I'll take it.", doctor_orbon_ill_take_it,
+        "No, I don't need anymore.", doctor_orbon_no_i_dont_need_any_more
+    );
+}
+
+[label,doctor_orbon_no_i_dont_need_any_more]
+~chatplayer("<p,neutral>No, I don't need anymore.");
+~chatnpc("<p,neutral>I suggest you go and retrieve your protective suit then. Trust me, you do not want to be infected.");
+
+[label,doctor_orbon_after_sheep_herder]
+~chatnpc("<p,happy>Well hello again.|I hear you managed to dispose of those sheep.|Good work.");
+

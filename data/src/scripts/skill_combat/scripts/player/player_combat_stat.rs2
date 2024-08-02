@@ -47,7 +47,7 @@ def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 // get style data
 def_dbrow $data = ~combat_get_weapon_style_data($weapon);
 
-// might be worth having a %damagetype, and %damagestyle varp
+%attackstyle = min(%attackstyle, sub(db_getfieldcount($data, combat_style_table:damagestyle), 1));
 def_int $damagetype = ~combat_get_damagetype($data, %attackstyle);
 def_int $damagestyle = ~combat_get_damagestyle($data, %attackstyle);
 

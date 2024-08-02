@@ -27,7 +27,17 @@ head1=model_51_obj_wear
 param=attack_anim,human_staff_pound
 param=defend_anim,human_staff_def
 param=attack_sound,staff_hit
-// TODO
+// stats based off: https://oldschool.runescape.wiki/w/Mourner?oldid=9768605#Lv_11, 70t respawn on rs3
+respawnrate=70
+hitpoints=19
+attack=8
+strength=8
+defence=8
+param=attackbonus,6
+param=strengthbonus,2
+param=stabdefence,6
+param=slashdefence,6
+param=crushdefence,9
 
 [npc_348]
 name=Mourner
@@ -52,7 +62,15 @@ model4=model_273_obj_wear
 model5=model_185_obj_wear
 model6=model_323_obj_wear
 head1=model_51_obj_wear
-// TODO
+// stats based off: https://oldschool.runescape.wiki/w/Mourner?oldid=9768605#Lv_24, 70t respawn on rs3
+respawnrate=70
+hitpoints=25
+attack=20
+strength=20
+defence=20
+param=stabdefence,3
+param=slashdefence,2
+param=crushdefence,4
 
 [npc_357]
 name=Mourner
@@ -79,7 +97,17 @@ model7=model_555_npc
 head1=model_51_obj_wear
 param=attack_anim,human_staff_spike
 param=attack_sound,staff_stab
-// TODO
+// stats based off: https://oldschool.runescape.wiki/w/Mourner?oldid=9768605#Lv_18, 70t respawn on rs3
+respawnrate=70
+hitpoints=13
+attack=17
+strength=17
+defence=17
+param=attackbonus,5
+param=strengthbonus,5
+param=stabdefence,5
+param=slashdefence,5
+param=crushdefence,7
 
 [npc_369]
 name=Mourner
@@ -106,17 +134,15 @@ model4=model_273_obj_wear
 model5=model_323_obj_wear
 model6=model_499_npc
 head1=model_51_obj_wear
-// stats based off: https://oldschool.runescape.wiki/w/Mourner?oldid=8089161#Lv_18, 70t respawn on rs3
+// stats based off: https://oldschool.runescape.wiki/w/Mourner?oldid=9753180#Lv_24_(Vial), 70t respawn on rs3
 respawnrate=70
-hitpoints=13
-attack=17
-strength=17
-defence=17
-param=attackbonus,5
-param=strengthbonus,5
-param=stabdefence,5
-param=slashdefence,5
-param=crushdefence,7
+hitpoints=25
+attack=20
+strength=20
+defence=20
+param=stabdefence,2
+param=slashdefence,1
+param=crushdefence,3
 
 [npc_370]
 name=Mourner
@@ -149,8 +175,6 @@ hitpoints=19
 attack=10
 strength=10
 defence=10
-param=attackbonus,5
-param=strengthbonus,6
 param=stabdefence,3
 param=slashdefence,2
 param=crushdefence,4
@@ -186,8 +210,6 @@ hitpoints=13
 attack=10
 strength=10
 defence=10
-param=attackbonus,5
-param=strengthbonus,6
 param=stabdefence,3
 param=slashdefence,2
 param=crushdefence,4
