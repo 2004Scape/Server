@@ -63,10 +63,12 @@ if (inv_totalcat(inv, cat) > 0  | inv_totalcat(inv, overgrown) > 0) {
 return(false);
 
 [label,civilian_give_runes]
-if(oc_category(last_useitem) = cat | oc_category(last_useitem) = overgrown) { //does this reset progress?
+if(oc_category(last_useitem) = cat | oc_category(last_useitem) = overgrown) {
     inv_del(inv, last_useitem, 1);
     inv_add(inv, deathrune, 100);
-    ~objboxt(deathrune, "You hand over the cat.|You are given 100 Death Runes."); //guessed linebreak
+    ~objboxt(deathrune, "You hand over the cat.|You are given 100 Death Runes.");
+    ~chatnpc("<p,happy>Great, thanks for that!");
+    ~chatplayer("<p,happy>That's ok, take care.");
     return;
 }
 ~displaymessage(^dm_default);
