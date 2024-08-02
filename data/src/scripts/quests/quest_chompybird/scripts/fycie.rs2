@@ -1,6 +1,3 @@
-// TODO buying feathers
-
-
 [opnpc1,npc_1011]
 switch_int(%chompybird_progress) {
     case ^chompybird_started:
