@@ -99,9 +99,26 @@ if(last_useitem = doogle_leaves) {
 }
 ~displaymessage(^dm_default);
 
-[opnpc1,fluffs] ~fluffs_interact;
-[opnpc3,fluffs] ~fluffs_interact; //TODO: what does stroke do?
-[proc,fluffs_interact]
+[opnpc1,fluffs]
+if(%fluffs_progress >= ^fluffs_rescued) {
+    ~chatplayer("<p,default>Oh, it looks like Fluffs has returned.|I'd better leave her alone."); //OSRS
+    return;
+}
+~fluffs_attack;
+switch_int(%fluffs_progress) {
+    case ^fluffs_gave_milk:
+        ~mesbox("Maybe the cat is hungry?");
+    case ^fluffs_gave_sardine:
+        ~mesbox("In the distance you can hear kittens mewing...");
+    case default:
+        ~mesbox("Maybe the cat is thirsty?"); 
+}
+
+[opnpc3,fluffs]
+~fluffs_attack;
+~mesbox("Perhaps the cat wants something?");
+
+[proc,fluffs_attack]
 npc_facesquare(coord);
 anim(human_pickupfloor, 0);
 p_delay(1);
@@ -110,16 +127,6 @@ npc_anim(cat_attack, 0);
 p_delay(0);
 say("Ouch!");
 p_delay(3);
-switch_int(%fluffs_progress) {
-    case ^fluffs_paid_boy:
-        ~mesbox("Maybe the cat is thirsty?");
-    case ^fluffs_gave_milk:
-        ~mesbox("Maybe the cat is hungry?");
-    case ^fluffs_gave_sardine:
-        ~mesbox("In the distance you can hear kittens mewing...");
-    case default:
-        ~mesbox("Perhaps the cat wants something?"); //TODO: is this correct?
-}
 
 [opnpcu,fluffs]
 if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
