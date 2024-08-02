@@ -61,6 +61,7 @@ if (%macro_event_uid ! npc_uid) {
     ~chatnpc("<p,neutral>Goodbye.");
     return;
 }
+%macro_event = ^no_macro_event;
 %macro_event_uid = null;
 inv_add(inv, ~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
