@@ -64,7 +64,7 @@ inv_add(inv, gold_bar, 1);
 ~send_quest_complete(questlist:gobdip, gold_bar, 250, ^gobdip_questpoints, "You have completed the\\nGoblin Diplomacy Quest!");
 
 [label,goblin_diplomacy_completed]
-~chatnpc_specific("General Wartface", general_wartface, "<p,goblinchat>Now you've solved our argument we gotta think of something else to do.");
+~chatnpc_specific("General Wartface", general_wartface, "<p,goblinchat>Now you've solved our argument we|gotta think of something else to do.");
 ~chatnpc_specific("General Bentnoze", general_bentnoze, "<p,goblinchat>Yep, we bored now.");
 
 [label,goblin_diplomacy_greet_player_reply]
