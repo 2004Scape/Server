@@ -3600,13 +3600,6 @@ name=Grandfather clock
 desc=Tick-tock, it's a clock.
 model=model_loc_683
 
-[loc_684]
-name=Swamp bubbles
-desc=The noxious liquid bubbles horribly.
-model=model_loc_684
-anim=seq_480
-hasalpha=yes
-
 [loc_685]
 name=Weather vane
 desc=Shows which way the wind blows.
@@ -3917,15 +3910,6 @@ desc=A huge web, cruelly slashed in half.
 model=model_loc_734
 blockwalk=no
 sharelight=yes
-
-[loc_735]
-name=Swamp bubbles
-desc=The noxious liquid bubbles horribly.
-model=model_loc_684
-anim=seq_480
-hasalpha=yes
-recol1s=3297
-recol1d=1418
 
 [loc_736]
 name=Animal skull
@@ -18570,31 +18554,6 @@ desc=Some stealthy thief must have picked the ogre lock!
 model=model_loc_3378
 width=2
 op1=Search
-
-[loc_3379]
-name=Cave entrance
-desc=The entrance to Rantz's cave.4
-model=model_loc_2
-width=3
-length=2
-op1=Enter
-
-[loc_3380]
-name=Cave exit
-desc=Exit this way for fresh air and daylight.
-model=model_loc_1423
-sharelight=yes
-hillskew=yes
-op1=Walk through
-
-[loc_3381]
-name=Cave exit
-desc=Exit this way for fresh air and daylight.
-model=model_loc_1423
-sharelight=yes
-hillskew=yes
-mirror=yes
-op1=Walk through
 
 [loc_3382]
 name=Ogre spitroast

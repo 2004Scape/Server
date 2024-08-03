@@ -1,0 +1,7 @@
+^chompybird_not_started = 0
+^chompybird_started = 1
+^chompybird_made_arrows = 2
+^chompybird_given_arrows = 3
+^chompybird_shown_toad = 4
+
+^chompybird_complete = 999
