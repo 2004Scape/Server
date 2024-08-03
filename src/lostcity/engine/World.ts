@@ -1342,7 +1342,7 @@ class World {
         }
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
-        if (receiverId !== -1 && objType.tradeable) {
+        if (receiverId !== -1 && objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members)) {
             obj.setLifeCycle(this.currentTick + 100);
             this.trackZone(this.currentTick + 100, zone);
             this.trackZone(this.currentTick, zone);
