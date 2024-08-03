@@ -220,6 +220,8 @@ scope=perm
 
 [varp_191]
 
+[varp_196]
+
 [varp_198]
 
 [varp_199]
@@ -372,10 +374,6 @@ scope=perm
 
 [charge_god_spell]
 scope=perm
-
-[varp_275]
-
-[varp_276]
 
 [antifire]
 scope=perm
