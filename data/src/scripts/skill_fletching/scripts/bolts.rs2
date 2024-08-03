@@ -1,22 +1,3 @@
-// bolt tips
-[opheldu,opal]
-switch_obj(last_useitem) {
-    case chisel : @make_bolt_tips(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,oyster_perl]
-switch_obj(last_useitem) {
-    case chisel : @make_bolt_tips(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
-[opheldu,oyster_perls]
-switch_obj(last_useitem) {
-    case chisel : @make_bolt_tips(last_item);
-    case default : ~displaymessage(^dm_default);
-}
-
 // bolts
 [opheldu,_category_530]
 switch_obj(last_useitem) {

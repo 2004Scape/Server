@@ -7,38 +7,6 @@ switch_obj (last_useitem)
     case default : ~displaymessage(^dm_default);
 };
 
-[opheldu,uncut_sapphire]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
-[opheldu,uncut_emerald]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
-[opheldu,uncut_ruby]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
-[opheldu,uncut_diamond]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
-[opheldu,uncut_opal]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
-[opheldu,uncut_jade]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
-[opheldu,uncut_red_topaz]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
-[opheldu,uncut_dragonstone]
-if (last_useitem = chisel) @crafting_gem(last_item);
-~displaymessage(^dm_default);
-
 //--- Label to craft a gem
 [label,crafting_gem](obj $uncut_gem)
 if (oc_members($uncut_gem) = true) {
