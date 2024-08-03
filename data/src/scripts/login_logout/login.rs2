@@ -45,6 +45,10 @@ queue(macro_event_login, 0);
 // update weight-reduction equipment (in the case where you switch from f2p <-> p2p)
 ~update_weight_equipment;
 
+if(inzone(movecoord(^grandtree_jail_coord, 0, 0, -2), movecoord(^grandtree_jail_coord, 3, 0, 2), coord) = true) {
+    ~grandtree_spawn_charlie;
+}
+
 if (%tutorial_progress < ^tutorial_complete) {
      if (%tutorial_progress = 5 & inzone(0_48_48_14_27, 0_48_48_27_41, coord) = false) {
         // This is a check to not bork every account that currently has a tutorial complete progress of 5.

@@ -1,6 +1,11 @@
 [apnpc1,grandtree_charlie]
 // no range 
 switch_int(%grandtree_progress) {
+    case ^grandtree_found_invasion_plans:
+        ~chatplayer("<p,angry>You were right! I searched Glough's chest and found some invasion plans!");
+        ~chatnpc("<p,angry>Go to the King and tell him! Finally you have proof. Surely King Narnode will belive you now and set me free!");
+        ~chatplayer("<p,happy>Hold tight Charlie!");
+        ~chatnpc("<p,neutral>I'm not going anywhere!");
     case ^grandtree_obtained_lumber_order:
         ~chatplayer("<p,quiz>How are you doing Charlie?");
         ~chatnpc("<p,neutral>I've been better.");

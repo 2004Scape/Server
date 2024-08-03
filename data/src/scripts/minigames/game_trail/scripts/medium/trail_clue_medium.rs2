@@ -56,7 +56,6 @@ if(inv_total(inv, trail_clue_medium_riddle_exp001) > 0) {
 }
 mes("The chest is locked.");
 
-// TODO: not the same drawer, but basing the lock message off this, probably confirm on OSRS: https://youtu.be/cFwNqBvSHNg?si=poX8EWgEZIEfvie7&t=66
 [label,riddle_loc_medium_exp002]
 if(inv_total(inv, trail_clue_medium_riddle_exp002) > 0) {
     // https://www.youtube.com/watch?v=tfnYvJrHnqw

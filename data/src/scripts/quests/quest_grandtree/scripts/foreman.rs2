@@ -1,5 +1,5 @@
 [opnpc1,foreman]
-if((%grandtree_progress ! ^grandtree_released_prison & %grandtree_progress ! ^grandtree_obtained_lumber_order) | inv_total(inv, lumber_order) > 0) {
+if((%grandtree_progress ! ^grandtree_released_prison & %grandtree_progress ! ^grandtree_obtained_lumber_order) | ~obj_gettotal(lumber_order) > 0) {
     ~mesbox("The foreman is too busy to talk.");
     return;
 }
@@ -20,7 +20,7 @@ npc_walk(0_46_47_45_40);
 p_delay(1);
 bas_running(null);
 p_walk(0_46_47_45_40);
-p_delay(1);
+p_delay(2);
 p_teleport(0_46_47_11_25);
 if(npc_find(coord, foreman, 10, 0) = false) {
     npc_add(movecoord(coord, -1, 0, -1), foreman, 200); // 200t osrs
@@ -101,6 +101,10 @@ switch_int(~p_choice3("He loves tangled toads legs.", 1, "He loves worm holes.",
 ~chatnpc("<p,neutral>Of course, why else would Glough want 30 battleships? Between you and me I don't think he stands a chance.");
 ~chatplayer("<p,quiz>No?");
 ~chatnpc("<p,neutral>I mean, for the kind of battleships Glough's ordered I'll need tons and tons of lumber! Still, if he says he can supply the wood I'm sure he can! Anyway, here's the order for the lumber.");
+if(inv_freespace(inv) = 0) {
+    ~chatnpc("It seems you can't carry anymore. Come back when you have some space.");
+    return;
+}
 if(%grandtree_progress = ^grandtree_released_prison) %grandtree_progress = ^grandtree_obtained_lumber_order;
 inv_add(inv, lumber_order, 1);
 ~objboxt(lumber_order, "The foreman has given you the lumber order.");
@@ -115,7 +119,7 @@ npc_setmode(opplayer2);
 gosub(npc_death);
 if(npc_findhero = true) {
     // queued, no if_close, TODO: check if this is obj_gettotal or not
-    if((%grandtree_progress = ^grandtree_released_prison | %grandtree_progress = ^grandtree_obtained_lumber_order) & inv_total(inv, lumber_order) = 0) {
+    if((%grandtree_progress = ^grandtree_released_prison | %grandtree_progress = ^grandtree_obtained_lumber_order) & ~obj_gettotal(lumber_order) = 0) {
         queue(queue_defeat_foreman, 0, npc_uid);
     }
     obj_add(npc_coord, bones, 1, ^lootdrop_duration); // this isn't queued, the lumber order is

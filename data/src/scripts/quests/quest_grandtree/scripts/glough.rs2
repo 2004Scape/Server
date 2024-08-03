@@ -1,7 +1,9 @@
 [opnpc1,glough]
 switch_int(%grandtree_progress) {
     // https://youtu.be/LFvLBRCxFwk?si=IKRtVRjysWWM9U4u&t=482, fixed at some point?
-    case ^grandtree_spoken_glough:
+    case ^grandtree_spoken_glough, ^grandtree_unlocked_trapdoor, ^grandtree_defeated_black_demon, ^grandtree_searching_daconia, ^grandtree_complete:
+        // when underground during the fight, he will say this as well (before the cutscene update a few months after OSRS launch), if you interrupt the dialogue you have to go back down
+        // https://youtu.be/OHlL7GZW2hw?si=ulwwb-_NUDHsVb9e&t=920
         ~chatplayer("<p,quiz>Hello?");
         ~chatnpc("<p,angry>I warn you now, human: stay out of my affairs!");
         ~chatplayer("<p,angry>I've stopped you before, Glough, and I'll stop you again!");
@@ -9,8 +11,8 @@ switch_int(%grandtree_progress) {
         ~chatplayer("<p,angry>I'm going to stop you, Glough!");
         ~chatnpc("<p,angry>You're becoming quite annoying traveller!");
         ~mesbox("Glough is searching his pockets.");
-        ~chatnpc("<p,angry>Where are that darn key?");
-        ~chatnpc("<p,angry>Leave human, before I have you put in the cage!")
+        ~chatnpc("<p,angry>Where are that darn key?"); // no typos here 
+        ~chatnpc("<p,angry>Leave human, before I have you put in the cage!");
     case ^grandtree_obtained_lumber_order:
         ~chatplayer("<p,angry>I know what you're up to Glough!");
         ~chatnpc("<p,angry>You have no idea human!");
@@ -73,3 +75,36 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,angry>We don't need your sort round here!");
         ~mesbox("He doesn't seem very nice!");
 }
+
+[label,glough_cutscene]
+mes("You can hear footsteps approaching.");
+npc_add(movecoord(coord, 3, 0, 0), glough, 500); // not sure since osrs changed it, but based off this it's less than the black demons timer 
+npc_tele(0_38_154_42_8);
+npc_setmode(none);
+npc_walk(movecoord(coord, -1, 0, 0));
+p_delay(17); // seems like 17t based off video
+@glough_headache;
+
+[label,glough_headache]
+~chatnpc("<p,angry>You really are becoming a headache! Well, at least now you can die knowing you were right, it will save me having to hunt you down like all the other human filth of RuneScape!");
+~chatplayer("<p,angry>You're crazy Glough!");
+~chatnpc("<p,angry>Bah! Well, soon you'll see, the gnomes are ready to fight, in three weeks this tree will be dead wood, in ten weeks it will be 30 battleships! Finally we will rid the world of the disease called humanity!");
+~chatplayer("<p,angry>What makes you think I'll let you get away with it?");
+~chatnpc("<p,laugh>Fool...meet my little friend!");
+if_close;
+npc_walk(movecoord(coord, -1, 0, -2));
+npc_setmode(none);
+npc_facesquare(0_38_154_47_11);
+p_delay(3);
+cam_shake(0, 6, 6, 2); // OSRS shake
+// these two are guessed
+cam_moveto(0_38_154_44_13, 2000, 100, 232);
+cam_lookat(movecoord(coord, -1, 0, -1), 0, 100, 232); 
+npc_add(0_38_154_47_11, grandtree_black_demon, 1000);
+npc_setmode(none);
+npc_walk(movecoord(npc_coord, 4, 0, -3));
+p_delay(4);
+npc_walk(movecoord(npc_coord, 3, 0, 0));
+p_delay(2);
+cam_reset;
+~npc_retaliate(0);

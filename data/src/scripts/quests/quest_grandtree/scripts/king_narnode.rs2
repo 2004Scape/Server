@@ -1,9 +1,98 @@
 [opnpc1,king_narnode]
-if(coordz(npc_coord) > 0 & (%grandtree_progress <= ^grandtree_found_journal | %grandtree_progress > ^grandtree_released_prison)) {
+if(coordy(npc_coord) > 0 & (%grandtree_progress <= ^grandtree_found_journal | %grandtree_progress > ^grandtree_released_prison)) {
     mes("The King doesn't seem interested in talking.");
     return;
 }
 switch_int(%grandtree_progress) {
+    case ^grandtree_complete:
+        ~chatplayer("<p,happy>Hello your highness!");
+        ~chatnpc("<p,happy>Well, hello again Traveller! How are you?");
+        ~chatplayer("<p,happy>I'm good thanks, how's the tree?");
+        ~chatnpc("<p,happy>Better than ever, thanks to you!");
+    case ^grandtree_searching_daconia:
+        ~chatnpc("<p,quiz>Traveller, have you managed to find the Daconia?");
+        if(inv_total(inv, daconia_rock) > 0) {
+            ~chatplayer("<p,quiz>Is this it?");
+            ~chatnpc("<p,happy>Yes! Excellent, well done!");
+            ~objbox(daconia_rock, "You give the King the Daconia rock.");
+            ~chatnpc("<p,happy>It's incredible, the tree's health is improving already! I don't know what to say, we owe you so much!");
+            ~chatnpc("<p,sad>To think Glough had me fooled all along!");
+            ~chatplayer("<p,happy>All that matters now is that humans and gnomes can live together in peace!");
+            ~chatnpc("<p,laugh>I'll drink to that!");
+            ~chatnpc("<p,happy>From now on I vow to make this stronghold a welcoming place for all! I'll grant you access to all our facilities.");
+            ~chatplayer("<p,happy>Thanks!");
+            ~chatplayer("<p,laugh>I think!");
+            ~chatnpc("<p,neutral>It should make your stay here easier. You can use the spirit tree to transport yourself, as well as the gnome glider. I also give you access to our mine.");
+            ~chatplayer("<p,quiz>Mine?");
+            ~chatnpc("<p,neutral>Very few know of the secret mine under the Grand Tree. If you push on the roots just to my north they will seperate and let you pass.");
+            ~chatplayer("<p,quiz>Strange!");
+            ~chatnpc("<p,laugh>That's magic trees for you!");
+            ~chatnpc("<p,happy>All the best Traveller and thanks again!");
+            ~chatplayer("<p,happy>You too, your highness!");
+            queue(grandtree_quest_complete, 0);
+            return;
+        }
+        ~chatplayer("<p,sad>No sign of it so far.");
+        ~chatnpc("<p,sad>The tree will still die if we don't find it!|It could be anywhere!");
+        ~chatplayer("<p,happy>Don't worry your highness! We'll find it!");
+    case ^grandtree_defeated_black_demon:
+        if(coordz(coord) < 6400) {
+            mes("The King doesn't seem interested in talking.");
+            return;
+        }
+        ~chatnpc("<p,sad>Traveller you're wounded! What happened?");
+        ~chatplayer("<p,angry>It's Glough! He set a demon on me!");
+        ~chatnpc("<p,shock>What?! Glough?! With a demon?!");
+        ~chatplayer("<p,angry>Glough has a store of Daconia rocks further up the passage! He's been accessing the roots from a secret passage at his home.");
+        ~chatnpc("<p,angry>Never! Not Glough! He's a good gnome at heart!");
+        if_close;
+        p_delay(1); // 1t TODO: -1 after delay change like the rest in this dialogue
+        ~chatnpc("<p,angry>Guard!");
+        if_close;
+        p_delay(7); // 7t
+        if(.npc_find(coord, gnome_guard_halberd, 8, 0) = true) { // not sure about the dist
+            ~.chatnpc("<p,neutral>Sire!");
+            ~chatnpc("<p,neutral>Go and check out that passage!");
+            if_close;
+            p_delay(5); // 5t
+            ~.chatnpc("<p,angry>We found Glough hiding under a horde of Daconia rocks!");
+            ~chatplayer("<p,laugh>That's what I've been trying to tell you!|Glough's been fooling you!");
+            ~chatnpc("<p,sad>I..I don't know what to say!|How could I have been so blind?!");
+            ~chatnpc("<p,angry>Guard! Call off the military training!");
+            ~chatnpc("<p,angry>The humans are not attacking!");
+            ~.chatnpc("<p,neutral>Yes sir!");
+            ~chatnpc("<p,sad>You have my full apologies Traveller!");
+            ~chatnpc("<p,happy>And my gratitude!");
+            %grandtree_progress = ^grandtree_searching_daconia;
+            %daconia_rock_root = ~random_range(1, 15);
+            ~chatnpc("<p,sad>A reward will have to wait though, the tree is still dying!|The guards are clearing Glough's rock supply now|but there must be more Daconia hidden somewhere in the roots!|Help us search, we have little time!");
+        }
+    case ^grandtree_unlocked_trapdoor:
+        ~chatplayer("<p,angry>Your highness, it's true about Glough I tell you! He's planning to take over Gielinor!");
+        ~chatnpc("<p,neutral>I'm sorry Traveller but it's just not realistic. How could Glough, even with a gnome army, take over?");
+        ~chatplayer("<p,angry>He plans to make a fleet of warships from the Grand Tree's wood!");
+        ~chatnpc("<p,angry>That's enough Traveller! I've no time for make believe. The tree's still dying, I must get to the truth of this!");
+    case ^grandtree_given_twigs:
+        ~chatnpc("<p,sad>Please Traveller, take my advice and leave!");
+    case ^grandtree_found_invasion_plans:
+        ~chatplayer("<p,neutral>Hi, your highness, did you think about what I said?");
+        ~chatnpc("<p,neutral>Look, if you're right about Glough I would have him arrested but there's no reason for me to think he's lying.");
+        if(inv_total(inv, invasion_plans) > 0) {
+            ~chatplayer("<p,neutral>Look, I found this at Glough's home!");
+            ~objboxt(invasion_plans, "You give the King the invasion plans.");
+            ~chatnpc("<p,shock>If these are to be believed then this is terrible!");
+            ~chatnpc("<p,neutral>But it's not proof, any one could have made these. Traveller, I understand your concern, I had guards search Glough's house but they found nothing suspicious, just these odd twigs.");
+            if(inv_freespace(inv) < 4) {
+                ~chatnpc("<p,neutral>Hmm. Looks like you can't carry anymore. Put 4 things down and come back to me.");
+                return;
+            }
+            ~objbox(twigs_t, "The King has given you some twigs lashed together.");
+            ~chatnpc("<p,neutral>On the other hand, if Glough's right about the humans we will need an army of gnomes to protect ourselves. So I've decided to allow Glough to raise a mighty gnome army.");
+            ~chatnpc("<p,angry>The Grand Tree's still slowly dying, if it is human sabotage we must respond!");
+            %grandtree_progress = ^grandtree_given_twigs;
+            inv_del(inv, invasion_plans, 1);
+            @narnode_add_twigs;
+        }
     case ^grandtree_clue_charlie:
         ~chatplayer("<p,neutral>Hello, your highness.");
         ~chatnpc("<p,neutral>Please Traveller, if the gnomes see me talking to you they'll revolt against me.");
@@ -22,7 +111,7 @@ switch_int(%grandtree_progress) {
     case ^grandtree_released_prison:
         ~chatnpc("<p,sad>Glough is looking for you! Leave on the glider now before it's too late!");
     case ^grandtree_found_journal:
-        if(coordz(npc_coord) = 3) {
+        if(coordy(npc_coord) = 3) {
             @narnode_trust_glough;
         }
         ~chatplayer("<p,sad>Your highness! I'm concerned about Glough!");
@@ -176,6 +265,10 @@ switch_int(~p_choice2("I'm sorry, I don't want to get involved.", 1, "I'd be hap
         ~chatnpc("<p,neutral>My top tree guardian, Glough, believes it's human sabotage. I'm not so sure! The only way to know for sure is to talk to Hazelmere.");
         ~chatplayer("<p,quiz>Who's Hazelmere?");
         ~chatnpc("<p,neutral>Hazelmere is one of the mages that created the Grand Tree! He is the only one that has survived from that time. Take this bark sample to him, he will be able to help!");
+        if(inv_freespace(inv) < 2) {
+            ~chatnpc("<p,neutral>Hmm. Looks like you can't carry anymore. Put a couple of things down and come back to me.");
+            return;
+        }
         ~objboxt(bark_sample, "The king has given you a sample of bark.");
         ~chatnpc("<p,neutral>The mage only talks in the old tongue, you'll need this.");
         ~objbox(translation_book, "The king has given you a translation book.");
@@ -305,3 +398,28 @@ switch_int(~p_choice4("All with be fine on the third night.", 1, "You must wait 
 ~chatnpc("<p,neutral>I'm afraid Glough has placed guards on the front gate to stop you escaping! Let my glider pilot fly you away until things calm down around here.");
 ~chatplayer("<p,neutral>Well, OK.");
 ~chatnpc("<p,sad>I'm sorry again Traveller!");
+
+// this isn't actual randomization, can't get any of the other permutations (incl correct one of course)
+[label,narnode_add_twigs]
+def_namedobj $first_twig;
+def_namedobj $second_twig; 
+def_namedobj $third_twig;
+def_namedobj $fourth_twig;
+while($first_twig ! twigs_t & $second_twig ! twigs_u & $third_twig ! twigs_z & $fourth_twig ! twigs_o) {
+    $first_twig = ~get_random_twig;
+    $second_twig = ~get_random_twig;
+    $third_twig = ~get_random_twig;
+    $fourth_twig = ~get_random_twig;
+}
+inv_add(inv, $first_twig, 1);
+inv_add(inv, $second_twig, 1);
+inv_add(inv, $third_twig, 1);
+inv_add(inv, $fourth_twig, 1);
+
+[proc,get_random_twig](namedobj)
+switch_int(random(3)) {
+    case 0: return (twigs_t);
+    case 1: return (twigs_z);
+    case 2: return (twigs_u);
+    case 3: return (twigs_o);
+}
