@@ -51,7 +51,7 @@ womanwear=model_453_obj_wear,0
 weight=10g
 tradeable=yes
 
-[obj_1554]
+[fluffs_kitten]
 name=Fluffs' kitten
 desc=It looks like it's lost.
 model=model_3006_obj
@@ -66,7 +66,7 @@ category=category_81
 members=yes
 op1=Use
 
-[obj_1555]
+[kitten_greyblack]
 name=Pet kitten
 desc=This kitten seems to like you.
 model=model_3009_obj
@@ -78,11 +78,11 @@ model=model_3009_obj
 2dxan=32
 members=yes
 weight=750g
-category=category_31
-param=follower_id,npc_761
+category=kitten
+param=follower_id,follower_kitten_greyblack
 //https://chisel.weirdgloop.org/structs_rs3/index.html?type=items&id=1555
 
-[obj_1556]
+[kitten_white]
 name=Pet kitten
 desc=This kitten seems to like you.
 model=model_3009_obj
@@ -102,10 +102,10 @@ recol4d=0
 2dxan=32
 members=yes
 weight=750g
-category=category_31
-param=follower_id,npc_762
+category=kitten
+param=follower_id,follower_kitten_white
 
-[obj_1557]
+[kitten_brown]
 name=Pet kitten
 desc=This kitten seems to like you.
 model=model_3009_obj
@@ -123,10 +123,10 @@ recol3d=15685
 2dxan=32
 members=yes
 weight=750g
-category=category_31
-param=follower_id,npc_763
+category=kitten
+param=follower_id,follower_kitten_brown
 
-[obj_1558]
+[kitten_black]
 name=Pet kitten
 desc=This kitten seems to like you.
 model=model_3009_obj
@@ -144,10 +144,10 @@ recol3d=8456
 2dxan=32
 members=yes
 weight=750g
-category=category_31
-param=follower_id,npc_764
+category=kitten
+param=follower_id,follower_kitten_black
 
-[obj_1559]
+[kitten_greybrown]
 name=Pet kitten
 desc=This kitten seems to like you.
 model=model_3009_obj
@@ -165,10 +165,10 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=750g
-category=category_31
-param=follower_id,npc_765
+category=kitten
+param=follower_id,follower_kitten_greybrown
 
-[obj_1560]
+[kitten_greyblue]
 name=Pet kitten
 desc=This kitten seems to like you.
 model=model_3009_obj
@@ -186,10 +186,10 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=750g
-category=category_31
-param=follower_id,npc_766
+category=kitten
+param=follower_id,follower_kitten_greyblue
 
-[obj_1561]
+[cat_greyblack]
 name=Pet cat
 desc=This cat definitely likes you.
 model=model_3006_obj
@@ -201,10 +201,10 @@ model=model_3006_obj
 2dxan=32
 members=yes
 weight=1500g
-category=category_30
-param=follower_id,npc_768
+category=cat
+param=follower_id,follower_cat_greyblack
 
-[obj_1562]
+[cat_white]
 name=Pet cat
 desc=This cat definitely likes you.
 model=model_3006_obj
@@ -224,10 +224,10 @@ recol4d=0
 2dxan=32
 members=yes
 weight=1500g
-category=category_30
-param=follower_id,npc_769
+category=cat
+param=follower_id,follower_cat_white
 
-[obj_1563]
+[cat_brown]
 name=Pet cat
 desc=This cat definitely likes you.
 model=model_3006_obj
@@ -245,10 +245,10 @@ recol3d=15685
 2dxan=32
 members=yes
 weight=1500g
-category=category_30
-param=follower_id,npc_770
+category=cat
+param=follower_id,follower_cat_brown
 
-[obj_1564]
+[cat_black]
 name=Pet cat
 desc=This cat definitely likes you.
 model=model_3006_obj
@@ -266,10 +266,10 @@ recol3d=8456
 2dxan=32
 members=yes
 weight=1500g
-category=category_30
-param=follower_id,npc_771
+category=cat
+param=follower_id,follower_cat_black
 
-[obj_1565]
+[cat_greybrown]
 name=Pet cat
 desc=This cat definitely likes you.
 model=model_3006_obj
@@ -287,10 +287,10 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=1500g
-category=category_30
-param=follower_id,npc_772
+category=cat
+param=follower_id,follower_cat_greybrown
 
-[obj_1566]
+[cat_greyblue]
 name=Pet cat
 desc=This cat definitely likes you.
 model=model_3006_obj
@@ -308,10 +308,10 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=1500g
-category=category_30
-param=follower_id,npc_773
+category=cat
+param=follower_id,follower_cat_greyblue
 
-[obj_1567]
+[overgrown_greyblack]
 name=Pet cat
 desc=This cat is so well fed it can hardly move.
 model=model_3007_obj
@@ -323,10 +323,10 @@ model=model_3007_obj
 2dxan=32
 members=yes
 weight=2500g
-category=category_29
-param=follower_id,npc_774
+category=overgrown
+param=follower_id,follower_overgrown_greyblack
 
-[obj_1568]
+[overgrown_white]
 name=Pet cat
 desc=This cat is so well fed it can hardly move.
 model=model_3007_obj
@@ -346,10 +346,10 @@ recol4d=0
 2dxan=32
 members=yes
 weight=2500g
-category=category_29
-param=follower_id,npc_775
+category=overgrown
+param=follower_id,follower_overgrown_white
 
-[obj_1569]
+[overgrown_brown]
 name=Pet cat
 desc=This cat is so well fed it can hardly move.
 model=model_3007_obj
@@ -367,10 +367,10 @@ recol3d=15685
 2dxan=32
 members=yes
 weight=2500g
-category=category_29
-param=follower_id,npc_776
+category=overgrown
+param=follower_id,follower_overgrown_brown
 
-[obj_1570]
+[overgrown_black]
 name=Pet cat
 desc=This cat is so well fed it can hardly move.
 model=model_3007_obj
@@ -388,10 +388,10 @@ recol3d=8456
 2dxan=32
 members=yes
 weight=2500g
-category=category_29
-param=follower_id,npc_777
+category=overgrown
+param=follower_id,follower_overgrown_black
 
-[obj_1571]
+[overgrown_greybrown]
 name=Pet cat
 desc=This cat is so well fed it can hardly move.
 model=model_3007_obj
@@ -409,10 +409,10 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=2500g
-category=category_29
-param=follower_id,npc_778
+category=overgrown
+param=follower_id,follower_overgrown_greybrown
 
-[obj_1572]
+[overgrown_greyblue]
 name=Pet cat
 desc=This cat is so well fed it can hardly move.
 model=model_3007_obj
@@ -430,5 +430,5 @@ recol3d=11627
 2dxan=32
 members=yes
 weight=2500g
-category=category_29
-param=follower_id,npc_779
+category=overgrown
+param=follower_id,follower_overgrown_greyblue

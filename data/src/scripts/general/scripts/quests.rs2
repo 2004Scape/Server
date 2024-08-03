@@ -84,6 +84,10 @@ if (%sheep_progress = ^sheep_complete) {
     $questpoints = add($questpoints, ^sheep_questpoints);
 }
 
+if (%fluffs_progress = ^fluffs_complete) {
+    $questpoints = add($questpoints, ^fluffs_questpoints);
+}
+
 if (%demon_progress = ^demon_complete) {
     $questpoints = add($questpoints, ^demon_questpoints);
 }
@@ -213,6 +217,7 @@ if (%mcannon_progress = ^mcannon_complete) {
 ~send_quest_progress_colour(questlist:druid, %druid_progress, ^druid_complete);
 ~send_quest_progress_colour(questlist:gobdip, %gobdip_progress, ^gobdip_complete);
 ~send_quest_progress_colour(questlist:sheep, %sheep_progress, ^sheep_complete);
+~send_quest_progress_colour(questlist:fluffs, %fluffs_progress, ^fluffs_complete);
 ~send_quest_progress_colour(questlist:demon, %demon_progress, ^demon_complete);
 ~send_quest_progress_colour(questlist:prince, %prince_progress, ^prince_complete);
 ~send_quest_progress_colour(questlist:fortress, %blackknight_progress, ^blackknight_complete);

@@ -1,0 +1,51 @@
+[opnpc1,npc_1011]
+switch_int(%chompybird_progress) {
+    case ^chompybird_started:
+        // TODO is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Fycie_after_buying_her_feathers
+        if (inv_total(inv, feather) >= 25) {
+            ~chatnpc("<p,neutral>I's sorry creature, I don't got no more flufsies! But I got lots of bright pretties! Hope you's get da stabbers for Dad soonly!");
+            return;
+        }
+
+        ~chatnpc("<p,neutral>Hey you Creature, I know's what you is You's a 'uman!");
+        ~chatplayer("<p,neutral>That's right... I'm making some 'stabbers' for Rantz.");
+        ~chatnpc("<p,neutral>Dat's great...Dad want's to hunt da chompy... Da chompy is our bestest yumms! Yous needies da scratchers for makin' dem huh? I's wants some bright pretties for em!");
+
+        // TODO correct obj id
+        ~objboxt(blue_partyhat,"Fycie shows you the flufsies...you count 25 of them.");
+
+        ~chatplayer("<p,neutral>How many 'bright pretties' do you want?");
+        ~chatnpc("<p,neutral>Mee's wants lots of bright pretties, this many!|@blu@~ Fycie quickly opens and closes her hands in front ~|@blu@~ of you to indicate a number of bright pretties. ~|@blu@~ It looks like she wants 50 gold coins.~");
+
+        switch_int(~p_choice2("Ok, I'll give you 50 bright pretties.", 1, "Er, sorry, I can't give you that many...", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>Ok, I'll give you 50 bright pretties.");
+
+                if (inv_total(inv, coins) < 50) {
+                    ~chatnpc("<p,neutral>You's not got da bright pretties... I wants da bright pretties..you not get no flufsies wid'out da bright pretties.");
+                    return;
+                }
+
+                if (inv_freespace(inv) = 0 & inv_total(inv, feather) = 0) {
+                    // TODO what to do?
+                    return;
+                }
+
+                // TODO correct obj id
+                ~objboxt(blue_partyhat,"You offer the 50 coins for the 25 flufsies.");
+
+                inv_del(inv, coins, 50);
+                inv_add(inv, feather, 25);
+                ~chatnpc("<p,neutral>Ok, dat's a good 'un, I got da bright pretties and you got da flufsies!");
+            case 2:
+                ~chatplayer("<p,neutral>Er, sorry, I can't give you that many...");
+                ~chatnpc("<p,angry>Well, you not have da flufsies den!");
+        }
+
+    case ^chompybird_shown_toad:
+        ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky chompy.");
+        
+    case default:
+        // TODO TBC other states
+        return;
+}

@@ -8,20 +8,6 @@ if (p_finduid(uid) = true) {
     mes("Hunger: <tostring($hunger)> || Attent: <tostring($attent)> || Growth: <tostring($growth)> || Vermin: <tostring($vermin)>"); 
 }
 
-[debugproc,getcat]
-if_close;
-if (p_finduid(uid) = true) {
-    %cat_growth = 0;
-    switch_int (random(6)) {
-        case 0: inv_add(inv, obj_1555, 1);
-        case 1: inv_add(inv, obj_1556, 1);
-        case 2: inv_add(inv, obj_1557, 1);
-        case 3: inv_add(inv, obj_1558, 1);
-        case 4: inv_add(inv, obj_1559, 1);
-        case 5: inv_add(inv, obj_1560, 1);
-    } 
-}
-
 [ai_timer,_petcat]
 if (finduid(%npc_attacking_uid) = false | p_finduid(uid) = false) { //paused when player is busy
     return; 
@@ -33,41 +19,42 @@ def_int $vermin = getbit_range(%cat_growth, 20,26); //rats caught  (0-100)
 if($attent = 0) { 
     $attent = 28;
 }
-if(oc_category(nc_param(npc_type, pet_item_id)) ! category_29) {
-    if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
-        npc_say("Meow!"); //seems to be done every 90s, no random chance
+if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
+    if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
+        npc_say("Meow!"); //done every 90s, no random chance
     }
     %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
     switch_int (getbit_range(%cat_growth, 11, 19)) {
         case 120:
-            if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
+            if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
                 npc_changetype(nc_param(npc_type, cat_next_id));
                 %follower_obj = nc_param(npc_type, pet_item_id);
                 %follower_uid = npc_uid;
                 npc_say("Meeeooowww!");
                 npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
-                ~mesbox("Your kitten has grown into a healthy cat that can hunt for itself.");
+                ~mesbox("Your kitten has grown into a healthy cat, that can hunt for itself."); //intentional ,
             }
         case 320:
-            if(oc_category(nc_param(npc_type, pet_item_id)) = category_30) {
+            if(oc_category(nc_param(npc_type, pet_item_id)) = cat) {
                 npc_changetype(nc_param(npc_type, cat_next_id));
                 %follower_obj = nc_param(npc_type, pet_item_id);
                 %follower_uid = npc_uid;
+                %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
                 npc_say("Meeeooowww!");
                 npc_settimer(150);
                 //TODO: check if there's a message for this
             }
     } 
 }
-if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) { //only for kittens
+if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
     %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
     switch_int (getbit_range(%cat_growth, 0, 4)) {
         case 16:
-            mes("Your kitten is hungry.");
-            npc_say("Meeeooowww!");
+            ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
+            npc_say("Miaow!");
         case 18: 
-            mes("Your kitten is really hungry."); //guess
-            npc_say("Meeeooowww!");
+            ~chatplayer("<p,worried>I think it's really hungry!"); 
+            npc_say("Miaow!"); //guess
         case 20:
             mes("Your kitten has run away to look for food.");
             %follower_obj = null;
@@ -80,11 +67,11 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) { //only for kitt
     %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
     switch_int (getbit_range(%cat_growth, 5, 10)) {
         case 40:
-            mes("Your kitten wants attention.");
-            npc_say("Meeeooowww...");
+            ~chatplayer("<p,neutral>I think it wants some attention.");
+            npc_say("Purr..."); //TODO: verify this, based off a video
         case 45:
-            mes("Your kitten really wants attention.");
-            npc_say("Meeeooowww...");
+            ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
+            npc_say("Meeeooowww..."); //TODO: verify this, guessed
         case 50:
             mes("Your kitten got lonely and ran off.");
             %follower_obj = null;
@@ -95,9 +82,9 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) { //only for kitt
     }
 }
 
-[opheld5,_category_31] ~cat_drop; //kitten
-[opheld5,_category_30] ~cat_drop; //cat
-[opheld5,_category_29] ~cat_drop; //overgrown
+[opheld5,_kitten] ~cat_drop; //kitten
+[opheld5,_cat] ~cat_drop; //cat
+[opheld5,_overgrown] ~cat_drop; //overgrown
 
 [opnpcu,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
@@ -112,18 +99,21 @@ switch_obj(last_useitem) {
         npc_say("Purr!");
         p_delay(2);
         ~chatplayer("<p,happy>That kitten loves to play with that ball of wool. I think it is its favourite.");
-    case bucket_milk:
+    case bucket_milk: //https://youtu.be/1vY_uGOq6qM&t=97s
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         inv_del(inv, last_useitem, 1);
         inv_add(inv, bucket_empty, 1);
-        anim(human_pickupfloor, 0); //https://youtu.be/RC0tSXdN3EA?t=117
+        anim(human_pickupfloor, 0);
+        p_delay(0);
         mes("The kitten laps up the milk.");
-        npc_say("Purr!");
+        npc_say("Purpurr");
     case raw_shrimps, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna:
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
+        def_string $fishname = lowercase(oc_name(last_useitem));
         inv_del(inv, last_useitem, 1);
-        anim(human_pickupfloor, 0); //https://youtu.be/RC0tSXdN3EA?t=117
-        mes("The kitten gobbles up the fish.");
+        anim(human_pickupfloor, 0);
+        p_delay(0);
+        mes("The kitten gobbles up the <$fishname>."); //https://youtu.be/suusfGcvi1w?t=195
         npc_say("Purr!");
     case default: ~displaymessage(^dm_default);
 }
@@ -134,7 +124,7 @@ if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
     return;
 }
 if (inv_freespace(inv) = 0) {
-    mes("You don't have enough inventory space to pick up your cat."); //guess
+    mes("You don't have enough inventory space to pick up your cat."); //TODO: verify the message for this
     return;
 }
 p_delay(0);
@@ -190,7 +180,7 @@ if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
 }
 def_int $chance = random(2); //50%
 def_int $vermin = getbit_range(%cat_growth, 20, 26);
-if (oc_category(nc_param(npc_type, pet_item_id)) = category_29) {
+if (oc_category(nc_param(npc_type, pet_item_id)) = overgrown) {
     mes("The cat is just too big to catch vermin.");
     return;
 }
@@ -211,7 +201,7 @@ if (.npc_find(coord, rat, 10, 1) = true) {
     npc_anim(cat_pounce, 0);
     p_delay(1);
     npc_setmode(playerfollow);
-    if(oc_category(nc_param(npc_type, pet_item_id)) = category_31) {
+    if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
         $chance = random(10); //10% if not grown
     }
     if($chance ! 0) {
@@ -227,6 +217,7 @@ if (.npc_find(coord, rat, 10, 1) = true) {
 }
 
 [proc,cat_drop]
+~require_members_do_that; //TODO: verify if there is a specific message for trying to drop in f2p
 if (npc_finduid(%follower_uid) = true) {
     mes("You already have a follower."); //osrs
     return;
@@ -240,7 +231,6 @@ npc_add(coord, oc_param(last_item, follower_id), ^max_32bit_int);
 npc_setmode(playerfollow);
 npc_say("Miaow!");
 npc_settimer(150);
-return;
 
 [proc,follower_death]
 if (npc_finduid(%follower_uid) = true) {
@@ -256,12 +246,11 @@ if (npc_finduid(%follower_uid) = true) {
     %follower_uid = null;
 }
 
-[queue,follower_login]
+[queue,follower_login] //cats get lost on f2p according to ash, no checks here
 if (%follower_obj ! null) {
     if (oc_param(%follower_obj, follower_id) = null) { 
         %follower_obj = null;
         return;
-        //bug where %follower_obj was set to non-null at log-in and second check would run without any pet
     }
 }
 
