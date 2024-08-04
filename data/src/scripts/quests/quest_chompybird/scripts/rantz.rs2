@@ -23,7 +23,7 @@ switch_int(%chompybird_progress) {
                 ~chatplayer("<p,neutral>Er, make you're own 'stabbers'!");
                 ~chatnpc("<p,angry>When I make 'stabbers', I pretend you chompy and practice on you!");
         }
-    case ^chompybird_started, ^chompybird_made_arrows:
+    case ^chompybird_started:
         @return_to_rantz;
     case ^chompybird_given_arrows:
         ~chatnpc("<p,neutral>Hey you creature, you still here?");
@@ -127,7 +127,7 @@ if (inv_total(inv, ogre_arrow) < 6) {
     return;
 }
 
-if (%chompybird_progress = ^chompybird_started) {
+if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = true) {
     ~chatnpc("<p,neutral>Hey, 'dee'se stabbers no good! Did you make dem you's self? YOU go make dem arrows for ME creature!");
     return;
 }

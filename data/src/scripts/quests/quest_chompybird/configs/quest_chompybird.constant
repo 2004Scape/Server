@@ -5,3 +5,6 @@
 ^chompybird_shown_toad = 4
 
 ^chompybird_complete = 999
+
+// varbit locations - TBC exact
+^chompybird_varbit_made_arrows = 0
