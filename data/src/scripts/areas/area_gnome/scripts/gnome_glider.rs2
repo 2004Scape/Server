@@ -18,7 +18,7 @@ if($start_pos ! ^ta_quir_priw & $dest ! ^ta_quir_priw) {
     return;
 }
 %glider_takeoff = ~calc_glidervar($start_pos, $dest);
-p_delay(0); // 1t before teleport, 3t before if_close
+p_delay(1); // 1t before teleport, 3t before if_close
 p_teleport(map_findsquare($dest, 0, 1, ^map_findsquare_lineofwalk));
 p_delay(2);
 %glider_takeoff = -1;
