@@ -34,7 +34,7 @@ if (npc_findnext = true) {
     return;
 }
 
-npc_add(coord, npc_1014, 100);
+inv_del(inv, obj_2875, 1);
 npc_queue(4, 0, 25);
 
 if (%chompybird_progress = ^chompybird_shown_toad) {
