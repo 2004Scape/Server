@@ -37,6 +37,18 @@ switch_obj(last_useitem) {
         mes("Nothing interesting happens.");
 }
 
+[opheld4,obj_2875]
+// release all
+// TODO tbc message and actual behaviour
+inv_del(inv, obj_2875, inv_size(inv));
+mes("You release the bloated toads.");
+
+[opheld5,obj_2875]
+// release
+// TODO tbc message and actual behaviour
+inv_delslot(inv, last_slot);
+mes("You release the bloated toad.");
+
 [opheld1,obj_2875]
 if (%chompybird_progress < ^chompybird_shown_toad) {
     ~objboxt(obj_2875,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
@@ -145,5 +157,3 @@ npc_queue(10, 0, 25);
 // fourth attempt, HAS already spawned a chompy
 [ai_queue10,npc_1014]
 npc_say("BOOM I explode");
-
-// TODO release and release all
