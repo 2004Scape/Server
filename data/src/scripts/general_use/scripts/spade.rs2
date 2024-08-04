@@ -34,7 +34,7 @@ if(map_members = true & ~trail_hasclue_inv = true) {
                     npc_say("Die, human!");
                     %aggressive_npc = npc_uid;
                     %npc_attacking_uid = uid;
-                    npc_setmode(opplayer2);
+                    npc_setmode(applayer2);
                     return;
                 }
             }
@@ -47,3 +47,11 @@ if(map_members = true & ~trail_hasclue_inv = true) {
     }
 }
 ~displaymessage(^dm_default);
+
+[debugproc,zt]
+                    npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofsight), zamorak_wizard, 500);
+                    spotanim_map(smokepuff_large, npc_coord, 124, 0);
+                    npc_say("Die, human!");
+                    %aggressive_npc = npc_uid;
+                    %npc_attacking_uid = uid;
+                    npc_setmode(applayer2);
