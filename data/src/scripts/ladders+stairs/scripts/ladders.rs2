@@ -63,7 +63,7 @@ p_arrivedelay;
 
 [oploc3,loc_1748]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+@climb_ladder(movecoord(coord(), 0, -1, 0), true);
 
 [oploc1,loc_1749]
 p_arrivedelay;
@@ -120,16 +120,13 @@ p_arrivedelay;
 [oploc1,loc_2884]
 p_arrivedelay;
 def_int $option = ~p_choice2_header("Climb Up.", 1, "Climb Down.", 2, "Climb up or down the ladder?");
+if_close;
+anim(human_reachforladdertop, 0);
+p_delay(1);
 if ($option = 1) {
-    if_close();
     ~grandtree_spawn_charlie;
-    anim(human_reachforladdertop, 0);
-    p_delay(1);
     p_telejump(movecoord(coord(), 0, 1, 0));
 } else if ($option = 2) {
-    if_close();
-    anim(human_reachforladdertop, 0);
-    p_delay(1);
     p_telejump(movecoord(coord(), 0, -1, 0));
 }
 
@@ -140,7 +137,7 @@ p_arrivedelay;
 
 [oploc3,loc_2884]
 p_arrivedelay;
-@climb_ladder(movecoord(coord(), 0, -1, 0), false);
+@climb_ladder(movecoord(coord(), 0, -1, 0), true);
 
 [oploc1,loc_3205]
 p_arrivedelay;
@@ -157,15 +154,12 @@ p_telejump($coord);
 
 [label,ladder_options](coord $up, coord $down)
 def_int $option = ~p_choice2_header("Climb Up.", 1, "Climb Down.", 2, "Climb up or down the ladder?");
+if_close;
+anim(human_reachforladdertop, 0);
+p_delay(1);
 if ($option = 1) {
-    if_close();
-    anim(human_reachforladdertop, 0);
-    p_delay(1);
     p_telejump($up);
 } else if ($option = 2) {
-    if_close();
-    anim(human_pickupfloor, 0);
-    p_delay(1);
     p_telejump($down);
 }
 
