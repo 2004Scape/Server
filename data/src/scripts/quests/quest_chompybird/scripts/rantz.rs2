@@ -149,6 +149,7 @@ switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy to
     case 1:
         ~chatplayer("<p,neutral>How do we make the chompys come?");
         ~chatnpc("<p,neutral>Chompys love da fatsy toadies. Toadies get big on der swamp gas and der chompys are licking der lips for em as me is licking lips for da chompy. Da chompys don't like da smaller toadies from nearby swampy.");
+        %chompybird_progress = ^chompybird_kids_play_with_toad;
         ~chatnpc("<p,neutral>Dey's fussie eaters just like Rantz. Fycie an' Bugs play with toadies and blower dey's all times making fatsy toadies.");
         @toadies_questions;
     case 2:
