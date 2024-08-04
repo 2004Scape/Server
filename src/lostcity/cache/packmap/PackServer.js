@@ -106,6 +106,7 @@ export function packServerMap() {
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/l${x}_${z}`) &&
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/n${x}_${z}`) &&
             !shouldBuildFile(`data/src/maps/${file}`, `data/pack/server/maps/o${x}_${z}`) &&
+            !shouldBuild('data/src/maps', '.csv', `data/pack/server/maps/m${x}_${z}`) &&
             !shouldBuild('src/lostcity/cache/packmap', '.js', `data/pack/server/maps/m${x}_${z}`)
         ) {
             return;
