@@ -29,7 +29,7 @@ if(map_members = true & ~trail_hasclue_inv = true) {
                     }
                     // los not low: https://www.youtube.com/watch?v=AoozFVuxWx8&t=88s, https://www.youtube.com/watch?v=AoozFVuxWx8&t=88s
                     // https://youtu.be/uAv5a6y-3OQ?si=QxAUtMVq6KCZebat&t=36 notice smokepuff on adj tile to where he appears, confirms it should be map_findsquare
-                    npc_add(map_findsquare(coord, 0, 1, ^map_findsquare_lineofsight), zamorak_wizard, 500);
+                    npc_add(map_findsquare(coord, 1, 1, ^map_findsquare_lineofsight), zamorak_wizard, 500);
                     spotanim_map(smokepuff_large, npc_coord, 124, 0);
                     npc_say("Die, human!");
                     %aggressive_npc = npc_uid;
@@ -47,3 +47,11 @@ if(map_members = true & ~trail_hasclue_inv = true) {
     }
 }
 ~displaymessage(^dm_default);
+
+[debugproc,zt]
+                    npc_add(map_findsquare(coord, 0, 1, ^map_findsquare_lineofsight), zamorak_wizard, 500);
+                    spotanim_map(smokepuff_large, npc_coord, 124, 0);
+                    npc_say("Die, human!");
+                    %aggressive_npc = npc_uid;
+                    %npc_attacking_uid = uid;
+                    npc_setmode(applayer2);
