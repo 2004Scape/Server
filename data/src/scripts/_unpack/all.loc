@@ -41,34 +41,6 @@ model=model_loc_21
 width=4
 length=4
 
-[loc_33]
-name=Lever
-desc=Yup, definitely a lever.
-model=model_loc_33
-active=yes
-op1=Pull
-
-[loc_34]
-name=Lever
-desc=Yup, definitely a lever.
-model=model_loc_34
-active=yes
-op1=Pull
-
-[loc_35]
-name=Lever
-desc=Yup, definitely a lever.
-model=model_loc_34
-active=yes
-op1=Pull
-
-[loc_36]
-name=Lever
-desc=Yup, definitely a lever.
-model=model_loc_33
-active=yes
-op1=Pull
-
 [loc_37]
 name=Gate
 desc=Stops people walking past.
@@ -82,20 +54,6 @@ desc=Stops people walking past.
 model=model_loc_37
 active=yes
 op1=Open
-
-[loc_39]
-name=Gate
-desc=Stops people walking past.
-model=model_loc_37
-active=yes
-op1=Go-through
-
-[loc_40]
-name=Food trough
-desc=Animals have no table manners.
-model=model_loc_40
-width=2
-active=yes
 
 [loc_41]
 name=Wall Pipe
