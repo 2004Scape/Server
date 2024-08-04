@@ -16,4 +16,6 @@ switch_int(stat_base(fishing)) {
     case 53: ~doubleobjbox(raw_lava_eel,fishing_rod,"Members can now try catching @dbl@Lava Eels@bla@.");
     case 68: ~mesbox("Members are now qualified to enter the @dbl@Fishing Guild@bla@.");
     case 76: ~doubleobjbox(raw_shark,harpoon,"Members can now try harpooning @dbl@Sharks@bla@.");
+    case 79: ~doubleobjbox(raw_sea_turtle,bucket_empty,"Members can now catch @dbl@Sea Turtles on the Trawler@bla@.");
+    case 81: ~doubleobjbox(raw_manta_ray,bucket_empty,"Members can now catch @dbl@Manta Rays on the Trawler@bla@.");
 }

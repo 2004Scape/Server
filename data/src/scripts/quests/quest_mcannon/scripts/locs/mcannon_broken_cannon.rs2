@@ -2,12 +2,10 @@
 if (%mcannon_progress = ^mcannon_tasked_with_fixing_cannon) {
     ~chatplayer("<p,default>I guess I'd better fix it with the toolkit I was given.");
     %mcannon_progress = ^mcannon_inspected_cannon_first_time;
-}else if (%mcannon_progress = ^mcannon_inspected_cannon_first_time) {
+} else if (%mcannon_progress = ^mcannon_inspected_cannon_first_time) {
     mes("You inspect the multi cannon.");
     if (getbit_range(%mcannon_railings, 0, 3) = 15) {
-        if (%mcannon_progress = ^mcannon_tasked_with_fixing_cannon) {
-            %mcannon_progress = ^mcannon_has_repaired_cannon;
-        }
+        %mcannon_progress = ^mcannon_has_repaired_cannon;
         p_delay(2);
         ~chatplayer("<p,happy>The Cannon seems to be in working order.|Lawgof will be pleased.");
     } else {

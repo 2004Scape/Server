@@ -76,8 +76,6 @@ protect=no
 [autocast_spell]
 scope=perm
 
-[varp_61]
-
 [gobdip_progress]
 scope=perm
 
@@ -215,10 +213,6 @@ scope=perm
 
 [elena_progress]
 scope=perm
-
-[varp_181]
-
-[varp_182]
 
 [varp_189]
 
@@ -380,10 +374,6 @@ scope=perm
 
 [charge_god_spell]
 scope=perm
-
-[varp_275]
-
-[varp_276]
 
 [antifire]
 scope=perm

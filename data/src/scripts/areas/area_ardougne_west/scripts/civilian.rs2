@@ -1,3 +1,9 @@
+[opnpcu,civilian_blonde] @civilian_give_runes;
+
+[opnpcu,civilian_brown] @civilian_give_runes;
+
+[opnpcu,civilian_bald] @civilian_give_runes;
+
 [opnpc1,civilian_blonde]
 ~chatplayer("<p,happy>Hello there.");
 ~chatnpc("<p,neutral>Oh hello, I'm sorry, I'm a bit worn out.");
@@ -51,7 +57,18 @@ if (~civilian_player_has_cat = false) {
 ~chatnpc("<p,happy>Great! Hand over the cat and I'll give you the runes.");
 
 [proc,civilian_player_has_cat]()(boolean)
-if (inv_totalcat(inv, category_29) > 0 | inv_totalcat(inv, category_30) > 0 | inv_totalcat(inv, category_31) > 0) {
+if (inv_totalcat(inv, cat) > 0  | inv_totalcat(inv, overgrown) > 0) {
     return(true);
 }
 return(false);
+
+[label,civilian_give_runes]
+if(oc_category(last_useitem) = cat | oc_category(last_useitem) = overgrown) {
+    inv_del(inv, last_useitem, 1);
+    inv_add(inv, deathrune, 100);
+    ~objboxt(deathrune, "You hand over the cat.|You are given 100 Death Runes.");
+    ~chatnpc("<p,happy>Great, thanks for that!");
+    ~chatplayer("<p,happy>That's ok, take care.");
+    return;
+}
+~displaymessage(^dm_default);

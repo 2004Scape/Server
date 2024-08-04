@@ -1,0 +1,6 @@
+^fluffs_not_started = 0
+^fluffs_started = 1
+^fluffs_paid_boy = 2
+^fluffs_gave_milk = 3
+^fluffs_gave_sardine = 4
+^fluffs_rescued = 5
