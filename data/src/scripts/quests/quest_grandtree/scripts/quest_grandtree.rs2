@@ -42,7 +42,7 @@ if(last_useitem = twigs_t | last_useitem = twigs_u | last_useitem = twigs_z | la
         obj_find(2_38_54_55_11, twigs_z) = true & 
         obj_find(2_38_54_56_11, twigs_o) = true) {
         %grandtree_progress = ^grandtree_unlocked_trapdoor;
-        sound_synth(unlock_and_move, 0, 0); // TODO: confirm sound
+        sound_synth(machinery, 0, 0); 
         ~mesbox("You hear the grinding of an ancient pulley system.");
     }
 } else {
