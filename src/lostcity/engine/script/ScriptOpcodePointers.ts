@@ -527,7 +527,8 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.NPC_DELAY]: {
         require: ['active_npc'],
         corrupt: [
-            // everything except active is assumed corrupted
+            'p_active_player',
+            'p_active_player2',
             ...POINTER_GROUP_FIND,
             'last_com',
             'last_int',

@@ -21,7 +21,7 @@ switch_obj(last_useitem) {
         // TODO anim
 
         // TODO tbc delay amount
-        p_delay(3);
+        // p_delay(3); // need to come back here because of npc_delay!
 
         if (inv_total(inv, obj_2875) >= 3) {
             mes("One of your bloated toads manage to escape. You manage to catch the toad and inflate it with the swamp gas.");

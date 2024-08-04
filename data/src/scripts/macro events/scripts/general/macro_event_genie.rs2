@@ -3,9 +3,10 @@ spotanim_map(small_smokepuff, npc_coord, 124, 0);
 sound_synth(genie_appear, 0, 0);
 npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
 %npc_attacking_uid = uid;
-npc_delay(1);
-npc_setmode(playerfollow);
-npc_queue(4, 0, 20);
+// todo: this invalidates the protected player pointer
+// npc_delay(1);
+// npc_setmode(playerfollow);
+// npc_queue(4, 0, 20);
 
 [ai_queue4,macro_event_genie]
 if (finduid(%npc_attacking_uid) = true) {
