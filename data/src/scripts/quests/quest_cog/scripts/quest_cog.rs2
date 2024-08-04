@@ -1,112 +1,13 @@
-[label,cog_start_quest]
-~chatplayer("<p,default>Hello monk.");
-~chatnpc("<p,default>Hello adventurer. My name is Brother Kojo. Do you happen to know the time?");
-~chatplayer("<p,default>No, sorry, I don't");
-~chatnpc("<p,default>Exactly! This clock tower has recently broken down,|and without it nobody can tell the correct time. I must|fix it before the town people become too angry!");
-~chatnpc("<p,default>I don't suppose you could assist me in the repairs? I'll|pay you for your help.");
-@cog_start_options;
+// Sources:
+// https://web.archive.org/web/20051025140435/http://www.runeweb.net/index.php?page=rs2-quest-clocktower
+[queue,cog_complete]
+~cog_update_main_quest_step(^quest_cog_complete);
+inv_add(inv, coins, 500);
+~send_quest_complete(questlist:cog, coins_100, 200, ^cog_questpoints, "You have completed the\\nClock Tower Quest!");
 
-[label,cog_start_options]
-def_int $option = ~p_choice3("OK old monk, what can I do?", 1, "How much reward are we talking?", 2, "Not now old monk.", 3);
-if($option = 1) {
-    ~chatplayer("<p,default>OK old monk, what can I do?");
-    %cog_progress = 1;
-    ~send_quest_progress(questlist:cog, %cog_progress, 15);
-    ~chatnpc("<p,default>Oh, thank you kind sir!|In the cellar below, you'll find four cogs.|They're too heavy for me, but you should be able to carry them one at a time.");
-    ~chatnpc("<p,default>I know one goes on each floor... but I can't exactly remember which goes where specifically. Oh well, I'm sure you can figure it out fairly easily.");
-    ~chatplayer("<p,default>Well, I'll do my best.");
-    ~chatnpc("<p,default>Thank you again! And remember to be careful, the cellar is full of strange beasts!");
-} else if($option = 2) {
-    ~chatplayer("<p,default>So... how much reward are we talking then?");
-    ~chatnpc("<p,default>Well, I'm only a monk so I'm not exactly rich, btu I assure you I will give you a fair reward for the tiem spent assisting me in repairing the clock.");
-    @cog_start_options;
-} else if($option = 3) {
-    ~chatplayer("<p,default>Not now old monk.");
-    ~chatnpc("<p,default>OK then. Come back and let me know if you change your mind.");
-}
+[proc,cog_update_main_quest_step](int $step)()
+%cog_progress = setbit_range_toint(%cog_progress, $step, 0, 3);
 
-[opobj3,black_cog]
-if(inv_total(inv, black_cog) = 0 & inv_total(inv, red_cog) = 0 & inv_total(inv, blue_cog) = 0 & inv_total(inv, white_cog) = 0) {
-    if(inv_total(inv, bucket_water) > 0) {
-        ~mesbox("You pour water over the cog. It quickly cools down enough to take.");
-        inv_del(inv, bucket_water, 1);
-        inv_add(inv, bucket_empty, 1);
-        if(inv_freespace(inv) > 0) {
-            obj_takeitem(inv);
-        }
-    } else {
-        ~mesbox("The cog is red hot from flames. You cannot pick it up.");
-    }
-} else {
-    mes("The cogs are too heavy to carry more than one at a time.");
-}
-
-
-[opobju,black_cog]
-if(last_useitem = bucket_water) {
-    ~mesbox("You pour water over the cog. It quickly cools down enough to take.");
-    inv_del(inv, bucket_water, 1);
-    inv_add(inv, bucket_empty, 1);
-    if(inv_freespace(inv) > 0) {
-        obj_takeitem(inv);
-    }
-} else {
-    ~displaymessage(^dm_default);
-}
-
-
-[oplocu,black_clock_spindle]
-if(last_useitem = black_cog) {
-    mes("The cog fits perfectly.");
-} else if(oc_category(last_useitem) = cog) {
-    mes("The cog doesn't seem to fit.");
-} else {
-    ~displaymessage(^dm_default);
-}
-
-[oplocu,red_clock_spindle]
-if(last_useitem = red_cog) {
-    mes("The cog fits perfectly.");
-} else if(oc_category(last_useitem) = cog) {
-    mes("The cog doesn't seem to fit.");
-} else {
-    ~displaymessage(^dm_default);
-}
-
-[oplocu,white_clock_spindle]
-if(last_useitem = white_cog) {
-    mes("The cog fits perfectly.");
-} else if(oc_category(last_useitem) = cog) {
-    mes("The cog doesn't seem to fit.");
-} else {
-    ~displaymessage(^dm_default);
-}
-
-[oplocu,blue_clock_spindle]
-if(last_useitem = blue_cog) {
-    mes("The cog fits perfectly.");
-} else if(oc_category(last_useitem) = cog) {
-    mes("The cog doesn't seem to fit.");
-} else {
-    ~displaymessage(^dm_default);
-}
-
-[oplocu,_incorrect_clock_spindle]
-if(oc_category(last_useitem) = cog) {
-    mes("The cog doesn't seem to fit.");
-} else {
-    ~displaymessage(^dm_default);
-}
-
-[oplocu,loc_40] // Rat Food Trough
-if(last_useitem = rat_poison) {
-    inv_del(inv, rat_poison, 1);
-    mes("The rats swarm towards the poisoned food...");
-    mes("...and devour it hungrily.");
-    mes("You see them smashing against the gates in panic.");
-    mes("They seem to be dying.");
-} else {
-    ~displaymessage(^dm_default);
-}
-
+[proc,get_cog_progress]()(int)
+return(getbit_range(%cog_progress, 0, 3));
 
