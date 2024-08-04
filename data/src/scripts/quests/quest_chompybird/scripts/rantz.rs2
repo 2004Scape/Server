@@ -1,0 +1,196 @@
+// exact text and mesanims TBC
+[opnpc1,npc_1010]
+switch_int(%chompybird_progress) {
+    case ^chompybird_not_started:
+        ~chatnpc("<p,neutral>Hey you creature! Make me some stabbers! I wanna hunt da chompy?");
+        ~chatplayer("<p,neutral>Stabbers?");
+        ~chatnpc("<p,neutral>For da stabbie chucker, I's wanna hunt da chompy! Da chompy is der bestest yummies for Rantz, Fycie and Bugs! Creature knows what Rantz wants... flyin' to stabbie da chompy!");
+        
+        // TODO correct obj id
+        ~objboxt(blue_partyhat,"The ogre shows you a huge but crude bow and then starts to nod energetically in an effort to help you understand.");
+
+        ~chatplayer("<p,neutral>I think I understand. You want me to make some arrows for you?");
+        ~chatnpc("<p,neutral>Yeah, is what Rantz sayed, make da stabbers for da stabby chucker!");
+
+        // TODO "you're" sic?
+        switch_int(~p_choice2("OK, I'll make you some 'stabbers'.", 1, "Er, make you're own 'stabbers'!", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>OK, I'll make you some 'stabbers'.");
+                ~chatnpc("<p,neutral>Good you creature, you need sticksies from achey tree and stabbies from dog bones.");
+                %chompybird_progress = ^chompybird_started;
+                ~send_quest_progress(questlist:chompybird, %chompybird_progress, ^chompybird_complete);
+            case 2:
+                ~chatplayer("<p,neutral>Er, make you're own 'stabbers'!");
+                ~chatnpc("<p,angry>When I make 'stabbers', I pretend you chompy and practice on you!");
+        }
+    case ^chompybird_started, ^chompybird_made_arrows:
+        @return_to_rantz;
+    case ^chompybird_given_arrows:
+        ~chatnpc("<p,neutral>Hey you creature, you still here?");
+        ~chatnpc("<p,neutral>Da chompy still not coming! We need da fatsy toady to get da chompy, do you got it? Do you got da fatsy toady? Then we can sneaky, sneaky stick da chompy.");
+        
+        if (inv_total(inv, obj_2875) = 0) {        
+            ~chatplayer("<p,neutral>No I haven't got the 'fatsy toady' yet!");
+            ~chatnpc("<p,neutral>Dat's a pidy... but maybe Rantz can help da creature?");
+            @toadies_questions;
+        } else {
+            ~chatplayer("<p,neutral>Yes, I have a 'fatsy toady' for you, here look!");
+            @show_toad;
+        }
+    case ^chompybird_shown_toad:
+        @where_to_put_toadies;
+}
+
+[opnpcu,npc_1010]
+switch_obj(last_useitem) {
+    case obj_2876:
+        ~chatnpc("<p,neutral>Erk! Da's a yukky chompy, I's wants a yummie chompy!");
+        
+        @return_to_rantz;
+
+    case ogre_arrow:
+        if (%chompybird_progress = ^chompybird_not_started) {
+            // TODO TBC
+            mes("Nothing interesting happens.");
+            return;
+        }
+
+        ~objboxt(ogre_arrow_5,"You show Rantz the ogre arrow.");
+
+        if (%chompybird_progress = ^chompybird_given_arrows) {
+            ~chatnpc("<p,neutral>Creature already given Rantz stabbers, Dey's worser at flying dan a dead dog.");
+            return;
+        }
+
+        ~chatnpc("<p,neutral>Hey you creature..you made da stabbers|Dat's good creature!");
+        
+        if (%chompybird_progress = ^chompybird_started) {
+            ~chatnpc("<p,neutral>Hey, deese stabbers no good... did you make dem you's self? You go make dem stabbers for me creature! Don't get old ones or from other creatures.");
+
+            @no_arrows_choice;
+            return;
+        }
+
+        @attempt_give_rantz_arrows;
+
+    case obj_2875:
+        if (%chompybird_progress = ^chompybird_not_started) {
+            // TODO TBC
+            mes("Nothing interesting happens.");
+            return;
+        }
+
+        ~objboxt(obj_2875,"You show the bloated toad to Rantz.");
+
+        if (%chompybird_progress = ^chompybird_shown_toad) {
+            ~chatnpc("<p,neutral>Hey creature got da fatsy toady Is you's gonna stick da chompy?");
+            return;
+        }
+
+        @show_toad;
+
+    case default:
+        // TODO TBC
+        mes("Nothing interesting happens.");
+}
+
+[label,return_to_rantz]
+~chatnpc("<p,neutral>Hey you creature... Have you made me da stabbers? I wanna stick da chompy?");
+if (inv_total(inv, ogre_arrow) > 0) {
+    @attempt_give_rantz_arrows;
+} else {
+    @no_arrows;
+}
+
+[label,no_arrows]
+~chatplayer("<p,neutral>Er not exactly?");
+~chatnpc("<p,neutral>You do stabbers quick quick! Or Rantz make stabbers for Rantz and then practice for chompy sticking on creature!");
+@no_arrows_choice;
+
+[label,no_arrows_choice]
+switch_int(~p_choice2("How do I make the 'stabbers' again?", 1, "Ok, I'll make the 'stabbers' for you.", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>How do I make the 'stabbers' again?");
+        ~chatnpc("<p,neutral>Grrr creature... you's no good stabber maker! You's make da stabbie bit from da dog bones, and get da sticksies from da Achey tree... simple see? Oh and da flufsies from da flappers as well!");
+        ~chatplayer("<p,neutral>Oh, so I need logs from the achey tree, bones from a canine... and feathers?");
+        ~chatnpc("<p,neutral>Is just what Rantz sayed!|@blu@~ The hulking ogre nods excitedly. ~");
+    case 2:
+        ~chatplayer("<p,neutral>Ok, I'll make the 'stabbers' for you.");
+        ~chatnpc("<p,neutral>Good creature, quickly, hurry bring da stabbers!");
+}
+
+[label,attempt_give_rantz_arrows]
+~chatplayer("<p,neutral>Well, yes actually, as you asked so nicely. Here you go! Here's your 'stabbers'.");
+
+if (inv_total(inv, ogre_arrow) < 6) {
+    ~chatnpc("<p,neutral>Dat's not enough, me's an good shot, but need some for practice. Bring more than fingers on hand...");
+    return;
+}
+
+if (%chompybird_progress = ^chompybird_started) {
+    ~chatnpc("<p,neutral>Hey, 'dee'se stabbers no good! Did you make dem you's self? YOU go make dem arrows for ME creature!");
+    return;
+}
+
+@give_rantz_arrows;
+
+[label,give_rantz_arrows]
+inv_del(inv, ogre_arrow, 6);
+%chompybird_progress = ^chompybird_given_arrows;
+~objboxt(ogre_arrow_5,"Rantz takes six ogre arrows off you.");
+
+~chatnpc("<p,neutral>Ahh, der creature has dem... goodly, goodly. Now us can stick der chompy bird...");
+~chatnpc("<p,neutral>But da chompy not coming without da fatsy toadies... Godda get der fatsy toadies to get da chompys. Den we put it over de're and sneaky, sneaky stick da chompy.");
+
+@toadies_questions;
+
+[label,toadies_questions]
+switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy toadies'?", 2, "Where do we put the fatsy toadies?", 3, "What do you mean 'sneaky..sneaky, stick da chompy?'", 4, "Ok, thanks.", 5)) {
+    case 1:
+        ~chatplayer("<p,neutral>How do we make the chompys come?");
+        ~chatnpc("<p,neutral>Chompys love da fatsy toadies. Toadies get big on der swamp gas and der chompys are licking der lips for em as me is licking lips for da chompy. Da chompys don't like da smaller toadies from nearby swampy.");
+        ~chatnpc("<p,neutral>Dey's fussie eaters just like Rantz. Fycie an' Bugs play with toadies and blower dey's all times making fatsy toadies.");
+        @toadies_questions;
+    case 2:
+        ~chatplayer("<p,neutral>What are 'fatsy toadies'?");
+        ~chatnpc("<p,neutral>Fatsy toadies are da chompy burds bestest yumms. But da toadies here are too small for da chompy. You've godda make da toadies big and round!");
+        @toadies_questions;
+    case 3:
+        ~chatplayer("<p,neutral>Where do we put the fatsy toadies?");
+        ~chatnpc("<p,neutral>Over der!");
+
+        // TODO "da south" sic?
+        ~mesbox("The ogre points to a small clearing to da south.");
+
+        // TODO does camera move here? I think not
+
+        ~chatnpc("<p,neutral>Ok creature? You got dat? Over dere by der no tree's place.");
+        @toadies_questions;
+    case 4:
+        ~chatplayer("<p,neutral>What do you mean 'sneaky..sneaky, stick da chompy?'");
+        ~chatnpc("<p,neutral>Duh! You creature is a bit stoopid yes? Us needs to sneaky, sneaky and stick da chompy! Den we can eat da chompy!");
+        @toadies_questions;
+    case 5:
+        ~chatplayer("<p,neutral>Ok, thanks.");
+}
+
+[label,where_to_put_toadies]
+~chatplayer("<p,neutral>Where should I put the 'fatsy toadies'?");
+~chatnpc("<p,neutral>Over 'dere creature, put da toadies over der!|@blu@~ The ogre points to a clearing to the south. ~");
+
+hint_coord(^hint_center, 0_41_46_12_21, 0);
+
+// TODO confirm cam params this was just a rough guess
+cam_lookat(0_41_46_12_21, 100, 100, 100);
+p_delay(3);
+cam_moveto(0_41_46_12_17, 450, 4, 2);
+p_delay(2);
+cam_reset;
+
+[label,show_toad]
+~objboxt(obj_2875,"You show the bloated toad to Rantz. He nods with approval.");
+
+~chatnpc("<p,neutral>Dat's a good fatsy toady, now we's need to put it for da chompy to come.");
+%chompybird_progress = ^chompybird_shown_toad;
+
+@where_to_put_toadies;

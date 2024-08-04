@@ -1,93 +1,4 @@
-[npc_780]
-vislevel=hide
-name=Gertrude
-desc=A busy housewife.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=14724
-recol1d=24884
-recol2s=2340
-recol2d=27294
-recol3s=6273
-recol3d=26122
-recol4s=13537
-recol4d=27430
-recol5s=7298
-recol5d=20
-model1=model_390_idk
-model2=model_462_npc
-model3=model_348_idk
-model4=model_353_idk
-model5=model_428_idk
-model6=model_358_idk
-model7=model_444_obj_wear
-head1=model_113_idk_head
-members=yes
-param=death_sound,female_death
-
-[npc_781]
-vislevel=hide
-name=Shilop
-desc=One of Gertrude's Sons.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=24609
-recol2s=384
-recol2d=26425
-recol3s=8387
-recol3d=27240
-recol4s=6273
-recol4d=27240
-model1=model_2897_npc
-model2=model_2909_npc
-model3=model_2918_npc
-head1=model_139_npc_head
-wanderrange=2
-members=yes
-param=death_anim,midget_death
-
-[npc_782]
-vislevel=hide
-name=Philop
-desc=One of Gertrude's Sons.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=15
-recol2s=384
-recol2d=5
-model1=model_2897_npc
-model2=model_2909_npc
-model3=model_2918_npc
-head1=model_139_npc_head
-moverestrict=indoors
-members=yes
-param=death_anim,midget_death
-
-[npc_784]
-vislevel=hide
-name=Kanel
-desc=One of Gertrude's Sons.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=416
-recol1d=320
-recol2s=384
-recol2d=2114
-model1=model_2897_npc
-model2=model_2909_npc
-model3=model_2918_npc
-head1=model_139_npc_head
-moverestrict=indoors
-members=yes
-param=death_anim,midget_death
-
-[npc_767]
+[kitten_crate]
 vislevel=hide
 name=Crate
 desc=Can I hear kittens?
@@ -98,8 +9,9 @@ wanderrange=0
 members=yes
 moverestrict=nomove
 blockwalk=all
+timer=25
 
-[npc_759]
+[fluffs]
 vislevel=hide
 name=Gertrudes cat
 desc=A friendly feline?
@@ -115,7 +27,7 @@ members=yes
 param=attack_anim,cat_attack
 param=death_anim,cat_death
 
-[npc_760]
+[lost_kitten]
 vislevel=hide
 name=Kitten
 desc=It looks lost.
@@ -127,7 +39,7 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 
-[npc_761]
+[follower_kitten_greyblack]
 vislevel=hide
 name=Kitten
 desc=A friendly little pet.
@@ -143,10 +55,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1555
-param=cat_next_id,npc_768
+param=pet_item_id,kitten_greyblack
+param=cat_next_id,follower_cat_greyblack
 
-[npc_762]
+[follower_kitten_white]
 vislevel=hide
 name=Kitten
 desc=A friendly little pet.
@@ -168,10 +80,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1556
-param=cat_next_id,npc_769
+param=pet_item_id,kitten_white
+param=cat_next_id,follower_cat_white
 
-[npc_763]
+[follower_kitten_brown]
 vislevel=hide
 name=Kitten
 desc=A friendly little pet.
@@ -193,10 +105,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1557
-param=cat_next_id,npc_770
+param=pet_item_id,kitten_brown
+param=cat_next_id,follower_cat_brown
 
-[npc_764]
+[follower_kitten_black]
 vislevel=hide
 name=Kitten
 desc=A friendly little pet.
@@ -218,10 +130,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1558
-param=cat_next_id,npc_771
+param=pet_item_id,kitten_black
+param=cat_next_id,follower_cat_black
 
-[npc_765]
+[follower_kitten_greybrown]
 vislevel=hide
 name=Kitten
 desc=A friendly little pet.
@@ -241,10 +153,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1559
-param=cat_next_id,npc_772
+param=pet_item_id,kitten_greybrown
+param=cat_next_id,follower_cat_greybrown
 
-[npc_766]
+[follower_kitten_greyblue]
 vislevel=hide
 name=Kitten
 desc=A friendly little pet.
@@ -264,10 +176,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1560
-param=cat_next_id,npc_773
+param=pet_item_id,kitten_greyblue
+param=cat_next_id,follower_cat_greyblue
 
-[npc_768]
+[follower_cat_greyblack]
 vislevel=hide
 name=Cat
 desc=A fully grown feline.
@@ -283,10 +195,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1561
-param=cat_next_id,npc_774
+param=pet_item_id,cat_greyblack
+param=cat_next_id,follower_overgrown_greyblack
 
-[npc_769]
+[follower_cat_white]
 vislevel=hide
 name=Cat
 desc=A fully grown feline.
@@ -308,10 +220,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1562
-param=cat_next_id,npc_775
+param=pet_item_id,cat_white
+param=cat_next_id,follower_overgrown_white
 
-[npc_770]
+[follower_cat_brown]
 vislevel=hide
 name=Cat
 desc=A fully grown feline.
@@ -333,10 +245,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1563
-param=cat_next_id,npc_776
+param=pet_item_id,cat_brown
+param=cat_next_id,follower_overgrown_brown
 
-[npc_771]
+[follower_cat_black]
 vislevel=hide
 name=Cat
 desc=A fully grown feline.
@@ -358,10 +270,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1564
-param=cat_next_id,npc_777
+param=pet_item_id,cat_black
+param=cat_next_id,follower_overgrown_black
 
-[npc_772]
+[follower_cat_greybrown]
 vislevel=hide
 name=Cat
 desc=A fully grown feline.
@@ -381,10 +293,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1565
-param=cat_next_id,npc_778
+param=pet_item_id,cat_greybrown
+param=cat_next_id,follower_overgrown_greybrown
 
-[npc_773]
+[follower_cat_greyblue]
 vislevel=hide
 name=Cat
 desc=A fully grown feline.
@@ -404,10 +316,10 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1566
-param=cat_next_id,npc_779
+param=pet_item_id,cat_greyblue
+param=cat_next_id,follower_overgrown_greyblue
 
-[npc_774]
+[follower_overgrown_greyblack]
 vislevel=hide
 name=Overgrown cat
 desc=A friendly not-so little pet.
@@ -423,9 +335,9 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1567
+param=pet_item_id,overgrown_greyblack
 
-[npc_775]
+[follower_overgrown_white]
 vislevel=hide
 name=Overgrown cat
 desc=A friendly not-so little pet.
@@ -447,9 +359,9 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1568
+param=pet_item_id,overgrown_white
 
-[npc_776]
+[follower_overgrown_brown]
 vislevel=hide
 name=Overgrown cat
 desc=A friendly not-so little pet.
@@ -471,9 +383,9 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1569
+param=pet_item_id,overgrown_brown
 
-[npc_777]
+[follower_overgrown_black]
 vislevel=hide
 name=Overgrown cat
 desc=A friendly not-so little pet.
@@ -495,9 +407,9 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1570
+param=pet_item_id,overgrown_black
 
-[npc_778]
+[follower_overgrown_greybrown]
 vislevel=hide
 name=Overgrown cat
 desc=A friendly not-so little pet.
@@ -517,9 +429,9 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1571
+param=pet_item_id,overgrown_greybrown
 
-[npc_779]
+[follower_overgrown_greyblue]
 vislevel=hide
 name=Overgrown cat
 desc=A friendly not-so little pet.
@@ -539,4 +451,4 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
-param=pet_item_id,obj_1572
+param=pet_item_id,overgrown_greyblue

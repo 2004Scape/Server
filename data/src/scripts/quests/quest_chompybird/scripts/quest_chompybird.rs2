@@ -1,0 +1,30 @@
+[oploc1,loc_3379]
+p_teleport(0_41_146_23_35);
+
+[oploc1,loc_3380]
+p_teleport(0_41_46_6_53);
+
+[oploc1,loc_3381]
+p_teleport(0_41_46_6_53);
+
+[oplocu,loc_684]
+@use_bellows_on_swamp_bubbles;
+
+[oplocu,loc_735]
+@use_bellows_on_swamp_bubbles;
+
+[label,use_bellows_on_swamp_bubbles]
+switch_obj(last_useitem) {
+    case obj_2871:
+        // TODO TBC anim and sound
+        anim(human_firecooking, 0);
+        sound_synth(ogre_bellows_suck, 0, 0);
+        p_delay(1);
+
+        mes("You collect some gas from the swamp.");
+        inv_del(inv, obj_2871, 1);
+        inv_add(inv, obj_2872, 1);
+    case default:
+        // TODO can you fill bellows (2) and (1)?
+        mes("Nothing interesting happens.");
+}

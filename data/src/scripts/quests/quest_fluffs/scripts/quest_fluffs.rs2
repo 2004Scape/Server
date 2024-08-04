@@ -1,0 +1,217 @@
+[label,fluffs_boy_dialogue]
+switch_int (%fluffs_progress) {
+    case ^fluffs_not_started:
+        ~chatplayer("<p,neutral>Hello youngster!");
+        ~chatnpc("<p,neutral>I don't talk to strange old people.");
+    case ^fluffs_started:
+        @fluffs_boy;
+    case ^fluffs_paid_boy:
+        ~chatplayer("<p,neutral>Where did you say you saw Fluffs?");
+        ~chatnpc("<p,neutral>Weren't you listening? I saw the flea bag in the old lumber mill just north east of here. Just walk past the Jolly Boar Inn and you should find it.");
+    case default: //guessed mesanims
+        ~chatplayer("<p,neutral>Hello again.");
+        ~chatnpc("<p,angry>You think you're tough do you?");
+        ~chatplayer("<p,neutral>Pardon?");
+        ~chatnpc("<p,angry>I can beat anyone up!");
+        ~chatplayer("<p,bored>Really?");
+        ~mesbox("The boy begins to jump around with his fists up.|You decide it's best not to kill him just yet.");
+}
+
+[label,fluffs_boy]
+~chatplayer("<p,neutral>Hello there, I've been looking for you.");
+~chatnpc("<p,neutral>I didn't mean to take it!|I just forgot to pay."); //authentic
+~chatplayer("<p,neutral>What? I'm trying to help your mum find Fluffs.");
+~chatnpc("<p,default>Ohh...well, in that case I might be able to help.|Fluffs followed me to my secret play area,|I haven't seen her since."); //guessed linebreaks
+~chatplayer("<p,quiz>Where is this play area?");
+~chatnpc("<p,neutral>If I told you that, it wouldn't be a secret.");
+def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will make you tell me?", 2, "Well never mind, it's Fluffs' loss.", 3);
+switch_int ($option) {
+    case 1:
+        ~chatplayer("<p,angry>Tell me sonny, or I will hurt you.");
+        ~chatnpc("<p,worried>W..wh..what?! Y..you wouldn't!|A young lad like me!|I'd have you behind bars before nightfall!"); //guessed linebreaks
+        ~mesbox("You decide it's best not to hurt the boy.");
+    case 2:
+        ~chatplayer("<p,quiz>What will make you tell me?");
+        ~chatnpc("<p,neutral>Well...now you ask, I am a bit short on cash.");
+        ~chatplayer("<p,bored>How much?");
+        ~chatnpc("<p,neutral>100 coins should cover it.");
+        ~chatplayer("<p,angry>100 coins!|Why should I pay you?"); //guessed linebreak
+        ~chatnpc("<p,default>I never liked that cat anyway, so what do you say?");
+        @fluffs_pay;
+    case 3:
+        ~chatplayer("<p,neutral>Well, never mind, it's Fluffs' loss.");
+        ~chatnpc("<p,neutral>I'm sure my mum will get over it.");
+}
+
+[label,fluffs_pay]
+def_int $option = ~p_choice2("I'm not paying you a penny.", 1, "Okay then, I'll pay.", 2);
+switch_int ($option) {
+    case 1:
+        ~chatplayer("<p,happy>I'm not paying you a penny.");
+        ~chatnpc("<p,neutral>Okay then, I'll find another way to make money.");
+    case 2:
+        ~chatplayer("<p,neutral>Okay then, I'll pay.");
+        if (inv_total(inv, coins) < 100) {
+            ~chatplayer("<p,neutral>But I'll have to get some money first.");
+            ~chatnpc("<p,neutral>I'll be waiting.");
+            return;
+        }
+        inv_del(inv, coins, 100);
+        %fluffs_progress = ^fluffs_paid_boy;
+        ~objbox(coins_25, "You give the lad 100 coins."); //authentic
+        ~chatplayer("<p,neutral>There you go, now where did you see Fluffs ?"); //intentional
+        ~chatnpc("<p,default>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there."); //guessed linebreaks
+        ~chatplayer("<p,neutral>Anything else?");
+        ~chatnpc("<p,default>Well, you'll have to find the broken fence to get in.|I'm sure you can manage that."); //guessed linebreak
+}
+
+[oploc1,loc_2618]
+def_coord $start_coord = loc_coord;
+def_int $dir = ^exact_south;
+def_coord $end_coord = movecoord(loc_coord, 0, 0, -1);
+if(coordz(coord) < coordz(loc_coord)) {
+    $start_coord = movecoord(loc_coord, 0, 0, -1);
+    $dir = ^exact_north;
+    $end_coord = loc_coord;
+}
+p_teleport($start_coord);
+p_delay(0);
+~agility_exactmove(human_walk_fence_north, 30, 2, $start_coord, $end_coord, 30, 94, $dir, true);
+p_teleport($end_coord);
+
+[opheldu,doogle_leaves]
+if(last_useitem = raw_sardine) {
+    ~mesbox("You rub the doogle leaves over the sardine."); //TODO: check if this always was mesbox
+    inv_del(inv, doogle_leaves, 1);
+    inv_del(inv, raw_sardine, 1);
+    inv_add(inv, seasoned_sardine, 1);
+    return;
+}
+~displaymessage(^dm_default);
+
+[opheldu,raw_sardine]
+if(last_useitem = doogle_leaves) {
+    ~mesbox("You rub the doogle leaves over the sardine."); //mesbox is before item
+    inv_del(inv, raw_sardine, 1);
+    inv_del(inv, doogle_leaves, 1);
+    inv_add(inv, seasoned_sardine, 1);
+    return;
+}
+~displaymessage(^dm_default);
+
+[opnpc1,fluffs]
+if(%fluffs_progress >= ^fluffs_rescued) {
+    ~chatplayer("<p,default>Oh, it looks like Fluffs has returned.|I'd better leave her alone."); //OSRS
+    return;
+}
+~fluffs_attack;
+switch_int(%fluffs_progress) {
+    case ^fluffs_gave_milk:
+        ~mesbox("Maybe the cat is hungry?");
+    case ^fluffs_gave_sardine:
+        ~mesbox("In the distance you can hear kittens mewing...");
+    case default:
+        ~mesbox("Maybe the cat is thirsty?"); 
+}
+
+[opnpc3,fluffs]
+~fluffs_attack;
+~mesbox("Perhaps the cat wants something?");
+
+[proc,fluffs_attack]
+npc_facesquare(coord);
+anim(human_pickupfloor, 0);
+p_delay(1);
+npc_say("Hisss!");
+npc_anim(cat_attack, 0);
+p_delay(0);
+say("Ouch!");
+p_delay(3);
+
+[opnpcu,fluffs]
+if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
+    inv_del(inv, bucket_milk, 1);
+    inv_add(inv, bucket_empty, 1);
+    npc_say("Mew!");
+    %fluffs_progress = ^fluffs_gave_milk;
+} else if (%fluffs_progress = ^fluffs_gave_milk & last_useitem = seasoned_sardine) {
+    inv_del(inv, seasoned_sardine, 1);
+    npc_say("Mew!");
+    %fluffs_progress = ^fluffs_gave_sardine;
+    switch_int (random(6)) {
+        case 0: %fluffs_crate = 0_51_54_41_44;
+        case 1: %fluffs_crate = 0_51_54_46_43;
+        case 2: %fluffs_crate = 0_51_54_43_51;
+        case 3: %fluffs_crate = 0_51_54_39_50;
+        case 4: %fluffs_crate = 0_51_54_34_58;
+        case 5: %fluffs_crate = 0_51_54_47_55;
+    }
+} else if (%fluffs_progress = ^fluffs_gave_sardine & last_useitem = fluffs_kitten) {
+    inv_del(inv, fluffs_kitten, 1);
+    anim(human_pickupfloor, 0);
+    npc_setmode(none);
+    .npc_add(coord, lost_kitten, ^max_32bit_int);
+    .npc_setmode(none);
+    p_delay(1);
+    npc_say("Purr...");
+    p_delay(0);
+    .npc_say("Purr...");
+    p_delay(1);
+    .npc_walk(1_51_54_46_53);
+    p_delay(0);
+    npc_walk(1_51_54_46_53);
+    p_delay(4);
+    %fluffs_progress = ^fluffs_rescued;
+    npc_del;
+    .npc_del;
+    ~mesbox("Fluffs has run off home with her offspring.");
+} else {
+    ~displaymessage(^dm_default);
+}
+
+[ai_timer,kitten_crate]
+npc_settimer(calc(5 + random(20)));
+if (random(5) = 0) {
+    npc_say("Mew!");
+}
+
+[opnpc1,kitten_crate]
+mes("You search the crate.");
+p_delay(4);
+if (npc_coord = %fluffs_crate & %fluffs_progress = ^fluffs_gave_sardine & inv_total(inv, fluffs_kitten) = 0 & inv_total(bank, fluffs_kitten) = 0) {
+    ~mesbox("You find a kitten! You carefully place it in your backpack."); //OSRS -- may have been different
+    inv_add(inv, fluffs_kitten, 1);
+    return;
+}
+mes("You find nothing.");
+
+[opheld5,fluffs_kitten] //TODO: All of this is guessed -- test this in OSRS.
+inv_delslot(inv, last_slot);
+npc_add(coord, lost_kitten, ^max_32bit_int);
+mes("You drop Fluffs' kitten.");
+npc_setmode(none);
+npc_walk(%fluffs_crate);
+p_delay(5);
+mes("It runs back to the crate.");
+npc_del;
+
+[queue,fluffs_complete]
+// Random quest complete jingle.
+def_int $random = random(128);
+if ($random < 32) {
+    // The least common music that plays when completing a quest.
+    midi_jingle(^quest_complete_3_jingle, ^quest_complete_3_millis);
+} else if ($random < 64) {
+    // A less common music that plays when completing a quest.
+    midi_jingle(^quest_complete_2_jingle, ^quest_complete_2_millis);
+} else {
+    // The most common music that plays when completing a quest.
+    midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
+}
+inv_add(inv, chocolate_cake, 1);
+inv_add(inv, stew, 1);
+stat_advance(cooking, 15250);
+if_openmainmodal(questscroll_fluffs);
+if_setcolour(questlist:fluffs, ^green_rgb);
+if_settab(questlist, ^tab_quest_journal);
+mes("Congratulations! Quest complete!");

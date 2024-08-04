@@ -1,0 +1,5 @@
+[opheldu,hammer]
+switch_obj (last_useitem) {
+    case red_topaz, opal, jade, uncut_red_topaz, uncut_opal, uncut_jade : mes("You can't think of any reason to do this.");
+    case default : ~displaymessage(^dm_default);
+}
