@@ -13,7 +13,7 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,sad>I wouldn't put it past him, the Gnome's crazy!");
         ~chatplayer("<p,neutral>I need some proof to convince the King.");
         // https://youtu.be/LFvLBRCxFwk?si=jZsV07Dsc1uTR1WH&t=997
-        ~chatnpc("<p,neutral>Hmm...you could be in luck! Before Glough had me locked up I heard him mention that he'd left his chest keys at his girlfriend's.");
+        ~chatnpc("<p,neutral>Hmm...you could be in luck! Before Glough had me|locked up I heard him mention that he'd left his|chest keys at his girlfriend's.");
         ~chatplayer("<p,quiz>Where does she live?");
         %grandtree_progress = ^grandtree_clue_charlie;
         ~chatnpc("<p,neutral>Just west of the toad swamp.");
@@ -39,7 +39,8 @@ switch_int(%grandtree_progress) {
         // https://youtu.be/LFvLBRCxFwk?si=2LxhRmfBnwuNBFf_&t=543
         ~chatplayer("<p,neutral>Tell me. Why would you want to kill the Grand Tree?");
         ~chatnpc("<p,shock>What do you mean?!");
-        ~chatplayer("<p,laugh>Don't tell me, you just happened to be caught carrying Daconia rocks!");
+        // https://web.archive.org/web/20041114190435/http://img52.exs.cx/img52/1067/wittyremark.jpg
+        ~chatplayer("<p,laugh>Don't tell me, you just happened|to be caught carrying Daconia rocks!");
         ~chatnpc("<p,sad>All I know is that I did what I was asked.");
         ~chatplayer("<p,confused>I don't understand.");
         // https://web.archive.org/web/20060911005925im_/http://www.runeweb.net/fireball/Grand%20Tree%20Images/GrandTree6.PNG
@@ -70,6 +71,7 @@ p_delay(0);
 npc_walk(movecoord(coord, 1, 0, 0));
 p_delay(3); // TODO: +1 until delay is fixed
 ~chatnpc("<p,sad>Traveller please accept my apologies!|Glough had no right to arrest you!|I just think he's scared of humans.|Let me get you out of there.");
+if_close;
 // can't use door proc here since it opens incorrectly (notice the lock side)
 if(loc_find(movecoord(coord, 1, 0, 0), loc_3367) = true) {
     loc_del(6);

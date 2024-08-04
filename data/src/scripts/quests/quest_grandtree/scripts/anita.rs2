@@ -10,7 +10,8 @@ if((%grandtree_progress = ^grandtree_clue_charlie | %grandtree_progress = ^grand
     ~chatplayer("<p,confused>I suppose so.");
     ~chatnpc("<p,neutral>Please give this key to Glough, he left it here last night.");
     if(inv_freespace(inv) = 0) {
-        ~chatnpc("<p,neutral>You can't carry anymore. Come back when you have some space.");
+        // https://youtu.be/ZNgxsI_jH_E?si=O4Rsx-7jsNSHtGrh&t=640
+        ~chatnpc("<p,sad>You can't carry anymore. Come back when you have some space.");
         return;
     }
     ~objboxt(gloughs_key, "Anita gives you a key.");

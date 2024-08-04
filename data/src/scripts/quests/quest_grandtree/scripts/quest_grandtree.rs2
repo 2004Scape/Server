@@ -11,6 +11,7 @@ mes("The trapdoor won't open!");
 
 [opheld1,hazelmeres_scroll] @scroll_hazelmere;
 [opheld1,lumber_order] @scroll_lumber_order;
+[opheld1,invasion_plans] @scroll_invasion_plans;
 
 [proc,grandtree_spawn_charlie]
 if(%grandtree_progress >= ^grandtree_found_prisoner & %grandtree_progress <= ^grandtree_found_invasion_plans
@@ -58,6 +59,7 @@ if(%grandtree_progress >= ^grandtree_unlocked_trapdoor) {
     if(%grandtree_progress = ^grandtree_unlocked_trapdoor) {
         @glough_cutscene;
     }
+    return;
 }
 ~mesbox("The trapdoor won't open.");
 
@@ -70,9 +72,14 @@ if(last_useitem = gloughs_key) {
     anim(human_openchest, 0);
     sound_synth(chest_open, 0, 0);
     p_delay(0);
-    loc_change(loc_3370, 4);
+    loc_change(loc_3368, 4);
     if((%grandtree_progress = ^grandtree_found_invasion_plans | %grandtree_progress = ^grandtree_clue_charlie) & inv_total(inv, invasion_plans) = 0) {
         ~objboxt(invasion_plans, "You have found a scroll!");
+        if(inv_freespace(inv) = 0) { 
+            // https://youtu.be/ZNgxsI_jH_E?si=wuOkSTdEAuYDoeTc&t=697
+            ~mesbox("You don't have enough space to hold the scroll.");
+            return;
+        }
         inv_add(inv, invasion_plans, 1);
         if(%grandtree_progress = ^grandtree_clue_charlie) %grandtree_progress = ^grandtree_found_invasion_plans;
         return;
@@ -81,12 +88,16 @@ if(last_useitem = gloughs_key) {
 }
 // no nothing interesting happens
 
-[oploc2,loc_2434] @open_cupboard(false);
+[oploc1,loc_2434] @open_cupboard(false);
 
 [oploc2,loc_2435]
-if(%grandtree_progress = ^grandtree_spoken_prisoner & inv_total(inv, gloughs_journal) = 0) {
+if((%grandtree_progress = ^grandtree_spoken_prisoner | %grandtree_progress = ^grandtree_found_journal) & ~obj_gettotal(gloughs_journal) = 0) {
     // https://youtu.be/LFvLBRCxFwk?si=7pHYoJgRRdwxc3nu&t=598
     ~objbox(gloughs_journal, "You've found Glough's Journal!");
+    if(inv_freespace(inv) = 0) {
+        ~mesbox("You don't have enough space to hold the journal.");
+        return;
+    }
     inv_add(inv, gloughs_journal, 1);
     if(%grandtree_progress = ^grandtree_spoken_prisoner) %grandtree_progress = ^grandtree_found_journal;
 }
@@ -170,6 +181,7 @@ if($rand < 2) {
 
 [queue,grandtree_quest_complete]
 inv_del(inv, daconia_rock, ^max_32bit_int);
+inv_del(bank, daconia_rock, ^max_32bit_int);
 %grandtree_progress = ^grandtree_complete;
 stat_advance(agility, 79000);
 stat_advance(attack, 184000);

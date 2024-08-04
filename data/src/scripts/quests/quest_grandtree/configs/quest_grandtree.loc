@@ -27,6 +27,7 @@ model=model_loc_367
 length=2
 forceapproach=east
 op1=Open
+param=cupboard_other,loc_2435
 
 [loc_2435]
 name=Cupboard
@@ -36,6 +37,7 @@ length=2
 forceapproach=east
 op2=Search
 op3=Close
+param=cupboard_other,loc_2434
 
 [loc_2436]
 name=Closed chest

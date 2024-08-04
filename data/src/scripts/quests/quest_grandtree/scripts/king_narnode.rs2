@@ -68,12 +68,26 @@ switch_int(%grandtree_progress) {
             ~chatnpc("<p,sad>A reward will have to wait though, the tree is still dying!|The guards are clearing Glough's rock supply now|but there must be more Daconia hidden somewhere in the roots!|Help us search, we have little time!");
         }
     case ^grandtree_unlocked_trapdoor:
-        ~chatplayer("<p,angry>Your highness, it's true about Glough I tell you! He's planning to take over Gielinor!");
+        ~chatplayer("<p,angry>Your highness, it's true about Glough I tell you! He's planning to take over RuneScape!");
         ~chatnpc("<p,neutral>I'm sorry Traveller but it's just not realistic. How could Glough, even with a gnome army, take over?");
         ~chatplayer("<p,angry>He plans to make a fleet of warships from the Grand Tree's wood!");
         ~chatnpc("<p,angry>That's enough Traveller! I've no time for make believe. The tree's still dying, I must get to the truth of this!");
     case ^grandtree_given_twigs:
         ~chatnpc("<p,sad>Please Traveller, take my advice and leave!");
+        if(~obj_gettotal(twigs_t) = 0 | ~obj_gettotal(twigs_u) = 0 | ~obj_gettotal(twigs_z) = 0 | ~obj_gettotal(twigs_o) = 0) {
+            ~chatplayer("<p,neutral>I've lost those twigs you gave me.");
+            ~chatnpc("<p,neutral>Here take these, I don't see how it will help though.");
+            ~objboxt(twigs_t, "The King has given you some twigs lashed together.");
+            inv_del(inv, twigs_t, ^max_32bit_int);
+            inv_del(inv, twigs_u, ^max_32bit_int);
+            inv_del(inv, twigs_z, ^max_32bit_int);
+            inv_del(inv, twigs_o, ^max_32bit_int);
+            inv_del(bank, twigs_t, ^max_32bit_int);
+            inv_del(bank, twigs_u, ^max_32bit_int);
+            inv_del(bank, twigs_z, ^max_32bit_int);
+            inv_del(bank, twigs_o, ^max_32bit_int);
+            @narnode_add_twigs;
+        }
     case ^grandtree_found_invasion_plans:
         ~chatplayer("<p,neutral>Hi, your highness, did you think about what I said?");
         ~chatnpc("<p,neutral>Look, if you're right about Glough I would have him arrested but there's no reason for me to think he's lying.");
@@ -86,7 +100,7 @@ switch_int(%grandtree_progress) {
                 ~chatnpc("<p,neutral>Hmm. Looks like you can't carry anymore. Put 4 things down and come back to me.");
                 return;
             }
-            ~objbox(twigs_t, "The King has given you some twigs lashed together.");
+            ~objboxt(twigs_t, "The King has given you some twigs lashed together.");
             ~chatnpc("<p,neutral>On the other hand, if Glough's right about the humans we will need an army of gnomes to protect ourselves. So I've decided to allow Glough to raise a mighty gnome army.");
             ~chatnpc("<p,angry>The Grand Tree's still slowly dying, if it is human sabotage we must respond!");
             %grandtree_progress = ^grandtree_given_twigs;
@@ -100,7 +114,7 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,neutral>Glough's scared the whole town, he expects the humans to attack any day. He's even begun to recruit hundreds of gnome soldiers.");
         ~chatplayer("<p,angry>Don't you understand he's creating his own army?!");
         ~chatnpc("<p,sad>Please Traveller, leave before it's too late!");
-    case ^grandtree_released_prison:
+    case ^grandtree_obtained_lumber_order:
         // recheck mesanims here forgot to talk to him (basing off of https://youtu.be/LFvLBRCxFwk?si=VQiQfoxC5IsW-CXp&t=961)
         ~chatplayer("<p,angry>King Narnode, I need to talk!");
         ~chatnpc("<p,shock>Traveller, what are you doing here?|The stronghold has been put on full alert!|It's not safe for you here!");
@@ -193,26 +207,26 @@ switch_int(%grandtree_progress) {
                 if($npc_dist > 0) {
                     p_delay(calc($npc_dist + 1)); // TODO: + 1 until delay change is fix
                 }
-                npc_facesquare(movecoord(npc_coord, -1, 0, -1));
-                if(loc_find(movecoord(coord, -1, 0, 0), loc_2446) = true) {
+                npc_facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
+                if(loc_find(movecoord(^narnode_trapdoor_coord, -1, 0, -1), loc_2446) = true) {
                     loc_change(loc_2445, 10);
                 }
                 npc_say("Down here.");
                 ~forcemove2(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
-                facesquare(movecoord(coord, -1, 0, 0));
+                facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
                 p_delay(0);
                 anim(human_pickupfloor, 0);
                 p_delay(0);
                 npc_setmode(null);
                 p_telejump(movecoord(coord, -1, 0, 6399));
                 p_delay(2);
-                if(npc_find(coord, king_narnode, 6, 0) = true) {
+                if(npc_find(coord, king_narnode, 7, 0) = true) {
                     $npc_dist = ~total_distance(npc_coord, movecoord(coord, 1, 0, 0));
                     npc_walk(movecoord(coord, 1, 0, 0));
                     if($npc_dist > 0) {
                         p_delay(calc($npc_dist + 1));
                     }
-                    npc_setmode(playerfaceclose);
+                    npc_setmode(playerface);
                     @king_narnode_foundations;
                 }
             case 2:
@@ -222,25 +236,25 @@ switch_int(%grandtree_progress) {
 }
 
 [label,king_narnode_back_up]
-~chatnpc("<p,neutral>I'll show you the way back up.");
-if_close;
 npc_setmode(none);
+~chatnpcnoturn("<p,neutral>I'll show you the way back up.");
+if_close;
 def_coord $up_coord = movecoord(^narnode_trapdoor_coord, 0, 0, 6400);
 def_int $npc_dist = ~total_distance(npc_coord, $up_coord);
 npc_walk($up_coord);
 if($npc_dist > 0) {
     p_delay(calc($npc_dist + 1)); // TODO: + 1 until delay change is fix
 }
-npc_facesquare(movecoord(npc_coord, -1, 0, -1));
+npc_facesquare(movecoord($up_coord, -1, 0, -1));
 p_delay(0);
 npc_say("Up here.");
 ~forcemove2(movecoord($up_coord, 0, 0, -1));
-facesquare(movecoord(coord, -1, 0, 0));
+facesquare(movecoord($up_coord, -1, 0, -1));
 p_delay(0);
 anim(human_reachforladdertop, 0);
 p_delay(0);
 npc_setmode(null);
-p_telejump(movecoord(coord, -1, 0, 6399));
+p_telejump(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
 
 [label,king_narnode_foundations]
 ~chatplayer("<p,quiz>So what is this place?");
@@ -275,6 +289,7 @@ switch_int(~p_choice2("I'm sorry, I don't want to get involved.", 1, "I'd be hap
         ~chatplayer("<p,quiz>What is it?");
         ~chatnpc("<p,neutral>It's a translation book, you'll need it to translate what Hazelmere says. Do that carefully! His words are our only hope! You'll find his dwellings high upon a towering hill, on an island east of Yanille.");
         %grandtree_progress = ^grandtree_started;
+        ~send_quest_progress(questlist:grandtree, %grandtree_progress, ^grandtree_complete);
         inv_add(inv, bark_sample, 1);
         inv_add(inv, translation_book, 1);
         @king_narnode_back_up;
@@ -376,7 +391,8 @@ switch_int(~p_choice4("All with be fine on the third night.", 1, "You must wait 
 @narnode_incorrect_final;
 
 [label,narnode_correct_final]
-~chatnpc("<p,sad>Of course! I should've known! Someone must've forged my royal seal. Hazelmere thought I sent him for the Daconia stones!");
+// https://web.archive.org/web/20060911005925im_/http://www.runeweb.net/fireball/Grand%20Tree%20Images/GrandTree4.PNG
+~chatnpc("<p,sad>Of course! I should've known!|Someone must've forged my royal seal.|Hazelmere thought I sent him for the Daconia stones!");
 ~chatplayer("<p,quiz>What are Daconia stones?");
 ~chatnpc("<p,neutral>Hazelmere created the Daconia stones. They are a safety measure, in case the tree grew out of control. They're the only thing that can kill the tree.");
 ~chatnpc("<p,shock>This is terrible! The stones must be recovered!");
@@ -399,27 +415,122 @@ switch_int(~p_choice4("All with be fine on the third night.", 1, "You must wait 
 ~chatplayer("<p,neutral>Well, OK.");
 ~chatnpc("<p,sad>I'm sorry again Traveller!");
 
-// this isn't actual randomization, can't get any of the other permutations (incl correct one of course)
+// pretty bad... everything but the correct arangement
 [label,narnode_add_twigs]
-def_namedobj $first_twig;
-def_namedobj $second_twig; 
-def_namedobj $third_twig;
-def_namedobj $fourth_twig;
-while($first_twig ! twigs_t & $second_twig ! twigs_u & $third_twig ! twigs_z & $fourth_twig ! twigs_o) {
-    $first_twig = ~get_random_twig;
-    $second_twig = ~get_random_twig;
-    $third_twig = ~get_random_twig;
-    $fourth_twig = ~get_random_twig;
-}
-inv_add(inv, $first_twig, 1);
-inv_add(inv, $second_twig, 1);
-inv_add(inv, $third_twig, 1);
-inv_add(inv, $fourth_twig, 1);
-
-[proc,get_random_twig](namedobj)
-switch_int(random(3)) {
-    case 0: return (twigs_t);
-    case 1: return (twigs_z);
-    case 2: return (twigs_u);
-    case 3: return (twigs_o);
+switch_int(random(23)) { 
+    case 0:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+    case 1:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+    case 2:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+    case 3:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+    case 4:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+    case 5:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+    case 6:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+    case 7:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+    case 8:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+    case 9:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+    case 10:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+    case 11:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+    case 12:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+    case 13:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+    case 14:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+    case 15:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+    case 16:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+    case 17:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+    case 18:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+    case 19:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+    case 20:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+    case 21:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+    case 22:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
 }

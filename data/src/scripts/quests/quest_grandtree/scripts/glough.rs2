@@ -28,7 +28,7 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,angry>How dare you accuse me! I'm the head tree guardian!");
         ~chatnpc("<p,angry>Guards! Guards!");
         if_close;
-        // 50t osrs, this uses an attackable guard before late 2005 (lol)
+        // 50t osrs, this (probably?) uses an attackable guard before late 2005 (lol)
         if(npc_find(coord, gnome_guard_halberd, 7, 0) = false) {
             npc_add(1_38_54_44_6, gnome_guard_halberd, 50);
         }
@@ -78,11 +78,12 @@ switch_int(%grandtree_progress) {
 
 [label,glough_cutscene]
 mes("You can hear footsteps approaching.");
+def_coord $start = 0_38_154_42_8;
 npc_add(movecoord(coord, 3, 0, 0), glough, 500); // not sure since osrs changed it, but based off this it's less than the black demons timer 
-npc_tele(0_38_154_42_8);
+npc_tele($start);
 npc_setmode(none);
 npc_walk(movecoord(coord, -1, 0, 0));
-p_delay(17); // seems like 17t based off video
+p_delay(distance($start, coord)); // walking dist + 1 tick
 @glough_headache;
 
 [label,glough_headache]
@@ -90,17 +91,18 @@ p_delay(17); // seems like 17t based off video
 ~chatplayer("<p,angry>You're crazy Glough!");
 ~chatnpc("<p,angry>Bah! Well, soon you'll see, the gnomes are ready to fight, in three weeks this tree will be dead wood, in ten weeks it will be 30 battleships! Finally we will rid the world of the disease called humanity!");
 ~chatplayer("<p,angry>What makes you think I'll let you get away with it?");
-~chatnpc("<p,laugh>Fool...meet my little friend!");
-if_close;
-npc_walk(movecoord(coord, -1, 0, -2));
 npc_setmode(none);
-npc_facesquare(0_38_154_47_11);
+~chatnpcnoturn("<p,laugh>Fool...meet my little friend!");
+if_close;
+def_coord $demon_spawn = 0_38_154_47_11;
+npc_walk(0_38_154_58_6);
+npc_facesquare($demon_spawn);
 p_delay(3);
 cam_shake(0, 6, 6, 2); // OSRS shake
 // these two are guessed
 cam_moveto(0_38_154_44_13, 2000, 100, 232);
 cam_lookat(movecoord(coord, -1, 0, -1), 0, 100, 232); 
-npc_add(0_38_154_47_11, grandtree_black_demon, 1000);
+npc_add($demon_spawn, grandtree_black_demon, 1000);
 npc_setmode(none);
 npc_walk(movecoord(npc_coord, 4, 0, -3));
 p_delay(4);
