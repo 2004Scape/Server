@@ -1,3 +1,12 @@
+[ai_timer,grandtree_black_demon]
+if(finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+if(distance(coord, npc_coord) > 17) {
+    npc_del;
+}
+
 [ai_queue3,grandtree_black_demon]
 gosub(npc_death);
 if(npc_findhero = true) {
