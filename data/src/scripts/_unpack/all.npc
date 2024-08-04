@@ -9864,7 +9864,6 @@ model6=model_170_idk
 model7=model_176_idk
 model8=model_265_obj_wear
 model9=model_544_obj_wear
-// TODO respawnrate?
 wanderrange=3
 maxrange=5
 hitpoints=76
@@ -9872,6 +9871,7 @@ attack=24
 strength=24
 defence=24
 magic=80
+timer=20
 param=magicdefence,3
 
 [poison_spider_observatory]
