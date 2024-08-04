@@ -37,5 +37,61 @@ switch_obj(last_useitem) {
         mes("Nothing interesting happens.");
 }
 
-// TODO drop
+[opheld1,obj_2875]
+if (%chompybird_progress < ^chompybird_shown_toad) {
+    ~objboxt(obj_2875,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
+    return;
+}
+
+// TODO tbc which quest states show this message
+// TODO tbc distance
+if (distance(coord, 0_41_46_12_21) > 5) {
+    mes("This is too far away for Rantz to shoot the chompy bird.");
+    return;
+}
+
+anim(human_pickupfloor, 0);
+
+p_delay(0);
+
+// TODO tbc any npc? or just toads
+npc_findallany(coord, 0, 0);
+if (npc_findnext = true) {
+    mes("There is a bloated toad already placed at this location.");
+    return;
+}
+
+npc_add(coord, npc_1014, 100);
+
+if (%chompybird_progress = ^chompybird_shown_toad) {
+    %chompybird_progress = ^chompybird_dropped_toad;
+}
+
+mes("You carefully place the bloated toad bait.");
+
+p_delay(0);
+if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // check west
+    p_teleport(movecoord(coord, -1, 0, 0));
+    p_delay(0);
+    return;
+}
+
+if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
+    p_teleport(movecoord(coord, 1, 0, 0));
+    p_delay(0);
+    return;
+}
+
+if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
+    p_teleport(movecoord(coord, 0, 0, 1));
+    p_delay(0);
+    return;
+}
+
+if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
+    p_teleport(movecoord(coord, 0, 0, -1));
+    p_delay(0);
+    return;
+}
+
 // TODO release and release all
