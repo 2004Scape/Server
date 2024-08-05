@@ -1,0 +1,67 @@
+[oploc1,quest_cog_rate_gate]
+if (testbit(%cog_progress, ^quest_cog_rat_door_bit) = true) {
+    ~mesbox("The death throes of the rats seem to have shaken the door|loose of its hinges. You pick it up and go through.");
+    ~open_and_close_door2(loc_1541, ~check_axis(coord, loc_coord, loc_angle), grate_open);
+} else {
+    mes("This door does not seem to be openable.");
+}
+
+[label,clock_tower_first_door_for_rat_cage]
+def_boolean $is_inside = ~check_axis(coord, loc_coord, loc_angle);
+if ($is_inside = true) {
+    loc_del(500);
+    loc_add(movecoord(loc_coord, 1, 0, 0), loc_1541, 3, loc_shape, 500);
+    sound_synth(grate_open, 0, 0);
+
+    if(loc_find(0_40_150_31_61, loc_33) = true) {
+        loc_del(500);
+        loc_add(loc_coord, loc_35, loc_angle, loc_shape, 500);
+    }
+} else {
+    mes("The door doesn't seem to open from here...");
+}
+
+// Lever into Rat Cage
+[oploc1,loc_33]
+p_delay(0);
+facesquare(movecoord(loc_coord,0, 0, -1));
+//anim 2141 on OSRS and RS3
+anim(human_leverdown, 0);
+sound_synth(lever, 0, 0);
+loc_del(500);
+loc_add(loc_coord, loc_35, loc_angle, loc_shape, 500);
+
+if(loc_find(0_40_150_35_57, loc_37) = true) {
+    loc_del(500);
+    loc_add(movecoord(loc_coord, 1, 0, 0), loc_1541, 3, loc_shape, 500);
+}
+
+[oploc1,loc_35]
+p_delay(0);
+facesquare(movecoord(loc_coord,0, 0, -1));
+//anim 2141 on OSRS and RS3
+anim(human_leverdown, 0);
+sound_synth(lever, 0, 0);
+loc_del(500);
+loc_add(loc_coord, loc_33, loc_angle, loc_shape, 500);
+
+if(loc_find(0_40_150_36_57, loc_1541) = true) {
+    loc_del(500);
+    loc_add(movecoord(loc_coord, -1, 0, 0), loc_37, 2, loc_shape, 2);
+}
+
+[oploc1,loc_34]
+@quest_cog_pull_dummy_lever(loc_36);
+
+[oploc1,loc_36]
+@quest_cog_pull_dummy_lever(loc_34);
+
+[label,quest_cog_pull_dummy_lever](loc $replacement_loc)
+p_delay(0);
+facesquare(movecoord(loc_coord,0, 0, -1));
+//anim 2141 on OSRS and RS3
+anim(human_leverdown, 0);
+sound_synth(lever, 0, 0);
+loc_del(500);
+loc_add(loc_coord, $replacement_loc, loc_angle, loc_shape, 500);
+

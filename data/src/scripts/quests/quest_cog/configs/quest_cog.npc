@@ -1,0 +1,26 @@
+[cog_dungeon_rat]
+resizeh=64
+resizev=64
+walkanim=giantrat_walk
+readyanim=giantrat_ready
+name=Dungeon rat
+desc=A dirty rat.
+op2=Attack
+vislevel=10
+recol1s=6347
+recol1d=17969
+model1=model_2959_npc
+wanderrange=6
+maxrange=8
+respawnrate=25
+hitpoints=12
+attack=10
+strength=10
+defence=10
+param=damagetype,^stab_style
+param=attack_anim,giantrat_attack
+param=defend_anim,giantrat_block
+param=death_anim,giantrat_death
+param=attack_sound,rat_attack
+param=defend_sound,rat_hit
+param=death_sound,rat_death
