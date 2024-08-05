@@ -1,0 +1,159 @@
+[loc_1985]
+name=Root
+desc=A large root.
+model=model_loc_1339
+width=3
+length=3
+blockrange=no
+op1=Search
+active=yes
+category=grandtree_root
+
+[loc_1986]
+name=Root
+desc=A large root.
+model=model_loc_1340
+width=3
+length=3
+blockrange=no
+op1=Search
+active=yes
+category=grandtree_root
+
+[loc_2434]
+name=Cupboard
+desc=This may be worth opening.
+model=model_loc_367
+length=2
+forceapproach=east
+op1=Open
+param=cupboard_other,loc_2435
+
+[loc_2435]
+name=Cupboard
+desc=This may be worth opening.
+model=model_loc_370
+length=2
+forceapproach=east
+op2=Search
+op3=Close
+param=cupboard_other,loc_2434
+
+[loc_2436]
+name=Closed chest
+desc=I wonder what's inside.
+model=wooden_chest
+op1=Open
+forceapproach=north
+
+[loc_2437]
+model=model_loc_76
+active=no
+
+[loc_2438]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+op1=Open
+active=yes
+blockrange=no
+category=shipyard_gate
+
+[loc_2439]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+mirror=yes
+op1=Open
+active=yes
+category=shipyard_gate
+
+[loc_2440]
+name=Pillar
+desc=Wonder what this pillar is for?
+model=model_loc_2440
+blockrange=no
+active=yes
+category=grandtree_pillar
+
+[loc_2441]
+name=Pillar
+desc=Wonder what this pillar is for?
+model=model_loc_2440
+blockrange=no
+active=yes
+category=grandtree_pillar
+
+[loc_2442]
+name=Pillar
+desc=Wonder what this pillar is for?
+model=model_loc_2440
+blockrange=no
+active=yes
+category=grandtree_pillar
+
+[loc_2443]
+name=Pillar
+desc=Wonder what this pillar is for?
+model=model_loc_2440
+blockrange=no
+active=yes
+category=grandtree_pillar
+
+[loc_2444]
+name=Trapdoor
+desc=I wonder what's under it?
+model=model_loc_2444
+active=yes
+op1=Open
+mapscene=43
+
+[loc_2445]
+model=model_loc_2445
+active=no
+mapscene=43
+
+[loc_2446]
+name=Trap door
+desc=This leads to somewhere...but where?
+model=model_loc_2444
+active=yes
+op1=Open
+mapscene=43
+
+[loc_2447]
+name=Tree
+desc=I reckon I could climb that!
+model=model_loc_1134
+active=yes
+op1=Climb-up
+
+[loc_2448]
+name=Tree
+desc=I reckon I could climb that!
+model=model_loc_1137
+active=yes
+op1=Climb-down
+
+[loc_2449]
+name=Daconia rocks
+desc=Some magical rocks.
+model=model_loc_450
+recol1s=6342
+recol1d=4264
+
+[loc_2450]
+name=Daconia rocks
+desc=Some magical rocks.
+model=model_loc_12
+recol1s=6342
+recol1d=4264
+
+[loc_2451]
+name=Roots
+desc=There's something behind these roots.
+model=model_loc_2451
+width=4
+hillskew=yes
+op1=Push
+active=yes

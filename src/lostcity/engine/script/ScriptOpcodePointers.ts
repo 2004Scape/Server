@@ -765,6 +765,10 @@ const ScriptOpcodePointers: {
         require: ['active_obj'],
         require2: ['active_obj2']
     },
+    [ScriptOpcode.OBJ_FIND]: {
+        set: ['active_obj'],
+        set2: ['active_obj2']
+    },
 
     // Inventory ops
     [ScriptOpcode.INV_ADD]: {

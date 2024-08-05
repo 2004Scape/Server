@@ -204,6 +204,10 @@ if (%mcannon_progress = ^mcannon_complete) {
     $questpoints = add($questpoints, ^mcannon_questpoints);
 }
 
+if (%grandtree_progress = ^grandtree_complete) {
+    $questpoints = add($questpoints, ^grandtree_questpoints);
+}
+
 %questpoints = $questpoints;
 
 ~send_quest_progress_colour(questlist:runemysteries, %runemysteries_progress, ^runemysteries_complete);
@@ -251,6 +255,7 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:biohazard, %biohazard_progress, ^biohazard_complete);
 ~send_quest_progress_colour(questlist:sheepherder, %sheepherder_progress, ^sheepherder_complete);
 ~send_quest_progress_colour(questlist:mcannon, %mcannon_progress, ^mcannon_complete);
+~send_quest_progress_colour(questlist:grandtree, %grandtree_progress, ^grandtree_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

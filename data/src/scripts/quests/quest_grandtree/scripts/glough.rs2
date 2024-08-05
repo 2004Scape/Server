@@ -1,0 +1,112 @@
+[opnpc1,glough]
+switch_int(%grandtree_progress) {
+    // https://youtu.be/LFvLBRCxFwk?si=IKRtVRjysWWM9U4u&t=482, fixed at some point?
+    case ^grandtree_spoken_glough, ^grandtree_unlocked_trapdoor, ^grandtree_defeated_black_demon, ^grandtree_searching_daconia, ^grandtree_complete:
+        // when underground during the fight, he will say this as well (before the cutscene update a few months after OSRS launch), if you interrupt the dialogue you have to go back down
+        // https://youtu.be/OHlL7GZW2hw?si=ulwwb-_NUDHsVb9e&t=920
+        ~chatplayer("<p,quiz>Hello?");
+        ~chatnpc("<p,angry>I warn you now, human: stay out of my affairs!");
+        ~chatplayer("<p,angry>I've stopped you before, Glough, and I'll stop you again!");
+    case ^grandtree_clue_charlie:
+        ~chatplayer("<p,angry>I'm going to stop you, Glough!");
+        ~chatnpc("<p,angry>You're becoming quite annoying traveller!");
+        ~mesbox("Glough is searching his pockets.");
+        ~chatnpc("<p,angry>Where are that darn key?"); // no typos here 
+        ~chatnpc("<p,angry>Leave human, before I have you put in the cage!");
+    case ^grandtree_obtained_lumber_order:
+        ~chatplayer("<p,angry>I know what you're up to Glough!");
+        ~chatnpc("<p,angry>You have no idea human!");
+        ~chatplayer("<p,angry>You may be able to make a fleet but the tree gnomes will never follow you into battle against humans.");
+        ~chatnpc("<p,angry>So, you know more than I thought! The gnomes fear humanity more than any other race. I just need to give them a push in the right direction. There's nothing you can do traveller! Leave before it's too late!");
+        ~chatplayer("<p,angry>King Narnode won't allow it!");
+        ~chatnpc("<p,angry>The King's a fool and a coward! He'll bow to me! You'll soon be back in that cage!");
+    case ^grandtree_found_journal:
+        ~chatplayer("<p,angry>Glough! I don't know what you're up to but I know you paid Charlie to get those rocks!");
+        ~chatnpc("<p,angry>You're a fool human! You have no idea what's going on.");
+        // https://web.archive.org/web/20060911005925im_/http://www.runeweb.net/fireball/Grand%20Tree%20Images/GrandTree7.PNG
+        ~chatplayer("<p,angry>I know the Grand Tree's dying!|And I think you're part of the reason.");
+        ~chatnpc("<p,angry>How dare you accuse me! I'm the head tree guardian!");
+        ~chatnpc("<p,angry>Guards! Guards!");
+        if_close;
+        // 50t osrs, this (probably?) uses an attackable guard before late 2005 (lol)
+        if(npc_find(coord, gnome_guard_halberd, 7, 0) = false) {
+            npc_add(1_38_54_44_6, gnome_guard_halberd, 50);
+        }
+        npc_setmode(none);
+        def_coord $dest = map_findsquare(coord, 0, 1, ^map_findsquare_lineofwalk);
+        def_int $dist_delay = ~total_distance(npc_coord, $dest);
+        npc_walk($dest);
+        if($dist_delay > 0) p_delay(calc($dist_delay + 1));
+        ~chatnpc("<p,angry>Come with me!");
+        if_close;
+        $dest = 1_38_54_45_7;
+        ~forcewalk($dest);
+        p_delay(0);
+        // https://youtu.be/LFvLBRCxFwk?si=58l2TkJcT5ifq4_W&t=616 face
+        facesquare(movecoord($dest, -2, 0, 0));
+        anim(human_reachforladdertop, 0);
+        p_delay(0);
+        p_telejump(^grandtree_jail_coord);
+        p_delay(2); // 3t delay before talking when initially sent, but if you retalk it's 4t
+        if(npc_find(coord, grandtree_charlie, 2, 0) = true) {
+            ~chatnpc("<p,sad>So they got you as well?");
+            ~chatplayer("<p,angry>It's Glough! He's trying to cover something up.");
+            @charlie_shouldnt_tell;
+        }
+    case ^grandtree_relayed_message_narnode:
+        ~chatplayer("<p,neutral>Hello.");
+        ~mesbox("The gnome is munching on a worm hole.");
+        // https://web.archive.org/web/20041114213711/http://img67.exs.cx/img67/3498/glough1.jpg
+        ~chatnpc("<p,angry>Can I help human?|Can't you see I'm eating?!");
+        ~mesbox("The gnome continues to eat.");
+        ~chatplayer("<p,sad>The King asked me to inform you|that the Daconia rocks have been taken!");
+        ~chatnpc("<p,shock>Surely not!");
+        ~chatplayer("<p,neutral>Apparently a human took them from Hazelmere. Hazelmere believed him; he had the King's seal!");
+        ~chatnpc("<p,angry>I should've known! The humans are going to invade!");
+        ~chatplayer("<p,shock>Never!");
+        %grandtree_progress = ^grandtree_spoken_glough;
+        ~chatnpc("<p,angry>Your type can't be trusted!|I'll take care of this! Go back to the King.");
+    case default:
+        ~chatplayer("<p,happy>Hello there!");
+        ~chatnpc("<p,angry>You shouldn't be here human!");
+        ~chatplayer("<p,sad>What do you mean?");
+        ~chatnpc("<p,angry>The Gnome Stronghold is for gnomes alone!");
+        ~chatplayer("<p,angry>Surely not!");
+        ~chatnpc("<p,angry>We don't need your sort round here!");
+        ~mesbox("He doesn't seem very nice!");
+}
+
+[label,glough_cutscene]
+mes("You can hear footsteps approaching.");
+def_coord $start = 0_38_154_42_8;
+npc_add(movecoord(coord, 3, 0, 0), glough, 500); // not sure since osrs changed it, but based off this it's less than the black demons timer 
+npc_tele($start);
+npc_setmode(none);
+npc_walk(movecoord(coord, -1, 0, 0));
+p_delay(distance($start, coord)); // walking dist + 1 tick
+@glough_headache;
+
+[label,glough_headache]
+~chatnpc("<p,angry>You really are becoming a headache! Well, at least now you can die knowing you were right, it will save me having to hunt you down like all the other human filth of RuneScape!");
+~chatplayer("<p,angry>You're crazy Glough!");
+~chatnpc("<p,angry>Bah! Well, soon you'll see, the gnomes are ready to fight, in three weeks this tree will be dead wood, in ten weeks it will be 30 battleships! Finally we will rid the world of the disease called humanity!");
+~chatplayer("<p,angry>What makes you think I'll let you get away with it?");
+npc_setmode(none);
+~chatnpcnoturn("<p,laugh>Fool...meet my little friend!");
+if_close;
+def_coord $demon_spawn = 0_38_154_47_11;
+npc_walk(0_38_154_58_6);
+npc_facesquare($demon_spawn);
+p_delay(3);
+cam_shake(0, 6, 6, 2); // OSRS shake
+// these two are guessed
+cam_moveto(0_38_154_44_13, 2000, 100, 232);
+cam_lookat(movecoord(coord, -1, 0, -1), 0, 100, 232); 
+npc_add($demon_spawn, grandtree_black_demon, 1000);
+npc_setmode(none);
+npc_walk(movecoord(npc_coord, 4, 0, -3));
+p_delay(4);
+npc_walk(movecoord(npc_coord, 3, 0, 0));
+p_delay(2);
+cam_reset;
+~npc_retaliate(0);

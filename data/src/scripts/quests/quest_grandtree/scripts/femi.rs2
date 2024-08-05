@@ -1,0 +1,103 @@
+[opnpc1,femi]
+if(%grandtree_progress = ^grandtree_obtained_lumber_order) {
+    if(coordz(npc_coord) > 3400) {
+        ~chatnpc("<p,neutral>Now, to get this lot to the Grand Tree!");
+        switch_int(~p_choice2("Can I help?", 1, "I'd better get going!", 2)) {
+            case 1:
+                ~chatplayer("<p,happy>Can I help?");
+                ~chatnpc("<p,happy>No, you're OK, traveller.|I can manage from here."); // OSRS linebreak
+            case 2:
+                ~chatplayer("<p,neutral>I'd better get going!");
+        }
+        return;
+    }
+    ~chatplayer("<p,angry>I can't believe they won't let me in!");
+    ~chatnpc("<p,neutral>I don't believe all this rubbish about an invasion. If mankind wanted to, they could have invaded before now.");
+    ~chatplayer("<p,neutral>I really need to see King Narnode. Could you help sneak me in?");
+    if(%femi_help = 1) { // only if you've declined help, if you've never used the grand tree door she will help for free
+        ~chatnpc("<p,quiz>Why should I help you?|You wouldn't help me!");
+        ~chatplayer("<p,shock>Erm I know, but this is an emergency!");
+        ~chatnpc("<p,angry>So was lifting that barrel!");
+        ~chatnpc("<p,shifty>Tell you what, call it a round 1000 gold pieces.");
+        ~chatplayer("<p,shock>1000 gold pieces!");
+        ~chatnpc("<p,shifty>That's right, 1000 and I'll sneak you in.");
+        if(inv_total(inv, coins) < 1000) {
+            ~chatplayer("<p,sad>I haven't got that much.");
+            ~chatnpc("<p,bored>That's a shame.");
+            return;
+        }
+        switch_int(~p_choice2("No chance!", 1, "OK then, I'll pay.", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>No chance!");
+                return;
+            case 2:
+                ~chatplayer("<p,neutral>OK then, I'll pay.");
+                ~chatnpc("<p,neutral>Alright, jump in the back of the cart. It's a food delivery, we should be fine.");
+                ~objbox(coins_250, "You give Femi 1000 coins"); // no period
+                inv_del(inv, coins, 1000);
+                @femi_sneakin;
+        }
+    }
+    ~chatnpc("<p,neutral>Well, as you helped me I suppose I could. We'll have to be careful. If I get caught I'll be in the cage!");
+    ~chatplayer("<p,neutral>OK, what should I do?");
+    ~chatnpc("<p,neutral>Jump in the back of the cart.|It's a food delivery, we should be fine"); // no period, OSRS has this linebreak
+    @femi_sneakin;
+}
+mes("The little gnome is too busy to talk.");
+
+[label,femi_sneakin]
+if_close;
+bas_running(null);
+p_walk(0_38_52_29_51); // respects clipping from my testing
+p_delay(5); // 5t, delay seems to be fixed (TODO: -1 once delay is corrected)
+facesquare(movecoord(coord, 1, 0, 0));
+anim(human_reachforladdertop, 0);
+p_delay(0);
+p_telejump(0_38_53_27_17);
+~update_bas;
+if(loc_find(movecoord(coord, -1, 0, 1), loc_308) = false) {
+    loc_add(movecoord(coord, -1, 0, 1), loc_308, 0, centrepiece_straight, 199);
+}
+if(npc_find(coord, femi, 5, 0) = false) {
+    npc_add(movecoord(coord, -1, 0, 0), femi, 200);
+}
+~chatnpc("<p,neutral>OK, traveller, you'd better get going.");
+~chatplayer("<p,happy>Thanks again!");
+~chatnpc("<p,neutral>That's OK, all the best.");
+
+[label,femi_boxes]
+if(loc_find(0_38_52_28_52, loc_83) = true) {
+    loc_change(loc_361, 200);
+}
+~chatnpc("<p,happy>Hello there.");
+~chatplayer("<p,happy>Hi!");
+~chatnpc("<p,quiz>Could you help me lift these boxes?|They are really heavy!");
+switch_int(~p_choice2("Sorry, I'm a bit busy.", 1, "OK then.", 2)) {
+    case 1:
+        %femi_help = 1;
+        ~chatplayer("<p,neutral>Sorry, I'm a bit busy.");
+        ~chatnpc("<p,sad>Oh, OK, I'll do it myself.");
+    case 2:
+        ~chatplayer("<p,happy>OK then.");
+        ~chatnpc("<p,happy>Thanks traveller!");
+        if_close;
+        ~forcewalk(0_38_52_29_52);
+        p_delay(0);
+        facesquare(movecoord(coord, -1, 0, 0));
+        p_delay(0);
+        anim(human_pickupfloor, 0);
+        p_delay(0);
+        if(loc_find(movecoord(coord, -1, 0, 0), loc_361) = true) {
+            loc_change(loc_83, 200); // rs3 removes loc here instead, this can get you stuck, not sure which is correct cause the cart doesn't change on RS3 as well
+        }
+        facesquare(0_38_52_26_50);
+        p_delay(0);
+        anim(human_pickupfloor, 0);
+        p_delay(0);
+        if(loc_find(0_38_52_26_50, loc_307) = true) {
+            loc_change(loc_308, 200);
+        }
+        p_delay(0);
+        %femi_help = 2;
+        ~chatnpc("<p,happy>Thanks again friend!");
+}

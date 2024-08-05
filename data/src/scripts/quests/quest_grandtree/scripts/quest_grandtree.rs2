@@ -1,0 +1,189 @@
+[oploc1,loc_2446]
+if(%grandtree_progress = ^grandtree_complete) {
+    anim(human_pickupfloor, 0);
+    sound_synth(door_open, 0, 0);
+    loc_change(loc_2445, 5); 
+    p_delay(1);
+    p_teleport(movecoord(coord, 0, 0, 6400));
+    return;
+}
+mes("The trapdoor won't open!");
+
+[opheld1,hazelmeres_scroll] @scroll_hazelmere;
+[opheld1,lumber_order] @scroll_lumber_order;
+[opheld1,invasion_plans] @scroll_invasion_plans;
+
+[proc,grandtree_spawn_charlie]
+if(%grandtree_progress >= ^grandtree_found_prisoner & %grandtree_progress <= ^grandtree_found_invasion_plans
+    & npc_findexact(movecoord(^grandtree_jail_coord, 0, 0, -1), grandtree_charlie) = false) {
+    npc_add(movecoord(^grandtree_jail_coord, 0, 0, -1), grandtree_charlie, 500);
+}
+
+[oploc1,loc_2447]
+p_arrivedelay;
+if(stat(agility) < 25) {
+    ~mesbox("You need at least 25 Agility to climb the tree.");
+    return;
+}
+~agility_climb_up(0, movecoord(loc_coord, 2, 1, 1));
+
+[oploc1,loc_2448] 
+p_arrivedelay;
+~agility_climb_up(0, movecoord(loc_coord, -1, -1, -1));
+
+[oplocu,_grandtree_pillar]
+if(last_useitem = twigs_t | last_useitem = twigs_u | last_useitem = twigs_z | last_useitem = twigs_o) {
+    anim(human_pickuptable, 0);
+    sound_synth(put_down, 0, 0);
+    inv_dropslot(inv, loc_coord, last_useslot, 500); // 500t osrs
+    if(%grandtree_progress = ^grandtree_given_twigs & 
+        obj_find(2_38_54_53_11, twigs_t) = true & 
+        obj_find(2_38_54_54_11, twigs_u) = true & 
+        obj_find(2_38_54_55_11, twigs_z) = true & 
+        obj_find(2_38_54_56_11, twigs_o) = true) {
+        %grandtree_progress = ^grandtree_unlocked_trapdoor;
+        sound_synth(machinery, 0, 0); 
+        ~mesbox("You hear the grinding of an ancient pulley system.");
+    }
+} else {
+    mes("You cannot put that on the pillar.");
+}
+
+[oploc1,loc_2444]
+if(%grandtree_progress >= ^grandtree_unlocked_trapdoor) {
+    anim(human_pickupfloor, 0);
+    sound_synth(door_open, 0, 0);
+    loc_change(loc_2445, 5); // idk cause this is varbit now, will assume same as the other trapdoor
+    p_delay(1);
+    p_teleport(0_38_154_59_8);
+    if(%grandtree_progress = ^grandtree_unlocked_trapdoor) {
+        @glough_cutscene;
+    }
+    return;
+}
+~mesbox("The trapdoor won't open.");
+
+[oploc1,loc_2436]
+~mesbox("The chest is locked.");
+
+[oplocu,loc_2436]
+if(last_useitem = gloughs_key) {
+    p_arrivedelay;
+    anim(human_openchest, 0);
+    sound_synth(chest_open, 0, 0);
+    p_delay(0);
+    loc_change(loc_3368, 4);
+    if((%grandtree_progress = ^grandtree_found_invasion_plans | %grandtree_progress = ^grandtree_clue_charlie) & inv_total(inv, invasion_plans) = 0) {
+        ~objboxt(invasion_plans, "You have found a scroll!");
+        if(inv_freespace(inv) = 0) { 
+            // https://youtu.be/ZNgxsI_jH_E?si=wuOkSTdEAuYDoeTc&t=697
+            ~mesbox("You don't have enough space to hold the scroll.");
+            return;
+        }
+        inv_add(inv, invasion_plans, 1);
+        if(%grandtree_progress = ^grandtree_clue_charlie) %grandtree_progress = ^grandtree_found_invasion_plans;
+        return;
+    }
+    mes("You search the chest but find nothing.");
+}
+// no nothing interesting happens
+
+[oploc1,loc_2434] @open_cupboard(false);
+
+[oploc2,loc_2435]
+if((%grandtree_progress = ^grandtree_spoken_prisoner | %grandtree_progress = ^grandtree_found_journal) & ~obj_gettotal(gloughs_journal) = 0) {
+    // https://youtu.be/LFvLBRCxFwk?si=7pHYoJgRRdwxc3nu&t=598
+    ~objbox(gloughs_journal, "You've found Glough's Journal!");
+    if(inv_freespace(inv) = 0) {
+        ~mesbox("You don't have enough space to hold the journal.");
+        return;
+    }
+    inv_add(inv, gloughs_journal, 1);
+    if(%grandtree_progress = ^grandtree_spoken_prisoner) %grandtree_progress = ^grandtree_found_journal;
+}
+mes("You search the cupboard but you find nothing.");
+
+[oploc3,loc_2435] 
+@close_cupboard(false);
+
+[oploc1,_shipyard_gate]
+if(%grandtree_progress >= ^grandtree_released_prison) {
+    if(coordx(coord) < coordx(loc_coord) & npc_find(coord, grandtree_shipyard_worker, 5, 0) = true) {
+        @shipyard_worker_gate;
+    } else {
+        @open_shipyard_gate;
+    }
+}
+~mesbox("The gate is locked.");
+
+[label,open_shipyard_gate]
+if(coordx(coord) < coordx(loc_coord)) { 
+    p_teleport(loc_coord);
+} else {
+    p_teleport(movecoord(loc_coord, -1, 0, 0));
+}
+loc_findallzone(coord);
+while(loc_findnext = true) {
+     if(loc_category = shipyard_gate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            def_loc $type = loc_type;
+            loc_change(loc_83, 2);
+            if($type = loc_2438) {
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_49, 3, loc_shape, 2);
+                loc_add(movecoord($central_coord, -2, 0, 0), loc_50, 3, loc_shape, 2); 
+            }
+     }
+}
+p_delay(0);
+
+[oploc1,loc_2451]
+anim(human_push, 0);
+if(%grandtree_progress ! ^grandtree_complete) {
+    p_delay(0);
+    ~mesbox("You push against the roots but they push back at you!");
+    return;
+}
+sound_synth(tanglevine_appear, 0, 0);
+loc_anim(seq_452);
+p_delay(2);
+if(coordz(coord) < coordz(loc_coord)) {
+    ~forcemove(movecoord(coord, 0, 0, 2));
+} else {
+    ~forcemove(movecoord(coord, 0, 0, -2));
+}
+loc_anim(seq_453);
+
+[oploc1,_grandtree_root]
+p_arrivedelay;
+anim(human_pickupfloor, 0);
+p_delay(0);
+if(%grandtree_progress = ^grandtree_searching_daconia & enum(coord, int, daconia_coords, loc_coord) = %daconia_rock_root & ~obj_gettotal(daconia_rock) = 0) {
+    ~objbox(daconia_rock, "You've found a Daconia Rock!");
+    if(inv_freespace(inv) = 0) {
+        ~mesbox("You don't have enough space to hold the rock.");
+        return;
+    }
+    inv_add(inv, daconia_rock, 1);
+    return;
+}
+def_int $rand = random(1000);
+// seems like these messages are just completely random but might want to confirm
+// I don't think it's based off daconia rock position or quest stage...
+if($rand < 2) {
+    mes("You think you find something nice...");
+    mes("But it turns out to be nothing.");
+} else if($rand < 12) {
+    mes("You don't find anything interesting.");
+} else {
+    mes("You search the root but don't find anything.");
+}
+
+[queue,grandtree_quest_complete]
+inv_del(inv, daconia_rock, ^max_32bit_int);
+inv_del(bank, daconia_rock, ^max_32bit_int);
+%grandtree_progress = ^grandtree_complete;
+stat_advance(agility, 79000);
+stat_advance(attack, 184000);
+stat_advance(magic, 21500);
+~send_quest_complete(questlist:grandtree, daconia_rock, 250, ^grandtree_questpoints, "You have completed the\\nGrand Tree Quest!");
