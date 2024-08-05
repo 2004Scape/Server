@@ -89,6 +89,8 @@ npc_anim(npc_param(attack_anim), 20);
 ~player_projectile(npc_coord, coord, uid, dwarf_rock_launch, 45, 40, 51, 25, 5, 11, 5);
 sound_synth(npc_param(attack_sound), 0, 0);
 
+~npc_set_attack_vars;
+
 if (stat(hitpoints) = 0) {
     return;
 }
@@ -110,7 +112,6 @@ if (getqueue(player_death) < 1) {
     queue(damage_player, 1, $damage);
     queue(playerhit_n_retaliate, 1, npc_uid); // this should be a queue* command
 }
-~npc_set_attack_vars;
 
 [queue,drunken_dwarf_player_defend_anim]
 anim(%com_defendanim, 0);
