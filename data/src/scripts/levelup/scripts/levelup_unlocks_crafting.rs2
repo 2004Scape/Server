@@ -40,7 +40,7 @@ switch_int(stat_base(crafting)) {
     case 68: ~objboxt(blue_dragonhide_chaps,"Members can now craft @dbl@Blue Dragonhide Chaps@bla@.");
     case 70: ~objboxt(diamond_amulet,"You can now craft @dbl@Diamond Amulets@bla@.");
     case 71: ~objbox(blue_dragonhide_body,"Members can now craft @dbl@Blue Dragonhide Armour@bla@.");
-    case 72: ~objboxt(dragonstone_necklace,"You can now craft @dbl@Dragonstone Necklaces@bla@.");
+    case 72: ~objboxt(dragonstone_necklace,"Members can now craft @dbl@Dragonstone Necklaces@bla@.");
     case 73: ~objboxt(red_dragonhide_vambraces,"Members can now craft @dbl@Red Dragonhide Vambraces@bla@.");
     case 75: ~objboxt(red_dragonhide_chaps,"Members can now craft @dbl@Red Dragonhide Chaps@bla@.");
     case 77: ~objbox(red_dragonhide_body,"Members can now craft @dbl@Red Dragonhide Armour@bla@.");

@@ -4,14 +4,13 @@ switch_int(stat_base(cooking)) {
     case 5: ~objboxt(herring,"You can now cook @dbl@Herring@bla@.");
     case 6: ~objboxb(fruit_blast,"Members can now make @dbl@Fruit Blasts@bla@.");
     case 8: ~objboxb(pineapple_punch,"Members can now make @dbl@Pineapple Punches@bla@.");
-    case 10: ~doubleobjbox(mackerel,redberry_pie,"You can now cook @dbl@Redberry Pies@bla@. Members can cook|@dbl@Mackrel@bla@ and also make @dbl@Toad Crunchies");
+    case 10: ~doubleobjbox(mackerel,redberry_pie,"You can now cook @dbl@Redberry Pies@bla@. Members can cook|@dbl@Mackerel@bla@ and also make @dbl@Toad Crunchies");
     case 12: ~objboxt(spicy_crunchies,"Members can now cook @dbl@Spicy Crunchies@bla@.");
     case 14: ~objboxt(worm_crunchies,"Members can now make @dbl@Worm Crunchies@bla@.");
     case 15: ~objboxt(trout,"You can now cook @dbl@Trout@bla@.");
     case 16: ~objboxt(choc_chip_crunchies,"Members can now make @dbl@Chocolate Chip Crunchies@bla@.");
     case 18: ~doubleobjbox(cod,wizard_blizzard,"Members can now cook @dbl@Cod@bla@ and make @dbl@Wizard|@dbl@Blizzards@bla@.");
     case 20: ~doubleobjbox(pike,meat_pie,"You can now cook @dbl@Meat Pies@bla@ and @dbl@Pike@bla@. Members can|also make @dbl@Short Green Guys@bla@.");
-    case 21: ~objbox(pot_of_cream,"Members can now churn @dbl@Cream@bla@.");
     case 25: ~doubleobjbox(salmon,stew,"You can now cook @dbl@Stews@bla@ and @dbl@Salmon@bla@. Members may| also create @dbl@Fruit Battas@bla@.");
     case 26: ~objbox(toad_batta,"Members can now cook @dbl@Toad Battas@bla@.");
     case 27: ~objbox(worm_batta,"Members can now cook @dbl@Worm Battas@bla@.");
