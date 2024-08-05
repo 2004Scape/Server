@@ -12,6 +12,15 @@
     }
 }
 
+[proc,come_here_toady]()
+{
+    // TODO face toad towards player and face player towards toad?
+    // TODO sound? in OSRS it's sound 1455
+    say("Come here toady!");
+    anim(human_ogre_bellows_use, 30);
+    spotanim_pl(ogre_bellows_use, 64, 30);
+    npc_anim(chompy_toad_death, 30);
+}
 
 [opnpcu,npc_1013]
 switch_obj(last_useitem) {
@@ -22,10 +31,7 @@ switch_obj(last_useitem) {
             return;
         }
 
-        say("Come here toady!");
-        anim(human_ogre_bellows_use, 30);
-        spotanim_pl(ogre_bellows_use, 64, 30);
-        npc_anim(chompy_toad_death, 30);
+        ~come_here_toady();
 
         p_delay(1);
 
@@ -60,10 +66,7 @@ switch_obj(last_useitem) {
 
             if (p_finduid(uid) = true) {
                 mes("You manage to catch the toad and inflate it with the swamp gas.");
-                say("Come here toady!");
-                anim(human_ogre_bellows_use, 30);
-                spotanim_pl(ogre_bellows_use, 64, 30);
-                npc_anim(chompy_toad_death, 30);
+                ~come_here_toady();
 
                 p_delay(3);
 
@@ -81,12 +84,7 @@ switch_obj(last_useitem) {
         }
         
         mes("You manage to catch the toad and inflate it with the swamp gas.");
-        say("Come here toady!");
-        anim(human_ogre_bellows_use, 30);
-        spotanim_pl(ogre_bellows_use, 64, 30);
-        npc_anim(chompy_toad_death, 30);
-        // TODO face toad towards player and face player towards toad?
-        // TODO sound? in OSRS it's sound 1455
+        ~come_here_toady();
 
         p_delay(3);
 
