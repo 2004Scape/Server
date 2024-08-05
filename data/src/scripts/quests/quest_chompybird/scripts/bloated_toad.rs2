@@ -123,7 +123,7 @@ npc_queue(10, 0, 25);
 
 [proc,toad_explode]()
 // TODO in OSRS this isn't sent with a height
-map_anim(npc_coord, chompy_toad_exploding, 0, 30);
+spotanim_map(chompy_toad_exploding, npc_coord, 0, 30);
 // TODO sound?
 
 huntall(npc_coord, 1, 1);
