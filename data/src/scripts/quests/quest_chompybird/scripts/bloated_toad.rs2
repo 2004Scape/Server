@@ -131,5 +131,5 @@ while (.huntnext = true) {
 
     .sound_synth(toad_burst, 0, 20);
     // is damage random per-player or per-toad?
-    ~.damage_self(random(2));
+    ~.damage_self(calc(random(1) + 1));
 }
