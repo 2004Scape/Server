@@ -80,9 +80,8 @@ if ($loc_coord ! null & distance(coord, $loc_coord) <= 1) {
     }
 }
 
-def_int $change_x = calc(coordx($coord) - coordx(coord));
-def_int $change_z = calc(coordz($coord) - coordz(coord));
-~agility_walk($change_x, $change_z);
+p_delay(0);
+~forcemove($coord);
 p_stopaction;
 p_delay(0);
 // open the gates and teleport through
