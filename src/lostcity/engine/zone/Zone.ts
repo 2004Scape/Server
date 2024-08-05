@@ -155,6 +155,14 @@ export default class Zone {
         this.shared = shared;
     }
 
+    /**
+     * - Update the player client the current visibility of the seen zones.
+     * - When UpdateZoneFullFollows is written, this completely resets the client zones to default.
+     * - Default zones, meaning, no objs and the original locs.
+     * - So we catch the client back up with everything that is "currently seen" in the zones.
+     * - "currently seen zones" meaning all the visible objs and locs that should be visible to the client.
+     * - This does not include any updates that were made to the zones "THIS TICK".
+     */
     writeFullFollows(player: Player): void {
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
@@ -178,6 +186,13 @@ export default class Zone {
         }
     }
 
+    /**
+     * - Update the player client with any partial enclosed "shared" zone updates.
+     * - Updates are only known by the server once per cycle.
+     * - So for example, if UpdateZoneFullFollows is written, then we must update the client with these
+     * updates after the client is set back to the original map then updated with the "currently seen zones".
+     * - "currently seen zones" meaning all the visible objs and locs that should be visible to the client.
+     */
     writePartialEncloses(player: Player): void {
         if (!this.shared) {
             return;
@@ -185,6 +200,9 @@ export default class Zone {
         player.write(new UpdateZonePartialEnclosed(this.x, this.z, player.originX, player.originZ, this.shared));
     }
 
+    /**
+     * Same shit as above basically.
+     */
     writePartialFollows(player: Player): void {
         if (this.events.size === 0) {
             return;
