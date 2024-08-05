@@ -120,9 +120,9 @@ npc_queue(10, 0, 25);
 ~toad_explode();
 
 [proc,toad_explode]()
-// TODO tbc anim
-spotanim_npc(smokepuff_large, 124, 0);
-npc_delay(0);
+// TODO in OSRS this isn't sent with a height
+map_anim(npc_coord, chompy_toad_exploding, 0, 30);
+// TODO sound?
 
 huntall(npc_coord, 1, 1);
 while (.huntnext = true) {
