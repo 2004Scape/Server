@@ -6,6 +6,15 @@
 
 [ai_queue1,zamorak_wizard] gosub(npc_default_retaliate_ap);
 
+[ai_timer,zamorak_wizard]
+if(finduid(%npc_attacking_uid) = false) {
+    npc_del;
+    return;
+}
+if(distance(coord, npc_coord) > 17) { // not 100% sure on this, think it's the same as the black demon in grandtree
+    npc_del;
+}
+
 [ai_queue3,zamorak_wizard]
 gosub(npc_death);
 if (npc_findhero = false) {
