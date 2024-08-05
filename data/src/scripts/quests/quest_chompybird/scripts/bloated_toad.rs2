@@ -40,7 +40,7 @@ if (%chompybird_progress = ^chompybird_shown_toad) {
 p_delay(0);
 
 if (p_finduid(uid) = true) {
-    npc_add(coord, npc_1014, 102);
+    npc_add(coord, npc_1014, 101);
     npc_queue(4, 0, 25);
 
     mes("You carefully place the bloated toad bait.");
@@ -124,14 +124,12 @@ npc_queue(10, 0, 25);
 [proc,toad_explode]()
 // TODO in OSRS this isn't sent with a height
 spotanim_map(chompy_toad_exploding, npc_coord, 0, 30);
-// TODO sound?
 
 huntall(npc_coord, 1, 1);
 while (.huntnext = true) {
     .mes("You're hit by bits of exploding toad!");
 
+    .sound_synth(toad_burst, 0, 20);
     // is damage random per-player or per-toad?
     ~.damage_self(random(2));
 }
-
-npc_del;
