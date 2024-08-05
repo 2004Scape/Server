@@ -108,7 +108,7 @@ export default class NpcType extends ConfigType {
     category = -1;
     wanderrange = 5;
     maxrange = 7;
-    huntrange = 5;
+    huntrange = -1;
     timer = -1;
     respawnrate = 100; // default to 1-minute
     stats = [1, 1, 1, 1, 1, 1];
