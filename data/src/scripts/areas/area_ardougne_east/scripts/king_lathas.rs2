@@ -31,6 +31,16 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatplayer("<p,angry>I've wasted enough of my time here.");
             ~chatnpc("<p,neutral>No time is ever wasted, thanks for all you've done.");
     }
+} else if(%biohazard_progress = ^biohazard_complete) {
+    switch_int(%upass_progress) {
+        case ^upass_not_started:
+            ~chatplayer("<p,happy>Hello King Lathas.");
+            ~chatnpc("<p,happy>Adventurer, thank Saradomin for your arrival!");
+            ~chatplayer("<p,quiz>Have your scouts found a way through the mountains?");
+            ~chatnpc("<p,sad>Not quite, we found a path to where we expected to find the Well of Voyage, an ancient portal to the west RuneScape."):
+            ~chatnpc("<p,neutral>However during recent times a cluster of cultists have settled there, run by a madman named Iban.");
+            
+    }
 } else {
     mes("The king is too busy to talk.");
 }

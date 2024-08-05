@@ -3,4 +3,4 @@ switch_int(%upass_progress) {
     
     case default:
         mes("Koftik doesn't seem interested in talking.");
-}
+} 
