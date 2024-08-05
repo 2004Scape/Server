@@ -15,6 +15,30 @@
 
 [opnpcu,npc_1013]
 switch_obj(last_useitem) {
+    case obj_2871:
+        // TODO tbc - wasn't tested on OSRS for if you can attempt with full inv but empty bellows
+        if (inv_freespace(inv) < 1) {
+            mes("You don't have space to carry that.");
+            return;
+        }
+
+        say("Come here toady!");
+        anim(human_ogre_bellows_use, 30);
+        spotanim_pl(ogre_bellows_use, 64, 30);
+        npc_anim(chompy_toad_death, 30);
+
+        p_delay(1);
+
+        if (p_finduid(uid) = true) {
+            npc_say("Hissss....");
+            
+            p_delay(1);
+
+            if (p_finduid(uid) = true) {
+                mes("The air seems too thin to stay in the toad.");
+                mes("Perhaps you need something thicker than air.");
+            }
+        }        
     case obj_2872, obj_2873, obj_2874:
         if (inv_freespace(inv) < 1) {
             mes("You don't have space to carry that.");
@@ -24,8 +48,6 @@ switch_obj(last_useitem) {
         def_obj $used_bellow = last_useitem;
 
         if (inv_total(inv, obj_2875) >= 3) {
-            mes ("branch A");
-
             mes("One of your bloated toads manages to escape.");
 
             // TODO does this spawn at players feet?
