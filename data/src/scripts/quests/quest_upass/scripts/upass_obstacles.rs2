@@ -1,0 +1,44 @@
+[oploc1,loc_3309]
+def_int $dir; 
+def_coord $end;
+if(coordz(coord) > coordz(loc_coord)) {
+    $dir = ^exact_south;
+    $end = movecoord(loc_coord, 0, 0, -1);
+} else if(coordz(coord) < coordz(loc_coord)) {
+    $dir = ^exact_north;
+    $end = movecoord(loc_coord, 0, 0, 1);
+} else if(coordx(coord) > coordx(loc_coord)) {
+    $dir = ^exact_west;
+    $end = movecoord(loc_coord, -1, 0, 0);
+} else {
+    $dir = ^exact_east; 
+    $end = movecoord(loc_coord, 1, 0, 0);
+}
+p_delay(0);
+mes("You climb onto the rock...");
+mes("...and step down the other side.");
+~agility_exactmove(human_walk_fence_north, 0, 1, coord, $end, 0, 60, $dir, true); // probably same seq for all directions
+
+[oploc1,loc_3263]
+mes("You try to cross the swamp...");
+p_teleport(loc_coord);
+p_delay(1);
+say("Gulp!");
+~bas_set_all(human_drowning);
+p_delay(2);
+mes("...but you are pulled below.");
+p_delay(0);
+~update_bas;
+p_teleport(0_38_150_53_49);
+anim(seq_534, 0);
+say("Aargh!");
+p_delay(1);
+~damage_self(calc((stat(hitpoints) * 15) / 100));
+
+[oploc1,loc_3265]
+anim(human_reachforladdertop, 0);
+mes("You climb up the rocks and into a dark tunnel...");
+p_delay(3);
+p_teleport(0_38_151_50_51);
+p_delay(1);
+mes("...you surface by the swamp, covered in muck.");

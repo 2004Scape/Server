@@ -1,0 +1,38 @@
+[timer,iban_say]
+
+
+[oploc1,loc_3213]
+if(%biohazard_progress < ^biohazard_complete) {
+    mes("You must first complete the biohazard quest before you can enter.");
+    return;
+}
+if(%upass_progress < ^upass_started) {
+    mes("You must talk to King Lathas before you can enter.");
+    return;
+}
+mes("You cautiously enter the cave...");
+p_delay(3);
+p_teleport(0_38_151_62_52);
+
+[oploc1,loc_3214]
+// https://youtu.be/nWnu0s4z_jE?si=oyWMT5f6h29uiyB8&t=909, fade and seq probably added in late 2005/early 2006
+mes("You leave the underground pass.");
+p_delay(3);
+p_teleport(0_38_51_4_51);
+
+[oploc1,loc_3295]
+mes("The writing seems to have been scratched into the rock with bare hands.");
+mes("It reads...");
+if_settext(stone:com_2, ^string_empty);
+if_settext(stone:com_3, ^string_empty);
+if_settext(stone:com_4, "All those who thirst for knowledge,");
+if_settext(stone:com_5, "Bow down to the lord.");
+if_settext(stone:com_6, "All you that crave eternal life,");
+if_settext(stone:com_7, "Come and meet your god.");
+if_settext(stone:com_8, "For no man nor beast");
+if_settext(stone:com_9, "can cast a spell");
+if_settext(stone:com_10, "against the wake of eternal hell.");
+if_settext(stone:com_11, ^string_empty);
+if_settext(stone:com_12, ^string_empty);
+if_settext(stone:com_13, ^string_empty);
+if_openmainmodal(stone);
