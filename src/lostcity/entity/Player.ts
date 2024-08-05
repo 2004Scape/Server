@@ -823,7 +823,7 @@ export default class Player extends PathingEntity {
 
     processInteraction() {
         if (this.target === null || !this.canAccess()) {
-            this.updateMovement();
+            this.updateMovement(false);
             return;
         }
 
