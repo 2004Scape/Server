@@ -297,10 +297,9 @@ export class NetworkPlayer extends Player {
             const zone: Zone = World.getZoneIndex(zoneIndex);
             if (!loadedZones.has(zone.index)) {
                 zone.writeFullFollows(this);
-            } else {
-                zone.writePartialEncloses(this);
-                zone.writePartialFollows(this);
             }
+            zone.writePartialEncloses(this);
+            zone.writePartialFollows(this);
             loadedZones.add(zone.index);
         }
     }

@@ -395,7 +395,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_hard
-param=trail_desc,46 is my number.|My body is the colour of burnt orange and crawls among those with eight.|Three mouths I have, yet I cannot eat.|My blinking blue eye hides my grave.
+param=trail_desc,46 is my number.|My body is the colour of burnt orange|and crawls among those with eight.|Three mouths I have, yet I cannot|eat.|My blinking blue eye hides my grave.
 param=trail_casket,trail_casket_hard_riddle_exp010
 param=trail_coord,0_49_60_34_45
 

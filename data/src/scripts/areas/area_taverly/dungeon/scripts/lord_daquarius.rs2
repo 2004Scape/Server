@@ -1,0 +1,6 @@
+//lord daquarius has no dialogue for us
+//[opnpc1,lord_daquarius]
+//~chatplayer("<p,neutral>Hello");
+//~chatnpc("<p,quiz>What want you, with the Lord of the Kinshra?|Speak!");
+//~chatplayer("<p,neutral>Erm, nothing actually.");
+//~chatnpc("<p,angry>Then begone knave, before I have my Knights put you to the sword!");

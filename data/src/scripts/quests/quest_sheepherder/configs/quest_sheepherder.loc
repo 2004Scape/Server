@@ -1,0 +1,24 @@
+[furnace2]
+name=Furnace
+desc=Very hot.
+model=model_loc_165
+width=3
+length=3
+forceapproach=east
+
+[sheepherder_gate_left]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+active=yes
+op1=Open
+category=sheepherder_gate
+
+[sheepherder_gate_right]
+name=Gate
+desc=A wooden gate.
+model=model_loc_47
+active=yes
+mirror=yes
+op1=Open
+category=sheepherder_gate

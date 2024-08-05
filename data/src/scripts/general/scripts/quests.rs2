@@ -84,6 +84,10 @@ if (%sheep_progress = ^sheep_complete) {
     $questpoints = add($questpoints, ^sheep_questpoints);
 }
 
+if (%fluffs_progress = ^fluffs_complete) {
+    $questpoints = add($questpoints, ^fluffs_questpoints);
+}
+
 if (%demon_progress = ^demon_complete) {
     $questpoints = add($questpoints, ^demon_questpoints);
 }
@@ -192,12 +196,20 @@ if (%biohazard_progress >= ^biohazard_complete) {
     $questpoints = add($questpoints, ^biohazard_questpoints);
 }
 
+if (%sheepherder_progress >= ^sheepherder_complete) {
+    $questpoints = add($questpoints, ^sheepherder_questpoints);
+}
+
 if (%mcannon_progress = ^mcannon_complete) {
     $questpoints = add($questpoints, ^mcannon_questpoints);
 }
 
 if (~get_cog_progress = ^quest_cog_complete) {
     $questpoints = add($questpoints, ^cog_questpoints);
+}
+
+if (%grandtree_progress = ^grandtree_complete) {
+    $questpoints = add($questpoints, ^grandtree_questpoints);
 }
 
 %questpoints = $questpoints;
@@ -213,6 +225,7 @@ if (~get_cog_progress = ^quest_cog_complete) {
 ~send_quest_progress_colour(questlist:druid, %druid_progress, ^druid_complete);
 ~send_quest_progress_colour(questlist:gobdip, %gobdip_progress, ^gobdip_complete);
 ~send_quest_progress_colour(questlist:sheep, %sheep_progress, ^sheep_complete);
+~send_quest_progress_colour(questlist:fluffs, %fluffs_progress, ^fluffs_complete);
 ~send_quest_progress_colour(questlist:demon, %demon_progress, ^demon_complete);
 ~send_quest_progress_colour(questlist:prince, %prince_progress, ^prince_complete);
 ~send_quest_progress_colour(questlist:fortress, %blackknight_progress, ^blackknight_complete);
@@ -244,8 +257,10 @@ if(%phoenixgang_progress > 0 & %blackarmgang_progress ! ^blackarmgang_complete) 
 ~send_quest_progress_colour(questlist:junglepotion, %junglepotion_progress, ^junglepotion_complete);
 ~send_quest_progress_colour(questlist:ikov, %ikov_progress, ^ikov_completed_armadyl);
 ~send_quest_progress_colour(questlist:biohazard, %biohazard_progress, ^biohazard_complete);
+~send_quest_progress_colour(questlist:sheepherder, %sheepherder_progress, ^sheepherder_complete);
 ~send_quest_progress_colour(questlist:mcannon, %mcannon_progress, ^mcannon_complete);
 ~send_quest_progress_colour(questlist:cog, ~get_cog_progress, ^quest_cog_complete);
+~send_quest_progress_colour(questlist:grandtree, %grandtree_progress, ^grandtree_complete);
 if_settab(questlist, ^tab_quest_journal);
 
 if (%drunkmonk_progress >= ^drunkmonk_spoken_to_omad) {

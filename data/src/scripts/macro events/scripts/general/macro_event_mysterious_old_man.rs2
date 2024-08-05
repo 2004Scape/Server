@@ -4,9 +4,10 @@ sound_synth(smokepuff, 0, 0);
 npc_anim(emote_bow, 20);
 npc_say("Greetings <displayname>!");
 %npc_attacking_uid = uid;
-npc_delay(1);
-npc_setmode(playerfollow);
-npc_queue(4, 0, 20);
+// todo: this invalidates the protected player pointer
+// npc_delay(1);
+// npc_setmode(playerfollow);
+// npc_queue(4, 0, 20);
 
 [ai_queue4,macro_event_mysterious_old_man_general]
 // other videos:
@@ -15,7 +16,7 @@ npc_queue(4, 0, 20);
 // warnings https://youtu.be/Ai89wqupYqA
 // https://youtu.be/HpmsgVshwxg?t=267
 if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event = ^no_macro_event) {
+    if (%macro_event_uid ! npc_uid) {
         npc_queue(5, 0, 2); // just incase
         return;
     }
@@ -57,11 +58,12 @@ if (uid ! %npc_attacking_uid) {
     }
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event_uid ! npc_uid) {
     ~chatnpc("<p,neutral>Goodbye.");
     return;
 }
 %macro_event = ^no_macro_event;
+%macro_event_uid = null;
 inv_add(inv, ~macro_event_mysterious_old_man_general_reward);
 // dialogue taken from osrs. Neutral is a guess.
 npc_queue(6, 0, 2); // say goodbye to player
@@ -106,5 +108,7 @@ if (~macro_event_lost = true) {
     return;
 }
 if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
+    if (%macro_event_uid = npc_uid) {
+        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
+    }
 }

@@ -64,19 +64,6 @@ if(inv_total(inv, plague_sample) > 0) {
     mes("The plague sample is too delicate...it disintegrates in the crossing.");
     return;
 }
-if (%gnomeball_progress = ^gnomeball_game_started) {
-    mes("You hear the ref call you out of the game as you leave.");
-    def_int $ball_inv = inv_total(inv, gnomeball);
-    def_int $ball_worn = inv_total(worn, gnomeball);
-    if ($ball_inv > 0) {
-        inv_del(inv, gnomeball, $ball_inv);
-    }
-    if ($ball_worn > 0) {
-        inv_del(worn, gnomeball, $ball_worn);
-    }
-    ~gnomeball_reset;
-}
-~update_all(null);
 
 [proc,pre_tele_checks](coord $coord)(boolean)
 if (~inzone_coord_pair_table(trawler_wreck_zones, $coord) = true) {

@@ -24,20 +24,14 @@ inv_add(inv, pot_empty, 1);
 inv_add(inv, raw_swamp_paste, 1);
 
 [opheldu,damp_sticks]
-if(last_useitem = broken_glass) {
-    @dry_damp_sticks;
-}
-~displaymessage(^dm_default);
-
-[opheldu,broken_glass]
-if(last_useitem = damp_sticks) {
+if(last_useitem = seaslug_broken_glass) {
     @dry_damp_sticks;
 }
 ~displaymessage(^dm_default);
 
 [label,dry_damp_sticks] // 1-1 RSC, combined messages
 mes("You hold the glass to the sun above the damp sticks.");
-p_delay(1);
+p_delay(2); // TODO: 2t, adjust when delay made consistent
 mes("The glass acts like a lens and drys the sticks out.");
 inv_del(inv, damp_sticks, 1);
 inv_add(inv, dry_sticks, 1);

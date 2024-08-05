@@ -1,0 +1,159 @@
+[if_button,glidermap:com_21] @gnomeglider_fly(^gandius);
+[if_button,glidermap:com_22] @gnomeglider_fly(^ta_quir_priw);
+[if_button,glidermap:com_23] @gnomeglider_fly(^sindarpos);
+[if_button,glidermap:com_24] @gnomeglider_fly(^lemanto_andra);
+[if_button,glidermap:com_25] @gnomeglider_fly(^kar_hewo);
+
+[label,gnomeglider_fly](coord $dest)
+// glider npcs don't stand still and the players coord isn't going to be consistent so we need to inzone this
+def_coord $start_pos = ~calc_gliderstart;
+if($start_pos = $dest) {
+    mes("You're already there.");
+    return;
+}
+if($start_pos ! ^ta_quir_priw & $dest ! ^ta_quir_priw) {
+    // https://external-preview.redd.it/-ll9vsImcQ_2VDpDv7teXZVi4dyOtkkeWotM3-OF9EA.png?auto=webp&s=4d22cba1b9a92847a58ba2df30d8da33aef2595a
+    // https://oldschool.runescape.wiki/w/Update:In-game_Name_Changing_%26_Sortable_Lists
+    mes("You can't go there at the moment.");
+    return;
+}
+%glider_takeoff = ~calc_glidervar($start_pos, $dest);
+p_delay(1); // 1t before teleport, 3t before if_close
+p_teleport(map_findsquare($dest, 0, 1, ^map_findsquare_lineofwalk));
+p_delay(2);
+%glider_takeoff = -1;
+if_close;
+
+[proc,calc_gliderstart](coord)
+if(inzone(movecoord(^ta_quir_priw, -8, 0, -8), movecoord(^ta_quir_priw, 8, 0, 8), coord) = true) {
+    return (^ta_quir_priw);
+} else if(inzone(movecoord(^gandius, -8, 0, -8), movecoord(^gandius, 8, 0, 8), coord) = true) {
+    return (^gandius);
+} else if(inzone(movecoord(^kar_hewo, -8, 0, -8), movecoord(^kar_hewo, 8, 0, 8), coord) = true) {
+    return (^kar_hewo);
+}  else if(inzone(movecoord(^sindarpos, -8, 0, -8), movecoord(^sindarpos, 8, 0, 8), coord) = true) {
+    return (^sindarpos);
+}
+return (^ta_quir_priw);
+
+[proc,calc_glidervar](coord $start_pos, coord $dest)(int)
+if($start_pos = ^ta_quir_priw & $dest = ^sindarpos) {
+    return (1);
+} else if($start_pos = ^sindarpos & $dest = ^ta_quir_priw) {
+    return (2);
+} else if($start_pos = ^ta_quir_priw & $dest = ^lemanto_andra) {
+    return (3);
+} else if($start_pos = ^ta_quir_priw & $dest = ^kar_hewo) {
+    return (4);
+} else if($start_pos = ^kar_hewo & $dest = ^ta_quir_priw) {
+    return (5);
+} else if($start_pos = ^gandius & $dest = ^ta_quir_priw) {
+    return (6);
+} else if($start_pos = ^ta_quir_priw & $dest = ^gandius) {
+    return (7);
+}
+return (-1);
+
+[opnpc1,gnome_pilot]
+if(inzone(0_45_47_35_42, 0_45_47_45_53, npc_coord) = true) {
+    @gnome_pilot_crash_karamja;
+}
+if(inzone(movecoord(^lemanto_andra, -8, 0, -8), movecoord(^lemanto_andra, 8, 0, 8), npc_coord) = true) {
+    @gnome_pilot_crash_varrock;
+}
+if(%grandtree_progress = ^grandtree_released_prison & inzone(3_38_54_31_43, 3_38_54_35_47, npc_coord) = true) {
+    ~chatnpc("<p,neutral>Hi, the King said that you need to leave?");
+    ~chatplayer("<p,sad>Apparently humans are invading!");
+    ~chatnpc("<p,angry>I find that hard to believe!|I have lots of human friends.");
+    ~chatplayer("<p,sad>I don't understand it either!");
+    ~chatnpc("<p,neutral>So where to?");
+    switch_int(~p_choice2("Take me to Karamja please!", 1, "Not anywhere for now!", 2)) {
+        // https://youtu.be/LFvLBRCxFwk?si=LoGnAkbVhdKeQtU0&t=689
+        case 1:
+            ~chatplayer("<p,happy>Take me to Karamja please!");
+            ~chatnpc("<p,happy>OK! You're the boss!|Hold on tight, it'll be a rough ride!");
+            if_close;
+            p_teleport(0_45_47_37_50);
+            p_delay(3);
+            // https://youtu.be/-jfueZpRhzU?si=yYCGWkah1TccT9cL&t=621
+            ~chatnpc("<p,sad>Sorry about that.");
+            ~chatnpc("<p,angry>That turbulence over the Karamja Volcano was a bit unexpected, and the area round here isn't well suited for emergency landing. Still! we're still alive that's the main thing. Are you OK?");
+            ~chatplayer("<p,neutral>I'm fine, I can't say the same for your glider!");
+            // OSRS dialogue here mentions an npc added in aug 2006, so I think it must've been changed at some point after that
+            ~chatnpc("<p,sad>I don't think I can fix this.|Looks like we'll be heading back by foot.");
+            ~chatplayer("<p,neutral>Where's the shipyard from here?");
+            ~chatnpc("<p,neutral>I think I saw some buildings on the coast east of here while we were crashing. I'd have a look there.");
+            ~chatnpc("<p,neutral>Take care adventurer!");
+            ~chatplayer("<p,neutral>Take care little man.");
+        case 2:
+            ~chatplayer("<p,neutral>Not anywhere for now!");
+            ~chatnpc("<p,neutral>OK. I'll be here for when you're ready.");
+    }
+    return;
+}
+if(%grandtree_progress = ^grandtree_complete) {
+    @multi3("Can you take me on the glider?", gnome_pilot_glider, "Why are gliders better than other transport?", gnome_pilot_transport, "Sorry, I don't want anything now.", gnome_pilot_sorry);
+}
+~chatnpc("<p,neutral>Welcome to Gnome Air!");
+@multi4("What's Gnome Air?", gnome_pilot_what, "Where can you take me?", gnome_pilot_where, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+[label,gnome_pilot_glider]
+~chatplayer("<p,quiz>Can you take me on the glider?");
+~chatnpc("<p,happy>Of course!");
+if_openmainmodal(glidermap);
+
+[label,gnome_pilot_transport]
+~chatplayer("<p,neutral>Why are gliders better than other transport?");
+~chatnpc("<p,happy>Oh we have a whole network! It's wonderful for getting to hard to reach places.");
+~chatnpc("<p,happy>There are so many places where your teleports cannot reach!");
+~chatplayer("<p,happy>How did you all manage to build such an established network?");
+~chatnpc("<p,neutral>I think you'll find that is a gnome trade secret!");
+@multi2("Can you take me on the glider?", gnome_pilot_glider, "Sorry, I don't want anything now.", gnome_pilot_sorry);
+
+[label,gnome_pilot_sorry]
+~chatnpc("<p,confused>Sorry, I don't want anything now.");
+
+[label,gnome_pilot_what]
+~chatplayer("<p,quiz>What's Gnome Air?");
+~chatnpc("<p,happy>Gnome Air is the finest airline in RuneScape!");
+@multi3("Where can you take me?", gnome_pilot_where, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+[label,gnome_pilot_where]
+~chatplayer("<p,quiz>Where can you take me?");
+~chatnpc("<p,sad>Glough has ordered that I only take gnomes on Gnome Air.");
+@multi3("What's Gnome Air?", gnome_pilot_what, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+[label,gnome_pilot_how]
+~chatplayer("<p,quiz>How much for one-way to Varrock?");
+~chatnpc("<p,sad>I can't take you anywhere.");
+~chatplayer("<p,sad>How come?");
+~chatnpc("<p,sad>I would, but Glough has told me not to take humans on Gnome Air.");
+@multi3("What's Gnome Air?", gnome_pilot_what, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
+
+[label,gnome_pilot_leave]
+~chatplayer("<p,confused>I'll leave you to it.");
+
+[label,gnome_pilot_crash_karamja]
+if(%grandtree_progress >= ^grandtree_obtained_lumber_order) {
+    // from OSRS, I think this is where the original dialogue ends
+    ~chatnpc("<p,sad>I don't think I can fix this.|Looks like I'll be heading back by foot.");
+    return;
+} else if (%grandtree_progress = ^grandtree_released_prison) {
+    ~chatplayer("<p,neutral>Where's the shipyard from here?");
+    ~chatnpc("<p,neutral>It's east of here. I think I saw some buildings on the coast while we were crashing...");
+} else {
+    @gnome_pilot_creative;
+}
+
+[label,gnome_pilot_crash_varrock]
+if(%grandtree_progress = ^grandtree_complete) {
+    ~chatnpc("<p,neutral>Ah, how embarrassing.");
+    ~chatplayer("<p,quiz>What happened?");
+    ~chatnpc("<p,neutral>A bit of a technical hitch with the landing gear. I won't be able to fly you anywhere, sorry.");
+} else {
+    @gnome_pilot_creative;
+}
+
+[label,gnome_pilot_creative]
+~chatplayer("<p,quiz>What happened here?");
+~chatnpc("<p,shifty>Call it 'creative landing'.");

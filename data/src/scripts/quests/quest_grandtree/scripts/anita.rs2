@@ -1,0 +1,23 @@
+[opnpc1,anita]
+// https://youtu.be/LFvLBRCxFwk?si=RAHjKaM8irUyNcTj&t=1085
+if((%grandtree_progress = ^grandtree_clue_charlie | %grandtree_progress = ^grandtree_found_invasion_plans) & ~obj_gettotal(gloughs_key) = 0) {
+    ~chatplayer("<p,neutral>Hello there.");
+    ~chatnpc("<p,neutral>Oh hello, I've seen you with the King.");
+    ~chatplayer("<p,neutral>Yes, I'm helping him with a problem.");
+    ~chatnpc("<p,quiz>You must know my boyfriend Glough then?");
+    ~chatplayer("<p,neutral>Indeed!");
+    ~chatnpc("<p,quiz>Could you do me a favour?");
+    ~chatplayer("<p,confused>I suppose so.");
+    ~chatnpc("<p,neutral>Please give this key to Glough, he left it here last night.");
+    if(inv_freespace(inv) = 0) {
+        // https://youtu.be/ZNgxsI_jH_E?si=O4Rsx-7jsNSHtGrh&t=640
+        ~chatnpc("<p,sad>You can't carry anymore. Come back when you have some space.");
+        return;
+    }
+    ~objboxt(gloughs_key, "Anita gives you a key.");
+    inv_add(inv, gloughs_key, 1);
+    ~chatnpc("<p,neutral>Thanks a lot.");
+    ~chatplayer("<p,shifty>No...thank you!");
+    return;
+}
+~mesbox("Anita is busy cleaning.");

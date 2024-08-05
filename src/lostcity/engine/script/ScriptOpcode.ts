@@ -267,6 +267,7 @@ enum ScriptOpcode {
     OBJ_PARAM,
     OBJ_TAKEITEM,
     OBJ_TYPE,
+    OBJ_FIND,
 
     // Npc config ops (4000-4099)
     NC_CATEGORY = 4000,

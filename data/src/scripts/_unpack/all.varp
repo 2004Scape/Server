@@ -76,8 +76,6 @@ protect=no
 [autocast_spell]
 scope=perm
 
-[varp_61]
-
 [gobdip_progress]
 scope=perm
 
@@ -191,18 +189,14 @@ transmit=yes
 [open_book]
 type=obj
 
-[gnomeball_progress]
-scope=perm
-
-[varp_152]
-
 [glider_takeoff]
 transmit=yes
 
 [shantay_jail_progress]
 scope=perm
 
-[varp_155]
+[gnomeball_progress]
+scope=perm
 
 [upass_progress]
 scope=perm
@@ -215,10 +209,6 @@ scope=perm
 
 [elena_progress]
 scope=perm
-
-[varp_181]
-
-[varp_182]
 
 [varp_189]
 
@@ -380,10 +370,6 @@ scope=perm
 
 [charge_god_spell]
 scope=perm
-
-[varp_275]
-
-[varp_276]
 
 [antifire]
 scope=perm

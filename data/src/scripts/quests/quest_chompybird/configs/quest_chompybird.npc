@@ -1,0 +1,100 @@
+
+[npc_1010]
+vislevel=hide
+name=Rantz
+desc=A large dim looking humanoid.
+size=2
+walkanim=ogre_walk
+readyanim=ogre_ready
+op1=Talk
+model1=model_2878_npc
+model2=model_3442_npc
+head1=model_141_npc_head
+wanderrange=2
+param=death_anim,ogre_death
+param=death_sound,giant_death
+
+[npc_1011]
+vislevel=hide
+name=Fycie
+desc=This must be Rantz's daughter.
+walkanim=ogre_walk
+readyanim=ogre_ready
+op1=Talk
+resizeh=128
+resizev=90
+recol1s=7362
+recol1d=15718
+recol2s=27448
+recol2d=16897
+model1=model_2878_npc
+model2=model_3441_npc
+head1=model_3444_npc_head
+wanderrange=3
+param=death_anim,ogre_death
+param=death_sound,giant_death
+
+[npc_1012]
+vislevel=hide
+name=Bugs
+desc=This must be Rantz's son.
+walkanim=ogre_walk
+readyanim=ogre_ready
+op1=Talk
+resizeh=128
+resizev=90
+recol1s=7362
+recol1d=15718
+recol2s=27448
+recol2d=9376
+model1=model_2878_npc
+model2=model_3441_npc
+head1=model_3444_npc_head
+wanderrange=3
+param=death_anim,ogre_death
+param=death_sound,giant_death
+
+[npc_1013]
+vislevel=hide
+name=Swamp toad
+desc=A green skinned croaker, loves the swamp.
+readyanim=chompy_toad_ready
+walkanim=chompy_toad_walk
+model1=model_3447_obj
+
+[npc_1014]
+vislevel=hide
+name=Bloated Toad
+desc=A green skinned croaker.
+readyanim=chompy_toad_permadeath
+walkanim=chompy_toad_permadeath
+model1=model_3447_obj
+wanderrange=0
+moverestrict=nomove
+
+[npc_1015]
+name=Chompy bird
+desc=A large boisterous bird, a delicacy for ogres.
+walkanim=chompy_walk
+readyanim=chompy_ready
+resizeh=180
+resizev=180
+op5=Attack
+vislevel=6
+model1=model_3445_obj
+param=attack_sound,chompy_bird_attack
+param=defend_sound,chompy_bird_hit
+param=death_sound,chompy_bird_death
+
+[npc_1016]
+vislevel=hide
+name=Chompy bird
+desc=A once boisterous bird, closer to being an ogre delicacy.
+walkanim=seq_1010
+readyanim=seq_1010
+op4=Pluck
+resizeh=180
+resizev=180
+model1=model_3445_obj
+wanderrange=0
+moverestrict=nomove

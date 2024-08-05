@@ -1,12 +1,3 @@
-[furnace2]
-name=Furnace
-desc=Very hot.
-model=model_loc_165
-width=3
-length=3
-forceapproach=east
-category=smithing_furnace
-
 [furnace1]
 name=Furnace
 desc=A hot place for forging things in.

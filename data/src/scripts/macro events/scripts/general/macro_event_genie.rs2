@@ -3,13 +3,14 @@ spotanim_map(small_smokepuff, npc_coord, 124, 0);
 sound_synth(genie_appear, 0, 0);
 npc_say("Greetings <text_gender("master", "mistress")> <displayname>!");
 %npc_attacking_uid = uid;
-npc_delay(1);
-npc_setmode(playerfollow);
-npc_queue(4, 0, 20);
+// todo: this invalidates the protected player pointer
+// npc_delay(1);
+// npc_setmode(playerfollow);
+// npc_queue(4, 0, 20);
 
 [ai_queue4,macro_event_genie]
 if (finduid(%npc_attacking_uid) = true) {
-    if (%macro_event = ^no_macro_event) {
+    if (%macro_event_uid ! npc_uid) {
         npc_queue(5, 0, 2); // just incase
         return;
     }
@@ -58,10 +59,11 @@ if (uid ! %npc_attacking_uid) {
     }
     return;
 }
-if (%macro_event = ^no_macro_event) {
+if (%macro_event_uid ! npc_uid) {
     ~chatnpc("<p,neutral>Have a nice day, <text_gender("master", "mistress")>.");
     return;
 }
+%macro_event_uid = null;
 %macro_event = ^no_macro_event;
 inv_add(inv, lamp, 1);
 // delays are taken from this video: https://youtu.be/EN4c2hV65Qk?list=PLn23LiLYLb1Y3P9S9qZbijcJihiD416jT
@@ -76,5 +78,7 @@ if (~macro_event_lost = true) {
     return;
 }
 if (finduid(%npc_attacking_uid) = true) {
-    npc_setmode(playerfollow);
+    if (%macro_event_uid = npc_uid) {
+        npc_setmode(playerfollow); // this is here because they used ~chatnpc back in the day, which sets the npc
+    }
 }

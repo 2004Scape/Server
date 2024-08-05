@@ -1,0 +1,135 @@
+[opheld4,obj_2875]
+// release all
+// TODO tbc message and actual behaviour
+inv_del(inv, obj_2875, inv_size(inv));
+mes("You release the bloated toads.");
+
+[opheld5,obj_2875]
+// release
+// TODO tbc message and actual behaviour
+inv_delslot(inv, last_slot);
+mes("You release the bloated toad.");
+
+[opheld1,obj_2875]
+if (%chompybird_progress < ^chompybird_shown_toad) {
+    ~objboxt(obj_2875,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
+    return;
+}
+
+// TODO tbc which quest states show this message
+// TODO tbc distance
+if (distance(coord, 0_41_46_12_21) > 5) {
+    mes("This is too far away for Rantz to shoot the chompy bird.");
+    return;
+}
+
+anim(human_pickupfloor, 0);
+
+p_delay(0);
+
+// TODO tbc any npc? or just toads
+npc_findallany(coord, 0, 0);
+if (npc_findnext = true) {
+    mes("There is a bloated toad already placed at this location.");
+    return;
+}
+
+inv_del(inv, obj_2875, 1);
+npc_add(coord, npc_1014, 102);
+npc_queue(4, 0, 25);
+
+if (%chompybird_progress = ^chompybird_shown_toad) {
+    %chompybird_progress = ^chompybird_dropped_toad;
+}
+
+mes("You carefully place the bloated toad bait.");
+
+p_delay(0);
+if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // check west
+    p_teleport(movecoord(coord, -1, 0, 0));
+    p_delay(0);
+    return;
+}
+
+if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
+    p_teleport(movecoord(coord, 1, 0, 0));
+    p_delay(0);
+    return;
+}
+
+if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
+    p_teleport(movecoord(coord, 0, 0, 1));
+    p_delay(0);
+    return;
+}
+
+if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
+    p_teleport(movecoord(coord, 0, 0, -1));
+    p_delay(0);
+    return;
+}
+
+// the code below is a bit of a mess, its meant to handle the
+// "each toad only spawns 1 chompy" situation while still exploding them after 4 attempts
+// so there are a parallel set of queues
+
+// first attempt, has not spawned a chompy yet
+[ai_queue4,npc_1014]
+if (random(5) = 1) {
+    npc_say("[debug] chompy spawned");
+    npc_queue(8, 0, 25);
+} else {
+    npc_queue(5, 0, 25);
+}
+
+// second attempt, has not spawned a chompy yet
+[ai_queue5,npc_1014]
+if (random(5) = 1) {
+    npc_say("[debug] chompy spawned");
+    npc_queue(9, 0, 25);
+} else {
+    npc_queue(6, 0, 25);
+}
+
+// third attempt, has not spawned a chompy yet
+[ai_queue6,npc_1014]
+if (random(5) = 1) {
+    npc_say("[debug] chompy spawned");
+    npc_queue(10, 0, 25);
+} else {
+    npc_queue(7, 0, 25);
+}
+
+// fourth attempt, has not spawned a chompy yet
+[ai_queue7,npc_1014]
+if (random(5) = 1) {
+    npc_say("[debug] chompy spawned");
+}
+~toad_explode();
+
+// second attempt, HAS already spawned a chompy
+[ai_queue8,npc_1014]
+npc_queue(9, 0, 25);
+
+// third attempt, HAS already spawned a chompy
+[ai_queue9,npc_1014]
+npc_queue(10, 0, 25);
+
+// fourth attempt, HAS already spawned a chompy
+[ai_queue10,npc_1014]
+~toad_explode();
+
+[proc,toad_explode]()
+// TODO tbc anim
+spotanim_npc(smokepuff_large, 124, 0);
+npc_delay(0);
+
+huntall(npc_coord, 1, 1);
+while (.huntnext = true) {
+    .mes("You're hit by bits of exploding toad!");
+
+    // is damage random per-player or per-toad?
+    ~.damage_self(random(2));
+}
+
+npc_del;

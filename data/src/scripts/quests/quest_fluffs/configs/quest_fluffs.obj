@@ -1,0 +1,434 @@
+[doogle_leaves]
+name=Doogle leaves
+desc=A tasty herb good for seasoning.
+cost=2
+model=model_2364_obj
+recol1s=15855
+recol1d=13068
+recol2s=26425
+recol2d=18417
+members=yes
+2dxof=4
+2dzoom=700
+2dyan=1588
+2dxan=376
+weight=7g
+tradeable=yes
+
+[seasoned_sardine]
+name=Seasoned sardine
+desc=Sardine flavoured with doogle leaves.
+cost=10
+model=model_2357_obj
+recol1s=15855
+recol1d=13068
+recol2s=26425
+recol2d=18417
+members=yes
+2dxof=-1
+2dyof=13
+2dzoom=820
+2dyan=1756
+2dzan=1964
+2dxan=320
+weight=120g
+tradeable=yes
+
+[cat_training_medal]
+cost=350
+name=Cat training medal
+desc=For feline training expertise.
+model=model_2400_obj
+members=yes
+2dyof=9
+2dzoom=500
+2dyan=120
+2dxan=296
+iop2=Wear
+wearpos=front
+manwear=model_289_obj_wear,0
+womanwear=model_453_obj_wear,0
+weight=10g
+tradeable=yes
+
+[fluffs_kitten]
+name=Fluffs' kitten
+desc=It looks like it's lost.
+model=model_3006_obj
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+weight=750g
+category=category_81
+members=yes
+op1=Use
+
+[kitten_greyblack]
+name=Pet kitten
+desc=This kitten seems to like you.
+model=model_3009_obj
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=750g
+category=kitten
+param=follower_id,follower_kitten_greyblack
+//https://chisel.weirdgloop.org/structs_rs3/index.html?type=items&id=1555
+
+[kitten_white]
+name=Pet kitten
+desc=This kitten seems to like you.
+model=model_3009_obj
+recol1s=32767
+recol1d=4228
+recol2s=4228
+recol2d=15855
+recol3s=15855
+recol3d=32767
+recol4s=31710
+recol4d=0
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=750g
+category=kitten
+param=follower_id,follower_kitten_white
+
+[kitten_brown]
+name=Pet kitten
+desc=This kitten seems to like you.
+model=model_3009_obj
+recol1s=15855
+recol1d=19873
+recol2s=4228
+recol2d=13537
+recol3s=32767
+recol3d=15685
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=750g
+category=kitten
+param=follower_id,follower_kitten_brown
+
+[kitten_black]
+name=Pet kitten
+desc=This kitten seems to like you.
+model=model_3009_obj
+recol1s=15855
+recol1d=3171
+recol2s=4228
+recol2d=3171
+recol3s=32767
+recol3d=8456
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=750g
+category=kitten
+param=follower_id,follower_kitten_black
+
+[kitten_greybrown]
+name=Pet kitten
+desc=This kitten seems to like you.
+model=model_3009_obj
+recol1s=15855
+recol1d=10432
+recol2s=4228
+recol2d=15855
+recol3s=32767
+recol3d=11627
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=750g
+category=kitten
+param=follower_id,follower_kitten_greybrown
+
+[kitten_greyblue]
+name=Pet kitten
+desc=This kitten seems to like you.
+model=model_3009_obj
+recol1s=15855
+recol1d=8459
+recol2s=4228
+recol2d=16911
+recol3s=32767
+recol3d=11627
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=750g
+category=kitten
+param=follower_id,follower_kitten_greyblue
+
+[cat_greyblack]
+name=Pet cat
+desc=This cat definitely likes you.
+model=model_3006_obj
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=1500g
+category=cat
+param=follower_id,follower_cat_greyblack
+
+[cat_white]
+name=Pet cat
+desc=This cat definitely likes you.
+model=model_3006_obj
+recol1s=32767
+recol1d=4228
+recol2s=4228
+recol2d=15855
+recol3s=15855
+recol3d=32767
+recol4s=31710
+recol4d=0
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=1500g
+category=cat
+param=follower_id,follower_cat_white
+
+[cat_brown]
+name=Pet cat
+desc=This cat definitely likes you.
+model=model_3006_obj
+recol1s=15855
+recol1d=19873
+recol2s=4228
+recol2d=13537
+recol3s=32767
+recol3d=15685
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=1500g
+category=cat
+param=follower_id,follower_cat_brown
+
+[cat_black]
+name=Pet cat
+desc=This cat definitely likes you.
+model=model_3006_obj
+recol1s=15855
+recol1d=3171
+recol2s=4228
+recol2d=3171
+recol3s=32767
+recol3d=8456
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=1500g
+category=cat
+param=follower_id,follower_cat_black
+
+[cat_greybrown]
+name=Pet cat
+desc=This cat definitely likes you.
+model=model_3006_obj
+recol1s=15855
+recol1d=10432
+recol2s=4228
+recol2d=15855
+recol3s=32767
+recol3d=11627
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=1500g
+category=cat
+param=follower_id,follower_cat_greybrown
+
+[cat_greyblue]
+name=Pet cat
+desc=This cat definitely likes you.
+model=model_3006_obj
+recol1s=15855
+recol1d=8459
+recol2s=4228
+recol2d=16911
+recol3s=32767
+recol3d=11627
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=1500g
+category=cat
+param=follower_id,follower_cat_greyblue
+
+[overgrown_greyblack]
+name=Pet cat
+desc=This cat is so well fed it can hardly move.
+model=model_3007_obj
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=2500g
+category=overgrown
+param=follower_id,follower_overgrown_greyblack
+
+[overgrown_white]
+name=Pet cat
+desc=This cat is so well fed it can hardly move.
+model=model_3007_obj
+recol1s=32767
+recol1d=4228
+recol2s=4228
+recol2d=15855
+recol3s=15855
+recol3d=32767
+recol4s=31710
+recol4d=0
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=2500g
+category=overgrown
+param=follower_id,follower_overgrown_white
+
+[overgrown_brown]
+name=Pet cat
+desc=This cat is so well fed it can hardly move.
+model=model_3007_obj
+recol1s=15855
+recol1d=19873
+recol2s=4228
+recol2d=13537
+recol3s=32767
+recol3d=15685
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=2500g
+category=overgrown
+param=follower_id,follower_overgrown_brown
+
+[overgrown_black]
+name=Pet cat
+desc=This cat is so well fed it can hardly move.
+model=model_3007_obj
+recol1s=15855
+recol1d=3171
+recol2s=4228
+recol2d=3171
+recol3s=32767
+recol3d=8456
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=2500g
+category=overgrown
+param=follower_id,follower_overgrown_black
+
+[overgrown_greybrown]
+name=Pet cat
+desc=This cat is so well fed it can hardly move.
+model=model_3007_obj
+recol1s=15855
+recol1d=10432
+recol2s=4228
+recol2d=15855
+recol3s=32767
+recol3d=11627
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=2500g
+category=overgrown
+param=follower_id,follower_overgrown_greybrown
+
+[overgrown_greyblue]
+name=Pet cat
+desc=This cat is so well fed it can hardly move.
+model=model_3007_obj
+recol1s=15855
+recol1d=8459
+recol2s=4228
+recol2d=16911
+recol3s=32767
+recol3d=11627
+2dxof=13
+2dyof=21
+2dzoom=880
+2dyan=152
+2dzan=1940
+2dxan=32
+members=yes
+weight=2500g
+category=overgrown
+param=follower_id,follower_overgrown_greyblue

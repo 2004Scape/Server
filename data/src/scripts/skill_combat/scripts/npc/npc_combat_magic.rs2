@@ -83,7 +83,8 @@ def_stat $stat;
 def_int $constant;
 def_int $percent;
 def_int $i = 0;
-while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change)) {
+def_int $spell = db_getfield($spell_data, magic_spell_table:spell, 0);
+while ($i < db_getfieldcount($spell_data, magic_spell_table:stat_change) & $spell ! ^flames_of_zamorak & $spell ! ^claws_of_guthix & $spell ! ^saradomin_strike) {
     $stat, $constant, $percent = db_getfield($spell_data, magic_spell_table:stat_change, $i);
     if (stat($stat) < stat_base($stat)) {
         return(false);

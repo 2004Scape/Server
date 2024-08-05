@@ -1,0 +1,19 @@
+^grandtree_not_started = 0
+^grandtree_started = 10
+^grandtree_spoken_hazelmere = 20
+^grandtree_relayed_message_narnode = 30
+^grandtree_spoken_glough = 40
+^grandtree_found_prisoner = 50
+^grandtree_spoken_prisoner = 60
+^grandtree_found_journal = 70
+^grandtree_released_prison = 80
+^grandtree_obtained_lumber_order = 90
+^grandtree_clue_charlie = 100
+^grandtree_found_invasion_plans = 110
+^grandtree_given_twigs = 120
+^grandtree_unlocked_trapdoor = 130
+^grandtree_defeated_black_demon = 140
+^grandtree_searching_daconia = 150
+
+^narnode_trapdoor_coord = 0_38_54_32_42
+^grandtree_jail_coord = 3_38_54_32_40

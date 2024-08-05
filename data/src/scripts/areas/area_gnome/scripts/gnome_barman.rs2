@@ -1,5 +1,7 @@
 [opnpc1,gnome_barman]
-~chatnpc("<p,happy>Good day to you. What can I get you to drink?");
+// https://media.discordapp.net/attachments/1126857340075905135/1267505354502049883/grandtreebarman.png?ex=66af9f59&is=66ae4dd9&hm=e372c1e1c50c273cde88e52a910f1717216f59e01b0a1d5666e73890a2fdf11d&=&format=webp&quality=lossless&width=491&height=105
+// image from 2005, probably accidental space from removing linebreak (matches rsc)
+~chatnpc("<p,happy>Good day to you.|What can I get you to drink?");
 def_int $choice;
 if (inv_totalcat(inv, category_83) > 0) {
     if(testbit(%barcrawl_progress, ^blurberry_index) = false & inv_total(inv, barcrawl_card) > 0) {
