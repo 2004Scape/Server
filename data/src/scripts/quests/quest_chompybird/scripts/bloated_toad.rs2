@@ -1,14 +1,14 @@
 [opheld4,obj_2875]
 // release all
-// TODO tbc message and actual behaviour
+// TODO spawns toad(s?) on the ground
 inv_del(inv, obj_2875, inv_size(inv));
-mes("You release the bloated toads.");
+mes("You release the toads and see them hop off into the distance.");
 
 [opheld5,obj_2875]
 // release
-// TODO tbc message and actual behaviour
+// TODO spawn toad on the ground
 inv_delslot(inv, last_slot);
-mes("You release the bloated toad.");
+mes("You release the toad and see it hop off into the distance.");
 
 [opheld1,obj_2875]
 if (%chompybird_progress < ^chompybird_shown_toad) {
