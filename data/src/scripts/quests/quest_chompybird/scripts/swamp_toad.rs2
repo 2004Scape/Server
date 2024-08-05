@@ -36,6 +36,3 @@ switch_obj(last_useitem) {
     case default:
         mes("Nothing interesting happens.");
 }
-
-// TODO drop
-// TODO release and release all

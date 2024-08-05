@@ -23,7 +23,7 @@ switch_int(%chompybird_progress) {
                 ~chatplayer("<p,neutral>Er, make you're own 'stabbers'!");
                 ~chatnpc("<p,angry>When I make 'stabbers', I pretend you chompy and practice on you!");
         }
-    case ^chompybird_started, ^chompybird_made_arrows:
+    case ^chompybird_started:
         @return_to_rantz;
     case ^chompybird_given_arrows:
         ~chatnpc("<p,neutral>Hey you creature, you still here?");
@@ -127,7 +127,7 @@ if (inv_total(inv, ogre_arrow) < 6) {
     return;
 }
 
-if (%chompybird_progress = ^chompybird_started) {
+if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = true) {
     ~chatnpc("<p,neutral>Hey, 'dee'se stabbers no good! Did you make dem you's self? YOU go make dem arrows for ME creature!");
     return;
 }
@@ -149,6 +149,7 @@ switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy to
     case 1:
         ~chatplayer("<p,neutral>How do we make the chompys come?");
         ~chatnpc("<p,neutral>Chompys love da fatsy toadies. Toadies get big on der swamp gas and der chompys are licking der lips for em as me is licking lips for da chompy. Da chompys don't like da smaller toadies from nearby swampy.");
+        %chompybird_progress = ^chompybird_kids_play_with_toad;
         ~chatnpc("<p,neutral>Dey's fussie eaters just like Rantz. Fycie an' Bugs play with toadies and blower dey's all times making fatsy toadies.");
         @toadies_questions;
     case 2:

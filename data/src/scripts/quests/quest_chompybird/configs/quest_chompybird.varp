@@ -1,5 +1,6 @@
 [chompybird_progress]
 scope=perm
 
+// likely used for all kinds of quest info
 [chompybird_kills]
 scope=perm
