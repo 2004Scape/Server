@@ -1,18 +1,18 @@
-[opheld4,obj_2875]
+[opheld4,bloated_toad]
 // release all
 // TODO spawns toad(s?) on the ground
-inv_del(inv, obj_2875, inv_size(inv));
+inv_del(inv, bloated_toad, inv_size(inv));
 mes("You release the toads and see them hop off into the distance.");
 
-[opheld5,obj_2875]
+[opheld5,bloated_toad]
 // release
 // TODO spawn toad on the ground
 inv_delslot(inv, last_slot);
 mes("You release the toad and see it hop off into the distance.");
 
-[opheld1,obj_2875]
+[opheld1,bloated_toad]
 if (%chompybird_progress < ^chompybird_shown_toad) {
-    ~objbox(obj_2875,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
+    ~objbox(bloated_toad,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
     return;
 }
 
@@ -31,7 +31,7 @@ if (npc_findnext = true) {
 }
 
 anim(human_pickupfloor, 0);
-inv_del(inv, obj_2875, 1);
+inv_del(inv, bloated_toad, 1);
 
 if (%chompybird_progress = ^chompybird_shown_toad) {
     %chompybird_progress = ^chompybird_dropped_toad;

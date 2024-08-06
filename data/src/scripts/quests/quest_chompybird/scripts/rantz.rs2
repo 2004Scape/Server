@@ -29,7 +29,7 @@ switch_int(%chompybird_progress) {
         ~chatnpc("<p,quiz>Hey you creature, you still here?");
         ~chatnpc("<p,neutral>Da chompy still not coming! We need da fatsy toady to get da chompy, do you got it? Do you got da fatsy toady? Then we can sneaky, sneaky stick da chompy.");
         
-        if (inv_total(inv, obj_2875) = 0) {
+        if (inv_total(inv, bloated_toad) = 0) {
             ~chatplayer("<p,angry>No I haven't got the 'fatsy toady' yet!");
             ~chatnpc("<p,sad>Dat's a pidy... but maybe Rantz can help da creature?");
             @toadies_questions;
@@ -43,7 +43,7 @@ switch_int(%chompybird_progress) {
 
 [opnpcu,npc_1010]
 switch_obj(last_useitem) {
-    case obj_2876:
+    case raw_chompy:
         // TODO mesanim TBC
         ~chatnpc("<p,neutral>Erk! Da's a yukky chompy, I's wants a yummie chompy!");
         
@@ -76,7 +76,7 @@ switch_obj(last_useitem) {
 
         @attempt_give_rantz_arrows;
 
-    case obj_2875:
+    case bloated_toad:
         if (%chompybird_progress = ^chompybird_not_started) {
             // TODO TBC
             mes("Nothing interesting happens.");
@@ -84,7 +84,7 @@ switch_obj(last_useitem) {
         }
 
         if (%chompybird_progress = ^chompybird_shown_toad) {
-            ~objbox(obj_2875,"You show the bloated toad to Rantz.");
+            ~objbox(bloated_toad,"You show the bloated toad to Rantz.");
             ~chatnpc("<p,neutral>Hey creature got da fatsy toady Is you's gonna stick da chompy?");
             return;
         }
@@ -192,7 +192,7 @@ if (p_finduid(uid) = true) {
 }
 
 [label,show_toad]
-~objbox(obj_2875,"You show the bloated toad to Rantz. He nods with approval.");
+~objbox(bloated_toad,"You show the bloated toad to Rantz. He nods with approval.");
 
 ~chatnpc("<p,neutral>Dat's a good fatsy toady, now we's need to put it for da chompy to come.");
 %chompybird_progress = ^chompybird_shown_toad;
