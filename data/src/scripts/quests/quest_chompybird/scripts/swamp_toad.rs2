@@ -1,37 +1,100 @@
+[proc,reduce_ogre_bellows](obj $used_bellow)
+{
+    if ($used_bellow = obj_2872) {
+        inv_del(inv, obj_2872, 1);
+        inv_add(inv, obj_2873, 1);
+    } else if ($used_bellow = obj_2873) {
+        inv_del(inv, obj_2873, 1);
+        inv_add(inv, obj_2874, 1);
+    } else if ($used_bellow = obj_2874) {
+        inv_del(inv, obj_2874, 1);
+        inv_add(inv, obj_2871, 1);
+    }
+}
+
+[proc,come_here_toady]()
+{
+    // TODO face toad towards player and face player towards toad?
+    // TODO sound? in OSRS it's sound 1455
+    say("Come here toady!");
+    anim(human_ogre_bellows_use, 30);
+    spotanim_pl(ogre_bellows_use, 64, 30);
+    npc_anim(chompy_toad_death, 30);
+}
+
 [opnpcu,npc_1013]
 switch_obj(last_useitem) {
-    case obj_2872, obj_2873, obj_2874:
-        def_obj $used_bellow = last_useitem;
-        npc_delay(4);
-
-        mes("You manage to catch the toad and inflate it with the swamp gas.");
-        say("Come here toady!");
-
-        if ($used_bellow = obj_2872) {
-            inv_del(inv, obj_2872, 1);
-            inv_add(inv, obj_2873, 1);
-        } else if ($used_bellow = obj_2873) {
-            inv_del(inv, obj_2873, 1);
-            inv_add(inv, obj_2874, 1);
-        } else if ($used_bellow = obj_2874) {
-            inv_del(inv, obj_2874, 1);
-            inv_add(inv, obj_2871, 1);
+    case obj_2871:
+        // TODO tbc - wasn't tested on OSRS for if you can attempt with full inv but empty bellows
+        if (inv_freespace(inv) < 1) {
+            mes("You don't have space to carry that.");
+            return;
         }
 
-        // TODO anim
+        ~come_here_toady();
 
-        // TODO tbc delay amount
-        // p_delay(3); // need to come back here because of npc_delay!
+        p_delay(1);
+
+        if (p_finduid(uid) = true) {
+            npc_say("Hissss....");
+            
+            p_delay(1);
+
+            if (p_finduid(uid) = true) {
+                mes("The air seems too thin to stay in the toad.");
+                mes("Perhaps you need something thicker than air.");
+            }
+        }        
+    case obj_2872, obj_2873, obj_2874:
+        if (inv_freespace(inv) < 1) {
+            mes("You don't have space to carry that.");
+            return;
+        }
+
+        def_obj $used_bellow = last_useitem;
 
         if (inv_total(inv, obj_2875) >= 3) {
-            mes("One of your bloated toads manage to escape. You manage to catch the toad and inflate it with the swamp gas.");
-        } else {
-            // OSRS wiki is wrong for 2008 - "your" is correct: https://youtu.be/o5T8Bz_cp7o?t=308
+            mes("One of your bloated toads manages to escape.");
+
+            // TODO does this spawn at players feet?
+            // TODO is duration correct?
+            npc_add(coord, npc_1013, 100);
+            npc_say("Ribbitt!");
+            inv_del(inv, obj_2875, 1);
+
+            p_delay(1);
+
+            if (p_finduid(uid) = true) {
+                mes("You manage to catch the toad and inflate it with the swamp gas.");
+                ~come_here_toady();
+
+                p_delay(3);
+
+                if (p_finduid(uid) = true) {
+                    mes("You add the bloated toad to your inventory.");
+                    inv_add(inv, obj_2875, 1);
+
+                    ~reduce_ogre_bellows($used_bellow);
+
+                    npc_del;
+                }
+            }
+
+            return;
+        }
+        
+        mes("You manage to catch the toad and inflate it with the swamp gas.");
+        ~come_here_toady();
+
+        p_delay(3);
+
+        if (p_finduid(uid) = true) {
+            ~reduce_ogre_bellows($used_bellow);
             mes("You add the bloated toad to your inventory.");
             inv_add(inv, obj_2875, 1);
-        }
 
-        npc_del;
+            npc_del;
+        }
 
     case default:
         mes("Nothing interesting happens.");

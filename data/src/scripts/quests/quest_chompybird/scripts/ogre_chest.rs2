@@ -1,32 +1,46 @@
 [oploc1,loc_3377]
-// TODO some sources say this depends on:
-//   - asking Rantz all 4 questions
-//   - talking to one of the children in cave
-
 if (%chompybird_progress < ^chompybird_kids_play_with_toad) {
-    // TODO tbc actual message / behaviour
-    mes("Nothing interesting happens.");
+    mes("Perhaps you'd better ask permission before opening this.");
     return;
 }
 
 say("Humph!");
-anim(human_openchest, 0);
+anim(human_pickuptable, 0);
 
+// TODO set facing angle?
 // TODO sound effects?
 
 p_delay(0);
 
-// TODO success/failure
+if (p_finduid(uid) = true) {
+    // TODO confirm chance
+    if (random(3) = 0) {
+        mes("You strain to lift the huge rock off the chest...");
 
-mes("You manage to lift the huge rock off the chest.");
-say("I guess this is what an ogre would call a locked chest.");
+        p_delay(1);
+        
+        if (p_finduid(uid) = true) {
+            // TODO confirm message/reduction in 2004
+            mes("... but it's just too heavy for you.");
+            mes("The experience has left you feeling temporarily weakened.");
+            say("Arrgghhhhh!");
+            stat_sub(strength, 1, 0);
+            return;
+        }
 
-if (%chompybird_progress = ^chompybird_kids_play_with_toad) {
-    %chompybird_progress = ^chompybird_removed_rock_from_chest;
+        return;
+    }
+
+    mes("You manage to lift the huge rock off the chest.");
+    say("I guess this is what an ogre would call a locked chest.");
+
+    if (%chompybird_progress = ^chompybird_kids_play_with_toad) {
+        %chompybird_progress = ^chompybird_removed_rock_from_chest;
+    }
+
+    // TODO duration TBC
+    loc_change(loc_3378, 100);
 }
-
-// TODO duration TBC
-loc_change(loc_3378, 100);
 
 [oploc1,loc_3378]
 if (inv_freespace(inv) = 0) {

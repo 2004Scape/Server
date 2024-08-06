@@ -1,0 +1,24 @@
+[ai_queue4,npc_1015]
+// TODO confirm distance
+if (.npc_find(npc_coord, npc_1014, 10, 1) = true) {
+    // TODO implement proper eating mechanics
+    npc_say("Sqwark!");
+    
+    .npc_delay(3);
+
+    if (npc_finduid(npc_uid) = true & .npc_finduid(.npc_uid) = true) {
+        .npc_say("!!Croak!!");
+        npc_say("Gobble!");
+
+        // TODO confirm delay
+        .npc_delay(2);
+
+        if (.npc_finduid(.npc_uid) = true) {
+            .npc_del;
+
+            // TODO how to set `%chompybird_progress = ^chompybird_chompy_ate_toad` for the player who spawned the toad?
+        }
+    }
+} else {
+    npc_say("ME FIND NO FLIPIN TOAD");
+}

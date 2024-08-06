@@ -1,14 +1,14 @@
 [opheld4,obj_2875]
 // release all
-// TODO tbc message and actual behaviour
+// TODO spawns toad(s?) on the ground
 inv_del(inv, obj_2875, inv_size(inv));
-mes("You release the bloated toads.");
+mes("You release the toads and see them hop off into the distance.");
 
 [opheld5,obj_2875]
 // release
-// TODO tbc message and actual behaviour
+// TODO spawn toad on the ground
 inv_delslot(inv, last_slot);
-mes("You release the bloated toad.");
+mes("You release the toad and see it hop off into the distance.");
 
 [opheld1,obj_2875]
 if (%chompybird_progress < ^chompybird_shown_toad) {
@@ -23,10 +23,6 @@ if (distance(coord, 0_41_46_12_21) > 5) {
     return;
 }
 
-anim(human_pickupfloor, 0);
-
-p_delay(0);
-
 // TODO tbc any npc? or just toads
 npc_findallany(coord, 0, 0);
 if (npc_findnext = true) {
@@ -34,39 +30,57 @@ if (npc_findnext = true) {
     return;
 }
 
+anim(human_pickupfloor, 0);
 inv_del(inv, obj_2875, 1);
-npc_add(coord, npc_1014, 102);
-npc_queue(4, 0, 25);
 
 if (%chompybird_progress = ^chompybird_shown_toad) {
     %chompybird_progress = ^chompybird_dropped_toad;
 }
 
-mes("You carefully place the bloated toad bait.");
-
 p_delay(0);
-if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // check west
-    p_teleport(movecoord(coord, -1, 0, 0));
+
+if (p_finduid(uid) = true) {
+    npc_add(coord, npc_1014, 101);
+    npc_queue(4, 0, 25);
+
+    mes("You carefully place the bloated toad bait.");
+
     p_delay(0);
-    return;
+    if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // check west
+        p_teleport(movecoord(coord, -1, 0, 0));
+        p_delay(0);
+        return;
+    }
+
+    if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
+        p_teleport(movecoord(coord, 1, 0, 0));
+        p_delay(0);
+        return;
+    }
+
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+        return;
+    }
+
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+        return;
+    }
 }
 
-if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
-    p_teleport(movecoord(coord, 1, 0, 0));
-    p_delay(0);
-    return;
-}
+[proc,spawn_chompy_bird](coord $coord)
+{
+    def_coord $spawn_coord = map_findsquare($coord, 3, 10, 1);
+    
+    npc_add($spawn_coord, npc_1015, 100);
+    // TODO anim?
+    npc_say("Sqwirk!");
 
-if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
-    p_teleport(movecoord(coord, 0, 0, 1));
-    p_delay(0);
-    return;
-}
-
-if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
-    p_teleport(movecoord(coord, 0, 0, -1));
-    p_delay(0);
-    return;
+    // TODO confirm hunt behaviour on the toad, seems like it wanders first then goes for one
+    npc_queue(4, 0, 10);
 }
 
 // the code below is a bit of a mess, its meant to handle the
@@ -76,8 +90,8 @@ if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
 // first attempt, has not spawned a chompy yet
 [ai_queue4,npc_1014]
 if (random(5) = 1) {
-    npc_say("[debug] chompy spawned");
     npc_queue(8, 0, 25);
+    ~spawn_chompy_bird(npc_coord);
 } else {
     npc_queue(5, 0, 25);
 }
@@ -85,8 +99,8 @@ if (random(5) = 1) {
 // second attempt, has not spawned a chompy yet
 [ai_queue5,npc_1014]
 if (random(5) = 1) {
-    npc_say("[debug] chompy spawned");
     npc_queue(9, 0, 25);
+    ~spawn_chompy_bird(npc_coord);
 } else {
     npc_queue(6, 0, 25);
 }
@@ -94,18 +108,18 @@ if (random(5) = 1) {
 // third attempt, has not spawned a chompy yet
 [ai_queue6,npc_1014]
 if (random(5) = 1) {
-    npc_say("[debug] chompy spawned");
     npc_queue(10, 0, 25);
+    ~spawn_chompy_bird(npc_coord);
 } else {
     npc_queue(7, 0, 25);
 }
 
 // fourth attempt, has not spawned a chompy yet
 [ai_queue7,npc_1014]
-if (random(5) = 1) {
-    npc_say("[debug] chompy spawned");
-}
 ~toad_explode();
+if (random(5) = 1) {
+    ~spawn_chompy_bird(npc_coord);
+}
 
 // second attempt, HAS already spawned a chompy
 [ai_queue8,npc_1014]
@@ -120,16 +134,14 @@ npc_queue(10, 0, 25);
 ~toad_explode();
 
 [proc,toad_explode]()
-// TODO tbc anim
-spotanim_npc(smokepuff_large, 124, 0);
-npc_delay(0);
+// TODO in OSRS this isn't sent with a height
+spotanim_map(chompy_toad_exploding, npc_coord, 0, 30);
 
 huntall(npc_coord, 1, 1);
 while (.huntnext = true) {
     .mes("You're hit by bits of exploding toad!");
 
+    .sound_synth(toad_burst, 0, 20);
     // is damage random per-player or per-toad?
-    ~.damage_self(random(2));
+    ~.damage_self(calc(random(1) + 1));
 }
-
-npc_del;
