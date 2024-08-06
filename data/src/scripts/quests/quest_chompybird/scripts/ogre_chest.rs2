@@ -1,8 +1,4 @@
 [oploc1,loc_3377]
-// TODO some sources say this depends on:
-//   - asking Rantz all 4 questions
-//   - talking to one of the children in cave
-
 if (%chompybird_progress < ^chompybird_kids_play_with_toad) {
     mes("Perhaps you'd better ask permission before opening this.");
     return;
