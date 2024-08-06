@@ -12,7 +12,7 @@ switch_int(%chompybird_progress) {
         ~chatplayer("<p,quiz>I think I understand. You want me to make some arrows for you?");
         ~chatnpc("<p,neutral>Yeah, is what Rantz sayed, make da stabbers for da stabby chucker!");
 
-        // TODO "you're" sic?
+        // TODO this dialogue isn't in OSRS, try to find an old video
         switch_int(~p_choice2("OK, I'll make you some 'stabbers'.", 1, "Er, make you're own 'stabbers'!", 2)) {
             case 1:
                 ~chatplayer("<p,neutral>OK, I'll make you some 'stabbers'.");
@@ -150,7 +150,7 @@ inv_del(inv, ogre_arrow, 6);
 @toadies_questions;
 
 [label,toadies_questions]
-switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy toadies'?", 2, "Where do we put the fatsy toadies?", 3, "What do you mean 'sneaky..sneaky, stick da chompy?'", 4, "Ok, thanks.", 5)) {
+switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy toadies'?", 2, "Where do we put the 'fatsy toadies'?", 3, "What do you mean 'sneaky..sneaky, stick da chompy?'", 4, "Ok, thanks.", 5)) {
     case 1:
         ~chatplayer("<p,neutral>How do we make the chompys come?");
         ~chatnpc("<p,default>Chompys love da fatsy toadies. Toadies get big on der swamp gas and der chompys are licking der lips for em as me is licking lips for da chompy. Da chompys don't like da smaller toadies from nearby swampy.");
@@ -162,13 +162,10 @@ switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy to
         ~chatnpc("<p,neutral>Fatsy toadies are da chompy burds bestest yumms. But da toadies here are too small for da chompy. You've godda make da toadies big and round!");
         @toadies_questions;
     case 3:
-        ~chatplayer("<p,neutral>Where do we put the fatsy toadies?");
+        ~chatplayer("<p,neutral>Where do we put the 'fatsy toadies'?");
         ~chatnpc("<p,angry>Over der!");
 
-        // TODO "da south" sic?
         ~mesbox("The ogre points to a small clearing to da south.");
-
-        // TODO does camera move here? I think not
 
         ~chatnpc("<p,angry>Ok creature? You got dat? Over dere by der no tree's place.");
         @toadies_questions;
