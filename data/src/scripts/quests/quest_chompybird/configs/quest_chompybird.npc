@@ -1,5 +1,4 @@
-
-[npc_1010]
+[chompybird_rantz]
 vislevel=hide
 name=Rantz
 desc=A large dim looking humanoid.
@@ -14,7 +13,7 @@ wanderrange=2
 param=death_anim,ogre_death
 param=death_sound,giant_death
 
-[npc_1011]
+[chompybird_fycie]
 vislevel=hide
 name=Fycie
 desc=This must be Rantz's daughter.
@@ -34,7 +33,7 @@ wanderrange=3
 param=death_anim,ogre_death
 param=death_sound,giant_death
 
-[npc_1012]
+[chompybird_bugs]
 vislevel=hide
 name=Bugs
 desc=This must be Rantz's son.
@@ -54,7 +53,7 @@ wanderrange=3
 param=death_anim,ogre_death
 param=death_sound,giant_death
 
-[npc_1013]
+[swamp_toad]
 vislevel=hide
 name=Swamp toad
 desc=A green skinned croaker, loves the swamp.
@@ -62,7 +61,7 @@ readyanim=chompy_toad_ready
 walkanim=chompy_toad_walk
 model1=model_3447_obj
 
-[npc_1014]
+[bloated_toad]
 vislevel=hide
 name=Bloated Toad
 desc=A green skinned croaker.
@@ -72,7 +71,7 @@ model1=model_3447_obj
 wanderrange=0
 moverestrict=nomove
 
-[npc_1015]
+[chompy_bird]
 name=Chompy bird
 desc=A large boisterous bird, a delicacy for ogres.
 walkanim=chompy_walk
@@ -86,7 +85,7 @@ param=attack_sound,chompy_bird_attack
 param=defend_sound,chompy_bird_hit
 param=death_sound,chompy_bird_death
 
-[npc_1016]
+[chompy_bird_corpse]
 vislevel=hide
 name=Chompy bird
 desc=A once boisterous bird, closer to being an ogre delicacy.

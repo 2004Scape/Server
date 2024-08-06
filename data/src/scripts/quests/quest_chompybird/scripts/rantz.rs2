@@ -1,5 +1,5 @@
 // text and mesanims are taken from OSRS
-[opnpc1,npc_1010]
+[opnpc1,chompybird_rantz]
 switch_int(%chompybird_progress) {
     case ^chompybird_not_started:
         ~chatnpc("<p,neutral>Hey you creature! Make me some stabbers! I wanna hunt da chompy?");
@@ -41,7 +41,7 @@ switch_int(%chompybird_progress) {
         @where_to_put_toadies;
 }
 
-[opnpcu,npc_1010]
+[opnpcu,chompybird_rantz]
 switch_obj(last_useitem) {
     case raw_chompy:
         // TODO mesanim TBC

@@ -1,4 +1,4 @@
-[opnpc1,npc_1012]
+[opnpc1,chompybird_bugs]
 switch_int(%chompybird_progress) {
     case ^chompybird_started:
         // TODO is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Bugs_without_a_chisel_and_knife

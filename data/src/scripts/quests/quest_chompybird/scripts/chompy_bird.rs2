@@ -1,6 +1,6 @@
-[ai_queue4,npc_1015]
+[ai_queue4,chompy_bird]
 // TODO confirm distance
-if (.npc_find(npc_coord, npc_1014, 10, 1) = true) {
+if (.npc_find(npc_coord, bloated_toad, 10, 1) = true) {
     // TODO implement proper eating mechanics
     npc_say("Sqwark!");
     

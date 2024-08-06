@@ -22,7 +22,7 @@
     npc_anim(chompy_toad_death, 30);
 }
 
-[opnpcu,npc_1013]
+[opnpcu,swamp_toad]
 switch_obj(last_useitem) {
     case ogre_bellows_0:
         // TODO tbc - wasn't tested on OSRS for if you can attempt with full inv but empty bellows
@@ -58,7 +58,7 @@ switch_obj(last_useitem) {
 
             // TODO does this spawn at players feet?
             // TODO is duration correct?
-            npc_add(coord, npc_1013, 100);
+            npc_add(coord, swamp_toad, 100);
             npc_say("Ribbitt!");
             inv_del(inv, bloated_toad, 1);
 

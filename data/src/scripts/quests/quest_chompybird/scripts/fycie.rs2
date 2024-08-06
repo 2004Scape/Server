@@ -1,4 +1,4 @@
-[opnpc1,npc_1011]
+[opnpc1,chompybird_fycie]
 switch_int(%chompybird_progress) {
     case ^chompybird_started:
         // TODO is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Fycie_after_buying_her_feathers
