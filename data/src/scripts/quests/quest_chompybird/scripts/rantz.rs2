@@ -6,8 +6,7 @@ switch_int(%chompybird_progress) {
         ~chatplayer("<p,confused>Stabbers?");
         ~chatnpc("<p,default>For da stabbie chucker, I's wanna hunt da chompy! Da chompy is der bestest yummies for Rantz, Fycie and Bugs! Creature knows what Rantz wants... flyin' to stabbie da chompy!");
         
-        // TODO correct obj id
-        ~objboxt(blue_partyhat,"The ogre shows you a huge but crude bow and then starts to nod energetically in an effort to help you understand.");
+        ~objbox(ogre_bow,"The ogre shows you a huge but crude bow and then starts to nod energetically in an effort to help you understand.");
 
         ~chatplayer("<p,quiz>I think I understand. You want me to make some arrows for you?");
         ~chatnpc("<p,neutral>Yeah, is what Rantz sayed, make da stabbers for da stabby chucker!");
@@ -57,7 +56,8 @@ switch_obj(last_useitem) {
             return;
         }
 
-        ~objboxt(ogre_arrow_5,"You show Rantz the ogre arrow.");
+        // singular "Arrow" is correct on OSRS
+        ~objbox(ogre_arrow_5,"You show Rantz the ogre arrow.");
 
         if (%chompybird_progress = ^chompybird_given_arrows) {
             ~chatnpc("<p,neutral>Creature already given Rantz stabbers, Dey's worser at flying dan a dead dog.");
@@ -83,9 +83,8 @@ switch_obj(last_useitem) {
             return;
         }
 
-        ~objboxt(obj_2875,"You show the bloated toad to Rantz.");
-
         if (%chompybird_progress = ^chompybird_shown_toad) {
+            ~objbox(obj_2875,"You show the bloated toad to Rantz.");
             ~chatnpc("<p,neutral>Hey creature got da fatsy toady Is you's gonna stick da chompy?");
             return;
         }
@@ -142,7 +141,7 @@ if (testbit(%chompybird_kills, ^chompybird_varbit_made_arrows) = true) {
 [label,give_rantz_arrows]
 inv_del(inv, ogre_arrow, 6);
 %chompybird_progress = ^chompybird_given_arrows;
-~objboxt(ogre_arrow_5,"Rantz takes six ogre arrows off you.");
+~objbox(ogre_arrow_5,"Rantz takes six ogre arrows off you.");
 
 ~chatnpc("<p,happy>Ahh, der creature has dem... goodly, goodly. Now us can stick der chompy bird...");
 ~chatnpc("<p,sad>But da chompy not coming without da fatsy toadies... Godda get der fatsy toadies to get da chompys. Den we put it over de're and sneaky, sneaky stick da chompy.");
@@ -193,7 +192,7 @@ if (p_finduid(uid) = true) {
 }
 
 [label,show_toad]
-~objboxt(obj_2875,"You show the bloated toad to Rantz. He nods with approval.");
+~objbox(obj_2875,"You show the bloated toad to Rantz. He nods with approval.");
 
 ~chatnpc("<p,neutral>Dat's a good fatsy toady, now we's need to put it for da chompy to come.");
 %chompybird_progress = ^chompybird_shown_toad;

@@ -12,7 +12,7 @@ mes("You release the toad and see it hop off into the distance.");
 
 [opheld1,obj_2875]
 if (%chompybird_progress < ^chompybird_shown_toad) {
-    ~objboxt(obj_2875,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
+    ~objbox(obj_2875,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
     return;
 }
 
