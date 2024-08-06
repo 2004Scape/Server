@@ -7,9 +7,6 @@ if (%chompybird_progress < ^chompybird_kids_play_with_toad) {
 say("Humph!");
 anim(human_pickuptable, 0);
 
-// TODO set facing angle?
-// TODO sound effects?
-
 p_delay(0);
 
 if (p_finduid(uid) = true) {
@@ -38,8 +35,8 @@ if (p_finduid(uid) = true) {
         %chompybird_progress = ^chompybird_removed_rock_from_chest;
     }
 
-    // TODO duration TBC
-    loc_change(loc_3378, 100);
+    // duration from OSRS
+    loc_change(loc_3378, 48);
 }
 
 [oploc1,loc_3378]
