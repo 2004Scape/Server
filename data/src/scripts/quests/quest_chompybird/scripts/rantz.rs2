@@ -181,14 +181,16 @@ switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy to
 ~chatplayer("<p,neutral>Where should I put the 'fatsy toadies'?");
 ~chatnpc("<p,neutral>Over 'dere creature, put da toadies over der!|@blu@~ The ogre points to a clearing to the south. ~");
 
-hint_coord(^hint_center, 0_41_46_12_21, 0);
+cam_lookat(0_41_46_12_22, 25, 7, 7);
+cam_moveto(0_41_46_15_12, 900, 2, 2);
+hint_stop();
+hint_coord(^hint_center, 0_41_46_12_22, 0);
 
-// TODO confirm cam params this was just a rough guess
-cam_lookat(0_41_46_12_21, 100, 100, 100);
-p_delay(3);
-cam_moveto(0_41_46_12_17, 450, 4, 2);
-p_delay(2);
-cam_reset;
+p_delay(8);
+
+if (p_finduid(uid) = true) {
+    cam_reset;
+}
 
 [label,show_toad]
 ~objboxt(obj_2875,"You show the bloated toad to Rantz. He nods with approval.");
