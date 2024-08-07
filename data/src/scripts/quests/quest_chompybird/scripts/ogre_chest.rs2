@@ -7,9 +7,6 @@ if (%chompybird_progress < ^chompybird_kids_play_with_toad) {
 say("Humph!");
 anim(human_pickuptable, 0);
 
-// TODO set facing angle?
-// TODO sound effects?
-
 p_delay(0);
 
 if (p_finduid(uid) = true) {
@@ -38,15 +35,15 @@ if (p_finduid(uid) = true) {
         %chompybird_progress = ^chompybird_removed_rock_from_chest;
     }
 
-    // TODO duration TBC
-    loc_change(loc_3378, 100);
+    // duration from OSRS
+    loc_change(loc_3378, 48);
 }
 
 [oploc1,loc_3378]
 if (inv_freespace(inv) = 0) {
-    ~objbox(obj_2871,"Rantz stores ogre bellows in here, but you don't have space to hold any.");
+    ~objbox(ogre_bellows_0,"Rantz stores ogre bellows in here, but you don't have space to hold any.");
     return;
 }
 
-inv_add(inv, obj_2871, 1);
-~objbox(obj_2871,"You take a pair of bellows.");
+inv_add(inv, ogre_bellows_0, 1);
+~objbox(ogre_bellows_0,"You take a pair of bellows.");

@@ -1,0 +1,10 @@
+[chompybird]
+type=npc
+check_npc=bloated_toad
+check_vis=lineofsight
+check_afk=off
+check_notcombat=%lastcombat
+check_notcombat_self=%npc_lastcombat
+// confirm rate
+rate=10
+find_newmode=queue4

@@ -1,18 +1,18 @@
-[opheld4,obj_2875]
+[opheld4,bloated_toad]
 // release all
 // TODO spawns toad(s?) on the ground
-inv_del(inv, obj_2875, inv_size(inv));
+inv_del(inv, bloated_toad, inv_size(inv));
 mes("You release the toads and see them hop off into the distance.");
 
-[opheld5,obj_2875]
+[opheld5,bloated_toad]
 // release
 // TODO spawn toad on the ground
 inv_delslot(inv, last_slot);
 mes("You release the toad and see it hop off into the distance.");
 
-[opheld1,obj_2875]
+[opheld1,bloated_toad]
 if (%chompybird_progress < ^chompybird_shown_toad) {
-    ~objboxt(obj_2875,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
+    ~objbox(bloated_toad,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
     return;
 }
 
@@ -31,7 +31,7 @@ if (npc_findnext = true) {
 }
 
 anim(human_pickupfloor, 0);
-inv_del(inv, obj_2875, 1);
+inv_del(inv, bloated_toad, 1);
 
 if (%chompybird_progress = ^chompybird_shown_toad) {
     %chompybird_progress = ^chompybird_dropped_toad;
@@ -40,7 +40,7 @@ if (%chompybird_progress = ^chompybird_shown_toad) {
 p_delay(0);
 
 if (p_finduid(uid) = true) {
-    npc_add(coord, npc_1014, 101);
+    npc_add(coord, bloated_toad, 101);
     npc_queue(4, 0, 25);
 
     mes("You carefully place the bloated toad bait.");
@@ -71,24 +71,12 @@ if (p_finduid(uid) = true) {
     }
 }
 
-[proc,spawn_chompy_bird](coord $coord)
-{
-    def_coord $spawn_coord = map_findsquare($coord, 3, 10, 1);
-    
-    npc_add($spawn_coord, npc_1015, 100);
-    // TODO anim?
-    npc_say("Sqwirk!");
-
-    // TODO confirm hunt behaviour on the toad, seems like it wanders first then goes for one
-    npc_queue(4, 0, 10);
-}
-
 // the code below is a bit of a mess, its meant to handle the
 // "each toad only spawns 1 chompy" situation while still exploding them after 4 attempts
 // so there are a parallel set of queues
 
 // first attempt, has not spawned a chompy yet
-[ai_queue4,npc_1014]
+[ai_queue4,bloated_toad]
 if (random(5) = 1) {
     npc_queue(8, 0, 25);
     ~spawn_chompy_bird(npc_coord);
@@ -97,7 +85,7 @@ if (random(5) = 1) {
 }
 
 // second attempt, has not spawned a chompy yet
-[ai_queue5,npc_1014]
+[ai_queue5,bloated_toad]
 if (random(5) = 1) {
     npc_queue(9, 0, 25);
     ~spawn_chompy_bird(npc_coord);
@@ -106,7 +94,7 @@ if (random(5) = 1) {
 }
 
 // third attempt, has not spawned a chompy yet
-[ai_queue6,npc_1014]
+[ai_queue6,bloated_toad]
 if (random(5) = 1) {
     npc_queue(10, 0, 25);
     ~spawn_chompy_bird(npc_coord);
@@ -115,22 +103,22 @@ if (random(5) = 1) {
 }
 
 // fourth attempt, has not spawned a chompy yet
-[ai_queue7,npc_1014]
+[ai_queue7,bloated_toad]
 ~toad_explode();
 if (random(5) = 1) {
     ~spawn_chompy_bird(npc_coord);
 }
 
 // second attempt, HAS already spawned a chompy
-[ai_queue8,npc_1014]
+[ai_queue8,bloated_toad]
 npc_queue(9, 0, 25);
 
 // third attempt, HAS already spawned a chompy
-[ai_queue9,npc_1014]
+[ai_queue9,bloated_toad]
 npc_queue(10, 0, 25);
 
 // fourth attempt, HAS already spawned a chompy
-[ai_queue10,npc_1014]
+[ai_queue10,bloated_toad]
 ~toad_explode();
 
 [proc,toad_explode]()

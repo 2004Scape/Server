@@ -1,14 +1,14 @@
 [proc,reduce_ogre_bellows](obj $used_bellow)
 {
-    if ($used_bellow = obj_2872) {
-        inv_del(inv, obj_2872, 1);
-        inv_add(inv, obj_2873, 1);
-    } else if ($used_bellow = obj_2873) {
-        inv_del(inv, obj_2873, 1);
-        inv_add(inv, obj_2874, 1);
-    } else if ($used_bellow = obj_2874) {
-        inv_del(inv, obj_2874, 1);
-        inv_add(inv, obj_2871, 1);
+    if ($used_bellow = ogre_bellows_3) {
+        inv_del(inv, ogre_bellows_3, 1);
+        inv_add(inv, ogre_bellows_2, 1);
+    } else if ($used_bellow = ogre_bellows_2) {
+        inv_del(inv, ogre_bellows_2, 1);
+        inv_add(inv, ogre_bellows_1, 1);
+    } else if ($used_bellow = ogre_bellows_1) {
+        inv_del(inv, ogre_bellows_1, 1);
+        inv_add(inv, ogre_bellows_0, 1);
     }
 }
 
@@ -22,9 +22,9 @@
     npc_anim(chompy_toad_death, 30);
 }
 
-[opnpcu,npc_1013]
+[opnpcu,swamp_toad]
 switch_obj(last_useitem) {
-    case obj_2871:
+    case ogre_bellows_0:
         // TODO tbc - wasn't tested on OSRS for if you can attempt with full inv but empty bellows
         if (inv_freespace(inv) < 1) {
             mes("You don't have space to carry that.");
@@ -45,7 +45,7 @@ switch_obj(last_useitem) {
                 mes("Perhaps you need something thicker than air.");
             }
         }        
-    case obj_2872, obj_2873, obj_2874:
+    case ogre_bellows_3, ogre_bellows_2, ogre_bellows_1:
         if (inv_freespace(inv) < 1) {
             mes("You don't have space to carry that.");
             return;
@@ -53,14 +53,14 @@ switch_obj(last_useitem) {
 
         def_obj $used_bellow = last_useitem;
 
-        if (inv_total(inv, obj_2875) >= 3) {
+        if (inv_total(inv, bloated_toad) >= 3) {
             mes("One of your bloated toads manages to escape.");
 
             // TODO does this spawn at players feet?
             // TODO is duration correct?
-            npc_add(coord, npc_1013, 100);
+            npc_add(coord, swamp_toad, 100);
             npc_say("Ribbitt!");
-            inv_del(inv, obj_2875, 1);
+            inv_del(inv, bloated_toad, 1);
 
             p_delay(1);
 
@@ -72,7 +72,7 @@ switch_obj(last_useitem) {
 
                 if (p_finduid(uid) = true) {
                     mes("You add the bloated toad to your inventory.");
-                    inv_add(inv, obj_2875, 1);
+                    inv_add(inv, bloated_toad, 1);
 
                     ~reduce_ogre_bellows($used_bellow);
 
@@ -91,7 +91,7 @@ switch_obj(last_useitem) {
         if (p_finduid(uid) = true) {
             ~reduce_ogre_bellows($used_bellow);
             mes("You add the bloated toad to your inventory.");
-            inv_add(inv, obj_2875, 1);
+            inv_add(inv, bloated_toad, 1);
 
             npc_del;
         }

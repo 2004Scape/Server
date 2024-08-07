@@ -114,12 +114,13 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (this.checkCategory !== -1 && npcType.category !== this.checkCategory) {
                             continue;
                         }
-                        if (!npcType.op) {
-                            continue;
-                        }
-                        if (!npcType.op[1]) {
-                            continue;
-                        }
+                        // surely these are only needed if we are using opnpc1, opnpc2, etc
+                        // if (!npcType.op) {
+                        //     continue;
+                        // }
+                        // if (!npcType.op[1]) {
+                        //     continue;
+                        // }
                         if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }

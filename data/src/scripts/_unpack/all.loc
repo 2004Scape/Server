@@ -17466,7 +17466,7 @@ forcedecor=yes
 [loc_3263]
 name=Swamp
 desc=This area may not be safe...
-model=model_loc_684
+model=model_swamp_bubbles
 anim=seq_480
 op1=Cross
 

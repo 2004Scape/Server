@@ -1,7 +1,19 @@
-[ai_queue4,npc_1015]
-// TODO confirm distance
-if (.npc_find(npc_coord, npc_1014, 10, 1) = true) {
-    // TODO implement proper eating mechanics
+[proc,spawn_chompy_bird](coord $coord)
+{
+    // def_coord $spawn_coord = map_findsquare($coord, 3, 10, 1);
+    def_coord $spawn_coord = map_findsquare($coord, 4, 4, 1);
+    
+    npc_add($spawn_coord, chompy_bird, 100);
+    // TODO anim?
+    npc_say("Sqwirk!");
+
+    // TODO confirm behaviour, looks like it wanders first then hunts?
+    npc_sethuntmode(chompybird);
+}
+
+[ai_queue4,chompy_bird]
+if (.npc_find(npc_coord, bloated_toad, 1, 1) = true) {
+    // TODO get delays, anims etc with OSRS
     npc_say("Sqwark!");
     
     .npc_delay(3);
@@ -10,15 +22,13 @@ if (.npc_find(npc_coord, npc_1014, 10, 1) = true) {
         .npc_say("!!Croak!!");
         npc_say("Gobble!");
 
-        // TODO confirm delay
         .npc_delay(2);
 
         if (.npc_finduid(.npc_uid) = true) {
             .npc_del;
 
             // TODO how to set `%chompybird_progress = ^chompybird_chompy_ate_toad` for the player who spawned the toad?
+            // TODO clear hunt mode?
         }
     }
-} else {
-    npc_say("ME FIND NO FLIPIN TOAD");
 }
