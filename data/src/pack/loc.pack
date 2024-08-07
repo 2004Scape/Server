@@ -682,7 +682,7 @@
 681=loc_681
 682=loc_682
 683=loc_683
-684=loc_684
+684=swamp_bubbles_a
 685=loc_685
 686=loc_686
 687=loc_687
@@ -733,7 +733,7 @@
 732=loc_732
 733=loc_733
 734=loc_734
-735=loc_735
+735=swamp_bubbles_b
 736=loc_736
 737=loc_737
 738=loc_738
@@ -3377,9 +3377,9 @@
 3376=loc_3376
 3377=loc_3377
 3378=loc_3378
-3379=loc_3379
-3380=loc_3380
-3381=loc_3381
+3379=chompybird_cave_entrance
+3380=chompybird_cave_exit_a
+3381=chompybird_cave_exit_b
 3382=loc_3382
 3383=loc_3383
 3384=loc_3384

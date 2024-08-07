@@ -1,16 +1,16 @@
-[oploc1,loc_3379]
+[oploc1,chompybird_cave_entrance]
 p_teleport(0_41_146_23_35);
 
-[oploc1,loc_3380]
+[oploc1,chompybird_cave_exit_a]
 p_teleport(0_41_46_6_53);
 
-[oploc1,loc_3381]
+[oploc1,chompybird_cave_exit_b]
 p_teleport(0_41_46_6_53);
 
-[oplocu,loc_684]
+[oplocu,swamp_bubbles_a]
 @use_bellows_on_swamp_bubbles;
 
-[oplocu,loc_735]
+[oplocu,swamp_bubbles_b]
 @use_bellows_on_swamp_bubbles;
 
 [label,use_bellows_on_swamp_bubbles]
