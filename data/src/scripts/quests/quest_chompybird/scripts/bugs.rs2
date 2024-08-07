@@ -1,5 +1,7 @@
 [opnpc1,chompybird_bugs]
 switch_int(%chompybird_progress) {
+    case ^chompybird_not_started:
+        ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky da chompy.");
     case ^chompybird_started:
         // TODO is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Bugs_without_a_chisel_and_knife
         if (inv_total(inv, chisel) > 0 & inv_total(inv, knife) > 0) {
