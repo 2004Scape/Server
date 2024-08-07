@@ -1586,7 +1586,7 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
-huntmode=aggresive_melee
+huntmode=aggressive_melee
 huntrange=1
 
 [deadly_red_spider]
@@ -4618,7 +4618,7 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 huntmode=cowardly
-Pirate
+huntrange=1
 category=pirate
 
 [npc_183]
@@ -4662,6 +4662,8 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+huntmode=cowardly
+huntrange=1
 category=pirate
 
 [npc_184]
