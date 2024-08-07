@@ -37,24 +37,60 @@
 [opheldu,unf_torstol_potion]
 ~attempt_brew_potion(last_useslot, last_slot);
 
+[opheldu,eye_of_newt]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,red_spiders_eggs]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,limpwurt_root]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,unicorn_horn_dust]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,white_berries]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,dragon_scale_dust]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,wine_of_zamorak]
+~attempt_brew_potion(last_useslot, last_slot);
+
+[opheldu,jangerberries]
+~attempt_brew_potion(last_useslot, last_slot);
+
 [proc,attempt_brew_potion](int $use_slot, int $last_slot)
 def_obj $used_on = inv_getobj(inv, $last_slot);
 def_obj $used_with = inv_getobj(inv, $use_slot);
 
 def_struct $struct = oc_param($used_with, brew_potion_struct);
+// 1 = ingredient->solvent, 2 = solvent->ingredient
+def_int $used_direction = 1;
 
 // If the item used on the solvent is not a valid ingredient basically.
 if ($struct = null) {
-    ~displaymessage(^dm_default);
-    return;
+    $struct = oc_param($used_on, brew_potion_struct);
+    $used_direction = 2;
+
+    if ($struct = null) {
+        ~displaymessage(^dm_default);
+        return;
+    }
 }
 
 def_namedobj $ingredient = struct_param($struct, brew_potion_ingredient);
 def_namedobj $solvent = struct_param($struct, brew_potion_solvent);
 
 // If there is no first match, attempt to look for a possible second.
-if ($used_on ! $solvent) {
-    $struct = oc_param($used_with, brew_potion_struct_secondary);
+if (($used_direction = 1 & $used_on ! $solvent) | ($used_direction = 2 & $used_with ! $solvent)) {
+    if ($used_direction = 1) {
+        $struct = oc_param($used_with, brew_potion_struct_secondary);
+    } else {
+        $struct = oc_param($used_on, brew_potion_struct_secondary);
+    }
+
     // Secondary struct is optional here.
     if ($struct = null) {
         ~displaymessage(^dm_default);
