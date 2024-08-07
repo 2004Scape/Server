@@ -40,8 +40,8 @@ if($option = 1) {
     %barcrawl_progress = setbit(%barcrawl_progress, ^risingsun_index);
     mes("The barmaid signs your card.");
     // Not sure what the purpose of these 2 cmds are but OSRS sends them
-    cam_lookat(0_45_52_32_0, 0, 0, 0);
-    cam_moveto(0_45_52_32_0, 0, 0, 0);
+    //cam_lookat(0_45_52_32_0, 0, 0, 0);
+    //cam_moveto(0_45_52_32_0, 0, 0, 0);
     cam_reset;
     ~damage_self(calc((stat(hitpoints) * 5) / 100));
 }

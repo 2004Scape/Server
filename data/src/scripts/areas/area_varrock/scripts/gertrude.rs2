@@ -87,6 +87,7 @@ switch_int (%fluffs_progress) {
                     } 
                     ~chatnpc("<p,neutral>Ok then, here you go.");
                     ~chatplayer("<p,happy>Thanks!");
+                    inv_del(inv, coins, 100);
                     ~gertrude_give_cat;
                     ~mesbox("Gertrude gives you another kitten.");
                 case 2:

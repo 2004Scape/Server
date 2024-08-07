@@ -1,0 +1,18 @@
+[oplocu,quest_cog_food_trough] // Rat Food Trough
+if(last_useitem = rat_poison) {
+    inv_del(inv, rat_poison, 1);
+    %cog_progress = setbit(%cog_progress, ^quest_cog_rat_door_bit);
+    mes("The rats swarm towards the poisoned food...");
+    mes("...and devour it hungrily.");
+    mes("You see them smashing against the gates in panic.");
+    mes("They seem to be dying.");
+
+    npc_findallany(loc_coord, 10, 0);
+    while (npc_findnext = true) {
+        if (npc_type = cog_dungeon_rat) {
+            npc_queue(10, 0, 0);
+        }
+    }
+} else {
+    ~displaymessage(^dm_default);
+}

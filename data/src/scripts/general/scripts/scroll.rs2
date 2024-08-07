@@ -101,5 +101,51 @@ if(testbit(%barcrawl_progress, ^rustyanchor_index) = true) {
 }
 if_openmainmodal(scroll);
 
+[label,scroll_hazelmere]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, ^string_empty);
+if_settext(scroll:com_5, ^string_empty);
+if_settext(scroll:com_6, "Es lemanto meso pro eis prit ta Cinqo mond.");
+if_settext(scroll:com_7, "Mi lovos ta lemanto Daconia arpos");
+if_settext(scroll:com_8, "et Daconia arpos eto meriz ta priw!");
+if_settext(scroll:com_9, ^string_empty);
+if_settext(scroll:com_10, ^string_empty);
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_openmainmodal(scroll);
+
+[label,scroll_lumber_order]
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, "@red@Karamja Shipyard");
+if_settext(scroll:com_4, ^string_empty);
+if_settext(scroll:com_5, "@gre@Order");
+if_settext(scroll:com_6, ^string_empty);
+if_settext(scroll:com_7, "Order for 30 Karamja battleships");
+if_settext(scroll:com_8, "Lumber required: 2000");
+if_settext(scroll:com_9, "Troop capacity: 300");
+if_settext(scroll:com_10, ^string_empty);
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_openmainmodal(scroll);
+
+[label,scroll_invasion_plans]
+// https://web.archive.org/web/20060911005925im_/http://www.runeweb.net/fireball/Grand%20Tree%20Images/GrandTree12.PNG
+if_settext(scroll:com_2, "@red@Invasion");
+if_settext(scroll:com_3, ^string_empty);
+if_settext(scroll:com_4, "Troops board three fleets of battleships at Karamja.");
+if_settext(scroll:com_5, "@gre@Fleet one");
+if_settext(scroll:com_6, "Attacks Misthalin from the south.");
+if_settext(scroll:com_7, "@gre@Fleet two");
+if_settext(scroll:com_8, "Groups at crandor and attacks Asgarnia from the west.");
+if_settext(scroll:com_9, "@gre@Fleet three");
+if_settext(scroll:com_10, "Sails north to attack Kandarin from south, reinforced");
+if_settext(scroll:com_11, "by gnome foot soldiers leaving gnome stronghold.");
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, "@red@Take no prisoners!");
+if_openmainmodal(scroll);
+
 [if_close,scroll]
 clearsofttimer(server);

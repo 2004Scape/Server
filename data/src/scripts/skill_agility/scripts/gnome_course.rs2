@@ -13,12 +13,14 @@ if(coordz(coord) <= coordz(loc_coord)) {
 }
 mes("You climb the netting...");
 ~gnome_trainer_say("Move it, move it, move it!");
+p_arrivedelay;
 ~agility_climb_up(75, movecoord(coord, 0, 1, -2));
 ~update_gnome_varp(2);
 
 [oploc1,gnome_tree_branch_1]
 mes("You climb the tree..");
 ~gnome_trainer_say("That's it - straight up.");
+p_arrivedelay;
 ~agility_climb_up(50, movecoord(loc_coord, 0, 1, -2));
 mes("...To the platform above.");
 ~update_gnome_varp(3);
@@ -35,6 +37,7 @@ mes("You carefully cross the tightrope.");
 
 [label,climbdown_gnome_tree_branch]
 mes("You climb down the tree.");
+p_arrivedelay;
 ~agility_climb_up(50, 0_38_53_55_28);
 mes("You land on the ground.");
 ~update_gnome_varp(5);
@@ -46,6 +49,7 @@ if(coordz(coord) >= coordz(loc_coord)) {
 }
 mes("You climb the netting...");
 ~gnome_trainer_say("My Granny can move faster than you.");
+p_arrivedelay;
 ~agility_climb_up(75, movecoord(coord, 0, 0, 2));
 ~update_gnome_varp(6);
 
@@ -71,12 +75,8 @@ stat_advance(agility, 75);
 ~update_gnome_varp(7);
 
 [proc,gnome_trainer_say](string $line)
-npc_findallzone(loc_coord);
-while (npc_findnext = true) {
-    if (npc_type = gnome_trainer) {
-        npc_say($line);
-        return;
-    }
+if(npc_find(coord, gnome_trainer, 6, 0) = true) {
+    npc_say($line);
 }
 
 [proc,update_gnome_varp](int $completed)

@@ -116,8 +116,9 @@ inv_del(inv, wolfbone_arrowheads, $arrow_count);
 
 inv_add(inv, ogre_arrow, $arrow_count);
 
-if (%chompybird_progress = ^chompybird_started) {
-    %chompybird_progress = ^chompybird_made_arrows;
+// TODO tbc exact mechanism
+if (%chompybird_progress ! ^chompybird_not_started) {
+    setbit(%chompybird_kills, ^chompybird_varbit_made_arrows);
 }
 
 stat_advance(fletching, multiply($arrow_count, 10));

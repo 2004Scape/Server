@@ -164,6 +164,23 @@ const ObjOps: CommandHandlers = {
     [ScriptOpcode.OBJ_COORD]: state => {
         const position: Position = state.activeObj;
         state.pushInt(Position.packCoord(position.level, position.x, position.z));
+    },
+
+    [ScriptOpcode.OBJ_FIND]: state => {
+        const [coord, objId] = state.popInts(2);
+
+        const objType: ObjType = check(objId, ObjTypeValid);
+        const position: Position = check(coord, CoordValid);
+
+        const obj = World.getObj(position.x, position.z, position.level, objType.id, state.activePlayer.pid);
+        if (!obj) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.activeObj = obj;
+        state.pointerAdd(ActiveObj[state.intOperand]);
+        state.pushInt(1);
     }
 };
 

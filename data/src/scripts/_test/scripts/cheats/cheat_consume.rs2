@@ -17,7 +17,7 @@ if (p_finduid(uid) = true) {
 
     inv_clear(bank);
 
-    inv_add(bank, obj_2878, 100);
+    inv_add(bank, cooked_chompy, 100);
     inv_add(bank, ugthanki_meat, 100);
     inv_add(bank, cooked_chicken, 100);
     inv_add(bank, cooked_meat, 100);

@@ -1,0 +1,52 @@
+[label,cog_start_quest]
+~chatplayer("<p,neutral>Hello monk.");
+~chatnpc("<p,quiz>Hello adventurer.|My name is Brother Kojo.|Do you happen to know the time?");
+~chatplayer("<p,sad>No, sorry, I don't");
+~chatnpc("<p,neutral>Exactly! This clock tower has recently| broken down, and without it nobody can tell|the correct time. I must fix it before|the town people become too angry!");
+~chatnpc("<p,quiz>I don't suppose you could assist me in the repairs?|I'll pay you for your help.");
+@cog_start_options;
+
+[label,cog_start_options]
+def_int $option = ~p_choice3("OK old monk, what can I do?", 1, "How much reward are we talking?", 2, "Not now old monk.", 3);
+if($option = 1) {
+    ~chatplayer("<p,neutral>OK old monk, what can I do?");
+    ~chatnpc("<p,shock>Oh, thank you kind <text_gender("sir", "madam")>!|In the cellar below, you'll find four cogs.|They're too heavy for me, but you should be able to carry them one at a time.");
+    ~chatnpc("<p,confused>I know one goes on each floor... but I can't exactly remember which goes where specifically. Oh well, I'm sure you can figure it out fairly easily.");
+    ~chatplayer("<p,neutral>Well, I'll do my best.");
+    ~cog_update_main_quest_step(^quest_cog_tasked_with_placing_cogs);
+    ~send_quest_progress(questlist:cog, ~get_cog_progress, ^quest_cog_complete);
+    ~chatnpc("<p,happy>Thank you again!|And remember to be careful,|the cellar is full of strange beasts!");
+} else if($option = 2) {
+    ~chatplayer("<p,neutral>So... how much reward are we talking then?");
+    ~chatnpc("<p,neutral>Well, I'm only a monk so I'm not exactly rich,|but I assure you I will give you a fair reward for|the time spent assisting me in repairing the clock.");
+    @cog_start_options;
+} else if($option = 3) {
+    ~chatplayer("<p,neutral>Not now old monk.");
+    ~chatnpc("<p,sad>OK then.|Come back and let me know if you change your mind.");
+}
+
+[label,brother_kojo_before_placing_cogs]
+~chatplayer("<p,neutral>Hello again.");
+~chatnpc("<p,neutral>Oh hello, are you having trouble?|The cogs are in the four rooms below us. Place one cog on a pole on each of the four tower levels.");
+~chatplayer("<p,neutral>Right, gotcha.|I'll do that then.");
+
+[label,brother_kojo_placed_one_cog]
+~chatplayer("<p,neutral>I've placed a cog!");
+~chatnpc("<p,neutral>That's great.|Come see me when you've done the other three.");
+
+[label,brother_kojo_placed_two_cogs]
+~chatplayer("<p,neutral>Two down!");
+~chatnpc("<p,neutral>Two to go.");
+
+[label,brother_kojo_placed_three_cogs]
+~chatnpc("<p,neutral>One left.");
+
+[label,brother_kojo_placed_all_cogs]
+~chatplayer("<p,neutral>I have replaced all the cogs!");
+~chatnpc("<p,happy>Really..? Wait, listen!|Well done, well done!| Yes yes yes, you've done it!| You ARE clever!");
+~chatnpc("<p,happy>The townsfolk will all be able to know|the correct time now!|Thank you so much for all of your help!|And as promised, here is your reward!");
+queue(cog_complete, 0);
+
+[label,brother_kojo_post_clock_tower]
+~chatplayer("<p,neutral>Hello again Brother Kojo.");
+~chatnpc("<p,happy>Oh hello there traveller.|You've done a grand job with the clock.|It's just like new.");

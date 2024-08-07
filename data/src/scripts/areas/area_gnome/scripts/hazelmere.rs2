@@ -2,8 +2,38 @@
 if(inv_total(inv, trail_clue_medium_anagram_exp001) > 0) {
     @trail_hazelmere;
 }
-~mesbox("The mage starts to speak but all you hear is:");
-~chatnpc("<p,happy>Blah. Blah, blah, blah, blah...blah!");
+switch_int(%grandtree_progress) {
+    case ^grandtree_spoken_hazelmere: @hazelmere_write_scroll;
+    case ^grandtree_started:
+        ~mesbox("The mage starts to speak but all you hear is:");
+        ~chatnpc("<p,happy>Blah. Blah, blah, blah, blah...blah!");
+        if(inv_total(inv, bark_sample) = 0) {
+            ~mesbox("You still can't understand the mage.|King Narnode said to give him the bark sample.");
+            return;
+        }
+        ~objboxt(bark_sample, "You give the bark sample to Hazelmere.");
+        ~mesbox("The mage carefully examines the sample.");
+        inv_del(inv, bark_sample, 1);
+        %grandtree_progress = ^grandtree_spoken_hazelmere;
+        @hazelmere_write_scroll;
+    case default:
+        ~mesbox("The mage starts to speak but all you hear is:");
+        ~chatnpc("<p,happy>Blah. Blah, blah, blah, blah...blah!");
+    
+}
+
+[label,hazelmere_write_scroll]
+~chatnpc("<p,neutral>Blah, blah...Daconia...blah, blah.");
+// https://youtu.be/LFvLBRCxFwk?si=R4nV14tr_dJApo7u&t=299
+if(~obj_gettotal(hazelmeres_scroll) > 0) {
+    ~mesbox("You still can't understand Hazelmere.|The mage wrote it down for you on a scroll.");
+    return;
+}
+~chatplayer("<p,neutral>Can you write this down and I'll try and translate it?");
+~chatnpc("<p,quiz>Blah, blah?");
+~mesbox("You make a writing motion.|The mage scribbles something down on a scroll.");
+~objboxt(hazelmeres_scroll, "Hazelmere has given you the scroll.");
+inv_add(inv, hazelmeres_scroll, 1);
 
 [label,trail_hazelmere]
 if(inv_total(inv, trail_clue_medium_challenge_exp001) > 0) {

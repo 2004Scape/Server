@@ -50,7 +50,7 @@ switch_obj (last_useitem) {
 [opheldu,snape_grass]
 switch_obj (last_useitem) {
     case chocolaty_milk : @make_hangover_cure(last_slot);
-    case default : ~displaymessage(^dm_default);
+    case default : ~attempt_brew_potion(last_useslot, last_slot);
 }
 
 [opheldu,cake]

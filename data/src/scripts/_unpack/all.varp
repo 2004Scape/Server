@@ -189,18 +189,14 @@ transmit=yes
 [open_book]
 type=obj
 
-[gnomeball_progress]
-scope=perm
-
-[varp_152]
-
 [glider_takeoff]
 transmit=yes
 
 [shantay_jail_progress]
 scope=perm
 
-[varp_155]
+[gnomeball_progress]
+scope=perm
 
 [upass_progress]
 scope=perm

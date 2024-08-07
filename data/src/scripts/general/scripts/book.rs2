@@ -5,6 +5,8 @@ switch_obj (%open_book) {
     case guide_book: @book_flip_page(^book_direction_backward, 0, 3, guide_ardougne);
     case arrav_book: @book_flip_page(^book_direction_backward, 0, 2, shieldofarrav_book);
     case book_of_astrology: @book_flip_page(^book_direction_backward, 0, 3, astrology_book);
+    case translation_book: @book_flip_page(^book_direction_backward, 0, 4, translation_book);
+    case gloughs_journal: @book_flip_page(^book_direction_backward, 0, 3, glough_book);
     case instruction_manual: @book_flip_page(^book_direction_backward, 0, 3, cannon_instructions);
 }
 p_delay(0);
@@ -16,6 +18,8 @@ switch_obj (%open_book) {
     case guide_book: @book_flip_page(^book_direction_forward, 0, 3, guide_ardougne);
     case arrav_book: @book_flip_page(^book_direction_forward, 0, 2, shieldofarrav_book);
     case book_of_astrology: @book_flip_page(^book_direction_forward, 0, 3, astrology_book);
+    case translation_book: @book_flip_page(^book_direction_forward, 0, 4, translation_book);
+    case gloughs_journal: @book_flip_page(^book_direction_forward, 0, 3, glough_book);
     case instruction_manual: @book_flip_page(^book_direction_forward, 0, 3, cannon_instructions);
 }
 p_delay(0);

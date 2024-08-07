@@ -59,10 +59,6 @@ export class NetworkPlayer extends Player {
         }
 
         let offset = 0;
-        this.lastResponse = World.currentTick;
-
-        World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
-
         while (this.client.inOffset > offset) {
             const packetType = ClientProt.byId[this.client.in[offset++]];
             let length = packetType.length;
@@ -83,6 +79,11 @@ export class NetworkPlayer extends Player {
                     handler.handle(message, this);
                 }
             }
+        }
+
+        if (this.client.inOffset > 0) {
+            this.lastResponse = World.currentTick;
+            World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
         }
 
         this.client?.reset();
@@ -297,10 +298,9 @@ export class NetworkPlayer extends Player {
             const zone: Zone = World.getZoneIndex(zoneIndex);
             if (!loadedZones.has(zone.index)) {
                 zone.writeFullFollows(this);
-            } else {
-                zone.writePartialEncloses(this);
-                zone.writePartialFollows(this);
             }
+            zone.writePartialEncloses(this);
+            zone.writePartialFollows(this);
             loadedZones.add(zone.index);
         }
     }
