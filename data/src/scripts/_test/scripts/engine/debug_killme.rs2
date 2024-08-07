@@ -1,0 +1,6 @@
+[debugproc,killme]
+if (p_finduid(uid) = true) {
+    queue(damage_player, 0, stat(hitpoints));
+} else {
+    @please_finish;
+}

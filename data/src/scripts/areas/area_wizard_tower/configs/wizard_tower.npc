@@ -93,4 +93,3 @@ param=defend_sound,imp_hit
 param=death_sound,imp_death
 param=death_drop,ashes
 param=retreat,4
-huntmode=cowardly

@@ -34,6 +34,7 @@ param=deathanim_delay,1
 huntmode=aggressive_melee
 // https://youtu.be/uETjjZFKWus?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=134
 maxrange=7
+huntrange=7
 
 [dragonslayer_ned]
 vislevel=hide
@@ -87,7 +88,6 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
-huntmode=aggressive_melee
 
 [melzar_maze_ghost]
 name=Ghost
@@ -121,7 +121,6 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
-huntmode=aggressive_melee
 
 [melzar_maze_skeleton]
 name=Skeleton
@@ -150,7 +149,6 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
-huntmode=aggressive_melee
 
 [melzar_maze_zombie]
 name=Zombie
@@ -172,7 +170,6 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
-huntmode=aggressive_melee
 
 [melzar_maze_lesser_demon]
 size=2
@@ -200,7 +197,6 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
-huntmode=aggressive_melee
 
 [melzar]
 name=Melzar the mad
@@ -232,6 +228,7 @@ param=damagetype,2
 param=attack_anim,human_unarmedkick
 param=attack_sound,unarmed_kick
 huntmode=aggressive_melee
+huntrange=1
 
 [cabin_boy_jenkins]
 vislevel=hide

@@ -146,3 +146,4 @@ param=defend_anim,human_spear_def
 param=attack_sound,staff_stab
 // osrs param=defend_sound,blade2
 huntmode=cowardly
+huntrange=1
