@@ -70,7 +70,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     huntMode: number = -1;
     nextHuntTick: number = -1;
-    huntrange: number = 5;
+    huntrange: number = 0;
 
     nextPatrolTick: number = -1;
     nextPatrolPoint : number = 0;
@@ -786,6 +786,9 @@ export default class Npc extends PathingEntity {
 
     huntAll(): void {
         if (this.nextHuntTick > World.currentTick) {
+            return;
+        }
+        if (this.huntrange < 1) {
             return;
         }
         const hunt: HuntType = HuntType.get(this.huntMode);
