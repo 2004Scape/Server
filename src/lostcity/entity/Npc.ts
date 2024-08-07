@@ -70,7 +70,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     huntMode: number = -1;
     nextHuntTick: number = -1;
-    huntrange: number = 5;
+    huntrange: number = 0;
 
     nextPatrolTick: number = -1;
     nextPatrolPoint : number = 0;
@@ -179,6 +179,13 @@ export default class Npc extends PathingEntity {
             return false;
         }
         if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
+            const apTrigger: boolean =
+            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
+            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
+            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
+            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
+            const opTrigger: boolean = !apTrigger;
+
             if (this.targetOp === NpcMode.PLAYERESCAPE) {
                 const distanceToEscape = Position.distanceTo(this, {
                     x: this.startX,
@@ -196,8 +203,7 @@ export default class Npc extends PathingEntity {
                 if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
                     return false;
                 }
-            }
-            if (this.targetOp >= NpcMode.OPPLAYER1 && this.targetOp <= NpcMode.OPPLAYER5) {
+            } else if (opTrigger) {
                 const distanceToX = Math.abs(this.target.x - this.startX);
                 const distanceToZ = Math.abs(this.target.z - this.startZ);
                 if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
@@ -211,12 +217,14 @@ export default class Npc extends PathingEntity {
                     this.defaultMode();
                     return false; 
                 }
-            } else if (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) {
-                if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
-                    this.clearWaypoints();
-                    this.defaultMode();
-                    return false;   
-                }
+            } else if (apTrigger && Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                this.clearWaypoints();
+                this.defaultMode();
+                return false;   
+            } else if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange) {
+                this.clearWaypoints();
+                this.defaultMode();
+                return false;
             }
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
@@ -374,6 +382,8 @@ export default class Npc extends PathingEntity {
         this.clearInteraction();
         this.updateMovement(false);
         this.targetOp = NpcMode.NONE;
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     defaultMode(): void {
@@ -381,6 +391,8 @@ export default class Npc extends PathingEntity {
         this.updateMovement(false);
         const type: NpcType = NpcType.get(this.type);
         this.targetOp = type.defaultmode;
+        this.faceEntity = -1;
+        this.mask |= Npc.FACE_ENTITY;
     }
 
     wanderMode(): void {
@@ -614,14 +626,19 @@ export default class Npc extends PathingEntity {
             this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
-        } else if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
+            return;
+        }
+        if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
             this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
-        } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
+            return;
+        }
+        if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
             this.target = null;
             this.interacted = true;
             this.clearWaypoints();
+            return;
         }
 
         const moved: boolean = this.updateMovement();
@@ -788,6 +805,9 @@ export default class Npc extends PathingEntity {
         if (this.nextHuntTick > World.currentTick) {
             return;
         }
+        if (NpcType.get(this.type).huntrange < 1) {
+            return;
+        }
         const hunt: HuntType = HuntType.get(this.huntMode);
         if (hunt.type === HuntModeType.OFF) {
             return;
@@ -822,27 +842,10 @@ export default class Npc extends PathingEntity {
         const type: NpcType = NpcType.get(this.type);
         const players: Entity[] = [];
         const hunted: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType.PLAYER);
-        const opTrigger: boolean = (hunt.findNewMode >= NpcMode.OPPLAYER1 && hunt.findNewMode <= NpcMode.OPPLAYER5);
 
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
-            }
-
-            if (opTrigger) {
-                const distanceToX = Math.abs(player.x - this.startX);
-                const distanceToZ = Math.abs(player.z - this.startZ);
-                if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
-                    continue;
-                }
-                // remove maxrange corners
-                if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
-                    continue;
-                }
-            } else {
-                if (Position.distanceToSW(player, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange)  {
-                    continue;
-                }
             }
 
             if (hunt.checkAfk && player.zonesAfk()) {
@@ -852,11 +855,12 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
-
-            if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
-                continue;
-            } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
-                continue;
+            if (this.target !== player && !World.gameMap.multimap.has(Position.packCoord(player.level, player.x, player.z))) {
+                if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
+                    continue;
+                } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
+                    continue;
+                }
             }
 
             if (hunt.checkInv !== -1) {
