@@ -44,6 +44,21 @@ switch_int(%chompybird_progress) {
 
     case ^chompybird_shown_toad:
         ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky chompy.");
+
+    case ^chompybird_told_to_cook_chompy:
+        def_int $flavour = getbit_range(%chompybird_kills, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
+
+        if ($flavour = 0) {
+            $flavour = calc(random(1) + 1);
+            setbit_range_toint(%chompybird_kills, $flavour, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
+        }
+
+        def_string $chompy_flavour = "tomato";
+        if ($flavour = 2) {
+            $chompy_flavour = "doogle leaves";
+        }
+
+        ~chatnpc("<p,neutal>Dad say's you's roastling da chompy for us! Slurp!|Me's wants <$chompy_flavour> wiv mine! Yummy, can't wait|to eats it.");
         
     case default:
         // TODO TBC other states
