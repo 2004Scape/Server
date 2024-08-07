@@ -70,7 +70,7 @@ export default class Npc extends PathingEntity {
     timerClock: number = 0;
     huntMode: number = -1;
     nextHuntTick: number = -1;
-    huntrange: number = 1;
+    huntrange: number = 5;
 
     nextPatrolTick: number = -1;
     nextPatrolPoint : number = 0;
@@ -106,11 +106,7 @@ export default class Npc extends PathingEntity {
         this.varsString = new Array(VarNpcType.count);
         this.targetOp = npcType.defaultmode;
         this.huntMode = npcType.huntmode;
-        if (npcType.huntrange === -1) {
-            this.huntrange = npcType.attackrange;
-        } else {
-            this.huntrange = npcType.huntrange;
-        }
+        this.huntrange = npcType.huntrange;
     }
 
     resetHeroPoints() {
@@ -172,11 +168,7 @@ export default class Npc extends PathingEntity {
             this.defaultMode();
 
             const npcType: NpcType = NpcType.get(this.type);
-            if (npcType.huntrange === -1) {
-                this.huntrange = npcType.attackrange;
-            } else {
-                this.huntrange = npcType.huntrange;
-            }
+            this.huntrange = npcType.huntrange;
         }
         super.resetPathingEntity();
     }
