@@ -795,7 +795,7 @@ export default class Npc extends PathingEntity {
         if (this.nextHuntTick > World.currentTick) {
             return;
         }
-        if (this.huntrange < 1) {
+        if (NpcType.get(this.type).huntrange < 1) {
             return;
         }
         const hunt: HuntType = HuntType.get(this.huntMode);
