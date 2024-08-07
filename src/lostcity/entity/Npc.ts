@@ -834,27 +834,10 @@ export default class Npc extends PathingEntity {
         const type: NpcType = NpcType.get(this.type);
         const players: Entity[] = [];
         const hunted: HuntIterator = new HuntIterator(World.currentTick, this.level, this.x, this.z, this.huntrange, hunt.checkVis, -1, -1, HuntModeType.PLAYER);
-        const opTrigger: boolean = (hunt.findNewMode >= NpcMode.OPPLAYER1 && hunt.findNewMode <= NpcMode.OPPLAYER5);
 
         for (const player of hunted) {
             if (!(player instanceof Player)) {
                 throw new Error('[Npc] huntAll must be of type Player here.');
-            }
-
-            if (opTrigger) {
-                const distanceToX = Math.abs(player.x - this.startX);
-                const distanceToZ = Math.abs(player.z - this.startZ);
-                if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
-                    continue;
-                }
-                // remove maxrange corners
-                if (distanceToX === type.maxrange + 1 && distanceToZ === type.maxrange + 1) {
-                    continue;
-                }
-            } else {
-                if (Position.distanceToSW(player, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange)  {
-                    continue;
-                }
             }
 
             if (hunt.checkAfk && player.zonesAfk()) {
@@ -864,11 +847,12 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
-
-            if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
-                continue;
-            } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
-                continue;
+            if (this.target !== player && !World.gameMap.multimap.has(Position.packCoord(player.level, player.x, player.z))) {
+                if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
+                    continue;
+                } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
+                    continue;
+                }
             }
 
             if (hunt.checkInv !== -1) {
