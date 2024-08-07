@@ -179,6 +179,13 @@ export default class Npc extends PathingEntity {
             return false;
         }
         if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
+            const apTrigger: boolean =
+            (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
+            (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) ||
+            (this.targetOp >= NpcMode.APLOC1 && this.targetOp <= NpcMode.APLOC5) ||
+            (this.targetOp >= NpcMode.APOBJ1 && this.targetOp <= NpcMode.APOBJ5);
+            const opTrigger: boolean = !apTrigger;
+
             if (this.targetOp === NpcMode.PLAYERESCAPE) {
                 const distanceToEscape = Position.distanceTo(this, {
                     x: this.startX,
@@ -196,8 +203,7 @@ export default class Npc extends PathingEntity {
                 if (targetDistanceFromStart > type.maxrange && distanceToEscape > type.maxrange) {
                     return false;
                 }
-            }
-            if (this.targetOp >= NpcMode.OPPLAYER1 && this.targetOp <= NpcMode.OPPLAYER5) {
+            } else if (opTrigger) {
                 const distanceToX = Math.abs(this.target.x - this.startX);
                 const distanceToZ = Math.abs(this.target.z - this.startZ);
                 if (Math.max(distanceToX, distanceToZ) > type.maxrange + 1) {
@@ -211,12 +217,14 @@ export default class Npc extends PathingEntity {
                     this.defaultMode();
                     return false; 
                 }
-            } else if (this.targetOp >= NpcMode.APPLAYER1 && this.targetOp <= NpcMode.APPLAYER5) {
-                if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
-                    this.clearWaypoints();
-                    this.defaultMode();
-                    return false;   
-                }
+            } else if (apTrigger && Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange + type.attackrange) {
+                this.clearWaypoints();
+                this.defaultMode();
+                return false;   
+            } else if (Position.distanceToSW(this.target, {x: this.startX, z: this.startZ}) > type.maxrange) {
+                this.clearWaypoints();
+                this.defaultMode();
+                return false;
             }
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
