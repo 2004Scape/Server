@@ -39,6 +39,53 @@ switch_int(%chompybird_progress) {
         }
     case ^chompybird_shown_toad:
         @where_to_put_toadies;
+    case ^chompybird_dropped_toad:
+        // TODO mesanim TBC
+        ~chatplayer("<p,neutral>There you go, I've placed the bait.");
+        ~chatnpc("<p,neutral>Goodz, me now waits for da chompy! It shouldn't be long now. Sneaky... sneaky...");
+        ~chatplayer("<p,neutral>Yes, I know... stick da chompy!");
+        ~chatnpc("<p,neutral>Hey, you's creature, is da fatsy toady still dere? Go get more fatsy toadies if dey all gone!");
+        ~chatplayer("<p,neutral>What? I have to get more bait if there's none there? Does this Chompy Bird even exist I wonder?");
+    case ^chompybird_chompy_ate_toad:
+        mes("[debug] currently unimplemented");
+    case ^chompybird_rantz_tried_to_shoot_chompy:
+        ~chatplayer("<p,neutral>Hey there, you keep missing the chompy bird.");
+        ~chatnpc("<p,angry>I knows, I keeps missing... because your stabbers are|worserer at flying than a dead dog.");
+
+        switch_int(~p_choice2("Oh, keep trying then... you might hit one through pure luck.", 1, "Come on, let me have a go...", 2)) {
+            case 1:
+                ~chatplayer("<p,angry>Oh, keep trying then... you might hit one through pure luck.");
+                ~chatnpc("<p,angry>Grrrr... You lookin' like a chompy!");
+            case 2:
+                ~chatplayer("<p,angry>Come on, let me have a go...");
+                ~chatnpc("<p,angry>No, is Rantz stabby thrower... you too weedy...");
+
+                switch_int(~p_choice2("I'm actually quite strong... please let me try.", 1, "Oh suit yourself, you'll just have to go hungry.", 2)) {
+                    case 1:
+                        ~chatplayer("<p,sad>I'm actually quite strong... please let me try.");
+                        ~chatnpc("<p,angry>Oh, ok...I lend you other stabby thrower... but creature|don't better cry when it hurts itself.");
+        
+                        if (inv_freespace(inv) = 0) {
+                            // TODO confirm dialog
+                            ~chatnpc("<p,angry>[dev message: player inventory full]");
+                            return;
+                        }
+
+                        inv_add(inv, ogre_bow, 1);
+                        %chompybird_progress = ^chompybird_rantz_gave_player_bow;
+                        ~objbox(ogre_bow,"Rantz hands over an ogre bow. It's huge! You can|barely drawn back the string!");
+                    case 2:
+                        ~chatplayer("<p,angry>Oh suit yourself, you'll just have to go hungry.");
+                        ~chatnpc("<p,angry>Or I eat you instead!");
+                }
+        }
+    case ^chompybird_rantz_gave_player_bow:
+        // TODO mesanim TBC
+        ~chatnpc("<p,neutral>Hey You! Got da chompy yet?");
+        ~chatplayer("<p,neutral>Not yet!");
+        ~chatnpc("<p,angry>Well hurry up and get some, we is hungry!");
+
+    // TODO dialog to buy ogre bow back from Rantz
 }
 
 [opnpcu,chompybird_rantz]
@@ -90,6 +137,10 @@ switch_obj(last_useitem) {
         }
 
         @show_toad;
+
+    case ogre_bow:
+        // TODO confirm mesanim
+        ~chatnpc("<p,neutral>Yeah, it's a goodly stabbie chucker, but you's is too weedy to use it like Rantz.");
 
     case default:
         // TODO TBC
