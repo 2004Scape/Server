@@ -616,14 +616,19 @@ export default class Npc extends PathingEntity {
             this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
-        } else if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
+            return;
+        }
+        if (script && apTrigger && this.inApproachDistance(type.attackrange, this.target)) {
             this.executeScript(ScriptRunner.init(script, this, this.target));
             this.interacted = true;
             this.clearWaypoints();
-        } else if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
+            return;
+        }
+        if (this.inOperableDistance(this.target) && this.target instanceof PathingEntity) {
             this.target = null;
             this.interacted = true;
             this.clearWaypoints();
+            return;
         }
 
         const moved: boolean = this.updateMovement();
