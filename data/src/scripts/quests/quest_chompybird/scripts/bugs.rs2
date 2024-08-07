@@ -1,4 +1,4 @@
-[opnpc1,npc_1012]
+[opnpc1,chompybird_bugs]
 switch_int(%chompybird_progress) {
     case ^chompybird_started:
         // TODO is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Bugs_without_a_chisel_and_knife
@@ -8,21 +8,20 @@ switch_int(%chompybird_progress) {
         }
 
         ~chatnpc("<p,neutral>Hey you Creature, Dad says you's is gonna get da stabbers!");
-        ~chatplayer("<p,neutral>That's right... I'm making some 'stabbers' for Rantz.");
-        ~chatnpc("<p,neutral>Dat's great...Dad want's to hunt da chompy... Da chompy is our bestest yumms! Yous needies da scratchers for makin' dem huh? I's wants some bright pretties for em!");
+        ~chatplayer("<p,happy>That's right... I'm making some 'stabbers' for Rantz.");
+        ~chatnpc("<p,default>Dat's great...Dad want's to hunt da chompy... Da chompy is our bestest yumms! Yous needies da scratchers for makin' dem huh? I's wants some bright pretties for em!");
 
-        // TODO correct obj id
-        ~objboxt(blue_partyhat,"Bugs shows you a chisel and a knife.");
+        ~doubleobjbox(chisel, knife, "Bugs shows you a chisel and a knife.");
 
         ~chatplayer("<p,neutral>How many 'bright pretties' do you want?");
-        ~chatnpc("<p,neutral>Bugs wants lots of bright pretties, this many!|@blu@~ Bugs quickly opens and closes his hands in front ~|@blu@~ of you to indicate a number of bright pretties. ~|@blu@~ It looks like he wants 10 gold coins.~");
+        ~chatnpc("<p,default>Bugs wants lots of bright pretties, this many!|@blu@~ Bugs quickly opens and closes his hands in front ~|@blu@~ of you to indicate a number of bright pretties. ~|@blu@~ It looks like he wants 10 gold coins.~");
 
         switch_int(~p_choice2("Ok, I'll give you 10 bright pretties.", 1, "Er, sorry, I can't give you that many...", 2)) {
             case 1:
-                ~chatplayer("<p,neutral>Ok, I'll give you 10 bright pretties.");
+                ~chatplayer("<p,sad>Ok, I'll give you 10 bright pretties.");
 
                 if (inv_total(inv, coins) < 10) {
-                    ~chatnpc("<p,neutral>You's not got da bright pretties... I wants da bright pretties..you not get no scratchers wid'out da bright pretties.");
+                    ~chatnpc("<p,sad>You's not got da bright pretties... I wants da bright pretties..you not get no scratchers wid'out da bright pretties.");
                     return;
                 }
 
@@ -31,14 +30,14 @@ switch_int(%chompybird_progress) {
                     return;
                 }
 
-                // TODO correct obj id
-                ~objboxt(blue_partyhat,"You offer the 10 coins for the tools.");
+                ~doubleobjbox(chisel, coins, "You offer the 10 coins for the tools.");
 
                 inv_del(inv, coins, 10);
                 inv_add(inv, chisel, 1);
                 inv_add(inv, knife, 1);
-                ~chatnpc("<p,neutral>Ok, dat's a good 'un, I got da bright pretties and you got da scratchers!");
+                ~chatnpc("<p,happy>Ok, dat's a good 'un, I got da bright pretties and you got da scratchers!");
             case 2:
+                // TODO mesanim tbc
                 ~chatplayer("<p,neutral>Er, sorry, I can't give you that many...");
                 ~chatnpc("<p,angry>Well, you not have da scratchers den!");
         }

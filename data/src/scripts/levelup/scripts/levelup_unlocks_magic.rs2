@@ -6,8 +6,8 @@ switch_int(stat_base(magic)) {
     case 9: ~objboxt(battlestaff, "You can now cast @dbl@Earth Strike@bla@!");
     case 11: ~objboxt(battlestaff, "You can now cast @dbl@Weaken@bla@!");
     case 13: ~objboxt(battlestaff, "You can now cast @dbl@Fire Strike@bla@!");
-    case 15: ~objboxt(battlestaff, "You can now get @dbl@Bones to Peaches@bla@ from the Magic Training Arena.");
-    case 17: ~objboxt(battlestaff, "You can now cast @dbl@Air Bolt@bla@!");
+    case 15: ~objboxt(battlestaff, "You can now cast @dbl@Bones to Bananas@bla@!"); //guess
+    case 17: ~objboxt(battlestaff, "You can now cast @dbl@Wind Bolt@bla@!");
     case 19: ~objboxt(battlestaff, "You can now cast @dbl@Curse@bla@!");
     case 20: ~objboxt(battlestaff, "You can now cast @dbl@Bind@bla@!");
     case 21: ~objboxt(battlestaff, "You can now cast @dbl@Low Level Alchemy@bla@!");
@@ -20,7 +20,7 @@ switch_int(stat_base(magic)) {
     case 35: ~objboxt(battlestaff, "You can now cast @dbl@Fire Bolt@bla@!");
     case 37: ~objboxt(battlestaff, "You can now @dbl@Teleport to Falador@bla@!");
     case 39: ~objboxt(battlestaff, "You can now cast @dbl@Crumble Undead@bla@!");
-    case 41: ~objboxt(battlestaff, "You can now cast @dbl@Air Blast@bla@!");
+    case 41: ~objboxt(battlestaff, "You can now cast @dbl@Wind Blast@bla@!");
     case 43: ~objboxt(battlestaff, "You can now cast @dbl@Superheat Item@bla@!");
     case 45: ~objboxt(battlestaff, "Members can now @dbl@Teleport to Camelot@bla@!");
     case 47: ~objboxt(battlestaff, "You can now cast @dbl@Water Blast@bla@!");
@@ -31,10 +31,10 @@ switch_int(stat_base(magic)) {
     case 55: ~objboxt(battlestaff, "You can now cast @dbl@High Level Alchemy@bla@!");
     case 56: ~objboxt(battlestaff, "Members can now @dbl@Charge Water Orbs@bla@!");
     case 57: ~objboxt(battlestaff, "You can now enchant @dbl@Diamond Jewellery@bla@!");
-    case 58: ~objboxt(battlestaff, "Members can now @dbl@Teleport to Watchtower@bla@!");
+    case 58: ~objboxt(battlestaff, "Members can now @dbl@Teleport to the Watchtower@bla@!");
     case 59: ~objboxt(battlestaff, "You can now cast @dbl@Fire Blast@bla@!");
-    case 60: ~objboxt(battlestaff, "Members can now @dbl@ECharge Earth Orbs@bla@!");
-    case 62: ~objboxt(battlestaff, "Members can now cast @dbl@Air Wave@bla@!");
+    case 60: ~objboxt(battlestaff, "Members can now @dbl@Charge Earth Orbs@bla@!");
+    case 62: ~objboxt(battlestaff, "Members can now cast @dbl@Wind Wave@bla@!");
     case 63: ~objboxt(battlestaff, "Members can now @dbl@Charge Fire Orbs@bla@!");
     case 65: ~objboxt(battlestaff, "Members can now cast @dbl@Water Wave@bla@!");
     case 66: ~objboxt(battlestaff, "Members can now cast @dbl@Vulnerability@bla@ and @dbl@Charge Air|@dbl@Orbs@bla@! Members can also enter the @dbl@Wizard's Guild@bla@.");
@@ -43,7 +43,7 @@ switch_int(stat_base(magic)) {
     case 73: ~objboxt(battlestaff, "Members can now cast @dbl@Enfeeble@bla@!");
     case 75: ~objboxt(battlestaff, "Members can now cast @dbl@Fire Wave@bla@!");
     case 79: ~objboxt(battlestaff, "Members can now cast @dbl@Entangle@bla@!");
-    case 80: ~objboxt(battlestaff, "Members can now cast @dbl@Charge@bla@ and @dbl@Stun@bla@!");
+    case 80: ~objboxt(battlestaff, "Members can now cast @dbl@Stun@bla@!");
 
 
 

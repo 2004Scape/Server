@@ -417,7 +417,6 @@ const ServerOps: CommandHandlers = {
                 for (let i = 0; i < 50; i++) {
                     const randomX = origin.x + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
                     const randomZ = origin.z + (Math.floor(Math.random() * (maxRadius - minRadius + 1)) + minRadius) * (Math.random() < 0.5 ? 1 : -1);
-                    console.log((Math.floor(Math.random() * (maxRadius - minRadius)) + minRadius) * (Math.random() < 0.5 ? 1 : -1));                       
                     if (rsmod.hasLineOfWalk(origin.level, randomX, randomZ, origin.x, origin.z) && !rsmod.isFlagged(randomX, randomZ, origin.level, CollisionFlag.WALK_BLOCKED)) {
                         state.pushInt(Position.packCoord(origin.level, randomX, randomZ));
                         return;

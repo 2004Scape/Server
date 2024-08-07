@@ -1,6 +1,6 @@
 
 
-[obj_2871]
+[ogre_bellows_0]
 name=Ogre bellows
 desc=A large pair of ogre bellows.
 members=yes
@@ -11,7 +11,7 @@ model=model_3440_obj
 2dxan=112
 weight=18oz
 
-[obj_2872]
+[ogre_bellows_3]
 name=Ogre bellows (3)
 desc=A large pair of ogre bellows, it has three loads of swamp gas in it.
 members=yes
@@ -24,7 +24,7 @@ recol1d=6628
 2dxan=112
 weight=18oz
 
-[obj_2873]
+[ogre_bellows_2]
 name=Ogre bellows (2)
 desc=A large pair of ogre bellows, it has two loads of swamp gas in it.
 members=yes
@@ -37,7 +37,7 @@ recol1d=10726
 2dxan=112
 weight=18oz
 
-[obj_2874]
+[ogre_bellows_1]
 name=Ogre bellows (1)
 desc=A large pair of ogre bellows, it has one load of swamp gas in it.
 members=yes
@@ -50,7 +50,7 @@ recol1d=14824
 2dxan=112
 weight=18oz
 
-[obj_2875]
+[bloated_toad]
 name=Bloated toad
 desc=An inflated toad.
 members=yes
@@ -65,7 +65,7 @@ iop1=Drop
 iop4=Release All
 iop5=Release
 
-[obj_2876]
+[raw_chompy]
 name=Raw chompy
 desc=I need to cook this first.
 members=yes
@@ -80,7 +80,7 @@ recol1d=19014
 weight=10kg
 tradeable=yes
 
-[obj_2878]
+[cooked_chompy]
 name=Cooked chompy
 desc=It might look delicious to an ogre.
 members=yes
@@ -97,7 +97,7 @@ iop1=Eat
 category=category_5
 tradeable=yes
 
-[obj_2880]
+[ruined_chompy]
 name=Ruined chompy
 desc=It's really burnt.
 members=yes
@@ -111,7 +111,7 @@ recol1d=6273
 weight=10kg
 tradeable=yes
 
-[obj_2882]
+[seasoned_chompy]
 name=Seasoned chompy
 desc=It has been deliciously seasoned to taste wonderful for ogres.
 members=yes
