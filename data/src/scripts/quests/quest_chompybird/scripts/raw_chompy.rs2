@@ -1,0 +1,12 @@
+[opheldu,raw_chompy]
+switch_obj (last_useitem)
+{
+    case cabbage, tomato, potato, equa_leaves, doogle_leaves:
+        @quest_chompybird_add_ingredients_to_chompy_message;
+    case default : ~displaymessage(^dm_default);
+};
+
+
+[label,quest_chompybird_add_ingredients_to_chompy_message]
+// message taken from OSRS
+~mesbox("You can only add ingredients when you're cooking a chompy bird. Ensure you have the seasonings you want to use in your inventory when cooking the chompy bird and you will use them automatically when cooking.");

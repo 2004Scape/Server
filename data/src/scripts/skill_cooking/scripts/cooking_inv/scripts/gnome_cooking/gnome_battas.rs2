@@ -49,6 +49,7 @@ if_close;
 //p_stopaction;
 switch_obj(last_useitem) {
     case half_baked_batta : @add_batta_ingredient(last_item);
+    case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
     case default : ~displaymessage(^dm_default);
 }
 

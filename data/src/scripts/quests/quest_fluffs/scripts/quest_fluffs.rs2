@@ -87,6 +87,11 @@ if(last_useitem = raw_sardine) {
     inv_add(inv, seasoned_sardine, 1);
     return;
 }
+
+if (last_useitem = raw_chompy) {
+    @quest_chompybird_add_ingredients_to_chompy_message;
+}
+
 ~displaymessage(^dm_default);
 
 [opheldu,raw_sardine]
