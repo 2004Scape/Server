@@ -295,6 +295,7 @@
 [command,.npc_walk](coord $coord)
 [command,npc_attackrange]()(int)
 [command,.npc_attackrange]()(int)
+[command,npc_arrivedelay]
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
