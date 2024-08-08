@@ -21,7 +21,6 @@ if (npc_stat(hitpoints) > 0) { // if they lived from that damage:
     return;
 }
 // else they died
-npc_setmode(none);
 npc_queue(3, 0, 0);
 
 
