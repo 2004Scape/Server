@@ -140,11 +140,6 @@ export default abstract class PathingEntity extends Entity {
             if (this.lastCrawl && this.walkDir === -1) {
                 this.walkDir = this.validateAndAdvanceStep();
             }
-            if (this instanceof Npc) {
-                if (this.lastX !== this.x || this.lastZ !== this.z) {
-                    this.lastMovement = World.currentTick + 1;
-                }
-            }
             return true;
         }
 
@@ -153,11 +148,6 @@ export default abstract class PathingEntity extends Entity {
             this.walkDir = this.validateAndAdvanceStep();
             if (this.moveSpeed === MoveSpeed.RUN && this.walkDir !== -1 && this.runDir === -1) {
                 this.runDir = this.validateAndAdvanceStep();
-            }
-        }
-        if (this instanceof Npc) {
-            if (this.lastX !== this.x || this.lastZ !== this.z) {
-                this.lastMovement = World.currentTick + 1;
             }
         }
         return true;
@@ -228,6 +218,7 @@ export default abstract class PathingEntity extends Entity {
         const previousZ: number = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
+        this.lastMovement = World.currentTick + 1;
         this.orientationX = Position.moveX(this.x, dir) * 2 + 1;
         this.orientationZ = Position.moveZ(this.z, dir) * 2 + 1;
         this.stepsTaken++;
