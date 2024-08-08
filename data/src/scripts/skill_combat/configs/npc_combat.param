@@ -40,4 +40,4 @@ default=2
 
 [retreat]
 type=int
-default=0
+default=null
