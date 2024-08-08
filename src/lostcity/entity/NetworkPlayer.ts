@@ -13,7 +13,6 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import { Position } from './Position.js';
-import MoveSpeed from './MoveSpeed.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import Zone from '#lostcity/engine/zone/Zone.js';
 import InvType from '#lostcity/cache/config/InvType.js';
@@ -220,9 +219,11 @@ export class NetworkPlayer extends Player {
             info.unlink();
         }
 
-        if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
+        // no need to rebuild upon telejump anymore.
+        // causes u to full follows zones which is wrong.
+        /*if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
             loadedZones.clear();
-        }
+        }*/
 
         // update any newly tracked zones
         activeZones.clear();
