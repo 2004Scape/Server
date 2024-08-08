@@ -431,7 +431,6 @@ const NpcOps: CommandHandlers = {
         if (state.activeNpc.lastMovement < World.currentTick) {
             return;
         }
-
         state.activeNpc.delay = 1;
         state.execution = ScriptState.NPC_SUSPENDED;
     }),
