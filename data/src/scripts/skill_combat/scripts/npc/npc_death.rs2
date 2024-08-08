@@ -12,5 +12,5 @@ if (npc_findhero = true){
 }
 npc_delay(0);
 npc_anim(npc_param(death_anim), 0);
-npc_delay(npc_param(deathanim_delay));
+npc_delay(2);
 npc_del;
