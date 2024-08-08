@@ -433,7 +433,7 @@ const NpcOps: CommandHandlers = {
             return;
         }
 
-        state.activeNpc.delay = check(state.popInt(), NumberNotNull) + 1;
+        state.activeNpc.delay = 1;
         state.execution = ScriptState.NPC_SUSPENDED;
     }),
 };
