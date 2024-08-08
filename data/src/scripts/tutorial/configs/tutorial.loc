@@ -139,7 +139,7 @@ param=next_loc_stage,loc_1535
 
 [loc_3033]
 name=Tree
-desc=One of the most common trees in RuneScape.
+desc=One of the most common trees in <^game>.
 model=model_loc_1276
 width=2
 length=2
@@ -150,7 +150,7 @@ param=next_loc_stage,loc_1342
 
 [loc_3034]
 name=Tree
-desc=One of the most common trees in RuneScape.
+desc=One of the most common trees in <^game>.
 model=model_loc_1278
 width=2
 length=2
@@ -161,7 +161,7 @@ param=next_loc_stage,loc_1342
 
 [loc_3036]
 name=Tree
-desc=One of the most common trees in RuneScape.
+desc=One of the most common trees in <^game>.
 model=model_loc_1286
 width=2
 length=2

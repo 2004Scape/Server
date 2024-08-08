@@ -97,7 +97,7 @@ switch_int(~p_choice3("Anita.", 1, "Alia.", 2, "Elena.", 3)) {
 ~chatplayer("<p,neutral>Indeed.");
 ~chatnpc("<p,neutral>When I was asked to build a fleet large enough to invade Port Sarim and carry 300 gnome troops I said: 'If anyone can, I can.'");
 ~chatplayer("<p,neutral>That's a lot of troops!");
-~chatnpc("<p,neutral>True but if the gnomes are really going to take over RuneScape they'll need at least that.");
+~chatnpc("<p,neutral>True but if the gnomes are really going to take over <^game> they'll need at least that.");
 ~chatplayer("<p,quiz>Take over?");
 ~chatnpc("<p,neutral>Of course, why else would Glough want 30 battleships? Between you and me I don't think he stands a chance.");
 ~chatplayer("<p,quiz>No?");

@@ -62,7 +62,7 @@ if(map_members = false) {
 }
 if(testbit(%bioerrand, ^devinci_correct) = true) {
     ~chatnpc("<p,happy>Hello again.|I hope your journey was as pleasant as mine.");
-    ~chatplayer("<p,happy>Well, as they say, it's always sunny in RuneScape.");
+    ~chatplayer("<p,happy>Well, as they say, it's always sunny in <^game>.");
     ~chatnpc("<p,happy>Ok, here it is.");
     mes("He gives you the vial of ethenea.");
     inv_add(inv, Ethenea, 1);

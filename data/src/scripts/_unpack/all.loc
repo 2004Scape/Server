@@ -3129,17 +3129,17 @@ model=model_loc_573
 
 [loc_574]
 name=Statue
-desc=A carving of a figure from the history of RuneScape.
+desc=A carving of a figure from the history of <^game>.
 model=model_loc_574
 
 [loc_575]
 name=Statue
-desc=A carving of a figure from the history of RuneScape.
+desc=A carving of a figure from the history of <^game>.
 model=model_loc_575
 
 [loc_576]
 name=Statue
-desc=A carving of a figure from the history of RuneScape.
+desc=A carving of a figure from the history of <^game>.
 model=model_loc_576
 
 [loc_577]
@@ -15754,7 +15754,7 @@ op3=hidden
 
 [loc_3035]
 name=Tree
-desc=One of the most common trees in RuneScape.
+desc=One of the most common trees in <^game>.
 model=model_loc_154
 width=2
 length=2

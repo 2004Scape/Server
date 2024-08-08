@@ -1,6 +1,7 @@
 import Packet from '#jagex2/io/Packet.js';
 import { loadDir, loadOrder } from '#lostcity/util/NameMap.js';
 import { InterfacePack, ModelPack, ObjPack, SeqPack, VarpPack } from '#lostcity/util/PackFile.js';
+import {CONSTANTS} from '#lostcity/cache/packconfig/PackShared.js';
 
 function nameToType(name: string) {
     switch (name) {
@@ -480,10 +481,34 @@ export function packInterface(server: boolean) {
         }
 
         if (type === 4) {
+            // check the value for a constant starting with ^ and ending with a \r, \n, comma, or otherwise end of string
+            // then replace just that substring with CONSTANTS.get(value) if CONSTANTS.has(value) returns true
+
+            let text = src.text as string ?? '';
+
+            const idx = text.indexOf('^');
+            if (idx !== -1) {
+                const constantStart = idx;
+                let lineLength = idx + 1;
+
+                while (lineLength < text.length) {
+                    if (text[lineLength] === '\r' || text[lineLength] === '\n' || text[lineLength] === ',' || text[lineLength] === ' ') {
+                        break;
+                    }
+
+                    lineLength++;
+                }
+
+                const constant = text.substring(constantStart + 1, lineLength);
+                if (CONSTANTS.has(constant)) {
+                    text = text.substring(0, constantStart) + CONSTANTS.get(constant) + text.substring(lineLength);
+                }
+            }
+
             data.pbool(src.center === 'yes');
             data.p1(nameToFont(src.font as string));
             data.pbool(src.shadowed === 'yes');
-            data.pjstr((src.text as string) ?? '');
+            data.pjstr(text);
             data.pjstr((src.activetext as string) ?? '');
         }
 

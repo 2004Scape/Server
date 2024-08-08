@@ -68,7 +68,7 @@ switch_int(%grandtree_progress) {
             ~chatnpc("<p,sad>A reward will have to wait though, the tree is still dying!|The guards are clearing Glough's rock supply now|but there must be more Daconia hidden somewhere in the roots!|Help us search, we have little time!");
         }
     case ^grandtree_unlocked_trapdoor:
-        ~chatplayer("<p,angry>Your highness, it's true about Glough I tell you! He's planning to take over RuneScape!");
+        ~chatplayer("<p,angry>Your highness, it's true about Glough I tell you! He's planning to take over <^game>!");
         ~chatnpc("<p,neutral>I'm sorry Traveller but it's just not realistic. How could Glough, even with a gnome army, take over?");
         ~chatplayer("<p,angry>He plans to make a fleet of warships from the Grand Tree's wood!");
         ~chatnpc("<p,angry>That's enough Traveller! I've no time for make believe. The tree's still dying, I must get to the truth of this!");

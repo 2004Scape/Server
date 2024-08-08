@@ -98,8 +98,8 @@ wanderrange=2
 
 [runescape_guide]
 vislevel=hide
-name=RuneScape Guide
-desc=Your introduction to the world of RuneScape.
+name=^game Guide
+desc=Your introduction to the world of <^game>.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
@@ -167,7 +167,7 @@ moverestrict=indoors
 [financial_advisor]
 vislevel=hide
 name=Financial Advisor
-desc=An official representative from the First National Bank of RuneScape.
+desc=An official representative from the First National Bank of <^game>.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
@@ -228,7 +228,7 @@ wanderrange=2
 [quest_guide]
 vislevel=hide
 name=Quest Guide
-desc=Your introduction to the world of RuneScape.
+desc=Your introduction to the world of <^game>.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to

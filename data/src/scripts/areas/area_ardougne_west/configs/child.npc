@@ -1,7 +1,7 @@
 [child_white]
 vislevel=hide
 name=Child
-desc=One of RuneScapes' many citizens.
+desc=One of <^game>s' many citizens.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to
@@ -18,7 +18,7 @@ param=death_anim,midget_death
 [child_brown]
 vislevel=hide
 name=Child
-desc=One of RuneScapes' many citizens.
+desc=One of <^game>s' many citizens.
 walkanim=midget_walk
 readyanim=midget_ready
 op1=Talk-to

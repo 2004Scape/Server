@@ -1244,7 +1244,7 @@ param=combat_xp_multiplier,25
 [macro_event_ent_tree1]
 vislevel=hide
 name=Tree
-desc=One of the most common trees in RuneScape.
+desc=One of the most common trees in <^game>.
 readyanim=seq_334
 vislevel=hide
 size=2

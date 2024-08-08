@@ -90,6 +90,7 @@ export class PackedData {
     }
 }
 
+// used by config and interface
 export const CONSTANTS = new Map<string, string>();
 // console.time('Generating constants');
 loadDir('data/src/scripts', '.constant', src => {
@@ -256,23 +257,40 @@ export function readConfigs(extension: string, requiredProperties: string[], par
                 // then replace just that substring with CONSTANTS.get(value) if CONSTANTS.has(value) returns true
 
                 if (value[i] === '^') {
-                    const start = i;
-                    let end = i + 1;
+                    const constantStart = i;
+                    let lineLength = i + 1;
+                    let constantStringIdx = -1;
 
-                    while (end < value.length) {
-                        if (value[end] === '\r' || value[end] === '\n' || value[end] === ',' || value[end] === ' ') {
+                    while (lineLength < value.length) {
+                        if (value[lineLength] === '\r' || value[lineLength] === '\n' || value[lineLength] === ',' || value[lineLength] === ' ') {
                             break;
                         }
 
-                        end++;
+                        if (value[lineLength] === '>') {
+                            constantStringIdx = lineLength;
+                        }
+
+                        lineLength++;
                     }
 
-                    const constant = value.substring(start + 1, end);
+                    if (value[constantStart - 1] === '<' && constantStringIdx === -1) {
+                        throw parseStepError(file, lineNumber, `Missing property separator: ${line}. Wrap the constant in <>`);
+                    }
+
+                    let constant;
+                    if (constantStringIdx !== -1) {
+                        if (value[constantStart - 1] !== '<') {
+                            throw parseStepError(file, lineNumber, `Missing property separator: ${line}. Wrap the constant in <>`);
+                        }
+                        constant = value.substring(constantStart + 1, constantStringIdx);
+                    } else {
+                        constant = value.substring(constantStart + 1, lineLength);
+                    }
                     if (CONSTANTS.has(constant)) {
-                        value = value.substring(0, start) + CONSTANTS.get(constant) + value.substring(end);
+                        value = value.substring(0, constantStringIdx === -1 ? constantStart : constantStart - 1) + CONSTANTS.get(constant) + value.substring(constantStringIdx === -1 ? lineLength : constantStringIdx + 1);
                     }
 
-                    i = end;
+                    i = lineLength;
                 }
             }
 

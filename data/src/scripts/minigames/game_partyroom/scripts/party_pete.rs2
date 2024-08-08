@@ -13,7 +13,7 @@ switch_int(~p_choice4("So what's this room for?", 1, "What's the big lever over 
     case 1:
         ~chatplayer("<p,confused>So what's this room for?");
         ~chatnpc("<p,laugh>This room is for partying the night away!");
-        ~chatplayer("<p,laugh>How do you have a party in RuneScape?");
+        ~chatplayer("<p,laugh>How do you have a party in <^game>?");
         ~chatnpc("<p,happy>Get a few mates round, get the beers in and have fun!");
         ~chatnpc("<p,neutral>Some players organise parties so keep an eye open!");
         ~chatplayer("<p,happy>Woop! Thanks Pete!");

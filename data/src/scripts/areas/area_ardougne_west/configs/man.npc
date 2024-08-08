@@ -1,6 +1,6 @@
 [npc_351]
 name=Man
-desc=One of RuneScapes' many citizens.
+desc=One of <^game>s' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
@@ -32,7 +32,7 @@ param=damagetype,^crush_style
 [npc_728]
 vislevel=hide
 name=Man
-desc=One of RuneScapes' many citizens.
+desc=One of <^game>s' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to
@@ -55,7 +55,7 @@ head2=model_82_idk_head
 [npc_729]
 vislevel=hide
 name=Man
-desc=One of RuneScapes' many citizens.
+desc=One of <^game>s' many citizens.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 op1=Talk-to

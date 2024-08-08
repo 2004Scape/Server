@@ -8,7 +8,7 @@ if(%totem_progress = ^totem_crate_marked) {
         ~chatnpc("<p,neutral>Well... I guess we could do it now...");
     } else if ($option = 2) {
         ~chatplayer("<p,neutral>Thank you, it's interesting in here.");
-        ~chatnpc("<p,neutral>We're the premier delivery service in ALL of RuneScape!");
+        ~chatnpc("<p,neutral>We're the premier delivery service in ALL of <^game>!");
     }
     return;
 }

@@ -717,7 +717,7 @@ width=457
 height=14
 font=b12
 shadowed=yes
-text=Welcome to RuneScape - Use the buttons below to design your player
+text=Welcome to ^game - Use the buttons below to design your player
 colour=0xFFFF00
 
 [com_90]

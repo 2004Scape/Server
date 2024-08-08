@@ -27,7 +27,7 @@ if($option = 1) {
         @cromperty_teleport;
     } else if($option = 2) {
         ~chatplayer("<p,quiz>Who are the RPDT?");
-        ~chatnpc("<p,happy>The RuneScape Parcel Delivery Team. They come very highly recommended. Their motto is: 'We aim to deliver your stuff at some point after you have paid us!'");
+        ~chatnpc("<p,happy>The <^game> Parcel Delivery Team. They come very highly recommended. Their motto is: 'We aim to deliver your stuff at some point after you have paid us!'");
     }
 } else if($option = 2) {
     @cromperty_teleport;

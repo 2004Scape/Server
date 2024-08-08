@@ -717,7 +717,7 @@ width=151
 height=14
 font=b12
 shadowed=yes
-text=The Bank of RuneScape
+text=The Bank of ^game
 colour=0xFF981F
 
 [com_90]

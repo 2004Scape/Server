@@ -9,7 +9,7 @@ switch_int(%grandtree_progress) {
     case ^grandtree_obtained_lumber_order:
         ~chatplayer("<p,quiz>How are you doing Charlie?");
         ~chatnpc("<p,neutral>I've been better.");
-        ~chatplayer("<p,angry>Glough has some plan to rule RuneScape!");
+        ~chatplayer("<p,angry>Glough has some plan to rule <^game>!");
         ~chatnpc("<p,sad>I wouldn't put it past him, the Gnome's crazy!");
         ~chatplayer("<p,neutral>I need some proof to convince the King.");
         // https://youtu.be/LFvLBRCxFwk?si=jZsV07Dsc1uTR1WH&t=997

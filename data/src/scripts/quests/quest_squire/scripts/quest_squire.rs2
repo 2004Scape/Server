@@ -59,7 +59,7 @@ if($option = 1) {
 def_int $option = ~p_choice2("So would these dwarves make another one?", 1, "Well I hope you find it soon.", 2);
 if($option = 1) {
     ~chatplayer("<p,quiz>So would these dwarves make another one?");
-    ~chatnpc("<p,default>I'm not a hundred percent sure the Imcando tribe exists anymore. I should think Reldo, the palace librarian in Varrock, will know; he has done a lot of research on the races of RuneScape.");
+    ~chatnpc("<p,default>I'm not a hundred percent sure the Imcando tribe exists anymore. I should think Reldo, the palace librarian in Varrock, will know; he has done a lot of research on the races of <^game>.");
     ~chatnpc("<p,happy>I don't suppose you could try and track down the Imcando dwarves for me? I've got so much work to do...");
     $option = ~p_choice2("Ok, I'll give it a go.", 1, "No, I've got lots of mining work to do.", 2);
     if($option = 1) {

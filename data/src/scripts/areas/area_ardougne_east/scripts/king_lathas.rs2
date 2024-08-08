@@ -15,7 +15,7 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatnpc("<p,sad>The Dark Lord agreed to spare his life, but only on one condition... That he would drink from the Chalice of Eternity.");
             ~chatplayer("<p,quiz>So what happened?");
             ~chatnpc("<p,sad>The chalice corrupted him. He joined forces with the Dark Lord, the embodiment of pure evil, banished all those years ago...");
-            ~chatnpc("<p,sad>And so I erected this wall, not just to protect my people, but to protect all the people of RuneScape.");
+            ~chatnpc("<p,sad>And so I erected this wall, not just to protect my people, but to protect all the people of <^game>.");
             ~chatnpc("<p,sad>Now, with the King of West Ardougne, the Dark Lord has an ally on the inside.");
             ~chatnpc("<p,sad>So I'm sorry that I lied about the plague. I just hope that you can understand my reasons.");
             ~chatplayer("<p,quiz>Well at least I know now, but what can we do about it?");

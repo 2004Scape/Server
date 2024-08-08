@@ -71,7 +71,7 @@ if(inv_total(inv, coins) < 15) {
     return;
 }
 ~chatplayer("<p,neutral>Okay, please sell me some rope.");
-~chatnpc("<p,happy>There you go, finest rope in RuneScape.");
+~chatnpc("<p,happy>There you go, finest rope in <^game>.");
 ~mesbox("You hand Ned 15 coins.|Ned gives you a coil of rope.");
 inv_del(inv, coins, 15);
 inv_add(inv, rope, 1);

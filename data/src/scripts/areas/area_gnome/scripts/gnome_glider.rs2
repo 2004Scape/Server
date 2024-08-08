@@ -115,7 +115,7 @@ if_openmainmodal(glidermap);
 
 [label,gnome_pilot_what]
 ~chatplayer("<p,quiz>What's Gnome Air?");
-~chatnpc("<p,happy>Gnome Air is the finest airline in RuneScape!");
+~chatnpc("<p,happy>Gnome Air is the finest airline in <^game>!");
 @multi3("Where can you take me?", gnome_pilot_where, "How much for one-way to Varrock?", gnome_pilot_how, "I'll leave you to it.", gnome_pilot_leave);
 
 [label,gnome_pilot_where]

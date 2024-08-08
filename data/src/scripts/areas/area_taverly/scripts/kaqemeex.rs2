@@ -41,7 +41,7 @@ if(%druid_progress = ^druid_not_started) {
 
 [label,kaqemeex_about_guthix]
 ~chatplayer("<p,quiz>So what's so good about Guthix?");
-~chatnpc("<p,neutral>Guthix is the oldest and most powerful god in RuneScape. His existence is vital to this world. He is the god of balance, and nature; he is also a very part of this world.");
+~chatnpc("<p,neutral>Guthix is the oldest and most powerful god in <^game>. His existence is vital to this world. He is the god of balance, and nature; he is also a very part of this world.");
 ~chatnpc("<p,neutral>He exists in the trees, and the flowers, the water and the rocks. He is everywhere. His purpose is to ensure balance in everything in this world, and as such we worship him.");
 ~chatplayer("<p,confused>He sounds kind of boring...");
 ~chatnpc("<p,neutral>Some day when your mind achieves enlightenment you will see the true beauty of his power.");

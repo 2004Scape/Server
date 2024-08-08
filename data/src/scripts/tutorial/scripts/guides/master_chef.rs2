@@ -65,7 +65,7 @@ switch_int($option) {
         ~master_chef_recap_options;
     case 2:
         ~chatplayer("<p,neutral>Tell me about range cooking again.");
-        ~chatnpc("<p,neutral>The range is the only place you can cook a lot of the more complex foods in Runescape. To cook on a range, right click the item you would like to cook, select 'use' then left click the range.");
+        ~chatnpc("<p,neutral>The range is the only place you can cook a lot of the more complex foods in <^game>. To cook on a range, right click the item you would like to cook, select 'use' then left click the range.");
         ~master_chef_recap_options;
     case 3:
         ~chatplayer("<p,neutral>Tell me about music again.");
