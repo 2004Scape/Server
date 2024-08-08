@@ -428,7 +428,6 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_ARRIVEDELAY]: checkedHandler(ActiveNpc, state => {
-        console.log(state.activeNpc.lastMovement, World.currentTick, state.activeNpc.lastStepX, state.activeNpc.x, state.activeNpc.lastStepZ, state.activeNpc.z);
         if (state.activeNpc.lastMovement < World.currentTick) {
             return;
         }
