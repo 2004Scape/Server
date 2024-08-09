@@ -188,6 +188,7 @@ const ObjOps: CommandHandlers = {
     }
 
     // obj_setvar // https://x.com/JagexAsh/status/1679942100249464833
+    // obj_adddelayed // https://x.com/JagexAsh/status/1730321158858276938
 };
 
 export default ObjOps;
