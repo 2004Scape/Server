@@ -151,22 +151,43 @@ if (%action_delay < map_clock) {
         // if player isnt standing on the log anymore, the fire is lit
         if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // check west
             p_teleport(movecoord(coord, -1, 0, 0));
-        }
-        if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
+            p_delay(1);
+            if (coord = $fire_coord & lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
+                p_teleport(movecoord(coord, 1, 0, 0));
+                p_delay(0);
+            }
+            if (coord = $fire_coord & lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
+                p_teleport(movecoord(coord, 0, 0, 1));
+                p_delay(0);
+            }
+            if (coord = $fire_coord & lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
+                p_teleport(movecoord(coord, 0, 0, -1));
+                p_delay(0);
+            }
+        } else if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
             p_teleport(movecoord(coord, 1, 0, 0));
-        }
-        if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
+            p_delay(1);
+            if (coord = $fire_coord & lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
+                p_teleport(movecoord(coord, 0, 0, 1));
+                p_delay(0);
+            }
+            if (coord = $fire_coord & lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
+                p_teleport(movecoord(coord, 0, 0, -1));
+                p_delay(0);
+            }
+        } else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
             p_teleport(movecoord(coord, 0, 0, 1));
-        }
-        if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
+            p_delay(1);
+            if (coord = $fire_coord & lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
+                p_teleport(movecoord(coord, 0, 0, -1));
+                p_delay(0);
+            }
+        } else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
             p_teleport(movecoord(coord, 0, 0, -1));
+            p_delay(0);
         }
-        p_delay(1);
-        if (coord ! $fire_coord) {
-            ~firemaking_success($fire_coord, $log);
-        } else {
-            p_opobj(4);
-        }
+        ~firemaking_success($fire_coord, $log);
+        return;
         // if fully blocked then just light the log and dont move
         //~firemaking_success($fire_coord, $log);
     } else {
