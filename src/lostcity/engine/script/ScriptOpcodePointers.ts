@@ -156,6 +156,10 @@ const ScriptOpcodePointers: {
         set2: ['active_npc2'],
         conditional: true
     },
+    [ScriptOpcode.NPC_HASOP]: {
+        require: ['active_npc'],
+        require2: ['active_npc2'],
+    },
     [ScriptOpcode.IF_CLOSE]: {
         require: ['active_player'],
         require2: ['active_player2']

@@ -7,7 +7,7 @@ p_stopaction;
 // TODO this is for flinching players (pvp etc)
 //if (autoretaliateenabled && action_clock < gameClock()) action_clock = gameClock() + (weaponSpeed / 2)
 
-if (~npc_is_attackable(npc_type) = false) {
+if (~npc_is_attackable() = false) {
     return;
 }
 

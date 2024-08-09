@@ -10,7 +10,7 @@ import ScriptOpcode from '#lostcity/engine/script/ScriptOpcode.js';
 import { CommandHandlers } from '#lostcity/engine/script/ScriptRunner.js';
 import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import {ActiveNpc, ActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
-import {HuntIterator} from '#lostcity/engine/script/ScriptIterators.js';
+import {HuntIterator, NpcHuntAllCommandIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import { Position } from '#lostcity/entity/Position.js';
 import MapFindSqaureType from '#lostcity/entity/MapFindSquareType.js';
@@ -102,7 +102,7 @@ const ServerOps: CommandHandlers = {
         check(distance, NumberNotNull);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
-        state.huntIterator = new HuntIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, -1, -1, HuntModeType.NPC);
+        state.huntIterator = new NpcHuntAllCommandIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis);
     },
 
     [ScriptOpcode.NPC_HUNTNEXT]: state => {

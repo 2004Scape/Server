@@ -240,6 +240,7 @@ enum ScriptOpcode {
     SPOTANIM_NPC,
     NPC_WALK,
     NPC_ATTACKRANGE, // official
+    NPC_HASOP, // official
     NPC_ARRIVEDELAY,
 
     // Loc ops (3000-3499)

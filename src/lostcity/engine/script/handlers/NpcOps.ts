@@ -427,6 +427,22 @@ const NpcOps: CommandHandlers = {
         state.pushInt(check(state.activeNpc.type, NpcTypeValid).attackrange);
     }),
 
+    // https://x.com/JagexAsh/status/1821492251429679257
+    [ScriptOpcode.NPC_HASOP]: checkedHandler(ActiveNpc, state => {
+        const op = state.popInt();
+
+        check(op, NumberNotNull);
+
+        const npcType: NpcType = NpcType.get(state.activeNpc.type);
+
+        if (!npcType.op) {
+            state.pushInt(0);
+            return;
+        }
+
+        state.pushInt(npcType.op[op - 1] ? 1 : 0);
+    }),
+
     [ScriptOpcode.NPC_ARRIVEDELAY]: checkedHandler(ActiveNpc, state => {
         if (state.activeNpc.lastMovement < World.currentTick) {
             return;
