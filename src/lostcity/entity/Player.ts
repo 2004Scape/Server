@@ -704,9 +704,12 @@ export default class Player extends PathingEntity {
 
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, request.args);
-                this.executeScript(script, true);
                 request.unlink();
+
+                const script = ScriptRunner.init(request.script, this, null, request.args);
+                const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
+                this.executeScript(script, true);
+                this.queue.cursor = save;
             }
         }
     }
@@ -715,9 +718,12 @@ export default class Player extends PathingEntity {
         for (let request = this.weakQueue.head(); request !== null; request = this.weakQueue.next()) {
             const delay = request.delay--;
             if (this.canAccess() && delay <= 0) {
-                const script = ScriptRunner.init(request.script, this, null, request.args);
-                this.executeScript(script, true);
                 request.unlink();
+
+                const script = ScriptRunner.init(request.script, this, null, request.args);
+                const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
+                this.executeScript(script, true);
+                this.queue.cursor = save;
             }
         }
     }

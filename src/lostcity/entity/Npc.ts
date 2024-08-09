@@ -331,10 +331,13 @@ export default class Npc extends PathingEntity {
             }
 
             if (!this.delayed() && request.delay <= 0) {
+                request.unlink();
+
                 const state = ScriptRunner.init(request.script, this, null, request.args);
                 state.lastInt = request.lastInt;
+                const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
                 this.executeScript(state);
-                request.unlink();
+                this.queue.cursor = save;
             }
         }
     }
