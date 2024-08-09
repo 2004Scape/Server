@@ -14,11 +14,14 @@ if (random(4) = 0) {
 npc_settimer(calc(15 + random(20)));
 if (random(4) = 0) {
     npc_say("Eep!");
+    // in osrs: ducklings have a different sound that we dont have
 }
 
 [label,duck_quack]
 if (random(2) = 0) {
     npc_say("Quack!");
+    ~sound_area(quack, 0, npc_coord, 5); // osrs
 } else {
     npc_say("Quack?");
+    ~sound_area(quack, 0, npc_coord, 5); // osrs
 }
