@@ -40,7 +40,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
                 %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
                 npc_say("Meeeooowww!");
                 npc_settimer(150);
-                //TODO: check if there's a message for this
+                ~mesbox("Your cat has grown into a mighty feline,|but it will no longer be able to chase vermin."); //linebreak is guessed
             }
     } 
 }
@@ -171,7 +171,7 @@ p_delay(4); //guessed delay
 mes("The cat has run away."); //after or before delay?
 npc_del;
 
-[opnpc5,_petcat] //TODO: add cat raising medal after gertrude's cat
+[opnpc5,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
     ~displaymessage(^dm_default);
     return;
