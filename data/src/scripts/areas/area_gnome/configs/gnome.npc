@@ -490,7 +490,7 @@ param=shop_delta,10
 param=death_anim,midget_death
 param=death_sound,gnome_death
 
-[npc_602]
+[gulluck]
 name=Gulluck
 desc=He sells weapons.
 readyanim=midget_ready
@@ -508,6 +508,12 @@ model3=model_2915_npc
 head1=model_21_npc_head
 param=death_anim,midget_death
 param=death_sound,gnome_death
+category=shop_keeper
+param=owned_shop,gulluck_and_sons
+param=shop_title,Gulluck and Sons
+param=shop_buy_multiplier,250
+param=shop_sell_multiplier,1000
+param=shop_delta,10
 
 [npc_603]
 name=Heckel Funch
