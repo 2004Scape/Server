@@ -627,6 +627,7 @@ export default abstract class PathingEntity extends Entity {
         if (dz != 0 && rsmod.canTravel(this.level, this.x, this.z, 0, dz, this.width, extraFlag, collisionStrategy)) {
             return Position.face(srcX, srcZ, srcX, z);
         }
+        // https://x.com/JagexAsh/status/1727609489954664502
         return null;
     }
 }

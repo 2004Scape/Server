@@ -811,6 +811,8 @@ export default class Npc extends PathingEntity {
         return null;
     }
 
+    // https://x.com/JagexAsh/status/1821236327150710829
+    // https://x.com/JagexAsh/status/1799793914595131463
     huntAll(): void {
         if (this.nextHuntTick > World.currentTick) {
             return;

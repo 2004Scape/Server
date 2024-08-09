@@ -1,3 +1,4 @@
+// https://x.com/JagexAsh/status/1678810351091974159
 enum MoveRestrict {
     NORMAL,
     BLOCKED,

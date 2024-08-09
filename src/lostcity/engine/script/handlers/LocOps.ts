@@ -54,6 +54,7 @@ const LocOps: CommandHandlers = {
         state.pushInt(check(state.activeLoc.angle, LocAngleValid));
     }),
 
+    // https://x.com/JagexAsh/status/1773801749175812307
     [ScriptOpcode.LOC_ANIM]: checkedHandler(ActiveLoc, state => {
         const seqType: SeqType = check(state.popInt(), SeqTypeValid);
 
