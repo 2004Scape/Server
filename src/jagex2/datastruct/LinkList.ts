@@ -2,7 +2,7 @@ import Linkable from './Linkable.js';
 
 export default class LinkList<T extends Linkable> {
     private readonly sentinel: Linkable;
-    private cursor: Linkable | null = null;
+    public cursor: Linkable | null = null;
 
     constructor() {
         const head: Linkable = new Linkable();

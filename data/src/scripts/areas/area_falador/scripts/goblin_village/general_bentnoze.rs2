@@ -18,7 +18,7 @@ if(map_members = true & inv_total(inv, trail_clue_hard_riddle_exp017) > 0) {
         return;
     }
     ~chatnpc("<p,goblinchat>Human do puzzle for me!");
-    ~give_trail_puzzle(trail_clue_hard_puzzle_exp014, "Bentnoze has given you a puzzle box!");
+    ~give_trail_puzzle(trail_clue_hard_puzzle_exp017, "Bentnoze has given you a puzzle box!");
     return;
 }
 if (~quest_dragon_getting_map_parts = true & %dragon_goblin = ^quest_dragon_knows_about_goblin) {

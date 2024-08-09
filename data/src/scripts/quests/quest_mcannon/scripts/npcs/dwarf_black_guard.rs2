@@ -1,0 +1,14 @@
+[opnpc1,dwarf_black_guard]
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,angry>Don't distract me while I'm on duty!|This mine has to be protected!");
+~chatplayer("<p,quiz>What's going to attack a mine?");
+~chatnpc("<p,angry>Goblins! They wander everywhere, attacking anyone they think is small enough to be an easy victim. We need more cannons to fight them off properly.");
+if(%mcannon_progress = ^mcannon_complete) { // TODO: confirm this is the correct stage this dialogue starts
+    ~chatplayer("<p,happy>Well, I've done my bit to help with that.");
+    ~chatnpc("<p,neutral>Yes, I heard. Now please let me get on with my guard duties.");
+    return;
+}
+~chatnpc("<p,neutral>A new cannon can cost 750,000 coins, and the ammo isn't easy to get, but they do up to 30 hitpoints of damage with each shot. When you've got an important mine like this one to protect, it's worth the expense.");
+~chatplayer("<p,happy>Thanks for the information.");
+~chatnpc("<p,neutral>You're welcome. Now please let me|get on with my guard duties.");
+~chatplayer("<p,neutral>Alright, I'll leave you alone now.");

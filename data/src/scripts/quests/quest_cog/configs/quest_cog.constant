@@ -1,0 +1,9 @@
+^quest_cog_not_started = 0
+^quest_cog_tasked_with_placing_cogs = 1
+^quest_cog_three_remaining_cogs = 2
+^quest_cog_two_remaining_cogs = 3
+^quest_cog_one_remaining_cog = 4
+^quest_cog_no_remaining_cogs = 5
+^quest_cog_complete = 8
+
+^quest_cog_rat_door_bit = 4

@@ -47,7 +47,7 @@ if ($choice = 3) {
     ~chatnpc("<p,neutral>A waterskin and a knife help you survive from the juice|of a cactus. Use the chest to store your items, we'll take|them to the bank. It's hot in the desert, you'll bake in|all that armour.");
     ~chatnpc("<p,neutral>To keep the pass open we ask for 5 gold pieces. And|we give you a Shantay Pass, just ask to see what I sell|to buy one.");
 }
-@multi3("Can I See what you have to sell please?", shantay_can_i_see_what_you_have_to_sell_please, "I must be going.", shantay_i_must_be_going, "Why do I have to pay to go into the desert?", shantay_pay_for_desert);
+@multi3("Can I see what you have to sell please?", shantay_can_i_see_what_you_have_to_sell_please, "I must be going.", shantay_i_must_be_going, "Why do I have to pay to go into the desert?", shantay_pay_for_desert);
 
 [label,shantay_pay_for_desert]
 ~chatplayer("<p,neutral>Why do I have to pay to go into the desert?");

@@ -75,7 +75,6 @@ if(stat(agility) < 67) {
     ~mesbox("You need an Agility level of 67 to climb this pile of rubble.");
     return;
 }
-p_arrivedelay;
 mes("You climb up the pile of rubble...");
 ~agility_climb_up(55, 0_40_148_55_34);
 

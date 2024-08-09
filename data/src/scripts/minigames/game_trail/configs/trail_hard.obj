@@ -152,7 +152,7 @@ category=trail_clue_hard
 param=trail_desc,21 degrees 24 minutes north|17 degrees 54 minutes east
 param=trail_sextant,yes
 param=trail_casket,trail_casket_hard_sextant_exp008
-param=trail_coord,0_46_60_5_6
+param=trail_coord,0_47_60_5_6
 param=trail_guardian,zamorak_wizard
 
 [trail_clue_hard_sextant_exp009]
@@ -395,7 +395,7 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_hard
-param=trail_desc,46 is my number.|My body is the colour of burnt orange and crawls among those with eight.|Three mouths I have, yet I cannot eat.|My blinking blue eye hides my grave.
+param=trail_desc,46 is my number.|My body is the colour of burnt orange|and crawls among those with eight.|Three mouths I have, yet I cannot|eat.|My blinking blue eye hides my grave.
 param=trail_casket,trail_casket_hard_riddle_exp010
 param=trail_coord,0_49_60_34_45
 
@@ -413,7 +413,7 @@ iop1=Read
 category=trail_clue_hard
 param=trail_sextant,yes
 param=trail_desc,My giant guardians below|the market streets would|be fans of rock and roll,|if only they could grab hold of it.|Dig near my green bubbles!
-param=trail_coord,0_48_154_25_48
+param=trail_coord,0_49_154_25_49
 param=trail_casket,trail_casket_hard_riddle_exp011
 
 [trail_clue_hard_riddle_exp012]

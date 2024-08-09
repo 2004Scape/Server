@@ -1,5 +1,26 @@
 // Gnome stronghold entrance gate
 [oploc1,loc_190]
+if(%grandtree_progress = ^grandtree_released_prison & coordz(coord) > coordz(loc_coord)) { // only when leaving
+    ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,angry>Halt, human!");
+    ~chatplayer("<p,shock>What?, why?"); // intentional
+    ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,angry>By order of the head tree guardian!|You can not leave!");
+    ~chatplayer("<p,shock>That's crazy! Why?!");
+    ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,angry>Humans are planning to attack our stronghold.|You could be a spy!");
+    ~chatplayer("<p,angry>That's ridiculous!");
+    ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,neutral>Maybe, but that's the orders, I'm sorry.");
+    return;
+}
+if(%grandtree_progress = ^grandtree_obtained_lumber_order & coordz(coord) < coordz(loc_coord)) { // TODO: is this before or after helping femi?
+    ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,neutral>I'm afraid that we have orders not to let you in.");
+    ~chatplayer("<p,angry>Orders from who?");
+    ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,neutral>The head tree guardian, he say's you're a spy!");
+    ~chatplayer("<p,angry>Glough!");
+    ~chatnpc_specific(nc_name(gnome_guard_halberd), gnome_guard_halberd, "<p,neutral>I'm sorry but you'll have to leave.");
+    return;
+}
+if(%femi_help = 0 & coordz(coord) < coordz(loc_coord) & npc_find(coord, femi, 6, 0) = true) {
+    @femi_boxes;
+}
 // walk to start
 def_coord $loc_coord = loc_coord;
 def_coord $north_entrance = movecoord($loc_coord, 2, 0, 2);
@@ -13,11 +34,10 @@ if(coordz(coord) > coordz($loc_coord) & coord ! $north_entrance) {
 }
 p_delay(0);
 // replace gate
-loc_del(4);
+loc_change(loc_191, 4);
 loc_add(movecoord($loc_coord, 3, 0, 0), loc_192, 0, loc_shape, 4); // opened right side
 loc_add(movecoord($loc_coord, 2, 0, 0), loc_83, 3, loc_shape, 4); // blocks whole path
 loc_add(movecoord($loc_coord, 2, 0, 1), loc_83, 1, loc_shape, 4);
-loc_add($loc_coord, loc_191, 2, loc_shape, 4); // opened left side 
 p_delay(0);
 // walk to dest
 if(coordz(coord) > coordz($loc_coord)) {

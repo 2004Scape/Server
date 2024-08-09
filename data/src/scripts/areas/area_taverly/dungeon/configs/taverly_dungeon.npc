@@ -58,3 +58,44 @@ defence=40
 param=stabdefence,79
 param=slashdefence,63
 param=crushdefence,47
+
+[lord_daquarius]
+name=Lord Daquarius
+desc=Wears a stylish suit of armour.
+walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
+readyanim=human_ready
+op1=Talk-to
+op2=Attack
+vislevel=59
+recol1s=15855
+recol1d=3171
+recol2s=10570
+recol2d=3171
+recol3s=15360
+recol3d=5285
+recol4s=8386
+recol4d=3171
+recol5s=14798
+recol5d=3171
+recol6s=24075
+recol6d=13506
+model1=model_217_idk
+model2=model_306_obj_wear
+model3=model_268_obj_wear
+model4=model_246_idk
+model5=model_185_obj_wear
+model6=model_156_npc
+model7=model_179_obj_wear
+model8=model_323_obj_wear
+// does not move on osrs
+wanderrange=0
+moverestrict=nomove
+hitpoints=38
+attack=65
+strength=65
+defence=65
+param=stabdefence,50
+param=slashdefence,64
+param=crushdefence,81
+// param=defend_sound,
+// TODO

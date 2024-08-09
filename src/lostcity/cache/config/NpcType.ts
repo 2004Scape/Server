@@ -108,12 +108,12 @@ export default class NpcType extends ConfigType {
     category = -1;
     wanderrange = 5;
     maxrange = 7;
-    huntrange = 5;
+    huntrange = 0;
     timer = -1;
     respawnrate = 100; // default to 1-minute
     stats = [1, 1, 1, 1, 1, 1];
     moverestrict = MoveRestrict.NORMAL;
-    attackrange = 1;
+    attackrange = 0;
     huntmode = -1;
     defaultmode = NpcMode.WANDER;
     members = false;

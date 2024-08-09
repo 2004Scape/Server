@@ -149,7 +149,7 @@ data=consumable,vegetable_batta
 data=consumable,pineapple_pizza
 data=consumable,obj_2303
 data=consumable,tuna
-data=consumable,obj_2878
+data=consumable,cooked_chompy
 data=stat_restore,hitpoints,10,0
 data=consume_sound,eat
 

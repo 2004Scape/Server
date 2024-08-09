@@ -13,7 +13,6 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import { Position } from './Position.js';
-import MoveSpeed from './MoveSpeed.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import Zone from '#lostcity/engine/zone/Zone.js';
 import InvType from '#lostcity/cache/config/InvType.js';
@@ -59,10 +58,6 @@ export class NetworkPlayer extends Player {
         }
 
         let offset = 0;
-        this.lastResponse = World.currentTick;
-
-        World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
-
         while (this.client.inOffset > offset) {
             const packetType = ClientProt.byId[this.client.in[offset++]];
             let length = packetType.length;
@@ -83,6 +78,11 @@ export class NetworkPlayer extends Player {
                     handler.handle(message, this);
                 }
             }
+        }
+
+        if (this.client.inOffset > 0) {
+            this.lastResponse = World.currentTick;
+            World.cycleStats[WorldStat.BANDWIDTH_IN] += this.client.inOffset;
         }
 
         this.client?.reset();
@@ -219,9 +219,11 @@ export class NetworkPlayer extends Player {
             info.unlink();
         }
 
-        if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
+        // no need to rebuild upon telejump anymore.
+        // causes u to full follows zones which is wrong.
+        /*if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
             loadedZones.clear();
-        }
+        }*/
 
         // update any newly tracked zones
         activeZones.clear();
@@ -297,10 +299,9 @@ export class NetworkPlayer extends Player {
             const zone: Zone = World.getZoneIndex(zoneIndex);
             if (!loadedZones.has(zone.index)) {
                 zone.writeFullFollows(this);
-            } else {
-                zone.writePartialEncloses(this);
-                zone.writePartialFollows(this);
             }
+            zone.writePartialEncloses(this);
+            zone.writePartialFollows(this);
             loadedZones.add(zone.index);
         }
     }

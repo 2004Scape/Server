@@ -1,29 +1,29 @@
-[oploc1,loc_3379]
+[oploc1,chompybird_cave_entrance]
 p_teleport(0_41_146_23_35);
 
-[oploc1,loc_3380]
+[oploc1,chompybird_cave_exit_a]
 p_teleport(0_41_46_6_53);
 
-[oploc1,loc_3381]
+[oploc1,chompybird_cave_exit_b]
 p_teleport(0_41_46_6_53);
 
-[oplocu,loc_684]
+[oplocu,swamp_bubbles_a]
 @use_bellows_on_swamp_bubbles;
 
-[oplocu,loc_735]
+[oplocu,swamp_bubbles_b]
 @use_bellows_on_swamp_bubbles;
 
 [label,use_bellows_on_swamp_bubbles]
 switch_obj(last_useitem) {
-    case obj_2871:
+    case ogre_bellows_0:
         // TODO TBC anim and sound
         anim(human_firecooking, 0);
         sound_synth(ogre_bellows_suck, 0, 0);
         p_delay(1);
 
         mes("You collect some gas from the swamp.");
-        inv_del(inv, obj_2871, 1);
-        inv_add(inv, obj_2872, 1);
+        inv_del(inv, ogre_bellows_0, 1);
+        inv_add(inv, ogre_bellows_3, 1);
     case default:
         // TODO can you fill bellows (2) and (1)?
         mes("Nothing interesting happens.");

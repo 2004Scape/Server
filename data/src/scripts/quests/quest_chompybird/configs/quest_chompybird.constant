@@ -1,7 +1,17 @@
 ^chompybird_not_started = 0
-^chompybird_started = 1
-^chompybird_made_arrows = 2
-^chompybird_given_arrows = 3
-^chompybird_shown_toad = 4
+^chompybird_started = 5
+^chompybird_given_arrows = 10
+^chompybird_kids_play_with_toad = 15
+^chompybird_removed_rock_from_chest = 20
+^chompybird_shown_toad = 25
+^chompybird_dropped_toad = 30
+^chompybird_chompy_ate_toad = 35
+^chompybird_rantz_tried_to_shoot_chompy = 40
+^chompybird_rantz_gave_player_bow = 45
+^chompybird_player_killed_chompy = 50
+^chompybird_told_to_cook_chompy = 55
+^chompybird_chompy_cooked = 60
+^chompybird_complete = 65
 
-^chompybird_complete = 999
+// varbit locations - TBC exact
+^chompybird_varbit_made_arrows = 0

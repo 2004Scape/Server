@@ -269,7 +269,6 @@ strength=13
 defence=12
 wanderrange=7
 param=retreat,8
-huntmode=cowardly
 
 [guard_sword]
 name=Guard
@@ -956,6 +955,7 @@ defence=10
 param=attackbonus,6
 param=strengthbonus,6
 param=damagetype,^crush_style
+category=shipyard_worker
 
 [shipyard_worker2]
 name=Shipyard worker
@@ -988,6 +988,7 @@ param=strengthbonus,6
 param=damagetype,^crush_style
 param=attack_anim,human_blunt_crush
 param=attack_sound,baxe_slash
+category=shipyard_worker
 // osrs defend seq_403
 // osrs attack sound warhammer_crush
 
@@ -1214,6 +1215,7 @@ param=attack_sound,chicken_attack
 param=defend_sound,chicken_hit
 param=death_sound,chicken_death
 huntmode=cowardly
+huntrange=1
 
 [hellhound]
 size=2
@@ -1238,6 +1240,7 @@ param=death_anim,hellhound_death
 param=attack_sound,growl6
 param=defend_sound,growl5
 huntmode=cowardly
+huntrange=2
 
 [baby_dragon]
 size=2
@@ -1269,6 +1272,7 @@ param=defend_sound,babydragon_hit
 param=death_sound,babydragon_death
 param=death_drop,babydragon_bones
 huntmode=cowardly
+huntrange=2
 
 [baby_blue_dragon]
 size=2
@@ -1302,6 +1306,7 @@ param=defend_sound,babydragon_hit
 param=death_sound,babydragon_death
 param=death_drop,babydragon_bones
 huntmode=cowardly
+huntrange=2
 
 [red_dragon]
 size=4
@@ -1336,6 +1341,7 @@ param=defend_sound,dragon_hit
 param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
+huntrange=4
 
 [black_dragon]
 size=4
@@ -1371,6 +1377,7 @@ param=defend_sound,dragon_hit
 param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
+huntrange=4
 
 [blue_dragon]
 size=4
@@ -1405,6 +1412,7 @@ param=defend_sound,dragon_hit
 param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
+huntrange=4
 
 [dryad]
 name=Dryad
@@ -1457,6 +1465,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 // TODO spider prayer drain attack
 
 [giant_spider1]
@@ -1489,6 +1498,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 
 [giant_spider2]
 walkanim=giantspider_walk
@@ -1516,6 +1526,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 
 [spider]
 walkanim=spider_walk
@@ -1575,7 +1586,8 @@ param=attack_sound,insect_attack
 param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
-huntmode=cowardly
+huntmode=aggressive_melee
+huntrange=1
 
 [deadly_red_spider]
 walkanim=giantspider_walk
@@ -1608,6 +1620,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 
 [ice_spider]
 walkanim=giantspider_walk
@@ -1639,6 +1652,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 
 [leprechaun]
 walkanim=midget_walk
@@ -1782,6 +1796,7 @@ param=attack_sound,lizardman_attack
 param=defend_sound,lizardman_hit
 param=death_sound,lizardman_death
 huntmode=cowardly
+huntrange=2
 
 [mummy]
 name=Mummy
@@ -1798,6 +1813,7 @@ param=attack_sound,mummy_attack
 param=defend_sound,mummy_hit
 param=death_sound,mummy_death
 huntmode=cowardly
+huntrange=1
 
 [orc]
 name=Orc
@@ -1814,6 +1830,7 @@ param=attack_sound,orc_attack
 param=defend_sound,orc_hit
 param=death_sound,orc_death
 huntmode=cowardly
+huntrange=1
 
 [troll]
 name=Troll
@@ -1827,6 +1844,7 @@ param=attack_anim,troll_attack
 param=defend_anim,troll_block
 param=death_anim,troll_death
 huntmode=cowardly
+huntrange=1
 
 [zombie1]
 name=Zombie
@@ -1855,6 +1873,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [zombie2]
 name=Zombie
@@ -1882,6 +1901,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [zombie3]
 name=Zombie
@@ -1911,6 +1931,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [zombie_entrana]
 name=Zombie
@@ -1941,6 +1962,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=aggressive_melee
+huntrange=1
 
 [summoned_zombie]
 name=Summoned Zombie
@@ -1963,6 +1985,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [giant_bat]
 name=Giant bat
@@ -1995,6 +2018,7 @@ param=defend_sound,bat_hit
 param=death_sound,bat_death
 param=death_drop,bat_bones
 huntmode=cowardly
+huntrange=2
 
 [death_wing]
 name=Death wing
@@ -2029,6 +2053,7 @@ param=attack_sound,bat_attack
 param=defend_sound,bat_hit
 param=death_sound,bat_death
 huntmode=aggressive_melee
+huntrange=2
 
 [cow_1]
 size=2
@@ -2119,6 +2144,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
+huntrange=3
 
 [black_demon]
 size=3
@@ -2154,6 +2180,7 @@ param=death_sound,black_demon_death
 param=death_drop,ashes
 category=black_demon
 huntmode=cowardly
+huntrange=3
 
 [golem]
 name=Golem
@@ -2196,7 +2223,6 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
-huntmode=cowardly
 
 [giant_rat2]
 size=2
@@ -2223,6 +2249,8 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
+// osrs
+huntrange=1
 
 [dungeon_rat]
 size=2
@@ -2251,6 +2279,7 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
+huntrange=2
 
 [unicorn]
 size=2
@@ -2304,6 +2333,7 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [skeleton2]
 name=Skeleton
@@ -2332,6 +2362,7 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [skeleton3]
 name=Skeleton
@@ -2462,6 +2493,7 @@ param=defend_sound,wolf_hit
 param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_96]
 size=2
@@ -2492,6 +2524,7 @@ param=defend_sound,wolf_hit
 param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_97]
 size=2
@@ -2522,6 +2555,7 @@ param=defend_sound,wolf_hit
 param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_98]
 name=Dog
@@ -2555,6 +2589,7 @@ param=death_anim,dog_death
 param=attack_sound,wolf_attack2
 param=defend_sound,wolf_hit
 huntmode=cowardly
+huntrange=1
 
 [goblin_unarmed1]
 name=Goblin
@@ -2681,6 +2716,7 @@ param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [ghost_draynor_manor]
 name=Ghost
@@ -2739,6 +2775,7 @@ param=defend_sound,bear_hit
 param=death_sound,bear_death
 category=bear
 huntmode=cowardly
+huntrange=2
 
 [bear_black]
 size=2
@@ -2796,6 +2833,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=2
 
 [npc_108]
 size=2
@@ -2827,6 +2865,7 @@ param=death_sound,insect_death
 param=death_drop,null
 param=poison_severity,15
 huntmode=cowardly
+huntrange=2
 
 [npc_109]
 name=Pit Scorpion
@@ -2854,6 +2893,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=1
 
 [fire_giant]
 size=2
@@ -2889,6 +2929,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [ice_giant]
 size=2
@@ -2920,6 +2961,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [moss_giant]
 size=2
@@ -2954,6 +2996,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [jogre]
 size=2
@@ -2990,6 +3033,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_114]
 size=2
@@ -3020,6 +3064,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_115]
 size=2
@@ -3050,6 +3095,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 // osrs attack_sound,giant_attack & defend_sound,mace_crush
 
 [cyclops]
@@ -3078,6 +3124,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [giant]
 size=2
@@ -3108,6 +3155,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_118]
 walkanim=dwarf_walk
@@ -3182,6 +3230,7 @@ param=attack_sound,baxe_crush
 // param=defend_sound,brassclash2   possible used this before???
 // TODO sounds osrs use these sounds warhammer_crush, dwarf_hit, dwarf_death
 huntmode=cowardly
+huntrange=1
 
 [npc_120]
 walkanim=dwarf_walk
@@ -3266,6 +3315,7 @@ param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 huntmode=cowardly
+huntrange=1
 
 [hobgoblin_armed]
 walkanim=hobgoblin_walk
@@ -3295,6 +3345,7 @@ param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
 huntmode=cowardly
+huntrange=1
 
 [earth_warrior]
 hasalpha=yes
@@ -3345,6 +3396,7 @@ param=death_anim,earthwarrior_death
 param=attack_sound,mace_crush
 // param=defend_sound,blade5
 huntmode=cowardly
+huntrange=1
 // osrs defend anim seq_398
 // osrs sound attack warhammer_crush
 
@@ -3395,6 +3447,7 @@ param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
+huntrange=1
 
 [otherworldly_being]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -3460,6 +3513,7 @@ param=defend_sound,sword_hit2
 // param=death_sound,brassclash2
 param=death_drop,iron_battleaxe
 huntmode=cowardly
+huntrange=1
 
 [snake]
 name=Snake
@@ -3482,6 +3536,7 @@ param=attack_sound,snake_attack
 param=defend_sound,snake_hit
 param=death_sound,snake_death
 huntmode=cowardly
+huntrange=1
 
 [npc_129]
 walkanim=skavid_walk
@@ -3583,6 +3638,7 @@ param=death_anim,unicorn_death
 param=attack_sound,horse_hit
 param=defend_sound,horse_hit
 huntmode=cowardly
+huntrange=2
 category=unicorn
 
 [npc_134]
@@ -3616,6 +3672,7 @@ param=death_sound,insect_death
 param=death_drop,null
 param=poison_severity,27
 huntmode=cowardly
+huntrange=1
 
 [mammoth]
 size=3
@@ -3632,6 +3689,8 @@ param=death_anim,mammoth_death
 param=attack_sound,mammoth_attack
 param=defend_sound,mammoth_hit
 param=death_sound,mammoth_death
+huntmode=cowardly
+huntrange=3
 
 [terrorbird]
 name=Terrorbird
@@ -3766,6 +3825,7 @@ param=death_anim,souless_death
 // TODO param=death_sound,
 param=retreat,9
 huntmode=cowardly
+huntrange=1
 
 [npc_141]
 size=2
@@ -3798,6 +3858,7 @@ param=defend_sound,wolf_hit
 param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_142]
 size=2
@@ -3828,6 +3889,7 @@ param=defend_sound,wolf_hit
 param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_143]
 name=Jungle Wolf
@@ -3858,6 +3920,7 @@ param=defend_sound,wolf_hit
 param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_144]
 size=2
@@ -3890,6 +3953,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+huntrange=2
 
 [npc_145]
 hasalpha=yes
@@ -3938,6 +4002,7 @@ param=attack_sound,hacksword_slash
 param=defend_sound,ice_warrior_hit
 param=death_sound,ice_warrior_death
 huntmode=cowardly
+huntrange=1
 // osrs attack animation seq_390 and defend seq_388
 
 [npc_146]
@@ -4159,6 +4224,7 @@ param=death_anim,earthwarrior_death
 param=attack_sound,baxe_slash
 // param=defend_sound,steel
 huntmode=cowardly
+huntrange=1
 // osrs defend seq_399
 
 [dark_wizard_earth]
@@ -4183,6 +4249,8 @@ model6=model_176_idk
 model7=model_265_obj_wear
 wanderrange=3
 maxrange=5
+attackrange=5
+huntrange=5
 respawnrate=50
 hitpoints=24
 attack=17
@@ -4242,6 +4310,7 @@ model6=model_176_idk
 model7=model_265_obj_wear
 wanderrange=3
 maxrange=5
+attackrange=5
 respawnrate=50
 hitpoints=12
 attack=5
@@ -4250,6 +4319,8 @@ defence=5
 magic=6
 param=magicdefence,3
 huntmode=ranged
+// osrs
+huntrange=3
 
 [npc_175]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4283,6 +4354,8 @@ param=strengthbonus,-21
 param=damagetype,^crush_style
 param=defend_anim,human_unarmedblock
 huntmode=cowardly
+// osrs
+huntrange=5
 
 [npc_176]
 name=Witch
@@ -4461,6 +4534,7 @@ head2=model_76_obj_wear
 wanderrange=12
 maxrange=14
 attackrange=3
+huntrange=5
 hitpoints=13
 attack=2
 strength=2
@@ -4543,6 +4617,8 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+huntmode=cowardly
+huntrange=1
 category=pirate
 
 [npc_183]
@@ -4586,6 +4662,8 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
+huntmode=cowardly
+huntrange=1
 category=pirate
 
 [npc_184]
@@ -4630,6 +4708,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 category=pirate
 huntmode=cowardly
+huntrange=1
 
 [npc_185]
 name=Pirate
@@ -4669,6 +4748,8 @@ param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 category=pirate
+huntmode=cowardly
+huntrange=1
 
 [thug]
 name=Thug
@@ -4703,7 +4784,6 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
-huntmode=cowardly
 
 [rogue]
 name=Rogue
@@ -4742,6 +4822,7 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
 huntmode=cowardly
+huntrange=1
 
 [monk_of_zamorak_22]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4774,6 +4855,7 @@ magic=25
 param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
+huntrange=1
 
 [monk_of_zamorak_17]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4806,6 +4888,7 @@ magic=25
 param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
+huntrange=1
 
 [monk_of_zamorak_45]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4837,6 +4920,7 @@ magic=40
 param=damagetype,^crush_style
 category=monk_of_zamorak
 huntmode=cowardly
+huntrange=1
 
 [tribesman]
 name=Tribesman
@@ -4875,6 +4959,7 @@ param=attack_sound,staff_stab
 param=poison_severity,55
 // huntmode is just a guess
 huntmode=cowardly
+huntrange=1
 
 [dark_warrior]
 name=Dark warrior
@@ -4919,6 +5004,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,steel
 huntmode=cowardly
+huntrange=1
 
 [chaos_druid_warrior]
 name=Chaos druid warrior
@@ -4962,6 +5048,7 @@ param=attack_sound,mace_crush
 // osrs defend anim seq_403
 // osrs attack sound warhammer_crush
 huntmode=cowardly
+huntrange=1
 
 [necromancer]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -5028,6 +5115,8 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 huntmode=cowardly
+// osrs
+huntrange=6
 
 [guard_bandit]
 name=Guard Bandit
@@ -5071,6 +5160,8 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 huntmode=cowardly
+// osrs
+huntrange=6
 
 [npc_197]
 name=Barbarian guard
@@ -5155,39 +5246,6 @@ param=defend_anim,human_baxe_defend2
 param=attack_sound,baxe_slash
 // param=defend_sound,swordclash2
 
-[npc_200]
-name=Lord Daquarius
-desc=Wears a stylish suit of armour.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=59
-recol1s=15855
-recol1d=3171
-recol2s=10570
-recol2d=3171
-recol3s=15360
-recol3d=5285
-recol4s=8386
-recol4d=3171
-recol5s=14798
-recol5d=3171
-recol6s=24075
-recol6d=13506
-model1=model_217_idk
-model2=model_306_obj_wear
-model3=model_268_obj_wear
-model4=model_246_idk
-model5=model_185_obj_wear
-model6=model_156_npc
-model7=model_179_obj_wear
-model8=model_323_obj_wear
-wanderrange=3
-maxrange=5
-// param=defend_sound,
-// TODO
-
 [salarin_the_twisted]
 name=Salarin the twisted
 desc=Twisted by name, twisted by nature.
@@ -5246,33 +5304,6 @@ strength=2
 defence=3
 param=damagetype,^crush_style
 param=retreat,7
-
-[npc_224]
-resizeh=64
-resizev=64
-walkanim=giantrat_walk
-readyanim=giantrat_ready
-name=Dungeon rat
-desc=A dirty rat.
-op2=Attack
-vislevel=10
-recol1s=6347
-recol1d=17969
-model1=model_2959_npc
-wanderrange=6
-maxrange=8
-respawnrate=25
-hitpoints=12
-attack=10
-strength=10
-defence=10
-param=damagetype,^stab_style
-param=attack_anim,giantrat_attack
-param=defend_anim,giantrat_block
-param=death_anim,giantrat_death
-param=attack_sound,rat_attack
-param=defend_sound,rat_hit
-param=death_sound,rat_death
 
 [forester_mcgrubor]
 vislevel=hide
@@ -5374,7 +5405,6 @@ param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 param=retreat,8
-huntmode=cowardly
 
 [head_thief]
 name=Head Thief
@@ -5409,7 +5439,6 @@ param=damagetype,^slash_style
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_slash
-huntmode=cowardly
 
 [doric]
 vislevel=hide
@@ -5726,6 +5755,7 @@ param=defend_sound,giant_hit
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_382]
 vislevel=hide
@@ -6079,6 +6109,7 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [npc_503]
 name=Undead One
@@ -6102,6 +6133,7 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [npc_504]
 name=Undead One
@@ -6135,6 +6167,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [npc_505]
 name=Undead One
@@ -6173,6 +6206,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 huntmode=cowardly
+huntrange=1
 
 [npc_506]
 vislevel=hide
@@ -6607,213 +6641,7 @@ param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
-
-[hazelmere]
-name=Hazelmere
-desc=An ancient looking gnome.
-walkanim=midget_walk
-readyanim=midget_ready
-vislevel=hide
-op1=Talk-to
-recol1s=32766
-recol1d=28481
-recol2s=24075
-recol2d=13537
-recol3s=21961
-recol3d=13537
-recol4s=20904
-recol4d=13537
-model1=model_2909_npc
-model2=model_2901_npc
-model3=model_2916_npc
-head1=model_17_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_670]
-name=King Narnode Shareen
-desc=An important looking gnome.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-model1=model_2909_npc
-model2=model_2891_npc
-model3=model_2916_npc
-head1=model_20_npc_head
-wanderrange=2
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_671]
-name=Glough
-desc=A rough looking gnome.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=10570
-recol1d=2114
-model1=model_2909_npc
-model2=model_2903_npc
-model3=model_2919_npc
-head1=model_22_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_672]
-name=Anita
-desc=Glough's girlfriend.
-vislevel=hide
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-recol1s=352
-recol1d=12422
-model1=model_2911_npc
-model2=model_2907_npc
-model3=model_2917_npc
-head1=model_21_npc_head
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_673]
-name=Charlie
-desc=Poor guy, he looks frightened.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-vislevel=hide
-recol1s=14724
-recol1d=15855
-recol2s=2340
-recol2d=15855
-recol3s=6273
-recol3d=22850
-model1=model_215_idk
-model2=model_246_idk
-model3=model_292_idk
-model4=model_151_idk
-model5=model_176_idk
-model6=model_254_idk
-model7=model_181_idk
-head1=model_53_idk_head
-wanderrange=0
-moverestrict=nomove
-
-[npc_674]
-name=Foreman
-desc=The boss!
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op2=Attack
-vislevel=17
-recol1s=2340
-recol1d=8420
-recol2s=6273
-recol2d=18991
-recol3s=14724
-recol3d=15855
-model1=model_214_idk
-model2=model_247_idk
-model3=model_302_npc
-model4=model_173_npc
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-head1=model_52_idk_head
-head2=model_79_idk_head
-wanderrange=2
-respawnrate=5
-hitpoints=20
-attack=20
-strength=20
-defence=20
-param=slashdefence,1
-param=crushdefence,1
-param=damagetype,^crush_style
-// trivia npc sounds - https://oldschool.runescape.wiki/w/Foreman
-
-[npc_675]
-name=Shipyard worker
-desc=Builds ships for a living.
-vislevel=hide
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=8420
-recol2s=6273
-recol2d=14594
-recol3s=14724
-recol3d=15855
-model1=model_215_idk
-model2=model_247_idk
-model3=model_305_obj_wear
-model4=model_151_idk
-model5=model_179_obj_wear
-model6=model_254_idk
-model7=model_185_obj_wear
-head1=model_53_idk_head
-head2=model_79_idk_head
-wanderrange=2
-
-[npc_676]
-name=Femi
-desc=A gnome trader.
-walkanim=midget_walk
-readyanim=midget_ready
-op1=Talk-to
-vislevel=hide
-recol1s=352
-recol1d=19489
-recol2s=416
-recol2d=8420
-recol3s=288
-recol3d=8420
-model1=model_2907_npc
-model2=model_2911_npc
-model3=model_2922_npc
-head1=model_21_npc_head
-wanderrange=1
-param=death_anim,midget_death
-param=death_sound,gnome_death
-
-[npc_677]
-size=3
-walkanim=demon_walk
-readyanim=demon_ready
-name=Black Demon
-desc=A big, scary, jet-black demon.
-op2=Attack
-vislevel=172
-recol1s=11264
-recol1d=1057
-recol2s=15393
-recol2d=1057
-recol3s=0
-recol3d=16417
-model1=model_2942_npc
-wanderrange=8
-maxrange=10
-respawnrate=30
-hitpoints=157
-attack=145
-strength=148
-defence=152
-param=magicdefence,-10
-param=damagetype,^slash_style
-param=attack_anim,demon_attack
-param=defend_anim,demon_block
-param=death_anim,demon_death
-param=demonbane_vulnerable,yes
-param=attack_sound,black_demon_attack
-param=defend_sound,black_demon_hit
-param=death_sound,black_demon_death
-param=death_drop,ashes
-category=black_demon
-huntmode=cowardly
+huntrange=3
 
 [imp]
 name=Imp
@@ -7727,6 +7555,7 @@ param=attack_anim,human_blunt_crush
 param=defend_anim,human_unarmedblock
 param=attack_sound,baxe_crush
 huntmode=aggressive_melee
+huntrange=1
 // Unknown reason osrs side this npc use unarmed attacks --attack seq_422 defend seq_424--
 
 [npc_828]
@@ -7997,6 +7826,7 @@ param=attack_sound,mace_crush
 param=death_sound,giant_death
 param=death_drop,big_bones
 huntmode=cowardly
+huntrange=2
 
 [npc_853]
 vislevel=hide
@@ -8654,6 +8484,7 @@ param=attack_anim,human_spear_stab
 param=defend_anim,human_khazard_spear_defend
 param=attack_sound,staff_stab
 huntmode=cowardly
+huntrange=1
 
 [npc_932]
 vislevel=hide
@@ -8972,6 +8803,7 @@ param=defend_sound,dragon_hit
 param=death_sound,dragon_death
 param=death_drop,dragon_bones
 huntmode=cowardly
+huntrange=4
 
 [cow_3]
 size=2
@@ -9086,7 +8918,6 @@ model6=model_170_idk
 model7=model_176_idk
 model8=model_265_obj_wear
 model9=model_544_obj_wear
-// TODO respawnrate?
 wanderrange=3
 attackrange=1
 maxrange=5
@@ -9095,6 +8926,7 @@ attack=24
 strength=24
 defence=24
 magic=80
+timer=20
 param=magicdefence,3
 
 [poison_spider_observatory]
@@ -9127,3 +8959,4 @@ param=death_sound,insect_death
 param=death_drop,null
 // Tested this npc in osrs, doesnt seem to poison? Seems like the chests have a chance to poison
 huntmode=cowardly
+huntrange=1

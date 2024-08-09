@@ -240,6 +240,8 @@ enum ScriptOpcode {
     SPOTANIM_NPC,
     NPC_WALK,
     NPC_ATTACKRANGE, // official
+    NPC_HASOP, // official
+    NPC_ARRIVEDELAY,
 
     // Loc ops (3000-3499)
     LOC_ADD = 3000, // official
@@ -267,6 +269,7 @@ enum ScriptOpcode {
     OBJ_PARAM,
     OBJ_TAKEITEM,
     OBJ_TYPE,
+    OBJ_FIND,
 
     // Npc config ops (4000-4099)
     NC_CATEGORY = 4000,

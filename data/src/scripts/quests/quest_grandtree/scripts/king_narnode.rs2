@@ -1,0 +1,536 @@
+[opnpc1,king_narnode]
+if(coordy(npc_coord) > 0 & (%grandtree_progress <= ^grandtree_found_journal | %grandtree_progress > ^grandtree_released_prison)) {
+    mes("The King doesn't seem interested in talking.");
+    return;
+}
+switch_int(%grandtree_progress) {
+    case ^grandtree_complete:
+        ~chatplayer("<p,happy>Hello your highness!");
+        ~chatnpc("<p,happy>Well, hello again Traveller! How are you?");
+        ~chatplayer("<p,happy>I'm good thanks, how's the tree?");
+        ~chatnpc("<p,happy>Better than ever, thanks to you!");
+    case ^grandtree_searching_daconia:
+        ~chatnpc("<p,quiz>Traveller, have you managed to find the Daconia?");
+        if(inv_total(inv, daconia_rock) > 0) {
+            ~chatplayer("<p,quiz>Is this it?");
+            ~chatnpc("<p,happy>Yes! Excellent, well done!");
+            ~objbox(daconia_rock, "You give the King the Daconia rock.");
+            ~chatnpc("<p,happy>It's incredible, the tree's health is improving already! I don't know what to say, we owe you so much!");
+            ~chatnpc("<p,sad>To think Glough had me fooled all along!");
+            ~chatplayer("<p,happy>All that matters now is that humans and gnomes can live together in peace!");
+            ~chatnpc("<p,laugh>I'll drink to that!");
+            ~chatnpc("<p,happy>From now on I vow to make this stronghold a welcoming place for all! I'll grant you access to all our facilities.");
+            ~chatplayer("<p,happy>Thanks!");
+            ~chatplayer("<p,laugh>I think!");
+            ~chatnpc("<p,neutral>It should make your stay here easier. You can use the spirit tree to transport yourself, as well as the gnome glider. I also give you access to our mine.");
+            ~chatplayer("<p,quiz>Mine?");
+            ~chatnpc("<p,neutral>Very few know of the secret mine under the Grand Tree. If you push on the roots just to my north they will seperate and let you pass.");
+            ~chatplayer("<p,quiz>Strange!");
+            ~chatnpc("<p,laugh>That's magic trees for you!");
+            ~chatnpc("<p,happy>All the best Traveller and thanks again!");
+            ~chatplayer("<p,happy>You too, your highness!");
+            queue(grandtree_quest_complete, 0);
+            return;
+        }
+        ~chatplayer("<p,sad>No sign of it so far.");
+        ~chatnpc("<p,sad>The tree will still die if we don't find it!|It could be anywhere!");
+        ~chatplayer("<p,happy>Don't worry your highness! We'll find it!");
+    case ^grandtree_defeated_black_demon:
+        if(coordz(coord) < 6400) {
+            mes("The King doesn't seem interested in talking.");
+            return;
+        }
+        ~chatnpc("<p,sad>Traveller you're wounded! What happened?");
+        ~chatplayer("<p,angry>It's Glough! He set a demon on me!");
+        ~chatnpc("<p,shock>What?! Glough?! With a demon?!");
+        ~chatplayer("<p,angry>Glough has a store of Daconia rocks further up the passage! He's been accessing the roots from a secret passage at his home.");
+        ~chatnpc("<p,angry>Never! Not Glough! He's a good gnome at heart!");
+        if_close;
+        p_delay(1); // 1t TODO: -1 after delay change like the rest in this dialogue
+        ~chatnpc("<p,angry>Guard!");
+        if_close;
+        p_delay(7); // 7t
+        if(.npc_find(coord, gnome_guard_halberd, 8, 0) = true) { // not sure about the dist
+            ~.chatnpc("<p,neutral>Sire!");
+            ~chatnpc("<p,neutral>Go and check out that passage!");
+            if_close;
+            p_delay(5); // 5t
+            ~.chatnpc("<p,angry>We found Glough hiding under a horde of Daconia rocks!");
+            ~chatplayer("<p,laugh>That's what I've been trying to tell you!|Glough's been fooling you!");
+            ~chatnpc("<p,sad>I..I don't know what to say!|How could I have been so blind?!");
+            ~chatnpc("<p,angry>Guard! Call off the military training!");
+            ~chatnpc("<p,angry>The humans are not attacking!");
+            ~.chatnpc("<p,neutral>Yes sir!");
+            ~chatnpc("<p,sad>You have my full apologies Traveller!");
+            ~chatnpc("<p,happy>And my gratitude!");
+            %grandtree_progress = ^grandtree_searching_daconia;
+            %daconia_rock_root = ~random_range(1, 15);
+            ~chatnpc("<p,sad>A reward will have to wait though, the tree is still dying!|The guards are clearing Glough's rock supply now|but there must be more Daconia hidden somewhere in the roots!|Help us search, we have little time!");
+        }
+    case ^grandtree_unlocked_trapdoor:
+        ~chatplayer("<p,angry>Your highness, it's true about Glough I tell you! He's planning to take over RuneScape!");
+        ~chatnpc("<p,neutral>I'm sorry Traveller but it's just not realistic. How could Glough, even with a gnome army, take over?");
+        ~chatplayer("<p,angry>He plans to make a fleet of warships from the Grand Tree's wood!");
+        ~chatnpc("<p,angry>That's enough Traveller! I've no time for make believe. The tree's still dying, I must get to the truth of this!");
+    case ^grandtree_given_twigs:
+        ~chatnpc("<p,sad>Please Traveller, take my advice and leave!");
+        if(~obj_gettotal(twigs_t) = 0 | ~obj_gettotal(twigs_u) = 0 | ~obj_gettotal(twigs_z) = 0 | ~obj_gettotal(twigs_o) = 0) {
+            ~chatplayer("<p,neutral>I've lost those twigs you gave me.");
+            ~chatnpc("<p,neutral>Here take these, I don't see how it will help though.");
+            ~objboxt(twigs_t, "The King has given you some twigs lashed together.");
+            inv_del(inv, twigs_t, ^max_32bit_int);
+            inv_del(inv, twigs_u, ^max_32bit_int);
+            inv_del(inv, twigs_z, ^max_32bit_int);
+            inv_del(inv, twigs_o, ^max_32bit_int);
+            inv_del(bank, twigs_t, ^max_32bit_int);
+            inv_del(bank, twigs_u, ^max_32bit_int);
+            inv_del(bank, twigs_z, ^max_32bit_int);
+            inv_del(bank, twigs_o, ^max_32bit_int);
+            @narnode_add_twigs;
+        }
+    case ^grandtree_found_invasion_plans:
+        ~chatplayer("<p,neutral>Hi, your highness, did you think about what I said?");
+        ~chatnpc("<p,neutral>Look, if you're right about Glough I would have him arrested but there's no reason for me to think he's lying.");
+        if(inv_total(inv, invasion_plans) > 0) {
+            ~chatplayer("<p,neutral>Look, I found this at Glough's home!");
+            ~objboxt(invasion_plans, "You give the King the invasion plans.");
+            ~chatnpc("<p,shock>If these are to be believed then this is terrible!");
+            ~chatnpc("<p,neutral>But it's not proof, any one could have made these. Traveller, I understand your concern, I had guards search Glough's house but they found nothing suspicious, just these odd twigs.");
+            if(inv_freespace(inv) < 4) {
+                ~chatnpc("<p,neutral>Hmm. Looks like you can't carry anymore. Put 4 things down and come back to me.");
+                return;
+            }
+            ~objboxt(twigs_t, "The King has given you some twigs lashed together.");
+            ~chatnpc("<p,neutral>On the other hand, if Glough's right about the humans we will need an army of gnomes to protect ourselves. So I've decided to allow Glough to raise a mighty gnome army.");
+            ~chatnpc("<p,angry>The Grand Tree's still slowly dying, if it is human sabotage we must respond!");
+            %grandtree_progress = ^grandtree_given_twigs;
+            inv_del(inv, invasion_plans, 1);
+            @narnode_add_twigs;
+        }
+    case ^grandtree_clue_charlie:
+        ~chatplayer("<p,neutral>Hello, your highness.");
+        ~chatnpc("<p,neutral>Please Traveller, if the gnomes see me talking to you they'll revolt against me.");
+        ~chatplayer("<p,shock>That's crazy!");
+        ~chatnpc("<p,neutral>Glough's scared the whole town, he expects the humans to attack any day. He's even begun to recruit hundreds of gnome soldiers.");
+        ~chatplayer("<p,angry>Don't you understand he's creating his own army?!");
+        ~chatnpc("<p,sad>Please Traveller, leave before it's too late!");
+    case ^grandtree_obtained_lumber_order:
+        // recheck mesanims here forgot to talk to him (basing off of https://youtu.be/LFvLBRCxFwk?si=VQiQfoxC5IsW-CXp&t=961)
+        ~chatplayer("<p,angry>King Narnode, I need to talk!");
+        ~chatnpc("<p,shock>Traveller, what are you doing here?|The stronghold has been put on full alert!|It's not safe for you here!");
+        ~chatplayer("<p,angry>Your highness, I believe Glough is killing the trees|in order to make a mass fleet of warships!");
+        ~chatnpc("<p,angry>That's an absurd accusation!");
+        ~chatplayer("<p,angry>His hatred for humanity is stronger than you know!");
+        ~chatnpc("<p,angry>That's enough Traveller, you sound as paranoid as him!|Traveller please leave!|It's bad enough having one human locked up.");
+    case ^grandtree_released_prison:
+        ~chatnpc("<p,sad>Glough is looking for you! Leave on the glider now before it's too late!");
+    case ^grandtree_found_journal:
+        if(coordy(npc_coord) = 3) {
+            @narnode_trust_glough;
+        }
+        ~chatplayer("<p,sad>Your highness! I'm concerned about Glough!");
+        ~chatnpc("<p,quiz>Why? Don't worry about him now the culprit has been caught. I'm sure Glough's resentment of humans will pass with time.");
+        ~chatplayer("<p,sad>I'm not so sure.");
+        ~chatnpc("<p,neutral>If you're really concerned speak to him.");
+    case ^grandtree_spoken_prisoner:
+        ~chatnpc("<p,neutral>Hello Traveller. So, did you speak to the culprit?");
+        ~chatplayer("<p,neutral>Yes I did and something's not right!");
+        ~chatnpc("<p,confused>What do you mean?");
+        ~chatplayer("<p,neutral>The prisoner said he was paid by Glough to get the Daconia stones!");
+        ~chatnpc("<p,angry>That's absurd! He's just trying to save himself!");
+        ~chatnpc("<p,neutral>Since Glough's wife died he's been a little strange.|He would never wrongly imprison someone though!|Now that the culprit is locked up we can relax.|It's sad but I think Glough was right.");
+        ~chatnpc("<p,sad>Humans are planning to invade and wipe out the tree gnomes!");
+        ~chatplayer("<p,confused>But why?");
+        ~chatnpc("<p,neutral>Who knows? You may have to leave soon Traveller!|I trust you but the local gnomes are getting paranoid.");
+    case ^grandtree_found_prisoner: 
+        ~chatnpc("<p,neutral>Hello Traveller. If you wish to talk to the prisoner go to the top of the tree, you'll find him there.");
+        ~chatplayer("<p,neutral>Thanks.");
+    case ^grandtree_spoken_glough:
+        ~chatplayer("<p,quiz>Hello, your highness.|Have you any news on the Daconia stones?");
+        ~chatnpc("<p,neutral>It's OK Traveller, thanks to Glough!|He found a human sneaking around!|He had three Daconia rocks on him!");
+        ~chatplayer("<p,shock>Wow! That was quick!");
+        ~chatnpc("<p,neutral>Yes Glough really knows what he's doing.|The human has been detained until we know who else is involved.");
+        ~chatnpc("<p,sad>Maybe Glough was right, maybe humans are invading!");
+        ~chatplayer("<p,sad>I doubt it, can I speak to the prisoner?");
+        %grandtree_progress = ^grandtree_found_prisoner;
+        ~chatnpc("<p,neutral>Certainly. He's on the top level of the tree.|Be careful, it's a long way down!");
+    case ^grandtree_relayed_message_narnode:
+        ~chatnpc("<p,quiz>Hello Traveller, did you speak to Glough?");
+        ~chatplayer("<p,neutral>Not yet.");
+        ~chatnpc("<p,neutral>OK. He lives just in front of the Grand Tree.|Let me know when you've talked to him.");
+    case ^grandtree_spoken_hazelmere:
+        ~chatplayer("<p,neutral>Hello again, your highness.");
+        ~chatnpc("<p,neutral>Hello Traveller, did you speak to Hazelmere?");
+        ~chatplayer("<p,neutral>Yes! I managed to find him.");
+        ~chatnpc("<p,quiz>Do you understand what he said?");
+        switch_int(~p_choice2("I think so!", 1, "No, I need to go back.", 2)) {
+            case 1:
+                ~chatplayer("<p,happy>I think so!");
+                ~chatnpc("<p,quiz>So what did he say?");
+                // 5 branches with 5 choices each, if the wrong choice is given at any point we switch to an "incorrect" set of branches
+                switch_int(~p_choice5("King Narnode must be stopped, he is a madman!", 1, "Praise be to the great Zamorak!", 2, "Do you have any bread? I do like bread.", 3, "The time has come to attack!", 4, "None of the above.", 5)) {
+                    case 1: ~chatplayer("<p,neutral>King Narnode must be stopped, he is a madman!");
+                    case 2: ~chatplayer("<p,neutral>Praise be to the great Zamorak!");
+                    case 3: ~chatplayer("<p,neutral>Do you have any bread? I do like bread.");
+                    case 4: ~chatplayer("<p,neutral>The time has come to attack!");
+                    case 5: @narnode_correct_b2;
+                }
+                @narnode_incorrect_b2;
+            case 2:
+                ~chatplayer("<p,neutral>No, I need to go back.");
+                ~check_narnode_items;
+                ~chatnpc("<p,worried>Time is of the essence Traveller!");
+        }
+    case ^grandtree_started:
+        ~chatnpc("<p,neutral>Traveler, any word from Hazelmere?");
+        ~chatplayer("<p,neutral>Not yet.");
+        ~check_narnode_items;
+        ~chatnpc("<p,neutral>Hazelmere lives on an island just south of the Khazard Fight Arena. Give him the sample and translate his reply.");
+        ~chatnpc("<p,sad>I just hope he can help us in our hour of need!");
+    case ^grandtree_not_started:
+        if(coordz(npc_coord) > 6400) {
+            @king_narnode_foundations;
+        }
+        ~chatnpc("<p,happy>Welcome Traveller. I am King Narnode.|It's nice to see an outsider.");
+        ~chatplayer("<p,happy>Hi! It seems to be a busy settlement.");
+        ~chatnpc("<p,worried>For now.");
+        switch_int(~p_choice2("You seem worried, what's up?", 1, "I'll be off now.", 2)) {
+            case 1:
+                ~chatplayer("<p,quiz>You seem worried, what's up?");
+                ~chatnpc("<p,sad>Traveller, Can I speak to you in strictest confidence?");
+                ~chatplayer("<p,neutral>Of course sire.");
+                npc_setmode(none);
+                ~chatnpcnoturn("<p,shifty>Not here, follow me.");
+                if_close;
+                def_int $npc_dist = ~total_distance(npc_coord, ^narnode_trapdoor_coord);
+                npc_walk(^narnode_trapdoor_coord);
+                if($npc_dist > 0) {
+                    p_delay(calc($npc_dist + 1)); // TODO: + 1 until delay change is fix
+                }
+                npc_facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
+                if(loc_find(movecoord(^narnode_trapdoor_coord, -1, 0, -1), loc_2446) = true) {
+                    loc_change(loc_2445, 10);
+                }
+                npc_say("Down here.");
+                ~forcemove2(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
+                facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
+                p_delay(0);
+                anim(human_pickupfloor, 0);
+                p_delay(0);
+                npc_setmode(null);
+                p_telejump(movecoord(coord, -1, 0, 6399));
+                p_delay(2);
+                if(npc_find(coord, king_narnode, 7, 0) = true) {
+                    $npc_dist = ~total_distance(npc_coord, movecoord(coord, 1, 0, 0));
+                    npc_walk(movecoord(coord, 1, 0, 0));
+                    if($npc_dist > 0) {
+                        p_delay(calc($npc_dist + 1));
+                    }
+                    npc_setmode(playerface);
+                    @king_narnode_foundations;
+                }
+            case 2:
+                ~chatplayer("<p,neutral>I'll be off now.");
+                ~chatnpc("<p,neutral>Enjoy your stay with us.|There are many things to see in my kingdom.");
+        }
+}
+
+[label,king_narnode_back_up]
+npc_setmode(none);
+~chatnpcnoturn("<p,neutral>I'll show you the way back up.");
+if_close;
+def_coord $up_coord = movecoord(^narnode_trapdoor_coord, 0, 0, 6400);
+def_int $npc_dist = ~total_distance(npc_coord, $up_coord);
+npc_walk($up_coord);
+if($npc_dist > 0) {
+    p_delay(calc($npc_dist + 1)); // TODO: + 1 until delay change is fix
+}
+npc_facesquare(movecoord($up_coord, -1, 0, -1));
+p_delay(0);
+npc_say("Up here.");
+~forcemove2(movecoord($up_coord, 0, 0, -1));
+facesquare(movecoord($up_coord, -1, 0, -1));
+p_delay(0);
+anim(human_reachforladdertop, 0);
+p_delay(0);
+npc_setmode(null);
+p_telejump(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
+
+[label,king_narnode_foundations]
+~chatplayer("<p,quiz>So what is this place?");
+~chatnpc("<p,neutral>These, my friend, are the foundations of the stronghold.");
+~chatplayer("<p,neutral>They look like roots to me.");
+~chatnpc("<p,neutral>Not just any roots Traveller!|These were created by gnome mages eons ago,|since then they have grown to become a mighty stronghold!");
+~chatplayer("<p,neutral>Impressive. What exactly is the problem?");
+~chatnpc("<p,worried>In the last two months our tree guardians have|reported continuing deterioration of the Grand|Tree's health. I've never seen this before!|It could be the end for us all!");
+~chatplayer("<p,quiz>You mean the tree is ill?");
+~chatnpc("<p,neutral>In effect yes. Would you be willing to help us discover what is happening to the tree?");
+switch_int(~p_choice2("I'm sorry, I don't want to get involved.", 1, "I'd be happy to help!", 2)) {
+    case 1:
+        ~chatplayer("<p,sad>I'm sorry, I don't want to get involved.");
+        ~chatnpc("<p,sad>I understand Traveller.|Please keep this to yourself.");
+        ~chatplayer("<p,neutral>Of course.");
+        @king_narnode_back_up;
+    case 2:
+        ~chatplayer("<p,happy>I'd be happy to help!");
+        ~chatnpc("<p,happy>Thank Guthix for your arrival!");
+        ~chatnpc("<p,neutral>The first task is to find out what's killing the tree.");
+        ~chatplayer("<p,quiz>Do you have an idea?");
+        ~chatnpc("<p,neutral>My top tree guardian, Glough, believes it's human sabotage. I'm not so sure! The only way to know for sure is to talk to Hazelmere.");
+        ~chatplayer("<p,quiz>Who's Hazelmere?");
+        ~chatnpc("<p,neutral>Hazelmere is one of the mages that created the Grand Tree! He is the only one that has survived from that time. Take this bark sample to him, he will be able to help!");
+        if(inv_freespace(inv) < 2) {
+            ~chatnpc("<p,neutral>Hmm. Looks like you can't carry anymore. Put a couple of things down and come back to me.");
+            return;
+        }
+        ~objboxt(bark_sample, "The king has given you a sample of bark.");
+        ~chatnpc("<p,neutral>The mage only talks in the old tongue, you'll need this.");
+        ~objbox(translation_book, "The king has given you a translation book.");
+        ~chatplayer("<p,quiz>What is it?");
+        ~chatnpc("<p,neutral>It's a translation book, you'll need it to translate what Hazelmere says. Do that carefully! His words are our only hope! You'll find his dwellings high upon a towering hill, on an island east of Yanille.");
+        %grandtree_progress = ^grandtree_started;
+        ~send_quest_progress(questlist:grandtree, %grandtree_progress, ^grandtree_complete);
+        inv_add(inv, bark_sample, 1);
+        inv_add(inv, translation_book, 1);
+        @king_narnode_back_up;
+}
+
+[proc,check_narnode_items]
+if(inv_total(inv, bark_sample) = 0) {
+    ~chatplayer("<p,neutral>I've lost the bark sample.");
+    ~chatnpc("<p,neutral>Here's another sample, hang on to it this time!");
+    inv_add(inv, bark_sample, 1);
+    inv_del(bank, bark_sample, ^max_32bit_int);
+    ~objboxt(bark_sample, "The king gives you another bark sample.");
+}
+if(inv_total(inv, translation_book) = 0) {
+    ~chatplayer("<p,neutral>I've lost the translation book.");
+    ~chatnpc("<p,neutral>Don't worry, I have more.");
+    inv_add(inv, translation_book, 1);
+    inv_del(bank, translation_book, ^max_32bit_int);
+    ~objbox(translation_book, "The king gives you another translation book.");
+}
+
+[label,narnode_correct_b2]
+switch_int(~p_choice5("The tree is fine, you have nothing to fear.", 1, "You must come and see me!", 2, "The tree needs watering as there has been drought.", 3, "Grave danger lies ahead, only the bravest will linger.", 4, "None of the above.", 5)) {
+    case 1: ~chatplayer("<p,neutral>The tree is fine, you have nothing to fear.");
+    case 2: ~chatplayer("<p,neutral>You must come and see me!");
+    case 3: ~chatplayer("<p,neutral>The tree needs watering as there has been drought.");
+    case 4: ~chatplayer("<p,neutral>Grave danger lies ahead, only the bravest will linger.");
+    case 5: @narnode_correct_b3;
+}
+@narnode_incorrect_b3;
+
+[label,narnode_incorrect_b2]
+switch_int(~p_choice5("The tree is fine, you have nothing to fear.", 1, "You must come and see me!", 2, "The tree needs watering as there has been drought.", 3, "Grave danger lies ahead, only the bravest will linger.", 4, "None of the above.", 5)) {
+    case 1: ~chatplayer("<p,neutral>The tree is fine, you have nothing to fear.");
+    case 2: ~chatplayer("<p,neutral>You must come and see me!");
+    case 3: ~chatplayer("<p,neutral>The tree needs watering as there has been drought.");
+    case 4: ~chatplayer("<p,neutral>Grave danger lies ahead, only the bravest will linger.");
+}
+@narnode_incorrect_b3;
+
+[label,narnode_correct_b3]
+switch_int(~p_choice5("Time is of the essence! We must move quickly.", 1, "A man came to me with the King's seal.", 2, "There is no need for haste, just send a runner.", 3, "You must act now or we will all die!", 4, "None of the above.", 5)) {
+    case 1: ~chatplayer("<p,neutral>Time is of the essence! We must move quickly.");
+    case 2: 
+        ~chatplayer("<p,neutral>A man came to me with the King's seal.");
+        @narnode_correct_b4;
+    case 3: ~chatplayer("<p,neutral>There is no need for haste.");
+    case 4: ~chatplayer("<p,neutral>You must act now or we will all die!");
+}
+@narnode_incorrect_b4;
+
+[label,narnode_incorrect_b3]
+switch_int(~p_choice5("Time is of the essence! We must move quickly.", 1, "There is no need for haste, just send a runner.", 2, "You must act now or we will all die!", 3, "Time passes us by.", 4, "None of the above.", 5)) {
+    case 1: ~chatplayer("<p,neutral>Time is of the essence! We must move quickly.");
+    case 2: ~chatplayer("<p,neutral>There is no need for haste.");
+    case 3: ~chatplayer("<p,neutral>You must act now or we will all die!");
+    case 4: ~chatplayer("<p,neutral>Time passes us by.");
+}
+@narnode_incorrect_b4;
+
+[label,narnode_correct_b4]
+switch_int(~p_choice5("I gave the man Daconia rocks.", 1, "You must use force!", 2, "Use a bucket of milk from a scared cow.", 3, "Take this banana to him, he will understand.", 4, "None of the above.", 5)) {
+    case 1: 
+        ~chatplayer("<p,neutral>I gave the man Daconia rocks.");
+        @narnode_correct_b5;
+    case 2: ~chatplayer("<p,neutral>You must use force!");
+    case 3: ~chatplayer("<p,neutral>Use a bucket of milk from a scared cow.");
+    case 4: ~chatplayer("<p,neutral>Take this banana to him, he will understand.");
+}
+@narnode_incorrect_b5;
+
+[label,narnode_incorrect_b4]
+switch_int(~p_choice5("You must use force!", 1, "Use a bucket of milk from a scared cow.", 2, "Take this banana to him, he will understand.", 3, "Only Adamantite is any use.", 4, "None of the above.", 5)) {
+    case 1: ~chatplayer("<p,neutral>You must use force!");
+    case 2: ~chatplayer("<p,neutral>Use a bucket of milk from a scared cow.");
+    case 3: ~chatplayer("<p,neutral>Take this banana to him, he will understand.");
+    case 4: ~chatplayer("<p,neutral>Only Adamantite is any use.");
+}
+@narnode_incorrect_b5;
+
+[label,narnode_correct_b5]
+switch_int(~p_choice4("All with be fine on the third night.", 1, "You must wait till the second night.", 2, "Nothing will help us now!", 3, "And Daconia rocks will kill the tree!", 4)) {
+    case 1: ~chatplayer("<p,neutral>All with be fine on the third night.");
+    case 2: ~chatplayer("<p,neutral>You must wait till the second night.");
+    case 3: ~chatplayer("<p,neutral>Nothing will help us now!");
+    case 4: 
+        ~chatplayer("<p,neutral>And Daconia rocks will kill the tree!");
+        @narnode_correct_final;
+}
+@narnode_incorrect_final;
+
+[label,narnode_incorrect_b5]
+switch_int(~p_choice4("All with be fine on the third night.", 1, "You must wait till the second night.", 2, "Nothing will help us now!", 3, "The tree will die in five days!", 4)) {
+    case 1: ~chatplayer("<p,neutral>All with be fine on the third night.");
+    case 2: ~chatplayer("<p,neutral>You must wait till the second night.");
+    case 3: ~chatplayer("<p,neutral>Nothing will help us now!");
+    case 4: ~chatplayer("<p,neutral>The tree will die in five days!");
+}
+@narnode_incorrect_final;
+
+[label,narnode_correct_final]
+// https://web.archive.org/web/20060911005925im_/http://www.runeweb.net/fireball/Grand%20Tree%20Images/GrandTree4.PNG
+~chatnpc("<p,sad>Of course! I should've known!|Someone must've forged my royal seal.|Hazelmere thought I sent him for the Daconia stones!");
+~chatplayer("<p,quiz>What are Daconia stones?");
+~chatnpc("<p,neutral>Hazelmere created the Daconia stones. They are a safety measure, in case the tree grew out of control. They're the only thing that can kill the tree.");
+~chatnpc("<p,shock>This is terrible! The stones must be recovered!");
+~chatplayer("<p,quiz>Can I help?");
+%grandtree_progress = ^grandtree_relayed_message_narnode;
+~chatnpc("<p,neutral>First I must warn the tree guardians. Please, could you tell the chief tree guardian Glough. He lives in a tree house just in front of the Grand Tree.");
+~chatnpc("<p,neutral>If he's not there he will be at his girlfriend Anita's place. Meet me back here once you've told him.");
+~chatplayer("<p,neutral>OK! I'll be back soon.");
+
+[label,narnode_incorrect_final]
+~chatnpc("<p,shock>Wait a minute, that doesn't sound like Hazelmere!|Are you sure you translated correctly?");
+~chatplayer("<p,sad>Erm...I think so.");
+~chatnpc("<p,sad>I'm sorry Traveller but this is no good. The translation must be perfect or the infomation's no use. Please come back when you know exactly what Hazelmere said."); // intentional typo
+
+[label,narnode_trust_glough]
+~chatplayer("<p,neutral>I don't think you can trust Glough, your highness. He seems to have an unnatural hatred for humans.");
+~chatnpc("<p,neutral>I know he can be a bit extreme at times. But he's the best tree guardian I have, he has made the gnomes paranoid about humans though.");
+%grandtree_progress = ^grandtree_released_prison;
+~chatnpc("<p,neutral>I'm afraid Glough has placed guards on the front gate to stop you escaping! Let my glider pilot fly you away until things calm down around here.");
+~chatplayer("<p,neutral>Well, OK.");
+~chatnpc("<p,sad>I'm sorry again Traveller!");
+
+// pretty bad... everything but the correct arangement
+[label,narnode_add_twigs]
+switch_int(random(23)) { 
+    case 0:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+    case 1:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+    case 2:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+    case 3:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+    case 4:
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+    case 5:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+    case 6:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+    case 7:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+    case 8:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+    case 9:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+    case 10:
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+    case 11:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+    case 12:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+    case 13:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_u, 1);
+    case 14:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+    case 15:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+    case 16:
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+    case 17:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+    case 18:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+    case 19:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_z, 1);
+    case 20:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+    case 21:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_t, 1);
+        inv_add(inv, twigs_o, 1);
+    case 22:
+        inv_add(inv, twigs_u, 1);
+        inv_add(inv, twigs_z, 1);
+        inv_add(inv, twigs_o, 1);
+        inv_add(inv, twigs_t, 1);
+}

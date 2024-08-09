@@ -472,6 +472,7 @@ param=death_anim,hellhound_death
 param=attack_sound,growl6
 param=defend_sound,growl5
 huntmode=aggressive_melee
+huntrange=2
 
 [khazard_ogre]
 name=Khazard Ogre
@@ -502,6 +503,7 @@ param=attack_sound,giant_attack
 param=defend_sound,giant_hit
 param=death_sound,giant_death
 huntmode=aggressive_melee
+huntrange=2
 
 [khazard_scorpion]
 name=Khazard Scorpion
@@ -536,3 +538,4 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=aggressive_melee
+huntrange=2

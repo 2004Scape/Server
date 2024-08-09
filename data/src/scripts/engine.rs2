@@ -295,6 +295,9 @@
 [command,.npc_walk](coord $coord)
 [command,npc_attackrange]()(int)
 [command,.npc_attackrange]()(int)
+[command,npc_arrivedelay]
+[command,npc_hasop](int $op)(boolean)
+[command,.npc_hasop](int $op)(boolean)
 
 // Loc ops (3000-3499)
 [command,loc_add](coord $coord, loc $loc, int $angle, locshape $shape, int $duration)
@@ -330,6 +333,7 @@
 [command,obj_type]()(namedobj)
 [command,obj_takeitem](inv $inv)
 [command,obj_coord]()(coord)
+[command,obj_find](coord $coord, obj $obj)(boolean)
 
 // Npc config ops (4000-4099)
 [command,nc_name](npc $npc)(string)

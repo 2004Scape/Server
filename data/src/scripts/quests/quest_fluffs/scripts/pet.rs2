@@ -20,9 +20,7 @@ if($attent = 0) {
     $attent = 28;
 }
 if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
-    if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
-        npc_say("Meow!"); //done every 90s, no random chance
-    }
+    npc_say("Meow!"); //done every 90s, no random chance
     %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
     switch_int (getbit_range(%cat_growth, 11, 19)) {
         case 120:
@@ -32,7 +30,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
                 %follower_uid = npc_uid;
                 npc_say("Meeeooowww!");
                 npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
-                ~mesbox("Your kitten has grown into a healthy cat, that can hunt for itself."); //intentional ,
+                ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //2007rshelp.com/img/genimg/kittencare/grown.gif
             }
         case 320:
             if(oc_category(nc_param(npc_type, pet_item_id)) = cat) {
@@ -50,11 +48,11 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
     %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
     switch_int (getbit_range(%cat_growth, 0, 4)) {
         case 16:
-            ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
             npc_say("Miaow!");
+            ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
         case 18: 
-            ~chatplayer("<p,worried>I think it's really hungry!"); 
             npc_say("Miaow!"); //guess
+            ~chatplayer("<p,worried>I think it's really hungry!"); 
         case 20:
             mes("Your kitten has run away to look for food.");
             %follower_obj = null;
@@ -67,11 +65,11 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
     %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
     switch_int (getbit_range(%cat_growth, 5, 10)) {
         case 40:
-            ~chatplayer("<p,neutral>I think it wants some attention.");
             npc_say("Purr..."); //TODO: verify this, based off a video
+            ~chatplayer("<p,neutral>I think it wants some attention.");
         case 45:
-            ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
             npc_say("Meeeooowww..."); //TODO: verify this, guessed
+            ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
         case 50:
             mes("Your kitten got lonely and ran off.");
             %follower_obj = null;

@@ -391,7 +391,7 @@ param=proj_travel,iron_arrow_travel
 param=defend_sound,gnome_hit
 param=death_sound,gnome_death
 
-[npc_170]
+[gnome_pilot]
 name=Gnome pilot
 desc=He can fly the glider.
 vislevel=hide

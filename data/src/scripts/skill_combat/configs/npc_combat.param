@@ -34,10 +34,6 @@ default=bones
 type=boolean
 default=no
 
-[deathanim_delay]
-type=int
-default=2
-
 [retreat]
 type=int
-default=0
+default=null

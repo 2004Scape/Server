@@ -156,6 +156,10 @@ const ScriptOpcodePointers: {
         set2: ['active_npc2'],
         conditional: true
     },
+    [ScriptOpcode.NPC_HASOP]: {
+        require: ['active_npc'],
+        require2: ['active_npc2'],
+    },
     [ScriptOpcode.IF_CLOSE]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -527,7 +531,8 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.NPC_DELAY]: {
         require: ['active_npc'],
         corrupt: [
-            // everything except active is assumed corrupted
+            'p_active_player',
+            'p_active_player2',
             ...POINTER_GROUP_FIND,
             'last_com',
             'last_int',
@@ -662,6 +667,22 @@ const ScriptOpcodePointers: {
         require: ['active_npc'],
         require2: ['active_npc2']
     },
+    [ScriptOpcode.NPC_ARRIVEDELAY]: {
+        require: ['active_npc'],
+        corrupt: [
+            'p_active_player',
+            'p_active_player2',
+            ...POINTER_GROUP_FIND,
+            'last_com',
+            'last_int',
+            'last_item',
+            'last_slot',
+            'last_targetslot',
+            'last_useitem',
+            'last_useslot'
+        ],
+        require2: ['active_npc2']
+    },
 
     // Loc ops
     [ScriptOpcode.LOC_ADD]: {
@@ -763,6 +784,10 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.OBJ_TYPE]: {
         require: ['active_obj'],
         require2: ['active_obj2']
+    },
+    [ScriptOpcode.OBJ_FIND]: {
+        set: ['active_obj'],
+        set2: ['active_obj2']
     },
 
     // Inventory ops

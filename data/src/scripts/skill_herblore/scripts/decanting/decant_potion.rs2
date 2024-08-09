@@ -31,15 +31,8 @@ inv_setslot(inv, last_useslot, $decanted_potion, 1);
 inv_setslot(inv, last_slot, $remainder_potion, 1);
 
 sound_synth(liquid, 0, 0); // osrs
-mes("You have combined the liquid into <~doses_made($total_doses)> doses.");
-
-[proc,doses_made](int $total_doses)(string)
-switch_int($total_doses) {
-    case 2: return("two");
-    case 3: return("three");
-    case 4: return("four");
-    case default: return("one");
-}
+// https://youtu.be/qGcENRGIcoI?si=qGubXr8z_G3aDeaI&t=12
+mes("You have combined the liquid into <tostring($total_doses)> doses.");
 
 [proc,get_potion_type](obj $potion, obj $used_potion)(enum)
 def_enum $first_enum = oc_param($potion, decant_potion_enum);

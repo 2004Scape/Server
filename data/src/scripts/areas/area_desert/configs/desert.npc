@@ -36,6 +36,7 @@ param=defend_sound,wolf_hit
 param=death_sound,wolf_death
 param=death_drop,wolf_bones
 huntmode=cowardly
+huntrange=1
 
 [npc_840]
 name=Ugthanki
@@ -64,3 +65,4 @@ param=defend_sound,cow_hit
 param=death_sound,cow_death
 param=retreat,5
 huntmode=cowardly
+huntrange=2

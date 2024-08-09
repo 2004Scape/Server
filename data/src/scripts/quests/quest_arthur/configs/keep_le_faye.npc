@@ -40,6 +40,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,stabsword_stab
 // param=defend_sound,blade4
 huntmode=cowardly
+huntrange=1
 
 [sir_mordred]
 name=Sir Mordred
