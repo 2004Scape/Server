@@ -441,7 +441,15 @@ const NpcOps: CommandHandlers = {
         }
 
         state.pushInt(npcType.op[op - 1] ? 1 : 0);
-    })
+    }),
+
+    [ScriptOpcode.NPC_ARRIVEDELAY]: checkedHandler(ActiveNpc, state => {
+        if (state.activeNpc.lastMovement < World.currentTick) {
+            return;
+        }
+        state.activeNpc.delay = 1;
+        state.execution = ScriptState.NPC_SUSPENDED;
+    }),
 };
 
 export default NpcOps;

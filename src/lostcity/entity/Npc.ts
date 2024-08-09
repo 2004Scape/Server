@@ -240,12 +240,19 @@ export default class Npc extends PathingEntity {
                 ScriptRunner.execute(state);
             }
         }
-
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
         }
 
-        return super.processMovement();
+        if (!super.processMovement()) {
+            // nothing
+        }
+
+        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        if (moved) {
+            this.lastMovement = World.currentTick + 1;
+        }
+        return moved;
     }
 
     blockWalkFlag(): CollisionFlag {

@@ -74,7 +74,6 @@ if (npc_stat(hitpoints) > 0) {
     return;
 }
 // if the npc died from this damage
-npc_setmode(none);
 npc_queue(3, 0, 0);
 
 // a default death script.

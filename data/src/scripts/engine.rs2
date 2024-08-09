@@ -295,6 +295,7 @@
 [command,.npc_walk](coord $coord)
 [command,npc_attackrange]()(int)
 [command,.npc_attackrange]()(int)
+[command,npc_arrivedelay]
 [command,npc_hasop](int $op)(boolean)
 [command,.npc_hasop](int $op)(boolean)
 

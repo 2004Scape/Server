@@ -243,7 +243,6 @@ export default class Player extends PathingEntity {
     originX: number = -1;
     originZ: number = -1;
     buildArea: BuildArea = new BuildArea();
-    lastMovement: number = 0; // for p_arrivedelay
     basReadyAnim: number = -1;
     basTurnOnSpot: number = -1;
     basWalkForward: number = -1;
@@ -546,6 +545,9 @@ export default class Player extends PathingEntity {
         if (this.runenergy === 0) {
             this.setVar(VarPlayerType.PLAYER_RUN, 0);
             this.setVar(VarPlayerType.TEMP_RUN, 0);
+        }
+        if (moved) {
+            this.lastMovement = World.currentTick + 1;
         }
         return moved;
     }
@@ -875,7 +877,6 @@ export default class Player extends PathingEntity {
             if (moved) {
                 // we need to keep the mask if the player had to move.
                 this.alreadyFacedEntity = false;
-                this.lastMovement = World.currentTick + 1;
             }
             return;
         }
@@ -947,7 +948,6 @@ export default class Player extends PathingEntity {
         if (moved) {
             // we need to keep the mask if the player had to move.
             this.alreadyFacedEntity = false;
-            this.lastMovement = World.currentTick + 1;
         }
 
         if (this.target && (!this.interacted || this.apRangeCalled)) {
