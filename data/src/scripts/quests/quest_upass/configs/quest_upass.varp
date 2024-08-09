@@ -1,0 +1,5 @@
+[upass_progress]
+scope=perm
+
+[upass_map_mechanisms]
+scope=perm

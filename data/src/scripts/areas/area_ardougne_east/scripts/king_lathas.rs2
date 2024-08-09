@@ -37,8 +37,25 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatplayer("<p,happy>Hello King Lathas.");
             ~chatnpc("<p,happy>Adventurer, thank Saradomin for your arrival!");
             ~chatplayer("<p,quiz>Have your scouts found a way through the mountains?");
-            ~chatnpc("<p,sad>Not quite, we found a path to where we expected to find the Well of Voyage, an ancient portal to the west RuneScape."):
+            if(stat_base(ranged) < 25) {
+                ~chatnpc("<p,neutral>I appreciate your enthusiasm adventurer. However, I fear you are not yet ready for the challenges ahead. Return to me when you are and we will discuss our next steps.");
+                return;
+            }
+            ~chatnpc("<p,sad>Not quite, we found a path to where we expected to find the Well of Voyage, an ancient portal to the west RuneScape.");
             ~chatnpc("<p,neutral>However during recent times a cluster of cultists have settled there, run by a madman named Iban.");
+            ~chatplayer("<p,quiz>Iban?");
+            ~chatnpc("<p,neutral>A crazy loon who claims to be the son of Zamorak.");
+            %upass_progress = ^upass_started;
+            ~send_quest_progress(questlist:upass, %upass_progress, ^upass_complete);
+            ~chatnpc("<p,neutral>Go meet my main tracker, Koftik. He will help you. He waits for you at the west side of West Ardougne.");
+            ~chatnpc("<p,neutral>We must find a way through these caverns if we are to stop my brother Tyras.");
+            ~chatplayer("<p,neutral>I'll do my best Lathas.");
+            ~chatnpc("<p,neutral>A warning traveller, the underground pass is lethal. We lost many men exploring those caverns. Go prepared with food and armour or you won't last long.");
+        case default:
+            ~chatplayer("<p,happy>Hello King Lathas.");
+            ~chatnpc("<p,happy>Traveller, how are you managing down there?");
+            ~chatplayer("<p,neutral>It's a pretty nasty place but I'm OK.");
+            ~chatnpc("<p,neutral>Well keep up the good work.");
             
     }
 } else {

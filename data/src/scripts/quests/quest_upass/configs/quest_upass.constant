@@ -1,2 +1,10 @@
 ^upass_not_started = 0
 ^upass_started = 1
+^upass_spoken_koftik = 2
+^upass_passed_bridge = 3
+^upass_entered_second_area = 4
+^upass_complete = 11
+
+^upass_grid_col1 = 0_38_151_43_9
+^upass_grid_col3 = 0_38_151_39_9
+^upass_grid_col5 = 0_38_151_35_9

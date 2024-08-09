@@ -1,6 +1,81 @@
+// outside underground pass
 [opnpc1,npc_972]
 switch_int(%upass_progress) {
-    
+    case ^upass_spoken_koftik:
+        // TODO: confirm mesanim
+        ~chatnpc("<p,neutral>I know it's scary in there, but you'll have to go in alone. I'll catch up as soon as I can.");
+    case ^upass_started: @koftik_first_dialogue;
     case default:
         mes("Koftik doesn't seem interested in talking.");
-} 
+}
+
+[label,koftik_first_dialogue]
+// https://youtu.be/IUzRF8GrfSY?si=iJ9ytVtJONT4ok6q&t=65, https://youtu.be/ZxF473zUZfQ?si=nrGO9gJiP_CbpqJp&t=153
+~chatplayer("<p,happy>Hello there, are you the King's scout?");
+~chatnpc("<p,happy>That I am, brave adventurer. King Lathas informed me that you need to cross these mountains.");
+~chatnpc("<p,neutral>I'm afraid you'll have to go through the ancient underground pass...");
+~chatplayer("<p,happy>That's OK, I've travelled through many a cave in my time.");
+~chatnpc("<p,shock>These caves are different... They're filled with the spirit of Zamorak!");
+~chatnpc("<p,neutral>You can feel it as you wind your way round the stalagmites.. an icy chill that penetrates the very fabric of your being...");
+~chatnpc("<p,neutral>Not so many travellers come down here these days, ...but there are some who are still foolhardy enough."); // intentional comma
+%upass_progress = ^upass_spoken_koftik;
+switch_int(~p_choice2("I'll take my chances.", 1, "Tell me more...", 2)) {
+    case 1:
+        ~chatplayer("<p,bored>I'll take my chances.");
+        ~chatnpc("<p,neutral>Okay traveller, I'll catch up with you by the bridge.");
+    case 2:
+        ~chatplayer("<p,neutral>Tell me more...");
+        ~chatnpc("<p,neutral>I remember seeing one such warrior. Going by the name of Randas... ..he stood tall and proud like an Elven King...");
+        ~chatnpc("<p,neutral>...That same pride made him vulnerable to Zamorak's calls. Randas' worthy desire to be a great and mighty warrior also made him corruptible to Zamorak's promises of glory.");
+        ~chatnpc("<p,neutral>..Zamorak showed him a way to achieve his goals by appealing to that most base and dark nature ...that resides in all of us.");
+        ~chatplayer("<p,shock>What happened to him?");
+        ~chatnpc("<p,sad>No one knows...");
+}
+
+// before the bridge in area 1
+[opnpc1,npc_973]
+switch_int(%upass_progress) {
+    case ^upass_spoken_koftik:
+        ~chatplayer("<p,quiz>Koftik, how can we cross the bridge?");
+        ~chatnpc("<p,confused>I'm not sure, seems as if others were here before us though...");
+        if(inv_total(inv, damp_cloth) = 0) {
+            ~chatnpc("<p,neutral>I found this cloth amongst the charred remains of some arrows.");
+            ~chatplayer("<p,shock>Charred arrows? They must have been trying to burn something. Or someone!");
+            inv_add(inv, damp_cloth, 1);
+        }
+        ~chatplayer("<p,neutral>Interesting... we better keep our eyes open.");
+        ~chatnpc("<p,neutral>I have also found the remains of a book...");
+        switch_int(~p_choice2("Not to worry, probably just litter.", 1, "What does it say?", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>Not to worry, probably just litter.");
+                ~chatnpc("<p,confused>Well.. maybe?");
+            case 2:
+                ~chatplayer("<p,neutral>What does it say?");
+                ~chatnpc("<p,neutral>It seems to be written by the adventurer Randas. It reads...");
+                @open_randas_diary;
+        }
+    case default: 
+        // rs3, objbox for the cloth but I think that was added later (since the main dialogue also has objbox in rs3, but not in release OSRS)
+        ~chatplayer("<p,happy>Hi Koftik.");
+        if(inv_total(inv, damp_cloth) = 0) {
+            return;
+        }
+        ~chatnpc("<p,neutral>Hi - I found this cloth amongst the charred remains of some arrows, perhaps you need it?");
+        inv_add(inv, damp_cloth, 1);
+        ~objbox(damp_cloth, "Koftik gives you a damp cloth.");
+}
+
+// before the bridge in area 1
+[opnpc1,npc_974]
+switch_int(%upass_progress) {
+    case ^upass_passed_bridge:
+        ~chatplayer("<p,quiz>Hello Koftik.");
+        ~chatnpc("<p,neutral>Do you hear them? The voices tell me things.");
+        ~chatplayer("<p,happy>Are you OK?");
+        ~chatnpc("<p,neutral>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men.");
+        ~chatplayer("<p,happy>Tyranny of the righteous? What?");
+        ~chatnpc("<p,neutral>So many paths to choose... Here we must all take our own path.");
+    case default:
+        mes("Koftik doesn't seem interested in talking.");
+}
+

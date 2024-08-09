@@ -1,17 +1,40 @@
 [timer,iban_say]
+switch_int(random(8)) {
+    case 0: mes("I see you adventurer... you can't hide.");
+    case 1: mes("Make them all pay!");
+    case 2: mes("Iban will save you... He'll save us all.");
+    case 3: mes("Kill, maim... murder.");
+    case 4: mes("Death is only the beginning.");
+    case 5: mes("Blood, pain and hate.");
+    case 6: mes("I'll swallow your soul.");
+    case 7: mes("The power of the gods could be yours.");
+    case 8: mes("Hear me...");
+    case 9: mes("I will release you...");
+    case 10: mes("Join us!");
+}
+settimer(iban_say, ~random_range(15, 200));
 
+[zone,0_38_151_0_48] settimer(iban_say, ~random_range(2, 20));
+[zoneexit,0_38_151_0_48] cleartimer(iban_say);
 
 [oploc1,loc_3213]
 if(%biohazard_progress < ^biohazard_complete) {
-    mes("You must first complete the biohazard quest before you can enter.");
+    ~mesbox("You must complete the Biohazard quest before you can enter."); // rs3
     return;
 }
 if(%upass_progress < ^upass_started) {
     mes("You must talk to King Lathas before you can enter.");
     return;
 }
+if(%upass_progress = ^upass_started) {
+    if(npc_find(coord, npc_972, 7, 0) = true) {
+        @koftik_first_dialogue;
+    }
+    return; // failsafe in case npc_find returns false
+}
 mes("You cautiously enter the cave...");
 p_delay(3);
+~generate_upass_grid;
 p_teleport(0_38_151_62_52);
 
 [oploc1,loc_3214]
@@ -20,18 +43,199 @@ mes("You leave the underground pass.");
 p_delay(3);
 p_teleport(0_38_51_4_51);
 
+[label,open_randas_diary]
+if_sethide(book:com_1, true);
+if_sethide(book:com_3, true);
+~book("The Diary of Randas", "It began as a whisper in my ears. Dismissing the sounds as the whistling of the wind, I steeled myself against these forces, and continued on my way.||But the whispers became|moans...|||At once fearsome and enticing like the call of some beautiful siren.|||Join us!||Our greatness lies within you, but only Zamorak can unlock your potential...");
+
+[label,destroy_orboflight](obj $orb)
+mes("You throw the glowing orb into the furnace...");
+p_delay(2);
+inv_del(inv, $orb, 1);
+%upass_map_mechanisms = setbit(%upass_map_mechanisms, oc_param($orb, orb_bit));
+mes("Its light quickly dims and then dies.");
+p_delay(2);
+mes("You feel a cold shudder run down your spine.");
+
+[oploc1,loc_3264]
+anim(human_reachforladdertop, 0);
+mes("You climb into the well...");
+if(getbit_range(%upass_map_mechanisms, 0, 3) = calc(pow(2,4) - 1)) {
+    p_delay(0);
+    mes("You feel the grip of icy hands all around you...");
+    p_delay(0);
+    p_teleport(0_37_150_55_60);
+    if(%upass_progress = ^upass_passed_bridge) %upass_progress = ^upass_entered_second_area;
+    mes("... slowly dragging you further down into the caverns.");
+    return;
+    
+}
+p_delay(1);
+mes("... A mystical force seems to blast you out of the well!");
+p_delay(1);
+mes("... There must be some positive force nearby.");
+p_delay(1);
+~damage_self(10);
+
+[oplocu,loc_3264]
+switch_obj(last_useitem) {
+    case obj_1481, obj_1482, obj_1483, obj_1484:
+        mes("You place the orb in the well...");
+        p_delay(2);
+        mes("A mystical force blasts the orb back out.");
+        ~damage_self(3);
+    case default: ~displaymessage(^dm_default);
+}
+
+[oploc1,loc_3307]
+anim(human_reachforladdertop, 0);
+mes("You climb up in to the pipe...");
+p_delay(0);
+p_teleport(0_37_151_50_10);
+mes("...and out of the well.");
+
+[oploc3,loc_3361] @upass_orboflight_trap;
+
+[opobj3,obj_1481]
+if (inv_total(inv, obj_1481) > 0) {
+    mes("You are already carrying this orb.");
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
+
+[opobj3,obj_1482]
+if (inv_total(inv, obj_1482) > 0) {
+    mes("You are already carrying this orb.");
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
+
+[opobj3,obj_1483]
+if (inv_total(inv, obj_1483) > 0) {
+    mes("You are already carrying this orb.");
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
+
+[opobj3,obj_1484]
+if (inv_total(inv, obj_1484) > 0) {
+    mes("You are already carrying this orb.");
+    return;
+}
+@pickup_obj(obj_coord, obj_type, obj_count);
+
+[label,upass_orboflight_trap]
+~forcewalk(movecoord(loc_coord, 1, 0, 0));
+p_delay(0);
+if(loc_find(0_37_151_12_3, loc_3338) = true) loc_anim(seq_458);
+~agility_exactmove(seq_734, 20, 2, coord, movecoord(coord, 5, 0, 0), 20, 80, ^exact_west, false);
+anim(seq_848, 0);
+spotanim_pl(stunned_thieving, 124, 0);
+sound_synth(stunned, 0, 0);
+p_delay(0);
+~damage_self(min(5, calc(((stat(hitpoints) * 20) / 100))));
+p_delay(0);
+
+[oploc1,loc_3360]
+mes("You search the crate...");
+p_delay(2);
+if(testbit(%upass_map_mechanisms, 14) = false) {
+    mes("...inside you find some food.");
+    inv_add(inv, salmon, 2);
+    inv_add(inv, meat_pie, 2);
+    %upass_map_mechanisms = setbit(%upass_map_mechanisms, 14);
+    return;
+}
+mes("...but you find nothing.");
+
+[oplocu,loc_3216]
+if(last_useitem = spade) {
+    p_arrivedelay;
+    anim(human_dig, 0);
+    mes("You dig into the pile of mud...");
+    mes("...and find it's a filled in tunnel!");
+    p_delay(1);
+    loc_change(loc_3218, 2); // TODO: check this timing
+    @push_tunnel;
+}
+~displaymessage(^dm_default);
+
+[oploc1,loc_3218] @push_tunnel;
+
+[label,push_tunnel]
+mes("You push your way through the tunnel.");
+p_delay(0);
+p_teleport(0_37_150_24_46);
+
 [oploc1,loc_3295]
 mes("The writing seems to have been scratched into the rock with bare hands.");
 mes("It reads...");
-if_settext(stone:com_2, ^string_empty);
-if_settext(stone:com_3, ^string_empty);
-if_settext(stone:com_4, "All those who thirst for knowledge,");
-if_settext(stone:com_5, "Bow down to the lord.");
-if_settext(stone:com_6, "All you that crave eternal life,");
-if_settext(stone:com_7, "Come and meet your god.");
-if_settext(stone:com_8, "For no man nor beast");
-if_settext(stone:com_9, "can cast a spell");
-if_settext(stone:com_10, "against the wake of eternal hell.");
+p_delay(1);
+if_settext(stone:com_2, "All those who thirst for knowledge,");
+if_settext(stone:com_3, "Bow down to the lord.");
+if_settext(stone:com_4, "All you that crave eternal life,");
+if_settext(stone:com_5, "Come and meet your god.");
+if_settext(stone:com_6, "For no man nor beast");
+if_settext(stone:com_7, "can cast a spell");
+if_settext(stone:com_8, "against the wake of eternal hell.");
+if_settext(stone:com_9, ^string_empty);
+if_settext(stone:com_10, ^string_empty);
+if_settext(stone:com_11, ^string_empty);
+if_settext(stone:com_12, ^string_empty);
+if_settext(stone:com_13, ^string_empty);
+if_openmainmodal(stone);
+
+[oploc1,loc_3296]
+mes("The writing seems to have been scratched into the rock with bare hands.");
+mes("It reads...");
+p_delay(1);
+if_settext(stone:com_2, "Most men do live in fear of death");
+if_settext(stone:com_3, "that it might steal their soul.");
+if_settext(stone:com_4, "Some work and pray,");
+if_settext(stone:com_5, "to shield their life");
+if_settext(stone:com_6, "from the ravages of the cold.");
+if_settext(stone:com_7, "But only those who embrace the end");
+if_settext(stone:com_8, "can truly make their life extend.");
+if_settext(stone:com_9, "And when all hope begins to fade");
+if_settext(stone:com_10, "look above and use nature");
+if_settext(stone:com_11, "as your aid.");
+if_settext(stone:com_12, ^string_empty);
+if_settext(stone:com_13, ^string_empty);
+if_openmainmodal(stone);
+
+[oploc1,loc_3297]
+// https://web.archive.org/web/20060908030821im_/http://www.runeweb.net/fireball/Underground%20Pass%20Images/Underground7.PNG
+mes("The writing seems to have been scratched into the rock with bare hands.");
+mes("It reads...");
+p_delay(1);
+if_settext(stone:com_2, "And now our God has given us");
+if_settext(stone:com_3, "one who is from our own.");
+if_settext(stone:com_4, "A saviour who once sat upon");
+if_settext(stone:com_5, "his father's glorious throne.");
+if_settext(stone:com_6, "It is in your name that we");
+if_settext(stone:com_7, "will lead the attack,");
+if_settext(stone:com_8, "Iban, Son of Zamorak!");
+if_settext(stone:com_9, ^string_empty);
+if_settext(stone:com_10, ^string_empty);
+if_settext(stone:com_11, ^string_empty);
+if_settext(stone:com_12, ^string_empty);
+if_settext(stone:com_13, ^string_empty);
+if_openmainmodal(stone);
+
+[oploc1,loc_3298]
+// https://youtu.be/f_g1T2GYWfo?si=Z2RTl2pgxZfO-rXv&t=43
+mes("The writing seems to have been scratched into the rock with bare hands.");
+mes("It reads...");
+p_delay(1);
+if_settext(stone:com_2, "Here lies the sacred well,");
+if_settext(stone:com_3, "entrance to Iban's hell.");
+if_settext(stone:com_4, "He blesses all his disciples keen.");
+if_settext(stone:com_5, "'We bathe in pure evil' they yell.");
+if_settext(stone:com_6, "The force of darkness is strong,");
+if_settext(stone:com_7, "the wait for morning forever long.");
+if_settext(stone:com_8, "If a light should break the night");
+if_settext(stone:com_9, "the dark will rise to win the fight.");
+if_settext(stone:com_10, ^string_empty);
 if_settext(stone:com_11, ^string_empty);
 if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);

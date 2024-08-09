@@ -596,7 +596,7 @@
 595=cert_lit_torch
 596=unlit_torch
 597=cert_unlit_torch
-598=obj_598
+598=unlit_arrow
 599=obj_599
 600=book_of_astrology
 601=keep_key
@@ -1483,7 +1483,7 @@
 1482=obj_1482
 1483=obj_1483
 1484=obj_1484
-1485=obj_1485
+1485=damp_cloth
 1486=obj_1486
 1487=obj_1487
 1488=obj_1488
@@ -1491,7 +1491,7 @@
 1490=obj_1490
 1491=obj_1491
 1492=obj_1492
-1493=obj_1493
+1493=old_journal
 1494=obj_1494
 1495=obj_1495
 1496=obj_1496

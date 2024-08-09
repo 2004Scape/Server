@@ -24,6 +24,7 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
+param=orb_bit,0
 
 [obj_1482]
 name=Orb of light
@@ -36,6 +37,7 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
+param=orb_bit,1
 
 [obj_1483]
 name=Orb of light
@@ -48,6 +50,7 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
+param=orb_bit,2
 
 [obj_1484]
 name=Orb of light
@@ -60,8 +63,9 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
+param=orb_bit,3
 
-[obj_1485]
+[damp_cloth]
 name=Damp cloth
 desc=A damp, wet cloth.
 cost=10
@@ -172,7 +176,7 @@ iop1=Search
 2dxan=364
 weight=300g
 
-[obj_1493]
+[old_journal]
 name=Old journal
 desc=An account of the last times of someone.
 category=category_1328
