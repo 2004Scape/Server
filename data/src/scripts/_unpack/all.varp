@@ -201,7 +201,8 @@ scope=perm
 [upass_progress]
 scope=perm
 
-[varp_162]
+[fm_log]
+type=coord
 
 [varp_163]
 
