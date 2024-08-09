@@ -1,6 +1,10 @@
 [if_button,prayer:prayer_protectfrommagic]
 if_close;
-queue(prayer_activate, 0, 13);
+if (p_finduid(uid) = true) {
+    @activate_prayer_protectfrommagic;
+} else {
+    queue(prayer_activate, 0, 13);
+}
 
 [label,activate_prayer_protectfrommagic]
 def_dbrow $data = ~get_prayer_data(^prayer_protectfrommagic);

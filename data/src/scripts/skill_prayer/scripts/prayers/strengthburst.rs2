@@ -1,7 +1,10 @@
 [if_button,prayer:prayer_strengthburst]
 if_close;
-queue(prayer_activate, 0, 4);
-
+if (p_finduid(uid) = true) {
+    @activate_prayer_strengthburst;
+} else {
+    queue(prayer_activate, 0, 4);
+}
 [label,activate_prayer_strengthburst]
 def_dbrow $data = ~get_prayer_data(^prayer_strengthburst);
 if ($data = null) {

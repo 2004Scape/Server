@@ -1,6 +1,10 @@
 [if_button,prayer:prayer_protectfrommelee]
 if_close;
-queue(prayer_activate, 0, 15);
+if (p_finduid(uid) = true) {
+    @activate_prayer_protectfrommelee;
+} else {
+    queue(prayer_activate, 0, 15);
+}
 
 [label,activate_prayer_protectfrommelee]
 def_dbrow $data = ~get_prayer_data(^prayer_protectfrommelee);

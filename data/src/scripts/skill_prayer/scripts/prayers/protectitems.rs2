@@ -1,6 +1,10 @@
 [if_button,prayer:prayer_protectitems]
 if_close;
-queue(prayer_activate, 0, 12);
+if (p_finduid(uid) = true) {
+    @activate_prayer_protectitems;
+} else {
+    queue(prayer_activate, 0, 12);
+}
 
 [label,activate_prayer_protectitems]
 def_dbrow $data = ~get_prayer_data(^prayer_protectitems);

@@ -1,6 +1,10 @@
 [if_button,prayer:prayer_protectfrommissiles]
 if_close;
-queue(prayer_activate, 0, 14);
+if (p_finduid(uid) = true) {
+    @activate_prayer_protectfrommissiles;
+} else {
+    queue(prayer_activate, 0, 14);
+}
 
 [label,activate_prayer_protectfrommissiles]
 def_dbrow $data = ~get_prayer_data(^prayer_protectfrommissiles);

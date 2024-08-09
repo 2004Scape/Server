@@ -1,6 +1,10 @@
 [if_button,prayer:prayer_steelskin]
 if_close;
-queue(prayer_activate, 0, 3);
+if (p_finduid(uid) = true) {
+    @activate_prayer_steelskin;
+} else {
+    queue(prayer_activate, 0, 3);
+}
 
 [label,activate_prayer_steelskin]
 def_dbrow $data = ~get_prayer_data(^prayer_steelskin);
