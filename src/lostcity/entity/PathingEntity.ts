@@ -218,7 +218,6 @@ export default abstract class PathingEntity extends Entity {
         const previousZ: number = this.z;
         this.x = Position.moveX(this.x, dir);
         this.z = Position.moveZ(this.z, dir);
-        this.lastMovement = World.currentTick + 1;
         this.orientationX = Position.moveX(this.x, dir) * 2 + 1;
         this.orientationZ = Position.moveZ(this.z, dir) * 2 + 1;
         this.stepsTaken++;
