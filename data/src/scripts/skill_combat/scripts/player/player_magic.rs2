@@ -104,7 +104,7 @@ if (~player_in_combat_check = false) {
     return(false);
 }
 // check if npc is attackable
-if (~npc_is_attackable_message(npc_type) = false) {
+if (~npc_is_attackable_message() = false) {
     return(false);
 }
 if (npc_type = delrith) {

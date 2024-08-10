@@ -50,6 +50,7 @@ export default abstract class PathingEntity extends Entity {
     stepsTaken: number = 0;
     lastInt: number = -1; // resume_p_countdialog, ai_queue
     lastCrawl: boolean = false;
+    lastMovement: number = 0;
 
     walktrigger: number = -1;
     walktriggerArg: number = 0; // used for npcs

@@ -106,7 +106,6 @@ category=bandit_camp_leader
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=cowardly
 
 [donny_the_lad]
 name=Donny the lad
@@ -149,7 +148,6 @@ category=bandit_camp_leader
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=cowardly
 
 [speedy_keith]
 name=Speedy Keith
@@ -192,4 +190,3 @@ category=bandit_camp_leader
 param=attack_anim,human_sword_slash
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
-huntmode=cowardly

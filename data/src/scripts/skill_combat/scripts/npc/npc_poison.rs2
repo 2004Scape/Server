@@ -21,7 +21,6 @@ if (npc_stat(hitpoints) > 0) { // if they lived from that damage:
     return;
 }
 // else they died
-npc_setmode(none);
 npc_queue(3, 0, 0);
 
 
@@ -31,7 +30,7 @@ npc_settimer(0); // npc_cleartimer?
 
 
 [proc,npc_poison_start](int $severity)
-if (~npc_is_attackable(npc_type) = false) {
+if (~npc_is_attackable() = false) {
     return;
 }
 if (map_members = false) {
