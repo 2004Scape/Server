@@ -102,6 +102,8 @@ const InvOps: CommandHandlers = {
         state.activePlayer.invClear(invType.id);
     }),
 
+    // https://x.com/JagexAsh/status/1679942100249464833
+    // https://x.com/JagexAsh/status/1708084689141895625
     // inv write
     [ScriptOpcode.INV_DEL]: checkedHandler(ActivePlayer, state => {
         const [inv, obj, count] = state.popInts(3);
@@ -135,6 +137,7 @@ const InvOps: CommandHandlers = {
         state.activePlayer.invDelSlot(invType.id, slot);
     }),
 
+    // https://x.com/JagexAsh/status/1679942100249464833
     // inv write
     [ScriptOpcode.INV_DROPITEM]: checkedHandler(ActivePlayer, state => {
         const [inv, coord, obj, count, duration] = state.popInts(5);
@@ -163,6 +166,7 @@ const InvOps: CommandHandlers = {
         state.pointerAdd(ActiveObj[state.intOperand]);
     }),
 
+    // https://x.com/JagexAsh/status/1679942100249464833
     // inv write
     [ScriptOpcode.INV_DROPSLOT]: checkedHandler(ActivePlayer, state => {
         const [inv, coord, slot, duration] = state.popInts(4);
@@ -255,6 +259,7 @@ const InvOps: CommandHandlers = {
         state.pushInt(state.activePlayer.invItemSpace(invType.id, objType.id, count, size));
     }),
 
+    // https://x.com/JagexAsh/status/1706983568805704126
     // inv write
     [ScriptOpcode.INV_MOVEFROMSLOT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, fromSlot] = state.popInts(3);
@@ -284,6 +289,7 @@ const InvOps: CommandHandlers = {
         }
     }),
 
+    // https://x.com/JagexAsh/status/1706983568805704126
     // inv write
     [ScriptOpcode.INV_MOVETOSLOT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, fromSlot, toSlot] = state.popInts(4);
@@ -302,6 +308,8 @@ const InvOps: CommandHandlers = {
         state.activePlayer.invMoveToSlot(fromInvType.id, toInvType.id, fromSlot, toSlot);
     }),
 
+    // https://x.com/JagexAsh/status/1681295591639248897
+    // https://x.com/JagexAsh/status/1799020087086903511
     // inv write
     [ScriptOpcode.BOTH_MOVEINV]: checkedHandler(ActivePlayer, state => {
         const [from, to] = state.popInts(2);
@@ -353,6 +361,7 @@ const InvOps: CommandHandlers = {
         }
     }),
 
+    // https://x.com/TheCrazy0neTv/status/1681181722811957248
     // inv write
     [ScriptOpcode.INV_MOVEITEM]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
@@ -388,6 +397,7 @@ const InvOps: CommandHandlers = {
         }
     }),
 
+    // https://x.com/JagexAsh/status/1681616480763367424
     // inv write
     [ScriptOpcode.INV_MOVEITEM_CERT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
@@ -423,6 +433,7 @@ const InvOps: CommandHandlers = {
     
     }),
 
+    // https://x.com/JagexAsh/status/1681616480763367424
     // inv write
     [ScriptOpcode.INV_MOVEITEM_UNCERT]: checkedHandler(ActivePlayer, state => {
         const [fromInv, toInv, obj, count] = state.popInts(4);
@@ -570,6 +581,7 @@ const InvOps: CommandHandlers = {
         World.addObj(new Obj(position.level, position.x, position.z, EntityLifeCycle.DESPAWN, obj.id, completed), toPlayer.pid, duration);
     }),
 
+    // https://x.com/JagexAsh/status/1778879334167548366
     // inv write
     [ScriptOpcode.INV_DROPALL]: checkedHandler(ActivePlayer, state => {
         const [inv, coord, duration] = state.popInts(3);
