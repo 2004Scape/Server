@@ -43,7 +43,6 @@ return(true);
 
 [proc,prayer_activate](dbrow $data)
 sound_synth(db_getfield($data, prayers:sound, 0), 0, 0);
-%prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(int, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
 // mes("<tostring(map_clock)>: prayer_activate();");
 // deactivate conflicting prayers
 def_int $i = 0;
@@ -57,18 +56,14 @@ def_int $headicon = enum(int, int, prayer_headicons, db_getfield($data, prayers:
 if ($headicon > 0) {
     ~headicon_add($headicon);
 }
-// Yes its 5 tick as opposed to 1t in osrs
 //https://www.youtube.com/watch?v=cVisNIAVvfk&t=169s 
 //https://twitter.com/JagexAsh/status/1646903747837059072
-if (getqueue(start_draining) < 1) { // it might be queue(start_draining, getqueue(start_draining));
-    queue(start_draining, 5);
+if (%prayer_drain_effect < 1) {
+    // https://youtu.be/UAWSeOYLVHU First ones 10 tick, remaining timer loops are 5 tick
+    // https://youtu.be/cQZhL4VP84A?t=179 normal timer instead of softtimer
+    settimer(drain_prayer, 10);
 }
-
-
-[queue,start_draining]
-// https://youtu.be/UAWSeOYLVHU 5t
-// https://youtu.be/cQZhL4VP84A?t=179 normal timer instead of softtimer
-settimer(drain_prayer, 5);
+%prayer_drain_effect = add(max(%prayer_drain_effect, 0), enum(int, int, prayer_drain_effects, db_getfield($data, prayers:prayer, 0)));
 
 [timer,drain_prayer]
 %prayer_drain_counter = calc(%prayer_drain_effect * 5 + max(%prayer_drain_counter, 0));
@@ -85,12 +80,12 @@ if (%prayer_drain_counter >= max(%prayer_drain_resistance, 60)) {
     stat_sub(prayer, $reduce_points, 0);
     if (stat(prayer) = 0) {
         cleartimer(drain_prayer);
-        //clearqueue(start_draining);
         mes("You have run out of prayer points, you must recharge at an altar.");
         ~deactivate_prayers;
         sound_synth(prayer_drain, 0, 0);
     }
 }
+settimer(drain_prayer, 5);
 
 [proc,prayers_are_active]()(boolean)
 if (%prayer_thickskin = ^true) return (true);

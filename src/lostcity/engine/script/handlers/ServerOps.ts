@@ -95,6 +95,8 @@ const ServerOps: CommandHandlers = {
         state.pushInt(1);
     },
 
+    // https://x.com/JagexAsh/status/1796460129430433930
+    // https://x.com/JagexAsh/status/1821236327150710829
     [ScriptOpcode.NPC_HUNTALL]: state => {
         const [coord, distance, checkVis] = state.popInts(3);
 
@@ -153,6 +155,7 @@ const ServerOps: CommandHandlers = {
         state.pushInt(rsmod.hasLineOfWalk(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
     },
 
+    // https://x.com/JagexAsh/status/1110604592138670083
     [ScriptOpcode.STAT_RANDOM]: state => {
         const [level, low, high] = state.popInts(3);
 
@@ -293,6 +296,8 @@ const ServerOps: CommandHandlers = {
         state.pushInt(rsmod.hasLineOfSight(from.level, from.x, from.z, to.x, to.z, 1, 1, 1, 1) ? 1 : 0);
     },
 
+    // https://x.com/JagexAsh/status/1730321158858276938
+    // https://x.com/JagexAsh/status/1814230119411540058
     [ScriptOpcode.WORLD_DELAY]: state => {
         // arg is popped elsewhere
         state.execution = ScriptState.WORLD_SUSPENDED;
@@ -469,6 +474,8 @@ const ServerOps: CommandHandlers = {
 
         state.pushInt(World.gameMap.multimap.has(coord) ? 1 : 0);
     }
+
+    // npc_findallany // https://x.com/JagexAsh/status/1796878374398246990
 };
 
 export default ServerOps;
