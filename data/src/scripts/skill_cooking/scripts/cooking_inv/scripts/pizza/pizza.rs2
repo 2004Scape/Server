@@ -15,7 +15,6 @@ switch_obj (last_useitem) {
     case incomplete_pizza : mes("I think it's already got enough tomato on.");
     case half_baked_gnomebowl : @add_bowl_ingredient(last_item);
     case half_baked_batta : @add_batta_ingredient(last_item);
-    case raw_chompy : @quest_chompybird_add_ingredients_to_chompy_message;
     case default : ~displaymessage(^dm_default);
 };
 
