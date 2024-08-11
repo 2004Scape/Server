@@ -124,14 +124,9 @@ export default class Zone {
     }
 
     computeShared(): void {
-        this.shared = null;
-
         let length: number = 0;
         const enclosed: Uint8Array[] = [];
-        for (const event of this.events.values()) {
-            if (event.type !== ZoneEventType.ENCLOSED) {
-                continue;
-            }
+        for (const event of this.enclosed()) {
             const encoder: ZoneMessageEncoder<ZoneMessage> | undefined = ServerProtRepository.getZoneEncoder(event.message);
             if (typeof encoder === 'undefined') {
                 continue;
@@ -141,7 +136,7 @@ export default class Zone {
             length += bytes.length;
         }
 
-        if (enclosed.length === 0 || length === 0) {
+        if (length === 0) {
             return;
         }
 
@@ -208,10 +203,7 @@ export default class Zone {
             return;
         }
         player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
-        for (const event of this.events) {
-            if (event.type !== ZoneEventType.FOLLOWS) {
-                continue;
-            }
+        for (const event of this.follows()) {
             if (event.receiverId !== -1 && event.receiverId !== player.pid) {
                 continue;
             }
@@ -220,6 +212,7 @@ export default class Zone {
     }
 
     reset(): void {
+        this.shared = null;
         this.events.clear();
         this.entityEvents.clear();
     }
@@ -240,17 +233,7 @@ export default class Zone {
         this.objs.sortStack(coord, true);
     }
 
-    // ----
-
-    appendEvent(entity: NonPathingEntity, event: ZoneEvent): void {
-        this.events.add(event);
-        const exist: ZoneEvent[] | undefined = this.entityEvents.get(entity);
-        if (typeof exist === 'undefined') {
-            this.entityEvents.set(entity, [event]);
-            return;
-        }
-        this.entityEvents.set(entity, exist.concat(event));
-    }
+    // ---- locs ----
 
     addLoc(loc: Loc): void {
         const coord: number = Position.packZoneCoord(loc.x, loc.z);
@@ -258,9 +241,10 @@ export default class Zone {
             this.locs.addLast(coord, loc);
             this.totalLocs++;
         }
+
         this.locs.sortStack(coord);
 
-        this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAddChange(coord, loc.type, loc.shape, loc.angle)));
     }
 
     removeLoc(loc: Loc): void {
@@ -269,19 +253,12 @@ export default class Zone {
             this.locs.remove(coord, loc);
             this.totalLocs--;
         }
+
         this.locs.sortStack(coord);
-
-        const events: ZoneEvent[] | undefined = this.entityEvents.get(loc);
-        if (typeof events !== 'undefined') {
-            for (let index: number = 0; index < events.length; index++) {
-                this.events.delete(events[index]);
-            }
-
-            this.entityEvents.delete(loc);
-        }
+        this.clearQueuedEvents(loc);
 
         if (loc.lastLifecycleTick !== World.currentTick) {
-            this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocDel(coord, loc.shape, loc.angle)));
+            this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocDel(coord, loc.shape, loc.angle)));
         }
     }
 
@@ -295,14 +272,14 @@ export default class Zone {
     }
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
-        this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocMerge(loc.x, loc.z, loc.shape, loc.angle, loc.type, startCycle, endCycle, player.pid, east, south, west, north)));
     }
 
     animLoc(loc: Loc, seq: number): void {
-        this.appendEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
+        this.queueEvent(loc, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new LocAnim(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle, seq)));
     }
 
-    // ----
+    // ---- objs ----
 
     addObj(obj: Obj, receiverId: number): void {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
@@ -310,12 +287,13 @@ export default class Zone {
             this.objs.addLast(coord, obj);
             this.totalObjs++;
         }
+
         this.objs.sortStack(coord);
 
         if (obj.lifecycle === EntityLifeCycle.RESPAWN || receiverId === -1) {
-            this.appendEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjAdd(coord, obj.type, obj.count)));
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjAdd(coord, obj.type, obj.count)));
         } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-            this.appendEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjAdd(coord, obj.type, obj.count)));
+            this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjAdd(coord, obj.type, obj.count)));
         }
     }
 
@@ -326,7 +304,7 @@ export default class Zone {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.appendEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjReveal(coord, obj.type, obj.count, receiverId)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, receiverId, new ObjReveal(coord, obj.type, obj.count, receiverId)));
     }
 
     changeObj(obj: Obj, receiverId: number, oldCount: number, newCount: number): void {
@@ -335,7 +313,7 @@ export default class Zone {
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
 
-        this.appendEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjCount(coord, obj.type, oldCount, newCount)));
+        this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, receiverId, new ObjCount(coord, obj.type, oldCount, newCount)));
     }
 
     removeObj(obj: Obj): void {
@@ -344,54 +322,44 @@ export default class Zone {
             this.objs.remove(coord, obj);
             this.totalObjs--;
         }
+
         this.objs.sortStack(coord);
-
-        const exist: ZoneEvent[] | undefined = this.entityEvents.get(obj);
-        if (typeof exist !== 'undefined') {
-            for (let index: number = 0; index < exist.length; index++) {
-                this.events.delete(exist[index]);
-            }
-
-            this.entityEvents.delete(obj);
-        }
+        this.clearQueuedEvents(obj);
 
         if (obj.lastLifecycleTick !== World.currentTick) {
             if (obj.lifecycle === EntityLifeCycle.RESPAWN || obj.receiverId === -1) {
-                this.appendEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new ObjDel(coord, obj.type)));
+                this.queueEvent(obj, new ZoneEvent(ZoneEventType.ENCLOSED, -1, new ObjDel(coord, obj.type)));
             } else if (obj.lifecycle === EntityLifeCycle.DESPAWN) {
-                this.appendEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, -1, new ObjDel(coord, obj.type)));
+                this.queueEvent(obj, new ZoneEvent(ZoneEventType.FOLLOWS, -1, new ObjDel(coord, obj.type)));
             }
         }
+    }
+
+    getObj(x: number, z: number, type: number, receiverId: number): Obj | null {
+        for (const obj of this.getObjsSafe(Position.packZoneCoord(x, z))) {
+            if (!((obj.receiverId !== -1 && obj.receiverId !== receiverId) || obj.type !== type)) {
+                return obj;
+            }
+        }
+        return null;
     }
 
     // ---- not tied to any entities ----
 
     animMap(x: number, z: number, spotanim: number, height: number, delay: number): void {
-        this.events.add({
-            type: ZoneEventType.ENCLOSED,
-            receiverId: -1,
-            message: new MapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)
-        });
+        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1, new MapAnim(Position.packZoneCoord(x, z), spotanim, height, delay)));
     }
 
     mapProjAnim(x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
-        this.events.add({
-            type: ZoneEventType.ENCLOSED,
-            receiverId: -1,
-            message: new MapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)
-        });
+        this.events.add(new ZoneEvent(ZoneEventType.ENCLOSED, -1, new MapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc)));
     }
 
-    getObj(x: number, z: number, type: number, receiverId: number): Obj | null {
-        for (const obj of this.getObjsSafe(Position.packZoneCoord(x, z))) {
-            if ((obj.receiverId !== -1 && obj.receiverId !== receiverId) || obj.type !== type) {
-                continue;
-            }
-            return obj;
-        }
-        return null;
-    }
+    // ---- core functions ----
 
+    /**
+     * Generates players that are currently "visible" in this zone.
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getAllPlayersSafe(): IterableIterator<Player> {
         for (const uid of this.players) {
             const player: Player | null = World.getPlayerByUid(uid);
@@ -401,6 +369,10 @@ export default class Zone {
         }
     }
 
+    /**
+     * Generates npcs that are currently "visible" in this zone.
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getAllNpcsSafe(): IterableIterator<Npc> {
         for (const nid of this.npcs) {
             const npc: Npc | undefined = World.getNpc(nid);
@@ -410,6 +382,10 @@ export default class Zone {
         }
     }
 
+    /**
+     * Generates all objs that are currently "visible" in this zone.
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getAllObjsSafe(): IterableIterator<Obj> {
         for (const obj of this.objs.all()) {
             if (obj.checkLifeCycle(World.currentTick)) {
@@ -418,6 +394,10 @@ export default class Zone {
         }
     }
 
+    /**
+     * Generates objs that are currently "visible" in this zone on the specified coord (tile).
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getObjsSafe(coord: number): IterableIterator<Obj> {
         for (const obj of this.objs.stack(coord)) {
             if (obj.checkLifeCycle(World.currentTick)) {
@@ -426,14 +406,28 @@ export default class Zone {
         }
     }
 
+    /**
+     * Generates objs in this zone on the specified coord (tile).
+     * Does not guarantee that the objs are currently "visible".
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getObjsUnsafe(coord: number): IterableIterator<Obj> {
         yield *this.objs.stack(coord);
     }
 
+    /**
+     * Generates all objs in this zone.
+     * Does not guarantee that the objs are currently "visible".
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getAllObjsUnsafe(reverse: boolean = false): IterableIterator<Obj> {
         yield *this.objs.all(reverse);
     }
 
+    /**
+     * Generates all locs that are currently "visible" in this zone.
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getAllLocsSafe(): IterableIterator<Loc> {
         for (const loc of this.locs.all()) {
             if (loc.checkLifeCycle(World.currentTick)) {
@@ -442,6 +436,10 @@ export default class Zone {
         }
     }
 
+    /**
+     * Generates locs that are currently "visible" in this zone on the specified coord (tile).
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getLocsSafe(coord: number): IterableIterator<Loc> {
         for (const loc of this.locs.stack(coord)) {
             if (loc.checkLifeCycle(World.currentTick)) {
@@ -450,11 +448,75 @@ export default class Zone {
         }
     }
 
+    /**
+     * Generates locs in this zone on the specified coord (tile).
+     * Does not guarantee that the locs are currently "visible".
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getLocsUnsafe(coord: number): IterableIterator<Loc> {
         yield *this.locs.stack(coord);
     }
 
+    /**
+     * Generates all locs in this zone.
+     * Does not guarantee that the locs are currently "visible".
+     * "visible" meaning they are active on the server and available to the client.
+     */
     *getAllLocsUnsafe(reverse: boolean = false): IterableIterator<Loc> {
         yield *this.locs.all(reverse);
+    }
+
+    /**
+     * Generates the enclosed (shared) zone events currently queued for this zone.
+     * These are cleared at the end of every game cycle.
+     */
+    private *enclosed(): IterableIterator<ZoneEvent> {
+        for (const event of this.events) {
+            if (event.type === ZoneEventType.ENCLOSED) {
+                yield event;
+            }
+        }
+    }
+
+    /**
+     * Generates the follows zone events currently queued for this zone.
+     * These are cleared at the end of every game cycle.
+     */
+    private *follows(): IterableIterator<ZoneEvent> {
+        for (const event of this.events) {
+            if (event.type === ZoneEventType.FOLLOWS) {
+                yield event;
+            }
+        }
+    }
+
+    /**
+     * Queue a new zone event for a specified zone entity.
+     */
+    private queueEvent(entity: NonPathingEntity, event: ZoneEvent): void {
+        this.events.add(event);
+        const exist: ZoneEvent[] | undefined = this.entityEvents.get(entity);
+        if (typeof exist === 'undefined') {
+            this.entityEvents.set(entity, [event]);
+            return;
+        }
+        this.entityEvents.set(entity, exist.concat(event));
+    }
+
+    /**
+     * Clear all the queued zone events for a specified zone entity.
+     * This is important for example when objs are added into a zone than
+     * what the zone can actually hold, then the cheapest objs are automatically dropped.
+     * If an entity is dropped, and it had other queued events this game cycle, then
+     * we should remove them, so they do not get sent out to the clients.
+     */
+    private clearQueuedEvents(entity: NonPathingEntity): void {
+        const exist: ZoneEvent[] | undefined = this.entityEvents.get(entity);
+        if (typeof exist !== 'undefined') {
+            for (let index: number = 0; index < exist.length; index++) {
+                this.events.delete(exist[index]);
+            }
+            this.entityEvents.delete(entity);
+        }
     }
 }
