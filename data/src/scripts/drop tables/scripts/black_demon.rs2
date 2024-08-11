@@ -14,7 +14,7 @@ if ($random < 4) {
 } else if ($random < 7) {
     obj_add(npc_coord, steel_battleaxe, 1, ^lootdrop_duration);
 } else if ($random < 9) {
-    obj_add(npc_coord, black_axe, 11, ^lootdrop_duration);
+    obj_add(npc_coord, black_axe, 1, ^lootdrop_duration);
 } else if ($random < 10) {
     obj_add(npc_coord, mithril_kiteshield, 1, ^lootdrop_duration);
 } else if ($random < 11) {

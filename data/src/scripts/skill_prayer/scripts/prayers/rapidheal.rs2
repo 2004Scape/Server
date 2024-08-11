@@ -1,6 +1,10 @@
 [if_button,prayer:prayer_rapidheal]
 if_close;
-queue(prayer_activate, 0, 11);
+if (p_finduid(uid) = true) {
+    @activate_prayer_rapidheal;
+} else {
+    queue(prayer_activate, 0, 11);
+}
 
 [label,activate_prayer_rapidheal]
 def_dbrow $data = ~get_prayer_data(^prayer_rapidheal);

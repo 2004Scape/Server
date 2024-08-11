@@ -240,12 +240,19 @@ export default class Npc extends PathingEntity {
                 ScriptRunner.execute(state);
             }
         }
-
         if (this.moveSpeed !== MoveSpeed.INSTANT) {
             this.moveSpeed = this.defaultMoveSpeed();
         }
 
-        return super.processMovement();
+        if (!super.processMovement()) {
+            // nothing
+        }
+
+        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        if (moved) {
+            this.lastMovement = World.currentTick + 1;
+        }
+        return moved;
     }
 
     blockWalkFlag(): CollisionFlag {
@@ -331,10 +338,13 @@ export default class Npc extends PathingEntity {
             }
 
             if (!this.delayed() && request.delay <= 0) {
+                request.unlink();
+
                 const state = ScriptRunner.init(request.script, this, null, request.args);
                 state.lastInt = request.lastInt;
+                const save = this.queue.cursor; // LinkList-specific behavior so we can getqueue/clearqueue inside of this
                 this.executeScript(state);
-                request.unlink();
+                this.queue.cursor = save;
             }
         }
     }
@@ -801,6 +811,8 @@ export default class Npc extends PathingEntity {
         return null;
     }
 
+    // https://x.com/JagexAsh/status/1821236327150710829
+    // https://x.com/JagexAsh/status/1799793914595131463
     huntAll(): void {
         if (this.nextHuntTick > World.currentTick) {
             return;

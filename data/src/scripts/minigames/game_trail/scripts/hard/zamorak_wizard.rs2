@@ -1,10 +1,9 @@
 [ai_applayer2,zamorak_wizard]
-~npc_cast_spell(^flames_of_zamorak, 5);
+npc_setmode(opplayer2);
+~npc_cast_spell(^flames_of_zamorak, 4);
 
 [ai_opplayer2,zamorak_wizard]
-~npc_cast_spell(^flames_of_zamorak, 5);
-
-[ai_queue1,zamorak_wizard] gosub(npc_default_retaliate_ap);
+~npc_cast_spell(^flames_of_zamorak, 4);
 
 [ai_timer,zamorak_wizard]
 if(finduid(%npc_attacking_uid) = false) {
@@ -35,9 +34,9 @@ if ($random < 4) {
 } else if ($random < 13) {
     obj_add(npc_coord, earth_battlestaff, 1, ^lootdrop_duration);
 } else if ($random < 15) {
-    obj_add(npc_coord, air_battlestaff, 12, ^lootdrop_duration);
+    obj_add(npc_coord, air_battlestaff, 1, ^lootdrop_duration);
 } else if ($random < 16) {
-    obj_add(npc_coord, fire_battlestaff, 3, ^lootdrop_duration);
+    obj_add(npc_coord, fire_battlestaff, 1, ^lootdrop_duration);
 } else if ($random < 28) {
     obj_add(npc_coord, bloodrune, 12, ^lootdrop_duration);
 } else if ($random < 35) {

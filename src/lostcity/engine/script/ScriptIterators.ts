@@ -114,12 +114,6 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (this.checkCategory !== -1 && npcType.category !== this.checkCategory) {
                             continue;
                         }
-                        if (!npcType.op) {
-                            continue;
-                        }
-                        if (!npcType.op[1]) {
-                            continue;
-                        }
                         if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
@@ -178,6 +172,79 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         }
                         yield loc;
                     }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * This iterator powers the `npc_huntall` RuneScript command.
+ */
+export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
+    // a radius of 1 will loop 9 zones
+    // a radius of 2 will loop 25 zones
+    // a radius of 3 will loop 49 zones
+    private readonly x: number;
+    private readonly z: number;
+    private readonly level: number;
+    private readonly minX: number;
+    private readonly maxX: number;
+    private readonly minZ: number;
+    private readonly maxZ: number;
+    private readonly distance: number;
+    private readonly checkVis: HuntVis;
+
+    constructor(
+        tick: number,
+        level: number,
+        x: number,
+        z: number,
+        distance: number,
+        checkVis: HuntVis,
+    ) {
+        super(tick);
+        const centerX: number = Position.zone(x);
+        const centerZ: number = Position.zone(z);
+        const radius: number = (1 + (distance / 8)) | 0;
+        this.x = x;
+        this.z = z;
+        this.level = level;
+        this.maxX = centerX + radius;
+        this.minX = centerX - radius;
+        this.maxZ = centerZ + radius;
+        this.minZ = centerZ - radius;
+        this.distance = distance;
+        this.checkVis = checkVis;
+    }
+
+    protected *generator(): IterableIterator<Entity> {
+        for (let x: number = this.maxX; x >= this.minX; x--) {
+            const zoneX: number = x << 3;
+            for (let z: number = this.maxZ; z >= this.minZ; z--) {
+                const zoneZ: number = z << 3;
+
+                for (const npc of World.getZone(zoneX, zoneZ, this.level).getAllNpcsSafe()) {
+                    if (World.currentTick > this.tick) {
+                        throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
+                    }
+                    const npcType: NpcType = NpcType.get(npc.type);
+                    if (!npcType.op) {
+                        continue;
+                    }
+                    if (!npcType.op[1]) {
+                        continue;
+                    }
+                    if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
+                        continue;
+                    }
+                    if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        continue;
+                    }
+                    if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                        continue;
+                    }
+                    yield npc;
                 }
             }
         }
