@@ -280,18 +280,17 @@ export default class Player extends PathingEntity {
     engineQueue: LinkList<EntityQueueRequest> = new LinkList();
     cameraPackets: LinkList<CameraInfo> = new LinkList();
     timers: Map<number, EntityTimer> = new Map();
-    modalState = 0;
-    modalTop = -1;
-    lastModalTop = -1;
-    modalBottom = -1;
-    lastModalBottom = -1;
-    modalSidebar = -1;
-    lastModalSidebar = -1;
-    refreshModalClose = false;
-    refreshModal = false;
+    tabs: number[] = new Array(14).fill(-1);
+    modalState = 0; // 1 - if_openmain, 2 - if_openchat, 4 - if_openside, 8 - tut_open, 16 - last_login_info
+    modalMain = -1;
+    lastModalMain = -1;
+    modalChat = -1;
+    lastModalChat = -1;
+    modalSide = -1;
+    lastModalSide = -1;
     modalTutorial = -1;
-    overlaySide: number[] = new Array(14).fill(-1);
-    receivedFirstClose = true; // workaround to not close welcome screen on login
+    refreshModal = false;
+    refreshModalClose = false;
 
     protect: boolean = false; // whether protected access is available
     activeScript: ScriptState | null = null;
@@ -539,7 +538,7 @@ export default class Player extends PathingEntity {
             this.setVar(VarPlayerType.TEMP_RUN, 0);
         }
 
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         this.drainEnergy(moved);
         this.recoverEnergy(moved);
         if (this.runenergy === 0) {
@@ -594,13 +593,7 @@ export default class Player extends PathingEntity {
     }
 
     closeModal() {
-        if (!this.receivedFirstClose) {
-            this.receivedFirstClose = true;
-            return;
-        }
-
         this.weakQueue.clear();
-        // this.activeScript = null;
 
         if (!this.delayed()) {
             this.protect = false;
@@ -610,31 +603,31 @@ export default class Player extends PathingEntity {
             return;
         }
 
-        if (this.modalTop !== -1) {
-            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTop);
+        if (this.modalMain !== -1) {
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalMain);
             if (closeTrigger) {
                 this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
-            this.modalTop = -1;
+            this.modalMain = -1;
         }
 
-        if (this.modalBottom !== -1) {
-            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalBottom);
+        if (this.modalChat !== -1) {
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalChat);
             if (closeTrigger) {
                 this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
-            this.modalBottom = -1;
+            this.modalChat = -1;
         }
 
-        if (this.modalSidebar !== -1) {
-            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSidebar);
+        if (this.modalSide !== -1) {
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSide);
             if (closeTrigger) {
                 this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
-            this.modalSidebar = -1;
+            this.modalSide = -1;
         }
 
         this.modalState = 0;
@@ -646,7 +639,8 @@ export default class Player extends PathingEntity {
     }
 
     containsModalInterface() {
-        return (this.modalState & 1) === 1 || (this.modalState & 2) === 2 || (this.modalState & 16) === 16;
+        // main, chat, or last_login_info is open
+        return (this.modalState & 1) !== 0 || (this.modalState & 2) !== 0 || (this.modalState & 16) !== 0;
     }
 
     busy() {
@@ -1604,26 +1598,34 @@ export default class Player extends PathingEntity {
     }
 
     openMainModal(com: number) {
-        if (this.modalState & 4) {
+        if ((this.modalState & 2) !== 0) {
+            // close chat modal if we're opening a new main modal
+            this.write(new IfClose());
+            this.modalState &= ~2;
+            this.modalChat = -1;
+        }
+
+        if ((this.modalState & 4) !== 0) {
+            // close side modal if we're opening a new main modal
             this.write(new IfClose());
             this.modalState &= ~4;
-            this.modalSidebar = -1;
+            this.modalSide = -1;
         }
 
         this.modalState |= 1;
-        this.modalTop = com;
+        this.modalMain = com;
         this.refreshModal = true;
     }
 
     openChat(com: number) {
         this.modalState |= 2;
-        this.modalBottom = com;
+        this.modalChat = com;
         this.refreshModal = true;
     }
 
     openSideModal(com: number) {
         this.modalState |= 4;
-        this.modalSidebar = com;
+        this.modalSide = com;
         this.refreshModal = true;
     }
 
@@ -1635,9 +1637,9 @@ export default class Player extends PathingEntity {
 
     openMainModalSide(top: number, side: number) {
         this.modalState |= 1;
-        this.modalTop = top;
+        this.modalMain = top;
         this.modalState |= 4;
-        this.modalSidebar = side;
+        this.modalSide = side;
         this.refreshModal = true;
     }
 
@@ -1659,12 +1661,12 @@ export default class Player extends PathingEntity {
     }
 
     setTab(com: number, tab: number) {
-        this.overlaySide[tab] = com;
+        this.tabs[tab] = com;
         this.write(new IfSetTab(com, tab));
     }
 
     isComponentVisible(com: Component) {
-        return this.modalTop === com.rootLayer || this.modalBottom === com.rootLayer || this.modalSidebar === com.rootLayer || this.overlaySide.findIndex(l => l === com.rootLayer) !== -1 || this.modalTutorial === com.rootLayer;
+        return this.modalMain === com.rootLayer || this.modalChat === com.rootLayer || this.modalSide === com.rootLayer || this.tabs.findIndex(l => l === com.rootLayer) !== -1 || this.modalTutorial === com.rootLayer;
     }
 
     updateAfkZones(): void {
@@ -1764,7 +1766,8 @@ export default class Player extends PathingEntity {
         } else if (script === this.activeScript) {
             this.activeScript = null;
 
-            if ((this.modalState & 1) == 0) {
+            if ((this.modalState & 1) === 0) {
+                // close chat dialogues automatically and leave main modals alone
                 this.closeModal();
             }
         }

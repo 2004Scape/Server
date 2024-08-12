@@ -359,7 +359,6 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1389465615631519744
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, state => {
         state.execution = ScriptState.PAUSEBUTTON;
-        // TODO last_com
     }),
 
     // https://x.com/JagexAsh/status/1780904271610867780

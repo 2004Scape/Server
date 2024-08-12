@@ -93,26 +93,26 @@ export class NetworkPlayer extends Player {
             return;
         }
 
-        if (this.modalTop !== this.lastModalTop || this.modalBottom !== this.lastModalBottom || this.modalSidebar !== this.lastModalSidebar || this.refreshModalClose) {
+        if (this.modalMain !== this.lastModalMain || this.modalChat !== this.lastModalChat || this.modalSide !== this.lastModalSide || this.refreshModalClose) {
             if (this.refreshModalClose) {
                 this.write(new IfClose());
             }
             this.refreshModalClose = false;
 
-            this.lastModalTop = this.modalTop;
-            this.lastModalBottom = this.modalBottom;
-            this.lastModalSidebar = this.modalSidebar;
+            this.lastModalMain = this.modalMain;
+            this.lastModalChat = this.modalChat;
+            this.lastModalSide = this.modalSide;
         }
 
         if (this.refreshModal) {
-            if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
-                this.write(new IfOpenMainSide(this.modalTop, this.modalSidebar));
-            } else if ((this.modalState & 1) === 1) {
-                this.write(new IfOpenMain(this.modalTop));
-            } else if ((this.modalState & 2) === 2) {
-                this.write(new IfOpenChat(this.modalBottom));
-            } else if ((this.modalState & 4) === 4) {
-                this.write(new IfOpenSide(this.modalSidebar));
+            if ((this.modalState & 1) !== 0 && (this.modalState & 4) !== 0) {
+                this.write(new IfOpenMainSide(this.modalMain, this.modalSide));
+            } else if ((this.modalState & 1) !== 0) {
+                this.write(new IfOpenMain(this.modalMain));
+            } else if ((this.modalState & 2) !== 0) {
+                this.write(new IfOpenChat(this.modalChat));
+            } else if ((this.modalState & 4) !== 0) {
+                this.write(new IfOpenSide(this.modalSide));
             }
 
             this.refreshModal = false;
@@ -277,11 +277,11 @@ export class NetworkPlayer extends Player {
     }
 
     updatePlayers() {
-        this.write(new PlayerInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, this.uid, this.mask, this.tele, this.jump, this.walkDir, this.runDir, Math.abs(this.lastX - this.x), Math.abs(this.lastZ - this.z), this.lastLevel !== this.level));
+        this.write(new PlayerInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, this.uid, this.mask, this.tele, this.jump, this.walkDir, this.runDir, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateNpcs() {
-        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, Math.abs(this.lastX - this.x), Math.abs(this.lastZ - this.z), this.lastLevel !== this.level));
+        this.write(new NpcInfo(this.buildArea, this.level, this.x, this.z, this.originX, this.originZ, Math.abs(this.lastTickX - this.x), Math.abs(this.lastTickZ - this.z), this.lastLevel !== this.level));
     }
 
     updateZones() {

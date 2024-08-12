@@ -40,8 +40,8 @@ export default abstract class PathingEntity extends Entity {
     runDir: number = -1;
     waypointIndex: number = -1;
     waypoints: Int32Array = new Int32Array(25);
-    lastX: number = -1;
-    lastZ: number = -1;
+    lastTickX: number = -1;
+    lastTickZ: number = -1;
     lastLevel: number = -1;
     tele: boolean = false;
     jump: boolean = false;
@@ -285,8 +285,8 @@ export default abstract class PathingEntity extends Entity {
     validateDistanceWalked() {
         const distanceCheck =
             Position.distanceTo(this, {
-                x: this.lastX,
-                z: this.lastZ,
+                x: this.lastTickX,
+                z: this.lastTickZ,
                 width: this.width,
                 length: this.length
             }) > 2;
@@ -303,21 +303,21 @@ export default abstract class PathingEntity extends Entity {
 
         // convert p_teleport() into walk or run
         const distanceMoved = Position.distanceTo(this, {
-            x: this.lastX,
-            z: this.lastZ,
+            x: this.lastTickX,
+            z: this.lastTickZ,
             width: this.width,
             length: this.length
         });
         if (tele && !this.jump && distanceMoved <= 2) {
             if (distanceMoved === 2) {
                 // run
-                const firstX = ((this.x + this.lastX) / 2) | 0;
-                const firstZ = ((this.z + this.lastZ) / 2) | 0;
-                walkDir = Position.face(this.lastX, this.lastZ, firstX, firstZ);
+                const firstX = ((this.x + this.lastTickX) / 2) | 0;
+                const firstZ = ((this.z + this.lastTickZ) / 2) | 0;
+                walkDir = Position.face(this.lastTickX, this.lastTickZ, firstX, firstZ);
                 runDir = Position.face(firstX, firstZ, this.x, this.z);
             } else {
                 // walk
-                walkDir = Position.face(this.lastX, this.lastZ, this.x, this.z);
+                walkDir = Position.face(this.lastTickX, this.lastTickZ, this.x, this.z);
                 runDir = -1;
             }
 
@@ -544,8 +544,8 @@ export default abstract class PathingEntity extends Entity {
         this.runDir = -1;
         this.jump = false;
         this.tele = false;
-        this.lastX = this.x;
-        this.lastZ = this.z;
+        this.lastTickX = this.x;
+        this.lastTickZ = this.z;
         this.lastLevel = this.level;
         this.stepsTaken = 0;
         this.interacted = false;

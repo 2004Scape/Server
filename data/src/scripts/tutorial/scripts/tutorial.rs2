@@ -48,7 +48,6 @@ if_settab(null, ^tab_musicplayer);
 
 if (%tutorial_progress = ^runescape_guide_start) {
     p_telejump(0_48_48_22_34);
-    if_close; // workaround w/ receivedFirstClose
     if_openmain(player_kit);
     allowdesign(true);
 }
