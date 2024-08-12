@@ -1,6 +1,6 @@
 [opheld1,nulodions_notes]
 mes("The note reads...");
-if_openmainmodal(scroll);
+if_openmain(scroll);
 if_settext(scroll:com_2, "Ammo for the Dwarf Multi Cannon must be made from steel bars.");
 if_settext(scroll:com_3, "");
 if_settext(scroll:com_4, "The bars must be heated in a furnace and used with the ammo mould.");

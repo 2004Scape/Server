@@ -33,7 +33,7 @@ if_settext(questscroll:com_3, $questmessage);
 if_settext(questscroll:com_9, tostring($questpoints));
 if_settext(questscroll:com_10, "Quest points.");
 if_setobject(questscroll:com_4, $obj, $objscale);
-if_openmainmodal(questscroll);
+if_openmain(questscroll);
 if_setcolour($component, ^green_rgb);
 if_settab(questlist, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");

@@ -56,7 +56,7 @@ import VarpSmall from '#lostcity/network/outgoing/model/VarpSmall.js';
 import VarpLarge from '#lostcity/network/outgoing/model/VarpLarge.js';
 import MidiSong from '#lostcity/network/outgoing/model/MidiSong.js';
 import MidiJingle from '#lostcity/network/outgoing/model/MidiJingle.js';
-import IfOpenSideOverlay from '#lostcity/network/outgoing/model/IfOpenSideOverlay.js';
+import IfSetTab from '#lostcity/network/outgoing/model/IfSetTab.js';
 import UnsetMapFlag from '#lostcity/network/outgoing/model/UnsetMapFlag.js';
 import HintArrow from '#lostcity/network/outgoing/model/HintArrow.js';
 import LastLoginInfo from '#lostcity/network/outgoing/model/LastLoginInfo.js';
@@ -1621,7 +1621,7 @@ export default class Player extends PathingEntity {
         this.refreshModal = true;
     }
 
-    openSideOverlay(com: number) {
+    openSideModal(com: number) {
         this.modalState |= 4;
         this.modalSidebar = com;
         this.refreshModal = true;
@@ -1633,7 +1633,7 @@ export default class Player extends PathingEntity {
         this.modalTutorial = com;
     }
 
-    openMainModalSideOverlay(top: number, side: number) {
+    openMainModalSide(top: number, side: number) {
         this.modalState |= 1;
         this.modalTop = top;
         this.modalState |= 4;
@@ -1660,7 +1660,7 @@ export default class Player extends PathingEntity {
 
     setTab(com: number, tab: number) {
         this.overlaySide[tab] = com;
-        this.write(new IfOpenSideOverlay(com, tab));
+        this.write(new IfSetTab(com, tab));
     }
 
     isComponentVisible(com: Component) {

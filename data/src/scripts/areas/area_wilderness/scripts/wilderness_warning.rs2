@@ -11,7 +11,7 @@ if (coordz(last_coord) < coordz(coord)) { // if player is comin from the south
 [queue,wilderness_warning]
 // no idea if they had an area check before opening this interface
 p_stopaction;
-if_openmainmodal(wilderness_warning);
+if_openmain(wilderness_warning);
 
 [zone,0_45_54_48_56] @wilderness_warning;
 [zone,0_45_54_56_56] @wilderness_warning;

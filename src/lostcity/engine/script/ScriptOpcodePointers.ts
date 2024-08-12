@@ -173,15 +173,15 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.TUT_OPEN]: {
         require: ['active_player']
     },
-    [ScriptOpcode.IF_OPENMAINMODAL]: {
+    [ScriptOpcode.IF_OPENMAIN]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: {
+    [ScriptOpcode.IF_OPENMAIN_SIDE]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_OPENSIDEOVERLAY]: {
+    [ScriptOpcode.IF_OPENSIDE]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_SETANIM]: {

@@ -30,9 +30,9 @@
 ~chatnpc("<p,happy>Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
 
 if (gender = ^gender_male) {
-    if_openmainmodal(player_kit_tailor_torso_man);
+    if_openmain(player_kit_tailor_torso_man);
 } else {
-    if_openmainmodal(player_kit_tailor_torso_woman);
+    if_openmain(player_kit_tailor_torso_woman);
 }
 
 [label,thessalia_b3_s2]
@@ -43,9 +43,9 @@ if (gender = ^gender_male) {
 ~chatnpc("<p,happy>Just select what style and colour you would like from this catalogue, and then give me the 500 coins when you've picked.");
 
 if (gender = ^gender_male) {
-    if_openmainmodal(player_kit_tailor_legs_man);
+    if_openmain(player_kit_tailor_legs_man);
 } else {
-    if_openmainmodal(player_kit_tailor_legs_woman);
+    if_openmain(player_kit_tailor_legs_woman);
 }
 
 [label,thessalia_b2_s2]

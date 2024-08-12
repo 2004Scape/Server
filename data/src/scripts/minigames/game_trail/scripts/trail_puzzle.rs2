@@ -5,7 +5,7 @@ if(p_finduid(uid) = false){
 inv_clear(trail_puzzle_inv);
 ~init_trail_puzzle;
 inv_transmit(trail_puzzle_inv, trail_puzzle:com_4);
-if_openmainmodal(trail_puzzle);
+if_openmain(trail_puzzle);
 
 [opheld1,_trail_puzzle] @trail_open_puzzle;
 
@@ -15,7 +15,7 @@ if(inv_freespace(trail_puzzle_inv) > 1) {
     ~init_trail_puzzle;
 }
 inv_transmit(trail_puzzle_inv, trail_puzzle:com_4);
-if_openmainmodal(trail_puzzle);
+if_openmain(trail_puzzle);
 
 [proc,init_trail_puzzle]
 inv_setslot(trail_puzzle_inv, 0, obj_2749, 1);
@@ -174,4 +174,4 @@ if($open_slot ! -1) {
     inv_movetoslot(trail_puzzle_inv, trail_puzzle_inv, $slot, $open_slot);
 }
 
-if_openmainmodal(trail_puzzle); // opheld5 closes modal so this is temp workaround
+if_openmain(trail_puzzle); // opheld5 closes modal so this is temp workaround

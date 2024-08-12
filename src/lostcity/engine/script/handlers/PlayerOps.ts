@@ -27,7 +27,7 @@ import SynthSound from '#lostcity/network/outgoing/model/SynthSound.js';
 import IfSetColour from '#lostcity/network/outgoing/model/IfSetColour.js';
 import IfSetHide from '#lostcity/network/outgoing/model/IfSetHide.js';
 import IfSetObject from '#lostcity/network/outgoing/model/IfSetObject.js';
-import IfShowSide from '#lostcity/network/outgoing/model/IfShowSide.js';
+import IfSetTabActive from '#lostcity/network/outgoing/model/IfSetTabActive.js';
 import IfSetModel from '#lostcity/network/outgoing/model/IfSetModel.js';
 import IfSetRecol from '#lostcity/network/outgoing/model/IfSetRecol.js';
 import TutFlash from '#lostcity/network/outgoing/model/TutFlash.js';
@@ -499,13 +499,13 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openChat(check(state.popInt(), NumberNotNull));
     }),
 
-    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
+    [ScriptOpcode.IF_OPENMAIN_SIDE]: checkedHandler(ActivePlayer, state => {
         const [main, side] = state.popInts(2);
 
         check(main, NumberNotNull);
         check(side, NumberNotNull);
 
-        state.activePlayer.openMainModalSideOverlay(main, side);
+        state.activePlayer.openMainModalSide(main, side);
     }),
 
     [ScriptOpcode.IF_SETHIDE]: checkedHandler(ActivePlayer, state => {
@@ -528,7 +528,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new IfShowSide(check(state.popInt(), NumberNotNull)));
+        state.activePlayer.write(new IfSetTabActive(check(state.popInt(), NumberNotNull)));
     }),
 
     [ScriptOpcode.IF_SETMODEL]: checkedHandler(ActivePlayer, state => {
@@ -573,7 +573,7 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.setTab(com, tab);
     }),
 
-    [ScriptOpcode.IF_OPENMAINMODAL]: checkedHandler(ActivePlayer, state => {
+    [ScriptOpcode.IF_OPENMAIN]: checkedHandler(ActivePlayer, state => {
         state.activePlayer.openMainModal(check(state.popInt(), NumberNotNull));
     }),
 
@@ -581,8 +581,8 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openTutorial(check(state.popInt(), NumberNotNull));
     }),
 
-    [ScriptOpcode.IF_OPENSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.openSideOverlay(check(state.popInt(), NumberNotNull));
+    [ScriptOpcode.IF_OPENSIDE]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.openSideModal(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, state => {

@@ -3,18 +3,18 @@ export default class ServerProt {
     static readonly byId: ServerProt[] = [];
 
     // interfaces
-    static readonly IF_OPENCHATMODAL = new ServerProt(14, 2);
-    static readonly IF_OPENMAINSIDEMODAL = new ServerProt(28, 4);
-    static readonly IF_CLOSE = new ServerProt(129, 0); // NXT has "IF_CLOSESUB"
-    static readonly IF_OPENSIDEOVERLAY = new ServerProt(167, 3);
-    static readonly IF_OPENMAINMODAL = new ServerProt(168, 2);
-    static readonly IF_OPENSIDEMODAL = new ServerProt(195, 2);
+    static readonly IF_OPENCHAT = new ServerProt(14, 2);
+    static readonly IF_OPENMAIN_SIDE = new ServerProt(28, 4);
+    static readonly IF_CLOSE = new ServerProt(129, 0);
+    static readonly IF_SETTAB = new ServerProt(167, 3);
+    static readonly IF_OPENMAIN = new ServerProt(168, 2);
+    static readonly IF_OPENSIDE = new ServerProt(195, 2);
 
     // updating interfaces
     static readonly IF_SETCOLOUR = new ServerProt(2, 4); // NXT naming
     static readonly IF_SETHIDE = new ServerProt(26, 3); // NXT naming
     static readonly IF_SETOBJECT = new ServerProt(46, 6); // NXT naming
-    static readonly IF_SHOWSIDE = new ServerProt(84, 1);
+    static readonly IF_SETTAB_ACTIVE = new ServerProt(84, 1);
     static readonly IF_SETMODEL = new ServerProt(87, 4); // NXT naming
     static readonly IF_SETRECOL = new ServerProt(103, 6); // NXT naming
     static readonly IF_SETANIM = new ServerProt(146, 4); // NXT naming

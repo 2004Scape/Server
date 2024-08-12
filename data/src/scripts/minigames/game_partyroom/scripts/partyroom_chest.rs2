@@ -5,7 +5,7 @@
 inv_transmit(partyroominv, party_drop_chest:inv);
 inv_transmit(partyroomoffer, party_drop_chest:playerinv);
 inv_transmit(inv, party_drop_chest_side:inv);
-if_openmainmodalsideoverlay(party_drop_chest, party_drop_chest_side);
+if_openmain_side(party_drop_chest, party_drop_chest_side);
 
 [if_close,party_drop_chest]
 inv_stoptransmit(party_drop_chest_side:inv);

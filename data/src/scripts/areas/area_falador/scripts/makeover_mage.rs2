@@ -22,7 +22,7 @@ if(inv_total(inv, coins) < 3000) {
     return;
 }
 ~chatnpc("<p,happy>You of course agree that if by some accident you are turned into a frog you have no rights for compensation or refund.");
-if_openmainmodal(makeover_mage);
+if_openmain(makeover_mage);
 
 [label,makeover_mage_no]
 ~chatplayer("<p,angry>No thanks. I'm happy as Saradomin made me.");

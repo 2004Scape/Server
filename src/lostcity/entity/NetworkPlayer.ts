@@ -17,10 +17,10 @@ import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import Zone from '#lostcity/engine/zone/Zone.js';
 import InvType from '#lostcity/cache/config/InvType.js';
 import IfClose from '#lostcity/network/outgoing/model/IfClose.js';
-import IfOpenMainSideModal from '#lostcity/network/outgoing/model/IfOpenMainSideModal.js';
-import IfOpenMainModal from '#lostcity/network/outgoing/model/IfOpenMainModal.js';
-import IfOpenChatModal from '#lostcity/network/outgoing/model/IfOpenChatModal.js';
-import IfOpenSideModal from '#lostcity/network/outgoing/model/IfOpenSideModal.js';
+import IfOpenMainSide from '#lostcity/network/outgoing/model/IfOpenMainSide.js';
+import IfOpenMain from '#lostcity/network/outgoing/model/IfOpenMain.js';
+import IfOpenChat from '#lostcity/network/outgoing/model/IfOpenChat.js';
+import IfOpenSide from '#lostcity/network/outgoing/model/IfOpenSide.js';
 import RebuildNormal from '#lostcity/network/outgoing/model/RebuildNormal.js';
 import UpdateStat from '#lostcity/network/outgoing/model/UpdateStat.js';
 import UpdateRunEnergy from '#lostcity/network/outgoing/model/UpdateRunEnergy.js';
@@ -106,13 +106,13 @@ export class NetworkPlayer extends Player {
 
         if (this.refreshModal) {
             if ((this.modalState & 1) === 1 && (this.modalState & 4) === 4) {
-                this.write(new IfOpenMainSideModal(this.modalTop, this.modalSidebar));
+                this.write(new IfOpenMainSide(this.modalTop, this.modalSidebar));
             } else if ((this.modalState & 1) === 1) {
-                this.write(new IfOpenMainModal(this.modalTop));
+                this.write(new IfOpenMain(this.modalTop));
             } else if ((this.modalState & 2) === 2) {
-                this.write(new IfOpenChatModal(this.modalBottom));
+                this.write(new IfOpenChat(this.modalBottom));
             } else if ((this.modalState & 4) === 4) {
-                this.write(new IfOpenSideModal(this.modalSidebar));
+                this.write(new IfOpenSide(this.modalSidebar));
             }
 
             this.refreshModal = false;

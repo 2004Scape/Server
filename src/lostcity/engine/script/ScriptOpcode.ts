@@ -114,9 +114,10 @@ enum ScriptOpcode {
     IF_MULTIZONE, // moved to engine, remove this
     IF_OPENCHAT,
     TUT_OPEN,
-    IF_OPENMAINMODAL,
-    IF_OPENMAINMODALSIDEOVERLAY,
-    IF_OPENSIDEOVERLAY,
+    IF_OPENMAIN,
+    // IF_OPENOVERLAY comes later
+    IF_OPENMAIN_SIDE,
+    IF_OPENSIDE,
     IF_SETANIM, // official
     IF_SETCOLOUR, // official
     IF_SETHIDE, // official
