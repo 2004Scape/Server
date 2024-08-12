@@ -87,6 +87,8 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
+huntmode=cowardly
+huntrange=1
 
 [melzar_maze_ghost]
 name=Ghost
@@ -120,6 +122,8 @@ param=attack_sound,ghost_attack
 param=defend_sound,ghost_hit
 param=death_sound,ghost_death
 param=death_drop,null
+huntmode=cowardly
+huntrange=1
 
 [melzar_maze_skeleton]
 name=Skeleton
@@ -148,6 +152,8 @@ param=death_anim,skeleton_death
 param=attack_sound,skeleton_attack
 param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
+huntmode=cowardly
+huntrange=1
 
 [melzar_maze_zombie]
 name=Zombie
@@ -169,6 +175,8 @@ param=death_anim,zombie_death
 param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
+huntmode=cowardly
+huntrange=1
 
 [melzar_maze_lesser_demon]
 size=2
@@ -196,6 +204,8 @@ param=attack_sound,demon_attack
 param=defend_sound,demon_hit
 param=death_sound,demon_death
 param=death_drop,ashes
+huntmode=cowardly
+huntrange=2
 
 [melzar]
 name=Melzar the mad
