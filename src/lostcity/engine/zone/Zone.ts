@@ -300,6 +300,7 @@ export default class Zone {
     revealObj(obj: Obj, receiverId: number): void {
         obj.receiverId = -1;
         obj.reveal = -1;
+        obj.lastChange = -1;
 
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
@@ -309,6 +310,7 @@ export default class Zone {
 
     changeObj(obj: Obj, receiverId: number, oldCount: number, newCount: number): void {
         obj.count = newCount;
+        obj.lastChange = World.currentTick;
 
         const coord: number = Position.packZoneCoord(obj.x, obj.z);
         this.objs.sortStack(coord);
