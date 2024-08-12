@@ -30,13 +30,12 @@ import IfSetObject from '#lostcity/network/outgoing/model/IfSetObject.js';
 import IfShowSide from '#lostcity/network/outgoing/model/IfShowSide.js';
 import IfSetModel from '#lostcity/network/outgoing/model/IfSetModel.js';
 import IfSetRecol from '#lostcity/network/outgoing/model/IfSetRecol.js';
-import TutorialFlashSide from '#lostcity/network/outgoing/model/TutorialFlashSide.js';
+import TutFlash from '#lostcity/network/outgoing/model/TutFlash.js';
 import IfSetAnim from '#lostcity/network/outgoing/model/IfSetAnim.js';
 import IfSetPlayerHead from '#lostcity/network/outgoing/model/IfSetPlayerHead.js';
 import IfSetText from '#lostcity/network/outgoing/model/IfSetText.js';
 import IfSetNpcHead from '#lostcity/network/outgoing/model/IfSetNpcHead.js';
 import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
-import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
@@ -549,8 +548,8 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.write(new IfSetRecol(com, src, dest));
     }),
 
-    [ScriptOpcode.IF_SETTABFLASH]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new TutorialFlashSide(check(state.popInt(), NumberNotNull)));
+    [ScriptOpcode.TUT_FLASH]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.write(new TutFlash(check(state.popInt(), NumberNotNull)));
     }),
 
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, state => {
@@ -578,8 +577,8 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openMainModal(check(state.popInt(), NumberNotNull));
     }),
 
-    [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.openChatSticky(check(state.popInt(), NumberNotNull));
+    [ScriptOpcode.TUT_OPEN]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.openTutorial(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_OPENSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
@@ -612,10 +611,6 @@ const PlayerOps: CommandHandlers = {
         check(com, NumberNotNull);
 
         state.activePlayer.write(new IfSetPosition(com, x, y));
-    }),
-
-    [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new SetMultiway(check(state.popInt(), NumberNotNull) === 1));
     }),
 
     [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ProtectedActivePlayer, state => {
@@ -708,8 +703,8 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.stopHint();
     },
 
-    [ScriptOpcode.IF_CLOSESTICKY]: state => {
-        state.activePlayer.closeSticky();
+    [ScriptOpcode.TUT_CLOSE]: state => {
+        state.activePlayer.closeTutorial();
     },
 
     // https://x.com/JagexAsh/status/1684174294086033410

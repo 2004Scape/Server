@@ -130,7 +130,7 @@
 [command,if_settabactive](int $tab)
 [command,if_setmodel](component $component, int $model)
 [command,if_setrecol](component $component, int $src, int $dest)
-[command,if_settabflash](int $tab)
+[command,tut_flash](int $tab)
 [command,if_setanim](component $component,seq $anim)
 [command,if_settab](interface $interface, int $tab)
 [command,.if_settab](interface $interface, int $tab)
@@ -138,14 +138,14 @@
 [command,.if_openmainmodal](interface $interface)
 [command,if_openmainoverlay](interface $interface)
 [command,.if_openmainoverlay](interface $interface)
-[command,if_openchatsticky](interface $interface)
+[command,tut_open](interface $interface)
+[command,tut_close]
 [command,if_opensideoverlay](interface $interface)
 [command,if_setplayerhead](component $component)
 [command,if_settext](component $component, string $text)
 [command,.if_settext](component $component, string $text)
 [command,if_setnpchead](component $component, npc $npc)
 [command,if_setposition](component $component, int $x, int $y);
-[command,if_multizone](boolean $multizone)
 [command,stat_advance](stat $stat, int $exp)
 [command,damage](player_uid $uid, int $type, int $amount)
 [command,.damage](player_uid $uid, int $type, int $amount)
@@ -168,7 +168,6 @@
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
 [command,.hint_stop]
-[command,if_closesticky]
 [command,p_exactmove](coord $startCoord, coord $endCoord, int $startCycle, int $endCycle, int $direction)
 [command,queue](queue $queue, int $delay) // , $arg)
 [command,.queue](queue $queue, int $delay) // , $arg)

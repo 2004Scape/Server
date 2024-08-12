@@ -164,16 +164,13 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_CLOSESTICKY]: {
-        require: ['active_player']
-    },
-    [ScriptOpcode.IF_MULTIZONE]: {
+    [ScriptOpcode.TUT_CLOSE]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_OPENCHAT]: {
         require: ['active_player']
     },
-    [ScriptOpcode.IF_OPENCHATSTICKY]: {
+    [ScriptOpcode.TUT_OPEN]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_OPENMAINMODAL]: {
@@ -225,7 +222,7 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_SETTABFLASH]: {
+    [ScriptOpcode.TUT_FLASH]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_SETTEXT]: {

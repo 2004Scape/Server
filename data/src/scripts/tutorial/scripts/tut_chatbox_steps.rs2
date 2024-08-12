@@ -4,7 +4,7 @@
 
 // Relevant in October 2006, Get Ready 435
 [proc,tutorial_step_player_controls_spanner]
-if_settabflash(^tab_game_options);
+tut_flash(^tab_game_options);
 ~tutorialstep("", "Player controls|Please click on the flashing spanner icon found at the bottom right of your screen. This will display your player controls.");
 
 // Relevant in October 2006, Get Ready 435
@@ -25,7 +25,7 @@ hint_stop();
 ~tutorialstep("Viewing the items that you were given.", "Click on the flashing backpack icon to the right side of the main window to view your inventory. Your inventory is a list of everything you have in your backpack.");
 inv_transmit(inv, inventory:inv);
 if_settab(inventory, ^tab_inventory);
-if_settabflash(^tab_inventory);
+tut_flash(^tab_inventory);
 
 [proc,tutorial_step_cut_tree]
 hint_coord(^hint_west, 0_48_48_28_23, 175);
@@ -42,7 +42,7 @@ hint_coord(^hint_west, 0_48_48_28_23, 175);
 
 [proc,tutorial_step_you_gained_experience]
 if_settab(stats, ^tab_skills);
-if_settabflash(^tab_skills);
+tut_flash(^tab_skills);
 ~tutorialstep("", "You gained some experience.|Click on the flashing bar graph icon near the inventory button|to see your skill abilities.");
 
 [proc,tutorial_step_view_stats]
@@ -84,10 +84,10 @@ hint_coord(2, 0_48_48_3_9, 100);
 [proc,tutorial_step_click_music_player]
 hint_stop();
 if (lowmemory = true) {
-    if_settabflash(^tab_musicplayer);
+    tut_flash(^tab_musicplayer);
     if_settab(music_ld, ^tab_musicplayer);
 } else {
-    if_settabflash(^tab_musicplayer);
+    tut_flash(^tab_musicplayer);
     if_settab(music, ^tab_musicplayer);
 }
 ~tutorialstep("Well done, your first loaf of bread. As you gain experience in", "cooking you will be able to make other things like pies, cakes|and even kebabs. Now you've got the hang of cooking let's|move on. Click on the flashing icon in the bottom right to see|the jukebox.");
@@ -97,7 +97,7 @@ hint_coord(^hint_east, 0_48_48_0_18, 150);
 ~tutorialstep("The Music Player.", "From this interface you can control the music that is played.|As you explore the world more of the tunes will become unlocked.|Once you've examined this menu use the next door|to continue.");
 
 [proc,tutorial_step_click_run_icon]
-if_settabflash(^tab_player_controls);
+tut_flash(^tab_player_controls);
 if_settab(controls, ^tab_player_controls);
 ~update_weight; // update weight
 
@@ -121,7 +121,7 @@ hint_coord(^hint_south, 0_48_48_14_54, 150);
 
 [proc,tutorial_step_open_quest_journal]
 hint_stop();
-if_settabflash(^tab_quest_journal);
+tut_flash(^tab_quest_journal);
 ~update_quests;
 if_settab(questlist, ^tab_quest_journal);
 ~tutorialstep("", "Open the Quest journal||Click on the flashing icon next to your inventory.");
@@ -221,7 +221,7 @@ hint_stop();
 ~update_bonuses; // update bonuses if
 inv_transmit(worn, wornitems:wear);
 if_settab(wornitems, ^tab_wornitems);
-if_settabflash(^tab_wornitems);
+tut_flash(^tab_wornitems);
 
 [proc,tutorial_step_worn_inventory]
 ~tutorialstep("This is your worn inventory.", "From here you can see what items you have equipped. Let's|get one of those slots filled, go back to your inventory and |right click your dagger, select wield from the menu.");
@@ -237,7 +237,7 @@ hint_stop();
 [proc,tutorial_step_open_combat_interface]
 ~tutorialstep("Combat interface.", "|Click on the flashing crossed swords icon to see the combat interface.");
 ~update_weapon_category(inv_getobj(worn, ^wearpos_rhand));
-if_settabflash(^tab_combat_options);
+tut_flash(^tab_combat_options);
 
 [proc,tutorial_step_opened_combat_interface]
 hint_coord(^hint_west, 0_48_148_39_46, 125);
@@ -285,7 +285,7 @@ hint_coord(^hint_east, 0_48_48_57_52, 150);
 
 [proc,tutorial_your_prayer_menu]
 hint_stop();
-if_settabflash(^tab_prayer);
+tut_flash(^tab_prayer);
 if_settab(prayer, ^tab_prayer);
 ~tutorialstep("", "Your prayer menu.||Click on the flashing icon to open the prayer menu.");
 
@@ -295,12 +295,12 @@ if_settab(prayer, ^tab_prayer);
 
 [proc,tutorial_friends_tab]
 hint_stop();
-if_settabflash(^tab_friends);
+tut_flash(^tab_friends);
 if_settab(friends, ^tab_friends);
 ~tutorialstep("", "You should now see another new icon. Click on flashing smily to open your friends list.");
 
 [proc,tutorial_ignore_tab]
-if_settabflash(^tab_ignore);
+tut_flash(^tab_ignore);
 if_settab(ignore, ^tab_ignore);
 ~tutorialstep("This is your friends list.", "|This will be explained by Brother Brace shortly, but first click|on the other flashing icon next to the friends list one.");
 
@@ -317,7 +317,7 @@ hint_coord(^hint_north, 0_48_48_50_30, 125);
 ~tutorialstep("Your final instructor!", "Just follow the path to the wizards house, where you will be shown how to cast spells. Just talk with the mage indicated to find out more.");
 
 [proc,tutorial_open_your_final_menu]
-if_settabflash(^tab_magic);
+tut_flash(^tab_magic);
 if_settab(magic, ^tab_magic);
 ~tutorialstep("Open up your final menu.", "|Open up the Magic menu by clicking on the flashing icon next to the Prayer button you just learned about.");
 

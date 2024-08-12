@@ -24,8 +24,8 @@ export default class ServerProt {
     static readonly IF_SETPOSITION = new ServerProt(209, 6); // NXT naming
 
     // tutorial area
-    static readonly TUTORIAL_FLASHSIDE = new ServerProt(126, 1);
-    static readonly TUTORIAL_OPENCHAT = new ServerProt(185, 2);
+    static readonly TUT_FLASH = new ServerProt(126, 1);
+    static readonly TUT_OPEN = new ServerProt(185, 2);
 
     // inventory
     static readonly UPDATE_INV_STOP_TRANSMIT = new ServerProt(15, 2); // NXT naming

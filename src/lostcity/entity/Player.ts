@@ -50,7 +50,7 @@ import IfClose from '#lostcity/network/outgoing/model/IfClose.js';
 import UpdateUid192 from '#lostcity/network/outgoing/model/UpdateUid192.js';
 import ResetAnims from '#lostcity/network/outgoing/model/ResetAnims.js';
 import ResetClientVarCache from '#lostcity/network/outgoing/model/ResetClientVarCache.js';
-import TutorialOpenChat from '#lostcity/network/outgoing/model/TutorialOpenChat.js';
+import TutOpen from '#lostcity/network/outgoing/model/TutOpen.js';
 import UpdateInvStopTransmit from '#lostcity/network/outgoing/model/UpdateInvStopTransmit.js';
 import VarpSmall from '#lostcity/network/outgoing/model/VarpSmall.js';
 import VarpLarge from '#lostcity/network/outgoing/model/VarpLarge.js';
@@ -289,7 +289,7 @@ export default class Player extends PathingEntity {
     lastModalSidebar = -1;
     refreshModalClose = false;
     refreshModal = false;
-    modalSticky = -1;
+    modalTutorial = -1;
     overlaySide: number[] = new Array(14).fill(-1);
     receivedFirstClose = true; // workaround to not close welcome screen on login
 
@@ -581,15 +581,15 @@ export default class Player extends PathingEntity {
 
     // ----
 
-    closeSticky() {
-        if (this.modalSticky !== -1) {
-            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalSticky);
+    closeTutorial() {
+        if (this.modalTutorial !== -1) {
+            const closeTrigger = ScriptProvider.getByTrigger(ServerTriggerType.IF_CLOSE, this.modalTutorial);
             if (closeTrigger) {
                 this.enqueueScript(closeTrigger, PlayerQueueType.ENGINE);
             }
 
-            this.modalSticky = -1;
-            this.write(new TutorialOpenChat(-1));
+            this.modalTutorial = -1;
+            this.write(new TutOpen(-1));
         }
     }
 
@@ -1627,10 +1627,10 @@ export default class Player extends PathingEntity {
         this.refreshModal = true;
     }
 
-    openChatSticky(com: number) {
-        this.write(new TutorialOpenChat(com));
+    openTutorial(com: number) {
+        this.write(new TutOpen(com));
         this.modalState |= 8;
-        this.modalSticky = com;
+        this.modalTutorial = com;
     }
 
     openMainModalSideOverlay(top: number, side: number) {
@@ -1664,7 +1664,7 @@ export default class Player extends PathingEntity {
     }
 
     isComponentVisible(com: Component) {
-        return this.modalTop === com.rootLayer || this.modalBottom === com.rootLayer || this.modalSidebar === com.rootLayer || this.overlaySide.findIndex(l => l === com.rootLayer) !== -1 || this.modalSticky === com.rootLayer;
+        return this.modalTop === com.rootLayer || this.modalBottom === com.rootLayer || this.modalSidebar === com.rootLayer || this.overlaySide.findIndex(l => l === com.rootLayer) !== -1 || this.modalTutorial === com.rootLayer;
     }
 
     updateAfkZones(): void {
