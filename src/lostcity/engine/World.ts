@@ -1361,11 +1361,11 @@ class World {
         // console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
         const duration: number = obj.reveal;
         const change: number = obj.lastChange;
-        const changed: boolean = change !== -1;
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.revealObj(obj, obj.receiverId);
         // objs next life cycle always starts from the last time they changed + the inputted duration.
-        const nextLifecycle: number = (changed ? (Obj.REVEAL - (this.currentTick - change)) : 0) + this.currentTick + duration;
+        // accounting for reveal time here.
+        const nextLifecycle: number = (change !== -1 ? (Obj.REVEAL - (this.currentTick - change)) : 0) + this.currentTick + duration;
         obj.setLifeCycle(nextLifecycle);
         this.trackZone(nextLifecycle, zone);
         this.trackZone(this.currentTick, zone);
