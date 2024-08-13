@@ -294,6 +294,7 @@ stat_advance($skill, $xp);
 
 [label,tutorial_complete]
 tut_close();
+if_close;
 
 %tutorial_progress = ^tutorial_complete;
 p_telejump(0_50_50_22_22);
