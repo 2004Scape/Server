@@ -1,0 +1,23 @@
+[ai_queue3,sir_harry]
+gosub(npc_death);
+if (npc_findhero = true) {
+    if_close;
+    if(p_finduid(uid) = true) { // get protected access, if not then queue
+        @defeat_sir_harry;
+    }
+    queue(queue_defeat_sir_harry, 0, npc_uid);
+}
+~paladin_drops;
+
+[queue,defeat_sir_harry](npc_uid $npc)
+@defeat_sir_harry($npc);
+
+[label,defeat_sir_harry](npc_uid $npc)
+if(npc_finduid($npc) = true) {
+    obj_add(npc_coord, upass_harry_badge, 1, ^lootdrop_duration);
+}
+
+
+[opnpc1,sir_harry]
+~chatplayer("<p,neutral>Good day.");
+~chatnpc("<p,neutral>Watch your back, the undead are about here...")

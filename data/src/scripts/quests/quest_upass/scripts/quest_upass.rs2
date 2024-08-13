@@ -12,10 +12,36 @@ switch_int(random(8)) {
     case 9: mes("I will release you...");
     case 10: mes("Join us!");
 }
-settimer(iban_say, ~random_range(15, 200));
+cleartimer(iban_say);
 
-[zone,0_38_151_0_48] settimer(iban_say, ~random_range(2, 20));
-[zoneexit,0_38_151_0_48] cleartimer(iban_say);
+// https://x.com/JagexAsh/status/1232279101131706379
+// these are sourced from OSRS, don't think they've been changed
+[zone,0_38_151_0_48] settimer(iban_say, ~random_range(1, 15));
+[zone,0_38_151_16_16] settimer(iban_say, ~random_range(1, 15));
+[zone,0_38_151_56_24] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_151_32_16] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_151_32_0] settimer(iban_say, ~random_range(1, 15));
+
+[zone,0_37_150_8_40] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_150_16_32] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_150_32_32] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_150_32_16] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_150_40_0] settimer(iban_say, ~random_range(1, 15));
+
+// trap timers, mapzone enter in music.rs2
+[mapzoneexit,0_38_151] cleartimer(upass_trap);
+[mapzoneexit,0_37_151] cleartimer(upass_trap);
+
+// grid timers, this could also just be mapzone but want to avoid running 1t timers too often
+// (and this timer makes a lot of calls)
+[zone,0_38_151_40_16] settimer(upass_grid_traps, 1);
+[zone,0_38_151_40_8] settimer(upass_grid_traps, 1);
+[zone,0_38_151_32_16] settimer(upass_grid_traps, 1);
+[zone,0_38_151_32_8] settimer(upass_grid_traps, 1);
+[zoneexit,0_38_151_40_16] cleartimer(upass_grid_traps);
+[zoneexit,0_38_151_40_8] cleartimer(upass_grid_traps);
+[zoneexit,0_38_151_32_16] cleartimer(upass_grid_traps);
+[zoneexit,0_38_151_32_8] cleartimer(upass_grid_traps);
 
 [oploc1,loc_3213]
 if(%biohazard_progress < ^biohazard_complete) {
@@ -34,7 +60,7 @@ if(%upass_progress = ^upass_started) {
 }
 mes("You cautiously enter the cave...");
 p_delay(3);
-~generate_upass_grid;
+~setupassgrilltrap;
 p_teleport(0_38_151_62_52);
 
 [oploc1,loc_3214]
@@ -75,7 +101,7 @@ mes("... A mystical force seems to blast you out of the well!");
 p_delay(1);
 mes("... There must be some positive force nearby.");
 p_delay(1);
-~damage_self(10);
+~damage_self(min(sub(stat(hitpoints), 1), 10));
 
 [oplocu,loc_3264]
 switch_obj(last_useitem) {
@@ -156,16 +182,135 @@ if(last_useitem = spade) {
     mes("...and find it's a filled in tunnel!");
     p_delay(1);
     loc_change(loc_3218, 2); // TODO: check this timing
-    @push_tunnel;
+    mes("You push your way through the tunnel.");
+    p_delay(0);
+    p_teleport(0_37_150_24_46);
 }
 ~displaymessage(^dm_default);
 
-[oploc1,loc_3218] @push_tunnel;
+[oploc1,loc_3266]
+mes("You attempt to pick the lock...");
+def_int $roll = random(100);
+if ($roll < 50) { // Some arbitrary rng.
+    mes("You fail to pick the lock.");
+    return;
+}
+sound_synth(lockeddoor, 0, 0);
+mes("You manage to pick the lock.");
+p_delay(2);
+stat_advance(thieving, 30);
+mes("You walk through.");
+~open_and_close_door2(loc_3269, ~check_axis_locactive(coord), door_open);
+mes("The cage slams shut behind you.");
+sound_synth(grate_close, 0, 50);
 
-[label,push_tunnel]
-mes("You push your way through the tunnel.");
+[oploc2,loc_3266]
+mes("You search the bars...");
 p_delay(0);
-p_teleport(0_37_150_24_46);
+mes("...The cage has been locked.");
+
+[oploc1,loc_3268]
+if(stat(thieving) < 50) {
+    mes("You need a Thieving level of 50 to pick this lock."); // RS3, osrs has a mesbox
+    return;
+}
+mes("You attempt to pick the lock...");
+def_int $roll = random(100);
+if ($roll < 50) { // Some arbitrary rng.
+    mes("You fail to pick the lock.");
+    return;
+}
+// for some reason they made this work slightly different than the jail cell doors: https://youtu.be/n_ip_vEDbCA?si=c51xpPJ36Nx8ABoL&t=633
+sound_synth(lockeddoor, 0, 0);
+mes("You manage to pick the lock.");
+~open_and_close_door2(loc_3269, ~check_axis_locactive(coord), door_open);
+p_delay(1);
+stat_advance(thieving, 30);
+mes("You walk through...");
+mes("The cage slams shut behind you.");
+sound_synth(grate_close, 0, 50);
+
+[oploc2,loc_3268]
+mes("You search the bars...");
+p_delay(0);
+mes("...The cage has been locked.");
+
+[opnpc1,boulder_upass]
+// https://youtu.be/ZxF473zUZfQ?si=meqGxA-HNxlmx4oD&t=1187
+~chatplayer("<p,sad>It's too heavy to move with just my hands.");
+
+// https://x.com/JagexOrion/status/1039548840339296261
+[opnpcu,boulder_upass]
+if(last_useitem = piece_of_railing & %upass_progress = ^upass_entered_second_area) {
+    npc_tele(movecoord(npc_coord, 0, 0, 1));
+    p_delay(1);
+    npc_tele(movecoord(npc_coord, 0, 0, 1));
+    p_delay(0);
+    %upass_progress = ^upass_killed_unicorn;
+    p_telejump(movecoord(coord, -25, 0, 0));
+    npc_tele(movecoord(npc_coord, 0, 0, -2)); // not sure about this
+    ~chatplayer("<p,neutral>I heard something breaking.");
+}
+
+[oploc2,loc_3267]
+mes("You search the cage...");
+p_delay(2);
+if(inv_total(inv, piece_of_railing) > 0) { // checks bank in OSRS, not in RS3
+    mes("But find nothing.");
+    return;
+}
+mes("You find a loose railing lying on the floor.");
+inv_add(inv, piece_of_railing, 1);
+
+[oploc1,loc_3308]
+mes("The unicorn was killed by the boulder.");
+if(inv_total(inv, upass_unicorn_horn) = 0) {
+    ~chatplayer("<p,neutral>All that remains is a damaged horn.");
+    inv_add(inv, upass_unicorn_horn, 1);
+    return;
+}
+mes("Nothing remains.");
+
+[oploc1,loc_3218] @upass_area_2_3_entrance;
+[oploc1,loc_3219] @upass_area_2_3_entrance;
+
+[label,upass_area_2_3_entrance]
+if(loc_angle = ^loc_south) {
+    p_telejump(0_37_151_3_2);
+} else {
+    if(%upass_progress >= ^upass_killed_unicorn) {
+        p_telejump(0_37_150_8_10);
+    } else {
+        p_telejump(0_37_150_33_10);
+    }
+}
+
+[oploc1,loc_3305]
+mes("You search the stone structure...");
+p_delay(0);
+mes("On the side you find an old inscription,");
+mes("It reads...");
+p_delay(1);
+@upass_well_inscription;
+
+[oploc1,loc_3220] @open_upass_main_area_door;
+[oploc1,loc_3221] @open_upass_main_area_door;
+
+[label,open_upass_main_area_door]
+if(coordz(loc_coord) > 6400) {
+    p_teleport(1_33_73_61_53);
+} else {
+    p_teleport(1_33_73_61_53);
+}
+
+[oploc1,loc_3333] @open_iban_door(^left);
+[oploc1,loc_3334] @open_iban_door(^right);
+
+[label,open_iban_door](int $side)
+if(%upass_progress = ^upass_complete) {
+    mes("The temple is in ruins... ...You cannot enter.");
+    return;
+}
 
 [oploc1,loc_3295]
 mes("The writing seems to have been scratched into the rock with bare hands.");

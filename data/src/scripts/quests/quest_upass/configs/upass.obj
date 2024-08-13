@@ -78,7 +78,7 @@ recol1d=8388
 weight=12g
 members=yes
 
-[obj_1486]
+[piece_of_railing]
 name=Piece of railing
 desc=A broken piece of railing.
 cost=10
@@ -91,7 +91,7 @@ model=model_2826_obj
 weight=2kg
 members=yes
 
-[obj_1487]
+[upass_unicorn_horn]
 name=Unicorn horn
 desc=A withered unicorn horn.
 model=model_2495_obj
@@ -104,7 +104,7 @@ members=yes
 cost=20
 weight=7g
 
-[obj_1488]
+[upass_jerro_badge]
 name=Paladin's badge
 desc=A coat of arms of the Ardougne Paladins.
 cost=10
@@ -117,7 +117,7 @@ model=model_2759_obj
 weight=12g
 members=yes
 
-[obj_1489]
+[upass_carl_badge]
 name=Paladin's badge
 desc=A coat of arms of the Ardougne Paladins.
 cost=10
@@ -132,7 +132,7 @@ recol1d=5474
 weight=12g
 members=yes
 
-[obj_1490]
+[upass_harry_badge]
 name=Paladin's badge
 desc=A coat of arms of the Ardougne Paladins.
 cost=10

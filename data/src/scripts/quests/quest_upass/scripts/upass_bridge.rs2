@@ -10,18 +10,20 @@ switch_obj(last_useitem) {
 }
 
 [label,make_clotharrow](namedobj $arrow_type)
-if(inv_freespace(inv) = 0) {
+def_obj $product = oc_param($arrow_type, next_obj_stage);
+if (inv_itemspace(inv $product, 1, inv_size(inv)) = false) {
     mes("You don't have space to do that."); // rs3
     return;
 }
 inv_del(inv, damp_cloth, 1);
 inv_del(inv, $arrow_type, 1);
-inv_add(inv, oc_param($arrow_type, next_obj_stage), 1);
+inv_add(inv, $product, 1);
 // https://youtu.be/qGcENRGIcoI?si=exA8N3UOZj-G0IaH&t=26
 mes("\"You wrap the damp cloth around the arrow head.\"...");
 
 [label,light_firearrow](obj $arrow_type)
-if(inv_freespace(inv) = 0) { // does nothing on rs3
+def_obj $product = oc_param($arrow_type, next_obj_stage);
+if (inv_itemspace(inv $product, 1, inv_size(inv)) = false) { // does nothing on rs3
     return;
 }
 inv_del(inv, $arrow_type, 1);

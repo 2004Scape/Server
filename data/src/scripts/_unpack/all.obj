@@ -1823,7 +1823,7 @@ desc=A magical sphere that glimmers within.
 cost=1
 model=model_loc_771_0
 members=yes
-respawnrate=48
+respawnrate=50
 
 [obj_2530]
 name=Bones

@@ -194,10 +194,10 @@ if((loc_type = loc_137 & (testbit(%haunted_lever, 0) = false & testbit(%haunted_
     def_boolean $entering = true;
     def_coord $player_coord = coord;
     def_coord $start_coord = loc_coord;
-    if(loc_angle = 0 & (coordx(coord) < coordx(loc_coord))) {
+    if(loc_angle = ^loc_west & (coordx(coord) < coordx(loc_coord))) {
         $entering = false;
         $start_coord = movecoord(loc_coord, -1, 0, 0);
-    } else if(loc_angle = 3 & (coordz(coord) < coordz(loc_coord))) {
+    } else if(loc_angle = ^loc_south & (coordz(coord) < coordz(loc_coord))) {
         $entering = false;
         $start_coord = movecoord(loc_coord, 0, 0, -1);
     }

@@ -158,6 +158,5 @@ buildappearance(worn);
 // Finds an identical loc on the $merge_pos coord to switch active_loc to
 [proc,change_merged_loc](coord $merge_pos)
 if (loc_find($merge_pos, loc_type) = true) {
-    mes("testingg");
     return;
 }

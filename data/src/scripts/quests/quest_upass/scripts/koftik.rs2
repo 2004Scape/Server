@@ -1,6 +1,10 @@
 // outside underground pass
 [opnpc1,npc_972]
 switch_int(%upass_progress) {
+    case ^upass_passed_bridge, ^upass_entered_second_area, ^upass_killed_unicorn:
+        ~chatplayer("<p,neutral>Hello Koftik.");
+        ~chatnpc("<p,shock>It scares me in there, ... The voices, don't you hear them?"); // intentional
+        ~chatplayer("<p,neutral>You'll be okay Koftik...");
     case ^upass_spoken_koftik:
         // TODO: confirm mesanim
         ~chatnpc("<p,neutral>I know it's scary in there, but you'll have to go in alone. I'll catch up as soon as I can.");
@@ -68,14 +72,12 @@ switch_int(%upass_progress) {
 // before the bridge in area 1
 [opnpc1,npc_974]
 switch_int(%upass_progress) {
-    case ^upass_passed_bridge:
+    case default:
         ~chatplayer("<p,quiz>Hello Koftik.");
         ~chatnpc("<p,neutral>Do you hear them? The voices tell me things.");
         ~chatplayer("<p,happy>Are you OK?");
         ~chatnpc("<p,neutral>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men.");
         ~chatplayer("<p,happy>Tyranny of the righteous? What?");
         ~chatnpc("<p,neutral>So many paths to choose... Here we must all take our own path.");
-    case default:
-        mes("Koftik doesn't seem interested in talking.");
 }
 

@@ -58,7 +58,9 @@ if (%music_mapsquare ! $mapsquare) {
 
 [mapzone,0_37_150] ~move_musictrigger(coord);
 
-[mapzone,0_37_151] ~move_musictrigger(coord);
+[mapzone,0_37_151] 
+settimer(upass_trap, 1);
+~move_musictrigger(coord);
 
 [mapzone,0_38_49] ~move_musictrigger(coord);
 
@@ -76,7 +78,9 @@ if (%music_mapsquare ! $mapsquare) {
 
 [mapzone,0_38_150] ~move_musictrigger(coord);
 
-[mapzone,0_38_151] ~move_musictrigger(coord);
+[mapzone,0_38_151] 
+settimer(upass_trap, 1);
+~move_musictrigger(coord);
 
 [mapzone,0_39_46] ~move_musictrigger(coord);
 
