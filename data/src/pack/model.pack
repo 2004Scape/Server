@@ -1388,8 +1388,8 @@
 1387=model_loc_642_0
 1388=model_loc_453_8
 1389=model_loc_636_8
-1390=model_loc_450_8
-1391=model_loc_12_8
+1390=plainrock1_8
+1391=plainrock2_8
 1392=model_loc_643_0
 1393=model_loc_644_0
 1394=model_loc_638_0
@@ -2234,9 +2234,9 @@
 2233=model_loc_679_8
 2234=model_loc_678_8
 2235=model_loc_673_8
-2236=model_loc_675_8
-2237=model_loc_676_8
-2238=model_loc_677_8
+2236=macro_plainrock1_8
+2237=macro_plainrock2_8
+2238=macro_plainrock3_8
 2239=model_2239_spotanim
 2240=model_2240_spotanim
 2241=model_loc_692_8
