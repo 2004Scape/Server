@@ -9,7 +9,7 @@ switch_int(%murder_progress) {
             case 1:
                 ~chatplayer("<p,neutral>What can you tell me about the Sinclairs?");
                 ~chatnpc("<p,neutral>Well, what do you want to know?");
-                switch_int(~p_choice4("Tell me about Lord Sinclair.", 1, "Who do you think was responsible?", 2, "What can you tell me about his sons?", 3, "I am so confused about who did it.", 4)) {
+                switch_int(~p_choice4("Tell me about Lord Sinclair.", 1, "Why do the Sinclairs live so far from town?", 2, "What can you tell me about his sons?", 3, "What can you tell me about his daughters?", 4)) {
                     case 1:
                         ~chatplayer("<p,neutral>Tell me about Lord Sinclair.");
                         ~chatnpc("<p,neutral>Old Lord Sinclair was a great man with a lot of respect in these parts. More than his worthless children have anyway.");
