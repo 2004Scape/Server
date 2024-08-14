@@ -15,6 +15,10 @@ if (~npc_can_attack_player = false) {
     npc_setmode(null);
     return;
 }
+if (busy = true & %demon_progress = 29) {
+    npc_setmode(null);
+    return;
+}
 
 npc_setmode(applayer2);
 
@@ -31,6 +35,10 @@ if (%npc_action_delay > map_clock) {
     return;
 }
 if (~npc_can_attack_player = false) {
+    npc_setmode(null);
+    return;
+}
+if (busy = true & %demon_progress = 29) {
     npc_setmode(null);
     return;
 }
