@@ -867,7 +867,7 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
-            if (this.target !== player && !World.gameMap.multimap.has(Position.packCoord(player.level, player.x, player.z))) {
+            if (this.target !== player && !World.gameMap.isMulti(Position.packCoord(player.level, player.x, player.z))) {
                 if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
                     continue;
                 } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
