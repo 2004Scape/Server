@@ -18,6 +18,7 @@ import LocType from '#lostcity/cache/config/LocType.js';
 
 import * as rsmod from '@2004scape/rsmod-pathfinder';
 import {CollisionFlag, CollisionType} from '@2004scape/rsmod-pathfinder';
+import Environment from '#lostcity/util/Environment.js';
 
 type TargetSubject = {
     type: number,
@@ -609,8 +610,13 @@ export default abstract class PathingEntity extends Entity {
             // nomove moverestrict returns as null = no walking allowed.
             return -1;
         }
+
         if (this.moveStrategy === MoveStrategy.FLY) {
             return dir;
+        }
+
+        if (!Environment.NODE_MEMBERS && !World.gameMap.isFreeToPlay(this.x + dx, this.z + dz)) {
+            return -1;
         }
 
         // check current direction if can travel to chosen dest.

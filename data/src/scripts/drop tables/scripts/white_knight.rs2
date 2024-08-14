@@ -1,0 +1,68 @@
+[ai_queue3,white_knight]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+def_int $random = random(128);
+
+if ($random < 2) { // 2
+    obj_add(npc_coord, iron_longsword, 1, ^lootdrop_duration);
+} else if ($random < 3) { // 1
+    obj_add(npc_coord, steel_sword, 1, ^lootdrop_duration);
+} else if ($random < 4) { // 1
+    obj_add(npc_coord, steel_med_helm, 1, ^lootdrop_duration);
+} else if ($random < 15) { // 11
+    obj_add(npc_coord, mindrune, 5, ^lootdrop_duration);
+} else if ($random < 19) { // 4
+    obj_add(npc_coord, naturerune, 4, ^lootdrop_duration);
+} else if ($random < 22) { // 3
+    obj_add(npc_coord, bodyrune, ~random_range(9,13), ^lootdrop_duration);
+} else if ($random < 25) { // 3
+    obj_add(npc_coord, chaosrune, 2, ^lootdrop_duration);
+} else if ($random < 28) { // 3
+    obj_add(npc_coord, waterrune, ~random_range(25,30), ^lootdrop_duration);
+} else if ($random < 30) { // 2
+    obj_add(npc_coord, mithril_arrow, 5, ^lootdrop_duration);
+} else if ($random < 31) { // 1
+    obj_add(npc_coord, adamant_arrow, 2, ^lootdrop_duration);
+} else if ($random < 32) { // 1
+    if (map_members = true) {
+        obj_add(npc_coord, bloodrune, 2, ^lootdrop_duration);
+    }
+} else if ($random < 33) { // 1
+    obj_add(npc_coord, lawrune, 2, ^lootdrop_duration);
+} else if ($random < 38) { // 5
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
+} else if ($random < 53) { // 15 (seeds)
+    obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else if ($random < 68) { // 15
+    obj_add(npc_coord, coins, 48, ^lootdrop_duration);
+} else if ($random < 83) { // 15
+    obj_add(npc_coord, coins, 15, ^lootdrop_duration);
+} else if ($random < 93) { // 10
+    obj_add(npc_coord, coins, ~random_range(45,53), ^lootdrop_duration);
+} else if ($random < 98) { // 5
+    obj_add(npc_coord, coins, 1, ^lootdrop_duration);
+} else if ($random < 103) { // 5
+    obj_add(npc_coord, coins, 2, ^lootdrop_duration);
+} else if ($random < 104) { // 1
+    obj_add(npc_coord, coins, 120, ^lootdrop_duration);
+} else if ($random < 114) { // 10
+    obj_add(npc_coord, coins, 8, ^lootdrop_duration);
+} else if ($random < 120) { // 6
+    obj_add(npc_coord, iron_bar, 2, ^lootdrop_duration);
+} else if ($random < 122) { // 2
+    obj_add(npc_coord, iron_bar, 1, ^lootdrop_duration);
+} else if ($random < 123) { // 1
+    obj_add(npc_coord, half_an_apple_pie, 1, ^lootdrop_duration);
+} else if ($random < 124) { // 1
+    obj_add(npc_coord, iron_ore, 1, ^lootdrop_duration);
+} else if ($random < 125) { // 1
+    obj_add(npc_coord, pot_of_flour, 1, ^lootdrop_duration);
+} else if ($random < 126) { // 1
+    obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+} // 2 for nothing

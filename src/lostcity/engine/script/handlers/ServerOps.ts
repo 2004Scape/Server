@@ -472,7 +472,7 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_MULTI]: state => {
         const coord = state.popInt();
 
-        state.pushInt(World.gameMap.multimap.has(coord) ? 1 : 0);
+        state.pushInt(World.gameMap.isMulti(coord) ? 1 : 0);
     }
 
     // npc_findallany // https://x.com/JagexAsh/status/1796878374398246990
