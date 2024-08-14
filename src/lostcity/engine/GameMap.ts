@@ -40,8 +40,8 @@ export default class GameMap {
     init(zoneMap: ZoneMap): void {
         console.time('Loading game map');
 
-        this.loadMultiMap(fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n'));
-        this.loadFreeMap(fs.readFileSync('data/src/maps/free2play.csv', 'ascii').replace(/\r/g, '').split('\n'));
+        this.loadCsvMap(this.multimap, fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n'));
+        this.loadCsvMap(this.freemap, fs.readFileSync('data/src/maps/free2play.csv', 'ascii').replace(/\r/g, '').split('\n'));
 
         const path: string = 'data/pack/server/maps/';
         const maps: string[] = fs.readdirSync(path).filter(x => x[0] === 'm');
@@ -316,78 +316,39 @@ export default class GameMap {
         }
     }
 
-    private loadMultiMap(multiway: string[]): void {
+    private loadCsvMap(map: Set<number>, csv: string[]): void {
         // easiest solution for the time being
-        for (let i = 0; i < multiway.length; i++) {
-            if (multiway[i].startsWith('//') || !multiway[i].length) {
+        for (let i: number = 0; i < csv.length; i++) {
+            if (csv[i].startsWith('//') || !csv[i].length) {
                 continue;
             }
 
-            const parts = multiway[i].split(',');
+            const parts: string[] = csv[i].split(',');
             if (parts.length === 2) {
                 const [from, to] = parts;
                 const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(Number);
                 const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
 
                 if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                    console.warn('Multiway map not aligned to a zone', multiway[i]);
+                    console.warn('Free to play map not aligned to a zone', csv[i]);
                 }
 
-                const startX = (fromMx << 6) + fromLx;
-                const startZ = (fromMz << 6) + fromLz;
-                const endX = (toMx << 6) + toLx;
-                const endZ = (toMz << 6) + toLz;
+                const startX: number  = (fromMx << 6) + fromLx;
+                const startZ: number  = (fromMz << 6) + fromLz;
+                const endX: number  = (toMx << 6) + toLx;
+                const endZ: number  = (toMz << 6) + toLz;
 
-                for (let x = startX; x <= endX; x++) {
-                    for (let z = startZ; z <= endZ; z++) {
-                        this.multimap.add(Position.packCoord(fromLevel, x, z));
+                for (let x: number  = startX; x <= endX; x++) {
+                    for (let z: number  = startZ; z <= endZ; z++) {
+                        map.add(Position.packCoord(fromLevel, x, z));
                     }
                 }
             } else {
-                const [level, mx, mz, lx, lz] = multiway[i].split('_').map(x => parseInt(x));
+                const [level, mx, mz, lx, lz] = csv[i].split('_').map(Number);
 
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        this.multimap.add(Position.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
-                    }
-                }
-            }
-        }
-    }
-
-    private loadFreeMap(free2play: string[]): void {
-        // easiest solution for the time being
-        for (let i = 0; i < free2play.length; i++) {
-            if (free2play[i].startsWith('//') || !free2play[i].length) {
-                continue;
-            }
-
-            const parts = free2play[i].split(',');
-            if (parts.length === 2) {
-                const [from, to] = parts;
-                const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(Number);
-                const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
-
-                if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                    console.warn('Free to play map not aligned to a zone', free2play[i]);
-                }
-
-                const startX = (fromMx << 6) + fromLx;
-                const startZ = (fromMz << 6) + fromLz;
-                const endX = (toMx << 6) + toLx;
-                const endZ = (toMz << 6) + toLz;
-
-                for (let x = startX; x <= endX; x++) {
-                    for (let z = startZ; z <= endZ; z++) {
-                        this.freemap.add(Position.packCoord(fromLevel, x, z));
-                    }
-                }
-            } else {
-                const [level, mx, mz, lx, lz] = free2play[i].split('_').map(Number);
-
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        this.freemap.add(Position.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
+                for (let x: number  = 0; x < 8; x++) {
+                    for (let z: number  = 0; z < 8; z++) {
+                        map.add(Position.packCoord(level, (mx << 6) + lx + x, (mz << 6) + lz + z));
                     }
                 }
             }
