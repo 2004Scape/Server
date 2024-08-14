@@ -115,7 +115,7 @@ if (p_finduid(uid) = true) {
     inv_add(bank, meat_pie, 100);
     inv_add(bank, obj_2331, 100);
     inv_add(bank, obj_2333, 100);
-    inv_add(bank, obj_2335, 100);
+    inv_add(bank, half_an_apple_pie, 100);
     inv_add(bank, obj_2291, 100);
     inv_add(bank, meat_pizza, 100);
     inv_add(bank, obj_2295, 100);

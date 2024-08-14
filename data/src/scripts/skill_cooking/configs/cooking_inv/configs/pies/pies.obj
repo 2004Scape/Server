@@ -17,7 +17,7 @@ recol3d=20971
 weight=450g
 category=category_129
 tradeable=yes
-param=next_obj_stage,obj_2335
+param=next_obj_stage,half_an_apple_pie
 
 [redberry_pie]
 name=Redberry pie
@@ -115,7 +115,7 @@ category=category_129
 tradeable=yes
 param=next_obj_stage,piedish
 
-[obj_2335]
+[half_an_apple_pie]
 name=Half an apple pie
 desc=Mmm half an apple pie.
 iop1=Eat
