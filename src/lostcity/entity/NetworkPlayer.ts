@@ -260,8 +260,8 @@ export class NetworkPlayer extends Player {
 
         const zone = Position.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
         if (this.lastZone !== zone) {
-            const lastWasMulti = World.gameMap.multimap.has(this.lastZone);
-            const nowIsMulti = World.gameMap.multimap.has(zone);
+            const lastWasMulti = World.gameMap.isMulti(this.lastZone);
+            const nowIsMulti = World.gameMap.isMulti(zone);
             if (lastWasMulti != nowIsMulti) {
                 this.write(new SetMultiway(nowIsMulti));
             }
