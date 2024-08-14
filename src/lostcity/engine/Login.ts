@@ -148,9 +148,15 @@ class Login {
                 client.encryptor = new Isaac(seed);
 
                 const player = PlayerLoading.load(username, new Packet(save), client);
+
+                if (!Environment.NODE_MEMBERS && !World.gameMap.isFreeToPlay(player.x, player.z)) {
+                    client.writeImmediate(LoginResponse.STANDING_IN_MEMBERS);
+                    client.close();
+                    return;
+                }
+
                 player.lowMemory = (info & 0x1) !== 0;
                 player.webClient = client.isWebSocket();
-
                 World.addPlayer(player);
                 break;
             }
