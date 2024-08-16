@@ -176,7 +176,9 @@ export default class Zone {
             if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(World.currentTick)) {
                 player.write(new LocAddChange(Position.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
             } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(World.currentTick)) {
-                player.write(new LocDel(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
+                if (loc.lastLifecycleTick !== World.currentTick) {
+                    player.write(new LocDel(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
+                }
             }
         }
     }
