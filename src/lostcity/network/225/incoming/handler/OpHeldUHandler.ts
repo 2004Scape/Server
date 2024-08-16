@@ -66,6 +66,9 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
         const objType = ObjType.get(player.lastItem);
         const useObjType = ObjType.get(player.lastUseItem);
 
+        player.clearInteraction();
+        player.closeModal();
+
         if ((objType.members || useObjType.members) && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
@@ -95,9 +98,6 @@ export default class OpHeldUHandler extends MessageHandler<OpHeldU> {
             [player.lastItem, player.lastUseItem] = [player.lastUseItem, player.lastItem];
             [player.lastSlot, player.lastUseSlot] = [player.lastUseSlot, player.lastSlot];
         }
-
-        player.clearInteraction();
-        player.closeModal();
 
         if (script) {
             player.executeScript(ScriptRunner.init(script, player), true);
