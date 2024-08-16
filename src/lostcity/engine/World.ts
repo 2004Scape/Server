@@ -769,6 +769,7 @@ class World {
                 }
 
                 // - stat regen
+                npc.processRegen();
                 // - timer
                 npc.processTimers();
                 // - queue
