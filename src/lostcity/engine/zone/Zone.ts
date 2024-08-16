@@ -159,23 +159,27 @@ export default class Zone {
      * - This does not include any updates that were made to the zones "THIS TICK".
      */
     writeFullFollows(player: Player): void {
+        const currentTick: number = World.currentTick;
         // full update necessary to clear client zone memory
         player.write(new UpdateZoneFullFollows(this.x, this.z, player.originX, player.originZ));
         for (const obj of this.getAllObjsUnsafe(true)) {
-            if (obj.receiverId !== -1 && obj.receiverId !== player.pid) {
+            if (obj.lastLifecycleTick === currentTick || (obj.receiverId !== -1 && obj.receiverId !== player.pid)) {
                 continue;
             }
             player.write(new UpdateZonePartialFollows(this.x, this.z, player.originX, player.originZ));
-            if (obj.lifecycle === EntityLifeCycle.DESPAWN && obj.checkLifeCycle(World.currentTick)) {
+            if (obj.lifecycle === EntityLifeCycle.DESPAWN && obj.checkLifeCycle(currentTick)) {
                 player.write(new ObjAdd(Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
-            } else if (obj.lifecycle === EntityLifeCycle.RESPAWN && obj.checkLifeCycle(World.currentTick)) {
+            } else if (obj.lifecycle === EntityLifeCycle.RESPAWN && obj.checkLifeCycle(currentTick)) {
                 player.write(new ObjAdd(Position.packZoneCoord(obj.x, obj.z), obj.type, obj.count));
             }
         }
         for (const loc of this.getAllLocsUnsafe(true)) {
-            if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(World.currentTick)) {
+            if (loc.lastLifecycleTick === currentTick) {
+                continue;
+            }
+            if (loc.lifecycle === EntityLifeCycle.DESPAWN && loc.checkLifeCycle(currentTick)) {
                 player.write(new LocAddChange(Position.packZoneCoord(loc.x, loc.z), loc.type, loc.shape, loc.angle));
-            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(World.currentTick)) {
+            } else if (loc.lifecycle === EntityLifeCycle.RESPAWN && !loc.checkLifeCycle(currentTick)) {
                 player.write(new LocDel(Position.packZoneCoord(loc.x, loc.z), loc.shape, loc.angle));
             }
         }
