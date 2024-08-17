@@ -60,6 +60,10 @@ switch_int(%chompybird_progress) {
 
         ~chatnpc("<p,neutal>Dad say's you's roastling da chompy for us! Slurp!|Me's wants <$chompy_flavour> wiv mine! Yummy, can't wait|to eats it.");
         
+    case ^chompybird_chompy_cooked:
+        // TODO mesanim TBC
+        ~chatnpc("<p,neutral>Go talk to Dad, him chasey sneaky chompy.");
+
     case default:
         // TODO TBC other states
         return;

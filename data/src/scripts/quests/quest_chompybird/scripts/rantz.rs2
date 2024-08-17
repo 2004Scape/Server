@@ -142,7 +142,6 @@ switch_obj(last_useitem) {
         }
 
         if (%chompybird_progress = ^chompybird_told_to_cook_chompy) {
-            
             ~objbox(raw_chompy,"You show Rantz the freshly plucked chompy carcass.");
             @rantz_tell_chompy_flavour;
             return;
