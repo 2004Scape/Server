@@ -33,10 +33,16 @@ export default class GameMap {
     private static readonly Z: number = 64;
 
     private static readonly MAPSQUARE: number = GameMap.X * GameMap.Y * GameMap.Z;
-    public multimap: Set<number> = new Set();
+
+    private multimap: Set<number> = new Set();
+    private freemap: Set<number> = new Set();
 
     init(zoneMap: ZoneMap): void {
         console.time('Loading game map');
+
+        this.loadCsvMap(this.multimap, fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n'));
+        this.loadCsvMap(this.freemap, fs.readFileSync('data/src/maps/free2play.csv', 'ascii').replace(/\r/g, '').split('\n'));
+
         const path: string = 'data/pack/server/maps/';
         const maps: string[] = fs.readdirSync(path).filter(x => x[0] === 'm');
         for (let index: number = 0; index < maps.length; index++) {
@@ -50,44 +56,6 @@ export default class GameMap {
             const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
             this.loadGround(lands, Packet.load(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
             this.loadLocations(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
-        }
-
-        // easiest solution for the time being
-        const multiway = fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n');
-        for (let i = 0; i < multiway.length; i++) {
-            if (multiway[i].startsWith('//') || !multiway[i].length) {
-                continue;
-            }
-
-            const parts = multiway[i].split(',');
-            if (parts.length === 2) {
-                const [from, to] = parts;
-                const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(x => parseInt(x));
-                const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(x => parseInt(x));
-
-                if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
-                    console.warn('Multiway map not aligned to a zone', multiway[i]);
-                }
-
-                const startX = (fromMx << 6) + fromLx;
-                const startZ = (fromMz << 6) + fromLz;
-                const endX = (toMx << 6) + toLx;
-                const endZ = (toMz << 6) + toLz;
-
-                for (let x = startX; x <= endX; x++) {
-                    for (let z = startZ; z <= endZ; z++) {
-                        this.multimap.add(Position.packCoord(fromLevel, x, z));
-                    }
-                }
-            } else {
-                const [level, mx, mz, lx, lz] = multiway[i].split('_').map(x => parseInt(x));
-
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        this.multimap.add(Position.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
-                    }
-                }
-            }
         }
         console.timeEnd('Loading game map');
     }
@@ -196,6 +164,14 @@ export default class GameMap {
         rsmod.changeRoof(x, z, level, add);
     }
 
+    isMulti(coord: number): boolean {
+        return this.multimap.has(coord);
+    }
+
+    isFreeToPlay(x: number, z: number): boolean {
+        return this.freemap.has(Position.packCoord(0, x, z));
+    }
+
     private loadNpcs(packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         while (packet.available > 0) {
             const { x, z, level } = this.unpackCoord(packet.g2());
@@ -203,7 +179,11 @@ export default class GameMap {
             const absoluteZ: number = mapsquareZ + z;
             const count: number = packet.g1();
             for (let index: number = 0; index < count; index++) {
-                const npcType: NpcType = NpcType.get(packet.g2());
+                const id: number = packet.g2();
+                if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
+                    continue;
+                }
+                const npcType: NpcType = NpcType.get(id);
                 const size: number = npcType.size;
                 const npc: Npc = new Npc(level, absoluteX, absoluteZ, size, size, EntityLifeCycle.RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
                 if (npcType.members && Environment.NODE_MEMBERS || !npcType.members) {
@@ -219,9 +199,14 @@ export default class GameMap {
             const absoluteX: number = mapsquareX + x;
             const absoluteZ: number = mapsquareZ + z;
             const count: number = packet.g1();
-            for (let j: number = 0; j < count; j++) {
-                const objType: ObjType = ObjType.get(packet.g2());
-                const obj: Obj = new Obj(level, absoluteX, absoluteZ, EntityLifeCycle.RESPAWN, objType.id, packet.g1());
+            for (let index: number = 0; index < count; index++) {
+                const id: number = packet.g2();
+                const count: number = packet.g1();
+                if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
+                    continue;
+                }
+                const objType: ObjType = ObjType.get(id);
+                const obj: Obj = new Obj(level, absoluteX, absoluteZ, EntityLifeCycle.RESPAWN, objType.id, count);
                 if (objType.members && Environment.NODE_MEMBERS || !objType.members) {
                     zoneMap.zone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 }
@@ -259,6 +244,9 @@ export default class GameMap {
                     const absoluteZ: number = z + mapsquareZ;
 
                     if (x % 7 === 0 && z % 7 === 0) { // allocate per zone
+                        if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
+                            continue;
+                        }
                         rsmod.allocateIfAbsent(absoluteX, absoluteZ, level);
                     }
 
@@ -299,6 +287,13 @@ export default class GameMap {
                 const info: number = packet.g1();
                 coordOffset = packet.gsmart();
 
+                const absoluteX: number = x + mapsquareX;
+                const absoluteZ: number = z + mapsquareZ;
+
+                if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
+                    continue;
+                }
+
                 const bridged: boolean = (level === 1 ? lands[coord] & GameMap.BRIDGE : lands[this.packCoord(x, z, 1)] & GameMap.BRIDGE) === GameMap.BRIDGE;
                 const actualLevel: number = bridged ? level - 1 : level;
                 if (actualLevel < 0) {
@@ -311,9 +306,6 @@ export default class GameMap {
                 const shape: number = info >> 2;
                 const angle: number = info & 0x3;
 
-                const absoluteX: number = x + mapsquareX;
-                const absoluteZ: number = z + mapsquareZ;
-
                 zoneMap.zone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
 
                 if (type.blockwalk) {
@@ -321,6 +313,45 @@ export default class GameMap {
                 }
             }
             locIdOffset = packet.gsmart();
+        }
+    }
+
+    private loadCsvMap(map: Set<number>, csv: string[]): void {
+        // easiest solution for the time being
+        for (let i: number = 0; i < csv.length; i++) {
+            if (csv[i].startsWith('//') || !csv[i].length) {
+                continue;
+            }
+
+            const parts: string[] = csv[i].split(',');
+            if (parts.length === 2) {
+                const [from, to] = parts;
+                const [fromLevel, fromMx, fromMz, fromLx, fromLz] = from.split('_').map(Number);
+                const [toLevel, toMx, toMz, toLx, toLz] = to.split('_').map(Number);
+
+                if (fromLx % 8 !== 0 || fromLz % 8 !== 0 || toLx % 8 !== 7 || toLz % 8 !== 7 || fromMx > toMx || fromMz > toMz || (fromMx <= toMx && fromMz <= toMz && (fromLx > toLx || fromLz > toLz))) {
+                    console.warn('Free to play map not aligned to a zone', csv[i]);
+                }
+
+                const startX: number  = (fromMx << 6) + fromLx;
+                const startZ: number  = (fromMz << 6) + fromLz;
+                const endX: number  = (toMx << 6) + toLx;
+                const endZ: number  = (toMz << 6) + toLz;
+
+                for (let x: number  = startX; x <= endX; x++) {
+                    for (let z: number  = startZ; z <= endZ; z++) {
+                        map.add(Position.packCoord(fromLevel, x, z));
+                    }
+                }
+            } else {
+                const [level, mx, mz, lx, lz] = csv[i].split('_').map(Number);
+
+                for (let x: number  = 0; x < 8; x++) {
+                    for (let z: number  = 0; z < 8; z++) {
+                        map.add(Position.packCoord(level, (mx << 6) + lx + x, (mz << 6) + lz + z));
+                    }
+                }
+            }
         }
     }
 

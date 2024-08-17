@@ -3,7 +3,7 @@ if (map_production = true | $interface = null) {
     return;
 }
 
-if_openmainmodal($interface);
+if_openmain($interface);
 
 [debugproc,close]
 if (map_production = true) {

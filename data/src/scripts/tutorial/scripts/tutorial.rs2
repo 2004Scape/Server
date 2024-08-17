@@ -48,8 +48,7 @@ if_settab(null, ^tab_musicplayer);
 
 if (%tutorial_progress = ^runescape_guide_start) {
     p_telejump(0_48_48_22_34);
-    if_close; // workaround w/ receivedFirstClose
-    if_openmainmodal(player_kit);
+    if_openmain(player_kit);
     allowdesign(true);
 }
 ~set_tutorial_progress;
@@ -294,7 +293,8 @@ if (stat_base($skill) >= 3) {
 stat_advance($skill, $xp);
 
 [label,tutorial_complete]
-if_closesticky();
+tut_close();
+if_close;
 
 %tutorial_progress = ^tutorial_complete;
 p_telejump(0_50_50_22_22);

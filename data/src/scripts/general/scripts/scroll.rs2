@@ -11,7 +11,7 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
-if_openmainmodal(scroll);
+if_openmain(scroll);
 
 [label,scroll_elena_hangover_cure_recipe]
 // Get a bucket of milk.
@@ -35,7 +35,7 @@ if_setcolour(scroll:com_10, ^black_rgb);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
-if_openmainmodal(scroll);
+if_openmain(scroll);
 
 [label,scroll_barcrawl_card]
 if_settext(scroll:com_2, "@blu@The Official Alfred Grimhand Barcrawl!");
@@ -99,7 +99,7 @@ if(testbit(%barcrawl_progress, ^rustyanchor_index) = true) {
 } else {
     if_settext(scroll:com_13, "@red@Rusty Anchor Inn - Not Completed...");
 }
-if_openmainmodal(scroll);
+if_openmain(scroll);
 
 [label,scroll_hazelmere]
 if_settext(scroll:com_2, ^string_empty);
@@ -114,7 +114,7 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
-if_openmainmodal(scroll);
+if_openmain(scroll);
 
 [label,scroll_lumber_order]
 if_settext(scroll:com_2, ^string_empty);
@@ -129,7 +129,7 @@ if_settext(scroll:com_10, ^string_empty);
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
-if_openmainmodal(scroll);
+if_openmain(scroll);
 
 [label,scroll_invasion_plans]
 // https://web.archive.org/web/20060911005925im_/http://www.runeweb.net/fireball/Grand%20Tree%20Images/GrandTree12.PNG
@@ -145,7 +145,7 @@ if_settext(scroll:com_10, "Sails north to attack Kandarin from south, reinforced
 if_settext(scroll:com_11, "by gnome foot soldiers leaving gnome stronghold.");
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, "@red@Take no prisoners!");
-if_openmainmodal(scroll);
+if_openmain(scroll);
 
 [if_close,scroll]
 clearsofttimer(server);

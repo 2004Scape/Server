@@ -2,7 +2,7 @@
 // this is a talk opt and probably(?) had a dialogue, but the op was replaced with trade
 // in mid-2005 so I have no idea what the dialogue would've been and would rather not guess
 // TODO: find out what the dialogue was
-if_openmainmodal(tickets_shop);
+if_openmain(tickets_shop);
 
 [if_button,tickets_shop:com_88] @tickets_shop_buy(obj_47, 30, "140", 140);
 [if_button,tickets_shop:com_89] @tickets_shop_buy(studded_body, 1, "150", 150);

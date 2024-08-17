@@ -15,10 +15,15 @@ export default class MoveClickHandler extends MessageHandler<MoveClick> {
         }
 
         if (Environment.NODE_CLIENT_ROUTEFINDER) {
-            player.userPath = [];
+            if (message.path.length === 1 && start.x === player.x && start.z === player.z) {
+                // this check ignores setting the path when the player is clicking on their current tile
+                player.userPath = [];
+            } else {
+                player.userPath = [];
 
-            for (let i = 0; i < message.path.length; i++) {
-                player.userPath[i] = Position.packCoord(player.level, message.path[i].x, message.path[i].z);
+                for (let i = 0; i < message.path.length; i++) {
+                    player.userPath[i] = Position.packCoord(player.level, message.path[i].x, message.path[i].z);
+                }
             }
         } else {
             const dest = message.path[message.path.length - 1];

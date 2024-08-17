@@ -43,7 +43,7 @@ if (inv_total(inv, karamja_rum) >= 1) {
 inv_del(inv, karamja_rum, 1);
 inv_add(inv, hunt_chest_key, 1);
 
-~objbox(hunt_chest_key, "Frank happily takes the rum... ... and hands you a key.");
+~objboxt(hunt_chest_key, "Frank happily takes the rum... ... and hands you a key.");
 ~chatnpc("<p,shifty>This be Hector's key. I believe it opens his chest in his old room in the Blue Moon Inn in Varrock.");
 ~chatnpc("<p,neutral>With any luck his treasure will be in there.");
 

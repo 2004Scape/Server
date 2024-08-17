@@ -1,10 +1,13 @@
 import Packet from '#jagex2/io/Packet.js';
 import { loadOrder, listFiles } from '#lostcity/util/NameMap.js';
 import Jagfile from '#jagex2/io/Jagfile.js';
-import { AnimPack, BasePack, ModelPack, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
+import { AnimPack, BasePack, ModelPack, shouldBuildFile, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
+import path from 'path';
 
 export function packClientModel() {
-    if (!shouldBuildFileAny('data/src/models', 'data/pack/client/models')) {
+    if (!shouldBuildFile('src/lostcity/cache/packgraphics/pack.ts', 'data/pack/client/models') &&
+        !shouldBuildFileAny('data/src/models', 'data/pack/client/models')
+    ) {
         return;
     }
 
@@ -52,7 +55,7 @@ export function packClientModel() {
             const id = baseOrder[i];
             const name = BasePack.getById(id);
 
-            const file = files.find(file => file.endsWith(`${name}.base`));
+            const file = files.find(file => path.basename(file) === `${name}.base`);
             if (!file) {
                 console.log('missing base file', id, name);
                 continue;
@@ -105,7 +108,7 @@ export function packClientModel() {
             const id = animOrder[i];
             const name = AnimPack.getById(id);
 
-            const file = files.find(file => file.endsWith(`${name}.frame`));
+            const file = files.find(file => path.basename(file) === `${name}.frame`);
             if (!file) {
                 console.log('missing frame file', id, name);
                 continue;
@@ -170,7 +173,7 @@ export function packClientModel() {
             const id = modelOrder[i];
             const name = ModelPack.getById(id);
 
-            const file = files.find(file => file.endsWith(`${name}.ob2`));
+            const file = files.find(file => path.basename(file) === `${name}.ob2`);
             if (!file) {
                 console.log('missing ob2 file', id, name);
                 continue;

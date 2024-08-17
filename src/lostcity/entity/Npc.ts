@@ -68,6 +68,7 @@ export default class Npc extends PathingEntity {
     queue: LinkList<EntityQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
+    regenClock: number = 0;
     huntMode: number = -1;
     nextHuntTick: number = -1;
     huntrange: number = 0;
@@ -248,7 +249,7 @@ export default class Npc extends PathingEntity {
             // nothing
         }
 
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
         }
@@ -315,6 +316,24 @@ export default class Npc extends PathingEntity {
         if (script.pointerGet(ScriptPointer.ProtectedActivePlayer2) && script._activePlayer2) {
             script._activePlayer2.protect = false;
             script.pointerRemove(ScriptPointer.ProtectedActivePlayer2);
+        }
+    }
+
+    processRegen() {
+        const type = NpcType.get(this.type);
+        if (type.regenRate !== 0 && ++this.regenClock >= type.regenRate) {
+            this.regenClock = 0;
+
+            for (let index = 0; index < this.baseLevels.length; index++) {
+                const stat = this.levels[index];
+                const baseStat = this.baseLevels[index];
+                if (stat < baseStat) {
+                    this.levels[index]++;
+                } else if (stat > baseStat) {
+                    this.levels[index]--;
+                }
+            }
+
         }
     }
 
@@ -867,7 +886,7 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
-            if (this.target !== player && !World.gameMap.multimap.has(Position.packCoord(player.level, player.x, player.z))) {
+            if (this.target !== player && !World.gameMap.isMulti(Position.packCoord(player.level, player.x, player.z))) {
                 if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
                     continue;
                 } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {

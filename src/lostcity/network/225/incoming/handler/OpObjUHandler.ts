@@ -50,6 +50,7 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
             return false;
         }
 
+        player.clearPendingAction();
         if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
@@ -59,7 +60,6 @@ export default class OpObjUHandler extends MessageHandler<OpObjU> {
         player.lastUseItem = item;
         player.lastUseSlot = slot;
 
-        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, obj, ServerTriggerType.APOBJU);
         player.opcalled = true;
         return true;

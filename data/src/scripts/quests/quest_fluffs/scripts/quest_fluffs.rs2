@@ -211,7 +211,7 @@ if ($random < 32) {
 inv_add(inv, chocolate_cake, 1);
 inv_add(inv, stew, 1);
 stat_advance(cooking, 15250);
-if_openmainmodal(questscroll_fluffs);
+if_openmain(questscroll_fluffs);
 if_setcolour(questlist:fluffs, ^green_rgb);
 if_settab(questlist, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");

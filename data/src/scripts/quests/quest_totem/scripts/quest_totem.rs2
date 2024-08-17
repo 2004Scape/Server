@@ -90,7 +90,7 @@ switch_int($lock_index) {
 [oploc1,loc_2705]
 if(testbit(%handelmort_traps_disabled, 0) = false) {
     ~clear_tribaldoor_inter;
-    if_openmainmodal(tribal_door2);
+    if_openmain(tribal_door2);
     return;
 }
 ~open_and_close_door(loc_1535, ~check_axis(coord, loc_coord, loc_angle), false);

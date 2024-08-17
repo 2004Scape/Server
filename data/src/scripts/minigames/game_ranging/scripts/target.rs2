@@ -41,7 +41,7 @@ if (%target1 = 0) {
     %target2 = calc(%target2 + $points);
     stat_advance(ranged, calc(($points / 2) * 10));
     if_settext(target:com_120, ~get_targetstr);
-    if_openmainmodal(target);
+    if_openmain(target);
 } else if(%target1 = 11) {   
     if(npc_find(coord, competition_judge, 5, 0) = true) {
         @competition_judge_reward_pts;

@@ -31,3 +31,15 @@ while ($x < $size) {
     $x = calc($x + 1);
 }
 
+[debugproc,testloc2]
+if (loc_find(0_49_52_41_38, silverrock2) = true) {
+    loc_change(loc_param(next_loc_stage_mining), 2);
+}
+
+if (p_finduid(uid) = true) {
+    p_telejump(movecoord(coord, 0, 0, 25));
+    p_delay(2);
+    p_telejump(movecoord(coord, 0, 0, -25));
+} else {
+    @please_finish;
+}

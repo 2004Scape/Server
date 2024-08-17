@@ -40,7 +40,7 @@ mes("Murphy turns the boat towards shore.");
 %boat_takeoff = 12;
 %trawler = ^trawler_finished;
 midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
-if_openmainmodal(ship_journey);
+if_openmain(ship_journey);
 
 p_delay(20);
 if_close;
@@ -61,7 +61,7 @@ anim(human_pickupfloor, 0);
 p_delay(0);
 
 inv_transmit(trawler_catch, trawler_catch:inv);
-if_openmainmodal(trawler_catch);
+if_openmain(trawler_catch);
 
 def_int $i = 0;
 while ($i < %trawler_catch) {

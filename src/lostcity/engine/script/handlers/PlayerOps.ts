@@ -27,16 +27,15 @@ import SynthSound from '#lostcity/network/outgoing/model/SynthSound.js';
 import IfSetColour from '#lostcity/network/outgoing/model/IfSetColour.js';
 import IfSetHide from '#lostcity/network/outgoing/model/IfSetHide.js';
 import IfSetObject from '#lostcity/network/outgoing/model/IfSetObject.js';
-import IfShowSide from '#lostcity/network/outgoing/model/IfShowSide.js';
+import IfSetTabActive from '#lostcity/network/outgoing/model/IfSetTabActive.js';
 import IfSetModel from '#lostcity/network/outgoing/model/IfSetModel.js';
 import IfSetRecol from '#lostcity/network/outgoing/model/IfSetRecol.js';
-import TutorialFlashSide from '#lostcity/network/outgoing/model/TutorialFlashSide.js';
+import TutFlash from '#lostcity/network/outgoing/model/TutFlash.js';
 import IfSetAnim from '#lostcity/network/outgoing/model/IfSetAnim.js';
 import IfSetPlayerHead from '#lostcity/network/outgoing/model/IfSetPlayerHead.js';
 import IfSetText from '#lostcity/network/outgoing/model/IfSetText.js';
 import IfSetNpcHead from '#lostcity/network/outgoing/model/IfSetNpcHead.js';
 import IfSetPosition from '#lostcity/network/outgoing/model/IfSetPosition.js';
-import SetMultiway from '#lostcity/network/outgoing/model/SetMultiway.js';
 
 import ColorConversion from '#lostcity/util/ColorConversion.js';
 
@@ -360,7 +359,6 @@ const PlayerOps: CommandHandlers = {
     // https://x.com/JagexAsh/status/1389465615631519744
     [ScriptOpcode.P_PAUSEBUTTON]: checkedHandler(ProtectedActivePlayer, state => {
         state.execution = ScriptState.PAUSEBUTTON;
-        // TODO last_com
     }),
 
     // https://x.com/JagexAsh/status/1780904271610867780
@@ -500,13 +498,13 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.openChat(check(state.popInt(), NumberNotNull));
     }),
 
-    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
+    [ScriptOpcode.IF_OPENMAIN_SIDE]: checkedHandler(ActivePlayer, state => {
         const [main, side] = state.popInts(2);
 
         check(main, NumberNotNull);
         check(side, NumberNotNull);
 
-        state.activePlayer.openMainModalSideOverlay(main, side);
+        state.activePlayer.openMainModalSide(main, side);
     }),
 
     [ScriptOpcode.IF_SETHIDE]: checkedHandler(ActivePlayer, state => {
@@ -529,7 +527,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.IF_SETTABACTIVE]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new IfShowSide(check(state.popInt(), NumberNotNull)));
+        state.activePlayer.write(new IfSetTabActive(check(state.popInt(), NumberNotNull)));
     }),
 
     [ScriptOpcode.IF_SETMODEL]: checkedHandler(ActivePlayer, state => {
@@ -549,8 +547,8 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.write(new IfSetRecol(com, src, dest));
     }),
 
-    [ScriptOpcode.IF_SETTABFLASH]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new TutorialFlashSide(check(state.popInt(), NumberNotNull)));
+    [ScriptOpcode.TUT_FLASH]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.write(new TutFlash(check(state.popInt(), NumberNotNull)));
     }),
 
     [ScriptOpcode.IF_SETANIM]: checkedHandler(ActivePlayer, state => {
@@ -574,16 +572,16 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.setTab(com, tab);
     }),
 
-    [ScriptOpcode.IF_OPENMAINMODAL]: checkedHandler(ActivePlayer, state => {
+    [ScriptOpcode.IF_OPENMAIN]: checkedHandler(ActivePlayer, state => {
         state.activePlayer.openMainModal(check(state.popInt(), NumberNotNull));
     }),
 
-    [ScriptOpcode.IF_OPENCHATSTICKY]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.openChatSticky(check(state.popInt(), NumberNotNull));
+    [ScriptOpcode.TUT_OPEN]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.openTutorial(check(state.popInt(), NumberNotNull));
     }),
 
-    [ScriptOpcode.IF_OPENSIDEOVERLAY]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.openSideOverlay(check(state.popInt(), NumberNotNull));
+    [ScriptOpcode.IF_OPENSIDE]: checkedHandler(ActivePlayer, state => {
+        state.activePlayer.openSideModal(check(state.popInt(), NumberNotNull));
     }),
 
     [ScriptOpcode.IF_SETPLAYERHEAD]: checkedHandler(ActivePlayer, state => {
@@ -612,10 +610,6 @@ const PlayerOps: CommandHandlers = {
         check(com, NumberNotNull);
 
         state.activePlayer.write(new IfSetPosition(com, x, y));
-    }),
-
-    [ScriptOpcode.IF_MULTIZONE]: checkedHandler(ActivePlayer, state => {
-        state.activePlayer.write(new SetMultiway(check(state.popInt(), NumberNotNull) === 1));
     }),
 
     [ScriptOpcode.STAT_ADVANCE]: checkedHandler(ProtectedActivePlayer, state => {
@@ -708,8 +702,8 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.stopHint();
     },
 
-    [ScriptOpcode.IF_CLOSESTICKY]: state => {
-        state.activePlayer.closeSticky();
+    [ScriptOpcode.TUT_CLOSE]: state => {
+        state.activePlayer.closeTutorial();
     },
 
     // https://x.com/JagexAsh/status/1684174294086033410

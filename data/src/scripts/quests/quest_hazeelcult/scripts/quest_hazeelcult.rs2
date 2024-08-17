@@ -175,7 +175,7 @@ if_settext(questscroll:com_3, "You have... kind of...\\ncompleted the Hazeel Cul
 if_settext(questscroll:com_9, "5");
 if_settext(questscroll:com_10, "coins.");
 if_setobject(questscroll:com_4, coins, 250);
-if_openmainmodal(questscroll);
+if_openmain(questscroll);
 
 [queue,hazeelcult_quest_complete]
 %hazeelcult_progress = ^hazeelcult_complete;

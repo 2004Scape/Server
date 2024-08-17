@@ -63,8 +63,8 @@ if (.%duelpartner = uid) {
     .invother_transmit(uid, tempinv, duel_select_type:otherinv);
     .inv_transmit(inv, duel_side:inv);
 
-    if_openmainmodalsideoverlay(duel_select_type, duel_side);
-    .if_openmainmodalsideoverlay(duel_select_type, duel_side);
+    if_openmain_side(duel_select_type, duel_side);
+    .if_openmain_side(duel_select_type, duel_side);
     
     %duelstatus = 0;
     .%duelstatus = 0;
@@ -139,8 +139,8 @@ if (.finduid(%duelpartner) = true & ~enough_duel_space = true) { // https://yout
             invother_transmit(.uid, tempinv, duel_confirm:otherinv);
             .inv_transmit(tempinv, duel_confirm:inv);
         }
-        if_openmainmodal(duel_confirm);
-        .if_openmainmodal(duel_confirm);
+        if_openmain(duel_confirm);
+        .if_openmain(duel_confirm);
 
         if_settext(duel_confirm:status, "");
         .if_settext(duel_confirm:status, "");

@@ -14,7 +14,7 @@ width=57
 height=13
 graphic=sworddecor,0
 
-[com_2]
+[obj1]
 type=model
 x=92
 y=13
@@ -23,7 +23,7 @@ width=64
 height=96
 zoom=400
 
-[com_3]
+[obj2]
 type=model
 x=323
 y=13
@@ -32,7 +32,7 @@ width=64
 height=96
 zoom=400
 
-[com_4]
+[objtext1]
 type=text
 x=48
 y=76
@@ -42,7 +42,7 @@ height=17
 center=yes
 font=q8
 
-[com_5]
+[objtext2]
 type=text
 x=280
 y=76
@@ -52,7 +52,7 @@ height=17
 center=yes
 font=q8
 
-[com_6]
+[title]
 type=text
 x=8
 y=3
