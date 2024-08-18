@@ -1,0 +1,20 @@
+[opnpc1,nilhoof]
+switch_int(%upass_progress) {
+    case ^upass_entered_main_area :
+        ~chatnpc("<p,shock>Back away! Back away! ....Wait. ...You're human!");
+        ~chatplayer("<p,happy>That's right, I'm on a quest for King Lathas. We need to find a way through these caverns.");
+        ~chatnpc("<p,neutral>Ha ha, listen up. We came here as miners decades ago, completely unaware of the evil that lurked here. There's no way through, not while Iban still rules. He controls the gateway, the only way to the other side.");
+        ~chatplayer("<p,confused>What gateway?");
+        ~chatnpc("<p,neutral>It once stood as the 'Well of Voyage'. A gateway to the West. Now Iban's moulded it into a pit of the damned, a portal to Zamorak's darkest realms.");
+        ~chatnpc("<p,neutral>He sends his followers there, never to return. Only once Iban is destroyed can the well be restored.");
+        ~chatplayer("<p,neutral>But how?");
+        ~chatnpc("<p,neutral>If I knew, I would have slain him already. Seek out the Witch, his guide, his only confidante. Only she knows how to rid us of Iban.");
+        ~chatnpc("<p,neutral>She lives on the platforms above, we dare not go there. Here, take some food to aid your journey.");
+        if_close;
+        mes("Niloof gives you some food...");
+        inv_add(inv, meat_pie, 2);
+        inv_add(inv, meat_pizza, 1);
+        p_delay(3); // 3 ticks
+        %upass_progress = ^upass_spoken_nilhoof;
+        ~chatplayer("<p,happy>Thanks Niloof, take care.");
+}

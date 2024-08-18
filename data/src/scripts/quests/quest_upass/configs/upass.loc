@@ -971,6 +971,7 @@ desc=A very big door.
 model=model_loc_3333
 length=2
 op1=Open
+param=next_loc_stage,loc_3335
 
 [loc_3334]
 name=Door
@@ -979,6 +980,7 @@ model=model_loc_3333
 length=2
 mirror=yes
 op1=Open
+param=next_loc_stage,loc_3336
 
 [loc_3335]
 name=Door

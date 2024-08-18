@@ -1,0 +1,23 @@
+[opnpc1,klank]
+switch_int(%upass_progress) {
+    case ^upass_entered_main_area :
+        ~chatplayer("<p,happy>Hello my good man.");
+        ~chatnpc("<p,happy>Good day to you outsider. I'm Klank, I'm the only blacksmith still alive down here. In fact we're the only ones that haven't yet turned.");
+        ~chatnpc("<p,shock>If you're not careful you'll become one of them too!");
+        ~chatplayer("<p,confused>Who?.. Iban's followers?");
+        ~chatnpc("<p,neutral>They're not followers, they're slaves, they're the Soulless...");
+        switch_int(~p_choice2("What happened to them?", 1, "No wonder their breath was so bad!", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>What happened to them?");
+                ~chatnpc("<p,neutral>They were normal once, adventurers, treasure hunters. But men are weak, they couldn't ignore the voices.");
+                ~chatnpc("<p,sad>Now they all seem to think with one conscience... As if they're being controlled by one being...");
+                ~chatplayer("<p,confused>Iban?");
+                ~chatnpc("<p,neutral>Maybe... maybe Zamorak himself. Those who try and fight it Iban locks in cages, until their minds are too weak to resist.");
+                ~chatnpc("<p,sad>Eventually they all fall to his control...");
+            case 2:
+                ~chatplayer("<p,shock>No wonder their breath was so bad!");
+                ~chatnpc("<p,angry>You think this is funny... Eh?");
+                ~chatplayer("<p,bored>Not really, just trying to lighten up the conversation.");
+                ~chatnpc("<p,neutral>Hmph!");
+        }
+}

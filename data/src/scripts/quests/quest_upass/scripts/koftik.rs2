@@ -81,3 +81,25 @@ switch_int(%upass_progress) {
         ~chatnpc("<p,neutral>So many paths to choose... Here we must all take our own path.");
 }
 
+
+[opnpc1,npc_975]
+if(testbit(%upass_map_mechanisms, 20) = true) {
+    // TODO: check mesanim I closed dialogue on rs3, it's happy on OSRS but dialogue is a bit different
+    ~chatnpc("<p,happy>Nice job killing those Paladins. You're much closer to his side now. Perhaps you could kill those dwarfs to the south...");
+    return;
+}
+@koftik_isthatyou;
+
+[label,koftik_isthatyou]
+%upass_map_mechanisms = setbit(%upass_map_mechanisms, 20);
+~chatnpc("<p,shock>Traveller is that you?.. my friend on a mission!");
+~chatplayer("<p,quiz>Koftik, you're still here, you should leave.");
+~chatnpc("<p,quiz>Leave?...leave?..this is my home now. Home with my lord, he talks to me, he's my friend.");
+~mesbox("Koftik seems to be in a weak state of mind.");
+~chatplayer("<p,neutral>Koftik you really should leave these caverns.");
+~chatnpc("<p,angry>Not now, we're all the same down here. There's just you and those Dwarfs left to be converted.");
+~chatplayer("<p,quiz>Dwarfs?");
+~chatnpc("<p,angry>Foolish Dwarfs, still believing that they can resist. No one resists Iban, go traveller");
+~chatnpc("<p,shock>The Dwarfs to the south, they're not safe in the south.");
+~chatnpc("<p,angry>We'll show them, go slay them m'lord. He'll be so proud, that's all I want.");
+~chatplayer("<p,sad>I'll pray for you.");

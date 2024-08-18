@@ -1,0 +1,24 @@
+[ai_queue3,kalrag]
+gosub(npc_death);
+if (npc_findhero = true) {
+    queue(defeat_kalrag, 0);
+    return;
+}
+
+[queue,defeat_kalrag]
+npc_huntall(coord, 5, 0);
+while (npc_huntnext = true) {
+    if (npc_type = npc_977) {
+        npc_setmode(opplayer2);
+    }
+}
+mes("Kalrag slumps to the floor...");
+if(inv_total(inv, doll_of_iban) > 0) {
+    p_delay(1);
+    mes("poison flows from the corpse over the soil.");
+    p_delay(1);
+    mes("You smear the doll of Iban in the poisoned blood...");
+    p_delay(1);
+    // set bit here
+    mes("It smells horrific.");
+}

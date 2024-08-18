@@ -317,7 +317,7 @@ wanderrange=0
 moverestrict=nomove
 blockwalk=all
 
-[npc_987]
+[unicorn_upass]
 size=2
 walkanim=unicorn_walk
 readyanim=unicorn_ready
@@ -485,7 +485,7 @@ model7=model_176_idk
 wanderrange=0
 moverestrict=nomove
 
-[npc_992]
+[kardia]
 vislevel=hide
 name=Kardia
 desc=A dark and evil crone.
@@ -514,7 +514,7 @@ model9=model_534_obj_wear
 model10=model_377_obj_wear
 param=death_sound,female_death
 
-[npc_993]
+[witches_cat]
 vislevel=hide
 name=Witches cat
 desc=Curiosity is yet to kill this one...
@@ -529,7 +529,7 @@ model1=model_3010_npc
 model2=model_3006_obj
 param=death_anim,cat_death
 
-[npc_994]
+[nilhoof]
 vislevel=hide
 walkanim=dwarf_walk
 readyanim=dwarf_ready
@@ -554,7 +554,7 @@ model6=model_2990_npc
 head1=model_0_npc_head
 param=death_anim,dwarf_death
 
-[npc_995]
+[klank]
 vislevel=hide
 walkanim=dwarf_walk
 readyanim=dwarf_ready
@@ -576,7 +576,7 @@ model5=model_2985_npc
 head1=model_1_npc_head
 param=death_anim,dwarf_death
 
-[npc_996]
+[kamen]
 vislevel=hide
 walkanim=dwarf_walk
 readyanim=dwarf_ready
@@ -597,7 +597,7 @@ model6=model_2990_npc
 head1=model_2_npc_head
 param=death_anim,dwarf_death
 
-[npc_997]
+[kalrag]
 name=Kalrag
 desc=A giant spider.
 walkanim=giantspider_walk
@@ -714,7 +714,7 @@ param=death_sound,demon_death
 param=death_drop,ashes
 huntmode=cowardly
 
-[npc_1002]
+[iban_disciple]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
 readyanim=human_ready
 name=Iban disciple
@@ -745,7 +745,7 @@ strength=8
 defence=12
 param=damagetype,^crush_style
 
-[npc_1003]
+[lord_iban]
 vislevel=hide
 size=2
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -774,4 +774,5 @@ model7=model_251_idk
 model8=model_265_obj_wear
 head1=model_83_idk_head
 wanderrange=0
+timer=10
 moverestrict=nomove

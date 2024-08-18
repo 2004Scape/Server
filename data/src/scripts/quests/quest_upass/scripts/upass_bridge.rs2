@@ -10,8 +10,8 @@ switch_obj(last_useitem) {
 }
 
 [label,make_clotharrow](namedobj $arrow_type)
-def_obj $product = oc_param($arrow_type, next_obj_stage);
-if (inv_itemspace(inv $product, 1, inv_size(inv)) = false) {
+def_namedobj $product = oc_param($arrow_type, next_obj_stage);
+if (inv_itemspace(inv, $product, 1, inv_size(inv)) = false) {
     mes("You don't have space to do that."); // rs3
     return;
 }
@@ -22,13 +22,19 @@ inv_add(inv, $product, 1);
 mes("\"You wrap the damp cloth around the arrow head.\"...");
 
 [label,light_firearrow](obj $arrow_type)
-def_obj $product = oc_param($arrow_type, next_obj_stage);
-if (inv_itemspace(inv $product, 1, inv_size(inv)) = false) { // does nothing on rs3
+def_namedobj $product = oc_param($arrow_type, next_obj_stage);
+if (inv_itemspace(inv, $product, 1, inv_size(inv)) = false) { // does nothing on rs3
     return;
 }
 inv_del(inv, $arrow_type, 1);
 inv_add(inv, oc_param($arrow_type, next_obj_stage), 1);
 mes("You light the cloth wrapped arrow head.");
+
+[proc,upass_bridge_shot_success](boolean)
+if(randominc(%com_rangeattack) <= randominc(2000)) {
+    return (true);
+}
+return (false);
 
 [aploc1,loc_3340]
 if(coordx(coord) < coordx(loc_coord)) {
@@ -63,9 +69,10 @@ if($wearing_lit_arrow = ^false) {
 inv_del(worn, $worn_ammo, 1);
 mes("You fire your arrow at the rope supporting the bridge...");
 anim(human_bow, 0);
+def_boolean $shot_success = ~upass_bridge_shot_success;
 ~coord_projectile(coord, loc_coord, oc_param($worn_ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5);
 p_delay(0);
-if(randominc(%com_rangeattack) <= randominc(2000)) {
+if($shot_success = false) {
     mes("The arrow just misses the rope.");
     return;
 }

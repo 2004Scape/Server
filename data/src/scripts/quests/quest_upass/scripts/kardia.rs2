@@ -1,0 +1,24 @@
+[oploc1,loc_3270]
+mes("You reach to open the door...");
+if(npc_find(coord, kardia, 8, 0) = true) {
+    //~chatnpc("<p,angry>Get away... Far away from here!"); // rs3, no chathead until way later though...
+    npc_say("Get away... Far away from here!");
+    p_delay(1); // 2t rsc
+    mes("The witch raises her hands above her...");
+    npc_say("Ha ha... die mortal!");
+    p_delay(0); // 1t
+    ~damage_self(calc(((stat(hitpoints) * 25) / 100) + 1));
+}
+
+[oploc2,loc_3270]
+mes("You knock on the door...");
+p_delay(2);
+mes("There is no reply.");
+
+[oploc1,loc_3362]
+mes("Inside you see a witch, she appears to be looking for something.");
+if(npc_find(coord, kardia, 8, 0) = true) npc_say("Here kitty, kitty!");
+
+[opnpc1,witches_cat]
+mes("It's not very nice to squeeze a cat into a satchel.");
+mes("...if you don't need to.");

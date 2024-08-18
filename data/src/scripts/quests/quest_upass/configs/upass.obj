@@ -162,7 +162,7 @@ recol1d=4228
 weight=1200g
 members=yes
 
-[obj_1492]
+[doll_of_iban]
 name=Doll of iban
 desc=A simple doll with Iban's likeness.
 cost=2
@@ -233,7 +233,7 @@ param=slashdefence,9
 param=crushdefence,7
 param=strengthbonus,2
 
-[obj_1496]
+[ibans_dove]
 name=Iban's dove
 desc=I thought you only saw these in pairs?
 cost=1

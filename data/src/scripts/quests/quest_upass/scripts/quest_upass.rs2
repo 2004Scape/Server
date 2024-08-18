@@ -21,8 +21,13 @@ cleartimer(iban_say);
 [zone,0_38_151_56_24] settimer(iban_say, ~random_range(1, 15));
 [zone,0_37_151_32_16] settimer(iban_say, ~random_range(1, 15));
 [zone,0_37_151_32_0] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_151_8_24] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_151_40_40] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_151_24_40] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_151_16_48] settimer(iban_say, ~random_range(1, 15));
 
 [zone,0_37_150_8_40] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_150_8_0] settimer(iban_say, ~random_range(1, 15));
 [zone,0_37_150_16_32] settimer(iban_say, ~random_range(1, 15));
 [zone,0_37_150_32_32] settimer(iban_say, ~random_range(1, 15));
 [zone,0_37_150_32_16] settimer(iban_say, ~random_range(1, 15));
@@ -263,6 +268,12 @@ mes("You find a loose railing lying on the floor.");
 inv_add(inv, piece_of_railing, 1);
 
 [oploc1,loc_3308]
+if(%upass_progress >= ^upass_entered_main_area) { 
+    mes("You search the cage remains...");
+    p_delay(2);
+    mes("But find nothing.");
+    return;
+}
 mes("The unicorn was killed by the boulder.");
 if(inv_total(inv, upass_unicorn_horn) = 0) {
     ~chatplayer("<p,neutral>All that remains is a damaged horn.");
@@ -293,23 +304,148 @@ mes("It reads...");
 p_delay(1);
 @upass_well_inscription;
 
+[oplocu,loc_3305]
+// no howl sound: https://youtu.be/n_ip_vEDbCA?si=lCRUSgavmsiM68TL&t=824
+switch_obj(last_useitem) {
+    case upass_unicorn_horn:
+        mes("You throw the unicorn horn into the flames...");
+        p_delay(1);
+        inv_del(inv, upass_carl_badge, 1);
+        %upass_map_mechanisms = setbit(%upass_map_mechanisms, 16);
+        mes("You hear a howl in the distance.");
+    case upass_jerro_badge:
+        mes("You throw the coat of arms into the flames...");
+        p_delay(1);
+        inv_del(inv, upass_jerro_badge, 1);
+        %upass_map_mechanisms = setbit(%upass_map_mechanisms, 17);
+        mes("You hear a howl in the distance.");
+    case upass_carl_badge:
+        mes("You throw the coat of arms into the flames...");
+        p_delay(1);
+        inv_del(inv, upass_carl_badge, 1);
+        %upass_map_mechanisms = setbit(%upass_map_mechanisms, 18);
+        mes("You hear a howl in the distance.");
+    case upass_harry_badge:
+        mes("You throw the coat of arms into the flames...");
+        p_delay(1);
+        inv_del(inv, upass_harry_badge, 1);
+        %upass_map_mechanisms = setbit(%upass_map_mechanisms, 19);
+        mes("You hear a howl in the distance.");
+}
+if(getbit_range(%upass_map_mechanisms, 16, 19) = calc(pow(2,4) - 1)) {
+    sound_synth(lockeddoor, 0, 0);
+    mes("You hear a click from nearby...");
+    mes("It sounded like it came from the skull above the door"); // no period
+}
+
 [oploc1,loc_3220] @open_upass_main_area_door;
 [oploc1,loc_3221] @open_upass_main_area_door;
 
 [label,open_upass_main_area_door]
-if(coordz(loc_coord) > 6400) {
-    p_teleport(1_33_73_61_53);
+// no arrivedelay: https://youtu.be/n_ip_vEDbCA?si=33Kv6dsbs-tpoI8n&t=824 (OSRS does have arrivedelay)
+if(coordz(loc_coord) < 6400) {
+    p_teleport(0_37_151_2_55);
 } else {
+    if(getbit_range(%upass_map_mechanisms, 16, 19) ! calc(pow(2,4) - 1)) {
+        mes("The door is locked.");
+        return;
+    }
     p_teleport(1_33_73_61_53);
+    if(%upass_progress = ^upass_killed_unicorn) %upass_progress = ^upass_entered_main_area;
 }
 
-[oploc1,loc_3333] @open_iban_door(^left);
-[oploc1,loc_3334] @open_iban_door(^right);
+[oploc1,loc_3222]
+if(loc_coord = 1_33_71_38_1) p_teleport(0_36_153_32_2);
+else p_teleport(0_36_154_1_59);
+if(testbit(%upass_map_mechanisms, 20) = false) {
+    p_delay(0);
+    // TODO: figure out how long this should be, only works this way on RS3
+    npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), npc_975, 200);
+    @koftik_isthatyou;
+}
 
-[label,open_iban_door](int $side)
-if(%upass_progress = ^upass_complete) {
-    mes("The temple is in ruins... ...You cannot enter.");
+[oploc1,loc_3223] 
+if(loc_coord = 0_36_153_32_1) p_teleport(1_33_71_38_2);
+else p_teleport(1_33_73_1_57);
+
+[oplocu,loc_3344]
+if(last_useitem = bucket_empty) {
+    // no sound https://youtu.be/n_ip_vEDbCA?si=JO56KfFzMy86y8_Y&t=1620
+    mes("You fill the bucket with dwarf brew.");
+    inv_del(inv, bucket_empty, 1);
+    inv_add(inv, dwarf_brew, 1);
     return;
+}
+~displaymessage(^dm_default);
+
+[oploc1,loc_3353]
+if(%upass_progress < ^upass_spoken_nilhoof) {
+    ~chatplayer("<p,confused>I'm not searching that without good reason!");
+    return;
+}
+
+[oplocu,loc_3353]
+if(%upass_progress < ^upass_spoken_nilhoof) {
+    ~chatplayer("<p,confused>I'm not touching that without good reason!");
+    return;
+}
+
+// for some reason this uses aploc and does some p_teleport pathing w/weird delay
+[aploc1,loc_3351] @upass_soulless_cage;
+[aploc1,loc_3352] @upass_soulless_cage;
+
+[label,upass_soulless_cage]
+p_delay(0);
+def_int $delay = calc(distance(coord, loc_coord) + 1);
+p_walk(loc_coord);
+p_delay($delay);
+mes("The man seems to be entranced.");
+p_delay(1);
+mes("You search through the bottom of the cage...");
+p_delay(1);
+if(inv_total(inv, ibans_dove) = 0 & loc_type = loc_3351) {
+    mes("...and find Iban's dove.");
+    inv_add(inv, ibans_dove, 1);
+    return;
+}
+p_delay(1);
+if(inv_total(worn, obj_1495) > 0) {
+    mes("Klank's gauntlets protect you.");
+    return;
+}
+mes("The soulless being bites into your arm.");
+say("Aaarrgghh!");
+~damage_self(10);
+
+[oploc1,loc_3274]
+mes("You attempt to open the chest...");
+mes("But it's magically sealed.");
+
+[oploc1,loc_3333] @open_iban_door;
+[oploc1,loc_3334] @open_iban_door;
+
+[label,open_iban_door]
+if(coordx(loc_coord) < coordx(coord)) {
+    if(%upass_progress = ^upass_complete) {
+        mes("The temple is in ruins... ...You cannot enter.");
+        return;
+    }
+    if(inv_total(worn, zamorak_monk_top) = 0 | inv_total(worn, zamorak_monk_bottom) = 0 | inv_freespace(worn) ! calc(inv_size(worn) - 2)) {
+        mes("The door refuses to open...");
+        p_delay(1);
+        mes("Only followers of Zamorak may enter.");
+        return;
+    }
+    mes("You pull open the large doors...");
+    loc_change(loc_param(next_loc_stage), 4);
+    ~forcemove(movecoord(loc_coord, -1, 0, 0));
+} else {
+    mes("You pull open the large doors.");
+    loc_change(loc_param(next_loc_stage), 4);
+    p_teleport(loc_coord);
+    p_delay(0);
+    mes("...And walk out of the temple.");
+    ~forcemove(movecoord(loc_coord, 2, 0, 0));
 }
 
 [oploc1,loc_3295]
@@ -382,6 +518,24 @@ if_settext(stone:com_8, "If a light should break the night");
 if_settext(stone:com_9, "the dark will rise to win the fight.");
 if_settext(stone:com_10, ^string_empty);
 if_settext(stone:com_11, ^string_empty);
+if_settext(stone:com_12, ^string_empty);
+if_settext(stone:com_13, ^string_empty);
+if_openmainmodal(stone);
+
+[oploc1,loc_3299]
+mes("The writing seems to have been scratched into the rock with bare hands.");
+mes("It reads...");
+p_delay(1);
+if_settext(stone:com_2, "Leave this battered corpse be,");
+if_settext(stone:com_3, "for now he lives as spirit alone.");
+if_settext(stone:com_4, "Turn and leave, run and flee");
+if_settext(stone:com_5, "before the Soulless writhe and moan.");
+if_settext(stone:com_6, "It is the soil that shall rise");
+if_settext(stone:com_7, "to turn away the mites and flies.");
+if_settext(stone:com_8, "Only as flesh becomes ash,");
+if_settext(stone:com_9, "and wood becomes dust,");
+if_settext(stone:com_10, "will Iban's corpse embrace");
+if_settext(stone:com_11, "nature's eternal lust.");
 if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
 if_openmainmodal(stone);

@@ -256,7 +256,6 @@ if(coordz(coord) > coordz(loc_coord)) {
 
 [oploc1,loc_3276]
 p_arrivedelay;
-mes("<tostring(loc_angle)>");
 mes("You start to cross the rock bridge...");
 def_coord $end;
 if(coordx(coord) > coordx(loc_coord)) {
@@ -266,7 +265,7 @@ if(coordx(coord) > coordx(loc_coord)) {
 }
 ~agility_force_move(0, human_walk_logbalance, movecoord(coord, calc((coordx($end) - coordx(coord)) / 2), 0, calc((coordz($end) - coordz(coord)) / 2)));
 // https://youtu.be/n_ip_vEDbCA?si=0_EUH-TcBp6oAAZL&t=547
-if(stat_random(stat(agility), 110, 320) = false) {
+if(stat_random(stat(agility), 90, 300) = false) {
     // no actual difference in terms of angle or anything so guess these are hardcoded
     // (guessing all destinations are but w/e)
     def_int $dz = -1;
@@ -322,3 +321,44 @@ if($dir = ^exact_west) {
 ~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
 p_delay(0);
 stat_advance(agility, 30);
+
+[oploc1,loc_3254] @upass_cross_bridge;
+[oploc1,loc_3255] @upass_cross_bridge;
+
+[label,upass_cross_bridge]
+mes("You attempt to walk over the remaining bridge...");
+p_delay(1);
+if(stat_random(stat(agility), 90, 300) = false) {
+    if(random(2) = 0) p_teleport(0_36_153_31_29);
+    else p_teleport(0_36_154_29_10);
+    // sound fall_land
+    mes("... but you slip and tumble into the darkness.");
+    say("Ouch!");
+    ~damage_self(calc(((stat(hitpoints) * 20) / 100) + 1));
+    if(testbit(%upass_map_mechanisms, 20) = false) {
+        p_delay(0);
+        // TODO: figure out how long this should be, only works this way on RS3
+        npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), npc_975, 200);
+        @koftik_isthatyou;
+    }
+    return;
+}
+def_int $dir;
+def_coord $end;
+if(coordz(coord) > coordz(loc_coord)) {
+    $dir = ^exact_south;
+    $end = movecoord(loc_coord, 0, 0, -1);
+} else if(coordz(coord) < coordz(loc_coord)) {
+    $dir = ^exact_north;
+    $end = movecoord(loc_coord, 0, 0, 3);
+} else if(coordx(coord) > coordx(loc_coord)) {
+    $dir = ^exact_west;
+    $end = movecoord(loc_coord, -1, 0, 0);
+} else {
+    $dir = ^exact_east; 
+    $end = movecoord(loc_coord, 3, 0, 0);
+}
+// https://youtu.be/n_ip_vEDbCA?si=OKvgFalYoPKlW2AU&t=1308 delay = 35 in current osrs, this seems like 0...
+sound_synth(jump_no_land, 0, 0);
+~agility_exactmove(seq_807, 20, 2, coord, $end, 38, 67, $dir, true);
+mes("... you manage to cross safely.");
