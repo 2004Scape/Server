@@ -115,4 +115,5 @@ if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_in
 %chompybird_progress = ^chompybird_chompy_cooked;
 mes("You carefully place the chompy bird on the spit-roast.");
 mes("You add the other ingredients and cook the food.");
-~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name> with the chompy bird to make a seasoned chompy.");
+mes("Eventually the chompy is cooked.");
+~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.");
