@@ -157,7 +157,7 @@ switch_obj(last_useitem) {
         mes("Nothing interesting happens.");
 
     case seasoned_chompy:
-        if (%chompybird_progress = chompybird_chompy_cooked)
+        if (%chompybird_progress = ^chompybird_chompy_cooked)
         {
             @hand_chompy_to_rantz;
             return;
