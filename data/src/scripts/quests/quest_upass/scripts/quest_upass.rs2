@@ -33,6 +33,26 @@ cleartimer(iban_say);
 [zone,0_37_150_32_16] settimer(iban_say, ~random_range(1, 15));
 [zone,0_37_150_40_0] settimer(iban_say, ~random_range(1, 15));
 
+[zone,0_36_153_8_8] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_8_24] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_8_32] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_16_8] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_32_0] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_24_40] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_40_8] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_40_24] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_40_48] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_16_48] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_16_56] settimer(iban_say, ~random_range(1, 15));
+
+[zone,0_36_154_16_0] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_154_40_0] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_154_8_8] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_154_24_24] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_154_24_48] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_154_40_24] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_154_0_56] settimer(iban_say, ~random_range(1, 15));
+
 // trap timers, mapzone enter in music.rs2
 [mapzoneexit,0_38_151] cleartimer(upass_trap);
 [mapzoneexit,0_37_151] cleartimer(upass_trap);
@@ -378,13 +398,13 @@ if(last_useitem = bucket_empty) {
 }
 ~displaymessage(^dm_default);
 
-[oploc1,loc_3353]
+[oploc1,_ibantomb]
 if(%upass_progress < ^upass_spoken_nilhoof) {
     ~chatplayer("<p,confused>I'm not searching that without good reason!");
     return;
 }
 
-[oplocu,loc_3353]
+[oplocu,_ibantomb]
 if(%upass_progress < ^upass_spoken_nilhoof) {
     ~chatplayer("<p,confused>I'm not touching that without good reason!");
     return;

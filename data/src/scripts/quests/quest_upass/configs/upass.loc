@@ -1146,6 +1146,7 @@ recol1s=14628
 recol1d=7328
 recol2s=12548
 recol2d=8385
+category=ibantomb
 
 [loc_3354]
 name=Tomb
@@ -1160,6 +1161,7 @@ recol1s=14628
 recol1d=7328
 recol2s=12548
 recol2d=8385
+category=ibantomb
 
 [ibantomb_burnt_left]
 model=model_loc_3353
