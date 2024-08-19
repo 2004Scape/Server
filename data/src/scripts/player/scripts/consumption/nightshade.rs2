@@ -1,5 +1,5 @@
 [opheld2,nightshade]
-inv_del(inv, nightshade, 1);
+inv_delslot(inv, last_slot);
 ~chatplayer("<p,angry>Ahhhh! What have I done!");
 @nightshade_damage_player;
 
