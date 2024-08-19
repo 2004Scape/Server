@@ -1,6 +1,5 @@
 // https://www.youtube.com/watch?v=cz0FGYbfzzk
 // https://www.youtube.com/watch?v=IC2n8t76DDY
-
 [advancestat,attack] queue(levelup, 0, enum(int, stat, stats, ^attack));
 [advancestat,strength] queue(levelup, 0, enum(int, stat, stats, ^strength));
 [advancestat,ranged] queue(levelup, 0, enum(int, stat, stats, ^ranged));
