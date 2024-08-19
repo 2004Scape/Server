@@ -20,13 +20,30 @@ if (last_useitem ! raw_chompy)
 }
 
 // TODO allow cooking after quest
-if (%chompybird_progress ! ^chompybird_told_to_cook_chompy)
+if (%chompybird_progress < ^chompybird_told_to_cook_chompy)
 {
     // TODO this has a few different messages in different quest states on OSRS
     ~displaymessage(^dm_default);
     return;
 }
 
+if (%chompybird_progress = ^chompybird_told_to_cook_chompy)
+{
+    @cook_chompy_quest;
+    return;
+}
+
+if (%chompybird_progress = ^chompybird_chompy_cooked)
+{
+    // TODO auto hand in to Rantz
+    ~displaymessage(^dm_default);
+    return;
+}
+
+// TODO handle non-quest cooking
+~displaymessage(^dm_default);
+
+[label,cook_chompy_quest]
 def_int $bugs_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_bugs_flavour_start, ^chompybird_varbit_bugs_flavour_end);
 def_int $fycie_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
 
