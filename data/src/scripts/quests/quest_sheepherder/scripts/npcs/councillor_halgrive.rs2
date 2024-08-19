@@ -17,8 +17,8 @@ switch_int(%sheepherder_progress) {
 
 [label,halgrive_whats_wrong]
 ~chatplayer("<p,quiz>What's wrong?");
-~chatnpc("<p,confused>You may or may not be aware,|but a plague has spread across West Ardougne.|Now, so far, our efforts to contain it have|been largely successly, for the most part.");
-~chatnpc("<p,conufsed>However, four sheep recently escaped from| a farm near the city. When they were found,|We noticed that they were strangely discolored,|so we asked the mourners to examine them.");
+~chatnpc("<p,confused>You may or may not be aware,|but a plague has spread across West Ardougne.|Now, so far, our efforts to contain it have|been largely successfully, for the most part.");
+~chatnpc("<p,confused>However, four sheep recently escaped from| a farm near the city. When they were found,|we noticed that they were strangely discolored,|so we asked the mourners to examine them.");
 ~chatnpc("<p,sad>They believe that the sheep have|become infected with the plague.");
 ~chatnpc("<p,confused>As the councillor response for public health and safety here in East Ardougne, I am looking for someone to herd these sheep into a safe enclosure, kill them quickly and cleanly and then dispose of the remains hygienically in a special incinerator.");
 ~chatnpc("<p,neutral>Unfortunately nobody wants to risk catching the plague, and I am unable to find someone willing to undertake this mission for me.");
