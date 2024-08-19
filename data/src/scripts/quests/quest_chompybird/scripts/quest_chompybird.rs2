@@ -35,3 +35,13 @@ p_delay(1);
 mes("You collect some gas from the swamp.");
 inv_del(inv, ogre_bellows_0, 1);
 inv_add(inv, ogre_bellows_3, 1);
+
+
+[queue,quest_chompybird_complete]
+%chompybird_progress = ^chompybird_complete;
+stat_advance(fletching, 262);
+stat_advance(cooking, 1470);
+stat_advance(ranged, 735);
+// TODO is ogre bow given separately here?
+// TODO confirm completion dialog
+~send_quest_complete(questlist:chompybird, ogre_bow, 250, ^chompybird_questpoints, "You have completed Big Chompy Bird Hunting!");

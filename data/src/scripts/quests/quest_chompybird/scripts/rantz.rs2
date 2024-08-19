@@ -95,6 +95,12 @@ switch_int(%chompybird_progress) {
         }
     case ^chompybird_told_to_cook_chompy:
         @rantz_tell_chompy_flavour;
+    case ^chompybird_chompy_cooked:
+        // TODO what if the player no longer has the seasoned chompy? Does it still auto-hand in?
+        @hand_chompy_to_rantz;
+    case ^chompybird_complete:
+        // TODO message tbc
+        ~chatnpc("<p,default>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!");
 
     // TODO dialog to buy ogre bow back from Rantz
 }
@@ -148,6 +154,16 @@ switch_obj(last_useitem) {
         }
 
         // TODO TBC
+        mes("Nothing interesting happens.");
+
+    case seasoned_chompy:
+        if (%chompybird_progress = chompybird_chompy_cooked)
+        {
+            @hand_chompy_to_rantz;
+            return;
+        }
+
+        // TODO tbc other states
         mes("Nothing interesting happens.");
 
     case ogre_arrow:
@@ -303,3 +319,15 @@ if (p_finduid(uid) = true) {
 %chompybird_progress = ^chompybird_shown_toad;
 
 @where_to_put_toadies;
+
+[label,hand_chompy_to_rantz]
+// TODO mesanim and line breaks TBC
+~chatnpc("<p,neutral>Hey creature, did you's get da cooked chompy yet?|I smelled something cooking and it mades me 'ungry.|Hand over da chompy if ya know what's good for ya.");
+~chatplayer("<p,neutral>Yes, here you go, here's your cooked chompy bird.");
+inv_del(inv, seasoned_chompy, 1);
+queue(quest_chompybird_complete, 0);
+~objbox(seasoned_chompy, "You hand over the cooked chompy bird to Rantz.");
+
+~chatnpc("<p,neutral>Hey hey! We got da delicious chompy bird - yay!|This looks really tasty as well!");
+~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!|@dbl@~ The family of ogres sit down together and enjoy your well cooked chompy bird. ~");
+~chatplayer("<p,neutral>It's my pleasure!");

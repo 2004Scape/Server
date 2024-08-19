@@ -35,8 +35,16 @@ if (%chompybird_progress = ^chompybird_told_to_cook_chompy)
 
 if (%chompybird_progress = ^chompybird_chompy_cooked)
 {
-    // TODO auto hand in to Rantz
-    ~displaymessage(^dm_default);
+    // TODO what if the player no longer has the original chompy? Does it still auto-hand in?
+    if (npc_find(loc_coord, chompybird_rantz, 16, 0) = true)
+    {
+        @hand_chompy_to_rantz;
+    }
+    else
+    {
+        mes("eep cabbage , could not find Rantz - please tell a dev");
+    }
+
     return;
 }
 
