@@ -52,8 +52,8 @@ if (.%tradepartner = uid) {
     .invother_transmit(uid, tempinv, trademain:otherinv);
     .inv_transmit(inv, tradeside:inv);
 
-    if_openmainmodalsideoverlay(trademain, tradeside);
-    .if_openmainmodalsideoverlay(trademain, tradeside);
+    if_openmain_side(trademain, tradeside);
+    .if_openmain_side(trademain, tradeside);
 
     %tradestatus = 0;
     .%tradestatus = 0;
@@ -126,8 +126,8 @@ if (.finduid(%tradepartner) = true) {
             .inv_transmit(tempinv, tradeconfirm:inv2);
         }
 
-        if_openmainmodal(tradeconfirm);
-        .if_openmainmodal(tradeconfirm);
+        if_openmain(tradeconfirm);
+        .if_openmain(tradeconfirm);
 
         if_settext(tradeconfirm:com_91, "Are you sure you want to make this trade?");
         .if_settext(tradeconfirm:com_91, "Are you sure you want to make this trade?");

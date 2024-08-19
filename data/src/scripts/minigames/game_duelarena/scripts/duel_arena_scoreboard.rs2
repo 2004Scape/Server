@@ -9,7 +9,7 @@ if_settext(duel_scoreboard:duel7, %duel7);
 if_settext(duel_scoreboard:duel8, %duel8);
 if_settext(duel_scoreboard:duel9, %duel9);
 if_settext(duel_scoreboard:duel10, %duel10);
-if_openmainmodal(duel_scoreboard);
+if_openmain(duel_scoreboard);
 
 
 [proc,duel_adjust_scoreboard](string $winner, int $winner_combat_level, string $loser, int $loser_combat_level)

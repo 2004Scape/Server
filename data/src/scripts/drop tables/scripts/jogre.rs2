@@ -13,7 +13,7 @@ if (npc_findhero = false) {
 obj_add(npc_coord, npc_param(death_drop), 1, 200);
 
 // Treasure trail
-~trail_mediumcluedrop(128, npc_coord);
+~trail_mediumcluedrop(129, npc_coord);
 
 def_int $dropint = randominc(128);
 if ($dropint < 30) {

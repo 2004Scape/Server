@@ -18,6 +18,7 @@ model=model_2815_obj
 2dyan=1904
 2dxan=112
 weight=1oz
+tradeable=yes
 
 [poison]
 name=Poison
@@ -29,6 +30,7 @@ model=model_2714_obj
 2dyan=1828
 2dxan=132
 weight=20g
+tradeable=yes
 
 [poisoned_fish_good]
 name=Poisoned fish food

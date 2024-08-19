@@ -174,7 +174,7 @@ inv_add(inv, lens, 1);
 
 [label,observatory_telescope]
 mes("You look through the telescope.");
-if_openmainmodal(telescope);
+if_openmain(telescope);
 // appearntly RSC doesn't save this and just sends scorpio
 if(%itgronigen_progress = ^itgronigen_complete) {
     if_setmodel(telescope:com_92, 3053);
@@ -265,7 +265,7 @@ if ($random < 32) {
     // The most common music that plays when completing a quest.
     midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
-if_openmainmodal(questscroll_itgronigen);
+if_openmain(questscroll_itgronigen);
 if_setcolour(questlist:itgronigen, ^green_rgb);
 if_settab(questlist, ^tab_quest_journal);
 mes("Congratulations! Quest complete!");

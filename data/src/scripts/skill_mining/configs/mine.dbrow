@@ -10,10 +10,10 @@ data=rock_successchance,256,256
 
 [clay_rock_table]
 table=mining_table
-data=rock,clay_rock_1
-data=rock,clay_rock_2
-data=rock,clay_rock_macro_gas_1
-data=rock,clay_rock_macro_gas_2
+data=rock,clayrock1
+data=rock,clayrock2
+data=rock,macro_clayrock1
+data=rock,macro_clayrock2
 data=ore_name,clay
 data=rock_output,clay
 data=rock_level,1
@@ -23,10 +23,10 @@ data=rock_respawnrate,6
 
 [copper_rock_table]
 table=mining_table
-data=rock,copper_rock_1
-data=rock,copper_rock_2
-data=rock,copper_rock_macro_gas_1
-data=rock,copper_rock_macro_gas_2
+data=rock,copperrock1
+data=rock,copperrock2
+data=rock,macro_copperrock1
+data=rock,macro_copperrock2
 data=ore_name,copper
 data=rock_output,copper_ore
 data=rock_level,1
@@ -36,10 +36,10 @@ data=rock_respawnrate,10
 
 [tin_rock_table]
 table=mining_table
-data=rock,tin_rock_1
-data=rock,tin_rock_2
-data=rock,tin_rock_macro_gas_1
-data=rock,tin_rock_macro_gas_2
+data=rock,tinrock1
+data=rock,tinrock2
+data=rock,macro_tinrock1
+data=rock,macro_tinrock2
 data=ore_name,tin
 data=rock_output,tin_ore
 data=rock_level,1
@@ -49,10 +49,10 @@ data=rock_respawnrate,10
 
 [iron_rock_table]
 table=mining_table
-data=rock,iron_rock_1
-data=rock,iron_rock_2
-data=rock,iron_rock_macro_gas_1
-data=rock,iron_rock_macro_gas_2
+data=rock,ironrock1
+data=rock,ironrock2
+data=rock,macro_ironrock1
+data=rock,macro_ironrock2
 data=ore_name,iron
 data=rock_output,iron_ore
 data=rock_level,15
@@ -62,10 +62,10 @@ data=rock_respawnrate,20
 
 [coal_rock_table]
 table=mining_table
-data=rock,coal_rock_1
-data=rock,coal_rock_2
-data=rock,coal_rock_macro_gas_1
-data=rock,coal_rock_macro_gas_2
+data=rock,coalrock1
+data=rock,coalrock2
+data=rock,macro_coalrock1
+data=rock,macro_coalrock2
 data=ore_name,coal
 data=rock_output,coal
 data=rock_level,30
@@ -75,10 +75,10 @@ data=rock_respawnrate,100
 
 [gold_rock_table]
 table=mining_table
-data=rock,gold_rock_1
-data=rock,gold_rock_2
-data=rock,gold_rock_macro_gas_1
-data=rock,gold_rock_macro_gas_2
+data=rock,goldrock1
+data=rock,goldrock2
+data=rock,macro_goldrock1
+data=rock,macro_goldrock2
 data=ore_name,gold
 data=rock_output,gold_ore
 data=rock_level,40
@@ -88,10 +88,10 @@ data=rock_respawnrate,200
 
 [silver_rock_table]
 table=mining_table
-data=rock,silver_rock_1
-data=rock,silver_rock_2
-data=rock,silver_rock_macro_gas_1
-data=rock,silver_rock_macro_gas_2
+data=rock,silverrock1
+data=rock,silverrock2
+data=rock,macro_silverrock1
+data=rock,macro_silverrock2
 data=ore_name,silver
 data=rock_output,silver_ore
 data=rock_level,20
@@ -101,10 +101,10 @@ data=rock_respawnrate,200
 
 [mithril_rock_table]
 table=mining_table
-data=rock,mithril_rock_1
-data=rock,mithril_rock_2
-data=rock,mithril_rock_macro_gas_1
-data=rock,mithril_rock_macro_gas_2
+data=rock,mithrilrock1
+data=rock,mithrilrock2
+data=rock,macro_mithrilrock1
+data=rock,macro_mithrilrock2
 data=ore_name,mithril
 data=rock_output,mithril_ore
 data=rock_level,55
@@ -114,10 +114,10 @@ data=rock_respawnrate,400
 
 [adamantite_rock_table]
 table=mining_table
-data=rock,adamantite_rock_1
-data=rock,adamantite_rock_2
-data=rock,adamantite_rock_macro_gas_1
-data=rock,adamantite_rock_macro_gas_2
+data=rock,adamantiterock1
+data=rock,adamantiterock2
+data=rock,macro_adamantiterock1
+data=rock,macro_adamantiterock2
 data=ore_name,adamantite
 data=rock_output,adamantite_ore
 data=rock_level,70
@@ -127,10 +127,10 @@ data=rock_respawnrate,800
 
 [runite_rock_table]
 table=mining_table
-data=rock,runite_rock_1
-data=rock,runite_rock_2
-data=rock,runite_rock_macro_gas_1
-data=rock,runite_rock_macro_gas_2
+data=rock,runiterock1
+data=rock,runiterock2
+data=rock,macro_runiterock1
+data=rock,macro_runiterock2
 data=ore_name,runite
 data=rock_output,runite_ore
 data=rock_level,85
@@ -140,10 +140,10 @@ data=rock_respawnrate,2400
 
 // TODO: add the correct success rates here (not currently on wiki)
 // using limestone rates (lvl-10 mining req) for now
-[blurite_rock_1]
+[blurite_rock]
 table=mining_table
-data=rock,blurite_rock_1
-data=rock,blurite_rock_macro_gas_1
+data=rock,bluriterock
+data=rock,macro_bluriterock
 data=ore_name,blurite
 data=rock_output,blurite_ore
 data=rock_level,10
@@ -151,10 +151,10 @@ data=rock_exp,175
 data=rock_successchance,95,350
 data=rock_respawnrate,80
 
-[gem_rock_1]
+[gem_rock]
 table=mining_table
-data=rock,gem_rock_1
-data=rock,gem_rock_macro_gas_1
+data=rock,gemrock
+data=rock,macro_gemrock
 data=ore_name,gem
 data=rock_level,40
 data=rock_exp,650

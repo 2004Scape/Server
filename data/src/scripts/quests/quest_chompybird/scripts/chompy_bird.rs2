@@ -32,3 +32,12 @@ if (.npc_find(npc_coord, bloated_toad, 1, 1) = true) {
         }
     }
 }
+
+[opnpc4,chompy_bird_corpse]
+mes("You start plucking the chompy bird.");
+anim(human_pickupfloor, 0);
+p_delay(1);
+obj_add(npc_coord, raw_chompy, 1, ^lootdrop_duration);
+obj_add(npc_coord, bones, 1, ^lootdrop_duration);
+inv_add(inv, feather, calc(random(20) + 10));
+npc_del;

@@ -4,7 +4,7 @@ if (p_finduid(uid) = false) {
     if_close;
     return;
 }
-if_openmainmodal(scroll);
+if_openmain(scroll);
 softtimer(server, 1);
 
 [softtimer,server]

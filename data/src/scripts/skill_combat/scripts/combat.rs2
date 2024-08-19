@@ -169,7 +169,7 @@ if (%tutorial_progress < ^tutorial_complete) {
 
 // returns the defend anim to use for this combat
 [proc,combat_defend_anim](obj $weapon)(seq)
-if ($weapon = null) {
+if ($weapon = null | (map_members = false & oc_members($weapon) = true)) {
     return(human_unarmedblock);
 }
 return(oc_param($weapon, defend_anim));

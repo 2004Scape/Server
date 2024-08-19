@@ -91,7 +91,7 @@ stock5=premade_pineapple_punch,10,100
 stock6=premade_short_green_guy,10,100
 stock7=premade_wizard_blizzard,10,100
 
-[gullock_and_sons]
+[gulluck_and_sons]
 scope=shared
 size=40
 restock=yes

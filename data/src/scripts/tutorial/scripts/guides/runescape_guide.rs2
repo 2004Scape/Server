@@ -29,7 +29,7 @@ if (map_production = false) {
 //%tutorial_progress = 2;
 //~tutorial_step_player_controls_spanner;
 //if_settab(game_options, ^tab_game_options);
-//if_settabflash(^tab_game_options);
+//tut_flash(^tab_game_options);
 
 //[label,runescape_guide_spanner]
 //~chatnpc("<p,neutral>You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");

@@ -40,7 +40,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
                 %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
                 npc_say("Meeeooowww!");
                 npc_settimer(150);
-                //TODO: check if there's a message for this
+                ~mesbox("Your cat has grown into a mighty feline,|but it will no longer be able to chase vermin."); //linebreak is guessed
             }
     } 
 }
@@ -86,7 +86,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
 
 [opnpcu,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    ~displaymessage(^dm_default);
+    mes("This is not your cat.");
     return;
 }
 switch_obj(last_useitem) {
@@ -118,7 +118,7 @@ switch_obj(last_useitem) {
 
 [opnpc1,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    ~displaymessage(^dm_default); //unsure if there was a message, putting this for every interaction
+    mes("This is not your cat."); //2005
     return;
 }
 if (inv_freespace(inv) = 0) {
@@ -134,7 +134,7 @@ npc_del;
 
 [opnpc3,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    ~displaymessage(^dm_default);
+    mes("This is not your cat.");
     return;
 }
 if(getbit_range(%cat_growth, 5, 10) = 28) { 
@@ -151,7 +151,7 @@ npc_say("Purr...purr...");
 
 [opnpc4,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    ~displaymessage(^dm_default);
+    mes("This is not your cat.");
     return;
 }
 def_int $choice = ~p_choice2_header("Yes I am.", 1, "No I'm not.", 2, "Are you sure you want to shoo away the cat?");
@@ -171,18 +171,18 @@ p_delay(4); //guessed delay
 mes("The cat has run away."); //after or before delay?
 npc_del;
 
-[opnpc5,_petcat] //TODO: add cat raising medal after gertrude's cat
+[opnpc5,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    ~displaymessage(^dm_default);
+    mes("This is not your cat.");
     return;
 }
-def_int $chance = random(2); //50%
-def_int $vermin = getbit_range(%cat_growth, 20, 26);
 if (oc_category(nc_param(npc_type, pet_item_id)) = overgrown) {
     mes("The cat is just too big to catch vermin.");
     return;
 }
 if (.npc_find(coord, rat, 10, 1) = true) {  
+    def_int $chance = random(2); //50%
+    def_int $vermin = getbit_range(%cat_growth, 20, 26);
     say("Go on puss...kill that rat!");
     p_delay(0);
     npc_say("Meeeeeoooowww!");

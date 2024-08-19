@@ -29,7 +29,7 @@ mapscene=7
 [loc_12]
 name=Rock pile
 desc=A pile of rocks is blocking my path.
-model=model_loc_12
+model=plainrock2
 op1=Climb-over
 recol1s=6342
 recol1d=15749
@@ -2118,7 +2118,7 @@ length=4
 [loc_454]
 name=Cave rocks
 desc=Solid rock from the cave floor.
-model=model_loc_12
+model=plainrock2
 mapscene=12
 blockrange=no
 recol1s=6342
@@ -3512,17 +3512,17 @@ anim=seq_654
 hasalpha=yes
 
 [gas_rocks1]
-model=model_loc_675
+model=macro_plainrock1
 anim=seq_523
 hasalpha=yes
 
 [gas_rocks2]
-model=model_loc_676
+model=macro_plainrock2
 anim=seq_523
 hasalpha=yes
 
 [gas_rocks3]
-model=model_loc_677
+model=macro_plainrock3
 anim=seq_523
 hasalpha=yes
 
@@ -11766,7 +11766,7 @@ forcedecor=yes
 [loc_2234]
 name=Well stacked rocks
 desc=Rocks that have been stacked at regular intervals.
-model=model_loc_450
+model=plainrock1
 op1=Investigate
 op2=Search
 hillskew=yes
@@ -11973,7 +11973,7 @@ op2=Search
 [loc_2257]
 name=Rocks
 desc=A rocky outcrop.
-model=model_loc_450
+model=plainrock1
 hillskew=yes
 op1=Climb
 
@@ -13712,7 +13712,7 @@ op2=Search
 
 [loc_2694]
 name=Rock
-model=model_loc_12
+model=plainrock2
 op2=Climb-to
 blockrange=no
 recol1s=6342
@@ -13728,7 +13728,7 @@ recol1d=15749
 
 [loc_2696]
 name=Rock
-model=model_loc_12
+model=plainrock2
 op2=Climb-to
 blockrange=no
 recol1s=6342
@@ -14453,13 +14453,13 @@ forceapproach=north
 [loc_2830]
 name=Rock
 desc=You can probably jump over from here.
-model=model_loc_12
+model=plainrock2
 op1=Jump-From
 
 [loc_2831]
 name=Rock
 desc=You can probably jump over from here.
-model=model_loc_12
+model=plainrock2
 op1=Jump-From
 
 [loc_2832]
@@ -14485,12 +14485,12 @@ active=yes
 
 [loc_2835]
 name=Rock
-model=model_loc_450
+model=plainrock1
 op1=Search
 
 [loc_2836]
 name=Rock
-model=model_loc_12
+model=plainrock2
 op1=Search
 
 [loc_2837]
@@ -15447,7 +15447,7 @@ op1=Climb
 [loc_2959]
 name=Rocky Ledge
 desc=A dangerous path onwards.
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 hillskew=yes
 op1=Climb-over
@@ -15455,35 +15455,35 @@ op1=Climb-over
 [loc_2960]
 name=Rocky Ledge
 desc=A dangerous path onwards.
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2961]
 name=Rocky Ledge
 desc=A dangerous path onwards.
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2962]
 name=Rocks
 desc=Stoney!
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2963]
 name=Rocks
 desc=Stoney!
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2964]
 name=Rocks
 desc=Stoney!
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
@@ -15796,19 +15796,19 @@ op1=Search
 op2=Shut
 forceapproach=east
 
-[loc_3042]
+[tut_copperrock]
 name=Rocks
 desc=A rocky outcrop.
-model=model_loc_450
+model=plainrock1
 op1=Mine
 op2=Prospect
 recol1s=6342
 recol1d=11492
 
-[loc_3043]
+[tut_tinrock]
 name=Rocks
 desc=A rocky outcrop.
-model=model_loc_450
+model=plainrock1
 op1=Mine
 op2=Prospect
 recol1s=6342

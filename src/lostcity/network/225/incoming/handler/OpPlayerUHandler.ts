@@ -46,6 +46,7 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
             return false;
         }
 
+        player.clearPendingAction();
         if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
@@ -54,7 +55,6 @@ export default class OpPlayerUHandler extends MessageHandler<OpPlayerU> {
 
         player.lastUseSlot = slot;
 
-        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, other, ServerTriggerType.APPLAYERU, { type: item, com: -1 });
         player.opcalled = true;
         return true;

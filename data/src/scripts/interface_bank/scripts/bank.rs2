@@ -13,7 +13,7 @@
 ~reorganize_bank;
 inv_transmit(inv, bank_side:inv);
 inv_transmit(bank, bank_main:inv);
-if_openmainmodalsideoverlay(bank_main, bank_side);
+if_openmain_side(bank_main, bank_side);
 
 [label,closebank]
 ~reorganize_bank;
