@@ -47,6 +47,6 @@ if ($random < 1) {
     obj_add(npc_coord, silver_ore, 1, ^lootdrop_duration);
 } else if ($random < 124) {
     obj_add(npc_coord, cert_swordfish, 5, ^lootdrop_duration);
-} else if ($random < 2) {
+} else if ($random < 126) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }
