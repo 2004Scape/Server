@@ -203,7 +203,7 @@ if(coordz(coord) <= coordz(loc_coord)) {
     return;
 }
 def_coord $rock_coord = loc_coord;
-~forcewalk(movecoord($rock_coord, 0, 0, 8)); 
+~forcewalk2(movecoord($rock_coord, 0, 0, 8)); 
 p_arrivedelay;
 anim(seq_774, 0);
 spotanim_map(spotanim_67, movecoord($rock_coord, 0, 0, 6), 0, 20);
