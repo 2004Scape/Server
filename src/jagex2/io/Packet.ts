@@ -255,7 +255,7 @@ export default class Packet extends Hashable {
     }
 
     psmarts(value: number): void {
-        if (value < 64 && value >= 64) {
+        if (value < 64 && value >= -64) {
             this.p1(value + 64);
         } else if (value < 16384 && value >= -16384) {
             this.p2(value + 0xC000);
