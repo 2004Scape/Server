@@ -14,8 +14,6 @@ if (p_finduid(uid) = true) {
         return;
     }
     // TODO: 
-    // - check if player has plague city completed for ardy teleport
-    // - check if player has watchtower quest completed for watchtower teleport
     // - check for additional reqs, BEFORE deleting runes
     if (~pre_tele_checks(coord) = false) {
         return;
@@ -25,8 +23,17 @@ if (p_finduid(uid) = true) {
         mes("You can't use this teleport after level 20 wilderness.");
         return;
     }
-    if($spell = ^ardougne_teleport & %elena_progress < ^elena_complete_read_scroll) {
+    if($spell = ^ardougne_teleport & %elena_progress < ^elena_complete) {
         mes("You must have completed Plague City to use this spell.");
+        return;
+    }
+    if($spell = ^watchtower_teleport & %itwatchtower_progress < ^itwatchtower_complete) {
+        mes("You must have completed Watch Tower to use this spell.");
+        return;
+    }
+    // https://www.reddit.com/r/2007scape/comments/b4vdki/watchtower_teleport_not_working_despite/, https://runescape.salmoneus.net/forums/topic/212538-cant-do-ardougne-tele-why-is-it-so/
+    if(($spell = ^ardougne_teleport & %elena_progress < ^elena_complete_read_scroll) | ($spell = ^watchtower_teleport & %itwatchtower_progress < ^itwatchtower_complete_read_scroll)) {
+        mes("You havn't learnt how to cast this spell yet.");
         return;
     }
     if (afk_event = ^true) {
