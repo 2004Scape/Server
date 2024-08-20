@@ -53,6 +53,9 @@ cleartimer(iban_say);
 [zone,0_36_154_40_24] settimer(iban_say, ~random_range(1, 15));
 [zone,0_36_154_0_56] settimer(iban_say, ~random_range(1, 15));
 
+[zone,1_33_72_48_32] settimer(iban_say, ~random_range(1, 15));
+[zone,1_33_72_48_40] settimer(iban_say, ~random_range(1, 15));
+
 // trap timers, mapzone enter in music.rs2
 [mapzoneexit,0_38_151] cleartimer(upass_trap);
 [mapzoneexit,0_37_151] cleartimer(upass_trap);
