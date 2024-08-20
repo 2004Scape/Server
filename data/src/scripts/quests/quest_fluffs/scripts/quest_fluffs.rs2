@@ -7,12 +7,12 @@ switch_int (%fluffs_progress) {
         @fluffs_boy;
     case ^fluffs_paid_boy:
         ~chatplayer("<p,neutral>Where did you say you saw Fluffs?");
-        ~chatnpc("<p,neutral>Weren't you listening? I saw the flea bag in the old lumber mill just north east of here. Just walk past the Jolly Boar Inn and you should find it.");
+        ~chatnpc("<p,neutral>Weren't you listening? I saw the flea bag|in the old lumber mill just north east of here.|Just walk past the Jolly Boar Inn|and you should find it.");
     case default: //guessed mesanims
         ~chatplayer("<p,neutral>Hello again.");
         ~chatnpc("<p,angry>You think you're tough do you?");
         ~chatplayer("<p,neutral>Pardon?");
-        ~chatnpc("<p,angry>I can beat anyone up!");
+        ~chatnpc("<p,angry>I can beat anyone up.");
         ~chatplayer("<p,bored>Really?");
         ~mesbox("The boy begins to jump around with his fists up.|You decide it's best not to kill him just yet.");
 }
@@ -36,7 +36,7 @@ switch_int ($option) {
         ~chatplayer("<p,bored>How much?");
         ~chatnpc("<p,neutral>100 coins should cover it.");
         ~chatplayer("<p,angry>100 coins!|Why should I pay you?"); //guessed linebreak
-        ~chatnpc("<p,default>I never liked that cat anyway, so what do you say?");
+        ~chatnpc("<p,default>You shouldn't,|but I won't help otherwise.|I never liked that cat anyway,|so what do you say?");
         @fluffs_pay;
     case 3:
         ~chatplayer("<p,neutral>Well, never mind, it's Fluffs' loss.");
@@ -213,8 +213,6 @@ if ($random < 32) {
     // The most common music that plays when completing a quest.
     midi_jingle(^quest_complete_1_jingle, ^quest_complete_1_millis);
 }
-inv_add(inv, chocolate_cake, 1);
-inv_add(inv, stew, 1);
 stat_advance(cooking, 15250);
 if_openmain(questscroll_fluffs);
 if_setcolour(questlist:fluffs, ^green_rgb);
