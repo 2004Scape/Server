@@ -18,4 +18,5 @@ switch_stat($stat) {
     case ranged: return(levelup_ranged);
     case firemaking: return(levelup_firemaking);
     case smithing: return(levelup_smithing);
+    case agility: return(levelup_agility);
 }
