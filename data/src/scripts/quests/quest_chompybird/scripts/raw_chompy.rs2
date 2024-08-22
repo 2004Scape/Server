@@ -11,7 +11,7 @@ switch_obj (last_useitem)
 // message taken from OSRS
 ~mesbox("You can only add ingredients when you're cooking a chompy bird. Ensure you have the seasonings you want to use in your inventory when cooking the chompy bird and you will use them automatically when cooking.");
 
-[oplocu,loc_3375]
+[oplocu,ogre_spitroast]
 // TODO what else can be cooked here?
 if (last_useitem ! raw_chompy)
 {
