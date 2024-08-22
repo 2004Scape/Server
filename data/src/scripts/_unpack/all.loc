@@ -18349,17 +18349,17 @@ blockrange=no
 recol1s=10400
 recol1d=12580
 
-[loc_3377]
+[chompybird_ogre_chest_closed]
 name=Locked Ogre chest
 desc=Hmmm, a rock for a lock....
-model=model_loc_3377
+model=chompybird_ogre_chest_closed
 width=2
 op1=Unlock
 
-[loc_3378]
+[chompybird_ogre_chest_open]
 name=Unlocked Ogre chest
 desc=Some stealthy thief must have picked the ogre lock!
-model=model_loc_3378
+model=chompybird_ogre_chest_open
 width=2
 op1=Search
 
