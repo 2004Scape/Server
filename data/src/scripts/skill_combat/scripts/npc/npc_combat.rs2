@@ -188,23 +188,6 @@ if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progr
     return(false);
 }
 
-if (npc_category = diseased_sheep) {
-    if (%sheepherder_progress = ^sheepherder_complete) {
-        ~mesbox("There's no need for you to do that.|You've already completed the Sheep Herder quest.");
-        return(false);
-    }
-
-    if (%sheepherder_progress > ^sheepherder_not_started & %sheepherder_progress < ^sheepherder_complete) {
-        ~chatplayer("<p,neutral>I don't want to attack the sheep.|I need to make it move!");
-        return(false);
-    }
-
-    if (%sheepherder_progress = ^sheepherder_not_started) {
-        ~mesbox("The sheep looks extremely ill and you|haven't any reason to interfere with it.");
-        return(false);
-    }
-}
-
 if (npc_hasop(2) = true) {
     return (true);
 }

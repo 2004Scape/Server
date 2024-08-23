@@ -1,5 +1,7 @@
 [opnpc1,chompybird_bugs]
 switch_int(%chompybird_progress) {
+    case ^chompybird_not_started:
+        ~chatnpc("<p,neutral>You's better talk to Dad, him chasey sneaky da chompy.");
     case ^chompybird_started:
         // TODO is this the right check? source: https://oldschool.runescape.wiki/w/Transcript:Big_Chompy_Bird_Hunting#Talking_to_Bugs_without_a_chisel_and_knife
         if (inv_total(inv, chisel) > 0 & inv_total(inv, knife) > 0) {
@@ -44,6 +46,25 @@ switch_int(%chompybird_progress) {
 
     case ^chompybird_shown_toad:
         ~chatnpc("<p,neutral>You's better talk to Dad, he might have something for you to do.");
+
+    case ^chompybird_told_to_cook_chompy:
+        def_int $flavour = getbit_range(%chompybird_kills, ^chompybird_varbit_bugs_flavour_start, ^chompybird_varbit_bugs_flavour_end);
+
+        if ($flavour = 0) {
+            $flavour = calc(random(1) + 1);
+            setbit_range_toint(%chompybird_kills, $flavour, ^chompybird_varbit_bugs_flavour_start, ^chompybird_varbit_bugs_flavour_end);
+        }
+
+        def_string $chompy_flavour = "equa leaves";
+        if ($flavour = 2) {
+            $chompy_flavour = "cabbage";
+        }
+
+        ~chatnpc("<p,neutal>Dad say's you's making da chompy for us! Slurp! Me's|has to have <$chompy_flavour> wiv mine! Chompy is our|favourite yummms!");
+
+    case ^chompybird_chompy_cooked:
+        // TODO mesanim TBC
+        ~chatnpc("<p,neutral>Have you talked to Dad, he might have something for you to do.");
 
     case default:
         // TODO TBC other states

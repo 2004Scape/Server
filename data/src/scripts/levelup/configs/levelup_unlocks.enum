@@ -115,6 +115,8 @@ val=43
 inputtype=autoint
 outputtype=int
 default=null
+val=35
+val=52
 
 [levelup_unlocks_herblore]
 inputtype=autoint

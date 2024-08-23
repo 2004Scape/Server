@@ -9,3 +9,16 @@ if ($loc = null) {
 }
 
 loc_add(coord, $loc, 0, centrepiece_straight, 500);
+
+[debugproc,loc_anim](loc $loc, seq $seq)
+if ($loc = null | $seq = null) {
+    @debugusage("::loc_anim (name) (seq)", "::loc_anim ogre_spitroast spit_anim", "");
+    return;
+}
+
+loc_findallzone(coord);
+while (loc_findnext = true) {
+    if (loc_type = $loc) {
+        loc_anim($seq);
+    }
+}

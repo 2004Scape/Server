@@ -47,10 +47,10 @@ if ($random < 4) {
     obj_add(npc_coord, coins, 330, ^lootdrop_duration);
 } else if ($random < 119) {
     obj_add(npc_coord, coins, 690, ^lootdrop_duration);
-} else if ($random < 112) {
+} else if ($random < 122) {
     obj_add(npc_coord, chocolate_cake, 3, ^lootdrop_duration);
-} else if ($random < 113) {
+} else if ($random < 123) {
     obj_add(npc_coord, adamantite_bar, 1, ^lootdrop_duration);
-} else if ($random < 7) {
+} else if ($random < 128) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
 }

@@ -28,7 +28,7 @@ if(npc_find(coord, foreman, 10, 0) = false) {
 }
 npc_walk(0_46_47_10_16);
 p_delay(1);
-~forcemove2(0_46_47_10_17);
+~forcewalk(0_46_47_10_17);
 ~update_bas;
 p_delay(0);
 @foreman_whyhere;

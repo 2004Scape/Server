@@ -3,7 +3,7 @@
 [oploc1,loc_2875] @pray_at_statue("Guthix", guthixcape, ^mage_arena_guthix);
 
 [label,pray_at_statue](string $name, namedobj $cape, int $stage)
-~forcewalk(movecoord(loc_coord, 0, 0, -2));
+~forcewalk2(movecoord(loc_coord, 0, 0, -2));
 facesquare(loc_coord);
 if (%magearena_progress <= ^mage_arena_prayed_at_statue) { // first time
     %magearena_progress = $stage;

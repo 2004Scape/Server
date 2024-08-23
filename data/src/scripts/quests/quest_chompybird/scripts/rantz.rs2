@@ -39,15 +39,132 @@ switch_int(%chompybird_progress) {
         }
     case ^chompybird_shown_toad:
         @where_to_put_toadies;
+    case ^chompybird_dropped_toad:
+        // TODO mesanim TBC
+        ~chatplayer("<p,neutral>There you go, I've placed the bait.");
+        ~chatnpc("<p,neutral>Goodz, me now waits for da chompy! It shouldn't be long now. Sneaky... sneaky...");
+        ~chatplayer("<p,neutral>Yes, I know... stick da chompy!");
+        ~chatnpc("<p,neutral>Hey, you's creature, is da fatsy toady still dere? Go get more fatsy toadies if dey all gone!");
+        ~chatplayer("<p,neutral>What? I have to get more bait if there's none there? Does this Chompy Bird even exist I wonder?");
+    case ^chompybird_chompy_ate_toad:
+        mes("[debug] currently unimplemented");
+    case ^chompybird_rantz_tried_to_shoot_chompy:
+        ~chatplayer("<p,neutral>Hey there, you keep missing the chompy bird.");
+        ~chatnpc("<p,angry>I knows, I keeps missing... because your stabbers are|worserer at flying than a dead dog.");
+
+        switch_int(~p_choice2("Oh, keep trying then... you might hit one through pure luck.", 1, "Come on, let me have a go...", 2)) {
+            case 1:
+                ~chatplayer("<p,angry>Oh, keep trying then... you might hit one through pure luck.");
+                ~chatnpc("<p,angry>Grrrr... You lookin' like a chompy!");
+            case 2:
+                ~chatplayer("<p,angry>Come on, let me have a go...");
+                ~chatnpc("<p,angry>No, is Rantz stabby thrower... you too weedy...");
+
+                switch_int(~p_choice2("I'm actually quite strong... please let me try.", 1, "Oh suit yourself, you'll just have to go hungry.", 2)) {
+                    case 1:
+                        ~chatplayer("<p,sad>I'm actually quite strong... please let me try.");
+                        ~chatnpc("<p,angry>Oh, ok...I lend you other stabby thrower... but creature|don't better cry when it hurts itself.");
+        
+                        if (inv_freespace(inv) = 0) {
+                            // TODO confirm dialog
+                            ~chatnpc("<p,angry>[dev message: player inventory full]");
+                            return;
+                        }
+
+                        inv_add(inv, ogre_bow, 1);
+                        %chompybird_progress = ^chompybird_rantz_gave_player_bow;
+                        ~objbox(ogre_bow,"Rantz hands over an ogre bow. It's huge! You can|barely drawn back the string!");
+                    case 2:
+                        ~chatplayer("<p,angry>Oh suit yourself, you'll just have to go hungry.");
+                        ~chatnpc("<p,angry>Or I eat you instead!");
+                }
+        }
+    case ^chompybird_rantz_gave_player_bow:
+        // TODO mesanim TBC
+        ~chatnpc("<p,neutral>Hey You! Got da chompy yet?");
+        ~chatplayer("<p,neutral>Not yet!");
+        ~chatnpc("<p,angry>Well hurry up and get some, we is hungry!");
+    case ^chompybird_player_killed_chompy:
+        if (inv_total(inv, raw_chompy) = 0) {
+            mes("[debug] TODO currently unimplemented");
+        } else {
+            // TODO mesanim TBC
+            ~chatnpc("<p,default>Hey You! Got da chompy yet?");
+            ~chatplayer("<p,neutral>Yep, here's your chompy Bird!");
+            @rantz_show_chompy;
+        }
+    case ^chompybird_told_to_cook_chompy:
+        @rantz_tell_chompy_flavour;
+    case ^chompybird_chompy_cooked:
+        // TODO what if the player no longer has the seasoned chompy? Does it still auto-hand in?
+        @hand_chompy_to_rantz;
+    case ^chompybird_complete:
+        // TODO message tbc
+        ~chatnpc("<p,default>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!");
+
+    // TODO dialog to buy ogre bow back from Rantz
 }
+
+[label,rantz_show_chompy]
+~objbox(raw_chompy,"You show Rantz the freshly plucked chompy carcass.");
+
+~chatnpc("<p,angry>Dat's a great chompy, you musta got a lucky shot wiv|da stabbie chucker.");
+%chompybird_progress = ^chompybird_told_to_cook_chompy;
+if (random(1) = 0) {
+    setbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour);
+} else {
+    clearbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour);
+}
+
+@rantz_tell_chompy_flavour;
+
+[label,rantz_tell_chompy_flavour]
+~chatnpc("<p,angry>Okay's now you's needs to cook da chompy! Slurp!|You's can cook it's over der!|@blu@~ Rantz points to a nearby spit roast. ~");
+
+def_string $chompy_flavour = "Potato";
+if (testbit(%chompybird_kills, ^chompybird_varbit_rantz_flavour) = true) {
+    // full stop (sic) in OSRS
+    $chompy_flavour = "Onion.";
+}
+
+~chatnpc("<p,angry>But's we's particular about our chompy yumms. Me's|wants <$chompy_flavour> wiv mine! Fycie and Bugs want|something wiv der's as well, go and ask 'em wat dey|want.");
+~chatplayer("<p,angry>What! Now I've got the chompy bird, you expect me to|cook it as well?");
+~chatnpc("<p,angry>Yep, da spit's over der! Last time Rantz did yummies,|got very bad, did bad things to food... and belly.");
+~chatplayer("<p,angry>HUH!");
 
 [opnpcu,chompybird_rantz]
 switch_obj(last_useitem) {
     case raw_chompy:
-        // TODO mesanim TBC
-        ~chatnpc("<p,neutral>Erk! Da's a yukky chompy, I's wants a yummie chompy!");
-        
-        @return_to_rantz;
+        if (%chompybird_progress < ^chompybird_player_killed_chompy) {
+            // TODO mesanim TBC
+            ~chatnpc("<p,neutral>Erk! Da's a yukky chompy, I's wants a yummie chompy!");
+            @return_to_rantz;
+            return;
+        }
+
+        if (%chompybird_progress = ^chompybird_player_killed_chompy) {
+            @rantz_show_chompy;
+            return;
+        }
+
+        if (%chompybird_progress = ^chompybird_told_to_cook_chompy) {
+            ~objbox(raw_chompy,"You show Rantz the freshly plucked chompy carcass.");
+            @rantz_tell_chompy_flavour;
+            return;
+        }
+
+        // TODO TBC
+        mes("Nothing interesting happens.");
+
+    case seasoned_chompy:
+        if (%chompybird_progress = ^chompybird_chompy_cooked)
+        {
+            @hand_chompy_to_rantz;
+            return;
+        }
+
+        // TODO tbc other states
+        mes("Nothing interesting happens.");
 
     case ogre_arrow:
         if (%chompybird_progress = ^chompybird_not_started) {
@@ -90,6 +207,10 @@ switch_obj(last_useitem) {
         }
 
         @show_toad;
+
+    case ogre_bow:
+        // TODO confirm mesanim
+        ~chatnpc("<p,neutral>Yeah, it's a goodly stabbie chucker, but you's is too weedy to use it like Rantz.");
 
     case default:
         // TODO TBC
@@ -198,3 +319,15 @@ if (p_finduid(uid) = true) {
 %chompybird_progress = ^chompybird_shown_toad;
 
 @where_to_put_toadies;
+
+[label,hand_chompy_to_rantz]
+// TODO mesanim and line breaks TBC
+~chatnpc("<p,neutral>Hey creature, did you's get da cooked chompy yet?|I smelled something cooking and it mades me 'ungry.|Hand over da chompy if ya know what's good for ya.");
+~chatplayer("<p,neutral>Yes, here you go, here's your cooked chompy bird.");
+inv_del(inv, seasoned_chompy, 1);
+queue(quest_chompybird_complete, 0);
+~objbox(seasoned_chompy, "You hand over the cooked chompy bird to Rantz.");
+
+~chatnpc("<p,neutral>Hey hey! We got da delicious chompy bird - yay!|This looks really tasty as well!");
+~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!|@dbl@~ The family of ogres sit down together and enjoy your well cooked chompy bird. ~");
+~chatplayer("<p,neutral>It's my pleasure!");

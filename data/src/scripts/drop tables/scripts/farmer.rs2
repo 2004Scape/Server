@@ -41,9 +41,9 @@ if ($random < 2) {
     obj_add(npc_coord, fishing_bait, 1, ^lootdrop_duration);
 } else if ($random < 106) {
     obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
-} else if ($random < 106) {
+} else if ($random < 108) {
     obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
-} else if ($random < 107) {
+} else if ($random < 109) {
     obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
 }
 

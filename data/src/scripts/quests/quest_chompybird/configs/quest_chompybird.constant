@@ -15,3 +15,14 @@
 
 // varbit locations - TBC exact
 ^chompybird_varbit_made_arrows = 0
+
+// 0 = potato, 1 = onion
+^chompybird_varbit_rantz_flavour = 1
+
+// 0 = not set, 1 = equa leaves, 2 = cabbage
+^chompybird_varbit_bugs_flavour_start = 2
+^chompybird_varbit_bugs_flavour_end = 3
+
+// 0 = not set, 1 = tomato, 2 = doogle leaves
+^chompybird_varbit_fycie_flavour_start = 4
+^chompybird_varbit_fycie_flavour_end = 5

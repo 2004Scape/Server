@@ -212,7 +212,7 @@ switch_int(%grandtree_progress) {
                     loc_change(loc_2445, 10);
                 }
                 npc_say("Down here.");
-                ~forcemove2(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
+                ~forcewalk(movecoord(^narnode_trapdoor_coord, 0, 0, -1));
                 facesquare(movecoord(^narnode_trapdoor_coord, -1, 0, -1));
                 p_delay(0);
                 anim(human_pickupfloor, 0);
@@ -248,7 +248,7 @@ if($npc_dist > 0) {
 npc_facesquare(movecoord($up_coord, -1, 0, -1));
 p_delay(0);
 npc_say("Up here.");
-~forcemove2(movecoord($up_coord, 0, 0, -1));
+~forcewalk(movecoord($up_coord, 0, 0, -1));
 facesquare(movecoord($up_coord, -1, 0, -1));
 p_delay(0);
 anim(human_reachforladdertop, 0);
@@ -299,16 +299,14 @@ switch_int(~p_choice2("I'm sorry, I don't want to get involved.", 1, "I'd be hap
 if(inv_total(inv, bark_sample) = 0) {
     ~chatplayer("<p,neutral>I've lost the bark sample.");
     ~chatnpc("<p,neutral>Here's another sample, hang on to it this time!");
-    inv_add(inv, bark_sample, 1);
-    inv_del(bank, bark_sample, ^max_32bit_int);
     ~objboxt(bark_sample, "The king gives you another bark sample.");
+    inv_add(inv, bark_sample, 1);
 }
 if(inv_total(inv, translation_book) = 0) {
     ~chatplayer("<p,neutral>I've lost the translation book.");
     ~chatnpc("<p,neutral>Don't worry, I have more.");
-    inv_add(inv, translation_book, 1);
-    inv_del(bank, translation_book, ^max_32bit_int);
     ~objbox(translation_book, "The king gives you another translation book.");
+    inv_add(inv, translation_book, 1);
 }
 
 [label,narnode_correct_b2]

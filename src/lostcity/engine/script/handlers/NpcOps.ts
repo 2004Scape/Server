@@ -198,7 +198,14 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_SETHUNTMODE]: checkedHandler(ActiveNpc, state => {
-        state.activeNpc.huntMode = check(state.popInt(), HuntTypeValid).id;
+        // TODO is this authentic? or is there npc_clearhuntmode (or similar)?
+        const huntTypeId = state.popInt();
+
+        if (huntTypeId === -1) {
+            state.activeNpc.huntMode = -1;
+        } else {
+            state.activeNpc.huntMode = check(huntTypeId, HuntTypeValid).id;
+        }
     }),
 
     // https://x.com/JagexAsh/status/1795184135327089047

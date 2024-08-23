@@ -84,6 +84,8 @@ model1=model_3445_obj
 param=attack_sound,chompy_bird_attack
 param=defend_sound,chompy_bird_hit
 param=death_sound,chompy_bird_death
+// TODO tbc
+huntrange=10
 
 [chompy_bird_corpse]
 vislevel=hide

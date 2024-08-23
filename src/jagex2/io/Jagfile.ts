@@ -85,6 +85,10 @@ export default class Jagfile {
             throw new Error('Jagfile data is not loaded');
         }
 
+        if (this.filePos[index] >= this.data.length) {
+            throw new Error('Attempted out of bounds data array access; this is indicative of an improperly constructed Jagfile');
+        }
+
         const src: Uint8Array = this.data.subarray(this.filePos[index], this.filePos[index] + this.filePackedSize[index]);
         if (this.unpacked) {
             return new Packet(src);

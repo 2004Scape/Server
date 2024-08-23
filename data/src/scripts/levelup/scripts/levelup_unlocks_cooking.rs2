@@ -21,7 +21,7 @@ switch_int(stat_base(cooking)) {
     case 33: ~objboxb(chocolate_saturday,"Members can now make @dbl@Chocolate Saturdays@bla@.");
     case 35: ~doubleobjbox(plain_pizza,jug_wine,"You can now cook @dbl@Pizzas@bla@ and @dbl@Wine@bla@. Members can|now cook @dbl@Vegetable Balls@bla@.");
     case 37: ~objboxb(blurberry_special,"Members can now create @dbl@Blurberry Specials@bla@.");
-    case 40: ~doubleobjbox(lobster,cake,"You can now cook @dbl@Cakes@bla@ and @dbl@Lobsters@bla@. Members may|create@dbl@Tangled Toad Legs@bla@.");
+    case 40: ~doubleobjbox(lobster,cake,"You can now cook @dbl@Cakes@bla@ and @dbl@Lobsters@bla@. Members may|create @dbl@Tangled Toad Legs@bla@.");
     case 42: ~objbox(chocolate_bomb,"Members can now cook @dbl@Chocolate Bombs@bla@.");
     case 43: ~objboxt(bass,"Members can now cook @dbl@Bass@bla@.");
     case 45: ~doubleobjbox(swordfish,meat_pizza,"You can now cook @dbl@Meat Pizzas@bla@ and @dbl@Swordfish@bla@.");
