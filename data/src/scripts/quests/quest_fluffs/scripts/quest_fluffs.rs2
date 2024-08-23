@@ -1,3 +1,4 @@
+//most linebreaks in the quest are guessed (added for 2004 flair) based off rsc dialogue breaks
 [label,fluffs_boy_dialogue]
 switch_int (%fluffs_progress) {
     case ^fluffs_not_started:
@@ -19,23 +20,23 @@ switch_int (%fluffs_progress) {
 
 [label,fluffs_boy]
 ~chatplayer("<p,neutral>Hello there, I've been looking for you.");
-~chatnpc("<p,neutral>I didn't mean to take it!|I just forgot to pay."); //authentic
+~chatnpc("<p,neutral>I didn't mean to take it!|I just forgot to pay."); //imgur.com/jk6y117
 ~chatplayer("<p,neutral>What? I'm trying to help your mum find Fluffs.");
-~chatnpc("<p,default>Ohh...well, in that case I might be able to help.|Fluffs followed me to my secret play area,|I haven't seen her since."); //guessed linebreaks
+~chatnpc("<p,default>Ohh...well, in that case I might be able to help.|Fluffs followed me to my secret play area,|I haven't seen her since.");
 ~chatplayer("<p,quiz>Where is this play area?");
 ~chatnpc("<p,neutral>If I told you that, it wouldn't be a secret.");
 def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will make you tell me?", 2, "Well never mind, it's Fluffs' loss.", 3);
 switch_int ($option) {
     case 1:
         ~chatplayer("<p,angry>Tell me sonny, or I will hurt you.");
-        ~chatnpc("<p,worried>W..wh..what?! Y..you wouldn't!|A young lad like me!|I'd have you behind bars before nightfall!"); //guessed linebreaks
+        ~chatnpc("<p,worried>W..wh..what?! Y..you wouldn't!|A young lad like me!|I'd have you behind bars before nightfall!");
         ~mesbox("You decide it's best not to hurt the boy.");
     case 2:
         ~chatplayer("<p,quiz>What will make you tell me?");
         ~chatnpc("<p,neutral>Well...now you ask, I am a bit short on cash.");
         ~chatplayer("<p,bored>How much?");
         ~chatnpc("<p,neutral>100 coins should cover it.");
-        ~chatplayer("<p,angry>100 coins!|Why should I pay you?"); //guessed linebreak
+        ~chatplayer("<p,angry>100 coins!|Why should I pay you?");
         ~chatnpc("<p,default>You shouldn't,|but I won't help otherwise.|I never liked that cat anyway,|so what do you say?");
         @fluffs_pay;
     case 3:
@@ -44,7 +45,7 @@ switch_int ($option) {
 }
 
 [label,fluffs_pay]
-def_int $option = ~p_choice2("I'm not paying you a penny.", 1, "Okay then, I'll pay.", 2);
+def_int $option = ~p_choice2("I'm not paying you a penny.", 1, "Okay then, I'll pay.", 2); //imgur.com/PU4c51N
 switch_int ($option) {
     case 1:
         ~chatplayer("<p,happy>I'm not paying you a penny.");
@@ -58,11 +59,11 @@ switch_int ($option) {
         }
         inv_del(inv, coins, 100);
         %fluffs_progress = ^fluffs_paid_boy;
-        ~objbox(coins_25, "You give the lad 100 coins."); //authentic
+        ~objbox(coins_25, "You give the lad 100 coins."); //imgur.com/jhDCIvP
         ~chatplayer("<p,neutral>There you go, now where did you see Fluffs ?"); //intentional
-        ~chatnpc("<p,default>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there."); //guessed linebreaks
+        ~chatnpc("<p,default>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there.");
         ~chatplayer("<p,neutral>Anything else?");
-        ~chatnpc("<p,default>Well, you'll have to find the broken fence to get in.|I'm sure you can manage that."); //guessed linebreak
+        ~chatnpc("<p,default>Well, you'll have to find the broken fence to get in.|I'm sure you can manage that.");
 }
 
 [oploc1,loc_2618]
@@ -81,7 +82,7 @@ p_teleport($end_coord);
 
 [opheldu,doogle_leaves]
 if(last_useitem = raw_sardine) {
-    ~mesbox("You rub the doogle leaves over the sardine."); //TODO: check if this always was mesbox
+    ~mesbox("You rub the doogle leaves over the sardine.");
     inv_del(inv, doogle_leaves, 1);
     inv_del(inv, raw_sardine, 1);
     inv_add(inv, seasoned_sardine, 1);
@@ -114,7 +115,7 @@ switch_int(%fluffs_progress) {
     case ^fluffs_gave_milk:
         ~mesbox("Maybe the cat is hungry?");
     case ^fluffs_gave_sardine:
-        ~mesbox("In the distance you can hear kittens mewing...");
+        ~mesbox("In the distance you can hear kittens mewing..."); //imgur.com/EPtymln
     case default:
         ~mesbox("Maybe the cat is thirsty?"); 
 }
@@ -135,12 +136,16 @@ p_delay(3);
 
 [opnpcu,fluffs]
 if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
-    inv_del(inv, bucket_milk, 1);
-    inv_add(inv, bucket_empty, 1);
+    anim(human_pickupfloor, 0);
+    p_delay(0);
     npc_say("Mew!");
+    inv_del(inv, bucket_milk, 1); //after delay
+    inv_add(inv, bucket_empty, 1);
     %fluffs_progress = ^fluffs_gave_milk;
 } else if (%fluffs_progress = ^fluffs_gave_milk & last_useitem = seasoned_sardine) {
-    inv_del(inv, seasoned_sardine, 1);
+    inv_del(inv, seasoned_sardine, 1); //before delay
+    anim(human_pickupfloor, 0);
+    p_delay(0);
     npc_say("Mew!");
     %fluffs_progress = ^fluffs_gave_sardine;
     switch_int (random(6)) {
@@ -170,6 +175,13 @@ if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
     npc_del;
     .npc_del;
     ~mesbox("Fluffs has run off home with her offspring.");
+} else if (oc_category(last_useitem) = category_57) { //TODO: test with all raw fish. tested sardine & salmon
+    def_string $fishname = lowercase(oc_name(last_useitem));
+    anim(human_pickupfloor, 0);
+    p_delay(0);
+    npc_say("Hiss!");
+    p_delay(3);
+    ~mesbox("The cat doesn't want <$fishname>.|It seems to be a very fussy cat!");
 } else {
     ~displaymessage(^dm_default);
 }
@@ -184,11 +196,25 @@ if (random(5) = 0) {
 mes("You search the crate.");
 p_delay(4);
 if (npc_coord = %fluffs_crate & %fluffs_progress = ^fluffs_gave_sardine & inv_total(inv, fluffs_kitten) = 0 & inv_total(bank, fluffs_kitten) = 0) {
-    ~mesbox("You find a kitten! You carefully place it in your backpack."); //OSRS -- may have been different
+    ~mesbox("You find a kitten!"); //imgur.com/np0oFUT
     inv_add(inv, fluffs_kitten, 1);
     return;
 }
 mes("You find nothing.");
+
+[oploc1,loc_2619]
+mes("You search the barrel.");
+p_delay(4);
+mes("You find nothing.");
+p_delay(4);
+mes("You can hear kittens mewing close by...");
+
+[oploc1,loc_2620]
+mes("You search the crate.");
+p_delay(4);
+mes("You find nothing.");
+p_delay(4);
+mes("You can hear kittens mewing close by...");
 
 [opheld5,fluffs_kitten] //TODO: All of this is guessed -- test this in OSRS.
 inv_delslot(inv, last_slot);
@@ -200,7 +226,7 @@ p_delay(5);
 mes("It runs back to the crate.");
 npc_del;
 
-[queue,fluffs_complete]
+[queue,fluffs_complete] //imgur.com/6ePHvef
 // Random quest complete jingle.
 def_int $random = random(128);
 if ($random < 32) {

@@ -13341,23 +13341,6 @@ active=yes
 op1=Climb-down
 mapscene=7
 
-[loc_2619]
-name=Barrel
-desc=A wooden barrel for storage.
-model=model_loc_362
-op1=Search
-
-[loc_2620]
-name=Crate
-desc=An old crate for storage.
-model=model_loc_0
-op1=Search
-retex1s=darkwood
-retex1d=wood2
-retex2s=elfwood
-retex2d=wood2
-category=empty_crate
-
 [loc_2621]
 name=Door
 model=model_loc_3

@@ -30,7 +30,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) ! overgrown) {
                 %follower_uid = npc_uid;
                 npc_say("Meeeooowww!");
                 npc_settimer(150); //reset timer -- bug where timer would go insanely fast upon growing up
-                ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //2007rshelp.com/img/genimg/kittencare/grown.gif
+                ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
             }
         case 320:
             if(oc_category(nc_param(npc_type, pet_item_id)) = cat) {
@@ -51,7 +51,7 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
             npc_say("Miaow!");
             ~chatplayer("<p,worried>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
         case 18: 
-            npc_say("Miaow!"); //guess
+            npc_say("Meeeooowww!");
             ~chatplayer("<p,worried>I think it's really hungry!"); 
         case 20:
             mes("Your kitten has run away to look for food.");
@@ -65,10 +65,10 @@ if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
     %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
     switch_int (getbit_range(%cat_growth, 5, 10)) {
         case 40:
-            npc_say("Purr..."); //TODO: verify this, based off a video
+            npc_say("Purr...");
             ~chatplayer("<p,neutral>I think it wants some attention.");
         case 45:
-            npc_say("Meeeooowww..."); //TODO: verify this, guessed
+            npc_say("Meeeooowww...");
             ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
         case 50:
             mes("Your kitten got lonely and ran off.");
@@ -111,14 +111,14 @@ switch_obj(last_useitem) {
         inv_del(inv, last_useitem, 1);
         anim(human_pickupfloor, 0);
         p_delay(0);
-        mes("The kitten gobbles up the <$fishname>."); //https://youtu.be/suusfGcvi1w?t=195
+        mes("The kitten gobbles up the <$fishname>."); //youtu.be/suusfGcvi1w?t=195
         npc_say("Purr!");
     case default: ~displaymessage(^dm_default);
 }
 
 [opnpc1,_petcat]
 if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    mes("This is not your cat."); //2005
+    mes("This is not your cat."); //imgur.com/acr5ER2
     return;
 }
 if (inv_freespace(inv) = 0) {
@@ -250,13 +250,12 @@ if (%follower_obj ! null) {
         %follower_obj = null;
         return;
     }
-}
-
-if (%follower_obj ! null & npc_finduid(%follower_uid) = false) {
-    npc_add(coord, oc_param(%follower_obj, follower_id), ^max_32bit_int);
-    %npc_attacking_uid = uid;
-    %follower_uid = npc_uid;
-    npc_setmode(playerfollow);
-    npc_say("Meeeew!"); //https://youtu.be/6y_cOu5OQf4?t=110
-    npc_settimer(150);
+    if(npc_finduid(%follower_uid) = false) {
+        npc_add(coord, oc_param(%follower_obj, follower_id), ^max_32bit_int);
+        %npc_attacking_uid = uid;
+        %follower_uid = npc_uid;
+        npc_setmode(playerfollow);
+        npc_say("Meeeew!"); //youtu.be/6y_cOu5OQf4?t=110
+        npc_settimer(150);
+    }
 }
