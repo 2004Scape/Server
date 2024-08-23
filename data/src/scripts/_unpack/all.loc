@@ -18295,10 +18295,10 @@ width=2
 length=2
 mapscene=0
 
-[loc_3372]
+[ogre_spitroast_raw_chompy]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -18306,10 +18306,10 @@ blockrange=no
 recol1s=26156
 recol1d=19014
 
-[loc_3373]
+[ogre_spitroast_cooked_chompy]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -18317,10 +18317,10 @@ blockrange=no
 recol1s=26156
 recol1d=14690
 
-[loc_3374]
+[ogre_spitroast_burnt_chompy]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -18328,10 +18328,10 @@ blockrange=no
 recol1s=26156
 recol1d=6273
 
-[loc_3375]
+[ogre_spitroast]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3375
+model=model_ogre_spitroast
 width=2
 anim=seq_1016
 hasalpha=yes
@@ -18349,24 +18349,24 @@ blockrange=no
 recol1s=10400
 recol1d=12580
 
-[loc_3377]
+[chompybird_ogre_chest_closed]
 name=Locked Ogre chest
 desc=Hmmm, a rock for a lock....
-model=model_loc_3377
+model=chompybird_ogre_chest_closed
 width=2
 op1=Unlock
 
-[loc_3378]
+[chompybird_ogre_chest_open]
 name=Unlocked Ogre chest
 desc=Some stealthy thief must have picked the ogre lock!
-model=model_loc_3378
+model=chompybird_ogre_chest_open
 width=2
 op1=Search
 
 [loc_3382]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -18375,7 +18375,7 @@ blockrange=no
 [loc_3383]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes

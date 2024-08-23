@@ -15,6 +15,7 @@
 if (.npc_find(npc_coord, bloated_toad, 1, 1) = true) {
     // TODO get delays, anims etc with OSRS
     npc_say("Sqwark!");
+    npc_facesquare(.npc_coord);
     
     .npc_delay(3);
 
