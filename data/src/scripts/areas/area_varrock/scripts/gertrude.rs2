@@ -1,3 +1,4 @@
+//most linebreaks in the quest are guessed (added for 2004 flair) based off rsc dialogue breaks
 [opnpc1,gertrude]
 switch_int (%fluffs_progress) {
     case ^fluffs_not_started:
@@ -16,15 +17,15 @@ switch_int (%fluffs_progress) {
         ~chatnpc("<p,sad>What about Shilop?");
         ~chatplayer("<p,neutral>No sign of him either.");
         ~chatnpc("<p,confused>Hmmm...strange,|he should be at the market.");
-    case ^fluffs_paid_boy: //guessed linebreaks
+    case ^fluffs_paid_boy:
         ~chatplayer("<p,neutral>Hello Gertrude.");
         ~chatnpc("<p,neutral>Hello again, did you manage to find Shilop?|I can't keep an eye on him for the life of me.");
         ~chatplayer("<p,neutral>He does seem quite a handful.");
         ~chatnpc("<p,neutral>You have no idea!|Did he help at all?");
         ~chatplayer("<p,neutral>I think so,|I'm just going to look now.");
         ~chatnpc("<p,neutral>Thanks again, adventurer.");
-    case ^fluffs_gave_milk: //guessed linebreaks based off rsc
-        ~chatplayer("<p,neutral>Hello Gertrude.");
+    case ^fluffs_gave_milk:
+        ~chatplayer("<p,happy>Hello again.");
         ~chatnpc("<p,neutral>Hello. How's it going?|Any luck?");
         ~chatplayer("<p,happy>Yes, I've found Fluffs!");
         ~chatnpc("<p,happy>Well well, you are clever!|Did you bring her back?");
@@ -39,15 +40,14 @@ switch_int (%fluffs_progress) {
         ~chatnpc("<p,confused>Well that is strange, there must be a reason.");
     case ^fluffs_rescued:
         ~chatplayer("<p,neutral>Hello Gertrude.|Fluffs ran off with her kitten.");
-        ~chatnpc("<p,happy>You're back! Thank you! Thank you!|Fluffs just came back!|I think she was just upset|as she couldn't find her kitten."); //authentic
+        ~chatnpc("<p,happy>You're back! Thank you! Thank you!|Fluffs just came back!|I think she was just upset|as she couldn't find her kitten."); //imgur.com/lAhzO4q
         ~mesbox("Gertrude gives you a hug.");
         ~chatnpc("<p,happy>If you hadn't found her kitten|it would have died out there!");
         ~chatplayer("<p,neutral>That's okay, I like to do my bit.");
-        ~chatnpc("<p,happy>I don't know how to thank you.|I have no real material possessions.|I do have kittens!|I can only really look after one."); //guessed linebreaks
+        ~chatnpc("<p,happy>I don't know how to thank you.|I have no real material possessions.|I do have kittens!|I can only really look after one.");
         ~chatplayer("<p,neutral>Well, if it needs a home.");
-        ~chatnpc("<p,neutral>I would sell it to my cousin in West Ardougne.|I hear there's a rat epidemic there.|But it's too far."); //guessed linebreaks
+        ~chatnpc("<p,neutral>I would sell it to my cousin in West Ardougne.|I hear there's a rat epidemic there.|But it's too far.");
         ~chatnpc("<p,happy>Here you go, look after her and thank you again!");
-        //in osrs she explains kittens only grow outside the backpack
         ~mesbox("Gertrude hands you a kitten.");
         if_close;
         ~gertrude_give_cat;
@@ -66,13 +66,13 @@ switch_int (%fluffs_progress) {
             ~chatplayer("<p,happy>My cat has caught 100 rats!");
             ~chatnpc("<p,neutral>Well well! You are good with cats!");
             if(inv_freespace(inv) = 0) {
-            ~chatnpc("<p,neutral>Free up a little space so I can give you a present."); //104433
-            return;
+                ~chatnpc("<p,neutral>Free up a little space so I can give you a present."); //104433
+                return;
             }
             ~chatnpc("<p,neutral>Here, I have a little present for you...");
             inv_add(inv, cat_training_medal, 1);
             ~objbox(cat_training_medal, "Gertrude gives you a small medal.");
-            ~chatplayer("<p,neutral>Hey, thanks Gertrude.");
+            ~chatplayer("<p,neutral>Hey thanks Gertrude.");
             return;
         } //this is guessed off RSC. assuming her post-quest dialogue was changed later on.
         if(inv_totalcat(inv, kitten) > 0 | inv_totalcat(bank, kitten) > 0 | inv_totalcat(inv, cat) > 0 | inv_totalcat(bank, cat) > 0 | %follower_obj ! null & oc_category(%follower_obj) = kitten | %follower_obj ! null & oc_category(%follower_obj) = cat) {
@@ -105,14 +105,14 @@ switch_int (%fluffs_progress) {
 
 [label,fluffs_start]
 def_int $option = ~p_choice3("Well, I suppose I could.", 1, "What's in it for me?", 2, "Sorry, I'm too busy to play pet rescue.", 3);
-if($option = 1) { //linebreaks guessed
+if($option = 1) {
     ~chatplayer("<p,neutral>Well, I suppose I could.");
     ~chatnpc("<p,happy>Really? Thank you so much!|I really have no idea where she could be!");
     ~chatnpc("<p,default>I think my sons, Shilop and Wilough, saw the cat last.|They'll be out in the market place.");
     ~chatplayer("<p,default>Alright then, I'll see what I can do.");
     %fluffs_progress = ^fluffs_started;
     ~send_quest_progress(questlist:fluffs, %fluffs_progress, ^fluffs_complete);
-} else if($option = 2) { //linebreaks guessed
+} else if($option = 2) {
     ~chatplayer("<p,quiz>What's in it for me?");
     ~chatnpc("<p,sad>I'm sorry, I'm too poor to pay you anything.|The best I could offer is a warm meal.|So, can you help?");
     @fluffs_start;
