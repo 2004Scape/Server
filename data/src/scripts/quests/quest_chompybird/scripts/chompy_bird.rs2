@@ -1,9 +1,10 @@
-[proc,spawn_chompy_bird](coord $coord)
+[proc,spawn_chompy_bird](coord $coord, player_uid $baiter_uid)
 {
     // def_coord $spawn_coord = map_findsquare($coord, 3, 10, 1);
     def_coord $spawn_coord = map_findsquare($coord, 4, 4, 1);
     
     npc_add($spawn_coord, chompy_bird, 100);
+    %quest_chompybird_baiter = $baiter_uid;
     // TODO anim?
     npc_say("Sqwirk!");
 
@@ -26,6 +27,15 @@ npc_say("Sqwark!");
 npc_delay(3);
 npc_say("Gobble!");
 npc_delay(2);
+
+// TODO consider some check that the toad actually still exists?
+//      might not be necessary though
+
+if (p_finduid(%quest_chompybird_baiter) = true) {
+    if (%chompybird_progress = ^chompybird_dropped_toad) {
+        %chompybird_progress = ^chompybird_chompy_ate_toad;
+    }
+}
 
 [opnpc4,chompy_bird_corpse]
 mes("You start plucking the chompy bird.");

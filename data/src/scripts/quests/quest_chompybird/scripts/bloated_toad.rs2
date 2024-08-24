@@ -41,6 +41,7 @@ p_delay(0);
 
 if (p_finduid(uid) = true) {
     npc_add(coord, bloated_toad, 101);
+    %quest_chompybird_baiter = uid;
     npc_queue(4, 0, 25);
 
     mes("You carefully place the bloated toad bait.");
@@ -105,7 +106,7 @@ if ($toad_should_explode = true) {
 }
 
 if ($should_spawn_chompy = true) {
-    ~spawn_chompy_bird(npc_coord);
+    ~spawn_chompy_bird(npc_coord, %quest_chompybird_baiter);
 }
 
 [proc,toad_explode]()
