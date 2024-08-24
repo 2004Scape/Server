@@ -120,3 +120,14 @@ while (.huntnext = true) {
     // is damage random per-player or per-toad?
     ~.damage_self(calc(random(1) + 1));
 }
+
+// The toad is being eaten by the Chompy
+[ai_queue5,bloated_toad]
+npc_delay(3);
+
+// TODO do we need to check that the Chompy is still there and eating the toad?
+//      should test on OSRS to confirm
+
+npc_say("!!Croak!!");
+npc_delay(2);
+npc_del;
