@@ -151,7 +151,7 @@ switch_int(%elena_progress) {
 ~chatplayer("<p,quiz>What brought the plague to Ardougne?");
 ~chatnpc("<p,neutral>It's all down to King Tyras of West Ardougne. It started came back from one of his visits to the lands west of here.");
 ~chatnpc("<p,neutral>Some of his men must have unknowingly caught it out there and brought it back with them.");
-~chatplayer("<p,quiz>Does he know how bad the sitation is now?");
+~chatplayer("<p,quiz>Does he know how bad the situation is now?");
 ~chatnpc("<p,angry>If he did he wouldn't care. I believe he wants his people to suffer, he's an evil man.");
 ~chatplayer("<p,shock>Isn't that treason?");
 ~chatnpc("<p,angry>He's not my king.");
