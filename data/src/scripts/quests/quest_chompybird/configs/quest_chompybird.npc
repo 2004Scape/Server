@@ -12,6 +12,7 @@ head1=model_141_npc_head
 wanderrange=2
 param=death_anim,ogre_death
 param=death_sound,giant_death
+timer=5
 
 [chompybird_fycie]
 vislevel=hide
