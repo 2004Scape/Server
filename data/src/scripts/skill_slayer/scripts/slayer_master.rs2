@@ -1,0 +1,138 @@
+[opnpc1,_slayer_master] @slayer_talk;
+
+[label,slayer_talk_intro]
+~chatplayer("<p,default>Who are you?");
+~chatnpc("<p,default>I'm one of the elite Slayer Masters.");
+def_int $choice = ~p_choice2("What's a slayer?", 1, "Never heard of you...", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,confused>What's a slayer?");
+    ~chatnpc("<p,sad>Oh dear, what do they teach you in school?");
+    ~chatplayer("<p,confused>Well... er...");
+    ~chatnpc("<p,neutral>I suppose I'll have to educate you then. A slayer is someone who is trained to fight specific creatures. They know these creatures' every weakness and strength. As you can guess it makes killing them a lot easier.");
+    jump(slayer_talk_intro_teach_choice);
+} else {
+    ~chatplayer("<p,quiz>Never heard of you...");
+    ~chatnpc("<p,default>That's because my foe never lives to tell of me. We slayers are a dangerous bunch.");
+    jump(slayer_talk_intro_teach_choice);
+}
+
+[label,slayer_talk_intro_teach_choice]
+def_int $choice = ~p_choice2("Wow, can you teach me?", 1, "Sounds useless to me.", 2);
+
+if ($choice = 1) {
+    ~chatplayer("<p,default>Wow, can you teach me?");
+    def_boolean $fail;
+    def_npc $slayer_master;
+    $fail, $slayer_master = ~slayer_master_check;
+
+    if ($fail = true) {
+        @slayer_talk_request_assignment_fail($slayer_master);
+        return;
+    }
+    ~chatnpc("<p,default>Hmmm well I'm not so sure...");
+    ~chatplayer("<p,default>Pleeeaasssse!");
+    ~chatnpc("<p,default>Oh okay then, you twisted my arm. You'll have to train against specific groups of creatures.");
+    ~chatplayer("<p,default>Okay, what's first?");
+    ~slayer_assign_task;
+    def_struct $task = enum(int, struct, slayer_targets, %slayer_task_target);
+    ~chatnpc("<p,default>We'll start you off hunting <struct_param($task, slayer_target_name)>, you'll need to kill <tostring(%slayer_task_remaining)> of them.");
+    inv_add(inv, enchanted_gem, 1);
+    %slayer_introduction = 1;
+    ~chatnpc("<p,default>You'll also need this enchanted gem, it allows Slayer Masters like myself to contact you and update you on your progress. Don't worry if you lose it, you can buy another from any Slayer Master.");
+    jump(slayer_talk_after_assignment);
+} else {
+    ~chatplayer("<p,bored>Sounds useless to me.");
+    ~chatnpc("<p,verymad>Suit yourself.");
+}
+
+[label,slayer_talk]
+if (%slayer_introduction <= 0) jump(slayer_talk_intro);
+~chatnpc("<p,default>'Ello, and what are you after then?");
+@multi3("I need another assignment.", slayer_talk_request_assignment, "Do you have anything for trade?", slayer_talk_shop, "Err...nothing...", slayer_talk_exit);
+
+[label,slayer_talk_shop]
+~chatplayer("<p,default>Do you have anything for trade?");
+~chatnpc("<p,default>I have quite a few rewards you can earn, and a wide variety of Slayer equipment for sale.");
+// TODO: open slayer shop
+
+[label,slayer_talk_exit]
+~chatplayer("<p,default>Err...nothing...");
+
+[label,slayer_talk_request_assignment]
+~chatplayer("<p,default>I need another assignment.");
+def_boolean $fail;
+def_npc $slayer_master;
+$fail, $slayer_master = ~slayer_master_check;
+
+if ($fail = true) {
+    @slayer_talk_request_assignment_fail($slayer_master);
+    return;
+}
+
+if (%slayer_task_remaining <= 0 | %slayer_task_target <= 0) {
+    jump(slayer_talk_assignment);
+} else {
+    // TODO: Check if turael and check if task is skippable
+    jump(slayer_talk_already_assigned);
+}
+
+[label,slayer_talk_request_assignment_fail](npc $slayer_master)
+~chatnpc("<p,default>Sorry, but you're not strong enough to be taught by me. Your best trainer would be Turael in Burthorpe.");
+
+[label,slayer_talk_assignment]
+~slayer_assign_task;
+def_struct $task = enum(int, struct, slayer_targets, %slayer_task_target);
+~chatnpc("<p,default>Excellent, you're doing great. Your new task is to kill <tostring(%slayer_task_remaining)> <struct_param($task, slayer_target_name)>.");
+jump(slayer_talk_after_assignment);
+
+[label,slayer_talk_already_assigned]
+def_struct $task = enum(int, struct, slayer_targets, %slayer_task_target);
+~chatnpc("<p,default>You're still hunting <struct_param($task, slayer_target_name)>; you have <tostring(%slayer_task_remaining)> to go. Come back when you've finished your task.");
+
+[label,slayer_talk_turael_skip_warning]
+~chatnpc("<p,default>You're still hunting something, although it's a tougher assignment than I'd normally give...|I guess I could give you a new assignment, if you'd like.");
+@multi2("Yes, please.", slayer_talk_turael_skip_confirm, "No, thanks.", slayer_talk_turael_skip_reject);
+
+[label,slayer_talk_turael_skip_confirm]
+~chatplayer("<p,default>Yes, please.");
+jump(slayer_talk_assignment);
+
+[label,slayer_talk_turael_skip_reject]
+~chatplayer("<p,default>No, thanks.");
+
+[label,slayer_talk_after_assignment]
+def_int $choice = ~p_choice2("Got any tips for me?", 1, "Okay, great!", 2);
+
+if ($choice = 1) {
+    jump(slayer_talk_task_tip);
+} else {
+    ~chatplayer("<p,default>Okay, great!");
+    ~chatnpc("<p,default>Good luck! Don't forget to come back when you need a new assignment.");
+}
+
+[label,slayer_talk_task_tip]
+if (%slayer_task_remaining <= 0 | %slayer_task_target <= 0) {
+    ~chatnpc("<p,neutral>It seems like you're not hunting anything. Talk to me again to get an assignment.");
+    return;
+}
+def_struct $task = enum(int, struct, slayer_targets, %slayer_task_target);
+~chatnpc("<p,neutral> <struct_param($task, slayer_target_tip)>");
+
+// checks if the player has the required combat & slayer level to use the slayer master
+// returns true or false if the player can use the current slayer master and if not also returns the best, usable slayer master
+[proc,slayer_master_check](boolean, npc)
+def_int $combat_level = ~player_combat_level;
+if (npc_type = slayer_vannaka & $combat_level < 40) {
+     return (true, ~slayer_find_best_master);
+}
+return (false, null);
+
+[proc,slayer_find_best_master]()(npc)
+// FIXME: replace runecraft with slayer and replace with the correct npc types
+def_int $combat_level = ~player_combat_level;
+if ($combat_level >= 100 & stat_base(runecraft) >= 50) return (slayer_turael);
+if ($combat_level >= 70) return (slayer_turael);
+if ($combat_level >= 40) return (slayer_vannaka);
+if ($combat_level >= 20) return (slayer_turael);
+return (slayer_turael);

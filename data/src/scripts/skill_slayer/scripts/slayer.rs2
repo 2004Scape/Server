@@ -1,0 +1,87 @@
+[proc,slayer_assign_task]
+// TODO: Temporary task assignment setup, some info on how it used to work:
+// https://x.com/JagexAsh/status/1823729959707517299
+// https://x.com/JagexAsh/status/1823766556871958811
+def_struct $task;
+def_int $attempts = 1;
+def_int $total_tasks = enum_getoutputcount(slayer_task_table_turael);
+
+while ($task = null & $attempts < 20) {
+    def_struct $temp_task = enum(int, struct, slayer_task_table_turael, calc(random($total_tasks) + 1));
+    if (~slayer_assign_task_check($temp_task) = true & ~slayer_assign_task_extra_checks($temp_task) = true) {
+        $task = $temp_task;
+    }
+    $attempts = calc($attempts + 1);
+}
+
+if ($task ! null) {
+    %slayer_task_target = struct_param($task, slayer_target_id);
+    %slayer_task_remaining = calc(15 + random(calc(50 - 15)));
+    %slayer_master = npc_param(slayer_master_id);
+}
+
+// slayer, defence & combat task checks
+// the proc returns if the task can be assigned to the player or not
+[proc,slayer_assign_task_check](struct $slayer_target)(boolean)
+// TODO: replace defence with 'slayer' stat
+if (struct_param($slayer_target, slayer_target_req_slayerlevel) ! null & struct_param($slayer_target, slayer_target_req_slayerlevel) > stat_base(runecraft)) return (false);
+if (struct_param($slayer_target, slayer_target_req_defencelevel) ! null & struct_param($slayer_target, slayer_target_req_defencelevel) > stat_base(defence)) return (false);
+if (struct_param($slayer_target, slayer_target_req_combatlevel) ! null & struct_param($slayer_target, slayer_target_req_combatlevel) > ~player_combat_level) return (false);
+return (true);
+
+// extra task related checks such as quest requiriments or other required levels
+// the proc returns if the task can be assigned to the player or not
+[proc,slayer_assign_task_extra_checks](struct $slayer_target)(boolean)
+switch_struct ($slayer_target) {
+    // priest in peril check
+    case slayer_target_crawlinghands, slayer_target_banshees, slayer_target_infernalmages, slayer_target_bloodveld, slayer_target_aberrantspectres, slayer_target_gargoyles, slayer_target_nechryael: return (false);
+    case slayer_target_ghouls, slayer_target_vampyres, slayer_target_werewolves: return (false);
+    // priest in peril or partial fairy tale pt2 check
+    case slayer_target_abyssaldemons: return (false);
+    // ernest the chicken check
+    case slayer_target_killerwatts: return (false);
+    // skippy check
+    case slayer_target_mogres: return (false);
+    // dragon slayer partial check
+    case slayer_target_greendragons, slayer_target_bluedragons, slayer_target_reddragons, slayer_target_blackdragons, slayer_target_bronzedragons, slayer_target_irondragons, slayer_target_steeldragons:
+        if (%dragon_shield = ^quest_dragon_knows_about_shield) {
+            return (true);
+        } else {
+            return (false);
+        }
+    // horror from the deep check
+    case slayer_target_dagannoth: return (false);
+    // desert treasure check
+    case slayer_target_dustdevils: return (false);
+    // rum deal check
+    case slayer_target_feverspiders: return (false);
+    // regicide partial check
+    case slayer_target_elves: return (false);
+    // 33 firemaking check
+    case slayer_target_harpiebugswarms: return (false);
+    // lost city check
+    case slayer_target_otherwordlybeings, slayer_target_mutatedzygomites: return (false);
+    // royal trouble check
+    case slayer_target_seasnakes: return (false);
+    // legends quest check
+    case slayer_target_shadowwarriors: return (true);
+    // elemental workshop check
+    case slayer_target_skeletalwyverns: return (false);
+    // mep2 start check
+    case slayer_target_darkbeasts: return (false);
+    case default: return (true);
+}
+
+[proc,slayer_check_assignment]
+if (%slayer_task_remaining <= 0) return;
+if (npc_param(slayer_category) ! %slayer_task_target) return;
+// TODO: scale slayer experience based on npc bonuses
+queue(slayer_progress_task, 0, calc(npc_basestat(hitpoints) * 10));
+
+[queue,slayer_progress_task](int $experience)
+%slayer_task_remaining = calc(%slayer_task_remaining - 1);
+stat_advance(runecraft, $experience);
+
+if (%slayer_task_remaining <= 0) {
+    mes("You've completed your task; return to a Slayer Master.");
+}

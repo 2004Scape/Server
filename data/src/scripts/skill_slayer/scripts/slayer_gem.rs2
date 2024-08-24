@@ -1,0 +1,43 @@
+[opheld1,enchanted_gem] @slayer_gem_talk;
+
+[label,slayer_gem_talk]
+def_npc $slayer_master = enum(int, npc, slayer_masters, %slayer_master);
+~chatnpc_specific(nc_name($slayer_master), $slayer_master, "<p,neutral>Hello there <displayname>, what can I help you with?");
+def_int $choice = ~p_choice5("How am I doing so far?", 1, "Who are you?", 2, "Where are you?", 3, "Got any tips for me?", 4, "Nothing really.", 5);
+
+if ($choice = 5) {
+    ~chatplayer("<p,default>Nothing really.");
+    return;
+}
+
+while ($choice ! null) {
+    if ($choice = 1) {
+        ~chatplayer("<p,quiz>How am I doing so far?");
+        if (%slayer_task_remaining <= 0 | %slayer_task_target <= 0) {
+            ~chatnpc_specific(nc_name($slayer_master), $slayer_master, "<p,neutral>You need something new to hunt. Come and see me when you can and I'll give you a new task.");
+        } else {
+            def_struct $task = enum(int, struct, slayer_targets, %slayer_task_target);
+            ~chatnpc_specific(nc_name($slayer_master), $slayer_master, "<p,neutral>You're currently assigned to kill <struct_param($task, slayer_target_name)>; only <tostring(%slayer_task_remaining)> more to go.");
+        }
+        $choice = ~p_choice4("Who are you?", 2, "Where are you?", 3, "Got any tips for me?", 4, "That's all thanks.", null);
+    } else if ($choice = 2) {
+        ~chatplayer("<p,default>Who are you?");
+        ~chatnpc_specific(nc_name($slayer_master), $slayer_master, "<p,neutral>My name's <nc_name($slayer_master)>, I'm the Slayer Master best able to train you.");
+        $choice = ~p_choice4("How am I doing so far?", 1, "Where are you?", 3, "Got any tips for me?", 4, "That's all thanks.", null);
+    } else if ($choice = 3) {
+        ~chatplayer("<p,default>Where are you?");
+        ~chatnpc_specific(nc_name($slayer_master), $slayer_master, "<p,neutral>You'll find me in <nc_param($slayer_master, slayer_master_location)>.|I'll be here when you need a new task.");
+        $choice = ~p_choice4("How am I doing so far?", 1, "Who are you?", 2, "Got any tips for me?", 4, "That's all thanks.", null);
+    } else if ($choice = 4) {
+        ~chatplayer("<p,default>Got any tips for me?");
+        if (%slayer_task_remaining <= 0 | %slayer_task_target <= 0) {
+            ~chatnpc_specific(nc_name($slayer_master), $slayer_master, "<p,neutral>You need something new to hunt.");
+        } else {
+            def_struct $task = enum(int, struct, slayer_targets, %slayer_task_target);
+            ~chatnpc_specific(nc_name($slayer_master), $slayer_master, "<p,neutral><struct_param($task, slayer_target_tip)>");
+        }
+        ~chatplayer("<p,default>Great, thanks!");
+        $choice = ~p_choice4("How am I doing so far?", 1, "Who are you?", 2, "Where are you?", 3, "That's all thanks.", null);
+    }
+}
+~chatplayer("<p,default>That's all thanks.");
