@@ -200,3 +200,19 @@ if (random(5) ! 0) {
     }
 }
 inv_clear(ranged_quiver_inv);
+
+[ai_queue3,chompy_bird]
+gosub(npc_death);
+
+if(npc_findhero = true) {
+    queue(chompybird_kill, 0);
+}
+
+// TODO confirm duration
+npc_add(npc_coord, chompy_bird_corpse, 100);
+
+[queue,chompybird_kill]
+if (%chompybird_progress = ^chompybird_rantz_gave_player_bow) {
+    %chompybird_progress = ^chompybird_player_killed_chompy;
+}
+// TODO add chompy bird killcount
