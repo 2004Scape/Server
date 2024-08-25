@@ -122,6 +122,7 @@ loc_change(loc_2574, $respawn_ticks);
 if (db_getfieldcount($data, trapped_chest:tele_coord) > 0) {
     p_delay(3);
     mes("Suddenly a second magical trap triggers.");
+    sound_synth(chest_open, 0, 0);
     p_telejump(db_getfield($data, trapped_chest:tele_coord, 0));
 }
 
