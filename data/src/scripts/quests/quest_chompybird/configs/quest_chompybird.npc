@@ -83,10 +83,14 @@ op5=Attack
 vislevel=6
 model1=model_3445_obj
 param=attack_sound,chompy_bird_attack
+param=attack_anim,seq_1012
 param=defend_sound,chompy_bird_hit
+param=defend_anim,seq_1011
 param=death_sound,chompy_bird_death
+param=death_anim,seq_1009
 // TODO tbc
 huntrange=10
+hitpoints=10
 
 [chompy_bird_corpse]
 vislevel=hide
