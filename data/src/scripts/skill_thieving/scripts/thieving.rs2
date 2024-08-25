@@ -88,10 +88,6 @@ loc_change(market_stall, $respawn_ticks);
 p_arrivedelay;
 ~require_members_feature;
 
-if (loc_type = chest_steel_arrowtips) { //hardcode
-    mes("This chest is locked"); //osrs
-    return;
-}
 mes("You have activated a trap on the chest.");
 anim(human_picklock_chest, 0);
 sound_synth(lever, 0, 0);
