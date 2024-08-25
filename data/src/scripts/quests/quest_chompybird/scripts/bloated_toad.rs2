@@ -12,6 +12,7 @@ mes("You release the toad and see it hop off into the distance.");
 
 [opheld1,bloated_toad]
 if (%chompybird_progress < ^chompybird_shown_toad) {
+    // TODO confirm line breaks, currently overruns
     ~objbox(bloated_toad,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
     return;
 }

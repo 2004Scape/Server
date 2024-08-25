@@ -329,7 +329,7 @@ queue(quest_chompybird_complete, 0);
 ~objbox(seasoned_chompy, "You hand over the cooked chompy bird to Rantz.");
 
 ~chatnpc("<p,neutral>Hey hey! We got da delicious chompy bird - yay!|This looks really tasty as well!");
-~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!|@dbl@~ The family of ogres sit down together and enjoy your well cooked chompy bird. ~");
+~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!|@dbl@~ The family of ogres sit down together and enjoy|@dbl@your well cooked chompy bird. ~");
 ~chatplayer("<p,neutral>It's my pleasure!");
 
 // look for any chompy birds to shoot
