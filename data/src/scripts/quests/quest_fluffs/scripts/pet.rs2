@@ -96,7 +96,7 @@ switch_obj(last_useitem) {
         npc_anim(cat_rollingover, 40); 
         npc_say("Purr!");
         p_delay(2);
-        ~chatplayer("<p,happy>That kitten loves to play with that ball of wool. I think it is its favourite.");
+        ~chatplayer("<p,happy>That kitten loves to play with that ball of wool.|I think it is its favourite."); //guessed linebreak
     case bucket_milk: //https://youtu.be/1vY_uGOq6qM&t=97s
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         inv_del(inv, last_useitem, 1);
