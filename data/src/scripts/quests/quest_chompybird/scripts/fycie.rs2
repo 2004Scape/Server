@@ -50,7 +50,7 @@ switch_int(%chompybird_progress) {
 
         if ($flavour = 0) {
             $flavour = calc(random(1) + 1);
-            setbit_range_toint(%chompybird_kills, $flavour, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
+            %chompybird_kills = setbit_range_toint(%chompybird_kills, $flavour, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
         }
 
         def_string $chompy_flavour = "tomato";
