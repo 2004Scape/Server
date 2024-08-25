@@ -25,7 +25,7 @@
 [oploc2,chest_50_coins]
 ~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
-[oploc2,chest_steel_arrowtips]
+[oploc2,chest_steel_arrowtips] //TODO: implement real functionality
 ~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,chest_blood_runes]

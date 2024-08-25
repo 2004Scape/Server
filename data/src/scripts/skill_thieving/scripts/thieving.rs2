@@ -88,6 +88,10 @@ loc_change(market_stall, $respawn_ticks);
 p_arrivedelay;
 ~require_members_feature;
 
+if (loc_type = chest_steel_arrowtips) { //hardcode
+    mes("This chest is locked"); //osrs
+    return;
+}
 mes("You have activated a trap on the chest.");
 anim(human_picklock_chest, 0);
 sound_synth(lever, 0, 0);
@@ -118,6 +122,12 @@ stat_advance(thieving, $experience);
 def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
 
 loc_change(loc_2574, $respawn_ticks);
+
+if (db_getfieldcount($data, trapped_chest:tele_coord) > 0) {
+    p_delay(3);
+    mes("Suddenly a second magical trap triggers.");
+    p_telejump(db_getfield($data, trapped_chest:tele_coord, 0));
+}
 
 [proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);
