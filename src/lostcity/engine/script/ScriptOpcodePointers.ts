@@ -323,8 +323,8 @@ const ScriptOpcodePointers: {
         require: ['p_active_player']
     },
     [ScriptOpcode.P_FINDUID]: {
-        set: ['p_active_player'],
-        set2: ['p_active_player2'],
+        set: ['p_active_player', 'active_player' ],
+        set2: ['p_active_player2', 'active_player2'],
         conditional: true
     },
     [ScriptOpcode.P_LOCMERGE]: {
