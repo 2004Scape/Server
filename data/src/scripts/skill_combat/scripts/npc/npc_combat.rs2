@@ -188,6 +188,11 @@ if (npc_category = kolodion & enum(int, npc, mage_arena_bosses, %magearena_progr
     return(false);
 }
 
+if (npc_type = chompy_bird) {
+    mes("Magic simply won't affect this beast!");
+    return(false);
+}
+
 if (npc_hasop(2) = true) {
     return (true);
 }

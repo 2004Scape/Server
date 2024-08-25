@@ -329,5 +329,42 @@ queue(quest_chompybird_complete, 0);
 ~objbox(seasoned_chompy, "You hand over the cooked chompy bird to Rantz.");
 
 ~chatnpc("<p,neutral>Hey hey! We got da delicious chompy bird - yay!|This looks really tasty as well!");
-~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!|@dbl@~ The family of ogres sit down together and enjoy your well cooked chompy bird. ~");
+~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!|@dbl@~ The family of ogres sit down together and enjoy|@dbl@your well cooked chompy bird. ~");
 ~chatplayer("<p,neutral>It's my pleasure!");
+
+// look for any chompy birds to shoot
+[ai_timer,chompybird_rantz]
+.npc_findallany(npc_coord, 24, 0);
+while (.npc_findnext = true) {
+    // find any chompy birds close to Rantz
+    if (.npc_type = chompy_bird) {
+        if (p_finduid(.%quest_chompybird_baiter) = true) {
+            // we only run this logic for players in the right quest state
+            if (%chompybird_progress = ^chompybird_chompy_ate_toad) {
+                // TODO fix the delays in this section
+
+                // TODO send mesbox if player is close?
+                //      not sure which one was in 04
+                mes("Rantz: Hey, dere's da chompy, I's gonna shoot it.");
+                npc_facesquare(.npc_coord);
+
+                // npc_delay(1);
+                
+                npc_anim(ogre_attackbow, 0);
+                spotanim_npc(ogre_arrow_launch, 50, 0);
+                def_int $duration = ~npc_projectile(npc_coord, .npc_uid, ogre_arrow_travel, 40, 36, 41, 15, 5, 11, 5);
+                // def_int $delay = add(sub(divide($duration, 30), 1), 2);
+
+                // npc_delay($delay);
+
+                if (p_finduid(.%quest_chompybird_baiter) = true) {
+                    %chompybird_progress = ^chompybird_rantz_tried_to_shoot_chompy;
+                    // TODO send mesbox if player is close?
+                    //      not sure which one was in 04
+                    mes("Rantz keeps missing the chompy bird...");
+                    mes("Rantz: Grrr...de'ese arrows are rubbish.");
+                }
+            }
+        }
+    }
+}
