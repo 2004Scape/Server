@@ -8,7 +8,7 @@
 @activate_trapped_chest;
 
 [oploc1,chest_steel_arrowtips]
-@activate_trapped_chest;
+@activate_locked_chest;
 
 [oploc1,chest_blood_runes]
 @activate_trapped_chest;
@@ -26,13 +26,18 @@
 ~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,chest_steel_arrowtips]
-~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+~attempt_locked_chest;
 
 [oploc2,chest_blood_runes]
 ~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
 
 [oploc2,chest_ardougne_castle]
 ~attempt_trapped_chest(loc_type, loc_coord, loc_angle, loc_shape);
+
+[oplocu,chest_steel_arrowtips]
+if (last_useitem = lockpick) {
+    ~attempt_locked_chest;
+}
 
 [proc,attempt_trapped_chest](loc $loc, coord $loc_coord, int $loc_angle, locshape $loc_shape)
 p_arrivedelay;
@@ -59,3 +64,54 @@ if ($current_level < $thieving_level) {
 }
 
 ~disarm_trapped_chest($data, $loc, $loc_coord, $loc_angle, $loc_shape);
+
+[label,activate_locked_chest]
+mes("This chest is locked");
+sound_synth(locked, 0, 0);
+
+[proc,attempt_locked_chest]
+//TODO: is gas random event possible?
+db_find(trapped_chest:loc, loc_type);
+def_dbrow $data = db_findnext;
+def_int $thieving_level = db_getfield($data, trapped_chest:level, 0);
+def_int $experience = db_getfield($data, trapped_chest:experience, 0);
+def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
+def_int $current_level = stat(thieving);
+mes("You attempt to pick the lock.");
+
+if ($current_level < $thieving_level) {
+    ~mesbox("You are not a high enough level to pick this lock.");
+    return;
+}
+
+if (inv_total(inv, lockpick) < 1) {
+    mes("You need a lockpick for this lock.");
+    return;
+}
+
+mes("You manage to pick the lock.");
+sound_synth(locked, 0, 0);
+p_delay(1);
+mes("You open the chest.");
+sound_synth(chest_open, 0, 0);
+p_delay(1);
+mes("You find treasure inside!");
+anim(human_openchest, 0);
+stat_advance(thieving, $experience);
+~trapped_chest_check_for_reward($data);
+loc_change(loc_2574, 3); //opened chest
+p_delay(3);
+loc_change(loc_2572, $respawn_ticks); //looted chest
+
+[oploc1,loc_2572]
+mes("It looks like this chest has already been looted.");
+
+[oploc2,loc_2572]
+mes("It looks like this chest has already been looted.");
+
+[oplocu,loc_2572]
+if (last_useitem = lockpick) {
+    mes("It looks like this chest has already been looted.");
+} else {
+    ~displaymessage(^dm_default);
+}

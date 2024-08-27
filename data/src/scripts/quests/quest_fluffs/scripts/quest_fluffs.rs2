@@ -175,13 +175,13 @@ if (%fluffs_progress = ^fluffs_paid_boy & last_useitem = bucket_milk) {
     npc_del;
     .npc_del;
     ~mesbox("Fluffs has run off home with her offspring.");
-} else if (oc_category(last_useitem) = category_57) { //TODO: test with all raw fish. tested sardine & salmon
+} else if (oc_category(last_useitem) = category_57 | oc_category(last_useitem) = category_58) { //TODO: test more. works with raw sardine & salmon, cooked trout
     def_string $fishname = lowercase(oc_name(last_useitem));
     anim(human_pickupfloor, 0);
     p_delay(0);
     npc_say("Hiss!");
     p_delay(3);
-    ~mesbox("The cat doesn't want <$fishname>.|It seems to be a very fussy cat!");
+    ~mesbox("The cat doesn't want that <$fishname>.|It seems to be a very fussy cat!");
 } else {
     ~displaymessage(^dm_default);
 }
@@ -216,15 +216,18 @@ mes("You find nothing.");
 p_delay(4);
 mes("You can hear kittens mewing close by...");
 
-[opheld5,fluffs_kitten] //TODO: All of this is guessed -- test this in OSRS.
+[opheld5,fluffs_kitten]
 inv_delslot(inv, last_slot);
-npc_add(coord, lost_kitten, ^max_32bit_int);
-mes("You drop Fluffs' kitten.");
+npc_add(coord, lost_kitten, 10);
 npc_setmode(none);
+p_delay(0);
+mes("You place the kitten on the floor.");
+p_delay(0);
+npc_say("Mew!");
+p_delay(0);
 npc_walk(%fluffs_crate);
-p_delay(5);
-mes("It runs back to the crate.");
-npc_del;
+p_delay(4);
+~mesbox("The kitten has run off!");
 
 [queue,fluffs_complete] //imgur.com/6ePHvef
 // Random quest complete jingle.

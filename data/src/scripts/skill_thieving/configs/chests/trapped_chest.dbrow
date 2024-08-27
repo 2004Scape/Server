@@ -40,6 +40,7 @@ data=experience,2500
 data=respawn_ticks,200
 data=loot,bloodrune,2,2,128
 data=loot,coins,500,500,128
+data=tele_coord,0_40_52_24_9
 
 [trapped_chest_chest_ardougne_castle]
 table=trapped_chest
@@ -51,3 +52,4 @@ data=loot,coins,1000,1000,128
 data=loot,raw_shark,1,1,128
 data=loot,adamantite_ore,1,1,128
 data=loot,uncut_sapphire,1,1,128
+data=tele_coord,0_42_51_8_17
