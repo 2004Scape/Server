@@ -22,7 +22,7 @@ switch_int(%sheepherder_progress) {
 ~chatplayer("<p,neutral>The plague? Tell me more.");
 ~chatnpc("<p,angry>It came from the west somewhere.|It is extremely quick spreading, and utterly deadly.");
 ~chatplayer("<p,neutral>What are the symptoms?");
-~chatnpc("<p,confused>It varies slightly from case to case,|but usually abnormal nightmares and flue-like symptoms,|progressing as you succumb more.");
+~chatnpc("<p,confused>It varies slightly from case to case,|but usually abnormal nightmares and flu-like symptoms,|progressing as you succumb more.");
 ~chatnpc("<p,confused>Eventually it results in the presence of a thick black tar-like substance secreted from the nose and eyes.");
 ~chatnpc("<p,sad>Unfortunately if you reach this stage of infection then no one can save you.");
 
