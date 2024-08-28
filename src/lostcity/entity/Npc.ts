@@ -68,6 +68,7 @@ export default class Npc extends PathingEntity {
     queue: LinkList<EntityQueueRequest> = new LinkList();
     timerInterval: number = 0;
     timerClock: number = 0;
+    regenClock: number = 0;
     huntMode: number = -1;
     nextHuntTick: number = -1;
     huntrange: number = 0;
@@ -98,9 +99,7 @@ export default class Npc extends PathingEntity {
             this.baseLevels[index] = level;
         }
 
-        if (npcType.timer !== -1) {
-            this.setTimer(npcType.timer);
-        }
+        this.setTimer(npcType.timer);
 
         this.vars = new Int32Array(VarNpcType.count);
         this.varsString = new Array(VarNpcType.count);
@@ -248,7 +247,7 @@ export default class Npc extends PathingEntity {
             // nothing
         }
 
-        const moved = this.lastX !== this.x || this.lastZ !== this.z;
+        const moved = this.lastTickX !== this.x || this.lastTickZ !== this.z;
         if (moved) {
             this.lastMovement = World.currentTick + 1;
         }
@@ -285,8 +284,10 @@ export default class Npc extends PathingEntity {
     }
 
     setTimer(interval: number) {
-        this.timerInterval = interval;
-        this.timerClock = 0;
+        if (interval !== -1) {
+            this.timerInterval = interval;
+            this.timerClock = 0;
+        }
     }
 
     executeScript(script: ScriptState) {
@@ -318,8 +319,26 @@ export default class Npc extends PathingEntity {
         }
     }
 
+    processRegen() {
+        const type = NpcType.get(this.type);
+        if (type.regenRate !== 0 && ++this.regenClock >= type.regenRate) {
+            this.regenClock = 0;
+
+            for (let index = 0; index < this.baseLevels.length; index++) {
+                const stat = this.levels[index];
+                const baseStat = this.baseLevels[index];
+                if (stat < baseStat) {
+                    this.levels[index]++;
+                } else if (stat > baseStat) {
+                    this.levels[index]--;
+                }
+            }
+
+        }
+    }
+
     processTimers() {
-        if (this.timerInterval !== 0 && ++this.timerClock >= this.timerInterval) {
+        if (this.timerInterval !== 0 && this.timerClock >= this.timerInterval) {
             this.timerClock = 0;
 
             const type = NpcType.get(this.type);
@@ -811,6 +830,8 @@ export default class Npc extends PathingEntity {
         return null;
     }
 
+    // https://x.com/JagexAsh/status/1821236327150710829
+    // https://x.com/JagexAsh/status/1799793914595131463
     huntAll(): void {
         if (this.nextHuntTick > World.currentTick) {
             return;
@@ -865,7 +886,7 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
-            if (this.target !== player && !World.gameMap.multimap.has(Position.packCoord(player.level, player.x, player.z))) {
+            if (this.target !== player && !World.gameMap.isMulti(Position.packCoord(player.level, player.x, player.z))) {
                 if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
                     continue;
                 } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {

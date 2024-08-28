@@ -40,12 +40,12 @@ inv_clear(trawler_catch);
 p_teleport(map_findsquare(^trawler_start_center_under, 0, 4, ^map_findsquare_lineofwalk));
 %boat_takeoff = 11;
 %trawler = ^trawler_sailed;
-if_openmainmodal(ship_journey);
+if_openmain(ship_journey);
 midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 
 p_delay(20);
 if_close;
-if_openmainmodal(trawler_help);
+if_openmain(trawler_help);
 // CamShake(type = 4, shakeIntensity = 0, movementIntensity = 20, speed = 4)
 // CamShake(type = 1, shakeIntensity = 0, movementIntensity = 20, speed = 5)
 cam_shake(4, 0, 20, 4);

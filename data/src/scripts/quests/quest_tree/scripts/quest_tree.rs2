@@ -50,7 +50,7 @@ if(%tree_progress >= ^tree_ballista_fired) {
     ~mesbox("The wall has been reduced to rubble.|It should be possible to climb over the remains.");
     if_close;
     def_coord $start = movecoord(loc_coord, 0, 0, -1);
-    ~forcewalk($start);
+    ~forcewalk2($start);
     ~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord($start, 0, 0, 2), 30, 100, ^exact_north, true);
     p_teleport(movecoord(coord, 0, 0, 1));
     if(%tree_progress = ^tree_ballista_fired & npc_find(coord, khazard_commander, 4, 0) = true) {

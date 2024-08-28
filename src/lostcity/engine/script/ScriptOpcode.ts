@@ -110,13 +110,14 @@ enum ScriptOpcode {
     HINT_PLAYER, // todo: take active_player
     HINT_STOP,
     IF_CLOSE, // official
-    IF_CLOSESTICKY,
-    IF_MULTIZONE,
+    TUT_CLOSE,
+    IF_MULTIZONE, // moved to engine, remove this
     IF_OPENCHAT,
-    IF_OPENCHATSTICKY,
-    IF_OPENMAINMODAL,
-    IF_OPENMAINMODALSIDEOVERLAY,
-    IF_OPENSIDEOVERLAY,
+    TUT_OPEN,
+    IF_OPENMAIN,
+    // IF_OPENOVERLAY comes later
+    IF_OPENMAIN_SIDE,
+    IF_OPENSIDE,
     IF_SETANIM, // official
     IF_SETCOLOUR, // official
     IF_SETHIDE, // official
@@ -129,7 +130,7 @@ enum ScriptOpcode {
     IF_SETRESUMEBUTTONS,
     IF_SETTAB,
     IF_SETTABACTIVE,
-    IF_SETTABFLASH,
+    TUT_FLASH,
     IF_SETTEXT, // official
     LAST_LOGIN_INFO,
     LAST_COM,

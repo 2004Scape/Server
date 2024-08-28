@@ -1,6 +1,5 @@
 [debugproc,hit](int $amount)
-~damage_self($amount);
-
+queue(damage_player, 0, $amount);
 [proc,combat_clearqueue]
 clearqueue(playerhit_n_retaliate);
 clearqueue(damage_player);

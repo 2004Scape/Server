@@ -18,17 +18,18 @@ describe('Jagfile', (): void => {
 
     describe('constructor', (): void => {
         it('result after creation', (): void => {
-            const packet: Packet = new Packet(new Uint8Array(18));
+            const packet: Packet = new Packet(new Uint8Array(19));
             packet.p3(1); // unpackedSize
             packet.p3(1); // packedSize
             packet.p2(1); // fileCount
             packet.p4(-1502153170); // hitmarks.dat
             packet.p3(1); // fileUnpackedSize[0]
             packet.p3(1); // filePackedSize[0]
+            packet.p1(255); // add one byte of data to match `filePackedSize`
             packet.pos = 0;
             const jagfile: Jagfile = new Jagfile(packet);
 
-            expect(jagfile.data?.length).toBe(18);
+            expect(jagfile.data?.length).toBe(19);
             expect(jagfile.fileCount).toBe(1);
             expect(jagfile.fileHash[0]).toBe(-1502153170);
             expect(jagfile.fileName[0]).toBe('hitmarks.dat');
@@ -41,20 +42,22 @@ describe('Jagfile', (): void => {
 
             expect(jagfile.read('kekw')).toBeNull();
             expect(jagfile.read('hitmarks.dat')).not.toBeNull();
+            expect(jagfile.read('hitmarks.dat')?.data).toStrictEqual(new Uint8Array([255]));
         });
 
         it('result after delete', (): void => {
-            const packet: Packet = new Packet(new Uint8Array(18));
+            const packet: Packet = new Packet(new Uint8Array(19));
             packet.p3(1); // unpackedSize
             packet.p3(1); // packedSize
             packet.p2(1); // fileCount
             packet.p4(-1502153170); // hitmarks.dat
             packet.p3(1); // fileUnpackedSize[0]
             packet.p3(1); // filePackedSize[0]
+            packet.p1(255); // add one byte of data to match `filePackedSize`
             packet.pos = 0;
             const jagfile: Jagfile = new Jagfile(packet);
 
-            expect(jagfile.data?.length).toBe(18);
+            expect(jagfile.data?.length).toBe(19);
             expect(jagfile.fileCount).toBe(1);
             expect(jagfile.fileHash[0]).toBe(-1502153170);
             expect(jagfile.fileName[0]).toBe('hitmarks.dat');
@@ -72,17 +75,18 @@ describe('Jagfile', (): void => {
         });
 
         it('result after write', (): void => {
-            const packet: Packet = new Packet(new Uint8Array(18));
+            const packet: Packet = new Packet(new Uint8Array(19));
             packet.p3(1); // unpackedSize
             packet.p3(1); // packedSize
             packet.p2(1); // fileCount
             packet.p4(-1502153170); // hitmarks.dat
             packet.p3(1); // fileUnpackedSize[0]
             packet.p3(1); // filePackedSize[0]
+            packet.p1(255); // add one byte of data to match `filePackedSize`
             packet.pos = 0;
             const jagfile: Jagfile = new Jagfile(packet);
 
-            expect(jagfile.data?.length).toBe(18);
+            expect(jagfile.data?.length).toBe(19);
             expect(jagfile.fileCount).toBe(1);
             expect(jagfile.fileHash[0]).toBe(-1502153170);
             expect(jagfile.fileName[0]).toBe('hitmarks.dat');
@@ -100,17 +104,18 @@ describe('Jagfile', (): void => {
         });
 
         it('result after rename', (): void => {
-            const packet: Packet = new Packet(new Uint8Array(18));
+            const packet: Packet = new Packet(new Uint8Array(19));
             packet.p3(1); // unpackedSize
             packet.p3(1); // packedSize
             packet.p2(1); // fileCount
             packet.p4(-1502153170); // hitmarks.dat
             packet.p3(1); // fileUnpackedSize[0]
             packet.p3(1); // filePackedSize[0]
+            packet.p1(255); // add one byte of data to match `filePackedSize`
             packet.pos = 0;
             const jagfile: Jagfile = new Jagfile(packet);
 
-            expect(jagfile.data?.length).toBe(18);
+            expect(jagfile.data?.length).toBe(19);
             expect(jagfile.fileCount).toBe(1);
             expect(jagfile.fileHash[0]).toBe(-1502153170);
             expect(jagfile.fileName[0]).toBe('hitmarks.dat');

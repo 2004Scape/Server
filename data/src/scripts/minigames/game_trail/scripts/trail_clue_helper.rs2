@@ -77,7 +77,7 @@ while ($slot < inv_size(inv)) {
 mes("Well done you've completed the Treasure Trail!");
 midi_jingle(^treasure_hunt_win_jingle, ^treasure_hunt_win_jingle_millis);
 inv_transmit(reward, trail_reward:inv);
-if_openmainmodal(trail_reward);
+if_openmain(trail_reward);
 queue(trail_give_reward, 0);
 
 [queue,trail_give_reward]

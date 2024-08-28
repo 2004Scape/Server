@@ -13,12 +13,6 @@ val=60
 inputtype=autoint
 outputtype=int
 default=null
-val=5
-val=10
-val=20
-val=30
-val=40
-
 
 [levelup_unlocks_ranged]
 inputtype=autoint
@@ -121,6 +115,8 @@ val=43
 inputtype=autoint
 outputtype=int
 default=null
+val=35
+val=52
 
 [levelup_unlocks_herblore]
 inputtype=autoint

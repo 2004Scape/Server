@@ -155,7 +155,7 @@ switch_obj ($last_item)
         return;
 }
 
-if_openmainmodal(smithing);
+if_openmain(smithing);
 
 [label,attempt_smithing](obj $last_item, int $count)
 if_close;

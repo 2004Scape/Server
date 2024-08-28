@@ -102,7 +102,7 @@ if (map_multi(npc_coord) = true) {
 }
 // player has been attacked in the last 8 ticks, and not by the current npc
 // or player has been attacked in the last 8 ticks, and %aggressive_npc is null (for pvp)
-if (add(%lastcombat, 8) > map_clock & (%aggressive_npc ! npc_uid | %aggressive_npc = null)) {
+if (add(%lastcombat, 8) > map_clock & (%aggressive_npc ! npc_uid & %aggressive_npc ! null)) {
     mes("I'm already under attack.");
     return(false);
 }

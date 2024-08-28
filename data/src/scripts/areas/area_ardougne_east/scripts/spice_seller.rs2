@@ -11,3 +11,9 @@ if($option = 1) {
 } else if($option = 2) {
     ~chatplayer("<p,neutral>No thanks.");
 }
+
+[opnpc3,spice_seller]
+if (map_clock < %last_stolen_from_stall_spice) {
+    @stall_owner_alert_guards;
+}
+~openshop_activenpc;

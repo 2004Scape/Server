@@ -25,7 +25,7 @@ if ((%dragon_progress = ^quest_dragon_ned_given_map | %dragon_progress = ^quest_
     %boat_takeoff = ^sail_port_sarim_to_crandor;
 
     if_settext(ship_journey:com_0, "You sail to Crandor Isle.");
-    if_openmainmodal(ship_journey);
+    if_openmain(ship_journey);
     midi_jingle(^sailing_journey_jingle, ^sailing_journey_jingle_millis);
 
     p_telejump(^crandor_tele_coord);

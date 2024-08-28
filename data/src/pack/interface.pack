@@ -140,11 +140,11 @@
 139=multiobj2
 140=multiobj2:com_0
 141=multiobj2:com_1
-142=multiobj2:com_2
-143=multiobj2:com_3
-144=multiobj2:com_4
-145=multiobj2:com_5
-146=multiobj2:com_6
+142=multiobj2:obj1
+143=multiobj2:obj2
+144=multiobj2:objtext1
+145=multiobj2:objtext2
+146=multiobj2:title
 147=controls
 148=controls:com_0
 149=controls:com_1

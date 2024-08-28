@@ -26,6 +26,8 @@ import {
 import Environment from '#lostcity/util/Environment.js';
 
 const ObjOps: CommandHandlers = {
+    // https://x.com/JagexAsh/status/1679942100249464833
+    // https://x.com/NobodyImpo74600/status/1791469645939065036
     [ScriptOpcode.OBJ_ADD]: state => {
         const [coord, objId, count, duration] = state.popInts(4);
 
@@ -63,6 +65,7 @@ const ObjOps: CommandHandlers = {
         }
     },
 
+    // https://x.com/JagexAsh/status/1778879334167548366
     [ScriptOpcode.OBJ_ADDALL]: state => {
         const [coord, objId, count, duration] = state.popInts(4);
 
@@ -134,6 +137,7 @@ const ObjOps: CommandHandlers = {
         state.pushInt(check(state.activeObj.type, ObjTypeValid).id);
     },
 
+    // https://x.com/JagexAsh/status/1679942100249464833
     [ScriptOpcode.OBJ_TAKEITEM]: state => {
         const invType: InvType = check(state.popInt(), InvTypeValid);
 
@@ -182,6 +186,9 @@ const ObjOps: CommandHandlers = {
         state.pointerAdd(ActiveObj[state.intOperand]);
         state.pushInt(1);
     }
+
+    // obj_setvar // https://x.com/JagexAsh/status/1679942100249464833
+    // obj_adddelayed // https://x.com/JagexAsh/status/1730321158858276938
 };
 
 export default ObjOps;

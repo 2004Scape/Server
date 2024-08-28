@@ -504,8 +504,6 @@ manwear=model_265_obj_wear,0
 womanwear=model_428_idk,0
 weight=2lb
 tradeable=yes
-param=magicattack,2
-param=magicdefence,2
 
 [pink_skirt]
 cost=2

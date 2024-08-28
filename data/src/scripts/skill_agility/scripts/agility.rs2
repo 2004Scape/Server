@@ -66,12 +66,12 @@ if (map_blocked(movecoord(coord, 0, 0, $move_z)) = true) { // z block
 }
 if (map_blocked(movecoord(coord, $move_x, 0, 0)) = true) { // x block
     $move_x = 0;
-} 
+}
 if (map_blocked(movecoord(coord, $move_x, 0, $move_z)) = true) { // diagonal blocked, convert to horiz/vert movement
-    if (map_blocked(movecoord(coord, 0, 0, $move_z)) = false) { // try horiz
-        $move_x = 0;
-    } else if (map_blocked(movecoord(coord, $move_x, 0, 0)) = false) { // try vert
+    if (map_blocked(movecoord(coord, $move_x, 0, 0)) = false) { // try vert
         $move_z = 0;
+    } else if (map_blocked(movecoord(coord, 0, 0, $move_z)) = false) { // try horiz
+        $move_x = 0;
     } else {
         $move_x = 0;
         $move_z = 0;
@@ -114,30 +114,21 @@ if (gender() = 0) {
 mes($message);
 p_delay(0);
 
-// forces the player to walk to a certain coord, ignoring their current run setting, can be used to setup obstacles
-// or for cutscenes
-[proc,forcewalk](coord $dest_coord)
-if(coord = $dest_coord) {
-    return;
-}
-bas_running(null);
-def_int $dx = abs(calc(coordx(coord) - coordx($dest_coord)));
-def_int $dz = abs(calc(coordz(coord) - coordz($dest_coord)));
-def_int $delay = calc($dx + $dz - 1);
-p_delay(0);
-p_walk($dest_coord);
-p_delay($delay);
-~update_bas;
-
 // Forces the player to walk to a certain coord. Basically p_teleport but doesnt telejump from a distance.
 // doesnt respect clipping
 [proc,forcemove](coord $dest_coord)
 ~agility_force_move(0, human_walk_f, $dest_coord);
 
-[proc,forcemove2](coord $dest_coord)(int)
+// does a delayed walk to a certain coord using p_teleport (we can't use p_walk for this)
+[proc,forcewalk](coord $dest_coord)(int)
 def_int $change_x = calc(coordx($dest_coord) - coordx(coord));
 def_int $change_z = calc(coordz($dest_coord) - coordz(coord));
 ~clipped_telewalk($change_x, $change_z);
+
+// forces the player to delayed "walk" to a certain coord, used for agility obstacle setups
+[proc,forcewalk2](coord $dest_coord)
+p_delay(0);
+~forcewalk($dest_coord);
 
 // Instant fail, not used as often
 [proc,agility_instant_fail](coord $fail_coord, int $damage, string $message)

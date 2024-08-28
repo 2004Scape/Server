@@ -59,7 +59,7 @@ if(coordz(coord) > coordz(loc_coord)) {
     return;
 }
 // Enter tube
-~forcewalk(movecoord(loc_coord, 0, 0, -1));
+~forcewalk2(movecoord(loc_coord, 0, 0, -1));
 if(%gnome_obstacle_pipe_used >= map_clock) {
     mes("The pipe is being used"); 
     return;

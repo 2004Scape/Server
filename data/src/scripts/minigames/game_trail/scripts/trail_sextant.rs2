@@ -1,5 +1,5 @@
 [opheld1,trail_sextant]
-if_openmainmodal(trail_sextant);
+if_openmain(trail_sextant);
 %temp = 0;
 ~randomize_sextant_pos;
 

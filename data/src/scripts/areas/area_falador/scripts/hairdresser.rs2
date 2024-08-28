@@ -24,9 +24,9 @@ if(inv_total(inv, coins) < $cost) { // chisel dialogue, confirm for 2004
 %option2 = 0;
 ~chatnpc("<p,happy>Please select the hairstyle and colour you would like from this brochure.");
 if(gender = ^gender_male) {
-    if_openmainmodal(player_kit_hair_man);
+    if_openmain(player_kit_hair_man);
 } else {
-    if_openmainmodal(player_kit_hair_woman);
+    if_openmain(player_kit_hair_woman);
 }
 
 [label,hairdresser_b1_s2]
@@ -41,7 +41,7 @@ if(inv_total(inv, coins) < 1000) { // chisel dialogue, confirm for 2004
 %option1 = 0;
 %option2 = 0;
 ~chatnpc("<p,happy>Please select the facial hair you would like from this brochure.");
-if_openmainmodal(player_kit_hair_jaw);
+if_openmain(player_kit_hair_jaw);
 
 [label,hairdresser_b1_s3]
 ~chatplayer("<p,neutral>No thank you.");

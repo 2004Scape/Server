@@ -32,6 +32,9 @@ if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opnpc(2);
     return;
 }
+
+~player_combat_stat; // update combat varps before calculating action_delay and shooting
+
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
@@ -49,8 +52,6 @@ if ($ammo = null) {
     ~update_all($rhand);
     return;
 }
-
-~player_combat_stat; // update combat varps before swinging
 
 // check hit, give combat xp
 def_int $damage = 0;

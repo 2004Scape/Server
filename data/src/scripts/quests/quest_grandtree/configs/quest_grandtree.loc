@@ -138,14 +138,14 @@ op1=Climb-down
 [loc_2449]
 name=Daconia rocks
 desc=Some magical rocks.
-model=model_loc_450
+model=plainrock1
 recol1s=6342
 recol1d=4264
 
 [loc_2450]
 name=Daconia rocks
 desc=Some magical rocks.
-model=model_loc_12
+model=plainrock2
 recol1s=6342
 recol1d=4264
 

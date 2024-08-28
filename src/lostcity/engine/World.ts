@@ -745,11 +745,15 @@ class World {
     private processNpcs(): void {
         const start: number = Date.now();
         for (const npc of this.npcs) {
-            if (!npc.checkLifeCycle(this.currentTick)) {
-                continue;
-            }
-
             try {
+                // timers continue to tick when npc is despawned
+                if (npc.timerInterval !== 0) {
+                    npc.timerClock++;
+                }
+                if (!npc.checkLifeCycle(this.currentTick)) {
+                    continue;
+                }
+    
                 if (npc.delayed()) {
                     npc.delay--;
                 }
@@ -769,6 +773,7 @@ class World {
                 }
 
                 // - stat regen
+                npc.processRegen();
                 // - timer
                 npc.processTimers();
                 // - queue
@@ -1343,8 +1348,10 @@ class World {
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
         if (receiverId !== -1 && objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members)) {
-            obj.setLifeCycle(this.currentTick + 100);
-            this.trackZone(this.currentTick + 100, zone);
+            // objs always reveal 100 ticks after being dropped.
+            const reveal: number = this.currentTick + Obj.REVEAL;
+            obj.setLifeCycle(reveal);
+            this.trackZone(reveal, zone);
             this.trackZone(this.currentTick, zone);
             obj.receiverId = receiverId;
             obj.reveal = duration;
@@ -1358,10 +1365,14 @@ class World {
     revealObj(obj: Obj): void {
         // console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
         const duration: number = obj.reveal;
+        const change: number = obj.lastChange;
         const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
         zone.revealObj(obj, obj.receiverId);
-        obj.setLifeCycle(this.currentTick + duration);
-        this.trackZone(this.currentTick + duration, zone);
+        // objs next life cycle always starts from the last time they changed + the inputted duration.
+        // accounting for reveal time here.
+        const nextLifecycle: number = (change !== -1 ? (Obj.REVEAL - (this.currentTick - change)) : 0) + this.currentTick + duration;
+        obj.setLifeCycle(nextLifecycle);
+        this.trackZone(nextLifecycle, zone);
         this.trackZone(this.currentTick, zone);
     }
 

@@ -1,13 +1,12 @@
 [oploc1,loc_1947]
 ~require_members_feature;
-if(stat(agility) < 5) {
-    mes("You need an Agility level of 5 to climb this.");
-    return;
-}
 if(loc_coord ! 0_45_52_55_27) {
     // these walls are reused in the barb course for some reason (not the wall you climb)
     // TODO: figure out what would happen if you interact with those ones
-    ~displaymessage(^dm_default);
+    return;
+}
+if(stat(agility) < 5) {
+    mes("You need an Agility level of 5 to climb this.");
     return;
 }
 def_int $dir = ^exact_east; 
@@ -135,7 +134,7 @@ if(coordz(loc_coord) > coordz(loc_param(start_coord))) {
 }
 // osrs does this with running, video from july 2006 shows 1 tile walk at the start,
 // teleport to the end of the spikes and walk 1 tile to the end of the bars
-~forcewalk($start_coord);
+~forcewalk2($start_coord);
 facesquare(movecoord(coord, 0, 0, calc($dist_mod)));
 anim(monkeybar_jump_up, 0);
 p_delay(0);

@@ -29,7 +29,7 @@ mapscene=7
 [loc_12]
 name=Rock pile
 desc=A pile of rocks is blocking my path.
-model=model_loc_12
+model=plainrock2
 op1=Climb-over
 recol1s=6342
 recol1d=15749
@@ -2118,7 +2118,7 @@ length=4
 [loc_454]
 name=Cave rocks
 desc=Solid rock from the cave floor.
-model=model_loc_12
+model=plainrock2
 mapscene=12
 blockrange=no
 recol1s=6342
@@ -3512,17 +3512,17 @@ anim=seq_654
 hasalpha=yes
 
 [gas_rocks1]
-model=model_loc_675
+model=macro_plainrock1
 anim=seq_523
 hasalpha=yes
 
 [gas_rocks2]
-model=model_loc_676
+model=macro_plainrock2
 anim=seq_523
 hasalpha=yes
 
 [gas_rocks3]
-model=model_loc_677
+model=macro_plainrock3
 anim=seq_523
 hasalpha=yes
 
@@ -11766,7 +11766,7 @@ forcedecor=yes
 [loc_2234]
 name=Well stacked rocks
 desc=Rocks that have been stacked at regular intervals.
-model=model_loc_450
+model=plainrock1
 op1=Investigate
 op2=Search
 hillskew=yes
@@ -11973,7 +11973,7 @@ op2=Search
 [loc_2257]
 name=Rocks
 desc=A rocky outcrop.
-model=model_loc_450
+model=plainrock1
 hillskew=yes
 op1=Climb
 
@@ -13341,23 +13341,6 @@ active=yes
 op1=Climb-down
 mapscene=7
 
-[loc_2619]
-name=Barrel
-desc=A wooden barrel for storage.
-model=model_loc_362
-op1=Search
-
-[loc_2620]
-name=Crate
-desc=An old crate for storage.
-model=model_loc_0
-op1=Search
-retex1s=darkwood
-retex1d=wood2
-retex2s=elfwood
-retex2d=wood2
-category=empty_crate
-
 [loc_2621]
 name=Door
 model=model_loc_3
@@ -13712,7 +13695,7 @@ op2=Search
 
 [loc_2694]
 name=Rock
-model=model_loc_12
+model=plainrock2
 op2=Climb-to
 blockrange=no
 recol1s=6342
@@ -13728,7 +13711,7 @@ recol1d=15749
 
 [loc_2696]
 name=Rock
-model=model_loc_12
+model=plainrock2
 op2=Climb-to
 blockrange=no
 recol1s=6342
@@ -14453,13 +14436,13 @@ forceapproach=north
 [loc_2830]
 name=Rock
 desc=You can probably jump over from here.
-model=model_loc_12
+model=plainrock2
 op1=Jump-From
 
 [loc_2831]
 name=Rock
 desc=You can probably jump over from here.
-model=model_loc_12
+model=plainrock2
 op1=Jump-From
 
 [loc_2832]
@@ -14485,12 +14468,12 @@ active=yes
 
 [loc_2835]
 name=Rock
-model=model_loc_450
+model=plainrock1
 op1=Search
 
 [loc_2836]
 name=Rock
-model=model_loc_12
+model=plainrock2
 op1=Search
 
 [loc_2837]
@@ -15447,7 +15430,7 @@ op1=Climb
 [loc_2959]
 name=Rocky Ledge
 desc=A dangerous path onwards.
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 hillskew=yes
 op1=Climb-over
@@ -15455,35 +15438,35 @@ op1=Climb-over
 [loc_2960]
 name=Rocky Ledge
 desc=A dangerous path onwards.
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2961]
 name=Rocky Ledge
 desc=A dangerous path onwards.
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2962]
 name=Rocks
 desc=Stoney!
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2963]
 name=Rocks
 desc=Stoney!
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
 [loc_2964]
 name=Rocks
 desc=Stoney!
-model=model_loc_12
+model=plainrock2
 hillskew=yes
 op1=Climb-over
 
@@ -15796,19 +15779,19 @@ op1=Search
 op2=Shut
 forceapproach=east
 
-[loc_3042]
+[tut_copperrock]
 name=Rocks
 desc=A rocky outcrop.
-model=model_loc_450
+model=plainrock1
 op1=Mine
 op2=Prospect
 recol1s=6342
 recol1d=11492
 
-[loc_3043]
+[tut_tinrock]
 name=Rocks
 desc=A rocky outcrop.
-model=model_loc_450
+model=plainrock1
 op1=Mine
 op2=Prospect
 recol1s=6342
@@ -17026,10 +17009,10 @@ width=2
 length=2
 mapscene=0
 
-[loc_3372]
+[ogre_spitroast_raw_chompy]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -17037,10 +17020,10 @@ blockrange=no
 recol1s=26156
 recol1d=19014
 
-[loc_3373]
+[ogre_spitroast_cooked_chompy]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -17048,10 +17031,10 @@ blockrange=no
 recol1s=26156
 recol1d=14690
 
-[loc_3374]
+[ogre_spitroast_burnt_chompy]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -17059,10 +17042,10 @@ blockrange=no
 recol1s=26156
 recol1d=6273
 
-[loc_3375]
+[ogre_spitroast]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3375
+model=model_ogre_spitroast
 width=2
 anim=seq_1016
 hasalpha=yes
@@ -17080,24 +17063,24 @@ blockrange=no
 recol1s=10400
 recol1d=12580
 
-[loc_3377]
+[chompybird_ogre_chest_closed]
 name=Locked Ogre chest
 desc=Hmmm, a rock for a lock....
-model=model_loc_3377
+model=chompybird_ogre_chest_closed
 width=2
 op1=Unlock
 
-[loc_3378]
+[chompybird_ogre_chest_open]
 name=Unlocked Ogre chest
 desc=Some stealthy thief must have picked the ogre lock!
-model=model_loc_3378
+model=chompybird_ogre_chest_open
 width=2
 op1=Search
 
 [loc_3382]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
@@ -17106,7 +17089,7 @@ blockrange=no
 [loc_3383]
 name=Ogre spitroast
 desc=Useful for ogre dinners.
-model=model_loc_3372
+model=model_ogre_spitroast_with_chompy
 width=2
 anim=spit_anim
 hasalpha=yes
