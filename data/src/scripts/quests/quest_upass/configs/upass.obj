@@ -24,7 +24,7 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
-param=orb_bit,0
+param=orb_bit,^upass_orb1_bit
 
 [obj_1482]
 name=Orb of light
@@ -37,7 +37,7 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
-param=orb_bit,1
+param=orb_bit,^upass_orb2_bit
 
 [obj_1483]
 name=Orb of light
@@ -50,7 +50,7 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
-param=orb_bit,2
+param=orb_bit,^upass_orb3_bit
 
 [obj_1484]
 name=Orb of light
@@ -63,7 +63,7 @@ model=model_loc_3361_8
 weight=1lb
 members=yes
 param=no_alchemy,1
-param=orb_bit,3
+param=orb_bit,^upass_orb4_bit
 
 [damp_cloth]
 name=Damp cloth
@@ -147,7 +147,7 @@ recol1d=15556
 weight=12g
 members=yes
 
-[obj_1491]
+[upass_witches_cat]
 name=Witches cat
 desc=A cat.
 model=model_3006_obj
@@ -193,7 +193,7 @@ weight=8oz
 members=yes
 iop1=Read
 
-[obj_1494]
+[history_of_iban]
 name=History of iban
 desc=The tale of Iban.
 category=category_1328
@@ -206,7 +206,7 @@ weight=8oz
 members=yes
 iop1=Read
 
-[obj_1495]
+[klanks_gauntlets]
 name=Klank's gauntlets
 desc=Strong dwarvish gloves.
 cost=6
@@ -245,7 +245,7 @@ model=model_2793_obj
 weight=100g
 members=yes
 
-[obj_1497]
+[amulet_of_othanian]
 name=Amulet of othanian
 desc=A mystical demonic amulet.
 cost=0
@@ -262,7 +262,7 @@ recol2d=10240
 weight=10g
 members=yes
 
-[obj_1498]
+[amulet_of_doomion]
 name=Amulet of doomion
 desc=A mystical demonic amulet.
 cost=0
@@ -279,7 +279,7 @@ recol2d=10240
 weight=10g
 members=yes
 
-[obj_1499]
+[amulet_of_holthion]
 name=Amulet of holthion
 desc=A mystical demonic amulet.
 cost=0
@@ -296,7 +296,7 @@ recol2d=10240
 weight=10g
 members=yes
 
-[obj_1500]
+[ibans_shadow]
 name=Iban's shadow
 desc=A strange dark liquid.
 cost=2
@@ -320,7 +320,7 @@ weight=150g
 name=Dwarf brew
 desc=Smells stronger than most spirits.
 
-[obj_1502]
+[ibans_ashes]
 name=Iban's ashes
 desc=The burnt remains of Iban.
 cost=2

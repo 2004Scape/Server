@@ -33,6 +33,13 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
     }
 } else if(%biohazard_progress = ^biohazard_complete) {
     switch_int(%upass_progress) {
+        case ^upass_defeated_iban:
+            ~chatnpc("<p,quiz>The traveller returns, any news?");
+            ~chatplayer("<p,happy>Indeed, the quest is complete, Lathas. I have defeated Iban and his undead minions.");
+            ~chatnpc("<p,happy>Once our mages have re-summoned the well, I will send a band of troops led by yourself to head into west RuneScape and stop Tyras.");
+            ~chatplayer("<p,neutral>I will be ready and waiting.");
+            ~chatnpc("<p,happy>Your loyalty is appreciated, traveller.");
+            queue(upass_quest_complete, 0);
         case ^upass_not_started:
             ~chatplayer("<p,happy>Hello King Lathas.");
             ~chatnpc("<p,happy>Adventurer, thank Saradomin for your arrival!");

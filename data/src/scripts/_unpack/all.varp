@@ -198,8 +198,6 @@ scope=perm
 [gnomeball_progress]
 scope=perm
 
-[varp_162]
-
 [varp_163]
 
 [varp_164]
@@ -380,7 +378,9 @@ scope=perm
 
 [varp_283]
 
-[varp_288]
+[iban_staff_charges]
+
+[varp_289]
 
 [ring_of_recoil]
 scope=perm

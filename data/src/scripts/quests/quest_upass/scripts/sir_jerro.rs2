@@ -14,7 +14,7 @@ if(%upass_progress >= ^upass_entered_main_area) {
     @upass_paladin_after_killed;
 }
 ~chatplayer("<p,happy>Hello Paladin.");
-if(testbit(%upass_map_mechanisms, 15) = true) {
+if(testbit(%upass_map_mechanisms, ^upass_spoken_jerro) = true) {
     ~chatnpc("<p,neutral>You should leave this place now traveller, I heard the crashing of rocks further down the cavern. Iban must be restless.");
     ~chatnpc("<p,neutral>I doubt not that Zamorak still influences these caverns. A little further on lies the great door of Iban. We've tried everything, but it will not let us enter. Leave now before Iban awakes and it's too late.");
     return;
@@ -28,7 +28,7 @@ inv_add(inv, 2dose1attack, 1);
 inv_add(inv, bread, 2);
 inv_add(inv, 2doseprayerrestore, 1);
 mes("The Paladin gives you some food.");
-%upass_map_mechanisms = setbit(%upass_map_mechanisms, 15);
+%upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_spoken_jerro);
 ~chatplayer("<p,happy>Great, thanks a lot.");
 
 [label,upass_paladin_after_killed]

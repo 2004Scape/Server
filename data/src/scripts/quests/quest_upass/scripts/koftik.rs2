@@ -83,15 +83,28 @@ switch_int(%upass_progress) {
 
 
 [opnpc1,npc_975]
-if(testbit(%upass_map_mechanisms, 20) = true) {
+if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = true) {
     // TODO: check mesanim I closed dialogue on rs3, it's happy on OSRS but dialogue is a bit different
     ~chatnpc("<p,happy>Nice job killing those Paladins. You're much closer to his side now. Perhaps you could kill those dwarfs to the south...");
     return;
 }
 @koftik_isthatyou;
 
+[opnpc1,npc_976]
+~chatnpc("<p,confused>Traveller, where am I? I can't remember a thing!");
+~chatplayer("<p,sad>We were losing you to Iban's influence...");
+~chatnpc("<p,confused>What?..of course, the voices. ...But they've stopped. What happened?");
+~chatplayer("<p,neutral>Iban's dead, I destroyed him.");
+~chatnpc("<p,happy>You've done well, now we must inform the King. He'll have to send in some high mages to resurrect the Well of Voyage. Follow me, I'll lead you out.");
+~chatplayer("<p,happy>At last! I've had enough of caves.");
+if_close;
+mes("Koftik leads you back up through the winding caverns...");
+p_delay(3); // 3t
+p_teleport(0_38_151_49_53);
+mes("...and back to the cave entrance.");
+
 [label,koftik_isthatyou]
-%upass_map_mechanisms = setbit(%upass_map_mechanisms, 20);
+%upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_koftik_gone_insane);
 ~chatnpc("<p,shock>Traveller is that you?.. my friend on a mission!");
 ~chatplayer("<p,quiz>Koftik, you're still here, you should leave.");
 ~chatnpc("<p,quiz>Leave?...leave?..this is my home now. Home with my lord, he talks to me, he's my friend.");

@@ -36,7 +36,7 @@ if(loc_find(0_38_151_33_16, loc_3303) = true) {
 // generates a 5-digit value from 1-5
 // https://x.com/JagexOrion/status/1039548840339296261/photo/4
 [proc,setupassgrilltrap]
-def_int $grid = getbit_range(%upass_map_mechanisms, 4, 13);
+def_int $grid = getbit_range(%upass_map_mechanisms, 22, 31);
 if($grid > 0) { // already set
     return;
 }
@@ -49,14 +49,14 @@ while($counter < 2) {
     $counter = add($counter,1);
 }
 mes("setting grid to: <tostring($value)>");
-%upass_map_mechanisms = setbit_range_toint(%upass_map_mechanisms, $value, 4, 13);
+%upass_map_mechanisms = setbit_range_toint(%upass_map_mechanisms, $value, 22, 31);
 
 [debugproc,testmaze]
 if(p_finduid(uid) = true) ~setupassgrilltrap;
 
 // this is unique for each player, prob just easier to do this w/coord varps...
 [timer,upass_grid_traps]
-def_int $grid_val = getbit_range(%upass_map_mechanisms, 4, 13);
+def_int $grid_val = getbit_range(%upass_map_mechanisms, 22, 31);
 def_int $first_col = modulo(calc(($grid_val / pow(10, 2))), 10);
 def_int $second_col = modulo(calc(($grid_val / pow(10, 1))), 10);
 def_int $third_col = modulo(calc(($grid_val / pow(10, 0))), 10);

@@ -334,8 +334,8 @@ if(stat_random(stat(agility), 90, 300) = false) {
     // sound fall_land
     mes("... but you slip and tumble into the darkness.");
     say("Ouch!");
-    ~damage_self(calc(((stat(hitpoints) * 20) / 100) + 1));
-    if(testbit(%upass_map_mechanisms, 20) = false) {
+    ~damage_self(calc(((stat(hitpoints) * 25) / 100) + 4));
+    if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
         p_delay(0);
         // TODO: figure out how long this should be, only works this way on RS3
         npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), npc_975, 200);

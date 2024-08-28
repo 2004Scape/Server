@@ -527,6 +527,8 @@ recol1s=15855
 recol1d=4228
 model1=model_3010_npc
 model2=model_3006_obj
+// rs3 rate
+respawnrate=50
 param=death_anim,cat_death
 
 [nilhoof]
