@@ -26,7 +26,7 @@ if(%upass_progress = ^upass_found_doll) {
     } else {
         mes("You smear the doll of Iban in the poisoned blood...");
         p_delay(1);
-        %upass_progress = setbit(%upass_progress, ^upass_blood_on_doll);
+        %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_blood_on_doll);
         mes("It smells horrific.");
     }
 }

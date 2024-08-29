@@ -30,12 +30,6 @@ inv_del(inv, $arrow_type, 1);
 inv_add(inv, oc_param($arrow_type, next_obj_stage), 1);
 mes("You light the cloth wrapped arrow head.");
 
-[proc,upass_bridge_shot_success](boolean)
-if(randominc(%com_rangeattack) <= randominc(2000)) {
-    return (true);
-}
-return (false);
-
 [aploc1,loc_3340]
 if(coordx(coord) < coordx(loc_coord)) {
     mes("You don't need to shoot the bridge from this side.");
@@ -69,15 +63,16 @@ if($wearing_lit_arrow = ^false) {
 inv_del(worn, $worn_ammo, 1);
 mes("You fire your arrow at the rope supporting the bridge...");
 anim(human_bow, 0);
-def_boolean $shot_success = ~upass_bridge_shot_success;
 ~coord_projectile(coord, loc_coord, oc_param($worn_ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5);
 p_delay(0);
-if($shot_success = false) {
+if(stat_random(stat(ranged), 90, 300) = false) {
     mes("The arrow just misses the rope.");
     return;
 }
 mes("The arrow impales the rope support.");
 ~forcewalk(0_38_151_22_59);
+~forcewalk2(0_38_151_23_59);
+~forcewalk(0_38_151_23_53);
 ~forcewalk(0_38_151_22_52);
 ~forcewalk(0_38_151_15_52);
 p_delay(0);

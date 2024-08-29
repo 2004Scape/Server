@@ -1,15 +1,14 @@
 ^upass_not_started = 0
-^upass_started = 1
-^upass_spoken_koftik = 2
-^upass_passed_bridge = 3
-^upass_entered_second_area = 4
-^upass_killed_unicorn = 5
-^upass_entered_main_area = 6
-^upass_spoken_nilhoof = 7
-^upass_found_doll = 8
-^upass_confronted_iban = 9
-^upass_defeated_iban = 10
-^upass_complete = 11
+^upass_spoken_koftik = 1
+^upass_passed_bridge = 2
+^upass_entered_second_area = 3
+^upass_killed_unicorn = 4
+^upass_entered_main_area = 5
+^upass_spoken_nilhoof = 6
+^upass_found_doll = 7
+^upass_confronted_iban = 8
+^upass_defeated_iban = 9
+^upass_complete = 10
 
 // bit progress values, following OSRS where applicable (varp 162)
 ^upass_blood_on_doll = 1
@@ -21,6 +20,7 @@
 ^upass_orb3_bit = 7
 ^upass_orb4_bit = 8
 ^upass_dropped_cat = 9
+^upass_started_bit = 11
 ^upass_searched_area2_crate = 12
 ^upass_spoken_jerro = 13
 ^upass_thrown_jerro_badge = 14

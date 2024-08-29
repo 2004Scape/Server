@@ -14,6 +14,7 @@ if(coordz(coord) > coordz(loc_coord)) {
     $dir = ^exact_east; 
     $end = movecoord(loc_coord, 1, 0, 0);
 }
+p_arrivedelay;
 mes("You climb onto the rock...");
 facesquare(loc_coord);
 if(stat_random(stat(agility), 95, 305) = false) {
@@ -51,7 +52,8 @@ mes("It leads into darkness, the stench is unbearable.");
 mes("You surface by the swamp, covered in muck.");
 
 [oploc1,loc_3236]
-~mesbox("The other end of the pipe is blocked by a grill.");
+mes("The other end of the pipe is blocked by a grill.");
+mes("You cannot open the grill from this side.");
 
 [oploc1,loc_3235]
 p_arrivedelay;
@@ -103,7 +105,7 @@ if(stat_random(stat(agility), 100, 410) = false) {
     p_teleport(0_38_150_53_49);
     say("Aargh!");
     p_delay(1);
-    ~damage_self(calc((stat(hitpoints) * 15) / 100));
+    ~damage_self(calc(((stat(hitpoints) * 15) / 100) + 1));
     mes("You've lost your rope.");
     return;
 }
@@ -146,7 +148,7 @@ anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
 p_delay(2); // 2 ticks
 // TODO: check these numbers
-if(stat_random(stat(thieving), 90, 410) = false) {
+if(stat_random(stat(thieving), 110, 320) = false) {
     mes("...and fail, activating the trap!");
     loc_anim(seq_459);
     say("Ouch!");
@@ -213,7 +215,7 @@ anim(human_pickpocket, 0);
 sound_synth(lockeddoor, 0, 0);
 p_delay(2); // 2 ticks
 // TODO: check these numbers
-if(stat_random(stat(thieving), 90, 410) = false) {
+if(stat_random(stat(thieving), 110, 320) = false) {
     mes("...and fail, activating the trap!");
     @upass_orboflight_trap;
 }

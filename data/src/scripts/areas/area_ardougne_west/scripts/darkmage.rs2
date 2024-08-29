@@ -31,7 +31,6 @@ if(inv_total(inv, broken_iban_staff) > 0) {
             ~chatplayer("<p,happy>Thanks. I appreciate that.");
             ~chatnpc("<p,neutral>You be careful with that thing!");
         case 2:
-            // confirm mesanim
-            ~chatnpc("<p,neutral>...Fine by me.");
+            ~chatnpc("<p,bored>...Fine by me.");
     }
 }

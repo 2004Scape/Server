@@ -29,3 +29,7 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 obj_add(npc_coord, zamorak_monk_bottom, 1, ^lootdrop_duration);
 obj_add(npc_coord, zamorak_monk_top, 1, ^lootdrop_duration);
+
+if(%upass_progress = ^upass_complete & ~obj_gettotal(iban_staff) = 0 & ~obj_gettotal(broken_iban_staff) = 0) {
+    obj_add(npc_coord, broken_iban_staff, 1, ^lootdrop_duration);
+}

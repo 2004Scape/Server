@@ -775,6 +775,7 @@ model6=model_286_obj_wear
 model7=model_251_idk
 model8=model_265_obj_wear
 head1=model_83_idk_head
+respawnrate=50
 wanderrange=0
 timer=10
 moverestrict=nomove

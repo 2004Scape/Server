@@ -59,5 +59,5 @@ switch_int(%upass_progress) {
             ~chatnpc("<p,neutral>Good luck to you, you'll need it. May the strength of the Elders be with you...");
             ~chatplayer("<p,neutral>Take care <nc_name(nilhoof)>.");
         }
-    case ^upass_complete: mes("The Dwarf seems to be busy...");
+    case ^upass_defeated_iban, ^upass_complete: mes("The Dwarf seems to be busy...");
 }

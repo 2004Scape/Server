@@ -1,21 +1,10 @@
 [ai_queue3,othainian]
 gosub(npc_death);
-if (npc_findhero = true) {
-    obj_add(npc_coord, ashes, 1, ^lootdrop_duration);
-    if(p_finduid(uid) = true) { // get protected access, if not then queue
-        @defeat_othainian;
-    }
-    queue(queue_defeat_othainian, 0, npc_uid);
-}
-
-
-[queue,queue_defeat_othainian](npc_uid $npc)
-if(npc_finduid($npc) = false) {
+if (npc_findhero = false) {
     return;
 }
-@defeat_othainian;
 
-[label,defeat_othainian]
+obj_add(npc_coord, ashes, 1, ^lootdrop_duration);
 if(%upass_progress = ^upass_found_doll & inv_total(inv, amulet_of_othanian) = 0) {
     obj_add(npc_coord, amulet_of_othanian, 1, ^lootdrop_duration);
 }

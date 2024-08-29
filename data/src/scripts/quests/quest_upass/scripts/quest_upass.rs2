@@ -14,47 +14,53 @@ switch_int(random(8)) {
 }
 cleartimer(iban_say);
 
+[proc,upass_voice]
+if(%upass_progress >= ^upass_defeated_iban) {
+    return;
+}
+settimer(iban_say, ~random_range(1, 15));
+
 // https://x.com/JagexAsh/status/1232279101131706379
 // these are sourced from OSRS, don't think they've been changed
-[zone,0_38_151_0_48] settimer(iban_say, ~random_range(1, 15));
-[zone,0_38_151_16_16] settimer(iban_say, ~random_range(1, 15));
-[zone,0_38_151_56_24] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_151_32_16] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_151_32_0] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_151_8_24] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_151_40_40] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_151_24_40] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_151_16_48] settimer(iban_say, ~random_range(1, 15));
+[zone,0_38_151_0_48] ~upass_voice;
+[zone,0_38_151_16_16] ~upass_voice;
+[zone,0_38_151_56_24] ~upass_voice;
+[zone,0_37_151_32_16] ~upass_voice;
+[zone,0_37_151_32_0] ~upass_voice;
+[zone,0_37_151_8_24] ~upass_voice;
+[zone,0_37_151_40_40] ~upass_voice;
+[zone,0_37_151_24_40] ~upass_voice;
+[zone,0_37_151_16_48] ~upass_voice;
 
-[zone,0_37_150_8_40] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_150_8_0] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_150_16_32] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_150_32_32] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_150_32_16] settimer(iban_say, ~random_range(1, 15));
-[zone,0_37_150_40_0] settimer(iban_say, ~random_range(1, 15));
+[zone,0_37_150_8_40] ~upass_voice;
+[zone,0_37_150_8_0] ~upass_voice;
+[zone,0_37_150_16_32] ~upass_voice;
+[zone,0_37_150_32_32] ~upass_voice;
+[zone,0_37_150_32_16] ~upass_voice;
+[zone,0_37_150_40_0] ~upass_voice;
 
-[zone,0_36_153_8_8] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_8_24] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_8_32] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_16_8] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_32_0] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_24_40] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_40_8] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_40_24] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_40_48] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_16_48] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_153_16_56] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_153_8_8] ~upass_voice;
+[zone,0_36_153_8_24] ~upass_voice;
+[zone,0_36_153_8_32] ~upass_voice;
+[zone,0_36_153_16_8] ~upass_voice;
+[zone,0_36_153_32_0] ~upass_voice;
+[zone,0_36_153_24_40] ~upass_voice;
+[zone,0_36_153_40_8] ~upass_voice;
+[zone,0_36_153_40_24] ~upass_voice;
+[zone,0_36_153_40_48] ~upass_voice;
+[zone,0_36_153_16_48] ~upass_voice;
+[zone,0_36_153_16_56] ~upass_voice;
 
-[zone,0_36_154_16_0] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_154_40_0] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_154_8_8] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_154_24_24] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_154_24_48] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_154_40_24] settimer(iban_say, ~random_range(1, 15));
-[zone,0_36_154_0_56] settimer(iban_say, ~random_range(1, 15));
+[zone,0_36_154_16_0] ~upass_voice;
+[zone,0_36_154_40_0] ~upass_voice;
+[zone,0_36_154_8_8] ~upass_voice;
+[zone,0_36_154_24_24] ~upass_voice;
+[zone,0_36_154_24_48] ~upass_voice;
+[zone,0_36_154_40_24] ~upass_voice;
+[zone,0_36_154_0_56] ~upass_voice;
 
-[zone,1_33_72_48_32] settimer(iban_say, ~random_range(1, 15));
-[zone,1_33_72_48_40] settimer(iban_say, ~random_range(1, 15));
+[zone,1_33_72_48_32] ~upass_voice;
+[zone,1_33_72_48_40] ~upass_voice;
 
 // trap timers, mapzone enter in music.rs2
 [mapzoneexit,0_38_151] cleartimer(upass_trap);
@@ -76,11 +82,11 @@ if(%biohazard_progress < ^biohazard_complete) {
     ~mesbox("You must complete the Biohazard quest before you can enter."); // rs3
     return;
 }
-if(%upass_progress < ^upass_started) {
+if(testbit(%upass_map_mechanisms, ^upass_started_bit) = false) {
     mes("You must talk to King Lathas before you can enter.");
     return;
 }
-if(%upass_progress = ^upass_started) {
+if(testbit(%upass_map_mechanisms, ^upass_started_bit) = true & %upass_progress = ^upass_not_started) {
     if(npc_find(coord, npc_972, 7, 0) = true) {
         @koftik_first_dialogue;
     }
@@ -88,7 +94,6 @@ if(%upass_progress = ^upass_started) {
 }
 mes("You cautiously enter the cave...");
 p_delay(3);
-~setupassgrilltrap;
 p_teleport(0_38_151_62_52);
 
 [oploc1,loc_3214]
@@ -213,6 +218,7 @@ if(last_useitem = spade) {
     mes("You push your way through the tunnel.");
     p_delay(0);
     p_teleport(0_37_150_24_46);
+    return;
 }
 ~displaymessage(^dm_default);
 
@@ -341,7 +347,7 @@ switch_obj(last_useitem) {
     case upass_unicorn_horn:
         mes("You throw the unicorn horn into the flames...");
         p_delay(1);
-        inv_del(inv, upass_carl_badge, 1);
+        inv_del(inv, upass_unicorn_horn, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_thrown_unicorn_horn);
         mes("You hear a howl in the distance.");
     case upass_jerro_badge:
@@ -362,6 +368,14 @@ switch_obj(last_useitem) {
         inv_del(inv, upass_harry_badge, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_thrown_harry_badge);
         mes("You hear a howl in the distance.");
+    case iban_staff:
+        mes("You hold the staff above the well...");
+        p_delay(1);
+        %iban_staff_charges = 120;
+        mes("...And feel the power of Zamorak flow through you.");
+    case default:
+        ~displaymessage(^dm_default);
+        return;
 }
 if(~upass_unicorn_door_unlocked = true) {
     sound_synth(lockeddoor, 0, 0);
@@ -428,6 +442,7 @@ say("Aaarrgghhh");
 if(last_useitem = dwarf_brew) {
     if(%upass_progress = ^upass_found_doll) {
         mes("You pour the strong alcohol over the tomb.");
+        sound_synth(tap_fill, 0, 0);
         inv_del(inv, dwarf_brew, 1);
         inv_add(inv, bucket_empty, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_poured_brew);
@@ -442,6 +457,7 @@ if(last_useitem = dwarf_brew) {
         mes("But it will not light.");
         return;
     }
+    sound_synth(fire_lit, 0, 0);
     mes("It bursts into flames.");
     loc_add(0_36_153_52_8, loc_3357, 3, wall_l, 10);
     loc_add(0_36_153_53_8, loc_3357, 3, wall_straight, 10);
@@ -473,8 +489,12 @@ if(last_useitem = dwarf_brew) {
 [label,upass_soulless_cage]
 p_delay(0);
 def_int $delay = calc(distance(coord, loc_coord) + 1);
-p_walk(loc_coord);
-p_delay($delay);
+~forcewalk(loc_coord);
+p_delay(1);
+// idk why it does this instead of just using oploc lol
+if(distance(coord, loc_coord) > 2) {
+    return;
+}
 mes("The man seems to be entranced.");
 p_delay(1);
 mes("You search through the bottom of the cage...");
@@ -505,7 +525,7 @@ if(inv_total(inv, amulet_of_doomion) > 0 & inv_total(inv, amulet_of_othanian) > 
     p_delay(1);
     mes("...You place them on the chest and it opens.");
     sound_synth(chest_open, 0, 0);
-    loc_change(loc_3275, 10);
+    loc_change(loc_378, 10); // osrs uses 378, you can kind of break this chest for a few minutes but idk if that was original behaviour
     p_delay(1);
     if(inv_total(inv, ibans_shadow) > 0) { // no doll check
         mes("But you find nothing.");
@@ -513,10 +533,11 @@ if(inv_total(inv, amulet_of_doomion) > 0 & inv_total(inv, amulet_of_othanian) > 
     }
     mes("Inside you find a strange dark liquid.");
     inv_add(inv, ibans_shadow, 1);
+    return;
 }
 mes("But it's magically sealed.");
 
-[opobju,doll_of_iban]
+[opheldu,doll_of_iban]
 switch_obj (last_useitem) {
     case ibans_dove:
         p_delay(1);
@@ -530,12 +551,12 @@ switch_obj (last_useitem) {
         mes("You pour the strange liquid over the doll...");
         p_delay(1);
         inv_del(inv, ibans_shadow, 1);
-        %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_dove_on_doll);
+        %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_shadow_on_doll);
         mes("...It seeps into the cloth.");
     case ibans_ashes:
         // https://youtu.be/ZxF473zUZfQ?si=KGkFgkQCiAMmgCv3&t=2789
         p_delay(7); // 8t
-        inv_del(inv, ibans_shadow, 1);
+        inv_del(inv, ibans_ashes, 1);
         %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_ashes_on_doll);
         mes("You rub the ashes into the doll.");
 }
@@ -545,16 +566,16 @@ switch_obj (last_useitem) {
 
 [label,open_iban_door]
 if(coordx(loc_coord) < coordx(coord)) {
-    if(%upass_progress = ^upass_complete) {
-        mes("The temple is in ruins...");
-        p_delay(1);
-        mes("...You cannot enter.");
-        return;
-    }
     if(inv_total(worn, zamorak_monk_top) = 0 | inv_total(worn, zamorak_monk_bottom) = 0 | inv_freespace(worn) ! calc(inv_size(worn) - 2)) {
         mes("The door refuses to open...");
         p_delay(1);
         mes("Only followers of Zamorak may enter.");
+        return;
+    }
+    if(%upass_progress >= ^upass_complete) { // you can still enter after defeating iban and before finishing quest
+        mes("The temple is in ruins...");
+        p_delay(2);
+        mes("...You cannot enter.");
         return;
     }
     mes("You pull open the large doors...");
@@ -605,7 +626,7 @@ mes("The doll is made from old wood and cloth.");
 [oplocu,loc_3359]
 // no nothing interesting happens
 if(last_useitem = doll_of_iban) {
-    // check if doll is complete
+    // check if doll is complete, TODO: how does this work if iban is currently dead
     if(getbit_range(%upass_map_mechanisms, ^upass_blood_on_doll, ^upass_shadow_on_doll) = calc(pow(2,4) - 1)
         & %upass_progress = ^upass_confronted_iban
         & npc_findexact(1_33_72_21_39, lord_iban) = true) {
@@ -648,13 +669,20 @@ if(last_useitem = doll_of_iban) {
         cam_reset;
         p_teleport(0_38_150_50_7);
         return;
+    } else if(%upass_progress >= ^upass_defeated_iban | npc_findexact(1_33_72_21_39, lord_iban) = false) {
+        mes("Iban is already dead...");
     }
     mes("The doll is still incomplete.");
 }
 
+[oploc1,loc_3224]
+if(npc_find(coord, npc_976, 9, 0) = true) {
+    @koftik_whereami;
+}
+
 [oploc1,loc_3295]
 mes("The writing seems to have been scratched");
-mes("into the rock with bare hands, It reads...");
+mes("into the rock with bare hands, it reads...");
 p_delay(1);
 if_settext(stone:com_2, "All those who thirst for knowledge,");
 if_settext(stone:com_3, "Bow down to the lord.");
@@ -668,11 +696,11 @@ if_settext(stone:com_10, ^string_empty);
 if_settext(stone:com_11, ^string_empty);
 if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
-if_openmainmodal(stone);
+if_openmain(stone);
 
 [oploc1,loc_3296]
 mes("The writing seems to have been scratched");
-mes("into the rock with bare hands, It reads...");
+mes("into the rock with bare hands, it reads...");
 p_delay(1);
 if_settext(stone:com_2, "Most men do live in fear of death");
 if_settext(stone:com_3, "that it might steal their soul.");
@@ -686,12 +714,12 @@ if_settext(stone:com_10, "look above and use nature");
 if_settext(stone:com_11, "as your aid.");
 if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
-if_openmainmodal(stone);
+if_openmain(stone);
 
 [oploc1,loc_3297]
 // https://web.archive.org/web/20060908030821im_/http://www.runeweb.net/fireball/Underground%20Pass%20Images/Underground7.PNG
 mes("The writing seems to have been scratched");
-mes("into the rock with bare hands, It reads...");
+mes("into the rock with bare hands, it reads...");
 p_delay(1);
 if_settext(stone:com_2, "And now our God has given us");
 if_settext(stone:com_3, "one who is from our own.");
@@ -705,12 +733,12 @@ if_settext(stone:com_10, ^string_empty);
 if_settext(stone:com_11, ^string_empty);
 if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
-if_openmainmodal(stone);
+if_openmain(stone);
 
 [oploc1,loc_3298]
 // https://youtu.be/f_g1T2GYWfo?si=Z2RTl2pgxZfO-rXv&t=43
 mes("The writing seems to have been scratched");
-mes("into the rock with bare hands, It reads...");
+mes("into the rock with bare hands, it reads...");
 p_delay(1);
 if_settext(stone:com_2, "Here lies the sacred well,");
 if_settext(stone:com_3, "entrance to Iban's hell.");
@@ -724,11 +752,11 @@ if_settext(stone:com_10, ^string_empty);
 if_settext(stone:com_11, ^string_empty);
 if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
-if_openmainmodal(stone);
+if_openmain(stone);
 
 [oploc1,loc_3299]
 mes("The writing seems to have been scratched");
-mes("into the rock with bare hands, It reads...");
+mes("into the rock with bare hands, it reads...");
 p_delay(1);
 if_settext(stone:com_2, "Leave this battered corpse be,");
 if_settext(stone:com_3, "for now he lives as spirit alone.");
@@ -742,7 +770,7 @@ if_settext(stone:com_10, "will Iban's corpse embrace");
 if_settext(stone:com_11, "nature's eternal lust.");
 if_settext(stone:com_12, ^string_empty);
 if_settext(stone:com_13, ^string_empty);
-if_openmainmodal(stone);
+if_openmain(stone);
 
 [queue,upass_quest_complete]
 %upass_progress = ^upass_complete;

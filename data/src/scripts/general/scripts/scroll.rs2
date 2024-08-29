@@ -161,7 +161,7 @@ if_settext(scroll:com_10, "dies in my flames.....");
 if_settext(scroll:com_11, ^string_empty);
 if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, ^string_empty);
-if_openmainmodal(scroll);
+if_openmain(scroll);
 
 [if_close,scroll]
 clearsofttimer(server);

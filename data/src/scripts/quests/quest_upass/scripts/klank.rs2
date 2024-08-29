@@ -58,6 +58,11 @@ switch_int(%upass_progress) {
 
 [label,klank_buygauntlets]
 ~chatplayer("<p,neutral>Okay then, I'll take a pair.");
+if(inv_total(inv, coins) < 5000) {
+    ~chatplayer("<p,sad>Oh dear, I haven't enough money...");
+    ~chatnpc("<p,neutral>Sorry, I can't sell them any cheaper than that.");
+    return;
+}
 if_close;
 inv_del(inv, coins, 5000);
 inv_add(inv, klanks_gauntlets, 1);
