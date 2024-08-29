@@ -33,10 +33,10 @@ recol6d=32767
 model=model_loc_3215
 active=no
 
-[loc_3216]
+[mudpile_upass]
 name=Mud
 desc=A pile of mud.
-model=model_loc_3216
+model=model_mudpile_upass
 forcedecor=yes
 active=yes
 
@@ -254,10 +254,10 @@ width=2
 recol1s=12580
 recol1d=7329
 
-[loc_3238]
+[upass_ledge]
 name=ledge
 desc=Maybe I can cross that.
-model=model_loc_3238
+model=model_upass_ledge
 op1=Cross
 forcedecor=yes
 mapscene=43

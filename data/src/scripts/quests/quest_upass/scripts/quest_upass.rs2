@@ -207,7 +207,7 @@ if(testbit(%upass_map_mechanisms, ^upass_searched_area2_crate) = false) {
 }
 mes("...but you find nothing.");
 
-[oplocu,loc_3216]
+[oplocu,mudpile_upass]
 if(last_useitem = spade) {
     p_arrivedelay;
     anim(human_dig, 0);
@@ -383,10 +383,11 @@ if(~upass_unicorn_door_unlocked = true) {
     mes("It sounded like it came from the skull above the door"); // no period
 }
 
-[oploc1,loc_3220] @open_upass_main_area_door;
-[oploc1,loc_3221] @open_upass_main_area_door;
+[oploc1,loc_3220] @upass_unicorn_door;
+[oploc1,loc_3221] @upass_unicorn_door;
 
-[label,open_upass_main_area_door]
+// https://github.com/RuneStar/leaks/blob/0e0c801b4a9fae9f7c8bad0176652035c5fe306a/295.txt#L12
+[label,upass_unicorn_door]
 // no arrivedelay: https://youtu.be/n_ip_vEDbCA?si=33Kv6dsbs-tpoI8n&t=824 (OSRS does have arrivedelay)
 if(coordz(loc_coord) < 6400) {
     p_teleport(0_37_151_2_55);
