@@ -17,10 +17,10 @@ switch_int(%sheepherder_progress) {
 
 [label,halgrive_whats_wrong]
 ~chatplayer("<p,quiz>What's wrong?");
-~chatnpc("<p,confused>You may or may not be aware,|but a plague has spread across West Ardougne.|Now, so far, our efforts to contain it have|been largely successfully, for the most part.");
-~chatnpc("<p,confused>However, four sheep recently escaped from| a farm near the city. When they were found,|we noticed that they were strangely discolored,|so we asked the mourners to examine them.");
+~chatnpc("<p,confused>You may or may not be aware,|but a plague has spread across West Ardougne.|Now, so far, our efforts to contain it have|been largely successful, for the most part.");
+~chatnpc("<p,confused>However, four sheep recently escaped from| a farm near the city. When they were found,|we noticed that they were strangely discoloured,|so we asked the mourners to examine them.");
 ~chatnpc("<p,sad>They believe that the sheep have|become infected with the plague.");
-~chatnpc("<p,confused>As the councillor response for public health and safety here in East Ardougne, I am looking for someone to herd these sheep into a safe enclosure, kill them quickly and cleanly and then dispose of the remains hygienically in a special incinerator.");
+~chatnpc("<p,confused>As the councillor responsible for public health and safety here in East Ardougne, I am looking for someone to herd these sheep into a safe enclosure, kill them quickly and cleanly and then dispose of the remains hygienically in a special incinerator.");
 ~chatnpc("<p,neutral>Unfortunately nobody wants to risk catching the plague, and I am unable to find someone willing to undertake this mission for me.");
 
 @multi2(
@@ -44,7 +44,7 @@ if (%sheepherder_progress = ^sheepherder_not_started) {
     ~send_quest_progress(questlist:sheepherder, %sheepherder_progress, ^sheepherder_complete);
 }
 ~chatplayer("<p,neutral>How will I know which sheep are infected?");
-~chatnpc("<p,sad>The poor creatures have developed strangely discolored wool and flesh. You should have no trouble spotting them.");
+~chatnpc("<p,sad>The poor creatures have developed strangely discoloured wool and flesh. You should have no trouble spotting them.");
 
 [label,halgrive_before_obtaining_plague_gear]
 ~chatnpc("<p,sad>Please... please find and dispose of those|four diseased sheep as quickly as possible.|Every second the risk of contamination grows!");
@@ -76,7 +76,7 @@ inv_add(inv, poisoned_feed, 1);
 
 [label,halgrive_thats_not_a_job_for_me]
 ~chatplayer("<p,neutral>That's not a job for me.");
-~chatnpc("<p,sad>I do not blame you adventurer. It is not particularly pleasant work. My problem remains however. If you know anyone suitable please them this way; time is of the essence.");
+~chatnpc("<p,sad>I do not blame you adventurer. It is not particularly pleasant work. My problem remains however. If you know anyone suitable please send them this way; time is of the essence.");
 
 // Using the RSC variant. I think the OSRS "More sheep have shown up" is in reference to MEP1 releasing.
 [label,halgrive_after_sheep_herder]
