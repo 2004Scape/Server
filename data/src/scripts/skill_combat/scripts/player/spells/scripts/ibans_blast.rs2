@@ -7,8 +7,8 @@ if (~pvm_combat_spell_checks($spell_data) = false) {
     return;
 }
 if (%iban_staff_charges < 1) {
-    // https://youtu.be/TrxuRyogdEo?list=PLn23LiLYLb1Y4vxMPWXM-CVEvOUfuAP_o&t=60
-    mes("out of charges lol");
+    // https://www.youtube.com/watch?v=vAN4qcGW4T4
+    mes("You have no charges left on the staff."); 
     return;
 }
 ~pvm_spell_cast($spell_data);
