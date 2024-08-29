@@ -131,7 +131,7 @@ if ($consumable ! null & oc_category($consumable) = category_69) {
         p_delay(db_getfield($message_data, consume_messages_table:message_delay2, 0));
     }
     if ($consumable = vial_empty) {
-        mes("You have finished your potion");
+        mes("You have finished your potion.");
         return;
     }
     $consumable = oc_param($consumable, next_obj_stage);

@@ -57,6 +57,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,kitten_greyblack
 param=cat_next_id,follower_cat_greyblack
+blockwalk=none
 
 [follower_kitten_white]
 vislevel=hide
@@ -82,6 +83,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,kitten_white
 param=cat_next_id,follower_cat_white
+blockwalk=none
 
 [follower_kitten_brown]
 vislevel=hide
@@ -107,6 +109,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,kitten_brown
 param=cat_next_id,follower_cat_brown
+blockwalk=none
 
 [follower_kitten_black]
 vislevel=hide
@@ -132,6 +135,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,kitten_black
 param=cat_next_id,follower_cat_black
+blockwalk=none
 
 [follower_kitten_greybrown]
 vislevel=hide
@@ -155,6 +159,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,kitten_greybrown
 param=cat_next_id,follower_cat_greybrown
+blockwalk=none
 
 [follower_kitten_greyblue]
 vislevel=hide
@@ -178,6 +183,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,kitten_greyblue
 param=cat_next_id,follower_cat_greyblue
+blockwalk=none
 
 [follower_cat_greyblack]
 vislevel=hide
@@ -197,6 +203,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,cat_greyblack
 param=cat_next_id,follower_overgrown_greyblack
+blockwalk=none
 
 [follower_cat_white]
 vislevel=hide
@@ -222,6 +229,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,cat_white
 param=cat_next_id,follower_overgrown_white
+blockwalk=none
 
 [follower_cat_brown]
 vislevel=hide
@@ -247,6 +255,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,cat_brown
 param=cat_next_id,follower_overgrown_brown
+blockwalk=none
 
 [follower_cat_black]
 vislevel=hide
@@ -272,6 +281,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,cat_black
 param=cat_next_id,follower_overgrown_black
+blockwalk=none
 
 [follower_cat_greybrown]
 vislevel=hide
@@ -295,6 +305,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,cat_greybrown
 param=cat_next_id,follower_overgrown_greybrown
+blockwalk=none
 
 [follower_cat_greyblue]
 vislevel=hide
@@ -318,6 +329,7 @@ param=death_anim,cat_death
 category=petcat
 param=pet_item_id,cat_greyblue
 param=cat_next_id,follower_overgrown_greyblue
+blockwalk=none
 
 [follower_overgrown_greyblack]
 vislevel=hide
@@ -336,6 +348,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,overgrown_greyblack
+blockwalk=none
 
 [follower_overgrown_white]
 vislevel=hide
@@ -360,6 +373,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,overgrown_white
+blockwalk=none
 
 [follower_overgrown_brown]
 vislevel=hide
@@ -384,6 +398,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,overgrown_brown
+blockwalk=none
 
 [follower_overgrown_black]
 vislevel=hide
@@ -408,6 +423,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,overgrown_black
+blockwalk=none
 
 [follower_overgrown_greybrown]
 vislevel=hide
@@ -430,6 +446,7 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,overgrown_greybrown
+blockwalk=none
 
 [follower_overgrown_greyblue]
 vislevel=hide
@@ -452,3 +469,4 @@ model2=model_3006_obj
 param=death_anim,cat_death
 category=petcat
 param=pet_item_id,overgrown_greyblue
+blockwalk=none
