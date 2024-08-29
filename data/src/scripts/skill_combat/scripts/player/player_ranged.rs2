@@ -83,6 +83,9 @@ if (npc_param(defend_sound) ! null) {
 
 npc_heropoints($damage);
 
+if (npc_type = shadow_spider & %npc_attacking_uid ! uid & ~npc_out_of_combat = true) {
+    ~shadow_spider_drain;
+}
 p_opnpc(2);
 if ($ammo = holy_water) {
     world_delay(calc($delay / 30 - 2));
