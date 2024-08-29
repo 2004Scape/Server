@@ -1,0 +1,35 @@
+[opnpc1,iban_disciple]
+~chatplayer("<p,happy>Hi.");
+if(inv_total(worn, zamorak_monk_bottom) > 0 & inv_total(worn, zamorak_monk_top) > 0) { 
+    // question marks here are all correct 
+    switch_int(random(5)) {
+        case 0:
+            ~chatnpc("<p,neutral>Hail the great one, my lord Iban. I die for you again and again.");
+            ~chatplayer("<p,confused>Is that possible ?");
+            ~chatnpc("<p,neutral>Under Iban anything is possible. Death is only the beginning.");
+        case 1:
+            ~chatnpc("<p,neutral>Iban is our father, our guide. Soon he will rule all life.");
+        case 2:
+            ~chatnpc("<p,neutral>Som Molica Aniul Demonte.");
+            ~chatplayer("<p,confused>Pardon ?");
+        case 3:
+            ~chatnpc("<p,neutral>Succumb to the might of Iban, the ruler of this world.");
+    }
+    return;
+}
+~chatnpc("<p,angry>An impostor... Die, scum!");
+~npc_retaliate(0);
+
+[ai_queue3,iban_disciple]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+obj_add(npc_coord, zamorak_monk_bottom, 1, ^lootdrop_duration);
+obj_add(npc_coord, zamorak_monk_top, 1, ^lootdrop_duration);
+
+if(%upass_progress = ^upass_complete & ~obj_gettotal(iban_staff) = 0 & ~obj_gettotal(broken_iban_staff) = 0) {
+    obj_add(npc_coord, broken_iban_staff, 1, ^lootdrop_duration);
+}

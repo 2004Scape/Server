@@ -1,0 +1,48 @@
+[ai_queue3,kalrag]
+gosub(npc_death);
+if (npc_findhero = true) {
+    queue(defeat_kalrag, 0);
+    return;
+}
+
+[queue,defeat_kalrag]
+npc_huntall(coord, 5, 0);
+while (npc_huntnext = true) {
+    if (npc_type = npc_977) {
+        npc_setmode(opplayer2);
+    }
+}
+mes("Kalrag slumps to the floor...");
+if(%upass_progress = ^upass_found_doll) {
+    p_delay(1);
+    mes("poison flows from the corpse over the soil.");
+    p_delay(1);
+    if(inv_total(inv, doll_of_iban) = 0) {
+        mes("It quickly seeps away into the earth.");
+        p_delay(1);
+        mes("You dare not collect any without Iban's doll.");
+    } else if(testbit(%upass_map_mechanisms, ^upass_blood_on_doll) = true) {
+        mes("You have already collected Iban's blood on the doll.");
+    } else {
+        mes("You smear the doll of Iban in the poisoned blood...");
+        p_delay(1);
+        %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_blood_on_doll);
+        mes("It smells horrific.");
+    }
+}
+
+// Could you originally attack multiple spiders?
+[ai_opplayer2,npc_977] ~blessedspider_attack;
+
+[proc,blessedspider_attack]
+if (stat(hitpoints) = 0) {
+    npc_setmode(null);
+    return;
+}
+if (%npc_action_delay > map_clock) return;
+anim(%com_defendanim, 0);
+npc_anim(npc_param(attack_anim), 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 0, 0);
+}
+~npc_meleeattack;

@@ -1,6 +1,8 @@
 [oplocu,_cooking_oven] @attempt_cook_item(last_useitem);
 [oplocu,_cooking_fire]
-if (%tutorial_progress < ^tutorial_complete) {
+if(oc_param(last_useitem, unlit_arrow) = ^true) { // might not work on every fire?
+    @light_firearrow(last_useitem);
+} else if (%tutorial_progress < ^tutorial_complete) {
     @tut_attempt_cook_item(last_useitem);
 } else {
     @attempt_cook_item(last_useitem);

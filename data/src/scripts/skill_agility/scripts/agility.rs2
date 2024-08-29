@@ -148,9 +148,6 @@ buildappearance(worn);
 
 // Finds an identical loc on the $merge_pos coord to switch active_loc to
 [proc,change_merged_loc](coord $merge_pos)
-loc_findallzone($merge_pos);
-while (loc_findnext = true) {
-    if (loc_find($merge_pos, loc_type) = true) {
-        return;
-    }
+if (loc_find($merge_pos, loc_type) = true) {
+    return;
 }

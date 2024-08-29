@@ -754,7 +754,7 @@ export default class Player extends PathingEntity {
                 timer.clock = timer.interval;
 
                 const script = ScriptRunner.init(timer.script, this, null, timer.args);
-                this.runScript(script, timer.type === PlayerTimerType.NORMAL);
+                this.executeScript(script, timer.type === PlayerTimerType.NORMAL);
             }
         }
     }

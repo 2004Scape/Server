@@ -1,0 +1,63 @@
+[opnpc1,nilhoof]
+switch_int(%upass_progress) {
+    case ^upass_entered_main_area :
+        ~chatnpc("<p,shock>Back away! Back away! ....Wait. ...You're human!");
+        ~chatplayer("<p,happy>That's right, I'm on a quest for King Lathas. We need to find a way through these caverns.");
+        ~chatnpc("<p,neutral>Ha ha, listen up. We came here as miners decades ago, completely unaware of the evil that lurked here. There's no way through, not while Iban still rules. He controls the gateway, the only way to the other side.");
+        ~chatplayer("<p,confused>What gateway?");
+        ~chatnpc("<p,neutral>It once stood as the 'Well of Voyage'. A gateway to the West. Now Iban's moulded it into a pit of the damned, a portal to Zamorak's darkest realms.");
+        ~chatnpc("<p,neutral>He sends his followers there, never to return. Only once Iban is destroyed can the well be restored.");
+        ~chatplayer("<p,neutral>But how?");
+        ~chatnpc("<p,neutral>If I knew, I would have slain him already. Seek out the Witch, his guide, his only confidante. Only she knows how to rid us of Iban.");
+        ~chatnpc("<p,neutral>She lives on the platforms above, we dare not go there. Here, take some food to aid your journey.");
+        if_close;
+        // TODO: should this be nilhoof or niloof?
+        mes("<nc_name(nilhoof)> gives you some food...");
+        inv_add(inv, meat_pie, 2);
+        inv_add(inv, meat_pizza, 1);
+        p_delay(3); // 3 ticks
+        %upass_progress = ^upass_spoken_nilhoof;
+        ~chatplayer("<p,happy>Thanks <nc_name(nilhoof)>, take care.");
+    case ^upass_spoken_nilhoof:
+        ~chatplayer("<p,happy>Hello <nc_name(nilhoof)>.");
+        ~chatnpc("<p,happy>So you still live, not many survive down here.");
+        ~chatplayer("<p,neutral>As I can see.");
+        ~chatnpc("<p,neutral>Don't stay too long traveller. Iban's calls will soon penetrate your delicate human mind.");
+        ~chatnpc("<p,neutral>You'll also become one of his minions... You must go above and find the witch Kardia. She holds the secret to Iban's destruction.");
+    case ^upass_found_doll:
+        ~chatplayer("<p,happy><nc_name(nilhoof)>, I found the Witch's house.");
+        ~chatnpc("<p,neutral>And...?");
+        if(inv_total(inv, doll_of_iban) > 0) {
+            ~chatplayer("<p,neutral>I found a strange doll.");
+        } else {
+            ~chatplayer("<p,neutral>I found a strange doll and a book, but I've lost the doll.");
+            ~chatnpc("<p,neutral>Well it's a good job I found it.");
+            inv_add(inv, doll_of_iban, 1); // no space check
+        }
+        ~chatnpc("<p,neutral>The witch's rag doll. This here be black magic traveller. Iban was magically conjured in that very item. His four elements of being are guarded somewhere in this cave...");
+        ~chatnpc("<p,neutral>His shadow, his flesh, his conscience and his blood. If you can retrieve these, with the flask, you will be able destroy Iban and resurrect the 'Well of Voyage'.");
+        if(inv_total(inv, history_of_iban) = 0) {
+            ~chatnpc("<p,confused>I found this old book... I'm not sure if it's of any use to you traveller.");
+            inv_add(inv, history_of_iban, 1);
+        }
+    case ^upass_confronted_iban:
+        ~chatplayer("<p,happy>Hi <nc_name(nilhoof)>.");
+        ~chatnpc("<p,happy>Traveller, thank the stars you're still around! ...I thought your time had come.");
+        ~chatplayer("<p,happy>I've still a few years in me yet.");
+        if(inv_total(inv, doll_of_iban) = 0) {
+            ~chatnpc("<p,neutral>I found something I think you need traveller...");
+            ~chatplayer("<p,neutral>The doll?");
+            ~chatnpc("<p,neutral>I found it while slaying some of the soulless. Here you go.");
+            inv_add(inv, doll_of_iban, 1);
+            mes("<nc_name(nilhoof)> gives you the doll of Iban"); // no period
+        }
+        if(inv_total(inv, history_of_iban) = 0) {
+            ~chatnpc("<p,neutral>I also found this old journal. I don't know if it's of any importance.");
+            ~chatplayer("<p,happy>That's great <nc_name(nilhoof)>.");
+            inv_add(inv, history_of_iban, 1);
+            ~chatplayer("<p,neutral>It's about time I dealt with Iban.");
+            ~chatnpc("<p,neutral>Good luck to you, you'll need it. May the strength of the Elders be with you...");
+            ~chatplayer("<p,neutral>Take care <nc_name(nilhoof)>.");
+        }
+    case ^upass_defeated_iban, ^upass_complete: mes("The Dwarf seems to be busy...");
+}

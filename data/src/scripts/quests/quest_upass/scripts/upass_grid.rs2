@@ -1,0 +1,103 @@
+[oploc1,loc_3337]
+mes("You pull the lever...");
+sound_synth(lever, 0, 0);
+loc_change(loc_3242, 14);
+p_delay(1);
+mes("The portcullis opens.");
+if(loc_find(0_38_151_33_10, loc_3303) = true) {
+    loc_anim(seq_455); // sound portcullis_open
+}
+if(loc_find(0_38_151_33_12, loc_3303) = true) {
+    loc_anim(seq_455); // sound portcullis_open
+}
+if(loc_find(0_38_151_33_14, loc_3303) = true) {
+    loc_anim(seq_455); // sound portcullis_open
+}
+if(loc_find(0_38_151_33_16, loc_3303) = true) {
+    loc_anim(seq_455); // sound portcullis_open
+}
+~forcemove(movecoord(coord, 0, 0, 2));
+~forcemove(movecoord(coord, -2, 0, 1));
+~forcemove(movecoord(coord, 0, 0, 1));
+mes("The portcullis closes.");
+if(loc_find(0_38_151_33_10, loc_3303) = true) {
+    loc_anim(seq_454); // sound portcullis_open
+}
+if(loc_find(0_38_151_33_12, loc_3303) = true) {
+    loc_anim(seq_454); // sound portcullis_open
+}
+if(loc_find(0_38_151_33_14, loc_3303) = true) {
+    loc_anim(seq_454); // sound portcullis_open
+}
+if(loc_find(0_38_151_33_16, loc_3303) = true) {
+    loc_anim(seq_454); // sound portcullis_open
+}
+
+// generates a 5-digit value from 1-5
+// https://x.com/JagexOrion/status/1039548840339296261/photo/4
+[proc,setupassgrilltrap]
+def_int $grid = getbit_range(%upass_map_mechanisms, 22, 31);
+def_int $counter = 0;
+def_int $value = 0;
+def_int $last_digit = ~random_range(1, 5);
+$value = calc($value * 10 + $last_digit);
+while($counter < 2) {
+    $last_digit = ~random_range(max(sub($last_digit, 1), 1), min(add($last_digit, 1), 5)); // calc next value
+    $value = calc($value * 10 + $last_digit);
+    $counter = add($counter,1);
+}
+%upass_map_mechanisms = setbit_range_toint(%upass_map_mechanisms, $value, 22, 31);
+
+// this is unique for each player, prob just easier to do this w/coord varps...
+[timer,upass_grid_traps]
+def_int $grid_val = getbit_range(%upass_map_mechanisms, 22, 31);
+def_int $first_col = modulo(calc(($grid_val / pow(10, 2))), 10);
+def_int $second_col = modulo(calc(($grid_val / pow(10, 1))), 10);
+def_int $third_col = modulo(calc(($grid_val / pow(10, 0))), 10);
+if(inzone(^upass_grid_col5, movecoord(^upass_grid_col1, 1, 0, 9), coord) = true & 
+    (($first_col = 1 & inzone(movecoord(^upass_grid_col1, -2, 0, 0), movecoord(^upass_grid_col1, 3, 0, 1), coord) = false) | 
+    ($first_col = 2 & inzone(movecoord(^upass_grid_col1, -2, 0, 2), movecoord(^upass_grid_col1, 3, 0, 3), coord) = false) |
+    ($first_col = 3 & inzone(movecoord(^upass_grid_col1, -2, 0, 4), movecoord(^upass_grid_col1, 3, 0, 5), coord) = false) |
+    ($first_col = 4 & inzone(movecoord(^upass_grid_col1, -2, 0, 6), movecoord(^upass_grid_col1, 3, 0, 7), coord) = false) |
+    ($first_col = 5 & inzone(movecoord(^upass_grid_col1, -2, 0, 8), movecoord(^upass_grid_col1, 3, 0, 9), coord) = false)) &
+    (($second_col = 1 & inzone(movecoord(^upass_grid_col3, -2, 0, 0), movecoord(^upass_grid_col3, 3, 0, 1), coord) = false) |
+    ($second_col = 2 & inzone(movecoord(^upass_grid_col3, -2, 0, 2), movecoord(^upass_grid_col3, 3, 0, 3), coord) = false) |
+    ($second_col = 3 & inzone(movecoord(^upass_grid_col3, -2, 0, 4), movecoord(^upass_grid_col3, 3, 0, 5), coord) = false) |
+    ($second_col = 4 & inzone(movecoord(^upass_grid_col3, -2, 0, 6), movecoord(^upass_grid_col3, 3, 0, 7), coord) = false) |
+    ($second_col = 5 & inzone(movecoord(^upass_grid_col3, -2, 0, 8), movecoord(^upass_grid_col3, 3, 0, 9), coord) = false)) &
+    (($third_col = 1 & inzone(^upass_grid_col5, movecoord(^upass_grid_col5, 3, 0, 1), coord) = false) |
+    ($third_col = 2 & inzone(movecoord(^upass_grid_col5, 0, 0, 2), movecoord(^upass_grid_col5, 3, 0, 3), coord) = false) |
+    ($third_col = 3 & inzone(movecoord(^upass_grid_col5, 0, 0, 4), movecoord(^upass_grid_col5, 3, 0, 5), coord) = false) |
+    ($third_col = 4 & inzone(movecoord(^upass_grid_col5, 0, 0, 6), movecoord(^upass_grid_col5, 3, 0, 7), coord) = false) |
+    ($third_col = 5 & inzone(movecoord(^upass_grid_col5, 0, 0, 8), movecoord(^upass_grid_col5, 3, 0, 9), coord) = false))) {
+        @upass_fail_grid;
+}
+
+[label,upass_fail_grid]
+p_stopaction;
+p_delay(0);
+mes("It's a trap!");
+anim(human_sidestep_fall, 0);
+// sound
+p_delay(0);
+mes("You fall onto the spikes.");
+// seems to just be random based off old videos, changed with sote on osrs to be relative to where you fall
+p_teleport(movecoord(0_37_149_27_23, random(2), 0, random(2)));
+anim(human_death, 0);
+p_delay(0);
+anim(null, 0);
+say("Ouch!");
+~damage_self(15); // always 15
+
+[oploc1,loc_3365]
+p_delay(0);
+anim(human_reachforladdertop, 0);
+p_delay(0);
+mes("You crawl out of the pit.");
+p_teleport(0_38_151_45_13);
+
+[debugproc,testmaze]
+if(p_finduid(uid) = true) ~setupassgrilltrap;
+
+[debugproc,getmaze]
+if(p_finduid(uid) = true) mes("<tostring(getbit_range(%upass_map_mechanisms, 22, 31))>");

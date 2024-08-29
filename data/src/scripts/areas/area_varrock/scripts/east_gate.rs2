@@ -9,7 +9,7 @@ if(~check_axis(coord, loc_coord, loc_angle) = false) {
     if(map_members = false) {
         @you_need_to_be_on_a_members_server_to_use_this_gate;
     }
-    if(%biohazard_progress >= ^biohazard_given_distillator & %biohazard_progress < ^biohazard_complete & npc_find(coord, npc_368, 2, 0) = true) { // shouldn't ever fail...
+    if(%biohazard_progress >= ^biohazard_given_distillator & %biohazard_progress < ^biohazard_found_secret & npc_find(coord, npc_368, 2, 0) = true) { // shouldn't ever fail...
         ~chatnpc("<p,neutral>Halt. I need to conduct a search on you. There have been reports of someone bringing a virus into Varrock.");
         if_close;
         mes("The guard searches you.");
