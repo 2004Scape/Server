@@ -668,11 +668,11 @@ if(last_useitem = doll_of_iban) {
         mes("...And you're thrown from the temple platform.");
         cam_reset;
         p_teleport(0_38_150_50_7);
-        return;
     } else if(%upass_progress >= ^upass_defeated_iban | npc_findexact(1_33_72_21_39, lord_iban) = false) {
         mes("Iban is already dead...");
+    } else {
+        mes("The doll is still incomplete.");
     }
-    mes("The doll is still incomplete.");
 }
 
 [oploc1,loc_3224]
