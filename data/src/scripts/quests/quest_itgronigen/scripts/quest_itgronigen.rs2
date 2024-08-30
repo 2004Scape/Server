@@ -96,7 +96,7 @@ if(last_useitem = keep_key) {
     @open_keep_gate;
 }
 [oploc1,_observatory_dungeon_gate] 
-if(%keepdoor_unlocked ! 0 & coordz(coord) > coordz(loc_coord)) {
+if(%keepdoor_unlocked = 0 & coordz(coord) > coordz(loc_coord)) {
     mes("The gate is locked.");
     return;
 }
