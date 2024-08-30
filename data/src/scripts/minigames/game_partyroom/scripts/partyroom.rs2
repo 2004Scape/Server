@@ -122,6 +122,7 @@ if($balloons_dropped < 200) {
         }
         $i = calc($i + 1);
     }
+    mes("<tostring(map_clock)>");
     world_delay(1);
     @partyroom_drop_balloons($balloons_dropped);
 }
