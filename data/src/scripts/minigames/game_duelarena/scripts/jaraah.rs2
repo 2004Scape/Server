@@ -1,17 +1,17 @@
 [opnpc1,jaraah]
-~chatplayer("<p,default>Hi!");
-~chatnpc("<p,default>What? Can't you see I'm busy?!");
+~chatplayer("<p,neutral>Hi!");
+~chatnpc("<p,neutral>What? Can't you see I'm busy?!");
 
 def_int $choice = ~p_choice3("Can you heal me?", 0, "You must see some gruesome things?", 1, "Why do they call you 'The Butcher'?", 2);
 
 switch_int ($choice) {
     case 0:
-    ~chatplayer("<p,default>Can you heal me?");
+    ~chatplayer("<p,neutral>Can you heal me?");
 
     if (stat(hitpoints) >= stat_base(hitpoints)) {
-        ~chatnpc("<p,default>You look healthy to me!");
+        ~chatnpc("<p,neutral>You look healthy to me!");
     } else {
-        ~chatnpc("<p,default>Okay, this will hurt you more than it will me.");
+        ~chatnpc("<p,neutral>Okay, this will hurt you more than it will me.");
         npc_anim(human_pickpocket, 0);
         p_delay(0);
         mes("You feel a little better.");
@@ -20,15 +20,15 @@ switch_int ($choice) {
     }
 
     case 1:
-    ~chatplayer("<p,default>You must see some gruesome things?");
-    ~chatnpc("<p,default>It's a gruesome business and with the tools they give me it gets more gruesome before it gets better!");
+    ~chatplayer("<p,neutral>You must see some gruesome things?");
+    ~chatnpc("<p,neutral>It's a gruesome business and with the tools they give me it gets more gruesome before it gets better!");
 
     case 2:
-    ~chatplayer("<p,default>Why do they call you 'The Butcher'?");
-    ~chatnpc("<p,default>'The Butcher'?'");
-    ~chatnpc("<p,default>Ha!");
-    ~chatnpc("<p,default>Would you like me to demonstrate?");
-    ~chatplayer("<p,default>Er...I'll give it a miss, thanks.");
+    ~chatplayer("<p,neutral>Why do they call you 'The Butcher'?");
+    ~chatnpc("<p,neutral>'The Butcher'?'");
+    ~chatnpc("<p,neutral>Ha!");
+    ~chatnpc("<p,neutral>Would you like me to demonstrate?");
+    ~chatplayer("<p,neutral>Er...I'll give it a miss, thanks.");
 }
 
 [opnpc3,jaraah]

@@ -108,8 +108,8 @@ def_int $option = ~p_choice3("Well, I suppose I could.", 1, "What's in it for me
 if($option = 1) {
     ~chatplayer("<p,neutral>Well, I suppose I could.");
     ~chatnpc("<p,happy>Really? Thank you so much!|I really have no idea where she could be!");
-    ~chatnpc("<p,default>I think my sons, Shilop and Wilough, saw the cat last.|They'll be out in the market place.");
-    ~chatplayer("<p,default>Alright then, I'll see what I can do.");
+    ~chatnpc("<p,neutral>I think my sons, Shilop and Wilough, saw the cat last.|They'll be out in the market place.");
+    ~chatplayer("<p,happy>Alright then, I'll see what I can do.");
     %fluffs_progress = ^fluffs_started;
     ~send_quest_progress(questlist:fluffs, %fluffs_progress, ^fluffs_complete);
 } else if($option = 2) {

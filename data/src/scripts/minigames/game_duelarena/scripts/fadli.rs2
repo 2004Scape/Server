@@ -1,33 +1,33 @@
 [opnpc1,fadli]
-~chatplayer("<p,default>Hi.");
-~chatnpc("<p,default>What?");
+~chatplayer("<p,neutral>Hi.");
+~chatnpc("<p,neutral>What?");
 
 def_int $option = ~p_choice4("What do you do?", 1, "What is this place?", 2, "I'd like to access my bank, please.", 3, "Do you watch any matches?", 4);
 
 switch_int ($option) {
     case 1:
-    ~chatplayer("<p,default>What do you do?");
-    ~chatnpc("<p,default>You can store your stuff here if you want. You can dump anything you don't want to carry whilst you're fighting duels and then pick it up again on the way out.");
-    ~chatnpc("<p,default>To be honest I'm wasted here.");
-    ~chatnpc("<p,default>I should be winning duels in the arena! I'm the best warrior in Al Kharid!");
-    ~chatplayer("<p,default>Easy, tiger!");
+    ~chatplayer("<p,neutral>What do you do?");
+    ~chatnpc("<p,neutral>You can store your stuff here if you want. You can dump anything you don't want to carry whilst you're fighting duels and then pick it up again on the way out.");
+    ~chatnpc("<p,neutral>To be honest I'm wasted here.");
+    ~chatnpc("<p,neutral>I should be winning duels in the arena! I'm the best warrior in Al Kharid!");
+    ~chatplayer("<p,neutral>Easy, tiger!");
 
     case 2:
-    ~chatplayer("<p,default>What is this place?");
-    ~chatnpc("<p,default>Isn't it obvious?");
-    ~chatnpc("<p,default>This is the Duel Arena...duh!");
+    ~chatplayer("<p,neutral>What is this place?");
+    ~chatnpc("<p,neutral>Isn't it obvious?");
+    ~chatnpc("<p,neutral>This is the Duel Arena...duh!");
 
     case 3:
-    ~chatplayer("<p,default>I'd like to access my bank, please.");
-    ~chatnpc("<p,default>Sure.");
+    ~chatplayer("<p,neutral>I'd like to access my bank, please.");
+    ~chatnpc("<p,neutral>Sure.");
     @openbank;
 
     case 4:
-    ~chatplayer("<p,default>Do you watch any matches?");
-    ~chatnpc("<p,default>When I can.");
-    ~chatnpc("<p,default>Most aren't any good so I throw rotten fruit at them!");
-    ~chatplayer("<p,default>Heh. Can I buy some?");
-    ~chatnpc("<p,default>Sure.");
+    ~chatplayer("<p,neutral>Do you watch any matches?");
+    ~chatnpc("<p,neutral>When I can.");
+    ~chatnpc("<p,neutral>Most aren't any good so I throw rotten fruit at them!");
+    ~chatplayer("<p,neutral>Heh. Can I buy some?");
+    ~chatnpc("<p,neutral>Sure.");
     ~require_members_store_owner; // complete guess, this could be earlier in the dialogue
     ~openshop_activenpc;
 }

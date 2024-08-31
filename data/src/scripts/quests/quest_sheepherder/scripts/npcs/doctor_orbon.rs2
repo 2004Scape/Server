@@ -11,7 +11,7 @@ switch_int(%sheepherder_progress) {
 ~chatnpc("<p,quiz>How do you feel?|No heavy flu, shivers, nausea or loss of appetite?");
 ~chatplayer("<p,quiz>Uh... no... I feel fine...");
 ~chatnpc("<p,quiz>How about nightmares then? Are you experiencing any problems with especially scary nightmares?");
-~chatplayer("<p,default>No... not since I was young.");
+~chatplayer("<p,neutral>No... not since I was young.");
 ~chatnpc("<p,happy>Good, good, I had to make sure.|This plague really has an incredible fast contagion rate. It spreads faster than the common cold!");
 @multi2(
     "The plague? Tell me more.", doctor_orbon_more_about_plague,

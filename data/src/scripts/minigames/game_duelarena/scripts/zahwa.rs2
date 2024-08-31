@@ -5,37 +5,37 @@ def_int $random = random(8);
 switch_int ($random) {
     case 0:
     ~chatplayer("<p,happy>Hi!");
-    ~chatnpc("<p,default>Hi!");
+    ~chatnpc("<p,neutral>Hi!");
 
     case 1:
     ~chatplayer("<p,happy>Hi!");
     ~chatnpc("<p,sad>Ughhhh....");
 
     case 2:
-    ~chatplayer("<p,default>Hi!");
-    ~chatnpc("<p,default>I could've 'ad 'im!");
-    ~chatplayer("<p,default>Er...");
-    ~chatnpc("<p,default>I was robbed!");
-    ~chatplayer("<p,default>Right.");
-    ~chatnpc("<p,default>It was rigged I tell you!");
-    ~chatplayer("<p,default>Uh huh.");
-    ~chatnpc("<p,default>Leave me alone!");
+    ~chatplayer("<p,neutral>Hi!");
+    ~chatnpc("<p,neutral>I could've 'ad 'im!");
+    ~chatplayer("<p,neutral>Er...");
+    ~chatnpc("<p,neutral>I was robbed!");
+    ~chatplayer("<p,neutral>Right.");
+    ~chatnpc("<p,neutral>It was rigged I tell you!");
+    ~chatplayer("<p,neutral>Uh huh.");
+    ~chatnpc("<p,neutral>Leave me alone!");
 
     case 3:
-    ~chatplayer("<p,default>Are you alright?");
-    ~chatnpc("<p,default>NURSE!");
+    ~chatplayer("<p,neutral>Are you alright?");
+    ~chatnpc("<p,neutral>NURSE!");
 
     case 4:
-    ~chatplayer("<p,default>Are you alright?");
-    ~chatnpc("<p,default>Do I look alright?!");
+    ~chatplayer("<p,neutral>Are you alright?");
+    ~chatnpc("<p,neutral>Do I look alright?!");
 
     case 5:
-    ~chatplayer("<p,default>Are you alright?");
-    ~chatnpc("<p,default>Yeh. The nurses here are...wonderful!");
+    ~chatplayer("<p,neutral>Are you alright?");
+    ~chatnpc("<p,neutral>Yeh. The nurses here are...wonderful!");
 
     case 6:
-    ~chatplayer("<p,default>Are you alright?");
-    ~chatnpc("<p,default>It's just a flesh wound!");
+    ~chatplayer("<p,neutral>Are you alright?");
+    ~chatnpc("<p,neutral>It's just a flesh wound!");
 
     case 7:
     ~chatplayer("<p,confused>Are you alright?");

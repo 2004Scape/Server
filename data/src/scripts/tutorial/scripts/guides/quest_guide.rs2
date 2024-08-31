@@ -31,11 +31,11 @@ switch_int(%tutorial_progress) {
 def_int $choice = ~p_choice2("Yes!", 1, "Nope, I'm ready to move on!", 2);
 
 if ($choice = 1) {
-    ~chatplayer("<p,default>Yes!");
+    ~chatplayer("<p,neutral>Yes!");
     ~quest_guide_journal_info_no_intro;
 } else {
-    ~chatplayer("<p,default>Nope, I'm ready to move on!");
-    ~chatnpc("<p,default>Okay then.");
+    ~chatplayer("<p,neutral>Nope, I'm ready to move on!");
+    ~chatnpc("<p,neutral>Okay then.");
 }
 
 [label,quest_guide_not_ready_to_leave_yet]

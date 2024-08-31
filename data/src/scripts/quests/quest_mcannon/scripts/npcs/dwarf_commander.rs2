@@ -15,7 +15,7 @@ switch_int(%mcannon_progress) {
 }
 
 [label,dwarf_commander_start_quest]
-~chatplayer("<p,default>Hello.");
+~chatplayer("<p,neutral>Hello.");
 ~chatnpc("<p,happy>Hello traveller, I'm pleased to see you.|We were hoping to find an extra pair of hands.|That's if you don't mind helping?");;
 ~chatplayer("<p,quiz>Why, what's wrong?");
 ~chatnpc("<p,sad>As part of the Dwarven Black Guard,|it is our duty to protect these mines,|but we just don't have the man power.|Could you help?");
@@ -25,7 +25,7 @@ switch_int(%mcannon_progress) {
 );
 
 [label,im_too_busy_mining]
-~chatplayer("<p,default>I'm sorry, I'm too busy mining.");
+~chatplayer("<p,neutral>I'm sorry, I'm too busy mining.");
 ~chatnpc("<p,sad>Ok then, we'll have to find someone else.");
 
 [label,id_love_to_help]
@@ -34,12 +34,12 @@ if (%mcannon_progress = ^mcannon_not_started) {
     %mcannon_progress = ^mcannon_tasked_with_fixing_railings;
     ~send_quest_progress_colour(questlist:mcannon, %mcannon_progress, ^mcannon_complete);
 }
-~chatnpc("<p,default>Thank you, we have no time to waste.|The Goblins are attacking from the forests to the south,|they managed to get through the broken railings,|could you please replace them with these new ones?");
-~chatplayer("<p,default>Sounds easy enough...");
+~chatnpc("<p,neutral>Thank you, we have no time to waste.|The Goblins are attacking from the forests to the south,|they managed to get through the broken railings,|could you please replace them with these new ones?");
+~chatplayer("<p,neutral>Sounds easy enough...");
 ~mesbox("The Dwarf Commander gives you six railings.");
 inv_add(inv, mcannon_railing, 6);
-~chatnpc("<p,default>Let me know once you've fixed the railings.");    
-~chatplayer("<p,default>Ok, commander.");
+~chatnpc("<p,neutral>Let me know once you've fixed the railings.");    
+~chatplayer("<p,neutral>Ok, commander.");
 
 [label,dwarf_commander_how_goes_fixing_those_fences]
 ~chatplayer("<p,happy>Hello.");
@@ -126,7 +126,7 @@ mes("The Dwarf Commander gives you a tool kit.");
 ~chatnpc("<p,happy>Let me know how you get on.");
 
 [label,mcannon_ive_done_enough_for_today]
-~chatplayer("<p,default>Sorry, I've done enough for today.");
+~chatplayer("<p,neutral>Sorry, I've done enough for today.");
 ~chatnpc("<p,neutral>Fair enough, take care traveller.");
 
 [label,dwarf_commander_still_fixing_cannon]

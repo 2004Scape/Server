@@ -8,9 +8,9 @@ switch_int (%romeojuliet_progress) {
     case ^romeojuliet_spoken_apothecary:
         ~chatnpc("<p,quiz>Did you find the Apothecary?");
         if(inv_total(inv, cadaver) > 0) {
-            ~chatplayer("<p,default>I've got the Cadaver potion.");
-            ~chatnpc("<p,default>Good! Good work! Ok, take it to Juliet, she's expecting you.");
-            ~chatnpc("<p,default>I'll talk to Romeo and make sure he knows what to do.");
+            ~chatplayer("<p,happy>I've got the Cadaver potion.");
+            ~chatnpc("<p,happy>Good! Good work! Ok, take it to Juliet, she's expecting you.");
+            ~chatnpc("<p,happy>I'll talk to Romeo and make sure he knows what to do.");
         } else if(inv_total(inv, cadaver_berries) > 0) {
             ~chatplayer("<p,happy>I am on my way back to him with the ingredients.");
             ~chatnpc("<p,happy>Good work. Get the potion to Juliet when you have it.");
@@ -18,7 +18,7 @@ switch_int (%romeojuliet_progress) {
         } else {
             ~chatplayer("<p,neutral>Yes, I must find some berries.");
             ~chatnpc("<p,neutral>Well, take care. They are poisonous to the touch.");
-            ~chatnpc("<p,default>You will need gloves.");
+            ~chatnpc("<p,neutral>You will need gloves.");
         }
     case default:
         ~chatnpc("<p,happy>Oh to be a father in the times of whiskey.");

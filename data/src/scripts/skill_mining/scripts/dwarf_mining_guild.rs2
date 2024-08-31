@@ -5,18 +5,18 @@
 [label,dwarf_at_entrance]
 switch_int(~p_choice2("What have you got in the guild?", 0, "No thanks, I'm fine.", 2)) {
     case 0:
-    ~chatplayer("<p,quiz>What have you to in the guild?");
+    ~chatplayer("<p,quiz>What have you got in the guild?");
     ~chatnpc("<p,happy>Ooh, it's WONDERFUL! There are lots of coal rocks, and even a few mithril rocks in the guild, all exclusively for people with atleast level 60 mining.");
     ~chatnpc("<p,happy>There's no better mining site anywhere near here.");
     if (stat(mining) > 60) {
         ~chatplayer("<p,happy>It's a good thing I have level <tostring(stat(mining))> Mining.");
         ~chatnpc("<p,happy>Yes, that's amazing! Did you want anything else?");
     } else {
-        ~chatplayer("<p,default>So you won't let me go in there?");
-        ~chatnpc("<p,default>Sorry, but rules are rules.|Go do some more training first.|Can I help you with anything else?");
+        ~chatplayer("<p,neutral>So you won't let me go in there?");
+        ~chatnpc("<p,neutral>Sorry, but rules are rules.|Go do some more training first.|Can I help you with anything else?");
     }
     @dwarf_at_entrance;
 
     case 2:
-    ~chatplayer("<p,quiz>No thanks, I'm fine.");
+    ~chatplayer("<p,bored>No thanks, I'm fine.");
 }

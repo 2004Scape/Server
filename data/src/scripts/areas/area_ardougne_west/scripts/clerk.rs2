@@ -37,7 +37,7 @@ switch_int(%elena_progress) {
 
 [label,clerk_surely_you_dont_let_them_run_everything_for_you]
 ~chatplayer("<p,quiz>Surely you don't let them run everything for you?");
-~chatnpc("<p,default>Well, they do know what they're doing here. If they did start doing something badly <nc_name(bravek)>, the city warder, would have the power to override. I can't see that happening though.");
+~chatnpc("<p,neutral>Well, they do know what they're doing here. If they did start doing something badly <nc_name(bravek)>, the city warder, would have the power to override. I can't see that happening though.");
 @multi2("I'll try asking them then.", clerk_ill_try_asking_them_then, "Can I speak to <nc_name(bravek)> anyway?", clerk_can_i_speak_to_bravek_anyway);
 
 [label,clerk_can_i_speak_to_bravek_anyway]
