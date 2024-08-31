@@ -20,7 +20,7 @@ model=model_2385_obj
 weight=2oz
 members=yes
 
-[obj_671]
+[rock_sample1]
 model=model_2393_obj
 2dxof=8
 2dyof=-15
@@ -32,7 +32,7 @@ name=Rock sample 1
 desc=A carefully kept safe rock sample.
 members=yes
 
-[obj_672]
+[rock_sample2]
 model=model_2394_obj
 name=Rock sample 2
 desc=A carefully kept safe rock sample.
@@ -43,7 +43,7 @@ desc=A carefully kept safe rock sample.
 weight=3oz
 members=yes
 
-[obj_673]
+[rock_sample3]
 model=model_2396_obj
 name=Rock sample 3
 desc=A carefully kept safe rock sample.
@@ -55,7 +55,7 @@ desc=A carefully kept safe rock sample.
 weight=3oz
 members=yes
 
-[obj_674]
+[rock_sample]
 model=model_2393_obj
 2dxof=8
 2dyof=-37
@@ -91,7 +91,7 @@ model=model_2630_obj
 weight=2oz
 members=yes
 
-[obj_677]
+[panning_tray]
 name=Panning tray
 desc=An empty tray for panning.
 model=model_2577_obj
@@ -103,7 +103,7 @@ weight=3oz
 members=yes
 iop2=Search
 
-[obj_678]
+[panning_tray_gold]
 name=Panning tray
 desc=This tray contains gold.
 model=model_2513_obj
@@ -115,7 +115,7 @@ weight=5oz
 members=yes
 iop2=Search
 
-[obj_679]
+[panning_tray_mud]
 name=Panning tray
 desc=This tray contains mud.
 model=model_2452_obj
@@ -127,7 +127,7 @@ weight=6oz
 members=yes
 iop2=Search
 
-[obj_680]
+[nuggets]
 name=Nuggets
 desc=Pure, lovely gold!
 model=model_2812_obj
@@ -151,7 +151,7 @@ model=model_2449_obj
 weight=3oz
 members=yes
 
-[obj_682]
+[unstamped_letter]
 model=model_2600_obj
 name=Unstamped letter
 desc=A scroll waiting to be stamped.
@@ -163,7 +163,7 @@ desc=A scroll waiting to be stamped.
 weight=20g
 members=yes
 
-[obj_683]
+[stamped_letter]
 model=model_2675_obj
 name=Stamped letter
 desc=A stamped scroll of recommendation.
@@ -175,7 +175,7 @@ desc=A stamped scroll of recommendation.
 weight=20g
 members=yes
 
-[obj_684]
+[belt_buckle]
 model=model_2516_obj
 name=Belt buckle
 desc=Used to hold up trousers!
@@ -260,7 +260,7 @@ weight=20g
 category=category_15
 members=yes
 
-[obj_691]
+[level_1_certificate]
 model=model_2600_obj
 name=Level 1 certificate
 desc=The owner has passed earth sciences level 1 exam.
@@ -272,7 +272,7 @@ desc=The owner has passed earth sciences level 1 exam.
 weight=20g
 members=yes
 
-[obj_692]
+[level_2_certificate]
 model=model_2600_obj
 name=Level 2 certificate
 desc=The owner has passed earth sciences level 2 exam.
@@ -284,7 +284,7 @@ desc=The owner has passed earth sciences level 2 exam.
 weight=20g
 members=yes
 
-[obj_693]
+[level_3_certificate]
 model=model_2600_obj
 name=Level 3 certificate
 desc=The owner has passed earth sciences level 3 exam.
@@ -296,7 +296,7 @@ desc=The owner has passed earth sciences level 3 exam.
 weight=20g
 members=yes
 
-[obj_694]
+[ceramic_remains]
 name=Ceramic remains
 desc=Smashing!
 model=model_2493_obj
@@ -322,7 +322,7 @@ model=model_2522_obj
 weight=1g
 members=yes
 
-[obj_696]
+[invitation_letter]
 model=model_2600_obj
 name=Invitation letter
 desc=A letter inviting me to use the private digshafts.
@@ -349,7 +349,7 @@ recol1d=8420
 weight=17lb
 members=yes
 
-[obj_698]
+[broken_armour]
 name=Broken armour
 desc=No use to me...
 model=model_loc_826_0
@@ -363,7 +363,7 @@ recol1d=8420
 weight=17lb
 members=yes
 
-[obj_699]
+[stone_tablet]
 name=Stone tablet
 desc=An old stone slab with writing on it.
 model=model_2627_obj
@@ -375,7 +375,7 @@ members=yes
 iop2=Read
 weight=800g
 
-[obj_700]
+[chemical_powder]
 name=Chemical powder
 desc=An acrid chemical.
 model=model_2742_obj
@@ -388,7 +388,7 @@ members=yes
 2dxan=136
 weight=1oz
 
-[obj_701]
+[ammonium_nitrate]
 name=Ammonium nitrate
 desc=An acrid chemical.
 model=model_2742_obj
@@ -401,7 +401,7 @@ members=yes
 2dxan=264
 weight=15g
 
-[obj_702]
+[unidentified_liquid]
 name=Unidentified liquid
 desc=A strong chemical.
 model=model_2789_obj
@@ -414,7 +414,7 @@ recol1d=31201
 weight=25g
 members=yes
 
-[obj_703]
+[nitroglycerin]
 name=Nitroglycerin
 desc=A strong chemical.
 model=model_2789_obj
@@ -427,7 +427,7 @@ recol1d=31201
 weight=25g
 members=yes
 
-[obj_704]
+[ground_charcoal]
 name=Ground charcoal
 desc=Charcoal, crushed to small pieces!
 model=model_2742_obj
@@ -440,7 +440,7 @@ members=yes
 2dxan=264
 weight=8g
 
-[obj_705]
+[mixed_chemicals1]
 name=Mixed chemicals
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -453,7 +453,7 @@ recol1d=20929
 weight=30g
 members=yes
 
-[obj_706]
+[mixed_chemicals2]
 name=Mixed chemicals
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -466,7 +466,7 @@ recol1d=16577
 weight=35g
 members=yes
 
-[obj_707]
+[chemical_compound]
 name=Chemical compound
 desc=A mixture of strong chemicals.
 model=model_2789_obj
@@ -491,7 +491,7 @@ model=model_2629_obj
 weight=10g
 members=yes
 
-[obj_709]
+[chest_key]
 name=Chest key
 desc=This fits a chest.
 model=model_2372_obj
@@ -503,7 +503,7 @@ model=model_2372_obj
 weight=10g
 members=yes
 
-[obj_710]
+[vase]
 name=Vase
 desc=A vessel for holding plants.
 model=model_2704_obj
@@ -516,7 +516,7 @@ recol1d=13605
 weight=500g
 members=yes
 
-[obj_711]
+[book_on_chemicals]
 name=Book on chemicals
 desc=It's about chemicals, judging from its' cover.
 model=model_2543_obj

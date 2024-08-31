@@ -165,7 +165,7 @@ recol1d=32767
 weight=2lb
 members=yes
 
-[obj_616]
+[beads_of_the_dead]
 name=Beads of the dead
 desc=A curious looking neck ornament.
 cost=1
@@ -207,7 +207,7 @@ model=model_2667_obj
 weight=2g
 members=yes
 
-[obj_618]
+[bone_beads]
 name=Bone beads
 desc=Beads carved out of a bone.
 model=model_2561_obj
@@ -218,7 +218,7 @@ model=model_2561_obj
 weight=1g
 members=yes
 
-[obj_623]
+[sword_pommel]
 name=Sword pommel
 desc=An ivory sword pommel.
 model=model_2547_obj
@@ -231,7 +231,7 @@ cost=1
 weight=3oz
 members=yes
 
-[obj_624]
+[bervirius_notes]
 name=Bervirius notes
 desc=Notes taken from the tomb of Bervirius.
 cost=1
@@ -247,7 +247,7 @@ iop1=Read
 weight=20g
 members=yes
 
-[obj_625]
+[wampum_belt]
 name=Wampum belt
 desc=A decorated belt used to trade information between distant villages.
 cost=5

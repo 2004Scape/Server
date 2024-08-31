@@ -239,6 +239,7 @@ param=attack_anim,human_farmersfork_stab
 param=defend_anim,human_farmersfork_defend
 param=attack_sound,staff_stab
 // osrs attack sound farmersfork_stab
+// runescape classic wander range is 15.
 
 [thief]
 name=Thief
@@ -295,7 +296,7 @@ model8=model_519_obj_wear
 model9=model_541_obj_wear
 // Todo: proof
 wanderrange=2
-maxrange=2
+maxrange=7
 respawnrate=50
 hitpoints=22
 attack=19
@@ -338,9 +339,9 @@ model5=model_176_idk
 model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_508_obj_wear
-// Todo: proof
+// Todo: proof + attackrange
 wanderrange=2
-maxrange=2
+maxrange=4
 respawnrate=50
 hitpoints=22
 attack=15
@@ -422,8 +423,8 @@ model9=model_550_obj_wear
 head1=model_57_obj_wear
 head2=model_84_idk_head
 head3=model_75_npc_head
-wanderrange=10
-maxrange=12
+// wanderrange=10
+// maxrange=12
 // TODO level 7 barbarian not in osrs possible original wander/max is 5/7?
 respawnrate=25
 hitpoints=14
@@ -465,8 +466,6 @@ head1=model_53_idk_head
 head2=model_44_obj_wear
 // osrs
 maxrange=8
-attackrange=8
-wanderrange=5
 respawnrate=30
 hitpoints=14
 attack=8
@@ -832,6 +831,7 @@ model5=model_268_obj_wear
 model6=model_185_obj_wear
 model7=model_518_obj_wear
 model8=model_3330_obj_wear
+// Todo: proof
 wanderrange=15
 maxrange=17
 respawnrate=25
@@ -1056,7 +1056,7 @@ op2=Attack
 minimap=no
 vislevel=1
 model1=model_2847_npc
-// todo: proof
+// todo: proof  recheck wanderranges
 wanderrange=35
 maxrange=40
 moverestrict=blocked
@@ -1251,6 +1251,7 @@ desc=Young but still dangerous.
 op2=Attack
 vislevel=43
 model1=model_2998_npc
+// todo: proof
 wanderrange=4
 maxrange=6
 respawnrate=30
@@ -1498,6 +1499,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+// osrs
 huntrange=1
 
 [giant_spider2]
@@ -1526,6 +1528,7 @@ param=defend_sound,insect_hit
 param=death_sound,insect_death
 param=death_drop,null
 huntmode=cowardly
+// osrs
 huntrange=1
 
 [spider]
@@ -1854,7 +1857,6 @@ readyanim=zombie_ready
 op2=Attack
 vislevel=13
 model1=model_2931_npc
-// todo: proof
 wanderrange=9
 maxrange=11
 respawnrate=35
@@ -2093,7 +2095,6 @@ desc=Lesser, but still pretty big.
 op2=Attack
 vislevel=82
 model1=model_2943_npc
-// todo: proof
 wanderrange=6
 maxrange=16
 respawnrate=30
@@ -2161,8 +2162,8 @@ recol2d=1057
 recol3s=0
 recol3d=16417
 model1=model_2942_npc
-wanderrange=8
-maxrange=10
+wanderrange=7
+maxrange=9
 respawnrate=30
 hitpoints=157
 attack=145
@@ -2208,9 +2209,8 @@ desc=Overgrown vermin.
 op2=Attack
 vislevel=3
 model1=model_2959_npc
-// todo: proof
 wanderrange=6
-maxrange=9
+maxrange=8
 respawnrate=30
 hitpoints=5
 attack=2
@@ -2223,6 +2223,8 @@ param=death_anim,giantrat_death
 param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
+// osrs
+// category=
 
 [giant_rat2]
 size=2
@@ -2233,9 +2235,8 @@ desc=Overgrown vermin.
 op2=Attack
 vislevel=6
 model1=model_2959_npc
-// todo: proof
 wanderrange=6
-maxrange=9
+maxrange=8
 respawnrate=30
 hitpoints=10
 attack=6
@@ -2251,6 +2252,7 @@ param=death_sound,rat_death
 huntmode=cowardly
 // osrs
 huntrange=1
+// category=
 
 [dungeon_rat]
 size=2
@@ -2263,9 +2265,8 @@ vislevel=10
 recol1s=6347
 recol1d=17969
 model1=model_2959_npc
-// todo: proof
 wanderrange=6
-maxrange=9
+maxrange=8
 respawnrate=25
 hitpoints=12
 attack=10
@@ -2279,7 +2280,9 @@ param=attack_sound,rat_attack
 param=defend_sound,rat_hit
 param=death_sound,rat_death
 huntmode=cowardly
+// osrs
 huntrange=2
+// category=
 
 [unicorn]
 size=2
@@ -2290,7 +2293,6 @@ desc=Horse with a horn.
 op2=Attack
 vislevel=15
 model1=model_2933_npc
-// todo: proof
 wanderrange=17
 maxrange=19
 respawnrate=90
@@ -2306,6 +2308,7 @@ param=attack_sound,horse_hit
 param=defend_sound,horse_hit
 param=retreat,6
 category=unicorn
+// osrs
 
 [skeleton1]
 name=Skeleton
@@ -2315,6 +2318,9 @@ readyanim=skeleton_ready
 op2=Attack
 vislevel=18
 model1=model_2944_npc
+// Todo: proof old wander/maxranges  / osrs wr3/mr5 / runescape classic wanderrange is 8    --checkthis--
+// wanderrange=
+// maxrange=
 respawnrate=70
 hitpoints=29
 attack=15
@@ -2344,7 +2350,7 @@ op2=Attack
 vislevel=20
 model1=model_2944_npc
 wanderrange=8
-maxrange=9
+maxrange=10
 respawnrate=35
 hitpoints=24
 attack=17
@@ -2363,6 +2369,7 @@ param=death_sound,skeleton_death
 param=undead,^true
 huntmode=cowardly
 huntrange=1
+// osrs
 
 [skeleton3]
 name=Skeleton
@@ -2398,6 +2405,7 @@ param=undead,^true
 huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=1
+// osrs
 
 [skeleton4]
 name=Skeleton
@@ -2435,6 +2443,7 @@ param=undead,^true
 huntmode=cowardly
 // huntrange: https://youtu.be/bU8sQbojKH4?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=127
 huntrange=1
+// osrs
 
 [skeleton_mage]
 name=Skeleton Mage
@@ -4175,59 +4184,6 @@ recol3d=6273
 model1=model_3023_npc
 wanderrange=10
 
-[npc_158]
-name=Shadow warrior
-desc=A fighter from the supernatural world, he's a shadow of his former self.
-walkanim=earthwarrior_walk
-readyanim=earthwarrior_ready
-hasalpha=yes
-minimap=no
-op2=Attack
-vislevel=48
-recol1s=15855
-recol1d=5284
-recol2s=10570
-recol2d=4227
-recol3s=14798
-recol3d=4227
-recol4s=15649
-recol4d=4227
-recol5s=24075
-recol5d=1056
-recol6s=9473
-recol6d=1056
-model1=model_213_npc
-model2=model_306_obj_wear
-model3=model_164_obj_wear
-model4=model_179_obj_wear
-model5=model_268_obj_wear
-model6=model_184_npc
-model7=model_550_obj_wear
-wanderrange=4
-maxrange=6
-respawnrate=30
-hitpoints=67
-attack=36
-strength=33
-defence=36
-param=attackrate,4
-param=attackbonus,43
-param=strengthbonus,26
-param=stabdefence,43
-param=slashdefence,31
-param=crushdefence,19
-param=magicdefence,15
-param=rangedefence,38
-param=damagetype,^slash_style
-param=attack_anim,human_trans_axe_chop
-param=defend_anim,earthwarrior_def
-param=death_anim,earthwarrior_death
-param=attack_sound,baxe_slash
-// param=defend_sound,steel
-huntmode=cowardly
-huntrange=1
-// osrs defend seq_399
-
 [dark_wizard_earth]
 name=Dark wizard
 desc=A practicer of dark arts.
@@ -4416,7 +4372,7 @@ param=attack_sound,unarmed_kick
 param=defend_sound,female_hit
 param=death_sound,female_death
 
-[npc_178]
+[black_knight1]
 name=Black Knight
 desc=A dark-hearted knight.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4461,7 +4417,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // param=defend_sound,steel
 
-[npc_179]
+[black_knight2]
 name=Black Knight
 desc=A dark-hearted knight.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4506,6 +4462,7 @@ param=defend_anim,human_sword_defend2
 param=attack_sound,2H_slash
 // param=defend_sound,steel
 huntmode=aggressive_melee
+// huntrange=
 
 [highwayman]
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
@@ -4547,10 +4504,11 @@ param=crushdefence,2
 param=rangedefence,2
 param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
-param=defend_anim,human_sword_defend1
+param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_slash
 // https://oldschool.runescape.wiki/w/Highwayman#Trivia
 // year ???? attack seq_390 defend seq_388 these seqs used some reason after update x
+// seq_386 seq_388
 // https://www.youtube.com/watch?v=QqLSZgZLwvA
 // https://www.youtube.com/watch?v=ympIobOpG4M
 // year 2024 attack seq_386 defend seq_387 and same animations used 2007 + original osrs launch
@@ -4785,6 +4743,7 @@ param=damagetype,^stab_style
 param=attack_anim,human_sword_stab
 param=defend_anim,human_sword_defend2
 param=attack_sound,hacksword_stab
+members=yes
 
 [rogue]
 name=Rogue
@@ -5849,100 +5808,6 @@ param=defend_sound,cow_hit
 param=death_sound,cow_death
 category=cow
 
-[npc_398]
-vislevel=hide
-name=Legends Guard
-desc=A Legends Guild Guard, he protects the entrance to the Legends Guild.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=7329
-recol1d=32767
-recol2s=15855
-recol2d=19030
-recol3s=10570
-recol3d=9517
-recol4s=15360
-recol4d=32767
-recol5s=14798
-recol5d=19030
-recol6s=9473
-recol6d=32767
-model1=model_219_obj_wear
-model2=model_253_idk
-model3=model_306_obj_wear
-model4=model_164_obj_wear
-model5=model_179_obj_wear
-model6=model_268_obj_wear
-model7=model_184_npc
-model8=model_540_obj_wear
-model9=model_317_npc
-head1=model_57_obj_wear
-head2=model_85_idk_head
-
-[npc_399]
-vislevel=hide
-name=Legends Guard
-desc=A Legends Guild Guard, he protects the entrance to the Legends Guild.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_staffready
-op1=Talk-to
-recol1s=7329
-recol1d=32767
-recol2s=15855
-recol2d=19030
-recol3s=10570
-recol3d=9517
-recol4s=15360
-recol4d=32767
-recol5s=14798
-recol5d=19030
-recol6s=9473
-recol6d=32767
-model1=model_219_obj_wear
-model2=model_253_idk
-model3=model_306_obj_wear
-model4=model_164_obj_wear
-model5=model_179_obj_wear
-model6=model_268_obj_wear
-model7=model_184_npc
-model8=model_540_obj_wear
-model9=model_317_npc
-head1=model_57_obj_wear
-head2=model_85_idk_head
-
-[npc_400]
-vislevel=hide
-name=Radimus Erkle
-desc=Radimus is the Grand Vizier of the Legends Guild.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=7329
-recol1d=32767
-recol2s=15855
-recol2d=6476
-recol3s=10570
-recol3d=3272
-recol4s=6273
-recol4d=28539
-recol5s=7298
-recol5d=9517
-recol6s=14798
-recol6d=6476
-model1=model_215_idk
-model2=model_250_idk
-model3=model_306_obj_wear
-model4=model_164_obj_wear
-model5=model_179_obj_wear
-model6=model_268_obj_wear
-model7=model_185_obj_wear
-model8=model_317_npc
-head1=model_53_idk_head
-head2=model_82_idk_head
-wanderrange=3
-moverestrict=indoors
-
 [npc_401]
 vislevel=hide
 name=Jungle Forester
@@ -6048,7 +5913,7 @@ param=defend_sound,animated_hit
 param=death_sound,animated_death
 param=death_drop,null
 
-[npc_500]
+[mosol_rei]
 vislevel=hide
 name=Mosol Rei
 desc=Slightly under dressed.
@@ -6072,7 +5937,7 @@ model8=model_553_npc
 head1=model_46_idk_head
 head2=model_81_idk_head
 
-[npc_501]
+[zadimus_spirit]
 vislevel=hide
 name=Zadimus' spirit.
 desc=The animated spirit of a soul not at rest.
@@ -6089,7 +5954,7 @@ param=undead,^true
 param=death_anim,ghost_death
 param=death_sound,ghost_death
 
-[npc_502]
+[undead1skele1]
 name=Undead One
 desc=It rattles when it walks.
 walkanim=skeleton_walk
@@ -6112,7 +5977,7 @@ param=undead,^true
 huntmode=cowardly
 huntrange=1
 
-[npc_503]
+[undead1skele2]
 name=Undead One
 desc=A minion of Rashiliyia.
 walkanim=skeleton_walk
@@ -6136,7 +6001,7 @@ param=undead,^true
 huntmode=cowardly
 huntrange=1
 
-[npc_504]
+[undead1zombie1]
 name=Undead One
 desc=The animated dead, one of Rashiliyias' minions.
 walkanim=zombie_walk
@@ -6170,7 +6035,7 @@ param=undead,^true
 huntmode=cowardly
 huntrange=1
 
-[npc_505]
+[undead1zombie2]
 name=Undead One
 desc=The animated dead, one of Rashiliyias' minions.
 walkanim=zombie_walk
@@ -6209,7 +6074,7 @@ param=undead,^true
 huntmode=cowardly
 huntrange=1
 
-[npc_506]
+[rashiliyia]
 vislevel=hide
 name=Rashiliyia
 desc=The animated spirit of Rashiliyia the Zombie Queen.
@@ -6237,7 +6102,7 @@ param=undead,^true
 param=death_anim,ghost_death
 param=death_sound,ghost_death
 
-[npc_507]
+[nazastarool_zombie]
 name=Nazastarool
 desc=A giant zombie of huge strength and devastating power.
 walkanim=zombie_walk
@@ -6272,7 +6137,7 @@ param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
 
-[npc_508]
+[nazastarool_skeleton]
 name=Nazastarool
 desc=A giant skeleton of huge strength and devastating power.
 walkanim=skeleton_walk
@@ -6307,7 +6172,7 @@ param=defend_sound,skelly_hit
 param=death_sound,skeleton_death
 param=undead,^true
 
-[npc_509]
+[nazastarool_ghost]
 name=Nazastarool
 desc=A giant ghost of huge strength and devastating power.
 hasalpha=yes
@@ -6337,7 +6202,7 @@ param=death_sound,ghost_death
 param=death_drop,null
 param=undead,^true
 
-[npc_518]
+[captain_shanks]
 vislevel=hide
 name=Captain Shanks
 desc=He's the Captain of the 'Lady of the Waves'.
@@ -6366,7 +6231,7 @@ head1=model_52_idk_head
 head2=model_81_idk_head
 head3=model_37_npc_head
 
-[npc_613]
+[digsite_workman1]
 vislevel=hide
 name=Digsite workman
 desc=This person is working on the site.
@@ -6388,7 +6253,7 @@ model7=model_181_idk
 model8=model_185_obj_wear
 head1=model_67_idk_head
 
-[npc_614]
+[digsite_workman2]
 vislevel=hide
 name=Digsite workman
 desc=This person is working on the site.
@@ -6410,7 +6275,7 @@ model7=model_181_idk
 model8=model_185_obj_wear
 head1=model_67_idk_head
 
-[npc_615]
+[student1]
 vislevel=hide
 name=Student
 desc=A student busily digging.
@@ -6432,7 +6297,7 @@ model8=model_185_obj_wear
 head1=model_55_idk_head
 head2=model_81_idk_head
 
-[npc_616]
+[student2]
 vislevel=hide
 name=Student
 desc=A student busily digging.
@@ -6457,7 +6322,7 @@ model7=model_257_npc
 model8=model_276_npc
 head1=model_53_idk_head
 
-[npc_617]
+[student3]
 vislevel=hide
 name=Student
 desc=A student busily digging.
@@ -6480,7 +6345,7 @@ model7=model_185_obj_wear
 head1=model_113_idk_head
 param=death_sound,female_death
 
-[npc_618]
+[examiner]
 vislevel=hide
 name=Examiner
 desc=Upon examining the examiner you examine it is indeed an examiner!
@@ -6504,7 +6369,7 @@ head1=model_103_idk_head
 head2=model_137_npc_head
 param=death_sound,female_death
 
-[npc_619]
+[archaeological_expert]
 vislevel=hide
 name=Archaeological expert
 desc=An expert on archaeology.
@@ -6530,7 +6395,7 @@ model8=model_185_obj_wear
 head1=model_55_idk_head
 head2=model_82_idk_head
 
-[npc_620]
+[panning_guide]
 vislevel=hide
 name=Panning guide
 desc=A specialist in panning for gold.
@@ -6554,7 +6419,7 @@ model8=model_185_obj_wear
 model9=model_326_idk
 head1=model_53_idk_head
 
-[npc_663]
+[crest_man]
 vislevel=hide
 name=Man
 desc=A well dressed nobleman.
@@ -6624,8 +6489,8 @@ readyanim=imp_ready
 op2=Attack
 vislevel=2
 model1=model_2887_npc
-maxrange=40
-wanderrange=30
+maxrange=25
+wanderrange=27
 respawnrate=50
 hitpoints=8
 givechase=false
@@ -6718,7 +6583,7 @@ model7=model_275_idk
 head1=model_52_idk_head
 head2=model_82_idk_head
 
-[npc_732]
+[bartender_dancingdonkey]
 vislevel=hide
 name=Bartender
 desc=I could get a beer from him.
@@ -8459,70 +8324,6 @@ param=attack_sound,staff_stab
 huntmode=cowardly
 huntrange=1
 
-[npc_932]
-vislevel=hide
-name=Fionella
-desc=She sells general items at the Legends Guild.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-op3=Trade
-recol1s=2340
-recol1d=9517
-recol2s=14724
-recol2d=9517
-recol3s=3232
-recol3d=32767
-recol4s=4192
-recol4d=32767
-recol5s=7328
-recol5d=32767
-recol6s=15855
-recol6d=32767
-model1=model_390_idk
-model2=model_470_idk
-model3=model_343_idk
-model4=model_484_npc
-model5=model_353_idk
-model6=model_437_idk
-model7=model_361_obj_wear
-model8=model_376_obj_wear
-head1=model_113_idk_head
-head2=model_101_obj_wear
-wanderrange=3
-param=death_sound,female_death
-
-[npc_933]
-vislevel=hide
-name=Siegfried Erkle
-desc=An eccentric shop keeper - related to the Grand Vizier of the Legends Guild.
-walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
-readyanim=human_ready
-op1=Talk-to
-recol1s=2340
-recol1d=9517
-recol2s=14724
-recol2d=9517
-recol3s=3232
-recol3d=32767
-recol4s=4192
-recol4d=32767
-recol5s=7328
-recol5d=32767
-recol6s=8384
-recol6d=32767
-model1=model_230_idk
-model2=model_250_idk
-model3=model_292_idk
-model4=model_327_idk
-model5=model_162_idk
-model6=model_176_idk
-model7=model_274_idk
-model8=model_185_obj_wear
-head1=model_63_idk_head
-head2=model_82_idk_head
-wanderrange=3
-
 [nezikchened]
 name=Nezikchened
 desc=An ancient powerful demon of the underworld.
@@ -8812,58 +8613,6 @@ param=attack_sound,cow_attack
 param=defend_sound,cow_hit
 param=death_sound,cow_death
 category=cow
-
-[npc_1004]
-walkanim=spider_walk
-name=Spider
-desc=Incey wincey.
-op2=Attack
-vislevel=1
-recol1s=15855
-recol1d=5284
-model1=model_2996_npc
-wanderrange=8
-maxrange=10
-respawnrate=35
-hitpoints=2
-param=attackbonus,-35
-param=strengthbonus,-58
-param=stabdefence,-53
-param=slashdefence,-53
-param=crushdefence,-53
-param=magicdefence,-53
-param=rangedefence,-53
-param=damagetype,^stab_style
-param=attack_anim,spider_attack
-param=defend_anim,spider_block
-param=death_anim,spider_death
-param=attack_sound,insect_attack
-param=defend_sound,insect_hit
-param=death_sound,insect_death
-param=death_drop,null
-
-[npc_1005]
-name=Giant bat
-desc=Annoying flappy thing.
-size=2
-walkanim=bat_walk
-readyanim=bat_ready
-vislevel=hide
-model1=model_2941_npc
-wanderrange=8
-param=death_anim,bat_death
-param=death_sound,bat_death
-param=death_drop,null
-
-[sea_slug]
-vislevel=hide
-name=Sea slug
-desc=A rather nasty looking crustacean.
-walkanim=seaslug_walk
-readyanim=seaslug_ready
-op1=Take
-model1=model_560_npc
-wanderrange=2
 
 [zamorak_wizard]
 name=Zamorak Wizard

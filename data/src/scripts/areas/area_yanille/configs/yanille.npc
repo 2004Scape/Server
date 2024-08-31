@@ -131,7 +131,7 @@ model7=model_181_idk
 head1=model_53_idk_head
 wanderrange=2
 
-[npc_593]
+[frenita]
 vislevel=hide
 name=Frenita
 desc=A recipe for success...in cooking.
