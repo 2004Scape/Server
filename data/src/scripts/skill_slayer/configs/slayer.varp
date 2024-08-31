@@ -1,0 +1,25 @@
+// https://github.com/Joshua-F/cs2-scripts/blob/master/scripts/%5Bproc%2Chelper_slayer_draw_content%5D.cs2
+// https://github.com/Joshua-F/cs2-scripts/blob/master/scripts/%5Bproc%2Chelper_slayer_current_assignment%5D.cs2
+// https://github.com/Joshua-F/cs2-scripts/blob/master/scripts/%5Bclientscript%2Chelper_slayer_update_info%5D.cs2
+
+// client codes for target_remaining and target are confirmed, the others are guesses
+
+[slayer_introduction]
+clientcode=393
+scope=perm
+transmit=no
+
+[slayer_task_remaining]
+clientcode=394
+scope=perm
+transmit=no
+
+[slayer_task_target]
+clientcode=395
+scope=perm
+transmit=no
+
+[slayer_master]
+clientcode=396
+scope=perm
+transmit=no

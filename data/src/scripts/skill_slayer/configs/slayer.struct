@@ -1,0 +1,472 @@
+// combat level checks: https://archive.is/tUbhq
+[slayer_target_monkeys]
+param=slayer_target_id,^slayer_target_monkeys
+param=slayer_target_name,Monkeys
+param=slayer_target_tip,Monkeys are tricky creatures, they are agile and fairly fast. Learn to anticipate their movements.
+
+[slayer_target_goblins]
+param=slayer_target_id,^slayer_target_goblins
+param=slayer_target_name,Goblins
+param=slayer_target_tip,Goblins are mostly just annoying, but they can be vicious. Watch out for the spears they sometimes carry.
+
+[slayer_target_rats]
+param=slayer_target_id,^slayer_target_rats
+param=slayer_target_name,Rats
+param=slayer_target_tip,Rats are your everyday pest, but they can get fairly big. Watch out for their sharp piercing teeth.
+
+[slayer_target_spiders]
+param=slayer_target_id,^slayer_target_spiders
+param=slayer_target_name,Spiders
+param=slayer_target_tip,Spiders are often poisonous, and many varieties are camouflaged too.
+
+[slayer_target_birds]
+param=slayer_target_id,^slayer_target_birds
+param=slayer_target_name,Birds
+param=slayer_target_tip,Birds aren't the most intelligent of creatures, but watch out for their sharp stabbing beaks.
+
+[slayer_target_cows]
+param=slayer_target_id,^slayer_target_cows
+param=slayer_target_name,Cows
+param=slayer_target_tip,Cows are bigger than you, so they'll often hit fairly hard but are usually fairly slow to react.
+param=slayer_target_req_combatlevel,5
+
+[slayer_target_scorpions]
+param=slayer_target_id,^slayer_target_scorpions
+param=slayer_target_name,Scorpions
+param=slayer_target_tip,Scorpions are almost always poisonous, their hard carapace makes them resistant to crushing and stabbing attacks.
+param=slayer_target_req_combatlevel,7
+
+[slayer_target_bats]
+param=slayer_target_id,^slayer_target_bats
+param=slayer_target_name,Bats
+param=slayer_target_tip,Bats are rarely found on the ground, so you'll have to fight them while they're airborne, which won't be easy for melee.
+param=slayer_target_req_combatlevel,5
+
+[slayer_target_wolves]
+param=slayer_target_id,^slayer_target_wolves
+param=slayer_target_name,Wolves
+param=slayer_target_tip,Wolves are pack animals, so you'll always find them in groups. Watch out for their bite, it can be nasty.
+param=slayer_target_req_combatlevel,20
+
+[slayer_target_zombies]
+param=slayer_target_id,^slayer_target_zombies
+param=slayer_target_name,Zombies
+param=slayer_target_tip,Zombies are undead so magic is your best bet against them, there is even a spell specially for fighting the undead.
+param=slayer_target_req_combatlevel,10
+
+[slayer_target_skeletons]
+param=slayer_target_id,^slayer_target_skeletons
+param=slayer_target_name,Skeletons
+param=slayer_target_tip,Skeletons are undead so magic is your best bet against them, there is even a spell specially for fighting the undead.
+param=slayer_target_req_combatlevel,15
+
+[slayer_target_ghosts]
+param=slayer_target_id,^slayer_target_ghosts
+param=slayer_target_name,Ghosts
+param=slayer_target_tip,Ghosts are undead so magic is your best bet against them, there is even a spell specially for fighting the undead.
+param=slayer_target_req_combatlevel,13
+
+[slayer_target_bears]
+param=slayer_target_id,^slayer_target_bears
+param=slayer_target_name,Bears
+param=slayer_target_tip,Bears are tough creatures and fierce fighters, watch out for their powerful claws.
+param=slayer_target_req_combatlevel,13
+
+[slayer_target_hillgiants]
+param=slayer_target_id,^slayer_target_hillgiants
+param=slayer_target_name,Hill Giants
+param=slayer_target_tip,Hill Giants often wield large weapons, learn to recognise what kind of weapon it is and act accordingly.
+param=slayer_target_req_combatlevel,25
+
+[slayer_target_icegiants]
+param=slayer_target_id,^slayer_target_icegiants
+param=slayer_target_name,Ice Giants
+param=slayer_target_tip,Like other giants, Ice Giants often wield large weapons, learn to recognise what kind of weapon it is and act accordingly.
+param=slayer_target_req_combatlevel,50
+
+[slayer_target_firegiants]
+param=slayer_target_id,^slayer_target_firegiants
+param=slayer_target_name,Fire Giants
+param=slayer_target_tip,Like other giants, Fire Giants often wield large weapons, learn to recognise what kind of weapon it is and act accordingly.
+param=slayer_target_req_combatlevel,65
+
+[slayer_target_mossgiants]
+param=slayer_target_id,^slayer_target_mossgiants
+param=slayer_target_name,Moss Giants
+param=slayer_target_tip,Like other giants, Moss Giants often wield large weapons, learn to recognise what kind of weapon it is and act accordingly.
+param=slayer_target_req_combatlevel,40
+
+[slayer_target_trolls]
+param=slayer_target_id,^slayer_target_trolls
+param=slayer_target_name,Trolls
+param=slayer_target_tip,Trolls regenerate damage quickly but are still vulnerable to poisons, they usually use crushing weapons.
+param=slayer_target_req_combatlevel,60
+
+[slayer_target_icewarriors]
+param=slayer_target_id,^slayer_target_icewarriors
+param=slayer_target_name,Ice Warriors
+param=slayer_target_tip,Ice Warriors are a kind of ice elemental, shatter them with blunt weapons or melt them with fire.
+param=slayer_target_req_combatlevel,45
+
+[slayer_target_ogres]
+param=slayer_target_id,^slayer_target_ogres
+param=slayer_target_name,Ogres
+param=slayer_target_tip,Ogres are brutal creatures, favouring large blunt maces and clubs, they often attack without warning.
+param=slayer_target_req_combatlevel,40
+
+[slayer_target_hobgoblins]
+param=slayer_target_id,^slayer_target_hobgoblins
+param=slayer_target_name,Hobgoblins
+param=slayer_target_tip,Hobgoblins are sneaky underhanded creatures, they often wield spears and some times carry javelines too.
+param=slayer_target_req_combatlevel,20
+
+[slayer_target_dogs]
+param=slayer_target_id,^slayer_target_dogs
+param=slayer_target_name,Dogs
+param=slayer_target_tip,Dogs are much like Wolves, they are pack creatures which will hunt in groups.
+param=slayer_target_req_combatlevel,15
+
+[slayer_target_ghouls]
+param=slayer_target_id,^slayer_target_ghouls
+param=slayer_target_name,Ghouls
+param=slayer_target_tip,Ghouls aren't undead but they are stronger and tougher than they look. However they're also very cowardly and will run if they're losing a fight.
+param=slayer_target_req_combatlevel,25
+
+[slayer_target_greendragons]
+param=slayer_target_id,^slayer_target_greendragons
+param=slayer_target_name,Green Dragons
+param=slayer_target_tip,Green Dragons are the weakest dragon but still very powerful, watch out for their fiery breath.
+param=slayer_target_req_combatlevel,52
+
+[slayer_target_bluedragons]
+param=slayer_target_id,^slayer_target_bluedragons
+param=slayer_target_name,Blue Dragons
+param=slayer_target_tip,Blue Dragons aren't as strong as other dragons but they're still very powerful, watch out for their fiery breath.
+param=slayer_target_req_combatlevel,65
+
+[slayer_target_reddragons]
+param=slayer_target_id,^slayer_target_reddragons
+param=slayer_target_name,Red Dragons
+param=slayer_target_tip,Red Dragons are very powerful, stronger than most dragons, watch out for their fiery breath.
+param=slayer_target_req_combatlevel,68
+
+[slayer_target_blackdragons]
+param=slayer_target_id,^slayer_target_blackdragons
+param=slayer_target_name,Black Dragons
+param=slayer_target_tip,Black Dragons are the strongest dragons and very fierce, watch out for their fiery breath.
+param=slayer_target_req_combatlevel,80
+
+[slayer_target_lesserdemons]
+param=slayer_target_id,^slayer_target_lesserdemons
+param=slayer_target_name,Lesser Demons
+param=slayer_target_tip,Lesser Demons are magic creatures so they are weak to magical attacks. Though they're relatively weak they are still dangerous.
+param=slayer_target_req_combatlevel,60
+
+[slayer_target_greaterdemons]
+param=slayer_target_id,^slayer_target_greaterdemons
+param=slayer_target_name,Greater Demons
+param=slayer_target_tip,Greater Demons are magic creatures so they are weak to magical attacks. Though not the strongest demon, they are still dangerous.
+param=slayer_target_req_combatlevel,75
+
+[slayer_target_blackdemons]
+param=slayer_target_id,^slayer_target_blackdemons
+param=slayer_target_name,Black Demons
+param=slayer_target_tip,Black Demons are magic creatures so they are weak to magical attacks. They're a very strong demon and very dangerous.
+param=slayer_target_req_combatlevel,80
+
+[slayer_target_hellhounds]
+param=slayer_target_id,^slayer_target_hellhounds
+param=slayer_target_name,Hellhounds
+param=slayer_target_tip,Hellhounds are a cross between Dogs and Demons, they are dangerous with a fierce bite.
+param=slayer_target_req_combatlevel,75
+
+[slayer_target_shadowwarriors]
+param=slayer_target_id,^slayer_target_shadowwarriors
+param=slayer_target_name,Shadow Warriors
+param=slayer_target_tip,Shadow Warriors are dark and mysterious, they hide in the shadows so be wary of ambushes.
+param=slayer_target_req_combatlevel,60
+
+[slayer_target_werewolves]
+param=slayer_target_id,^slayer_target_werewolves
+param=slayer_target_name,Werewolves
+param=slayer_target_tip,Werewolves are feral creatures, they are strong and tough with sharp claws and teeth.
+param=slayer_target_req_combatlevel,60
+
+[slayer_target_vampyres]
+param=slayer_target_id,^slayer_target_vampyres
+param=slayer_target_name,Vampyres
+param=slayer_target_tip,Vampyres are extremely powerful beings. They feed on the blood of the living so watch out you don't get bitten.
+param=slayer_target_req_combatlevel,35
+
+[slayer_target_dagannoth]
+param=slayer_target_id,^slayer_target_dagannoth
+param=slayer_target_name,Dagannoth
+param=slayer_target_tip,Dagannoth are large sea dwelling creatures which are very aggressive. You'll often find them in caves near sea water.
+param=slayer_target_req_combatlevel,75
+
+[slayer_target_turoth]
+param=slayer_target_id,^slayer_target_turoth
+param=slayer_target_name,Turoth
+param=slayer_target_tip,Turoth are large vicious creatures with thick hides. You'll need a Leaf-Tipped Spear Sword, Broad Arrows, or a Magic Dart to harm them.
+param=slayer_target_req_slayerlevel,55
+param=slayer_target_req_combatlevel,60
+
+[slayer_target_cavecrawlers]
+param=slayer_target_id,^slayer_target_cavecrawlers
+param=slayer_target_name,Cave Crawlers
+param=slayer_target_tip,Cave Crawlers are small and fast, often hiding in ambush. Avoid their barbed tongue or you'll get poisoned.
+param=slayer_target_req_slayerlevel,10
+param=slayer_target_req_combatlevel,10
+
+[slayer_target_banshees]
+param=slayer_target_id,^slayer_target_banshees
+param=slayer_target_name,Banshees
+param=slayer_target_tip,Banshees use a piercing scream to shock their enemies, you'll need some Earmuffs to protect yourself from them.
+param=slayer_target_req_slayerlevel,15
+param=slayer_target_req_combatlevel,20
+
+[slayer_target_crawlinghands]
+param=slayer_target_id,^slayer_target_crawlinghands
+param=slayer_target_name,Crawling Hands
+param=slayer_target_tip,Crawling Hands are undead severed hands, fast and dexterous they claw their victims.
+param=slayer_target_req_slayerlevel,5
+
+[slayer_target_infernalmages]
+param=slayer_target_id,^slayer_target_infernalmages
+param=slayer_target_name,Infernal Mages
+param=slayer_target_tip,Infernal Mages are dangerous spell users, beware of their magic spells and go properly prepared.
+param=slayer_target_req_slayerlevel,45
+param=slayer_target_req_combatlevel,40
+
+[slayer_target_aberrantspectres]
+param=slayer_target_id,^slayer_target_aberrantspectres
+param=slayer_target_name,Aberrant Spectres
+param=slayer_target_tip,Aberrant Spectres are fetid, vile ghosts. The very smell of them will paralyse and harm you. A nosepeg will help ignore their stink.
+param=slayer_target_req_slayerlevel,60
+param=slayer_target_req_combatlevel,65
+
+[slayer_target_abyssaldemons]
+param=slayer_target_id,^slayer_target_abyssaldemons
+param=slayer_target_name,Abyssal Demons
+param=slayer_target_tip,Abyssal Demons are nasty creatures to fight. They aren't really part of this realm, and are able to move very quickly to trap their prey.
+param=slayer_target_req_slayerlevel,85
+param=slayer_target_req_combatlevel,85
+
+[slayer_target_basilisks]
+param=slayer_target_id,^slayer_target_basilisks
+param=slayer_target_name,Basilisks
+param=slayer_target_tip,Basilisks, like Cockatrice, have a gaze which will paralyse and harm their prey. You'll need a Mirror Shield to protect you.
+param=slayer_target_req_slayerlevel,40
+param=slayer_target_req_combatlevel,40
+param=slayer_target_req_defencelevel,20
+
+[slayer_target_cockatrice]
+param=slayer_target_id,^slayer_target_cockatrice
+param=slayer_target_name,Cockatrice
+param=slayer_target_tip,Cockatrice, like Basilisks, have a gaze which will paralyse and harm their prey. You'll need a Mirror Shield to protect you.
+param=slayer_target_req_slayerlevel,25
+param=slayer_target_req_combatlevel,25
+param=slayer_target_req_defencelevel,20
+
+[slayer_target_kurask]
+param=slayer_target_id,^slayer_target_kurask
+param=slayer_target_name,Kurask
+param=slayer_target_tip,Kurask are large brutal creatures with very thick hides. You'll need a Leaf-Tipped Spear Sword, Broad Arrows, or a Magic Dart to harm them.
+param=slayer_target_req_slayerlevel,70
+param=slayer_target_req_combatlevel,65
+
+[slayer_target_gargoyles]
+param=slayer_target_id,^slayer_target_gargoyles
+param=slayer_target_name,Gargoyles
+param=slayer_target_tip,Gargoyles are winged creatures of stone. You'll need to fight them to near death before breaking them apart with a Rock Hammer.
+param=slayer_target_req_slayerlevel,75
+param=slayer_target_req_combatlevel,80
+
+[slayer_target_pyrefiends]
+param=slayer_target_id,^slayer_target_pyrefiends
+param=slayer_target_name,Pyrefiends
+param=slayer_target_tip,Pyrefiends are beings of fire and molten rock, they're quick and agile so you'll want to be careful when getting close to them.
+param=slayer_target_req_slayerlevel,30
+param=slayer_target_req_combatlevel,25
+
+[slayer_target_bloodveld]
+param=slayer_target_id,^slayer_target_bloodveld
+param=slayer_target_name,Bloodveld
+param=slayer_target_tip,Bloodveld are strange demonic creatures, they use their long rasping tongue to feed on just about anything they can find.
+param=slayer_target_req_slayerlevel,50
+param=slayer_target_req_combatlevel,50
+
+[slayer_target_dustdevils]
+param=slayer_target_id,^slayer_target_dustdevils
+param=slayer_target_name,Dust Devils
+param=slayer_target_tip,Dust Devils use clouds of dust, sand, ash, and whatever else they can inhale to blind and disorientate their victims.
+param=slayer_target_req_slayerlevel,65
+param=slayer_target_req_combatlevel,70
+
+[slayer_target_jellies]
+param=slayer_target_id,^slayer_target_jellies
+param=slayer_target_name,Jellies
+param=slayer_target_tip,Jellies are nasty cube-like gelatinous creatures which absorb everything they come across into themselves. 
+param=slayer_target_req_slayerlevel,52
+param=slayer_target_req_combatlevel,57
+
+[slayer_target_rockslugs]
+param=slayer_target_id,^slayer_target_rockslugs
+param=slayer_target_name,Rockslugs
+param=slayer_target_tip,Rockslugs are strange stoney slugs. You'll need to fight them to near death before finishing them off with Salt.
+param=slayer_target_req_slayerlevel,20
+param=slayer_target_req_combatlevel,20
+
+[slayer_target_nechryael]
+param=slayer_target_id,^slayer_target_nechryael
+param=slayer_target_name,Nechryael
+param=slayer_target_tip,Nechryael are demons of decay which summon small winged beings to help them fight their victims.
+param=slayer_target_req_slayerlevel,80
+param=slayer_target_req_combatlevel,85
+
+[slayer_target_kalphite]
+param=slayer_target_id,^slayer_target_kalphite
+param=slayer_target_name,Kalphite
+param=slayer_target_tip,Kalphite are large insects which live in great hives under the desert sands.
+param=slayer_target_req_combatlevel,15
+
+[slayer_target_earthwarriors]
+param=slayer_target_id,^slayer_target_earthwarriors
+param=slayer_target_name,Earth Warriors
+param=slayer_target_tip,Earth Warriors are a kind of earth elemental, grind them to dust with blunt weapons.
+
+[slayer_target_otherwordlybeings]
+param=slayer_target_id,^slayer_target_otherwordlybeings
+param=slayer_target_name,Otherworldly Beings
+param=slayer_target_tip,Otherworldly Beings are ethereal beings making them weak to magical attack.
+param=slayer_target_req_combatlevel,40
+
+[slayer_target_elves]
+param=slayer_target_id,^slayer_target_elves
+param=slayer_target_name,Elves
+param=slayer_target_tip,Elves are quick, agile, and vicious fighters which often favour bows and polearms.
+param=slayer_target_req_combatlevel,70
+
+[slayer_target_dwarves]
+param=slayer_target_id,^slayer_target_dwarves
+param=slayer_target_name,Dwarves
+param=slayer_target_tip,Dwarves are a small but tough race of miners, often using pickaxes to pierce their opponents armour.
+param=slayer_target_req_combatlevel,6
+
+[slayer_target_bronzedragons]
+param=slayer_target_id,^slayer_target_bronzedragons
+param=slayer_target_name,Bronze Dragons
+param=slayer_target_tip,Bronze Dragons are the weakest of the metallic dragons, their bronze scales are far thicker than normal bronze armour.
+param=slayer_target_req_combatlevel,75
+
+[slayer_target_irondragons]
+param=slayer_target_id,^slayer_target_irondragons
+param=slayer_target_name,Iron Dragons
+param=slayer_target_tip,Iron Dragons are some of the weaker metallic dragons, their iron scales are far thicker than normal iron armour.
+param=slayer_target_req_combatlevel,80
+
+[slayer_target_steeldragons]
+param=slayer_target_id,^slayer_target_steeldragons
+param=slayer_target_name,Steel Dragons
+param=slayer_target_tip,Steel Dragons are dangerous metallic dragons, their steel scales are far thicker than normal steel armour.
+param=slayer_target_req_combatlevel,85
+
+[slayer_target_wallbeasts]
+param=slayer_target_id,^slayer_target_wallbeasts
+param=slayer_target_name,Wall Beasts
+param=slayer_target_tip,Wall Beasts are really much larger creatures but you'll only see their arms. You'll want something sharp on your head to stop them grabbing you.
+param=slayer_target_req_slayerlevel,35
+param=slayer_target_req_combatlevel,30
+param=slayer_target_req_defencelevel,5
+
+[slayer_target_caveslimes]
+param=slayer_target_id,^slayer_target_caveslimes
+param=slayer_target_name,Cave Slimes
+param=slayer_target_tip,Cave Slimes are the lesser cousins of Jellies, though don't be fooled they can still be dangerous as they're often poisonous.
+param=slayer_target_req_slayerlevel,17
+param=slayer_target_req_combatlevel,15
+
+[slayer_target_cavebugs]
+param=slayer_target_id,^slayer_target_cavebugs
+param=slayer_target_name,Cave Bugs
+param=slayer_target_tip,Cave Bugs are like Cave Crawlers, except smaller and easier to squish, though they still have a fondness for plants.
+param=slayer_target_req_slayerlevel,7
+
+[slayer_target_shades]
+param=slayer_target_id,^slayer_target_shades
+param=slayer_target_name,Shades
+param=slayer_target_tip,Shades are undead so magic is your best best against them, you can find Shades at Mort'ton.
+param=slayer_target_req_combatlevel,30
+
+[slayer_target_crocodiles]
+param=slayer_target_id,^slayer_target_crocodiles
+param=slayer_target_name,Crocodiles
+param=slayer_target_tip,Crocodiles are large reptiles which live near water. You'll want to have a stabbing weapon handy for puncturing their thick scaly hides.
+param=slayer_target_req_combatlevel,50
+
+[slayer_target_darkbeasts]
+param=slayer_target_id,^slayer_target_darkbeasts
+param=slayer_target_name,Dark Beasts
+param=slayer_target_tip,Dark Beasts are large, dog-like predators. Their massively muscled bodies protect them from crushing weapons.
+param=slayer_target_req_slayerlevel,90
+param=slayer_target_req_combatlevel,90
+
+[slayer_target_mogres]
+param=slayer_target_id,^slayer_target_mogres
+param=slayer_target_name,Mogres
+param=slayer_target_tip,Mogres are a type of aquatic Ogre that is often mistaken for a giant mudskipper. You have to force them out of the water with a fishing explosive.
+param=slayer_target_req_slayerlevel,32
+param=slayer_target_req_combatlevel,30
+
+[slayer_target_desertlizards]
+param=slayer_target_id,^slayer_target_desertlizards
+param=slayer_target_name,Desert Lizards
+param=slayer_target_tip,Desert Lizards are large reptiles with tough skin. Those found in the desert will need you to douse them with freezing water to finish them off after a tough battle.
+param=slayer_target_req_slayerlevel,22
+
+[slayer_target_feverspiders]
+param=slayer_target_id,^slayer_target_feverspiders
+param=slayer_target_name,Fever Spiders
+param=slayer_target_tip,Fever Spiders are giant spiders that carry the deadly Spider Fever. If you don't want to catch it I suggest you wear Slayer Gloves to fight them.
+param=slayer_target_req_slayerlevel,42
+param=slayer_target_req_combatlevel,40
+
+[slayer_target_harpiebugswarms]
+param=slayer_target_id,^slayer_target_harpiebugswarms
+param=slayer_target_name,Harpie Bug Swarms
+param=slayer_target_tip,Harpie Bug Swarms are pesky critters that are hard to hit. You need a lit bug lantern to distract them with its hypnotic light.
+param=slayer_target_req_slayerlevel,33
+param=slayer_target_req_combatlevel,45
+
+[slayer_target_seasnakes]
+param=slayer_target_id,^slayer_target_seasnakes
+param=slayer_target_name,Sea Snakes
+param=slayer_target_tip,Sea Snakes are long and slithery with a venomous bite. The larger ones are more poisonous, so keep an eye on your health.
+param=slayer_target_req_slayerlevel,40
+param=slayer_target_req_combatlevel,50
+
+[slayer_target_skeletalwyverns]
+param=slayer_target_id,^slayer_target_skeletalwyverns
+param=slayer_target_name,Skeletal Wyverns
+param=slayer_target_tip,Skeletal Wyverns are extremely dangerous and they are hard to hit with arrows as they slip right through. To stand a good chance of surviving you'll need some elemental shielding from its icy breath.
+param=slayer_target_req_slayerlevel,72
+param=slayer_target_req_combatlevel,70
+
+[slayer_target_killerwatts]
+param=slayer_target_id,^slayer_target_skeletalwyverns
+param=slayer_target_name,Killerwatts
+param=slayer_target_tip,Killerwatts store huge amounts of energy in their bodies, which is released if they are touched. You'll need to wear heavily insulated boots to counter this shocking effect.
+param=slayer_target_req_slayerlevel,37
+param=slayer_target_req_combatlevel,50
+
+[slayer_target_mutatedzygomites]
+param=slayer_target_id,^slayer_target_mutatedzygomites
+param=slayer_target_name,Mutated Zygomites
+param=slayer_target_tip,Mutated Zygomites are hard to destroy. They regenerate quickly so you will need to finish them with fungicide. 
+param=slayer_target_req_combatlevel,60
+
+[slayer_target_icefiends]
+param=slayer_target_id,^slayer_target_icefiends
+param=slayer_target_name,Icefiends
+param=slayer_target_tip,Icefiends are beings of ice and freezing rock, they're quick and agile so you'll want to be careful when getting close to them.
+param=slayer_target_req_combatlevel,20

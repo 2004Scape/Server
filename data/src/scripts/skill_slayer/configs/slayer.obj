@@ -1,0 +1,22 @@
+[enchanted_gem]
+name=Enchanted gem
+model=inv_gem
+2dzoom=780
+2dxof=-5
+2dyof=7
+2dxan=368
+2dyan=220
+iop1=Activate
+recol1s=478
+recol1d=43241
+recol2s=931
+recol2d=43606
+recol3s=918
+recol3d=43548
+recol4s=127
+recol4d=43606
+manwear=model_516_obj_wear,0
+womanwear=model_516_obj_wear,6
+weight=2g
+members=yes
+tradeable=no

@@ -2620,6 +2620,7 @@ param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+param=slayer_category,^slayer_target_goblins
 
 [goblin_armed]
 name=Goblin
@@ -2649,6 +2650,7 @@ param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+param=slayer_category,^slayer_target_goblins
 
 [goblin_unarmed2]
 name=Goblin
@@ -2681,6 +2683,7 @@ param=death_anim,goblin_death
 param=attack_sound,goblin_attack
 param=defend_sound,goblin_hit
 param=death_sound,goblin_death
+param=slayer_category,^slayer_target_goblins
 
 [ghost]
 name=Ghost

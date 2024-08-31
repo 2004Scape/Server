@@ -8,8 +8,9 @@ if (finduid(%npc_aggressive_player) = true) {
         sound_synth(npc_param(death_sound), 0, 0);
     }
 }
-if (npc_findhero = true){
+if (npc_findhero = true) {
     %aggressive_npc = null;
+    ~slayer_check_assignment;
 }
 npc_anim(npc_param(death_anim), 0);
 npc_delay(2);
