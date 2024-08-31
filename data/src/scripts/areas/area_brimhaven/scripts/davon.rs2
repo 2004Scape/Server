@@ -1,15 +1,15 @@
 [opnpc1,davon]
-~chatnpc("<p,default>Psst! Come here if you want to do some amulet trading.");
+~chatnpc("<p,neutral>Psst! Come here if you want to do some amulet trading.");
 def_int $option = ~p_choice3("What are you selling?", 1, "What do you mean pssst?", 2, "Why don't you ever restock some types of amulets?", 3);
 
 switch_int ($option) {
     case 1: ~openshop_activenpc;
 
     case 2:
-    ~chatplayer("<p,default>What do you mean pssst?");
-    ~chatnpc("<p,default>Errr, I was...I was clearing my throat.");
+    ~chatplayer("<p,neutral>What do you mean pssst?");
+    ~chatnpc("<p,neutral>Errr, I was...I was clearing my throat.");
 
     case 3:
-    ~chatplayer("<p,default>Why don't you ever restock some types of amulets?");
-    ~chatnpc("<p,default>Some of these amulets are very hard to get. I have to wait until an adventurer supplies me.");
+    ~chatplayer("<p,neutral>Why don't you ever restock some types of amulets?");
+    ~chatnpc("<p,neutral>Some of these amulets are very hard to get.|I have to wait until an adventurer supplies me.");
 }

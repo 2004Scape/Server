@@ -46,12 +46,6 @@ len2=chat_quiz2
 len3=chat_quiz3
 len4=chat_quiz4
 
-[default]
-len1=chat_default
-len2=chat_default
-len3=chat_default
-len4=chat_default
-
 [shifty]
 len1=chat_shifty1
 len2=chat_shifty2

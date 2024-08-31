@@ -20,7 +20,7 @@ switch_int (~p_choice3("No, vampires are scary!", 1, "Ok, I'm up for an adventur
     case default: ~displaymessage(^dm_default);
 }
 
-~chatnpc("<p,default>I think first you should seek help. I have a friend who is a retired vampire hunter, his name is Dr. Harlow. He may be able to give you some tips. He can normally be found in the Jolly Boar Inn in Varrock, he's a bit of");
+~chatnpc("<p,neutral>I think first you should seek help. I have a friend who is a retired vampire hunter, his name is Dr. Harlow. He may be able to give you some tips. He can normally be found in the Jolly Boar Inn in Varrock, he's a bit of");
 ~chatnpc("<p,quiz>an old soak these days. Mention his old friend Morgan, I'm sure he wouldn't want me killed by a vampire.");
 ~quest_vampire_set_progress(^quest_vampire_started);
 ~chatplayer("<p,quiz>I'll look him up then.");

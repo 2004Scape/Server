@@ -28,7 +28,7 @@ switch_int($choice) {
         return;
     case 3 :
         ~chatplayer("<p,neutral>Actually I'd like to sell some drinks.");
-        ~chatnpc("<p,default>If you want to sell any cocktails you've made yourself|I suggest you talk to Blurberry, he's the one who owns|the bar.");
+        ~chatnpc("<p,neutral>If you want to sell any cocktails you've made yourself|I suggest you talk to Blurberry, he's the one who owns|the bar.");
         ~chatplayer("<p,neutral>Thank you.");
         return;
     case 5 : @gnome_barman_barcrawl;

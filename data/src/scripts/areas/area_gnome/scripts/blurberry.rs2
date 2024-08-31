@@ -13,8 +13,8 @@ switch_int(%gnome_bar_progress) {
     case default :
         if (%gnome_bar_progress = 7 | %gnome_bar_progress > 12) {
             // rsc dialogue
-            ~chatplayer("<p,default>Hello again Blurberry!");
-            ~chatnpc("<p,default>Well hello traveller.");
+            ~chatplayer("<p,neutral>Hello again Blurberry!");
+            ~chatnpc("<p,neutral>Well hello traveller.");
             ~chatnpc("<p,neutral>I'm quite busy as usual, any chance you could help?");
             @gnome_bar_cocktail_job_start;
         }
@@ -30,7 +30,7 @@ if(testbit(%barcrawl_progress, ^blurberry_index) = false & last_useitem = barcra
 def_category $category = oc_category(last_useitem);
 if ($category = category_83 | $category = category_15) {
     switch_int(%gnome_bar_progress) {
-        case 0 : ~chatnpc("<p,default>Nice cocktail, but I don't need any right now...");
+        case 0 : ~chatnpc("<p,neutral>Nice cocktail, but I don't need any right now...");
         case 1 : @gnome_bar_assign_fruit_blast;
         case 2 : @gnome_bar_assign_drunk_dragon;
         case 3 : @gnome_bar_assign_ssg;
@@ -39,7 +39,7 @@ if ($category = category_83 | $category = category_15) {
         case 6 : @gnome_bar_complete;
         case default :
             if (%gnome_bar_progress = 7 | %gnome_bar_progress > 12) {
-                ~chatnpc("<p,default>Nice cocktail, but I don't need any right now...");
+                ~chatnpc("<p,neutral>Nice cocktail, but I don't need any right now...");
             }
             if (%gnome_bar_progress > 7 & %gnome_bar_progress < 13) {
                 @gnome_bar_cocktail_job_finish;

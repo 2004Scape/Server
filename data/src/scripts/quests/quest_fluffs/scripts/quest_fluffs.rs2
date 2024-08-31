@@ -9,11 +9,11 @@ switch_int (%fluffs_progress) {
     case ^fluffs_paid_boy:
         ~chatplayer("<p,neutral>Where did you say you saw Fluffs?");
         ~chatnpc("<p,neutral>Weren't you listening? I saw the flea bag|in the old lumber mill just north east of here.|Just walk past the Jolly Boar Inn|and you should find it.");
-    case default: //guessed mesanims
-        ~chatplayer("<p,neutral>Hello again.");
+    case default: 
+        ~chatplayer("<p,happy>Hello again.");
         ~chatnpc("<p,angry>You think you're tough do you?");
-        ~chatplayer("<p,neutral>Pardon?");
-        ~chatnpc("<p,angry>I can beat anyone up.");
+        ~chatplayer("<p,shock>Pardon?");
+        ~chatnpc("<p,angry>I can beat anyone up!");
         ~chatplayer("<p,bored>Really?");
         ~mesbox("The boy begins to jump around with his fists up.|You decide it's best not to kill him just yet.");
 }
@@ -22,7 +22,7 @@ switch_int (%fluffs_progress) {
 ~chatplayer("<p,neutral>Hello there, I've been looking for you.");
 ~chatnpc("<p,neutral>I didn't mean to take it!|I just forgot to pay."); //imgur.com/jk6y117
 ~chatplayer("<p,neutral>What? I'm trying to help your mum find Fluffs.");
-~chatnpc("<p,default>Ohh...well, in that case I might be able to help.|Fluffs followed me to my secret play area,|I haven't seen her since.");
+~chatnpc("<p,neutral>Ohh...well, in that case I might be able to help.|Fluffs followed me to my secret play area,|I haven't seen her since.");
 ~chatplayer("<p,quiz>Where is this play area?");
 ~chatnpc("<p,neutral>If I told you that, it wouldn't be a secret.");
 def_int $option = ~p_choice3("Tell me sonny, or I will hurt you.", 1, "What will make you tell me?", 2, "Well never mind, it's Fluffs' loss.", 3);
@@ -37,7 +37,7 @@ switch_int ($option) {
         ~chatplayer("<p,bored>How much?");
         ~chatnpc("<p,neutral>100 coins should cover it.");
         ~chatplayer("<p,angry>100 coins!|Why should I pay you?");
-        ~chatnpc("<p,default>You shouldn't,|but I won't help otherwise.|I never liked that cat anyway,|so what do you say?");
+        ~chatnpc("<p,neutral>You shouldn't,|but I won't help otherwise.|I never liked that cat anyway,|so what do you say?");
         @fluffs_pay;
     case 3:
         ~chatplayer("<p,neutral>Well, never mind, it's Fluffs' loss.");
@@ -61,9 +61,9 @@ switch_int ($option) {
         %fluffs_progress = ^fluffs_paid_boy;
         ~objbox(coins_25, "You give the lad 100 coins."); //imgur.com/jhDCIvP
         ~chatplayer("<p,neutral>There you go, now where did you see Fluffs ?"); //intentional
-        ~chatnpc("<p,default>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there.");
+        ~chatnpc("<p,neutral>I play at an abandoned lumber mill to the north east.|Just beyond the Jolly Boar Inn.|I saw Fluffs running around in there.");
         ~chatplayer("<p,neutral>Anything else?");
-        ~chatnpc("<p,default>Well, you'll have to find the broken fence to get in.|I'm sure you can manage that.");
+        ~chatnpc("<p,neutral>Well, you'll have to find the broken fence to get in.|I'm sure you can manage that.");
 }
 
 [oploc1,loc_2618]
@@ -107,7 +107,7 @@ if(last_useitem = doogle_leaves) {
 
 [opnpc1,fluffs]
 if(%fluffs_progress >= ^fluffs_rescued) {
-    ~chatplayer("<p,default>Oh, it looks like Fluffs has returned.|I'd better leave her alone."); //OSRS
+    ~chatplayer("<p,neutral>Oh, it looks like Fluffs has returned.|I'd better leave her alone."); //OSRS
     return;
 }
 ~fluffs_attack;

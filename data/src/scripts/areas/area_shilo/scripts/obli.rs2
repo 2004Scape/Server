@@ -1,5 +1,5 @@
 [opnpc1,obli]
-~chatnpc("<p,default>Welcome to Obli's General Store Bwana!|Would you like to see my items?");
+~chatnpc("<p,neutral>Welcome to Obli's General Store Bwana!|Would you like to see my items?");
 def_int $option = ~p_choice2("Yes please!", 1, "No, but thanks for the offer.", 2);
 
 switch_int ($option) {
@@ -7,5 +7,5 @@ switch_int ($option) {
     ~chatplayer("<p,happy>Yes please!");
     ~openshop_activenpc;
     case 2:
-    ~chatplayer("<p,default>No, but thanks for the offer.");
+    ~chatplayer("<p,neutral>No, but thanks for the offer.");
 }

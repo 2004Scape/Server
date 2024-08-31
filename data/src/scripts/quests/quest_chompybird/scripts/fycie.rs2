@@ -11,12 +11,12 @@ switch_int(%chompybird_progress) {
 
         ~chatnpc("<p,neutral>Hey you Creature, I know's what you is You's a|'uman!");
         ~chatplayer("<p,happy>That's right... I'm making some 'stabbers' for Rantz.");
-        ~chatnpc("<p,default>Dat's great...Dad want's to hunt da chompy... Da chompy is our bestest yumms! Yous needies da scratchers for makin' dem huh? I's wants some bright pretties for em!");
+        ~chatnpc("<p,neutral>Dat's great...Dad want's to hunt da chompy... Da chompy is our bestest yumms! Yous needies da scratchers for makin' dem huh? I's wants some bright pretties for em!");
 
         ~objbox(feather, "Fycie shows you the flufsies...you count 25 of them.");
 
         ~chatplayer("<p,neutral>How many 'bright pretties' do you want?");
-        ~chatnpc("<p,default>Mee's wants lots of bright pretties, this many!|@blu@~ Fycie quickly opens and closes her hands in front ~|@blu@~ of you to indicate a number of bright pretties. ~|@blu@~ It looks like she wants 50 gold coins.~");
+        ~chatnpc("<p,neutral>Mee's wants lots of bright pretties, this many!|@blu@~ Fycie quickly opens and closes her hands in front ~|@blu@~ of you to indicate a number of bright pretties. ~|@blu@~ It looks like she wants 50 gold coins.~");
 
         switch_int(~p_choice2("Ok, I'll give you 50 bright pretties.", 1, "Er, sorry, I can't give you that many...", 2)) {
             case 1:
