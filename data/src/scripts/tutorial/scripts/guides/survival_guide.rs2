@@ -113,35 +113,35 @@ switch_int($choice) {
 }
 
 [proc,survival_recap_skills]
-~chatplayer("<p,default>Tell me about my stats again.");
+~chatplayer("<p,neutral>Tell me about my stats again.");
 ~chatnpc("<p,neutral>To look at your stats, click on the bar graph icon found near your backpack icon. You can check your skill levels here.");
 // OSRS specific
 //~chatnpc("<p,neutral>Every skill is listed in the skills menu. Here you can see what your current levels are and how much experience you have.");
 ~chatnpc("<p,neutral>As you move your mouse over any of the icons here, look at the bottom of the menu and you will see the exact amount of experience you have and how much is needed to get to the next level.");
 // Re-enable this line when we get skill menus.
-//~chatnpc("<p,default>You can also click on a skill to open the relevant skillguide. In the skillguide, you can see all of the unlocks available in that skill. ");
+//~chatnpc("<p,neutral>You can also click on a skill to open the relevant skillguide. In the skillguide, you can see all of the unlocks available in that skill. ");
 
 [proc,survival_recap_woodcutting]
-~chatplayer("<p,default>Tell me about Woodcutting again.");
+~chatplayer("<p,neutral>Tell me about Woodcutting again.");
 ~chatnpc("<p,neutral>Woodcutting, eh? Don't worry, newcomer, it's really very easy. Simply equip your axe and click on a nearby tree to chop away.");
 ~chatnpc("<p,neutral>As you explore the mainland you will discover many different kinds of trees that will require different levels of Woodcutting to chop down.");
 ~chatnpc("<p,neutral>Logs are not only useful for making fires. Many archers use the skill known as Fletching to craft their own bows and arrows from trees.");
 
 [proc,survival_recap_fishing]
-~chatplayer("<p,default>Tell me about Fishing again.");
+~chatplayer("<p,neutral>Tell me about Fishing again.");
 ~chatnpc("<p,neutral>Ah, yes. Fishing! Fishing is undoubtedly one the more popular hobbies here in Runescape!");
 ~chatnpc("<p,neutral>Whenever you see sparkling waters, you can be sure there's probably some good fishing to be had there!");
 ~chatnpc("<p,neutral>Not only are fish absolutely delicious when cooked, there are always fighters willing to buy a well cooked fish when they're low on health.");
 ~chatnpc("<p,quiz>I would recommend everybody has a go at Fishing at least once in their lives! Was there anything else you wished to hear again?");
 
 [proc,survival_recap_firemaking]
-~chatplayer("<p,default>Tell me about Firemaking again.");
+~chatplayer("<p,neutral>Tell me about Firemaking again.");
 ~chatnpc("<p,neutral>Certainly, newcomer. When you have logs simply use your tinderbox on then. If successful, you will start a fire.");
 ~chatnpc("<p,neutral>You can also set fire to logs you find lying on the floor already, and some other things can also be set alight...");
 ~chatnpc("<p,neutral>A tinderbox is always a useful item to keep around!");
 
 [proc,survival_recap_cooking]
-~chatplayer("<p,default>Tell me about Cooking again.");
+~chatplayer("<p,neutral>Tell me about Cooking again.");
 ~chatnpc("<p,neutral>Yes, the most basic of survival techniques. Most simple meals can be cooked on a fire by right clicking on the food, selecting use, then left clicking on the fire.");
 ~chatnpc("<p,neutral>Eating food will restore a little health. The harder something is to cook, the more it will heal you. Somewhere around here is a chef who will tell you more about food and cooking it.");
 

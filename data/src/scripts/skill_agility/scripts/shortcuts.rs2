@@ -169,7 +169,7 @@ if(coordz(coord) > coordz(loc_coord)) {
     $end_coord = movecoord(loc_coord, 0, 0, 0);
 }
 def_coord $walk_coord = movecoord($end_coord, 0, 0, $mod);
-if(loc_angle = 1 | loc_angle = 3) {
+if(loc_angle = ^loc_north | loc_angle = ^loc_south) {
     $start_coord = loc_coord;
     $mod = 1;
     $dir = ^exact_east;

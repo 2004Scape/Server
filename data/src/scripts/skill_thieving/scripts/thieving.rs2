@@ -119,6 +119,13 @@ def_int $respawn_ticks = db_getfield($data, trapped_chest:respawn_ticks, 0);
 
 loc_change(loc_2574, $respawn_ticks);
 
+if (db_getfieldcount($data, trapped_chest:tele_coord) > 0) {
+    p_delay(3);
+    mes("Suddenly a second magical trap triggers.");
+    sound_synth(chest_open, 0, 0);
+    p_telejump(db_getfield($data, trapped_chest:tele_coord, 0));
+}
+
 [proc,pick_pocket_check_for_reward](dbrow $data)
 def_int $count = calc(db_getfieldcount($data, pickpocket:loot) - 1);
 def_int $reward_rarity_denominator = 128;

@@ -1,0 +1,12 @@
+[zone,0_48_52_40_8] settimer(draynor_manor_vines, 5);
+
+[timer,draynor_manor_vines]
+// will only start timer after you enter the zone, but will continue 1 tile n/e outside of the zone
+if(inzone(0_48_52_40_8, movecoord(0_48_52_40_8, 9, 0, 9), coord) = false) { 
+    cleartimer(draynor_manor_vines);
+    return;
+}
+mes("A vine whips out and attacks you!");
+spotanim_map(spotanim_8, coord, 0, 0);
+sound_synth(nasty_tree_attack, 0, 0);
+queue(damage_player, 0, 1);

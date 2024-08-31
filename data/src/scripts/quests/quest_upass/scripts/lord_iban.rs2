@@ -1,0 +1,40 @@
+[ai_timer,lord_iban]
+npc_facesquare(movecoord(npc_coord, 8, 0, 0));
+npc_anim(ibansboltcasting, 0);
+switch_int(random(8)) {
+    case 0: npc_say("Begone from my temple!");
+    case 1: npc_say("Fool!");
+    case 2: npc_say("I'll swallow your soul!");
+    case 3: npc_say("You belong in the slave pits!");
+    case 4: npc_say("You will die, frail mortal.");
+    case 5: npc_say("You dare to defy me?!?");
+    case 6: npc_say("Who dares desecrate my temple!");
+    case 7: npc_say("I am the great Iban, I cannot die!");
+}
+def_int $i = 0;
+def_int $j = 0;
+// 8 rounds of bolts, 1 round per tick, defer to world since the bolts will still occur after iban is deleted
+while($i < 8) {
+    $j = 0;
+    while($j < 25) {
+        def_coord $bolt_coord = movecoord(1_33_72_24_31, random(6), 0, random(12));
+        if(map_blocked($bolt_coord) = false) {
+            spotanim_map(ibansbolt, $bolt_coord, 0, 0);
+            huntall($bolt_coord, 0, 0);
+            if (huntnext = true) {
+                if(p_finduid(uid) = true) { // this isn't queued or anything
+                    ~damage_self(~random_range(5, 10));
+                    if(lineofwalk(coord, movecoord(coord, 2, 0, 0)) = true) {
+                        p_telejump(movecoord(coord, 1, 0, 0));
+                        anim(seq_848, 0);
+                        spotanim_pl(stunned_thieving, 124, 0);
+                        sound_synth(stunned, 0, 0);
+                    }
+                }
+            }
+        }
+        $j = add($j, 1);
+    }
+    $i = add($i, 1);
+    world_delay(0);
+}

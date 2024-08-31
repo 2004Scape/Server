@@ -198,11 +198,6 @@ scope=perm
 [gnomeball_progress]
 scope=perm
 
-[upass_progress]
-scope=perm
-
-[varp_162]
-
 [varp_163]
 
 [varp_164]
@@ -382,8 +377,6 @@ scope=perm
 [varp_280]
 
 [varp_283]
-
-[varp_288]
 
 [varp_289]
 

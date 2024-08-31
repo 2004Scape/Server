@@ -12,6 +12,7 @@ mes("You release the toad and see it hop off into the distance.");
 
 [opheld1,bloated_toad]
 if (%chompybird_progress < ^chompybird_shown_toad) {
+    // TODO confirm line breaks, currently overruns
     ~objbox(bloated_toad,"You're not sure where Rantz told you to place the bloated toad. You decide to wait and ask him where to place it.");
     return;
 }
@@ -41,6 +42,7 @@ p_delay(0);
 
 if (p_finduid(uid) = true) {
     npc_add(coord, bloated_toad, 101);
+    %quest_chompybird_baiter = uid;
     npc_queue(4, 0, 25);
 
     mes("You carefully place the bloated toad bait.");
@@ -105,7 +107,7 @@ if ($toad_should_explode = true) {
 }
 
 if ($should_spawn_chompy = true) {
-    ~spawn_chompy_bird(npc_coord);
+    ~spawn_chompy_bird(npc_coord, %quest_chompybird_baiter);
 }
 
 [proc,toad_explode]()
@@ -120,3 +122,14 @@ while (.huntnext = true) {
     // is damage random per-player or per-toad?
     ~.damage_self(calc(random(1) + 1));
 }
+
+// The toad is being eaten by the Chompy
+[ai_queue5,bloated_toad]
+npc_delay(3);
+
+// TODO do we need to check that the Chompy is still there and eating the toad?
+//      should test on OSRS to confirm
+
+npc_say("!!Croak!!");
+npc_delay(2);
+npc_del;

@@ -147,5 +147,21 @@ if_settext(scroll:com_12, ^string_empty);
 if_settext(scroll:com_13, "@red@Take no prisoners!");
 if_openmain(scroll);
 
+[label,upass_well_inscription]
+// https://web.archive.org/web/20060908030821im_/http://www.runeweb.net/fireball/Underground%20Pass%20Images/Underground12.PNG
+if_settext(scroll:com_2, ^string_empty);
+if_settext(scroll:com_3, "While I sense the beating of a");
+if_settext(scroll:com_4, "good heart I will not open.");
+if_settext(scroll:com_5, "Feed me three crests of the blessed");
+if_settext(scroll:com_6, "and the creature's remains,");
+if_settext(scroll:com_7, "throw them to me as an offering...");
+if_settext(scroll:com_8, "a gift of hatred, a token.");
+if_settext(scroll:com_9, "Then finally rejoice as all goodness");
+if_settext(scroll:com_10, "dies in my flames.....");
+if_settext(scroll:com_11, ^string_empty);
+if_settext(scroll:com_12, ^string_empty);
+if_settext(scroll:com_13, ^string_empty);
+if_openmain(scroll);
+
 [if_close,scroll]
 clearsofttimer(server);

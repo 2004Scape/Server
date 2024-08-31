@@ -2,8 +2,8 @@
 [ai_timer,border_guard_alkharid] @guard_scout_toll_fence;
 [opnpc1,border_guard_lumby] @talk_to_border_guard(null);
 [opnpc1,border_guard_alkharid] @talk_to_border_guard(null);
-[oploc1,loc_2882] @find_and_talk_to_border_guard;
-[oploc1,loc_2883] @find_and_talk_to_border_guard;
+[oploc1,border_gate_toll_left] @find_and_talk_to_border_guard;
+[oploc1,border_gate_toll_right] @find_and_talk_to_border_guard;
 
 // searches for a nearby border guard
 // then starts dialogue with them

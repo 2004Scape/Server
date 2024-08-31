@@ -1,0 +1,21 @@
+[opnpct,magic:iban_blast] ~pvm_iban_blast;
+[apnpct,magic:iban_blast] ~pvm_iban_blast;
+
+[proc,pvm_iban_blast]
+def_dbrow $spell_data = ~get_spell_data(^iban_blast);
+if (~pvm_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (%iban_staff_charges < 1) {
+    // https://www.youtube.com/watch?v=vAN4qcGW4T4
+    mes("You have no charges left on the staff."); 
+    return;
+}
+~pvm_spell_cast($spell_data);
+
+if (~player_npc_hit_roll(^magic_style) = true) {
+    ~pvm_spell_success($spell_data, ~magic_spell_maxhit($spell_data), 64);
+} else {
+    ~pvm_spell_fail($spell_data, 64);
+}
+%iban_staff_charges = sub(%iban_staff_charges, 1);

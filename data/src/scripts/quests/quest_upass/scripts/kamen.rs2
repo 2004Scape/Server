@@ -1,0 +1,53 @@
+[opnpc1,kamen]
+mes("He looks a little drunk.");
+npc_say("Hic!");
+p_delay(1);
+~chatplayer("<p,neutral>Hi there, you okay?");
+~chatnpc("<p,sad>Ooooh, my head ...I'm fried.");
+~chatplayer("<p,confused>What's wrong?");
+~chatnpc("<p,neutral>Too much of this home brew my friend. We make it from plant roots, but it blows your head off.");
+~chatnpc("<p,shifty>You don't wanna put it near any naked flames. Want some?");
+switch_int(~p_choice2("Okay then.", 1, "No thanks.", 2)) {
+    case 1:
+        ~chatplayer("<p,happy>Okay then.");
+        ~chatnpc("<p,happy>Here you go... Hic!");
+        if_close;
+        mes("You take a sip of brew from Kamen's glass..");
+        mes("It tastes horrific and burns your throat.");
+        say("Aaarrgghh!");
+        stat_sub(agility, 3, 0);
+        ~stat_addclamp(strength, 1, 0);
+        p_delay(1);
+        mes("The dwarf kindly gives you some food to help you recover from the ghastly drink.");
+        inv_add(inv, meat_pie, 1);
+        inv_add(inv, stew, 1);
+        inv_add(inv, bread, 1);
+        p_delay(0);
+        ~damage_self(~random_range(3, 5));
+        ~chatnpc("<p,happy>Ha ha! I warned you - it's strong stuff.|Have a good meal; it may sober you up a bit.");
+    case 2:
+        ~chatplayer("<p,neutral>No thanks.");
+        ~chatnpc("<p,happy>Your losh... Hic!");
+        ~chatnpc("<p,happy>Well maybe a good meal? I could part with some food for a few coins.");
+        @multi2("Okay then.", kamen_buymeal, "No thanks.", kamen_nomeal);
+}
+
+[label,kamen_buymeal]
+~chatplayer("<p,happy>Okay then.");
+~chatnpc("<p,happy>75 coins pleashe.");
+if(inv_total(inv, coins) < 75) {
+    ~chatplayer("<p,sad>Oh dear, I haven't enough money...");
+    ~chatnpc("<p,neutral>Sorry, I can't just give it away to anyone that walks past.");
+    return;
+}
+inv_del(inv, coins, 75);
+~chatplayer("<p,happy>Here you go.");
+// no space check
+inv_add(inv, meat_pie, 1);
+inv_add(inv, stew, 1);
+inv_add(inv, bread, 1);
+~chatnpc("<p,neutral>Thanks... Eat well.");
+
+[label,kamen_nomeal]
+~chatplayer("<p,neutral>No thanks.");
+~chatnpc("<p,happy>Well come back any time.");

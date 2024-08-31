@@ -1,0 +1,38 @@
+[ai_queue3,sir_jerro]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// no quest stage check, no bank check (RS3)
+if(inv_total(inv, upass_jerro_badge) = 0) {
+    obj_add(npc_coord, upass_jerro_badge, 1, ^lootdrop_duration);
+}
+~paladin_drops;
+
+[opnpc1,sir_jerro]
+if(%upass_progress >= ^upass_entered_main_area) {
+    @upass_paladin_after_killed;
+}
+~chatplayer("<p,happy>Hello Paladin.");
+if(testbit(%upass_map_mechanisms, ^upass_spoken_jerro) = true) {
+    ~chatnpc("<p,neutral>You should leave this place now traveller, I heard the crashing of rocks further down the cavern. Iban must be restless.");
+    ~chatnpc("<p,neutral>I doubt not that Zamorak still influences these caverns. A little further on lies the great door of Iban. We've tried everything, but it will not let us enter. Leave now before Iban awakes and it's too late.");
+    return;
+}
+~chatnpc("<p,confused>Traveller, what are you doing in this most unholy place?");
+~chatplayer("<p,neutral>I'm looking for safe route through the caverns, under order of King Lathas.");
+~chatnpc("<p,happy>You've done well to get this far traveller, here eat...");
+inv_add(inv, meat_pie, 2);
+inv_add(inv, stew, 1);
+inv_add(inv, 2dose1attack, 1);
+inv_add(inv, bread, 2);
+inv_add(inv, 2doseprayerrestore, 1);
+mes("The Paladin gives you some food.");
+%upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_spoken_jerro);
+~chatplayer("<p,happy>Great, thanks a lot.");
+
+[label,upass_paladin_after_killed]
+~chatplayer("<p,happy>Hello.");
+if_close;
+npc_say("You again... die Zamorakian scum!");
+~npc_retaliate(0);

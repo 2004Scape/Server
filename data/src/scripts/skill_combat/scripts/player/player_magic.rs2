@@ -116,6 +116,9 @@ if (npc_type = delrith) {
         return(false);
     }
 }
+if (npc_type = shadow_spider & %npc_attacking_uid ! uid & ~npc_out_of_combat = true) {
+    ~shadow_spider_drain;
+}
 return(true);
 
 [proc,pvm_freeze_allowed](dbrow $spell_data)(boolean)

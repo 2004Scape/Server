@@ -59,7 +59,7 @@ if($option = 1) {
 def_int $option = ~p_choice2("So would these dwarves make another one?", 1, "Well I hope you find it soon.", 2);
 if($option = 1) {
     ~chatplayer("<p,quiz>So would these dwarves make another one?");
-    ~chatnpc("<p,default>I'm not a hundred percent sure the Imcando tribe exists anymore. I should think Reldo, the palace librarian in Varrock, will know; he has done a lot of research on the races of RuneScape.");
+    ~chatnpc("<p,neutral>I'm not a hundred percent sure the Imcando tribe exists anymore. I should think Reldo, the palace librarian in Varrock, will know; he has done a lot of research on the races of RuneScape.");
     ~chatnpc("<p,happy>I don't suppose you could try and track down the Imcando dwarves for me? I've got so much work to do...");
     $option = ~p_choice2("Ok, I'll give it a go.", 1, "No, I've got lots of mining work to do.", 2);
     if($option = 1) {
@@ -118,7 +118,7 @@ if(%squire_progress = 3) {
 ~chatplayer("<p,quiz>So are there any Imcando left at all?");
 ~chatnpc("<p,happy>I believe a few of them survived,|but with the bulk of their population destroyed|their numbers have dwindled even further.");
 ~chatnpc("<p,happy>I believe I remember a couple living in Asgarnia|near the cliffs on the Asgarnian southern peninsula,|but they DO tend to keep to themselves.");
-~chatnpc("<p,default>They tend not to tell people that they're the descendants of the Imcando, which is why people think that the tribe has died out totally, but you may well have more luck talking to them if you bring them some");
+~chatnpc("<p,neutral>They tend not to tell people that they're the descendants of the Imcando, which is why people think that the tribe has died out totally, but you may well have more luck talking to them if you bring them some");
 ~chatnpc("<p,neutral>redberry pie. They REALLY like redberry pie.");
 %squire_progress = 2;
 
@@ -140,7 +140,7 @@ if(inv_total(inv, redberry_pie) >= 1) {
 
 [label,thurgo_special_sword_pre_pie]
 ~chatplayer("<p,quiz>Can you make me a special sword?");
-~chatnpc("<p,default>No, I don't do that anymore. I'm getting old."); 
+~chatnpc("<p,neutral>No, I don't do that anymore. I'm getting old."); 
 
 [label,thurgo_redberry_pie]
 ~chatplayer("<p,quiz>Would you like a redberry pie?");
@@ -153,10 +153,10 @@ inv_del(inv, redberry_pie, 1);
 
 [label,thurgo_special_sword_post_pie]
 ~chatplayer("<p,quiz>Can you make me a special sword?");
-~chatnpc("<p,default>Well, after bringing me my favorite food I guess I should give it a go. What sort of sword is it?");
-~chatplayer("<p,default>I need you to make a sword for one of Falador's knights. He had one which was passed down through five generations, but his squire has lost it. So we need an identical one to replace it.");
-~chatnpc("<p,default>A Knight's sword eh? Well I'd need to know exactly how it looked before I could make a new one.");
-~chatnpc("<p,happy>All the Faladian knights used to have swords with unique designs according to their position. Could you bring me a picture or something?");
+~chatnpc("<p,neutral>Well, after bringing me my favorite food I guess I should give it a go. What sort of sword is it?");
+~chatplayer("<p,neutral>I need you to make a sword for one of Falador's knights. He had one which was passed down through five generations, but his squire has lost it. So we need an identical one to replace it.");
+~chatnpc("<p,neutral>A Knight's sword eh? Well I'd need to know exactly how it looked before I could make a new one.");
+~chatnpc("<p,neutral>All the Faladian knights used to have swords with unique designs according to their position. Could you bring me a picture or something?");
 %squire_progress = 4;
 ~chatplayer("<p,neutral>I'll go and ask his squire and see if I can find one.");
 
@@ -167,14 +167,14 @@ if(%squire_progress = 4 | %squire_progress = 5 & inv_total(inv, portrait) = 0) {
     ~chatplayer("<p,neutral>Sorry, not yet.");
     ~chatnpc("<p,happy>Well, come back when you do.");
 } else if (%squire_progress = 5 & inv_total(inv, portrait) >= 1) {
-    ~chatplayer("<p,default>I have found a picture of the sword I would like you to make.");
+    ~chatplayer("<p,neutral>I have found a picture of the sword I would like you to make.");
     ~mesbox("You give the portrait to Thurgo. Thurgo studies the portrait.");
-    ~chatnpc("<p,default>Ok. You'll need to get me some stuff in order for me to make this.");
-    ~chatnpc("<p,default>I'll need two iron bars to make the sword to start with. I'll also need an ore called blurite. It's useless for making actual weapons for fighting with, but I'll need some as decoration for the hilt.");
-    ~chatnpc("<p,default>It is fairly rare sort of ore... The only place I know where to get it is under this cliff here...");
+    ~chatnpc("<p,neutral>Ok. You'll need to get me some stuff in order for me to make this.");
+    ~chatnpc("<p,neutral>I'll need two iron bars to make the sword to start with. I'll also need an ore called blurite. It's useless for making actual weapons for fighting with, but I'll need some as decoration for the hilt.");
+    ~chatnpc("<p,neutral>It is fairly rare sort of ore... The only place I know where to get it is under this cliff here...");
     ~chatnpc("<p,sad>But it is guarded by a very powerful ice giant.");
-    ~chatnpc("<p,happy>Most of the rocks in that cliff are pretty useless, and don't contain much of anything, but there's DEFINITELY some blurite in there.");
-    ~chatnpc("<p,default>You'll need a little bit of mining experience to be able to find it.");
+    ~chatnpc("<p,neutral>Most of the rocks in that cliff are pretty useless, and don't contain much of anything, but there's DEFINITELY some blurite in there.");
+    ~chatnpc("<p,neutral>You'll need a little bit of mining experience to be able to find it.");
     %squire_progress = 6;
     ~chatplayer("<p,neutral>Ok. I'll go and find them then.");
 } else if (%squire_progress = 6) {
@@ -198,9 +198,9 @@ if(inv_total(inv, blurite_ore) >= 1 & inv_total(inv, iron_bar) >= 2) {
     ~chatnpc("<p,happy>Just remember to call in with more pie some time!");
     return;
 } else if(inv_total(inv, blurite_ore) >= 1) {
-    ~chatplayer("<p,default>I don't have enough iron bars...");
+    ~chatplayer("<p,neutral>I don't have enough iron bars...");
 } else {
-    ~chatplayer("<p,default>I don't have any blurite ore yet...");
+    ~chatplayer("<p,neutral>I don't have any blurite ore yet...");
 }
 ~chatnpc("<p,shifty>Better go get some then, huh?");
 

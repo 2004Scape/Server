@@ -1,0 +1,10 @@
+[ai_queue3,doomion]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+
+obj_add(npc_coord, ashes, 1, ^lootdrop_duration);
+if(%upass_progress = ^upass_found_doll & inv_total(inv, amulet_of_doomion) = 0) {
+    obj_add(npc_coord, amulet_of_doomion, 1, ^lootdrop_duration);
+}

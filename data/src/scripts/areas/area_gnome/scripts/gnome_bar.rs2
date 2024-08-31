@@ -1,12 +1,12 @@
 // *********************** TUTORIAL ************************
 [label,gnome_bar_start]
-~chatplayer("<p,default>Hello.");
+~chatplayer("<p,neutral>Hello.");
 ~chatnpc("<p,happy>Well hello there <displayname()>. If you're looking for a cocktail|the barman will happily make you one.");
-~chatplayer("<p,default>He looks pretty busy.");
+~chatplayer("<p,neutral>He looks pretty busy.");
 ~chatnpc("<p,happy>I know, I just can't find any skilled staff.|I don't suppose you're looking for some part time work?|The pay isn't great but its a good way to meet people.");
 def_int $choice = ~p_choice2("No thanks, I prefer to stay this side of the bar.", 1, "Ok then I'll give it a go.", 2);
 if ($choice = 1) {
-    ~chatplayer("<p,default>No thanks, I prefer to stay this side of the bar.");
+    ~chatplayer("<p,neutral>No thanks, I prefer to stay this side of the bar.");
     return;
 }
 ~chatplayer("<p,happy>Ok then I'll give it a go.");
@@ -15,10 +15,10 @@ inv_add(inv, cocktail_guide, 1);
 %gnome_bar_progress = 1;
 ~chatnpc("<p,happy>Here, take this cocktail guide. The book tells you how to|make all the cocktails we serve. I'll tell you what I need|and you can make them.");
 ~chatplayer("<p,happy>Sounds easy enough.");
-~chatnpc("<p,default>Take a look at the book then come and talk to me.");
+~chatnpc("<p,neutral>Take a look at the book then come and talk to me.");
 
 [label,gnome_bar_assign_fruit_blast]
-~chatplayer("<p,default>Hello Blurberry.");
+~chatplayer("<p,neutral>Hello Blurberry.");
 ~chatnpc("<p,happy>Hi, are you ready to make your first cocktail?");
 ~chatplayer("<p,happy>Absolutely.");
 ~chatnpc("<p,happy>Ok then, to start with make a Fruit Blast. Here, you'll|need these ingredients, but I'm afraid I can't give you|any more if you mess up.");
@@ -30,7 +30,7 @@ inv_add(inv, knife, 1);
 inv_add(inv, cocktail_shaker, 1);
 %gnome_bar_progress = 2;
 ~mesbox("Blurberry gives you two lemons, one orange, one pineapple, a cocktail shaker, a glass and a knife.");
-~chatnpc("<p,default>Let me know when you're done.");
+~chatnpc("<p,neutral>Let me know when you're done.");
 
 [label,gnome_bar_assign_drunk_dragon]
 ~chatnpc("<p,neutral>So where's my Fruit Blast?");
@@ -60,7 +60,7 @@ if (inv_total(inv, fruit_blast) < 1) {
 }
 
 [label,gnome_bar_assign_ssg]
-~chatplayer("<p,default>Hello Blurberry.");
+~chatplayer("<p,neutral>Hello Blurberry.");
 ~chatnpc("<p,quiz>Hello again <displayname()>, how did you do?");
 if (inv_total(inv, drunk_dragon) > 0) {
     ~chatplayer("<p,happy>Here you go.");
@@ -182,8 +182,8 @@ if (inv_total(inv, blurberry_special) < 1) {
 //         ~chatnpc("<p,happy>I can see how that would make it hard to mix cocktails.|I'll give you another one, but please try not lose any|more.");
 //         @exit;
 //     }
-//     ~chatplayer("<p,default>I've not finished yet.");
-//     ~chatnpc("<p,default>Ok, well let me know when you're done.");
+//     ~chatplayer("<p,neutral>I've not finished yet.");
+//     ~chatnpc("<p,neutral>Ok, well let me know when you're done.");
 //     @exit;
 // }
 if (inv_total(inv, $premade_cocktail) > 0) {
@@ -197,8 +197,8 @@ if (inv_total(inv, $premade_cocktail) > 0) {
 [label,gnome_bar_cocktail_job_start]
 def_int $choice = ~p_choice2("I'm quite busy myself, sorry.", 1, "Ok then, what do you need?", 2);
 if ($choice = 1) {
-    ~chatplayer("<p,default>I'm quite busy myself, sorry.");
-    ~chatnpc("<p,default>That's ok, come back when you're free.");
+    ~chatplayer("<p,neutral>I'm quite busy myself, sorry.");
+    ~chatnpc("<p,neutral>That's ok, come back when you're free.");
     return;
 }
 ~chatplayer("<p,happy>Ok then, what do you need?");
@@ -207,24 +207,24 @@ def_int $rand = randominc(5);
 %gnome_bar_progress = calc(7 + $rand);
 switch_int($rand) {
     case 1 : 
-        ~chatnpc("<p,default>Can you make me one Pineapple Punch, one Choc Saturday and one Drunk Dragon!");
-        ~chatplayer("<p,default>Ok then I'll be back soon.");
+        ~chatnpc("<p,neutral>Can you make me one Pineapple Punch, one Choc Saturday and one Drunk Dragon!");
+        ~chatplayer("<p,neutral>Ok then I'll be back soon.");
     case 2 :
-        ~chatnpc("<p,default>Ok, I need two Wizard Blizzards and an SGG!");
-        ~chatplayer("<p,default>No problem!");
+        ~chatnpc("<p,neutral>Ok, I need two Wizard Blizzards and an SGG!");
+        ~chatplayer("<p,neutral>No problem!");
     case 3 :
-        ~chatnpc("<p,default>Ok, I need one Wizard Blizzard, one Pineapple Punch, one Blurberry Special and two Fruit Blasts!");
-        ~chatplayer("<p,default>I'll do my best.");
+        ~chatnpc("<p,neutral>Ok, I need one Wizard Blizzard, one Pineapple Punch, one Blurberry Special and two Fruit Blasts!");
+        ~chatplayer("<p,neutral>I'll do my best.");
     case 4 :
-        ~chatnpc("<p,default>I just need two SGG's and one Blurberry Special!");
-        ~chatplayer("<p,default>No problem!");
+        ~chatnpc("<p,neutral>I just need two SGG's and one Blurberry Special!");
+        ~chatplayer("<p,neutral>No problem!");
     case default : 
-        ~chatnpc("<p,default>I just need one Fruit Blast!");
-        ~chatplayer("<p,default>No problem!");
+        ~chatnpc("<p,neutral>I just need one Fruit Blast!");
+        ~chatplayer("<p,neutral>No problem!");
 }
 
 [label,gnome_bar_cocktail_job_finish]
-~chatplayer("<p,default>Hi.");
+~chatplayer("<p,neutral>Hi.");
 ~chatnpc("<p,neutral>Have you made the order?");
 switch_int(%gnome_bar_progress) {
     case 8 : 
@@ -278,18 +278,18 @@ if (%gnome_bar_progress = 13) {
 // "Making gnome cocktails earns 60 xp, with no bonus from Blurberry"
 // no bonus xp for gnome bar
 if (inv_total(inv, $cocktail1) >= $count1 & inv_total(inv, $cocktail2) >= $count2 & inv_total(inv, $cocktail3) >= $count3 & inv_total(inv, $cocktail4) >= $count4) {
-    ~chatplayer("<p,default>Here you go, <$order>.");
+    ~chatplayer("<p,neutral>Here you go, <$order>.");
     inv_del(inv, $cocktail1, $count1);
     inv_del(inv, $cocktail2, $count2);
     inv_del(inv, $cocktail3, $count3);
     inv_del(inv, $cocktail4, $count4);
     %gnome_bar_progress = 13;
     ~mesbox("You give blurberry <$order>.");
-    ~chatnpc(append("<p,default>", $order_succeed));
+    ~chatnpc(append("<p,neutral>", $order_succeed));
     inv_add(inv, coins, $coins);
     ~mesbox("Blurberry gives you <tostring($coins)> gold coins.");
     return;
 }
 ~chatplayer("<p,sad>Not yet.");
-~chatnpc("<p,default>Ok, I need <$order>.");
-~chatnpc("<p,default>Let me know when you're done.");
+~chatnpc("<p,neutral>Ok, I need <$order>.");
+~chatnpc("<p,neutral>Let me know when you're done.");

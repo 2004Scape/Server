@@ -99,9 +99,7 @@ export default class Npc extends PathingEntity {
             this.baseLevels[index] = level;
         }
 
-        if (npcType.timer !== -1) {
-            this.setTimer(npcType.timer);
-        }
+        this.setTimer(npcType.timer);
 
         this.vars = new Int32Array(VarNpcType.count);
         this.varsString = new Array(VarNpcType.count);
@@ -286,8 +284,10 @@ export default class Npc extends PathingEntity {
     }
 
     setTimer(interval: number) {
-        this.timerInterval = interval;
-        this.timerClock = 0;
+        if (interval !== -1) {
+            this.timerInterval = interval;
+            this.timerClock = 0;
+        }
     }
 
     executeScript(script: ScriptState) {
@@ -338,7 +338,7 @@ export default class Npc extends PathingEntity {
     }
 
     processTimers() {
-        if (this.timerInterval !== 0 && ++this.timerClock >= this.timerInterval) {
+        if (this.timerInterval !== 0 && this.timerClock >= this.timerInterval) {
             this.timerClock = 0;
 
             const type = NpcType.get(this.type);

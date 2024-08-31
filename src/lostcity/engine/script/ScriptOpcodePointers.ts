@@ -323,8 +323,8 @@ const ScriptOpcodePointers: {
         require: ['p_active_player']
     },
     [ScriptOpcode.P_FINDUID]: {
-        set: ['p_active_player'],
-        set2: ['p_active_player2'],
+        set: ['p_active_player', 'active_player' ],
+        set2: ['p_active_player2', 'active_player2'],
         conditional: true
     },
     [ScriptOpcode.P_LOCMERGE]: {
@@ -558,6 +558,11 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.NPC_FINDNEXT]: {
         require: ['find_npc'],
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
+    [ScriptOpcode.NPC_FINDEXACT]: {
         set: ['active_npc'],
         set2: ['active_npc2'],
         conditional: true

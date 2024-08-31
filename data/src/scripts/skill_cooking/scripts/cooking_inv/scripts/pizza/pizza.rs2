@@ -129,4 +129,4 @@ inv_add(inv, struct_param($struct, product), 1);
 //give xp
 stat_advance(crafting, struct_param($struct, productexp));
 //display message
-mes("You add the <struct_param($struct, productmessage)> to the pizza");
+mes("You add the <struct_param($struct, productmessage)> to the pizza.");

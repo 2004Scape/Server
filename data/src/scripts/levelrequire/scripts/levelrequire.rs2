@@ -143,4 +143,6 @@ if (stat_base(magic) < 49 & stat_base(attack) < 49) {
     // todo: messages and additional quest requirements
     return;
 }
+// https://youtu.be/n_ip_vEDbCA?si=0uESoOC98Fvl7HqS&t=2333
+mes("You equip the staff of Iban.");
 ~equip($slot);

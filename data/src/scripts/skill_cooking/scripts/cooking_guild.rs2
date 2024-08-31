@@ -12,7 +12,7 @@ if ($is_inside = false) {
         return;
     }
     if (inv_total(worn, chefshat) < 1) {
-        ~chatnpc_specific("Head chef", npc_847, "<p,default>You can't come in here unless you're wearing a chef's hat, or something like that.");
+        ~chatnpc_specific("Head chef", npc_847, "<p,neutral>You can't come in here unless you're wearing a chef's hat, or something like that.");
         return;
     }
 }

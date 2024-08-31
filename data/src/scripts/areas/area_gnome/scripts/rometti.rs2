@@ -1,6 +1,6 @@
 [opnpc1,npc_601]
 ~chatplayer("<p,neutral>Hello.");
-~chatnpc("<p,default>Hello traveller. Have a look at my latest range of|gnome fashion. Rometti is the ultimate label in gnome|high society.");
+~chatnpc("<p,neutral>Hello traveller. Have a look at my latest range of|gnome fashion. Rometti is the ultimate label in gnome|high society.");
 ~chatplayer("<p,bored>Really.");
 ~chatnpc("<p,neutral>Pastels are all the rage this season.");
 def_int $choice = ~p_choice2("I've no time for fashion.", 1, "OK then, let's have a look.", 2);

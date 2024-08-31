@@ -219,6 +219,7 @@ hitpoints=31
 attack=17
 strength=17
 defence=17
+param=attackrate,6
 param=attackbonus,8
 param=strengthbonus,13
 param=damagetype,^slash_style

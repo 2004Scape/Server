@@ -1,0 +1,23 @@
+[opplayert,magic:iban_blast] ~pvp_iban_blast;
+[applayert,magic:iban_blast] ~pvp_iban_blast;
+
+[proc,pvp_iban_blast]
+def_dbrow $spell_data = ~get_spell_data(^iban_blast);
+if (~pvp_combat_spell_checks($spell_data) = false) {
+    return;
+}
+if (%iban_staff_charges < 2) {
+    // https://www.youtube.com/watch?v=vAN4qcGW4T4
+    mes("You have no charges left on the staff."); 
+    return;
+}
+
+~set_pk_vars;
+~pvp_spell_cast($spell_data);
+// spell hit
+if (~pvp_hit_roll(^magic_style) = true) {
+    ~pvp_spell_success($spell_data, ~magic_spell_maxhit($spell_data), 64);
+} else {
+    ~pvp_spell_fail($spell_data, 64);
+}
+%iban_staff_charges = sub(%iban_staff_charges, 2);
