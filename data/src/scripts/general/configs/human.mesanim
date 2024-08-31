@@ -20,7 +20,7 @@ len4=chat_short
 len1=chat_neutral1
 len2=chat_neutral2
 len3=chat_neutral3
-len4=chat_default
+len4=chat_neutral4
 
 [shock]
 len1=chat_shock1
