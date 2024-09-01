@@ -1479,6 +1479,11 @@ class World {
 
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
+
+        this.friendsThread.postMessage({
+            type: 'player_login',
+            username: player.username
+        });
     }
 
     async removePlayer(player: Player): Promise<void> {
@@ -1495,6 +1500,11 @@ class World {
         }
 
         Login.logout(player);
+
+        this.friendsThread.postMessage({
+            type: 'player_logout',
+            username: player.username,
+        });
     }
 
     getPlayer(pid: number): Player | undefined {

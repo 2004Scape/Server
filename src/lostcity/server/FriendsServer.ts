@@ -2,6 +2,8 @@ import net from 'net';
 
 import Packet from '#jagex2/io/Packet.js';
 
+import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
+
 import NetworkStream from '#lostcity/server/NetworkStream.js';
 
 import Environment from '#lostcity/util/Environment.js';
@@ -11,13 +13,28 @@ import Environment from '#lostcity/util/Environment.js';
  */
 export enum FriendsClientOpcodes {
     WORLD_CONNECT,
+    PLAYER_LOGIN,
+    PLAYER_LOGOUT,
 }
+
+// TODO make this configurable (or at least source it from somewhere common)
+const WORLD_PLAYER_LIMIT = 2000;
 
 /**
  * TODO refactor, this class shares a lot with the other servers
  */
 export class FriendsServer {
     private server: net.Server;
+
+    /**
+     * playersByWorld[worldId][playerIndex] = username37 | null
+     */
+    private playersByWorld: (bigint | null)[][] = [];
+
+    /**
+     * worldByPlayer[username] = worldId
+     */
+    private worldByPlayer: Record<string, number> = {};
 
     /**
      * socketByWorld[worldId] = socket
@@ -74,8 +91,42 @@ export class FriendsServer {
                         }
 
                         this.socketByWorld[world] = socket;
+                        
+                        if (!this.playersByWorld[world]) {
+                            this.playersByWorld[world] = new Array(WORLD_PLAYER_LIMIT).fill(null);
+                        }
 
                         console.log(`[Friends]: World ${world} connected`);
+                    } else if (opcode === FriendsClientOpcodes.PLAYER_LOGIN) {
+                        if (world === null) {
+                            console.error('[Friends]: Received PLAYER_LOGIN before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        
+                        // remove player from previous world, if any
+                        this.removePlayer(username37);
+
+                        if (!this.addPlayer(world, username37)) {
+                            // TODO handle this better?
+                            console.error(`[Friends]: World ${world} is full`);
+                            return;
+                        }
+
+                        console.log(`[Friends]: Player ${fromBase37(username37)} logged in to world ${world}`);
+                    } else if (opcode === FriendsClientOpcodes.PLAYER_LOGOUT) {                        
+                        if (world === null) {
+                            console.error('[Friends]: Received PLAYER_LOGOUT before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const username = fromBase37(username37);
+
+                        console.log(`[Friends]: Player ${username} logged out of world ${world}`);
+
+                        this.removePlayer(username37);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -93,6 +144,53 @@ export class FriendsServer {
         this.server.listen({ port: Environment.FRIENDS_PORT, host: '0.0.0.0' }, () => {
             console.log(`[Friends]: Listening on port ${Environment.FRIENDS_PORT}`);
         });
+    }
+
+    private addPlayer(world: number, username37: bigint) {
+        const username = fromBase37(username37);
+
+        // add player to new world
+        const newIndex = this.playersByWorld[world].findIndex(p => p === null);
+        if (newIndex === -1) {
+            // TODO handle this better?
+            console.error(`[Friends]: World ${world} is full`);
+            return false;
+        }
+
+        this.playersByWorld[world][newIndex] = username37;
+        this.worldByPlayer[username] = world;
+
+        return true;
+    }
+
+    private removePlayer(username37: bigint) {
+        const username = fromBase37(username37);
+
+        // if we know what world they are on, remove them from that world specifically
+        const world = this.worldByPlayer[username];
+        if (world) {
+            const player = this.playersByWorld[world].findIndex(p => p === username37);
+
+            if (player !== -1) {
+                this.playersByWorld[world][player] = null;
+                delete this.worldByPlayer[username];
+                return;
+            }
+        }
+
+        // otherwise, look through all worlds
+        for (let i = 0; i < this.playersByWorld.length; i++) {
+            if (!this.playersByWorld[i]) {
+                continue;
+            }
+
+            const player = this.playersByWorld[i].findIndex(p => p === username37);
+
+            if (player !== -1) {
+                this.playersByWorld[i][player] = null;
+                delete this.worldByPlayer[username];
+            }
+        }
     }
 }
 
@@ -219,5 +317,29 @@ export class FriendsClient {
         const request = new Packet(new Uint8Array(2));
         request.p2(world);
         await this.write(this.socket, FriendsClientOpcodes.WORLD_CONNECT, request.data);
+    }
+
+    public async playerLogin(username: string) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(8));
+        request.p8(toBase37(username));
+        await this.write(this.socket, FriendsClientOpcodes.PLAYER_LOGIN, request.data);
+    }
+
+    public async playerLogout(username: string) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(8));
+        request.p8(toBase37(username));
+        await this.write(this.socket, FriendsClientOpcodes.PLAYER_LOGOUT, request.data);
     }
 }

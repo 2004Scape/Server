@@ -50,6 +50,16 @@ async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.
             await client.worldConnect(Environment.NODE_ID as number);
             break;
         }
+        case 'player_login': {
+            const { username } = msg;
+            await client.playerLogin(username);
+            break;
+        }
+        case 'player_logout': {
+            const { username } = msg;
+            await client.playerLogout(username);
+            break;
+        }
         default:
             console.error('Unknown message type: ' + msg.type);
             break;
