@@ -7,10 +7,22 @@ import NetworkStream from '#lostcity/server/NetworkStream.js';
 import Environment from '#lostcity/util/Environment.js';
 
 /**
+ * client -> server opcodes for friends server
+ */
+export enum FriendsClientOpcodes {
+    WORLD_CONNECT,
+}
+
+/**
  * TODO refactor, this class shares a lot with the other servers
  */
 export class FriendsServer {
     private server: net.Server;
+
+    /**
+     * socketByWorld[worldId] = socket
+     */
+    private socketByWorld: Record<number, net.Socket> = {};
 
     constructor() {
         this.server = net.createServer();
@@ -22,6 +34,11 @@ export class FriendsServer {
             socket.setTimeout(5000);
 
             const stream = new NetworkStream();
+
+            /**
+             * The world number for this connection. This is set when the world sends a WORLD_CONNECT packet.
+             */
+            let world: number | null = null;
 
             socket.on('data', async buf => {
                 stream.received(buf);
@@ -42,7 +59,31 @@ export class FriendsServer {
 
                 await stream.readBytes(socket, data, 0, length);
 
-                data.release();
+                try
+                {
+                    if (opcode === FriendsClientOpcodes.WORLD_CONNECT) {
+                        if (world !== null) {
+                            console.error('[Friends]: Received WORLD_CONNECT after already connected');
+                            return;
+                        }
+
+                        world = data.g2();
+
+                        if (this.socketByWorld[world]) {
+                            this.socketByWorld[world].destroy();
+                        }
+
+                        this.socketByWorld[world] = socket;
+
+                        console.log(`[Friends]: World ${world} connected`);
+                    } else {
+                        console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
+                    }
+                }
+                finally
+                {
+                    data.release();
+                }
             });
 
             socket.on('close', () => {});
@@ -130,9 +171,53 @@ export class FriendsClient {
         this.stream.clear();
     }
 
+    private async write(socket: net.Socket, opcode: FriendsClientOpcodes, data: Uint8Array | null = null, full: boolean = true) {
+        if (socket === null) {
+            return;
+        }
+
+        const packet = new Packet(new Uint8Array(1 + 2 + (data !== null ? data?.length : 0)));
+        packet.p1(opcode);
+        if (data !== null) {
+            packet.p2(data.length);
+            packet.pdata(data, 0, data.length);
+        } else {
+            packet.p2(0);
+        }
+        const done = socket.write(packet.data);
+
+        if (!done && full) {
+            await new Promise<void>(res => {
+                const interval = setInterval(() => {
+                    if (socket === null || socket.closed) {
+                        clearInterval(interval);
+                        res();
+                    }
+                }, 100);
+
+                socket.once('drain', () => {
+                    clearInterval(interval);
+                    res();
+                });
+            });
+        }
+    }
+
     private messageHandlers: ((opcode: number, data: Uint8Array) => void)[] = [];
 
     public async onMessage(fn: (opcode: number, data: Uint8Array) => void) {
         this.messageHandlers.push(fn);
+    }
+
+    public async worldConnect(world: number) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(2));
+        request.p2(world);
+        await this.write(this.socket, FriendsClientOpcodes.WORLD_CONNECT, request.data);
     }
 }

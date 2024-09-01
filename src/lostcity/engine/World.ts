@@ -407,6 +407,10 @@ class World {
             type: 'reset'
         });
 
+        this.friendsThread.postMessage({
+            type: 'connect'
+        });
+
         if (typeof self === 'undefined') {
             if (!Environment.NODE_PRODUCTION) {
                 this.startDevWatcher();

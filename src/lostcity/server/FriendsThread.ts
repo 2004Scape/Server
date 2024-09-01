@@ -2,6 +2,7 @@ import fs from 'fs';
 import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
+import Environment from '#lostcity/util/Environment.js';
 import { FriendsClient } from './FriendsServer.js';
 
 const client = new FriendsClient();
@@ -45,6 +46,10 @@ type ParentPort = {
 
 async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.rsa.PrivateKey) {
     switch (msg.type) {
+        case 'connect': {
+            await client.worldConnect(Environment.NODE_ID as number);
+            break;
+        }
         default:
             console.error('Unknown message type: ' + msg.type);
             break;
