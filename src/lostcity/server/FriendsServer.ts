@@ -21,6 +21,13 @@ export enum FriendsClientOpcodes {
     PLAYER_LOGOUT,
 }
 
+/**
+ * server -> client opcodes for friends server
+ */
+export enum FriendsServerOpcodes {
+    UPDATE_FRIENDLIST,
+}
+
 // TODO make this configurable (or at least source it from somewhere common)
 const WORLD_PLAYER_LIMIT = 2000;
 
@@ -119,6 +126,12 @@ export class FriendsServer {
                         }
 
                         console.log(`[Friends]: Player ${fromBase37(username37)} logged in to world ${world}`);
+
+                        // notify the player who just logged in about their friends
+                        await this.sendFriendsListToPlayer(username37, socket);
+
+                        // notify all friends of the player who just logged in
+                        await this.broadcastWorldToFollowers(username37, world);
                     } else if (opcode === FriendsClientOpcodes.PLAYER_LOGOUT) {                        
                         if (world === null) {
                             console.error('[Friends]: Received PLAYER_LOGOUT before WORLD_CONNECT');
@@ -131,6 +144,8 @@ export class FriendsServer {
                         console.log(`[Friends]: Player ${username} logged out of world ${world}`);
 
                         this.removePlayer(username37);
+
+                        await this.broadcastWorldToFollowers(username37, 0);
                     } else if (opcode === FriendsClientOpcodes.FRIENDLIST_ADD) {                      
                         if (world === null) {
                             console.error('[Friends]: Received FRIENDLIST_ADD before WORLD_CONNECT');
@@ -141,6 +156,11 @@ export class FriendsServer {
                         const targetUsername37 = data.g8();
 
                         await this.addFriend(username37, targetUsername37);
+
+                        const targetUsername = fromBase37(targetUsername37);
+                        const targetCurrentWorld = this.worldByPlayer[targetUsername];
+
+                        await this.sendPlayerWorldUpdate(username37, targetCurrentWorld ?? 0, targetUsername37);
                     } else if (opcode === FriendsClientOpcodes.FRIENDLIST_DEL) {
                         if (world === null) {
                             console.error('[Friends]: Received FRIENDLIST_DEL before WORLD_CONNECT');
@@ -242,6 +262,94 @@ export class FriendsServer {
             .execute();
     }
 
+    private async sendFriendsListToPlayer(username37: bigint, socket: net.Socket) {
+        const friendUsernames = await db
+            .selectFrom('account as a')
+            .innerJoin('friendlist as f', 'a.id', 'f.friend_account_id')
+            .innerJoin('account as local', 'local.id', 'f.account_id')
+            .select('a.username')
+            .where('local.username', '=', fromBase37(username37))
+            .execute();
+        const friendUsername37s = friendUsernames.map(f => toBase37(f.username));
+
+        const playerFriends: [number, bigint][] = [];
+        for (const [worldId, worldPlayers] of this.playersByWorld.entries()) {
+            if (!worldPlayers?.length) {
+                continue;
+            }
+
+            const friendsOnWorld: bigint[] = worldPlayers
+                .filter(p => p !== null)
+                .filter(p => friendUsername37s.includes(p));
+
+            if (friendsOnWorld.length === 0) {
+                continue;
+            }
+
+            for (const friend of friendsOnWorld) {
+                // TODO cap to 100 friends here too?
+                playerFriends.push([worldId, friend]);
+            }
+        }
+
+        const remainingFriends = friendUsername37s.filter(f => !playerFriends.some(p => p[1] === f));
+        for (const friend of remainingFriends) {
+            playerFriends.push([0, friend]);
+        }
+
+        if (playerFriends.length > 0) {
+            const localFriendPacket = new Packet(new Uint8Array(8 + (playerFriends.length * 10)));
+            localFriendPacket.p8(username37);
+            for (const [worldId, friend] of playerFriends) {
+                localFriendPacket.p2(worldId);
+                localFriendPacket.p8(friend);
+            }
+
+            // we can use `socket` here because we know the player is connected to this world
+            await this.write(socket, FriendsServerOpcodes.UPDATE_FRIENDLIST, localFriendPacket.data);
+        }
+    }
+
+    private async broadcastWorldToFollowers(username37: bigint, world: number) {
+        const followerUsernames = await db
+            .selectFrom('account as a')
+            .innerJoin('friendlist as f', 'a.id', 'f.account_id')
+            .innerJoin('account as local', 'local.id', 'f.friend_account_id')
+            .select('a.username')
+            .where('local.username', '=', fromBase37(username37))
+            .execute();
+
+        const followerUsername37s = followerUsernames.map(f => toBase37(f.username));
+
+        for (const follower of followerUsername37s) {
+            await this.sendPlayerWorldUpdate(follower, world, username37);
+        }
+    }
+
+    private getPlayerWorldSocket(username: bigint) {
+        const world = this.worldByPlayer[fromBase37(username)];
+        if (!world) {
+            return null;
+        }
+
+        return this.socketByWorld[world] ?? null;
+    }
+
+    private sendPlayerWorldUpdate(receiver: bigint, world: number, player: bigint) {
+        const socket = this.getPlayerWorldSocket(receiver);
+
+        if (!socket) {
+            return Promise.resolve();
+        }
+
+        const packet = new Packet(new Uint8Array(8 + 2 + 8));
+        packet.p8(receiver);
+        packet.p2(world);
+        packet.p8(player);
+
+        return this.write(socket, FriendsServerOpcodes.UPDATE_FRIENDLIST, packet.data);
+    }
+
     private addPlayer(world: number, username37: bigint) {
         const username = fromBase37(username37);
 
@@ -286,6 +394,42 @@ export class FriendsServer {
                 this.playersByWorld[i][player] = null;
                 delete this.worldByPlayer[username];
             }
+        }
+    }
+
+    /**
+     * TODO this might be better if it adds the packet to some queue for the given socket,
+     *      that way the friend server logic won't wait on the outbound traffic
+     */
+    private async write(socket: net.Socket, opcode: FriendsServerOpcodes, data: Uint8Array | null = null, full: boolean = true) {
+        if (socket === null) {
+            return;
+        }
+
+        const packet = new Packet(new Uint8Array(1 + 2 + (data !== null ? data?.length : 0)));
+        packet.p1(opcode);
+        if (data !== null) {
+            packet.p2(data.length);
+            packet.pdata(data, 0, data.length);
+        } else {
+            packet.p2(0);
+        }
+        const done = socket.write(packet.data);
+
+        if (!done && full) {
+            await new Promise<void>(res => {
+                const interval = setInterval(() => {
+                    if (socket === null || socket.closed) {
+                        clearInterval(interval);
+                        res();
+                    }
+                }, 100);
+
+                socket.once('drain', () => {
+                    clearInterval(interval);
+                    res();
+                });
+            });
         }
     }
 }

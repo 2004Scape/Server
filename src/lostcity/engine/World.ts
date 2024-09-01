@@ -6,7 +6,7 @@ import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import {toBase37} from '#jagex2/jstring/JString.js';
+import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import DbRowType from '#lostcity/cache/config/DbRowType.js';
@@ -68,6 +68,8 @@ import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTime
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
+import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 
 class World {
     private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
@@ -147,11 +149,29 @@ class World {
         }
     }
 
-    onFriendsMessage({ opcode, data }: any) {
+    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: Uint8Array }) {
         const packet = new Packet(data);
 
         try {
-            console.error('Unknown friends opcode: ' + opcode);
+            if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
+                const username37 = packet.g8();
+
+                // TODO make getPlayerByUsername37?
+                const player = this.getPlayerByUsername(fromBase37(username37));
+                if (!player) {
+                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    return;
+                }
+
+                // 10 bytes per friend
+                while (packet.available >= 10) {
+                    const world = packet.g2();
+                    const friendUsername37 = packet.g8();
+                    player.write(new UpdateFriendList(friendUsername37, world));
+                }
+            } else {
+                console.error('Unknown friends opcode: ' + opcode);
+            }
         } finally {
             packet.release();
         }
