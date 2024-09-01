@@ -2,6 +2,10 @@ import fs from 'fs';
 import forge from 'node-forge';
 import { parentPort } from 'worker_threads';
 
+import { FriendsClient } from './FriendsServer.js';
+
+const client = new FriendsClient();
+
 if (typeof self === 'undefined') {
     if (!parentPort) throw new Error('This file must be run as a worker thread.');
 
@@ -15,6 +19,10 @@ if (typeof self === 'undefined') {
             console.error(err);
         }
     });
+    
+    client.onMessage((opcode, data) => {
+        parentPort!.postMessage({ opcode, data });
+    });
 } else {
     const priv = forge.pki.privateKeyFromPem(await (await fetch('data/config/private.pem')).text());
 
@@ -25,6 +33,10 @@ if (typeof self === 'undefined') {
             console.error(err);
         }
     };
+    
+    client.onMessage((opcode, data) => {
+        self.postMessage({ opcode, data });
+    });
 }
 
 type ParentPort = {

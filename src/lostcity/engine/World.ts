@@ -1,4 +1,4 @@
-import {Worker} from 'worker_threads';
+import { Worker as NodeWorker } from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
 import path from 'path';
@@ -70,6 +70,8 @@ import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
 
 class World {
+    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
+
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
 
@@ -114,7 +116,7 @@ class World {
     varsString: string[] = [];
 
     devWatcher: Watcher | null = null;
-    devThread: Worker | null = null;
+    devThread: NodeWorker | null = null;
     devRebuilding: boolean = false;
     devMTime: Map<string, number> = new Map();
 
@@ -129,6 +131,30 @@ class World {
         this.queue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
+
+        if (typeof self === 'undefined') {
+            if (this.friendsThread instanceof NodeWorker) {
+                this.friendsThread.on('message', msg => {
+                    this.onFriendsMessage(msg);
+                });
+            }
+        } else {
+            if (this.friendsThread instanceof Worker) {
+                this.friendsThread.onmessage = msg => {
+                    this.onFriendsMessage(msg.data);
+                };
+            }
+        }
+    }
+
+    onFriendsMessage({ opcode, data }: any) {
+        const packet = new Packet(data);
+
+        try {
+            console.error('Unknown friends opcode: ' + opcode);
+        } finally {
+            packet.release();
+        }
     }
 
     // ----
@@ -408,7 +434,7 @@ class World {
     }
 
     startDevWatcher(): void {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -462,7 +488,7 @@ class World {
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
+                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
             }
 
             this.devThread.postMessage({

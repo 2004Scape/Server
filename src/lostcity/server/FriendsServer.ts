@@ -94,9 +94,12 @@ export class FriendsClient {
                     return;
                 }
 
+                // TODO review - doing this to avoid passing a 5kb buffer for each message
                 const data = Packet.alloc(length);
 
                 await this.stream.readBytes(this.socket!, data, 0, length);
+
+                this.messageHandlers.forEach(fn => fn(opcode, data.data));
 
                 data.release();
             });
@@ -125,5 +128,11 @@ export class FriendsClient {
         this.socket.destroy();
         this.socket = null;
         this.stream.clear();
+    }
+
+    private messageHandlers: ((opcode: number, data: Uint8Array) => void)[] = [];
+
+    public async onMessage(fn: (opcode: number, data: Uint8Array) => void) {
+        this.messageHandlers.push(fn);
     }
 }
