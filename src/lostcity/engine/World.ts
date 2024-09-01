@@ -1477,6 +1477,24 @@ class World {
         }
     }
 
+    addFriend(player: Player, targetUsername37: bigint) {
+        console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_friendslist_add',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    removeFriend(player: Player, targetUsername37: bigint) {
+        console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_friendslist_remove',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
 

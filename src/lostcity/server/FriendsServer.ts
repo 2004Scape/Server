@@ -4,6 +4,8 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
+import { db } from '#lostcity/db/query.js';
+
 import NetworkStream from '#lostcity/server/NetworkStream.js';
 
 import Environment from '#lostcity/util/Environment.js';
@@ -13,6 +15,8 @@ import Environment from '#lostcity/util/Environment.js';
  */
 export enum FriendsClientOpcodes {
     WORLD_CONNECT,
+    FRIENDLIST_ADD,
+    FRIENDLIST_DEL,
     PLAYER_LOGIN,
     PLAYER_LOGOUT,
 }
@@ -127,6 +131,26 @@ export class FriendsServer {
                         console.log(`[Friends]: Player ${username} logged out of world ${world}`);
 
                         this.removePlayer(username37);
+                    } else if (opcode === FriendsClientOpcodes.FRIENDLIST_ADD) {                      
+                        if (world === null) {
+                            console.error('[Friends]: Received FRIENDLIST_ADD before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const targetUsername37 = data.g8();
+
+                        await this.addFriend(username37, targetUsername37);
+                    } else if (opcode === FriendsClientOpcodes.FRIENDLIST_DEL) {
+                        if (world === null) {
+                            console.error('[Friends]: Received FRIENDLIST_DEL before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const targetUsername37 = data.g8();
+
+                        await this.deleteFriend(username37, targetUsername37);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -144,6 +168,78 @@ export class FriendsServer {
         this.server.listen({ port: Environment.FRIENDS_PORT, host: '0.0.0.0' }, () => {
             console.log(`[Friends]: Listening on port ${Environment.FRIENDS_PORT}`);
         });
+    }
+
+    private async deleteFriend(username37: bigint, targetUsername37: bigint) {
+        // I tried to do all this in 1 query but Kyesly wasn't happy
+        const accountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(username37))
+            .limit(1)
+            .executeTakeFirst();
+
+        const friendAccountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(targetUsername37))
+            .limit(1)
+            .executeTakeFirst();
+
+        if (accountId && friendAccountId) {
+            await db
+                .deleteFrom('friendlist')
+                .where('account_id', '=', accountId.id)
+                .where('friend_account_id', '=', friendAccountId.id)
+                .execute();
+        }
+    }
+
+    private async addFriend(username37: bigint, targetUsername37: bigint) {
+        const username = fromBase37(username37);
+        const targetUsername = fromBase37(targetUsername37);
+
+        // I tried to do all this in 1 query but Kyesly wasn't happy
+        const accountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(username37))
+            .limit(1)
+            .executeTakeFirst();
+
+        const friendAccountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(targetUsername37))
+            .limit(1)
+            .executeTakeFirst();
+
+        if (!accountId || !friendAccountId) {
+            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but one of the accounts does not exist`);
+            return;
+        }
+
+        const existing = await db
+            .selectFrom('friendlist')
+            .select(['account_id', 'friend_account_id'])
+            .where('account_id', '=', accountId.id)
+            .where('friend_account_id', '=', friendAccountId.id)
+            .executeTakeFirst();
+
+        if (existing) {
+            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but they are already friends`);
+            return;
+        }
+
+        // TODO check player is not over friends limit
+
+        await db
+            .insertInto('friendlist')
+            .values({
+                account_id: accountId.id,
+                friend_account_id: friendAccountId.id,
+            })
+            .execute();
     }
 
     private addPlayer(world: number, username37: bigint) {
@@ -341,5 +437,31 @@ export class FriendsClient {
         const request = new Packet(new Uint8Array(8));
         request.p8(toBase37(username));
         await this.write(this.socket, FriendsClientOpcodes.PLAYER_LOGOUT, request.data);
+    }
+
+    public async playerFriendslistAdd(username: string, target: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(16));
+        request.p8(toBase37(username));
+        request.p8(target);
+        await this.write(this.socket, FriendsClientOpcodes.FRIENDLIST_ADD, request.data);
+    }
+
+    public async playerFriendslistRemove(username: string, target: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(16));
+        request.p8(toBase37(username));
+        request.p8(target);
+        await this.write(this.socket, FriendsClientOpcodes.FRIENDLIST_DEL, request.data);
     }
 }

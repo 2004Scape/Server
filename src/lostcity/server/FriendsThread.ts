@@ -60,6 +60,16 @@ async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.
             await client.playerLogout(username);
             break;
         }
+        case 'player_friendslist_add': {
+            const { username, target } = msg;
+            await client.playerFriendslistAdd(username, target);
+            break;
+        }
+        case 'player_friendslist_remove': {
+            const { username, target } = msg;
+            await client.playerFriendslistRemove(username, target);
+            break;
+        }
         default:
             console.error('Unknown message type: ' + msg.type);
             break;
