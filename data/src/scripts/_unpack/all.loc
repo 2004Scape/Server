@@ -11815,6 +11815,7 @@ model=model_loc_2240
 width=2
 op1=Open
 op2=Search
+category=rashiliyia_tomb_door
 
 [loc_2241]
 name=Carved doors
@@ -11824,6 +11825,7 @@ width=2
 mirror=yes
 op1=Open
 op2=Search
+category=rashiliyia_tomb_door
 
 [loc_2242]
 name=Tomb exit

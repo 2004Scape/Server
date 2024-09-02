@@ -1,0 +1,35 @@
+[oploc2,loc_2237]
+if(loc_find(0_45_48_37_18, loc_2240) = true) {
+    mes("The trees are already pulled apart revealing some doors.");
+    return;
+}
+mes("You search the palm trees...");
+mes("...and reveal an ancient doorway set into the side of the hill!");
+if(loc_find(0_45_48_37_18, loc_2244) = true & .loc_find(0_45_48_36_18, loc_2245) = true) {
+    loc_change(loc_2240, ^max_32bit_int);
+    .loc_change(loc_2241, ^max_32bit_int);
+}
+// for w/e reason it handles respawn with a timer
+settimer(hide_rashiliyia_doors, 50);
+
+[timer,hide_rashiliyia_doors]
+if(loc_find(0_45_48_37_18, loc_2240) = true & .loc_find(0_45_48_36_18, loc_2241) = true) {
+    loc_change(loc_2244, ^max_32bit_int);
+    .loc_change(loc_2245, ^max_32bit_int);
+    if(distance(.loc_coord, coord) < 2 | distance(loc_coord, coord) < 2) mes("The trees spring back into place and hide the doors again.");
+}
+
+[proc,rashiliyia_door_logout]
+if(getqueue(hide_rashiliyia_doors) > 0) {
+    if(loc_find(0_45_48_37_18, loc_2240) = true) loc_change(loc_2244, ^max_32bit_int);
+    if(loc_find(0_45_48_36_18, loc_2241) = true) loc_change(loc_2245, ^max_32bit_int);
+}
+
+[oploc1,_rashiliyia_tomb_door]
+~mesbox("There seems to be some sort of recepticle on the door.|Perhaps it needs a key?");
+
+[oploc2,_rashiliyia_tomb_door]
+~mesbox("Examining the door, you see that it has a very|strange lock. You're shocked to find that it seems to|be made out of bone!"); // double spaces where the linebreaks are here in OSRS
+
+[oplocu,loc_2245]
+mes("<~coord_tostring(loc_coord)>");
