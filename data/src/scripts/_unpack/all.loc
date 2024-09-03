@@ -11989,6 +11989,7 @@ desc=The gate is closed.
 model=model_loc_52
 op1=Open
 blockrange=no
+category=shilo_metalgate
 
 [loc_2260]
 name=Metal gate
@@ -11997,6 +11998,7 @@ model=model_loc_52
 op1=Open
 mirror=yes
 blockrange=no
+category=shilo_metalgate
 
 [loc_2261]
 name=Wooden gate
@@ -12005,6 +12007,7 @@ model=model_loc_47
 active=yes
 op1=Open
 blockrange=no
+category=shilo_woodengate
 
 [loc_2262]
 name=Wooden gate
@@ -12014,6 +12017,7 @@ mirror=yes
 active=yes
 op1=Open
 blockrange=no
+category=shilo_woodengate
 
 [loc_2263]
 model=model_loc_47

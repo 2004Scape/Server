@@ -1,0 +1,35 @@
+[opnpc1,npc_500]
+if(%junglepotion_progress < ^junglepotion_complete) {
+    ~chatnpc("<p,neutral>Sorry Bwana, I cannot help you at this time. Go and talk to Trufitus at Tai Bwo Wannai, I believe he needs some help."); // rs3
+    return;
+}
+switch_int(%zombiequeen_progress) {
+    case ^zombiequeen_not_started:
+        ~mesbox("Mosol seems to be looking around very cautiously. He jumps a little when you approach and talk to him.");
+        ~chatnpc("<p,neutral>Run! Run for your life! Save yourself! I'll keep them back as long as I can...");
+        @multi4("Why do I need to run?", mosol_whyrun, "Yeah... Ok, I'm running!", mosol_yeahok, "Who are you?", mosol_who, "Ok. Thanks for your help.", mosol_ok_thanks);
+}
+
+[label,mosol_whyrun]
+~chatplayer("<p,happy>Why do I need to run?");
+~chatnpc("<p,neutral>Your very life is in danger. Rashiliyia has returned and we are all doomed.");
+
+[label,mosol_who]
+~chatplayer("<p,happy>Who are you?");
+~chatnpc("<p,neutral>I am Mosol Rei, I am a Jungle Warrior. I used to live in this village, but it is too dangerous for you to stay around here.");
+@multi3("Mosol Rei, that's a nice name.", mosol_nicename, "What danger is there around here?", mosol_danger, "Ok. Thanks for your help.", mosol_ok_thanks);
+
+[label,mosol_nicename]
+~chatplayer("<p,happy>Mosol Rei, that's a nice name.");
+~mesbox("Mosol looks at you and shakes his head in bewilderment.");
+~chatnpc("<p,quiz>Thanks, but you really should leave.");
+
+[label,mosol_danger]
+
+[label,mosol_yeahok]
+~chatplayer("<p,happy>Yeah... Ok, I'm running!");
+~chatnpc("<p,neutral>God speed to you my friend.");
+
+[label,mosol_ok_thanks]
+~chatplayer("<p,neutral>Ok. Thanks for your help.");
+~chatnpc("<p,neutral>You're welcome Bwana, good luck.");

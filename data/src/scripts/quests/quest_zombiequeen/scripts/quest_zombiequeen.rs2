@@ -1,3 +1,80 @@
+[oploc1,loc_2216]
+~mesbox("You see a broken cart has been placed here.|You suspect it's intended to keep people out."); // OSRS lb
+
+[oploc2,loc_2216]
+if(coordx(coord) <= coordx(loc_coord)) {
+    mes("You nimbly jump from one side of the cart...");
+    mes("...to the other and climb down again.");
+    p_telejump(movecoord(loc_coord, 3, 0, 1));
+    return;
+}
+~mesbox("You approach the cart and see undead creatures gathering by the village gates. There is a note attached to the cart. The note says,|@red@:: Danger :: Deadly green mist DO NOT ENTER IF YOU @red@VALUE YOUR LIFE!");
+if(npc_find(coord, npc_500, 8, 0) = true) {
+    if(random(2) = 0) ~chatnpc("<p,shock>Hey, move away from the cart please!|It's unsafe to go in there."); // chatnpc_specific in OSRS but chatnpc on RS3
+    else ~chatnpc("<p,shock>You must be a maniac to go in there!|The whole place is swarming with zombies!");
+}
+~mesbox("It looks as if you can climb across the cart. Would you like to try?");
+switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, I am happy where I am thanks!", 2)) {
+    case 1:
+        mes("You nimbly jump from one side of the cart...");
+        mes("...to the other and climb down again.");
+        p_telejump(movecoord(loc_coord, -1, 0, 1));
+    case 2:
+        if_close;
+        mes("You think better of clambering over the cart, you might get dirty.");
+        p_delay(2);
+        say("I'd probably have just scraped my knees up as well.");
+}
+
+[oploc1,_shilo_metalgate]
+if(coordx(coord) < coordx(loc_coord)) {
+    p_delay(1);
+    p_teleport(loc_coord);
+    ~shilo_metalgates_open;
+    return;
+}
+~mesbox("The gate feels very cold to your touch! Are you sure you want to go through?");
+switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I have a bad feeling about this!", 2)) {
+    case 1:
+        if_close;
+        mes("The gates slowly begin to open...");
+        p_delay(1); // 1t
+        mes("Suddenly some Zombies grab you and start dragging you inside!");
+        settimer(shilo_greenmist, 16);
+        ~shilo_metalgates_open;
+        ~forcemove(0_44_46_54_9);
+    case 2:
+        if_close;
+        mes("You drag your quivering body away from the gates.");
+        p_delay(2); // 2t
+        mes("You look around, but you don't think anyone saw you.");
+}
+
+[timer,shilo_greenmist]
+mes("A green thick mist rises from the ground and starts choking you.");
+spotanim_map(spotanim_184, coord, 124, 3);
+queue(damage_player, 0, calc((stat(hitpoints) / 20) + 1));
+
+
+[proc,shilo_metalgates_open]
+loc_findallzone(coord);
+while(loc_findnext = true) {
+    if(loc_category = shilo_metalgate) {
+            def_coord $central_coord = loc_coord;
+            def_int $orig_angle = loc_angle;
+            loc_del(2);
+            if(loc_type = loc_2259) {
+                loc_add(movecoord($central_coord, -1, 0, 0), loc_1562, 3, loc_shape, 2);
+                loc_add(movecoord($central_coord, -1, 0, 1), loc_1563, 1, loc_shape, 2);
+            }
+            loc_add($central_coord, loc_83, $orig_angle, loc_shape, 2);
+            sound_synth(grate_open, 0, 0);
+    }
+}
+
+[oploc1,_shilo_woodengate]
+mes("The gate won't open.");
+
 [oploc2,loc_2237]
 if(loc_find(0_45_48_37_18, loc_2240) = true) {
     mes("The trees are already pulled apart revealing some doors.");
@@ -8,21 +85,24 @@ mes("...and reveal an ancient doorway set into the side of the hill!");
 if(loc_find(0_45_48_37_18, loc_2244) = true & .loc_find(0_45_48_36_18, loc_2245) = true) {
     loc_change(loc_2240, ^max_32bit_int);
     .loc_change(loc_2241, ^max_32bit_int);
+    %varp_117 = setbit(%varp_117, 0);
 }
-// for w/e reason it handles respawn with a timer
+// for w/e reason it handles despawn with a player timer
 settimer(hide_rashiliyia_doors, 50);
 
 [timer,hide_rashiliyia_doors]
 if(loc_find(0_45_48_37_18, loc_2240) = true & .loc_find(0_45_48_36_18, loc_2241) = true) {
     loc_change(loc_2244, ^max_32bit_int);
     .loc_change(loc_2245, ^max_32bit_int);
-    if(distance(.loc_coord, coord) < 2 | distance(loc_coord, coord) < 2) mes("The trees spring back into place and hide the doors again.");
+    %varp_117 = clearbit(%varp_117, 0);
+    if(distance(.loc_coord, coord) <= 2 | distance(loc_coord, coord) <= 2) mes("The trees spring back into place and hide the doors again.");
 }
 
 [proc,rashiliyia_door_logout]
-if(getqueue(hide_rashiliyia_doors) > 0) {
+if(testbit(%varp_117, 0) = true) {
     if(loc_find(0_45_48_37_18, loc_2240) = true) loc_change(loc_2244, ^max_32bit_int);
     if(loc_find(0_45_48_36_18, loc_2241) = true) loc_change(loc_2245, ^max_32bit_int);
+    %varp_117 = clearbit(%varp_117, 0);
 }
 
 [oploc1,_rashiliyia_tomb_door]
@@ -31,5 +111,14 @@ if(getqueue(hide_rashiliyia_doors) > 0) {
 [oploc2,_rashiliyia_tomb_door]
 ~mesbox("Examining the door, you see that it has a very|strange lock. You're shocked to find that it seems to|be made out of bone!"); // double spaces where the linebreaks are here in OSRS
 
-[oplocu,loc_2245]
-mes("<~coord_tostring(loc_coord)>");
+[oploc1,loc_2217]
+~mesbox("It just looks like some bumpy ground.");
+
+[oploc2,loc_2217]
+~mesbox("It just looks like some bumpy ground.");
+
+[oplocu,loc_2217]
+if(last_useitem = spade) {
+    ~mesbox("You start digging...|But without knowing what you're digging for...|You decide to give up.");
+    return;
+}
