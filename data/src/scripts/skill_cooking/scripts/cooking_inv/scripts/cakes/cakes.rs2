@@ -102,7 +102,7 @@ return;
 
 [label,make_chocolate_cake](int $last)
 if (stat(cooking) < 50) {
-    // unsure on the authentic message, guessing
+    // OSRS message
     ~mesbox("You need a Cooking level of 50 to make a chocolate cake.");
     return;
 }
