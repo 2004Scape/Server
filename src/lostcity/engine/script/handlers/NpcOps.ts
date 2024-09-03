@@ -219,11 +219,14 @@ const NpcOps: CommandHandlers = {
             state.activeNpc.targetOp = mode;
             return;
         }
-        
         state.activeNpc.targetOp = mode;
         let target: Entity | null;
         if (mode >= NpcMode.OPNPC1) {
-            target = state._activeNpc2;
+            if (state.intOperand === 0) {
+                target = state._activeNpc2;
+            } else {
+                target = state._activeNpc;
+            }
         } else if (mode >= NpcMode.OPOBJ1) {
             target = state._activeObj;
         } else if (mode >= NpcMode.OPLOC1) {
