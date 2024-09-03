@@ -347,6 +347,22 @@ const NpcOps: CommandHandlers = {
         }
     },
 
+    [ScriptOpcode.NPC_FINDALL]: state => {
+        const [coord, npc, distance, checkVis] = state.popInts(4);
+
+        const position: Position = check(coord, CoordValid);
+        check(distance, NumberNotNull);
+        const npcType: NpcType = check(npc, NpcTypeValid);
+        const huntvis: HuntVis = check(checkVis, HuntVisValid);
+
+        state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE, npcType);
+        // not necessary but if we want to refer to the original npc again, we can
+        if (state._activeNpc) {
+            state._activeNpc2 = state._activeNpc;
+            state.pointerAdd(ScriptPointer.ActiveNpc2);
+        }
+    },
+
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
         const position: Position = check(state.popInt(), CoordValid);
 
