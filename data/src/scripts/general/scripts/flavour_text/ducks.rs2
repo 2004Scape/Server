@@ -1,13 +1,19 @@
 [ai_timer,drake]
 npc_settimer(calc(15 + random(20)));
 if (random(4) = 0) {
-    @duck_quack;
+    ~duck_quack;
 }
 
 [ai_timer,duck]
 npc_settimer(calc(15 + random(20)));
 if (random(4) = 0) {
-    @duck_quack;
+    ~duck_quack;
+}
+.npc_findall(npc_coord, duckling, 2, 1);
+while (.npc_findnext = true) {
+    if (.npc_getmode ! opnpc2) {
+        .npc_setmode(opnpc2);
+    }
 }
 
 [ai_timer,duckling]
@@ -17,7 +23,7 @@ if (random(4) = 0) {
     // in osrs: ducklings have a different sound that we dont have
 }
 
-[label,duck_quack]
+[proc,duck_quack]
 if (random(2) = 0) {
     npc_say("Quack!");
     ~sound_area(quack, 0, npc_coord, 5); // osrs
@@ -25,3 +31,23 @@ if (random(2) = 0) {
     npc_say("Quack?");
     ~sound_area(quack, 0, npc_coord, 5); // osrs
 }
+
+[ai_opnpc2,duckling] // for following
+npc_setmode(opnpc2);
+
+[ai_queue5,duckling]
+npc_say("Eep!");
+
+// https://oldschool.runescape.wiki/w/Duck
+[ai_queue3,_duck]
+.npc_findall(npc_coord, duckling, 1, 1);
+while (.npc_findnext = true) {
+    .npc_say("Cheep cheep!");
+    .npc_queue(5, 0, add(4, random(3)));
+    .npc_setmode(null);
+}
+.npc_findall(npc_coord, duck, 1, 1);
+while (.npc_findnext = true) {
+    .npc_say("Quack!");
+}
+gosub(npc_death);
