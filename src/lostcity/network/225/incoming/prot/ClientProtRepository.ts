@@ -60,6 +60,10 @@ import ResumePCountDialogHandler from '#lostcity/network/225/incoming/handler/Re
 import TutorialClickSideHandler from '#lostcity/network/225/incoming/handler/TutorialClickSideHandler.js';
 import MoveClickDecoder from '#lostcity/network/225/incoming/codec/MoveClickDecoder.js';
 import MoveClickHandler from '#lostcity/network/225/incoming/handler/MoveClickHandler.js';
+import FriendListAddDecoder from '../codec/FriendListAddDecoder.js';
+import FriendListAddHandler from '../handler/FriendListAddHandler.js';
+import FriendListDelDecoder from '../codec/FriendListDelDecoder.js';
+import FriendListDelHandler from '../handler/FriendListDelHandler.js';
 
 class ClientProtRepository {
     decoders: Map<number, MessageDecoder<IncomingMessage>> = new Map();
@@ -80,8 +84,8 @@ class ClientProtRepository {
     constructor() {
         this.bind(new ClientCheatDecoder(), new ClientCheatHandler());
         this.bind(new CloseModalDecoder(), new CloseModalHandler());
-        // this.bind(new FriendListAddDecoder(), new FriendListAddHandler());
-        // this.bind(new FriendListDelDecoder(), new FriendListDelHandler());
+        this.bind(new FriendListAddDecoder(), new FriendListAddHandler());
+        this.bind(new FriendListDelDecoder(), new FriendListDelHandler());
         this.bind(new IdleTimerDecoder(), new IdleTimerHandler());
         this.bind(new IfButtonDecoder(), new IfButtonHandler());
         this.bind(new IfPlayerDesignDecoder(), new IfPlayerDesignHandler());

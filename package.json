@@ -19,6 +19,7 @@
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev",
     "dev": "nodemon src/lostcity/app.ts",
+    "friends": "npm run ts-loader src/lostcity/friends.ts",
     "lint": "eslint src --ext .ts --ext .js",
     "lint:staged": "eslint --ext .ts --ext .js",
     "login": "npm run ts-loader src/lostcity/login.ts",

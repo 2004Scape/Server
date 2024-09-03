@@ -1,4 +1,4 @@
-import {Worker} from 'worker_threads';
+import { Worker as NodeWorker } from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
 import path from 'path';
@@ -6,7 +6,7 @@ import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import {toBase37} from '#jagex2/jstring/JString.js';
+import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import DbRowType from '#lostcity/cache/config/DbRowType.js';
@@ -68,8 +68,12 @@ import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTime
 import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
+import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
 
 class World {
+    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
+
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
 
@@ -114,7 +118,7 @@ class World {
     varsString: string[] = [];
 
     devWatcher: Watcher | null = null;
-    devThread: Worker | null = null;
+    devThread: NodeWorker | null = null;
     devRebuilding: boolean = false;
     devMTime: Map<string, number> = new Map();
 
@@ -129,6 +133,48 @@ class World {
         this.queue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
+
+        if (typeof self === 'undefined') {
+            if (this.friendsThread instanceof NodeWorker) {
+                this.friendsThread.on('message', msg => {
+                    this.onFriendsMessage(msg);
+                });
+            }
+        } else {
+            if (this.friendsThread instanceof Worker) {
+                this.friendsThread.onmessage = msg => {
+                    this.onFriendsMessage(msg.data);
+                };
+            }
+        }
+    }
+
+    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: Uint8Array }) {
+        const packet = new Packet(data);
+
+        try {
+            if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
+                const username37 = packet.g8();
+
+                // TODO make getPlayerByUsername37?
+                const player = this.getPlayerByUsername(fromBase37(username37));
+                if (!player) {
+                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    return;
+                }
+
+                // 10 bytes per friend
+                while (packet.available >= 10) {
+                    const world = packet.g2();
+                    const friendUsername37 = packet.g8();
+                    player.write(new UpdateFriendList(friendUsername37, world));
+                }
+            } else {
+                console.error('Unknown friends opcode: ' + opcode);
+            }
+        } finally {
+            packet.release();
+        }
     }
 
     // ----
@@ -381,6 +427,10 @@ class World {
             type: 'reset'
         });
 
+        this.friendsThread.postMessage({
+            type: 'connect'
+        });
+
         if (typeof self === 'undefined') {
             if (!Environment.NODE_PRODUCTION) {
                 this.startDevWatcher();
@@ -408,7 +458,7 @@ class World {
     }
 
     startDevWatcher(): void {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -462,7 +512,7 @@ class World {
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
+                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
             }
 
             this.devThread.postMessage({
@@ -1451,8 +1501,31 @@ class World {
         }
     }
 
+    addFriend(player: Player, targetUsername37: bigint) {
+        console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_friendslist_add',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    removeFriend(player: Player, targetUsername37: bigint) {
+        console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_friendslist_remove',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
+
+        this.friendsThread.postMessage({
+            type: 'player_login',
+            username: player.username
+        });
     }
 
     async removePlayer(player: Player): Promise<void> {
@@ -1469,6 +1542,11 @@ class World {
         }
 
         Login.logout(player);
+
+        this.friendsThread.postMessage({
+            type: 'player_logout',
+            username: player.username,
+        });
     }
 
     getPlayer(pid: number): Player | undefined {
