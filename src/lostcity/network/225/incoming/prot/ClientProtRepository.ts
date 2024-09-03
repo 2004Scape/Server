@@ -60,6 +60,8 @@ import ResumePCountDialogHandler from '#lostcity/network/225/incoming/handler/Re
 import TutorialClickSideHandler from '#lostcity/network/225/incoming/handler/TutorialClickSideHandler.js';
 import MoveClickDecoder from '#lostcity/network/225/incoming/codec/MoveClickDecoder.js';
 import MoveClickHandler from '#lostcity/network/225/incoming/handler/MoveClickHandler.js';
+import ChatSetModeDecoder from '../codec/ChatSetModeDecoder.js';
+import ChatSetModeHandler from '../handler/ChatSetModeHandler.js';
 import FriendListAddDecoder from '../codec/FriendListAddDecoder.js';
 import FriendListAddHandler from '../handler/FriendListAddHandler.js';
 import FriendListDelDecoder from '../codec/FriendListDelDecoder.js';
@@ -141,6 +143,7 @@ class ClientProtRepository {
         this.bind(new ResumePauseButtonDecoder(), new ResumePauseButtonHandler());
         this.bind(new ResumePCountDialogDecoder(), new ResumePCountDialogHandler());
         this.bind(new TutorialClickSideDecoder(), new TutorialClickSideHandler());
+        this.bind(new ChatSetModeDecoder(), new ChatSetModeHandler());
     }
 
     getDecoder(prot: ClientProt) {
