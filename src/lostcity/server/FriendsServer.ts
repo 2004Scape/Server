@@ -4,11 +4,10 @@ import Packet from '#jagex2/io/Packet.js';
 
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
-import { db } from '#lostcity/db/query.js';
-
 import NetworkStream from '#lostcity/server/NetworkStream.js';
 
 import Environment from '#lostcity/util/Environment.js';
+import { FriendsServerRepository } from './FriendsServerRepository.js';
 
 /**
  * client -> server opcodes for friends server
@@ -37,15 +36,7 @@ const WORLD_PLAYER_LIMIT = 2000;
 export class FriendsServer {
     private server: net.Server;
 
-    /**
-     * playersByWorld[worldId][playerIndex] = username37 | null
-     */
-    private playersByWorld: (bigint | null)[][] = [];
-
-    /**
-     * worldByPlayer[username] = worldId
-     */
-    private worldByPlayer: Record<string, number> = {};
+    private repository: FriendsServerRepository = new FriendsServerRepository();
 
     /**
      * socketByWorld[worldId] = socket
@@ -102,10 +93,8 @@ export class FriendsServer {
                         }
 
                         this.socketByWorld[world] = socket;
-                        
-                        if (!this.playersByWorld[world]) {
-                            this.playersByWorld[world] = new Array(WORLD_PLAYER_LIMIT).fill(null);
-                        }
+
+                        this.repository.initializeWorld(world, WORLD_PLAYER_LIMIT);
 
                         console.log(`[Friends]: World ${world} connected`);
                     } else if (opcode === FriendsClientOpcodes.PLAYER_LOGIN) {
@@ -117,9 +106,9 @@ export class FriendsServer {
                         const username37 = data.g8();
                         
                         // remove player from previous world, if any
-                        this.removePlayer(username37);
+                        this.repository.unregister(username37);
 
-                        if (!this.addPlayer(world, username37)) {
+                        if (!await this.repository.register(world, username37)) {
                             // TODO handle this better?
                             console.error(`[Friends]: World ${world} is full`);
                             return;
@@ -143,7 +132,8 @@ export class FriendsServer {
 
                         console.log(`[Friends]: Player ${username} logged out of world ${world}`);
 
-                        this.removePlayer(username37);
+                        // remove player from previous world, if any
+                        this.repository.unregister(username37);
 
                         await this.broadcastWorldToFollowers(username37, 0);
                     } else if (opcode === FriendsClientOpcodes.FRIENDLIST_ADD) {                      
@@ -155,10 +145,9 @@ export class FriendsServer {
                         const username37 = data.g8();
                         const targetUsername37 = data.g8();
 
-                        await this.addFriend(username37, targetUsername37);
+                        await this.repository.addFriend(username37, targetUsername37);
 
-                        const targetUsername = fromBase37(targetUsername37);
-                        const targetCurrentWorld = this.worldByPlayer[targetUsername];
+                        const targetCurrentWorld = this.repository.getWorld(targetUsername37);
 
                         await this.sendPlayerWorldUpdate(username37, targetCurrentWorld ?? 0, targetUsername37);
                     } else if (opcode === FriendsClientOpcodes.FRIENDLIST_DEL) {
@@ -170,7 +159,7 @@ export class FriendsServer {
                         const username37 = data.g8();
                         const targetUsername37 = data.g8();
 
-                        await this.deleteFriend(username37, targetUsername37);
+                        await this.repository.deleteFriend(username37, targetUsername37);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -190,112 +179,8 @@ export class FriendsServer {
         });
     }
 
-    private async deleteFriend(username37: bigint, targetUsername37: bigint) {
-        // I tried to do all this in 1 query but Kyesly wasn't happy
-        const accountId = await db
-            .selectFrom('account')
-            .select('id')
-            .where('username', '=', fromBase37(username37))
-            .limit(1)
-            .executeTakeFirst();
-
-        const friendAccountId = await db
-            .selectFrom('account')
-            .select('id')
-            .where('username', '=', fromBase37(targetUsername37))
-            .limit(1)
-            .executeTakeFirst();
-
-        if (accountId && friendAccountId) {
-            await db
-                .deleteFrom('friendlist')
-                .where('account_id', '=', accountId.id)
-                .where('friend_account_id', '=', friendAccountId.id)
-                .execute();
-        }
-    }
-
-    private async addFriend(username37: bigint, targetUsername37: bigint) {
-        const username = fromBase37(username37);
-        const targetUsername = fromBase37(targetUsername37);
-
-        // I tried to do all this in 1 query but Kyesly wasn't happy
-        const accountId = await db
-            .selectFrom('account')
-            .select('id')
-            .where('username', '=', fromBase37(username37))
-            .limit(1)
-            .executeTakeFirst();
-
-        const friendAccountId = await db
-            .selectFrom('account')
-            .select('id')
-            .where('username', '=', fromBase37(targetUsername37))
-            .limit(1)
-            .executeTakeFirst();
-
-        if (!accountId || !friendAccountId) {
-            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but one of the accounts does not exist`);
-            return;
-        }
-
-        const existing = await db
-            .selectFrom('friendlist')
-            .select(['account_id', 'friend_account_id'])
-            .where('account_id', '=', accountId.id)
-            .where('friend_account_id', '=', friendAccountId.id)
-            .executeTakeFirst();
-
-        if (existing) {
-            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but they are already friends`);
-            return;
-        }
-
-        // TODO check player is not over friends limit
-
-        await db
-            .insertInto('friendlist')
-            .values({
-                account_id: accountId.id,
-                friend_account_id: friendAccountId.id,
-            })
-            .execute();
-    }
-
     private async sendFriendsListToPlayer(username37: bigint, socket: net.Socket) {
-        const friendUsernames = await db
-            .selectFrom('account as a')
-            .innerJoin('friendlist as f', 'a.id', 'f.friend_account_id')
-            .innerJoin('account as local', 'local.id', 'f.account_id')
-            .select('a.username')
-            .where('local.username', '=', fromBase37(username37))
-            .execute();
-        const friendUsername37s = friendUsernames.map(f => toBase37(f.username));
-
-        const playerFriends: [number, bigint][] = [];
-        for (const [worldId, worldPlayers] of this.playersByWorld.entries()) {
-            if (!worldPlayers?.length) {
-                continue;
-            }
-
-            const friendsOnWorld: bigint[] = worldPlayers
-                .filter(p => p !== null)
-                .filter(p => friendUsername37s.includes(p));
-
-            if (friendsOnWorld.length === 0) {
-                continue;
-            }
-
-            for (const friend of friendsOnWorld) {
-                // TODO cap to 100 friends here too?
-                playerFriends.push([worldId, friend]);
-            }
-        }
-
-        const remainingFriends = friendUsername37s.filter(f => !playerFriends.some(p => p[1] === f));
-        for (const friend of remainingFriends) {
-            playerFriends.push([0, friend]);
-        }
+        const playerFriends = await this.repository.getFriends(username37);
 
         if (playerFriends.length > 0) {
             const localFriendPacket = new Packet(new Uint8Array(8 + (playerFriends.length * 10)));
@@ -311,23 +196,15 @@ export class FriendsServer {
     }
 
     private async broadcastWorldToFollowers(username37: bigint, world: number) {
-        const followerUsernames = await db
-            .selectFrom('account as a')
-            .innerJoin('friendlist as f', 'a.id', 'f.account_id')
-            .innerJoin('account as local', 'local.id', 'f.friend_account_id')
-            .select('a.username')
-            .where('local.username', '=', fromBase37(username37))
-            .execute();
+        const followers = this.repository.getFollowers(username37);
 
-        const followerUsername37s = followerUsernames.map(f => toBase37(f.username));
-
-        for (const follower of followerUsername37s) {
+        for (const follower of followers) {
             await this.sendPlayerWorldUpdate(follower, world, username37);
         }
     }
 
     private getPlayerWorldSocket(username: bigint) {
-        const world = this.worldByPlayer[fromBase37(username)];
+        const world = this.repository.getWorld(username);
         if (!world) {
             return null;
         }
@@ -348,53 +225,6 @@ export class FriendsServer {
         packet.p8(player);
 
         return this.write(socket, FriendsServerOpcodes.UPDATE_FRIENDLIST, packet.data);
-    }
-
-    private addPlayer(world: number, username37: bigint) {
-        const username = fromBase37(username37);
-
-        // add player to new world
-        const newIndex = this.playersByWorld[world].findIndex(p => p === null);
-        if (newIndex === -1) {
-            // TODO handle this better?
-            console.error(`[Friends]: World ${world} is full`);
-            return false;
-        }
-
-        this.playersByWorld[world][newIndex] = username37;
-        this.worldByPlayer[username] = world;
-
-        return true;
-    }
-
-    private removePlayer(username37: bigint) {
-        const username = fromBase37(username37);
-
-        // if we know what world they are on, remove them from that world specifically
-        const world = this.worldByPlayer[username];
-        if (world) {
-            const player = this.playersByWorld[world].findIndex(p => p === username37);
-
-            if (player !== -1) {
-                this.playersByWorld[world][player] = null;
-                delete this.worldByPlayer[username];
-                return;
-            }
-        }
-
-        // otherwise, look through all worlds
-        for (let i = 0; i < this.playersByWorld.length; i++) {
-            if (!this.playersByWorld[i]) {
-                continue;
-            }
-
-            const player = this.playersByWorld[i].findIndex(p => p === username37);
-
-            if (player !== -1) {
-                this.playersByWorld[i][player] = null;
-                delete this.worldByPlayer[username];
-            }
-        }
     }
 
     /**
