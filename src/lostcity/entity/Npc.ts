@@ -168,6 +168,10 @@ export default class Npc extends PathingEntity {
 
             const npcType: NpcType = NpcType.get(this.type);
             this.huntrange = npcType.huntrange;
+            const hunt = HuntType.get(this.huntMode);
+            if (hunt) {
+                this.nextHuntTick = World.currentTick + hunt.rate;
+            }
         }
         super.resetPathingEntity();
     }
