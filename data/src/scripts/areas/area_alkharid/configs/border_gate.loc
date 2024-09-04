@@ -1,4 +1,4 @@
-[loc_2882]
+[border_gate_toll_left]
 name=Gate
 desc=The toll gate from Lumbridge to Al-Kharid.
 model=model_loc_52
@@ -6,7 +6,7 @@ op1=Open
 category=border_gate_toll_left
 param=next_loc_stage,loc_1562
 
-[loc_2883]
+[border_gate_toll_right]
 name=Gate
 desc=The toll gate from Lumbridge to Al-Kharid.
 model=model_loc_52

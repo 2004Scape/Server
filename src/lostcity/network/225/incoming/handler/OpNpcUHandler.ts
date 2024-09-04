@@ -46,6 +46,7 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
             return false;
         }
 
+        player.clearPendingAction();
         if (ObjType.get(item).members && !Environment.NODE_MEMBERS) {
             player.messageGame("To use this item please login to a members' server.");
             player.unsetMapFlag();
@@ -55,7 +56,6 @@ export default class OpNpcUHandler extends MessageHandler<OpNpcU> {
         player.lastUseItem = item;
         player.lastUseSlot = slot;
 
-        player.clearPendingAction();
         player.setInteraction(Interaction.ENGINE, npc, ServerTriggerType.APNPCU, { type: npc.type, com: -1 });
         player.opcalled = true;
         return true;

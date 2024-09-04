@@ -1,0 +1,103 @@
+[opheldu,damp_cloth]
+switch_obj(last_useitem) {
+    case bronze_arrow: @make_clotharrow(bronze_arrow);
+    case iron_arrow: @make_clotharrow(iron_arrow);
+    case steel_arrow: @make_clotharrow(steel_arrow);
+    case mithril_arrow: @make_clotharrow(mithril_arrow);
+    case adamant_arrow: @make_clotharrow(adamant_arrow);
+    case rune_arrow: @make_clotharrow(rune_arrow);
+    case default: ~displaymessage(^dm_default);
+}
+
+[label,make_clotharrow](namedobj $arrow_type)
+def_namedobj $product = oc_param($arrow_type, next_obj_stage);
+if (inv_itemspace(inv, $product, 1, inv_size(inv)) = false) {
+    mes("You don't have space to do that."); // rs3
+    return;
+}
+inv_del(inv, damp_cloth, 1);
+inv_del(inv, $arrow_type, 1);
+inv_add(inv, $product, 1);
+// https://youtu.be/qGcENRGIcoI?si=exA8N3UOZj-G0IaH&t=26
+mes("\"You wrap the damp cloth around the arrow head.\"...");
+
+[label,light_firearrow](obj $arrow_type)
+def_namedobj $product = oc_param($arrow_type, next_obj_stage);
+if (inv_itemspace(inv, $product, 1, inv_size(inv)) = false) { // does nothing on rs3
+    return;
+}
+inv_del(inv, $arrow_type, 1);
+inv_add(inv, oc_param($arrow_type, next_obj_stage), 1);
+mes("You light the cloth wrapped arrow head.");
+
+[aploc1,loc_3340]
+if(coordx(coord) < coordx(loc_coord)) {
+    mes("You don't need to shoot the bridge from this side.");
+    return;
+}
+if(coordz(coord) < 9720) {
+    mes("You can't get a clear shot from here.");
+    return;
+}
+
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_obj $worn_ammo = inv_getobj(worn, ^wearpos_quiver);
+if($weapon = null) {
+    mes("You'll need to equip a bow before you can fire arrows at the rope.");
+    return;
+} 
+if($worn_ammo = null) {
+    mes("You need something to fire that will make the bridge drop.");
+    return;
+}
+def_category $weapon_cat = oc_category($weapon);
+def_int $wearing_lit_arrow = oc_param($worn_ammo, lit_arrow);
+if($weapon_cat ! weapon_bow) {
+    mes("You'll need to equip a bow before you can fire arrows at the rope.");
+    return;
+}
+if($wearing_lit_arrow = ^false) {
+    mes("You need something to fire that will make the bridge drop.");
+    return;
+}
+inv_del(worn, $worn_ammo, 1);
+mes("You fire your arrow at the rope supporting the bridge...");
+anim(human_bow, 0);
+~coord_projectile(coord, loc_coord, oc_param($worn_ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5);
+p_delay(0);
+if(stat_random(stat(ranged), 90, 300) = false) {
+    mes("The arrow just misses the rope.");
+    return;
+}
+mes("The arrow impales the rope support.");
+~forcewalk(0_38_151_22_59);
+~forcewalk2(0_38_151_23_59);
+~forcewalk(0_38_151_23_53);
+~forcewalk(0_38_151_22_52);
+~forcewalk(0_38_151_15_52);
+p_delay(0);
+mes("The bridge falls.");
+mes("You rush across the bridge.");
+if(loc_find(0_38_151_11_52, loc_3239) = true) {
+    loc_change(loc_3240, 7);
+}
+p_delay(3);
+p_teleport(0_38_151_10_52);
+if(%upass_progress = ^upass_spoken_koftik) %upass_progress = ^upass_passed_bridge;
+
+[oploc1,loc_3241]
+mes("You pull the old lever...");
+anim(seq_798, 0);
+sound_synth(lever, 0, 0);
+loc_change(loc_3242, 3);
+~forcemove(0_38_151_7_51);
+p_delay(2);
+~forcemove(movecoord(coord, 1, 0, 1));
+p_delay(1);
+if(loc_find(0_38_151_11_52, loc_3239) = true) {
+    loc_change(loc_3240, 4);
+}
+~forcemove(movecoord(coord, 2, 0, 0));
+p_delay(1);
+mes("You cross the lowered bridge.");
+p_teleport(0_38_151_15_52);

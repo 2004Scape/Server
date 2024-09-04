@@ -164,27 +164,24 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_CLOSESTICKY]: {
-        require: ['active_player']
-    },
-    [ScriptOpcode.IF_MULTIZONE]: {
+    [ScriptOpcode.TUT_CLOSE]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_OPENCHAT]: {
         require: ['active_player']
     },
-    [ScriptOpcode.IF_OPENCHATSTICKY]: {
+    [ScriptOpcode.TUT_OPEN]: {
         require: ['active_player']
     },
-    [ScriptOpcode.IF_OPENMAINMODAL]: {
+    [ScriptOpcode.IF_OPENMAIN]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_OPENMAINMODALSIDEOVERLAY]: {
+    [ScriptOpcode.IF_OPENMAIN_SIDE]: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_OPENSIDEOVERLAY]: {
+    [ScriptOpcode.IF_OPENSIDE]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_SETANIM]: {
@@ -225,7 +222,7 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
-    [ScriptOpcode.IF_SETTABFLASH]: {
+    [ScriptOpcode.TUT_FLASH]: {
         require: ['active_player']
     },
     [ScriptOpcode.IF_SETTEXT]: {
@@ -326,8 +323,8 @@ const ScriptOpcodePointers: {
         require: ['p_active_player']
     },
     [ScriptOpcode.P_FINDUID]: {
-        set: ['p_active_player'],
-        set2: ['p_active_player2'],
+        set: ['p_active_player', 'active_player' ],
+        set2: ['p_active_player2', 'active_player2'],
         conditional: true
     },
     [ScriptOpcode.P_LOCMERGE]: {
@@ -561,6 +558,11 @@ const ScriptOpcodePointers: {
     },
     [ScriptOpcode.NPC_FINDNEXT]: {
         require: ['find_npc'],
+        set: ['active_npc'],
+        set2: ['active_npc2'],
+        conditional: true
+    },
+    [ScriptOpcode.NPC_FINDEXACT]: {
         set: ['active_npc'],
         set2: ['active_npc2'],
         conditional: true

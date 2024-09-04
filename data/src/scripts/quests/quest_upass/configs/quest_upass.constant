@@ -1,0 +1,37 @@
+^upass_not_started = 0
+^upass_spoken_koftik = 1
+^upass_passed_bridge = 2
+^upass_entered_second_area = 3
+^upass_killed_unicorn = 4
+^upass_entered_main_area = 5
+^upass_spoken_nilhoof = 6
+^upass_found_doll = 7
+^upass_confronted_iban = 8
+^upass_defeated_iban = 9
+^upass_complete = 10
+
+// bit progress values, following OSRS where applicable (varp 162)
+^upass_blood_on_doll = 1
+^upass_dove_on_doll = 2
+^upass_ashes_on_doll = 3
+^upass_shadow_on_doll = 4
+^upass_orb1_bit = 5
+^upass_orb2_bit = 6
+^upass_orb3_bit = 7
+^upass_orb4_bit = 8
+^upass_dropped_cat = 9
+^upass_started_bit = 11
+^upass_searched_area2_crate = 12
+^upass_spoken_jerro = 13
+^upass_thrown_jerro_badge = 14
+^upass_thrown_carl_badge = 15
+^upass_thrown_harry_badge = 16
+^upass_koftik_gone_insane = 17
+^upass_thrown_unicorn_horn = 18
+^upass_read_history = 19
+^upass_poured_brew = 21
+// 22 - 31 used for the maze
+
+^upass_grid_col1 = 0_38_151_43_9
+^upass_grid_col3 = 0_38_151_39_9
+^upass_grid_col5 = 0_38_151_35_9

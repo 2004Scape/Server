@@ -56,6 +56,7 @@ if(inv_total(inv, barcrawl_card) = 0 & inv_total(bank, barcrawl_card) = 0) {
         }
         ~mesbox("You give the card to the barbarian");
         ~chatnpc("<p,happy>Yep that seems fine, you can come in now.|I never learned to read,|but you look like you've drunk plenty.");
+        return;
     }
     ~chatplayer("<p,sad>I haven't finished it yet.");
     ~chatnpc("<p,neutral>Well come back when you have, you lightweight.");

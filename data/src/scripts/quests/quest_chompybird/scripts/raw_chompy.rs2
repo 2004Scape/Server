@@ -1,0 +1,174 @@
+[opheldu,raw_chompy]
+switch_obj (last_useitem)
+{
+    case cabbage, tomato, potato, equa_leaves, doogle_leaves:
+        @quest_chompybird_add_ingredients_to_chompy_message;
+    case default : ~displaymessage(^dm_default);
+};
+
+
+[label,quest_chompybird_add_ingredients_to_chompy_message]
+// message taken from OSRS
+~mesbox("You can only add ingredients when you're cooking a chompy bird. Ensure you have the seasonings you want to use in your inventory when cooking the chompy bird and you will use them automatically when cooking.");
+
+[oplocu,ogre_spitroast]
+// TODO what else can be cooked here?
+if (last_useitem ! raw_chompy)
+{
+    ~displaymessage(^dm_default);
+    return;
+}
+
+// TODO allow cooking after quest
+if (%chompybird_progress < ^chompybird_told_to_cook_chompy)
+{
+    // TODO this has a few different messages in different quest states on OSRS
+    ~displaymessage(^dm_default);
+    return;
+}
+
+if (%chompybird_progress = ^chompybird_told_to_cook_chompy)
+{
+    @cook_chompy_quest;
+    return;
+}
+
+if (%chompybird_progress = ^chompybird_chompy_cooked)
+{
+    // TODO what if the player no longer has the original chompy? Does it still auto-hand in?
+    if (npc_find(loc_coord, chompybird_rantz, 16, 0) = true)
+    {
+        @hand_chompy_to_rantz;
+    }
+    else
+    {
+        mes("eep cabbage , could not find Rantz - please tell a dev");
+    }
+
+    return;
+}
+
+// TODO handle non-quest cooking
+~displaymessage(^dm_default);
+
+[label,cook_chompy_quest]
+def_int $bugs_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_bugs_flavour_start, ^chompybird_varbit_bugs_flavour_end);
+def_int $fycie_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_fycie_flavour_start, ^chompybird_varbit_fycie_flavour_end);
+
+if ($bugs_ingredient = 0 | $fycie_ingredient = 0)
+{
+    // TODO confirm behaviour
+    mes("You should ask Bugs and Fycie for their favourite ingredients first!");
+    return;
+}
+
+def_int $rantz_ingredient = getbit_range(%chompybird_kills, ^chompybird_varbit_rantz_flavour, ^chompybird_varbit_rantz_flavour);
+
+def_boolean $has_rantz_ingredient = false;
+
+def_string $rantz_ingredient_name;
+def_string $bugs_ingredient_name;
+def_string $fycie_ingredient_name;
+
+if ($rantz_ingredient = 0)
+{
+    if (inv_total(inv, potato) > 0)
+    {
+        $has_rantz_ingredient = true;
+    }
+
+    $rantz_ingredient_name = "potato";
+}
+else if ($rantz_ingredient = 1)
+{
+    if (inv_total(inv, onion) > 0)
+    {
+        $has_rantz_ingredient = true;
+    }
+    
+    $rantz_ingredient_name = "onion";
+}
+
+def_boolean $has_bugs_ingredient = false;
+
+if ($bugs_ingredient = 1)
+{
+    if (inv_total(inv, equa_leaves) > 0)
+    {
+        $has_bugs_ingredient = true;
+    }
+
+    $bugs_ingredient_name = "equa leaves";
+}
+else if ($bugs_ingredient = 2)
+{
+    if (inv_total(inv, cabbage) > 0)
+    {
+        $has_bugs_ingredient = true;
+    }
+
+    $bugs_ingredient_name = "cabbage";
+}
+
+def_boolean $has_fycie_ingredient = false;
+
+if ($fycie_ingredient = 1)
+{
+    if (inv_total(inv, tomato) > 0)
+    {
+        $has_fycie_ingredient = true;
+    }
+
+    $fycie_ingredient_name = "tomato";
+}
+else if ($fycie_ingredient = 2)
+{
+    if (inv_total(inv, doogle_leaves) > 0)
+    {
+        $has_fycie_ingredient = true;
+    }
+
+    $fycie_ingredient_name = "doogle leaves";
+}
+
+if ($has_rantz_ingredient = false | $has_bugs_ingredient = false | $has_fycie_ingredient = false) {
+    ~mesbox("You don't have all the ingredients yet to cook the chompy bird for the ogre family.|Remember what the Ogre family wanted? Rantz wanted <$rantz_ingredient_name>. Fycie wanted <$fycie_ingredient_name>. Bugs wanted <$bugs_ingredient_name>.");
+    return;
+}
+
+// TODO in OSRS this takes some time, and the spit is animated
+%chompybird_progress = ^chompybird_chompy_cooked;
+mes("You carefully place the chompy bird on the spit-roast.");
+inv_del(inv, raw_chompy, 1);
+
+mes("You add the other ingredients and cook the food.");
+if ($rantz_ingredient = 0)
+{
+    inv_del(inv, potato, 1);
+}
+else if ($rantz_ingredient = 1)
+{
+    inv_del(inv, onion, 1);
+}
+
+if ($bugs_ingredient = 1)
+{
+    inv_del(inv, equa_leaves, 1);
+}
+else if ($bugs_ingredient = 2)
+{
+    inv_del(inv, cabbage, 1);
+}
+
+if ($fycie_ingredient = 1)
+{
+    inv_del(inv, tomato, 1);
+}
+else if ($fycie_ingredient = 2)
+{
+    inv_del(inv, doogle_leaves, 1);
+}
+
+mes("Eventually the chompy is cooked.");
+inv_add(inv, seasoned_chompy, 1);
+~objbox(seasoned_chompy, "You use the <$rantz_ingredient_name>, <$bugs_ingredient_name> and the <$fycie_ingredient_name>|with the chompy bird to make a seasoned chompy.");

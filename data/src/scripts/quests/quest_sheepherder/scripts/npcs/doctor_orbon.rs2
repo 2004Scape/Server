@@ -11,7 +11,7 @@ switch_int(%sheepherder_progress) {
 ~chatnpc("<p,quiz>How do you feel?|No heavy flu, shivers, nausea or loss of appetite?");
 ~chatplayer("<p,quiz>Uh... no... I feel fine...");
 ~chatnpc("<p,quiz>How about nightmares then? Are you experiencing any problems with especially scary nightmares?");
-~chatplayer("<p,default>No... not since I was young.");
+~chatplayer("<p,neutral>No... not since I was young.");
 ~chatnpc("<p,happy>Good, good, I had to make sure.|This plague really has an incredible fast contagion rate. It spreads faster than the common cold!");
 @multi2(
     "The plague? Tell me more.", doctor_orbon_more_about_plague,
@@ -22,7 +22,7 @@ switch_int(%sheepherder_progress) {
 ~chatplayer("<p,neutral>The plague? Tell me more.");
 ~chatnpc("<p,angry>It came from the west somewhere.|It is extremely quick spreading, and utterly deadly.");
 ~chatplayer("<p,neutral>What are the symptoms?");
-~chatnpc("<p,confused>It varies slightly from case to case,|but usually abnormal nightmares and flue-like symptoms,|progressing as you succumb more.");
+~chatnpc("<p,confused>It varies slightly from case to case,|but usually abnormal nightmares and flu-like symptoms,|progressing as you succumb more.");
 ~chatnpc("<p,confused>Eventually it results in the presence of a thick black tar-like substance secreted from the nose and eyes.");
 ~chatnpc("<p,sad>Unfortunately if you reach this stage of infection then no one can save you.");
 

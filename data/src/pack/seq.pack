@@ -589,7 +589,7 @@
 588=chat_neutral1
 589=chat_neutral2
 590=chat_neutral3
-591=chat_default
+591=chat_neutral4
 592=chat_shifty1
 593=chat_shifty2
 594=chat_shifty3
@@ -1023,5 +1023,5 @@
 1022=seq_1022
 1023=seq_1023
 1024=seq_1024
-1025=ogre_seq_1025
+1025=ogre_attackbow
 1026=human_ogre_bellows_use

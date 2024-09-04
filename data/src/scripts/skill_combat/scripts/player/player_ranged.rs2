@@ -32,6 +32,9 @@ if (%action_delay > map_clock | getwalktrigger() = stunned) {
     p_opnpc(2);
     return;
 }
+
+~player_combat_stat; // update combat varps before calculating action_delay and shooting
+
 // set the skill clock depending on the weapon attack rate
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 if ($weapon = null) {
@@ -49,8 +52,6 @@ if ($ammo = null) {
     ~update_all($rhand);
     return;
 }
-
-~player_combat_stat; // update combat varps before swinging
 
 // check hit, give combat xp
 def_int $damage = 0;
@@ -82,6 +83,9 @@ if (npc_param(defend_sound) ! null) {
 
 npc_heropoints($damage);
 
+if (npc_type = shadow_spider & %npc_attacking_uid ! uid & ~npc_out_of_combat = true) {
+    ~shadow_spider_drain;
+}
 p_opnpc(2);
 if ($ammo = holy_water) {
     world_delay(calc($delay / 30 - 2));

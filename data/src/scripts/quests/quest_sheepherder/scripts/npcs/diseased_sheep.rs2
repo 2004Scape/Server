@@ -22,13 +22,39 @@
 
 [label,prod_sheep](npc $npc)
 p_arrivedelay;
-if (~inzone_coord_pair_table(sheepherder_in_pen, npc_coord) = true) {
-    ~mesbox("The sheep is already in the enclosure.|You don't need to prod it.");
+
+if (%sheepherder_progress = ^sheepherder_not_started) {
+    mes("The sheep looks extremely ill and you haven't any reason to interfere with it.");
     return;
 }
 
-if (($npc = green_sheep & inv_total(inv, green_sheep_bones)> 0)) {
-    ~mesbox("You've already got bones from a sheep like this.|You don't need to fetch another one now.");
+if (%sheepherder_progress = ^sheepherder_complete) {
+    ~mesbox("There's no need for you to do that.|You've already completed the Sheep Herder quest.");
+    return;
+}
+
+if (%sheepherder_progress > ^sheepherder_not_started & %sheepherder_progress < ^sheepherder_complete) {
+    // not wearing a protective suit
+    if (inv_total(worn, plague_jacket) < 1 | inv_total(worn, plague_trousers)  < 1) {
+        ~chatplayer("<p,neutral>The sheep looks extremely unwell.|I don't want to touch it without a full protective suit.");
+        return;
+    }
+
+    // not having a prod but having a protective suit
+    def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+    if ($rhand = null) {
+        ~chatplayer("<p,angry>I'm not prodding a sickly-looking sheep with my hands!");
+         ~chatplayer("<p,neutral>I'll need to wield an appropriate tool.");
+        return;
+    } else if ($rhand ! cattle_prod) {
+        ~chatplayer("<p,neutral>I don't want to attack the sheep.|I need to make it move!");
+         ~chatplayer("<p,neutral>I'll need to wield an appropriate tool.");
+        return;
+    }
+}
+
+if (~inzone_coord_pair_table(sheepherder_in_pen, npc_coord) = true) {
+    ~mesbox("The sheep is already in the enclosure.|You don't need to prod it.");
     return;
 }
 
@@ -36,6 +62,12 @@ db_find(sheep_table:sheep_type, $npc);
 def_dbrow $data = db_findnext;
 if ($data = null) {
     ~displaymessage(^dm_default);
+    return;
+}
+
+def_namedobj $npc_bones = db_getfield($data, sheep_table:sheep_bones, 0);
+if ((npc_category = diseased_sheep & inv_total(inv, $npc_bones) > 0)) {
+    ~mesbox("You've already got bones from a sheep like this.|You don't need to fetch another one now.");
     return;
 }
 

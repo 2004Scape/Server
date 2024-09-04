@@ -105,6 +105,7 @@ export default class NpcType extends ConfigType {
     resizev = 128;
 
     // server-side
+    regenRate = 100;
     category = -1;
     wanderrange = 5;
     maxrange = 7;

@@ -3,10 +3,11 @@ gosub(npc_death);
 if (npc_findhero = false) {
     return;
 }
-
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~paladin_drops;
 
+[proc,paladin_drops]
 // Tertiary
 ~trail_mediumcluedrop(128, npc_coord);
 

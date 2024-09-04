@@ -49,7 +49,7 @@ if (%magearena_progress >= ^mage_arena_complete) {
 }
 
 if ($outside_edge ! coord) {
-    ~forcewalk($outside_edge);
+    ~forcewalk2($outside_edge);
 }
 facesquare($inside_edge);
 mes("You step into the pool.");

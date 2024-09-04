@@ -1,0 +1,11 @@
+[lit_arrow]
+type=int
+default=0
+
+[unlit_arrow]
+type=int
+default=0
+
+[orb_bit]
+type=int
+default=0

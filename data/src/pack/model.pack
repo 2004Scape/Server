@@ -1388,8 +1388,8 @@
 1387=model_loc_642_0
 1388=model_loc_453_8
 1389=model_loc_636_8
-1390=model_loc_450_8
-1391=model_loc_12_8
+1390=plainrock1_8
+1391=plainrock2_8
 1392=model_loc_643_0
 1393=model_loc_644_0
 1394=model_loc_638_0
@@ -1503,7 +1503,7 @@
 1502=model_loc_1114_8
 1503=model_loc_568_8
 1504=model_loc_2375_8
-1505=model_loc_68_8
+1505=model_beehive_8
 1506=model_loc_2359_8
 1507=model_loc_881_8
 1508=model_loc_821_8
@@ -1755,7 +1755,7 @@
 1754=model_1754
 1755=model_1755_obj_wear
 1756=model_1756
-1757=model_loc_3216_8
+1757=model_mudpile_upass_8
 1758=model_loc_698_8
 1759=model_loc_870_8
 1760=model_loc_1998_8
@@ -1802,7 +1802,7 @@
 1801=model_loc_8_8
 1802=model_loc_9_8
 1803=model_loc_2010_8
-1804=model_loc_3238_0
+1804=model_upass_ledge_0
 1805=model_loc_1996_8
 1806=model_loc_2151_8
 1807=model_1807
@@ -2234,9 +2234,9 @@
 2233=model_loc_679_8
 2234=model_loc_678_8
 2235=model_loc_673_8
-2236=model_loc_675_8
-2237=model_loc_676_8
-2238=model_loc_677_8
+2236=macro_plainrock1_8
+2237=macro_plainrock2_8
+2238=macro_plainrock3_8
 2239=model_2239_spotanim
 2240=model_2240_spotanim
 2241=model_loc_692_8
@@ -3447,8 +3447,8 @@
 3446=model_3446_spotanim
 3447=model_3447_obj
 3448=model_loc_2023_8
-3449=model_loc_3378_8
-3450=model_loc_3377_8
+3449=chompybird_ogre_chest_open_8
+3450=chompybird_ogre_chest_closed_8
 3451=model_loc_3371_8
-3452=model_loc_3375_8
-3453=model_loc_3372_8
+3452=model_ogre_spitroast_8
+3453=model_ogre_spitroast_with_chompy_8

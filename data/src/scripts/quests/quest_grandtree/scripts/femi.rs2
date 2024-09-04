@@ -81,7 +81,7 @@ switch_int(~p_choice2("Sorry, I'm a bit busy.", 1, "OK then.", 2)) {
         ~chatplayer("<p,happy>OK then.");
         ~chatnpc("<p,happy>Thanks traveller!");
         if_close;
-        ~forcewalk(0_38_52_29_52);
+        ~forcewalk2(0_38_52_29_52);
         p_delay(0);
         facesquare(movecoord(coord, -1, 0, 0));
         p_delay(0);

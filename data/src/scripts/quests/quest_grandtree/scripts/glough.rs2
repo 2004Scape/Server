@@ -40,13 +40,16 @@ switch_int(%grandtree_progress) {
         ~chatnpc("<p,angry>Come with me!");
         if_close;
         $dest = 1_38_54_45_7;
+        p_delay(5); // 5t https://youtu.be/7HhbbrxwvtA?si=Xgps1UVy6LUDOPEp&t=395
         ~forcewalk($dest);
         p_delay(0);
         // https://youtu.be/LFvLBRCxFwk?si=58l2TkJcT5ifq4_W&t=616 face
         facesquare(movecoord($dest, -2, 0, 0));
+        p_delay(0);
         anim(human_reachforladdertop, 0);
         p_delay(0);
         p_telejump(^grandtree_jail_coord);
+        ~grandtree_spawn_charlie;
         p_delay(2); // 3t delay before talking when initially sent, but if you retalk it's 4t
         if(npc_find(coord, grandtree_charlie, 2, 0) = true) {
             ~chatnpc("<p,sad>So they got you as well?");

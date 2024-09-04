@@ -1,0 +1,11 @@
+[ai_opplayer2,shadow_spider] 
+// https://www.youtube.com/watch?v=qCuX19-3SHc&t=185s
+if (~npc_out_of_combat = true) {
+    ~shadow_spider_drain;
+}
+gosub(npc_default_attack);
+
+[proc,shadow_spider_drain]
+mes("The spider drains your prayer...");
+sound_synth(prayer_drain, 0, 0);
+stat_sub(prayer, divide(stat(prayer), 2), 0); // division by 2 round up, thats why percent isn't being used 

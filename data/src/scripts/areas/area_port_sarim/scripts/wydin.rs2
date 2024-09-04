@@ -62,5 +62,5 @@ p_opnpc(3);
 p_opnpc(3);
 
 [label,wydin_recommend_no]
-~chatplayer("<p,default>I don't like the sound of that.");
+~chatplayer("I don't like the sound of that."); // no anim
 ~chatnpc("<p,neutral>Well, it's your choice, but I do recommend them.");

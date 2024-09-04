@@ -1,0 +1,56 @@
+[opnpc1,npc_979]
+mes("The man seems to be in a weak state of mind.");
+p_delay(2);
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,sad>Eating me... they keep eating me! Eating me from the inside! Please stop them! I can feel them wriggling around inside me right now... please stop them!");
+
+[opnpc1,npc_980]
+mes("The man seems to be in a weak state of mind.");
+p_delay(2);
+~chatplayer("<p,neutral>Hi.");
+~chatnpc("<p,sad>Blood, blood... never enough blood to go round. When I lift up my arm like this, it all pours back into my body.");
+~chatnpc("<p,confused>I hope it remembers to go back inside my arm. And don't even ask me about my legs... how much blood are they going to need?");
+~chatnpc("<p,neutral>Blood is important. We must offer it to Zamorak every day as proof of our devotion. I just hope I don't run out!");
+mes("The prisoner has clearly been here too long.");
+
+[opnpc1,npc_981]
+mes("The man seems to be in a weak state of mind.");
+p_delay(2);
+~chatplayer("<p,confused>Hello, are you okay?");
+~chatnpc("<p,happy>Oh yes, you're a fine one. Nice red cheeks, shiny hair.");
+~chatnpc("<p,neutral>Let's see now, some potatoes, some cabbage... Maybe half a clove of garlic...");
+~chatnpc("<p,happy>...Yes I think you'd make a fine soup. You don't mind do you?");
+~chatplayer("<p,angry>Actually I do.");
+~chatnpc("<p,happy>You're welcome to have some with me of course...");
+
+[opnpc1,npc_982]
+mes("The man seems to be in a weak state of mind.");
+p_delay(2);
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,sad>Mwaarrr fnnntchh. Gbpp dng sktd delp?");
+~chatplayer("<p,confused>Pardon?");
+~chatnpc("<p,neutral>Kjp lar falut: Gbpp dng sktd delp?");
+~chatplayer("<p,confused>Sorry, I don't under..");
+~chatnpc("<p,angry>Mwaarrr fnnntchh. Gbpp dng sktd delp? GBPP DNG SKTD DELP!");
+
+[opnpc1,npc_983]
+mes("The man seems to be in a weak state of mind.");
+p_delay(2);
+~chatplayer("<p,neutral>Hello...");
+~chatnpc("<p,angry>Kill the villagers, burn them all... every last one! I want nothing to survive... nothing but the sweet smell of burning flesh...");
+~chatplayer("<p,shock>You're ill!");
+~chatnpc("<p,neutral>What's that? You've never smelt it before? Well, let's just say that it's an acquired taste...");
+
+[opnpc1,npc_984]
+mes("The man seems to be in a weak state of mind.");
+p_delay(2);
+~chatplayer("<p,happy>Hello.");
+~chatnpc("<p,shock>Danger, everywhere danger! But not from man nor beast! This is the danger that is inside you.");
+~chatnpc("<p,neutral>Bring it out, nurture it, cherish it. Stroke it like you would stroke a wounded bird... then strangle it before it takes hold of your very being. Don't say I didn't warn you.");
+
+[opnpc1,npc_985]
+mes("The man seems to be in a weak state of mind.");
+p_delay(2);
+~chatplayer("<p,neutral>Hello.");
+~chatnpc("<p,neutral>What's that... Is that a dagger I see before me? Why should I bear the slings and arrows of outrageous fortune.");
+~chatnpc("<p,neutral>For what is a man but this quintessence of dust? And so I say goodnight sweet prince. The rest is silence.");

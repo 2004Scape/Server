@@ -18,6 +18,11 @@ if (~npc_can_attack_player = false) {
 
 npc_setmode(applayer2);
 
+if (busy = true & %demon_progress = 29)  { // in osrs dark wizards wont attack if player is busy and ready to fight delrith
+    // dark wizards will still try to hunt you
+    return;
+}
+
 if (stat_base(strength) <= stat(strength) & random(2) = 0) { // guessed
     ~npc_cast_spell(^weaken, 4);
 } else {
@@ -32,6 +37,10 @@ if (%npc_action_delay > map_clock) {
 }
 if (~npc_can_attack_player = false) {
     npc_setmode(null);
+    return;
+}
+
+if (busy = true & %demon_progress = 29)  {
     return;
 }
 

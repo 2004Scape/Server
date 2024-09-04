@@ -490,7 +490,7 @@ data=restore_message2,0
 
 [half_apple_pie_consume_messages]
 table=consume_messages_table
-data=consumable,obj_2335
+data=consumable,half_an_apple_pie
 data=consume_message1,You eat the remaining apple pie.
 data=restore_message2,0
 

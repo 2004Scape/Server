@@ -1,9 +1,10 @@
-[proc,spawn_chompy_bird](coord $coord)
+[proc,spawn_chompy_bird](coord $coord, player_uid $baiter_uid)
 {
     // def_coord $spawn_coord = map_findsquare($coord, 3, 10, 1);
     def_coord $spawn_coord = map_findsquare($coord, 4, 4, 1);
     
     npc_add($spawn_coord, chompy_bird, 100);
+    %quest_chompybird_baiter = $baiter_uid;
     // TODO anim?
     npc_say("Sqwirk!");
 
@@ -11,24 +12,207 @@
     npc_sethuntmode(chompybird);
 }
 
+// triggered by the .hunt config, the Chompy has found, and arrived at, the Bloated Toad
 [ai_queue4,chompy_bird]
 if (.npc_find(npc_coord, bloated_toad, 1, 1) = true) {
-    // TODO get delays, anims etc with OSRS
-    npc_say("Sqwark!");
-    
-    .npc_delay(3);
+    npc_sethuntmode(null);
+    npc_facesquare(.npc_coord);
+    npc_queue(5, 0, 0);
+    .npc_queue(5, 0, 0);
+}
 
-    if (npc_finduid(npc_uid) = true & .npc_finduid(.npc_uid) = true) {
-        .npc_say("!!Croak!!");
-        npc_say("Gobble!");
+// the Chompy is eating the toad
+[ai_queue5,chompy_bird]
+npc_say("Sqwark!");
+npc_delay(3);
+npc_say("Gobble!");
+npc_delay(2);
 
-        .npc_delay(2);
+// TODO consider some check that the toad actually still exists?
+//      might not be necessary though
 
-        if (.npc_finduid(.npc_uid) = true) {
-            .npc_del;
+if (p_finduid(%quest_chompybird_baiter) = true) {
+    if (%chompybird_progress = ^chompybird_dropped_toad) {
+        %chompybird_progress = ^chompybird_chompy_ate_toad;
+    }
+}
 
-            // TODO how to set `%chompybird_progress = ^chompybird_chompy_ate_toad` for the player who spawned the toad?
-            // TODO clear hunt mode?
+[opnpc4,chompy_bird_corpse]
+mes("You start plucking the chompy bird.");
+anim(human_pickupfloor, 0);
+p_delay(1);
+obj_add(npc_coord, raw_chompy, 1, ^lootdrop_duration);
+obj_add(npc_coord, bones, 1, ^lootdrop_duration);
+inv_add(inv, feather, calc(random(20) + 10));
+npc_del;
+
+[apnpc5,chompy_bird]
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+
+// make the player run to the bird if they are unarmed
+if ($rhand = null)
+{
+    p_aprange(1);
+    return;
+}
+
+def_category $rhand_cat = oc_category($rhand);
+
+// make the player run to the bird if they have a melee weapon equipped
+if ($rhand_cat = weapon_slash
+    | $rhand_cat = weapon_stab
+    | $rhand_cat = weapon_axe
+    | $rhand_cat = weapon_pickaxe
+    | $rhand_cat = weapon_blunt
+    | $rhand_cat = weapon_spear
+    | $rhand_cat = weapon_spiked
+    | $rhand_cat = weapon_2h_sword
+    | $rhand_cat = weapon_staff
+    | $rhand_cat = weapon_scythe)
+{
+    p_aprange(1);
+    return;
+}
+
+// otherwise start combat from a distance
+@player_combat_chompybird_start;
+
+[opnpc5,chompy_bird]
+@player_combat_chompybird_start;
+
+[label,player_combat_chompybird_start]
+def_obj $rhand = inv_getobj(worn, ^wearpos_rhand);
+
+if ($rhand = null)
+{
+    // TODO confirm for 2004
+    mes("You'll need a weapon to try and attack this beast.");
+    return;
+}
+
+def_category $rhand_cat = oc_category($rhand);
+
+if ($rhand_cat = weapon_slash
+    | $rhand_cat = weapon_stab
+    | $rhand_cat = weapon_axe
+    | $rhand_cat = weapon_pickaxe
+    | $rhand_cat = weapon_blunt
+    | $rhand_cat = weapon_spear
+    | $rhand_cat = weapon_spiked
+    | $rhand_cat = weapon_2h_sword
+    | $rhand_cat = weapon_staff
+    | $rhand_cat = weapon_scythe)
+{
+    // TODO confirm for 2004
+    mes("The Chompy Bird is too quick for your melee weapon.");
+    return;
+}
+
+if (
+    $rhand ! ogre_bow
+    & (
+        $rhand_cat = weapon_bow
+        | $rhand_cat = weapon_crossbow
+        | $rhand_cat = weapon_thrown
+        | $rhand_cat = weapon_javelin))
+{
+    // TODO confirm for 2004
+    mes("Your ranged weapon isn't powerful enough to hurt the Chompy bird.");
+    return;
+}
+
+
+def_obj $ammo = inv_getobj(worn, ^wearpos_quiver);
+if ($ammo = null) {
+    // TODO confirm for 2004
+    mes("There is no ammo left in your quiver.");
+    return;
+}
+
+if ($ammo ! ogre_arrow) {
+    // TODO confirm for 2004
+    mes("You can't use that ammo with your bow.");
+    return;
+}
+
+~player_combat_chompybird($rhand, $ammo);
+
+// is this right?  it's basically a replica of the existing combat logic,
+// but that relies on some npc_hasop(2) checks, which I don't want to mess with
+[proc,player_combat_chompybird](obj $rhand, obj $ammo)
+def_int $distance = npc_range(coord);
+def_int $attackrange = min(oc_param($rhand, attackrange), 10);
+if (%damagestyle = ^style_ranged_longrange) {
+    $attackrange = min(add($attackrange, 2), 10);
+}
+
+if (($attackrange <= 1 & ~player_in_combat_check = false) | $distance > $attackrange) {
+    // p_opnpc(2);
+    p_aprange($attackrange);
+    return;
+}
+
+p_stopaction;
+// npc_setmode(opplayer2);
+// facesquare(npc_coord);
+
+if (%action_delay > map_clock | getwalktrigger() = stunned) {
+    p_opnpc(2);
+    return;
+}
+
+~player_combat_stat; // update combat varps before calculating action_delay and shooting
+
+// set the skill clock depending on the weapon attack rate
+%action_delay = add(map_clock, oc_param($rhand, attackrate));
+
+if (%damagestyle = ^style_ranged_rapid) {
+    %action_delay = sub(%action_delay, 1);
+}
+
+// check hit, give combat xp
+def_int $damage = 0;
+if (~player_npc_hit_roll(%damagetype) = true) {
+    $damage = randominc(min(%com_maxhit, npc_param(max_dealt)));
+    $damage = min($damage, npc_stat(hitpoints));
+    ~give_combat_experience(%damagestyle, $damage, npc_param(combat_xp_multiplier));
+}
+
+def_int $delay = add(~player_ranged_use_weapon($rhand, $ammo), 30); // osrs it seems to be delayed an extra tick
+anim(%com_attackanim, 0);
+sound_synth(%com_attacksound, 0, 0);
+~npc_retaliate(calc($delay / 30));
+npc_queue(2, $damage, calc($delay / 30));
+npc_anim(npc_param(defend_anim), sub($delay, 30)); // delay npc this tick
+if (npc_param(defend_sound) ! null) {
+    sound_synth(npc_param(defend_sound), 0, sub($delay, 30)); // delay 1 client tick for the hit queue
+}
+
+npc_heropoints($damage);
+
+p_opnpc(2);
+if (random(5) ! 0) {
+    world_delay(calc($delay / 30 - 2));
+    if (map_blocked(npc_coord) = false) {
+        if (p_finduid(uid) = true) {
+            inv_dropslot(ranged_quiver_inv, npc_coord, 0, 200);
         }
     }
 }
+inv_clear(ranged_quiver_inv);
+
+[ai_queue3,chompy_bird]
+gosub(npc_death);
+
+if(npc_findhero = true) {
+    queue(chompybird_kill, 0);
+}
+
+// TODO confirm duration
+npc_add(npc_coord, chompy_bird_corpse, 100);
+
+[queue,chompybird_kill]
+if (%chompybird_progress = ^chompybird_rantz_gave_player_bow) {
+    %chompybird_progress = ^chompybird_player_killed_chompy;
+}
+// TODO add chompy bird killcount

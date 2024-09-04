@@ -56,7 +56,7 @@ tradeable=yes
 category=light_source_unlit
 param=product,lit_torch
 
-[obj_598]
+[unlit_arrow]
 name=Unlit arrows
 desc=Unlit arrows.
 members=yes
@@ -78,6 +78,8 @@ param=rangebonus,7
 param=levelrequire,1
 param=proj_launch,unlit_arrow_launch
 param=proj_travel,unlit_arrow_travel
+param=next_obj_stage,lit_arrows
+param=unlit_arrow,^true
 
 [obj_599]
 

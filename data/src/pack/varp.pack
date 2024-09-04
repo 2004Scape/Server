@@ -160,7 +160,7 @@
 159=seaslug_progress
 160=imp_progress
 161=upass_progress
-162=varp_162
+162=upass_map_mechanisms
 163=varp_163
 164=varp_164
 165=elena_progress
@@ -286,7 +286,7 @@
 285=duelstatus
 286=duel_settings
 287=split_privatechat
-288=varp_288
+288=iban_staff_charges
 289=varp_289
 290=ring_of_recoil
 291=ring_of_forging

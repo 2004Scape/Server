@@ -1,0 +1,119 @@
+[oploc1,loc_3270]
+if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
+    mes("You open the door...");
+    ~open_and_close_door3(loc_1532, ~check_axis(coord, loc_coord, loc_angle), door_open);
+    p_delay(3);
+    mes("The Witch is busy talking to the cat.");
+    return;
+}
+mes("You reach to open the door...");
+if(npc_find(coord, kardia, 8, 0) = true) {
+    //~chatnpc("<p,angry>Get away... Far away from here!"); // rs3 (and osrs I think?), no chathead until way later though...
+    npc_say("Get away... Far away from here!");
+    p_delay(1); // 2t rsc
+    mes("The witch raises her hands above her...");
+    npc_say("Ha ha... die mortal!");
+    p_delay(0); // 1t
+    ~damage_self(calc(((stat(hitpoints) * 25) / 100) + 1));
+}
+
+[oploc2,loc_3270]
+mes("You knock on the door...");
+p_delay(2);
+if(inv_total(inv, upass_witches_cat) > 0 & testbit(%upass_map_mechanisms, ^upass_dropped_cat) = false) {
+    @upass_drop_witches_cat;
+}
+mes("There is no reply.");
+p_delay(2);
+if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
+    mes("Inside you can hear the witch talking to her cat.");
+}
+
+[oplocu,loc_3270]
+if(last_useitem = upass_witches_cat) {
+    if(testbit(%upass_map_mechanisms, ^upass_dropped_cat) = true) {
+        ~mesbox("The witch is busy playing with her other cat...");
+        return;
+    }
+    @upass_drop_witches_cat;
+}
+~displaymessage(^dm_default);
+
+[oploc1,loc_3362]
+mes("Inside you see a witch, she appears to be looking for something.");
+if(npc_find(coord, kardia, 8, 0) = true) npc_say("Here kitty, kitty!");
+
+[opnpc1,witches_cat]
+if(%upass_progress < ^upass_spoken_nilhoof) {
+    mes("It's not very nice to squeeze a cat into a satchel.");
+    mes("...if you don't need to.");
+    return;
+}
+if(inv_total(inv, upass_witches_cat) > 0) {
+    mes("It's not very nice to squeeze a cat into a satchel.");
+    mes("... Two is just plain cruel!");
+    return;
+}
+if(inv_freespace(inv) = 0) {
+    mes("You don't have enough inventory space to hold that item."); // rs3
+    return;
+}
+sound_synth(pick2, 0, 0);
+npc_del;
+inv_add(inv, upass_witches_cat, 1);
+p_delay(0);
+anim(human_pickuptable, 0);
+
+[opheld5,upass_witches_cat]
+inv_delslot(inv, last_slot);
+anim(human_pickupfloor, 0);
+mes("The cat runs off and hides.");
+p_delay(2);
+
+[label,upass_drop_witches_cat]
+mes("... You place the cat by the door.");
+anim(human_pickupfloor, 0);
+p_delay(2);
+inv_del(inv, upass_witches_cat, 1);
+mes("You knock the door and hide around the corner.");
+p_walk(1_33_71_45_24);
+p_delay(5);
+%upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_dropped_cat);
+mes("The witch takes the cat inside.");
+
+[oploc1,loc_3272]
+p_arrivedelay;
+anim(human_openchest, 0);
+sound_synth(chest_open, 0, 0);
+p_delay(0);
+loc_change(loc_3273, 20);
+@search_kardia_chest;
+
+[oploc1,loc_3273] @search_kardia_chest;
+
+[label,search_kardia_chest]
+~mesbox("You search the chest...");
+if_close;
+p_delay(3); // 3t
+if(%upass_progress >= ^upass_found_doll) {
+    // rs3, not sure if this existed originally...
+    ~mesbox("... but the doll's gone.");
+    if(inv_total(inv, doll_of_iban) > 0) {
+        ~chatplayer("<p,neutral>This doll's giving me the creeps.|I don't want another one!");
+    } else if(inv_total(bank, doll_of_iban) > 0) {
+        ~chatplayer("<p,angry>Oh great, I've left the doll of Iban in my bank. It's going to take me ages to fetch it back.");
+    } else {
+        ~chatplayer("<p,angry>Oh great, I've lost the doll of Iban.");
+        ~chatplayer("<p,neutral>Now, who in this blasted cave might have found it for me?");
+    }
+} else if(%upass_progress = ^upass_spoken_nilhoof) {
+    ~mesbox("Inside you find a book, a wooden doll and two potions.");
+    %upass_progress = ^upass_found_doll;
+    inv_add(inv, doll_of_iban, 1);
+    inv_add(inv, history_of_iban, 1);
+    inv_add(inv, 3dose2attack, 1);
+    inv_add(inv, 3dose1restore, 1);
+}
+
+[opnpc1,kardia]
+mes("Kardia doesn't seem interested in talking.");

@@ -37,7 +37,7 @@ if (.finduid(%duelpartner) = true & (%duelstatus = ^duelstatus_victory | %duelst
         mes("Well done! You have defeated <.displayname>!");
     }
     midi_jingle(^duel_win_2_jingle, ^duel_win_2_jingle_millis);
-    if_openmainmodal(duel_win);
+    if_openmain(duel_win);
     ~duel_adjust_scoreboard(displayname, ~player_combat_level, .displayname, ~.player_combat_level);
     if_settext(duel_win:displayname, .displayname);
     if_settext(duel_win:combat_level, tostring(~.player_combat_level));

@@ -1,0 +1,157 @@
+// outside underground pass
+[opnpc1,npc_972]
+if(%upass_progress = ^upass_not_started & testbit(%upass_map_mechanisms, ^upass_started_bit) = true) {
+    @koftik_first_dialogue;
+}
+switch_int(%upass_progress) {
+    case ^upass_complete: 
+        ~chatplayer("<p,quiz>Hello Koftik.");
+        ~chatnpc("<p,happy>Hello Adventurer, how's things?");
+        ~chatplayer("<p,happy>Not bad, yourself?");
+        ~chatnpc("<p,neutral>I'm good... just keeping an eye out.");
+    case ^upass_defeated_iban:
+        ~chatplayer("<p,happy>Thanks for getting me out Koftik.");
+        ~chatnpc("<p,happy>Always a pleasure squire. Have you informed the king about Iban?");
+        switch_int(~p_choice2("No, not yet.", 1, "Yes, I've told him.", 2)) {
+        case 1:
+            ~chatplayer("<p,neutral>No, not yet.");
+            ~chatnpc("<p,neutral>Traveller, this is no time to linger. The King must know that Iban is dead. This is a truly historical moment for Ardougne.");
+        case 2:
+            ~chatplayer("<p,happy>Yes, I've told him.");
+            ~chatnpc("<p,happy>Good to hear, the sooner we find King Tyras the better.");
+        }
+    case ^upass_passed_bridge, ^upass_entered_second_area, ^upass_killed_unicorn:
+        ~chatplayer("<p,neutral>Hello Koftik.");
+        ~chatnpc("<p,shock>It scares me in there, ... The voices, don't you hear them?"); // intentional
+        ~chatplayer("<p,neutral>You'll be okay Koftik...");
+    case ^upass_spoken_koftik:
+        // TODO: confirm mesanim
+        ~chatnpc("<p,neutral>I know it's scary in there, but you'll have to go in alone. I'll catch up as soon as I can.");
+    case default:
+        mes("Koftik doesn't seem interested in talking.");
+}
+
+[label,koftik_first_dialogue]
+// https://youtu.be/IUzRF8GrfSY?si=iJ9ytVtJONT4ok6q&t=65, https://youtu.be/ZxF473zUZfQ?si=nrGO9gJiP_CbpqJp&t=153
+~chatplayer("<p,happy>Hello there, are you the King's scout?");
+~chatnpc("<p,happy>That I am, brave adventurer. King Lathas informed me that you need to cross these mountains.");
+~chatnpc("<p,neutral>I'm afraid you'll have to go through the ancient underground pass...");
+~chatplayer("<p,happy>That's OK, I've travelled through many a cave in my time.");
+~chatnpc("<p,shock>These caves are different... They're filled with the spirit of Zamorak!");
+~chatnpc("<p,neutral>You can feel it as you wind your way round the stalagmites.. an icy chill that penetrates the very fabric of your being...");
+~chatnpc("<p,neutral>Not so many travellers come down here these days, ...but there are some who are still foolhardy enough."); // intentional comma
+%upass_progress = ^upass_spoken_koftik;
+switch_int(~p_choice2("I'll take my chances.", 1, "Tell me more...", 2)) {
+    case 1:
+        ~chatplayer("<p,bored>I'll take my chances.");
+        ~chatnpc("<p,neutral>Okay traveller, I'll catch up with you by the bridge.");
+    case 2:
+        ~chatplayer("<p,neutral>Tell me more...");
+        ~chatnpc("<p,neutral>I remember seeing one such warrior. Going by the name of Randas... ..he stood tall and proud like an Elven King...");
+        ~chatnpc("<p,neutral>...That same pride made him vulnerable to Zamorak's calls. Randas' worthy desire to be a great and mighty warrior also made him corruptible to Zamorak's promises of glory.");
+        ~chatnpc("<p,neutral>..Zamorak showed him a way to achieve his goals by appealing to that most base and dark nature ...that resides in all of us.");
+        ~chatplayer("<p,shock>What happened to him?");
+        ~chatnpc("<p,sad>No one knows...");
+}
+
+// before the bridge in area 1
+[opnpc1,npc_973]
+switch_int(%upass_progress) {
+    case ^upass_defeated_iban:
+        ~chatplayer("<p,happy>Thanks for getting me out Koftik.");
+        ~chatnpc("<p,happy>Always a pleasure squire.");
+        if(inv_total(inv, damp_cloth) = 0) {
+            ~chatnpc("<p,neutral>I found this cloth amongst the charred remains of some arrows, perhaps you need it?");
+            inv_add(inv, damp_cloth, 1);
+            ~objbox(damp_cloth, "Koftik gives you a damp cloth.");
+        }
+    case ^upass_spoken_koftik:
+        ~chatplayer("<p,quiz>Koftik, how can we cross the bridge?");
+        ~chatnpc("<p,confused>I'm not sure, seems as if others were here before us though...");
+        if(inv_total(inv, damp_cloth) = 0) {
+            ~chatnpc("<p,neutral>I found this cloth amongst the charred remains of some arrows.");
+            ~chatplayer("<p,shock>Charred arrows? They must have been trying to burn something. Or someone!");
+            inv_add(inv, damp_cloth, 1);
+        }
+        ~chatplayer("<p,neutral>Interesting... we better keep our eyes open.");
+        ~chatnpc("<p,neutral>I have also found the remains of a book...");
+        switch_int(~p_choice2("Not to worry, probably just litter.", 1, "What does it say?", 2)) {
+            case 1:
+                ~chatplayer("<p,neutral>Not to worry, probably just litter.");
+                ~chatnpc("<p,confused>Well.. maybe?");
+            case 2:
+                ~chatplayer("<p,neutral>What does it say?");
+                ~chatnpc("<p,neutral>It seems to be written by the adventurer Randas. It reads...");
+                @open_randas_diary;
+        }
+    case default: 
+        // rs3, objbox for the cloth but I think that was added later (since the main dialogue also has objbox in rs3, but not in release OSRS)
+        ~chatplayer("<p,happy>Hi Koftik.");
+        if(inv_total(inv, damp_cloth) = 0) {
+            ~chatnpc("<p,neutral>Hi - I found this cloth amongst the charred remains of some arrows, perhaps you need it?");
+            inv_add(inv, damp_cloth, 1);
+            ~objbox(damp_cloth, "Koftik gives you a damp cloth.");
+        }
+}
+
+// before the bridge in area 1
+[opnpc1,npc_974]
+switch_int(%upass_progress) {
+    case ^upass_defeated_iban, ^upass_complete: 
+        ~chatplayer("<p,quiz>Hello Koftik.");
+        ~chatnpc("<p,happy>Hello, how's things?");
+        ~chatplayer("<p,happy>Not bad, yourself?");
+        ~chatnpc("<p,neutral>I'm good... just keeping an eye out.");
+    case default:
+        ~chatplayer("<p,quiz>Hello Koftik.");
+        ~chatnpc("<p,neutral>Do you hear them? The voices tell me things.");
+        ~chatplayer("<p,happy>Are you OK?");
+        ~chatnpc("<p,neutral>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men.");
+        ~chatplayer("<p,happy>Tyranny of the righteous? What?");
+        ~chatnpc("<p,neutral>So many paths to choose... Here we must all take our own path.");
+}
+
+[opnpc1,npc_975]
+// guessing, need to confirm by getting someone midquest to spawn this one in
+if(%upass_progress >= ^upass_defeated_iban) {
+    ~chatplayer("<p,quiz>Hello Koftik.");
+    ~chatnpc("<p,happy>Hello, how's things?"); // no adventurer when i checked by grid
+    ~chatplayer("<p,happy>Not bad, yourself?");
+    ~chatnpc("<p,neutral>I'm good... just keeping an eye out.");
+    return;
+}
+if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = true) {
+    // TODO: check mesanim I closed dialogue on rs3, it's happy on OSRS but dialogue is a bit different
+    ~chatnpc("<p,happy>Nice job killing those Paladins. You're much closer to his side now. Perhaps you could kill those dwarfs to the south...");
+    return;
+}
+@koftik_isthatyou;
+
+[opnpc1,npc_976] @koftik_whereami;
+
+[label,koftik_whereami]
+~chatnpc("<p,confused>Traveller, where am I? I can't remember a thing!");
+~chatplayer("<p,sad>We were losing you to Iban's influence...");
+~chatnpc("<p,confused>What?..of course, the voices. ...But they've stopped. What happened?");
+~chatplayer("<p,neutral>Iban's dead, I destroyed him.");
+~chatnpc("<p,happy>You've done well, now we must inform the King. He'll have to send in some high mages to resurrect the Well of Voyage. Follow me, I'll lead you out.");
+~chatplayer("<p,happy>At last! I've had enough of caves.");
+if_close;
+mes("Koftik leads you back up through the winding caverns...");
+p_delay(3); // 3t
+p_teleport(0_38_151_49_53);
+mes("...and back to the cave entrance.");
+
+[label,koftik_isthatyou]
+%upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_koftik_gone_insane);
+~chatnpc("<p,shock>Traveller is that you?.. my friend on a mission!");
+~chatplayer("<p,quiz>Koftik, you're still here, you should leave.");
+~chatnpc("<p,quiz>Leave?...leave?..this is my home now. Home with my lord, he talks to me, he's my friend.");
+~mesbox("Koftik seems to be in a weak state of mind.");
+~chatplayer("<p,neutral>Koftik you really should leave these caverns.");
+~chatnpc("<p,angry>Not now, we're all the same down here. There's just you and those Dwarfs left to be converted.");
+~chatplayer("<p,quiz>Dwarfs?");
+~chatnpc("<p,angry>Foolish Dwarfs, still believing that they can resist. No one resists Iban, go traveller");
+~chatnpc("<p,shock>The Dwarfs to the south, they're not safe in the south.");
+~chatnpc("<p,angry>We'll show them, go slay them m'lord. He'll be so proud, that's all I want.");
+~chatplayer("<p,sad>I'll pray for you.");

@@ -31,6 +31,53 @@ if(%biohazard_progress = ^biohazard_reported_elena) {
             ~chatplayer("<p,angry>I've wasted enough of my time here.");
             ~chatnpc("<p,neutral>No time is ever wasted, thanks for all you've done.");
     }
+} else if(%biohazard_progress = ^biohazard_complete) {
+    switch_int(%upass_progress) {
+        case ^upass_complete:
+            ~chatplayer("<p,happy>Hello King Lathas.");
+            // magi isn't a typo lol
+            ~chatnpc("<p,happy>Well hello there traveller. The magi are still resurrecting the Well of Voyage, but I'll have word sent to you as soon as it's ready.");
+            ~chatplayer("<p,happy>Ok then, take care.");
+            ~chatnpc("<p,happy>You too.");
+        case ^upass_defeated_iban:
+            ~chatnpc("<p,quiz>The traveller returns, any news?");
+            ~chatplayer("<p,happy>Indeed, the quest is complete, Lathas. I have defeated Iban and his undead minions.");
+            ~chatnpc("<p,happy>Once our mages have re-summoned the well, I will send a band of troops led by yourself to head into west RuneScape and stop Tyras.");
+            ~chatplayer("<p,neutral>I will be ready and waiting.");
+            ~chatnpc("<p,happy>Your loyalty is appreciated, traveller.");
+            queue(upass_quest_complete, 0);
+        case ^upass_not_started:
+            if(testbit(%upass_map_mechanisms, ^upass_started_bit) = true) {
+                @lathas_managing;
+            }
+            ~chatplayer("<p,happy>Hello King Lathas.");
+            ~chatnpc("<p,happy>Adventurer, thank Saradomin for your arrival!");
+            ~chatplayer("<p,quiz>Have your scouts found a way through the mountains?");
+            if(stat_base(ranged) < 25) {
+                // TODO: did this exist originally?
+                ~chatnpc("<p,neutral>I appreciate your enthusiasm adventurer. However, I fear you are not yet ready for the challenges ahead. Return to me when you are and we will discuss our next steps.");
+                return;
+            }
+            ~chatnpc("<p,sad>Not quite, we found a path to where we expected to find the Well of Voyage, an ancient portal to the west RuneScape.");
+            ~chatnpc("<p,neutral>However during recent times a cluster of cultists have settled there, run by a madman named Iban.");
+            ~chatplayer("<p,quiz>Iban?");
+            ~chatnpc("<p,neutral>A crazy loon who claims to be the son of Zamorak.");
+            %upass_map_mechanisms = setbit(%upass_map_mechanisms, ^upass_started_bit);
+            ~setupassgrilltrap;
+            ~send_quest_progress(questlist:upass, 1, ^upass_complete);
+            ~chatnpc("<p,neutral>Go meet my main tracker, Koftik. He will help you. He waits for you at the west side of West Ardougne.");
+            ~chatnpc("<p,neutral>We must find a way through these caverns if we are to stop my brother Tyras.");
+            ~chatplayer("<p,neutral>I'll do my best Lathas.");
+            ~chatnpc("<p,neutral>A warning traveller, the underground pass is lethal. We lost many men exploring those caverns. Go prepared with food and armour or you won't last long.");
+        case default: @lathas_managing;
+            
+    }
 } else {
     mes("The king is too busy to talk.");
 }
+
+[label,lathas_managing]
+~chatplayer("<p,happy>Hello King Lathas.");
+~chatnpc("<p,happy>Traveller, how are you managing down there?");
+~chatplayer("<p,neutral>It's a pretty nasty place but I'm OK.");
+~chatnpc("<p,neutral>Well keep up the good work.");

@@ -1,3 +1,7 @@
+// course xp rebalanced Nov 2005: https://oldschool.runescape.wiki/w/Update:Rat_Catchers_and_Rat_Pits!
+// sourcing xp from : https://web.archive.org/web/20041013093238/http://runehq.com/viewskills.php?id=00063, https://web.archive.org/web/20050307025404/http://runevillage.com/rs2skillAgility.php
+// https://web.archive.org/web/20050524102000/http://runescape.salmoneus.net/agility.html, https://web.archive.org/web/20041217153554/http://www.runescapecommunity.com/index.php?showtopic=123647
+// obstacle net is 8 on most sites and sals has 7.5, I think it's probably 7.5, note that everything that has been changed is 10% higher (22 vs 20, 13.7 vs 12.5, 8.2 vs 7.5, 46 vs 42)
 [oploc1,barbarian_rope_swing]
 def_coord $start_pos = movecoord(loc_coord, 0, 0, 4);
 def_int $delay = distance(coord, $start_pos);
@@ -22,7 +26,7 @@ p_delay($delay);
 loc_anim(rope_swing);
 ~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, 0, 0, -5), 45, 70, ^exact_south, false);
 mes("You skillfully swing across.");
-stat_advance(agility, 220);
+stat_advance(agility, 200);
 ~update_barbarian_varp(1);
 
 [oploc1,barbarian_log_balance]
@@ -47,7 +51,7 @@ if(stat_random(stat(agility), 185, 260) = false) {
     ~damage_self(calc(((stat(hitpoints) * 9) / 100) + 1));
     return;
 }
-~agility_force_move(137, human_walk_logbalance, movecoord(coord, -4, 0, 0));
+~agility_force_move(125, human_walk_logbalance, movecoord(coord, -4, 0, 0));
 mes("...You make it safely to the other side.");
 ~update_barbarian_varp(2);
 
@@ -56,7 +60,7 @@ if(coordx(coord) <= coordx(loc_coord)) {
     return;
 }
 mes("You climb the netting...");
-~agility_climb_up(82, movecoord(loc_coord, -1, 1, 1));
+~agility_climb_up(75, movecoord(loc_coord, -1, 1, 1));
 ~update_barbarian_varp(3);
 
 [oploc1,barbarian_ledge]
@@ -81,25 +85,25 @@ if(stat_random(stat(agility), 210, 260) = false) {
 p_teleport(movecoord(coord, 0, 0, -1));
 mes("You skillfully edge across the gap.");
 p_delay(0);
-stat_advance(agility, 220);
+stat_advance(agility, 200);
 ~update_barbarian_varp(4);
 
-[oploc1,barbarian_crumblingwall]
+[oploc1,barbarian_crumblingwall] 
 if(coordx(coord) > coordx(loc_coord)) {
     mes("You cannot climb that from this side.");
     return;
 }
 mes("You climb the low wall...");
 def_coord $start = movecoord(loc_coord, -1, 0, 0);
-~forcewalk($start);
+~forcewalk2($start);
 ~agility_exactmove(human_walk_crumbledwall, 30, 2, $start, movecoord($start, 2, 0, 0), 30, 100, ^exact_east, true);
-stat_advance(agility, 137);
+stat_advance(agility, 125);
 if(loc_coord = 0_39_55_46_33) {
     ~update_barbarian_varp(5);
 }
 
 [oploc1,barbarian_obstacle_pipe]
-if (stat(agility) < 35) {
+if (stat(agility) < 35 & coordz(coord) > coordz(loc_coord)) {
     ~mesbox("You need an Agility level of 35 to squeeze through the pipe.");
     return;
 }
@@ -111,19 +115,21 @@ if(coordz(coord) <= coordz(loc_coord)) {
     $dist = 3;
     $dir = ^exact_north;
 }
-~forcewalk($start_coord);
+~forcewalk2($start_coord);
 if(%barb_obstacle_pipe_used >= map_clock) {
     mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
     return;
 }
 %barb_obstacle_pipe_used = calc(map_clock + 4);
-~agility_exactmove(human_pipesqueeze, 30, 4, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
+~agility_exactmove(human_pipesqueeze, 30, 3, $start_coord, movecoord($start_coord, 0, 0, $dist), 30, 126, $dir, true);
+stat_advance(agility, 100);
+p_delay(0);
 
 [proc,update_barbarian_varp](int $completed)
 if(calc(%barbarian_course_progress + 1) >= $completed) {
     %barbarian_course_progress = $completed;
 }
 if(%barbarian_course_progress = 5) {
-    stat_advance(agility, 463);
+    stat_advance(agility, 420);
     %barbarian_course_progress = 0;
 }

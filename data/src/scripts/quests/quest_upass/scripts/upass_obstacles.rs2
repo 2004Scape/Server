@@ -1,0 +1,366 @@
+[oploc1,loc_3309]
+def_int $dir; 
+def_coord $end;
+if(coordz(coord) > coordz(loc_coord)) {
+    $dir = ^exact_south;
+    $end = movecoord(loc_coord, 0, 0, -1);
+} else if(coordz(coord) < coordz(loc_coord)) {
+    $dir = ^exact_north;
+    $end = movecoord(loc_coord, 0, 0, 1);
+} else if(coordx(coord) > coordx(loc_coord)) {
+    $dir = ^exact_west;
+    $end = movecoord(loc_coord, -1, 0, 0);
+} else {
+    $dir = ^exact_east; 
+    $end = movecoord(loc_coord, 1, 0, 0);
+}
+p_arrivedelay;
+mes("You climb onto the rock...");
+facesquare(loc_coord);
+if(stat_random(stat(agility), 95, 305) = false) {
+    p_delay(0);
+    anim(seq_846, 0);
+    mes("...but you slip back down.");
+    ~damage_self(3); // fixed dmg
+    return;
+}
+mes("...and step down the other side.");
+~agility_exactmove(human_walk_fence_north, 0, 1, coord, $end, 0, 60, $dir, true); // probably same seq for all directions
+
+[oploc1,loc_3263]
+mes("You try to cross the swamp...");
+p_delay(0);
+mes("The swamp seems to cling to your legs.");
+p_delay(0);
+mes("You feel yourself being slowly dragged below...");
+say("Gulp!");
+~bas_set_all(human_drowning);
+p_delay(2);
+~update_bas;
+mes("You tumble deep into the crevasse.");
+mes("You land battered and bruised at the base.");
+p_teleport(0_38_150_53_49);
+say("Aargh!");
+~damage_self(calc((stat(hitpoints) * 15) / 100));
+p_delay(0);
+
+[oploc1,loc_3265]
+mes("You climb up the pile of mud...");
+p_delay(3);
+p_teleport(0_38_151_50_51);
+mes("It leads into darkness, the stench is unbearable.");
+mes("You surface by the swamp, covered in muck.");
+
+[oploc1,loc_3236]
+mes("The other end of the pipe is blocked by a grill.");
+mes("You cannot open the grill from this side.");
+
+[oploc1,loc_3235]
+p_arrivedelay;
+mes("You open the grating.");
+loc_change(loc_3236, 9);
+~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, 0, 0, 3), 30, 126, ^exact_north, true);
+sound_synth(squeeze_in, 0, 0);
+mes("You crawl through the pipe.");
+~change_merged_loc(movecoord(coord, 0, 0, 1));
+~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, 0, 0, 3), 30, 126, ^exact_north, true);
+mes("You hear the grating slam shut behind you.");
+stat_advance(agility, 30);
+sound_synth(squeeze_in, 0, 0);
+sound_synth(grate_close, 0, 0);
+
+[oplocu,loc_2275]
+if(last_useitem = rope & loc_find(0_38_151_28_35, loc_2276) = true) {
+    @upass_rock_ropeswing;
+}
+~displaymessage(^dm_default);
+
+[oplocu,loc_2276]
+if(last_useitem = rope) {
+    @upass_rock_ropeswing;
+}
+~displaymessage(^dm_default);
+
+[label,upass_rock_ropeswing]
+def_coord $start_pos = 0_38_151_30_35;
+p_delay(0);
+if(%upass_rockswing_used >= map_clock) {
+    // https://youtu.be/ZxF473zUZfQ?si=LcCRb0zeRxdtWay_&t=438
+    ~mesbox("The rock is being used.");
+    return;
+}
+%upass_rockswing_used = calc(map_clock + 5);
+~forcemove($start_pos);
+p_delay(1);
+facesquare(movecoord(coord, 1, 0, 0));
+mes("You tie the rope to the rock...");
+anim(seq_775, 0);
+p_delay(0);
+inv_del(inv, rope, 1);
+loc_change(loc_2273, 4);
+p_delay(0);
+// https://youtu.be/zGVrFETj96E?si=-LiJOUm_2GMCx7VU&t=144, might need more data
+if(stat_random(stat(agility), 100, 410) = false) {
+    mes("You try to swing but fall in to the darkness.");
+    p_teleport(0_38_150_53_49);
+    say("Aargh!");
+    p_delay(1);
+    ~damage_self(calc(((stat(hitpoints) * 15) / 100) + 1));
+    mes("You've lost your rope.");
+    return;
+}
+loc_anim(rope_swing);
+~agility_exactmove(human_ropeswing, 20, 0, $start_pos, movecoord($start_pos, 4, 0, 0), 45, 70, ^exact_east, false);
+mes("You skillfully swing across.");
+mes("The rope gets tangled in some stalagmites.");
+p_delay(1);
+mes("You've lost your rope.");
+
+[oploc1,loc_2274]
+def_coord $start_pos = movecoord(loc_coord, 4, 0, 0);
+def_int $delay = distance(coord, $start_pos);
+if(coordz(coord) < coordz($start_pos)) {
+    mes("You cannot do that from here.");
+    return;
+}
+p_delay(0);
+p_teleport($start_pos);
+if(%barb_ropeswing_used >= map_clock) {
+    ~mesbox("The rope swing is being used");
+    return;
+}
+%barb_ropeswing_used = calc(map_clock + 3);
+p_delay($delay);
+loc_anim(rope_swing);
+~agility_exactmove(human_ropeswing, 20, 1, $start_pos, movecoord($start_pos, -5, 0, 0), 45, 70, ^exact_west, false);
+mes("You skillfully swing across.");
+
+[oploc1,loc_3234]
+// https://youtu.be/PZvZhKg-T9A?si=mupz2AP54KUFKJzw&t=733
+~mesbox("The markings appear to be holes in the wall... It's a trap!");
+def_int $choice = ~p_choice2_header("Yes, I'll give it a go.", 1, "No thanks, I'll leave it alone.", 2, "Do you want to try and disarm it?");
+if($choice = 2) {
+    return;
+}
+if_close;
+mes("You try to disarm the trap...");
+anim(human_pickpocket, 0);
+sound_synth(lockeddoor, 0, 0);
+p_delay(2); // 2 ticks
+// TODO: check these numbers
+if(stat_random(stat(thieving), 110, 320) = false) {
+    mes("...and fail, activating the trap!");
+    loc_anim(seq_459);
+    say("Ouch!");
+    ~damage_self(calc(((stat(hitpoints) * 10) / 100) + 1)); // unlike activating, this doesn't seem to queue
+    return;
+}
+mes("...and succeed, you quickly walk past.");
+if(coordx(coord) > coordx(loc_coord)) {
+    ~forcemove(movecoord(coord, -2, 0, 0));
+} else {
+    ~forcemove(movecoord(coord, 2, 0, 0));
+}
+
+// these traps both appear to run on a softtimer (and the damage is strongqueued which will if_close) on OSRS
+// since neither function existed on RS2 launch we will assume regular timer
+[timer,upass_trap]
+if (loc_find(coord, loc_3234) = true | loc_find(movecoord(coord, 0, 0, -1), loc_3234) = true) {
+    loc_anim(seq_459);
+    say("Ouch!");
+    queue(damage_player, 0, calc(((stat(hitpoints) * 10) / 100) + 1));
+} else if (loc_find(coord, loc_3230) = true) {
+    if(loc_find(movecoord(loc_coord, -1, 0, 0), loc_3232) = true | loc_find(movecoord(loc_coord, 0, 0, -1), loc_3232) = true) loc_anim(seq_462);
+    say("Ouch!");
+    queue(damage_player, 0, calc(((stat_base(hitpoints) * 8) / 100) + 1));
+    world_delay(1);
+    loc_anim(seq_463);
+}
+
+[oploc1,loc_3230]
+~mesbox("The rock appears to move slightly as you touch it...|It's a trap!|You don't see any way to disarm it,|maybe you can find a way to cross over it...");
+
+[oplocu,loc_3230]
+if(last_useitem = plank) {
+    mes("You place the plank across the flat rock...");
+    anim(human_pickupfloor, 0);
+    sound_synth(put_down, 0, 0);
+    p_delay(1);
+    mes("...and quickly walk over.");
+    loc_del(4);
+    if(coordz(coord) > coordz(loc_coord)) {
+        loc_add(loc_coord, loc_3231, 0, grounddecor, 4);
+        ~forcemove(movecoord(loc_coord, 0, 0, -1));
+    } else if(coordz(coord) < coordz(loc_coord)) {
+        loc_add(loc_coord, loc_3231, 0, grounddecor, 4);
+        ~forcemove(movecoord(loc_coord, 0, 0, 1));
+    } else if(coordx(coord) > coordx(loc_coord)) {
+        loc_add(loc_coord, loc_3231, 1, grounddecor, 4);
+        ~forcemove(movecoord(loc_coord, -1, 0, 0));
+    } else {
+        loc_add(loc_coord, loc_3231, 1, grounddecor, 4);
+        ~forcemove(movecoord(loc_coord, 1, 0, 0));
+    }
+}
+
+[oploc1,loc_3339]
+~mesbox("The rock appears to move slightly as you touch it... It's a trap!");
+def_int $choice = ~p_choice2_header("Yes, I'll give it a go.", 1, "No thanks, I'll leave it alone.", 2, "Do you want to try and disarm it?");
+if($choice = 2) {
+    return;
+}
+if_close;
+mes("You try to disarm the trap...");
+anim(human_pickpocket, 0);
+sound_synth(lockeddoor, 0, 0);
+p_delay(2); // 2 ticks
+// TODO: check these numbers
+if(stat_random(stat(thieving), 110, 320) = false) {
+    mes("...and fail, activating the trap!");
+    @upass_orboflight_trap;
+}
+if(inv_freespace(inv) = 0 | inv_total(inv, obj_1481) > 0 | testbit(%upass_map_mechanisms, oc_param(obj_1481, orb_bit)) = true) {
+    mes("...and succeed, you hear it resetting after a few seconds.");
+    return;
+}
+inv_add(inv, obj_1481, 1);
+if(obj_find(loc_coord, obj_2529) = true) obj_del;
+if(loc_find(loc_coord, loc_3361) = true) loc_del(50); // rs3
+mes("...and succeed long enough to take the Orb.");
+
+[oploc1,upass_ledge]
+mes("You put your foot on the ledge and try to edge across...");
+def_coord $dest = 0_37_150_6_38;
+def_seq $seq = human_ledge_walk_right;
+if(coordz(coord) < coordz(loc_coord)) {
+    $seq = human_ledge_walk_left;
+    $dest = movecoord($dest, 0, 0, 5);
+    anim(human_ledge_on_left, 0);
+} else {
+    anim(human_ledge_on_right, 0);
+}
+~agility_force_move(0, $seq, 0_37_150_6_42);
+// https://youtu.be/n_ip_vEDbCA?si=0_EUH-TcBp6oAAZL&t=547
+if(stat_random(stat(agility), 90, 300) = false) {
+    anim(human_sidestep_fall, 0);
+    mes("You fall in to the rat pit.");
+    p_exactmove(coord, movecoord(coord, -1, 0, 0), 18, 30, ^exact_south);
+    p_delay(0);
+    ~damage_self(5); // always 5
+    sound_synth(human_hit2, 0, 20);
+    p_delay(0);
+    return;
+}
+~agility_force_move(0, $seq, $dest);
+if(coordz(coord) > coordz(loc_coord)) {
+    ~agility_force_move(0, $seq, movecoord(coord, 1, 0, 1));
+}
+
+[oploc1,loc_3276]
+p_arrivedelay;
+mes("You start to cross the rock bridge...");
+def_coord $end;
+if(coordx(coord) > coordx(loc_coord)) {
+    $end = movecoord(loc_coord, -1, 0, 0);
+} else {
+    $end = movecoord(loc_coord, 1, 0, 0);
+}
+~agility_force_move(0, human_walk_logbalance, movecoord(coord, calc((coordx($end) - coordx(coord)) / 2), 0, calc((coordz($end) - coordz(coord)) / 2)));
+// https://youtu.be/n_ip_vEDbCA?si=0_EUH-TcBp6oAAZL&t=547
+if(stat_random(stat(agility), 90, 300) = false) {
+    // no actual difference in terms of angle or anything so guess these are hardcoded
+    // (guessing all destinations are but w/e)
+    def_int $dz = -1;
+    def_int $dir = ^exact_south;
+    if(loc_coord = 0_37_150_31_32 | loc_coord = 0_37_150_38_32) {
+        $dz = 1;
+        $dir = ^exact_north;
+    }
+    anim(human_sidestep_fall, 10);
+    mes("...and fall off it.");
+    p_delay(0);
+    p_exactmove(coord, movecoord(coord, 0, 0, $dz), 30, 45, $dir);
+    p_delay(0);
+    p_teleport(movecoord(coord, 0, 0, $dz));
+    p_delay(2);
+    ~damage_self(5); // always 5
+    sound_synth(human_hit2, 0, 20);
+    return;
+}
+mes("...and make it.");
+~agility_force_move(0, human_walk_logbalance, $end);
+
+[oploc1,loc_3237]
+def_int $mod = -1;
+def_coord $start = movecoord(loc_coord, 2, 0, 0);
+def_int $dir = ^exact_west;
+if(coordx(loc_coord) < 2415) {
+    $mod = 1;
+    $dir = ^exact_east;
+    $start = movecoord(loc_coord, -1, 0, 0);
+}
+p_delay(0);
+p_walk($start);
+p_delay(2);
+if(%upass_area2_pipe_used >= map_clock) {
+    mes("The pipe is being used"); // TODO: confirm, using the same as gnome course
+    return;
+}
+%upass_area2_pipe_used = calc(map_clock + 6);
+~agility_exactmove(human_pipesqueeze, 30, 5, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
+mes("You crawl through the pipe.");
+if(%upass_progress >= ^upass_killed_unicorn) {
+    p_telejump(movecoord(coord, calc(26*$mod), 0, 0));
+} else {
+    p_telejump(movecoord(coord, $mod, 0, 0));
+}
+p_delay(0);
+if($dir = ^exact_west) {
+    ~change_merged_loc(movecoord(coord, sub($mod,1), 0, 0));
+} else {
+    ~change_merged_loc(movecoord(coord, $mod, 0, 0));
+}
+~agility_exactmove(human_pipesqueeze, 30, 3, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
+p_delay(0);
+stat_advance(agility, 30);
+
+[oploc1,loc_3254] @upass_cross_bridge;
+[oploc1,loc_3255] @upass_cross_bridge;
+
+[label,upass_cross_bridge]
+mes("You attempt to walk over the remaining bridge...");
+p_delay(1);
+if(stat_random(stat(agility), 90, 300) = false) {
+    if(random(2) = 0) p_teleport(0_36_153_31_29);
+    else p_teleport(0_36_154_29_10);
+    // sound fall_land
+    mes("... but you slip and tumble into the darkness.");
+    say("Ouch!");
+    ~damage_self(calc(((stat(hitpoints) * 25) / 100) + 4));
+    if(testbit(%upass_map_mechanisms, ^upass_koftik_gone_insane) = false) {
+        p_delay(0);
+        // TODO: figure out how long this should be, only works this way on RS3
+        npc_add(map_findsquare(coord, 1, 2, ^map_findsquare_lineofwalk), npc_975, 200);
+        @koftik_isthatyou;
+    }
+    return;
+}
+def_int $dir;
+def_coord $end;
+if(coordz(coord) > coordz(loc_coord)) {
+    $dir = ^exact_south;
+    $end = movecoord(loc_coord, 0, 0, -1);
+} else if(coordz(coord) < coordz(loc_coord)) {
+    $dir = ^exact_north;
+    $end = movecoord(loc_coord, 0, 0, 3);
+} else if(coordx(coord) > coordx(loc_coord)) {
+    $dir = ^exact_west;
+    $end = movecoord(loc_coord, -1, 0, 0);
+} else {
+    $dir = ^exact_east; 
+    $end = movecoord(loc_coord, 3, 0, 0);
+}
+// https://youtu.be/n_ip_vEDbCA?si=OKvgFalYoPKlW2AU&t=1308 delay = 35 in current osrs, this seems like 0...
+sound_synth(jump_no_land, 0, 0);
+~agility_exactmove(seq_807, 20, 2, coord, $end, 38, 67, $dir, true);
+mes("... you manage to cross safely.");

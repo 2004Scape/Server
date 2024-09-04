@@ -100,7 +100,7 @@ if(%grandtree_progress = ^grandtree_complete) {
 [label,gnome_pilot_glider]
 ~chatplayer("<p,quiz>Can you take me on the glider?");
 ~chatnpc("<p,happy>Of course!");
-if_openmainmodal(glidermap);
+if_openmain(glidermap);
 
 [label,gnome_pilot_transport]
 ~chatplayer("<p,neutral>Why are gliders better than other transport?");

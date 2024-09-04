@@ -106,7 +106,7 @@ if (inv_total(inv, thread) < 1) {
     return;
 }
 if_setobject(leather_crafting:com_100, leather_cowl, 180);
-if_openmainmodal(leather_crafting);
+if_openmain(leather_crafting);
 
 //--- dragonhide interface
 [label,craft_dhide_interface](int $last)

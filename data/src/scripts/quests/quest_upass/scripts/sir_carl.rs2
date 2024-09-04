@@ -1,0 +1,17 @@
+[ai_queue3,sir_carl]
+gosub(npc_death);
+if (npc_findhero = false) {
+    return;
+}
+// no quest stage check, no bank check (RS3)
+if(inv_total(inv, upass_carl_badge) = 0) {
+    obj_add(npc_coord, upass_carl_badge, 1, ^lootdrop_duration);
+}
+~paladin_drops;
+
+[opnpc1,sir_carl]
+if(%upass_progress >= ^upass_entered_main_area) {
+    @upass_paladin_after_killed;
+}
+~chatplayer("<p,neutral>Hello there.");
+~chatnpc("<p,neutral>Take care down here, Evil things are abroad...");

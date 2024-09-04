@@ -172,7 +172,7 @@ if (inv_total(inv, amulet_mould) > 0) {
     if_sethide(crafting_jewelry:amulets_layer, true);
 }
 // open jewelry interface
-if_openmainmodal(crafting_jewelry);
+if_openmain(crafting_jewelry);
 //----------------------
 
 

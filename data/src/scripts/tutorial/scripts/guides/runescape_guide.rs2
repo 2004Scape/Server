@@ -9,7 +9,7 @@ switch_int(%tutorial_progress) {
 
 [label,runescape_guide_welcome]
 if (map_production = false) {
-    ~chatnpc("<p,default>Do you want to skip the tutorial?");
+    ~chatnpc("<p,neutral>Do you want to skip the tutorial?");
     def_int $choice = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
     if ($choice = 1) {
         %tutorial_progress = ^tutorial_complete;
@@ -29,7 +29,7 @@ if (map_production = false) {
 //%tutorial_progress = 2;
 //~tutorial_step_player_controls_spanner;
 //if_settab(game_options, ^tab_game_options);
-//if_settabflash(^tab_game_options);
+//tut_flash(^tab_game_options);
 
 //[label,runescape_guide_spanner]
 //~chatnpc("<p,neutral>You will notice a flashing icon of a spanner.|Please click on this to continue the tutorial.");
