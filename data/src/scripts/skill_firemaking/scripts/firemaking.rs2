@@ -54,23 +54,11 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
-        def_coord $fire_coord = obj_coord;
-        if (~in_duel_arena(coord) = true) {
-            // https://youtu.be/L3OwjH-iXQU
-            //  - could still fm in the duel arena. 
-            //  - It just didnt move the player at all
-            // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
-            //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
-            p_delay(0);
-            anim(null, 0);
-            ~firemaking_success($fire_coord, $log);
-            return;
-        }
         // attempt to firemaking each direction: west east south north
         // if player isnt standing on the log anymore, the fire is lit
-        ~push_player($fire_coord);
+        ~push_player(obj_coord);
         // if fully blocked then just light the log and dont move
-        ~firemaking_success($fire_coord, $log);
+        ~firemaking_success(obj_coord, $log);
         return;
     } else {
         // if fails, then reattempt to light
@@ -116,20 +104,8 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
-        def_coord $fire_coord = coord;
-        if (~in_duel_arena(coord) = true) {
-            // https://youtu.be/L3OwjH-iXQU
-            //  - could still fm in the duel arena. 
-            //  - It just didnt move the player at all
-            // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
-            //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
-            p_delay(0);
-            anim(null, 0);
-            ~firemaking_success($fire_coord, $log);
-            return;
-        }
-        ~push_player_from_inv($fire_coord);
-        ~firemaking_success($fire_coord, $log); // if fully blocked then just light the log and dont move
+        ~push_player_from_inv(obj_coord);
+        ~firemaking_success(obj_coord, $log); // if fully blocked then just light the log and dont move
         return;
     } else {
         // if fails, then reattempt to light
@@ -174,6 +150,11 @@ if (p_finduid(uid) = true) {
 }
 
 [proc,push_player](coord $origin_coord)
+if (~in_duel_arena($origin_coord) = true) {
+    p_delay(0);
+    anim(null, 0);
+    return;
+}
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
     p_teleport(movecoord(coord, -1, 0, 0));
     p_delay(0);
@@ -192,6 +173,16 @@ if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord
 }
 
 [proc,push_player_from_inv](coord $origin_coord)
+if (~in_duel_arena($origin_coord) = true) {
+    // https://youtu.be/L3OwjH-iXQU
+    //  - could still fm in the duel arena. 
+    //  - It just didnt move the player at all
+    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+    p_delay(1);
+    anim(null, 0);
+    return;
+}
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
     p_teleport(movecoord(coord, -1, 0, 0));
     p_delay(1);
