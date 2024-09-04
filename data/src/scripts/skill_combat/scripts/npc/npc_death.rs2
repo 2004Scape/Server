@@ -1,5 +1,6 @@
 [proc,npc_death]
-npc_walk(npc_coord);
+npc_walk(npc_coord); // unnecessary but leaked screenshot of another script having this npc_walk + npc_setmode(none) stuff
+npc_setmode(none);
 npc_arrivedelay;
 if (finduid(%npc_aggressive_player) = true) {
     if (npc_param(death_sound) ! null) {
