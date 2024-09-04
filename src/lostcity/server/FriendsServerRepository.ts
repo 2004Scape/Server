@@ -43,6 +43,12 @@ export class FriendsServerRepository {
         return this.worldByPlayer[username];
     }
 
+    public getPrivateChat(username37: bigint) {
+        const username = fromBase37(username37);
+
+        return this.privateChatByPlayer[username];
+    }
+
     public async register(world: number, username37: bigint, privateChat: ChatModePrivate) {
         const username = fromBase37(username37);
 
@@ -228,9 +234,16 @@ export class FriendsServerRepository {
         this.playerFriends[username] = friendUsername37s;
     }
 
-    private isVisibleTo(playerUsername37: bigint, targetUsername37: bigint) {
-        const playerUsername = fromBase37(playerUsername37);
+    /**
+     * Is a player's online status visible to another player?
+     * 
+     * @param viewer37 The player who is viewing the online status
+     * @param other37 The player whose online status is being viewed
+     * @returns Whether the viewer can see the other player's online status
+     */
+    private isVisibleTo(viewer37: bigint, other37: bigint) {
+        const viewerUsername = fromBase37(viewer37);
         
-        return this.playerFriends[playerUsername]?.includes(targetUsername37) ?? false;
+        return this.playerFriends[viewerUsername]?.includes(other37) ?? false;
     }
 }
