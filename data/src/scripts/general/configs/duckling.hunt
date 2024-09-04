@@ -1,0 +1,8 @@
+// todo: figure out if it hunts by hunt config, or by ai_timer
+[duck_hunt]
+type=npc
+check_npc=duck
+check_vis=lineofsight
+find_keephunting=off
+rate=3
+find_newmode=opnpc3
