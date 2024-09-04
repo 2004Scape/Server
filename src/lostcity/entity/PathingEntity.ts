@@ -481,7 +481,6 @@ export default abstract class PathingEntity extends Entity {
         const faceX: number = target.x * 2 + target.width;
         const faceZ: number = target.z * 2 + target.length;
 
-        // less packets out thanks to me :-)
         if (target instanceof Player) {
             const pid: number = target.pid + 32768;
             if (this.faceEntity !== pid) {
@@ -494,14 +493,19 @@ export default abstract class PathingEntity extends Entity {
                 this.faceEntity = nid;
                 this.mask |= this.entitymask;
             }
-        } else if (this.orientationX !== faceX || this.orientationZ !== faceZ) {
+        } else {
             // direction when the player is first observed (updates on movement)
             this.orientationX = faceX;
             this.orientationZ = faceZ;
+
             // direction update (only updates from facesquare or interactions)
             this.faceX = faceX;
             this.faceZ = faceZ;
-            this.mask |= this.coordmask;
+
+            if (interaction === Interaction.ENGINE) {
+                // mask updates will be sent every time from the packet handler
+                this.mask |= this.coordmask;
+            }
         }
 
         if (interaction === Interaction.SCRIPT) {

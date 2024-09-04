@@ -178,9 +178,6 @@ export default class Npc extends PathingEntity {
 
     updateMovement(repathAllowed: boolean = true): boolean {
         const type = NpcType.get(this.type);
-        if (type.moverestrict === MoveRestrict.NOMOVE) {
-            return false;
-        }
         if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
             const apTrigger: boolean =
             (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
@@ -229,6 +226,9 @@ export default class Npc extends PathingEntity {
                 this.defaultMode();
                 return false;
             }
+        }
+        if (type.moverestrict === MoveRestrict.NOMOVE) {
+            return false;
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();

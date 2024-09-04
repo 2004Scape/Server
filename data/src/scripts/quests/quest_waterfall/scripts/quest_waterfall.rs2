@@ -242,7 +242,7 @@ p_teleport(0_39_54_15_7);
 [oploc1,loc_2010] // basing this off RS3, seems like RS3 mechanics for this havn't changed
 mes("The door begins to open.");
 p_delay(2);
-if(inv_total(worn, glarials_amulet) > 0) {
+if(inv_total(worn, glarials_amulet) > 0 | inv_total(inv, glarials_amulet) > 0) {
     mes("You walk through the door.");
     if(%waterfall_progress = ^waterfall_entered_glarial_tomb) {
         %waterfall_progress = ^waterfall_entered_waterfall;
