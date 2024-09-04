@@ -51,8 +51,8 @@ async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.
             break;
         }
         case 'player_login': {
-            const { username } = msg;
-            await client.playerLogin(username);
+            const { username, chatModePrivate } = msg;
+            await client.playerLogin(username, chatModePrivate);
             break;
         }
         case 'player_logout': {

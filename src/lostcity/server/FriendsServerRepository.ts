@@ -1,6 +1,7 @@
 import { fromBase37, toBase37 } from '#jagex2/jstring/JString.js';
 
 import { db } from '#lostcity/db/query.js';
+import { ChatModePrivate } from '#lostcity/util/ChatModes.js';
 
 /**
  * Stores friends data related to players.
@@ -17,6 +18,11 @@ export class FriendsServerRepository {
      * worldByPlayer[username] = worldId
      */
     private worldByPlayer: Record<string, number> = {};
+
+    /**
+     * privateChatByPlayer[username] = privateChat
+     */
+    private privateChatByPlayer: Record<string, ChatModePrivate> = {};
 
     /**
      * playerFriends[username] = username37[]
@@ -37,7 +43,7 @@ export class FriendsServerRepository {
         return this.worldByPlayer[username];
     }
 
-    public async register(world: number, username37: bigint) {
+    public async register(world: number, username37: bigint, privateChat: ChatModePrivate) {
         const username = fromBase37(username37);
 
         // add player to new world
@@ -50,6 +56,7 @@ export class FriendsServerRepository {
 
         this.playersByWorld[world][newIndex] = username37;
         this.worldByPlayer[username] = world;
+        this.privateChatByPlayer[username] = privateChat;
         await this.loadFriends(username37);
 
         return true;
@@ -66,6 +73,7 @@ export class FriendsServerRepository {
             if (player !== -1) {
                 this.playersByWorld[world][player] = null;
                 delete this.worldByPlayer[username];
+                delete this.privateChatByPlayer[username];
                 delete this.playerFriends[username];
                 return;
             }
@@ -82,6 +90,7 @@ export class FriendsServerRepository {
             if (player !== -1) {
                 this.playersByWorld[i][player] = null;
                 delete this.worldByPlayer[username];
+                delete this.privateChatByPlayer[username];
                 delete this.playerFriends[username];
             }
         }

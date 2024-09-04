@@ -104,17 +104,23 @@ export class FriendsServer {
                         }
 
                         const username37 = data.g8();
+                        let privateChat: ChatModePrivate = data.g1();
+
+                        if (privateChat !== 0 && privateChat !== 1 && privateChat !== 2) {
+                            console.error(`[Friends]: Player ${fromBase37(username37)} tried to log in with invalid private chat setting ${privateChat}`);
+                            privateChat = ChatModePrivate.ON;
+                        }
                         
                         // remove player from previous world, if any
                         this.repository.unregister(username37);
 
-                        if (!await this.repository.register(world, username37)) {
+                        if (!await this.repository.register(world, username37, privateChat)) {
                             // TODO handle this better?
                             console.error(`[Friends]: World ${world} is full`);
                             return;
                         }
 
-                        console.log(`[Friends]: Player ${fromBase37(username37)} logged in to world ${world}`);
+                        console.log(`[Friends]: Player ${fromBase37(username37)} (${privateChat}) logged in to world ${world}`);
 
                         // notify the player who just logged in about their friends
                         await this.sendFriendsListToPlayer(username37, socket);
@@ -389,15 +395,16 @@ export class FriendsClient {
         await this.write(this.socket, FriendsClientOpcodes.WORLD_CONNECT, request.data);
     }
 
-    public async playerLogin(username: string) {
+    public async playerLogin(username: string, privateChat: number) {
         await this.connect();
 
         if (this.socket === null) {
             return -1;
         }
 
-        const request = new Packet(new Uint8Array(8));
+        const request = new Packet(new Uint8Array(9));
         request.p8(toBase37(username));
+        request.p1(privateChat);
         await this.write(this.socket, FriendsClientOpcodes.PLAYER_LOGIN, request.data);
     }
 
