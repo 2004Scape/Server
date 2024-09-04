@@ -6,8 +6,10 @@ import NpcType from '#lostcity/cache/config/NpcType.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
 import LocType from '#lostcity/cache/config/LocType.js';
 
-import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import World from '#lostcity/engine/World.js';
+import Zone from '#lostcity/engine/zone/Zone.js';
+import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
+import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
@@ -17,8 +19,6 @@ import { Position } from '#lostcity/entity/Position.js';
 
 import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
-import Zone from '#lostcity/engine/zone/Zone.js';
-import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
 
 export default class GameMap {
     private static readonly OPEN: number = 0x0;
