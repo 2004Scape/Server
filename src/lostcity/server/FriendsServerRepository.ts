@@ -242,8 +242,17 @@ export class FriendsServerRepository {
      * @returns Whether the viewer can see the other player's online status
      */
     private isVisibleTo(viewer37: bigint, other37: bigint) {
-        const viewerUsername = fromBase37(viewer37);
+        const otherUsername = fromBase37(other37);
+        const otherChatMode = this.privateChatByPlayer[otherUsername] ?? ChatModePrivate.OFF;
+
+        if (otherChatMode === ChatModePrivate.OFF) {
+            return false;
+        }
+
+        if (otherChatMode === ChatModePrivate.FRIENDS) {
+            return this.playerFriends[otherUsername]?.includes(viewer37) ?? false;
+        }
         
-        return this.playerFriends[viewerUsername]?.includes(other37) ?? false;
+        return true;
     }
 }
