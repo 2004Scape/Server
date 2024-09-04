@@ -24,16 +24,16 @@ if (npc_getmode ! none) {
     return;
 }
 // in osrs ducklings only path to the shore, so im guessing map_findsquare is used (skips map_blocked tiles)
-def_coord $coord = map_findsquare(npc_coord, 1, 7, ^map_findsquare_none);
+def_coord $coord = map_findsquare(npc_coord, 1, 9, ^map_findsquare_none);
 npc_walk($coord);
 npc_queue(6, 0, 2);
 
 [ai_queue6,duckling]
 npc_say("Eep!");
+~sound_area(quack, 0, npc_coord, 5); // just guessing its the normal quack, no eep sound for us
 
 [ai_queue5,_duck]
 npc_say("Quack!");
-
 ~sound_area(quack, 0, npc_coord, 5); // osrs
 
 // https://oldschool.runescape.wiki/w/Duck
