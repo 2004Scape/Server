@@ -58,7 +58,7 @@ const ServerOps: CommandHandlers = {
         let count = 0;
         for (let x = Math.floor(from.x / 8); x <= Math.ceil(to.x / 8); x++) {
             for (let z = Math.floor(from.z / 8); z <= Math.ceil(to.z / 8); z++) {
-                for (const player of World.getZone(x << 3, z << 3, from.level).getAllPlayersSafe()) {
+                for (const player of World.gameMap.getZone(x << 3, z << 3, from.level).getAllPlayersSafe()) {
                     if (player.x >= from.x && player.x <= to.x && player.z >= from.z && player.z <= to.z) {
                         count++;
                     }
@@ -347,7 +347,7 @@ const ServerOps: CommandHandlers = {
     [ScriptOpcode.MAP_LOCADDUNSAFE]: state => {
         const pos: Position = check(state.popInt(), CoordValid);
 
-        for (const loc of World.getZone(pos.x, pos.z, pos.level).getAllLocsUnsafe()) {
+        for (const loc of World.gameMap.getZone(pos.x, pos.z, pos.level).getAllLocsUnsafe()) {
             const type = check(loc.type, LocTypeValid);
 
             if (type.active !== 1) {
@@ -391,15 +391,15 @@ const ServerOps: CommandHandlers = {
     },
 
     [ScriptOpcode.ZONECOUNT]: state => {
-        state.pushInt(World.getTotalZones());
+        state.pushInt(World.gameMap.getTotalZones());
     },
 
     [ScriptOpcode.LOCCOUNT]: state => {
-        state.pushInt(World.getTotalLocs());
+        state.pushInt(World.gameMap.getTotalLocs());
     },
 
     [ScriptOpcode.OBJCOUNT]: state => {
-        state.pushInt(World.getTotalObjs());
+        state.pushInt(World.gameMap.getTotalObjs());
     },
 
     [ScriptOpcode.MAP_FINDSQUARE]: state => {

@@ -143,7 +143,7 @@ const ObjOps: CommandHandlers = {
 
         const obj: Obj = state.activeObj;
         const objType = ObjType.get(obj.type);
-        const zone: Zone = World.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = World.gameMap.getZone(obj.x, obj.z, obj.level);
         for (const o of zone.getObjsSafe(Position.packZoneCoord(obj.x, obj.z))) {
             if (o.type !== obj.type || o.count !== obj.count) {
                 continue;
