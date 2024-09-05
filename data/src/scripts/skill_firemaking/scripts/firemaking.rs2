@@ -44,6 +44,7 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     return;
 }
 // 4t cycle
+// mes(tostring(sub(map_clock, %action_delay)));
 if (%action_delay < map_clock) {
     p_stopaction;
     anim(human_createfire, 0);
@@ -53,54 +54,11 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
         %action_delay = calc(map_clock + 4);
-        def_coord $fire_coord = obj_coord;
-        if (~in_duel_arena(coord) = true) {
-            // https://youtu.be/L3OwjH-iXQU
-            //  - could still fm in the duel arena. 
-            //  - It just didnt move the player at all
-            // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
-            //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
-            p_delay(0);
-            anim(null, 0);
-            ~firemaking_success($fire_coord, $log);
-            return;
-        }
         // attempt to firemaking each direction: west east south north
         // if player isnt standing on the log anymore, the fire is lit
-        if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // check west
-            p_teleport(movecoord(coord, -1, 0, 0));
-            p_delay(0);
-        }
-        if (coord ! $fire_coord) {
-            ~firemaking_success($fire_coord, $log);
-            return;
-        }
-        if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // check east
-            p_teleport(movecoord(coord, 1, 0, 0));
-            p_delay(0);
-        }
-        if (coord ! $fire_coord) {
-            ~firemaking_success($fire_coord, $log);
-            return;
-        }
-        if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // check south
-            p_teleport(movecoord(coord, 0, 0, 1));
-            p_delay(0);
-        }
-        if (coord ! $fire_coord) {
-            ~firemaking_success($fire_coord, $log);
-            return;
-        }
-        if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // check north
-            p_teleport(movecoord(coord, 0, 0, -1));
-            p_delay(0);
-        }
-        if (coord ! $fire_coord) {
-            ~firemaking_success($fire_coord, $log);
-            return;
-        }
+        ~push_player(obj_coord);
         // if fully blocked then just light the log and dont move
-        ~firemaking_success($fire_coord, $log);
+        ~firemaking_success(obj_coord, $log);
         return;
     } else {
         // if fails, then reattempt to light
@@ -109,6 +67,7 @@ if (%action_delay < map_clock) {
         %action_delay = calc(map_clock + 3);
     }
 }
+mes("<tostring(map_clock)>: p_opobj(4)");
 p_opobj(4); // interact with obj again
 
 [label,light_logs_inv](int $slot)
@@ -135,9 +94,27 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("Party Pete won't be happy if you light a fire here.");
     return;
 }
-
 inv_dropslot(inv, coord, $slot, ^lootdrop_duration);
-p_opobj(4); // interact with obj on the ground
+if (%action_delay < map_clock) {
+    p_stopaction;
+    anim(human_createfire, 0);
+    sound_synth(tinderbox_strike, 0, 0);
+    mes("You attempt to light the logs.");
+    %action_delay = calc(map_clock + 3);
+} else if (%action_delay = map_clock) {
+    if(stat_random(stat(firemaking), 64, 512) = true) { // firemaking roll
+        %action_delay = calc(map_clock + 4);
+        ~push_player_from_inv(obj_coord);
+        ~firemaking_success(obj_coord, $log); // if fully blocked then just light the log and dont move
+        return;
+    } else {
+        // if fails, then reattempt to light
+        anim(human_createfire, 0);
+        sound_synth(tinderbox_strike, 0, 0);
+        %action_delay = calc(map_clock + 3);
+    }
+}
+p_opobj(4);
 
 [proc,firemaking_success](coord $fire_coord, obj $log)
 obj_del;
@@ -165,3 +142,81 @@ if (~inzone_coord_pair_table(trawler_game_zones, $coord) = true & coordy($coord)
     return(false);
 }
 return(true);
+
+
+[debugproc,pt]
+if (p_finduid(uid) = true) {
+    p_teleport(movecoord(coord, 1, 0, 0));
+}
+
+[proc,push_player](coord $origin_coord)
+if (~in_duel_arena($origin_coord) = true) {
+    p_delay(0);
+    anim(null, 0);
+    return;
+}
+if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
+    p_teleport(movecoord(coord, -1, 0, 0));
+    p_delay(0);
+}
+if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
+    p_teleport(movecoord(coord, 1, 0, 0));
+    p_delay(0);
+}
+if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
+    p_teleport(movecoord(coord, 0, 0, 1));
+    p_delay(0);
+}
+if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
+    p_teleport(movecoord(coord, 0, 0, -1));
+    p_delay(0);
+}
+
+[proc,push_player_from_inv](coord $origin_coord)
+if (~in_duel_arena($origin_coord) = true) {
+    // https://youtu.be/L3OwjH-iXQU
+    //  - could still fm in the duel arena. 
+    //  - It just didnt move the player at all
+    // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
+    //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
+    p_delay(1);
+    anim(null, 0);
+    return;
+}
+if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
+    p_teleport(movecoord(coord, -1, 0, 0));
+    p_delay(1);
+    if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
+        p_teleport(movecoord(coord, 1, 0, 0));
+        p_delay(0);
+    }
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+    }
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
+    p_teleport(movecoord(coord, 1, 0, 0));
+    p_delay(1);
+    if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
+        p_teleport(movecoord(coord, 0, 0, 1));
+        p_delay(0);
+    }
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
+    p_teleport(movecoord(coord, 0, 0, 1));
+    p_delay(1);
+    if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
+        p_teleport(movecoord(coord, 0, 0, -1));
+        p_delay(0);
+    }
+} else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check north
+    p_teleport(movecoord(coord, 0, 0, -1));
+    p_delay(1);
+}
