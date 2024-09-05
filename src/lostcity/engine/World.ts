@@ -1541,6 +1541,24 @@ class World {
         });
     }
 
+    addIgnore(player: Player, targetUsername37: bigint) {
+        console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_ignorelist_add',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    removeIgnore(player: Player, targetUsername37: bigint) {
+        console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_ignorelist_remove',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
 

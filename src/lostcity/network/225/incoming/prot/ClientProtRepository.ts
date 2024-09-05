@@ -66,6 +66,10 @@ import FriendListAddDecoder from '../codec/FriendListAddDecoder.js';
 import FriendListAddHandler from '../handler/FriendListAddHandler.js';
 import FriendListDelDecoder from '../codec/FriendListDelDecoder.js';
 import FriendListDelHandler from '../handler/FriendListDelHandler.js';
+import IgnoreListAddDecoder from '../codec/IgnoreListAddDecoder.js';
+import IgnoreListDelDecoder from '../codec/IgnoreListDelDecoder.js';
+import IgnoreListAddHandler from '../handler/IgnoreListAddHandler.js';
+import IgnoreListDelHandler from '../handler/IgnoreListDelHandler.js';
 
 class ClientProtRepository {
     decoders: Map<number, MessageDecoder<IncomingMessage>> = new Map();
@@ -91,8 +95,8 @@ class ClientProtRepository {
         this.bind(new IdleTimerDecoder(), new IdleTimerHandler());
         this.bind(new IfButtonDecoder(), new IfButtonHandler());
         this.bind(new IfPlayerDesignDecoder(), new IfPlayerDesignHandler());
-        // this.bind(new IgnoreListAddDecoder(), new IgnoreListAddHandler());
-        // this.bind(new IgnoreListDelDecoder(), new IgnoreListDelHandler());
+        this.bind(new IgnoreListAddDecoder(), new IgnoreListAddHandler());
+        this.bind(new IgnoreListDelDecoder(), new IgnoreListDelHandler());
         this.bind(new InvButtonDecoder(ClientProt.INV_BUTTON1, 1), new InvButtonHandler());
         this.bind(new InvButtonDecoder(ClientProt.INV_BUTTON2, 2), new InvButtonHandler());
         this.bind(new InvButtonDecoder(ClientProt.INV_BUTTON3, 3), new InvButtonHandler());
