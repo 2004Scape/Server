@@ -1529,6 +1529,14 @@ class World {
         });
     }
 
+    sendPrivateChatModeToFriendsServer(player: Player): void {
+        this.friendsThread.postMessage({
+            type: 'player_chat_setmode',
+            username: player.username,
+            chatModePrivate: player.chatModes.privateChat,
+        });
+    }
+
     async removePlayer(player: Player): Promise<void> {
         if (player.pid === -1) {
             return;
