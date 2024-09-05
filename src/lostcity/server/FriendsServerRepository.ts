@@ -23,6 +23,11 @@ export class FriendsServerRepository {
      */
     private playerFriends: Record<string, bigint[]> = {};
 
+    /**
+     * playerIgnores[username] = username37[]
+     */
+    private playerIgnores: Record<string, bigint[]> = {};
+
     public initializeWorld(world: number, size: number) {
         if (this.playersByWorld[world]) {
             return;
@@ -123,6 +128,14 @@ export class FriendsServerRepository {
         return playerFriends;
     }
 
+    public async getIgnores(username37: bigint) {
+        await this.loadIgnores(username37);
+        
+        const username = fromBase37(username37);
+
+        return this.playerIgnores[username] ?? [];
+    }
+
     /**
      * Get all "followers" of a player,
      * i.e. players who have the player in their friend list
@@ -217,6 +230,20 @@ export class FriendsServerRepository {
         const friendUsername37s = friendUsernames.map(f => toBase37(f.username));
 
         this.playerFriends[username] = friendUsername37s;
+    }
+
+    private async loadIgnores(username37: bigint) {
+        const username = fromBase37(username37);
+        const ignoreUsernames = await db
+            .selectFrom('account as a')
+            .innerJoin('ignorelist as i', 'a.id', 'i.ignore_account_id')
+            .innerJoin('account as local', 'local.id', 'i.account_id')
+            .select('a.username')
+            .where('local.username', '=', username)
+            .execute();
+        const ignoreUsername37s = ignoreUsernames.map(f => toBase37(f.username));
+
+        this.playerIgnores[username] = ignoreUsername37s;
     }
 
     private isVisibleTo(playerUsername37: bigint, targetUsername37: bigint) {
