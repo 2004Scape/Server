@@ -226,10 +226,7 @@ export class FriendsServer {
         const followers = this.repository.getFollowers(username37);
 
         for (const follower of followers) {
-            await this.sendPlayerWorldUpdate(
-                follower,
-                this.repository.isVisibleTo(follower, username37) ? world : 0,
-                username37);
+            await this.sendPlayerWorldUpdate(follower, world, username37);
         }
     }
 
@@ -251,7 +248,7 @@ export class FriendsServer {
 
         const packet = new Packet(new Uint8Array(8 + 2 + 8));
         packet.p8(receiver);
-        packet.p2(world);
+        packet.p2(this.repository.isVisibleTo(receiver, player) ? world : 0);
         packet.p8(player);
 
         return this.write(socket, FriendsServerOpcodes.UPDATE_FRIENDLIST, packet.data);

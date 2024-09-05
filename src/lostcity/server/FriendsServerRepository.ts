@@ -236,20 +236,6 @@ export class FriendsServerRepository {
         this.privateChatByPlayer[username] = privateChat;
     }
 
-    private async loadFriends(username37: bigint) {
-        const username = fromBase37(username37);
-        const friendUsernames = await db
-            .selectFrom('account as a')
-            .innerJoin('friendlist as f', 'a.id', 'f.friend_account_id')
-            .innerJoin('account as local', 'local.id', 'f.account_id')
-            .select('a.username')
-            .where('local.username', '=', username)
-            .execute();
-        const friendUsername37s = friendUsernames.map(f => toBase37(f.username));
-
-        this.playerFriends[username] = friendUsername37s;
-    }
-
     /**
      * Is a player's online status visible to another player?
      * 
@@ -257,7 +243,7 @@ export class FriendsServerRepository {
      * @param other37 The player whose online status is being viewed
      * @returns Whether the viewer can see the other player's online status
      */
-    private isVisibleTo(viewer37: bigint, other37: bigint) {
+    public isVisibleTo(viewer37: bigint, other37: bigint) {
         const otherUsername = fromBase37(other37);
         const otherChatMode = this.privateChatByPlayer[otherUsername] ?? ChatModePrivate.OFF;
 
@@ -270,5 +256,19 @@ export class FriendsServerRepository {
         }
         
         return true;
+    }
+
+    private async loadFriends(username37: bigint) {
+        const username = fromBase37(username37);
+        const friendUsernames = await db
+            .selectFrom('account as a')
+            .innerJoin('friendlist as f', 'a.id', 'f.friend_account_id')
+            .innerJoin('account as local', 'local.id', 'f.account_id')
+            .select('a.username')
+            .where('local.username', '=', username)
+            .execute();
+        const friendUsername37s = friendUsernames.map(f => toBase37(f.username));
+
+        this.playerFriends[username] = friendUsername37s;
     }
 }
