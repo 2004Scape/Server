@@ -8,6 +8,7 @@ import NetworkStream from '#lostcity/server/NetworkStream.js';
 
 import Environment from '#lostcity/util/Environment.js';
 import { FriendsServerRepository } from './FriendsServerRepository.js';
+import { ChatModePrivate } from '#lostcity/util/ChatModes.js';
 
 /**
  * client -> server opcodes for friends server
@@ -225,7 +226,10 @@ export class FriendsServer {
         const followers = this.repository.getFollowers(username37);
 
         for (const follower of followers) {
-            await this.sendPlayerWorldUpdate(follower, world, username37);
+            await this.sendPlayerWorldUpdate(
+                follower,
+                this.repository.isVisibleTo(follower, username37) ? world : 0,
+                username37);
         }
     }
 
