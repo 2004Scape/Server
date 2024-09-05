@@ -41,9 +41,9 @@ loc_add(movecoord($loc_coord, 2, 0, 1), loc_83, 1, loc_shape, 4);
 p_delay(0);
 // walk to dest
 if(coordz(coord) > coordz($loc_coord)) {
-    ~agility_walk(0, -3);
+    ~forcemove(movecoord(coord, 0, 0, -3));
 } else {
-    ~agility_walk(0, 3);
+    ~forcemove(movecoord(coord, 0, 0, 3));
 }
 
 // Grand Tree gate

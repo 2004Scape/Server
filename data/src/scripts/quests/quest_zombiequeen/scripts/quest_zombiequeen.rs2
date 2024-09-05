@@ -40,7 +40,7 @@ switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I ha
         mes("The gates slowly begin to open...");
         p_delay(1); // 1t
         mes("Suddenly some Zombies grab you and start dragging you inside!");
-        settimer(shilo_greenmist, 16);
+        settimer(shilo_mist_timer, 16);
         ~shilo_metalgates_open;
         ~forcemove(0_44_46_54_9);
     case 2:
@@ -50,11 +50,23 @@ switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, actually, I ha
         mes("You look around, but you don't think anyone saw you.");
 }
 
-[timer,shilo_greenmist]
+[timer,shilo_mist_timer]
 mes("A green thick mist rises from the ground and starts choking you.");
-spotanim_map(spotanim_184, coord, 124, 3);
-queue(damage_player, 0, calc((stat(hitpoints) / 20) + 1));
+cleartimer(shilo_mist_timer);
+// sound_synth swamp gas
+@shilo_greenmist(coord, 0);
 
+[label,shilo_greenmist](coord $mist_coord, int $counter)
+if($counter >= 4) {
+    return;
+}
+spotanim_map(spotanim_184, $mist_coord, 124, 3);
+huntall($mist_coord, 1, 0);
+while (huntnext = true) {
+    queue(damage_player, 0, ~random_range(2,3));
+}
+world_delay(3); // might be npc_queue on a zombie or something
+@shilo_greenmist($mist_coord, calc($counter + 1));
 
 [proc,shilo_metalgates_open]
 loc_findallzone(coord);
@@ -116,6 +128,109 @@ if(testbit(%varp_117, 0) = true) {
 
 [oploc2,loc_2217]
 ~mesbox("It just looks like some bumpy ground.");
+
+[oploc1,loc_2231]
+def_int $z_dist = -4;
+stat_advance(agility, 10);
+if(coordx(coord) = coordx(loc_coord)) {
+    mes("You can't do that from here.");
+    return;
+}
+if(coordx(coord) > coordx(loc_coord)) {
+    if(stat(agility) < 15) { // req is only checked on one side
+        mes("You need an Agility level of at least 15 to climb these rocks.");
+        return;
+    }
+    p_delay(0);
+    ~agility_force_move(0, seq_737, movecoord(coord, -2, 0, 0));
+    // stumble loop on both fails
+    if(stat_random(stat(agility), 125, 250) = false) {
+        ~agility_exactmove(seq_739, 0, 1, coord, movecoord(coord, 2, 0, 0), 0, 50, ^exact_west, false);
+        anim(null, 0);
+        mes("You fall and hurt yourself.");
+        say("Ouch");
+        ~damage_self(calc(((stat(hitpoints) * 5) / 100) + 1));
+        ~damage_self(calc(((stat(hitpoints) * 5) / 100) + 1));
+        return;
+    }
+    ~agility_force_move(0, seq_737, movecoord(coord, -2, 0, 0));
+} else if (coordx(coord) < coordx(loc_coord)) {
+    ~agility_exactmove(human_rock_climb, 15, 0, coord, movecoord(coord, 4, 0, 0), 0, 120, ^exact_west, false);
+    if(stat_random(stat(agility), 125, 250) = false) {
+        anim(seq_739, 0);
+        p_delay(1);
+        anim(null, 0);
+        mes("You fall and hurt yourself.");
+        say("Ouch");
+        ~damage_self(calc(((stat(hitpoints) * 5) / 100) + 1));
+        ~damage_self(calc(((stat(hitpoints) * 5) / 100) + 1));
+        return;
+    }
+    p_delay(1);
+    anim(null, 0);
+}
+
+[zone,0_43_46_24_32] settimer(cairn_island_bridge, 3);
+[zoneexit,0_43_46_24_32] cleartimer(cairn_island_bridge);
+
+[timer,cairn_island_bridge]
+if(inzone(0_43_46_24_35, 0_43_46_29_35, coord) = true) {
+    if(stat_random(stat(agility), 125, 250) = false) {
+        // fall
+        mes("You fall!");
+        p_stopaction;
+        cleartimer(cairn_island_bridge);
+        ~set_walkbas(human_sidestep_fall);
+        // stumble_loop, 10
+        facesquare(movecoord(coord, 0, 0, -2));
+        p_delay(0);
+
+        ~set_walkbas(seq_766);
+        if(coord = 0_43_46_24_35) p_teleport(movecoord(coord, 1, 0, -1));
+        else p_teleport(movecoord(coord, -1, 0, -1));
+        say("Ahhhhhhhhhh!");
+        p_delay(0);
+
+        say("Choke!");
+        spotanim_map(watersplash, coord, 0, 3);
+        sound_synth(pool_plop, 0, 0);
+        bas_readyanim(seq_773);
+        bas_turnonspot(seq_773);
+        bas_walk_f(human_swim);
+        bas_walk_b(human_swim);
+        bas_walk_l(human_swim);
+        bas_walk_r(human_swim);
+        buildappearance(worn);
+        p_delay(0);
+
+        ~forcemove(0_43_46_26_33);
+        say("Gulp!");
+        ~forcemove(movecoord(coord, 0, 0, -2));
+        ~forcemove(movecoord(coord, 1, 0, -2));
+        say("Cough!");
+        ~forcemove(movecoord(coord, 1, 0, -2));
+        ~forcemove(movecoord(coord, 1, 0, 1));
+        p_delay(0);
+        ~update_bas;
+        mes("You just manage to drag your pitiful frame onto the river bank.");
+        mes("Though you nearly drowned in the river!");
+        p_teleport(movecoord(coord, 1, 0, -1));
+        ~damage_self(calc(stat(hitpoints) / 11));
+        ~damage_self(calc(stat(hitpoints) / 11));
+        ~damage_self(calc(stat(hitpoints) / 11));
+        return;
+    }
+    mes("You manage to keep your balance on the bridge.");
+    stat_advance(agility, 100);
+    settimer(cairn_island_bridge, 20); // it's always 20 ticks
+}
+
+[oploc1,loc_2234]
+~mesbox("These rocks look like they have been stacked uniformly.");
+
+[oploc2,loc_2234]
+// stage check
+~mesbox("You find nothing of significance. And it does look quite scary.");
 
 [oplocu,loc_2217]
 if(last_useitem = spade) {

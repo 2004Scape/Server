@@ -12,12 +12,12 @@ p_telejump($coord);
 ~set_walkbas($walk_seq);
 def_int $change_x = calc(coordx($dest) - coordx(coord));
 def_int $change_z = calc(coordz($dest) - coordz(coord));
-~agility_walk($change_x, $change_z);
+~agility_walk($change_x, $change_z, true);
 stat_advance(agility, $xp);
 
-[proc,agility_walk](int $change_x, int $change_z)
+[proc,agility_walk](int $change_x, int $change_z, boolean $reset_bas)
 if($change_x = 0 & $change_z = 0) {
-    ~update_bas;
+    if($reset_bas = true) ~update_bas;
     return;
 }
 def_int $move_x = 0;
@@ -40,7 +40,7 @@ $change_z = calc($change_z - $move_z);
 p_stopaction;
 p_delay(0);
 // recursive call
-~agility_walk($change_x, $change_z);
+~agility_walk($change_x, $change_z, $reset_bas);
 
 // "clipped" teleport walk that OSRS seems to use, probably since p_walk isn't reliable
 // and you wont want players visibly clipping much!
@@ -117,7 +117,9 @@ p_delay(0);
 // Forces the player to walk to a certain coord. Basically p_teleport but doesnt telejump from a distance.
 // doesnt respect clipping
 [proc,forcemove](coord $dest_coord)
-~agility_force_move(0, human_walk_f, $dest_coord);
+def_int $change_x = calc(coordx($dest_coord) - coordx(coord));
+def_int $change_z = calc(coordz($dest_coord) - coordz(coord));
+~agility_walk($change_x, $change_z, false);
 
 // does a delayed walk to a certain coord using p_teleport (we can't use p_walk for this)
 [proc,forcewalk](coord $dest_coord)(int)
