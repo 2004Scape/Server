@@ -177,6 +177,10 @@ export class FriendsServer {
                         const targetCurrentWorld = this.repository.getWorld(targetUsername37);
 
                         await this.sendPlayerWorldUpdate(username37, targetCurrentWorld ?? 0, targetUsername37);
+
+                        // we can refactor this to only send the update to the new friend
+                        // currently we broadcast this in case the player has private chat set to "Friends"
+                        await this.broadcastWorldToFollowers(username37, world);
                     } else if (opcode === FriendsClientOpcodes.FRIENDLIST_DEL) {
                         if (world === null) {
                             console.error('[Friends]: Received FRIENDLIST_DEL before WORLD_CONNECT');
@@ -187,6 +191,9 @@ export class FriendsServer {
                         const targetUsername37 = data.g8();
 
                         await this.repository.deleteFriend(username37, targetUsername37);
+
+                        // we can refactor this to only send the update to the ex-friend
+                        await this.broadcastWorldToFollowers(username37, world);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
