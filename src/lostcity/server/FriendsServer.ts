@@ -128,7 +128,7 @@ export class FriendsServer {
                         await this.sendFriendsListToPlayer(username37, socket);
 
                         // notify all friends of the player who just logged in
-                        await this.broadcastWorldToFollowers(username37, world);
+                        await this.broadcastWorldToFollowers(username37);
                     } else if (opcode === FriendsClientOpcodes.PLAYER_LOGOUT) {
                         if (world === null) {
                             console.error('[Friends]: Received PLAYER_LOGOUT before WORLD_CONNECT');
@@ -143,7 +143,7 @@ export class FriendsServer {
                         // remove player from previous world, if any
                         this.repository.unregister(username37);
 
-                        await this.broadcastWorldToFollowers(username37, 0);
+                        await this.broadcastWorldToFollowers(username37);
                     } else if (opcode === FriendsClientOpcodes.PLAYER_CHAT_SETMODE) {
                         if (world === null) {
                             console.error('[Friends]: Received PLAYER_CHAT_SETMODE before WORLD_CONNECT');
@@ -162,7 +162,7 @@ export class FriendsServer {
                         console.log(`[Friends]: Player ${username} set chat mode to ${privateChat}`);
 
                         this.repository.setChatMode(username37, privateChat);
-                        await this.broadcastWorldToFollowers(username37, world);
+                        await this.broadcastWorldToFollowers(username37);
                     } else if (opcode === FriendsClientOpcodes.FRIENDLIST_ADD) {
                         if (world === null) {
                             console.error('[Friends]: Received FRIENDLIST_ADD before WORLD_CONNECT');
@@ -174,13 +174,11 @@ export class FriendsServer {
 
                         await this.repository.addFriend(username37, targetUsername37);
 
-                        const targetCurrentWorld = this.repository.getWorld(targetUsername37);
-
-                        await this.sendPlayerWorldUpdate(username37, targetCurrentWorld ?? 0, targetUsername37);
+                        await this.sendPlayerWorldUpdate(username37, targetUsername37);
 
                         // we can refactor this to only send the update to the new friend
                         // currently we broadcast this in case the player has private chat set to "Friends"
-                        await this.broadcastWorldToFollowers(username37, world);
+                        await this.broadcastWorldToFollowers(username37);
                     } else if (opcode === FriendsClientOpcodes.FRIENDLIST_DEL) {
                         if (world === null) {
                             console.error('[Friends]: Received FRIENDLIST_DEL before WORLD_CONNECT');
@@ -193,7 +191,7 @@ export class FriendsServer {
                         await this.repository.deleteFriend(username37, targetUsername37);
 
                         // we can refactor this to only send the update to the ex-friend
-                        await this.broadcastWorldToFollowers(username37, world);
+                        await this.broadcastWorldToFollowers(username37);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -229,11 +227,11 @@ export class FriendsServer {
         }
     }
 
-    private async broadcastWorldToFollowers(username37: bigint, world: number) {
+    private async broadcastWorldToFollowers(username37: bigint) {
         const followers = this.repository.getFollowers(username37);
 
         for (const follower of followers) {
-            await this.sendPlayerWorldUpdate(follower, world, username37);
+            await this.sendPlayerWorldUpdate(follower, username37);
         }
     }
 
@@ -246,17 +244,19 @@ export class FriendsServer {
         return this.socketByWorld[world] ?? null;
     }
 
-    private sendPlayerWorldUpdate(receiver: bigint, world: number, player: bigint) {
-        const socket = this.getPlayerWorldSocket(receiver);
+    private sendPlayerWorldUpdate(viewer: bigint, other: bigint) {
+        const socket = this.getPlayerWorldSocket(viewer);
 
         if (!socket) {
             return Promise.resolve();
         }
 
+        const otherPlayerWorld = this.repository.getWorld(other);
+
         const packet = new Packet(new Uint8Array(8 + 2 + 8));
-        packet.p8(receiver);
-        packet.p2(this.repository.isVisibleTo(receiver, player) ? world : 0);
-        packet.p8(player);
+        packet.p8(viewer);
+        packet.p2(this.repository.isVisibleTo(viewer, other) ? otherPlayerWorld : 0);
+        packet.p8(other);
 
         return this.write(socket, FriendsServerOpcodes.UPDATE_FRIENDLIST, packet.data);
     }
