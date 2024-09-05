@@ -218,6 +218,88 @@ export class FriendsServerRepository {
             .execute();
     }
 
+    public async addIgnore(username37: bigint, targetUsername37: bigint) {
+        const username = fromBase37(username37);
+        const targetUsername = fromBase37(targetUsername37);
+
+        this.playerIgnores[username] = this.playerIgnores[username] ?? [];
+
+        if (this.playerIgnores[username].includes(targetUsername37)) {
+            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but they are already ignored`);
+            return;
+        }
+
+        this.playerIgnores[username].push(targetUsername37);
+
+        // I tried to do all this in 1 query but Kyesly wasn't happy
+        const accountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(username37))
+            .limit(1)
+            .executeTakeFirst();
+
+        const targetAccountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(targetUsername37))
+            .limit(1)
+            .executeTakeFirst();
+
+        if (!accountId || !targetAccountId) {
+            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but one of the accounts does not exist`);
+            return;
+        }
+
+        // TODO check player is not over ignore limit
+
+        await db
+            .insertInto('ignorelist')
+            .values({
+                account_id: accountId.id,
+                ignore_account_id: targetAccountId.id,
+            })
+            .execute();
+    }
+
+    public async deleteIgnore(username37: bigint, targetUsername37: bigint) {
+        const username = fromBase37(username37);
+        const targetUsername = fromBase37(targetUsername37);
+
+        this.playerIgnores[username] = this.playerIgnores[username] ?? [];
+        const index = this.playerIgnores[username].indexOf(targetUsername37);
+
+        if (index === -1) {
+            console.error(`[Friends]: ${username} tried to remove ${targetUsername} from their ignore list, but they are not ignored`);
+            return;
+        }
+
+        this.playerIgnores[username].splice(index, 1);
+
+        // I tried to do all this in 1 query but Kyesly wasn't happy
+        const accountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(username37))
+            .limit(1)
+            .executeTakeFirst();
+
+        const targetAccountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(targetUsername37))
+            .limit(1)
+            .executeTakeFirst();
+
+        if (accountId && targetAccountId) {
+            await db
+                .deleteFrom('ignorelist')
+                .where('account_id', '=', accountId.id)
+                .where('ignore_account_id', '=', targetAccountId.id)
+                .execute();
+        }
+    }
+
     private async loadFriends(username37: bigint) {
         const username = fromBase37(username37);
         const friendUsernames = await db

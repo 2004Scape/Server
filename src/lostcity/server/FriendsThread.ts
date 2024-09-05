@@ -70,6 +70,16 @@ async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.
             await client.playerFriendslistRemove(username, target);
             break;
         }
+        case 'player_ignorelist_add': {
+            const { username, target } = msg;
+            await client.playerIgnorelistAdd(username, target);
+            break;
+        }
+        case 'player_ignorelist_remove': {
+            const { username, target } = msg;
+            await client.playerIgnorelistRemove(username, target);
+            break;
+        }
         default:
             console.error('Unknown message type: ' + msg.type);
             break;

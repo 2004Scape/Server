@@ -16,6 +16,8 @@ export enum FriendsClientOpcodes {
     WORLD_CONNECT,
     FRIENDLIST_ADD,
     FRIENDLIST_DEL,
+    IGNORELIST_ADD,
+    IGNORELIST_DEL,
     PLAYER_LOGIN,
     PLAYER_LOGOUT,
 }
@@ -163,6 +165,26 @@ export class FriendsServer {
                         const targetUsername37 = data.g8();
 
                         await this.repository.deleteFriend(username37, targetUsername37);
+                    } else if (opcode === FriendsClientOpcodes.IGNORELIST_ADD) {
+                        if (world === null) {
+                            console.error('[Friends]: Received IGNORELIST_ADD before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const targetUsername37 = data.g8();
+
+                        await this.repository.addIgnore(username37, targetUsername37);
+                    } else if (opcode === FriendsClientOpcodes.IGNORELIST_DEL) {
+                        if (world === null) {
+                            console.error('[Friends]: Received IGNORELIST_DEL before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const targetUsername37 = data.g8();
+
+                        await this.repository.deleteIgnore(username37, targetUsername37);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -453,5 +475,31 @@ export class FriendsClient {
         request.p8(toBase37(username));
         request.p8(target);
         await this.write(this.socket, FriendsClientOpcodes.FRIENDLIST_DEL, request.data);
+    }
+
+    public async playerIgnorelistAdd(username: string, target: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(16));
+        request.p8(toBase37(username));
+        request.p8(target);
+        await this.write(this.socket, FriendsClientOpcodes.IGNORELIST_ADD, request.data);
+    }
+
+    public async playerIgnorelistRemove(username: string, target: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(16));
+        request.p8(toBase37(username));
+        request.p8(target);
+        await this.write(this.socket, FriendsClientOpcodes.IGNORELIST_DEL, request.data);
     }
 }
