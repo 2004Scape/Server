@@ -1,14 +1,13 @@
 [proc,npc_death]
-npc_delay(0);
-npc_setmode(none);
+// npc_walk(npc_coord) is unnecessary due to npc_setmode(none).
+// But they do it in this screenshot so might be good to do it here just incase: https://i.imgur.com/AfQ1MfF.png
 npc_walk(npc_coord);
+npc_setmode(none);
 npc_arrivedelay;
 if (finduid(%npc_aggressive_player) = true) {
     if (npc_param(death_sound) ! null) {
         sound_synth(npc_param(death_sound), 0, 0);
     }
-}
-if (npc_findhero = true){
     %aggressive_npc = null;
 }
 npc_anim(npc_param(death_anim), 0);

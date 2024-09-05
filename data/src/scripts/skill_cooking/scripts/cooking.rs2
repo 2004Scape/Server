@@ -88,7 +88,7 @@ if ($cooking_source = cooking_oven) {
     $cookmessage = db_getfield($data,cooking_generic:cookmessage_fire,0);
     $anim = human_firecooking;
     if (string_length($cookmessage) < 1 & compare($cookmessage, "0") ! 0) {
-        $cookmessage = "You put the <lowercase(oc_name($cooked_item))> on the fire.";
+        $cookmessage = "You cook the <lowercase(oc_name($cooked_item))> on the fire."; // https://youtu.be/NjOBkLNp5p0?si=YpO-Cfmrgi4ktvJh&t=89
     }
 }
 // cooking gauntlets prioritize over cook o matic it seems
