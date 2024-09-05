@@ -340,6 +340,11 @@ export class FriendsServerRepository {
      */
     public isVisibleTo(viewer37: bigint, other37: bigint) {
         const otherUsername = fromBase37(other37);
+
+        if (this.playerIgnores[otherUsername] && this.playerIgnores[otherUsername].includes(viewer37)) {
+            return false;
+        }
+
         const otherChatMode = this.privateChatByPlayer[otherUsername] ?? ChatModePrivate.OFF;
 
         if (otherChatMode === ChatModePrivate.OFF) {
@@ -379,5 +384,4 @@ export class FriendsServerRepository {
         const ignoreUsername37s = ignoreUsernames.map(f => toBase37(f.username));
 
         this.playerIgnores[username] = ignoreUsername37s;
-    }
-}
+    }}
