@@ -149,6 +149,19 @@ export class FriendsServerRepository {
     }
 
     public async deleteFriend(username37: bigint, targetUsername37: bigint) {
+        const username = fromBase37(username37);
+        const targetUsername = fromBase37(targetUsername37);
+
+        this.playerFriends[username] = this.playerFriends[username] ?? [];
+        const index = this.playerFriends[username].indexOf(targetUsername37);
+
+        if (index === -1) {
+            console.error(`[Friends]: ${username} tried to remove ${targetUsername} from their friend list, but they are not friends`);
+            return;
+        }
+
+        this.playerFriends[username].splice(index, 1);
+
         // I tried to do all this in 1 query but Kyesly wasn't happy
         const accountId = await db
             .selectFrom('account')
@@ -177,6 +190,15 @@ export class FriendsServerRepository {
         const username = fromBase37(username37);
         const targetUsername = fromBase37(targetUsername37);
 
+        this.playerFriends[username] = this.playerFriends[username] ?? [];
+
+        if (this.playerFriends[username].includes(targetUsername37)) {
+            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but they are already friends`);
+            return;
+        }
+
+        this.playerFriends[username].push(targetUsername37);
+
         // I tried to do all this in 1 query but Kyesly wasn't happy
         const accountId = await db
             .selectFrom('account')
@@ -194,18 +216,6 @@ export class FriendsServerRepository {
 
         if (!accountId || !friendAccountId) {
             console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but one of the accounts does not exist`);
-            return;
-        }
-
-        const existing = await db
-            .selectFrom('friendlist')
-            .select(['account_id', 'friend_account_id'])
-            .where('account_id', '=', accountId.id)
-            .where('friend_account_id', '=', friendAccountId.id)
-            .executeTakeFirst();
-
-        if (existing) {
-            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their friend list, but they are already friends`);
             return;
         }
 
