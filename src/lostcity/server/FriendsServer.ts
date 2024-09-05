@@ -18,6 +18,7 @@ export enum FriendsClientOpcodes {
     FRIENDLIST_DEL,
     PLAYER_LOGIN,
     PLAYER_LOGOUT,
+    PLAYER_CHAT_SETMODE,
 }
 
 /**
@@ -127,7 +128,7 @@ export class FriendsServer {
 
                         // notify all friends of the player who just logged in
                         await this.broadcastWorldToFollowers(username37, world);
-                    } else if (opcode === FriendsClientOpcodes.PLAYER_LOGOUT) {                        
+                    } else if (opcode === FriendsClientOpcodes.PLAYER_LOGOUT) {
                         if (world === null) {
                             console.error('[Friends]: Received PLAYER_LOGOUT before WORLD_CONNECT');
                             return;
@@ -142,7 +143,26 @@ export class FriendsServer {
                         this.repository.unregister(username37);
 
                         await this.broadcastWorldToFollowers(username37, 0);
-                    } else if (opcode === FriendsClientOpcodes.FRIENDLIST_ADD) {                      
+                    } else if (opcode === FriendsClientOpcodes.PLAYER_CHAT_SETMODE) {
+                        if (world === null) {
+                            console.error('[Friends]: Received PLAYER_CHAT_SETMODE before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        let privateChat: ChatModePrivate = data.g1();
+                        const username = fromBase37(username37);
+
+                        if (privateChat !== 0 && privateChat !== 1 && privateChat !== 2) {
+                            console.error(`[Friends]: Player ${fromBase37(username37)} tried to set chatmode to invalid private chat setting ${privateChat}`);
+                            privateChat = ChatModePrivate.ON;
+                        }
+
+                        console.log(`[Friends]: Player ${username} set chat mode to ${privateChat}`);
+
+                        this.repository.setChatMode(username37, privateChat);
+                        await this.broadcastWorldToFollowers(username37, world);
+                    } else if (opcode === FriendsClientOpcodes.FRIENDLIST_ADD) {
                         if (world === null) {
                             console.error('[Friends]: Received FRIENDLIST_ADD before WORLD_CONNECT');
                             return;
@@ -444,5 +464,18 @@ export class FriendsClient {
         request.p8(toBase37(username));
         request.p8(target);
         await this.write(this.socket, FriendsClientOpcodes.FRIENDLIST_DEL, request.data);
+    }
+
+    public async playerChatSetMode(username: string, privateChatMode: ChatModePrivate) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(9));
+        request.p8(toBase37(username));
+        request.p1(privateChatMode);
+        await this.write(this.socket, FriendsClientOpcodes.PLAYER_CHAT_SETMODE, request.data);
     }
 }

@@ -70,6 +70,11 @@ async function handleRequests(parentPort: ParentPort, msg: any, priv: forge.pki.
             await client.playerFriendslistRemove(username, target);
             break;
         }
+        case 'player_chat_setmode': {
+            const { username, chatModePrivate } = msg;
+            await client.playerChatSetMode(username, chatModePrivate);
+            break;
+        }
         default:
             console.error('Unknown message type: ' + msg.type);
             break;

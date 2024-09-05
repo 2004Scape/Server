@@ -220,6 +220,12 @@ export class FriendsServerRepository {
             .execute();
     }
 
+    public setChatMode(username37: bigint, privateChat: ChatModePrivate) {
+        const username = fromBase37(username37);
+
+        this.privateChatByPlayer[username] = privateChat;
+    }
+
     private async loadFriends(username37: bigint) {
         const username = fromBase37(username37);
         const friendUsernames = await db
