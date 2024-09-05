@@ -1,11 +1,16 @@
+[proc,cannon_belongs_to_player]()(boolean)
+if (loc_coord = %mcannon_coord) {
+    return(true);
+}
+return(false);
+
 [opheld1,cannon_base]
 if (%mcannon_coord ! null) {
-    // todo: message for already having a cannon placed
-    return;
+    if (loc_find(%mcannon_coord, cannon) = true) {
+        return;
+    }
 }
 
-// todo: check locs that might be overridden as well
-// todo: check party room?
 def_coord $center = coord;
 if (~area_allow_loc_add($center) = false | // center
     ~area_allow_loc_add(movecoord($center, 0, 0, 1)) = false | // north
@@ -15,6 +20,22 @@ if (~area_allow_loc_add($center) = false | // center
     ~area_allow_loc_add(movecoord($center, 0, 0, -1)) = false | // south
     ~area_allow_loc_add(movecoord($center, -1, 0, -1)) = false | // south-west
     ~area_allow_loc_add(movecoord($center, -1, 0, 0)) = false) // west
+{
+    // todo: real message
+    mes("You cannot place your cannon here.");
+    return;
+}
+
+// https://oldschool.runescape.wiki/w/Update:Spirit_trees,_clues_%26_more!
+// - "Cannons can no longer be setup within the Party room and can now be placed where the Party room used to be."
+if (~inzone_coord_pair_table(party_room_zones, $center) = false | // center
+    ~inzone_coord_pair_table(party_room_zones, movecoord($center, 0, 0, 1)) = false | // north
+    ~inzone_coord_pair_table(party_room_zones, movecoord($center, 1, 0, 1)) = false | // north-east
+    ~inzone_coord_pair_table(party_room_zones, movecoord($center, 1, 0, 0)) = false | // east
+    ~inzone_coord_pair_table(party_room_zones, movecoord($center, 1, 0, -1)) = false | // south-east
+    ~inzone_coord_pair_table(party_room_zones, movecoord($center, 0, 0, -1)) = false | // south
+    ~inzone_coord_pair_table(party_room_zones, movecoord($center, -1, 0, -1)) = false | // south-west
+    ~inzone_coord_pair_table(party_room_zones, movecoord($center, -1, 0, 0)) = false) // west
 {
     // todo: real message
     mes("You cannot place your cannon here.");
@@ -78,15 +99,23 @@ facesquare($center);
 anim(human_pickupfloor, 0);
 inv_del(inv, cannon_base, 1);
 loc_add($origin, cannon_base, 0, centrepiece_straight, 10000);
-mes("You place the cannon on the ground.");
+mes("You place the cannon base on the ground."); // https://youtu.be/TeQXQDaawO0?t=227
 
 [oploc1,cannon_base]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
 %mcannon_coord = null;
 anim(human_pickupfloor, 0);
 inv_add(inv, cannon_base, 1);
 loc_del(1);
 
 [oplocu,cannon_base]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
 if (last_useitem = cannon_stand) {
     %mcannon_clock = map_clock;
     anim(human_pickupfloor, 0);
@@ -98,6 +127,10 @@ if (last_useitem = cannon_stand) {
 }
 
 [oploc1,cannon_stand]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
 %mcannon_coord = null;
 anim(human_pickupfloor, 0);
 inv_add(inv, cannon_base, 1);
@@ -105,6 +138,10 @@ inv_add(inv, cannon_stand, 1);
 loc_del(1);
 
 [oplocu,cannon_stand]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
 if (last_useitem = cannon_barrels) {
     %mcannon_clock = map_clock;
     anim(human_pickupfloor, 0);
@@ -116,6 +153,10 @@ if (last_useitem = cannon_barrels) {
 }
 
 [oploc1,cannon_barrels]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
 %mcannon_coord = null;
 anim(human_pickupfloor, 0);
 inv_add(inv, cannon_base, 1);
@@ -124,18 +165,30 @@ inv_add(inv, cannon_barrels, 1);
 loc_del(1);
 
 [oplocu,cannon_barrels]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
 if (last_useitem = cannon_furnace) {
     %mcannon_clock = map_clock;
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_furnace, 1);
     loc_add(%mcannon_coord, cannon, 0, centrepiece_straight, 10000);
     mes("You add the furnace.");
+    // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
+    settimer(cannon_rotate, 1);
 } else {
     ~displaymessage(^dm_default);
 }
 
 [oploc2,cannon]
-// todo: prevent picking up someone else's cannon
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
+mes("You pick up the cannon,"); // https://youtu.be/TeQXQDaawO0?t=518
+mes("It's really heavy.");
+%mcannon_clock = null;
 %mcannon_coord = null;
 cleartimer(cannon_rotate);
 anim(human_pickupfloor, 0);
@@ -143,34 +196,149 @@ inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 inv_add(inv, cannon_barrels, 1);
 inv_add(inv, cannon_furnace, 1);
+
+inv_add(inv, mcannonball, min(30, %mcannon_ammo));
+%mcannon_ammo = 0;
 loc_del(1);
 
 [oploc1,cannon]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!"); // https://youtu.be/aJDlEmyPpk8?t=140
+    return;
+}
+if (%mcannon_ammo = 0) {
+    // current osrs reloads, but thats wrong for our version
+    // https://oldschool.runescape.wiki/w/Update:Happy_Birthday!:
+    // - "Left-clicking on your cannon will now let you reload it, even if it isn't currently firing."
+    mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
+    return;
+}
 settimer(cannon_rotate, 1);
+
+[oplocu,cannon]
+if (~cannon_belongs_to_player = false) {
+    mes("That isn't your cannon!");
+    return;
+}
+if (last_useitem = mcannonball) {
+    // todo: mes for cannon full
+    if (%mcannon_ammo >= 30) {
+        return;
+    }
+    def_int $count = sub(30, max(%mcannon_ammo, 0));
+    mes("You load the cannon with <tostring($count)> cannonballs."); // https://youtu.be/TeQXQDaawO0?t=239
+    %mcannon_ammo = add(%mcannon_ammo, $count);
+    inv_del(inv, mcannonball, $count);
+    // todo mes for putting balls in cannon
+}
 
 [timer,cannon_rotate]
 if (loc_find(%mcannon_coord, cannon) = false) {
     cleartimer(cannon_rotate);
     return;
 }
-
-// todo: probably store cannon direction... this ends up syncing every cannon in the world
-// and does not start on the north side like osrs
-def_int $dir = calc(map_clock % 8);
+if (%mcannon_ammo < 1) {
+    mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
+    cleartimer(cannon_rotate);
+    return;
+}
+def_int $dir = modulo(map_clock, 8); // direction tied to map_clock https://youtu.be/TeQXQDaawO0?t=228
+def_coord $center = movecoord(loc_coord, 1, 0, 1);
+def_coord $close_range = movecoord($center, 0, 0, 3);
+def_coord $medium_range = movecoord($center, 0, 0, 7);
+def_coord $long_range = movecoord($center, 0, 0, 14);
+// start north, going clockwise
 if ($dir = 0) {
+    $close_range = movecoord($center, 0, 0, 3);
+    $medium_range = movecoord($center, 0, 0, 7);
+    $long_range = movecoord($center, 0, 0, 14);
     loc_anim(cannon_north);
 } else if ($dir = 1) {
+    $close_range = movecoord($center, 2, 0, 2);
+    $medium_range = movecoord($center, 5, 0, 5);
+    $long_range = movecoord($center, 12, 0, 12);
     loc_anim(cannon_north_east);
 } else if ($dir = 2) {
+    $close_range = movecoord($center, 3, 0, 0);
+    $medium_range = movecoord($center, 7, 0, 0);
+    $long_range = movecoord($center, 14, 0, 0);
     loc_anim(cannon_east);
 } else if ($dir = 3) {
+    $close_range = movecoord($center, -2, 0, 2);
+    $medium_range = movecoord($center, -5, 0, 5);
+    $long_range = movecoord($center, -12, 0, 12);
     loc_anim(cannon_south_east);
 } else if ($dir = 4) {
+    $close_range = movecoord($center, 0, 0, -3);
+    $medium_range = movecoord($center, 0, 0, -7);
+    $long_range = movecoord($center, 0, 0, -14);
     loc_anim(cannon_south);
 } else if ($dir = 5) {
+    $close_range = movecoord($center, -2, 0, -2);
+    $medium_range = movecoord($center, -5, 0, -5);
+    $long_range = movecoord($center, -12, 0, -12);
     loc_anim(cannon_south_west);
 } else if ($dir = 6) {
+    $close_range = movecoord($center, -3, 0, 0);
+    $medium_range = movecoord($center, -7, 0, 0);
+    $long_range = movecoord($center, -14, 0, 0);
     loc_anim(cannon_west);
 } else if ($dir = 7) {
+    $close_range = movecoord($center, 2, 0, -2);
+    $medium_range = movecoord($center, 5, 0, -5);
+    $long_range = movecoord($center, 12, 0, -12);
     loc_anim(cannon_north_west);
+}
+
+~player_combat_stat;
+
+// check close range
+npc_huntall($close_range, 1, 1);
+while (npc_huntnext = true) {
+    if (lineofsight($center, npc_coord) = true) {
+        jump(cannon_fire);
+    }
+}
+
+// check med range
+npc_huntall($medium_range, 2, 1);
+while (npc_huntnext = true) {
+    if (lineofsight($center, npc_coord) = true) {
+        jump(cannon_fire);
+    }
+}
+// check long range
+npc_huntall($long_range, 5, 1);
+while (npc_huntnext = true) {
+    if (lineofsight($center, npc_coord) = true) {
+        jump(cannon_fire);
+    }
+}
+
+[label,cannon_fire]
+if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
+    return;
+}
+if (npc_stat(hitpoints) = 0) {
+    return;
+}
+
+%mcannon_ammo = sub(%mcannon_ammo, 1);
+def_int $damage = 0;
+def_int $duration = 30;
+if (~player_npc_hit_roll(%damagetype) = true) {
+    $damage = randominc(min(30, npc_param(max_dealt)));
+    $damage = min($damage, npc_stat(hitpoints));
+    stat_advance(ranged, multiply(20, $damage));
+}
+%npc_lastattack = map_clock;
+%npc_attacking_uid = uid;
+%aggressive_npc = npc_uid;
+
+npc_heropoints($damage);
+npc_queue(2, $damage, divide($duration, 30));
+~npc_retaliate(divide($duration, 30));
+
+if (loc_find(%mcannon_coord, cannon) = true) {
+    mes(tostring(%mcannon_ammo));
 }
