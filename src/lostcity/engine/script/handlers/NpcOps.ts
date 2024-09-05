@@ -480,10 +480,16 @@ const NpcOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1432296606376906752
     [ScriptOpcode.NPC_ARRIVEDELAY]: checkedHandler(ActiveNpc, state => {
-        if (state.activeNpc.lastMovement < World.currentTick) {
+        if (state.activeNpc.lastMovement < World.currentTick - 1) {
             return;
         }
-        state.activeNpc.delay = 1;
+        // if the npc moved 1 tick ago, delay for 2 ticks. If npc moved 2 ticks ago, delay for 1 tick
+        if (state.activeNpc.lastMovement === World.currentTick) {
+            state.activeNpc.delay = 2;
+        } else {
+            state.activeNpc.delay = 1;
+        }
+        
         state.execution = ScriptState.NPC_SUSPENDED;
     }),
 };
