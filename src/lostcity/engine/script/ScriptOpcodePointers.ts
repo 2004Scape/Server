@@ -553,6 +553,9 @@ const ScriptOpcodePointers: {
     [ScriptOpcode.NPC_FINDALLANY]: {
         set: ['find_npc']
     },
+    [ScriptOpcode.NPC_FINDALL]: {
+        set: ['find_npc']
+    },
     [ScriptOpcode.NPC_FINDALLZONE]: {
         set: ['find_npc']
     },

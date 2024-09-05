@@ -262,8 +262,9 @@ export class NpcIterator extends ScriptIterator<Npc> {
     private readonly distance: number;
     private readonly checkVis: HuntVis;
     private readonly type: NpcIteratorType;
+    private readonly npcType?: NpcType;
 
-    constructor(tick: number, level: number, x: number, z: number,  distance: number, checkVis: HuntVis, type: NpcIteratorType) {
+    constructor(tick: number, level: number, x: number, z: number,  distance: number, checkVis: HuntVis, type: NpcIteratorType, npcType?: NpcType) {
         super(tick);
         const centerX: number = Position.zone(x);
         const centerZ: number = Position.zone(z);
@@ -278,6 +279,7 @@ export class NpcIterator extends ScriptIterator<Npc> {
         this.distance = distance;
         this.checkVis = checkVis;
         this.type = type;
+        this.npcType = npcType;
     }
 
     protected *generator(): IterableIterator<Npc> {
@@ -304,6 +306,9 @@ export class NpcIterator extends ScriptIterator<Npc> {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFWALK && !rsmod.hasLineOfWalk(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
+                            continue;
+                        }
+                        if (this.npcType && NpcType.get(npc.type) !== this.npcType) {
                             continue;
                         }
                         yield npc;

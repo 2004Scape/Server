@@ -1139,6 +1139,7 @@ moverestrict=blocked
 respawnrate=50
 timer=50
 hitpoints=3
+defaultmode=none
 param=attackbonus,-47
 param=strengthbonus,-42
 param=stabdefence,-42
@@ -1154,6 +1155,8 @@ param=defend_sound,duck_hit
 param=death_sound,duck_death
 param=death_drop,null
 category=duckling
+huntmode=duck_hunt
+huntrange=2
 
 [rat]
 name=Rat
