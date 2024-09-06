@@ -11,7 +11,7 @@ import {ActiveObj, ActivePlayer} from '#lostcity/engine/script/ScriptPointer.js'
 import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 
 import Obj from '#lostcity/entity/Obj.js';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import {

@@ -12,7 +12,7 @@ import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import IdkType from '#lostcity/cache/config/IdkType.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import {LocAngle, LocShape} from '@2004scape/rsmod-pathfinder';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import {ConfigType} from '#lostcity/cache/config/ConfigType.js';
 import SeqType from '#lostcity/cache/config/SeqType.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';

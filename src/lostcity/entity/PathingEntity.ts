@@ -10,7 +10,7 @@ import Player from '#lostcity/entity/Player.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 

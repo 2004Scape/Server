@@ -1,5 +1,5 @@
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import Player from '#lostcity/entity/Player.js';
 import World from '#lostcity/engine/World.js';
 import Npc from '#lostcity/entity/Npc.js';

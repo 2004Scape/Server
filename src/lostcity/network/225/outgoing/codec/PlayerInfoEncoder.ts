@@ -3,7 +3,7 @@ import Packet from '#jagex2/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import World from '#lostcity/engine/World.js';
-import { CoordGrid } from '#lostcity/entity/CoordGrid.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import Player from '#lostcity/entity/Player.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';

@@ -1,5 +1,5 @@
 import ZoneMessage from '#lostcity/network/outgoing/ZoneMessage.js';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 export default class LocMerge extends ZoneMessage {
     constructor(

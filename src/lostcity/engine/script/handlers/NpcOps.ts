@@ -15,7 +15,7 @@ import {NpcIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
-import { CoordGrid } from '#lostcity/entity/CoordGrid.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Npc from '#lostcity/entity/Npc.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';

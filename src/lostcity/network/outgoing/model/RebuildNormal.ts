@@ -1,6 +1,6 @@
 import OutgoingMessage from '#lostcity/network/outgoing/OutgoingMessage.js';
 import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriority.js';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 export default class RebuildNormal extends OutgoingMessage {
     priority = ServerProtPriority.HIGH;

@@ -4,7 +4,7 @@ import Obj from '#lostcity/entity/Obj.js';
 import Player from '#lostcity/entity/Player.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 
 import World from '#lostcity/engine/World.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';

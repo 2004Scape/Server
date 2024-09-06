@@ -10,7 +10,7 @@ import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import {ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
 import Obj from '#lostcity/entity/Obj.js';
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Player from '#lostcity/entity/Player.js';
 

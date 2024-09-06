@@ -18,7 +18,7 @@ import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
-import {Direction, CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {Direction, CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
 import HuntType from '#lostcity/cache/config/HuntType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';

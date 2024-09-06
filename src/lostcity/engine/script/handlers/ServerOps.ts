@@ -12,7 +12,7 @@ import ScriptState from '#lostcity/engine/script/ScriptState.js';
 import {ActiveNpc, ActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 import {HuntIterator, NpcHuntAllCommandIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
-import { CoordGrid } from '#lostcity/entity/CoordGrid.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import MapFindSqaureType from '#lostcity/entity/MapFindSquareType.js';
 import HuntModeType from '#lostcity/entity/hunt/HuntModeType.js';
 import Player from '#lostcity/entity/Player.js';

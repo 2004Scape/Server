@@ -9,7 +9,7 @@ import { convertImage } from '#lostcity/util/PixPack.js';
 import { LocShape } from '@2004scape/rsmod-pathfinder';
 import { shouldBuildFile, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 import NpcType from '#lostcity/cache/config/NpcType.js';
-import { CoordGrid } from '#lostcity/entity/CoordGrid.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 
 function packWater(underlay: Packet, overlay: Packet, mx: number, mz: number) {
     underlay.p1(mx);

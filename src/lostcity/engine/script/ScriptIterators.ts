@@ -4,7 +4,7 @@ import NpcType from '#lostcity/cache/config/NpcType.js';
 
 import World from '#lostcity/engine/World.js';
 
-import {CoordGrid} from '#lostcity/entity/CoordGrid.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import Npc from '#lostcity/entity/Npc.js';

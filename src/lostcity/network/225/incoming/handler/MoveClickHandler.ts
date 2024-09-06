@@ -1,7 +1,7 @@
 import MessageHandler from '#lostcity/network/incoming/handler/MessageHandler.js';
 import MoveClick from '#lostcity/network/incoming/model/MoveClick.js';
 import { NetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
-import { CoordGrid } from '#lostcity/entity/CoordGrid.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import Environment from '#lostcity/util/Environment.js';
 import VarPlayerType from '#lostcity/cache/config/VarPlayerType.js';
 

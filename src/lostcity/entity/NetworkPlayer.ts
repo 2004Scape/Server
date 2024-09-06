@@ -12,7 +12,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import { CoordGrid } from './CoordGrid.js';
+import { CoordGrid } from '../engine/CoordGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import Zone from '#lostcity/engine/zone/Zone.js';
 import InvType from '#lostcity/cache/config/InvType.js';
