@@ -48,7 +48,7 @@ if (~inzone_coord_pair_table(party_room_zones, coord) = true) {
     mes("Party Pete won't be happy if you set up a cannon here."); // osrs
     return;
 }
-if (~inzone_coord_pair_table(bank_zones, coord) = true) {
+if (~inzone_coord_pair_table(bank_zones, coord) = true | ~in_duel_arena(coord) = true) { // guessing they dont let u set up at duel arena at all, esp with nomovement duels
     mes("You can't set up a cannon here."); // osrs
     return;
 }
