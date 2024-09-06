@@ -1,0 +1,12 @@
+[ai_opplayer2,monk_entrana]
+if (%npc_action_delay > map_clock) return;
+def_int $heal = random(5); //guessing
+if ($heal = 0) {
+    @monk_heal_self;
+} else {
+    ~npc_default_attack;
+}
+
+[opnpc1,monk_entrana]
+~chatnpc("<p,neutral>Greetings traveller.");
+@multi2("Can you heal me? I'm injured.", monk_heal_player, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way);

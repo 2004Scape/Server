@@ -847,7 +847,7 @@ export default class Npc extends PathingEntity {
         if (hunt.type === HuntModeType.OFF) {
             return;
         }
-        if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.getZoneGrid(this.level).isFlagged(Position.zone(this.x), Position.zone(this.z), 5)) {
+        if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.gameMap.getZoneGrid(this.level).isFlagged(Position.zone(this.x), Position.zone(this.z), 5)) {
             return;
         }
         if (!hunt.findKeepHunting && this.target !== null) {

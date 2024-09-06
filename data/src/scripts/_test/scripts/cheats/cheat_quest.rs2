@@ -1,0 +1,205 @@
+[debugproc,quests] @debug_quests;
+[debugproc,quest] @debug_quests;
+
+
+[label,debug_quests]
+if (busy = true) {
+    mes("Please finish what you're doing.");
+    return;
+}
+if_close;
+if (p_finduid(uid) = true) {
+    def_int $int1 = 0;
+    def_string $string1 = "";
+    def_int $int2 = 0;
+    def_string $string2 = "";
+    def_int $int3 = 0;
+    def_string $string3 = "";
+
+    def_int $page = 0;
+    def_int $choice = -1;
+    def_int $max_pages = divide(add(enum_getoutputcount(quest_names_enum), 1), 3);
+
+    while ($choice = -1 | $choice = -2) {
+        $int1 = multiply($page, 3);
+        $string1 = enum(int, string, quest_names_enum, $int1);
+        $int2 = add($int1, 1);
+        $string2 = enum(int, string, quest_names_enum, $int2);
+        $int3 = add($int2, 1);
+        $string3 = enum(int, string, quest_names_enum, $int3);
+        $choice = ~p_choice5_header("Prev.", -1, "<tostring($int1)>. <$string1>", $int1, "<tostring($int2)>. <$string2>", $int2, "<tostring($int3)>. <$string3>", $int3, "Next.", -2, "Page Number: <tostring($page)>/<tostring($max_pages)>");
+        if ($choice = -1 & $page ! 0) {
+            $page = sub($page, 1);
+        } else if ($choice = -2 & $page ! $max_pages) {
+            $page = add($page, 1);
+        }
+    }
+    def_int $quest = sub($choice, multiply($page, 2));
+    def_int $choice2 = ~p_choice3_header("Complete.", 0, "Reset.", 1, "Cancel.", 3, "<enum(int, string, quest_names_enum, $quest)>");
+    if ($choice2 = 3) {
+        return;
+    } else if ($choice2 = 0) {
+        switch_int ($quest) {
+            case 0 : queue(black_knights_fortress_quest_complete, 0);
+            case 1 : queue(cooks_quest_complete, 0);
+            case 2 : queue(demon_slayer_complete, 0);
+            case 3 : queue(doric_quest_complete, 0);
+            case 4 : queue(dragon_complete, 0);
+            case 5 : queue(haunted_quest_complete, 0);
+            case 6 : queue(goblin_diplomacy_complete_quest, 0);
+            case 7 : queue(squire_complete, 0);
+            case 8 : queue(imp_quest_complete, 0);
+            case 9 : queue(hunt_quest_complete, 0);
+            case 10 : queue(prince_complete, 0);
+            case 11 : queue(priest_quest_complete, 0);
+            case 12 : queue(romeo_and_juliet_complete, 0);
+            case 13 : queue(rune_mysteries_complete, 0);
+            case 14 : queue(sheep_complete, 0);
+            case 15 : queue(blackarmgang_quest_complete, 0);
+            case 16 : queue(quest_vampire_complete, 0);
+            case 17 : queue(hetty_quest_complete, 0);
+            case 18 : queue(quest_chompybird_complete, 0);
+            case 19 : queue(quest_biohazard_complete, 0);
+            case 20 : queue(cog_complete, 0);
+            case 21 : mes("Quest not implemented");
+            case 22 : 
+                if (npc_find(0_45_54_45_30, kaqemeex, 7, 0) = true) {
+                    queue(druid_quest_complete, 0, npc_uid);
+                }
+            case 23 : queue(mcannon_complete, 0);
+            case 24 : mes("Quest not implemented");
+            case 25 : queue(arena_quest_complete, 0);
+            case 26 : queue(fishingcompo_quest_complete, 0);
+            case 27 : queue(grandtree_quest_complete, 0);
+            case 28 : mes("Quest not implemented");
+            case 29 : queue(hazeelcult_quest_complete, 0);
+            case 30 : mes("Quest not implemented");
+            case 31 : queue(grail_quest_complete, 0);
+            case 32 : queue(junglepotion_quest_complete, 0);
+            case 33 : mes("Quest not implemented");
+            case 34 : queue(zanaris_quest_complete, 0);
+            case 35 : queue(arthur_quest_complete, 0);
+            case 36 : queue(drunkmonk_complete, 0);
+            case 37 : queue(murder_quest_complete, 0);
+            case 38 : mes("Quest not implemented");
+            case 39 : queue(quest_elena_complete, 0);
+            case 40 : queue(scorpcatcher_quest_complete, 0);
+            case 41 : queue(seaslug_quest_complete, 0);
+            case 42 : queue(sheepherder_complete, 0);
+            case 43 : mes("Quest not implemented");
+            case 44 : 
+                def_int $choice3 = ~p_choice2("Armadyl.", 0, "Lucien.", 1);
+                if ($choice3 = 0) {
+                    if (npc_find(0_40_51_13_57, lucien_ardougne, 7, 0) = true) {
+                        queue(ikov_armadyl_quest_complete, 0, npc_uid);
+                    }
+                } else if ($choice3 = 1) {
+                    queue(ikov_lucien_quest_complete, 0);
+                }
+            case 45 : mes("Quest not implemented");
+            case 46 : queue(tree_quest_complete, 0);
+            case 47 : queue(totem_quest_complete, 0);
+            case 48 : queue(upass_quest_complete, 0);
+            case 49 : mes("Quest not implemented");
+            case 50 : queue(waterfall_quest_complete, 0);
+            case 51 : queue(ball_quest_complete, 0);
+            case default : mes("Quest not found.");
+        }
+    } else if ($choice2 = 1) {
+        switch_int ($quest) {
+            case 0 : %blackknight_progress = 0;
+            case 1 : %cook_progress = 0;
+            case 2 : %demon_progress = 0;
+            case 3 : %doric_progress = 0;
+            case 4 : 
+                %dragon_goblin = 0;
+                %dragon_ned_hired = 0;
+                %dragon_oracle = 0;
+                %dragon_shield = 0;
+                %dragon_wall = 0;
+                %dragon_progress = 0;
+                %dragon_planks = 0;
+            case 5 : 
+                %haunted_lever = 0;
+                %haunted_manor_fountain_poisoned = 0;
+                %haunted_progress = 0;
+            case 6 : %gobdip_progress = 0;
+            case 7 : %squire_progress = 0;
+            case 8 : %imp_progress = 0;
+            case 9 :
+                %hunt_progress = 0;
+                %hunt_store_employed = 0;
+            case 10 : 
+                %prince_keystatus = 0;
+                %prince_progress = 0;
+            case 11 : %priest_progress = 0;
+            case 12 : %romeojuliet_progress = 0;
+            case 13 : %runemysteries_progress = 0;
+            case 14 : %sheep_progress = 0;
+            case 15 : %blackarmgang_progress = 0;
+            case 16 : %vampire_progress = 0;
+            case 17 : %hetty_progress = 0;
+            case 18 :
+                %chompybird_kills = 0;
+                %chompybird_progress = 0;
+            case 19 : %biohazard_progress = 0;
+            case 20 : %cog_progress = 0;
+            case 21 : mes("Quest not implemented");
+            case 22 : %druid_progress = 0;
+            case 23 : 
+                %mcannon_railings = 0;
+                %mcannon_progress = 0;
+            case 24 : mes("Quest not implemented");
+            case 25 : %arena_progress = 0;
+            case 26 : %fishingcompo_progress = 0;
+            case 27 : %grandtree_progress = 0;
+            case 28 : mes("Quest not implemented");
+            case 29 : 
+                %hazeelcult_side = 0;
+                %hazeelcult_side = 0;
+                %hazeelcult_progress = 0;
+            case 30 : mes("Quest not implemented");
+            case 31 : %grail_progress = 0;
+            case 32 : %junglepotion_progress = 0;
+            case 33 : mes("Quest not implemented");
+            case 34 : %zanaris_progress = 0;
+            case 35 : %arthur_progress = 0;
+            case 36 : %drunkmonk_progress = 0;
+            case 37 : 
+                %murder_murderer_id = 0;
+                %murder_poisonproof_progress = 0;
+                %murder_progress = 0;
+                %murder_evidence = 0;
+            case 38 : mes("Quest not implemented");
+            case 39 : %elena_progress = 0;
+            case 40 : 
+                %scorpcatcher_progress = 0;
+                %scorpius_given_symbol = 0;
+            case 41 :
+                %seaslug_progress = 0;
+            case 42 :
+                %sheepherder_disposal = 0;
+                %sheepherder_progress = 0;
+            case 43 : mes("Quest not implemented");
+            case 44 :
+                %ikov_lever = 0;
+                %ikov_icearrowchest_coord = 0_0_0_0_0;
+                %haunted_lever = 0;
+                %haunted_manor_fountain_poisoned = 0;
+                %varp_35 = 0;
+            case 45 : mes("Quest not implemented");
+            case 46 : %tree_progress = 0;
+            case 47 : %totem_progress = 0;
+            case 48 : 
+                %upass_progress = 0;
+                %upass_map_mechanisms = 0;
+            case 49 : mes("Quest not implemented");
+            case 50 : 
+                %waterfall_golrie_and_puzzle = 0;
+                %waterfall_progress = 0;
+            case 51 : %ball_progress = 0;
+            case default : mes("Quest not found.");
+        }
+        ~update_quests;
+    }
+}

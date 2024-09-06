@@ -16,9 +16,9 @@ if (inv_total(inv, garlic) > 0) {
         npc_statsub(attack, 10, 0);
         npc_statsub(strength, 10, 0);
         npc_statsub(defence, 40, 0);
-        mes("The vampyre seems to weaken.");
+        mes("The vampire seems to weaken.");
     } else if (random(16) = 0) {
-        mes("The vampyre seems to weaken.");
+        mes("The vampire seems to weaken.");
     }
 }
 
@@ -38,9 +38,9 @@ if (inv_total(inv, garlic) > 0) {
         npc_statsub(attack, 10, 0);
         npc_statsub(strength, 10, 0);
         npc_statsub(defence, 40, 0);
-        mes("The vampyre seems to weaken.");
+        mes("The vampire seems to weaken.");
     } else if (random(16) = 0) {
-        mes("The vampyre seems to weaken.");
+        mes("The vampire seems to weaken.");
     }
 }
 @player_combat_start_ap;

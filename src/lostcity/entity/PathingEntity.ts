@@ -183,8 +183,8 @@ export default abstract class PathingEntity extends Entity {
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
-            World.getZone(previousX, previousZ, previousLevel).leave(this);
-            World.getZone(this.x, this.z, this.level).enter(this);
+            World.gameMap.getZone(previousX, previousZ, previousLevel).leave(this);
+            World.gameMap.getZone(this.x, this.z, this.level).enter(this);
         }
     }
 

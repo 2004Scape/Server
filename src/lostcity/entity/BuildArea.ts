@@ -77,7 +77,7 @@ export default class BuildArea {
 
     *getNearbyPlayers(uid: number, x: number, z: number, originX: number, originZ: number): IterableIterator<Player> {
         players: for (const zoneIndex of this.proximitySort(x, z, this.activeZones)) {
-            for (const other of this.getNearby(World.getZoneIndex(zoneIndex).getAllPlayersSafe(), x, z, originX, originZ, this.viewDistance)) {
+            for (const other of this.getNearby(World.gameMap.getZoneIndex(zoneIndex).getAllPlayersSafe(), x, z, originX, originZ, this.viewDistance)) {
                 if (this.players.size >= BuildArea.PREFERRED_PLAYERS) {
                     break players;
                 }
@@ -94,7 +94,7 @@ export default class BuildArea {
 
     *getNearbyNpcs(x: number, z: number, originX: number, originZ: number): IterableIterator<Npc> {
         npcs: for (const zoneIndex of this.proximitySort(x, z, this.activeZones)) {
-            for (const npc of this.getNearby(World.getZoneIndex(zoneIndex).getAllNpcsSafe(), x, z, originX, originZ, 15)) {
+            for (const npc of this.getNearby(World.gameMap.getZoneIndex(zoneIndex).getAllNpcsSafe(), x, z, originX, originZ, 15)) {
                 if (this.npcs.size >= BuildArea.PREFERRED_NPCS) {
                     break npcs;
                 }

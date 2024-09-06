@@ -19,13 +19,13 @@ if($option = 1) {
 [label,sinister_stranger_nice]
 ~chatplayer("<p,neutral>Is it nice there?");
 ~chatnpc("<p,happy>It is vonderful!|The vomen are beautiful|and the nights are long!");
-@multi3("You're a vampire aren't you?", sinister_stranger_vampire, "So you like fishing?", sinister_stranger_fishing, "Well, good look with the fishing.", sinister_stranger_luck);
+@multi3("You're a vampire aren't you?", sinister_stranger_vampire, "So you like fishing?", sinister_stranger_fishing, "Well, good luck with the fishing.", sinister_stranger_luck);
 
 [label,sinister_stranger_fishing]
 ~chatplayer("<p,neutral>So... you like fishing?");
 ~chatnpc("<p,neutral>My doctor told me to take up a velaxing hobby.|Vhen I am stressed I tend to get a little..");
 ~chatnpc("<p,angry>..thirsty.");
-@multi3("You're a vampire aren't you?", sinister_stranger_vampire, "If you get thirsty you should drink something.", sinister_stranger_thirsty, "Well, good look with the fishing.", sinister_stranger_luck);
+@multi3("You're a vampire aren't you?", sinister_stranger_vampire, "If you get thirsty you should drink something.", sinister_stranger_thirsty, "Well, good luck with the fishing.", sinister_stranger_luck);
 
 [label,sinister_stranger_thirsty]
 ~chatplayer("<p,neutral>If you get thirsty you should drink something.");
