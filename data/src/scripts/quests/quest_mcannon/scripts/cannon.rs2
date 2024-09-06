@@ -191,6 +191,7 @@ sound_synth(pick, 0, 0);
 %mcannon_clock = null;
 %mcannon_coord = null;
 cleartimer(cannon_rotate);
+cleartimer(cannon_decay);
 if (inv_freespace(inv) < 4) {
     mes("You need 4 free inventory spaces to pick that up."); // osrs
     return;
@@ -350,6 +351,7 @@ npc_queue(2, $damage, divide($duration, 30));
 
 [timer,cannon_decay]
 mes("Your cannon has decayed."); // https://runescape.wiki/w/Update:Patch_Notes_(6_May_2009)
+cleartimer(cannon_decay);
 cleartimer(cannon_rotate);
 
 [proc,set_cannon_vars_logout]
