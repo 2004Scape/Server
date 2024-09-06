@@ -112,7 +112,7 @@ if (add(%lastcombat, 8) > map_clock) {
     return;
 }
 
-if(getwalktrigger() = stunned) {
+if(%stunned > map_clock) {
     return;
 }
 
