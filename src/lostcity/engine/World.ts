@@ -68,6 +68,7 @@ import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTime
 import WorldStat from '#lostcity/engine/WorldStat.js';
 import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
+import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
 
 class World {
     private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
@@ -167,6 +168,27 @@ class World {
                     const world = packet.g2();
                     const friendUsername37 = packet.g8();
                     player.write(new UpdateFriendList(friendUsername37, world));
+                }
+            } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
+                const username37 = packet.g8();
+
+                // TODO make getPlayerByUsername37?
+                const player = this.getPlayerByUsername(fromBase37(username37));
+                if (!player) {
+                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    return;
+                }
+
+                const ignored: bigint[] = [];
+
+                while (packet.available >= 8) {
+                    const target37 = packet.g8();
+
+                    ignored.push(target37);
+                }
+
+                if (ignored.length > 0) {
+                    player.write(new UpdateIgnoreList(ignored));
                 }
             } else {
                 console.error('Unknown friends opcode: ' + opcode);
@@ -1501,6 +1523,24 @@ class World {
         console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
         this.friendsThread.postMessage({
             type: 'player_friendslist_remove',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    addIgnore(player: Player, targetUsername37: bigint) {
+        console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_ignorelist_add',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    removeIgnore(player: Player, targetUsername37: bigint) {
+        console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_ignorelist_remove',
             username: player.username,
             target: targetUsername37,
         });

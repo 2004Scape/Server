@@ -17,6 +17,8 @@ export enum FriendsClientOpcodes {
     WORLD_CONNECT,
     FRIENDLIST_ADD,
     FRIENDLIST_DEL,
+    IGNORELIST_ADD,
+    IGNORELIST_DEL,
     PLAYER_LOGIN,
     PLAYER_LOGOUT,
     PLAYER_CHAT_SETMODE,
@@ -27,6 +29,7 @@ export enum FriendsClientOpcodes {
  */
 export enum FriendsServerOpcodes {
     UPDATE_FRIENDLIST,
+    UPDATE_IGNORELIST,
 }
 
 // TODO make this configurable (or at least source it from somewhere common)
@@ -125,7 +128,9 @@ export class FriendsServer {
                         console.log(`[Friends]: Player ${fromBase37(username37)} (${privateChat}) logged in to world ${world}`);
 
                         // notify the player who just logged in about their friends
+                        // we can use `socket` here because we know the player is connected to this world
                         await this.sendFriendsListToPlayer(username37, socket);
+                        await this.sendIgnoreListToPlayer(username37, socket);
 
                         // notify all friends of the player who just logged in
                         await this.broadcastWorldToFollowers(username37);
@@ -192,6 +197,32 @@ export class FriendsServer {
 
                         // we can refactor this to only send the update to the ex-friend
                         await this.broadcastWorldToFollowers(username37);
+                    } else if (opcode === FriendsClientOpcodes.IGNORELIST_ADD) {
+                        if (world === null) {
+                            console.error('[Friends]: Received IGNORELIST_ADD before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const targetUsername37 = data.g8();
+
+                        await this.repository.addIgnore(username37, targetUsername37);
+
+                        // we can refactor this to only send the update to the player who was added to the ignore list
+                        await this.broadcastWorldToFollowers(username37);
+                    } else if (opcode === FriendsClientOpcodes.IGNORELIST_DEL) {
+                        if (world === null) {
+                            console.error('[Friends]: Received IGNORELIST_DEL before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const targetUsername37 = data.g8();
+
+                        await this.repository.deleteIgnore(username37, targetUsername37);
+
+                        // we can refactor this to only send the update to the player who was removed from the ignore list
+                        await this.broadcastWorldToFollowers(username37);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -222,8 +253,21 @@ export class FriendsServer {
                 localFriendPacket.p8(friend);
             }
 
-            // we can use `socket` here because we know the player is connected to this world
             await this.write(socket, FriendsServerOpcodes.UPDATE_FRIENDLIST, localFriendPacket.data);
+        }
+    }
+
+    private async sendIgnoreListToPlayer(username37: bigint, socket: net.Socket) {
+        const playerIgnores = await this.repository.getIgnores(username37);
+
+        if (playerIgnores.length > 0) {
+            const packet = new Packet(new Uint8Array(8 + (playerIgnores.length * 8)));
+            packet.p8(username37);
+            for (const ignoredPlayer of playerIgnores) {
+                packet.p8(ignoredPlayer);
+            }
+
+            await this.write(socket, FriendsServerOpcodes.UPDATE_IGNORELIST, packet.data);
         }
     }
 
@@ -472,6 +516,32 @@ export class FriendsClient {
         request.p8(toBase37(username));
         request.p8(target);
         await this.write(this.socket, FriendsClientOpcodes.FRIENDLIST_DEL, request.data);
+    }
+
+    public async playerIgnorelistAdd(username: string, target: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(16));
+        request.p8(toBase37(username));
+        request.p8(target);
+        await this.write(this.socket, FriendsClientOpcodes.IGNORELIST_ADD, request.data);
+    }
+
+    public async playerIgnorelistRemove(username: string, target: bigint) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(16));
+        request.p8(toBase37(username));
+        request.p8(target);
+        await this.write(this.socket, FriendsClientOpcodes.IGNORELIST_DEL, request.data);
     }
 
     public async playerChatSetMode(username: string, privateChatMode: ChatModePrivate) {

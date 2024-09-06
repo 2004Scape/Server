@@ -29,6 +29,11 @@ export class FriendsServerRepository {
      */
     private playerFriends: Record<string, bigint[]> = {};
 
+    /**
+     * playerIgnores[username] = username37[]
+     */
+    private playerIgnores: Record<string, bigint[]> = {};
+
     public initializeWorld(world: number, size: number) {
         if (this.playersByWorld[world]) {
             return;
@@ -138,6 +143,14 @@ export class FriendsServerRepository {
         return playerFriends;
     }
 
+    public async getIgnores(username37: bigint) {
+        await this.loadIgnores(username37);
+        
+        const username = fromBase37(username37);
+
+        return this.playerIgnores[username] ?? [];
+    }
+
     /**
      * Get all "followers" of a player,
      * i.e. players who have the player in their friend list
@@ -230,6 +243,88 @@ export class FriendsServerRepository {
             .execute();
     }
 
+    public async addIgnore(username37: bigint, targetUsername37: bigint) {
+        const username = fromBase37(username37);
+        const targetUsername = fromBase37(targetUsername37);
+
+        this.playerIgnores[username] = this.playerIgnores[username] ?? [];
+
+        if (this.playerIgnores[username].includes(targetUsername37)) {
+            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but they are already ignored`);
+            return;
+        }
+
+        this.playerIgnores[username].push(targetUsername37);
+
+        // I tried to do all this in 1 query but Kyesly wasn't happy
+        const accountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(username37))
+            .limit(1)
+            .executeTakeFirst();
+
+        const targetAccountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(targetUsername37))
+            .limit(1)
+            .executeTakeFirst();
+
+        if (!accountId || !targetAccountId) {
+            console.error(`[Friends]: ${username} tried to add ${targetUsername} to their ignore list, but one of the accounts does not exist`);
+            return;
+        }
+
+        // TODO check player is not over ignore limit
+
+        await db
+            .insertInto('ignorelist')
+            .values({
+                account_id: accountId.id,
+                ignore_account_id: targetAccountId.id,
+            })
+            .execute();
+    }
+
+    public async deleteIgnore(username37: bigint, targetUsername37: bigint) {
+        const username = fromBase37(username37);
+        const targetUsername = fromBase37(targetUsername37);
+
+        this.playerIgnores[username] = this.playerIgnores[username] ?? [];
+        const index = this.playerIgnores[username].indexOf(targetUsername37);
+
+        if (index === -1) {
+            console.error(`[Friends]: ${username} tried to remove ${targetUsername} from their ignore list, but they are not ignored`);
+            return;
+        }
+
+        this.playerIgnores[username].splice(index, 1);
+
+        // I tried to do all this in 1 query but Kyesly wasn't happy
+        const accountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(username37))
+            .limit(1)
+            .executeTakeFirst();
+
+        const targetAccountId = await db
+            .selectFrom('account')
+            .select('id')
+            .where('username', '=', fromBase37(targetUsername37))
+            .limit(1)
+            .executeTakeFirst();
+
+        if (accountId && targetAccountId) {
+            await db
+                .deleteFrom('ignorelist')
+                .where('account_id', '=', accountId.id)
+                .where('ignore_account_id', '=', targetAccountId.id)
+                .execute();
+        }
+    }
+    
     public setChatMode(username37: bigint, privateChat: ChatModePrivate) {
         const username = fromBase37(username37);
 
@@ -245,6 +340,11 @@ export class FriendsServerRepository {
      */
     public isVisibleTo(viewer37: bigint, other37: bigint) {
         const otherUsername = fromBase37(other37);
+
+        if (this.playerIgnores[otherUsername] && this.playerIgnores[otherUsername].includes(viewer37)) {
+            return false;
+        }
+
         const otherChatMode = this.privateChatByPlayer[otherUsername] ?? ChatModePrivate.OFF;
 
         if (otherChatMode === ChatModePrivate.OFF) {
@@ -271,4 +371,17 @@ export class FriendsServerRepository {
 
         this.playerFriends[username] = friendUsername37s;
     }
-}
+
+    private async loadIgnores(username37: bigint) {
+        const username = fromBase37(username37);
+        const ignoreUsernames = await db
+            .selectFrom('account as a')
+            .innerJoin('ignorelist as i', 'a.id', 'i.ignore_account_id')
+            .innerJoin('account as local', 'local.id', 'i.account_id')
+            .select('a.username')
+            .where('local.username', '=', username)
+            .execute();
+        const ignoreUsername37s = ignoreUsernames.map(f => toBase37(f.username));
+
+        this.playerIgnores[username] = ignoreUsername37s;
+    }}
