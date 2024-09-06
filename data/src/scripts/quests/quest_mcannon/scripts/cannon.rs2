@@ -97,6 +97,7 @@ if (~cannon_belongs_to_player = false) {
 %mcannon_coord = null;
 mes("You pick up the cannon,");
 mes("It's really heavy.");
+sound_synth(pick, 0, 0);
 inv_add(inv, cannon_base, 1);
 loc_del(1);
 
@@ -125,6 +126,7 @@ if (~cannon_belongs_to_player = false) {
 %mcannon_coord = null;
 mes("You pick up the cannon,");
 mes("It's really heavy.");
+sound_synth(pick, 0, 0);
 inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 loc_del(1);
@@ -154,6 +156,7 @@ if (~cannon_belongs_to_player = false) {
 %mcannon_coord = null;
 mes("You pick up the cannon,");
 mes("It's really heavy.");
+sound_synth(pick, 0, 0);
 inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 inv_add(inv, cannon_barrels, 1);
@@ -186,6 +189,7 @@ if (~cannon_belongs_to_player = false) {
 }
 mes("You pick up the cannon,"); // https://youtu.be/TeQXQDaawO0?t=518
 mes("It's really heavy.");
+sound_synth(pick, 0, 0);
 %mcannon_clock = null;
 %mcannon_coord = null;
 cleartimer(cannon_rotate);
