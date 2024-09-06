@@ -156,7 +156,7 @@ p_stopaction;
 // npc_setmode(opplayer2);
 // facesquare(npc_coord);
 
-if (%action_delay > map_clock | getwalktrigger() = stunned) {
+if (%action_delay > map_clock) {
     p_opnpc(2);
     return;
 }
