@@ -5280,7 +5280,7 @@ defence=62
 param=damagetype,^slash_style
 param=max_dealt,0
 
-[npc_222]
+[monk_entrana]
 name=Monk
 desc=A holy man.
 walkanim=human_walk_f,human_walk_b,human_walk_l,human_walk_r
