@@ -38,7 +38,7 @@ const LocOps: CommandHandlers = {
         check(duration, DurationValid);
 
         const created: Loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
-        const locs: IterableIterator<Loc> = World.getZone(position.x, position.z, position.level).getLocsUnsafe(Position.packZoneCoord(position.x, position.z));
+        const locs: IterableIterator<Loc> = World.gameMap.getZone(position.x, position.z, position.level).getLocsUnsafe(Position.packZoneCoord(position.x, position.z));
         for (const loc of locs) {
             if (loc !== created && loc.angle === locAngle && loc.shape === locShape) {
                 World.removeLoc(loc, duration);
@@ -78,7 +78,7 @@ const LocOps: CommandHandlers = {
 
         const {level, x, z, angle, shape} = state.activeLoc;
         const created: Loc = new Loc(level, x, z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, shape, angle);
-        const locs: IterableIterator<Loc> = World.getZone(x, z, level).getLocsUnsafe(Position.packZoneCoord(x, z));
+        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(Position.packZoneCoord(x, z));
         for (const loc of locs) {
             if (loc !== created && loc.angle === angle && loc.shape === shape) {
                 World.removeLoc(loc, duration);
@@ -99,7 +99,7 @@ const LocOps: CommandHandlers = {
         const duration: number = check(state.popInt(), DurationValid);
 
         const {level, x, z, angle, shape} = state.activeLoc;
-        const locs: IterableIterator<Loc> = World.getZone(x, z, level).getLocsUnsafe(Position.packZoneCoord(x, z));
+        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(Position.packZoneCoord(x, z));
         for (const loc of locs) {
             if (loc !== state.activeLoc && loc.angle === angle && loc.shape === shape) {
                 World.removeLoc(loc, duration);

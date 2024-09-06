@@ -71,7 +71,7 @@ export default class Zone {
     enter(entity: PathingEntity): void {
         if (entity instanceof Player) {
             this.players.add(entity.uid);
-            World.getZoneGrid(this.level).flag(this.x, this.z);
+            World.gameMap.getZoneGrid(this.level).flag(this.x, this.z);
         } else if (entity instanceof Npc) {
             this.npcs.add(entity.nid);
         }
@@ -81,7 +81,7 @@ export default class Zone {
         if (entity instanceof Player) {
             this.players.delete(entity.uid);
             if (this.players.size === 0) {
-                World.getZoneGrid(this.level).unflag(this.x, this.z);
+                World.gameMap.getZoneGrid(this.level).unflag(this.x, this.z);
             }
         } else if (entity instanceof Npc) {
             this.npcs.delete(entity.nid);

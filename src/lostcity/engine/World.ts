@@ -65,8 +65,6 @@ import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
 import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
 import {Position} from '#lostcity/entity/Position.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
-import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
-import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
 import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
 import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
@@ -89,9 +87,11 @@ class World {
     private static readonly TIMEOUT_IDLE_TICKS: number = 75;
     private static readonly TIMEOUT_LOGOUT_TICKS: number = 100;
 
+    // the game/zones map
     readonly gameMap: GameMap;
-    readonly zoneMap: ZoneMap;
-    readonly invs: Set<Inventory>; // shared inventories (shops)
+
+    // shared inventories (shops)
+    readonly invs: Set<Inventory>;
 
     // entities
     readonly newPlayers: Set<Player>; // players joining at the end of this tick
@@ -123,8 +123,7 @@ class World {
     devMTime: Map<string, number> = new Map();
 
     constructor() {
-        this.gameMap = new GameMap();
-        this.zoneMap = new ZoneMap();
+        this.gameMap = new GameMap(Environment.NODE_MEMBERS);
         this.invs = new Set();
         this.newPlayers = new Set();
         this.players = new PlayerList(World.PLAYERS - 1);
@@ -411,14 +410,14 @@ class World {
             this.reload();
 
             if (!skipMaps) {
-                this.gameMap.init(this.zoneMap);
+                this.gameMap.init();
             }
         } else {
             console.time('World ready');
             await this.loadAsync();
 
             if (!skipMaps) {
-                await this.gameMap.initAsync(this.zoneMap);
+                await this.gameMap.initAsync();
             }
             console.timeEnd('World ready');
         }
@@ -980,7 +979,7 @@ class World {
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
 
-            this.getZone(player.x, player.z, player.level).enter(player);
+            this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin(); // todo: check response from login script?
 
             if (this.shutdownTick > -1) {
@@ -1248,18 +1247,6 @@ class World {
         return inventory;
     }
 
-    getZone(x: number, z: number, level: number): Zone {
-        return this.zoneMap.zone(x, z, level);
-    }
-
-    getZoneIndex(zoneIndex: number): Zone {
-        return this.zoneMap.zoneByIndex(zoneIndex);
-    }
-
-    getZoneGrid(level: number): ZoneGrid {
-        return this.zoneMap.grid(level);
-    }
-
     computeSharedEvents(): void {
         const zones: Set<number> = new Set();
         for (const player of this.players) {
@@ -1271,7 +1258,7 @@ class World {
             }
         }
         for (const zoneIndex of zones) {
-            this.getZoneIndex(zoneIndex).computeShared();
+            this.gameMap.getZoneIndex(zoneIndex).computeShared();
         }
     }
 
@@ -1280,7 +1267,7 @@ class World {
         npc.x = npc.startX;
         npc.z = npc.startZ;
 
-        const zone = this.getZone(npc.x, npc.z, npc.level);
+        const zone = this.gameMap.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
 
         switch (npc.blockWalk) {
@@ -1300,7 +1287,7 @@ class World {
     }
 
     removeNpc(npc: Npc, duration: number): void {
-        const zone = this.getZone(npc.x, npc.z, npc.level);
+        const zone = this.gameMap.getZone(npc.x, npc.z, npc.level);
         zone.leave(npc);
 
         switch (npc.blockWalk) {
@@ -1321,11 +1308,11 @@ class World {
     }
 
     getLoc(x: number, z: number, level: number, locId: number): Loc | null {
-        return this.getZone(x, z, level).getLoc(x, z, locId);
+        return this.gameMap.getZone(x, z, level).getLoc(x, z, locId);
     }
 
     getObj(x: number, z: number, level: number, objId: number, receiverId: number): Obj | null {
-        return this.getZone(x, z, level).getObj(x, z, objId, receiverId);
+        return this.gameMap.getZone(x, z, level).getObj(x, z, objId, receiverId);
     }
 
     trackZone(tick: number, zone: Zone): void {
@@ -1347,7 +1334,7 @@ class World {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.addLoc(loc);
         loc.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
@@ -1356,14 +1343,14 @@ class World {
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
         // console.log(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
         this.trackZone(this.currentTick, zone);
     }
 
     animLoc(loc: Loc, seq: number): void {
         // console.log(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.animLoc(loc, seq);
         this.trackZone(this.currentTick, zone);
     }
@@ -1375,7 +1362,7 @@ class World {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
         }
 
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc);
         loc.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
@@ -1395,7 +1382,7 @@ class World {
                 return;
             }
         }
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
         if (receiverId !== -1 && objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members)) {
             // objs always reveal 100 ticks after being dropped.
@@ -1416,7 +1403,7 @@ class World {
         // console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
         const duration: number = obj.reveal;
         const change: number = obj.lastChange;
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.revealObj(obj, obj.receiverId);
         // objs next life cycle always starts from the last time they changed + the inputted duration.
         // accounting for reveal time here.
@@ -1428,14 +1415,14 @@ class World {
 
     changeObj(obj: Obj, receiverId: number, newCount: number): void {
         // console.log(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.changeObj(obj, receiverId, obj.count, newCount);
         this.trackZone(this.currentTick, zone);
     }
 
     removeObj(obj: Obj, duration: number): void {
         // console.log(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj);
         obj.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
@@ -1443,13 +1430,13 @@ class World {
     }
 
     animMap(level: number, x: number, z: number, spotanim: number, height: number, delay: number): void {
-        const zone: Zone = this.getZone(x, z, level);
+        const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.animMap(x, z, spotanim, height, delay);
         this.trackZone(this.currentTick, zone);
     }
 
     mapProjAnim(level: number, x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
-        const zone: Zone = this.getZone(x, z, level);
+        const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
         this.trackZone(this.currentTick, zone);
     }
@@ -1599,18 +1586,6 @@ class World {
 
     getTotalNpcs(): number {
         return this.npcs.count;
-    }
-
-    getTotalZones(): number {
-        return this.zoneMap.zoneCount();
-    }
-
-    getTotalLocs(): number {
-        return this.zoneMap.locCount();
-    }
-
-    getTotalObjs(): number {
-        return this.zoneMap.objCount();
     }
 
     getNpc(nid: number): Npc | undefined {

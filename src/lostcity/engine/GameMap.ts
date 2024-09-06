@@ -6,16 +6,16 @@ import NpcType from '#lostcity/cache/config/NpcType.js';
 import ObjType from '#lostcity/cache/config/ObjType.js';
 import LocType from '#lostcity/cache/config/LocType.js';
 
-import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import World from '#lostcity/engine/World.js';
+import Zone from '#lostcity/engine/zone/Zone.js';
+import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
+import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 
 import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Loc from '#lostcity/entity/Loc.js';
 import { Position } from '#lostcity/entity/Position.js';
-
-import Environment from '#lostcity/util/Environment.js';
 
 import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
@@ -34,10 +34,19 @@ export default class GameMap {
 
     private static readonly MAPSQUARE: number = GameMap.X * GameMap.Y * GameMap.Z;
 
-    private multimap: Set<number> = new Set();
-    private freemap: Set<number> = new Set();
+    private readonly members: boolean;
+    private readonly zonemap: ZoneMap;
+    private readonly multimap: Set<number>;
+    private readonly freemap: Set<number>;
 
-    init(zoneMap: ZoneMap): void {
+    constructor(members: boolean) {
+        this.members = members;
+        this.zonemap = new ZoneMap();
+        this.multimap = new Set();
+        this.freemap = new Set();
+    }
+
+    init(): void {
         console.time('Loading game map');
 
         this.loadCsvMap(this.multimap, fs.readFileSync('data/src/maps/multiway.csv', 'ascii').replace(/\r/g, '').split('\n'));
@@ -51,16 +60,16 @@ export default class GameMap {
             const mapsquareZ: number = mz << 6;
 
             this.loadNpcs(Packet.load(`${path}n${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.loadObjs(Packet.load(`${path}o${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            this.loadObjs(Packet.load(`${path}o${mx}_${mz}`), mapsquareX, mapsquareZ);
             // collision
             const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
             this.loadGround(lands, Packet.load(`${path}m${mx}_${mz}`), mapsquareX, mapsquareZ);
-            this.loadLocations(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ, zoneMap);
+            this.loadLocations(lands, Packet.load(`${path}l${mx}_${mz}`), mapsquareX, mapsquareZ);
         }
         console.timeEnd('Loading game map');
     }
 
-    async initAsync(zoneMap: ZoneMap): Promise<void> {
+    async initAsync(): Promise<void> {
         console.time('Loading game map');
         const path: string = 'data/pack/server/maps/';
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -78,11 +87,11 @@ export default class GameMap {
                 await Packet.loadAsync(`${path}l${mx}_${mz}`)]);
 
             this.loadNpcs(npcData, mapsquareX, mapsquareZ);
-            this.loadObjs(objData, mapsquareX, mapsquareZ, zoneMap);
+            this.loadObjs(objData, mapsquareX, mapsquareZ);
             // collision
             const lands: Int8Array = new Int8Array(GameMap.MAPSQUARE); // 4 * 64 * 64 size is guaranteed for lands
             this.loadGround(lands, landData, mapsquareX, mapsquareZ);
-            this.loadLocations(lands, locData, mapsquareX, mapsquareZ, zoneMap);
+            this.loadLocations(lands, locData, mapsquareX, mapsquareZ);
         });
         await Promise.all(maps);
         console.timeEnd('Loading game map');
@@ -172,6 +181,30 @@ export default class GameMap {
         return this.freemap.has(Position.packCoord(0, x, z));
     }
 
+    getZone(x: number, z: number, level: number): Zone {
+        return this.zonemap.zone(x, z, level);
+    }
+
+    getZoneIndex(zoneIndex: number): Zone {
+        return this.zonemap.zoneByIndex(zoneIndex);
+    }
+
+    getZoneGrid(level: number): ZoneGrid {
+        return this.zonemap.grid(level);
+    }
+
+    getTotalZones(): number {
+        return this.zonemap.zoneCount();
+    }
+
+    getTotalLocs(): number {
+        return this.zonemap.locCount();
+    }
+
+    getTotalObjs(): number {
+        return this.zonemap.objCount();
+    }
+
     private loadNpcs(packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         while (packet.available > 0) {
             const { x, z, level } = this.unpackCoord(packet.g2());
@@ -180,20 +213,20 @@ export default class GameMap {
             const count: number = packet.g1();
             for (let index: number = 0; index < count; index++) {
                 const id: number = packet.g2();
-                if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
+                if (!this.members && !this.isFreeToPlay(absoluteX, absoluteZ)) {
                     continue;
                 }
                 const npcType: NpcType = NpcType.get(id);
                 const size: number = npcType.size;
                 const npc: Npc = new Npc(level, absoluteX, absoluteZ, size, size, EntityLifeCycle.RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk);
-                if (npcType.members && Environment.NODE_MEMBERS || !npcType.members) {
+                if (npcType.members && this.members || !npcType.members) {
                     World.addNpc(npc, -1);
                 }
             }
         }
     }
 
-    private loadObjs(packet: Packet, mapsquareX: number, mapsquareZ: number, zoneMap: ZoneMap): void {
+    private loadObjs(packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         while (packet.available > 0) {
             const { x, z, level } = this.unpackCoord(packet.g2());
             const absoluteX: number = mapsquareX + x;
@@ -202,13 +235,13 @@ export default class GameMap {
             for (let index: number = 0; index < count; index++) {
                 const id: number = packet.g2();
                 const count: number = packet.g1();
-                if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
+                if (!this.members && !this.isFreeToPlay(absoluteX, absoluteZ)) {
                     continue;
                 }
                 const objType: ObjType = ObjType.get(id);
                 const obj: Obj = new Obj(level, absoluteX, absoluteZ, EntityLifeCycle.RESPAWN, objType.id, count);
-                if (objType.members && Environment.NODE_MEMBERS || !objType.members) {
-                    zoneMap.zone(obj.x, obj.z, obj.level).addStaticObj(obj);
+                if (objType.members && this.members || !objType.members) {
+                    this.getZone(obj.x, obj.z, obj.level).addStaticObj(obj);
                 }
             }
         }
@@ -243,10 +276,11 @@ export default class GameMap {
                 for (let z: number = 0; z < GameMap.Z; z++) {
                     const absoluteZ: number = z + mapsquareZ;
 
+                    if (!this.members && !this.isFreeToPlay(absoluteX, absoluteZ) && !this.bordersFreeToPlay(absoluteX, absoluteZ)) {
+                        continue;
+                    }
+
                     if (x % 7 === 0 && z % 7 === 0) { // allocate per zone
-                        if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
-                            continue;
-                        }
                         rsmod.allocateIfAbsent(absoluteX, absoluteZ, level);
                     }
 
@@ -272,7 +306,7 @@ export default class GameMap {
         }
     }
 
-    private loadLocations(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number, zoneMap: ZoneMap): void {
+    private loadLocations(lands: Int8Array, packet: Packet, mapsquareX: number, mapsquareZ: number): void {
         let locId: number = -1;
         let locIdOffset: number = packet.gsmart();
         while (locIdOffset !== 0) {
@@ -290,7 +324,7 @@ export default class GameMap {
                 const absoluteX: number = x + mapsquareX;
                 const absoluteZ: number = z + mapsquareZ;
 
-                if (!Environment.NODE_MEMBERS && !this.isFreeToPlay(absoluteX, absoluteZ)) {
+                if (!this.members && !this.isFreeToPlay(absoluteX, absoluteZ) && !this.bordersFreeToPlay(absoluteX, absoluteZ)) {
                     continue;
                 }
 
@@ -306,7 +340,7 @@ export default class GameMap {
                 const shape: number = info >> 2;
                 const angle: number = info & 0x3;
 
-                zoneMap.zone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
+                this.getZone(absoluteX, absoluteZ, actualLevel).addStaticLoc(new Loc(actualLevel, absoluteX, absoluteZ, width, length, EntityLifeCycle.RESPAWN, locId, shape, angle));
 
                 if (type.blockwalk) {
                     this.changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);
@@ -364,5 +398,9 @@ export default class GameMap {
         const x: number = (packed >> 6) & 0x3f;
         const level: number = (packed >> 12) & 0x3;
         return { x, z, level };
+    }
+
+    private bordersFreeToPlay(x: number, z: number): boolean {
+        return this.isFreeToPlay(x + 1, z) || this.isFreeToPlay(x - 1, z) || this.isFreeToPlay(x, z + 1) || this.isFreeToPlay(x, z - 1);
     }
 }

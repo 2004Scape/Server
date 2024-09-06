@@ -164,7 +164,7 @@ class Login {
 
                 const player = World.getPlayerByUsername(username);
                 if (player) {
-                    World.getZone(player.x, player.z, player.level).leave(player);
+                    World.gameMap.getZone(player.x, player.z, player.level).leave(player);
                     World.players.remove(player.pid);
                     player.pid = -1;
                     player.terminate();
