@@ -34,7 +34,7 @@ if (p_finduid(uid) = true) {
             $page = add($page, 1);
         }
     }
-    def_int $quest = sub($choice, multiply($page, 2));
+    def_int $quest = $choice;
     def_int $choice2 = ~p_choice3_header("Complete.", 0, "Reset.", 1, "Cancel.", 3, "<enum(int, string, quest_names_enum, $quest)>");
     if ($choice2 = 3) {
         return;

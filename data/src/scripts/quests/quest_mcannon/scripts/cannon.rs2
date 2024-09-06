@@ -85,7 +85,7 @@ def_coord $origin = movecoord($center, -1, 0, -1); // south-west tile
 facesquare($center);
 anim(human_pickupfloor, 0);
 inv_del(inv, cannon_base, 1);
-loc_add($origin, cannon_base, 0, centrepiece_straight, 3000);
+loc_add($origin, cannon_base, 0, centrepiece_straight, 2500);
 mes("You place the cannon base on the ground."); // https://youtu.be/TeQXQDaawO0?t=227
 
 // ------- cannon base -------
@@ -107,10 +107,9 @@ if (~cannon_belongs_to_player = false) {
     return;
 }
 if (last_useitem = cannon_stand) {
-    %mcannon_clock = map_clock;
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_stand, 1);
-    loc_add(%mcannon_coord, cannon_stand, 0, centrepiece_straight, 3000);
+    loc_add(%mcannon_coord, cannon_stand, 0, centrepiece_straight, 2500);
     mes("You add the stand.");
 } else {
     ~displaymessage(^dm_default);
@@ -137,10 +136,9 @@ if (~cannon_belongs_to_player = false) {
     return;
 }
 if (last_useitem = cannon_barrels) {
-    %mcannon_clock = map_clock;
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_barrels, 1);
-    loc_add(%mcannon_coord, cannon_barrels, 0, centrepiece_straight, 3000);
+    loc_add(%mcannon_coord, cannon_barrels, 0, centrepiece_straight, 2500);
     mes("You add the barrels.");
 } else {
     ~displaymessage(^dm_default);
@@ -168,11 +166,11 @@ if (~cannon_belongs_to_player = false) {
     return;
 }
 if (last_useitem = cannon_furnace) {
-    %mcannon_clock = map_clock;
+    %mcannon_clock = add(map_clock, 3500);
     settimer(cannon_decay, 2500);
     anim(human_pickupfloor, 0);
     inv_del(inv, cannon_furnace, 1);
-    loc_add(%mcannon_coord, cannon, 0, centrepiece_straight, 3000);
+    loc_add(%mcannon_coord, cannon, 0, centrepiece_straight, 2500);
     mes("You add the furnace.");
     // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
     settimer(cannon_rotate, 1);
@@ -242,11 +240,6 @@ if (last_useitem = mcannonball) {
 
 [timer,cannon_rotate]
 if (loc_find(%mcannon_coord, cannon) = false) {
-    cleartimer(cannon_rotate);
-    return;
-}
-if (%mcannon_ammo < 1) {
-    mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
     cleartimer(cannon_rotate);
     return;
 }
@@ -328,6 +321,11 @@ while (npc_huntnext = true) {
 if (npc_stat(hitpoints) = 0) {
     return;
 }
+if (%mcannon_ammo < 1) {
+    mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
+    cleartimer(cannon_rotate);
+    return;
+}
 if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
     return;
 }
@@ -342,20 +340,20 @@ if (~player_npc_hit_roll(%damagetype) = true) {
     $damage = min($damage, npc_stat(hitpoints));
     stat_advance(ranged, multiply(20, $damage));
 }
-%npc_lastattack = map_clock;
-%npc_attacking_uid = uid;
-%aggressive_npc = npc_uid;
 
 npc_heropoints($damage);
 ~npc_retaliate(divide($duration, 30));
 npc_queue(2, $damage, divide($duration, 30));
 
 [timer,cannon_decay]
-if (loc_find(%mcannon_coord, cannon) = true) {
-    mes("Your cannon has decayed."); // https://runescape.wiki/w/Update:Patch_Notes_(6_May_2009)
-    cleartimer(cannon_rotate);
-    loc_del;
-}
+mes("Your cannon has decayed."); // https://runescape.wiki/w/Update:Patch_Notes_(6_May_2009)
+cleartimer(cannon_rotate);
+
+[proc,set_cannon_vars_logout]
+%mcannon_clock = sub(%mcannon_clock, map_clock);
+
+[proc,set_cannon_vars_login]
+%mcannon_clock = add(map_clock, %mcannon_clock);
 
 [debugproc,cannontest]
 inv_clear(inv);
@@ -364,3 +362,8 @@ inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 inv_add(inv, cannon_barrels, 1);
 inv_add(inv, cannon_furnace, 1);
+
+[debugproc,cvars]
+mes("%mcannon_ammo: <tostring(%mcannon_ammo)>");
+mes("%mcannon_clock: <tostring(%mcannon_clock)>");
+mes("%mcannon_coord: <~coord_tostring(%mcannon_coord)>");
