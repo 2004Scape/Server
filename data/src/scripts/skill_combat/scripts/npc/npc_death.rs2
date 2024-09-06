@@ -1,9 +1,18 @@
+// videos of death:
+// - https://youtu.be/Vsnkdq8OOMg?t=209
+// - https://youtu.be/mrqmLFGEsOE?t=69
+// - https://youtu.be/fZGgcIlfoeI?t=33
+// - https://youtu.be/TiJ7bmcXVK0?t=33
+// - https://youtu.be/OHx58MJ2itw?t=338
+// - https://youtu.be/aJDlEmyPpk8?t=140
+// - https://youtu.be/QCUMECkwUb0?t=103
+
 [proc,npc_death]
 // npc_walk(npc_coord) is unnecessary due to npc_setmode(none).
 // But they do it in this screenshot so might be good to do it here just incase: https://i.imgur.com/AfQ1MfF.png
 npc_walk(npc_coord);
 npc_setmode(none);
-npc_arrivedelay;
+npc_arrivedelay; // arrivedelay for up to two ticks (current osrs too) https://youtu.be/Vsnkdq8OOMg?t=209
 if (finduid(%npc_aggressive_player) = true) {
     if (npc_param(death_sound) ! null) {
         sound_synth(npc_param(death_sound), 0, 0);
@@ -11,5 +20,5 @@ if (finduid(%npc_aggressive_player) = true) {
     %aggressive_npc = null;
 }
 npc_anim(npc_param(death_anim), 0);
-npc_delay(2);
+npc_delay(1); // osrs has an extra tick of delay here. I think this delay can vary from npc to npc
 npc_del;
