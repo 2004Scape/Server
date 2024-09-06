@@ -318,6 +318,9 @@ while (npc_huntnext = true) {
 
 
 [label,cannon_fire]
+if (~npc_is_attackable = false) {
+    return;
+}
 if (npc_stat(hitpoints) = 0) {
     return;
 }
