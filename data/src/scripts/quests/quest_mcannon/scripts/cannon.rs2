@@ -217,6 +217,7 @@ if (%mcannon_ammo = 0) {
     mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
     return;
 }
+// todo: figure out behavior if cannon is already loaded and rotating??
 settimer(cannon_rotate, 1);
 
 [oplocu,cannon]
