@@ -120,7 +120,7 @@ while (.huntnext = true) {
 
     .sound_synth(toad_burst, 0, 20);
     // is damage random per-player or per-toad?
-    ~.damage_self(calc(random(1) + 1));
+    .queue(damage_player, calc(random(1) + 1), 0);
 }
 
 // The toad is being eaten by the Chompy
