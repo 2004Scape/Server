@@ -691,6 +691,23 @@ const PlayerOps: CommandHandlers = {
         state.activePlayer.clearTimer(state.popInt());
     }),
 
+    [ScriptOpcode.GETTIMER]: checkedHandler(ActivePlayer, state => {
+        const timerId = state.popInt();
+        const script = ScriptProvider.get(timerId);
+        if (!script) {
+            throw new Error(`Unable to find timer script: ${timerId}`);
+        }
+
+        for (const timer of state.activePlayer.timers.values()) {
+            if (timer.script.id === timerId) {
+                state.pushInt(timer.clock);
+                return;
+            }
+        }
+
+        state.pushInt(-1);
+    }),
+
     [ScriptOpcode.HINT_COORD]: state => {
         const [offset, coord, height] = state.popInts(3);
 
