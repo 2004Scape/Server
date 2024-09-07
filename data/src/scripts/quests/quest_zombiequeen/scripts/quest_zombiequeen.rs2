@@ -232,6 +232,14 @@ if(inzone(0_43_46_24_35, 0_43_46_29_35, coord) = true) {
 // stage check
 ~mesbox("You find nothing of significance. And it does look quite scary.");
 
+[proc,random_undead_one](npc)
+switch_int(random(4)) {
+    case 0: return (npc_502);
+    case 1: return (npc_503);
+    case 2: return (npc_504);
+    case 3: return (npc_505);
+}
+
 [oplocu,loc_2217]
 if(last_useitem = spade) {
     ~mesbox("You start digging...|But without knowing what you're digging for...|You decide to give up.");
