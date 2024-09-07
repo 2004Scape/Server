@@ -211,7 +211,7 @@ if (.npc_find(coord, rat, 10, 1) = true) {
     say("Hey well done puss, you got it!");
     %cat_growth = setbit_range_toint(%cat_growth, min(100,max(calc($vermin + 1),-1)), 20, 26);
 } else {
-    mes("There aren't any vermin around.");
+    mes("There aren't any rats or mice around."); // 2004 https://youtu.be/HQEpeWAUMbI?t=21
 }
 
 [proc,cat_drop]

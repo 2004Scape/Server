@@ -12,7 +12,7 @@ switch_int ($choice) {
         ~chatnpc("<p,neutral>You look healthy to me!");
     } else {
         ~chatnpc("<p,neutral>Of course!");
-        npc_anim(human_pickpocket, 0);
+        npc_anim(human_pickpocket, 0); // https://youtu.be/HQEpeWAUMbI?t=70
         p_delay(0);
         mes("You feel a little better.");
         sound_synth(heal, 0, 0);
