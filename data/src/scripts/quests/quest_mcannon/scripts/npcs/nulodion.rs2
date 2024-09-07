@@ -98,6 +98,7 @@ if (%mcannon_coord ! null & loc_find(%mcannon_coord, cannon) = true) {
 mes("The dwarf gives you a new cannon.");
 ~chatnpc("<p,neutral>Keep that quiet or I'll be in real trouble!");
 ~chatplayer("<p,neutral>Of course.");
+%mcannon_coord = null;
 inv_add(inv, cannon_base, 1);
 inv_add(inv, cannon_stand, 1);
 inv_add(inv, cannon_barrels, 1);
