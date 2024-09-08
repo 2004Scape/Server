@@ -4,7 +4,7 @@ if(%junglepotion_progress < ^junglepotion_complete) {
     return;
 }
 switch_int(%zombiequeen_progress) {
-    case ^zombiequeen_not_started:
+    case ^zombiequeen_not_started :
         ~mesbox("Mosol seems to be looking around very cautiously. He jumps a little when you approach and talk to him.");
         ~chatnpc("<p,neutral>Run! Run for your life! Save yourself! I'll keep them back as long as I can...");
         @multi4("Why do I need to run?", mosol_whyrun, "Yeah... Ok, I'm running!", mosol_yeahok, "Who are you?", mosol_who, "Ok. Thanks for your help.", mosol_ok_thanks);
@@ -13,11 +13,42 @@ switch_int(%zombiequeen_progress) {
 [label,mosol_whyrun]
 ~chatplayer("<p,happy>Why do I need to run?");
 ~chatnpc("<p,neutral>Your very life is in danger. Rashiliyia has returned and we are all doomed.");
+@multi3("Rashiliyia? Who is she?", mosol_whoisshe, "What danger is there around here?", mosol_danger, "Ok. Thanks for your help.", mosol_ok_thanks);
+
+[label,mosol_whoisshe]
+~chatplayer("<p,happy>Rashiliyia? Who is she?");
+~chatnpc("<p,neutral>Rashiliyia is the Queen of the dead. She has returned and has brought a plague of undead with her. They now occupy our village and we have them  trapped. I warn people like yourself to stay away.");
+@multi3("What can we do?", mosol_whatcanwe, "Uh, it sounds nasty, just the kind of thing I want to avoid.", mosol_avoid, "Ok. Thanks for your help.", mosol_ok_thanks);
+
+[label,mosol_whatcanwe]
+~chatplayer("<p,happy>What can we do?");
+~chatnpc("<p,neutral>We're doing all we can to keep the undead at bay. The village is covered in a deadly green mist. If you go into the village, a terrible sickness will befall you.");
+~chatnpc("<p,neutral>And the undead are even stronger beyond the gates. My guess is that it has something to do with the Legend of Rashiliyia.");
+~chatnpc("<p,neutral>But you would need to talk to the Shaman in Tai Bwo Wannai village to get more details about that. I really have to go now and fight these undead.");
+@multi5("Why are the undead here?", mosol_whyundead, "What can we do?", mosol_whatcan, "Can I help in any way?", mosol_canhelp, "I'll go to see the Shaman.", mosol_shaman, "Ok. Thanks for your help.", mosol_ok_thanks);
+
+[label,mosol_whyundead]
+~chatplayer("<p,neutral>Why are the undead here?");
+~chatnpc("<p,neutral>Rashiliyia! The Queen of the undead has risen! She is the mother of the undead creatures that roam this land. But alas I know nothing of the legend that surrounds her.");
+@multi3("Legend you say?", mosol_legend, "I don't think this is something I can help with at the moment.", mosol_dontthink, "Ok. Thanks for your help.", mosol_ok_thanks);
+
+[label,mosol_dontthink]
+~chatplayer("<p,neutral>Sorry, but I don't think this is something that I can help with at the moment!");
+~chatnpc("<p,neutral>Ok, I understand Bwana! You may as well be on your way then.");
+
+[label,mosol_canhelp]
+~chatplayer("<p,happy>Can I help in any way?");
+~chatnpc("<p,neutral>I don't think so Bwana, but you may want to consult with Trufitus the Shaman in Tai Bwo Wannai village, he may have some information which could help.");
+@multi4("Why are the undead here?", mosol_whyundead, "What can we do?", mosol_whatcan, "I'll go to see the Shaman.", mosol_shaman, "Ok. Thanks for your help.", mosol_ok_thanks);
 
 [label,mosol_who]
 ~chatplayer("<p,happy>Who are you?");
 ~chatnpc("<p,neutral>I am Mosol Rei, I am a Jungle Warrior. I used to live in this village, but it is too dangerous for you to stay around here.");
 @multi3("Mosol Rei, that's a nice name.", mosol_nicename, "What danger is there around here?", mosol_danger, "Ok. Thanks for your help.", mosol_ok_thanks);
+
+[label,mosol_avoid]
+~chatplayer("<p,happy>Uh, it sounds nasty, just the kind of thing I want to avoid!");
+~chatnpc("<p,sad>Quite right, Bwana, please make all haste! Before your spine turns to water as we speak.");
 
 [label,mosol_nicename]
 ~chatplayer("<p,happy>Mosol Rei, that's a nice name.");
