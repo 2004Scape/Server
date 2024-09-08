@@ -7,9 +7,10 @@ switch_int (%vampire_progress) {
 }
 
 [label,harlow_during_vampire_slayer]
-switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help!", 2)) {
+// https://web.archive.org/web/*/http://zybez.com/img/qimg/vampireslayer/3_harlow.jpg No period after help?
+switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help", 2)) {
     case 1: @harlow_decline_drink;
-    case 2: ~chatplayer("<p,shock>Morgan needs your help!");
+    case 2: ~chatplayer("<p,shock>Morgan needs your help");
     case default: ~displaymessage(^dm_default);
 }
 
@@ -21,10 +22,11 @@ switch_int (~p_choice2("No, you've had enough.", 1, "Morgan needs your help!", 2
 ~quest_vampire_set_progress(^quest_vampire_spoke_to_harlow);
 
 [label,harlow_during_vampire_slayer_buy_beer]
+// https://web.archive.org/web/*/http://zybez.com/img/qimg/vampireslayer/3_harlow.jpg
 if (inv_total(inv, stake) > 0) {
-    switch_int (~p_choice2("No, you've had enough.", 1, "Okay mate.", 2)) {
+    switch_int (~p_choice2("No, you've had enough.", 1, "Ok mate.", 2)) {
         case 1: @harlow_decline_drink;
-        case 2: ~chatplayer("<p,happy>Okay mate.");
+        case 2: ~chatplayer("<p,happy>Ok mate.");
         case default: ~displaymessage(^dm_default);
     }
 }
