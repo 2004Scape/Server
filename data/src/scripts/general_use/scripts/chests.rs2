@@ -30,8 +30,16 @@ if(map_members = true) {
     } else if(loc_coord = 2_42_54_60_39 & inv_total(inv, trail_clue_easy_riddle_exp001) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp001);
     } else {
+        if (random(10) = 0) { // complete guess
+            ~findsomethingnice;
+            return;
+        }
         mes("You search the chest but find nothing.");
     }
+    return;
+}
+if (random(10) = 0) { // complete guess
+    ~findsomethingnice;
     return;
 }
 mes("You search the chest but find nothing.");

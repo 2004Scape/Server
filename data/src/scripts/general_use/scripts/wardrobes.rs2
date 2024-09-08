@@ -13,6 +13,10 @@ if (random(21) = 0) {
 
 [oploc2,loc_389]
 p_arrivedelay;
+if (random(10) = 0) { // complete guess
+    ~findsomethingnice;
+    return;
+}
 mes("The wardrobe is empty.");
 
 [oploc3,loc_389]

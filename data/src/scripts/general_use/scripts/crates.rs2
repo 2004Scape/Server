@@ -24,10 +24,18 @@ if(map_members = true) {
     } else if(loc_coord = 0_50_150_19_17 & inv_total(inv, trail_clue_hard_riddle_exp001) = 1) {
         ~trail_clue_hard_loc_interact(trail_clue_hard_riddle_exp001);
     } else {
+        if (random(10) = 0) { // complete guess
+            ~findsomethingnice;
+            return;
+        }
         mes("You search the crate but find nothing.");
     }
     return;
 } 
+if (random(10) = 0) { // complete guess
+    ~findsomethingnice;
+    return;
+}
 mes("You search the crate but find nothing.");
 
 [oploc1,_empty_crates]
@@ -37,6 +45,10 @@ if(loc_coord = 0_40_52_57_19 & inv_total(inv, trail_clue_easy_riddle_exp005) = 1
 } else if(map_members = true & loc_coord = 2_49_51_30_45 & inv_total(inv, trail_clue_hard_riddle_exp008) = 1) {
     ~trail_clue_hard_loc_interact(trail_clue_hard_riddle_exp008);
 }else {
+    if (random(10) = 0) { // complete guess
+        ~findsomethingnice;
+        return;
+    }
     mes("You search the crates but find nothing of value.");
 }
 
@@ -54,8 +66,16 @@ if(map_members = true) {
     } else if(loc_coord = 0_41_51_30_35 & inv_total(inv, trail_clue_easy_riddle_exp003) = 1) {
         ~trail_clue_easy_loc_interact(trail_clue_easy_riddle_exp003);
     } else {
+        if (random(10) = 0) { // complete guess
+            ~findsomethingnice;
+            return;
+        }
         mes("There is nothing interesting in these boxes.");
     }
+    return;
+}
+if (random(10) = 0) { // complete guess
+    ~findsomethingnice;
     return;
 }
 mes("There is nothing interesting in these boxes.");
