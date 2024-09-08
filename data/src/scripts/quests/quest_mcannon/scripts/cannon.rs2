@@ -172,7 +172,11 @@ if (last_useitem = cannon_furnace) {
     settimer(cannon_decay, 2500);
     mes("You add the furnace.");
     // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
-    settimer(cannon_rotate, 1);
+    // at https://youtu.be/WWyNTsMXjTE?t=26 the cannon doesnt auto rotate immediately 
+    // but at https://youtu.be/WWyNTsMXjTE?t=219 the cannon does
+    if (%mcannon_clock > 0) {
+        settimer(cannon_rotate, 1);
+    }   
 } else {
     ~displaymessage(^dm_default);
 }
@@ -210,14 +214,17 @@ if (~cannon_belongs_to_player = false) {
     mes("That isn't your cannon!"); // https://youtu.be/aJDlEmyPpk8?t=140
     return;
 }
-if (%mcannon_ammo = 0) {
+if (gettimer(cannon_rotate) > 0) {
+    mes("Your cannon is already firing."); // https://youtu.be/WWyNTsMXjTE?t=122
+    return;
+}
+if (%mcannon_ammo < 1) {
     // current osrs reloads, but thats wrong for our version
     // https://oldschool.runescape.wiki/w/Update:Happy_Birthday!:
     // - "Left-clicking on your cannon will now let you reload it, even if it isn't currently firing."
     mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
     return;
 }
-// todo: figure out behavior if cannon is already loaded and rotating??
 settimer(cannon_rotate, 1);
 
 [oplocu,cannon]
@@ -251,6 +258,14 @@ def_coord $medium_range = movecoord($center, 0, 0, 7);
 def_coord $long_range = movecoord($center, 0, 0, 14);
 // start north, going clockwise
 if (%mcannon_clock = 0) {
+    // automatically starts spinning: https://youtu.be/TeQXQDaawO0?t=234
+    // at https://youtu.be/WWyNTsMXjTE?t=26 the cannon doesnt auto rotate immediately 
+    // but at https://youtu.be/WWyNTsMXjTE?t=219 the cannon does
+    if (%mcannon_ammo < 1) {
+        mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
+        cleartimer(cannon_rotate);
+        return;
+    }
     $close_range = movecoord($center, 0, 0, 3);
     $medium_range = movecoord($center, 0, 0, 7);
     $long_range = movecoord($center, 0, 0, 14);
@@ -320,15 +335,13 @@ while (npc_huntnext = true) {
 
 
 [label,cannon_fire]
+if (%mcannon_ammo < 1) {
+    return;
+}
 if (~npc_is_attackable = false) {
     return;
 }
 if (npc_stat(hitpoints) = 0) {
-    return;
-}
-if (%mcannon_ammo < 1) {
-    mes("Your cannon is out of ammo!"); // https://youtu.be/TeQXQDaawO0?t=239
-    cleartimer(cannon_rotate);
     return;
 }
 if (~player_in_combat_check = false) { // https://youtu.be/TeQXQDaawO0?t=247
@@ -354,16 +367,3 @@ npc_queue(2, $damage, divide($duration, 30));
 mes("Your cannon has decayed."); // https://runescape.wiki/w/Update:Patch_Notes_(6_May_2009)
 cleartimer(cannon_decay);
 cleartimer(cannon_rotate);
-
-[debugproc,cannontest]
-inv_clear(inv);
-inv_add(inv, mcannonball, 100000);
-inv_add(inv, cannon_base, 1);
-inv_add(inv, cannon_stand, 1);
-inv_add(inv, cannon_barrels, 1);
-inv_add(inv, cannon_furnace, 1);
-
-[debugproc,cvars]
-mes("%mcannon_ammo: <tostring(%mcannon_ammo)>");
-mes("%mcannon_clock: <tostring(%mcannon_clock)>");
-mes("%mcannon_coord: <~coord_tostring(%mcannon_coord)>");
