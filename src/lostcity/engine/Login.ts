@@ -166,6 +166,7 @@ class Login {
                 if (player) {
                     World.gameMap.getZone(player.x, player.z, player.level).leave(player);
                     World.players.remove(player.pid);
+                    World.gameMap.changeNpcCollision(player.width, player.x, player.z, player.level, false);
                     player.pid = -1;
                     player.terminate();
 
