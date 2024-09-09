@@ -10,3 +10,4 @@
 ^junglepotion_get_rogues_purse = 9
 ^junglepotion_found_rogues_purse = 10
 ^junglepotion_found_all_herbs = 11
+^junglepotion_complete_after_spoken = 13
