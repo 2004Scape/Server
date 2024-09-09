@@ -106,7 +106,7 @@ model6=model_254_idk
 model7=model_185_obj_wear
 model8=model_321_npc
 
-[priest]
+[priest_east]
 vislevel=hide
 name=Priest
 desc=A holy man.

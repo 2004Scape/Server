@@ -417,7 +417,6 @@ data=stat_change,strength,-1,-10
 data=continue_by_autocast,false
 
 [magic_spell_stun]
-// original // data=spotanim_target,stun_impact,124
 table=magic_spell_table
 data=spell,^stun
 data=spellcom,magic:stun
@@ -428,7 +427,8 @@ data=experience,900
 data=anim,human_caststun
 data=spotanim_origin,stun_casting
 data=spotanim_proj,stun_travel,36,31
-data=spotanim_target,stunned_thieving,124
+data=spotanim_target,stun_impact,124
+// data=spotanim_target,stunned_thieving,124
 data=sound_success,stun_all
 data=stat_change,attack,-1,-10
 data=continue_by_autocast,false

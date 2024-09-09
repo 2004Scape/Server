@@ -1,4 +1,4 @@
-[npc_494]
+[banker_man]
 vislevel=hide
 name=Banker
 desc=He can look after my money.
@@ -27,7 +27,7 @@ maxrange=2
 moverestrict=nomove
 category=bank_teller
 
-[npc_495]
+[banker_woman]
 vislevel=hide
 name=Banker
 desc=Good with money.
@@ -55,7 +55,7 @@ moverestrict=nomove
 category=bank_teller
 param=death_sound,female_death
 
-[npc_496]
+[banker_blackman]
 vislevel=hide
 name=Banker
 desc=A financial expert.
@@ -86,7 +86,7 @@ maxrange=2
 moverestrict=nomove
 category=bank_teller
 
-[npc_497]
+[banker_blackwoman]
 vislevel=hide
 name=Banker
 desc=Looks after your money.
@@ -116,7 +116,7 @@ moverestrict=nomove
 category=bank_teller
 param=death_sound,female_death
 
-[npc_498]
+[banker_fairy]
 vislevel=hide
 name=Banker
 desc=Manages money momentarily.
@@ -130,7 +130,7 @@ maxrange=2
 moverestrict=nomove
 param=death_anim,fairy_death
 
-[npc_499]
+[banker_shilo]
 vislevel=hide
 name=Banker
 desc=He can look after my money.

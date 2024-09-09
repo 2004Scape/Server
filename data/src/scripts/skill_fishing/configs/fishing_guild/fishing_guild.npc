@@ -1,4 +1,4 @@
-[npc_308]
+[master_fisher]
 vislevel=hide
 name=Master fisher
 desc=The man in charge of the fishing guild.
@@ -26,7 +26,7 @@ head2=model_77_npc_head
 head3=model_80_idk_head
 wanderrange=3
 
-[npc_592]
+[roachey]
 vislevel=hide
 name=Roachey
 desc=He runs the fishing guild shop.
