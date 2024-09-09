@@ -3872,7 +3872,7 @@ frame7=anim_1977
 frame8=anim_2278
 frame9=anim_561
 
-[human_dagger_defend1]
+[human_ddagger_defend1]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 stretches=yes
 frame1=anim_837
@@ -3886,7 +3886,7 @@ frame8=anim_1694
 frame9=anim_1402
 frame10=anim_1120
 
-[human_dagger_defend2]
+[human_ddagger_defend2]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 stretches=yes
 frame1=anim_1020
@@ -12122,7 +12122,7 @@ frame3=anim_6953
 frame4=anim_6954
 
 [human_bullroarer]
-righthand=obj_716
+righthand=bullroarer
 lefthand=hide
 frame1=anim_2137
 frame2=anim_2435

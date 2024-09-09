@@ -42,7 +42,7 @@ param=undead,^true
 param=death_anim,ghost_death
 param=death_sound,ghost_death
 
-[npc_493]
+[grave_scorpion]
 name=Grave Scorpion
 desc=A vicious little stinging thing.
 walkanim=smallscorpion_walk

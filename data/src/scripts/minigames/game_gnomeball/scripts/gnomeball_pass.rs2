@@ -10,6 +10,9 @@ if (inv_total(worn, gnomeball) < 1 & $player1_ingame = true) {
     mes("You need a ball in your hand to throw.");
     return;
 }
+// https://oldschool.runescape.wiki/w/Update:Patch_Notes_(3_October_2013)
+// if close early: "Players can no longer use a gnomeball to interrupt other players' Make-X actions without the gnomeball being thrown."
+.if_close;
 if (.p_finduid(.uid) = false) {
     mes("<.displayname> is busy."); // osrs
     return;
@@ -31,13 +34,13 @@ if ($player1_ingame = true & $player2_ingame = true) {
         mes("They already have a ball in play.");
         return;
     }
-    mes("You throw the ball in play.");
     inv_delslot(worn, ^wearpos_rhand);
     ~update_all(gnomeball);
 } else {
     inv_del(inv, gnomeball, 1);
-    mes("You throw the ball.");
+    // mes("You throw the ball."); // didnt exist in 2005
 }
+mes("You throw the ball in play."); // was always this mes https://youtu.be/0lgauPFMzQ8?t=69
 
 anim(seq_783, 0);
 def_int $duration = ~player_projectile(coord, .coord, .uid, spotanim_55, 40, 40, 41, 15, 5, 11, 5);

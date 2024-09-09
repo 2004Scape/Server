@@ -1,0 +1,38 @@
+// https://youtu.be/TeQXQDaawO0?t=134
+// https://web.archive.org/web/20041224191433/http://runehq.com/viewguilds.php?id=00375
+// https://web.archive.org/web/20040821133710/http://www.runescapecommunity.com:80/index.php?showtopic=159464
+// https://web.archive.org/web/20040727050826/http://img48.exs.cx/img48/9964/cannonballs1.png
+[label,smelt_cannonballs]
+if (stat(smithing) < 35) {
+    mes("You need a Smithing level of 35 to make cannonballs."); // osrs
+    return;
+}
+if (inv_total(inv, ammo_mould) < 1) {
+    mes("You need a cannonball mould to make cannonballs."); // osrs
+    return;
+}
+if (inv_total(inv, steel_bar) < 1) {
+    mes("You need a steel bar to make cannonballs."); // should never happen
+    return;
+}
+if (afk_event = ^true) {
+    ~macro_event_general_spawn(~macro_event_set_random); // guess
+    return;
+}
+mes("You heat the steel bar into a liquid state.");
+anim(human_furnace, 0);
+sound_synth(furnace, 0, 0);
+p_delay(4); // this delay is 2t faster in osrs, furnace anim overides pickupfloor if this delay is too fast
+mes("You pour the molten metal into your cannonball mould.");
+anim(human_pickupfloor, 0);
+p_delay(0);
+mes("The molten metal cools slowly to form 4 cannonballs.");
+p_delay(2);
+anim(human_pickupfloor, 0);
+mes("You remove the cannonballs from the mould.");
+inv_del(inv, steel_bar, 1);
+inv_add(inv, mcannonball, 4);
+// 37.5 xp gained
+// https://web.archive.org/web/20040606145237/http://www.tip.it/runescape/index.php?page=rs2smithtables.htm
+// https://web.archive.org/web/20041222084000/http://www.runehq.com/cacheguides/viewotherguide00278.htm
+stat_advance(smithing, 375);

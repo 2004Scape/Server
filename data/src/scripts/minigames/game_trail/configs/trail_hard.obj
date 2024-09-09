@@ -411,7 +411,6 @@ model=model_3374_obj
 2dxan=360
 iop1=Read
 category=trail_clue_hard
-param=trail_sextant,yes
 param=trail_desc,My giant guardians below|the market streets would|be fans of rock and roll,|if only they could grab hold of it.|Dig near my green bubbles!
 param=trail_coord,0_49_154_25_49
 param=trail_casket,trail_casket_hard_riddle_exp011

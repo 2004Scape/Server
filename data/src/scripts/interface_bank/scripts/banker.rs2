@@ -1,5 +1,5 @@
-[opnpc1,npc_498] @talk_to_banker;
-[opnpc1,npc_499] @talk_to_banker;
+[opnpc1,banker_fairy] @talk_to_banker;
+[opnpc1,banker_shilo] @talk_to_banker;
 
 [apnpc1,_bank_teller]
 if (npc_range(coord) > 2) {

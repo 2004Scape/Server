@@ -15,7 +15,7 @@ import {NpcIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import Loc from '#lostcity/entity/Loc.js';
 import Obj from '#lostcity/entity/Obj.js';
-import { Position } from '#lostcity/entity/Position.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import NpcIteratorType from '#lostcity/entity/NpcIteratorType.js';
 import Npc from '#lostcity/entity/Npc.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
@@ -60,7 +60,7 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_ADD]: state => {
         const [coord, id, duration] = state.popInts(3);
 
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         const npcType: NpcType = check(id, NpcTypeValid);
         check(duration, DurationValid);
 
@@ -89,8 +89,8 @@ const NpcOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1821835323808026853
     [ScriptOpcode.NPC_COORD]: checkedHandler(ActiveNpc, state => {
-        const position: Position = state.activeNpc;
-        state.pushInt(Position.packCoord(position.level, position.x, position.z));
+        const coord: CoordGrid = state.activeNpc;
+        state.pushInt(CoordGrid.packCoord(coord.level, coord.x, coord.z));
     }),
 
     [ScriptOpcode.NPC_DEL]: checkedHandler(ActiveNpc, state => {
@@ -103,15 +103,15 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_FACESQUARE]: checkedHandler(ActiveNpc, state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.activeNpc.faceSquare(position.x, position.z);
+        state.activeNpc.faceSquare(coord.x, coord.z);
     }),
 
     [ScriptOpcode.NPC_FINDEXACT]: state => {
         const [coord, id] = state.popInts(2);
 
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         const npcType: NpcType = check(id, NpcTypeValid);
 
         state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, 0, 0, NpcIteratorType.ZONE);
@@ -172,16 +172,16 @@ const NpcOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.NPC_RANGE]: checkedHandler(ActiveNpc, state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
         const npc = state.activeNpc;
-        if (position.level !== npc.level) {
+        if (coord.level !== npc.level) {
             state.pushInt(-1);
         } else {
             state.pushInt(
-                Position.distanceTo(npc, {
-                    x: position.x,
-                    z: position.z,
+                CoordGrid.distanceTo(npc, {
+                    x: coord.x,
+                    z: coord.z,
                     width: 1,
                     length: 1
                 })
@@ -306,7 +306,7 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FIND]: state => {
         const [coord, npc, distance, checkVis] = state.popInts(4);
 
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         const npcType: NpcType = check(npc, NpcTypeValid);
         check(distance, NumberNotNull);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
@@ -318,7 +318,7 @@ const NpcOps: CommandHandlers = {
 
         for (const npc of npcs) {
             if(npc && npc.type === npcType.id) {
-                const npcDistance = Position.distanceToSW(position, npc);
+                const npcDistance = CoordGrid.distanceToSW(position, npc);
                 if (npcDistance <= closestDistance) {
                     closestNpc = npc;
                     closestDistance = npcDistance;
@@ -338,7 +338,7 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDALLANY]: state => {
         const [coord, distance, checkVis] = state.popInts(3);
 
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         check(distance, NumberNotNull);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
 
@@ -353,7 +353,7 @@ const NpcOps: CommandHandlers = {
     [ScriptOpcode.NPC_FINDALL]: state => {
         const [coord, npc, distance, checkVis] = state.popInts(4);
 
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         check(distance, NumberNotNull);
         const npcType: NpcType = check(npc, NpcTypeValid);
         const huntvis: HuntVis = check(checkVis, HuntVisValid);
@@ -367,9 +367,9 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, 0, 0, NpcIteratorType.ZONE);
+        state.npcIterator = new NpcIterator(World.currentTick, coord.level, coord.x, coord.z, 0, 0, NpcIteratorType.ZONE);
         // not necessary but if we want to refer to the original npc again, we can
         if (state._activeNpc) {
             state._activeNpc2 = state._activeNpc;
@@ -391,17 +391,17 @@ const NpcOps: CommandHandlers = {
     },
 
     [ScriptOpcode.NPC_TELE]: checkedHandler(ActiveNpc, state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.activeNpc.teleport(position.x, position.z, position.level);
+        state.activeNpc.teleport(coord.x, coord.z, coord.level);
     }),
 
     // https://x.com/JagexAsh/status/1821835323808026853
     // https://x.com/JagexAsh/status/1780932943038345562
     [ScriptOpcode.NPC_WALK]: checkedHandler(ActiveNpc, state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.activeNpc.queueWaypoint(position.x, position.z);
+        state.activeNpc.queueWaypoint(coord.x, coord.z);
     }),
 
     [ScriptOpcode.NPC_CHANGETYPE]: checkedHandler(ActiveNpc, state => {

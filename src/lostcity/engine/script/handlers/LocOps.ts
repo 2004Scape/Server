@@ -11,7 +11,7 @@ import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import {LocIterator} from '#lostcity/engine/script/ScriptIterators.js';
 
 import Loc from '#lostcity/entity/Loc.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import {
@@ -31,14 +31,14 @@ const LocOps: CommandHandlers = {
     [ScriptOpcode.LOC_ADD]: state => {
         const [coord, type, angle, shape, duration] = state.popInts(5);
 
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         const locType: LocType = check(type, LocTypeValid);
         const locAngle: LocAngle = check(angle, LocAngleValid);
         const locShape: LocShape = check(shape, LocShapeValid);
         check(duration, DurationValid);
 
         const created: Loc = new Loc(position.level, position.x, position.z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, locShape, locAngle);
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(position.x, position.z, position.level).getLocsUnsafe(Position.packZoneCoord(position.x, position.z));
+        const locs: IterableIterator<Loc> = World.gameMap.getZone(position.x, position.z, position.level).getLocsUnsafe(CoordGrid.packZoneCoord(position.x, position.z));
         for (const loc of locs) {
             if (loc !== created && loc.angle === locAngle && loc.shape === locShape) {
                 World.removeLoc(loc, duration);
@@ -78,7 +78,7 @@ const LocOps: CommandHandlers = {
 
         const {level, x, z, angle, shape} = state.activeLoc;
         const created: Loc = new Loc(level, x, z, locType.width, locType.length, EntityLifeCycle.DESPAWN, locType.id, shape, angle);
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(Position.packZoneCoord(x, z));
+        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
         for (const loc of locs) {
             if (loc !== created && loc.angle === angle && loc.shape === shape) {
                 World.removeLoc(loc, duration);
@@ -91,15 +91,15 @@ const LocOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LOC_COORD]: checkedHandler(ActiveLoc, state => {
-        const position: Position = state.activeLoc;
-        state.pushInt(Position.packCoord(position.level, position.x, position.z));
+        const coord: CoordGrid = state.activeLoc;
+        state.pushInt(CoordGrid.packCoord(coord.level, coord.x, coord.z));
     }),
 
     [ScriptOpcode.LOC_DEL]: checkedHandler(ActiveLoc, state => {
         const duration: number = check(state.popInt(), DurationValid);
 
         const {level, x, z, angle, shape} = state.activeLoc;
-        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(Position.packZoneCoord(x, z));
+        const locs: IterableIterator<Loc> = World.gameMap.getZone(x, z, level).getLocsUnsafe(CoordGrid.packZoneCoord(x, z));
         for (const loc of locs) {
             if (loc !== state.activeLoc && loc.angle === angle && loc.shape === shape) {
                 World.removeLoc(loc, duration);
@@ -113,7 +113,7 @@ const LocOps: CommandHandlers = {
         const [coord, locId] = state.popInts(2);
 
         const locType: LocType = check(locId, LocTypeValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
 
         const loc = World.getLoc(position.x, position.z, position.level, locType.id);
         if (!loc) {
@@ -127,9 +127,9 @@ const LocOps: CommandHandlers = {
     },
 
     [ScriptOpcode.LOC_FINDALLZONE]: state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.locIterator = new LocIterator(World.currentTick, position.level, position.x, position.z);
+        state.locIterator = new LocIterator(World.currentTick, coord.level, coord.x, coord.z);
         // not necessary but if we want to refer to the original loc again, we can
         if (state._activeLoc) {
             state._activeLoc2 = state._activeLoc;
