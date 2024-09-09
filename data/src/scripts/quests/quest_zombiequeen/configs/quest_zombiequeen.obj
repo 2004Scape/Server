@@ -247,7 +247,7 @@ iop1=Read
 weight=20g
 members=yes
 
-[obj_625]
+[wampum_belt]
 name=Wampum belt
 desc=A decorated belt used to trade information between distant villages.
 cost=5
