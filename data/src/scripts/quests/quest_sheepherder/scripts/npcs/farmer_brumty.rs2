@@ -16,7 +16,7 @@ switch_int(%sheepherder_progress) {
 // Should also hypothetically never be seen since Brumty is in the pen on our Revision.
 // sheepherder_tasked_with_talking_to_dr_orbon
 [label,farmer_brumty_before_talking_to_orbon]
-~chatplayer("<p,default>Hello there. I've spoken to Councillor Halgrive. He has asked me to round up your sheep and slaughter them.");
+~chatplayer("<p,neutral>Hello there. I've spoken to Councillor Halgrive. He has asked me to round up your sheep and slaughter them.");
 ~chatnpc("<p,sad>Well, I always knew someone would have to. Make sure you're careful about it; there should be a cattleprod in the barn you can use to herd up the sheep.");
 
 [label,farmer_brumty_during_sheep_herder]

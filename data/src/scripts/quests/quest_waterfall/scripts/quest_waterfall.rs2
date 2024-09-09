@@ -140,9 +140,10 @@ if (inv_total(inv, glarials_amulet) > 0) { // no bank or worn check
 switch_int (%waterfall_progress) {
     case ^waterfall_not_started: ~mesbox("You're not sure if the raft is safe to use.|Best to leave it alone.");
     case default: 
+        // https://youtu.be/HQEpeWAUMbI?t=113
         mes("You board the small raft");
         p_delay(2);
-        mes("and you push off down stream");
+        mes("and you push off down stream.");
         p_delay(2);
         p_teleport(0_39_54_16_25);
         mes("The raft is pulled down stream by strong currents.");
@@ -242,7 +243,7 @@ p_teleport(0_39_54_15_7);
 [oploc1,loc_2010] // basing this off RS3, seems like RS3 mechanics for this havn't changed
 mes("The door begins to open.");
 p_delay(2);
-if(inv_total(worn, glarials_amulet) > 0) {
+if(inv_total(worn, glarials_amulet) > 0 | inv_total(inv, glarials_amulet) > 0) {
     mes("You walk through the door.");
     if(%waterfall_progress = ^waterfall_entered_glarial_tomb) {
         %waterfall_progress = ^waterfall_entered_waterfall;

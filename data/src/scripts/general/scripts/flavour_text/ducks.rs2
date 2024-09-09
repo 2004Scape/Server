@@ -1,27 +1,48 @@
-[ai_timer,drake]
-npc_settimer(calc(15 + random(20)));
-if (random(4) = 0) {
-    @duck_quack;
-}
+// from 83 "Quack!"s, ticks per quack:
+// - min was 50
+// - max was 99
+// - avg was 70.64
+[ai_timer,_duck]
+npc_settimer(add(50, random(50)));
+npc_queue(5, 0, 0);
 
-[ai_timer,duck]
-npc_settimer(calc(15 + random(20)));
-if (random(4) = 0) {
-    @duck_quack;
-}
-
-[ai_timer,duckling]
-npc_settimer(calc(15 + random(20)));
-if (random(4) = 0) {
-    npc_say("Eep!");
-    // in osrs: ducklings have a different sound that we dont have
-}
-
-[label,duck_quack]
-if (random(2) = 0) {
-    npc_say("Quack!");
+// from 157 "Eep!"s, ticks per eep:
+// - min was 50
+// - max was 99
+// - avg was 74.69
+[ai_timer,_duckling]
+npc_settimer(add(50, random(50)));
+if (.npc_find(npc_coord, duck, 10, 1) = true) {
+    .npc_say("Quack?");
     ~sound_area(quack, 0, npc_coord, 5); // osrs
-} else {
-    npc_say("Quack?");
-    ~sound_area(quack, 0, npc_coord, 5); // osrs
+    npc_queue(6, 0, 2);
 }
+
+[ai_queue5,duckling]
+npc_say("Cheep cheep!");
+if (npc_getmode ! none) {
+    return;
+}
+// in osrs ducklings only path to the shore, so im guessing map_findsquare is used (skips map_blocked tiles)
+def_coord $coord = map_findsquare(npc_coord, 1, 9, ^map_findsquare_none);
+npc_walk($coord);
+npc_queue(6, 0, 2);
+
+[ai_queue6,duckling]
+npc_say("Eep!");
+~sound_area(quack, 0, npc_coord, 5); // just guessing its the normal quack, no eep sound for us
+
+[ai_queue5,_duck]
+npc_say("Quack!");
+~sound_area(quack, 0, npc_coord, 5); // osrs
+
+// https://oldschool.runescape.wiki/w/Duck
+[ai_queue3,_duck]
+.npc_findall(npc_coord, duckling, 1, 1);
+while (.npc_findnext = true) {
+    .npc_queue(5, 0, 2);
+}
+if (.npc_find(npc_coord, drake, 1, 1) = true) {
+    .npc_queue(5, 0, 2);
+}
+gosub(npc_death);

@@ -85,31 +85,31 @@ switch_int ($rand) {
         ~chatplayer("<p,neutral>Hey I know that. Where's it from?");
         ~chatnpc("<p,neutral>Existentialism for insects.");
     case 3 :
-        ~chatnpc("<p,neutral>My mum says: A friendly look, a kindly smile one good act, and life's worthwhile!");
-        ~chatplayer("<p,neutral>Sweet.");
+        ~chatnpc("<p,happy>My mum says: A friendly look, a kindly smile one good act, and life's worthwhile!");
+        ~chatplayer("<p,happy>Sweet.");
     case 4 :
         ~chatnpc("<p,neutral>I wrote a few children's books.");
-        ~chatplayer("<p,neutral>Really.");
+        ~chatplayer("<p,bored>Really.");
         ~chatnpc("<p,neutral>Yep... but not on purpose!");
     case 5 :
         ~chatnpc("<p,neutral>The human mind is a tremendous thing.");
     case 6 :
-        ~chatnpc("<p,neutral>Bla bla bla!");
+        ~chatnpc("<p,angry>Bla bla bla!");
         ~chatplayer("<p,neutral>What?");
-        ~chatnpc("<p,neutral>Bla bla bla!");
+        ~chatnpc("<p,angry>Bla bla bla!");
         ~mesbox("Rude little gnome!");
     case 7 :
         ~chatnpc("<p,neutral>Real generosity is doing something nice for someone who will never find it out.");
-        ~chatplayer("<p,neutral>Thanks for the quote.");
+        ~chatplayer("<p,happy>Thanks for the quote.");
     case 8 :
-        ~chatnpc("<p,neutral>Hardy, ha ha! Hee, hee hee!");
-        ~chatplayer("<p,neutral>Are you OK?");
-        ~chatnpc("<p,neutral>I'm a little tree gnome. That is me!");
-        ~chatplayer("<p,neutral>I've heard better.");
+        ~chatnpc("<p,laugh>Hardy, ha ha! Hee, hee hee!");
+        ~chatplayer("<p,confused>Are you OK?");
+        ~chatnpc("<p,happy>I'm a little tree gnome. That is me!");
+        ~chatplayer("<p,bored>I've heard better.");
     case 9 :
         ~chatnpc("<p,neutral>I have a riddle for you.");
         ~chatplayer("<p,neutral>OK.");
-        ~chatnpc("<p,default>I am the beginning of eternity and the end of time and|space. I am the beginning of every end and the end of|every place. What am I?");
+        ~chatnpc("<p,neutral>I am the beginning of eternity and the end of time and|space. I am the beginning of every end and the end of|every place. What am I?");
         ~chatplayer("<p,confused>Err...?");
         ~chatplayer("<p,angry>Erm...not sure...annoying.");
         ~chatnpc("<p,laugh>I'm 'e'! Hee hee! Do you get it?");

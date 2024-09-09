@@ -7,7 +7,7 @@ if (~check_axis(coord, loc_coord, loc_angle) = true) {
     if (inv_total(worn, brown_apron) < 1) {
         ~chatnpc_specific(nc_name(master_crafter), master_crafter, "<p,neutral>Where's your brown apron? You can't come in here unless you're wearing one.");
         if (inv_total(inv, brown_apron) < 1) {
-            ~chatplayer("<p,default>Err... I haven't got one.");
+            ~chatplayer("<p,neutral>Err... I haven't got one.");
         }
         return;
     }

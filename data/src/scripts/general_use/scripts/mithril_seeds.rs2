@@ -13,9 +13,7 @@ mes("You open the small mithril case.");
 mes("You drop a seed by your feet.");
 inv_del(inv, mithril_seeds, 1);
 loc_add(coord, ~random_flowers, 0, centrepiece_straight, 500);
-def_coord $move_coord = ~free_mithseed_spot;
-p_teleport($move_coord);
-p_delay(1);
+~push_player_from_inv(coord);
 facesquare(loc_coord);
 def_int $option = ~p_choice2("Pick the flowers.", 1, "Leave the flowers.", 2);
 if($option = 2) {
@@ -64,23 +62,3 @@ switch_loc($flowers_loc) {
     case loc_2988: return (black_flowers);
     case default: return (mixed_flowers);
 }
-
-[proc,free_mithseed_spot](coord)
-if (~in_duel_arena(coord) = true) {
-        // https://youtu.be/L3OwjH-iXQU
-        //  - could still fm in the duel arena. 
-        //  - It just didnt move the player at all
-        // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
-        //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
-        return(coord);
-    }
-if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true) { // E
-    return (movecoord(coord, -1, 0, 0));
-} else if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true) { // W
-    return (movecoord(coord, 1, 0, 0));
-} else if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true) { // S
-    return (movecoord(coord, 0, 0, -1));
-} else if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true) { // N
-    return (movecoord(coord, 0, 0, 1));
-}
-return (coord);

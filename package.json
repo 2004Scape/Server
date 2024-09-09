@@ -19,6 +19,7 @@
     "db:reset": "prisma migrate reset --force",
     "db:schema": "prisma migrate dev",
     "dev": "nodemon src/lostcity/app.ts",
+    "friends": "npm run ts-loader src/lostcity/friends.ts",
     "lint": "eslint src --ext .ts --ext .js",
     "lint:staged": "eslint --ext .ts --ext .js",
     "login": "npm run ts-loader src/lostcity/login.ts",
@@ -81,7 +82,7 @@
     "prisma-kysely": "^1.8.0",
     "sort-package-json": "^2.10.0",
     "tinybench": "^2.8.0",
-    "typescript": "^5.4.5",
+    "typescript": "^5.5.4",
     "vitest": "^1.6.0"
   },
   "optionalDependencies": {

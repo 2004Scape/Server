@@ -12,7 +12,7 @@ def_int $effective_magic = ~combat_effective_stat(1, npc_stat(magic), 100); // n
 return(~combat_stat($effective_magic, $magicattack));
 
 [walktrigger,frozen]
-if (map_clock < %stunned) {
+if (map_clock < %frozen) {
     mes("A magical force stops you from moving.");
     p_walk(coord);
     walktrigger(frozen);
@@ -54,7 +54,7 @@ if (~npc_player_hit_roll(^magic_style) = true) {
 // todo: dunno if this should be queued but protected access lol
 [queue,npc_freeze_player](int $duration)
 mes("You've been frozen!");
-%stunned = calc(map_clock + $duration + 1);
+%frozen = calc(map_clock + $duration + 1);
 walktrigger(frozen);
 
 [proc,npc_combat_spell_checks](boolean)
@@ -73,7 +73,7 @@ return(true);
 
 [proc,npc_freeze_allowed](dbrow $spell_data)(boolean)
 if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-    if (%stunned > map_clock) {
+    if (%frozen > map_clock) {
         return(false);
     }
 }

@@ -3,7 +3,7 @@ import Packet from '#jagex2/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import NpcInfo from '#lostcity/network/outgoing/model/NpcInfo.js';
 import World from '#lostcity/engine/World.js';
-import { Position } from '#lostcity/entity/Position.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import NpcStat from '#lostcity/entity/NpcStat.js';
 import Npc from '#lostcity/entity/Npc.js';
 import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
@@ -64,7 +64,7 @@ export default class NpcInfoEncoder extends MessageEncoder<NpcInfo> {
 
         for (const nid of buildArea.npcs) {
             const npc: Npc | undefined = World.getNpc(nid);
-            if (!npc || npc.tele || npc.level !== message.level || !Position.isWithinDistanceSW(message, npc, 15) || !npc.checkLifeCycle(World.currentTick)) {
+            if (!npc || npc.tele || npc.level !== message.level || !CoordGrid.isWithinDistanceSW(message, npc, 15) || !npc.checkLifeCycle(World.currentTick)) {
                 // if the npc was teleported, it needs to be removed and re-added
                 buf.pBit(1, 1);
                 buf.pBit(2, 3);

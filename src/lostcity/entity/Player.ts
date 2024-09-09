@@ -21,7 +21,7 @@ import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
@@ -65,6 +65,8 @@ import ServerProtPriority from '#lostcity/network/outgoing/prot/ServerProtPriori
 import { ParamHelper } from '#lostcity/cache/config/ParamHelper.js';
 import ParamType from '#lostcity/cache/config/ParamType.js';
 import BuildArea from '#lostcity/entity/BuildArea.js';
+import ChatFilterSettings from '#lostcity/network/outgoing/model/ChatFilterSettings.js';
+import { ChatModePrivate, ChatModePublic, ChatModeTradeDuel } from '#lostcity/util/ChatModes.js';
 
 const levelExperience = new Int32Array(99);
 
@@ -137,7 +139,7 @@ export default class Player extends PathingEntity {
     save() {
         const sav = Packet.alloc(1);
         sav.p2(0x2004); // magic
-        sav.p2(3); // version
+        sav.p2(4); // version
 
         sav.p2(this.x);
         sav.p2(this.z);
@@ -204,6 +206,14 @@ export default class Player extends PathingEntity {
         }
         sav.p2(this.lastAfkZone);
 
+        const chatModePacked
+            = (
+                (this.chatModes.publicChat << 4)
+                | (this.chatModes.privateChat << 2)
+                | this.chatModes.tradeDuel
+            );
+        sav.p1(chatModePacked);
+
         sav.p4(Packet.getcrc(sav.data, 0, sav.pos));
         const safeName = fromBase37(this.username37);
         sav.save(`data/players/${safeName}.sav`);
@@ -227,6 +237,16 @@ export default class Player extends PathingEntity {
     vars: Int32Array;
     varsString: string[];
     invs: Map<number, Inventory> = new Map<number, Inventory>();
+
+    chatModes: {
+        publicChat: ChatModePublic;
+        privateChat: ChatModePrivate;
+        tradeDuel: ChatModeTradeDuel;
+    } = {
+            publicChat: ChatModePublic.ON,
+            privateChat: ChatModePrivate.ON,
+            tradeDuel: ChatModeTradeDuel.ON,
+        };
 
     // runtime variables
     pid: number = -1;
@@ -407,6 +427,12 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
+
+        this.write(
+            new ChatFilterSettings(
+                this.chatModes.publicChat,
+                this.chatModes.privateChat,
+                this.chatModes.tradeDuel));
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
         if (loginTrigger) {
@@ -1674,7 +1700,7 @@ export default class Player extends PathingEntity {
         if (this.withinAfkZone()) {
             return;
         }
-        const coord: number = Position.packCoord(0, this.x - 10, this.z - 10); // level doesn't matter.
+        const coord: number = CoordGrid.packCoord(0, this.x - 10, this.z - 10); // level doesn't matter.
         if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
             this.afkZones[1] = coord;
         } else {
@@ -1691,8 +1717,8 @@ export default class Player extends PathingEntity {
     private withinAfkZone(): boolean {
         const size: number = 21;
         for (let index: number = 0; index < this.afkZones.length; index++) {
-            const coord: Position = Position.unpackCoord(this.afkZones[index]);
-            if (Position.intersects(this.x, this.z, this.width, this.length, coord.x, coord.z, size, size)) {
+            const coord: CoordGrid = CoordGrid.unpackCoord(this.afkZones[index]);
+            if (CoordGrid.intersects(this.x, this.z, this.width, this.length, coord.x, coord.z, size, size)) {
                 return true;
             }
         }

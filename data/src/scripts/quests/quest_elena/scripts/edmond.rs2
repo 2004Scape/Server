@@ -22,7 +22,7 @@ switch_int(%elena_progress) {
         ~chatplayer("<p,happy>Hi <nc_name(edmond)>, I've got the gas mask now.");
         ~chatnpc("<p,neutral>Good stuff, now for the digging. Beneath are the Ardougne sewers. There you'll find access to West Ardougne.");
         if(%elena_progress = ^quest_elena_gasmask) ~quest_elena_set_progress(^quest_elena_started_mud_patch);
-        ~chatnpc("<p,default>The problem is the soil is rock hard. You'll need to pour on some buckets of water to soften it up. I'll keep an eye out for the mourners.");
+        ~chatnpc("<p,neutral>The problem is the soil is rock hard. You'll need to pour on some buckets of water to soften it up. I'll keep an eye out for the mourners.");
     }
     case ^quest_elena_opened_tunnel: {
         ~chatplayer("<p,confused><nc_name(edmond)>, I can't get through to West Ardougne! There's an iron grill blocking my way. I can't pull it off alone.");

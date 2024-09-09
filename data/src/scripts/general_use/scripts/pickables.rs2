@@ -49,7 +49,6 @@ if(inv_freespace(inv) = 0) {
 // Pickable flax
 // Could only pick one flax at a time until this update: https://oldschool.runescape.wiki/w/Update:Santa,_Flax_and_Castlewars
 [oploc2,flax_ground]
-p_arrivedelay;
 if(inv_freespace(inv) = 0) {
     mes("You can't carry any more flax.");
 } else {
@@ -58,10 +57,10 @@ if(inv_freespace(inv) = 0) {
         ~macro_event_general_spawn(~macro_event_set_random);
         return;
     }
-    mes("You pick some flax.");
-    p_delay(0);
     anim(human_pickupfloor, 0);
+    p_delay(0);
     sound_synth(pick, 0, 0);
+    mes("You pick some flax.");
     inv_add(inv, flax, 1);
 
     def_int $respawnrate = 20;

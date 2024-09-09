@@ -4,7 +4,7 @@ switch_int(%chompybird_progress) {
     case ^chompybird_not_started:
         ~chatnpc("<p,neutral>Hey you creature! Make me some stabbers! I wanna hunt da chompy?");
         ~chatplayer("<p,confused>Stabbers?");
-        ~chatnpc("<p,default>For da stabbie chucker, I's wanna hunt da chompy! Da chompy is der bestest yummies for Rantz, Fycie and Bugs! Creature knows what Rantz wants... flyin' to stabbie da chompy!");
+        ~chatnpc("<p,neutral>For da stabbie chucker, I's wanna hunt da chompy! Da chompy is der bestest yummies for Rantz, Fycie and Bugs! Creature knows what Rantz wants... flyin' to stabbie da chompy!");
         
         ~objbox(ogre_bow,"The ogre shows you a huge but crude bow and then starts to nod energetically in an effort to help you understand.");
 
@@ -89,7 +89,7 @@ switch_int(%chompybird_progress) {
             mes("[debug] TODO currently unimplemented");
         } else {
             // TODO mesanim TBC
-            ~chatnpc("<p,default>Hey You! Got da chompy yet?");
+            ~chatnpc("<p,neutral>Hey You! Got da chompy yet?");
             ~chatplayer("<p,neutral>Yep, here's your chompy Bird!");
             @rantz_show_chompy;
         }
@@ -100,7 +100,7 @@ switch_int(%chompybird_progress) {
         @hand_chompy_to_rantz;
     case ^chompybird_complete:
         // TODO message tbc
-        ~chatnpc("<p,default>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!");
+        ~chatnpc("<p,neutral>Tank's very much for da chompy...|Fycie an Bugs like very much da chompy yumms!");
 
     // TODO dialog to buy ogre bow back from Rantz
 }
@@ -234,7 +234,7 @@ if (inv_total(inv, ogre_arrow) > 0) {
 switch_int(~p_choice2("How do I make the 'stabbers' again?", 1, "Ok, I'll make the 'stabbers' for you.", 2)) {
     case 1:
         ~chatplayer("<p,neutral>How do I make the 'stabbers' again?");
-        ~chatnpc("<p,default>Grrr creature... you's no good stabber maker! You's make da stabbie bit from da dog bones, and get da sticksies from da Achey tree... simple see? Oh and da flufsies from da flappers as well!");
+        ~chatnpc("<p,neutral>Grrr creature... you's no good stabber maker! You's make da stabbie bit from da dog bones, and get da sticksies from da Achey tree... simple see? Oh and da flufsies from da flappers as well!");
         ~chatplayer("<p,quiz>Oh, so I need logs from the achey tree, bones from a canine... and feathers?");
         ~chatnpc("<p,happy>Is just what Rantz sayed!|@blu@~ The hulking ogre nods excitedly. ~");
     case 2:
@@ -273,7 +273,7 @@ inv_del(inv, ogre_arrow, 6);
 switch_int(~p_choice5("How do we make the chompys come?", 1, "What are 'fatsy toadies'?", 2, "Where do we put the 'fatsy toadies'?", 3, "What do you mean 'sneaky..sneaky, stick da chompy?'", 4, "Ok, thanks.", 5)) {
     case 1:
         ~chatplayer("<p,neutral>How do we make the chompys come?");
-        ~chatnpc("<p,default>Chompys love da fatsy toadies. Toadies get big on der swamp gas and der chompys are licking der lips for em as me is licking lips for da chompy. Da chompys don't like da smaller toadies from nearby swampy.");
+        ~chatnpc("<p,neutral>Chompys love da fatsy toadies. Toadies get big on der swamp gas and der chompys are licking der lips for em as me is licking lips for da chompy. Da chompys don't like da smaller toadies from nearby swampy.");
         %chompybird_progress = ^chompybird_kids_play_with_toad;
         ~chatnpc("<p,happy>Dey's fussie eaters just like Rantz. Fycie an' Bugs play with toadies and blower dey's all times making fatsy toadies.");
         @toadies_questions;

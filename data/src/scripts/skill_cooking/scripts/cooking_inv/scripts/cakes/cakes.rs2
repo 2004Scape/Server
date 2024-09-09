@@ -101,6 +101,11 @@ if (inv_total(inv, $ingredient2) < 1) {
 return;
 
 [label,make_chocolate_cake](int $last)
+if (stat(cooking) < 50) {
+    // OSRS message
+    ~mesbox("You need a Cooking level of 50 to make a chocolate cake.");
+    return;
+}
 def_obj $chocolate = inv_getobj(inv, $last);
 // delete chocolate and cake
 inv_del(inv, $chocolate, 1);

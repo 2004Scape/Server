@@ -159,7 +159,7 @@ if(~obj_gettotal(murder_needle) > 0) {
     mes("I already have Elizabeth's needle.");
     return;
 }
-~mesbox("There's something shiny hidden at the bottom.|You take Frank's silver pot.");
+~mesbox("There's something shiny hidden at the bottom.|You take Elizabeth's silver needle.");
 inv_add(inv, murder_needle, 1);
 
 [oploc2,loc_2661]
@@ -171,7 +171,7 @@ if(~obj_gettotal(murder_pot) > 0) {
     mes("I already have Frank's pot.");
     return;
 }
-~mesbox("There's something shiny hidden at the bottom.|You take Elizabeth's silver needle.");
+~mesbox("There's something shiny hidden at the bottom.|You take Frank's silver pot.");
 inv_add(inv, murder_pot, 1);
 
 [label,murder_flour_barrel]

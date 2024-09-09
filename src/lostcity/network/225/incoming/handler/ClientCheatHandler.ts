@@ -17,7 +17,7 @@ import { CollisionFlag, findPath, isFlagged } from '@2004scape/rsmod-pathfinder'
 import NullClientSocket from '#lostcity/server/NullClientSocket.js';
 import { tryParseInt } from '#lostcity/util/TryParse.js';
 import ScriptVarType from '#lostcity/cache/config/ScriptVarType.js';
-import { Position } from '#lostcity/entity/Position.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import ScriptRunner from '#lostcity/engine/script/ScriptRunner.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
@@ -196,11 +196,11 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                 if (args[0] === 'up') {
                     // this would be handled in cs2 in 2007+ and did not exist in 2004
                     player.teleJump(player.x, player.z, player.level + 1);
-                    player.messageGame('::tele ' + Position.formatString(player.level, player.x, player.z, ','));
+                    player.messageGame('::tele ' + CoordGrid.formatString(player.level, player.x, player.z, ','));
                 } else if (args[0] === 'down') {
                     // this would be handled in cs2 in 2007+ and did not exist in 2004
                     player.teleJump(player.x, player.z, player.level - 1);
-                    player.messageGame('::tele ' + Position.formatString(player.level, player.x, player.z, ','));
+                    player.messageGame('::tele ' + CoordGrid.formatString(player.level, player.x, player.z, ','));
                 } else if (args[0].indexOf(',') === -1) {
                     // not authentic but rsps users are used to absolute coordinates
                     player.teleJump(tryParseInt(args[0], 3200), tryParseInt(args[1], 3200), tryParseInt(args[2], player.level));
@@ -343,7 +343,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
             if (cmd === 'getcoord') {
                 // authentic
                 // todo find a real usage to see if we have it right
-                player.messageGame(Position.formatString(player.level, player.x, player.z, '_'));
+                player.messageGame(CoordGrid.formatString(player.level, player.x, player.z, '_'));
             }
         }
 
@@ -412,7 +412,7 @@ export default class ClientCheatHandler extends MessageHandler<ClientCheat> {
                             const lx = parseInt(args2[3]);
                             const lz = parseInt(args2[4]);
 
-                            params[i] = Position.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
+                            params[i] = CoordGrid.packCoord(level, (mx << 6) + lx, (mz << 6) + lz);
                             break;
                         }
                         case ScriptVarType.INTERFACE: {
