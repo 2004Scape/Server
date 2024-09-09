@@ -189,7 +189,7 @@ if (npc_type = chompy_bird) {
 }
 if (%vampire_progress = ^vampire_complete & npc_type = count_draynor) {
     mes("You've done enough vampire slaying.");
-    return;
+    return(false);
 }
 
 if (npc_hasop(2) = true) {
