@@ -1,4 +1,4 @@
-import {Worker} from 'worker_threads';
+import { Worker as NodeWorker } from 'worker_threads';
 import fs from 'fs';
 import Watcher from 'watcher';
 import path from 'path';
@@ -6,7 +6,7 @@ import kleur from 'kleur';
 
 import Packet from '#jagex2/io/Packet.js';
 
-import {toBase37} from '#jagex2/jstring/JString.js';
+import {fromBase37, toBase37} from '#jagex2/jstring/JString.js';
 
 import CategoryType from '#lostcity/cache/config/CategoryType.js';
 import DbRowType from '#lostcity/cache/config/DbRowType.js';
@@ -63,13 +63,16 @@ import {LoginResponse} from '#lostcity/server/LoginServer.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
 import {makeCrcs, makeCrcsAsync} from '#lostcity/server/CrcTable.js';
 import {preloadClient, preloadClientAsync} from '#lostcity/server/PreloadedPacks.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import UpdateRebootTimer from '#lostcity/network/outgoing/model/UpdateRebootTimer.js';
-import ZoneGrid from '#lostcity/engine/zone/ZoneGrid.js';
-import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import WorldStat from '#lostcity/engine/WorldStat.js';
+import { FriendsServerOpcodes } from '#lostcity/server/FriendsServer.js';
+import UpdateFriendList from '#lostcity/network/outgoing/model/UpdateFriendList.js';
+import UpdateIgnoreList from '#lostcity/network/outgoing/model/UpdateIgnoreList.js';
 
 class World {
+    private friendsThread: Worker | NodeWorker = createWorker(typeof self === 'undefined' ? './src/lostcity/server/FriendsThread.ts' : 'FriendsThread.js');
+
     private static readonly PLAYERS: number = 2048;
     private static readonly NPCS: number = 8192;
 
@@ -85,9 +88,11 @@ class World {
     private static readonly TIMEOUT_IDLE_TICKS: number = 75;
     private static readonly TIMEOUT_LOGOUT_TICKS: number = 100;
 
+    // the game/zones map
     readonly gameMap: GameMap;
-    readonly zoneMap: ZoneMap;
-    readonly invs: Set<Inventory>; // shared inventories (shops)
+
+    // shared inventories (shops)
+    readonly invs: Set<Inventory>;
 
     // entities
     readonly newPlayers: Set<Player>; // players joining at the end of this tick
@@ -114,13 +119,12 @@ class World {
     varsString: string[] = [];
 
     devWatcher: Watcher | null = null;
-    devThread: Worker | null = null;
+    devThread: NodeWorker | null = null;
     devRebuilding: boolean = false;
     devMTime: Map<string, number> = new Map();
 
     constructor() {
-        this.gameMap = new GameMap();
-        this.zoneMap = new ZoneMap();
+        this.gameMap = new GameMap(Environment.NODE_MEMBERS);
         this.invs = new Set();
         this.newPlayers = new Set();
         this.players = new PlayerList(World.PLAYERS - 1);
@@ -129,6 +133,69 @@ class World {
         this.queue = new LinkList();
         this.lastCycleStats = new Array(12).fill(0);
         this.cycleStats = new Array(12).fill(0);
+
+        if (typeof self === 'undefined') {
+            if (this.friendsThread instanceof NodeWorker) {
+                this.friendsThread.on('message', msg => {
+                    this.onFriendsMessage(msg);
+                });
+            }
+        } else {
+            if (this.friendsThread instanceof Worker) {
+                this.friendsThread.onmessage = msg => {
+                    this.onFriendsMessage(msg.data);
+                };
+            }
+        }
+    }
+
+    onFriendsMessage({ opcode, data }: { opcode: FriendsServerOpcodes, data: Uint8Array }) {
+        const packet = new Packet(data);
+
+        try {
+            if (opcode === FriendsServerOpcodes.UPDATE_FRIENDLIST) {
+                const username37 = packet.g8();
+
+                // TODO make getPlayerByUsername37?
+                const player = this.getPlayerByUsername(fromBase37(username37));
+                if (!player) {
+                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    return;
+                }
+
+                // 10 bytes per friend
+                while (packet.available >= 10) {
+                    const world = packet.g2();
+                    const friendUsername37 = packet.g8();
+                    player.write(new UpdateFriendList(friendUsername37, world));
+                }
+            } else if (opcode === FriendsServerOpcodes.UPDATE_IGNORELIST) {
+                const username37 = packet.g8();
+
+                // TODO make getPlayerByUsername37?
+                const player = this.getPlayerByUsername(fromBase37(username37));
+                if (!player) {
+                    console.error(`FriendsThread: player ${fromBase37(username37)} not found`);
+                    return;
+                }
+
+                const ignored: bigint[] = [];
+
+                while (packet.available >= 8) {
+                    const target37 = packet.g8();
+
+                    ignored.push(target37);
+                }
+
+                if (ignored.length > 0) {
+                    player.write(new UpdateIgnoreList(ignored));
+                }
+            } else {
+                console.error('Unknown friends opcode: ' + opcode);
+            }
+        } finally {
+            packet.release();
+        }
     }
 
     // ----
@@ -365,20 +432,24 @@ class World {
             this.reload();
 
             if (!skipMaps) {
-                this.gameMap.init(this.zoneMap);
+                this.gameMap.init();
             }
         } else {
             console.time('World ready');
             await this.loadAsync();
 
             if (!skipMaps) {
-                await this.gameMap.initAsync(this.zoneMap);
+                await this.gameMap.initAsync();
             }
             console.timeEnd('World ready');
         }
 
         Login.loginThread.postMessage({
             type: 'reset'
+        });
+
+        this.friendsThread.postMessage({
+            type: 'connect'
         });
 
         if (typeof self === 'undefined') {
@@ -408,7 +479,7 @@ class World {
     }
 
     startDevWatcher(): void {
-        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
+        this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
 
         this.devThread.on('message', msg => {
             if (msg.type === 'done') {
@@ -462,7 +533,7 @@ class World {
             this.broadcastMes('Rebuilding, please wait...');
 
             if (!this.devThread) {
-                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as Worker;
+                this.devThread = createWorker('./src/lostcity/server/DevThread.ts') as NodeWorker;
             }
 
             this.devThread.postMessage({
@@ -726,7 +797,7 @@ class World {
             }
 
             if (player.target instanceof Player && (player.targetOp === ServerTriggerType.APPLAYER3 || player.targetOp === ServerTriggerType.OPPLAYER3)) {
-                if (Position.distanceToSW(player, player.target) <= 25) {
+                if (CoordGrid.distanceToSW(player, player.target) <= 25) {
                     player.pathToPathingTarget();
                 } else {
                     player.clearWaypoints();
@@ -930,7 +1001,7 @@ class World {
             player.uid = ((Number(player.username37 & 0x1fffffn) << 11) | player.pid) >>> 0;
             player.tele = true;
 
-            this.getZone(player.x, player.z, player.level).enter(player);
+            this.gameMap.getZone(player.x, player.z, player.level).enter(player);
             player.onLogin(); // todo: check response from login script?
 
             if (this.shutdownTick > -1) {
@@ -1198,18 +1269,6 @@ class World {
         return inventory;
     }
 
-    getZone(x: number, z: number, level: number): Zone {
-        return this.zoneMap.zone(x, z, level);
-    }
-
-    getZoneIndex(zoneIndex: number): Zone {
-        return this.zoneMap.zoneByIndex(zoneIndex);
-    }
-
-    getZoneGrid(level: number): ZoneGrid {
-        return this.zoneMap.grid(level);
-    }
-
     computeSharedEvents(): void {
         const zones: Set<number> = new Set();
         for (const player of this.players) {
@@ -1221,7 +1280,7 @@ class World {
             }
         }
         for (const zoneIndex of zones) {
-            this.getZoneIndex(zoneIndex).computeShared();
+            this.gameMap.getZoneIndex(zoneIndex).computeShared();
         }
     }
 
@@ -1230,7 +1289,7 @@ class World {
         npc.x = npc.startX;
         npc.z = npc.startZ;
 
-        const zone = this.getZone(npc.x, npc.z, npc.level);
+        const zone = this.gameMap.getZone(npc.x, npc.z, npc.level);
         zone.enter(npc);
 
         switch (npc.blockWalk) {
@@ -1250,7 +1309,7 @@ class World {
     }
 
     removeNpc(npc: Npc, duration: number): void {
-        const zone = this.getZone(npc.x, npc.z, npc.level);
+        const zone = this.gameMap.getZone(npc.x, npc.z, npc.level);
         zone.leave(npc);
 
         switch (npc.blockWalk) {
@@ -1271,11 +1330,11 @@ class World {
     }
 
     getLoc(x: number, z: number, level: number, locId: number): Loc | null {
-        return this.getZone(x, z, level).getLoc(x, z, locId);
+        return this.gameMap.getZone(x, z, level).getLoc(x, z, locId);
     }
 
     getObj(x: number, z: number, level: number, objId: number, receiverId: number): Obj | null {
-        return this.getZone(x, z, level).getObj(x, z, objId, receiverId);
+        return this.gameMap.getZone(x, z, level).getObj(x, z, objId, receiverId);
     }
 
     trackZone(tick: number, zone: Zone): void {
@@ -1297,7 +1356,7 @@ class World {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, true);
         }
 
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.addLoc(loc);
         loc.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
@@ -1306,14 +1365,14 @@ class World {
 
     mergeLoc(loc: Loc, player: Player, startCycle: number, endCycle: number, south: number, east: number, north: number, west: number): void {
         // console.log(`[World] mergeLoc => name: ${LocType.get(loc.type).name}`);
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.mergeLoc(loc, player, startCycle, endCycle, south, east, north, west);
         this.trackZone(this.currentTick, zone);
     }
 
     animLoc(loc: Loc, seq: number): void {
         // console.log(`[World] animLoc => name: ${LocType.get(loc.type).name}, seq: ${seq}`);
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.animLoc(loc, seq);
         this.trackZone(this.currentTick, zone);
     }
@@ -1325,7 +1384,7 @@ class World {
             this.gameMap.changeLocCollision(loc.shape, loc.angle, type.blockrange, type.length, type.width, type.active, loc.x, loc.z, loc.level, false);
         }
 
-        const zone: Zone = this.getZone(loc.x, loc.z, loc.level);
+        const zone: Zone = this.gameMap.getZone(loc.x, loc.z, loc.level);
         zone.removeLoc(loc);
         loc.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
@@ -1345,7 +1404,7 @@ class World {
                 return;
             }
         }
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.addObj(obj, receiverId);
         if (receiverId !== -1 && objType.tradeable && (objType.members && Environment.NODE_MEMBERS || !objType.members)) {
             // objs always reveal 100 ticks after being dropped.
@@ -1366,7 +1425,7 @@ class World {
         // console.log(`[World] revealObj => name: ${ObjType.get(obj.type).name}`);
         const duration: number = obj.reveal;
         const change: number = obj.lastChange;
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.revealObj(obj, obj.receiverId);
         // objs next life cycle always starts from the last time they changed + the inputted duration.
         // accounting for reveal time here.
@@ -1378,14 +1437,14 @@ class World {
 
     changeObj(obj: Obj, receiverId: number, newCount: number): void {
         // console.log(`[World] changeObj => name: ${ObjType.get(obj.type).name}, receiverId: ${receiverId}, newCount: ${newCount}`);
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.changeObj(obj, receiverId, obj.count, newCount);
         this.trackZone(this.currentTick, zone);
     }
 
     removeObj(obj: Obj, duration: number): void {
         // console.log(`[World] removeObj => name: ${ObjType.get(obj.type).name}, duration: ${duration}`);
-        const zone: Zone = this.getZone(obj.x, obj.z, obj.level);
+        const zone: Zone = this.gameMap.getZone(obj.x, obj.z, obj.level);
         zone.removeObj(obj);
         obj.setLifeCycle(this.currentTick + duration);
         this.trackZone(this.currentTick + duration, zone);
@@ -1393,13 +1452,13 @@ class World {
     }
 
     animMap(level: number, x: number, z: number, spotanim: number, height: number, delay: number): void {
-        const zone: Zone = this.getZone(x, z, level);
+        const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.animMap(x, z, spotanim, height, delay);
         this.trackZone(this.currentTick, zone);
     }
 
     mapProjAnim(level: number, x: number, z: number, dstX: number, dstZ: number, target: number, spotanim: number, srcHeight: number, dstHeight: number, startDelay: number, endDelay: number, peak: number, arc: number): void {
-        const zone: Zone = this.getZone(x, z, level);
+        const zone: Zone = this.gameMap.getZone(x, z, level);
         zone.mapProjAnim(x, z, dstX, dstZ, target, spotanim, srcHeight, dstHeight, startDelay, endDelay, peak, arc);
         this.trackZone(this.currentTick, zone);
     }
@@ -1451,8 +1510,58 @@ class World {
         }
     }
 
+    addFriend(player: Player, targetUsername37: bigint) {
+        console.log(`[World] addFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_friendslist_add',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    removeFriend(player: Player, targetUsername37: bigint) {
+        console.log(`[World] removeFriend => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_friendslist_remove',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    addIgnore(player: Player, targetUsername37: bigint) {
+        console.log(`[World] addIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_ignorelist_add',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
+    removeIgnore(player: Player, targetUsername37: bigint) {
+        console.log(`[World] removeIgnore => player: ${player.username}, target: ${targetUsername37} (${fromBase37(targetUsername37)})`);
+        this.friendsThread.postMessage({
+            type: 'player_ignorelist_remove',
+            username: player.username,
+            target: targetUsername37,
+        });
+    }
+
     addPlayer(player: Player): void {
         this.newPlayers.add(player);
+
+        this.friendsThread.postMessage({
+            type: 'player_login',
+            username: player.username,
+            chatModePrivate: player.chatModes.privateChat,
+        });
+    }
+
+    sendPrivateChatModeToFriendsServer(player: Player): void {
+        this.friendsThread.postMessage({
+            type: 'player_chat_setmode',
+            username: player.username,
+            chatModePrivate: player.chatModes.privateChat,
+        });
     }
 
     async removePlayer(player: Player): Promise<void> {
@@ -1469,6 +1578,11 @@ class World {
         }
 
         Login.logout(player);
+
+        this.friendsThread.postMessage({
+            type: 'player_logout',
+            username: player.username,
+        });
     }
 
     getPlayer(pid: number): Player | undefined {
@@ -1512,18 +1626,6 @@ class World {
 
     getTotalNpcs(): number {
         return this.npcs.count;
-    }
-
-    getTotalZones(): number {
-        return this.zoneMap.zoneCount();
-    }
-
-    getTotalLocs(): number {
-        return this.zoneMap.locCount();
-    }
-
-    getTotalObjs(): number {
-        return this.zoneMap.objCount();
     }
 
     getNpc(nid: number): Npc | undefined {

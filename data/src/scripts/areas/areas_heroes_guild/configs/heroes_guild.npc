@@ -60,4 +60,6 @@ param=owned_shop,happy_heroes_hemporium
 param=shop_sell_multiplier,1000
 param=shop_buy_multiplier,550
 param=shop_delta,30
-param=shop_title,Happy Heroes' H'emporium.
+param=shop_title,Happy Heroes' Hemporium.
+// we have 3 different pictures of the store in question with 3 different store names and 2 different product quantities.
+// Happy Heroes Hemporium. / Happy Heroes' Hemporium. / Happy Heroes' H'emporium.

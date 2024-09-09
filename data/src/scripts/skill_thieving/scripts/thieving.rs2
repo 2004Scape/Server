@@ -49,6 +49,7 @@ p_delay(0);
 npc_setmode(null);
 
 mes("You've been stunned!");
+%action_delay = calc(map_clock + $stun_ticks);
 %stunned = calc(map_clock + $stun_ticks);
 walktrigger(stunned);
 

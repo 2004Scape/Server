@@ -166,6 +166,7 @@
 [command,.settimer]/*(timer $timer, int $interval, ...)*/
 [command,cleartimer](timer $timer)
 [command,.cleartimer](timer $timer)
+[command,gettimer](timer $timer)(int)// guess
 [command,spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,.spotanim_pl](spotanim $spotanim, int $height, int $delay)
 [command,hint_stop]
@@ -253,8 +254,10 @@
 [command,.npc_facesquare](coord $coord)
 [command,npc_find](coord $coord, npc $npc, int $distance, int $checkvis)(boolean)
 [command,.npc_find](coord $coord, npc $npc, int $distance, int $checkvis)(boolean)
-[command,npc_findallany](coord $coord, int $distance, int $checkvis)(boolean)
-[command,.npc_findallany](coord $coord, int $distance, int $checkvis)(boolean)
+[command,npc_findall](coord $coord, npc $npc, int $distance, int $checkvis)
+[command,.npc_findall](coord $coord, npc $npc, int $distance, int $checkvis)
+[command,npc_findallany](coord $coord, int $distance, int $checkvis)
+[command,.npc_findallany](coord $coord, int $distance, int $checkvis)
 [command,npc_findexact](coord $coord, npc $npc)(boolean)
 [command,npc_findhero]()(boolean)
 [command,npc_param]/*(param $param)(dynamic)*/
@@ -290,6 +293,7 @@
 [command,.npc_tele](coord $coord)
 [command,npc_changetype](npc $type)
 [command,npc_getmode]()(npc_mode)
+[command,.npc_getmode]()(npc_mode)
 [command,npc_heropoints](int $damage)
 [command,npc_walktrigger](int $ai_queue, int $arg)
 [command,.npc_walktrigger](int $ai_queue, int $arg)

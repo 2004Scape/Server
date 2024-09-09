@@ -91,19 +91,18 @@ inv_add(inv, ammo_mould, 1);
 [label,lost_my_cannon]
 ~chatplayer("<p,sad>I've lost my cannon...");
 ~chatnpc("<p,neutral>That's unfortunate... but don't worry, I can sort you out.");
-
-def_boolean $has_decayed = false;
-if ($has_decayed = true) {
-    mes("The dwarf gives you a new cannon.");
-    ~chatnpc("<p,neutral>Keep that quiet or I'll be in real trouble!");
-    ~chatplayer("<p,neutral>Of course.");
-    inv_add(inv, cannon_base, 1);
-    inv_add(inv, cannon_stand, 1);
-    inv_add(inv, cannon_barrels, 1);
-    inv_add(inv, cannon_furnace, 1);
-} else {
+if (%mcannon_coord ! null & loc_find(%mcannon_coord, cannon) = true) {
     ~chatnpc("<p,sad>Oh dear, I'm only allowed to replace cannons|that were stolen in action.|I'm sorry but you'll have to buy a new set.");
+    return;
 }
+mes("The dwarf gives you a new cannon.");
+~chatnpc("<p,neutral>Keep that quiet or I'll be in real trouble!");
+~chatplayer("<p,neutral>Of course.");
+%mcannon_coord = null;
+inv_add(inv, cannon_base, 1);
+inv_add(inv, cannon_stand, 1);
+inv_add(inv, cannon_barrels, 1);
+inv_add(inv, cannon_furnace, 1);
 
 [label,ill_take_a_cannon]
 ~chatplayer("<p,neutral>Ok, I'll take a cannon please.");

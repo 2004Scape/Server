@@ -237,6 +237,7 @@ model8=model_246_idk
 model9=model_184_npc
 head1=model_63_idk_head
 wanderrange=2
+attackrange=5
 hitpoints=59
 attack=78
 strength=78

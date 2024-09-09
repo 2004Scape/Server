@@ -458,7 +458,7 @@ param=defend_anim,human_sword_defend2
 // TODO sounds
 // TODO sounds
 
-[npc_991]
+[half_souless]
 size=2
 name=Half-Souless
 desc=A creature empty of emotion.
@@ -779,3 +779,45 @@ respawnrate=50
 wanderrange=0
 timer=10
 moverestrict=nomove
+
+[spider_upass]
+walkanim=spider_walk
+name=Spider
+desc=Incey wincey.
+op2=Attack
+vislevel=1
+recol1s=15855
+recol1d=5284
+model1=model_2996_npc
+wanderrange=8
+maxrange=10
+respawnrate=35
+hitpoints=2
+param=attackbonus,-35
+param=strengthbonus,-58
+param=stabdefence,-53
+param=slashdefence,-53
+param=crushdefence,-53
+param=magicdefence,-53
+param=rangedefence,-53
+param=damagetype,^stab_style
+param=attack_anim,spider_attack
+param=defend_anim,spider_block
+param=death_anim,spider_death
+param=attack_sound,insect_attack
+param=defend_sound,insect_hit
+param=death_sound,insect_death
+param=death_drop,null
+
+[bat_upass]
+name=Giant bat
+desc=Annoying flappy thing.
+size=2
+walkanim=bat_walk
+readyanim=bat_ready
+vislevel=hide
+model1=model_2941_npc
+wanderrange=8
+param=death_anim,bat_death
+param=death_sound,bat_death
+param=death_drop,null

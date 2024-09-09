@@ -83,6 +83,10 @@ const ScriptOpcodePointers: {
         require: ['active_player'],
         require2: ['active_player2']
     },
+    [ScriptOpcode.GETTIMER]: {
+        require: ['active_player'],
+        require2: ['active_player2']
+    },
     [ScriptOpcode.COORD]: {
         require: ['active_player'],
         require2: ['active_player2']
@@ -551,6 +555,9 @@ const ScriptOpcodePointers: {
         conditional: true
     },
     [ScriptOpcode.NPC_FINDALLANY]: {
+        set: ['find_npc']
+    },
+    [ScriptOpcode.NPC_FINDALL]: {
         set: ['find_npc']
     },
     [ScriptOpcode.NPC_FINDALLZONE]: {

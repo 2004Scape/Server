@@ -307,7 +307,7 @@ def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~chatnpc_page(npc_name, npc_type, $page);
     facesquare(npc_coord);
-    npc_setmode(playerfaceclose);
+    if(npc_getmode ! opplayer2 & npc_getmode ! applayer2) npc_setmode(playerfaceclose);
     p_pausebutton;
     $page = calc($page + 1);
 }
@@ -319,7 +319,7 @@ def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~chatnpc_page(.npc_name, .npc_type, $page);
     facesquare(.npc_coord);
-    .npc_setmode(playerfaceclose);
+    if(.npc_getmode ! opplayer2 & .npc_getmode ! applayer2) .npc_setmode(playerfaceclose);
     p_pausebutton;
     $page = calc($page + 1);
 }
@@ -331,7 +331,7 @@ def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~chatnpc_page(npc_name, npc_type, $page);
     facesquare(npc_coord);
-    npc_setmode(playerface);
+    if(npc_getmode ! opplayer2 & npc_getmode ! applayer2) npc_setmode(playerface);
     p_pausebutton;
     $page = calc($page + 1);
 }
@@ -343,7 +343,7 @@ def_int $pagetotal = split_pagecount;
 while ($page < $pagetotal) {
     ~chatnpc_page(.npc_name, .npc_type, $page);
     facesquare(.npc_coord);
-    .npc_setmode(playerface);
+    if(.npc_getmode ! opplayer2 & .npc_getmode !applayer2) .npc_setmode(playerface);
     p_pausebutton;
     $page = calc($page + 1);
 }

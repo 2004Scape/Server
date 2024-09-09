@@ -91,6 +91,7 @@ param=death_anim,seq_1009
 // TODO tbc
 huntrange=10
 hitpoints=10
+wanderrange=3
 
 [chompy_bird_corpse]
 vislevel=hide

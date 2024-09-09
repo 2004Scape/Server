@@ -9,22 +9,19 @@ if ($heal = 0) {
 
 [label,monk_heal_self]
 sound_synth(selfheal,0,0);
+spotanim_pl(heal_casting, 120, 0);
 npc_statheal(hitpoints,2,0);
 npc_anim(human_castheal,0);
 %npc_action_delay = add(map_clock, 4);
 %npc_attacking_uid = %npc_aggressive_player;
 
 [opnpc1,monk]
-~chatnpc("<p,quiz>Greetings traveller.");
-if (%prayer_guild < 1) {
-    @multi3("Can you heal me? I'm injured.", monk_heal_player, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way, "How do I get further into the monastery?", ask_to_join_monk);
-} else {
-    @multi2("Can you heal me? I'm injured.", monk_heal_player, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way);
-}
+~chatnpc("<p,neutral>Greetings traveller.");
+@multi3("Can you heal me? I'm injured.", monk_heal_player, "Isn't this place built a bit out the way?", isnt_this_place_built_a_bit_out_the_way, "How do I get further into the monastery?", ask_to_join_monk);
 
 [label,monk_heal_player]
-~chatplayer("<p,happy>Can you heal me? I'm injured.");
-~chatnpc("<p,quiz>Ok.");
+~chatplayer("<p,quiz>Can you heal me? I'm injured.");
+~chatnpc("<p,neutral>Ok.");
 if_close;
 sound_synth(heal, 0, 0);
 spotanim_pl(heal_casting, 120, 0);
@@ -33,5 +30,5 @@ stat_heal(hitpoints, calc(2 + scale(20, 100, stat_base(hitpoints))), 0);
 mes("You feel a little better.");
 
 [label,ask_to_join_monk]
-~chatplayer("<p,happy>How do I get further into the monastery?");
-~chatnpc("<p,quiz>You'll need to talk to Abbot Langley about that. He's|usually to be found walking the halls of the monastery.");
+~chatplayer("<p,quiz>How do I get further into the monastery?");
+~chatnpc("<p,neutral>You'll need to talk to Abbot Langley about that. He's|usually to be found walking the halls of the monastery.");

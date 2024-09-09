@@ -9,7 +9,7 @@ import { convertImage } from '#lostcity/util/PixPack.js';
 import { LocShape } from '@2004scape/rsmod-pathfinder';
 import { shouldBuildFile, shouldBuildFileAny } from '#lostcity/util/PackFile.js';
 import NpcType from '#lostcity/cache/config/NpcType.js';
-import { Position } from '#lostcity/entity/Position.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 
 function packWater(underlay: Packet, overlay: Packet, mx: number, mz: number) {
     underlay.p1(mx);
@@ -88,10 +88,10 @@ export async function packWorldmap() {
 
             for (let x = startX; x <= endX; x++) {
                 for (let z = startZ; z <= endZ; z++) {
-                    if (multimap.has(Position.packCoord(fromLevel, x, z))) {
+                    if (multimap.has(CoordGrid.packCoord(fromLevel, x, z))) {
                         console.warn('Overlapping multiway map', multiway[i]);
                     }
-                    multimap.add(Position.packCoord(fromLevel, x, z));
+                    multimap.add(CoordGrid.packCoord(fromLevel, x, z));
                 }
             }
         } else {
@@ -99,7 +99,7 @@ export async function packWorldmap() {
 
             for (let i = 0; i < 8; i++) {
                 for (let j = 0; j < 8; j++) {
-                    multimap.add(Position.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
+                    multimap.add(CoordGrid.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
                 }
             }
         }
@@ -129,10 +129,10 @@ export async function packWorldmap() {
 
             for (let x = startX; x <= endX; x++) {
                 for (let z = startZ; z <= endZ; z++) {
-                    if (freemap.has(Position.packCoord(fromLevel, x, z))) {
+                    if (freemap.has(CoordGrid.packCoord(fromLevel, x, z))) {
                         console.warn('Overlapping free map', free2play[i]);
                     }
-                    freemap.add(Position.packCoord(fromLevel, x, z));
+                    freemap.add(CoordGrid.packCoord(fromLevel, x, z));
                 }
             }
         } else {
@@ -140,7 +140,7 @@ export async function packWorldmap() {
 
             for (let i = 0; i < 8; i++) {
                 for (let j = 0; j < 8; j++) {
-                    freemap.add(Position.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
+                    freemap.add(CoordGrid.packCoord(level, (mx << 6) + lx + i, (mz << 6) + lz + j));
                 }
             }
         }
@@ -481,7 +481,7 @@ export async function packWorldmap() {
                 for (let z = 0; z < 64; z++) {
                     multiTiles[level][x][z] = false;
 
-                    if (multimap.has(Position.packCoord(level, (mx << 6) + x, (mz << 6) + z))) {
+                    if (multimap.has(CoordGrid.packCoord(level, (mx << 6) + x, (mz << 6) + z))) {
                         multiTiles[level][x][z] = true;
                         hasMulti = true;
                     }
@@ -513,7 +513,7 @@ export async function packWorldmap() {
                 for (let z = 0; z < 64; z++) {
                     freeTiles[level][x][z] = false;
 
-                    if (freemap.has(Position.packCoord(level, (mx << 6) + x, (mz << 6) + z))) {
+                    if (freemap.has(CoordGrid.packCoord(level, (mx << 6) + x, (mz << 6) + z))) {
                         freeTiles[level][x][z] = true;
                         hasFree = true;
                     }
