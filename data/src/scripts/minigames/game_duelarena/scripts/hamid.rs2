@@ -2,26 +2,26 @@
 
 // TODO - Treasure Trails
 
-~chatplayer("<p,default>Hi!");
-~chatnpc("<p,default>Hello traveller. How can I be of assistance?");
+~chatplayer("<p,neutral>Hi!");
+~chatnpc("<p,neutral>Hello traveller. How can I be of assistance?");
 
 def_int $choice = ~p_choice3("Can you heal me?", 1, "What's a Monk doing in a place such as this?", 2, "Which monastery do you come from?", 3);
 
 switch_int ($choice) {
     case 1:
-    ~chatplayer("<p,default>Can you heal me?");
-    ~chatnpc("<p,default>You'd be better off speaking to one of the nurses.");
-    ~chatnpc("<p,default>They are so... nice... afterall!"); // Typo consistent with OSRS.
+    ~chatplayer("<p,neutral>Can you heal me?");
+    ~chatnpc("<p,neutral>You'd be better off speaking to one of the nurses.");
+    ~chatnpc("<p,neutral>They are so... nice... afterall!"); // Typo consistent with OSRS.
 
     case 2:
-    ~chatplayer("<p,default>What's a Monk doing in a place such as this?");
-    ~chatnpc("<p,default>Well don't tell anyone but I came here because of the nurses!");
-    ~chatplayer("<p,default>Really?");
-    ~chatnpc("<p,default>It beats being stuck in the monastery!");
+    ~chatplayer("<p,neutral>What's a Monk doing in a place such as this?");
+    ~chatnpc("<p,neutral>Well don't tell anyone but I came here because of the nurses!");
+    ~chatplayer("<p,neutral>Really?");
+    ~chatnpc("<p,neutral>It beats being stuck in the monastery!");
 
     case 3:
-    ~chatplayer("<p,default>Which monastery do you come from?");
-    ~chatnpc("<p,default>I belong to a monastery north of Falador.");
-    ~chatplayer("<p,default>You're a long way from home?");
-    ~chatnpc("<p,default>Yeh. I miss the guys.");
+    ~chatplayer("<p,neutral>Which monastery do you come from?");
+    ~chatnpc("<p,neutral>I belong to a monastery north of Falador.");
+    ~chatplayer("<p,neutral>You're a long way from home?");
+    ~chatnpc("<p,neutral>Yeh. I miss the guys.");
 }

@@ -132,7 +132,7 @@ export default abstract class PathingEntity extends Entity {
      * Returns true if a step was taken and movement processed.
      */
     processMovement(): boolean {
-        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY || this.moveSpeed === MoveSpeed.INSTANT) {
+        if (!this.hasWaypoints() || this.moveSpeed === MoveSpeed.STATIONARY) {
             return false;
         }
 
@@ -183,8 +183,8 @@ export default abstract class PathingEntity extends Entity {
         }
 
         if (Position.zone(previousX) !== Position.zone(this.x) || Position.zone(previousZ) !== Position.zone(this.z) || previousLevel != this.level) {
-            World.getZone(previousX, previousZ, previousLevel).leave(this);
-            World.getZone(this.x, this.z, this.level).enter(this);
+            World.gameMap.getZone(previousX, previousZ, previousLevel).leave(this);
+            World.gameMap.getZone(this.x, this.z, this.level).enter(this);
         }
     }
 
@@ -255,6 +255,7 @@ export default abstract class PathingEntity extends Entity {
 
     teleJump(x: number, z: number, level: number): void {
         this.teleport(x, z, level);
+        this.clearWaypoints();
         this.jump = true;
     }
 
@@ -481,7 +482,6 @@ export default abstract class PathingEntity extends Entity {
         const faceX: number = target.x * 2 + target.width;
         const faceZ: number = target.z * 2 + target.length;
 
-        // less packets out thanks to me :-)
         if (target instanceof Player) {
             const pid: number = target.pid + 32768;
             if (this.faceEntity !== pid) {
@@ -494,14 +494,19 @@ export default abstract class PathingEntity extends Entity {
                 this.faceEntity = nid;
                 this.mask |= this.entitymask;
             }
-        } else if (this.orientationX !== faceX || this.orientationZ !== faceZ) {
+        } else {
             // direction when the player is first observed (updates on movement)
             this.orientationX = faceX;
             this.orientationZ = faceZ;
+
             // direction update (only updates from facesquare or interactions)
             this.faceX = faceX;
             this.faceZ = faceZ;
-            this.mask |= this.coordmask;
+
+            if (interaction === Interaction.ENGINE) {
+                // mask updates will be sent every time from the packet handler
+                this.mask |= this.coordmask;
+            }
         }
 
         if (interaction === Interaction.SCRIPT) {

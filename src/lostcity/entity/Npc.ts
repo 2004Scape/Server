@@ -168,15 +168,16 @@ export default class Npc extends PathingEntity {
 
             const npcType: NpcType = NpcType.get(this.type);
             this.huntrange = npcType.huntrange;
+            const hunt = HuntType.get(this.huntMode);
+            if (hunt) {
+                this.nextHuntTick = World.currentTick + hunt.rate;
+            }
         }
         super.resetPathingEntity();
     }
 
     updateMovement(repathAllowed: boolean = true): boolean {
         const type = NpcType.get(this.type);
-        if (type.moverestrict === MoveRestrict.NOMOVE) {
-            return false;
-        }
         if (this.target && this.targetOp !== NpcMode.PLAYERFOLLOW && this.targetOp !== NpcMode.WANDER) {
             const apTrigger: boolean =
             (this.targetOp >= NpcMode.APNPC1 && this.targetOp <= NpcMode.APNPC5) ||
@@ -225,6 +226,9 @@ export default class Npc extends PathingEntity {
                 this.defaultMode();
                 return false;
             }
+        }
+        if (type.moverestrict === MoveRestrict.NOMOVE) {
+            return false;
         }
         if (repathAllowed && this.target instanceof PathingEntity && !this.interacted && this.walktrigger === -1) {
             this.pathToPathingTarget();
@@ -843,7 +847,7 @@ export default class Npc extends PathingEntity {
         if (hunt.type === HuntModeType.OFF) {
             return;
         }
-        if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.getZoneGrid(this.level).isFlagged(Position.zone(this.x), Position.zone(this.z), 5)) {
+        if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.gameMap.getZoneGrid(this.level).isFlagged(Position.zone(this.x), Position.zone(this.z), 5)) {
             return;
         }
         if (!hunt.findKeepHunting && this.target !== null) {

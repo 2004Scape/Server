@@ -219,11 +219,14 @@ const NpcOps: CommandHandlers = {
             state.activeNpc.targetOp = mode;
             return;
         }
-        
         state.activeNpc.targetOp = mode;
         let target: Entity | null;
         if (mode >= NpcMode.OPNPC1) {
-            target = state._activeNpc2;
+            if (state.intOperand === 0) {
+                target = state._activeNpc2;
+            } else {
+                target = state._activeNpc;
+            }
         } else if (mode >= NpcMode.OPOBJ1) {
             target = state._activeObj;
         } else if (mode >= NpcMode.OPLOC1) {
@@ -347,6 +350,22 @@ const NpcOps: CommandHandlers = {
         }
     },
 
+    [ScriptOpcode.NPC_FINDALL]: state => {
+        const [coord, npc, distance, checkVis] = state.popInts(4);
+
+        const position: Position = check(coord, CoordValid);
+        check(distance, NumberNotNull);
+        const npcType: NpcType = check(npc, NpcTypeValid);
+        const huntvis: HuntVis = check(checkVis, HuntVisValid);
+
+        state.npcIterator = new NpcIterator(World.currentTick, position.level, position.x, position.z, distance, huntvis, NpcIteratorType.DISTANCE, npcType);
+        // not necessary but if we want to refer to the original npc again, we can
+        if (state._activeNpc) {
+            state._activeNpc2 = state._activeNpc;
+            state.pointerAdd(ScriptPointer.ActiveNpc2);
+        }
+    },
+
     [ScriptOpcode.NPC_FINDALLZONE]: state => {
         const position: Position = check(state.popInt(), CoordValid);
 
@@ -461,10 +480,16 @@ const NpcOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1432296606376906752
     [ScriptOpcode.NPC_ARRIVEDELAY]: checkedHandler(ActiveNpc, state => {
-        if (state.activeNpc.lastMovement < World.currentTick) {
+        if (state.activeNpc.lastMovement < World.currentTick - 1) {
             return;
         }
-        state.activeNpc.delay = 1;
+        // if the npc moved 1 tick ago, delay for 2 ticks. If npc moved 2 ticks ago, delay for 1 tick
+        if (state.activeNpc.lastMovement === World.currentTick) {
+            state.activeNpc.delay = 2;
+        } else {
+            state.activeNpc.delay = 1;
+        }
+        
         state.execution = ScriptState.NPC_SUSPENDED;
     }),
 };

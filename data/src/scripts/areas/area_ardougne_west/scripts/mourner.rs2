@@ -96,7 +96,7 @@ if (~inzone_coord_pair_table(ardougne_west, coord) = true) {
 [label,mourner_so_whats_a_mourner]
 ~chatplayer("<p,quiz>So what's a mourner?");
 ~chatnpc("<p,neutral>We're working for King Lathas of East Ardougne. He has tasked us with containing the accursed plague sweeping West Ardougne.");
-~chatnpc("<p,default>We also do our best to ease these people's suffering. We're nicknamed mourners because we spend a lot of time at plague victim funerals, no one else is allowed to risk attending.");
+~chatnpc("<p,neutral>We also do our best to ease these people's suffering. We're nicknamed mourners because we spend a lot of time at plague victim funerals, no one else is allowed to risk attending.");
 ~chatnpc("<p,neutral>It's a demanding job, and we get little thanks from the people here.");
 
 [label,mourner_i_havent_got_the_plague_though]

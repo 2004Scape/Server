@@ -28,7 +28,7 @@ if (~npc_is_attackable() = false) {
     return;
 }
 
-if (%action_delay > map_clock | getwalktrigger() = stunned) {
+if (%action_delay > map_clock) {
     p_opnpc(2);
     return;
 }

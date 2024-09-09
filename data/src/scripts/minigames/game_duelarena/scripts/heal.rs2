@@ -1,17 +1,17 @@
 [opnpc1,_healer]
-~chatplayer("<p,default>Hi!");
-~chatnpc("<p,default>Hi. How can I help you?");
+~chatplayer("<p,neutral>Hi!");
+~chatnpc("<p,neutral>Hi. How can I help you?");
 
 def_int $choice = ~p_choice3("Can you heal me?", 0, "Do you see a lot of injured fighters?", 1, "Do you come here often?", 2);
 
 switch_int ($choice) {
     case 0:
-    ~chatplayer("<p,default>Can you heal me?");
+    ~chatplayer("<p,neutral>Can you heal me?");
 
     if (stat(hitpoints) >= stat_base(hitpoints)) {
-        ~chatnpc("<p,default>You look healthy to me!");
+        ~chatnpc("<p,neutral>You look healthy to me!");
     } else {
-        ~chatnpc("<p,default>Of course!");
+        ~chatnpc("<p,neutral>Of course!");
         npc_anim(human_pickpocket, 0);
         p_delay(0);
         mes("You feel a little better.");
@@ -20,15 +20,15 @@ switch_int ($choice) {
     }
 
     case 1:
-    ~chatplayer("<p,default>Do you see a lot of injured fighters?");
-    ~chatnpc("<p,default>Yes I do. Thankfully we can cope with almost anything.|Jaraah really is a wonderful surgeon, his methods are a little unorthodox but he gets the job done.");
-    ~chatnpc("<p,default>I shouldn't tell you this but his nickname is 'The Butcher'.");
-    ~chatplayer("<p,default>That's reassuring.");
+    ~chatplayer("<p,neutral>Do you see a lot of injured fighters?");
+    ~chatnpc("<p,neutral>Yes I do. Thankfully we can cope with almost anything.|Jaraah really is a wonderful surgeon, his methods are a little unorthodox but he gets the job done.");
+    ~chatnpc("<p,neutral>I shouldn't tell you this but his nickname is 'The Butcher'.");
+    ~chatplayer("<p,neutral>That's reassuring.");
 
     case 2:
-    ~chatplayer("<p,default>Do you come here often?");
-    ~chatnpc("<p,default>I work here, so yes!");
-    ~chatnpc("<p,default>You're silly!");
+    ~chatplayer("<p,neutral>Do you come here often?");
+    ~chatnpc("<p,neutral>I work here, so yes!");
+    ~chatnpc("<p,neutral>You're silly!");
 }
 
 [opnpc3,_healer]
@@ -36,7 +36,7 @@ switch_int ($choice) {
 
 [label,heal_duelarena]
 if (stat(hitpoints) >= stat_base(hitpoints)) {
-    ~chatnpc("<p,default>You look healthy to me!");
+    ~chatnpc("<p,neutral>You look healthy to me!");
 } else {
     npc_anim(human_pickpocket, 0);
     p_delay(0);

@@ -81,7 +81,7 @@ p_stopaction;
 if (.stat(hitpoints) = 0) {
     return(false);
 }
-if (map_clock < %action_delay | getwalktrigger() = stunned) {
+if (map_clock < %action_delay) {
     p_opplayert(db_getfield($spell_data, magic_spell_table:spellcom, 0));
     return(false);
 }
@@ -110,12 +110,12 @@ return(true);
 [proc,pvp_freeze_allowed](dbrow $spell_data)(boolean)
 // check if player is already frozen
 if (db_getfield($spell_data, magic_spell_table:freeze_time, 0) > 0) {
-    if (.%stunned > map_clock) {
+    if (.%frozen > map_clock) {
         mes("Your target is already held by a magical force.");
         return(false);
     }
     // immune message existed in 2005 https://oldschool.runescape.wiki/w/Update:Magic_and_Wilderness_Updates
-    if (calc(.%stunned + 5) > map_clock) {
+    if (calc(.%frozen + 5) > map_clock) {
         // osrs wiki trivia says that snare didnt have this? No proof though
         // ive found proof of bind and entangle having this in 2006: https://imgur.com/a/jBb1awE
         mes("Your target is currently immume to that spell.");
@@ -254,5 +254,5 @@ return($maxhit);
 
 [queue,pvp_freeze_player](int $duration)
 mes("You've been frozen!");
-%stunned = calc(map_clock + $duration + 1);
+%frozen = calc(map_clock + $duration + 1);
 walktrigger(frozen);

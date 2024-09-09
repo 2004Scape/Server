@@ -68,7 +68,7 @@ export class PlayerLoading {
         }
 
         const version = sav.g2();
-        if (version > 3) {
+        if (version > 4) {
             throw new Error('Unsupported player save format');
         }
 
@@ -143,6 +143,14 @@ export class PlayerLoading {
                 player.afkZones[index] = sav.g4();
             }
             player.lastAfkZone = sav.g2();
+        }
+
+        // chat modes
+        if (version >= 4) {
+            const packedChatModes = sav.g1();
+            player.chatModes.publicChat = (packedChatModes >> 4) & 0b11;
+            player.chatModes.privateChat = (packedChatModes >> 2) & 0b11;
+            player.chatModes.tradeDuel = packedChatModes & 0b11;
         }
 
         player.combatLevel = player.getCombatLevel();

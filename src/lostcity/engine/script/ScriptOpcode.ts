@@ -212,6 +212,7 @@ enum ScriptOpcode {
     NPC_FACESQUARE, // official
     NPC_FIND, // official
     NPC_FINDALLANY, // official
+    NPC_FINDALL,
     NPC_FINDEXACT, // official
     NPC_FINDHERO, // official
     NPC_FINDALLZONE,

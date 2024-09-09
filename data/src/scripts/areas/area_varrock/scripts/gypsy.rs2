@@ -115,7 +115,7 @@ if ($option = 1) {
     }
 } else if ($option = 2) {
     ~chatplayer("<p,neutral>How do you know how old I think you are?");
-    ~chatnpc("<p,default>I have the power to know. Just as I have the power to foresee the future.");
+    ~chatnpc("<p,neutral>I have the power to know. Just as I have the power to foresee the future.");
     $option = ~p_choice3("Ok, what am I thinking now?", 1, "Ok, but how old are you?", 2, "Go on then, what's my future?", 3);
 
     if ($option = 1) {

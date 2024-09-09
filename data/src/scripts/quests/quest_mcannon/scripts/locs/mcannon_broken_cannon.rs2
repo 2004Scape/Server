@@ -1,6 +1,6 @@
 [oploc1,broken_cannon]
 if (%mcannon_progress = ^mcannon_tasked_with_fixing_cannon) {
-    ~chatplayer("<p,default>I guess I'd better fix it with the toolkit I was given.");
+    ~chatplayer("<p,neutral>I guess I'd better fix it with the toolkit I was given.");
     %mcannon_progress = ^mcannon_inspected_cannon_first_time;
 } else if (%mcannon_progress = ^mcannon_inspected_cannon_first_time) {
     mes("You inspect the multi cannon.");

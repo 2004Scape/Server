@@ -48,8 +48,8 @@ if (inv_total(inv, stake) > 0) {
     inv_add(inv, stake, 1);
     ~objboxt(stake, "Dr Harlow hands you a stake.");
 }
-~chatnpc("<p,default>You'll need a hammer as well, to drive it in properly, your everyday general store hammer will do. One last thing... It's wise to carry garlic with you, vampires are somewhat weakened if they can smell garlic. Morgan");
-~chatnpc("<p,quiz>always liked garlic, you should try his house. But remember, a vampire is still a dangerous foe!");
+~chatnpc("<p,neutral>You'll need a hammer as well, to drive it in properly, your everyday general store hammer will do. One last thing... It's wise to carry garlic with you, vampires are somewhat weakened if they can smell garlic. Morgan");
+~chatnpc("<p,neutral>always liked garlic, you should try his house. But remember, a vampire is still a dangerous foe!");
 ~chatplayer("<p,happy>Thank you very much!");
 
 [label,harlow_decline_drink]

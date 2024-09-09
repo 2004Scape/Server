@@ -9,7 +9,7 @@ switch_int(%tutorial_progress) {
 
 [label,runescape_guide_welcome]
 if (map_production = false) {
-    ~chatnpc("<p,default>Do you want to skip the tutorial?");
+    ~chatnpc("<p,neutral>Do you want to skip the tutorial?");
     def_int $choice = ~p_choice2("Yes please.", 1, "No, thank you.", 2);
     if ($choice = 1) {
         %tutorial_progress = ^tutorial_complete;

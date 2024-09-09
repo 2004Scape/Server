@@ -3,38 +3,38 @@
 // RS3 dialogue: https://runescape.wiki/w/Transcript:Mubariz?oldid=27948630
 // To try and take as many updates into account, any older reference/image/video would be fantastic.
 [opnpc1,mubariz]
-~chatplayer("<p,default>Hi!");
-~chatnpc("<p,default>Welcome to the Duel Arena!");
-~chatplayer("<p,default>Thanks! I need some information.");
-~chatnpc("<p,default>What would you like to know?");
+~chatplayer("<p,neutral>Hi!");
+~chatnpc("<p,neutral>Welcome to the Duel Arena!");
+~chatplayer("<p,neutral>Thanks! I need some information.");
+~chatnpc("<p,neutral>What would you like to know?");
 
 def_int $choice = ~p_choice4("What is this place?", 0, "How do I challenge someone to a duel?", 1, "What kind of options are there?", 2, "This place looks really old, where did it come from?", 3);
 
 switch_int ($choice) {
     case 0:
-    ~chatplayer("<p,default>What is this place?");
-    ~chatnpc("<p,default>The Duel Arena has six duel arenas where you can fight other players in a controlled environment. We have our own dedicated hospital where we guarantee to put you back together, even if you lose.");
-    ~chatnpc("<p,default>Inbetween the arenas are walkways where you can watch the fights and challenge other players.");
-    ~chatplayer("<p,default>Sounds great. Thanks!");
-    ~chatnpc("<p,default>See you in the arenas!");
+    ~chatplayer("<p,neutral>What is this place?");
+    ~chatnpc("<p,neutral>The Duel Arena has six duel arenas where you can fight other players in a controlled environment. We have our own dedicated hospital where we guarantee to put you back together, even if you lose.");
+    ~chatnpc("<p,neutral>Inbetween the arenas are walkways where you can watch the fights and challenge other players.");
+    ~chatplayer("<p,neutral>Sounds great. Thanks!");
+    ~chatnpc("<p,neutral>See you in the arenas!");
 
     case 1:
-    ~chatplayer("<p,default>How do I challenge someone to a duel?");
-    ~chatnpc("<p,default>When you go to the arena you'll go up an access ramp to the walkways that overlook the duel arenas.|From the walkway you can watch the duels and challenge other players.");
-    ~chatnpc("<p,default>You'll know you're in the right place as you'll have a 'Challenge' option when you right-click a player.");
+    ~chatplayer("<p,neutral>How do I challenge someone to a duel?");
+    ~chatnpc("<p,neutral>When you go to the arena you'll go up an access ramp to the walkways that overlook the duel arenas.|From the walkway you can watch the duels and challenge other players.");
+    ~chatnpc("<p,neutral>You'll know you're in the right place as you'll have a 'Challenge' option when you right-click a player.");
 
     case 2:
-    ~chatplayer("<p,default>What kind of options are there?");
-    ~chatnpc("<p,default>You and your opponent can offer items as a stake. If you win, you recieve what your opponent staked, but, if you lose, your oppenent will get whatever items you staked.");
-    ~chatnpc("<p,default>You can choose to use rules to spice things up a bit. For instance if you both agree to use the 'No Magic' rule then neither player can use magic to attack the other player. The fight will be restricted to ranging and");
-    ~chatnpc("<p,default>melee only.");
-    ~chatnpc("<p,default>The rules are fairly self-evident with lots of different combinations for you to try out!");
-    ~chatplayer("<p,default>Cool! Thanks!");
+    ~chatplayer("<p,neutral>What kind of options are there?");
+    ~chatnpc("<p,neutral>You and your opponent can offer items as a stake. If you win, you recieve what your opponent staked, but, if you lose, your oppenent will get whatever items you staked.");
+    ~chatnpc("<p,neutral>You can choose to use rules to spice things up a bit. For instance if you both agree to use the 'No Magic' rule then neither player can use magic to attack the other player. The fight will be restricted to ranging and");
+    ~chatnpc("<p,neutral>melee only.");
+    ~chatnpc("<p,neutral>The rules are fairly self-evident with lots of different combinations for you to try out!");
+    ~chatplayer("<p,neutral>Cool! Thanks!");
 
     case 3:
-    ~chatplayer("<p,default>This place looks really old, where did it come from?");
-    ~chatnpc("<p,default>The archaeologists that are excavating the area east of Varrock have been working on this site as well. From these cliffs they uncovered this huge building. The experts think it may date back to the second age!");
-    ~chatnpc("<p,default>Now that the archaeologists have moved out, a group of warriors, headed by myself, have bought the land and converted it to a set of duel arenas. The best fighters around the world come here to fight!");
-    ~chatplayer("<p,default>I challenge you!");
-    ~chatnpc("<p,default>Ho! Ho! Ho!");
+    ~chatplayer("<p,neutral>This place looks really old, where did it come from?");
+    ~chatnpc("<p,neutral>The archaeologists that are excavating the area east of Varrock have been working on this site as well. From these cliffs they uncovered this huge building. The experts think it may date back to the second age!");
+    ~chatnpc("<p,neutral>Now that the archaeologists have moved out, a group of warriors, headed by myself, have bought the land and converted it to a set of duel arenas. The best fighters around the world come here to fight!");
+    ~chatplayer("<p,neutral>I challenge you!");
+    ~chatnpc("<p,neutral>Ho! Ho! Ho!");
 }
