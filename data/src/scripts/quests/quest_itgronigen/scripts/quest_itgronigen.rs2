@@ -180,14 +180,14 @@ if(%itgronigen_progress = ^itgronigen_complete) {
     if_setmodel(telescope:com_92, 3053);
     return;
 }
-def_int $constellation = random(12);
+def_int $constellation = ~random_range(1, 12);
 // "You will automatically talk to the professor and finish the quest." (https://web.archive.org/web/20050206190040/http://runehq.com/cacheguides/viewquestguide00179.htm)
 // i'm guessing the dialogue is probably queued here, you can "re-roll" the constellation in classic so we'll do the same thing
 // don't need to use a varp here, can just pass through queue as an arg
-queue(constellation_dialogue, 0, $constellation);
 if($constellation > 6) { // because model 3056 isn't a constellation for some reason!
     $constellation = calc($constellation + 1);
 }
+queue(constellation_dialogue, 0, $constellation);
 if_setmodel(telescope:com_92, calc(3049 + $constellation));
 
 [queue,constellation_dialogue](int $constellation_numb)
