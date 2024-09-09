@@ -23,7 +23,6 @@ model=model_2648_obj
 2dxan=196
 iop2=Wield
 wearpos=righthand
-wearpos2=lefthand
 manwear=model_534_obj_wear,0
 womanwear=model_534_obj_wear,6
 category=weapon_blunt
