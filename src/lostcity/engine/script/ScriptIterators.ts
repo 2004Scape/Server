@@ -4,7 +4,7 @@ import NpcType from '#lostcity/cache/config/NpcType.js';
 
 import World from '#lostcity/engine/World.js';
 
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import Loc from '#lostcity/entity/Loc.js';
 import HuntVis from '#lostcity/entity/hunt/HuntVis.js';
 import Npc from '#lostcity/entity/Npc.js';
@@ -63,8 +63,8 @@ export class HuntIterator extends ScriptIterator<Entity> {
         type: HuntModeType
     ) {
         super(tick);
-        const centerX: number = Position.zone(x);
-        const centerZ: number = Position.zone(z);
+        const centerX: number = CoordGrid.zone(x);
+        const centerZ: number = CoordGrid.zone(z);
         const radius: number = (1 + (distance / 8)) | 0;
         this.x = x;
         this.z = z;
@@ -91,7 +91,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[HuntIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
-                        if (Position.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
+                        if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, player) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, player.x, player.z, 1, 1, 1, 1)) {
@@ -114,7 +114,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (this.checkCategory !== -1 && npcType.category !== this.checkCategory) {
                             continue;
                         }
-                        if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
+                        if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
@@ -138,7 +138,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (this.checkCategory !== -1 && objType.category !== this.checkCategory) {
                             continue;
                         }
-                        if (Position.distanceToSW({ x: this.x, z: this.z }, obj) > this.distance) {
+                        if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, obj) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, obj.x, obj.z, 1, 1, 1, 1)) {
@@ -161,7 +161,7 @@ export class HuntIterator extends ScriptIterator<Entity> {
                         if (this.checkCategory !== -1 && locType.category !== this.checkCategory) {
                             continue;
                         }
-                        if (Position.distanceToSW({ x: this.x, z: this.z }, loc) > this.distance) {
+                        if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, loc) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, loc.x, loc.z, 1, 1, 1, 1)) {
@@ -204,8 +204,8 @@ export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
         checkVis: HuntVis,
     ) {
         super(tick);
-        const centerX: number = Position.zone(x);
-        const centerZ: number = Position.zone(z);
+        const centerX: number = CoordGrid.zone(x);
+        const centerZ: number = CoordGrid.zone(z);
         const radius: number = (1 + (distance / 8)) | 0;
         this.x = x;
         this.z = z;
@@ -235,7 +235,7 @@ export class NpcHuntAllCommandIterator extends ScriptIterator<Entity> {
                     if (!npcType.op[1]) {
                         continue;
                     }
-                    if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
+                    if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                         continue;
                     }
                     if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {
@@ -266,8 +266,8 @@ export class NpcIterator extends ScriptIterator<Npc> {
 
     constructor(tick: number, level: number, x: number, z: number,  distance: number, checkVis: HuntVis, type: NpcIteratorType, npcType?: NpcType) {
         super(tick);
-        const centerX: number = Position.zone(x);
-        const centerZ: number = Position.zone(z);
+        const centerX: number = CoordGrid.zone(x);
+        const centerZ: number = CoordGrid.zone(z);
         const radius: number = (1 + (distance / 8)) | 0;
         this.x = x;
         this.z = z;
@@ -299,7 +299,7 @@ export class NpcIterator extends ScriptIterator<Npc> {
                         if (World.currentTick > this.tick) {
                             throw new Error('[NpcIterator] tried to use an old iterator. Create a new iterator instead.');
                         }
-                        if (Position.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
+                        if (CoordGrid.distanceToSW({ x: this.x, z: this.z }, npc) > this.distance) {
                             continue;
                         }
                         if (this.checkVis === HuntVis.LINEOFSIGHT && !rsmod.hasLineOfSight(this.level, this.x, this.z, npc.x, npc.z, 1, 1, 1, 1)) {

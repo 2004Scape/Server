@@ -10,7 +10,7 @@ import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 import {ActiveObj, ActivePlayer, checkedHandler, ProtectedActivePlayer} from '#lostcity/engine/script/ScriptPointer.js';
 
 import Obj from '#lostcity/entity/Obj.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Player from '#lostcity/entity/Player.js';
 
@@ -143,7 +143,7 @@ const InvOps: CommandHandlers = {
         const [inv, coord, obj, count, duration] = state.popInts(5);
 
         const invType: InvType = check(inv, InvTypeValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         const objType: ObjType = check(obj, ObjTypeValid);
         check(count, ObjStackValid);
         check(duration, DurationValid);
@@ -173,7 +173,7 @@ const InvOps: CommandHandlers = {
 
         const invType: InvType = check(inv, InvTypeValid);
         check(duration, DurationValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
 
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {
             throw new Error(`$inv requires protected access: ${invType.debugname}`);
@@ -542,7 +542,7 @@ const InvOps: CommandHandlers = {
 
         const invType: InvType = check(inv, InvTypeValid);
         check(duration, DurationValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
 
         const secondary = state.intOperand == 1;
 
@@ -588,7 +588,7 @@ const InvOps: CommandHandlers = {
 
         const invType: InvType = check(inv, InvTypeValid);
         check(duration, DurationValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
 
 
         if (!state.pointerGet(ProtectedActivePlayer[state.intOperand]) && invType.protect && invType.scope !== InvType.SCOPE_SHARED) {

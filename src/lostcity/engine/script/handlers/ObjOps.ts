@@ -11,7 +11,7 @@ import {ActiveObj, ActivePlayer} from '#lostcity/engine/script/ScriptPointer.js'
 import {CommandHandlers} from '#lostcity/engine/script/ScriptRunner.js';
 
 import Obj from '#lostcity/entity/Obj.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 
 import {
@@ -37,7 +37,7 @@ const ObjOps: CommandHandlers = {
 
         const objType: ObjType = check(objId, ObjTypeValid);
         check(duration, DurationValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         check(count, ObjStackValid);
 
         if (objType.dummyitem !== 0) {
@@ -75,7 +75,7 @@ const ObjOps: CommandHandlers = {
 
         const objType: ObjType = check(objId, ObjTypeValid);
         check(duration, DurationValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         check(count, ObjStackValid);
 
         if (objType.dummyitem !== 0) {
@@ -144,7 +144,7 @@ const ObjOps: CommandHandlers = {
         const obj: Obj = state.activeObj;
         const objType = ObjType.get(obj.type);
         const zone: Zone = World.gameMap.getZone(obj.x, obj.z, obj.level);
-        for (const o of zone.getObjsSafe(Position.packZoneCoord(obj.x, obj.z))) {
+        for (const o of zone.getObjsSafe(CoordGrid.packZoneCoord(obj.x, obj.z))) {
             if (o.type !== obj.type || o.count !== obj.count) {
                 continue;
             }
@@ -166,15 +166,15 @@ const ObjOps: CommandHandlers = {
     },
 
     [ScriptOpcode.OBJ_COORD]: state => {
-        const position: Position = state.activeObj;
-        state.pushInt(Position.packCoord(position.level, position.x, position.z));
+        const coord: CoordGrid = state.activeObj;
+        state.pushInt(CoordGrid.packCoord(coord.level, coord.x, coord.z));
     },
 
     [ScriptOpcode.OBJ_FIND]: state => {
         const [coord, objId] = state.popInts(2);
 
         const objType: ObjType = check(objId, ObjTypeValid);
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
 
         const obj = World.getObj(position.x, position.z, position.level, objType.id, state.activePlayer.pid);
         if (!obj) {

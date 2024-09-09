@@ -21,7 +21,7 @@ import Npc from '#lostcity/entity/Npc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import Obj from '#lostcity/entity/Obj.js';
 import PathingEntity from '#lostcity/entity/PathingEntity.js';
-import {Position} from '#lostcity/entity/Position.js';
+import {CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import MoveSpeed from '#lostcity/entity/MoveSpeed.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
@@ -1700,7 +1700,7 @@ export default class Player extends PathingEntity {
         if (this.withinAfkZone()) {
             return;
         }
-        const coord: number = Position.packCoord(0, this.x - 10, this.z - 10); // level doesn't matter.
+        const coord: number = CoordGrid.packCoord(0, this.x - 10, this.z - 10); // level doesn't matter.
         if (this.moveSpeed === MoveSpeed.INSTANT && this.jump) {
             this.afkZones[1] = coord;
         } else {
@@ -1717,8 +1717,8 @@ export default class Player extends PathingEntity {
     private withinAfkZone(): boolean {
         const size: number = 21;
         for (let index: number = 0; index < this.afkZones.length; index++) {
-            const coord: Position = Position.unpackCoord(this.afkZones[index]);
-            if (Position.intersects(this.x, this.z, this.width, this.length, coord.x, coord.z, size, size)) {
+            const coord: CoordGrid = CoordGrid.unpackCoord(this.afkZones[index]);
+            if (CoordGrid.intersects(this.x, this.z, this.width, this.length, coord.x, coord.z, size, size)) {
                 return true;
             }
         }

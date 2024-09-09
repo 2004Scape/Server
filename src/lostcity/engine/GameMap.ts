@@ -15,7 +15,7 @@ import Npc from '#lostcity/entity/Npc.js';
 import Obj from '#lostcity/entity/Obj.js';
 import EntityLifeCycle from '#lostcity/entity/EntityLifeCycle.js';
 import Loc from '#lostcity/entity/Loc.js';
-import { Position } from '#lostcity/entity/Position.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 
 import { LocAngle, LocLayer } from '@2004scape/rsmod-pathfinder';
 import * as rsmod from '@2004scape/rsmod-pathfinder';
@@ -178,7 +178,7 @@ export default class GameMap {
     }
 
     isFreeToPlay(x: number, z: number): boolean {
-        return this.freemap.has(Position.packCoord(0, x, z));
+        return this.freemap.has(CoordGrid.packCoord(0, x, z));
     }
 
     getZone(x: number, z: number, level: number): Zone {
@@ -374,7 +374,7 @@ export default class GameMap {
 
                 for (let x: number  = startX; x <= endX; x++) {
                     for (let z: number  = startZ; z <= endZ; z++) {
-                        map.add(Position.packCoord(fromLevel, x, z));
+                        map.add(CoordGrid.packCoord(fromLevel, x, z));
                     }
                 }
             } else {
@@ -382,7 +382,7 @@ export default class GameMap {
 
                 for (let x: number  = 0; x < 8; x++) {
                     for (let z: number  = 0; z < 8; z++) {
-                        map.add(Position.packCoord(level, (mx << 6) + lx + x, (mz << 6) + lz + z));
+                        map.add(CoordGrid.packCoord(level, (mx << 6) + lx + x, (mz << 6) + lz + z));
                     }
                 }
             }
@@ -393,7 +393,7 @@ export default class GameMap {
         return (z & 0x3f) | ((x & 0x3f) << 6) | ((level & 0x3) << 12);
     }
 
-    private unpackCoord(packed: number): Position {
+    private unpackCoord(packed: number): CoordGrid {
         const z: number = packed & 0x3f;
         const x: number = (packed >> 6) & 0x3f;
         const level: number = (packed >> 12) & 0x3;

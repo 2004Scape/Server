@@ -3,7 +3,7 @@ import Packet from '#jagex2/io/Packet.js';
 import ServerProt from '#lostcity/network/225/outgoing/prot/ServerProt.js';
 import PlayerInfo from '#lostcity/network/outgoing/model/PlayerInfo.js';
 import World from '#lostcity/engine/World.js';
-import { Position } from '#lostcity/entity/Position.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import Player from '#lostcity/entity/Player.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
 import BuildArea, { ExtendedInfo } from '#lostcity/entity/BuildArea.js';
@@ -76,8 +76,8 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         if (tele) {
             buf.pBit(2, 3);
             buf.pBit(2, level);
-            buf.pBit(7, Position.local(x, player.originX));
-            buf.pBit(7, Position.local(z, player.originZ));
+            buf.pBit(7, CoordGrid.local(x, player.originX));
+            buf.pBit(7, CoordGrid.local(z, player.originZ));
             buf.pBit(1, jump ? 1 : 0);
             buf.pBit(1, extendedInfo ? 1 : 0);
         } else if (runDir !== -1) {
@@ -106,7 +106,7 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
 
         for (const uid of buildArea.players) {
             const other: Player | null = World.getPlayerByUid(uid);
-            if (!other || other.tele || other.level !== message.level || !Position.isWithinDistanceSW(message, other, buildArea.viewDistance) || !other.checkLifeCycle(World.currentTick)) {
+            if (!other || other.tele || other.level !== message.level || !CoordGrid.isWithinDistanceSW(message, other, buildArea.viewDistance) || !other.checkLifeCycle(World.currentTick)) {
                 // if the player was teleported, they need to be removed and re-added
                 buf.pBit(1, 1);
                 buf.pBit(2, 3);
@@ -275,10 +275,10 @@ export default class PlayerInfoEncoder extends MessageEncoder<PlayerInfo> {
         }
 
         if (mask & Player.EXACT_MOVE) {
-            buf.p1(player.exactStartX - Position.zoneOrigin(message.originX));
-            buf.p1(player.exactStartZ - Position.zoneOrigin(message.originZ));
-            buf.p1(player.exactEndX - Position.zoneOrigin(message.originX));
-            buf.p1(player.exactEndZ - Position.zoneOrigin(message.originZ));
+            buf.p1(player.exactStartX - CoordGrid.zoneOrigin(message.originX));
+            buf.p1(player.exactStartZ - CoordGrid.zoneOrigin(message.originZ));
+            buf.p1(player.exactEndX - CoordGrid.zoneOrigin(message.originX));
+            buf.p1(player.exactEndZ - CoordGrid.zoneOrigin(message.originZ));
             buf.p2(player.exactMoveStart);
             buf.p2(player.exactMoveEnd);
             buf.p1(player.exactMoveDirection);

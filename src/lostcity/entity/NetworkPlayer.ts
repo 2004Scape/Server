@@ -12,7 +12,7 @@ import ClientSocket from '#lostcity/server/ClientSocket.js';
 
 import ClientProtRepository from '#lostcity/network/225/incoming/prot/ClientProtRepository.js';
 import ClientProt from '#lostcity/network/225/incoming/prot/ClientProt.js';
-import { Position } from './Position.js';
+import { CoordGrid } from '../engine/CoordGrid.js';
 import ZoneMap from '#lostcity/engine/zone/ZoneMap.js';
 import Zone from '#lostcity/engine/zone/Zone.js';
 import InvType from '#lostcity/cache/config/InvType.js';
@@ -194,14 +194,14 @@ export class NetworkPlayer extends Player {
         const loadedZones: Set<number> = this.buildArea.loadedZones;
         const activeZones: Set<number> = this.buildArea.activeZones;
 
-        const reloadLeftX = (Position.zone(this.originX) - 4) << 3;
-        const reloadRightX = (Position.zone(this.originX) + 5) << 3;
-        const reloadTopZ = (Position.zone(this.originZ) + 5) << 3;
-        const reloadBottomZ = (Position.zone(this.originZ) - 4) << 3;
+        const reloadLeftX = (CoordGrid.zone(this.originX) - 4) << 3;
+        const reloadRightX = (CoordGrid.zone(this.originX) + 5) << 3;
+        const reloadTopZ = (CoordGrid.zone(this.originZ) + 5) << 3;
+        const reloadBottomZ = (CoordGrid.zone(this.originZ) - 4) << 3;
 
         // if the build area should be regenerated, do so now
         if (this.x < reloadLeftX || this.z < reloadBottomZ || this.x > reloadRightX - 1 || this.z > reloadTopZ - 1) {
-            this.write(new RebuildNormal(Position.zone(this.x), Position.zone(this.z)));
+            this.write(new RebuildNormal(CoordGrid.zone(this.x), CoordGrid.zone(this.z)));
 
             this.originX = this.x;
             this.originZ = this.z;
@@ -209,8 +209,8 @@ export class NetworkPlayer extends Player {
         }
 
         for (let info = this.cameraPackets.head(); info !== null; info = this.cameraPackets.next()) {
-            const localX = info.camX - Position.zoneOrigin(this.originX);
-            const localZ = info.camZ - Position.zoneOrigin(this.originZ);
+            const localX = info.camX - CoordGrid.zoneOrigin(this.originX);
+            const localZ = info.camZ - CoordGrid.zoneOrigin(this.originZ);
             if (info.type === ServerProt.CAM_MOVETO) {
                 this.write(new CamMoveTo(localX, localZ, info.height, info.rotationSpeed, info.rotationMultiplier));
             } else if (info.type === ServerProt.CAM_LOOKAT) {
@@ -228,13 +228,13 @@ export class NetworkPlayer extends Player {
         // update any newly tracked zones
         activeZones.clear();
 
-        const centerX = Position.zone(this.x);
-        const centerZ = Position.zone(this.z);
+        const centerX = CoordGrid.zone(this.x);
+        const centerZ = CoordGrid.zone(this.z);
 
-        const leftX = Position.zone(this.originX) - 6;
-        const rightX = Position.zone(this.originX) + 6;
-        const topZ = Position.zone(this.originZ) + 6;
-        const bottomZ = Position.zone(this.originZ) - 6;
+        const leftX = CoordGrid.zone(this.originX) - 6;
+        const rightX = CoordGrid.zone(this.originX) + 6;
+        const topZ = CoordGrid.zone(this.originZ) + 6;
+        const bottomZ = CoordGrid.zone(this.originZ) - 6;
 
         for (let x = centerX - 3; x <= centerX + 3; x++) {
             for (let z = centerZ - 3; z <= centerZ + 3; z++) {
@@ -247,10 +247,10 @@ export class NetworkPlayer extends Player {
             }
         }
 
-        const mapZone = Position.packCoord(0, this.x >> 6 << 6, this.z >> 6 << 6);
+        const mapZone = CoordGrid.packCoord(0, this.x >> 6 << 6, this.z >> 6 << 6);
         if (this.lastMapZone !== mapZone) {
             if (this.lastMapZone !== -1) {
-                const { x, z } = Position.unpackCoord(this.lastMapZone);
+                const { x, z } = CoordGrid.unpackCoord(this.lastMapZone);
                 this.triggerMapzoneExit(x, z);
             }
 
@@ -258,7 +258,7 @@ export class NetworkPlayer extends Player {
             this.lastMapZone = mapZone;
         }
 
-        const zone = Position.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
+        const zone = CoordGrid.packCoord(this.level, this.x >> 3 << 3, this.z >> 3 << 3);
         if (this.lastZone !== zone) {
             const lastWasMulti = World.gameMap.isMulti(this.lastZone);
             const nowIsMulti = World.gameMap.isMulti(zone);
@@ -267,7 +267,7 @@ export class NetworkPlayer extends Player {
             }
 
             if (this.lastZone !== -1) {
-                const { level, x, z } = Position.unpackCoord(this.lastZone);
+                const { level, x, z } = CoordGrid.unpackCoord(this.lastZone);
                 this.triggerZoneExit(level, x, z);
             }
 

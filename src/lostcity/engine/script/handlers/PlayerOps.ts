@@ -13,7 +13,7 @@ import ServerTriggerType from '#lostcity/engine/script/ServerTriggerType.js';
 import { PlayerQueueType, ScriptArgument } from '#lostcity/entity/EntityQueueRequest.js';
 import { PlayerTimerType } from '#lostcity/entity/EntityTimer.js';
 import { isNetworkPlayer } from '#lostcity/entity/NetworkPlayer.js';
-import { Position } from '#lostcity/entity/Position.js';
+import { CoordGrid } from '#lostcity/engine/CoordGrid.js';
 import CameraInfo from '#lostcity/entity/CameraInfo.js';
 import Interaction from '#lostcity/entity/Interaction.js';
 import PlayerStat from '#lostcity/entity/PlayerStat.js';
@@ -155,14 +155,14 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.CAM_LOOKAT]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
-        const pos: Position = check(coord, CoordValid);
+        const pos: CoordGrid = check(coord, CoordValid);
         state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_LOOKAT, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
     [ScriptOpcode.CAM_MOVETO]: checkedHandler(ActivePlayer, state => {
         const [coord, height, rotationSpeed, rotationMultiplier] = state.popInts(4);
 
-        const pos: Position = check(coord, CoordValid);
+        const pos: CoordGrid = check(coord, CoordValid);
         state.activePlayer.cameraPackets.addTail(new CameraInfo(ServerProt.CAM_MOVETO, pos.x, pos.z, height, rotationSpeed, rotationMultiplier));
     }),
 
@@ -177,8 +177,8 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.COORD]: checkedHandler(ActivePlayer, state => {
-        const position: Position = state.activePlayer;
-        state.pushInt(Position.packCoord(position.level, position.x, position.z));
+        const coord: CoordGrid = state.activePlayer;
+        state.pushInt(CoordGrid.packCoord(coord.level, coord.x, coord.z));
     }),
 
     [ScriptOpcode.DISPLAYNAME]: checkedHandler(ActivePlayer, state => {
@@ -186,9 +186,9 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.FACESQUARE]: checkedHandler(ActivePlayer, state => {
-        const pos: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.activePlayer.faceSquare(pos.x, pos.z);
+        state.activePlayer.faceSquare(coord.x, coord.z);
     }),
 
     [ScriptOpcode.IF_CLOSE]: checkedHandler(ActivePlayer, state => {
@@ -373,26 +373,26 @@ const PlayerOps: CommandHandlers = {
 
     // https://x.com/JagexAsh/status/1697517518007541917
     [ScriptOpcode.P_TELEJUMP]: checkedHandler(ProtectedActivePlayer, state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.activePlayer.teleJump(position.x, position.z, position.level);
+        state.activePlayer.teleJump(coord.x, coord.z, coord.level);
     }),
 
     // https://x.com/JagexAsh/status/1697517518007541917
     // https://x.com/JagexAsh/status/1790684996480442796
     [ScriptOpcode.P_TELEPORT]: checkedHandler(ProtectedActivePlayer, state => {
-        const position: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
-        state.activePlayer.teleport(position.x, position.z, position.level);
+        state.activePlayer.teleport(coord.x, coord.z, coord.level);
     }),
 
     // https://x.com/JagexAsh/status/1605130887292751873
     // https://x.com/JagexAsh/status/1698248664349614138
     [ScriptOpcode.P_WALK]: checkedHandler(ProtectedActivePlayer, state => {
-        const pos: Position = check(state.popInt(), CoordValid);
+        const coord: CoordGrid = check(state.popInt(), CoordValid);
 
         const player = state.activePlayer;
-        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, pos.x, pos.z, player.width, player.width, player.length));
+        player.queueWaypoints(rsmod.findPath(player.level, player.x, player.z, coord.x, coord.z, player.width, player.width, player.length));
         player.updateMovement(false); // try to walk immediately
     }),
 
@@ -694,7 +694,7 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.HINT_COORD]: state => {
         const [offset, coord, height] = state.popInts(3);
 
-        const position: Position = check(coord, CoordValid);
+        const position: CoordGrid = check(coord, CoordValid);
         state.activePlayer.hintTile(offset, position.x, position.z, height);
     },
 
@@ -710,8 +710,8 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_EXACTMOVE]: checkedHandler(ProtectedActivePlayer, state => {
         const [start, end, startCycle, endCycle, direction] = state.popInts(5);
 
-        const startPos: Position = check(start, CoordValid);
-        const endPos: Position = check(end, CoordValid);
+        const startPos: CoordGrid = check(start, CoordValid);
+        const endPos: CoordGrid = check(end, CoordValid);
 
         state.activePlayer.unsetMapFlag();
         state.activePlayer.exactMove(startPos.x, startPos.z, endPos.x, endPos.z, startCycle, endCycle, direction);
@@ -750,8 +750,8 @@ const PlayerOps: CommandHandlers = {
     [ScriptOpcode.P_LOCMERGE]: checkedHandler(ProtectedActivePlayer, state => {
         const [startCycle, endCycle, southEast, northWest] = state.popInts(4);
 
-        const se: Position = check(southEast, CoordValid);
-        const nw: Position = check(northWest, CoordValid);
+        const se: CoordGrid = check(southEast, CoordValid);
+        const nw: CoordGrid = check(northWest, CoordValid);
 
         World.mergeLoc(state.activeLoc, state.activePlayer, startCycle, endCycle, se.z, se.x, nw.z, nw.x);
     }),
@@ -1031,7 +1031,7 @@ const PlayerOps: CommandHandlers = {
     }),
 
     [ScriptOpcode.LAST_COORD]: checkedHandler(ActivePlayer, state => {
-        state.pushInt(Position.packCoord(state.activePlayer.level, state.activePlayer.lastStepX, state.activePlayer.lastStepZ));
+        state.pushInt(CoordGrid.packCoord(state.activePlayer.level, state.activePlayer.lastStepX, state.activePlayer.lastStepZ));
     }),
 };
 
