@@ -2,6 +2,14 @@
 [opnpcu,trufitus]
 if(%junglepotion_progress >= ^junglepotion_complete) {
     switch_obj (last_useitem) {
+        case wampum_belt: 
+            if(%zombiequeen_progress = ^zombiequeen_not_started) {
+                ~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.");
+                ~chatnpc("<p,neutral>Hello Bwana, this message from Mosol Rei bears bad news... Yes, things do look very bad indeed.");
+                @multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
+            } else {
+                ~chatnpc("<p,neutral>You've already given me one of these Bwana. I'm aware of the situation with Rashiliyia.");
+            }
         case snake_weed, ardrigal, sito_foil, volencia_moss, rogues_purse:
             def_obj $herb = last_useitem;
             ~chatnpc("<p,neutral>Many thanks for the herb Bwana. I'll add it to my collection.");
@@ -71,16 +79,20 @@ switch_int(%junglepotion_progress) {
 @trufitus_wrong_herb;
 
 [opnpc1,trufitus]
-switch_int(%junglepotion_progress) {
-    case ^junglepotion_not_started: @trufitus_pre_quest;
-    case ^junglepotion_get_snake_weed, ^junglepotion_found_snake_weed: @trufitus_give_herb(snake_weed, unidentified_snake_weed);
-    case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal: @trufitus_give_herb(ardrigal, unidentified_ardrigal);
-    case ^junglepotion_get_sito_foil, ^junglepotion_found_sito_foil: @trufitus_give_herb(sito_foil, unidentified_sito_foil);
-    case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss: @trufitus_give_herb(volencia_moss, unidentified_volencia_moss);
-    case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse: @trufitus_give_herb(rogues_purse, unidentified_rogues_purse);
-    case ^junglepotion_found_all_herbs: @trufitus_finish_quest;
-    case ^junglepotion_complete: @trufitus_greatest_respects;
-    case ^junglepotion_complete_after_spoken: @trufitus_post_quest;
+if(%zombiequeen_progress > ^zombiequeen_not_started) {
+    ~chatnpc("<p,neutral>Hello Bwana, how goes your quest to find Ah Za Rhoon?");
+} else {
+    switch_int(%junglepotion_progress) {
+        case ^junglepotion_not_started: @trufitus_pre_quest;
+        case ^junglepotion_get_snake_weed, ^junglepotion_found_snake_weed: @trufitus_give_herb(snake_weed, unidentified_snake_weed);
+        case ^junglepotion_get_ardrigal, ^junglepotion_found_ardrigal: @trufitus_give_herb(ardrigal, unidentified_ardrigal);
+        case ^junglepotion_get_sito_foil, ^junglepotion_found_sito_foil: @trufitus_give_herb(sito_foil, unidentified_sito_foil);
+        case ^junglepotion_get_volencia_moss, ^junglepotion_found_volencia_moss: @trufitus_give_herb(volencia_moss, unidentified_volencia_moss);
+        case ^junglepotion_get_rogues_purse, ^junglepotion_found_rogues_purse: @trufitus_give_herb(rogues_purse, unidentified_rogues_purse);
+        case ^junglepotion_found_all_herbs: @trufitus_finish_quest;
+        case ^junglepotion_complete: @trufitus_greatest_respects;
+        case ^junglepotion_complete_after_spoken: @trufitus_post_quest;
+    }
 }
 
 [label,trufitus_pre_quest]
@@ -284,7 +296,7 @@ queue(junglepotion_quest_complete, 0);
 //~chatnpc("<p,happy>You should deliver the good news to bwana Timfraku, chief of Tai Bwo Wannai. He lives in a raised hut not far from here.");
 
 [label,trufitus_post_quest]
-if(inv_total(inv, wampus_belt) > 0) {
+if(inv_total(inv, wampum_belt) > 0) {
     ~chatplayer("<p,neutral>Greetings.");
     ~chatnpc("<p,neutral>Greetings Bwana!|You look like you have some serious news.");
     ~chatplayer("<p,neutral>Well, I think I may have. I have just spoken to Mosol Rei and he says that Rashiliyia has returned...");
@@ -328,6 +340,92 @@ if(inv_total(inv, wampus_belt) > 0) {
 ~chatnpc("<p,neutral>Although the adventurers disturbed Rashiliyia's bones, they were not able to properly sanctify them. And this is the most likely reason why she still plagues us today.");
 ~chatnpc("<p,neutral>Of course, she only has to order one of her minions to move her bones and she can quite quickly and easily set up a new headquarters anywhere and continue to launch her plague of undead.");
 @multi3("What are minions?", trufitus_minions, "What are onions?", trufitus_onions, "Does she have any weaknesses?", trufitus_weakness);
+
+[label,trufitus_minions]
+~chatplayer("<p,neutral>What are minions?");
+~chatnpc("<p,neutral>Minions are the fiendish undead creatures that she controls. She has very few living worshippers, but they need to be dealt with at some point.");
+~chatnpc("<p,neutral>Usually a strong creature of some sort will be guarding her remains. And of course, she is a very powerful spell caster herself. Not to be tackled lightly.");
+@multi2("Thanks for the information!", trufitus_info, "Does she have any weaknesses?", trufitus_weakness);
+
+[label,trufitus_info]
+~chatplayer("<p,neutral>Thanks for the information!");
+~chatnpc("<p,neutral>What information?");
+~chatplayer("<p,neutral>About Ah Za Rhoon and where it is.");
+~mesbox("Trufitus looks at you blankly...");
+~chatnpc("<p,neutral>Hmmm, well, you are welcome bwana.");
+
+[label,trufitus_weakness]
+~chatplayer("<p,neutral>Does she have any weaknesses?");
+~chatnpc("<p,neutral>I am not sure, but the legend about her certainly is long. It's a pity that the temple of Ah Za Rhoon has crumbled as there may be some clues that could help us to defeat her.");
+~chatnpc("<p,neutral>I think the largest problem will be in locating her resting place.");
+@multi2("Why was it called Ah Za Rhoon?", trufitus_why_ah_za_rhoon, "Is her resting place important?", trufitus_restingplace);
+
+[label,trufitus_why_ah_za_rhoon]
+~chatplayer("<p,neutarl>Why was it called Ah Za Rhoon?");
+~chatnpc("<p,neutral>It is from an ancient language. The direct translation is... 'Magnificence floating on water'. But my research makes me believe that the temple was built on land.");
+~chatnpc("<p,neutral>And most likely between large bodies of water, for example large lakes. However, many people have searched for the temple, and have failed. I would hate to see you waste your time on a pointless search like that.");
+@multi4("Thanks for the information!", trufitus_info, "Do you know anything more about the temple?", trufitus_temple, "I am going to search for Ah Za Rhoon!", trufitus_searchfor, "It's a pity that I can't search for Ah Za Rhoon now.", trufitus_pity);
+
+[label,trufitus_pity]
+~chatplayer("<p,neutral>It's a pity that I can't search for Ah Za Rhoon now.");
+~chatnpc("<p,neutral>Well, I understand. Perhaps you can search for it another time? Come back when you think you're ready.  Excuse me now won't you while I return to my studies.");
+mes("Trufitus goes back to his studies."); // this is the only dialogue mentioning his studies that will send this mes
+
+[label,trufitus_temple]
+~chatplayer("<p,neutral>Do you know anything more about the temple?");
+~chatnpc("<p,neutral>Not much... I would say that is about it...");
+~chatnpc("<p,neutral>Even the great priest Zadimus who built the temple did not survive. Some say that Rashiliyia caused the temple to collapse.");
+~chatnpc("<p,neutral>She was angry at Zadimus for not returning her affections. She was a great sorceress even before they met.");
+@multi3("Tell me more.", trufitus_tellmemore, "Are there any traps there?", trufitus_traps, "Thanks for the information!", trufitus_info);
+
+[label,trufitus_tellmemore]
+~chatplayer("<p,neutral>Tell me more.");
+~chatnpc("<p,neutral>I don't know anymore. You're very demanding aren't you!");
+@multi4("Thanks for the information!", trufitus_info, "Do you know anything more about the temple?", trufitus_temple, "I am going to search for Ah Za Rhoon!", trufitus_searchfor, "It's a pity that I can't search for Ah Za Rhoon now.", trufitus_pity);
+
+[label,trufitus_traps]
+~chatplayer("<p,neutral>Are there any traps there?");
+~chatnpc("<p,neutral>How am I supposed to know? A lot of what I know is most probably wrong but some of it seems right to me. Excuse me but I must get back to my studies.");
+
+[label,trufitus_searchfor]
+~chatplayer("<p,neutral>I am going to search for Ah Za Rhoon!");
+~chatnpc("<p,quiz>What?! You must be crazy! That place has passed into myth and legend, it has been buried under rubble for years. It's most likely buried 20 men deep, and that's if you can actually find it.");
+~chatnpc("<p,neutral>Are you sure you're going to go and look for it? I may be able to do some research into this if you agree. Only I don't want to waste my time if you're not serious about this!");
+// https://youtu.be/WyLiVLF4VnA?si=tIKWSVB4AqwRbI5L&t=217, i'm pretty sure the period is just cut off here
+switch_int(~p_choice2("Yes, I will seriously look for Ah Za Rhoon and I'd appreciate your help.", 1, "Actually, now it comes to it, I'm having second thoughts.", 2)) {
+    case 1:
+        ~chatplayer("<p,neutral>Yes, I will seriously look for Ah Za Rhoon and I'd appreciate your help.");
+        ~chatnpc("<p,neutral>Ok then Bwana, good luck with your quest, and remember to stock up well with adventuring supplies before setting off. You never know how useful some fairly ordinary things might be when you're adventuring.");
+        %zombiequeen_progress = ^zombiequeen_started;
+        inv_del(inv, wampum_belt, 1);
+        ~chatnpc("<p,neutral>I'll hold on to this Wampum belt for you for the time being. I'll give it back to you when we have completed this quest.");
+    case 2:
+        ~chatplayer("<p,neutral>Actually, now it comes to it, I'm having second thoughts.");
+        ~chatnpc("<p,neutral>Well, I understand. Perhaps you can search for it another time? Come back when you think you're ready.  Excuse me now won't you while I return to my studies.");
+}
+
+[label,trufitus_legend]
+~chatplayer("<p,neutral>Mosol Rei said something about a legend?");
+~chatnpc("<p,neutral>Ah, yes, there is a legend, but it is lost in the midst of antiquity...");
+~chatnpc("<p,neutral>The last place to hold any details regarding this mystery was in the temple of Ah Za Rhoon....and that has long since vanished... it crumbled into dust...");
+@multi2("Why was it called Ah Za Rhoon?", trufitus_why_ah_za_rhoon, "Do you know anything more about the temple?", trufitus_temple);
+
+[label,trufitus_mosolrei]
+~chatplayer("<p,neutral>What do you know about Mosol Rei?");
+~chatnpc("<p,neutral>I know he is a brave warrior, he lives in a village south of here.  Your journeys have taken you far!");
+@multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Do you trust him?", trufitus_trust);
+
+[label,trufitus_trust]
+~chatplayer("<p,neutral>Do you trust him?");
+~chatnpc("<p,neutral>He is a little headstrong, but for the right reasons. I think he is generally to be trusted.");
+@multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
+
+[label,trufitus_mosolgave]
+~chatplayer("<p,neutral>Mosol gave me something to show you.");
+~chatnpc("<p,neutral>Oh yes, let me see it then.");
+~objbox(wampum_belt, "You show Trufitus the Wampum belt, he studies it for a long time.");
+~chatnpc("<p,neutral>Yes, things do look very bad indeed.");
+@multi2("What do you know about Rashiliyia?", trufitus_rashiliyia, "Mosol Rei said something about a legend?", trufitus_legend);
 
 [label,trufitus_onions]
 ~chatplayer("<p,neutral>What are onions?");
