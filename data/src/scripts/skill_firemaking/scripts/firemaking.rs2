@@ -67,7 +67,7 @@ if (%action_delay < map_clock) {
         %action_delay = calc(map_clock + 3);
     }
 }
-mes("<tostring(map_clock)>: p_opobj(4)");
+// mes("<tostring(map_clock)>: p_opobj(4)");
 p_opobj(4); // interact with obj again
 
 [label,light_logs_inv](int $slot)
@@ -120,6 +120,7 @@ p_opobj(4);
 obj_del;
 stat_advance(firemaking, oc_param($log, productexp));
 sound_synth(fire_lit, 0, 0);
+anim(null, 0);
 facesquare($fire_coord);
 //mes("<tostring(map_clock)>, <tostring(%action_delay)>: The fire catches and the logs begin to burn.");
 mes("The fire catches and the logs begin to burn.");
@@ -149,7 +150,6 @@ if (p_finduid(uid) = true) {
 [proc,push_player](coord $origin_coord)
 if (~in_duel_arena($origin_coord) = true) {
     p_delay(0);
-    anim(null, 0);
     return;
 }
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
@@ -177,7 +177,6 @@ if (~in_duel_arena($origin_coord) = true) {
     // https://oldschool.runescape.wiki/w/Update:RS2_-_more_fixes/changes
     //  - "Fixed: You could select a duel with the no movement option and then plant flowers or light a fire so you weren't standing next to your opponent."
     p_delay(1);
-    anim(null, 0);
     return;
 }
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
