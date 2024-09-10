@@ -22,6 +22,7 @@ export enum FriendsClientOpcodes {
     PLAYER_LOGIN,
     PLAYER_LOGOUT,
     PLAYER_CHAT_SETMODE,
+    PRIVATE_MESSAGE,
 }
 
 /**
@@ -30,6 +31,7 @@ export enum FriendsClientOpcodes {
 export enum FriendsServerOpcodes {
     UPDATE_FRIENDLIST,
     UPDATE_IGNORELIST,
+    PRIVATE_MESSAGE,
 }
 
 // TODO make this configurable (or at least source it from somewhere common)
@@ -223,6 +225,19 @@ export class FriendsServer {
 
                         // we can refactor this to only send the update to the player who was removed from the ignore list
                         await this.broadcastWorldToFollowers(username37);
+                    } else if (opcode === FriendsClientOpcodes.PRIVATE_MESSAGE) {
+                        if (world === null) {
+                            console.error('[Friends]: Recieved PRIVATE_MESSAGE before WORLD_CONNECT');
+                            return;
+                        }
+
+                        const username37 = data.g8();
+                        const staffLvl = data.g1();
+                        const pmId = data.g4();
+                        const targetUsername37 = data.g8();
+                        const message = data.gjstr();
+                        
+                        await this.sendPrivateMessage(username37, staffLvl, pmId, targetUsername37, message);
                     } else {
                         console.error(`[Friends]: Unknown opcode ${opcode}, length ${length}`);
                     }
@@ -303,6 +318,23 @@ export class FriendsServer {
         packet.p8(other);
 
         return this.write(socket, FriendsServerOpcodes.UPDATE_FRIENDLIST, packet.data);
+    }
+
+    private sendPrivateMessage(username: bigint, staffLvl: number, pmId: number, target: bigint, message: string) {
+        const socket = this.getPlayerWorldSocket(target);
+
+        if (!socket) {
+            return Promise.resolve();
+        }
+
+        const packet = new Packet(new Uint8Array(8 + 1 + 4 + 8 + message.length + 1));
+        packet.p8(username);
+        packet.p1(staffLvl);
+        packet.p4(pmId);
+        packet.p8(target);
+        packet.pjstr(message);
+
+        return this.write(socket, FriendsServerOpcodes.PRIVATE_MESSAGE, packet.data);
     }
 
     /**
@@ -555,5 +587,22 @@ export class FriendsClient {
         request.p8(toBase37(username));
         request.p1(privateChatMode);
         await this.write(this.socket, FriendsClientOpcodes.PLAYER_CHAT_SETMODE, request.data);
+    }
+
+    public async privateMessage(username: string, staffLvl: number, pmId: number, target: bigint, message: string) {
+        await this.connect();
+
+        if (this.socket === null) {
+            return -1;
+        }
+
+        const request = new Packet(new Uint8Array(8 + 1 + 4 + 8 + message.length + 1));
+        request.p8(toBase37(username));
+        request.p1(staffLvl);
+        request.p4(pmId);
+        request.p8(target);
+        request.pjstr(message);
+
+        await this.write(this.socket, FriendsClientOpcodes.PRIVATE_MESSAGE, request.data);
     }
 }
