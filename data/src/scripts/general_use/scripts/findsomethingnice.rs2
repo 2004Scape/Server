@@ -12,10 +12,10 @@ switch_int ($random) {
         ~objboxt(leather_gloves, "You've found some gloves!"); // https://imgur.com/ivawRMt
     case 1 :
         inv_add(inv, leather_boots, 1);
-        ~objboxt(leather_boots, "You've found some boots!"); // guess
+        ~objboxb(leather_boots, "You've found some boots!"); // guess
     case 2 :
         inv_add(inv, pot_empty,  1);
-        ~objboxt(pot_empty, "You've found a pot."); // guess
+        ~objboxb(pot_empty, "You've found a pot."); // guess
     case 3 : 
         // https://web.archive.org/web/20061026043451/http://www.global-rs.com/atlas/city/falador/
         // "This is a house with a range, which we learned before, is better for cooking on then fires, 
@@ -24,7 +24,7 @@ switch_int ($random) {
         ~objboxt(coins, "You've found some spare coins!");
     case 4 :
         inv_add(inv, broken_arrow, 1);
-        ~objboxt(broken_arrow, "You've found a broken arrow."); // guess
+        ~objboxr(broken_arrow, "You've found a broken arrow."); // guess
     case 5 :
         inv_add(inv, broken_staff,  1);
         ~objboxt(broken_staff, "You've found a broken staff."); // guess
@@ -39,7 +39,7 @@ switch_int ($random) {
         ~objboxt(broken_glass, "You've found some broken glass.");
     case 9 :
         inv_add(inv, old_boot, 1);
-        ~objboxt(old_boot, "You've found an old boot.");
+        ~objbox(old_boot, "You've found an old boot.");
     case 10 :
         inv_add(inv, buttons, 1);
         ~objboxt(buttons, "You've found some buttons.");

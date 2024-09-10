@@ -42,6 +42,7 @@ if (random(^findsomethingnice_chance) = 0) { // complete guess
     ~findsomethingnice;
     return;
 }
+mes("You search the crate but find nothing.");
 
 [oploc1,_empty_crates]
 // Treasure Trail
