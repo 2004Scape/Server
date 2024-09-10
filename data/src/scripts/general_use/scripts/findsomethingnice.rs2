@@ -1,6 +1,8 @@
+// https://web.archive.org/web/20061105052142/http://runevillage.com/whatis2.php
+
 [proc,findsomethingnice] // mod lenny says this was the subroutine name
 // rates are completely guessed
-def_int $random = random(7);
+def_int $random = random(4);
 if (map_members = true) {
     $random = random(11);
 }
@@ -12,23 +14,23 @@ switch_int ($random) {
         inv_add(inv, leather_boots, 1);
         ~objboxt(leather_boots, "You've found some boots!"); // guess
     case 2 :
-        inv_add(inv, broken_arrow, 1);
-        ~objboxt(broken_arrow, "You've found a broken arrow."); // guess
-    case 3 :
-        inv_add(inv, broken_staff,  1);
-        ~objboxt(broken_staff, "You've found a broken staff."); // guess
-    case 4 :
-        inv_add(inv, rusty_sword,  1);
-        ~objboxt(rusty_sword, "You've found a rusty sword."); // guess
-    case 5 :
         inv_add(inv, pot_empty,  1);
         ~objboxt(pot_empty, "You've found a pot."); // guess
-    case 6 : 
+    case 3 : 
         // https://web.archive.org/web/20061026043451/http://www.global-rs.com/atlas/city/falador/
         // "This is a house with a range, which we learned before, is better for cooking on then fires, 
         // and two treasure chests upstairs which may contain a few spare gp or gloves or boots."
         inv_add(inv, coins, add(random(10), 1));
         ~objboxt(coins, "You've found some spare coins!");
+    case 4 :
+        inv_add(inv, broken_arrow, 1);
+        ~objboxt(broken_arrow, "You've found a broken arrow."); // guess
+    case 5 :
+        inv_add(inv, broken_staff,  1);
+        ~objboxt(broken_staff, "You've found a broken staff."); // guess
+    case 6 :
+        inv_add(inv, rusty_sword,  1);
+        ~objboxt(rusty_sword, "You've found a rusty sword."); // guess
     case 7 :
         inv_add(inv, damaged_armour, 1);
         ~objboxt(damaged_armour, "You've found some damaged armour.");
