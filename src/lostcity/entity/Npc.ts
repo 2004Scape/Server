@@ -73,7 +73,6 @@ export default class Npc extends PathingEntity {
     nextHuntTick: number = -1;
     huntTarget: Entity | null = null;
     huntrange: number = 0;
-    newTargetTick: number = -1;
 
     nextPatrolTick: number = -1;
     nextPatrolPoint : number = 0;
@@ -263,20 +262,14 @@ export default class Npc extends PathingEntity {
 
     setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: { type: number; com: number; }, hunt?: boolean): void {
         super.setInteraction(interaction, target, op, subject);
-        if (this.target !== target) {
-            this.newTargetTick = World.currentTick;
-        }
         if (hunt) {
             this.huntTarget = target;
-        } else {
-            this.huntTarget = null;
         }
     }
 
     clearInteraction() {
         super.clearInteraction();
         this.huntTarget = null;
-        this.newTargetTick = -1;
     }
 
     blockWalkFlag(): CollisionFlag {
@@ -911,20 +904,12 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
-            if (this.target !== player) {
-                if (World.gameMap.isMulti(CoordGrid.packCoord(player.level, player.x, player.z))) {
-                    if (this.newTargetTick + 8 <= World.currentTick && this.newTargetTick !== -1) {
-                        // in multi, if the npc has had its current target (not huntTarget) for less than 8 ticks it will continue its hunt
-                        // https://youtu.be/8AFed6tyOp8?t=231 (matches osrs)
-                        continue;
-                    }
-                } else {
-                    if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
-                        continue;
-                    }
-                    if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) + 8 > World.currentTick) {
-                        continue;
-                    }
+            if (this.target !== player && !World.gameMap.isMulti(CoordGrid.packCoord(player.level, player.x, player.z))) {
+                if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
+                    continue;
+                }
+                if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) + 8 > World.currentTick) {
+                    continue;
                 }
             }
 
