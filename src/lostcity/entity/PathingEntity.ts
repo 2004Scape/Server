@@ -61,7 +61,6 @@ export default abstract class PathingEntity extends Entity {
     repathed: boolean = false;
     target: Entity | null = null;
     targetOp: TargetOp = -1;
-    newTargetTick: number = -1;
     targetSubject: TargetSubject = {type: -1, com: -1};
     targetX: number = -1;
     targetZ: number = -1;
@@ -471,17 +470,7 @@ export default abstract class PathingEntity extends Entity {
         }
     }
 
-    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject, hunt?: boolean): void {
-        if (this.target !== target) {
-            this.newTargetTick = World.currentTick;
-        }
-        if (this instanceof Npc) {
-            if (hunt) {
-                this.huntTarget = target;
-            } else {
-                this.huntTarget = null;
-            } 
-        }
+    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: TargetSubject): void {
         this.target = target;
         this.targetOp = op;
         this.targetSubject = subject ?? {type: -1, com: -1};
@@ -526,12 +515,8 @@ export default abstract class PathingEntity extends Entity {
     }
 
     clearInteraction(): void {
-        if (this instanceof Npc) {
-            this.huntTarget = null;
-        }
         this.target = null;
         this.targetOp = -1;
-        this.newTargetTick = -1;
         this.targetSubject = {type: -1, com: -1};
         this.targetX = -1;
         this.targetZ = -1;

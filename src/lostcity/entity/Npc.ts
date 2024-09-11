@@ -16,7 +16,7 @@ import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
-import PathingEntity from '#lostcity/entity/PathingEntity.js';
+import PathingEntity, { TargetOp } from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import {Direction, CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
@@ -73,6 +73,7 @@ export default class Npc extends PathingEntity {
     nextHuntTick: number = -1;
     huntTarget: Entity | null = null;
     huntrange: number = 0;
+    newTargetTick: number = -1;
 
     nextPatrolTick: number = -1;
     nextPatrolPoint : number = 0;
@@ -258,6 +259,24 @@ export default class Npc extends PathingEntity {
             this.lastMovement = World.currentTick + 1;
         }
         return moved;
+    }
+
+    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: { type: number; com: number; }, hunt?: boolean): void {
+        super.setInteraction(interaction, target, op, subject);
+        if (this.target !== target) {
+            this.newTargetTick = World.currentTick;
+        }
+        if (hunt) {
+            this.huntTarget = target;
+        } else {
+            this.huntTarget = null;
+        }
+    }
+
+    clearInteraction() {
+        super.clearInteraction();
+        this.huntTarget = null;
+        this.newTargetTick = -1;
     }
 
     blockWalkFlag(): CollisionFlag {
