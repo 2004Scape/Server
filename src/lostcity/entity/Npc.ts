@@ -16,7 +16,7 @@ import Loc from '#lostcity/entity/Loc.js';
 import MoveRestrict from '#lostcity/entity/MoveRestrict.js';
 import NpcMode from '#lostcity/entity/NpcMode.js';
 import Obj from '#lostcity/entity/Obj.js';
-import PathingEntity, { TargetOp } from '#lostcity/entity/PathingEntity.js';
+import PathingEntity from '#lostcity/entity/PathingEntity.js';
 import Player from '#lostcity/entity/Player.js';
 import {Direction, CoordGrid} from '#lostcity/engine/CoordGrid.js';
 import MoveStrategy from '#lostcity/entity/MoveStrategy.js';
@@ -258,13 +258,6 @@ export default class Npc extends PathingEntity {
             this.lastMovement = World.currentTick + 1;
         }
         return moved;
-    }
-
-    setInteraction(interaction: Interaction, target: Entity, op: TargetOp, subject?: { type: number; com: number; }, hunt?: boolean): void {
-        super.setInteraction(interaction, target, op, subject);
-        if (hunt) {
-            this.huntTarget = target;
-        }
     }
 
     clearInteraction() {
@@ -864,6 +857,8 @@ export default class Npc extends PathingEntity {
         if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.gameMap.getZoneGrid(this.level).isFlagged(CoordGrid.zone(this.x), CoordGrid.zone(this.z), 5)) {
             return;
         }
+        // in osrs, and in this 2005: https://youtu.be/8AFed6tyOp8?t=231
+        // once an npc finds a huntTarget, it will no longer hunt until it's interactions are cleared
         if (!hunt.findKeepHunting && this.huntTarget !== null) {
             return;
         }
@@ -882,7 +877,8 @@ export default class Npc extends PathingEntity {
         // pick randomly from the hunted entities
         if (hunted.length > 0) {
             const entity: Entity = hunted[Math.floor(Math.random() * hunted.length)];
-            this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode, undefined, true);
+            this.huntTarget = entity;
+            this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
         }
         this.nextHuntTick = World.currentTick + hunt.rate;
     }
