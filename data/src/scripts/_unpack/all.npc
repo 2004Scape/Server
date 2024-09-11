@@ -2787,7 +2787,8 @@ param=defend_sound,bear_hit
 param=death_sound,bear_death
 category=bear
 huntmode=cowardly
-huntrange=2
+// osrs
+huntrange=1
 
 [bear_black]
 size=2
@@ -2815,6 +2816,8 @@ param=attack_sound,bear_attack
 param=defend_sound,bear_hit
 param=death_sound,bear_death
 category=bear
+huntmode=cowardly
+huntrange=1
 
 [npc_107]
 size=2
