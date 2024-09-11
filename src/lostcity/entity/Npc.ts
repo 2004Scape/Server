@@ -71,6 +71,7 @@ export default class Npc extends PathingEntity {
     regenClock: number = 0;
     huntMode: number = -1;
     nextHuntTick: number = -1;
+    huntTarget: Entity | null = null;
     huntrange: number = 0;
 
     nextPatrolTick: number = -1;
@@ -851,7 +852,7 @@ export default class Npc extends PathingEntity {
         if (hunt.nobodyNear === HuntNobodyNear.PAUSEHUNT && !World.gameMap.getZoneGrid(this.level).isFlagged(CoordGrid.zone(this.x), CoordGrid.zone(this.z), 5)) {
             return;
         }
-        if (!hunt.findKeepHunting && this.target !== null) {
+        if (!hunt.findKeepHunting && this.huntTarget !== null) {
             return;
         }
 
@@ -869,7 +870,7 @@ export default class Npc extends PathingEntity {
         // pick randomly from the hunted entities
         if (hunted.length > 0) {
             const entity: Entity = hunted[Math.floor(Math.random() * hunted.length)];
-            this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode);
+            this.setInteraction(Interaction.SCRIPT, entity, hunt.findNewMode, undefined, true);
         }
         this.nextHuntTick = World.currentTick + hunt.rate;
     }
@@ -891,11 +892,20 @@ export default class Npc extends PathingEntity {
             if (hunt.checkNotTooStrong === HuntCheckNotTooStrong.OUTSIDE_WILDERNESS && !player.isInWilderness() && player.combatLevel > type.vislevel * 2) {
                 continue;
             }
-            if (this.target !== player && !World.gameMap.isMulti(CoordGrid.packCoord(player.level, player.x, player.z))) {
-                if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
-                    continue;
-                } else if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) >= World.currentTick) {
-                    continue;
+            if (this.target !== player) {
+                if (World.gameMap.isMulti(CoordGrid.packCoord(player.level, player.x, player.z))) {
+                    if (this.newTargetTick + 8 <= World.currentTick && this.newTargetTick !== -1) {
+                        // in multi, if the npc has had its current target (not huntTarget) for less than 8 ticks it will continue its hunt
+                        // https://youtu.be/8AFed6tyOp8?t=231 (matches osrs)
+                        continue;
+                    }
+                } else {
+                    if (hunt.checkNotCombat !== -1 && (player.getVar(hunt.checkNotCombat) as number) + 8 > World.currentTick) {
+                        continue;
+                    }
+                    if (hunt.checkNotCombatSelf !== -1 && (this.getVar(hunt.checkNotCombatSelf) as number) + 8 > World.currentTick) {
+                        continue;
+                    }
                 }
             }
 
