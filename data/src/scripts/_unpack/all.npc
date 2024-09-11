@@ -1877,7 +1877,8 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-huntmode=cowardly
+// https://youtu.be/8AFed6tyOp8?t=230
+huntmode=constant_melee
 huntrange=1
 
 [zombie2]
@@ -1905,7 +1906,8 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-huntmode=cowardly
+// https://youtu.be/8AFed6tyOp8?t=230
+huntmode=constant_melee
 huntrange=1
 
 [zombie3]
@@ -1935,7 +1937,8 @@ param=attack_sound,zombie_attack
 param=defend_sound,zombie_hit
 param=death_sound,zombie_death
 param=undead,^true
-huntmode=cowardly
+// https://youtu.be/8AFed6tyOp8?t=230
+huntmode=constant_melee
 huntrange=1
 
 [zombie_entrana]
