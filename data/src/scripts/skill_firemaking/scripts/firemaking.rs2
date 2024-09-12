@@ -181,10 +181,7 @@ if (~in_duel_arena($origin_coord) = true) {
     return;
 }
 def_int $queued = ^false;
-def_int $lastopd = ^false;
-if (last_opobj = sub(map_clock, 1)) {
-    $lastopd = ^true;
-}
+def_int $lastopd = sub(map_clock, last_opobj);
 if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord) { // check west
     $queued = busy3;
     if ($lastopd = ^true & $queued = ^false) {
@@ -194,17 +191,14 @@ if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord
     }
     p_delay(1);
     if (lineofwalk(coord, movecoord(coord, 1, 0, 0)) = true & coord = $origin_coord) { // check east
-        $queued = add($queued, busy3);
         p_teleport(movecoord(coord, 1, 0, 0));
         p_delay(0);
     }
     if (lineofwalk(coord, movecoord(coord, 0, 0, -1)) = true & coord = $origin_coord) { // check south
-        $queued = add($queued, busy3);
         p_teleport(movecoord(coord, 0, 0, -1));
         p_delay(0);
     }
     if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
-        $queued = add($queued, busy3);
         p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
@@ -217,12 +211,10 @@ if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord
     }
     p_delay(1);
     if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check south
-        $queued = add($queued, busy3);
         p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
     if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
-        $queued = add($queued, busy3);
         p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
@@ -235,7 +227,6 @@ if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord
     }
     p_delay(1);
     if (lineofwalk(coord, movecoord(coord, 0, 0, 1)) = true & coord = $origin_coord) { // check north
-        $queued = add($queued, busy3);
         p_teleport(movecoord(coord, 0, 0, 1));
         p_delay(0);
     }
@@ -251,17 +242,3 @@ if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord
 if ($lastopd = ^true & $queued > 0) {
     p_walk($origin_coord);
 }
-
-
-[debugproc,qt]
-queue(test, 5000);
-
-
-[debugproc,qt2]
-mes(tostring(getqueue(test)));
-
-[debugproc,qt3]
-clearqueue(test);
-
-
-[queue,test]
