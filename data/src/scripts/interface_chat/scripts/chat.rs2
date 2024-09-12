@@ -539,6 +539,17 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
+// no idea if this exists but broken arrow looks terrible without it
+[proc,objboxr](obj $obj, string $string)
+split_init($string, 400, 4, q8);
+def_int $page = 0;
+def_int $pagetotal = split_pagecount;
+while ($page < $pagetotal) {
+    ~objbox_page($obj, 250, ^objbox_width, 0, $page);
+    p_pausebutton;
+    $page = calc($page + 1);
+}
+
 // ----
 
 [proc,doubleobjbox_page](obj $obj_1, obj $obj_2, int $scale, int $page)
@@ -699,4 +710,9 @@ switch_component (last_com) {
     case multiobj4:com_4 : return($obj3);
     case multiobj4:com_5 : return($obj4);
     case default : return(null);
+}
+
+[debugproc,objbox](obj $obj)
+if (p_finduid(uid) = true) {
+    ~objboxr($obj, "You've found <~add_article(oc_name($obj))>!");
 }

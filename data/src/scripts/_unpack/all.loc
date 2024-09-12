@@ -1748,6 +1748,7 @@ desc=Bamboo storage!
 model=model_loc_394
 length=2
 op1=Search
+category=bookcase
 
 [loc_395]
 name=Pot
