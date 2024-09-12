@@ -305,21 +305,21 @@ if (lineofwalk(coord, movecoord(coord, -1, 0, 0)) = true & coord = $origin_coord
 
 
 
-[debugproc,qt]
-mes("A script is now queued onto player.");
-queue(test, 5000);
+// [debugproc,qt]
+// mes("A script is now queued onto player.");
+// queue(test, 5000);
 
-[debugproc,cqt]
-clearqueue(test);
+// [debugproc,cqt]
+// clearqueue(test);
 
-[debugproc,qt2]
-mes(tostring(getqueue(test)));;
+// [debugproc,qt2]
+// mes(tostring(getqueue(test)));
 
-[queue,test]
+// [queue,test]
 
-[debugproc,stunned]
-if (p_finduid(uid) = true) {
-    mes("Player is stunned for 10 ticks");
-    %stunned = add(map_clock, 10);
-    walktrigger(stunned);
-}
+// [debugproc,stunned]
+// if (p_finduid(uid) = true) {
+//     mes("Player is stunned for 10 ticks");
+//     %stunned = add(map_clock, 10);
+//     walktrigger(stunned);
+// }
